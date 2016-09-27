@@ -47,51 +47,118 @@ import java.util.Map;
 public class OrganizationFinderImpl
 	extends OrganizationFinderBaseImpl implements OrganizationFinder {
 
-	public static final String COUNT_BY_GROUP_ID =
-		OrganizationFinder.class.getName() + ".countByGroupId";
+	public static final String COUNT_O_BY_GROUP_ID =
+		OrganizationFinder.class.getName() + ".countO_ByGroupId";
 
-	public static final String COUNT_BY_ORGANIZATION_ID =
-		OrganizationFinder.class.getName() + ".countByOrganizationId";
+	public static final String COUNT_O_BY_ORGANIZATION_ID =
+		OrganizationFinder.class.getName() + ".countO_ByOrganizationId";
 
-	public static final String COUNT_BY_C_PO_N_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".countByC_PO_N_S_C_Z_R_C";
+	public static final String COUNT_O_BY_C_PO_N_S_C_Z_R_C =
+		OrganizationFinder.class.getName() + ".countO_ByC_PO_N_S_C_Z_R_C";
 
-	public static final String COUNT_BY_C_PO_N_L_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".countByC_PO_N_L_S_C_Z_R_C";
+	public static final String COUNT_O_BY_C_PO_N_L_S_C_Z_R_C =
+		OrganizationFinder.class.getName() + ".countO_ByC_PO_N_L_S_C_Z_R_C";
 
-	public static final String FIND_BY_NO_ASSETS =
-		OrganizationFinder.class.getName() + ".findByNoAssets";
+	public static final String FIND_O_BY_NO_ASSETS =
+		OrganizationFinder.class.getName() + ".findO_ByNoAssets";
 
-	public static final String FIND_BY_GROUP_ID =
-		OrganizationFinder.class.getName() + ".findByGroupId";
+	public static final String FIND_O_BY_GROUP_ID =
+		OrganizationFinder.class.getName() + ".findO_ByGroupId";
 
-	public static final String FIND_BY_C_P =
-		OrganizationFinder.class.getName() + ".findByC_P";
+	public static final String FIND_O_BY_C_P =
+		OrganizationFinder.class.getName() + ".findO_ByC_P";
 
-	public static final String FIND_BY_C_PO_N_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".findByC_PO_N_S_C_Z_R_C";
+	public static final String FIND_O_BY_C_PO_N_S_C_Z_R_C =
+		OrganizationFinder.class.getName() + ".findO_ByC_PO_N_S_C_Z_R_C";
 
-	public static final String FIND_BY_C_PO_N_L_S_C_Z_R_C =
-		OrganizationFinder.class.getName() + ".findByC_PO_N_L_S_C_Z_R_C";
+	public static final String FIND_O_BY_C_PO_N_L_S_C_Z_R_C =
+		OrganizationFinder.class.getName() + ".findO_ByC_PO_N_L_S_C_Z_R_C";
 
-	public static final String JOIN_BY_ORGANIZATIONS_GROUPS =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsGroups";
+	public static final String JOIN_O_BY_ORGANIZATIONS_GROUPS =
+		OrganizationFinder.class.getName() + ".joinO_ByOrganizationsGroups";
 
-	public static final String JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES =
+	public static final String JOIN_O_BY_ORGANIZATIONS_PASSWORD_POLICIES =
 		OrganizationFinder.class.getName() +
-			".joinByOrganizationsPasswordPolicies";
+			".joinO_ByOrganizationsPasswordPolicies";
 
-	public static final String JOIN_BY_ORGANIZATIONS_ROLES =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsRoles";
+	public static final String JOIN_O_BY_ORGANIZATIONS_ROLES =
+		OrganizationFinder.class.getName() + ".joinO_ByOrganizationsRoles";
 
-	public static final String JOIN_BY_ORGANIZATIONS_USERS =
-		OrganizationFinder.class.getName() + ".joinByOrganizationsUsers";
+	public static final String JOIN_O_BY_ORGANIZATIONS_USERS =
+		OrganizationFinder.class.getName() + ".joinO_ByOrganizationsUsers";
 
-	public static final String JOIN_BY_USERS_ORGS =
-		OrganizationFinder.class.getName() + ".joinByUsersOrgs";
+	public static final String JOIN_O_BY_USERS_ORGS =
+		OrganizationFinder.class.getName() + ".joinO_ByUsersOrgs";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #countO_ByKeywords(long,
+	 *             long, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>)}
+	 */
+	@Deprecated
 	@Override
 	public int countByKeywords(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String keywords, String type,
+		Long regionId, Long countryId, LinkedHashMap<String, Object> params) {
+
+		return countO_ByKeywords(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			keywords, type, regionId, countryId, params);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #countO_ByO_U(long, long)}
+	 */
+	@Deprecated
+	@Override
+	public int countByO_U(long organizationId, long userId) {
+		return countO_ByO_U(organizationId, userId);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #countO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
+	 *             String, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int countByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String name, String type,
+		String street, String city, String zip, Long regionId, Long countryId,
+		LinkedHashMap<String, Object> params, boolean andOperator) {
+
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			name, type, street, city, zip, regionId, countryId, params,
+			andOperator);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #countO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String[],
+	 *             String, String[], String[], String[], Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean)}
+	 */
+	@Deprecated
+	@Override
+	public int countByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String[] names, String type,
+		String[] streets, String[] cities, String[] zips, Long regionId,
+		Long countryId, LinkedHashMap<String, Object> params,
+		boolean andOperator) {
+
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			names, type, streets, cities, zips, regionId, countryId, params,
+			andOperator);
+	}
+
+	@Override
+	public int countO_ByKeywords(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String keywords, String type,
 		Long regionId, Long countryId, LinkedHashMap<String, Object> params) {
@@ -112,14 +179,14 @@ public class OrganizationFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_PO_N_T_S_C_Z_R_C(
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator);
 	}
 
 	@Override
-	public int countByO_U(long organizationId, long userId) {
+	public int countO_ByO_U(long organizationId, long userId) {
 		LinkedHashMap<String, Object> params1 = new LinkedHashMap<>();
 
 		params1.put("usersOrgs", userId);
@@ -129,7 +196,8 @@ public class OrganizationFinderImpl
 		try {
 			session = openSession();
 
-			int count = countByOrganizationId(session, organizationId, params1);
+			int count = countO_ByOrganizationId(
+				session, organizationId, params1);
 
 			return count;
 		}
@@ -142,7 +210,7 @@ public class OrganizationFinderImpl
 	}
 
 	@Override
-	public int countByC_PO_N_T_S_C_Z_R_C(
+	public int countO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String name, String type,
 		String street, String city, String zip, Long regionId, Long countryId,
@@ -153,14 +221,14 @@ public class OrganizationFinderImpl
 		String[] cities = CustomSQLUtil.keywords(city);
 		String[] zips = CustomSQLUtil.keywords(zip);
 
-		return countByC_PO_N_T_S_C_Z_R_C(
+		return countO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator);
 	}
 
 	@Override
-	public int countByC_PO_N_T_S_C_Z_R_C(
+	public int countO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String[] names, String type,
 		String[] streets, String[] cities, String[] zips, Long regionId,
@@ -193,15 +261,15 @@ public class OrganizationFinderImpl
 
 			if (doUnion) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(CustomSQLUtil.get(COUNT_BY_GROUP_ID));
+				sb.append(CustomSQLUtil.get(COUNT_O_BY_GROUP_ID));
 				sb.append(") UNION ALL (");
 			}
 
 			if (Validator.isNotNull(type)) {
-				sb.append(CustomSQLUtil.get(COUNT_BY_C_PO_N_L_S_C_Z_R_C));
+				sb.append(CustomSQLUtil.get(COUNT_O_BY_C_PO_N_L_S_C_Z_R_C));
 			}
 			else {
-				sb.append(CustomSQLUtil.get(COUNT_BY_C_PO_N_S_C_Z_R_C));
+				sb.append(CustomSQLUtil.get(COUNT_O_BY_C_PO_N_S_C_Z_R_C));
 			}
 
 			if (doUnion) {
@@ -298,8 +366,94 @@ public class OrganizationFinderImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByKeywords(long, long,
+	 *             String, String, String, Long, Long, LinkedHashMap<String,
+	 *             Object>, int, int, OrderByComparator<Organization>)}
+	 */
+	@Deprecated
 	@Override
 	public List<Organization> findByKeywords(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String keywords, String type,
+		Long regionId, Long countryId, LinkedHashMap<String, Object> params,
+		int start, int end, OrderByComparator<Organization> obc) {
+
+		return findO_ByKeywords(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			keywords, type, regionId, countryId, params, start, end, obc);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByNoAssets()}
+	 */
+	@Deprecated
+	@Override
+	public List<Organization> findByNoAssets() {
+		return findO_ByNoAssets();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByC_P(long, long,
+	 *             long, int)}
+	 */
+	@Deprecated
+	@Override
+	public List<Long> findByC_P(
+		long companyId, long parentOrganizationId, long previousOrganizationId,
+		int size) {
+
+		return findO_ByC_P(
+			companyId, parentOrganizationId, previousOrganizationId, size);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
+	 *             String, String, String, String, Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean, int, int,
+	 *             OrderByComparator<Organization>)}
+	 */
+	@Deprecated
+	@Override
+	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String name, String type,
+		String street, String city, String zip, Long regionId, Long countryId,
+		LinkedHashMap<String, Object> params, boolean andOperator, int start,
+		int end, OrderByComparator<Organization> obc) {
+
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			name, type, street, city, zip, regionId, countryId, params,
+			andOperator, start, end, obc);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String[],
+	 *             String, String[], String[], String[], Long, Long,
+	 *             LinkedHashMap<String, Object>, boolean, int, int
+	 *             OrderByComparator<Organization>)}
+	 */
+	@Deprecated
+	@Override
+	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+		long companyId, long parentOrganizationId,
+		String parentOrganizationIdComparator, String[] names, String type,
+		String[] streets, String[] cities, String[] zips, Long regionId,
+		Long countryId, LinkedHashMap<String, Object> params,
+		boolean andOperator, int start, int end,
+		OrderByComparator<Organization> obc) {
+
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
+			companyId, parentOrganizationId, parentOrganizationIdComparator,
+			names, type, streets, cities, zips, regionId, countryId, params,
+			andOperator, start, end, obc);
+	}
+
+	@Override
+	public List<Organization> findO_ByKeywords(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String keywords, String type,
 		Long regionId, Long countryId, LinkedHashMap<String, Object> params,
@@ -321,20 +475,20 @@ public class OrganizationFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_PO_N_T_S_C_Z_R_C(
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator, start, end, obc);
 	}
 
 	@Override
-	public List<Organization> findByNoAssets() {
+	public List<Organization> findO_ByNoAssets() {
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+			String sql = CustomSQLUtil.get(FIND_O_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -351,7 +505,7 @@ public class OrganizationFinderImpl
 	}
 
 	@Override
-	public List<Long> findByC_P(
+	public List<Long> findO_ByC_P(
 		long companyId, long parentOrganizationId, long previousOrganizationId,
 		int size) {
 
@@ -360,7 +514,7 @@ public class OrganizationFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_P);
+			String sql = CustomSQLUtil.get(FIND_O_BY_C_P);
 
 			if (previousOrganizationId == 0) {
 				sql = StringUtil.replace(
@@ -391,7 +545,7 @@ public class OrganizationFinderImpl
 	}
 
 	@Override
-	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+	public List<Organization> findO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String name, String type,
 		String street, String city, String zip, Long regionId, Long countryId,
@@ -403,14 +557,14 @@ public class OrganizationFinderImpl
 		String[] cities = CustomSQLUtil.keywords(city);
 		String[] zips = CustomSQLUtil.keywords(zip);
 
-		return findByC_PO_N_T_S_C_Z_R_C(
+		return findO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			names, type, streets, cities, zips, regionId, countryId, params,
 			andOperator, start, end, obc);
 	}
 
 	@Override
-	public List<Organization> findByC_PO_N_T_S_C_Z_R_C(
+	public List<Organization> findO_ByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		String parentOrganizationIdComparator, String[] names, String type,
 		String[] streets, String[] cities, String[] zips, Long regionId,
@@ -436,15 +590,15 @@ public class OrganizationFinderImpl
 		boolean doUnion = Validator.isNotNull(groupOrganization);
 
 		if (doUnion) {
-			sb.append(CustomSQLUtil.get(FIND_BY_GROUP_ID));
+			sb.append(CustomSQLUtil.get(FIND_O_BY_GROUP_ID));
 			sb.append(") UNION ALL (");
 		}
 
 		if (Validator.isNotNull(type)) {
-			sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_L_S_C_Z_R_C));
+			sb.append(CustomSQLUtil.get(FIND_O_BY_C_PO_N_L_S_C_Z_R_C));
 		}
 		else {
-			sb.append(CustomSQLUtil.get(FIND_BY_C_PO_N_S_C_Z_R_C));
+			sb.append(CustomSQLUtil.get(FIND_O_BY_C_PO_N_S_C_Z_R_C));
 		}
 
 		String sql = sb.toString();
@@ -544,11 +698,11 @@ public class OrganizationFinderImpl
 		}
 	}
 
-	protected int countByOrganizationId(
+	protected int countO_ByOrganizationId(
 		Session session, long organizationId,
 		LinkedHashMap<String, Object> params) {
 
-		String sql = CustomSQLUtil.get(COUNT_BY_ORGANIZATION_ID);
+		String sql = CustomSQLUtil.get(COUNT_O_BY_ORGANIZATION_ID);
 
 		sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(params));
 		sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
@@ -604,19 +758,19 @@ public class OrganizationFinderImpl
 		String join = StringPool.BLANK;
 
 		if (key.equals("organizationsGroups")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_GROUPS);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_GROUPS);
 		}
 		else if (key.equals("organizationsPasswordPolicies")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_PASSWORD_POLICIES);
 		}
 		else if (key.equals("organizationsRoles")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_ROLES);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_ROLES);
 		}
 		else if (key.equals("organizationsUsers")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USERS);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_USERS);
 		}
 		else if (key.equals("usersOrgs")) {
-			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS);
+			join = CustomSQLUtil.get(JOIN_O_BY_USERS_ORGS);
 		}
 
 		if (Validator.isNotNull(join)) {
@@ -688,7 +842,7 @@ public class OrganizationFinderImpl
 		}
 		else if (key.equals("organizationsGroups")) {
 			if (value instanceof Long) {
-				join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_GROUPS);
+				join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_GROUPS);
 			}
 			else if (value instanceof Long[]) {
 				Long[] organizationGroupIds = (Long[])value;
@@ -717,10 +871,10 @@ public class OrganizationFinderImpl
 			}
 		}
 		else if (key.equals("organizationsPasswordPolicies")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_PASSWORD_POLICIES);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_PASSWORD_POLICIES);
 		}
 		else if (key.equals("organizationsRoles")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_ROLES);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_ROLES);
 		}
 		else if (key.equals("organizationsTree")) {
 			List<Organization> organizationsTree = (List<Organization>)value;
@@ -746,10 +900,10 @@ public class OrganizationFinderImpl
 			}
 		}
 		else if (key.equals("organizationsUsers")) {
-			join = CustomSQLUtil.get(JOIN_BY_ORGANIZATIONS_USERS);
+			join = CustomSQLUtil.get(JOIN_O_BY_ORGANIZATIONS_USERS);
 		}
 		else if (key.equals("usersOrgs")) {
-			join = CustomSQLUtil.get(JOIN_BY_USERS_ORGS);
+			join = CustomSQLUtil.get(JOIN_O_BY_USERS_ORGS);
 		}
 
 		if (Validator.isNotNull(join)) {

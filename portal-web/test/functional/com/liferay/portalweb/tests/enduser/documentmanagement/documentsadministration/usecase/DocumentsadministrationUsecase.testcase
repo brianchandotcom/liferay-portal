@@ -796,8 +796,8 @@
 
 		<execute macro="Role#addCP">
 			<var name="roleDescription" value="This is the technical writer role" />
+			<var name="roleKey" value="Technical Writer" />
 			<var name="roleName" value="Writer" />
-			<var name="roleTitle" value="Technical Writer" />
 			<var name="roleType" value="Regular Role" />
 		</execute>
 

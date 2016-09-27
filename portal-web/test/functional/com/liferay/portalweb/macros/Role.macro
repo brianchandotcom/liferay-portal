@@ -47,9 +47,9 @@
 		</if>
 
 		<if>
-			<isset var="roleTitle" />
+			<isset var="roleKey" />
 			<then>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${roleTitle}" />
+				<execute function="Type" locator1="TextInput#KEY" value1="${roleKey}" />
 			</then>
 		</if>
 
@@ -63,8 +63,8 @@
 
 		<execute macro="Role#addCP">
 			<var name="roleDescription" value="${roleDescription}" />
+			<var name="roleKey" value="${roleKey}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="Site" />
 		</execute>
 

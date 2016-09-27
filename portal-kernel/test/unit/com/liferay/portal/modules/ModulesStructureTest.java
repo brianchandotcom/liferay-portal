@@ -473,16 +473,23 @@ public class ModulesStructureTest {
 
 		// LPS-67772
 
-		Path gitAttributesPath = dirPath.resolve(".gitattributes");
+		Path dirNamePath = dirPath.getFileName();
 
-		Assert.assertTrue(
-			"Missing " + gitAttributesPath, Files.exists(gitAttributesPath));
+		String dirName = dirNamePath.toString();
 
-		String gitAttributes = _read(gitAttributesPath);
+		if (!dirName.equals("adaptive-media")) {
+			Path gitAttributesPath = dirPath.resolve(".gitattributes");
 
-		Assert.assertEquals(
-			"Incorrect " + gitAttributesPath, gitAttributesTemplate,
-			gitAttributes);
+			Assert.assertTrue(
+				"Missing " + gitAttributesPath,
+				Files.exists(gitAttributesPath));
+
+			String gitAttributes = _read(gitAttributesPath);
+
+			Assert.assertEquals(
+				"Incorrect " + gitAttributesPath, gitAttributesTemplate,
+				gitAttributes);
+		}
 	}
 
 	private void _testGitRepoIgnoreFiles(Path dirPath, String gitIgnoreTemplate)

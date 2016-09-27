@@ -63,12 +63,9 @@ public class DLPortletToolbarContributorHelper {
 			_log.error(pe, pe);
 		}
 
-		long folderId = BeanParamUtil.getLong(
-			folder, portletRequest, "folderId", rootFolderId);
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			try {
-				folder = _dlAppLocalService.getFolder(folderId);
+				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
 			catch (NoSuchFolderException nsfe) {
 				folder = null;

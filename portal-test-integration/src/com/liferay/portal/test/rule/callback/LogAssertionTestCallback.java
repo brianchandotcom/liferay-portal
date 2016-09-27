@@ -16,6 +16,7 @@ package com.liferay.portal.test.rule.callback;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.test.rule.callback.TestCallback;
@@ -61,7 +62,17 @@ public class LogAssertionTestCallback
 		if (currentThread != _thread) {
 			_concurrentFailures.put(currentThread, error);
 
-			_thread.interrupt();
+			DB db = DBManagerUtil.getDB();
+
+			// Hypersonic uses AQS to do sync waiting, which responses
+			// interruptions in an unfriendly way. To make the failure messages
+			// more readable, don't interrupt for Hypersonic, log asserter will
+			// only assert the log failures in the end of the test, rather than
+			// asserting it on catching.
+
+			if (db.getDBType() != DBType.HYPERSONIC) {
+				_thread.interrupt();
+			}
 		}
 		else {
 			throw error;

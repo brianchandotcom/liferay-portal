@@ -457,7 +457,7 @@ public class OrganizationLocalServiceImpl
 
 	@Override
 	public List<Organization> getNoAssetOrganizations() {
-		return organizationFinder.findByNoAssets();
+		return organizationFinder.findO_ByNoAssets();
 	}
 
 	/**
@@ -1133,7 +1133,7 @@ public class OrganizationLocalServiceImpl
 			parentOrganizationIdComparator = StringPool.NOT_EQUAL;
 		}
 
-		return organizationFinder.findByKeywords(
+		return organizationFinder.findO_ByKeywords(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			keywords, type, regionId, countryId, params, start, end, obc);
 	}
@@ -1253,7 +1253,7 @@ public class OrganizationLocalServiceImpl
 			parentOrganizationIdComparator = StringPool.NOT_EQUAL;
 		}
 
-		return organizationFinder.findByC_PO_N_T_S_C_Z_R_C(
+		return organizationFinder.findO_ByC_PO_N_T_S_C_Z_R_C(
 			companyId, parentOrganizationId, parentOrganizationIdComparator,
 			name, type, street, city, zip, regionId, countryId, params,
 			andOperator, start, end, obc);
@@ -1361,7 +1361,7 @@ public class OrganizationLocalServiceImpl
 				parentOrganizationIdComparator = StringPool.NOT_EQUAL;
 			}
 
-			return organizationFinder.countByKeywords(
+			return organizationFinder.countO_ByKeywords(
 				companyId, parentOrganizationId, parentOrganizationIdComparator,
 				keywords, type, regionId, countryId, params);
 		}
@@ -1448,7 +1448,7 @@ public class OrganizationLocalServiceImpl
 				parentOrganizationIdComparator = StringPool.NOT_EQUAL;
 			}
 
-			return organizationFinder.countByC_PO_N_T_S_C_Z_R_C(
+			return organizationFinder.countO_ByC_PO_N_T_S_C_Z_R_C(
 				companyId, parentOrganizationId, parentOrganizationIdComparator,
 				name, type, street, city, zip, regionId, countryId, params,
 				andOperator);

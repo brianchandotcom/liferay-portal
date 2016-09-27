@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLsException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -111,6 +112,20 @@ public class LayoutFriendlyURLTest {
 		friendlyURLMap.put(LocaleUtil.US, "/home");
 
 		addLayout(_group.getGroupId(), false, friendlyURLMap);
+	}
+
+	@Test
+	public void testFriendlyURLWithSpecialCharacter() throws Exception {
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		friendlyURLMap.put(LocaleUtil.US, "/Football⚽");
+
+		addLayout(_group.getGroupId(), false, friendlyURLMap);
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			_group.getGroupId(), false, "/Football⚽");
+
+		Assert.assertNotNull(layout);
 	}
 
 	@Test(expected = LayoutFriendlyURLsException.class)

@@ -31,18 +31,18 @@
 		</if>
 
 		<if>
-			<isset var="roleTitle" />
+			<isset var="roleKey" />
 			<then>
 				<execute class="java.net.URLEncoder" method="encode">
-					<arg value="${roleTitle}" />
+					<arg value="${roleKey}" />
 					<arg value="UTF-8" />
-					<return name="roleTitleEncoded" />
+					<return name="roleKeyEncoded" />
 				</execute>
 
-				<var name="roleTitleMap">{"en_US":"${roleTitleEncoded}"}</var>
+				<var name="roleKeyMap">{"en_US":"${roleKeyEncoded}"}</var>
 			</then>
 			<else>
-				<var name="roleTitleMap" value="{}" />
+				<var name="roleKeyMap" value="{}" />
 			</else>
 		</if>
 
@@ -78,7 +78,7 @@
 				-d className=com.liferay.portal.kernel.model.Role \
 				-d classPK=0 \
 				-d name=${roleNameEncoded} \
-				-d titleMap=${roleTitleMap} \
+				-d titleMap=${roleKeyMap} \
 				-d descriptionMap=${roleDescriptionMap} \
 				-d type=${roleTypeId} \
 				-d subtype=
@@ -96,9 +96,9 @@
 		<echo>## * Role Name: ${roleName}</echo>
 
 		<if>
-			<isset var="roleTitle" />
+			<isset var="roleKey" />
 			<then>
-				<echo>## * Role Title: ${roleTitle}</echo>
+				<echo>## * Role Title: ${roleKey}</echo>
 			</then>
 		</if>
 
@@ -176,8 +176,8 @@
 
 		<execute macro="JSONRole#_addRole">
 			<var name="roleDescription" value="${roleDescription}" />
+			<var name="roleKey" value="${roleKey}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="organization" />
 		</execute>
 	</command>
@@ -194,8 +194,8 @@
 
 		<execute macro="JSONRole#_addRole">
 			<var name="roleDescription" value="${roleDescription}" />
+			<var name="roleKey" value="${roleKey}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="regular" />
 		</execute>
 	</command>
@@ -212,8 +212,8 @@
 
 		<execute macro="JSONRole#_addRole">
 			<var name="roleDescription" value="${roleDescription}" />
+			<var name="roleKey" value="${roleKey}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="site" />
 		</execute>
 	</command>

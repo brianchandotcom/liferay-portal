@@ -544,8 +544,8 @@
 
 		<execute macro="Role#addCP">
 			<var name="roleDescription" value="${roleDescription}" />
+			<var name="roleKey" value="${roleKey}" />
 			<var name="roleName" value="${roleName}" />
-			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
 

@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"gulp": "3.9.1",
-		"gulp-metal": "1.5.3",
+		"gulp-metal": "1.9.4",
 		"karma": "1.2.0",
 		"liferay-karma-config": "0.0.3",
 		"liferay-module-config-generator": "1.1.10",

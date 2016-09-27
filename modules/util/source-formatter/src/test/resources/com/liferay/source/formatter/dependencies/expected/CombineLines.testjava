@@ -118,10 +118,9 @@ public class CombineLines extends SuperClass {
 
 	public String method4() {
 		String test1 = getString(
-			"hello world" + "hello world" + "hello world" + "hello world");
+			"hello worldhello worldhello worldhello world");
 
-		String test2 =
-			"hello world" + "hello world" + "hello world" + "hello world";
+		String test2 = "hello worldhello worldhello worldhello world";
 
 		return test1 + test2;
 	}
@@ -162,15 +161,13 @@ public class CombineLines extends SuperClass {
 
 		boolean b2 = StringUtil.contains(
 			test1,
-			"Hello World" + "Hello World Hello" +
+			"Hello WorldHello World Hello" +
 				"Hello World Hello World Hello World Hello World");
 
 		boolean b3 = StringUtil.merge(
 			new String[] {"One", "Two"}, "Hello World");
 
-		String s =
-			"Hello World " + "Hello World Hello" +
-				"Hello World Hello World Hello";
+		String s = "Hello World Hello World HelloHello World Hello World Hello";
 	}
 
 	public void method9(String s) {

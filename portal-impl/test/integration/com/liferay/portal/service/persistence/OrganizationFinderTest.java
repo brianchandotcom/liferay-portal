@@ -71,7 +71,7 @@ public class OrganizationFinderTest {
 		params1.put("usersOrgs", _user.getUserId());
 		params1.put("groupOrganization", _group.getGroupId());
 
-		int count1 = OrganizationFinderUtil.countByKeywords(
+		int count1 = OrganizationFinderUtil.countO_ByKeywords(
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 			StringPool.NOT_EQUAL, null, null, null, null, params1);
@@ -83,7 +83,7 @@ public class OrganizationFinderTest {
 		params2.put("groupOrganization", _group.getGroupId());
 		params2.put("usersOrgs", _user.getUserId());
 
-		int count2 = OrganizationFinderUtil.countByKeywords(
+		int count2 = OrganizationFinderUtil.countO_ByKeywords(
 			_user.getCompanyId(),
 			OrganizationConstants.ANY_PARENT_ORGANIZATION_ID,
 			StringPool.NOT_EQUAL, null, null, null, null, params2);

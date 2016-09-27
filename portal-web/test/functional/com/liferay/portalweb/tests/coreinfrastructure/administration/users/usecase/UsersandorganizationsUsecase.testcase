@@ -99,7 +99,7 @@
 		</execute>
 
 		<execute macro="User#assignRegularRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -138,13 +138,13 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Impersonating Role Name" />
+			<var name="roleTitle" value="Impersonating Role Name" />
 		</execute>
 
 		<execute macro="Role#editPermissionCmdCP">
 			<var name="define" value="true" />
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_VIEW_CHECKBOX,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_IMPERSONATE_CHECKBOX,CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_RESOURCE_PERMISSIONS_USER_VIEW_CHECKBOX" />
-			<var name="roleName" value="Impersonating Role Name" />
+			<var name="roleTitle" value="Impersonating Role Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -194,7 +194,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Impersonating Role Name" />
+			<var name="roleTitle" value="Impersonating Role Name" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -203,7 +203,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
@@ -273,7 +273,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Administrator" />
+			<var name="roleTitle" value="Administrator" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -683,7 +683,7 @@
 			<var name="permissionDefinitionValue" value="View Control Panel Menu" />
 			<var name="permissionNavigationKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS" />
 			<var name="permissionNavigationValue" value="General Permissions" />
-			<var name="roleName" value="Authenticated" />
+			<var name="roleTitle" value="Authenticated" />
 			<var name="roleUser" value="User" />
 		</execute>
 
@@ -737,7 +737,7 @@
 
 		<execute macro="Organization#assignOrgRoleCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="roleName" value="Organization Administrator" />
+			<var name="roleTitle" value="Organization Administrator" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
@@ -1149,12 +1149,12 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Canada Orgrole" />
+			<var name="roleTitle" value="Canada Orgrole" />
 			<var name="roleType" value="Organization" />
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="United States Orgrole" />
+			<var name="roleTitle" value="United States Orgrole" />
 			<var name="roleType" value="Organization" />
 		</execute>
 
@@ -1278,14 +1278,14 @@
 		</execute>
 
 		<execute macro="User#assignOrgRoleCP">
-			<var name="roleName" value="Canada Orgrole" />
+			<var name="roleTitle" value="Canada Orgrole" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#assignOrgRoleCP">
-			<var name="roleName" value="United States Orgrole" />
+			<var name="roleTitle" value="United States Orgrole" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 

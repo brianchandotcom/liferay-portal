@@ -789,7 +789,7 @@
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="INLINE_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="Guest" />
+			<var name="roleTitle" value="Guest" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1016,16 +1016,16 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<for list="Power User,User" param="roleName">
+		<for list="Power User,User" param="roleTitle">
 			<execute macro="PermissionsInline#viewPermissionsRemoved">
 				<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-				<var name="roleName" value="${roleName}" />
+				<var name="roleTitle" value="${roleTitle}" />
 			</execute>
 		</for>
 
 		<execute macro="PermissionsInline#viewPermissionsChecked">
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="Owner" />
+			<var name="roleTitle" value="Owner" />
 		</execute>
 	</command>
 
@@ -1284,7 +1284,7 @@
 		<for list="INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX" param="permissionDefinitionKey" >
 			<execute macro="Role#definePermissionPG">
 				<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="roleName" value="User" />
+				<var name="roleTitle" value="User" />
 			</execute>
 		</for>
 

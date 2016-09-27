@@ -90,7 +90,7 @@
 <!--ROLES_REGULAR_ROLES-->
 <tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

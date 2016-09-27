@@ -593,7 +593,7 @@
 	</command>
 
 	<command name="removeViewPermissionsPG">
-		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
+		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="Click" locator1="MessageBoards#THREAD_LIST_ACTIONS" />

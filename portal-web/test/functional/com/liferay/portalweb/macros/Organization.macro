@@ -341,8 +341,8 @@
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_ORGANIZATION_ROLES" value1="Assign Organization Roles" />
 
 		<execute function="SelectFrame" locator1="//iframe[contains(@class,'dialog-iframe-node')]" />
-		<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
-		<execute function="Click" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
+		<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/a" value1="${roleTitle}" />
+		<execute function="Click" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/a" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignOrganizationalRoles#AVAILABLE_TAB" value1="Available" />
 		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />

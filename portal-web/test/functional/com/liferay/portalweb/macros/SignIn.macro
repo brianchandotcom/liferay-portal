@@ -179,18 +179,6 @@
 
 		<execute macro="SignIn#signIn" />
 
-		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
-
-		<if>
-			<or>
-				<equals arg1="${browserType}" arg2="edge" />
-				<equals arg1="${browserType}" arg2="internetexplorer" />
-			</or>
-			<then>
-				<execute function="Open" locator1="/web/guest/home" />
-			</then>
-		</if>
-
 		<if>
 			<condition function="IsElementPresent" locator1="Button#I_AGREE" />
 			<then>

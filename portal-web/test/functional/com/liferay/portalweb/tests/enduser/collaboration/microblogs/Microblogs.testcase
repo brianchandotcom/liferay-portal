@@ -39,7 +39,7 @@
 	</tear-down>
 
 	<command name="AddEntry" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Microblogs#updateStatus">
 			<var name="entryContent" value="Microblog Entry Content" />
@@ -54,7 +54,7 @@
 	</command>
 
 	<command name="DeleteEntry" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Microblogs#updateStatus">
 			<var name="entryContent" value="Microblog Entry Content" />
@@ -72,7 +72,7 @@
 	</command>
 
 	<command name="EditEntry" priority="5">
-		<property name="portal.acceptance" value="quarantine" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Microblogs#updateStatus">
 			<var name="entryContent" value="Microblog Entry Content" />

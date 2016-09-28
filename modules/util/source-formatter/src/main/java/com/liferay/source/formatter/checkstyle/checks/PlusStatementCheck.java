@@ -64,8 +64,7 @@ public class PlusStatementCheck extends AbstractCheck {
 		if ((c2 == CharPool.SPACE) ||
 			((c1 != CharPool.SPACE) &&
 			 ((c2 == CharPool.COLON) || (c2 == CharPool.DASH) ||
-			  (c2 == CharPool.PERIOD) || (c2 == CharPool.SEMICOLON) ||
-			  (c2 == CharPool.UNDERLINE)))) {
+			  (c2 == CharPool.PERIOD) || (c2 == CharPool.SEMICOLON)))) {
 
 			log(detailAST.getLineNo() + 1, MSG_INVALID_START_CHARACTER, c2);
 		}

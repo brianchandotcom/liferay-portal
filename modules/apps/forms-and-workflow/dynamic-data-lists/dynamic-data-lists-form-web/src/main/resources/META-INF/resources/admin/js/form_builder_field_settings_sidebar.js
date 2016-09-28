@@ -7,6 +7,8 @@ AUI.add(
 
 		var TPL_NAVBAR_WRAPER = '<nav class="navbar navbar-default navbar-no-collapse"></nav>';
 
+		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
+
 		var FormBuilderFieldsSettingsSidebar = A.Component.create(
 			{
 				ATTRS: {
@@ -133,8 +135,10 @@ AUI.add(
 
 						instance._showLoading();
 
-						instance.set('description', field.get('type'));
-						instance.set('title', field.get('context').label);
+						var fieldType = FieldTypes.get(field.get('type'));
+
+						instance.set('description', fieldType.get('label'));
+						instance.set('title', field.get('context.label'));
 
 						instance._loadFieldSettingsForm(field);
 
@@ -279,6 +283,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-tabview', 'liferay-ddl-form-builder-sidebar']
+		requires: ['aui-tabview', 'liferay-ddl-form-builder-sidebar', 'liferay-ddm-form-renderer-types']
 	}
 );

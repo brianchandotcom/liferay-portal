@@ -247,6 +247,14 @@ argument in the `npmInstall` task by setting the project property
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.23.
 
+## 2.0.45 - 2016-09-28
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.24.
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.288.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

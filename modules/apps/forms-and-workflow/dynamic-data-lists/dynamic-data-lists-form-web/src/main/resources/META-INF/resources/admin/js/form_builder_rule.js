@@ -113,9 +113,7 @@ AUI.add(
 							};
 						}
 
-						if (rule.conditions[0]) {
-							instance.set('logicOperator', rule.conditions[0]['logic-operator']);
-						}
+						instance.set('logicOperator', rule['logical-operator']);
 
 						contentBox.setHTML(instance._getRuleContainerTemplate(rule));
 
@@ -413,7 +411,8 @@ AUI.add(
 							ddl.rule.condition(
 								{
 									deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
-									index: index
+									index: index,
+									logicOperator: instance.get('logicOperator')
 								}
 							)
 						);
@@ -507,7 +506,11 @@ AUI.add(
 					_handleLogicOperatorChange: function(event) {
 						var instance = this;
 
+						event.preventDefault();
+
 						instance.set('logicOperator', event.currentTarget.get('text'));
+
+						A.one('.dropdown-toggle-operator .dropdown-toggle-selected-value').setHTML(event.currentTarget.get('text'));
 					},
 
 					_handleSaveClick: function() {

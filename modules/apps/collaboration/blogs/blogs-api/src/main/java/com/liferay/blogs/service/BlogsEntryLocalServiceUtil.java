@@ -170,6 +170,11 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().fetchBlogsEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.blogs.kernel.model.BlogsEntry fetchEntry(
+		long groupId, java.lang.String urlTitle) {
+		return getService().fetchEntry(groupId, urlTitle);
+	}
+
 	public static com.liferay.blogs.kernel.model.BlogsEntry getBlogsEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

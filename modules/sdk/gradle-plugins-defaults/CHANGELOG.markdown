@@ -316,9 +316,22 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.45.
 
+## 1.2.36 - 2016-09-28
+
+### Added
+- [LPS-66396]: By setting the following system properties to `true`, it is now
+possible to exclude specific project types from the build:
+	- `build.exclude.ant.plugin` to exclude all the projects that contain a `build.xml` file from the build
+	- `build.exclude.module` to exclude all the projects that contain a `bnd.bnd` file from the build
+	- `build.exclude.theme` to exclude all the project that contain a `gulpfile.js` file from the build
+
+### Removed
+- [LPS-66396]: The `modules.only.build` system property is no longer available.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

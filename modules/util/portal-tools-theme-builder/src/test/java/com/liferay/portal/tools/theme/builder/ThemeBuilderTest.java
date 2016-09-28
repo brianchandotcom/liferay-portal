@@ -70,7 +70,7 @@ public class ThemeBuilderTest {
 	public void testThemeBuilderStyled() throws IOException {
 		ThemeBuilder themeBuilder = new ThemeBuilder(
 			_diffsDir, _NAME, temporaryFolder.getRoot(), _styledJarFile,
-			"_styled", "ftl", _unstyledJarFile);
+			ThemeBuilder.STYLED, "ftl", _unstyledJarFile);
 
 		themeBuilder.build();
 
@@ -84,8 +84,8 @@ public class ThemeBuilderTest {
 	@Test
 	public void testThemeBuilderUnstyled() throws IOException {
 		ThemeBuilder themeBuilder = new ThemeBuilder(
-			_diffsDir, _NAME, temporaryFolder.getRoot(), null, "_unstyled",
-			"vm", _unstyledJarFile);
+			_diffsDir, _NAME, temporaryFolder.getRoot(), null,
+			ThemeBuilder.UNSTYLED, "vm", _unstyledJarFile);
 
 		themeBuilder.build();
 

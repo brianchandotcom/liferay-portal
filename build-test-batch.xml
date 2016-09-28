@@ -840,7 +840,6 @@ app.server.type=@{app.server.type}]]></echo>
 								<arg value="--tests" />
 								<arg value="*.LPKGOverrideTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg value="-Dmodules.only.build=true" />
 							</gradle-execute>
 
 							<trycatch>
@@ -851,7 +850,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGOverrideVerifyTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
 
@@ -875,7 +873,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="--tests" />
 										<arg value="*.LPKGOverrideVerifyTest" />
 										<arg value="-Dlpkg.clean.startup=true" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
 								<finally>
@@ -901,7 +898,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGRevertOverrideVerifyTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
 
@@ -943,7 +939,6 @@ app.server.type=@{app.server.type}]]></echo>
 								<arg value="--tests" />
 								<arg value="*.LPKGPersistenceTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg value="-Dmodules.only.build=true" />
 							</gradle-execute>
 
 							<trycatch>
@@ -954,7 +949,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGPersistenceStopBundleTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
 
@@ -977,7 +971,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGPersistenceVerifyTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 								</try>
 								<finally>
@@ -1062,7 +1055,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGDeployerTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
@@ -1112,7 +1104,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="--tests" />
 										<arg value="*.LPKGDeployerTest" />
 										<arg value="-Dbefore.lpkg.upgrade=true" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
@@ -1136,7 +1127,6 @@ app.server.type=@{app.server.type}]]></echo>
 								<arg value="--tests" />
 								<arg value="*.LPKGUpgradeTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg value="-Dmodules.only.build=true" />
 							</gradle-execute>
 
 							<trycatch>
@@ -1147,7 +1137,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGDeployerTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
@@ -1155,7 +1144,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="--tests" />
 										<arg value="*.LPKGVersionChangeLogAssertorTest" />
 										<arg value="-Dliferay.home=${liferay.home}" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
@@ -1179,7 +1167,6 @@ app.server.type=@{app.server.type}]]></echo>
 								<arg value="--tests" />
 								<arg value="*.LPKGDowngradeTest" />
 								<arg value="-Dliferay.home=${liferay.home}" />
-								<arg value="-Dmodules.only.build=true" />
 							</gradle-execute>
 
 							<trycatch>
@@ -1190,7 +1177,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="testIntegration" />
 										<arg value="--tests" />
 										<arg value="*.LPKGDeployerTest" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
@@ -1198,7 +1184,6 @@ app.server.type=@{app.server.type}]]></echo>
 										<arg value="--tests" />
 										<arg value="*.LPKGVersionChangeLogAssertorTest" />
 										<arg value="-Dliferay.home=${liferay.home}" />
-										<arg value="-Dmodules.only.build=true" />
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">

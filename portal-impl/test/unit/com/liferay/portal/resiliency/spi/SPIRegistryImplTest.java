@@ -318,8 +318,8 @@ public class SPIRegistryImplTest {
 		}
 
 		@Around(
-			"execution(public static com.liferay.portal.kernel.model.Portlet" +
-				" com.liferay.portal.kernel.service.PortletLocalServiceUtil." +
+			"execution(public static com.liferay.portal.kernel.model.Portlet " +
+				"com.liferay.portal.kernel.service.PortletLocalServiceUtil." +
 					"getPortletById(String)) && args(portletId)"
 		)
 		public Portlet getPortletById(String portletId) {

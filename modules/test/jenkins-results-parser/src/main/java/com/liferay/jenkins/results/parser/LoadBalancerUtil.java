@@ -120,7 +120,7 @@ public class LoadBalancerUtil {
 					if (retryCount == 3) {
 						throw new RuntimeException(
 							"Retry limit exceeded. Unable to communicate " +
-								" with masters.");
+								"with masters.");
 					}
 
 					retryCount++;

@@ -1152,8 +1152,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMStructure set definition = ? where structureId" +
-						" = ?");
+					"update DDMStructure set definition = ? where " +
+						"structureId = ?");
 			PreparedStatement ps3 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection, sb1.toString());

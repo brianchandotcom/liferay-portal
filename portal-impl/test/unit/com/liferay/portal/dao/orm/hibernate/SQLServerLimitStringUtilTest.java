@@ -25,8 +25,8 @@ public class SQLServerLimitStringUtilTest {
 	@Test
 	public void testInnerOrderBy() throws Exception {
 		String sql = SQLServerLimitStringUtil.getLimitString(
-			"SELECT articleId, userName FROM JournalArticle" +
-				" ORDER BY modifiedDate ASC",
+			"SELECT articleId, userName FROM JournalArticle ORDER BY " +
+				"modifiedDate ASC",
 			10, 30);
 
 		Assert.assertTrue(sql.indexOf("30") > 0);
@@ -37,8 +37,8 @@ public class SQLServerLimitStringUtilTest {
 	@Test
 	public void testNoInnerOrderBy() throws Exception {
 		String sql = SQLServerLimitStringUtil.getLimitString(
-			"SELECT articleId, userName FROM JournalArticle" +
-				" ORDER BY userName ASC",
+			"SELECT articleId, userName FROM JournalArticle ORDER BY " +
+				"userName ASC",
 			10, 30);
 
 		Assert.assertTrue(sql.indexOf("30") > 0);
@@ -49,8 +49,8 @@ public class SQLServerLimitStringUtilTest {
 	@Test
 	public void testUnionWithFieldsQuery() throws Exception {
 		String sql = SQLServerLimitStringUtil.getLimitString(
-			"( SELECT articleId, userName FROM JournalArticle )" +
-				" UNION ALL ( SELECT articleId, userName FROM JournalArticle )",
+			"( SELECT articleId, userName FROM JournalArticle ) UNION ALL ( " +
+				"SELECT articleId, userName FROM JournalArticle )",
 			10, 30);
 
 		Assert.assertTrue(sql.indexOf("30") > 0);

@@ -38,8 +38,8 @@ public class UpgradePortletDisplayTemplatePreferences
 		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select templateKey from DDMTemplate where groupId = ?" +
-					" and uuid_ = ?")) {
+				"select templateKey from DDMTemplate where groupId = ? and " +
+					"uuid_ = ?")) {
 
 			ps.setLong(1, displayStyleGroupId);
 			ps.setString(2, uuid);

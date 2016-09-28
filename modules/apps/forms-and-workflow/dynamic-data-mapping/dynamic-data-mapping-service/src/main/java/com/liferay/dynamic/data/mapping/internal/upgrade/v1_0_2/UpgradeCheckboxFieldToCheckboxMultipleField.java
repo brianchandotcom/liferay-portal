@@ -73,8 +73,8 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update DDMStructure set definition = ? " +
-						" where structureId = ?")) {
+					"update DDMStructure set definition = ? where " +
+						"structureId = ?")) {
 
 			ps1.setInt(1, _SCOPE_FORMS);
 			ps1.setString(2, "%checkbox%");

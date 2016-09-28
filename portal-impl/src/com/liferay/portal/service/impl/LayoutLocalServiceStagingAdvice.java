@@ -134,6 +134,10 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		boolean showIncomplete = false;
 
+		if (methodName.equals("getNoPermissionLayouts")) {
+			return methodInvocation.proceed();
+		}
+
 		if (!_layoutLocalServiceStagingAdviceMethodNames.contains(methodName)) {
 			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
 		}

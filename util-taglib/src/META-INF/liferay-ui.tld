@@ -5545,6 +5545,7 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>webdav</name>
 		<tag-class>com.liferay.taglib.ui.WebDAVTag</tag-class>
 		<body-content>JSP</body-content>

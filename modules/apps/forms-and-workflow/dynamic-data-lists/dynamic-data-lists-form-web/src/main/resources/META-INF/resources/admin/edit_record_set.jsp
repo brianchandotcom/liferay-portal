@@ -35,11 +35,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 <div class="loading-animation" id="<portlet:namespace />loader"></div>
 
-<portlet:actionURL name="addRecordSet" var="addRecordSetURL">
-	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
-</portlet:actionURL>
-
-<portlet:actionURL name="updateRecordSet" var="updateRecordSetURL">
+<portlet:actionURL name="saveRecordSet" var="saveRecordSetURL">
 	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
 </portlet:actionURL>
 
@@ -51,7 +47,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		</aui:nav>
 	</aui:nav-bar>
 
-	<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
+	<aui:form action="<%= saveRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

@@ -31,11 +31,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-		"mvc.command.name=addRecordSet"
+		"mvc.command.name=saveRecordSet"
 	},
 	service = MVCActionCommand.class
 )
-public class AddRecordSetMVCActionCommand
+public class SaveRecordSetMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
 	@Override
@@ -43,7 +43,7 @@ public class AddRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		addUpdateRecordSetMVCCommandHelper.addRecordSet(
+		addUpdateRecordSetMVCCommandHelper.saveRecordSet(
 			actionRequest, actionResponse);
 	}
 

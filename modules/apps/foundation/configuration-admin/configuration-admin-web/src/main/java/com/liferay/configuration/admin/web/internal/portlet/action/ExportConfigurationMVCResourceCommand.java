@@ -291,19 +291,9 @@ public class ExportConfigurationMVCResourceCommand
 			String languageId, String factoryPid, String pid)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("##\n## To apply the configuration, place this file in the ");
-		sb.append("Liferay installation's osgi/modules folder. Make sure it ");
-		sb.append("is named ");
-		sb.append(getFileName(factoryPid, pid));
-		sb.append(".\n##\n\n");
-
 		Properties properties = getProperties(languageId, factoryPid, pid);
-
-		sb.append(PropertiesUtil.toString(properties));
-
-		String propertiesString = sb.toString();
+		
+		String propertiesString = PropertiesUtil.toString(properties);
 
 		return propertiesString.getBytes();
 	}

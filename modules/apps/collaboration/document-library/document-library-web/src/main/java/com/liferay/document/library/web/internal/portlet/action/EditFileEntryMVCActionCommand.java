@@ -616,8 +616,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else if (e instanceof DuplicateFileEntryException) {
 			errorMessage = themeDisplay.translate(
-				"the-folder-you-selected-already-has-an-entry-with-this-name." +
-					"-please-select-a-different-folder");
+				"the-folder-you-selected-already-has-an-entry-with-this-" +
+					"name.-please-select-a-different-folder");
 		}
 		else if (e instanceof FileExtensionException) {
 			errorMessage = themeDisplay.translate(
@@ -814,8 +814,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					}
 
 					errorMessage = themeDisplay.translate(
-						"please-enter-a-file-with-a-valid-file-size-no-larger" +
-							"-than-x",
+						"please-enter-a-file-with-a-valid-file-size-no-" +
+							"larger-than-x",
 						TextFormatter.formatStorageSize(
 							fileMaxSize, themeDisplay.getLocale()));
 

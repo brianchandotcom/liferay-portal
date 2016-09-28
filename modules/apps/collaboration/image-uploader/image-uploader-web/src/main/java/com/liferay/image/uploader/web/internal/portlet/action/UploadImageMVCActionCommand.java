@@ -240,8 +240,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 					}
 
 					errorMessage = themeDisplay.translate(
-						"please-enter-a-file-with-a-valid-file-size-no" +
-							"-larger-than-x",
+						"please-enter-a-file-with-a-valid-file-size-no-" +
+							"larger-than-x",
 						TextFormatter.formatStorageSize(
 							maxFileSize, themeDisplay.getLocale()));
 				}
@@ -253,8 +253,8 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						 e instanceof UploadException) {
 
 					errorMessage = themeDisplay.translate(
-						"an-unexpected-error-occurred-while-uploading" +
-							"-your-file");
+						"an-unexpected-error-occurred-while-uploading-" +
+							"your-file");
 				}
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();

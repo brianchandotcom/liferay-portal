@@ -428,11 +428,11 @@ AUI.add(
 						var index = event.currentTarget.getData('card-id');
 
 						if (instance._actionsIndexes.length > 1) {
-							instance._actions[index + '-action-do'].destroy();
-							instance._actions[index + '-action-the'].destroy();
+							instance._actions[index + '-action'].destroy();
+							instance._actions[index + '-target'].destroy();
 
-							delete instance._actions[index + '-action-do'];
-							delete instance._actions[index + '-action-the'];
+							delete instance._actions[index + '-action'];
+							delete instance._actions[index + '-target'];
 
 							instance.get('boundingBox').one('.form-builder-rule-action-container-' + index).remove(true);
 

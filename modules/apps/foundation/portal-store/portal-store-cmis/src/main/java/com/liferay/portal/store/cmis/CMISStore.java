@@ -511,7 +511,7 @@ public class CMISStore extends BaseStore {
 
 		ObjectId objectId = _session.createFolder(properties, parentFolderId);
 
-		return (Folder) _session.getObject(objectId);
+		return (Folder)_session.getObject(objectId);
 	}
 
 	protected OperationContextImpl createOperationContext() {

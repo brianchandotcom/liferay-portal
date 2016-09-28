@@ -154,7 +154,7 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 	public void testWriteWithRanges() throws IOException {
 		byte[] content = new byte[1000];
 
-		Arrays.fill(content, (byte) 48);
+		Arrays.fill(content, (byte)48);
 
 		testWriteWith(new ByteArrayInputStream(content), content);
 

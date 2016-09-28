@@ -57,7 +57,7 @@ public class SequentialUUID {
 		int index = digits;
 
 		do {
-			buffer[--index] = _HEX_DIGITS[(int) (number & 15)];
+			buffer[--index] = _HEX_DIGITS[(int)(number & 15)];
 
 			number >>>= 4;
 		}

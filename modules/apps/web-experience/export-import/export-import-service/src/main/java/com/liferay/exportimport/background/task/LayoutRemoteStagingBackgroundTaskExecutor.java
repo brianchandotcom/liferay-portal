@@ -285,7 +285,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 		String numberFormat = String.format(
 			"%%0%dd",
-			String.valueOf((int) (file.length() / bytes.length)).length() + 1);
+			String.valueOf((int)(file.length() / bytes.length)).length() + 1);
 
 		FileInputStream fileInputStream = null;
 

@@ -140,7 +140,7 @@ public class Base64 {
 		for (int i = 0; i <= end; i++) {
 			byte b = raw[offset + i];
 
-			int neuter = b >= 0 ? ((int) (b)) : b + 256;
+			int neuter = b >= 0 ? ((int)(b)) : b + 256;
 
 			block += neuter << 8 * (2 - i);
 		}

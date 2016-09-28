@@ -59,11 +59,11 @@ public class GeoLocationPoint {
 	public int hashCode() {
 		long value = Double.doubleToLongBits(_latitude);
 
-		int hashCode = (int) (value ^ (value >>> 32));
+		int hashCode = (int)(value ^ (value >>> 32));
 
 		value = Double.doubleToLongBits(_longitude);
 
-		hashCode = 31 * hashCode + (int) (value ^ (value >>> 32));
+		hashCode = 31 * hashCode + (int)(value ^ (value >>> 32));
 
 		return hashCode;
 	}

@@ -378,7 +378,7 @@ public class ClassUtil {
 		st.wordChars(')', ')');
 		st.wordChars('{', '{');
 		st.wordChars('}', '}');
-		st.wordChars(',',',');
+		st.wordChars(',', ',');
 	}
 
 	private static final Pattern _ANNOTATION_NAME_REGEXP = Pattern.compile(

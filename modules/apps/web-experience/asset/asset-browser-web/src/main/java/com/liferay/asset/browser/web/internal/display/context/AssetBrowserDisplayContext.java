@@ -67,7 +67,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public String getAddButtonLabel() {
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
@@ -83,7 +83,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public String getAddButtonURL() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long groupId = getGroupId();
@@ -127,7 +127,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public AssetBrowserSearch getAssetBrowserSearch() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		AssetBrowserSearch assetBrowserSearch = new AssetBrowserSearch(
@@ -260,7 +260,7 @@ public class AssetBrowserDisplayContext {
 	public List<ManagementBarFilterItem> getManagementBarFilterItem()
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		List<ManagementBarFilterItem> managementBarFilterItems =
@@ -310,7 +310,7 @@ public class AssetBrowserDisplayContext {
 			return LanguageUtil.get(_request, "all");
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
@@ -394,7 +394,7 @@ public class AssetBrowserDisplayContext {
 	}
 
 	public int getTotal(long[] groupIds) {
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();

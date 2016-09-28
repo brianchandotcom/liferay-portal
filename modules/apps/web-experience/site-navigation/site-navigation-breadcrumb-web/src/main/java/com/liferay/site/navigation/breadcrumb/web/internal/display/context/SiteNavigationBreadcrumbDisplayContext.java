@@ -93,7 +93,7 @@ public class SiteNavigationBreadcrumbDisplayContext {
 				displayStyleGroupId());
 
 		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
 			_displayStyleGroupId = themeDisplay.getSiteGroupId();

@@ -95,7 +95,7 @@ public class StripDoctypeFilter {
 			int bufferLength = _bufferLength;
 
 			for (int i = 0; i < bufferLength; i++) {
-				bytes[offset++] = (byte) (readFromBuffer() & 0xFF);
+				bytes[offset++] = (byte)(readFromBuffer() & 0xFF);
 			}
 
 			return _inputStream.read(bytes, offset, length - bufferLength) +
@@ -115,7 +115,7 @@ public class StripDoctypeFilter {
 				return read;
 			}
 
-			bytes[offset + read] = (byte) (c & 0xFF);
+			bytes[offset + read] = (byte)(c & 0xFF);
 		}
 
 		return read;

@@ -270,7 +270,7 @@
 
 		<execute macro="ServerAdministration#configureExternalServices">
 			<var name="installXuggler" value="true" />
-			<var name="xugglerJarFile" value="Linux 64-bit JVM (with GNU libc v6) (xuggle-xuggler-arch-x86_64-pc-linux-gnu.jar)" />
+			<var name="xugglerJarFile" value="Linux 32-bit JVM (with GNU libc v6) (xuggle-xuggler-arch-i686-pc-linux-gnu.jar)" />
 		</execute>
 
 		<execute macro="Portlet#shutdownServer" />

@@ -391,6 +391,8 @@ AUI.add(
 							instance._mainOption = repetitions[index + 1];
 						}
 
+						A.DD.DDM.getDrag(option.get('container')).destroy();
+
 						option.remove();
 
 						instance.fire('removeOption');

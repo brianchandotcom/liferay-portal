@@ -134,6 +134,11 @@ public class FriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public void deleteGroupFriendlyURLs(long groupId, long classNameId) {
+		friendlyURLPersistence.removeByG_C(groupId, classNameId);
+	}
+
+	@Override
 	public FriendlyURL fetchFriendlyURL(
 			long companyId, long groupId, Class<?> clazz, String urlTitle)
 		throws PortalException {
@@ -141,6 +146,14 @@ public class FriendlyURLLocalServiceImpl
 		return friendlyURLPersistence.fetchByC_G_C_U(
 			companyId, groupId, classNameLocalService.getClassNameId(clazz),
 			urlTitle);
+	}
+
+	@Override
+	public List<FriendlyURL> getFriendlyURLs(
+		long companyId, long groupId, long classNameId, long classPK) {
+
+		return friendlyURLPersistence.findByC_G_C_C(
+			companyId, groupId, classNameId, classPK);
 	}
 
 	@Override

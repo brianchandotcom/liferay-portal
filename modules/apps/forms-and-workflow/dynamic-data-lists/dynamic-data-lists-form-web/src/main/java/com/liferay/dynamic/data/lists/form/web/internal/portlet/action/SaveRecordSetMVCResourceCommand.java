@@ -64,6 +64,7 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 			DDLRecordSet recordSet = saveRecordSetInTransaction(
 				resourceRequest, resourceResponse);
 
+			response.put("ddmStructureId", recordSet.getDDMStructureId());
 			response.put("recordSetId", recordSet.getRecordSetId());
 		}
 		catch (Throwable t) {

@@ -14,12 +14,12 @@
 
 package com.liferay.gradle.plugins.workspace;
 
-import com.liferay.gradle.plugins.workspace.configurators.ModulesProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.PluginsProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.ProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.RootProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.configurators.ThemesProjectConfigurator;
-import com.liferay.gradle.plugins.workspace.util.GradleUtil;
+import com.liferay.gradle.plugins.workspace.internal.configurators.ModulesProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.PluginsProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.RootProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.ThemesProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.configurators.WarsProjectConfigurator;
+import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.lang.MissingPropertyException;
 
@@ -29,6 +29,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.gradle.api.Plugin;
+import org.gradle.api.Project;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.invocation.Gradle;
 
@@ -44,6 +46,7 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ModulesProjectConfigurator(settings));
 		_projectConfigurators.add(new PluginsProjectConfigurator(settings));
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
+		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
 		_bundleUrl = GradleUtil.getProperty(
 			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.url",
@@ -78,7 +81,7 @@ public class WorkspaceExtension {
 		return Collections.unmodifiableSet(_projectConfigurators);
 	}
 
-	public RootProjectConfigurator getRootProjectConfigurator() {
+	public Plugin<Project> getRootProjectConfigurator() {
 		return _rootProjectConfigurator;
 	}
 
@@ -125,7 +128,7 @@ public class WorkspaceExtension {
 	private Object _homeDir;
 	private final Set<ProjectConfigurator> _projectConfigurators =
 		new HashSet<>();
-	private final RootProjectConfigurator _rootProjectConfigurator =
+	private final Plugin<Project> _rootProjectConfigurator =
 		new RootProjectConfigurator();
 
 }

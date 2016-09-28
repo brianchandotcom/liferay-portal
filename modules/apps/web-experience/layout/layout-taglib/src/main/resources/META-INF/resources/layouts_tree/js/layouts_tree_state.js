@@ -346,7 +346,7 @@ AUI.add(
 						var children = node.get('children');
 
 						if (children.length) {
-							var childrenChecked = (force) ? undefined : checked;
+							var childrenChecked = (forceChildrenState) ? undefined : checked;
 
 							A.each(
 								children,

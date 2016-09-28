@@ -1243,7 +1243,6 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules" task="testIntegration">
 										<arg value="-Ddatabase.type=@{database.type}" />
 										<arg value="-Dbuild.exclude.ant.plugin=true" />
-										<arg value="-Dbuild.exclude.theme=true" />
 										<arg value="-Dtest.class.group.index=${axis.variable}" />
 									</gradle-execute>
 								</then>
@@ -1257,7 +1256,6 @@ app.server.type=@{app.server.type}]]></echo>
 											<gradle-execute dir="${module.base.dir}" task="testIntegration">
 												<arg value="-Ddatabase.type=@{database.type}" />
 												<arg value="-Dbuild.exclude.ant.plugin=true" />
-												<arg value="-Dbuild.exclude.theme=true" />
 											</gradle-execute>
 										</try>
 										<catch>
@@ -1333,7 +1331,6 @@ app.server.type=@{app.server.type}]]></echo>
 
 				<gradle-execute dir="modules" task="compileJSP">
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg value="-Dbuild.exclude.theme=true" />
 				</gradle-execute>
 			</test-action>
 
@@ -1638,7 +1635,6 @@ app.server.type=@{app.server.type}]]></echo>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
 					<arg value="-Dbuild.exclude.ant.plugin=true" />
-					<arg value="-Dbuild.exclude.theme=true" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>
 			</test-action>
@@ -1870,7 +1866,6 @@ ${output.content}</echo>
 
 		<gradle-execute dir="modules" task="buildCSS">
 			<arg value="-Dbuild.exclude.ant.plugin=true" />
-			<arg value="-Dbuild.exclude.theme=true" />
 		</gradle-execute>
 
 		<record action="stop" name="${project.dir}/sass-compiler-log" />

@@ -221,6 +221,7 @@
 		<var name="startDateTime" value="12:00 AM" />
 
 		<execute function="Check" locator1="CalendarEditEvent#ALL_DAY_CHECKBOX" />
+
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#START_DATE_TIME" />
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="CalendarEditEvent#END_DATE_TIME" />
 
@@ -674,12 +675,18 @@
 					<var name="endDate" value="${startDate}" />
 
 					<execute function="Type" locator1="CalendarEditEvent#END_DATE" value1="${endDate}" />
+
 					<execute function="Check" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
+
 					<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEATS_DROPDOWN" value1="Daily" />
 					<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEAT_EVERY_DROPDOWN" value1="1" />
+
 					<execute function="Click" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_RADIO" />
+
 					<execute function="Type" locator1="CalendarEditEvent#REPEAT_ENDS_AFTER_FIELD" value1="1" />
+
 					<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
+
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="Daily, 1 Times" />
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
 
@@ -855,10 +862,12 @@
 			<equals arg1="${soPage}" arg2="true" />
 			<then>
 				<execute function="AssertClickNoError" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete the selected comment?" />
 			</then>
 			<else>
 				<execute function="AssertClickNoError" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</else>
 		</if>
@@ -892,7 +901,9 @@
 		</if>
 
 		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
+
 		<execute function="Pause" value1="1000" />
+
 		<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 		<if>
@@ -940,6 +951,7 @@
 		</execute>
 
 		<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+
 		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
@@ -961,6 +973,7 @@
 		</execute>
 
 		<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+
 		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
@@ -1008,7 +1021,9 @@
 				<var locator="CalendarEditEvent#START_DATE" name="startDate" />
 
 				<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
+
 				<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 				<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
 
@@ -1026,7 +1041,9 @@
 				<equals arg1="${eventType}" arg2="Regular" />
 				<then>
 					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
+
 					<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
@@ -1036,9 +1053,13 @@
 					<var locator="CalendarEditEvent#START_DATE" name="startDate" />
 
 					<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
+
 					<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
+
 					<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
+
 					<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
+
 					<execute function="Pause" value1="1000" />
 
 					<if>
@@ -1056,7 +1077,9 @@
 				<equals arg1="${eventType}" arg2="Repeating" />
 				<then>
 					<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
+
 					<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
 					<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
@@ -1066,10 +1089,15 @@
 					<var locator="CalendarEditEvent#START_DATE" name="startDate" />
 
 					<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
+
 					<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
+
 					<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
+
 					<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
+
 					<execute function="Pause" value1="1000" />
+
 					<execute function="AssertChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="Daily, 1 Times" />
 
@@ -1143,12 +1171,15 @@
 		<var name="key_eventComment" value="${eventComment}" />
 
 		<execute function="AssertClick" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_EDIT" value1="Edit" />
+
 		<execute function="Type" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_EDIT_BODY_FIELD" value1="${eventCommentEdit}" />
+
 		<execute function="AssertClick" locator1="CalendarViewEventDetails#COMMENTS_COMMENT_EDIT_PUBLISH_BUTTON" value1="Publish" />
 
 		<var name="key_eventComment" value="${eventCommentEdit}" />
 
 		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventCommentEdit}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1192,8 +1223,11 @@
 		<execute function="AssertClick" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
 		<execute function="SelectFrame" locator1="CalendarEditEvent#EDIT_EVENT_IFRAME" />
+
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${eventTitle}" />
+
 		<execute function="Type" locator1="TextInput#TITLE" value1="${eventTitleEdit}" />
+
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE" />
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#START_DATE_TIME" />
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#END_DATE" />
@@ -1203,9 +1237,13 @@
 		<var locator="CalendarEditEvent#START_DATE" name="startDate" />
 
 		<execute function="Type" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
+
 		<execute function="Click" locator1="CalendarEditEvent#START_DATE_TIME" />
+
 		<execute function="Type" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />
+
 		<execute function="Click" locator1="CalendarEditEvent#END_DATE_TIME" />
+
 		<execute function="Pause" value1="1000" />
 
 		<execute macro="CalendarEvent#publish" />
@@ -1335,6 +1373,7 @@
 
 	<command name="selectRepeatFrequency">
 		<execute function="Select" locator1="CalendarEditEvent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
+
 		<execute function="AssertSelectedLabel" locator1="CalendarEditEvent#REPEAT_REPEATS_DROPDOWN" value1="${frequency}" />
 	</command>
 
@@ -1433,7 +1472,9 @@
 		</if>
 
 		<execute function="Pause" value1="1000" />
+
 		<execute function="Click" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" />
+
 		<execute function="Pause" value1="1000" />
 
 		<if>
@@ -1553,7 +1594,9 @@
 					<var name="key_tagText" value="${tagText}" />
 
 					<execute function="Type#typePause" locator1="CalendarEditEvent#CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
+
 					<execute function="AssertClick" locator1="CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
+
 					<execute function="AssertTextEquals" locator1="CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
 				</for>
 			</then>
@@ -1561,7 +1604,9 @@
 				<var name="key_tagText" value="${tagText}" />
 
 				<execute function="Type#typePause" locator1="CalendarEditEvent#CATEGORIZATION_TAG_FIELD" value1="${tagText}" />
+
 				<execute function="AssertClick" locator1="CalendarEditEvent#CATEGORIZATION_ADD_TAGS_BUTTON" value1="Add" />
+
 				<execute function="AssertTextEquals" locator1="CalendarEditEvent#CATEGORIZATION_TAG_SPECIFIC" value1="${tagText}" />
 			</else>
 		</if>

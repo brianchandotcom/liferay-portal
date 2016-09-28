@@ -249,7 +249,7 @@ AUI.add(
 						if (node.get('checked')) {
 							instance._updateCheckedNodes(
 								{
-									node: node, 
+									node: node,
 									checked: true,
 									forceChildrenState: true
 								}

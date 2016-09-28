@@ -38,7 +38,24 @@ public class BuildFactory {
 			}
 		}
 
-		return new TopLevelBuild(url, (TopLevelBuild)parentBuild);
+		TopLevelBuild topLevelBuild = new TopLevelBuild(
+			url, (TopLevelBuild)parentBuild);
+
+		String jobName = topLevelBuild.getJobName();
+
+		if (jobName.equals("test-portal-acceptance-pullrequest(ee-6.2.x)")) {
+			String jenkinsJobVariant = topLevelBuild.getParameterValue(
+				"JENKINS_JOB_VARIANT");
+
+			if ((jenkinsJobVariant != null) &&
+				jenkinsJobVariant.equals("rebase-error")) {
+
+				return new RebaseErrorTopLevelBuild(
+					url, (TopLevelBuild)parentBuild);
+			}
+		}
+
+		return topLevelBuild;
 	}
 
 	private static final String[] _BATCH_INDICATORS = {"-batch", "-dist"};

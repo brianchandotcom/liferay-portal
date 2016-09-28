@@ -364,8 +364,8 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
+			<var name="assetType" value="Page" />
 			<var name="required" value="true" />
-			<var name="vocabularyAssociatedAssetTypeList" value="Page" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 

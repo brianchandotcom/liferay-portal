@@ -2,10 +2,16 @@ import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 task copyTestLibs(type: Copy)
 
+configurations {
+	testLibs {
+		extendsFrom provided
+	}
+}
+
 copyTestLibs {
-	from configurations.provided
+	from configurations.testLibs
 	into "test-lib"
-	rename new RenameDependencyClosure(project, configurations.provided.name)
+	rename new RenameDependencyClosure(project, configurations.testLibs.name)
 }
 
 dependencies {
@@ -18,6 +24,8 @@ dependencies {
 	testCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "5.4.0"
 	testCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
 	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
+
+	testLibs "org.jboss.arquillian.osgi:arquillian-osgi-bundle:2.1.0.Final"
 }
 
 liferay {

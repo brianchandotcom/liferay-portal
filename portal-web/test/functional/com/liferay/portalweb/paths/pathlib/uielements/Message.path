@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENERIC</td>
+	<td>//div[contains(@class,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO</td>
 	<td>//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
 	<td></td>

@@ -284,8 +284,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 	@Test
 	public void testGetExcerptWhenAnchorHasParent() throws Exception {
 		whenHttpURLToString(
-			"<body><p>Visit <a href='http://" + _TARGET_URI + "'>Liferay</a>" +
-				" to learn more</p></body>");
+			"<body><p>Visit <a href='http://" + _TARGET_URI + "'>Liferay</a> " +
+				"to learn more</p></body>");
 
 		execute();
 

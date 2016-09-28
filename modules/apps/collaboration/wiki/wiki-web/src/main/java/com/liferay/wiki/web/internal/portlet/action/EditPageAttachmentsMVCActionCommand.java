@@ -309,8 +309,8 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 					}
 
 					errorMessage = themeDisplay.translate(
-						"please-enter-a-file-with-a-valid-file-size-no-larger" +
-							"-than-x",
+						"please-enter-a-file-with-a-valid-file-size-no-" +
+							"larger-than-x",
 						TextFormatter.formatStorageSize(
 							fileMaxSize, themeDisplay.getLocale()));
 

@@ -58,8 +58,8 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"update ResourcePermission set name = ? where name = ?");
 			PreparedStatement ps1 = connection.prepareStatement(
-				"update ResourcePermission set primKey = ? where primKey =" +
-					" ?")) {
+				"update ResourcePermission set primKey = ? where primKey = " +
+					"?")) {
 
 			ps.setString(1, newCompositeModelName);
 			ps.setString(2, oldCompositeModelName);

@@ -308,8 +308,8 @@ public class MediaWikiToCreoleTranslatorTest {
 
 		String expected =
 			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"previous line\n{{{{\nmonospace\n''second'' line\n}}}}\nnext" +
-					" line";
+				"previous line\n{{{{\nmonospace\n''second'' line\n}}}}\nnext " +
+					"line";
 
 		String actual = _mediaWikiToCreoleTranslator.translate(content);
 

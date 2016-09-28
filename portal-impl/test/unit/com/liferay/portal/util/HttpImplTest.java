@@ -238,8 +238,8 @@ public class HttpImplTest extends PowerMockito {
 		Assert.assertEquals(
 			"/TestServlet/one/two",
 			_httpImpl.removePathParameters(
-				"/TestServlet/one;test=$one@two/two;jsessionid=ae01b0f2af" +
-					";test2=123,456"));
+				"/TestServlet/one;test=$one@two/two;jsessionid=ae01b0f2af;" +
+					"test2=123,456"));
 		Assert.assertEquals("/", _httpImpl.removePathParameters("/;?"));
 		Assert.assertEquals("/", _httpImpl.removePathParameters("//;/;?"));
 		Assert.assertEquals("//", _httpImpl.removePathParameters("///;?"));

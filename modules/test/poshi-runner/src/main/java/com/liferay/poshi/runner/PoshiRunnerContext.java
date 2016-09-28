@@ -432,8 +432,9 @@ public class PoshiRunnerContext {
 
 			if (propertyNames.length != propertyValues.length) {
 				throw new Exception(
-					"'test.batch.property.names'/'test.batch.property.values'" +
-						" must have matching amounts of entries!");
+					"'test.batch.property.names'" +
+						"/'test.batch.property.values' must have matching " +
+							"amounts of entries!");
 			}
 
 			StringBuilder sb = new StringBuilder();

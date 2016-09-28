@@ -409,8 +409,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 							catch (Exception e) {
 								if (_log.isWarnEnabled()) {
 									_log.warn(
-										"Unable to rename duplicate title for" +
-											" file entry " +
+										"Unable to rename duplicate title " +
+											"for file entry " +
 												dlFileEntry.getFileEntryId(),
 										e);
 								}

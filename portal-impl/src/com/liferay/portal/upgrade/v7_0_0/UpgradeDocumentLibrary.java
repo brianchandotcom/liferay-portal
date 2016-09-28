@@ -166,8 +166,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			Set<String> generatedUniqueTitles = new HashSet<>();
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
-					"select fileEntryId, groupId, folderId, extension, title," +
-						" version from DLFileEntry");
+					"select fileEntryId, groupId, folderId, extension, " +
+						"title, version from DLFileEntry");
 				PreparedStatement ps2 =
 					AutoBatchPreparedStatementUtil.autoBatch(
 						connection.prepareStatement(
@@ -360,8 +360,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				if (rs.next()) {
 					throw new IllegalStateException(
 						String.format(
-							"Found more than one row in table DLFileEntryType" +
-								" with groupId %s and fileEntryTypeKey %s",
+							"Found more than one row in table " +
+								"DLFileEntryType with groupId %s and " +
+									"fileEntryTypeKey %s",
 							groupId, dlFileEntryTypeKey));
 				}
 

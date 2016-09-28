@@ -646,8 +646,8 @@ public class MailManager {
 			else if (me.getType() == MailException.MESSAGE_INVALID_ADDRESS) {
 				return createJSONResult(
 					"failure",
-					"please-make-sure-the-following-address-is-properly" +
-						"-formatted",
+					"please-make-sure-the-following-address-is-properly-" +
+						"formatted",
 					me.getValue());
 			}
 
@@ -685,8 +685,8 @@ public class MailManager {
 			else if (me.getType() == MailException.MESSAGE_INVALID_ADDRESS) {
 				return createJSONResult(
 					"failure",
-					"please-make-sure-the-following-address-is-properly" +
-						"-formatted",
+					"please-make-sure-the-following-address-is-properly-" +
+						"formatted",
 					HtmlUtil.escape(me.getValue()));
 			}
 
@@ -812,8 +812,8 @@ public class MailManager {
 			else if (me.getType() == MailException.MESSAGE_INVALID_ADDRESS) {
 				return createJSONResult(
 					"failure",
-					"please-make-sure-the-following-address-is-properly" +
-						"-formatted",
+					"please-make-sure-the-following-address-is-properly-" +
+						"formatted",
 					me.getValue());
 			}
 

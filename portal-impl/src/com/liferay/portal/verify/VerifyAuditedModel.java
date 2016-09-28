@@ -152,8 +152,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 		throws Exception {
 
 		try (PreparedStatement ps = con.prepareStatement(
-				"select userId, firstName, middleName, lastName from User_" +
-					" where companyId = ? and defaultUser = ?")) {
+				"select userId, firstName, middleName, lastName from User_ " +
+					"where companyId = ? and defaultUser = ?")) {
 
 			ps.setLong(1, companyId);
 			ps.setBoolean(2, true);

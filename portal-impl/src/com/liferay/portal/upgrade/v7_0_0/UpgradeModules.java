@@ -83,8 +83,8 @@ public class UpgradeModules extends UpgradeProcess {
 				String buildNamespace = convertedLegacyModule[2];
 
 				try (PreparedStatement ps = connection.prepareStatement(
-						"select servletContextName, buildNumber from Release_" +
-							" where servletContextName = ?")) {
+						"select servletContextName, buildNumber from " +
+							"Release_ where servletContextName = ?")) {
 
 					ps.setString(1, oldServletContextName);
 

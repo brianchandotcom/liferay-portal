@@ -376,6 +376,7 @@ public class ThemeBuilder {
 		id = id.replaceAll(" ", "_");
 
 		content = content.replace("[$ID$]", id);
+
 		content = content.replace("[$NAME$]", _name);
 		content = content.replace("[$TEMPLATE_EXTENSION$]", _templateExtension);
 

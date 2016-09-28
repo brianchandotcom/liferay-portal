@@ -334,6 +334,22 @@ AUI.add(
 						return options;
 					},
 
+					_getFieldType: function(fieldValue) {
+						var instance = this;
+
+						var fields = instance.get('fields');
+
+						var fieldType;
+
+						for (var index in fields) {
+							if (fields[index].value === fieldValue) {
+								fieldType = fields[index].type;
+							}
+						}
+
+						return fieldType;
+					},
+
 					_getFirstOperand: function(index) {
 						var instance = this;
 
@@ -589,7 +605,7 @@ AUI.add(
 					_isFieldList: function(field) {
 						var instance = this;
 
-						return instance._getFieldOptions(field.getValue()).length > 0 && field.get('type') !== 'text';
+						return instance._getFieldOptions(field.getValue()).length > 0 && instance._getFieldType(field.getValue()) !== 'text';
 					},
 
 					_isUnaryCondition: function(index) {
@@ -854,7 +870,7 @@ AUI.add(
 							else {
 								var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 
-								if (options.length > 0 && instance._getFirstOperand(index).get('type') !== 'text') {
+								if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
 									instance._getSecondOperand(index, 'options').set('options', options);
 									instance._getSecondOperand(index, 'options').set('visible', true);
 

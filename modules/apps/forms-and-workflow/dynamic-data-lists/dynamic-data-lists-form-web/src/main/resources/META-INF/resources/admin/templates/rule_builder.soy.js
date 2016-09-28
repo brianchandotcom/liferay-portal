@@ -21,11 +21,11 @@ ddl.rule_list = function(opt_data, opt_ignored) {
   var output = '';
   if (opt_data.rules.length > 0) {
     output += '<ul class="ddl-form-body-content form-builder-rule-builder-rules-list tabular-list-group">';
-    var ruleList171 = opt_data.rules;
-    var ruleListLen171 = ruleList171.length;
-    for (var ruleIndex171 = 0; ruleIndex171 < ruleListLen171; ruleIndex171++) {
-      var ruleData171 = ruleList171[ruleIndex171];
-      output += '<li class="list-group-item"><div class="list-group-item-field"><h4 class="form-builder-rule-builder-rules-list-type text-left">' + soy.$$escapeHtml(ruleData171['logical-operator']) + '</h4></div><div class="clamp-horizontal list-group-item-content"><p class="text-default">If ' + ddl.condition({content: ruleData171.conditions[0].operands[0].type + ' ' + ruleData171.conditions[0].operands[0].value}) + '<em> is ' + soy.$$escapeHtml(ruleData171.conditions[0].operator) + ', </em>' + ddl.condition({content: ruleData171.conditions[0].operands[1].value}) + '<br />' + ddl.action({rule: ruleData171}) + '</p></div><div class="list-group-item-field"><div class="card-col-field"><div class="dropdown"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">' + soy.$$filterNoAutoescape(opt_data.kebab) + '</a><ul class="dropdown-menu dropdown-menu-right"><li class="rule-card-edit" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex171) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.edit) + '</a></li><li class="rule-card-delete" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex171) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings['delete']) + '</a></li></ul></div></div></div></li>';
+    var ruleList178 = opt_data.rules;
+    var ruleListLen178 = ruleList178.length;
+    for (var ruleIndex178 = 0; ruleIndex178 < ruleListLen178; ruleIndex178++) {
+      var ruleData178 = ruleList178[ruleIndex178];
+      output += '<li class="list-group-item"><div class="clamp-horizontal list-group-item-content"><p class="text-default">If ' + ddl.condition({content: ruleData178.conditions[0].operands[0].type + ' ' + ruleData178.conditions[0].operands[0].value}) + '<em> is ' + soy.$$escapeHtml(ruleData178.conditions[0].operator) + ', </em>' + ddl.condition({content: ruleData178.conditions[0].operands[1].value}) + '<br />' + ddl.action({rule: ruleData178}) + '</p></div><div class="list-group-item-field"><div class="card-col-field"><div class="dropdown"><a class="dropdown-toggle icon-monospaced" data-toggle="dropdown" href="#1">' + soy.$$filterNoAutoescape(opt_data.kebab) + '</a><ul class="dropdown-menu dropdown-menu-right"><li class="rule-card-edit" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex178) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings.edit) + '</a></li><li class="rule-card-delete" data-card-id="' + soy.$$escapeHtmlAttribute(ruleIndex178) + '"><a href="javascript:;">' + soy.$$escapeHtml(opt_data.strings['delete']) + '</a></li></ul></div></div></div></li>';
     }
     output += '</ul>';
   } else {

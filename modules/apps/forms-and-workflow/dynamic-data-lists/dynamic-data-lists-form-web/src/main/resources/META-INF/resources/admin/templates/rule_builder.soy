@@ -33,9 +33,6 @@
 		<ul class="ddl-form-body-content form-builder-rule-builder-rules-list tabular-list-group">
 		{foreach $rule in $rules}
 			<li class="list-group-item">
-				<div class="list-group-item-field">
-					<h4 class="form-builder-rule-builder-rules-list-type text-left">{$rule['logical-operator']}</h4>
-				</div>
 				<div class="clamp-horizontal list-group-item-content">
 					<p class="text-default">
 						If {call .condition} {param content: $rule.conditions[0].operands[0].type + ' ' + $rule.conditions[0].operands[0].value /} {/call}

@@ -1,7 +1,9 @@
 task writeParentThemeDependencies
+task writeTestThemeDependencies
 
 configurations {
 	parentThemes
+	testThemes
 }
 
 dependencies {
@@ -10,6 +12,13 @@ dependencies {
 
 	provided group: "commons-cli", name: "commons-cli", transitive: false, version: "1.3.1"
 	provided group: "net.coobird", name: "thumbnailator", transitive: false, version: "0.4.8"
+
+	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
+
+	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-dashboard")
+	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-profile")
+	testThemes project(":apps:frontend-theme-fjord:frontend-theme-fjord")
+	testThemes project(":apps:frontend-theme-westeros-bank:frontend-theme-westeros-bank")
 }
 
 liferay {
@@ -18,6 +27,7 @@ liferay {
 
 test {
 	dependsOn writeParentThemeDependencies
+	dependsOn writeTestThemeDependencies
 }
 
 writeParentThemeDependencies {
@@ -31,5 +41,29 @@ writeParentThemeDependencies {
 		parentThemeDependenciesFile.parentFile.mkdirs()
 
 		parentThemeDependenciesFile.text = configurations.parentThemes.join(System.lineSeparator())
+	}
+}
+
+writeTestThemeDependencies {
+	configurations.testThemes.dependencies.withType(ProjectDependency) {
+		dependsOn "${dependencyProject.path}:assemble"
+	}
+
+	doLast {
+		Properties properties = new Properties()
+
+		for (ProjectDependency projectDependency in configurations.testThemes.dependencies.withType(ProjectDependency)) {
+			Project themeProject = projectDependency.dependencyProject
+
+			properties.setProperty themeProject.projectDir.absolutePath, themeProject.configurations.archives.artifacts.files.singleFile.absolutePath
+		}
+
+		File testThemeDependenciesFile = new File(buildDir, "test-theme-dependencies.properties")
+
+		testThemeDependenciesFile.parentFile.mkdirs()
+
+		testThemeDependenciesFile.withOutputStream {
+			properties.store it, null
+		}
 	}
 }

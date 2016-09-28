@@ -20,8 +20,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQuery;
 import com.liferay.dynamic.data.mapping.form.values.query.DDMFormValuesQueryFactory;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -68,7 +66,7 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
-		updatePermission(resourceRequest, recordSetId, published);
+		updateRecordSetPermission(resourceRequest, recordSetId, published);
 
 		DDMFormValues settingsDDMFormValues =
 			recordSet.getSettingsDDMFormValues();
@@ -77,14 +75,6 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		_ddlRecordSetService.updateRecordSet(
 			recordSetId, settingsDDMFormValues);
-	}
-
-	protected DDMForm getDDMForm(DDLRecordSet recordSet)
-		throws PortalException {
-
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
-
-		return ddmStructure.getDDMForm();
 	}
 
 	@Reference(unbind = "-")
@@ -113,7 +103,23 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 		_roleLocalService = roleLocalService;
 	}
 
-	protected void updatePermission(
+	protected void updatePublishedDDMFormFieldValue(
+			DDMFormValues ddmFormValues, boolean published)
+		throws PortalException {
+
+		DDMFormValuesQuery ddmFormValuesQuery =
+			_ddmFormValuesQueryFactory.create(ddmFormValues, "/published");
+
+		DDMFormFieldValue ddmFormFieldValue =
+			ddmFormValuesQuery.selectSingleDDMFormFieldValue();
+
+		Value value = ddmFormFieldValue.getValue();
+
+		value.addString(
+			ddmFormValues.getDefaultLocale(), Boolean.toString(published));
+	}
+
+	protected void updateRecordSetPermission(
 			ResourceRequest resourceRequest, long recordSetId,
 			boolean published)
 		throws PortalException {
@@ -138,22 +144,6 @@ public class PublishRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 		_resourcePermissionLocalService.updateResourcePermission(
 			resourcePermission);
-	}
-
-	protected void updatePublishedDDMFormFieldValue(
-			DDMFormValues ddmFormValues, boolean published)
-		throws PortalException {
-
-		DDMFormValuesQuery ddmFormValuesQuery =
-			_ddmFormValuesQueryFactory.create(ddmFormValues, "/published");
-
-		DDMFormFieldValue ddmFormFieldValue =
-			ddmFormValuesQuery.selectSingleDDMFormFieldValue();
-
-		Value value = ddmFormFieldValue.getValue();
-
-		value.addString(
-			ddmFormValues.getDefaultLocale(), Boolean.toString(published));
 	}
 
 	private DDLRecordSetService _ddlRecordSetService;

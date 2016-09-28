@@ -20,30 +20,32 @@ import com.liferay.configuration.admin.web.internal.util.AttributeDefinitionUtil
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 import java.io.FileInputStream;
+import java.io.OutputStream;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.component.annotations.Component;
@@ -229,11 +231,27 @@ public class ExportConfigurationMVCResourceCommand
 		return fileName + ".config";
 	}
 
-	protected Properties getProperties(
+	protected byte[] getPropertiesAsBytes(
 			String languageId, String factoryPid, String pid)
 		throws Exception {
 
-		Properties properties = new Properties();
+		Dictionary propertiesDictionary = getPropertiesDictionary(
+			languageId, factoryPid, pid);
+
+		OutputStream outputStream = new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(outputStream, propertiesDictionary);
+
+		String propertiesString = outputStream.toString();
+
+		return propertiesString.getBytes();
+	}
+
+	protected Dictionary<String, Object> getPropertiesDictionary(
+			String languageId, String factoryPid, String pid)
+		throws Exception {
+
+		Dictionary propertiesDictionary = new Hashtable<>();
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(languageId);
@@ -245,14 +263,14 @@ public class ExportConfigurationMVCResourceCommand
 		}
 
 		if (configurationModel == null) {
-			return properties;
+			return propertiesDictionary;
 		}
 
 		Configuration configuration =
 			_configurationModelRetriever.getConfiguration(pid);
 
 		if (configuration == null) {
-			return properties;
+			return propertiesDictionary;
 		}
 
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
@@ -266,36 +284,16 @@ public class ExportConfigurationMVCResourceCommand
 			String[] values = AttributeDefinitionUtil.getProperty(
 				attributeDefinition, configuration);
 
-			String value = null;
-
-			// See http://goo.gl/JhYK7g
-
 			if (values.length == 1) {
-				value = values[0];
+				propertiesDictionary.put(
+					attributeDefinition.getID(), values[0]);
 			}
 			else if (values.length > 1) {
-				value = StringUtil.merge(values, "\n");
+				propertiesDictionary.put(attributeDefinition.getID(), values);
 			}
-
-			if (value == null) {
-				value = StringPool.BLANK;
-			}
-
-			properties.setProperty(attributeDefinition.getID(), value);
 		}
 
-		return properties;
-	}
-
-	protected byte[] getPropertiesAsBytes(
-			String languageId, String factoryPid, String pid)
-		throws Exception {
-
-		Properties properties = getProperties(languageId, factoryPid, pid);
-		
-		String propertiesString = PropertiesUtil.toString(properties);
-
-		return propertiesString.getBytes();
+		return propertiesDictionary;
 	}
 
 	@Reference

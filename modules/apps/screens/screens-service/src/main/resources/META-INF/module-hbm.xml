@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.screens.model.ScreensAssetEntry" />
+	<import class="com.liferay.screens.model.ScreensComment" />
 	<import class="com.liferay.screens.model.ScreensDDLRecord" />
 	<import class="com.liferay.screens.model.ScreensJournalArticle" />
 	<import class="com.liferay.screens.model.ScreensRatingsEntry" />

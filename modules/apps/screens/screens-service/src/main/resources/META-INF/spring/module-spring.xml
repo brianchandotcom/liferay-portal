@@ -2,6 +2,7 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="com.liferay.screens.service.impl.ScreensAssetEntryServiceImpl" id="com.liferay.screens.service.ScreensAssetEntryService" />
+	<bean class="com.liferay.screens.service.impl.ScreensCommentServiceImpl" id="com.liferay.screens.service.ScreensCommentService" />
 	<bean class="com.liferay.screens.service.impl.ScreensDDLRecordServiceImpl" id="com.liferay.screens.service.ScreensDDLRecordService" />
 	<bean class="com.liferay.screens.service.impl.ScreensJournalArticleServiceImpl" id="com.liferay.screens.service.ScreensJournalArticleService" />
 	<bean class="com.liferay.screens.service.impl.ScreensRatingsEntryServiceImpl" id="com.liferay.screens.service.ScreensRatingsEntryService" />

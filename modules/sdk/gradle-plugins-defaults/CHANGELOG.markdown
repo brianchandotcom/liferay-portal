@@ -303,8 +303,8 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 ## 1.2.34 - 2016-09-27
 
 ### Changed
-- [LPS-67863]: Change dependency version overrides in
-`.version-override-${project.name}.properties` to:
+- [LPS-67863]: Change dependency version override declarations in
+`.version-override-${project.name}.properties` to follow a new format:
 
 		[artifact group]/[artifact name]=[new version]
 

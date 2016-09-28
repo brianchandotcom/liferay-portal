@@ -170,6 +170,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.blogs.kernel.model.BlogsEntry fetchEntry(long groupId,
+		java.lang.String urlTitle) {
+		return _blogsEntryLocalService.fetchEntry(groupId, urlTitle);
+	}
+
+	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry getBlogsEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

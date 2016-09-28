@@ -39,7 +39,7 @@ public class ArrayUtilTest {
 				new boolean[] {true, false}, new boolean[] {false, false}));
 		Assert.assertArrayEquals(
 			new byte[] {1, 2, 3, 4},
-			ArrayUtil.append(new byte[] {1, 2, 3}, (byte) 4));
+			ArrayUtil.append(new byte[] {1, 2, 3}, (byte)4));
 		Assert.assertArrayEquals(
 			new byte[] {1, 2, 3, 4, 5, 6},
 			ArrayUtil.append(new byte[] {1, 2, 3}, new byte[] {4, 5, 6}));

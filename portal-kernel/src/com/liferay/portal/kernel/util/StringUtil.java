@@ -4361,7 +4361,7 @@ public class StringUtil {
 		int index = 16;
 
 		do {
-			buffer[--index] = HEX_DIGITS[(int) (l & 15)];
+			buffer[--index] = HEX_DIGITS[(int)(l & 15)];
 
 			l >>>= 4;
 		}

@@ -258,7 +258,7 @@ public class AggregateClassLoader extends ClassLoader {
 		throws ClassNotFoundException {
 
 		try {
-			return (Class<?>) _FIND_CLASS_METHOD.invoke(classLoader, name);
+			return (Class<?>)_FIND_CLASS_METHOD.invoke(classLoader, name);
 		}
 		catch (InvocationTargetException ite) {
 			throw new ClassNotFoundException(

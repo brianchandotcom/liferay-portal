@@ -50,7 +50,7 @@ public class PwdGenerator {
 
 		int fullKeyLength = fullKey.length();
 
-		int refreshPeriod = (int) (_MULTIPLIER / Math.log(fullKeyLength));
+		int refreshPeriod = (int)(_MULTIPLIER / Math.log(fullKeyLength));
 
 		long secureLong = 0;
 

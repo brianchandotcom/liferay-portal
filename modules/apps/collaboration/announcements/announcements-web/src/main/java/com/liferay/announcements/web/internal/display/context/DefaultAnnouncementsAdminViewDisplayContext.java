@@ -75,7 +75,7 @@ public class DefaultAnnouncementsAdminViewDisplayContext
 	public Map<String, String> getDistributionScopes() throws Exception {
 		Map<String, String> distributionScopes = new LinkedHashMap<>();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =

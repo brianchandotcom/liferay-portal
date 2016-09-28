@@ -188,7 +188,7 @@ public class UnsyncPrintWriterTest {
 
 	private static Writer _getOut(UnsyncPrintWriter unsyncPrintWriter) {
 		try {
-			return (Writer) _writerField.get(unsyncPrintWriter);
+			return (Writer)_writerField.get(unsyncPrintWriter);
 		}
 		catch (Throwable t) {
 			throw new RuntimeException(t);

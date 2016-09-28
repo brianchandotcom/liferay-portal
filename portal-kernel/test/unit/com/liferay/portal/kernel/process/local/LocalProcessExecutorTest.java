@@ -1968,7 +1968,7 @@ public class LocalProcessExecutorTest {
 
 			byte[] serializedData = unsyncByteArrayOutputStream.toByteArray();
 
-			serializedData[5] = (byte) (serializedData[5] + 1);
+			serializedData[5] = (byte)(serializedData[5] + 1);
 
 			_brokenPipingData = serializedData;
 		}

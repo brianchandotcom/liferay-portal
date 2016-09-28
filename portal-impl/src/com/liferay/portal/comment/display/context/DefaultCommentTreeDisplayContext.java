@@ -196,7 +196,7 @@ public class DefaultCommentTreeDisplayContext
 
 		if (_discussionComment instanceof WorkflowableComment) {
 			WorkflowableComment workflowableComment =
-				(WorkflowableComment) _discussionComment;
+				(WorkflowableComment)_discussionComment;
 
 			if (workflowableComment.getStatus() ==
 					WorkflowConstants.STATUS_APPROVED) {
@@ -229,7 +229,7 @@ public class DefaultCommentTreeDisplayContext
 
 		if (_discussionComment instanceof WorkflowableComment) {
 			WorkflowableComment workflowableComment =
-				(WorkflowableComment) _discussionComment;
+				(WorkflowableComment)_discussionComment;
 
 			if (workflowableComment.getStatus() ==
 					WorkflowConstants.STATUS_PENDING) {

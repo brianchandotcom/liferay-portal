@@ -243,7 +243,7 @@ public class UnsyncCharArrayReaderTest {
 
 	static {
 		for (int i = 0; i < _SIZE; i++) {
-			_BUFFER[i] = (char) ('a' + i);
+			_BUFFER[i] = (char)('a' + i);
 		}
 	}
 

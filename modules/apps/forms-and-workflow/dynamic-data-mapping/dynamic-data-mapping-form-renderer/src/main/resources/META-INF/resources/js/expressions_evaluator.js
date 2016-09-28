@@ -54,51 +54,65 @@ AUI.add(
 						var form = instance.get('form');
 
 						if (enabled && form) {
-							if (instance.isEvaluating()) {
-								instance.stop();
+							var fieldName = trigger.get('fieldName');
+
+							var evaluable = true;
+
+							if (fieldName) {
+								var evaluableFields = form.get('evaluableFields');
+
+								if (evaluableFields && evaluableFields[fieldName] == undefined) {
+									evaluable = false;
+								}
 							}
 
-							instance._evaluating = true;
-
-							instance.fire(
-								'start',
-								{
-									trigger: trigger
+							if (evaluable) {
+								if (instance.isEvaluating()) {
+									instance.stop();
 								}
-							);
 
-							instance._queue.add(trigger);
+								instance._evaluating = true;
 
-							instance.fire(
-								'evaluate',
-								{
-									callback: function(result) {
-										instance._evaluating = false;
+								instance.fire(
+									'start',
+									{
+										trigger: trigger
+									}
+								);
 
-										var triggers = {};
+								instance._queue.add(trigger);
 
-										while (instance._queue.size() > 0) {
-											var next = instance._queue.next();
+								instance.fire(
+									'evaluate',
+									{
+										callback: function(result) {
+											instance._evaluating = false;
 
-											if (!triggers[next.get('name')]) {
-												instance.fire(
-													'evaluationEnded',
-													{
-														result: result,
-														trigger: next
-													}
-												);
+											var triggers = {};
+
+											while (instance._queue.size() > 0) {
+												var next = instance._queue.next();
+
+												if (!triggers[next.get('name')]) {
+													instance.fire(
+														'evaluationEnded',
+														{
+															result: result,
+															trigger: next
+														}
+													);
+												}
+
+												triggers[next.get('name')] = true;
 											}
 
-											triggers[next.get('name')] = true;
-										}
-
-										if (callback) {
-											callback.apply(instance, arguments);
+											if (callback) {
+												callback.apply(instance, arguments);
+											}
 										}
 									}
-								}
-							);
+								);
+							}
 						}
 					},
 

@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-ddm-form-renderer',
 	function(A) {
 		var AArray = A.Array;
+		var ALang = A.Lang;
 		var Renderer = Liferay.DDM.Renderer;
 
 		var TPL_CONTAINER = '<div class="lfr-ddm-form-container"></div>';
@@ -16,6 +17,28 @@ AUI.add(
 
 					dataProviderURL: {
 						value: ''
+					},
+
+					evaluableFields: {
+						setter: function(fieldNamesJSONString) {
+							var fieldNamesArray = JSON.parse(fieldNamesJSONString);
+
+							var fieldsMap = fieldNamesArray.reduce(
+								function(map, obj) {
+									if (ALang.isString(obj)) {
+										map[obj] = obj;
+									}
+									else {
+										map[obj.get('name')] = obj;
+									}
+
+									return map;
+								},
+								{}
+							);
+
+							return fieldsMap;
+						}
 					},
 
 					definition: {

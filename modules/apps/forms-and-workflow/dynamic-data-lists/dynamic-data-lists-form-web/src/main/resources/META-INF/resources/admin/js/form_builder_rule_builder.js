@@ -78,6 +78,7 @@ AUI.add(
 									{
 										label: field.get('label'),
 										options: field.get('options'),
+										type: field.get('type'),
 										value: field.get('fieldName')
 									}
 								);

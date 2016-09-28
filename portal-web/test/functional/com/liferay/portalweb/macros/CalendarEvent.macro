@@ -1266,6 +1266,8 @@
 	<command name="publishRepeating">
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Publish" />
 
+		<execute function="Pause" value1="30000" />
+
 		<execute function="AssertElementPresent" locator1="CalendarEditEvent#RECURRING_EVENT_DIALOG_BOX_HEADER" />
 
 		<var method="StringUtil#replace('${saveOption}', ' ', '_')" name="saveOptionPath" />

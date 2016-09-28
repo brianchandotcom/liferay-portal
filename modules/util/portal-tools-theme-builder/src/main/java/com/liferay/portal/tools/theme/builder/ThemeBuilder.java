@@ -105,7 +105,7 @@ public class ThemeBuilder {
 		if (parentDir == null) {
 			if (Validator.isNotNull(parentName) &&
 				((unstyledDir == null) ||
-				 ((unstyledDir != null) && !parentName.equals(_UNSTYLED)))) {
+				 ((unstyledDir != null) && !parentName.equals(UNSTYLED)))) {
 
 				throw new IllegalArgumentException("Parent path is required");
 			}
@@ -115,11 +115,11 @@ public class ThemeBuilder {
 				throw new IllegalArgumentException("Parent name is required");
 			}
 
-			if (!parentName.equals(_UNSTYLED) && (unstyledDir == null)) {
+			if (!parentName.equals(UNSTYLED) && (unstyledDir == null)) {
 				throw new IllegalArgumentException("Unstyled path is required");
 			}
 
-			if (parentName.equals(_UNSTYLED) && (unstyledDir != null)) {
+			if (parentName.equals(UNSTYLED) && (unstyledDir != null)) {
 				unstyledDir = parentDir;
 
 				parentDir = null;
@@ -144,7 +144,7 @@ public class ThemeBuilder {
 
 	public void build() throws IOException {
 		if (_unstyledDir != null) {
-			_copyTheme(_UNSTYLED, _unstyledDir);
+			_copyTheme(UNSTYLED, _unstyledDir);
 		}
 
 		if (_parentDir != null) {
@@ -159,6 +159,10 @@ public class ThemeBuilder {
 
 		_writeScreenshotThumbnail();
 	}
+
+	protected static final String STYLED = "_styled";
+
+	protected static final String UNSTYLED = "_unstyled";
 
 	private static Options _getOptions() {
 		Options options = new Options();
@@ -420,8 +424,6 @@ public class ThemeBuilder {
 		"template-extension";
 
 	private static final String _OPTION_UNSTYLED_PATH = "unstyled-path";
-
-	private static final String _UNSTYLED = "_unstyled";
 
 	static {
 		File userDir = new File(System.getProperty("user.dir"));

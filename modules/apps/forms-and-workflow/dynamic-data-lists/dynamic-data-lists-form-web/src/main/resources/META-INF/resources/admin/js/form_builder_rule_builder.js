@@ -16,9 +16,14 @@ AUI.add(
 
 					strings: {
 						value: {
+							contains: Liferay.Language.get('contains'),
 							delete: Liferay.Language.get('delete'),
 							edit: Liferay.Language.get('edit'),
-							emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-bellow-to-add-the-first')
+							emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-bellow-to-add-the-first'),
+							'equals-to': Liferay.Language.get('is-equals-to'),
+							'not-contains': Liferay.Language.get('not-contains'),
+							'not-equals-to': Liferay.Language.get('is-not-equals-to'),
+							ruleBuilder: Liferay.Language.get('rule-builder')
 						}
 					}
 				},

@@ -256,6 +256,7 @@ AUI.add(
 							var condition = {
 								'operands': [
 									{
+										label: instance._getFieldLabel(instance._getFirstOperandValue(index)),
 										type: 'field',
 										value: instance._getFirstOperandValue(index)
 									}
@@ -265,12 +266,23 @@ AUI.add(
 
 							if (instance._isBinaryCondition(index)) {
 								if (instance._getSecondOperandTypeValue(index) === 'constant') {
-									condition.operands.push(
-										{
-											type: 'constant',
-											value: instance._getSecondOperandValue(index, 'input') || instance._getSecondOperandValue(index, 'options')
-										}
-									);
+									if (instance._getSecondOperandValue(index, 'input')) {
+										condition.operands.push(
+											{
+												type: 'constant',
+												value: instance._getSecondOperandValue(index, 'input')
+											}
+										);
+									}
+									else {
+										condition.operands.push(
+											{
+												label: instance._getOptionsLabel(instance._getSecondOperand(index, 'options'), instance._getSecondOperandValue(index, 'options')),
+												type: 'constant',
+												value: instance._getSecondOperandValue(index, 'options')
+											}
+										);
+									}
 								}
 								else {
 									condition.operands.push(
@@ -286,6 +298,22 @@ AUI.add(
 						}
 
 						return conditions;
+					},
+
+					_getFieldLabel: function(fieldValue) {
+						var instance = this;
+
+						var fields = instance.get('fields');
+
+						var fieldLabel;
+
+						for (var index in fields) {
+							if (fields[index].value === fieldValue) {
+								fieldLabel = fields[index].label;
+							}
+						}
+
+						return fieldLabel;
 					},
 
 					_getFieldOptions: function(fieldName) {
@@ -328,6 +356,22 @@ AUI.add(
 						var instance = this;
 
 						return instance._getOperator(index).getValue();
+					},
+
+					_getOptionsLabel: function(field, optionValue) {
+						var instance = this;
+
+						var options = field.get('options');
+
+						var optionLabel;
+
+						for (var index in options) {
+							if (options[index].value === optionValue) {
+								optionLabel = options[index].label;
+							}
+						}
+
+						return optionLabel;
 					},
 
 					_getRuleContainerTemplate: function(rule) {

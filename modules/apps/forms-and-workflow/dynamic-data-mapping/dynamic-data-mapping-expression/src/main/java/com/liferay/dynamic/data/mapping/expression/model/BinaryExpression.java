@@ -23,27 +23,28 @@ import aQute.bnd.annotation.ProviderType;
 public abstract class BinaryExpression extends Expression {
 
 	public BinaryExpression(
-		String operator, Expression leftOperand, Expression rightOperand) {
+		String operator, Expression leftOperandExpression,
+		Expression rightOperandExpression) {
 
 		_operator = operator;
-		_leftOperand = leftOperand;
-		_rightOperand = rightOperand;
+		_leftOperandExpression = leftOperandExpression;
+		_rightOperandExpression = rightOperandExpression;
 	}
 
-	public Expression getLeftOperand() {
-		return _leftOperand;
+	public Expression getLeftOperandExpression() {
+		return _leftOperandExpression;
 	}
 
 	public String getOperator() {
 		return _operator;
 	}
 
-	public Expression getRightOperand() {
-		return _rightOperand;
+	public Expression getRightOperandExpression() {
+		return _rightOperandExpression;
 	}
 
-	private final Expression _leftOperand;
+	private final Expression _leftOperandExpression;
 	private final String _operator;
-	private final Expression _rightOperand;
+	private final Expression _rightOperandExpression;
 
 }

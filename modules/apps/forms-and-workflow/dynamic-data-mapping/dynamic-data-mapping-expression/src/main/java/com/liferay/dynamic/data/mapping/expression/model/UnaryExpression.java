@@ -22,14 +22,14 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public abstract class UnaryExpression extends Expression {
 
-	public UnaryExpression(Expression operand) {
-		_operand = operand;
+	public UnaryExpression(Expression operandExpression) {
+		_operandExpression = operandExpression;
 	}
 
-	public Expression getOperand() {
-		return _operand;
+	public Expression getOperandExpression() {
+		return _operandExpression;
 	}
 
-	private final Expression _operand;
+	private final Expression _operandExpression;
 
 }

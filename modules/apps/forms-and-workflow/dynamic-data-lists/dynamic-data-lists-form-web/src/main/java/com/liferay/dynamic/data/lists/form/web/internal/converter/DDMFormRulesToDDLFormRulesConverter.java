@@ -136,7 +136,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 				functionCallExpression.getFunctionName());
 
 			List<Expression> parameters =
-				functionCallExpression.getParameters();
+				functionCallExpression.getParameterExpressions();
 
 			String target = doVisit(parameters.get(0));
 
@@ -189,9 +189,9 @@ public class DDMFormRulesToDDLFormRulesConverter {
 		@Override
 		public Object visit(ComparisonExpression comparisonExpression) {
 			DDLFormRuleCondition.Operand leftOperand = doVisit(
-				comparisonExpression.getLeftOperand());
+				comparisonExpression.getLeftOperandExpression());
 			DDLFormRuleCondition.Operand rightOperand = doVisit(
-				comparisonExpression.getRightOperand());
+				comparisonExpression.getRightOperandExpression());
 
 			DDLFormRuleCondition ddlFormRuleCondition =
 				new DDLFormRuleCondition(
@@ -207,12 +207,12 @@ public class DDMFormRulesToDDLFormRulesConverter {
 		public Object visit(FunctionCallExpression functionCallExpression) {
 			String functionName = functionCallExpression.getFunctionName();
 
-			List<Expression> parameters =
-				functionCallExpression.getParameters();
+			List<Expression> parameterExpressions =
+				functionCallExpression.getParameterExpressions();
 
 			if (Objects.equals(functionName, "getValue")) {
 				DDLFormRuleCondition.Operand operand = doVisit(
-					parameters.get(0));
+					parameterExpressions.get(0));
 
 				return new DDLFormRuleCondition.Operand(
 					"field", operand.getValue());
@@ -220,7 +220,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 
 			List<DDLFormRuleCondition.Operand> operands = new ArrayList<>();
 
-			for (Expression parameterExpression : parameters) {
+			for (Expression parameterExpression : parameterExpressions) {
 				operands.add(
 					(DDLFormRuleCondition.Operand)doVisit(parameterExpression));
 			}
@@ -237,7 +237,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 		@Override
 		public Object visit(NotExpression notExpression) {
 			DDLFormRuleCondition condition = doVisit(
-				notExpression.getOperand());
+				notExpression.getOperandExpression());
 
 			String operator = condition.getOperator();
 
@@ -266,8 +266,8 @@ public class DDMFormRulesToDDLFormRulesConverter {
 		protected List<DDLFormRuleCondition> doVisitLogicalExpression(
 			BinaryExpression binaryExpression) {
 
-			Object o1 = doVisit(binaryExpression.getLeftOperand());
-			Object o2 = doVisit(binaryExpression.getRightOperand());
+			Object o1 = doVisit(binaryExpression.getLeftOperandExpression());
+			Object o2 = doVisit(binaryExpression.getRightOperandExpression());
 
 			if (o1 instanceof DDLFormRuleCondition) {
 				_conditions.add((DDLFormRuleCondition)o1);

@@ -2605,13 +2605,28 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					// Save version override file
 
+					boolean addVersionOverrideFile = false;
+
+					String versionOverrideRelativePath = project.relativePath(
+						versionOverrideFile);
+
+					String gitResult = GitUtil.getGitResult(
+						project, "ls-files", versionOverrideRelativePath);
+
+					if (Validator.isNotNull(gitResult)) {
+						addVersionOverrideFile = true;
+					}
+
 					_saveVersions(
 						project.getProjectDir(), versions, versionOverrideFile);
 
 					if (versionOverrideFile.exists()) {
+						addVersionOverrideFile = true;
+					}
+
+					if (addVersionOverrideFile) {
 						GitUtil.executeGit(
-							project, "add",
-							project.relativePath(versionOverrideFile));
+							project, "add", versionOverrideRelativePath);
 					}
 				}
 				else if (hasPackageInfoFiles) {
@@ -3083,7 +3098,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _CACHE_COMMIT_MESSAGE = "FAKE GRADLE CACHE";
 
-	private static final char _DEPENDENCY_KEY_SEPARATOR = '-';
+	private static final char _DEPENDENCY_KEY_SEPARATOR = '/';
 
 	private static final String _GROUP = "com.liferay";
 

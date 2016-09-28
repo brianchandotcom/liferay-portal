@@ -89,6 +89,20 @@ public class AddUpdateRecordSetMVCCommandHelper {
 		return recordSet;
 	}
 
+	public DDLRecordSet saveRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+	throws Exception {
+
+		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+
+		if (recordSetId == 0) {
+			return addRecordSet(portletRequest, portletResponse);
+		}
+		else {
+			return updateRecordSet(portletRequest, portletResponse);
+		}
+	}
+
 	public DDLRecordSet updateRecordSet(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {

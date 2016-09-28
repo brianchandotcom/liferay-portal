@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 
@@ -90,17 +89,8 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 			@Override
 			public DDLRecordSet call() throws Exception {
-				long recordSetId = ParamUtil.getLong(
-					resourceRequest, "recordSetId");
-
-				if (recordSetId == 0) {
-					return addUpdateRecordSetMVCCommandHelper.addRecordSet(
-						resourceRequest, resourceResponse);
-				}
-				else {
-					return addUpdateRecordSetMVCCommandHelper.updateRecordSet(
-						resourceRequest, resourceResponse);
-				}
+				return addUpdateRecordSetMVCCommandHelper.saveRecordSet(
+					resourceRequest, resourceResponse);
 			}
 
 		};

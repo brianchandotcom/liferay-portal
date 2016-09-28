@@ -309,7 +309,7 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 		[artifact group]/[artifact name]=[new version]
 
 ### Fixed
-- [LPS-67863]: Correctly commit deletion of version override files
+- [LPS-67863]: Fix commit deletion process of version override files.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node

@@ -74,6 +74,10 @@ public class SessionTreeJSClickAction extends Action {
 					boolean privateLayout = ParamUtil.getBoolean(
 						request, "privateLayout");
 
+					SessionTreeJSClicks.openLayoutNodes(
+						request, treeId, false, LayoutConstants.DEFAULT_PLID,
+						false);
+
 					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 						groupId, privateLayout,
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -104,6 +108,10 @@ public class SessionTreeJSClickAction extends Action {
 					long groupId = ParamUtil.getLong(request, "groupId");
 					boolean privateLayout = ParamUtil.getBoolean(
 						request, "privateLayout");
+
+					SessionTreeJSClicks.closeLayoutNodes(
+						request, treeId, false, LayoutConstants.DEFAULT_PLID,
+						false);
 
 					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 						groupId, privateLayout,
@@ -184,6 +192,11 @@ public class SessionTreeJSClickAction extends Action {
 					0L);
 
 				for (long checkedLayoutId : checkedLayoutIds) {
+					if (checkedLayoutId == LayoutConstants.DEFAULT_PLID) {
+						jsonArray.put(
+							String.valueOf(LayoutConstants.DEFAULT_PLID));
+					}
+
 					Layout checkedLayout = LayoutLocalServiceUtil.fetchLayout(
 						groupId, privateLayout, checkedLayoutId);
 

@@ -38,7 +38,9 @@
 		<module name="ModifierOrder" />
 		<module name="MultipleVariableDeclarations" />
 		<module name="NoLineWrap" />
-		<module name="NoWhitespaceAfter" />
+		<module name="NoWhitespaceAfter">
+			<property name="tokens" value="ARRAY_DECLARATOR, ARRAY_INIT, BNOT, DEC, DOT, INC, INDEX_OP, LNOT, TYPECAST, UNARY_MINUS, UNARY_PLUS" />
+		</module>
 		<module name="NoWhitespaceBefore" />
 		<module name="OneStatementPerLine" />
 		<module name="PackageName" />

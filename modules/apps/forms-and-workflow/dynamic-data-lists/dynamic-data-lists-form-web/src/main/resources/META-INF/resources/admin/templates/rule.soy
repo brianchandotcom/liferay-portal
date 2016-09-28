@@ -11,71 +11,71 @@
  * @param strings
  */
 {template .settings autoescape="deprecated-contextual"}
-	<div class="top-informations">
-		<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
-		<h4 class="text-default">{$strings.description}</h4>
-	</div>
+	<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
+	<h4 class="text-default">{$strings.description}</h4>
 
-	<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
-		{call .rulesHeader}
-			{param logicalOperator: $logicalOperator /}
-			{param title: 'Condition' /}
-			{param extraContent kind="html"}
-				{call .logicOperatorDropDown data="all" /}
-			{/param}
-		{/call}
-
-		{foreach $condition in $conditions}
-			{call .condition}
-				{param index: index($condition) /}
-				{param deleteIcon: $deleteIcon /}
-				{param logicOperator: $logicalOperator /}
+	<div class="ddl-form-body-content">
+		<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
+			{call .rulesHeader}
+				{param logicalOperator: $logicalOperator /}
+				{param title: 'Condition' /}
+				{param extraContent kind="html"}
+					{call .logicOperatorDropDown data="all" /}
+				{/param}
 			{/call}
-			{ifempty}
+
+			{foreach $condition in $conditions}
 				{call .condition}
-					{param index: 0 /}
+					{param index: index($condition) /}
 					{param deleteIcon: $deleteIcon /}
 					{param logicOperator: $logicalOperator /}
 				{/call}
-		{/foreach}
-	</ul>
+				{ifempty}
+					{call .condition}
+						{param index: 0 /}
+						{param deleteIcon: $deleteIcon /}
+						{param logicOperator: $logicalOperator /}
+					{/call}
+			{/foreach}
+		</ul>
 
-	{call .btnAddNewTimelineItem}
-		{param plusIcon: $plusIcon /}
-		{param cssClass: 'form-builder-rule-add-condition' /}
-	{/call}
-
-	<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
-		{call .rulesHeader}
-			{param logicalOperator: $logicalOperator /}
-			{param title: 'Actions' /}
+		{call .btnAddNewTimelineItem}
+			{param plusIcon: $plusIcon /}
+			{param cssClass: 'form-builder-rule-add-condition' /}
 		{/call}
 
-		{foreach $action in $actions}
-			{call .action}
-				{param index: index($action) /}
-				{param deleteIcon: $deleteIcon /}
+		<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
+			{call .rulesHeader}
+				{param logicalOperator: $logicalOperator /}
+				{param title: 'Actions' /}
 			{/call}
-			{ifempty}
+
+			{foreach $action in $actions}
 				{call .action}
-					{param index: 0 /}
+					{param index: index($action) /}
 					{param deleteIcon: $deleteIcon /}
 				{/call}
-		{/foreach}
-	</ul>
+				{ifempty}
+					{call .action}
+						{param index: 0 /}
+						{param deleteIcon: $deleteIcon /}
+					{/call}
+			{/foreach}
+		</ul>
 
-	{call .btnAddNewTimelineItem}
-		{param plusIcon: $plusIcon /}
-		{param cssClass: 'form-builder-rule-add-action' /}
-	{/call}
+		{call .btnAddNewTimelineItem}
+			{param plusIcon: $plusIcon /}
+			{param cssClass: 'form-builder-rule-add-action' /}
+		{/call}
 
-	<div class="liferay-ddl-form-rule-builder-footer">
-		<button class="btn btn-default btn-lg btn-primary ddl-button form-builder-rule-settings-save" type="button">
-			<span class="form-builder-rule-settings-save-label">{$strings.save}</span>
-		</button>
-		<button class="btn btn-cancel btn-default btn-lg btn-link form-builder-rule-settings-cancel" type="button">
-			<span class="lfr-btn-label">{$strings.cancel}</span>
-		</button>
+		<div class="liferay-ddl-form-rule-builder-footer">
+			<button class="btn btn-default btn-lg btn-primary ddl-button form-builder-rule-settings-save" type="button">
+				<span class="form-builder-rule-settings-save-label">{$strings.save}</span>
+			</button>
+			<button class="btn btn-cancel btn-default btn-lg btn-link form-builder-rule-settings-cancel" type="button">
+				<span class="lfr-btn-label">{$strings.cancel}</span>
+			</button>
+		</div>
 	</div>
 {/template}
 

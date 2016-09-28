@@ -34,18 +34,38 @@
 		{foreach $rule in $rules}
 			<li class="list-group-item">
 				<div class="clamp-horizontal list-group-item-content">
-					<p class="text-default">
-						If {call .condition} {param content: $rule.conditions[0].operands[0].type + ' ' + $rule.conditions[0].operands[0].value /} {/call}
+					<p class="form-builder-rule-builder-rule-description text-default">
+						<b>If </b>
+						{foreach $condition in $rule.conditions}
+							{call .condition}
+								{param operandType: $condition.operands[0].type /}
+								{param operandValue: $condition.operands[0].label /}
+							{/call}
 
-						<em> is {$rule.conditions[0].operator}, </em>
+							<b class="text-lowercase"><em> {$strings[$condition.operator]} </em></b>
 
-						{call .condition} {param content: $rule.conditions[0].operands[1].value /} {/call}
+							{call .condition}
+								{param operandType: $condition.operands[1].type /}
+								{param operandValue: $condition.operands[1].label /}
+							{/call}
+
+							{if not isLast($condition)}
+							, <br />
+							<b> and </b>
+							{/if}
+						{/foreach}
 
 						<br />
 
-						{call .action}
-							{param rule: $rule /}
-						{/call}
+						{foreach $action in $rule.actions}
+							{call .action}
+								{param action: $action /}
+							{/call}
+							{if not isLast($action)}
+							, <br />
+							<b> and </b>
+							{/if}
+						{/foreach}
 					</p>
 				</div>
 				<div class="list-group-item-field">
@@ -122,19 +142,21 @@
 /**
  * Prints Rules Conditions.
  *
- * @param content
+ * @param operandType
+ * @param operandValue
  */
 {template .condition autoescape="deprecated-contextual"}
+	<span>{$operandType} </span>
 	{call .badge}
-		{param content: $content /}
+		{param content: $operandValue /}
 	{/call}
 {/template}
 
 /**
  * Prints Rules Actions.
  *
- * @param rule
+ * @param action
  */
 {template .action autoescape="deprecated-contextual"}
-	<em>{$rule.actions[0].action}</em> {call .badge} {param content: $rule.actions[0].target /} {/call}
+	<b>{$action.action}</b> {call .badge} {param content: $action.target /} {/call}
 {/template}

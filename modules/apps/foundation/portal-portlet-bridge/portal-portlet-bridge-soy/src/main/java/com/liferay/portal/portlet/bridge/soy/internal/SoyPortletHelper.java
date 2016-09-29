@@ -16,20 +16,16 @@ package com.liferay.portal.portlet.bridge.soy.internal;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.InputStream;
+import com.liferay.portal.template.soy.utils.SoyJavaScriptRenderer;
 
 import java.net.URL;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -43,9 +39,8 @@ public class SoyPortletHelper {
 
 	public SoyPortletHelper(Bundle bundle) throws Exception {
 		_bundle = bundle;
-
-		_javaScriptTPL = getJavaScriptTPL();
 		_moduleName = getModuleName();
+		_soyJavaScriptRenderer = new SoyJavaScriptRenderer();
 	}
 
 	public String getPortletJavaScript(
@@ -56,26 +51,15 @@ public class SoyPortletHelper {
 			return StringPool.BLANK;
 		}
 
-		String contextString = createContextString(template, portletNamespace);
-
 		Set<String> requiredModules = getRequiredModules(
 			path, additionalRequiredModules);
 
-		return getPortletJavaScript(
-			contextString, portletNamespace,
-			getRequiredModulesString(requiredModules));
+		return _soyJavaScriptRenderer.getJavaScript(
+			template, portletNamespace, requiredModules);
 	}
 
 	public String getTemplateNamespace(String path) {
 		return path.concat(".render");
-	}
-
-	protected String createContextString(
-		Template template, String portletNamespace) {
-
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		return jsonSerializer.serializeDeep(template);
 	}
 
 	protected String getControllerName(String path) {
@@ -100,15 +84,6 @@ public class SoyPortletHelper {
 		return controllerName;
 	}
 
-	protected String getJavaScriptTPL() throws Exception {
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/bootstrap.js.tpl");
-
-		return StringUtil.read(inputStream);
-	}
-
 	protected String getModuleName() throws Exception {
 		URL url = _bundle.getEntry("package.json");
 
@@ -127,17 +102,6 @@ public class SoyPortletHelper {
 		}
 
 		return moduleName;
-	}
-
-	protected String getPortletJavaScript(
-		String context, String portletNamespace, String requiredModulesString) {
-
-		return StringUtil.replace(
-			_javaScriptTPL,
-			new String[] {
-				"$CONTEXT", "$PORTLET_NAMESPACE", "$REQUIRED_MODULES"
-			},
-			new String[] {context, portletNamespace, requiredModulesString});
 	}
 
 	protected Set<String> getRequiredModules(
@@ -159,27 +123,9 @@ public class SoyPortletHelper {
 		return requiredModules;
 	}
 
-	protected String getRequiredModulesString(Set<String> requiredModules) {
-		StringBundler sb = new StringBundler((requiredModules.size() * 4) - 1);
-
-		Iterator<String> iterator = requiredModules.iterator();
-
-		while (iterator.hasNext()) {
-			sb.append(StringPool.QUOTE);
-			sb.append(iterator.next());
-			sb.append(StringPool.QUOTE);
-
-			if (iterator.hasNext()) {
-				sb.append(StringPool.COMMA);
-			}
-		}
-
-		return sb.toString();
-	}
-
 	private final Bundle _bundle;
 	private final Map<String, String> _controllersMap = new HashMap<>();
-	private final String _javaScriptTPL;
 	private final String _moduleName;
+	private final SoyJavaScriptRenderer _soyJavaScriptRenderer;
 
 }

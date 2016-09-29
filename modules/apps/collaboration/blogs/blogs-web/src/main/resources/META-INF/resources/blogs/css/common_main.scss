@@ -62,6 +62,12 @@
 		color: #868896;
 		text-align: right;
 	}
+
+	.social-bookmarks {
+		.fb-like.fb_iframe_widget span {
+			vertical-align: top !important;
+		}
+	}
 }
 
 .firefox .portlet-blogs fieldset {

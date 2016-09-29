@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<taskdef classpath="${theme.builder.classpath}" resource="com/liferay/portal/tools/theme/builder/ant/taskdefs.properties" />
+
+	<target name="build-theme">
+		<build-theme
+			diffsDir="${build.theme.diffs.dir}"
+			name="${build.theme.name}"
+			if:set="build.theme.parent.dir"
+			outputDir="${build.theme.output.dir}"
+			parentDir="${build.theme.parent.dir}"
+			parentName="${build.theme.parent.name}"
+			templateExtension="${build.theme.template.extension}"
+			unstyledDir="${build.theme.unstyled.dir}"
+		/>
+
+		<build-theme
+			diffsDir="${build.theme.diffs.dir}"
+			name="${build.theme.name}"
+			outputDir="${build.theme.output.dir}"
+			parentName="${build.theme.parent.name}"
+			templateExtension="${build.theme.template.extension}"
+			unless:set="build.theme.parent.dir"
+			unstyledDir="${build.theme.unstyled.dir}"
+		/>
+	</target>
+</project>

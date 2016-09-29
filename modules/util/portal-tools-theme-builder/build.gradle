@@ -29,6 +29,7 @@ dependencies {
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
+	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 
 	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-dashboard")
 	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-profile")
@@ -45,8 +46,11 @@ liferay {
 }
 
 test {
+	dependsOn jar
 	dependsOn writeParentThemeDependencies
 	dependsOn writeTestThemeDependencies
+
+	systemProperty "theme.builder.classpath", jar.archivePath
 }
 
 writeParentThemeDependencies {

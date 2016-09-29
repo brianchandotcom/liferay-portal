@@ -23,6 +23,7 @@ configurations {
 		extendsFrom compile
 	}
 
+	mavenDistribution
 	parentThemes
 	testThemes
 }
@@ -30,6 +31,8 @@ configurations {
 dependencies {
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.13"
+
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-styled")
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
@@ -43,6 +46,7 @@ dependencies {
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+	testCompile project(":test:maven-executor")
 
 	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-dashboard")
 	testThemes project(":apps:foundation:frontend-theme:frontend-theme-user-profile")
@@ -59,11 +63,16 @@ liferay {
 }
 
 test {
-	dependsOn jar
+	dependsOn install
 	dependsOn writeParentThemeDependencies
 	dependsOn writeTestThemeDependencies
 
+	doFirst {
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+	}
+
 	systemProperty "theme.builder.classpath", jar.archivePath
+	systemProperty "theme.builder.version", jar.version
 }
 
 updateFileVersions {

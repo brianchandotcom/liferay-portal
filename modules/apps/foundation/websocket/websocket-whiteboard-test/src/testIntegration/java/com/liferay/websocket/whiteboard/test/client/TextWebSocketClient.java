@@ -28,10 +28,17 @@ import javax.websocket.Session;
  * @author Cristina González
  */
 @ClientEndpoint
-public class TestWebSocketClient {
+public class TextWebSocketClient {
 
-	public TestWebSocketClient(BlockingQueue<String> blockingQueue) {
+	public TextWebSocketClient(BlockingQueue<String> blockingQueue) {
 		_blockingQueue = blockingQueue;
+	}
+
+	@OnMessage
+	public void onMessage(String text, Session session)
+		throws InterruptedException {
+
+		_blockingQueue.put(text);
 	}
 
 	@OnOpen
@@ -39,14 +46,7 @@ public class TestWebSocketClient {
 		_session = session;
 	}
 
-	@OnMessage
-	public void onText(String text, Session session)
-		throws InterruptedException {
-
-		_blockingQueue.put(text);
-	}
-
-	public void sendText(String text) throws IOException {
+	public void sendMessage(String text) throws IOException {
 		Basic basic = _session.getBasicRemote();
 
 		basic.sendText(text);

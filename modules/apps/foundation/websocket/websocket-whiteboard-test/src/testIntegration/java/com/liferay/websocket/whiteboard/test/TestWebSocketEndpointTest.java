@@ -14,7 +14,7 @@
 
 package com.liferay.websocket.whiteboard.test;
 
-import com.liferay.websocket.whiteboard.test.client.TestWebSocketClient;
+import com.liferay.websocket.whiteboard.test.client.TextWebSocketClient;
 
 import java.net.URI;
 import java.net.URL;
@@ -47,7 +47,7 @@ public class TestWebSocketEndpointTest {
 
 		SynchronousQueue<String> synchronousQueue = new SynchronousQueue<>();
 
-		TestWebSocketClient testWebSocketClient = new TestWebSocketClient(
+		TextWebSocketClient testWebSocketClient = new TextWebSocketClient(
 			synchronousQueue);
 
 		StringBuilder sb = new StringBuilder();
@@ -62,7 +62,7 @@ public class TestWebSocketEndpointTest {
 
 		webSocketContainer.connectToServer(testWebSocketClient, uri);
 
-		testWebSocketClient.sendText("echo");
+		testWebSocketClient.sendMessage("echo");
 
 		Assert.assertEquals("echo", synchronousQueue.poll(1, TimeUnit.HOURS));
 	}

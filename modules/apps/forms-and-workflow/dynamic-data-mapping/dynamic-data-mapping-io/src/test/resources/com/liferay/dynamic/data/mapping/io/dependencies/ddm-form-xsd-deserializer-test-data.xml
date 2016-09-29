@@ -61,7 +61,7 @@
 			<entry name="tip"><![CDATA[]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="html" fieldNamespace="ddm" indexType="keyword" localizable="true" name="HTML4512" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-text-html" width="small">
+	<dynamic-element dataType="html" fieldNamespace="ddm" indexType="text" localizable="true" name="HTML4512" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-text-html" width="small">
 		<meta-data locale="en_US">
 			<entry name="label"><![CDATA[HTML]]></entry>
 			<entry name="predefinedValue"><![CDATA[]]></entry>

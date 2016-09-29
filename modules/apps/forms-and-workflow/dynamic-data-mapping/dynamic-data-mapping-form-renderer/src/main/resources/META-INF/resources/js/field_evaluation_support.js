@@ -5,8 +5,8 @@ AUI.add(
 		};
 
 		FieldEvaluationSupport.ATTRS = {
-			enableEvaluations: {
-				value: true
+			evaluable: {
+				value: false
 			},
 
 			evaluationTriggerEvents: {

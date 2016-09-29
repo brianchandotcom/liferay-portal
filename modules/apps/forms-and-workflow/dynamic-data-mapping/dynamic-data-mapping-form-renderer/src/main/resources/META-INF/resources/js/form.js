@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-ddm-form-renderer',
 	function(A) {
 		var AArray = A.Array;
-		var ALang = A.Lang;
 		var Renderer = Liferay.DDM.Renderer;
 
 		var TPL_CONTAINER = '<div class="lfr-ddm-form-container"></div>';
@@ -21,6 +20,10 @@ AUI.add(
 
 					definition: {
 						value: {}
+					},
+
+					enableEvaluations: {
+						value: true
 					},
 
 					layout: {

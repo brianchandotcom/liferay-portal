@@ -111,13 +111,12 @@ public class DDMFormTemplateContextFactoryImpl
 			containerId = StringUtil.randomId();
 		}
 
+		setEvaluableFieldNamesJSONArray(ddmForm);
+
 		templateContext.put("containerId", containerId);
+
 		templateContext.put(
 			"definition", _ddmFormJSONSerializer.serialize(ddmForm));
-
-
-		templateContext.put(
-			"evaluableFields", evaluableFieldNamesJSONArray.toString());
 
 		templateContext.put(
 			"evaluatorURL", getDDMFormContextProviderServletURL());
@@ -347,6 +346,17 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		return false;
+	}
+
+	protected void setEvaluableFieldNamesJSONArray(DDMForm ddmForm) {
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		for (String ddmFormFieldName : getEvaluableFieldNames(ddmForm)) {
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(ddmFormFieldName);
+
+			ddmFormField.setProperty("evaluable", true);
+		}
 	}
 
 	@Reference

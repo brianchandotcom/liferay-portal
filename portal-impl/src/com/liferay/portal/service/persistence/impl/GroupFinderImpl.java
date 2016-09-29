@@ -148,9 +148,6 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_USERS_GROUPS =
 		GroupFinder.class.getName() + ".joinByUsersGroups";
 
-	public static final String JOIN_BY_USERS_USER_GROUPS =
-		GroupFinder.class.getName() + ".joinByUsersUserGroups";
-
 	@Override
 	public int countByLayouts(
 		long companyId, long parentGroupId, boolean site) {
@@ -367,7 +364,7 @@ public class GroupFinderImpl
 			params4 = new LinkedHashMap<>(params1);
 
 			params4.remove("usersGroups");
-			params4.put("usersUserGroups", userId);
+			params4.put("groupsUserGroups", userId);
 
 			params2.put("classNameIds", groupOrganizationClassNameIds[1]);
 			params3.put("classNameIds", groupOrganizationClassNameIds[0]);
@@ -1413,9 +1410,6 @@ public class GroupFinderImpl
 		joinMap.put(
 			"usersGroups",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
-		joinMap.put(
-			"usersUserGroups",
-			_removeWhere(CustomSQLUtil.get(JOIN_BY_USERS_USER_GROUPS)));
 
 		_joinMap = joinMap;
 
@@ -1471,9 +1465,6 @@ public class GroupFinderImpl
 		whereMap.put(
 			"usersGroups",
 			_getCondition(CustomSQLUtil.get(JOIN_BY_USERS_GROUPS)));
-		whereMap.put(
-			"usersUserGroups",
-			_getCondition(CustomSQLUtil.get(JOIN_BY_USERS_USER_GROUPS)));
 
 		_whereMap = whereMap;
 

@@ -427,17 +427,6 @@
 				(Users_Groups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.GroupFinder.joinByUsersUserGroups">
-		<![CDATA[
-			INNER JOIN Groups_UserGroups
-				ON (Groups_UserGroups.groupId = Group_.groupId)
-			INNER JOIN Users_UserGroups
-				ON (Users_UserGroups.userGroupId = Groups_UserGroups.userGroupId)
-			WHERE
-				(Group_.liveGroupId = 0) AND
-				(Users_UserGroups.userId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNoPermissions">
 		<![CDATA[
 			SELECT

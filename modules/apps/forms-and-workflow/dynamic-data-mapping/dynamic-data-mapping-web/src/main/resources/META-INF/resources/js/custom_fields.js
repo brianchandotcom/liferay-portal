@@ -1413,6 +1413,10 @@ AUI.add(
 
 					fieldNamespace: {
 						value: 'ddm'
+					},
+
+					indexType: {
+						value: 'text'
 					}
 				},
 
@@ -1492,6 +1496,20 @@ AUI.add(
 			}
 		);
 
+		var DDMTextAreaField = A.Component.create(
+			{
+				ATTRS: {
+					indexType: {
+						value: 'text'
+					}
+				},
+
+				EXTENDS: A.FormBuilderTextAreaField,
+
+				NAME: 'textarea'
+			}
+		);
+
 		var plugins = [
 			DDMDateField,
 			DDMDecimalField,
@@ -1504,7 +1522,8 @@ AUI.add(
 			DDMNumberField,
 			DDMParagraphField,
 			DDMSeparatorField,
-			DDMHTMLTextField
+			DDMHTMLTextField,
+			DDMTextAreaField
 		];
 
 		plugins.forEach(

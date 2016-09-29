@@ -222,7 +222,15 @@ AUI.add(
 
 						var rulesList = instance.get('boundingBox').one('.liferay-ddl-form-rule-rules-list-container');
 
-						rulesList.setHTML(ddl.rule_list({kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'), rules: rules, strings: instance.get('strings')}));
+						rulesList.setHTML(
+							ddl.rule_list(
+								{
+									kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'),
+									rules: rules,
+									strings: instance.get('strings')
+								}
+							)
+						);
 					}
 				}
 			}

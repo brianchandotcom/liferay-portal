@@ -329,7 +329,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a navigation list item component for navigating app view entries.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-aui:nav-item</code>]]>. Creates a navigation list item component for navigating app view entries.</description>
 		<name>app-view-navigation-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewNavigationEntryTag</tag-class>
 		<body-content>empty</body-content>

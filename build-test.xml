@@ -4137,6 +4137,8 @@ go]]></replacevalue>
 							for (Integer propertyLocation : propertyLocations) {
 								String testrayTestcaseName = testcasePropertyLocations.get(propertyLocation);
 
+								lines.add(propertyLocation, "<property name=\"testray.case.type.name\" value=\"Automated Functional Test\" />");
+
 								if (testcaseFailures.contains(testrayTestcaseName)) {
 									lines.add(propertyLocation, "<property name=\"testray.testcase.status\" value=\"failed\" />");
 								}

@@ -191,7 +191,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Map<String, String> getStartProperties() {
-		return getStartProperties(this);
+		return getTempMap("start.properties");
 	}
 
 	@Override
@@ -306,7 +306,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Map<String, String> getStopProperties() {
-		return getStopProperties(this);
+		return getTempMap("stop.properties");
 	}
 
 	@Override
@@ -640,6 +640,27 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
+	protected String getJSONMapURL(TopLevelBuild topLevelBuild) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(topLevelBuild.getMaster());
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("/");
+		sb.append(getJobName());
+		sb.append("/");
+		String jobVariant = getParameterValue("JOB_VARIANT");
+
+		if ((jobVariant != null) && !jobVariant.isEmpty()) {
+			sb.append(jobVariant);
+			sb.append("/");
+		}
+
+		return sb.toString();
+	}
+
 	protected Map<String, String> getParametersFromBuildJSONObject(
 			JSONObject buildJSONObject)
 		throws Exception {
@@ -757,6 +778,57 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return Collections.emptyMap();
+	}
+
+	protected Map<String, String> getTempMap(String mapName) {
+		Build buildCur = this;
+
+		while (!(buildCur instanceof TopLevelBuild)) {
+			buildCur = buildCur.getParentBuild();
+
+			if (buildCur == null) {
+				throw new RuntimeException("Incomplete Build tree");
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/");
+		sb.append(getJSONMapURL((TopLevelBuild)buildCur));
+		sb.append(mapName);
+
+		try {
+			JSONObject tempMapJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
+
+			if (tempMapJSONObject.has("properties")) {
+				JSONArray propertiesJSONArray =
+					tempMapJSONObject.getJSONArray("properties");
+
+				Map<String, String> tempMap =
+					new HashMap<>(propertiesJSONArray.length());
+
+				for (int i = 0; i < propertiesJSONArray.length(); i++) {
+					JSONObject property = propertiesJSONArray.getJSONObject(i);
+
+					String key = property.getString("name");
+					String value = property.optString("value");
+
+					if ((value != null) && !value.isEmpty()) {
+						tempMap.put(key, value);
+					}
+				}
+
+				return tempMap;
+			}
+
+			return Collections.emptyMap();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}		
+		
 	}
 
 	protected void loadParametersFromBuildJSONObject() throws Exception {
@@ -880,7 +952,7 @@ public abstract class BaseBuild implements Build {
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>" +
 			"\\d+)/?");
 	protected static final Pattern downstreamBuildURLPattern = Pattern.compile(
-		"\\'.*\\' started at (?<url>.+)\\.");
+		"[\\'\\\"].*[\\'\\\"] started at (?<url>.+)\\.");
 	protected static final Pattern invocationURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
 			"buildWithParameters\\?(?<queryString>.*)");

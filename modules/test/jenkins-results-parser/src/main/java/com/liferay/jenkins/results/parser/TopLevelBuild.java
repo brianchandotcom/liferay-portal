@@ -14,15 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.net.URL;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import org.json.JSONObject;
 
 /**
  * @author Kevin Yen
@@ -68,71 +61,6 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	protected ExecutorService getExecutorService() {
 		return Executors.newFixedThreadPool(100);
-	}
-
-	protected String getJSONMapURL(Build targetBuild) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(getMaster());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-		sb.append(getBuildNumber());
-		sb.append("/");
-		sb.append(targetBuild.getJobName());
-		sb.append("/");
-		String jobVariant = targetBuild.getParameterValue("JOB_VARIANT");
-
-		if ((jobVariant != null) && !jobVariant.isEmpty()) {
-			sb.append(jobVariant);
-			sb.append("/");
-		}
-
-		return sb.toString();
-	}
-
-	@Override
-	protected Map<String, String> getStartProperties(Build targetBuild) {
-		return getTempMap("start.properties", targetBuild);
-	}
-
-	@Override
-	protected Map<String, String> getStopProperties(Build targetBuild) {
-		return getTempMap("stop.properties", targetBuild);
-	}
-
-	protected Map<String, String> getTempMap(
-		String mapName, Build targetBuild) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("http://cloud-10-0-0-31/osb-jenkins-web/map/");
-		sb.append(getJSONMapURL(targetBuild));
-		sb.append(mapName);
-
-		try {
-			URL url = JenkinsResultsParserUtil.encode(new URL(sb.toString()));
-
-			JSONObject tempMapJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(url.toString());
-
-			Set<?> keyset = tempMapJSONObject.keySet();
-
-			Map<String, String> tempMap = new HashMap<>(keyset.size());
-
-			for (Object key : tempMapJSONObject.keySet()) {
-				String value = tempMapJSONObject.optString(key.toString());
-
-				if ((value != null) && !value.isEmpty()) {
-					tempMap.put(key.toString(), value);
-				}
-			}
-
-			return tempMap;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	private long _updateDuration;

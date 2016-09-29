@@ -3553,7 +3553,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders a PNG image with the source given for the <![CDATA[<code>image</code>]]> attribute.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Renders a PNG image with the source given for the <![CDATA[<code>image</code>]]> attribute.</description>
 		<name>png-image</name>
 		<tag-class>com.liferay.taglib.ui.PngImageTag</tag-class>
 		<body-content>JSP</body-content>

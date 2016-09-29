@@ -25,7 +25,7 @@ dependencies {
 
 	provided group: "com.beust", name: "jcommander", version: "1.48"
 	provided group: "net.coobird", name: "thumbnailator", transitive: false, version: "0.4.8"
-	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"

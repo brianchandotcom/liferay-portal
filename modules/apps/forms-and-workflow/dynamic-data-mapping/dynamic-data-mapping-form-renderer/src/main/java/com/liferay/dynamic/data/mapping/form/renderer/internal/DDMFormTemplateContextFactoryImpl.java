@@ -115,8 +115,6 @@ public class DDMFormTemplateContextFactoryImpl
 		templateContext.put(
 			"definition", _ddmFormJSONSerializer.serialize(ddmForm));
 
-		JSONArray evaluableFieldNamesJSONArray =
-			getEvaluableFieldNamesJSONArray(ddmForm);
 
 		templateContext.put(
 			"evaluableFields", evaluableFieldNamesJSONArray.toString());
@@ -213,16 +211,6 @@ public class DDMFormTemplateContextFactoryImpl
 		}
 
 		return evaluableFieldNames;
-	}
-
-	protected JSONArray getEvaluableFieldNamesJSONArray(DDMForm ddmForm) {
-		JSONArray fieldsArray = _jsonFactory.createJSONArray();
-
-		for (String ddmFormFieldName : getEvaluableFieldNames(ddmForm)) {
-			fieldsArray.put(ddmFormFieldName);
-		}
-
-		return fieldsArray;
 	}
 
 	protected Map<String, String> getLanguageStringsMap(

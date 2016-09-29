@@ -54,65 +54,51 @@ AUI.add(
 						var form = instance.get('form');
 
 						if (enabled && form) {
-							var fieldName = trigger.get('fieldName');
-
-							var evaluable = true;
-
-							if (fieldName) {
-								var evaluableFields = form.get('evaluableFields');
-
-								if (evaluableFields && evaluableFields[fieldName] == undefined) {
-									evaluable = false;
-								}
+							if (instance.isEvaluating()) {
+								instance.stop();
 							}
 
-							if (evaluable) {
-								if (instance.isEvaluating()) {
-									instance.stop();
+							instance._evaluating = true;
+
+							instance.fire(
+								'start',
+								{
+									trigger: trigger
 								}
+							);
 
-								instance._evaluating = true;
+							instance._queue.add(trigger);
 
-								instance.fire(
-									'start',
-									{
-										trigger: trigger
-									}
-								);
+							instance.fire(
+								'evaluate',
+								{
+									callback: function(result) {
+										instance._evaluating = false;
 
-								instance._queue.add(trigger);
+										var triggers = {};
 
-								instance.fire(
-									'evaluate',
-									{
-										callback: function(result) {
-											instance._evaluating = false;
+										while (instance._queue.size() > 0) {
+											var next = instance._queue.next();
 
-											var triggers = {};
-
-											while (instance._queue.size() > 0) {
-												var next = instance._queue.next();
-
-												if (!triggers[next.get('name')]) {
-													instance.fire(
-														'evaluationEnded',
-														{
-															result: result,
-															trigger: next
-														}
-													);
-												}
-
-												triggers[next.get('name')] = true;
+											if (!triggers[next.get('name')]) {
+												instance.fire(
+													'evaluationEnded',
+													{
+														result: result,
+														trigger: next
+													}
+												);
 											}
 
-											if (callback) {
-												callback.apply(instance, arguments);
-											}
+											triggers[next.get('name')] = true;
+										}
+
+										if (callback) {
+											callback.apply(instance, arguments);
 										}
 									}
-								);
-							}
+								}
+							);
 						}
 					},
 

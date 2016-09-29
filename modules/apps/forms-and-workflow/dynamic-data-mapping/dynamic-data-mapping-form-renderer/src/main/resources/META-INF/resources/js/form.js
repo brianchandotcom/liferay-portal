@@ -19,28 +19,6 @@ AUI.add(
 						value: ''
 					},
 
-					evaluableFields: {
-						setter: function(fieldNamesJSONString) {
-							var fieldNamesArray = JSON.parse(fieldNamesJSONString);
-
-							var fieldsMap = fieldNamesArray.reduce(
-								function(map, obj) {
-									if (ALang.isString(obj)) {
-										map[obj] = obj;
-									}
-									else {
-										map[obj.get('name')] = obj;
-									}
-
-									return map;
-								},
-								{}
-							);
-
-							return fieldsMap;
-						}
-					},
-
 					definition: {
 						value: {}
 					},

@@ -190,6 +190,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Map<String, String> getStartProperties() {
+		return getStartProperties(this);
+	}
+
+	@Override
 	public String getStatus() {
 		return _status;
 	}
@@ -297,6 +302,11 @@ public abstract class BaseBuild implements Build {
 		}
 
 		throw new RuntimeException("Unknown status: " + status + ".");
+	}
+
+	@Override
+	public Map<String, String> getStopProperties() {
+		return getStopProperties(this);
 	}
 
 	@Override
@@ -727,6 +737,26 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return null;
+	}
+
+	protected Map<String, String> getStartProperties(Build targetBuild) {
+		BaseBuild parentBuild = (BaseBuild)_parentBuild;
+
+		if (parentBuild != null) {
+			return parentBuild.getStartProperties(targetBuild);
+		}
+
+		return Collections.emptyMap();
+	}
+
+	protected Map<String, String> getStopProperties(Build targetBuild) {
+		BaseBuild parentBuild = (BaseBuild)_parentBuild;
+
+		if (parentBuild != null) {
+			return parentBuild.getStopProperties(targetBuild);
+		}
+
+		return Collections.emptyMap();
 	}
 
 	protected void loadParametersFromBuildJSONObject() throws Exception {

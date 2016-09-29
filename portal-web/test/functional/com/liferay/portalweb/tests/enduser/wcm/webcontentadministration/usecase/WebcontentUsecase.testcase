@@ -305,7 +305,7 @@
 			<var name="dmDocumentTitle" value="Document_1.mp3" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Link#URL" value1="URL" />
+		<execute macro="DMNavigator#gotoURLDetail" />
 
 		<var method="selenium#getElementValue('//input[contains(@id,\'url\')]')" name="dmDocumentURL" />
 

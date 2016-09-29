@@ -312,6 +312,16 @@
 	min-height: 0;
 }
 
+.firefox .knowledge-base-portlet {
+	fieldset {
+		display: table-cell;
+	}
+
+	.kbarticle-navigation a {
+		word-wrap: break-word;
+	}
+}
+
 /* Skin */
 
 .knowledge-base-portlet {

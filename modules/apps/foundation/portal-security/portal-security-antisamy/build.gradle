@@ -25,22 +25,16 @@ processResources {
 	dependsOn processSanitizerConfiguration
 }
 
-
-
 processSanitizerConfiguration {
-
 	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
-
-	onlyIf {
-		!sanitizerConfigurationFile.exists()
-	}
 
 	filter {
 		String line ->
+
 		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
 			line = line.replace "20000", "200000"
 		}
-		if (line.contains('<tag-rules>')) {
+		else if (line.contains('<tag-rules>')) {
 			line = """
 				|	<allowed-empty-tags>
 				|		<literal-list>
@@ -88,6 +82,10 @@ processSanitizerConfiguration {
 	}
 
 	into sanitizerConfigurationFile.parentFile
+
+	onlyIf {
+		!sanitizerConfigurationFile.exists()
+	}
 
 	rename {
 		sanitizerConfigurationFile.name

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Tools Theme Builder
+Bundle-SymbolicName: com.liferay.portal.tools.theme.builder
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.tools.theme.builder
+Main-Class: com.liferay.portal.tools.theme.builder.ThemeBuilder
+-includeresource:\
+	@commons-cli-[0-9]*.jar,\
+	@thumbnailator-[0-9]*.jar

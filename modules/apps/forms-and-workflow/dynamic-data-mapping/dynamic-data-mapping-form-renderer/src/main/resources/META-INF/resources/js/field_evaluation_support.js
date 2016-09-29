@@ -34,7 +34,7 @@ AUI.add(
 
 				var evaluator = instance.get('evaluator');
 
-				if (evaluator && instance.get('rendered')) {
+				if (evaluator && instance.get('rendered') && instance.get('evaluable')) {
 					evaluator.evaluate(instance);
 				}
 			},

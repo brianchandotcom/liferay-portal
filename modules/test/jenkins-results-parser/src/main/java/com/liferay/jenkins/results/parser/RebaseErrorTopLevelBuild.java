@@ -55,32 +55,34 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 	public String getResult() {
 		String baseResult = super.getResult();
 
-		if (baseResult == null) {
-			return null;
+		if ((baseResult == null) || baseResult.equals("SUCCESS")) {
+			return baseResult;
 		}
 
 		if (baseResult.equals("FAILURE")) {
-			StringBuilder sb = new StringBuilder();
+			Map<String, String> stopProperties = getStopProperties();
 
-			sb.append("tests/");
-			sb.append(getJobName());
+			if (stopProperties.containsKey("TOP_LEVEL_GITHUB_COMMENT_ID")) {
+				StringBuilder sb = new StringBuilder();
 
-			String jenkinsJobVariant = getParameterValue("JENKINS_JOB_VARIANT");
+				sb.append("http://mirrors-no-cache.lax.liferay.com/");
+				sb.append("github.com/liferay/liferay-jenkins-ee/tests/");
+				sb.append(getJobName());
 
-			if (jenkinsJobVariant != null) {
-				sb.append("/");
-				sb.append(jenkinsJobVariant);
-			}
+				String jenkinsJobVariant =
+					getParameterValue("JENKINS_JOB_VARIANT");
 
-			sb.append("/report.html");
+				if (jenkinsJobVariant != null) {
+					sb.append("/");
+					sb.append(jenkinsJobVariant);
+				}
 
-			File file = new File(sb.toString());
+				sb.append("/report.html");
 
-			if (file.exists()) {
 				try {
-					String content = JenkinsResultsParserUtil.read(file);
-
-					Element rootElement = getElementFromString(content);
+					Element rootElement = 
+						getElementFromString(
+							JenkinsResultsParserUtil.toString(sb.toString()));
 
 					List<String> expectedCommentTokens = getCommentTokens(
 						rootElement);
@@ -93,10 +95,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					sb.append("liferay-portal-ee");
 					sb.append("/issues/comments/");
 
-					Map<String, String> startProperties = getStartProperties();
-
 					sb.append(
-						startProperties.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
+						stopProperties.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
 
 					JSONObject jsonObject = getJSONObjectFromURL(sb.toString());
 
@@ -135,7 +135,9 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 					}
 
 					if (matchesTemplate) {
-						return "SUCCESS";
+						result = "SUCCESS";
+
+						return result;
 					}
 				}
 				catch (Exception e) {
@@ -145,6 +147,10 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 						e);
 				}
 			}
+
+			result = null;
+
+			return result;
 		}
 
 		return baseResult;

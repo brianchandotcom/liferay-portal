@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -110,6 +111,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.portlet.PortletConfig;
@@ -230,21 +232,32 @@ public class MainServlet extends ActionServlet {
 			_log.debug("Verify JVM configuration");
 		}
 
-		String defaultCharsetName = StringPool.DEFAULT_CHARSET_NAME;
+		if (_log.isWarnEnabled()) {
+			if (!StringPool.DEFAULT_CHARSET_NAME.startsWith("UTF-")) {
+				StringBundler sb = new StringBundler(4);
 
-		if (!defaultCharsetName.startsWith("UTF-")) {
-			_log.error(
-				"Default JVM charset configuration [" + defaultCharsetName +
-				"] is not UTF, please review JVM file.encoding configuration");
-		}
+				sb.append("Default JVM charset \"");
+				sb.append(StringPool.DEFAULT_CHARSET_NAME);
+				sb.append("\" is not UTF, please review JVM file.encoding ");
+				sb.append("property");
 
-		String userTimeZone = System.getProperty("user.timezone");
+				_log.warn(sb.toString());
+			}
 
-		if (!"UTC".equals(userTimeZone) && !"GMT".equals(userTimeZone)) {
-			_log.error(
-				"Default JVM timezone configuration [" + userTimeZone + "] " +
-				"is not UTC or GMT, please review JVM user.timezone " +
-				"configuration");
+			String userTimeZone = System.getProperty("user.timezone");
+
+			if (!Objects.equals("UTC", userTimeZone) &&
+				!Objects.equals("GMT", userTimeZone)) {
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Default JVM timezone \"");
+				sb.append(userTimeZone);
+				sb.append("\" is not UTC or GMT, please review JVM ");
+				sb.append("user.timezone property");
+
+				_log.warn(sb.toString());
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

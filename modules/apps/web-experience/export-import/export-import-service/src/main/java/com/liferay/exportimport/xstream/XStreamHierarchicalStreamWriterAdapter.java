@@ -21,7 +21,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 /**
  * @author Daniel Kocsis
  */
-class XStreamHierarchicalStreamWriterAdapter
+public class XStreamHierarchicalStreamWriterAdapter
 	implements XStreamHierarchicalStreamWriter {
 
 	public XStreamHierarchicalStreamWriterAdapter(
@@ -31,18 +31,13 @@ class XStreamHierarchicalStreamWriterAdapter
 	}
 
 	@Override
-	public void startNode(String name) {
-		_hierarchicalStreamWriter.startNode(name);
-	}
-
-	@Override
 	public void addAttribute(String key, String value) {
 		_hierarchicalStreamWriter.addAttribute(key, value);
 	}
 
 	@Override
-	public void setValue(String value) {
-		_hierarchicalStreamWriter.setValue(value);
+	public void close() {
+		_hierarchicalStreamWriter.close();
 	}
 
 	@Override
@@ -56,8 +51,13 @@ class XStreamHierarchicalStreamWriterAdapter
 	}
 
 	@Override
-	public void close() {
-		_hierarchicalStreamWriter.close();
+	public void setValue(String value) {
+		_hierarchicalStreamWriter.setValue(value);
+	}
+
+	@Override
+	public void startNode(String name) {
+		_hierarchicalStreamWriter.startNode(name);
 	}
 
 	@Override

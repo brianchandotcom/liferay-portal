@@ -113,7 +113,13 @@ AUI.add(
 						}
 
 						if (!Lang.isUndefined(checked)) {
-							instance._updateCheckedNodes(node, checked);
+							instance._updateCheckedNodes(
+								{
+									node: node,
+									checked: checked,
+									forceChildrenState: true
+								}
+							);
 						}
 					},
 
@@ -227,7 +233,12 @@ AUI.add(
 
 						instance._updateSessionTreeCheckedState(treeId + 'SelectedNode', plid, newVal);
 
-						instance._updateCheckedNodes(target, newVal);
+						instance._updateCheckedNodes(
+							{
+								node:target,
+								checked: newVal
+							}
+						);
 					},
 
 					_onSelectableNodeChildrenChange: function(event) {
@@ -236,7 +247,13 @@ AUI.add(
 						var node = event.node;
 
 						if (node.get('checked')) {
-							instance._updateCheckedNodes(node, true);
+							instance._updateCheckedNodes(
+								{
+									node: node,
+									checked: true,
+									forceChildrenState: true
+								}
+							);
 						}
 
 						instance._restoreCheckedNode(node);
@@ -280,8 +297,12 @@ AUI.add(
 						node.get('children').forEach(A.bind(instance._restoreCheckedNode, instance));
 					},
 
-					_updateCheckedNodes: function(node, state) {
+					_updateCheckedNodes: function(nodeConfig) {
 						var instance = this;
+
+						var node = nodeConfig.node;
+						var checked = nodeConfig.checked;
+						var forceChildrenState = nodeConfig.forceChildrenState;
 
 						var plid = instance.get(STR_HOST).extractPlid(node);
 
@@ -293,7 +314,11 @@ AUI.add(
 						var localCheckedIndex = localCheckedNodes.indexOf(plid);
 						var localUncheckedIndex = localUncheckedNodes.indexOf(plid);
 
-						if (state) {
+						if (checked === undefined) {
+							checked = (checkedIndex > -1) ? true : false;
+						}
+
+						if (checked) {
 							if (checkedIndex === -1) {
 								checkedNodes.push(plid);
 							}
@@ -316,15 +341,23 @@ AUI.add(
 							}
 						}
 
-						node.set('checked', state);
+						node.set('checked', checked);
 
 						var children = node.get('children');
 
 						if (children.length) {
+							var childrenChecked = (forceChildrenState) ? undefined : checked;
+
 							A.each(
 								children,
 								function(child) {
-									instance._updateCheckedNodes(child, state);
+									instance._updateCheckedNodes(
+										{
+											node: child,
+											checked: childrenChecked,
+											forceChildrenState: forceChildrenState
+										}
+									);
 								}
 							);
 						}

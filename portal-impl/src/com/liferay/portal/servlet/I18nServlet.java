@@ -137,7 +137,7 @@ public class I18nServlet extends HttpServlet {
 		String path = GetterUtil.getString(request.getPathInfo());
 
 		if (Validator.isNull(path)) {
-			return null;
+			path = "/";
 		}
 
 		String i18nLanguageId = request.getServletPath();

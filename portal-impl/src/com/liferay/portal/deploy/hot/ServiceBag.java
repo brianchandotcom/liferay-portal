@@ -17,6 +17,7 @@ package com.liferay.portal.deploy.hot;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
@@ -41,8 +42,11 @@ public class ServiceBag<V> {
 		if (!(previousService instanceof ServiceWrapper)) {
 			Class<?> previousServiceClass = previousService.getClass();
 
-			ClassLoader previousServiceClassLoader =
-				previousServiceClass.getClassLoader();
+			AggregateClassLoader previousServiceClassLoader =
+				new AggregateClassLoader(previousServiceClass.getClassLoader());
+
+			previousServiceClassLoader.addClassLoader(
+				IdentifiableOSGiService.class.getClassLoader());
 
 			previousService = ProxyUtil.newProxyInstance(
 				previousServiceClassLoader,
@@ -55,8 +59,14 @@ public class ServiceBag<V> {
 			serviceWrapper.setWrappedService((V)previousService);
 		}
 
+		AggregateClassLoader newServiceClassLoader = new AggregateClassLoader(
+			serviceTypeClass.getClassLoader());
+
+		newServiceClassLoader.addClassLoader(
+			IdentifiableOSGiService.class.getClassLoader());
+
 		Object nextTarget = ProxyUtil.newProxyInstance(
-			serviceTypeClass.getClassLoader(),
+			newServiceClassLoader,
 			new Class<?>[] {
 				serviceTypeClass, ServiceWrapper.class,
 				IdentifiableOSGiService.class

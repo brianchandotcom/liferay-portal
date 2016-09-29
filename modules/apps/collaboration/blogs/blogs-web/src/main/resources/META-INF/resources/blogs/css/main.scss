@@ -45,6 +45,14 @@
 
 	.entry-info {
 		margin-top: 15px;
+
+		.social-bookmarks {
+			float: right;
+
+			ul {
+				margin: 0;
+			}
+		}
 	}
 
 	.edit-actions {
@@ -321,6 +329,17 @@
 				&:hover {
 					text-decoration: none;
 				}
+			}
+		}
+
+		.social-bookmarks {
+			display: inline-block;
+			position: absolute;
+			right: 35px;
+			top: 0;
+
+			ul {
+				margin-top: 6px;
 			}
 		}
 	}

@@ -24,7 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 7.0.3, with no direct replacement
  */
+@Deprecated
 public class QuickAccessTag extends IncludeTag {
 
 	public void setContentId(String contentId) {

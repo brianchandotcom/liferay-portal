@@ -227,6 +227,27 @@ public class MainServlet extends ActionServlet {
 		}
 
 		if (_log.isDebugEnabled()) {
+			_log.debug("Verify JVM configuration");
+		}
+
+		String defaultCharsetName = StringPool.DEFAULT_CHARSET_NAME;
+
+		if (!defaultCharsetName.startsWith("UTF-")) {
+			_log.error(
+				"Default JVM charset configuration [" + defaultCharsetName +
+				"] is not UTF, please review JVM file.encoding configuration");
+		}
+
+		String userTimeZone = System.getProperty("user.timezone");
+
+		if (!"UTC".equals(userTimeZone) && !"GMT".equals(userTimeZone)) {
+			_log.error(
+				"Default JVM timezone configuration [" + userTimeZone + "] " +
+				"is not UTC or GMT, please review JVM user.timezone " +
+				"configuration");
+		}
+
+		if (_log.isDebugEnabled()) {
 			_log.debug("Process startup events");
 		}
 

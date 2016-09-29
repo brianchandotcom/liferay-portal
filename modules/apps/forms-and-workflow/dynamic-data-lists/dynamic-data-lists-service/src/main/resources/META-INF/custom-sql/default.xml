@@ -90,15 +90,23 @@
 			SELECT
 				{DDLRecordSet.*}
 			FROM
-				DDLRecordSet
-			WHERE
-				(DDLRecordSet.companyId = ?) AND
-				(DDLRecordSet.groupId = ?) AND
-				(DDLRecordSet.scope = ?) AND
 				(
-					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
+					SELECT
+						DISTINCT DDLRecordSet.recordSetId
+					FROM
+						DDLRecordSet
+					WHERE
+						(DDLRecordSet.companyId = ?) AND
+						(DDLRecordSet.groupId = ?) AND
+						(DDLRecordSet.scope = ?) AND
+						(
+							(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
+						)
 				)
+				TEMP_TABLE
+					INNER JOIN DDLRecordSet ON
+						TEMP_TABLE.recordSetId = DDLRecordSet.recordSetId
 			ORDER BY
 				DDLRecordSet.recordSetId DESC
 		]]>

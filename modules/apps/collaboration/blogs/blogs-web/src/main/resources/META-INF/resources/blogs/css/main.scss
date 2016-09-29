@@ -47,7 +47,13 @@
 		margin-top: 15px;
 
 		.social-bookmarks {
-			float: right;
+			margin-top: 1em;
+			text-align: center;
+
+			@include respond-to(desktop) {
+				float: right;
+				margin-top: 0;
+			}
 
 			ul {
 				margin: 0;
@@ -333,10 +339,13 @@
 		}
 
 		.social-bookmarks {
-			display: inline-block;
-			position: absolute;
-			right: 35px;
-			top: 0;
+
+			@include respond-to(desktop) {
+				display: inline-block;
+				position: absolute;
+				right: 35px;
+				top: 0;
+			}
 
 			ul {
 				margin-top: 6px;

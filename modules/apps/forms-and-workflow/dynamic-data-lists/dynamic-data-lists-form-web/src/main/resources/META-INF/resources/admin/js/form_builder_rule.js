@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var CSS_CAN_REMOVE_ITEM = A.getClassName('can', 'remove', 'item');
 
-		var ddl = window.ddl;
+		var SoyTemplateUtil = Liferay.DDL.SoyTemplateUtil;
 
 		var textOperators = [
 			{
@@ -396,7 +396,9 @@ AUI.add(
 
 						var ruleSettingsContainer;
 
-						ruleSettingsContainer = ddl.rule.settings(
+						var settingsTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule.settings');
+
+						ruleSettingsContainer = settingsTemplateRenderer(
 							{
 								actions: rule ? rule.actions : [],
 								conditions: rule ? rule.conditions : [],
@@ -449,8 +451,10 @@ AUI.add(
 
 						var index = instance._actionsIndexes[instance._actionsIndexes.length - 1] + 1;
 
+						var actionTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule.action');
+
 						actionListNode.append(
-							ddl.rule.action(
+							actionTemplateRenderer(
 								{
 									deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
 									index: index
@@ -468,8 +472,10 @@ AUI.add(
 
 						var index = instance._conditionsIndexes[instance._conditionsIndexes.length - 1] + 1;
 
+						var conditionTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule.condition');
+
 						conditionListNode.append(
-							ddl.rule.condition(
+							conditionTemplateRenderer(
 								{
 									deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
 									index: index,

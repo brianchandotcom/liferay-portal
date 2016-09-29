@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ddl-form-builder-rule-builder',
 	function(A) {
-		var ddl = window.ddl;
+		var SoyTemplateUtil = Liferay.DDL.SoyTemplateUtil;
 
 		var FormBuilderRuleBuilder = A.Component.create(
 			{
@@ -50,7 +50,9 @@ AUI.add(
 					syncUI: function() {
 						var instance = this;
 
-						var rulesBuilder = ddl.rule_builder(
+						var ruleBuilderTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule_builder');
+
+						var rulesBuilder = ruleBuilderTemplateRenderer(
 							{
 								plusIcon: Liferay.Util.getLexiconIconTpl('plus', 'icon-monospaced'),
 								strings: instance.get('strings')
@@ -222,8 +224,10 @@ AUI.add(
 
 						var rulesList = instance.get('boundingBox').one('.liferay-ddl-form-rule-rules-list-container');
 
+						var ruleListTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule_list');
+
 						rulesList.setHTML(
-							ddl.rule_list(
+							ruleListTemplateRenderer(
 								{
 									kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'),
 									rules: rules,

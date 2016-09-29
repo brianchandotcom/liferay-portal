@@ -2825,7 +2825,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a select input component with yes or no options.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a select input component with yes or no options.</description>
 		<name>input-select</name>
 		<tag-class>com.liferay.taglib.ui.InputSelectTag</tag-class>
 		<body-content>JSP</body-content>

@@ -78,6 +78,7 @@
 		</if>
 
 		<execute function="Type" locator1="TextInput#CITY" value1="${userAddressCity}" />
+
 		<execute function="Click" locator1="Radio#PRIMARY" />
 		<execute function="Check" locator1="Checkbox#MAILING" />
 
@@ -90,7 +91,9 @@
 
 	<command name="addCommentViaMyAccount">
 		<execute function="Click" locator1="NavListItem#COMMENTS" />
+
 		<execute function="Type" locator1="MyAccount#COMMENTS_FIELD" value1="${userIntroduction}" />
+
 		<execute function="Click" locator1="Button#SAVE" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -1117,9 +1120,13 @@
 
 	<command name="deleteProfilePictureViaMyAccount">
 		<execute function="Click" locator1="Button#DELETE" />
+
 		<execute function="Pause" value1="1000" />
+
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1208,6 +1215,7 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Select" locator1="CPUsersandorganizationsUser#LANGUAGE_SELECT" value1="${languageName}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -1574,6 +1582,7 @@
 		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
+
 		<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
 		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
@@ -1706,6 +1715,7 @@
 			<condition function="IsElementPresent" locator1="TextInput#ANSWER" />
 			<then>
 				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
 				<execute macro="Button#clickSave" />
 
 				<execute function="AssertElementNotPresent" locator1="Button#SAVE" value1="Save" />

@@ -635,7 +635,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		validate(groupId, className, classTypeId, categoryIds, tagNames);
+		validate(
+			groupId, className, classPK, classTypeId, categoryIds, tagNames);
 
 		AssetEntry entry = assetEntryPersistence.fetchByC_C(
 			classNameId, classPK);
@@ -970,7 +971,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	@Override
 	public void validate(
-			long groupId, String className, long classTypePK,
+			long groupId, String className, long classPK, long classTypePK,
 			long[] categoryIds, String[] tagNames)
 		throws PortalException {
 
@@ -983,8 +984,18 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 					className)) {
 
 			assetEntryValidator.validate(
-				groupId, className, classTypePK, categoryIds, tagNames);
+				groupId, className, classPK, classTypePK, categoryIds,
+				tagNames);
 		}
+	}
+
+	@Override
+	public void validate(
+			long groupId, String className, long classTypePK,
+			long[] categoryIds, String[] tagNames)
+		throws PortalException {
+
+		validate(groupId, className, 0L, classTypePK, categoryIds, tagNames);
 	}
 
 	/**

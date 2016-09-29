@@ -347,31 +347,17 @@ public class GroupFinderImpl
 			doUnion = true;
 		}
 
-		long[] groupOrganizationClassNameIds =
-			_getGroupOrganizationClassNameIds();
-
 		if (doUnion) {
 			params2 = new LinkedHashMap<>(params1);
-
-			params2.remove("usersGroups");
-			params2.put("groupOrg", userId);
-
 			params3 = new LinkedHashMap<>(params1);
-
-			params3.remove("usersGroups");
-			params3.put("groupsOrgs", userId);
-
 			params4 = new LinkedHashMap<>(params1);
 
-			params4.remove("usersGroups");
-			params4.put("groupsUserGroups", userId);
-
-			params2.put("classNameIds", groupOrganizationClassNameIds[1]);
-			params3.put("classNameIds", groupOrganizationClassNameIds[0]);
-			params4.put("classNameIds", groupOrganizationClassNameIds[0]);
+			_populateUnionParams(
+				userId, null, params1, params2, params3, params4);
 		}
-
-		params1.put("classNameIds", _getGroupOrganizationClassNameIds());
+		else {
+			params1.put("classNameIds", _getGroupOrganizationClassNameIds());
+		}
 
 		String sqlKey = _buildSQLCacheKey(
 			obc, params1, params2, params3, params4);

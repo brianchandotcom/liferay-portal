@@ -291,7 +291,7 @@ public class ConfigurationImpl
 		// method fixes the weird behavior by returning properties with the
 		// correct values.
 
-		_properties = new Properties();
+		Properties properties = new Properties();
 
 		ComponentProperties componentProperties = getComponentProperties();
 
@@ -299,10 +299,12 @@ public class ConfigurationImpl
 			componentProperties.getProperties();
 
 		for (String key : componentPropertiesProperties.stringPropertyNames()) {
-			_properties.setProperty(key, componentProperties.getString(key));
+			properties.setProperty(key, componentProperties.getString(key));
 		}
 
-		return _properties;
+		_properties = properties;
+
+		return properties;
 	}
 
 	@Override

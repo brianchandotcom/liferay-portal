@@ -80,13 +80,13 @@
 	</command>
 
 	<command name="assignMembersOrganizationsCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -112,13 +112,13 @@
 	</command>
 
 	<command name="assignMembersSitesCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -144,13 +144,13 @@
 	</command>
 
 	<command name="assignMembersUserGroupsCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE_LINK" value1="${roleTitle}" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 
@@ -176,13 +176,13 @@
 	</command>
 
 	<command name="assignRegRoleCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_TITLE_LINK" value1="${roleTitle}" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 
 		<execute function="Click" locator1="Button#PLUS" />
 
@@ -283,9 +283,9 @@
 
 		<execute function="Click" locator1="Button#SUBMIT" />
 
-		<var name="key_roleTitle" value="${roleTitle}" />
+		<var name="key_itemName" value="${roleTitle}" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -293,15 +293,15 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleTitle}" />
+		<var name="key_itemName" value="${roleTitle}" />
 
-		<execute function="AssertClick" locator1="Roles#ROLE_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -359,16 +359,18 @@
 		<if>
 			<isset var="roleUser" />
 			<then>
-				<var name="key_roleUser" value="${roleUser}" />
+				<var name="key_itemName" value="${roleUser}" />
 
-				<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_USER_TITLE" value1="${roleUser}" />
+				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleUser}" />
 
-				<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleTitle}" />
+				<var name="key_itemName" value="${roleTitle}" />
 
-				<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleTitle}" />
+
+				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 			</else>
 		</if>
 
@@ -880,9 +882,9 @@
 		<execute function="Click" locator1="Roles#ROLE_SEARCH_BUTTON" />
 
 		<while>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Roles#ROLE_TABLE_ACTIONS_DEFAULT" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="ListGroupItem#ITEM_ACTIONS_DEFAULT" />
 			<then>
-				<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS_DEFAULT" />
+				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS_DEFAULT" />
 
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
@@ -892,13 +894,13 @@
 	</command>
 
 	<command name="unassignMembersOrganizationsCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -922,13 +924,13 @@
 	</command>
 
 	<command name="unassignMembersSitesCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -954,13 +956,13 @@
 	</command>
 
 	<command name="unassignMembersUserGroupsCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -984,13 +986,13 @@
 	</command>
 
 	<command name="unassignRegRoleCP">
-		<var name="key_roleTitle" value="${roleTitle}" />
-
 		<execute function="Type#sendKeys" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${roleTitle}" />
 
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<var name="key_itemName" value="${roleTitle}" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
 
@@ -1026,11 +1028,11 @@
 			</else>
 		</if>
 
-		<var name="key_roleTitle" value="${roleTitle}" />
+		<var name="key_itemName" value="${roleTitle}" />
 
-		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleTitle}" />
 
-		<execute function="Click" locator1="Roles#ROLE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -1066,11 +1068,11 @@
 			</else>
 		</if>
 
-		<var name="key_roleTitle" value="${roleTitle}" />
+		<var name="key_itemName" value="${roleTitle}" />
 
 		<execute function="AssertAlertNotPresent" />
-		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_TITLE" value1="${roleTitle}" />
-		<execute function="AssertTextEquals" locator1="Roles#ROLE_TABLE_DESCRIPTION" value1="${roleDescription}" />
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_DESCRIPTION" value1="${roleDescription}" />
 	</command>
 
 	<command name="viewPermissionCP">

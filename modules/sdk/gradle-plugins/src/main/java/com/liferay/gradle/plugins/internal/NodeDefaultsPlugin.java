@@ -57,6 +57,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			project, NodeExtension.class);
 
 		nodeExtension.setNodeVersion(_NODE_VERSION);
+		nodeExtension.setNpmVersion(_NPM_VERSION);
 
 		String npmArgs = GradleUtil.getProperty(
 			project, "nodejs.npm.args", (String)null);
@@ -204,6 +205,8 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private static final String _NODE_VERSION = "6.6.0";
+
+	private static final String _NPM_VERSION = "4.5.0";
 
 	private static final String _SASS_BINARY_SITE_ARG = "--sass-binary-site=";
 

@@ -144,8 +144,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected void updateStructuresClassNameId() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
-				"update DDMStructure set classNameId = ? where " +
-					"classNameId = ?")) {
+				"update DDMStructure set classNameId = ? where classNameId = " +
+					"?")) {
 
 			ps.setLong(
 				1,

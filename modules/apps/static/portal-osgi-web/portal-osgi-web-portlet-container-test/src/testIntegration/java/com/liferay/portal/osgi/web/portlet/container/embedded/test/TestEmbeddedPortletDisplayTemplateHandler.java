@@ -51,8 +51,8 @@ public class TestEmbeddedPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "/com/liferay/portal/osgi/web/portlet/container/embedded/test/" +
-			"template/dependencies/portlet-display-templates.xml";
+		return "/com/liferay/portal/osgi/web/portlet/container/embedded/test" +
+			"/template/dependencies/portlet-display-templates.xml";
 	}
 
 }

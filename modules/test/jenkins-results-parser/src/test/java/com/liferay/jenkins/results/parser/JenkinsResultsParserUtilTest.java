@@ -161,8 +161,8 @@ public class JenkinsResultsParserUtilTest
 
 		if (axisVariable != null) {
 			urlString =
-				"https://${hostName}.liferay.com/job/${jobName}/" +
-					"AXIS_VARIABLE=${axis}/${buildNumber}/";
+				"https://${hostName}.liferay.com/job/${jobName}" +
+					"/AXIS_VARIABLE=${axis}/${buildNumber}/";
 
 			urlString = replaceToken(urlString, "axis", axisVariable);
 		}

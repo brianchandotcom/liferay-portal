@@ -142,8 +142,8 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/asset/publisher/web/portlet/template/" +
-			"dependencies/portlet-display-templates.xml";
+		return "com/liferay/asset/publisher/web/portlet/template/dependencies" +
+			"/portlet-display-templates.xml";
 	}
 
 }

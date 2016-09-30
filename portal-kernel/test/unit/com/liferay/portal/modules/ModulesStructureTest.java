@@ -59,20 +59,20 @@ public class ModulesStructureTest {
 
 		final String gitRepoBuildGradleTemplate = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/modules/dependencies/" +
-				"git_repo_build_gradle.tmpl");
+			"com/liferay/portal/modules/dependencies" +
+				"/git_repo_build_gradle.tmpl");
 		final String gitRepoGitAttributesTemplate = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/modules/dependencies/" +
-				"git_repo_gitattributes.tmpl");
+			"com/liferay/portal/modules/dependencies" +
+				"/git_repo_gitattributes.tmpl");
 		final String gitRepoGradlePropertiesTemplate = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/modules/dependencies/" +
-				"git_repo_gradle_properties.tmpl");
+			"com/liferay/portal/modules/dependencies" +
+				"/git_repo_gradle_properties.tmpl");
 		final String gitRepoSettingsGradleTemplate = StringUtil.read(
 			classLoader,
-			"com/liferay/portal/modules/dependencies/" +
-				"git_repo_settings_gradle.tmpl");
+			"com/liferay/portal/modules/dependencies" +
+				"/git_repo_settings_gradle.tmpl");
 
 		Files.walkFileTree(
 			_modulesDirPath,

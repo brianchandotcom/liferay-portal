@@ -47,8 +47,8 @@ public class JSONWebServiceTracker
 
 		_serviceTracker = ServiceTrackerFactory.open(
 			bundleContext,
-			"(&(json.web.service.context.name=*)(json.web.service." +
-				"context.path=*))",
+			"(&(json.web.service.context.name=*)(json.web.service.context." +
+				"path=*))",
 			this);
 	}
 

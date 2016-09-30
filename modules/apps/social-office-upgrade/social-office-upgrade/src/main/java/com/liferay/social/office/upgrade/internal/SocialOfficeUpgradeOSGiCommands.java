@@ -135,8 +135,8 @@ public class SocialOfficeUpgradeOSGiCommands {
 		actionableDynamicQuery.performActions();
 
 		System.out.printf(
-			"[socialOffice:removeTasksPortlet] %d Tasks portlet " +
-				"preferences deleted.%n",
+			"[socialOffice:removeTasksPortlet] %d Tasks portlet preferences " +
+				"deleted.%n",
 			atomicInteger.get());
 	}
 

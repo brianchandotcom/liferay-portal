@@ -91,8 +91,8 @@ public class MentionsMatcherTest {
 
 		while (iterator1.hasNext()) {
 			String message = String.format(
-				"The second iterator has fewer elements than the first " +
-					"one (exhausted at position %d)",
+				"The second iterator has fewer elements than the first one " +
+					"(exhausted at position %d)",
 				pos);
 
 			Assert.assertTrue(message, iterator2.hasNext());

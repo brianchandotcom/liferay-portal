@@ -290,8 +290,8 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update SyncDLObject set extraSettings = ? where " +
-						"typePK = ?");
+					"update SyncDLObject set extraSettings = ? where typePK " +
+						"= ?");
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {

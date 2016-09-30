@@ -680,8 +680,8 @@ public class TranslationToXHTMLTest {
 	@Test
 	public void testParseTableImagesNested() throws Exception {
 		Assert.assertEquals(
-			"<table><tr><th>H1</th></tr><tr><td><img " +
-				"src=\"image.png\" alt=\"Image\"/></td></tr></table>",
+			"<table><tr><th>H1</th></tr><tr><td><img src=\"image.png\" " +
+				"alt=\"Image\"/></td></tr></table>",
 			translate("table-4.creole"));
 	}
 

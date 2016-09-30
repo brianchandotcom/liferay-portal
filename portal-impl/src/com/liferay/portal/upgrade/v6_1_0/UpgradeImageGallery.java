@@ -347,8 +347,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 	protected Map<String, Long> getBitwiseValues(String name) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select actionId, bitwiseValue from ResourceAction " +
-					"where name = ?")) {
+				"select actionId, bitwiseValue from ResourceAction where " +
+					"name = ?")) {
 
 			ps.setString(1, name);
 

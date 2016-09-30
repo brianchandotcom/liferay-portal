@@ -82,8 +82,8 @@ public class WorkflowContextUpgradeHelper {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					String.format(
-						"Workflow context Java class name renamed " +
-							"from \"%s\" to \"%s\"",
+						"Workflow context Java class name renamed from " +
+							"\"%s\" to \"%s\"",
 						oldPortalJavaClassName, newPortalJavaClassName));
 			}
 		}

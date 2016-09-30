@@ -101,8 +101,8 @@ public class InstancePool {
 				if (logErrors) {
 					_log.error(
 						"Unable to load " + className +
-							" with the portal class loader or the " +
-								"current context class loader",
+							" with the portal class loader or the current " +
+								"context class loader",
 						e2);
 				}
 			}

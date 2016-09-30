@@ -170,8 +170,8 @@ public class BrowserSnifferImplTest {
 
 		mockHttpServletRequest.addHeader(
 			HttpHeaders.USER_AGENT,
-			"IE 6 var4, , 6.0, mozilla/5.0 (compatible; msie 6.0; windows " +
-				"nt 5.1)");
+			"IE 6 var4, , 6.0, mozilla/5.0 (compatible; msie 6.0; windows nt " +
+				"5.1)");
 
 		Assert.assertFalse(
 			_browserSnifferImpl.isMobile(mockHttpServletRequest));

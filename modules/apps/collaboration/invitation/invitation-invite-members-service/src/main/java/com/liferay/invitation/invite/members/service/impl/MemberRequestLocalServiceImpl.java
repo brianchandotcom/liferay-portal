@@ -374,14 +374,14 @@ public class MemberRequestLocalServiceImpl
 		if (memberRequest.getReceiverUserId() > 0) {
 			body = StringUtil.read(
 				getClassLoader(),
-				"com/liferay/invitation/invite/members/dependencies/" +
-					"existing_user_body.tmpl");
+				"com/liferay/invitation/invite/members/dependencies" +
+					"/existing_user_body.tmpl");
 		}
 		else {
 			body = StringUtil.read(
 				getClassLoader(),
-				"com/liferay/invitation/invite/members/dependencies/" +
-					"new_user_body.tmpl");
+				"com/liferay/invitation/invite/members/dependencies" +
+					"/new_user_body.tmpl");
 		}
 
 		subject = StringUtil.replace(

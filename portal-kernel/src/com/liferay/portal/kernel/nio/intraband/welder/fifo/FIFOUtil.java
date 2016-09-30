@@ -37,8 +37,8 @@ public class FIFOUtil {
 
 			if (result != 0) {
 				throw new Exception(
-					"Unable to create FIFO with command \"mkfifo\", " +
-						"external process returned " + result);
+					"Unable to create FIFO with command \"mkfifo\", external " +
+						"process returned " + result);
 			}
 		}
 		finally {

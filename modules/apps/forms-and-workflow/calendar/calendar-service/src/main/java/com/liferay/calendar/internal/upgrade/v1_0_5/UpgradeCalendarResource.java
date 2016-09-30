@@ -81,8 +81,8 @@ public class UpgradeCalendarResource extends UpgradeProcess {
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select Calendar.calendarId from Calendar, CalendarResource " +
-					"where CalendarResource.classNameId = ? " +
-						"and CalendarResource.userId = ?")) {
+					"where CalendarResource.classNameId = ? and " +
+						"CalendarResource.userId = ?")) {
 
 			ps.setLong(1, groupClassNameId);
 			ps.setLong(2, defaultUserId);

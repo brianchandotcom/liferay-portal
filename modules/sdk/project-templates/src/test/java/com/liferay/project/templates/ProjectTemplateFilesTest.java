@@ -61,8 +61,8 @@ public class ProjectTemplateFilesTest {
 	@Test
 	public void testProjectTemplateFiles() throws IOException {
 		String gitIgnoreTemplate = FileTestUtil.read(
-			"com/liferay/project/templates/dependencies/" +
-				"archetype_resources_gitignore.tmpl");
+			"com/liferay/project/templates/dependencies" +
+				"/archetype_resources_gitignore.tmpl");
 
 		for (Path projectTemplateDirPath : _projectTemplateDirPaths) {
 			_testProjectTemplateFiles(

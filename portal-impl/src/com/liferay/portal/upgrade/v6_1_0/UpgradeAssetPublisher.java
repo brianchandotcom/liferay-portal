@@ -38,8 +38,8 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 
 	protected long getIGImageFileEntryType(long companyId) throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select fileEntryTypeId from DLFileEntryType " +
-					"where name = ? AND companyId = ?")) {
+				"select fileEntryTypeId from DLFileEntryType where name = ? " +
+					"AND companyId = ?")) {
 
 			ps.setString(1, DLFileEntryTypeConstants.NAME_IG_IMAGE);
 			ps.setLong(2, companyId);

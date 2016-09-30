@@ -38,11 +38,10 @@ public class NettyUtilAdvice {
 	}
 
 	@Around(
-		"execution(public static void com.liferay.portal.fabric.netty." +
-			"util.NettyUtil.scheduleCancellation(io.netty.channel." +
-				"Channel, com.liferay.portal.kernel.concurrent." +
-					"NoticeableFuture, long)) && args(channel, " +
-						"noticeableFuture, timeout)"
+		"execution(public static void com.liferay.portal.fabric.netty.util." +
+			"NettyUtil.scheduleCancellation(io.netty.channel.Channel, " +
+				"com.liferay.portal.kernel.concurrent.NoticeableFuture, " +
+					"long)) && args(channel, noticeableFuture, timeout)"
 	)
 	public <T> void scheduleCancellation(
 		Channel channel, final NoticeableFuture<T> noticeableFuture,

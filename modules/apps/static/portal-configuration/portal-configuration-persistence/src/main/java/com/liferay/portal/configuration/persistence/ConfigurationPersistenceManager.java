@@ -340,8 +340,8 @@ public class ConfigurationPersistenceManager
 
 			preparedStatement = prepareStatement(
 				connection,
-				"select dictionary from Configuration_ where " +
-					"configurationId = ?");
+				"select dictionary from Configuration_ where configurationId " +
+					"= ?");
 
 			preparedStatement.setString(1, pid);
 
@@ -404,8 +404,8 @@ public class ConfigurationPersistenceManager
 
 			preparedStatement = prepareStatement(
 				connection,
-				"select count(*) from Configuration_ where " +
-					"configurationId = ?");
+				"select count(*) from Configuration_ where configurationId = " +
+					"?");
 
 			preparedStatement.setString(1, pid);
 

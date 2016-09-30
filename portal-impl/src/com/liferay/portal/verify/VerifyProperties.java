@@ -331,8 +331,8 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.upload.UploadServletRequestImpl.temp.dir"
 		},
 		new String[] {
-			"com.liferay.util.servlet.fileupload.LiferayFileItem." +
-				"threshold.size",
+			"com.liferay.util.servlet.fileupload.LiferayFileItem.threshold." +
+				"size",
 			"com.liferay.portal.upload.LiferayFileItem.threshold.size"
 		},
 		new String[] {

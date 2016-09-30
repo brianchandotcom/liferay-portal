@@ -177,9 +177,8 @@ public class ScriptingExecutorExtender {
 			if (!_scriptingLanguages.contains(scriptingLanguage)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"No " + scriptingLanguage + " executors available " +
-							"to process scripts from " +
-								bundle.getSymbolicName());
+						"No " + scriptingLanguage + " executors available to " +
+							"process scripts from " + bundle.getSymbolicName());
 				}
 
 				return null;

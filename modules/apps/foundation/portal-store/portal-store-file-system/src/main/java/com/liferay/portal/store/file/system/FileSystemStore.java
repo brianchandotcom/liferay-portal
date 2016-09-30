@@ -728,8 +728,8 @@ public class FileSystemStore extends BaseStore {
 						fileSystemRootDir, advancedFileSystemRootDir)) {
 
 					throw new IllegalArgumentException(
-						"File system root directory and advanced file " +
-							"system root directory are identical",
+						"File system root directory and advanced file system " +
+							"root directory are identical",
 						new FileSystemStoreRootDirException());
 				}
 			}

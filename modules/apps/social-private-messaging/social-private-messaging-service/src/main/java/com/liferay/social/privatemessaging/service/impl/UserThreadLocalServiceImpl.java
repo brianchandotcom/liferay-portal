@@ -363,8 +363,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 						new CompanyServiceSettingsLocator(
 							companyId,
 							"com.liferay.social.privatemessaging." +
-								"configuration." +
-									"PrivateMessagingConfiguration"));
+								"configuration.PrivateMessagingConfiguration"));
 			}
 			catch (ConfigurationException ce) {
 				_log.error("Unable to get private message configuration", ce);

@@ -666,8 +666,8 @@ public class XhtmlTranslationVisitorTest {
 	@Test
 	public void testParseTableImagesNested() {
 		Assert.assertEquals(
-			"<table><tr><th>H1</th></tr><tr><td><img " +
-				"src=\"image.png\" alt=\"Image\"/></td></tr></table>",
+			"<table><tr><th>H1</th></tr><tr><td><img src=\"image.png\" " +
+				"alt=\"Image\"/></td></tr></table>",
 			translate("table-4.creole"));
 	}
 

@@ -313,10 +313,10 @@ public class InstrumentationAgent {
 			(classData.getLineCoverageRate() != 1.0)) {
 
 			System.out.printf(
-				"%n[Whip] %s is not fully covered.%n[Whip]Branch " +
-					"coverage rate : %.2f, line coverage rate : %.2f.%n" +
-						"[Whip]Please rerun test with -Djunit.code." +
-							"coverage=true to see coverage report.%n",
+				"%n[Whip] %s is not fully covered.%n[Whip]Branch coverage " +
+					"rate : %.2f, line coverage rate : %.2f.%n[Whip]Please " +
+						"rerun test with -Djunit.code.coverage=true to see " +
+							"coverage report.%n",
 				classData.getName(), classData.getBranchCoverageRate(),
 				classData.getLineCoverageRate());
 

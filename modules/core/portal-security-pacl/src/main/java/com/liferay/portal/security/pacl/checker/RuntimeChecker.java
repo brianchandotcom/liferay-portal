@@ -434,8 +434,8 @@ public class RuntimeChecker extends BaseChecker {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Allowing access to environment variables that match " +
-						"the regular expression " + environmentVariable);
+					"Allowing access to environment variables that match the " +
+						"regular expression " + environmentVariable);
 			}
 		}
 	}

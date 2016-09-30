@@ -84,8 +84,8 @@ public class SessionClicks {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Session clicks has attempted to exceed the maximum " +
-						"size allowed for keys or values with {key=" + key +
+					"Session clicks has attempted to exceed the maximum size " +
+						"allowed for keys or values with {key=" + key +
 							", value=" + value + "}");
 			}
 

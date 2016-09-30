@@ -823,8 +823,8 @@ public class MainServlet extends ActionServlet {
 									"/WEB-INF/liferay-layout-templates.xml")),
 							HttpUtil.URLtoString(
 								servletContext.getResource(
-									"/WEB-INF/" +
-										"liferay-layout-templates-ext.xml"))
+									"/WEB-INF" +
+										"/liferay-layout-templates-ext.xml"))
 						};
 
 						List<LayoutTemplate> layoutTemplates =

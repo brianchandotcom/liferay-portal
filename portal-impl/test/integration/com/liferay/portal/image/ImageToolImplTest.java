@@ -148,8 +148,8 @@ public class ImageToolImplTest {
 
 	protected File getFile(String fileName) {
 		fileName =
-			"portal-impl/test/integration/com/liferay/portal/image/" +
-				"dependencies/" + fileName;
+			"portal-impl/test/integration/com/liferay/portal/image" +
+				"/dependencies/" + fileName;
 
 		return new File(fileName);
 	}

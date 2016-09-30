@@ -198,8 +198,8 @@ public class FIFOUtilTest {
 
 			Assert.assertTrue(
 				message.startsWith(
-					"Unable to create FIFO with command \"mkfifo\", " +
-						"external process returned "));
+					"Unable to create FIFO with command \"mkfifo\", external " +
+						"process returned "));
 		}
 	}
 

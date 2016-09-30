@@ -14,12 +14,14 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
 import java.util.List;
 
@@ -28,12 +30,24 @@ import java.util.List;
  */
 public class PlusStatementCheck extends AbstractCheck {
 
+	public static final String MSG_COMBINE_LITERAL_STRINGS =
+		"literal.string.combine";
+
+	public static final String MSG_INVALID_END_CHARACTER =
+		"end.character.invalid";
+
 	public static final String MSG_INVALID_START_CHARACTER =
 		"start.character.invalid";
+
+	public static final String MSG_MOVE_LITERAL_STRING = "literal.string.move";
 
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {TokenTypes.PLUS};
+	}
+
+	public void setMaxLineLength(int maxLineLength) {
+		_maxLineLength = maxLineLength;
 	}
 
 	@Override
@@ -42,15 +56,27 @@ public class PlusStatementCheck extends AbstractCheck {
 			return;
 		}
 
-		String literalString1 = _getLiteralString(detailAST.getFirstChild());
+		DetailAST firstChild = detailAST.getFirstChild();
+
+		String literalString1 = _getLiteralString(firstChild);
 
 		if (literalString1 == null) {
 			return;
 		}
 
-		String literalString2 = _getLiteralString(detailAST.getLastChild());
+		DetailAST lastChild = detailAST.getLastChild();
+
+		String literalString2 = _getLiteralString(lastChild);
 
 		if (literalString2 == null) {
+			return;
+		}
+
+		if (firstChild.getLineNo() == lastChild.getLineNo()) {
+			log(
+				firstChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				literalString1, literalString2);
+
 			return;
 		}
 
@@ -58,34 +84,133 @@ public class PlusStatementCheck extends AbstractCheck {
 			return;
 		}
 
-		char c1 = literalString1.charAt(literalString1.length() - 2);
-		char c2 = literalString2.charAt(1);
+		if (literalString1.endsWith(StringPool.SLASH)) {
+			log(
+				detailAST.getLineNo(), MSG_INVALID_END_CHARACTER,
+				literalString1.charAt(literalString1.length() - 1));
+		}
 
-		if ((c2 == CharPool.SPACE) ||
-			((c1 != CharPool.SPACE) &&
-			 ((c2 == CharPool.COLON) || (c2 == CharPool.DASH) ||
-			  (c2 == CharPool.PERIOD) || (c2 == CharPool.SEMICOLON)))) {
+		if (literalString2.startsWith(StringPool.SPACE) ||
+			(!literalString1.endsWith(StringPool.SPACE) &&
+			 literalString2.matches("^[-:;.].*"))) {
 
-			log(detailAST.getLineNo() + 1, MSG_INVALID_START_CHARACTER, c2);
+			log(
+				lastChild.getLineNo(), MSG_INVALID_START_CHARACTER,
+				literalString2.charAt(0));
+
+			return;
+		}
+
+		String[] lines = getLines();
+
+		String line1 = lines[lastChild.getLineNo() - 2];
+		String line2 = lines[lastChild.getLineNo() - 1];
+
+		int tabCount1 = _getLeadingTabCount(line1);
+		int tabCount2 = _getLeadingTabCount(line2);
+
+		if (tabCount1 == tabCount2) {
+			return;
+		}
+
+		int lineLength1 = CommonUtils.lengthExpandedTabs(
+			line1, line1.length(), getTabWidth());
+
+		String trimmedLine2 = StringUtil.trim(line2);
+
+		if ((lineLength1 + trimmedLine2.length() - 4) <= _maxLineLength) {
+			log(
+				lastChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				literalString1, literalString2);
+
+			return;
+		}
+
+		DetailAST parentAST = detailAST.getParent();
+
+		if ((parentAST.getType() == TokenTypes.PLUS) &&
+			((lineLength1 + literalString2.length()) <= _maxLineLength)) {
+
+			log(
+				detailAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				literalString1, literalString2);
+
+			return;
+		}
+
+		int pos = _getStringBreakPos(
+			literalString1, literalString2, (_maxLineLength - lineLength1));
+
+		if (pos != -1) {
+			log(
+				lastChild.getLineNo(), MSG_MOVE_LITERAL_STRING,
+				literalString2.substring(0, pos + 1));
 		}
 	}
 
-	private String _getLiteralString(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.STRING_LITERAL) {
-			return detailAST.getText();
+	private int _getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
 		}
 
-		if ((detailAST.getType() == TokenTypes.PLUS) &&
-			(detailAST.getChildCount() == 2)) {
+		return leadingTabCount;
+	}
+
+	private String _getLiteralString(DetailAST detailAST) {
+		String literalString = null;
+
+		if (detailAST.getType() == TokenTypes.STRING_LITERAL) {
+			literalString = detailAST.getText();
+		}
+		else if ((detailAST.getType() == TokenTypes.PLUS) &&
+				 (detailAST.getChildCount() == 2)) {
 
 			DetailAST lastChild = detailAST.getLastChild();
 
 			if (lastChild.getType() == TokenTypes.STRING_LITERAL) {
-				return lastChild.getText();
+				literalString = lastChild.getText();
 			}
 		}
 
+		if (literalString != null) {
+			return literalString.substring(1, literalString.length() - 1);
+		}
+
 		return null;
+	}
+
+	private int _getStringBreakPos(String s1, String s2, int i) {
+		if (s2.startsWith(StringPool.SLASH)) {
+			int pos = s2.lastIndexOf(StringPool.SLASH, i);
+
+			if (pos > 0) {
+				return pos - 1;
+			}
+
+			return -1;
+		}
+
+		if (s1.endsWith(StringPool.DASH)) {
+			return Math.max(
+				s2.lastIndexOf(StringPool.DASH, i - 1),
+				s2.lastIndexOf(StringPool.SPACE, i - 1));
+		}
+
+		if (s1.endsWith(StringPool.PERIOD)) {
+			return Math.max(
+				s2.lastIndexOf(StringPool.PERIOD, i - 1),
+				s2.lastIndexOf(StringPool.SPACE, i - 1));
+		}
+
+		if (s1.endsWith(StringPool.SPACE)) {
+			return s2.lastIndexOf(StringPool.SPACE, i - 1);
+		}
+
+		return -1;
 	}
 
 	private boolean _isRegexPattern(DetailAST detailAST) {
@@ -128,5 +253,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private int _maxLineLength = 80;
 
 }

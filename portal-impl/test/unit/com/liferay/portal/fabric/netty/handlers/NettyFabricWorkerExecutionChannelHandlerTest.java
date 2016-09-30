@@ -1218,8 +1218,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 			LogRecord logRecord = logRecords.get(0);
 
 			Assert.assertEquals(
-				"Unable to send back fabric worker result " +
-					"{id=0, result=, throwable=null}",
+				"Unable to send back fabric worker result {id=0, result=, " +
+					"throwable=null}",
 				logRecord.getMessage());
 		}
 

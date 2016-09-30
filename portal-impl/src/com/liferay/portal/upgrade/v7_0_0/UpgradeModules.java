@@ -58,8 +58,8 @@ public class UpgradeModules extends UpgradeProcess {
 		throws SQLException {
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select serviceComponentId from ServiceComponent " +
-					"where buildNamespace = ?")) {
+				"select serviceComponentId from ServiceComponent where " +
+					"buildNamespace = ?")) {
 
 			ps.setString(1, buildNamespace);
 

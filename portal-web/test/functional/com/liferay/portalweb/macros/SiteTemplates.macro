@@ -152,6 +152,15 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
+	<command name="editDescription">
+		<execute macro="SiteTemplates#gotoSettingsCP">
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is the updated site template description" />
+		<execute macro="Button#clickSave" />
+	</command>
+
 	<command name="editTemplateStatusCP">
 		<execute macro="SiteTemplates#gotoSettingsCP">
 			<var name="siteTemplateName" value="${siteTemplateName}" />
@@ -280,6 +289,12 @@
 
 			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRITPION" value1="${DescriptionTranslation}" />
 		</for>
+	</command>
+
+	<command name="viewDescription">
+		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRITPION" value1="${siteTemplateDescription}">
+			<var name="key_siteTemplateDescription" value="${siteTemplateDescription}" />
+		</execute>
 	</command>
 
 	<command name="viewEditCP">

@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <div class="container-fluid-1280 event-display-portlet">
-	<liferay-portlet:actionURL portletConfiguration="true" var="configurationActionURL" />
+	<liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
 	<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />

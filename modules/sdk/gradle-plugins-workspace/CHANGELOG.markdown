@@ -22,6 +22,17 @@ applied:
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.45.
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 
+## 1.1.1 - 2016-09-30
+
+### Added
+- [LPS-68293]: Add the [Liferay CDN](https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public)
+as default repository in WAR projects. This behavior can be disabled by setting
+the `liferay.workspace.wars.default.repository.enabled` property in
+`gradle.properties` to `false`.
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.47.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-67352]: https://issues.liferay.com/browse/LPS-66853
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

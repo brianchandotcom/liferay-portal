@@ -34,17 +34,7 @@ AUI.add(
 						setter: function(val) {
 							return val.toUpperCase();
 						},
-						validator: function(val) {
-							var instance = this;
-
-							if (A.Lang.isString(val)) {
-								var valUpperCase = val.toUpperCase();
-
-								return valUpperCase === instance.get('strings').or || val.toUpperCase() === instance.get('strings').and;
-							}
-
-							return false;
-						},
+						validator: '_isValidLogicOperator',
 						value: Liferay.Language.get('or')
 					},
 					strings: {
@@ -74,8 +64,8 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._conditions = {};
 						instance._actions = {};
+						instance._conditions = {};
 					},
 
 					bindUI: function() {
@@ -83,16 +73,13 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
-						boundingBox.delegate('click', A.bind(instance._handleSaveClick, instance), '.form-builder-rule-settings-save');
-						boundingBox.delegate('click', A.bind(instance._handleCancelClick, instance), '.form-builder-rule-settings-cancel');
-
-						boundingBox.delegate('click', A.bind(instance._handleDeleteConditionClick, instance), '.condition-card-delete');
-						boundingBox.delegate('click', A.bind(instance._handleDeleteActionClick, instance), '.action-card-delete');
-
-						boundingBox.delegate('click', A.bind(instance._handleAddConditionClick, instance), '.form-builder-rule-add-condition');
 						boundingBox.delegate('click', A.bind(instance._handleAddActionClick, instance), '.form-builder-rule-add-action');
-
+						boundingBox.delegate('click', A.bind(instance._handleAddConditionClick, instance), '.form-builder-rule-add-condition');
+						boundingBox.delegate('click', A.bind(instance._handleCancelClick, instance), '.form-builder-rule-settings-cancel');
+						boundingBox.delegate('click', A.bind(instance._handleDeleteActionClick, instance), '.action-card-delete');
+						boundingBox.delegate('click', A.bind(instance._handleDeleteConditionClick, instance), '.condition-card-delete');
 						boundingBox.delegate('click', A.bind(instance._handleLogicOperatorChange, instance), '.logic-operator');
+						boundingBox.delegate('click', A.bind(instance._handleSaveClick, instance), '.form-builder-rule-settings-save');
 
 						instance.after(instance._toggleShowRemoveButton, instance, '_addAction');
 						instance.after(instance._toggleShowRemoveButton, instance, '_addCondition');
@@ -134,7 +121,7 @@ AUI.add(
 						instance._createActionSelect(index, action, contentBox.one('.action-' + index));
 						instance._createTargetSelect(index, action, contentBox.one('.target-' + index));
 
-						instance._actionsIndexes.push(Number(index));
+						instance._actionsIndexes.push(A.Lang.toInt(index, 10));
 					},
 
 					_addCondition: function(index, condition) {
@@ -150,6 +137,12 @@ AUI.add(
 						instance._renderSecondOperandSelectOptions(index, condition, contentBox.one('.condition-type-value-options-' + index));
 
 						instance._conditionsIndexes.push(Number(index));
+					},
+
+					_canDeleteCondition: function() {
+						var instance = this;
+
+						return instance._conditionsIndexes.length > 1;
 					},
 
 					_createActionSelect: function(index, action, container) {
@@ -201,14 +194,42 @@ AUI.add(
 						instance._actions[index + '-action'] = field;
 					},
 
+					_deleteCondition: function(index) {
+						var instance = this;
+
+						instance._destroyConditionFields(index);
+
+						instance.get('boundingBox').one('.form-builder-rule-condition-container-' + index).remove(true);
+
+						var conditionIndex = instance._conditionsIndexes.indexOf(Number(index));
+
+						if (conditionIndex > -1) {
+							instance._conditionsIndexes.splice(conditionIndex, 1);
+						}
+					},
+
+					_destroyConditionFields: function(index) {
+						var instance = this;
+
+						instance._conditions[index + '-condition-first-operand'].destroy();
+						instance._conditions[index + '-condition-operator'].destroy();
+						instance._conditions[index + '-condition-second-operand-type'].destroy();
+						instance._conditions[index + '-condition-second-operand-select'].destroy();
+						instance._conditions[index + '-condition-second-operand-input'].destroy();
+
+						delete instance._conditions[index + '-condition-first-operand'];
+						delete instance._conditions[index + '-condition-operator'];
+						delete instance._conditions[index + '-condition-second-operand-type'];
+						delete instance._conditions[index + '-condition-second-operand-select'];
+						delete instance._conditions[index + '-condition-second-operand-input'];
+					},
+
 					_getActionOptions: function() {
 						var instance = this;
 
-						var options;
-
 						var strings = instance.get('strings');
 
-						options = [
+						return [
 							{
 								label: strings.show,
 								value: 'show'
@@ -222,8 +243,6 @@ AUI.add(
 								value: 'require'
 							}
 						];
-
-						return options;
 					},
 
 					_getActions: function() {
@@ -231,16 +250,22 @@ AUI.add(
 
 						var actions = [];
 
-						for (var i = instance._actionsIndexes.length - 1; i >= 0; i--) {
-							var index = instance._actionsIndexes[i];
+						var indexes = instance._actionsIndexes;
 
-							var action = {
-								action: instance._actions[index + '-target'].getValue(),
-								label: instance._getFieldLabel(instance._actions[index + '-action'].getValue()),
-								target: instance._actions[index + '-action'].getValue()
-							};
+						for (var i = indexes.length - 1; i >= 0; i--) {
+							var currentIndex = indexes[i];
 
-							actions.push(action);
+							var actionField = instance._actions[currentIndex + '-action'];
+
+							var actionFieldValue = actionField.getValue();
+
+							actions.push(
+								{
+									action: instance._actions[currentIndex + '-target'].getValue(),
+									label: instance._getFieldLabel(actionFieldValue),
+									target: actionFieldValue
+								}
+							);
 						}
 
 						return actions;
@@ -304,51 +329,37 @@ AUI.add(
 					_getFieldLabel: function(fieldValue) {
 						var instance = this;
 
-						var fields = instance.get('fields');
-
-						var fieldLabel;
-
-						for (var index in fields) {
-							if (fields[index].value === fieldValue) {
-								fieldLabel = fields[index].label;
+						var field = instance.get('fields').find(
+							function(currentField) {
+								return currentField.value === fieldValue;
 							}
-						}
+						);
 
-						return fieldLabel;
+						return field && field.label;
 					},
 
 					_getFieldOptions: function(fieldName) {
 						var instance = this;
 
-						var fields = instance.get('fields');
-
-						var options = [];
-
-						for (var i = 0; i < fields.length; i++) {
-							if (fields[i].value === fieldName) {
-								options = fields[i].options;
-
-								break;
+						var field = instance.get('fields').find(
+							function(currentField) {
+								return currentField.value === fieldName;
 							}
-						}
+						);
 
-						return options;
+						return (field && field.options) || [];
 					},
 
 					_getFieldType: function(fieldValue) {
 						var instance = this;
 
-						var fields = instance.get('fields');
-
-						var fieldType;
-
-						for (var index in fields) {
-							if (fields[index].value === fieldValue) {
-								fieldType = fields[index].type;
+						var field = instance.get('fields').find(
+							function(currentField) {
+								return currentField.value === fieldValue;
 							}
-						}
+						);
 
-						return fieldType;
+						return field && field.type;
 					},
 
 					_getFirstOperand: function(index) {
@@ -378,27 +389,21 @@ AUI.add(
 					_getOptionsLabel: function(field, optionValue) {
 						var instance = this;
 
-						var options = field.get('options');
-
-						var optionLabel;
-
-						for (var index in options) {
-							if (options[index].value === optionValue) {
-								optionLabel = options[index].label;
+						var option = field.get('options').find(
+							function(currentOption) {
+								return currentOption.value === optionValue;
 							}
-						}
+						);
 
-						return optionLabel;
+						return option && option.label;
 					},
 
 					_getRuleContainerTemplate: function(rule) {
 						var instance = this;
 
-						var ruleSettingsContainer;
-
 						var settingsTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule.settings');
 
-						ruleSettingsContainer = settingsTemplateRenderer(
+						return settingsTemplateRenderer(
 							{
 								actions: rule ? rule.actions : [],
 								conditions: rule ? rule.conditions : [],
@@ -409,8 +414,6 @@ AUI.add(
 								strings: instance.get('strings')
 							}
 						);
-
-						return ruleSettingsContainer;
 					},
 
 					_getSecondOperand: function(index, type) {
@@ -524,26 +527,8 @@ AUI.add(
 
 						var index = event.currentTarget.getData('card-id');
 
-						if (instance._conditionsIndexes.length > 1) {
-							instance._conditions[index + '-condition-first-operand'].destroy();
-							instance._conditions[index + '-condition-operator'].destroy();
-							instance._conditions[index + '-condition-second-operand-type'].destroy();
-							instance._conditions[index + '-condition-second-operand-select'].destroy();
-							instance._conditions[index + '-condition-second-operand-input'].destroy();
-
-							delete instance._conditions[index + '-condition-first-operand'];
-							delete instance._conditions[index + '-condition-operator'];
-							delete instance._conditions[index + '-condition-second-operand-type'];
-							delete instance._conditions[index + '-condition-second-operand-select'];
-							delete instance._conditions[index + '-condition-second-operand-input'];
-
-							instance.get('boundingBox').one('.form-builder-rule-condition-container-' + index).remove(true);
-
-							var conditionIndex = instance._conditionsIndexes.indexOf(Number(index));
-
-							if (conditionIndex > -1) {
-								instance._conditionsIndexes.splice(conditionIndex, 1);
-							}
+						if (instance._canDeleteCondition()) {
+							instance._deleteCondition(index);
 						}
 
 						instance._toggleShowRemoveButton();
@@ -554,18 +539,18 @@ AUI.add(
 
 						var field = event.field;
 
-						var condition = field.get('fieldName');
+						var fieldName = field.get('fieldName');
 
-						var index = field.get('fieldName').split('-')[0];
+						var index = fieldName.split('-')[0];
 
-						if (condition.match('-condition-first-operand')) {
+						if (fieldName.match('-condition-first-operand')) {
 							instance._updateSecondOperandFieldVisibility(index);
 						}
-						else if (condition.match('-condition-operator')) {
+						else if (fieldName.match('-condition-operator')) {
 							instance._updateTypeFieldVisibility(index);
 							instance._updateSecondOperandFieldVisibility(index);
 						}
-						else if (condition.match('-condition-second-operand-type')) {
+						else if (fieldName.match('-condition-second-operand-type')) {
 							instance._updateSecondOperandFieldVisibility(index);
 						}
 					},
@@ -612,7 +597,9 @@ AUI.add(
 					_isFieldList: function(field) {
 						var instance = this;
 
-						return instance._getFieldOptions(field.getValue()).length > 0 && instance._getFieldType(field.getValue()) !== 'text';
+						var value = field.getValue();
+
+						return instance._getFieldOptions(value).length > 0 && instance._getFieldType(value) !== 'text';
 					},
 
 					_isUnaryCondition: function(index) {
@@ -623,31 +610,44 @@ AUI.add(
 						return value === 'is-email-address' || value === 'is-url';
 					},
 
+					_isValidLogicOperator: function(operator) {
+						var instance = this;
+
+						var strings = instance.get('strings');
+
+						if (A.Lang.isString(operator)) {
+							var upperCaseOperator = operator.toUpperCase();
+
+							return upperCaseOperator === strings.and || upperCaseOperator === strings.or;
+						}
+
+						return false;
+					},
+
 					_onLogicOperatorChanged: function(event) {
 						var instance = this;
 
+						var strings = instance.get('strings');
+
+						var logicOperatorString = strings.and;
+
 						if (event.newVal === 'or') {
-							A.all('.operator .panel-body').each(
-								function(operatorNode) {
-									operatorNode.set('text', instance.get('strings').or);
-								}
-							);
+							logicOperatorString = strings.or;
 						}
-						else {
-							A.all('.operator .panel-body').each(
-								function(operatorNode) {
-									operatorNode.set('text', instance.get('strings').and);
-								}
-							);
-						}
+
+						A.all('.operator .panel-body').each(
+							function(operatorNode) {
+								operatorNode.set('text', logicOperatorString);
+							}
+						);
 					},
 
 					_renderActions: function(actions) {
 						var instance = this;
 
-						var actionsQuant = actions.length;
+						var actionsLength = actions.length;
 
-						for (var i = 0; i < actionsQuant; i++) {
+						for (var i = 0; i < actionsLength; i++) {
 							instance._addAction(i, actions[i]);
 						}
 
@@ -659,9 +659,9 @@ AUI.add(
 					_renderConditions: function(conditions) {
 						var instance = this;
 
-						var conditionsQuant = conditions.length;
+						var conditionsLength = conditions.length;
 
-						for (var i = 0; i < conditionsQuant; i++) {
+						for (var i = 0; i < conditionsLength; i++) {
 							instance._addCondition(i, conditions[i]);
 						}
 
@@ -726,8 +726,11 @@ AUI.add(
 
 						var value;
 
-						var visible = instance._getSecondOperandTypeValue(index) === 'constant' &&
-							!instance._isFieldList(instance._getFirstOperand(index));
+						var firstOperand = instance._getFirstOperand(index);
+
+						var secondOperandValue = instance._getSecondOperandTypeValue(index);
+
+						var visible = secondOperandValue === 'constant' && !instance._isFieldList(firstOperand);
 
 						if (condition && instance._isBinaryCondition(index) && visible) {
 							value = condition.operands[1].value;
@@ -868,26 +871,33 @@ AUI.add(
 
 						instance._hideSecondOperandField(index);
 
-						if (instance._getSecondOperandType(index).get('visible') && instance._getSecondOperandTypeValue(index)) {
-							if (instance._getSecondOperandTypeValue(index) === 'field') {
-								instance._getSecondOperand(index, 'fields').set('visible', true);
+						var secondOperandType = instance._getSecondOperandType(index);
 
-								instance._getSecondOperand(index, 'options').cleanSelect();
+						var secondOperandTypeValue = secondOperandType.getValue();
+
+						if (secondOperandTypeValue && secondOperandType.get('visible')) {
+							var secondOperandFields = instance._getSecondOperand(index, 'fields');
+
+							var secondOperandOptions = instance._getSecondOperand(index, 'options');
+
+							if (secondOperandTypeValue === 'field') {
+								secondOperandFields.set('visible', true);
+								secondOperandOptions.cleanSelect();
 							}
 							else {
 								var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 
 								if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {
-									instance._getSecondOperand(index, 'options').set('options', options);
-									instance._getSecondOperand(index, 'options').set('visible', true);
+									secondOperandOptions.set('options', options);
+									secondOperandOptions.set('visible', true);
 
-									instance._getSecondOperand(index, 'fields').cleanSelect();
+									secondOperandFields.cleanSelect();
 								}
 								else {
 									instance._getSecondOperand(index, 'input').set('visible', true);
 
-									instance._getSecondOperand(index, 'fields').cleanSelect();
-									instance._getSecondOperand(index, 'options').cleanSelect();
+									secondOperandFields.cleanSelect();
+									secondOperandOptions.cleanSelect();
 								}
 							}
 						}
@@ -896,12 +906,14 @@ AUI.add(
 					_updateTypeFieldVisibility: function(index) {
 						var instance = this;
 
+						var secondOperandType = instance._getSecondOperandType(index);
+
 						if (instance._getFirstOperandValue(index) && instance._getOperatorValue(index) && !instance._isUnaryCondition(index)) {
-							instance._getSecondOperandType(index).set('visible', true);
+							secondOperandType.set('visible', true);
 						}
 						else {
 							instance._getSecondOperand(index, 'fields').set('value', '');
-							instance._getSecondOperandType(index).set('visible', false);
+							secondOperandType.set('visible', false);
 						}
 					}
 				}

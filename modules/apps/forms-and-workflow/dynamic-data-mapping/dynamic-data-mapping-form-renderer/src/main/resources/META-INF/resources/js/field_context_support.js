@@ -36,7 +36,7 @@ AUI.add(
 				instance.bindFieldClassAttributesStatus(fieldClass);
 			},
 
-			bindFieldClassAttributesStatus: function(fieldClass) {				
+			bindFieldClassAttributesStatus: function(fieldClass) {
 				var instance = this;
 
 				var EXTENDS = fieldClass;

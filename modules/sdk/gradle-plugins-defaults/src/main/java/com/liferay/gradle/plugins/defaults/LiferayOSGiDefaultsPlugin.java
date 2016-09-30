@@ -1078,11 +1078,16 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		replaceRegexTask.match(_BUNDLE_VERSION_REGEX, "bnd.bnd");
 
+		File npmShrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
+
+		if (npmShrinkwrapJsonFile.exists()) {
+			replaceRegexTask.match(_JSON_VERSION_REGEX, npmShrinkwrapJsonFile);
+		}
+
 		File packageJsonFile = project.file("package.json");
 
 		if (packageJsonFile.exists()) {
-			replaceRegexTask.match(
-				"\\n\\t\"version\": \"(.+)\"", packageJsonFile);
+			replaceRegexTask.match(_JSON_VERSION_REGEX, packageJsonFile);
 		}
 
 		replaceRegexTask.onlyIf(
@@ -3085,6 +3090,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final String _GROUP = "com.liferay";
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
+
+	private static final String _JSON_VERSION_REGEX =
+		"\\n\\t\"version\": \"(.+)\"";
 
 	private static final Version _LOWEST_BASELINE_VERSION = new Version(
 		1, 0, 0);

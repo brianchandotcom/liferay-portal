@@ -189,8 +189,6 @@ version 1.0.5.
 ## 2.0.37 - 2016-09-20
 
 ### Changed
-
-### Changed
 - [LPS-66906]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.0.
 - [LPS-66906]: Update the [Liferay Gradle Plugins JS Module Config Generator]

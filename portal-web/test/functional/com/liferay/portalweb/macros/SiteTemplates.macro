@@ -157,7 +157,7 @@
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 
-		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="This is the updated site template description" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${siteTemplateDescription}" />
 		<execute macro="Button#clickSave" />
 	</command>
 

@@ -115,8 +115,8 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/asset/categories/navigation/web/portlet/template/" +
-			"dependencies/portlet-display-templates.xml";
+		return "com/liferay/asset/categories/navigation/web/portlet/template" +
+			"/dependencies/portlet-display-templates.xml";
 	}
 
 }

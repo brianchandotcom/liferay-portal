@@ -106,8 +106,8 @@ public class PropertiesDocBuilder {
 
 			try {
 				FreeMarkerUtil.process(
-					"com/liferay/portal/tools/propertiesdoc/dependencies/" +
-						"properties.ftl",
+					"com/liferay/portal/tools/propertiesdoc/dependencies" +
+						"/properties.ftl",
 					context, writer);
 			}
 			catch (Exception e) {

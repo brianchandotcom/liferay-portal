@@ -71,8 +71,8 @@ public class FailureMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		if (axisVariable != null) {
 			urlString =
-				"https://${hostName}.liferay.com/job/${jobName}/" +
-					"AXIS_VARIABLE=${axis}/${buildNumber}/";
+				"https://${hostName}.liferay.com/job/${jobName}" +
+					"/AXIS_VARIABLE=${axis}/${buildNumber}/";
 
 			urlString = replaceToken(urlString, "axis", axisVariable);
 		}

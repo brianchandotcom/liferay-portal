@@ -122,8 +122,8 @@ public class LocationVariableResolverTest extends PowerMockito {
 		Assert.assertEquals(
 			expectedValue,
 			_locationVariableResolver.resolve(
-				"${server-property://com.liferay.portal/" +
-					"admin.email.from.address}"));
+				"${server-property://com.liferay.portal" +
+					"/admin.email.from.address}"));
 	}
 
 	private LocationVariableResolver _locationVariableResolver;

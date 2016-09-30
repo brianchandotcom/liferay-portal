@@ -197,8 +197,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	public static final String DEFAULT_REPOSITORY_URL =
-		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
-			"public";
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
 
 	public static final String DEPLOY_APP_SERVER_LIB_TASK_NAME =
 		"deployAppServerLib";
@@ -1130,8 +1130,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
-			"com/liferay/gradle/plugins/defaults/dependencies/" +
-				"config-maven.gradle",
+			"com/liferay/gradle/plugins/defaults/dependencies" +
+				"/config-maven.gradle",
 			project);
 	}
 
@@ -1570,8 +1570,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (portalRootDir != null) {
 			File ruleSetFile = new File(
 				portalRootDir,
-				"tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java/" +
-					"standard-rules.xml");
+				"tools/sdk/dependencies/net.sourceforge.pmd/rulesets/java" +
+					"/standard-rules.xml");
 
 			pmdExtension.setRuleSetFiles(project.files(ruleSetFile));
 		}

@@ -116,8 +116,8 @@ public class LiferayAntDefaultsPlugin implements Plugin<Project> {
 	protected void applyConfigScripts(Project project) {
 		GradleUtil.applyScript(
 			project,
-			"com/liferay/gradle/plugins/defaults/dependencies/" +
-				"config-maven.gradle",
+			"com/liferay/gradle/plugins/defaults/dependencies" +
+				"/config-maven.gradle",
 			project);
 	}
 

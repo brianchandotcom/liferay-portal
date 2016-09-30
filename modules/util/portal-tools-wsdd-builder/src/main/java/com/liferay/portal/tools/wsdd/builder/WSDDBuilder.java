@@ -75,8 +75,8 @@ public class WSDDBuilder {
 
 			String serverConfigContent = StringUtil.read(
 				classLoader,
-				"com/liferay/portal/tools/wsdd/builder/dependencies/" +
-					"server-config.wsdd");
+				"com/liferay/portal/tools/wsdd/builder/dependencies" +
+					"/server-config.wsdd");
 
 			_writeFile(serverConfigFile, serverConfigContent);
 		}

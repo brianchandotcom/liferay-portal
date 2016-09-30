@@ -111,8 +111,8 @@ public class DeploymentHelper {
 
 		zipEntrySources.add(
 			getClassZipEntrySource(
-				"com/liferay/deployment/helper/servlet/" +
-					"DeploymentHelperContextListener.class"));
+				"com/liferay/deployment/helper/servlet" +
+					"/DeploymentHelperContextListener.class"));
 
 		ZipUtil.pack(
 			zipEntrySources.toArray(new ZipEntrySource[zipEntrySources.size()]),

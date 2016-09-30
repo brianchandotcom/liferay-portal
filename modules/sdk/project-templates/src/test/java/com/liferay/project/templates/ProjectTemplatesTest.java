@@ -239,8 +239,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/foo/bar/content/targeting/tracking/action/" +
-				"FooBarTrackingAction.java",
+			"src/main/java/foo/bar/content/targeting/tracking/action" +
+				"/FooBarTrackingAction.java",
 			"public class FooBarTrackingAction extends BaseJSPTrackingAction");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
@@ -261,8 +261,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/foo/bar/control/menu/" +
-				"FooBarProductNavigationControlMenuEntry.java",
+			"src/main/java/foo/bar/control/menu" +
+				"/FooBarProductNavigationControlMenuEntry.java",
 			"public class FooBarProductNavigationControlMenuEntry",
 			"extends BaseProductNavigationControlMenuEntry",
 			"implements ProductNavigationControlMenuEntry");
@@ -450,8 +450,8 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/blade/test/portlet/configuration/icon/" +
-				"IcontestPortletConfigurationIcon.java",
+			"src/main/java/blade/test/portlet/configuration/icon" +
+				"/IcontestPortletConfigurationIcon.java",
 			"public class IcontestPortletConfigurationIcon",
 			"extends BasePortletConfigurationIcon");
 
@@ -474,8 +474,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/provider/test/constants/" +
-				"ProviderTestPortletKeys.java",
+			"src/main/java/provider/test/constants" +
+				"/ProviderTestPortletKeys.java",
 			"package provider.test.constants;",
 			"public class ProviderTestPortletKeys",
 			"public static final String ProviderTest = \"ProviderTest\";");
@@ -503,8 +503,8 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/blade/test/portlet/toolbar/contributor/" +
-				"ToolbartestPortletToolbarContributor.java",
+			"src/main/java/blade/test/portlet/toolbar/contributor" +
+				"/ToolbartestPortletToolbarContributor.java",
 			"public class ToolbartestPortletToolbarContributor",
 			"implements PortletToolbarContributor");
 
@@ -601,8 +601,8 @@ public class ProjectTemplatesTest {
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/test/simulator/application/list/" +
-				"SimulatorSimulationPanelApp.java",
+			"src/main/java/test/simulator/application/list" +
+				"/SimulatorSimulationPanelApp.java",
 			"public class SimulatorSimulationPanelApp",
 			"extends BaseJSPPanelApp");
 
@@ -629,8 +629,8 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/blade/test/theme/contributor/" +
-				"BladeTestTemplateContextContributor.java",
+			"src/main/java/blade/test/theme/contributor" +
+				"/BladeTestTemplateContextContributor.java",
 			"public class BladeTestTemplateContextContributor",
 			"implements TemplateContextContributor");
 
@@ -716,8 +716,8 @@ public class ProjectTemplatesTest {
 		}
 
 		String mavenSettingsXml = FileTestUtil.read(
-			"com/liferay/project/templates/dependencies/" +
-				"maven_settings_xml.tmpl");
+			"com/liferay/project/templates/dependencies" +
+				"/maven_settings_xml.tmpl");
 
 		if (mirrors) {
 			mavenSettingsXml = mavenSettingsXml.replace(
@@ -1168,8 +1168,8 @@ public class ProjectTemplatesTest {
 	private static final String _MAVEN_GOAL_PACKAGE = "package";
 
 	private static final String _REPOSITORY_CDN_URL =
-		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
-			"public";
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
 
 	private static URI _gradleDistribution;
 	private static String _httpProxyHost;

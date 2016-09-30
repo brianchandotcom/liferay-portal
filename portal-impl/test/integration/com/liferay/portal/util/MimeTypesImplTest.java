@@ -50,8 +50,8 @@ public class MimeTypesImplTest {
 	@Test
 	public void testDocx() throws Exception {
 		String validContentType =
-			"application/" +
-				"vnd.openxmlformats-officedocument.wordprocessingml.document";
+			"application" +
+				"/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
 		String contentTypeStream = getContentType("test-2007.docx", true);
 		String contentTypeName = getContentType("test-2007.docx", false);
@@ -130,8 +130,9 @@ public class MimeTypesImplTest {
 	@Test
 	public void testPptx() throws Exception {
 		String validContentType =
-			"application/" +
-				"vnd.openxmlformats-officedocument.presentationml.presentation";
+			"application" +
+				"/vnd.openxmlformats-officedocument.presentationml." +
+					"presentation";
 
 		String contentTypeStream = getContentType("test-2010.pptx", true);
 		String contentTypeName = getContentType("test-2010.pptx", false);

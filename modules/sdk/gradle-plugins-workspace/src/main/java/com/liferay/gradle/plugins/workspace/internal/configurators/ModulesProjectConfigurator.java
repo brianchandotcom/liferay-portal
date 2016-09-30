@@ -191,8 +191,8 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
 
 	private static final String _DEFAULT_REPOSITORY_URL =
-		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/" +
-			"public";
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
 
 	private static final String _NAME = "modules";
 

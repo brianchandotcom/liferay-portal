@@ -100,8 +100,8 @@ public class SetUpArquillianTask
 		File outputFile = getOutputFile();
 
 		String xml = FileUtil.read(
-			"com/liferay/gradle/plugins/test/integration/dependencies/" +
-				"arquillian.xml");
+			"com/liferay/gradle/plugins/test/integration/dependencies" +
+				"/arquillian.xml");
 
 		xml = xml.replace(
 			"${app.server.tomcat.manager.password}", getManagerPassword());

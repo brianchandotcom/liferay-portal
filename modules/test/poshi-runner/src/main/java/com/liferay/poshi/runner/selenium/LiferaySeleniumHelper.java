@@ -1157,8 +1157,8 @@ public class LiferaySeleniumHelper {
 		}
 
 		captureScreen(
-			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
-				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
+			_CURRENT_DIR_NAME + "test-results/functional/screenshots" +
+				"/ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
 
 	public static void selectFieldText() {

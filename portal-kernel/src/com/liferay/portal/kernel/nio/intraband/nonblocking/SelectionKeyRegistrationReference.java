@@ -22,7 +22,8 @@ import java.nio.channels.SelectionKey;
 /**
  * @author Shuyang Zhou
  */
-class SelectionKeyRegistrationReference implements RegistrationReference {
+public class SelectionKeyRegistrationReference
+	implements RegistrationReference {
 
 	@Override
 	public void cancelRegistration() {

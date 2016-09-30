@@ -33,7 +33,7 @@
 	</c:choose>
 </portlet:renderURL>
 
-<div class="social-bookmarks">
+<div class="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle().equals("vertical") ? "pull-right " : "" %>social-bookmarks">
 	<liferay-ui:social-bookmarks
 		contentId="<%= String.valueOf(entry.getEntryId()) %>"
 		displayStyle="<%= blogsPortletInstanceConfiguration.socialBookmarksDisplayStyle() %>"

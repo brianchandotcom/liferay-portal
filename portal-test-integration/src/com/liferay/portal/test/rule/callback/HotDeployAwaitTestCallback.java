@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.concurrent.CountDownLatch;
 
@@ -28,19 +29,30 @@ import org.junit.runner.Description;
 /**
  * @author Shuyang Zhou
  */
-public class HotDeployAwaitTestCallback extends BaseTestCallback<Void, Void> {
+public class HotDeployAwaitTestCallback
+	extends BaseTestCallback<CountDownLatch, Void> {
 
 	public static final HotDeployAwaitTestCallback INSTANCE =
 		new HotDeployAwaitTestCallback();
 
 	@Override
-	public Void beforeClass(Description description)
+	public void afterClass(
+			Description description, CountDownLatch endCountDownLatch)
+		throws Throwable {
+
+		endCountDownLatch.countDown();
+	}
+
+	@Override
+	public CountDownLatch beforeClass(Description description)
 		throws InterruptedException {
 
 		Destination destination = MessageBusUtil.getDestination(
 			DestinationNames.HOT_DEPLOY);
 
-		final CountDownLatch countDownLatch = new CountDownLatch(1);
+		final CountDownLatch startCountDownLatch = new CountDownLatch(1);
+
+		final CountDownLatch endCountDownLatch = new CountDownLatch(1);
 
 		final Message countDownMessage = new Message();
 
@@ -50,7 +62,16 @@ public class HotDeployAwaitTestCallback extends BaseTestCallback<Void, Void> {
 				@Override
 				public void receive(Message message) {
 					if (countDownMessage == message) {
-						countDownLatch.countDown();
+						startCountDownLatch.countDown();
+
+						try {
+							endCountDownLatch.await();
+
+							destination.unregister(this);
+						}
+						catch (InterruptedException ie) {
+							ReflectionUtil.throwException(ie);
+						}
 					}
 				}
 
@@ -58,9 +79,9 @@ public class HotDeployAwaitTestCallback extends BaseTestCallback<Void, Void> {
 
 		destination.send(countDownMessage);
 
-		countDownLatch.await();
+		startCountDownLatch.await();
 
-		return null;
+		return endCountDownLatch;
 	}
 
 }

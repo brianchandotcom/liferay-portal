@@ -137,6 +137,15 @@ public class PlusStatementCheck extends AbstractCheck {
 
 			return;
 		}
+
+		int pos = _getStringBreakPos(
+			literalString1, literalString2, (_maxLineLength - lineLength1));
+
+		if (pos != -1) {
+			log(
+				lastChild.getLineNo(), MSG_MOVE_LITERAL_STRING,
+				literalString2.substring(0, pos + 1));
+		}
 	}
 
 	private int _getLeadingTabCount(String line) {
@@ -172,6 +181,36 @@ public class PlusStatementCheck extends AbstractCheck {
 		}
 
 		return null;
+	}
+
+	private int _getStringBreakPos(String s1, String s2, int i) {
+		if (s2.startsWith(StringPool.SLASH)) {
+			int pos = s2.lastIndexOf(StringPool.SLASH, i);
+
+			if (pos > 0) {
+				return pos - 1;
+			}
+
+			return -1;
+		}
+
+		if (s1.endsWith(StringPool.DASH)) {
+			return Math.max(
+				s2.lastIndexOf(StringPool.DASH, i - 1),
+				s2.lastIndexOf(StringPool.SPACE, i - 1));
+		}
+
+		if (s1.endsWith(StringPool.PERIOD)) {
+			return Math.max(
+				s2.lastIndexOf(StringPool.PERIOD, i - 1),
+				s2.lastIndexOf(StringPool.SPACE, i - 1));
+		}
+
+		if (s1.endsWith(StringPool.SPACE)) {
+			return s2.lastIndexOf(StringPool.SPACE, i - 1);
+		}
+
+		return -1;
 	}
 
 	private boolean _isRegexPattern(DetailAST detailAST) {

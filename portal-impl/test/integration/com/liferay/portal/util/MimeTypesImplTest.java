@@ -130,9 +130,8 @@ public class MimeTypesImplTest {
 	@Test
 	public void testPptx() throws Exception {
 		String validContentType =
-			"application" +
-				"/vnd.openxmlformats-officedocument.presentationml." +
-					"presentation";
+			"application/vnd.openxmlformats-officedocument.presentationml." +
+				"presentation";
 
 		String contentTypeStream = getContentType("test-2010.pptx", true);
 		String contentTypeName = getContentType("test-2010.pptx", false);

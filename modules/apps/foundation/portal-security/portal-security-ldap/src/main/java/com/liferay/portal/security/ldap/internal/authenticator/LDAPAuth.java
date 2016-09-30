@@ -261,9 +261,8 @@ public class LDAPAuth implements Authenticator {
 		if (ldapContext == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"No LDAP server configuration available for " +
-						"LDAP server " + ldapServerId + " and company " +
-							companyId);
+					"No LDAP server configuration available for LDAP server " +
+						ldapServerId + " and company " + companyId);
 			}
 
 			return FAILURE;

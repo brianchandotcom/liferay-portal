@@ -7,11 +7,11 @@ AUI.add(
 
 		var textOperators = [
 			{
-				label: Liferay.Language.get('is-equals-to'),
+				label: Liferay.Language.get('is-equal-to'),
 				value: 'equals-to'
 			},
 			{
-				label: Liferay.Language.get('is-not-equals-to'),
+				label: Liferay.Language.get('is-not-equal-to'),
 				value: 'not-equals-to'
 			},
 			{
@@ -19,7 +19,7 @@ AUI.add(
 				value: 'contains'
 			},
 			{
-				label: Liferay.Language.get('not-contains'),
+				label: Liferay.Language.get('does-not-contain'),
 				value: 'not-contains'
 			}
 		];

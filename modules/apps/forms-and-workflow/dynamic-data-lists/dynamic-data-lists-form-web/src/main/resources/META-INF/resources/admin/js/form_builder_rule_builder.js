@@ -20,9 +20,9 @@ AUI.add(
 							delete: Liferay.Language.get('delete'),
 							edit: Liferay.Language.get('edit'),
 							emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-bellow-to-add-the-first'),
-							'equals-to': Liferay.Language.get('is-equals-to'),
-							'not-contains': Liferay.Language.get('not-contains'),
-							'not-equals-to': Liferay.Language.get('is-not-equals-to'),
+							'equals-to': Liferay.Language.get('is-equal-to'),
+							'not-contains': Liferay.Language.get('does-not-contain'),
+							'not-equals-to': Liferay.Language.get('is-not-equal-to'),
 							ruleBuilder: Liferay.Language.get('rule-builder')
 						}
 					}

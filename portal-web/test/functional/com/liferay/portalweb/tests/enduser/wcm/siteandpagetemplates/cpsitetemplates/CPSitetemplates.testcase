@@ -238,6 +238,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#editDescription">
+			<var name="siteTemplateDescription" value="This is the updated site template description" />
 			<var name="siteTemplateName" value="Intranet Site" />
 		</execute>
 
@@ -250,7 +251,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplateNameField" priority="4">
+	<command name="EditSiteTemplateName" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
 		</execute>

@@ -14,7 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -58,31 +58,34 @@ public class PlusStatementCheck extends AbstractCheck {
 			return;
 		}
 
-		char c1 = literalString1.charAt(literalString1.length() - 2);
-		char c2 = literalString2.charAt(1);
+		if (literalString2.startsWith(StringPool.SPACE) ||
+			(!literalString1.endsWith(StringPool.SPACE) &&
+			 literalString2.matches("^[-:;.].*"))) {
 
-		if ((c2 == CharPool.SPACE) ||
-			((c1 != CharPool.SPACE) &&
-			 ((c2 == CharPool.COLON) || (c2 == CharPool.DASH) ||
-			  (c2 == CharPool.PERIOD) || (c2 == CharPool.SEMICOLON)))) {
-
-			log(detailAST.getLineNo() + 1, MSG_INVALID_START_CHARACTER, c2);
+			log(
+				detailAST.getLineNo() + 1, MSG_INVALID_START_CHARACTER,
+				literalString2.charAt(0));
 		}
 	}
 
 	private String _getLiteralString(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.STRING_LITERAL) {
-			return detailAST.getText();
-		}
+		String literalString = null;
 
-		if ((detailAST.getType() == TokenTypes.PLUS) &&
-			(detailAST.getChildCount() == 2)) {
+		if (detailAST.getType() == TokenTypes.STRING_LITERAL) {
+			literalString = detailAST.getText();
+		}
+		else if ((detailAST.getType() == TokenTypes.PLUS) &&
+				 (detailAST.getChildCount() == 2)) {
 
 			DetailAST lastChild = detailAST.getLastChild();
 
 			if (lastChild.getType() == TokenTypes.STRING_LITERAL) {
-				return lastChild.getText();
+				literalString = lastChild.getText();
 			}
+		}
+
+		if (literalString != null) {
+			return literalString.substring(1, literalString.length() - 1);
 		}
 
 		return null;

@@ -15,11 +15,13 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
 import java.util.List;
 
@@ -28,11 +30,16 @@ import java.util.List;
  */
 public class PlusStatementCheck extends AbstractCheck {
 
+	public static final String MSG_COMBINE_LITERAL_STRINGS =
+		"literal.string.combine";
+
 	public static final String MSG_INVALID_END_CHARACTER =
 		"end.character.invalid";
 
 	public static final String MSG_INVALID_START_CHARACTER =
 		"start.character.invalid";
+
+	public static final String MSG_MOVE_LITERAL_STRING = "literal.string.move";
 
 	@Override
 	public int[] getDefaultTokens() {
@@ -49,15 +56,27 @@ public class PlusStatementCheck extends AbstractCheck {
 			return;
 		}
 
-		String literalString1 = _getLiteralString(detailAST.getFirstChild());
+		DetailAST firstChild = detailAST.getFirstChild();
+
+		String literalString1 = _getLiteralString(firstChild);
 
 		if (literalString1 == null) {
 			return;
 		}
 
-		String literalString2 = _getLiteralString(detailAST.getLastChild());
+		DetailAST lastChild = detailAST.getLastChild();
+
+		String literalString2 = _getLiteralString(lastChild);
 
 		if (literalString2 == null) {
+			return;
+		}
+
+		if (firstChild.getLineNo() == lastChild.getLineNo()) {
+			log(
+				firstChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				literalString1, literalString2);
+
 			return;
 		}
 
@@ -76,9 +95,60 @@ public class PlusStatementCheck extends AbstractCheck {
 			 literalString2.matches("^[-:;.].*"))) {
 
 			log(
-				detailAST.getLineNo() + 1, MSG_INVALID_START_CHARACTER,
+				lastChild.getLineNo(), MSG_INVALID_START_CHARACTER,
 				literalString2.charAt(0));
+
+			return;
 		}
+
+		String[] lines = getLines();
+
+		String line1 = lines[lastChild.getLineNo() - 2];
+		String line2 = lines[lastChild.getLineNo() - 1];
+
+		int tabCount1 = _getLeadingTabCount(line1);
+		int tabCount2 = _getLeadingTabCount(line2);
+
+		if (tabCount1 == tabCount2) {
+			return;
+		}
+
+		int lineLength1 = CommonUtils.lengthExpandedTabs(
+			line1, line1.length(), getTabWidth());
+
+		String trimmedLine2 = StringUtil.trim(line2);
+
+		if ((lineLength1 + trimmedLine2.length() - 4) <= _maxLineLength) {
+			log(
+				lastChild.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				literalString1, literalString2);
+
+			return;
+		}
+
+		DetailAST parentAST = detailAST.getParent();
+
+		if ((parentAST.getType() == TokenTypes.PLUS) &&
+			((lineLength1 + literalString2.length()) <= _maxLineLength)) {
+
+			log(
+				detailAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				literalString1, literalString2);
+
+			return;
+		}
+	}
+
+	private int _getLeadingTabCount(String line) {
+		int leadingTabCount = 0;
+
+		while (line.startsWith(StringPool.TAB)) {
+			line = line.substring(1);
+
+			leadingTabCount++;
+		}
+
+		return leadingTabCount;
 	}
 
 	private String _getLiteralString(DetailAST detailAST) {

@@ -4535,6 +4535,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"Could not perform Checkstyle checks. Please check your " +
 						"network connection.");
 			}
+			else {
+				throw ce;
+			}
 		}
 	}
 

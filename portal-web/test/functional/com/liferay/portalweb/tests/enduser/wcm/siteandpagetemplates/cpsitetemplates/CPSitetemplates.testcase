@@ -232,6 +232,42 @@
 		</execute>
 	</command>
 
+	<command name="EditSiteTemplateDescription" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#editDescription">
+			<var name="siteTemplateName" value="Intranet Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewDescription">
+			<var name="siteTemplateDescription" value="This is the updated site template description" />
+		</execute>
+	</command>
+
+	<command name="EditSiteTemplateNameField" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#editCP">
+			<var name="siteTemplateName" value="Community Site" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewCP">
+			<var name="siteTemplateNameList" value="Community Site Edit" />
+		</execute>
+	</command>
+
 	<command name="EditSiteTemplateStatus" priority="5">
 		<property name="portal.acceptance" value="true" />
 

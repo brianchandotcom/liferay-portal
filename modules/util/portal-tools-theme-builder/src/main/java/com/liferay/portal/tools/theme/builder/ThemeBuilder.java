@@ -372,8 +372,8 @@ public class ThemeBuilder {
 		}
 
 		String content = FileUtil.read(
-			"com/liferay/portal/tools/theme/builder/dependencies/" +
-				"liferay-look-and-feel.xml");
+			"com/liferay/portal/tools/theme/builder/dependencies" +
+				"/liferay-look-and-feel.xml");
 
 		String id = _name.toLowerCase();
 

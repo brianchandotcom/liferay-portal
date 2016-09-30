@@ -28,6 +28,9 @@ import java.util.List;
  */
 public class PlusStatementCheck extends AbstractCheck {
 
+	public static final String MSG_INVALID_END_CHARACTER =
+		"end.character.invalid";
+
 	public static final String MSG_INVALID_START_CHARACTER =
 		"start.character.invalid";
 
@@ -56,6 +59,12 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if (_isRegexPattern(detailAST)) {
 			return;
+		}
+
+		if (literalString1.endsWith(StringPool.SLASH)) {
+			log(
+				detailAST.getLineNo(), MSG_INVALID_END_CHARACTER,
+				literalString1.charAt(literalString1.length() - 1));
 		}
 
 		if (literalString2.startsWith(StringPool.SPACE) ||

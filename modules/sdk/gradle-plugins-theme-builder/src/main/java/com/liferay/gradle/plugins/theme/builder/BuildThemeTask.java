@@ -20,12 +20,15 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectories;
 
 /**
  * @author Andrea Di Giorgi
@@ -52,6 +55,19 @@ public class BuildThemeTask extends JavaExec {
 	@Input
 	public File getOutputDir() {
 		return GradleUtil.toFile(getProject(), _outputDir);
+	}
+
+	@OutputDirectories
+	public Iterable<File> getOutputThemeDirs() {
+		Set<File> dirs = new HashSet<>(_OUTPUT_THEME_DIR_NAMES.length);
+
+		File outputDir = getOutputDir();
+
+		for (String dirName : _OUTPUT_THEME_DIR_NAMES) {
+			dirs.add(new File(outputDir, dirName));
+		}
+
+		return dirs;
 	}
 
 	@Input
@@ -136,6 +152,10 @@ public class BuildThemeTask extends JavaExec {
 
 		return args;
 	}
+
+	private static final String[] _OUTPUT_THEME_DIR_NAMES = {
+		"css", "images", "js", "templates"
+	};
 
 	private Object _diffsDir;
 	private Object _outputDir;

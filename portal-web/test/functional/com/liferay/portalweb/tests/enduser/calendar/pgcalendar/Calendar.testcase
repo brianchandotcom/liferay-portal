@@ -3631,7 +3631,7 @@
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventComment" value="Calendar Event Regular Comment" />
 			<var name="eventCommentEnabled" value="true" />
-			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />
 			<var name="pageName" value="Calendar Page" />
 			<var name="site" value="${siteName}" />
@@ -3645,7 +3645,7 @@
 		<execute macro="CalendarEvent#viewComment">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventComment" value="Calendar Event Regular Comment" />
-			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitle" value="Calendar Event Regular Title" />
 			<var name="eventType" value="Regular" />
 			<var name="site" value="${siteName}" />
 			<var name="user" value="Test Test" />
@@ -3803,8 +3803,8 @@
 			</execute>
 
 			<execute macro="User#editPasswordCP">
-				<var name="userEmailAddress" value="usersn@liferay.com" />
-				<var name="userScreenName" value="usersn" />
+				<var name="userEmailAddress" value="${userScreenName}@liferay.com" />
+				<var name="userScreenName" value="${userScreenName}" />
 			</execute>
 		</for>
 

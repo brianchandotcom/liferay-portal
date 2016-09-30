@@ -24,7 +24,7 @@ import org.jruby.runtime.builtin.IRubyObject;
 /**
  * @author Alberto Montero
  */
-class BeanGlobalVariable implements IAccessor {
+public class BeanGlobalVariable implements IAccessor {
 
 	public BeanGlobalVariable(Ruby ruby, Object bean, Class<?> type) {
 		_ruby = ruby;

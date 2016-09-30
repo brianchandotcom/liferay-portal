@@ -60,6 +60,8 @@ public interface Build {
 
 	public String getStatusReport(int indentSize);
 
+	public String getStatusSummary();
+
 	public Map<String, String>getStopProperties();
 
 	public boolean hasBuildURL(String buildURL);

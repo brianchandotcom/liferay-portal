@@ -265,28 +265,7 @@ public abstract class BaseBuild implements Build {
 
 				sb.append("\n");
 				sb.append(indentStringBuffer);
-				sb.append(getDownstreamBuildCount("starting"));
-				sb.append(" Starting  ");
-				sb.append("/ ");
-
-				sb.append(getDownstreamBuildCount("missing"));
-				sb.append(" Missing  ");
-				sb.append("/ ");
-
-				sb.append(getDownstreamBuildCount("queued"));
-				sb.append(" Queued  ");
-				sb.append("/ ");
-
-				sb.append(getDownstreamBuildCount("running"));
-				sb.append(" Running  ");
-				sb.append("/ ");
-
-				sb.append(getDownstreamBuildCount("completed"));
-				sb.append(" Completed  ");
-				sb.append("/ ");
-
-				sb.append(getDownstreamBuildCount(null));
-				sb.append(" Total ");
+				sb.append(getStatusSummary());
 				sb.append("\n");
 			}
 
@@ -302,6 +281,36 @@ public abstract class BaseBuild implements Build {
 		}
 
 		throw new RuntimeException("Unknown status: " + status + ".");
+	}
+
+	@Override
+	public String getStatusSummary() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getDownstreamBuildCount("starting"));
+		sb.append(" Starting  ");
+		sb.append("/ ");
+
+		sb.append(getDownstreamBuildCount("missing"));
+		sb.append(" Missing  ");
+		sb.append("/ ");
+
+		sb.append(getDownstreamBuildCount("queued"));
+		sb.append(" Queued  ");
+		sb.append("/ ");
+
+		sb.append(getDownstreamBuildCount("running"));
+		sb.append(" Running  ");
+		sb.append("/ ");
+
+		sb.append(getDownstreamBuildCount("completed"));
+		sb.append(" Completed  ");
+		sb.append("/ ");
+
+		sb.append(getDownstreamBuildCount(null));
+		sb.append(" Total ");
+
+		return sb.toString();
 	}
 
 	@Override

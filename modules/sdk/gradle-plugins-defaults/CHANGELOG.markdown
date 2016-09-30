@@ -1424,6 +1424,7 @@ not contain a class or JAR file.
 ### Changed
 - [LPS-70819]: Use Gradle dependency management in the `downloadCompiledJSP`
 task if the URL is protected.
+- [LPS-72152]: Update the [Liferay Gradle Plugins] dependency to version 3.3.5.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -1572,6 +1573,7 @@ task if the URL is protected.
 [LPS-72045]: https://issues.liferay.com/browse/LPS-72045
 [LPS-72067]: https://issues.liferay.com/browse/LPS-72067
 [LPS-72102]: https://issues.liferay.com/browse/LPS-72102
+[LPS-72152]: https://issues.liferay.com/browse/LPS-72152
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

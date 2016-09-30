@@ -101,6 +101,17 @@ executing the `PublishNodeModuleTask`.
 - [LPS-71826]: Add the ability to set the NPM log level by setting the property
 `logLevel` of `ExecuteNPMTask`.
 
+## 2.2.0 - 2017-04-24
+
+### Added
+- [LPS-72152]: Add property `npmUrl` to all tasks that extend
+`DownloadNodeTask`. If set, it allows to download a specific version of NPM in
+order to override the one that comes with the Node.js installation.
+- [LPS-72152]: Add properties `npmUrl` and `npmVersion` to the `node` extension
+object. By default, `npmUrl` is equal to
+`https://registry.npmjs.org/npm/-/npm-${node.npmVersion}.tgz`. These properties
+allow to set a specific version of NPM to download with the `downloadNode` task.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -114,3 +125,4 @@ executing the `PublishNodeModuleTask`.
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
+[LPS-72152]: https://issues.liferay.com/browse/LPS-72152

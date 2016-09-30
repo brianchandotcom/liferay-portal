@@ -119,6 +119,12 @@ to 1.2.1.
 - [LPS-71826]: Update the [Liferay Gradle Plugins Node] dependency to version
 2.1.0.
 
+## 2.1.13 - 2017-04-24
+
+### Changed
+- [LPS-72152]: Update the [Liferay Gradle Plugins Node] dependency to version
+2.2.0.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -136,3 +142,4 @@ to 1.2.1.
 [LPS-70870]: https://issues.liferay.com/browse/LPS-70870
 [LPS-71222]: https://issues.liferay.com/browse/LPS-71222
 [LPS-71826]: https://issues.liferay.com/browse/LPS-71826
+[LPS-72152]: https://issues.liferay.com/browse/LPS-72152

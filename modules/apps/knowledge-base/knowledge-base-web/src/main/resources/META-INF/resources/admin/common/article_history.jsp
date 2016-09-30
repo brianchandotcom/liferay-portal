@@ -100,6 +100,7 @@ for (KBArticle curKBArticle : kbArticles) {
 										function(event) {
 											<portlet:renderURL var="compareVersionURL">
 												<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />
+												<portlet:param name="<%= Constants.CMD %>" value="compareVersions" />
 												<portlet:param name="backURL" value="<%= currentURL %>" />
 												<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
 											</portlet:renderURL>

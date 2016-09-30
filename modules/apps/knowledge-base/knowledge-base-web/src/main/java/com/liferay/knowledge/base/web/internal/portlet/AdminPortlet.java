@@ -260,6 +260,29 @@ public class AdminPortlet extends BaseKBPortlet {
 				renderRequest, "resourcePrimKey");
 			int status = WorkflowConstants.STATUS_ANY;
 
+			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
+
+			if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
+				double sourceVersion = ParamUtil.getDouble(
+					renderRequest, "sourceVersion");
+				double targetVersion = ParamUtil.getDouble(
+					renderRequest, "targetVersion");
+
+				String diffHtmlResults = null;
+
+				try {
+					diffHtmlResults = AdminUtil.getKBArticleDiff(
+						resourcePrimKey, GetterUtil.getInteger(sourceVersion),
+						GetterUtil.getInteger(targetVersion), "content");
+				}
+				catch (Exception e) {
+					throw new PortletException(e);
+				}
+
+				renderRequest.setAttribute(
+					WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+			}
+
 			if ((resourcePrimKey > 0) &&
 				(resourceClassNameId == kbArticleClassNameId)) {
 

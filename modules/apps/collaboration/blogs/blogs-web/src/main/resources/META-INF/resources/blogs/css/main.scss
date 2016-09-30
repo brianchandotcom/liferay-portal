@@ -122,6 +122,7 @@
 
 			.taglib-social-bookmarks {
 				display: inline-block;
+				margin-top: 5px;
 				vertical-align: middle;
 			}
 
@@ -221,13 +222,7 @@
 
 	.entry-title {
 		display: block;
-		overflow: hidden;
 		position: relative;
-
-		&:hover {
-			overflow: visible;
-			z-index: 1;
-		}
 
 		h1 {
 			font-size: 60px;
@@ -246,11 +241,16 @@
 		}
 
 		.social-bookmarks {
+			z-index: 1;
+
 			@include respond-to(desktop) {
 				display: inline-block;
-				position: absolute;
 				right: 35px;
 				top: 0;
+
+				&:not(.pull-right) {
+					position: absolute;
+				}
 			}
 
 			ul {

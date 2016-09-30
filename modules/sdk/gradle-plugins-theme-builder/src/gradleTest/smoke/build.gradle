@@ -1,0 +1,37 @@
+apply plugin: "com.liferay.portal.tools.theme.builder"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildTheme
+
+	doLast {
+		File generatedCustomCssFile = file("src/main/webapp/css/_custom.scss")
+		File expectedCustomCssFile = file("src/main/webapp/_diffs/css/_custom.scss")
+
+		assert expectedCustomCssFile.text.normalize() == generatedCustomCssFile.text.normalize()
+
+		String[] fileNames = [
+			"src/main/webapp/WEB-INF/liferay-look-and-feel.xml",
+			"src/main/webapp/css/main.scss",
+			"src/main/webapp/images/screenshot.png",
+			"src/main/webapp/images/thumbnail.png",
+			"src/main/webapp/js/main.js",
+			"src/main/webapp/templates/init.ftl"
+		]
+
+		for (String fileName in fileNames) {
+			File generatedFile = file(fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

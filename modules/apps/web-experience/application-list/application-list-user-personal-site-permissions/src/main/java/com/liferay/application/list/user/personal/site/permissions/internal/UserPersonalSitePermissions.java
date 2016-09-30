@@ -75,9 +75,9 @@ public class UserPersonalSitePermissions {
 			}
 			catch (PortalException pe) {
 				_log.error(
-					"Unable to initialize user personal site permissions " +
-						"for portlet " + portlet.getPortletId() +
-							" in company " + companyId,
+					"Unable to initialize user personal site permissions for " +
+						"portlet " + portlet.getPortletId() + " in company " +
+							companyId,
 					pe);
 			}
 		}
@@ -105,9 +105,9 @@ public class UserPersonalSitePermissions {
 			}
 			catch (PortalException pe) {
 				_log.error(
-					"Unable to initialize user personal site permissions " +
-						"for portlet " + portlet.getPortletId() +
-							" in company " + companyId,
+					"Unable to initialize user personal site permissions for " +
+						"portlet " + portlet.getPortletId() + " in company " +
+							companyId,
 					pe);
 			}
 		}

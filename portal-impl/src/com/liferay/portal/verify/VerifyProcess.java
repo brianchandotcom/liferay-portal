@@ -137,8 +137,8 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	 */
 	protected int getBuildNumber() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select buildNumber from Release_ where servletContextName " +
-					"= ?")) {
+				"select buildNumber from Release_ where servletContextName = " +
+					"?")) {
 
 			ps.setString(1, ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME);
 

@@ -750,8 +750,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (_log.isDebugEnabled()) {
 				String message =
-					"Using defaults because custom permissions for " +
-						"portlet resource " + name + " are not defined";
+					"Using defaults because custom permissions for portlet " +
+						"resource " + name + " are not defined";
 
 				_log.debug(message, new IllegalArgumentException(message));
 			}
@@ -767,8 +767,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 			if (_log.isDebugEnabled()) {
 				String message =
-					"Using defaults because custom permissions for " +
-						"root model resource " + name + " are not defined";
+					"Using defaults because custom permissions for root " +
+						"model resource " + name + " are not defined";
 
 				_log.debug(message, new IllegalArgumentException(message));
 			}

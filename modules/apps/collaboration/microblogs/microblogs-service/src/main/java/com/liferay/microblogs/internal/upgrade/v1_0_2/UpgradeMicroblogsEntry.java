@@ -60,8 +60,8 @@ public class UpgradeMicroblogsEntry extends UpgradeProcess {
 					"receiverMicroblogsEntryId");
 
 			runSQL(
-				"create index IX_6BD29B9C on MicroblogsEntry " +
-					"(type_, parentMicroblogsEntryId)");
+				"create index IX_6BD29B9C on MicroblogsEntry (type_, " +
+					"parentMicroblogsEntryId)");
 		}
 	}
 

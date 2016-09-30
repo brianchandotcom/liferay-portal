@@ -162,8 +162,8 @@ public class SubscriptionSender implements Serializable {
 
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Add " + toAddress + " to the list of users who " +
-							"have received an email");
+						"Add " + toAddress + " to the list of users who have " +
+							"received an email");
 				}
 
 				_sentEmailAddresses.add(toAddress);

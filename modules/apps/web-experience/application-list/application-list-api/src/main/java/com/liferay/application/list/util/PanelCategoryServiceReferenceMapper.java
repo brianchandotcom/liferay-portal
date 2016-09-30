@@ -38,8 +38,8 @@ public class PanelCategoryServiceReferenceMapper
 
 		if (Validator.isNull(panelCategoryKey)) {
 			_log.error(
-				"Unable to register panel entry because of missing " +
-					"service property \"panel.category.key\"");
+				"Unable to register panel entry because of missing service " +
+					"property \"panel.category.key\"");
 		}
 		else {
 			emitter.emit(panelCategoryKey);

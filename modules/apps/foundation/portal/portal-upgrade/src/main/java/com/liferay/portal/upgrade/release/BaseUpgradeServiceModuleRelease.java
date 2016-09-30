@@ -28,8 +28,8 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select buildNumber from Release_ where " +
-					"servletContextName = ?")) {
+				"select buildNumber from Release_ where servletContextName = " +
+					"?")) {
 
 			ps.setString(1, getOldBundleSymbolicName());
 
@@ -64,8 +64,8 @@ public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
 	private void _updateRelease(String schemaVersion) throws SQLException {
 		try (PreparedStatement ps = connection.prepareStatement(
-				"update Release_ set servletContextName = ?, " +
-					"schemaVersion = ? where servletContextName = ?")) {
+				"update Release_ set servletContextName = ?, schemaVersion = " +
+					"? where servletContextName = ?")) {
 
 			ps.setString(1, getNewBundleSymbolicName());
 			ps.setString(2, schemaVersion);

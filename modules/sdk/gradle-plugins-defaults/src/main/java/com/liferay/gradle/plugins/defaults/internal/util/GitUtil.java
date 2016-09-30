@@ -48,8 +48,8 @@ public class GitUtil {
 						}
 
 						execSpec.args(
-							"(git diff-index --cached --quiet HEAD || " +
-								"git commit " + messageArg + ")");
+							"(git diff-index --cached --quiet HEAD || git " +
+								"commit " + messageArg + ")");
 					}
 
 				});

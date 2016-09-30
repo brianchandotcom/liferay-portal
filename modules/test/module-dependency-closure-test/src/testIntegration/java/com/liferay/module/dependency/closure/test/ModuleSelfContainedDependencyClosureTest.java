@@ -69,8 +69,8 @@ public class ModuleSelfContainedDependencyClosureTest {
 
 			Assert.assertTrue(
 				"Test bundle " + testBundle + " has a dependency closure " +
-					dependencyClosure + " that is larger than self " +
-						"contained scope " + testBundles,
+					dependencyClosure + " that is larger than self contained " +
+						"scope " + testBundles,
 				testBundles.containsAll(dependencyClosure));
 		}
 	}

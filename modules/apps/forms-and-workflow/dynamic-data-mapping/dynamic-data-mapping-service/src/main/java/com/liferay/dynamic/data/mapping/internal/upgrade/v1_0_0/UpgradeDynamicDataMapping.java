@@ -415,8 +415,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select parentStructureId from " +
-					"DDMStructure where structureId = ?")) {
+				"select parentStructureId from DDMStructure where " +
+					"structureId = ?")) {
 
 			ps.setLong(1, structureId);
 
@@ -686,8 +686,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void updateStructureStorageType() throws Exception {
 		runSQL(
-			"update DDMStructure set storageType='json' where " +
-				"storageType = 'xml'");
+			"update DDMStructure set storageType='json' where storageType = " +
+				"'xml'");
 	}
 
 	protected void updateStructureVersionStorageType() throws Exception {

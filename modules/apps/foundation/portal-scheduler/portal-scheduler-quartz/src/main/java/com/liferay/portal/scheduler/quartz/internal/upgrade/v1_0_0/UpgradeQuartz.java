@@ -35,8 +35,8 @@ public class UpgradeQuartz extends UpgradeProcess {
 	protected void updateJobDetails() {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
-				"update QUARTZ_JOB_DETAILS set job_class_name = ? " +
-					"where job_class_name = ?")) {
+				"update QUARTZ_JOB_DETAILS set job_class_name = ? where " +
+					"job_class_name = ?")) {
 
 			ps.setString(
 				1,

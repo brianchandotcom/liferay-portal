@@ -46,8 +46,8 @@ public class DDMFormLayoutValidationException extends PortalException {
 
 		public InvalidColumnSize() {
 			super(
-				"Column size must be positive and less than maximum row " +
-					"size of 12");
+				"Column size must be positive and less than maximum row size " +
+					"of 12");
 		}
 
 	}
@@ -57,8 +57,8 @@ public class DDMFormLayoutValidationException extends PortalException {
 
 		public InvalidRowSize() {
 			super(
-				"The sum of all column sizes of a row must be less than " +
-					"the maximum row size of 12");
+				"The sum of all column sizes of a row must be less than the " +
+					"maximum row size of 12");
 		}
 
 	}

@@ -148,8 +148,8 @@ public class WelderFactoryUtilTest {
 	public static class FIFOUtilAdvice {
 
 		@Around(
-			"execution(public static boolean com.liferay.portal.kernel." +
-				"nio.intraband.welder.fifo.FIFOUtil.isFIFOSupported())"
+			"execution(public static boolean com.liferay.portal.kernel.nio." +
+				"intraband.welder.fifo.FIFOUtil.isFIFOSupported())"
 		)
 		public boolean isFIFOSupported() {
 			return _fifoSupported;

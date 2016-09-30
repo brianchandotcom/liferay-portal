@@ -39,8 +39,8 @@ public class EntityFinder {
 
 		if (isCollection() && isUnique() && !hasArrayableOperator()) {
 			throw new IllegalArgumentException(
-				"A finder cannot return a Collection and be unique unless " +
-					"it has an arrayable column. See the ExpandoColumn " +
+				"A finder cannot return a Collection and be unique unless it " +
+					"has an arrayable column. See the ExpandoColumn " +
 						"service.xml declaration for an example.");
 		}
 

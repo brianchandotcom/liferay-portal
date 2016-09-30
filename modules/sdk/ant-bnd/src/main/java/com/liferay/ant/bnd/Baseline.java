@@ -70,8 +70,8 @@ public abstract class Baseline {
 				!_oldJarFile.canRead()) {
 
 				baselineProcessor.warning(
-					"Baseline file %s is invalid. Check if it exists, " +
-						"is readable, and is not a directory.",
+					"Baseline file %s is invalid. Check if it exists, is " +
+						"readable, and is not a directory.",
 					_oldJarFile);
 			}
 			else {

@@ -149,8 +149,8 @@ public class StripFilterTest {
 		// Minifier code
 
 		String code =
-			".a{ position: relative; outline: none; overflow: " +
-				"hidden; text-align: left /* Force default alignment */ }";
+			".a{ position: relative; outline: none; overflow: hidden; " +
+				"text-align: left /* Force default alignment */ }";
 
 		String minifiedCode = MinifierUtil.minifyCss(code);
 

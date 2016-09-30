@@ -243,8 +243,8 @@ public class ResourcesImporterHotDeployMessageListener
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Group or layout set prototype already exists " +
-							"for company " + company.getWebId());
+						"Group or layout set prototype already exists for " +
+							"company " + company.getWebId());
 				}
 
 				return;

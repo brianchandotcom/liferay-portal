@@ -80,8 +80,8 @@ public class Table {
 
 		if (value == null) {
 			throw new UpgradeException(
-				"Nulls should never be inserted into the database. " +
-					"Attempted to append column to " + sb.toString() + ".");
+				"Nulls should never be inserted into the database. Attempted " +
+					"to append column to " + sb.toString() + ".");
 		}
 		else if (value instanceof byte[]) {
 			sb.append(Base64.encode((byte[])value));

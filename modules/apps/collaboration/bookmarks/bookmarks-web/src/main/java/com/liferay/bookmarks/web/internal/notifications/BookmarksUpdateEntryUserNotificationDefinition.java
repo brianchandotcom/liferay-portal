@@ -36,8 +36,8 @@ public class BookmarksUpdateEntryUserNotificationDefinition
 		super(
 			BookmarksPortletKeys.BOOKMARKS, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
-			"receive-a-notification-when-someone-updates-a-bookmark-you-" +
-				"are-subscribed-to");
+			"receive-a-notification-when-someone-updates-a-bookmark-you-are-" +
+				"subscribed-to");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

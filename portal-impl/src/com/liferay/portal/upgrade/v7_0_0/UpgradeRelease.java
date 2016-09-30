@@ -49,8 +49,8 @@ public class UpgradeRelease extends UpgradeProcess {
 	protected void upgradeSchemaVersion() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(
-				"select distinct buildNumber from Release_ " +
-					"where schemaVersion is null");
+				"select distinct buildNumber from Release_ where " +
+					"schemaVersion is null");
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {

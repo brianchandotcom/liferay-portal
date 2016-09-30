@@ -50,8 +50,8 @@ public class VerifyRatings extends VerifyProcess {
 
 	private static final String _SQL_FROM_WHERE_CLAUSE =
 		"from RatingsEntry where RatingsStats.classPK = RatingsEntry.classPK " +
-			"and RatingsStats.classNameId = RatingsEntry.classNameId " +
-				"group by classNameId, classPK";
+			"and RatingsStats.classNameId = RatingsEntry.classNameId group " +
+				"by classNameId, classPK";
 
 	private static final String _SQL_UPDATE_AVERAGE_SCORE =
 		"averageScore = coalesce((select sum(RatingsEntry.score) / count(1) " +

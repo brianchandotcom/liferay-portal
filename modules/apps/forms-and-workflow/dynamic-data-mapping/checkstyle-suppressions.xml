@@ -2,5 +2,6 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
+	<suppress checks="PlusStatement" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
 	<suppress checks="WhitespaceAround" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
 </suppressions>

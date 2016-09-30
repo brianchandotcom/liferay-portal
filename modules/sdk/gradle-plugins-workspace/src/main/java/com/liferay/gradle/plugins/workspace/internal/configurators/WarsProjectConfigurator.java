@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.workspace.internal.configurators;
 
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 
 import groovy.lang.Closure;
@@ -33,7 +34,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Action;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
@@ -49,6 +53,12 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
 	public WarsProjectConfigurator(Settings settings) {
 		super(settings);
+
+		_defaultRepositoryEnabled = GradleUtil.getProperty(
+			settings,
+			WorkspacePlugin.PROPERTY_PREFIX + _NAME +
+				".default.repository.enabled",
+			_DEFAULT_REPOSITORY_ENABLED);
 	}
 
 	@Override
@@ -60,6 +70,7 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 
 		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
+		_addRepositoryDefault(project);
 		_addTaskDeploy(war, workspaceExtension);
 
 		_configureRootTaskDistBundle(
@@ -71,6 +82,14 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 	@Override
 	public String getName() {
 		return _NAME;
+	}
+
+	public boolean isDefaultRepositoryEnabled() {
+		return _defaultRepositoryEnabled;
+	}
+
+	public void setDefaultRepositoryEnabled(boolean defaultRepositoryEnabled) {
+		_defaultRepositoryEnabled = defaultRepositoryEnabled;
 	}
 
 	@Override
@@ -98,6 +117,26 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 			});
 
 		return projectDirs;
+	}
+
+	private MavenArtifactRepository _addRepositoryDefault(Project project) {
+		if (!isDefaultRepositoryEnabled()) {
+			return null;
+		}
+
+		RepositoryHandler repositoryHandler = project.getRepositories();
+
+		return repositoryHandler.maven(
+			new Action<MavenArtifactRepository>() {
+
+				@Override
+				public void execute(
+					MavenArtifactRepository mavenArtifactRepository) {
+
+					mavenArtifactRepository.setUrl(_DEFAULT_REPOSITORY_URL);
+				}
+
+			});
 	}
 
 	private Copy _addTaskDeploy(
@@ -144,6 +183,14 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 			});
 	}
 
+	private static final boolean _DEFAULT_REPOSITORY_ENABLED = true;
+
+	private static final String _DEFAULT_REPOSITORY_URL =
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
+
 	private static final String _NAME = "wars";
+
+	private boolean _defaultRepositoryEnabled;
 
 }

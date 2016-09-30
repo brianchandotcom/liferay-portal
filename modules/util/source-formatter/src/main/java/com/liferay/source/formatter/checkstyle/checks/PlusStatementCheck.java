@@ -39,6 +39,10 @@ public class PlusStatementCheck extends AbstractCheck {
 		return new int[] {TokenTypes.PLUS};
 	}
 
+	public void setMaxLineLength(int maxLineLength) {
+		_maxLineLength = maxLineLength;
+	}
+
 	@Override
 	public void visitToken(DetailAST detailAST) {
 		if (detailAST.getChildCount() != 2) {
@@ -140,5 +144,7 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private int _maxLineLength = 80;
 
 }

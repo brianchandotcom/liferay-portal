@@ -117,22 +117,13 @@ public class CombineLines extends SuperClass {
 	}
 
 	public String method4() {
-		String test1 = getString(
-			"hello worldhello worldhello worldhello world");
-
-		String test2 = "hello worldhello worldhello worldhello world";
-
-		return test1 + test2;
-	}
-
-	public String method5() {
 		String stringWithAFairlyMediumLongName =
 			StringPool.GREATER_THAN_OR_EQUAL;
 
 		return stringWithAFairlyMediumLongName;
 	}
 
-	public Set<String> method6() {
+	public Set<String> method5() {
 		Set<String> numbers = SetUtil.fromArray(
 			new String[] {
 				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
@@ -142,13 +133,13 @@ public class CombineLines extends SuperClass {
 		return numbers;
 	}
 
-	public String method7(String s) {
+	public String method6(String s) {
 		return StringUtil.replace(
 			s, new String[] {StringPool.PERIOD, StringPool.SLASH},
 			new String[] {StringPool.COMMA, StringPool.BACK_SLASH});
 	}
 
-	public void method8(
+	public void method7(
 		String string1,
 		List<String>
 			listWithAVeryLongNameThatThereforeByNoMeansFitsOnTheSameLine) {
@@ -162,15 +153,13 @@ public class CombineLines extends SuperClass {
 		boolean b2 = StringUtil.contains(
 			test1,
 			"Hello WorldHello World Hello" +
-				"Hello World Hello World Hello World Hello World");
+				"HelloWorldHelloWorldHelloWorldHelloWorld");
 
 		boolean b3 = StringUtil.merge(
 			new String[] {"One", "Two"}, "Hello World");
-
-		String s = "Hello World Hello World HelloHello World Hello World Hello";
 	}
 
-	public void method9(String s) {
+	public void method8(String s) {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(s))) {
 

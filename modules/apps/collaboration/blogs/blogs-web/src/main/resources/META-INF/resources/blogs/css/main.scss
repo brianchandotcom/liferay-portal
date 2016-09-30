@@ -305,7 +305,13 @@
 
 	.entry-title {
 		display: block;
+		overflow: hidden;
 		position: relative;
+
+		&:hover {
+			overflow: visible;
+			z-index: 1;
+		}
 
 		h1 {
 			font-size: 60px;
@@ -339,7 +345,6 @@
 		}
 
 		.social-bookmarks {
-
 			@include respond-to(desktop) {
 				display: inline-block;
 				position: absolute;

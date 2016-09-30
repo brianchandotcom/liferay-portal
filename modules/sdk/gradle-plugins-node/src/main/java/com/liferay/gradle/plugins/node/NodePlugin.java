@@ -143,6 +143,16 @@ public class NodePlugin implements Plugin<Project> {
 
 			});
 
+		downloadNodeTask.setNpmUrl(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return nodeExtension.getNpmUrl();
+				}
+
+			});
+
 		downloadNodeTask.onlyIf(
 			new Spec<Task>() {
 

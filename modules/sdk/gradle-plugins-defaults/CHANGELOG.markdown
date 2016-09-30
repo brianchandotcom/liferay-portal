@@ -321,6 +321,11 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 ### Changed
 - [LPS-58672]: Update the [Liferay Gradle Plugins] dependency to version 2.0.46.
 
+## 1.2.37 - 2016-09-30
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.47.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672

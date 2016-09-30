@@ -1146,6 +1146,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void checkVersion(Project project) {
+		_checkJsonVersion(project, "npm-shrinkwrap.json");
 		_checkJsonVersion(project, "package.json");
 	}
 

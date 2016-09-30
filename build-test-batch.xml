@@ -1435,7 +1435,7 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
-	<target name="functional-smoke-jboss64-mysql56-jdk8">
+	<target name="functional-smoke-jboss70-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
 

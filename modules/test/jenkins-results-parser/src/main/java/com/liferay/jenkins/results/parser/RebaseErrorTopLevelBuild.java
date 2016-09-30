@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -47,8 +46,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 		super(url, topLevelBuild);
 
-		// TODO Auto-generated constructor stub
-
+		_validResult = false;
 	}
 
 	@Override
@@ -76,8 +74,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				sb.append("github.com/liferay/liferay-jenkins-ee/tests/");
 				sb.append(getJobName());
 
-				String jenkinsJobVariant =
-					getParameterValue("JENKINS_JOB_VARIANT");
+				String jenkinsJobVariant = getParameterValue(
+					"JENKINS_JOB_VARIANT");
 
 				if (jenkinsJobVariant != null) {
 					sb.append("/");
@@ -87,9 +85,8 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				sb.append("/report.html");
 
 				try {
-					Element rootElement = 
-						getElementFromString(
-							JenkinsResultsParserUtil.toString(sb.toString()));
+					Element rootElement = getElementFromString(
+						JenkinsResultsParserUtil.toString(sb.toString()));
 
 					List<String> expectedCommentTokens = getCommentTokens(
 						rootElement);
@@ -245,7 +242,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 		return s;
 	}
-	
-	private boolean _validResult = false;
+
+	private boolean _validResult;
 
 }

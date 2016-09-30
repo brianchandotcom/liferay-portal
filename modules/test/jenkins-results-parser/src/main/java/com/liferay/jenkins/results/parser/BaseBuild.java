@@ -803,11 +803,11 @@ public abstract class BaseBuild implements Build {
 				JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
 
 			if (tempMapJSONObject.has("properties")) {
-				JSONArray propertiesJSONArray =
-					tempMapJSONObject.getJSONArray("properties");
+				JSONArray propertiesJSONArray = tempMapJSONObject.getJSONArray(
+					"properties");
 
-				Map<String, String> tempMap =
-					new HashMap<>(propertiesJSONArray.length());
+				Map<String, String> tempMap = new HashMap<>(
+					propertiesJSONArray.length());
 
 				for (int i = 0; i < propertiesJSONArray.length(); i++) {
 					JSONObject property = propertiesJSONArray.getJSONObject(i);
@@ -827,8 +827,7 @@ public abstract class BaseBuild implements Build {
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
-		}		
-		
+		}
 	}
 
 	protected void loadParametersFromBuildJSONObject() throws Exception {

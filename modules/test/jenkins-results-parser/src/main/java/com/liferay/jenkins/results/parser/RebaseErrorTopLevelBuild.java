@@ -55,8 +55,15 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 	public String getResult() {
 		String baseResult = super.getResult();
 
-		if ((baseResult == null) || baseResult.equals("SUCCESS")) {
+		if ((baseResult == null) || _validResult) {
 			return baseResult;
+		}
+
+		if (baseResult.equals("SUCCESS")) {
+			result = "FAILURE";
+			_validResult = true;
+
+			return result;
 		}
 
 		if (baseResult.equals("FAILURE")) {
@@ -128,14 +135,15 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 						else {
 							System.out.println("Tokens mismatched.");
 
-							matchesTemplate = false;
+							_validResult = true;
 
-							break;
+							return baseResult;
 						}
 					}
 
 					if (matchesTemplate) {
 						result = "SUCCESS";
+						_validResult = true;
 
 						return result;
 					}
@@ -143,7 +151,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 				catch (Exception e) {
 					throw new RuntimeException(
 						"An exception occurred while trying to match the " +
-							"output with the expected output",
+							"actual output with the expected output",
 						e);
 				}
 			}
@@ -237,5 +245,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 		return s;
 	}
+	
+	private boolean _validResult = false;
 
 }

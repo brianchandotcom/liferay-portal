@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.3, with no direct replacement
  */
+@Deprecated
 public class RatingsScoreTag extends IncludeTag {
 
 	public void setScore(double score) {

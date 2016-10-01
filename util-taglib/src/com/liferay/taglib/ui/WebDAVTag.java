@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of 7.0.3, with no direct replacement
  */
 @Deprecated
 public class WebDAVTag extends IncludeTag {

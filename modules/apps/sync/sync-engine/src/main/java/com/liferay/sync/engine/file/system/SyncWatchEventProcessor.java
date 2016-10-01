@@ -151,7 +151,7 @@ public class SyncWatchEventProcessor implements Runnable {
 	protected void addFile(SyncWatchEvent syncWatchEvent) throws Exception {
 		final Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
-		if (Files.notExists(targetFilePath) ||
+		if (FileUtil.notExists(targetFilePath) ||
 			sanitizeFileName(targetFilePath) ||
 			isInErrorState(targetFilePath)) {
 
@@ -235,7 +235,7 @@ public class SyncWatchEventProcessor implements Runnable {
 					targetFilePath, _syncAccountId, syncFile);
 			}
 		}
-		else if (Files.exists(sourceFilePath)) {
+		else if (FileUtil.exists(sourceFilePath)) {
 			try {
 				if ((Files.size(targetFilePath) == 0) ||
 					FileUtil.isModified(syncFile, targetFilePath) ||
@@ -360,7 +360,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			FileKeyUtil.writeFileKey(
 				targetFilePath, String.valueOf(syncFile.getSyncFileId()), true);
 		}
-		else if (Files.exists(sourceFilePath)) {
+		else if (FileUtil.exists(sourceFilePath)) {
 			SyncFileService.addFolderSyncFile(
 				targetFilePath, parentSyncFile.getTypePK(),
 				parentSyncFile.getRepositoryId(), _syncAccountId);
@@ -419,7 +419,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFile syncFile = SyncFileService.fetchSyncFile(filePath.toString());
 
 		if ((syncFile == null) ||
-			!Files.notExists(Paths.get(syncFile.getFilePathName()))) {
+			!FileUtil.notExists(Paths.get(syncFile.getFilePathName()))) {
 
 			return;
 		}
@@ -580,7 +580,7 @@ public class SyncWatchEventProcessor implements Runnable {
 	protected void moveFile(SyncWatchEvent syncWatchEvent) throws Exception {
 		Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
-		if (Files.notExists(targetFilePath) ||
+		if (FileUtil.notExists(targetFilePath) ||
 			sanitizeFileName(targetFilePath) ||
 			isInErrorState(targetFilePath)) {
 

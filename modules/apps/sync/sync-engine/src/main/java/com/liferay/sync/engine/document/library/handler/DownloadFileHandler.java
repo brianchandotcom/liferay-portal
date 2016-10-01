@@ -191,7 +191,7 @@ public class DownloadFileHandler extends BaseHandler {
 		try {
 			Path tempFilePath = FileUtil.getTempFilePath(syncFile);
 
-			boolean exists = Files.exists(filePath);
+			boolean exists = FileUtil.exists(filePath);
 
 			if (append) {
 				outputStream = Files.newOutputStream(
@@ -378,7 +378,7 @@ public class DownloadFileHandler extends BaseHandler {
 
 		Path filePath = Paths.get(syncFile.getFilePathName());
 
-		if (Files.notExists(filePath.getParent())) {
+		if (FileUtil.notExists(filePath.getParent())) {
 			if (_logger.isDebugEnabled()) {
 				_logger.debug(
 					"Skipping file {}. Missing parent file path {}.",

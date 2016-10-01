@@ -60,7 +60,7 @@ public class FileLockRetryUtil {
 		try {
 			Path filePath = pathCallable.getPath();
 
-			if ((filePath == null) || Files.notExists(filePath)) {
+			if ((filePath == null) || FileUtil.notExists(filePath)) {
 				return true;
 			}
 

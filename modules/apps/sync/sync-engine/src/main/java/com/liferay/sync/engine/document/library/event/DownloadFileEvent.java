@@ -110,7 +110,7 @@ public class DownloadFileEvent extends BaseEvent {
 		Path tempFilePath = FileUtil.getTempFilePath(syncFile);
 
 		if (ServerInfo.supportsPartialDownloads(getSyncAccountId()) &&
-			Files.exists(tempFilePath)) {
+			FileUtil.exists(tempFilePath)) {
 
 			long size = Files.size(tempFilePath);
 

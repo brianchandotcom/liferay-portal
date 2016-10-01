@@ -356,7 +356,7 @@ public class FileEventUtil {
 			syncAccountId, SyncFile.UI_EVENT_DELETED_LOCAL, "syncFileId", true);
 
 		for (SyncFile deletingSyncFile : deletingSyncFiles) {
-			if (!Files.notExists(
+			if (!FileUtil.notExists(
 					Paths.get(deletingSyncFile.getFilePathName()))) {
 
 				deletingSyncFile.setState(SyncFile.STATE_SYNCED);
@@ -390,7 +390,7 @@ public class FileEventUtil {
 		for (SyncFile uploadingSyncFile : uploadingSyncFiles) {
 			Path filePath = Paths.get(uploadingSyncFile.getFilePathName());
 
-			if (Files.notExists(filePath)) {
+			if (FileUtil.notExists(filePath)) {
 				if (uploadingSyncFile.getTypePK() == 0) {
 					SyncFileService.deleteSyncFile(uploadingSyncFile, false);
 				}

@@ -19,7 +19,6 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.util.FileUtil;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -58,7 +57,7 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 				targetFilePath, targetSyncFile.getParentFolderId(),
 				sourceSyncFile);
 
-			if (Files.exists(sourceFilePath)) {
+			if (FileUtil.exists(sourceFilePath)) {
 				FileUtil.moveFile(sourceFilePath, targetFilePath);
 			}
 
@@ -79,7 +78,7 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 				targetFilePath, sourceSyncFile.getParentFolderId(),
 				sourceSyncFile);
 
-			if (Files.exists(sourceFilePath)) {
+			if (FileUtil.exists(sourceFilePath)) {
 				FileUtil.moveFile(sourceFilePath, targetFilePath);
 			}
 

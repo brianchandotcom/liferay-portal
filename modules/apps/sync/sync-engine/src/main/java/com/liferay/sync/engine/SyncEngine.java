@@ -45,7 +45,6 @@ import com.liferay.sync.engine.util.Validator;
 
 import java.io.IOException;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -295,7 +294,7 @@ public class SyncEngine {
 
 			Path syncSiteFilePath = Paths.get(syncSite.getFilePathName());
 
-			if (Files.notExists(syncSiteFilePath)) {
+			if (FileUtil.notExists(syncSiteFilePath)) {
 				if (_logger.isTraceEnabled()) {
 					_logger.trace(
 						"Missing sync site file path {}", syncSiteFilePath);

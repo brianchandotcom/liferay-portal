@@ -37,6 +37,7 @@ import com.liferay.sync.engine.upgrade.v3_0_9.UpgradeProcess_3_0_9;
 import com.liferay.sync.engine.upgrade.v3_1_0.UpgradeProcess_3_1_0;
 import com.liferay.sync.engine.upgrade.v3_2_1.UpgradeProcess_3_2_1;
 import com.liferay.sync.engine.upgrade.v3_3_0.UpgradeProcess_3_3_0;
+import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.LoggerUtil;
 import com.liferay.sync.engine.util.PropsValues;
 import com.liferay.sync.engine.util.ReleaseInfo;
@@ -88,7 +89,7 @@ public class UpgradeUtil {
 			Path loggerConfigurationFilePath = configurationFilePath.resolve(
 				PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
 
-			if (!Files.exists(loggerConfigurationFilePath)) {
+			if (!FileUtil.exists(loggerConfigurationFilePath)) {
 				copyLoggerConfiguration();
 			}
 

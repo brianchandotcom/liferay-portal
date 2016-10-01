@@ -80,7 +80,7 @@ public class SyncSiteService {
 
 		String filePathName = syncSite.getFilePathName();
 
-		if (!Files.exists(Paths.get(filePathName))) {
+		if (!FileUtil.exists(Paths.get(filePathName))) {
 			Files.createDirectories(Paths.get(filePathName));
 
 			SyncFile syncFile = SyncFileService.fetchSyncFile(filePathName);
@@ -368,7 +368,7 @@ public class SyncSiteService {
 
 		Path filePath = Paths.get(syncSite.getFilePathName());
 
-		if (!Files.exists(filePath)) {
+		if (!FileUtil.exists(filePath)) {
 			return;
 		}
 

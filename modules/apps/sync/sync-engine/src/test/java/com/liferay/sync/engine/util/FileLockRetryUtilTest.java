@@ -84,17 +84,17 @@ public class FileLockRetryUtilTest {
 
 		FileLockRetryUtil.registerPathCallable(pathCallable);
 
-		Assert.assertTrue(Files.exists(_filePath));
+		Assert.assertTrue(FileUtil.exists(_filePath));
 
 		countDownLatch.await(5, TimeUnit.SECONDS);
 
-		Assert.assertTrue(Files.exists(_filePath));
+		Assert.assertTrue(FileUtil.exists(_filePath));
 
 		unlockFile();
 
 		countDownLatch.await(5, TimeUnit.SECONDS);
 
-		Assert.assertTrue(Files.notExists(_filePath));
+		Assert.assertTrue(FileUtil.notExists(_filePath));
 	}
 
 	protected void lockFile() {

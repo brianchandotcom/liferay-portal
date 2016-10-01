@@ -52,7 +52,9 @@ public class IODeltaUtil {
 
 		Path syncFilePath = Paths.get(syncFile.getFilePathName());
 
-		if (Files.isDirectory(syncFilePath) || Files.notExists(syncFilePath)) {
+		if (Files.isDirectory(syncFilePath) ||
+			FileUtil.notExists(syncFilePath)) {
+
 			return null;
 		}
 
@@ -65,7 +67,7 @@ public class IODeltaUtil {
 
 			Path checksumsFilePath = getChecksumsFilePath(syncFile);
 
-			if (Files.notExists(checksumsFilePath)) {
+			if (FileUtil.notExists(checksumsFilePath)) {
 				Files.createFile(checksumsFilePath);
 			}
 
@@ -106,7 +108,7 @@ public class IODeltaUtil {
 		try {
 			Path sourceChecksumsFilePath = getChecksumsFilePath(sourceSyncFile);
 
-			if (Files.notExists(sourceChecksumsFilePath)) {
+			if (FileUtil.notExists(sourceChecksumsFilePath)) {
 				checksums(sourceSyncFile);
 			}
 
@@ -128,9 +130,9 @@ public class IODeltaUtil {
 	public static Path delta(
 		Path targetFilePath, Path checksumsFilePath, Path deltaFilePath) {
 
-		if (Files.notExists(targetFilePath) ||
-			Files.notExists(checksumsFilePath) ||
-			Files.notExists(deltaFilePath)) {
+		if (FileUtil.notExists(targetFilePath) ||
+			FileUtil.notExists(checksumsFilePath) ||
+			FileUtil.notExists(deltaFilePath)) {
 
 			return null;
 		}
@@ -199,7 +201,7 @@ public class IODeltaUtil {
 	public static Path patch(
 		Path targetFilePath, InputStream deltaInputStream) {
 
-		if (Files.notExists(targetFilePath)) {
+		if (FileUtil.notExists(targetFilePath)) {
 			return null;
 		}
 

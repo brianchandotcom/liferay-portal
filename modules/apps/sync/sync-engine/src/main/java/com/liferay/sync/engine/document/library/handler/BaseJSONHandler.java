@@ -29,7 +29,6 @@ import com.liferay.sync.engine.util.ConnectionRetryUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.JSONUtil;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -202,7 +201,7 @@ public class BaseJSONHandler extends BaseHandler {
 
 			Path filePath = Paths.get(syncFile.getFilePathName());
 
-			if (Files.exists(filePath)) {
+			if (FileUtil.exists(filePath)) {
 				Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
 				watcher.addDeletedFilePathName(syncFile.getFilePathName());

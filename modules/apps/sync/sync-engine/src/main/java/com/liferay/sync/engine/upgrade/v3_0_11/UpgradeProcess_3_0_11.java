@@ -22,8 +22,8 @@ import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.upgrade.BaseUpgradeProcess;
 import com.liferay.sync.engine.util.FileKeyUtil;
+import com.liferay.sync.engine.util.FileUtil;
 
-import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.List;
@@ -49,7 +49,7 @@ public class UpgradeProcess_3_0_11 extends BaseUpgradeProcess {
 
 			for (SyncSite syncSite : syncSites) {
 				if (!syncSite.isActive() ||
-					!Files.exists(Paths.get(syncSite.getFilePathName()))) {
+					!FileUtil.exists(Paths.get(syncSite.getFilePathName()))) {
 
 					continue;
 				}

@@ -17,11 +17,11 @@ package com.liferay.sync.engine.file.system;
 import com.liferay.sync.engine.SyncEngine;
 import com.liferay.sync.engine.file.system.listener.WatchEventListener;
 import com.liferay.sync.engine.util.BidirectionalMap;
+import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
 
 import java.io.IOException;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.List;
@@ -66,7 +66,7 @@ public class JPathWatcher extends Watcher {
 
 	@Override
 	public void registerFilePath(Path filePath) throws IOException {
-		if (Files.notExists(filePath)) {
+		if (FileUtil.notExists(filePath)) {
 			return;
 		}
 

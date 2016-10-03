@@ -336,6 +336,10 @@ version in the `npm-shrinkwrap.json` file, if present.
 
 ## 1.2.39 - 2016-10-03
 
+### Added
+- [LPS-68402]: Set the [`org.apache.maven.offline`](https://github.com/shrinkwrap/resolver#system-properties)
+system property to `true` for the `testIntegration` task.
+
 ### Changed
 - [LPS-68485]: Update the [Liferay Gradle Plugins] dependency to version 2.0.48.
 
@@ -373,6 +377,7 @@ dependency to version 1.1.0.
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
 [LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
+[LPS-68402]: https://issues.liferay.com/browse/LPS-68402
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504

@@ -48,7 +48,7 @@
 				<else>
 					<pathconvert pathsep="," property="plugin.build.path" setonempty="false">
 						<path>
-							<fileset dir="${project.dir}/modules" includes="**/@{plugin}/build.xml" />
+							<fileset dir="${project.dir}/modules" includes="**/@{plugin}/build.gradle,**/@{plugin}/build.xml" />
 						</path>
 					</pathconvert>
 

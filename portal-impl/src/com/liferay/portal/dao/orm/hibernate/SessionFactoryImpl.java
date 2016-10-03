@@ -58,10 +58,6 @@ public class SessionFactoryImpl implements SessionFactory {
 		return new DialectImpl(_sessionFactoryImplementor.getDialect());
 	}
 
-	public ClassLoader getSessionFactoryClassLoader() {
-		return _sessionFactoryClassLoader;
-	}
-
 	public SessionFactoryImplementor getSessionFactoryImplementor() {
 		return _sessionFactoryImplementor;
 	}

@@ -23,7 +23,9 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class AppViewToolbarTag extends TagSupport {
 
 	@Override

@@ -329,7 +329,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a navigation list item component for navigating app view entries.</description>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-aui:nav-item</code>]]>. Creates a navigation list item component for navigating app view entries.</description>
 		<name>app-view-navigation-entry</name>
 		<tag-class>com.liferay.taglib.ui.AppViewNavigationEntryTag</tag-class>
 		<body-content>empty</body-content>
@@ -525,7 +525,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a toolbar for viewing items in app view.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a toolbar for viewing items in app view.</description>
 		<name>app-view-toolbar</name>
 		<tag-class>com.liferay.taglib.ui.AppViewToolbarTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1061,7 +1061,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a calendar with configurable events.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a calendar with configurable events.</description>
 		<name>calendar</name>
 		<tag-class>com.liferay.taglib.ui.CalendarTag</tag-class>
 		<body-content>JSP</body-content>
@@ -1593,6 +1593,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>group-search</name>
 		<tag-class>com.liferay.taglib.ui.GroupSearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2825,7 +2826,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a select input component with yes or no options.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a select input component with yes or no options.</description>
 		<name>input-select</name>
 		<tag-class>com.liferay.taglib.ui.InputSelectTag</tag-class>
 		<body-content>JSP</body-content>
@@ -2863,7 +2864,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a configurable text area input field.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a configurable text area input field.</description>
 		<name>input-textarea</name>
 		<tag-class>com.liferay.taglib.ui.InputTextAreaTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3043,6 +3044,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>journal-content-search</name>
 		<tag-class>com.liferay.taglib.ui.JournalContentSearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3262,6 +3264,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>my-sites</name>
 		<tag-class>com.liferay.taglib.ui.MySitesTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3553,7 +3556,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders a PNG image with the source given for the <![CDATA[<code>image</code>]]> attribute.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Renders a PNG image with the source given for the <![CDATA[<code>image</code>]]> attribute.</description>
 		<name>png-image</name>
 		<tag-class>com.liferay.taglib.ui.PngImageTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3617,6 +3620,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>quick-access</name>
 		<tag-class>com.liferay.taglib.ui.QuickAccessTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3692,6 +3696,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0 with no direct replacement.</description>
 		<name>ratings-score</name>
 		<tag-class>com.liferay.taglib.ui.RatingsScoreTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3822,7 +3827,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a search form, with an additional select input to set the scope of the search.</description>
+		<description>Deprecated as of 7.0.0, with no direct replacement. Creates a search form, with an additional select input to set the scope of the search.</description>
 		<name>search</name>
 		<tag-class>com.liferay.taglib.ui.SearchTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3964,6 +3969,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>search-container-column-button</name>
 		<tag-class>com.liferay.taglib.ui.SearchContainerColumnButtonTag</tag-class>
 		<body-content>JSP</body-content>
@@ -5510,6 +5516,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>user-search</name>
 		<tag-class>com.liferay.taglib.ui.UserSearchTag</tag-class>
 		<body-content>JSP</body-content>

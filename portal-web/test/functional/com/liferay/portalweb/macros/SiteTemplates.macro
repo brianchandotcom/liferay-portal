@@ -266,7 +266,7 @@
 		<if>
 			<isset var="siteTemplateDescription" />
 			<then>
-				<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRITPION" value1="${siteTemplateDescription}">
+				<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${siteTemplateDescription}">
 					<var name="key_siteTemplateDescription" value="${siteTemplateDescription}" />
 				</execute>
 			</then>
@@ -293,7 +293,7 @@
 		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation" >
 			<var name="key_siteTemplateDescription" value="${DescriptionTranslation}" />
 
-			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRITPION" value1="${DescriptionTranslation}" />
+			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${DescriptionTranslation}" />
 		</for>
 	</command>
 

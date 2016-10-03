@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
@@ -93,6 +94,10 @@ public class AddChildPagePortletConfigurationIcon
 
 		try {
 			WikiPage page = ActionUtil.getPage(portletRequest);
+
+			if (Validator.isNull(page.getContent())) {
+				return false;
+			}
 
 			return WikiNodePermissionChecker.contains(
 				themeDisplay.getPermissionChecker(), page.getNodeId(),

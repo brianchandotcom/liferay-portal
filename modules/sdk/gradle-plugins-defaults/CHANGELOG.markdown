@@ -326,7 +326,7 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.47.
 
-## 1.2.38 - 2016-09-30
+## 1.2.38 - 2016-10-01
 
 ### Added
 - [LPS-68448]: Fail the build of an OSGi project if the version in the

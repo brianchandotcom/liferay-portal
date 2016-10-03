@@ -20,7 +20,6 @@ import com.liferay.portal.spring.extender.internal.context.ModuleApplicationCont
 
 import org.osgi.framework.BundleContext;
 
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -31,11 +30,6 @@ public class ModuleSessionFactory
 	extends PortletSessionFactoryImpl implements ApplicationContextAware {
 
 	@Override
-	public ClassLoader getSessionFactoryClassLoader() {
-		return _classLoader;
-	}
-
-	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) {
 		ModuleApplicationContext moduleApplicationContext =
 			(ModuleApplicationContext)applicationContext;
@@ -43,11 +37,8 @@ public class ModuleSessionFactory
 		BundleContext bundleContext =
 			moduleApplicationContext.getBundleContext();
 
-		_classLoader = new BundleResolverClassLoader(bundleContext.getBundle());
-
-		setSessionFactoryClassLoader(_classLoader);
+		setSessionFactoryClassLoader(
+			new BundleResolverClassLoader(bundleContext.getBundle()));
 	}
-
-	private ClassLoader _classLoader;
 
 }

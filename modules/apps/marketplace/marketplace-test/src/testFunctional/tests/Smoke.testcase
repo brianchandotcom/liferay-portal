@@ -1,0 +1,11 @@
+<definition component-name="marketplace">
+	<property name="marketplace.acceptance" value="true" />
+	<property name="portlet.plugins.includes" value="marketplace" />
+	<property name="testray.main.component.name" value="Marketplace" />
+
+	<var method="TestPropsUtil#get('marketplace.url')" name="marketplaceURL" />
+
+	<command name="Smoke" priority="5">
+		<execute function="Open" locator1="${marketplaceURL}" />
+	</command>
+</definition>

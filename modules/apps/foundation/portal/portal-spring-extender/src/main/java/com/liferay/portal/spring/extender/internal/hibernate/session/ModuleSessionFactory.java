@@ -17,11 +17,6 @@ package com.liferay.portal.spring.extender.internal.hibernate.session;
 import com.liferay.portal.dao.orm.hibernate.PortletSessionFactoryImpl;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 import com.liferay.portal.spring.extender.internal.context.ModuleApplicationContext;
-import com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration;
-
-import javax.sql.DataSource;
-
-import org.hibernate.SessionFactory;
 
 import org.osgi.framework.BundleContext;
 
@@ -53,21 +48,6 @@ public class ModuleSessionFactory
 		_classLoader = new BundleResolverClassLoader(bundleContext.getBundle());
 
 		setSessionFactoryClassLoader(_classLoader);
-	}
-
-	@Override
-	protected SessionFactory createSessionFactory(DataSource dataSource) {
-		ModuleHibernateConfiguration moduleHibernateConfiguration =
-			new ModuleHibernateConfiguration(_classLoader);
-
-		moduleHibernateConfiguration.setDataSource(dataSource);
-
-		try {
-			return moduleHibernateConfiguration.buildSessionFactory();
-		}
-		catch (Exception e) {
-			return null;
-		}
 	}
 
 	private ClassLoader _classLoader;

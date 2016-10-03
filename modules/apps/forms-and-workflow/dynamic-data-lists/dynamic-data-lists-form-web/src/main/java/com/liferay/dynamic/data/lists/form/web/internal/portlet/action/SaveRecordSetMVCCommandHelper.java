@@ -67,31 +67,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = AddUpdateRecordSetMVCCommandHelper.class)
-public class AddUpdateRecordSetMVCCommandHelper {
-
-	public DDLRecordSet addRecordSet(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			portletRequest);
-
-		DDMStructure ddmStructure = addDDMStructure(
-			portletRequest, settingsDDMFormValues);
-
-		DDLRecordSet recordSet = addRecordSet(
-			portletRequest, ddmStructure.getStructureId());
-
-		updateRecordSetSettings(
-			portletRequest, recordSet, settingsDDMFormValues);
-
-		return recordSet;
-	}
+@Component(immediate = true, service = SaveRecordSetMVCCommandHelper.class)
+public class SaveRecordSetMVCCommandHelper {
 
 	public DDLRecordSet saveRecordSet(
 			PortletRequest portletRequest, PortletResponse portletResponse)
-	throws Exception {
+		throws Exception {
 
 		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
 
@@ -101,24 +82,6 @@ public class AddUpdateRecordSetMVCCommandHelper {
 		else {
 			return updateRecordSet(portletRequest, portletResponse);
 		}
-	}
-
-	public DDLRecordSet updateRecordSet(
-			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws Exception {
-
-		DDMStructure ddmStructure = updateDDMStructure(portletRequest);
-
-		DDLRecordSet recordSet = updateRecordSet(
-			portletRequest, ddmStructure.getStructureId());
-
-		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			portletRequest);
-
-		updateRecordSetSettings(
-			portletRequest, recordSet, settingsDDMFormValues);
-
-		return recordSet;
 	}
 
 	protected DDMStructure addDDMStructure(
@@ -171,6 +134,25 @@ public class AddUpdateRecordSetMVCCommandHelper {
 			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
 			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
+	}
+
+	protected DDLRecordSet addRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+			portletRequest);
+
+		DDMStructure ddmStructure = addDDMStructure(
+			portletRequest, settingsDDMFormValues);
+
+		DDLRecordSet recordSet = addRecordSet(
+			portletRequest, ddmStructure.getStructureId());
+
+		updateRecordSetSettings(
+			portletRequest, recordSet, settingsDDMFormValues);
+
+		return recordSet;
 	}
 
 	protected DDMForm getDDMForm(PortletRequest portletRequest)
@@ -327,6 +309,24 @@ public class AddUpdateRecordSetMVCCommandHelper {
 			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
 			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
+	}
+
+	protected DDLRecordSet updateRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		DDMStructure ddmStructure = updateDDMStructure(portletRequest);
+
+		DDLRecordSet recordSet = updateRecordSet(
+			portletRequest, ddmStructure.getStructureId());
+
+		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+			portletRequest);
+
+		updateRecordSetSettings(
+			portletRequest, recordSet, settingsDDMFormValues);
+
+		return recordSet;
 	}
 
 	protected void updateRecordSetSettings(

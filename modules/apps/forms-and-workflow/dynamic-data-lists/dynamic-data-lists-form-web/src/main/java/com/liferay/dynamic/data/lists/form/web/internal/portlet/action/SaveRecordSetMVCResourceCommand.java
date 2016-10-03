@@ -89,7 +89,7 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 			@Override
 			public DDLRecordSet call() throws Exception {
-				return addUpdateRecordSetMVCCommandHelper.saveRecordSet(
+				return saveRecordSetMVCCommandHelper.saveRecordSet(
 					resourceRequest, resourceResponse);
 			}
 
@@ -99,11 +99,10 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	@Reference
-	protected AddUpdateRecordSetMVCCommandHelper
-		addUpdateRecordSetMVCCommandHelper;
+	protected JSONFactory jsonFactory;
 
 	@Reference
-	protected JSONFactory jsonFactory;
+	protected SaveRecordSetMVCCommandHelper saveRecordSetMVCCommandHelper;
 
 	private static final TransactionConfig _transactionConfig;
 

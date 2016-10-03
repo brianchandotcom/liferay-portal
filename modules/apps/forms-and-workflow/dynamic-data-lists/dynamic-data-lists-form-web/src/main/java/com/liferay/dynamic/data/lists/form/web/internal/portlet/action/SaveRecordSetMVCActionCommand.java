@@ -43,12 +43,11 @@ public class SaveRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		addUpdateRecordSetMVCCommandHelper.saveRecordSet(
+		saveRecordSetMVCCommandHelper.saveRecordSet(
 			actionRequest, actionResponse);
 	}
 
 	@Reference
-	protected AddUpdateRecordSetMVCCommandHelper
-		addUpdateRecordSetMVCCommandHelper;
+	protected SaveRecordSetMVCCommandHelper saveRecordSetMVCCommandHelper;
 
 }

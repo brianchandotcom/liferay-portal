@@ -4351,6 +4351,10 @@
 			<var name="userFirstName" value="userfn" />
 		</execute>
 
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="User#deleteCP" />
+
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />

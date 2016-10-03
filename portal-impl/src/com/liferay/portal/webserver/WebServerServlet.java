@@ -73,6 +73,8 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -117,6 +119,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -281,49 +284,11 @@ public class WebServerServlet extends HttpServlet {
 				}
 			}
 
-			String path = HttpUtil.fixPath(request.getPathInfo());
+			TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
-			String[] pathArray = StringUtil.split(path, CharPool.SLASH);
-
-			if (pathArray.length == 0) {
-				sendGroups(
-					response, user,
-					request.getServletPath() + StringPool.SLASH + path);
-			}
-			else {
-				if (Validator.isNumber(pathArray[0])) {
-					sendFile(request, response, user, pathArray);
-				}
-				else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
-					sendPortletFileEntry(request, response, pathArray);
-				}
-				else {
-					if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
-						if (isLegacyImageGalleryImageId(request, response)) {
-							return;
-						}
-					}
-
-					Image image = getImage(request, true);
-
-					if ((image.getCompanyId() != user.getCompanyId()) &&
-						_processCompanyInactiveRequest(
-							request, response, image.getCompanyId())) {
-
-						return;
-					}
-
-					if (image != null) {
-						writeImage(image, request, response);
-					}
-					else {
-						sendDocumentLibrary(
-							request, response, user,
-							request.getServletPath() + StringPool.SLASH + path,
-							pathArray);
-					}
-				}
-			}
+			TransactionInvokerUtil.invoke(
+				builder.build(),
+				_createFileServingCallable(request, response, user));
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			PortalUtil.sendError(
@@ -338,6 +303,9 @@ public class WebServerServlet extends HttpServlet {
 		}
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
+		}
+		catch (Throwable e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -1355,6 +1323,64 @@ public class WebServerServlet extends HttpServlet {
 				}
 			}
 		}
+	}
+
+	private Callable<Void> _createFileServingCallable(
+		final HttpServletRequest request, final HttpServletResponse response,
+		final User user) {
+
+		return new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				String path = HttpUtil.fixPath(request.getPathInfo());
+
+				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+				if (pathArray.length == 0) {
+					sendGroups(
+						response, user,
+						request.getServletPath() + StringPool.SLASH + path);
+				}
+				else {
+					if (Validator.isNumber(pathArray[0])) {
+						sendFile(request, response, user, pathArray);
+					}
+					else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
+						sendPortletFileEntry(request, response, pathArray);
+					}
+					else {
+						if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
+							if (isLegacyImageGalleryImageId(
+								request, response)) {
+								return;
+							}
+						}
+
+						Image image = getImage(request, true);
+
+						if ((image.getCompanyId() != user.getCompanyId()) &&
+							_processCompanyInactiveRequest(
+								request, response, image.getCompanyId())) {
+
+							return;
+						}
+
+						if (image != null) {
+							writeImage(image, request, response);
+						}
+						else {
+							sendDocumentLibrary(
+								request, response, user,
+								request.getServletPath() + StringPool.SLASH +
+								path,
+								pathArray);
+						}
+					}
+				}
+			}
+
+		};
 	}
 
 	private static long _getGroupId(long companyId, String name)

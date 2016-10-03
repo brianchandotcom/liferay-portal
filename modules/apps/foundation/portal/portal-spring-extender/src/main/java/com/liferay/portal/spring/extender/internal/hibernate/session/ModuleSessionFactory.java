@@ -36,9 +36,7 @@ public class ModuleSessionFactory
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-		throws BeansException {
-
+	public void setApplicationContext(ApplicationContext applicationContext) {
 		ModuleApplicationContext moduleApplicationContext =
 			(ModuleApplicationContext)applicationContext;
 

@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRulesToDDMFormRulesConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -42,8 +41,6 @@ import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -61,44 +58,50 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Bruno Basto
+ * @author Marcellus Tavares
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-		"mvc.command.name=addRecordSet"
-	},
-	service = MVCActionCommand.class
-)
-public class AddRecordSetMVCActionCommand
-	extends BaseTransactionalMVCActionCommand {
+@Component(immediate = true, service = SaveRecordSetMVCCommandHelper.class)
+public class SaveRecordSetMVCCommandHelper {
 
-	protected DDMStructure addDDMStructure(
-			ActionRequest actionRequest, DDMFormValues settingsDDMFormValues)
+	public DDLRecordSet saveRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+
+		if (recordSetId == 0) {
+			return addRecordSet(portletRequest, portletResponse);
+		}
+		else {
+			return updateRecordSet(portletRequest, portletResponse);
+		}
+	}
+
+	protected DDMStructure addDDMStructure(
+			PortletRequest portletRequest, DDMFormValues settingsDDMFormValues)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String structureKey = ParamUtil.getString(
-			actionRequest, "structureKey");
+			portletRequest, "structureKey");
 		String storageType = getStorageType(settingsDDMFormValues);
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
-		DDMForm ddmForm = getDDMForm(actionRequest);
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
+		DDMForm ddmForm = getDDMForm(portletRequest);
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), actionRequest);
+			DDMStructure.class.getName(), portletRequest);
 
 		return ddmStructureService.addStructure(
 			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -110,20 +113,20 @@ public class AddRecordSetMVCActionCommand
 	}
 
 	protected DDLRecordSet addRecordSet(
-			ActionRequest actionRequest, long ddmStructureId)
+			PortletRequest portletRequest, long ddmStructureId)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String recordSetKey = ParamUtil.getString(
-			actionRequest, "recordSetKey");
-		String name = ParamUtil.getString(actionRequest, "name");
-		String description = ParamUtil.getString(actionRequest, "description");
+			portletRequest, "recordSetKey");
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecordSet.class.getName(), actionRequest);
+			DDLRecordSet.class.getName(), portletRequest);
 
 		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, recordSetKey,
@@ -133,34 +136,35 @@ public class AddRecordSetMVCActionCommand
 			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
 	}
 
-	@Override
-	protected void doTransactionalCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	protected DDLRecordSet addRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
-			actionRequest);
+			portletRequest);
 
 		DDMStructure ddmStructure = addDDMStructure(
-			actionRequest, settingsDDMFormValues);
+			portletRequest, settingsDDMFormValues);
 
 		DDLRecordSet recordSet = addRecordSet(
-			actionRequest, ddmStructure.getStructureId());
+			portletRequest, ddmStructure.getStructureId());
 
 		updateRecordSetSettings(
-			actionRequest, recordSet, settingsDDMFormValues);
+			portletRequest, recordSet, settingsDDMFormValues);
+
+		return recordSet;
 	}
 
-	protected DDMForm getDDMForm(ActionRequest actionRequest)
+	protected DDMForm getDDMForm(PortletRequest portletRequest)
 		throws PortalException {
 
 		try {
 			String definition = ParamUtil.getString(
-				actionRequest, "definition");
+				portletRequest, "definition");
 
 			DDMForm ddmForm = ddmFormJSONDeserializer.deserialize(definition);
 
-			List<DDMFormRule> ddmFormRules = getDDMFormRules(actionRequest);
+			List<DDMFormRule> ddmFormRules = getDDMFormRules(portletRequest);
 
 			ddmForm.setDDMFormRules(ddmFormRules);
 
@@ -171,11 +175,11 @@ public class AddRecordSetMVCActionCommand
 		}
 	}
 
-	protected DDMFormLayout getDDMFormLayout(ActionRequest actionRequest)
+	protected DDMFormLayout getDDMFormLayout(PortletRequest portletRequest)
 		throws PortalException {
 
 		try {
-			String layout = ParamUtil.getString(actionRequest, "layout");
+			String layout = ParamUtil.getString(portletRequest, "layout");
 
 			return ddmFormLayoutJSONDeserializer.deserialize(layout);
 		}
@@ -184,10 +188,10 @@ public class AddRecordSetMVCActionCommand
 		}
 	}
 
-	protected List<DDMFormRule> getDDMFormRules(ActionRequest actionRequest)
+	protected List<DDMFormRule> getDDMFormRules(PortletRequest portletRequest)
 		throws PortalException {
 
-		String rules = ParamUtil.getString(actionRequest, "rules");
+		String rules = ParamUtil.getString(portletRequest, "rules");
 
 		if (Validator.isNull(rules) || Objects.equals("[]", rules)) {
 			return Collections.emptyList();
@@ -212,11 +216,11 @@ public class AddRecordSetMVCActionCommand
 	}
 
 	protected DDMFormValues getSettingsDDMFormValues(
-			ActionRequest actionRequest)
+			PortletRequest portletRequest)
 		throws PortalException {
 
 		String serializedSettingsDDMFormValues = ParamUtil.getString(
-			actionRequest, "serializedSettingsDDMFormValues");
+			portletRequest, "serializedSettingsDDMFormValues");
 
 		DDMForm ddmForm = DDMFormFactory.create(DDLRecordSetSettings.class);
 
@@ -262,72 +266,71 @@ public class AddRecordSetMVCActionCommand
 		return value.getString(ddmFormValues.getDefaultLocale());
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLFormRulesToDDMFormRulesConverter(
-		DDLFormRulesToDDMFormRulesConverter
-			ddlFormRulesToDDMFormRulesConverter) {
+	protected DDMStructure updateDDMStructure(PortletRequest portletRequest)
+		throws Exception {
 
-		this.ddlFormRulesToDDMFormRulesConverter =
-			ddlFormRulesToDDMFormRulesConverter;
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long ddmStructureId = ParamUtil.getLong(
+			portletRequest, "ddmStructureId");
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
+		DDMForm ddmForm = getDDMForm(portletRequest);
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMStructure.class.getName(), portletRequest);
+
+		return ddmStructureService.updateStructure(
+			ddmStructureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
+			ddmForm, ddmFormLayout, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
+	protected DDLRecordSet updateRecordSet(
+			PortletRequest portletRequest, long ddmStructureId)
+		throws Exception {
 
-		this.ddlRecordSetService = ddlRecordSetService;
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDLRecordSet.class.getName(), portletRequest);
+
+		return ddlRecordSetService.updateRecordSet(
+			recordSetId, ddmStructureId,
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+	protected DDLRecordSet updateRecordSet(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
-		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
-	}
+		DDMStructure ddmStructure = updateDDMStructure(portletRequest);
 
-	@Reference(unbind = "-")
-	protected void setDDMFormLayoutJSONDeserializer(
-		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
+		DDLRecordSet recordSet = updateRecordSet(
+			portletRequest, ddmStructure.getStructureId());
 
-		this.ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
-	}
+		DDMFormValues settingsDDMFormValues = getSettingsDDMFormValues(
+			portletRequest);
 
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+		updateRecordSetSettings(
+			portletRequest, recordSet, settingsDDMFormValues);
 
-		this.ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMFormValuesQueryFactory(
-		DDMFormValuesQueryFactory ddmFormValuesQueryFactory) {
-
-		this.ddmFormValuesQueryFactory = ddmFormValuesQueryFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
-
-		this.ddmStructureService = ddmStructureService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSONFactory(JSONFactory jsonFactory) {
-		this.jsonFactory = jsonFactory;
-	}
-
-	@Reference(unbind = "-")
-	protected void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		this.workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
+		return recordSet;
 	}
 
 	protected void updateRecordSetSettings(
-			ActionRequest actionRequest, DDLRecordSet recordSet,
+			PortletRequest portletRequest, DDLRecordSet recordSet,
 			DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
@@ -335,18 +338,18 @@ public class AddRecordSetMVCActionCommand
 			recordSet.getRecordSetId(), settingsDDMFormValues);
 
 		updateWorkflowDefinitionLink(
-			actionRequest, recordSet, settingsDDMFormValues);
+			portletRequest, recordSet, settingsDDMFormValues);
 	}
 
 	protected void updateWorkflowDefinitionLink(
-			ActionRequest actionRequest, DDLRecordSet recordSet,
+			PortletRequest portletRequest, DDLRecordSet recordSet,
 			DDMFormValues ddmFormValues)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 
 		String workflowDefinition = getWorkflowDefinition(ddmFormValues);
 
@@ -356,15 +359,32 @@ public class AddRecordSetMVCActionCommand
 			workflowDefinition);
 	}
 
+	@Reference
 	protected DDLFormRulesToDDMFormRulesConverter
 		ddlFormRulesToDDMFormRulesConverter;
+
+	@Reference
 	protected DDLRecordSetService ddlRecordSetService;
+
+	@Reference
 	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;
+
+	@Reference
 	protected DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer;
+
+	@Reference
 	protected DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer;
+
+	@Reference
 	protected DDMFormValuesQueryFactory ddmFormValuesQueryFactory;
+
+	@Reference
 	protected DDMStructureService ddmStructureService;
+
+	@Reference
 	protected JSONFactory jsonFactory;
+
+	@Reference
 	protected volatile WorkflowDefinitionLinkLocalService
 		workflowDefinitionLinkLocalService;
 

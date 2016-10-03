@@ -4,11 +4,16 @@ AUI.add(
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
+		var AUTOSAVE_INTERVAL = 60000;
+
 		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
 
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
+					autosaveURL: {
+					},
+
 					availableLanguageIds: {
 						value: [
 							themeDisplay.getDefaultLanguageId()
@@ -113,7 +118,7 @@ AUI.add(
 
 						instance.bindUI();
 
-						instance.initialState = instance.getState();
+						instance.savedState = instance.initialState = instance.getState();
 					},
 
 					renderUI: function() {
@@ -148,10 +153,14 @@ AUI.add(
 							instance.one('#showForm').on('click', A.bind('_onFormButtonClick', instance)),
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
+
+						instance._intervalId = setInterval(A.bind('_autosave', instance), AUTOSAVE_INTERVAL);
 					},
 
 					destructor: function() {
 						var instance = this;
+
+						clearInterval(instance._intervalId);
 
 						instance.get('formBuilder').destroy();
 						instance.get('ruleBuilder').destroy();
@@ -390,10 +399,72 @@ AUI.add(
 						instance.disableNameEditor();
 					},
 
+					_autosave: function() {
+						var instance = this;
+
+						instance.serializeFormBuilder();
+
+						var state = instance.getState();
+
+						var definition = state.definition;
+
+						if ((definition.fields.length > 0) && !instance._isSameState(instance.savedState, state)) {
+							var editForm = instance.get('editForm');
+
+							var formData = instance._getFormData(A.IO.stringify(editForm.form));
+
+							A.io.request(
+								instance.get('autosaveURL'),
+								{
+									after: {
+										success: function() {
+											instance._defineIds(this.get('responseData'));
+
+											instance.savedState = state;
+										}
+									},
+									data: formData,
+									dataType: 'JSON',
+									method: 'POST'
+								}
+							);
+						}
+					},
+
+					_defineIds: function(response) {
+						var instance = this;
+
+						var recordSetIdNode = instance.byId('recordSetId');
+
+						var ddmStructureIdNode = instance.byId('ddmStructureId');
+
+						if (recordSetIdNode.val() === '0') {
+							recordSetIdNode.val(response.recordSetId);
+						}
+
+						if (ddmStructureIdNode.val() === '0') {
+							ddmStructureIdNode.val(response.ddmStructureId);
+						}
+					},
+
 					_getDescription: function() {
 						var instance = this;
 
 						return window[instance.ns('descriptionEditor')].getHTML();
+					},
+
+					_getFormData: function(formString) {
+						var instance = this;
+
+						if (!instance.get('name').trim()) {
+							var formObject = A.QueryString.parse(formString);
+
+							formObject[instance.ns('name')] = Liferay.Language.get('untitled-form');
+
+							formString = A.QueryString.stringify(formObject);
+						}
+
+						return formString;
 					},
 
 					_getName: function() {
@@ -402,12 +473,12 @@ AUI.add(
 						return window[instance.ns('nameEditor')].getHTML();
 					},
 
-					_isSameState: function() {
+					_isSameState: function(state1, state2) {
 						var instance = this;
 
 						return AUI._.isEqual(
-							instance.getState(),
-							instance.initialState,
+							state1,
+							state2,
 							function(value1, value2, key) {
 								return (key === 'instanceId') || undefined;
 							}
@@ -417,7 +488,7 @@ AUI.add(
 					_onCancel: function(event) {
 						var instance = this;
 
-						if (!instance._isSameState()) {
+						if (!instance._isSameState(instance.getState(), instance.initialState)) {
 							event.preventDefault();
 							event.stopPropagation();
 
@@ -559,6 +630,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window']
+		requires: ['io-base', 'liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-ddl-form-builder-rule-builder', 'liferay-portlet-base', 'liferay-util-window', 'querystring-parse']
 	}
 );

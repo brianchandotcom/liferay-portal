@@ -14,12 +14,15 @@
 
 package com.liferay.websocket.whiteboard.internal;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import javax.servlet.ServletContext;
 
+import javax.websocket.Decoder;
 import javax.websocket.DeploymentException;
+import javax.websocket.Encoder;
 import javax.websocket.Endpoint;
 import javax.websocket.server.ServerContainer;
 
@@ -53,6 +56,17 @@ public class WebSocketEndpointTracker
 			return null;
 		}
 
+		List<Class<? extends Decoder>> decoders =
+			(List<Class<? extends Decoder>>)serviceReference.getProperty(
+				"org.osgi.http.websocket.endpoint.decoders");
+
+		List<Class<? extends Encoder>> encoders =
+			(List<Class<? extends Encoder>>)serviceReference.getProperty(
+				"org.osgi.http.websocket.endpoint.encoders");
+
+		List<String> subprotocol = (List<String>)serviceReference.getProperty(
+			"org.osgi.http.websocket.endpoint.subprotocol");
+
 		final ServiceObjects<Endpoint> serviceObjects =
 			_bundleContext.getServiceObjects(serviceReference);
 
@@ -63,7 +77,7 @@ public class WebSocketEndpointTracker
 
 		if (serverEndpointConfigWrapper == null) {
 			serverEndpointConfigWrapper = new ServerEndpointConfigWrapper(
-				path, _logService);
+				path, decoders, encoders, subprotocol, _logService);
 
 			isNew = true;
 		}

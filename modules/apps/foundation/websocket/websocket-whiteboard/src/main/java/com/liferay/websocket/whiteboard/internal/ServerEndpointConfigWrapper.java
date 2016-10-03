@@ -39,11 +39,19 @@ import org.osgi.service.log.LogService;
  */
 public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 
-	public ServerEndpointConfigWrapper(String path, LogService logService) {
+	public ServerEndpointConfigWrapper(
+		String path, List<Class<? extends Decoder>> decoders,
+		List<Class<? extends Encoder>> encoders, List<String> subprotocols,
+		LogService logService) {
+
 		_logService = logService;
 
 		ServerEndpointConfig.Builder builder =
 			ServerEndpointConfig.Builder.create(Endpoint.class, path);
+
+		builder.decoders(decoders);
+		builder.encoders(encoders);
+		builder.subprotocols(subprotocols);
 
 		_serverEndpointConfig = builder.build();
 	}

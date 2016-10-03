@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -2127,6 +2128,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			mbDiscussionLocalService.getThreadDiscussion(message.getThreadId());
 
 		String contentURL = (String)serviceContext.getAttribute("contentURL");
+
+		contentURL = HttpUtil.addParameter(
+			contentURL, serviceContext.getAttribute("namespace") + "messageId",
+			message.getMessageId());
 
 		String userAddress = StringPool.BLANK;
 		String userName = (String)serviceContext.getAttribute(

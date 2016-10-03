@@ -252,7 +252,7 @@ public class IgnoreDuplicatesStore implements Store {
 		}
 
 		recoverAndRetryOnFailure(
-			createDeleteFileStoreAction(companyId, repositoryId, fileName),
+			createDeleteFileStoreAction(companyId, newRepositoryId, fileName),
 			new StoreAction() {
 
 				@Override

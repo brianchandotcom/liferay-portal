@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.prototype.lar.test;
+package com.liferay.layout.prototype.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Group;

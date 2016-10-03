@@ -74,7 +74,7 @@
 						},
 						'liferay-ddl-form-builder-field-settings-sidebar': {
 							path: 'form_builder_field_settings_sidebar.js',
-							requires: ['aui-tabview', 'liferay-ddl-form-builder-sidebar']
+							requires: ['aui-tabview', 'liferay-ddl-form-builder-sidebar', 'liferay-ddm-form-renderer-types']
 						},
 						'liferay-ddl-form-builder-field-support': {
 							path: 'form_builder_field_support.js',

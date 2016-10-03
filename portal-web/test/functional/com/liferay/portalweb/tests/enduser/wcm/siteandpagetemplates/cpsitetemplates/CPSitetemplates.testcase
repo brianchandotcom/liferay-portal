@@ -39,7 +39,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateNameList" value="Site Template Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
@@ -228,7 +228,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#viewCP">
-			<var name="siteTemplateNameList" value="Site Template Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 	</command>
 

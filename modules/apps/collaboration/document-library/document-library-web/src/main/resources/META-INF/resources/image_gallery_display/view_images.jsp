@@ -127,12 +127,6 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				</portlet:renderURL>
 
 				<%
-				String curFolderTitle = curFolder.getName();
-
-				if (Validator.isNotNull(curFolder.getDescription())) {
-					curFolderTitle += " - " + curFolder.getDescription();
-				}
-
 				row.setCssClass("lfr-asset-folder");
 				%>
 
@@ -141,7 +135,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						actionJsp='<%= dlPortletInstanceSettingsHelper.isShowActions() ? "/document_library/folder_action.jsp" : StringPool.BLANK %>'
 						actionJspServletContext="<%= application %>"
 						resultRow="<%= row %>"
-						text="<%= HtmlUtil.escape(curFolderTitle) %>"
+						text="<%= HtmlUtil.escape(curFolder.getName()) %>"
 						url="<%= viewFolderURL %>"
 					>
 						<liferay-frontend:horizontal-card-col>

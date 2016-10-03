@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.websocket.whiteboard.test.endpoint;
+package com.liferay.websocket.whiteboard.test.simple.endpoint;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"org.osgi.http.websocket.endpoint.path=/o/websocket/test"},
 	service = Endpoint.class
 )
-public class TestWebSocketEndpoint extends Endpoint {
+public class SimpleWebSocketEndpoint extends Endpoint {
 
 	@Override
 	public void onOpen(final Session session, EndpointConfig endpointConfig) {

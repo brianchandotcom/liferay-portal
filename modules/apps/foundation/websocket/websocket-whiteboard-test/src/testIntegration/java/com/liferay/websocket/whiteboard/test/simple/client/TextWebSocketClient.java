@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.websocket.whiteboard.test.client;
+package com.liferay.websocket.whiteboard.test.simple.client;
 
 import java.io.IOException;
 

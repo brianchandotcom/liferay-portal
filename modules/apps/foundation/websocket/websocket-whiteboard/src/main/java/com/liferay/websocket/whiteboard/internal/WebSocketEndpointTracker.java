@@ -25,6 +25,7 @@ import javax.websocket.DeploymentException;
 import javax.websocket.Encoder;
 import javax.websocket.Endpoint;
 import javax.websocket.server.ServerContainer;
+import javax.websocket.server.ServerEndpointConfig;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceObjects;
@@ -80,6 +81,36 @@ public class WebSocketEndpointTracker
 				path, decoders, encoders, subprotocol, _logService);
 
 			isNew = true;
+		}
+		else {
+			Class<?> endpointClass =
+				serverEndpointConfigWrapper.getEndpointClass();
+
+			ServerEndpointConfig.Configurator configurator =
+				serverEndpointConfigWrapper.getConfigurator();
+
+			try {
+				Object endpointInstance = configurator.getEndpointInstance(
+					endpointClass);
+
+				Class<?> endpointInstanceClass = endpointInstance.getClass();
+
+				if (endpointInstanceClass.equals(
+						ServerEndpointConfigWrapper.NullEndpoint.class)) {
+
+					serverEndpointConfigWrapper.override(
+						decoders, encoders, subprotocol);
+				}
+			}
+			catch (InstantiationException ie) {
+				Endpoint endpoint = serviceObjects.getService();
+
+				_logService.log(
+					LogService.LOG_ERROR,
+					"Unable to register WebSocket endpoint " +
+						endpoint.getClass() + " for path " + path,
+					ie);
+			}
 		}
 
 		serverEndpointConfigWrapper.setConfigurator(

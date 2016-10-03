@@ -164,6 +164,8 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		long ddmDataProviderInstanceId = RandomTestUtil.randomLong();
 
+		ddmFormField.setProperty("dataSourceType", "data-provider");
+		
 		ddmFormField.setProperty(
 			"ddmDataProviderInstanceId", ddmDataProviderInstanceId);
 
@@ -592,6 +594,8 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		long ddmDataProviderInstanceId1 = RandomTestUtil.randomLong();
 
+		ddmFormField1.setProperty("dataSourceType", "data-provider");
+		
 		ddmFormField1.setProperty(
 			"ddmDataProviderInstanceId", ddmDataProviderInstanceId1);
 
@@ -603,6 +607,8 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		long ddmDataProviderInstanceId2 = RandomTestUtil.randomLong();
 
+		ddmFormField2.setProperty("dataSourceType", "data-provider");
+		
 		ddmFormField2.setProperty(
 			"ddmDataProviderInstanceId", ddmDataProviderInstanceId2);
 

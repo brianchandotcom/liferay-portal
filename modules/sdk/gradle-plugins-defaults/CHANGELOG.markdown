@@ -334,6 +334,12 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 - [LPS-68448]: The task `updateVersion` of OSGi and theme projects updates the
 version in the `npm-shrinkwrap.json` file, if present.
 
+## 1.2.39 - 2016-10-03
+
+### Added
+- [LPS-68402]: Set the [`org.apache.maven.offline`](https://github.com/shrinkwrap/resolver#system-properties)
+system property to `true` for the `testIntegration` task.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
@@ -356,6 +362,7 @@ version in the `npm-shrinkwrap.json` file, if present.
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
 [LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
+[LPS-68402]: https://issues.liferay.com/browse/LPS-68402
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

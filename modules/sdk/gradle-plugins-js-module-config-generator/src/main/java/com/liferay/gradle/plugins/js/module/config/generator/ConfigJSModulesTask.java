@@ -36,8 +36,6 @@ import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
-import org.gradle.api.tasks.OutputDirectory;
-import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
 import org.gradle.api.tasks.util.PatternSet;
@@ -149,12 +147,10 @@ public class ConfigJSModulesTask
 		return GradleUtil.toString(_moduleFormat);
 	}
 
-	@OutputDirectory
 	public File getOutputDir() {
 		return new File(getTemporaryDir(), "files");
 	}
 
-	@OutputFile
 	public File getOutputFile() {
 		return GradleUtil.toFile(getProject(), _outputFile);
 	}

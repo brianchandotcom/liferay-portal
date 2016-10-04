@@ -22,12 +22,16 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourceTypePermission;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.RolePermissions;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourceTypePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.GroupFinderUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
@@ -36,6 +40,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.ResourceTypePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
@@ -97,12 +103,17 @@ public class GroupFinderTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		GroupLocalServiceUtil.deleteGroup(_group);
+		GroupLocalServiceUtil.deleteGroup(_userGroupGroup);
 
 		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
 			_resourcePermission);
 
 		ResourceTypePermissionLocalServiceUtil.deleteResourceTypePermission(
 			_resourceTypePermission);
+
+		UserLocalServiceUtil.deleteUser(_userGroupUser);
+
+		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 	}
 
 	@Test
@@ -167,6 +178,44 @@ public class GroupFinderTest {
 			QueryUtil.ALL_POS, new GroupNameComparator(true));
 
 		Assert.assertFalse(groups.isEmpty());
+	}
+
+	@Test
+	public void testFindByCompanyIdByUserGroupGroup() throws Exception {
+		_userGroup = UserGroupTestUtil.addUserGroup();
+		_userGroupGroup = GroupTestUtil.addGroup();
+		_userGroupUser = UserTestUtil.addUser();
+
+		GroupLocalServiceUtil.addUserGroupGroup(
+			_userGroup.getUserGroupId(), _userGroupGroup.getGroupId());
+
+		UserGroupLocalServiceUtil.addUserUserGroup(
+			_userGroupUser.getUserId(), _userGroup);
+
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+		groupParams.put("inherit", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+		groupParams.put("usersGroups", _userGroupUser.getUserId());
+
+		List<Group> groups = GroupFinderUtil.findByCompanyId(
+			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new GroupNameComparator(true));
+
+		boolean exists = false;
+
+		for (Group group : groups) {
+			if (group.getGroupId() == _userGroupGroup.getGroupId()) {
+				exists = true;
+
+				break;
+			}
+		}
+
+		Assert.assertTrue(
+			"The method findByCompanyId should have returned the group " +
+				_userGroupGroup.getGroupId(),
+			exists);
 	}
 
 	@Test
@@ -258,5 +307,8 @@ public class GroupFinderTest {
 	private static ResourceAction _modelResourceAction;
 	private static ResourcePermission _resourcePermission;
 	private static ResourceTypePermission _resourceTypePermission;
+	private static UserGroup _userGroup;
+	private static Group _userGroupGroup;
+	private static User _userGroupUser;
 
 }

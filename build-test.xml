@@ -4038,10 +4038,7 @@ go]]></replacevalue>
 						import java.util.regex.Pattern;
 
 						Pattern failurePattern = Pattern.compile("<failure message=\"(?<failureMessage>[^\"]*)\" />");
-						Pattern testcaseStartPattern = Pattern.compile("<testcase>");
-						Pattern testcaseStopPattern = Pattern.compile("</testcase>");
 						Pattern testrayTestcaseNamePattern = Pattern.compile("<property name=\"testray.testcase.name\" value=\"(?<testrayTestcaseName>[^\"]*)\" ?/>");
-						Pattern propertiesPattern = Pattern.compile("<properties>");
 
 						BufferedReader bufferedReader = null;
 
@@ -4069,9 +4066,7 @@ go]]></replacevalue>
 
 								lines.add(line);
 
-								Matcher testcaseStartMatcher = testcaseStartPattern.matcher(line);
-
-								if (testcaseStartMatcher.find()) {
+								if (line.contains("<testcase>")) {
 									propertiesLocation = null;
 									testcaseFailed = null;
 									testrayTestcaseName = null;
@@ -4095,17 +4090,13 @@ go]]></replacevalue>
 									continue;
 								}
 
-								Matcher propertiesMatcher = propertiesPattern.matcher(line);
-
-								if (propertiesMatcher.find()) {
+								if (line.contains("<properties>")) {
 									propertiesLocation = lineNumber;
 
 									continue;
 								}
 
-								Matcher testcaseStopMatcher = testcaseStopPattern.matcher(line);
-
-								if (testcaseStopMatcher.find()) {
+								if (line.contains("</testcase>")) {
 									if ((testrayTestcaseName != null) && (propertiesLocation != null)) {
 										testcaseNames.add(testrayTestcaseName);
 

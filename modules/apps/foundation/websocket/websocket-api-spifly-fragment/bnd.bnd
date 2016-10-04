@@ -1,4 +1,4 @@
-Bundle-Name: Liferay WebSocket Api Spifly fragment
+Bundle-Name: Liferay WebSocket Api Spifly Fragment
 Bundle-SymbolicName: com.liferay.websocket.api.spifly.fragment
 Bundle-Version: 1.0.0
 Fragment-Host: javax.websocket-api

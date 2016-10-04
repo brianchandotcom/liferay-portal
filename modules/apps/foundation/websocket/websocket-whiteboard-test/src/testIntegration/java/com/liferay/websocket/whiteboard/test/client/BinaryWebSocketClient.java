@@ -16,6 +16,8 @@ package com.liferay.websocket.whiteboard.test.client;
 
 import java.io.IOException;
 
+import java.nio.ByteBuffer;
+
 import java.util.concurrent.BlockingQueue;
 
 import javax.websocket.ClientEndpoint;
@@ -28,10 +30,17 @@ import javax.websocket.Session;
  * @author Cristina González
  */
 @ClientEndpoint
-public class TestWebSocketClient {
+public class BinaryWebSocketClient {
 
-	public TestWebSocketClient(BlockingQueue<String> blockingQueue) {
+	public BinaryWebSocketClient(BlockingQueue<ByteBuffer> blockingQueue) {
 		_blockingQueue = blockingQueue;
+	}
+
+	@OnMessage
+	public void onMessage(ByteBuffer byteBuffer, Session session)
+		throws InterruptedException {
+
+		_blockingQueue.put(byteBuffer);
 	}
 
 	@OnOpen
@@ -39,20 +48,13 @@ public class TestWebSocketClient {
 		_session = session;
 	}
 
-	@OnMessage
-	public void onText(String text, Session session)
-		throws InterruptedException {
-
-		_blockingQueue.put(text);
-	}
-
-	public void sendText(String text) throws IOException {
+	public void sendMessage(ByteBuffer byteBuffer) throws IOException {
 		Basic basic = _session.getBasicRemote();
 
-		basic.sendText(text);
+		basic.sendBinary(byteBuffer);
 	}
 
-	private final BlockingQueue<String> _blockingQueue;
+	private final BlockingQueue<ByteBuffer> _blockingQueue;
 	private Session _session;
 
 }

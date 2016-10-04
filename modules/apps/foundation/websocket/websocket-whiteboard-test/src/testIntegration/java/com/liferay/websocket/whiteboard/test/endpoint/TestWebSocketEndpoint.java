@@ -16,6 +16,8 @@ package com.liferay.websocket.whiteboard.test.endpoint;
 
 import java.io.IOException;
 
+import java.nio.ByteBuffer;
+
 import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;
 import javax.websocket.MessageHandler;
@@ -45,6 +47,23 @@ public class TestWebSocketEndpoint extends Endpoint {
 						RemoteEndpoint.Basic basic = session.getBasicRemote();
 
 						basic.sendText(text);
+					}
+					catch (IOException ioe) {
+						throw new RuntimeException(ioe);
+					}
+				}
+
+			});
+
+		session.addMessageHandler(
+			new MessageHandler.Whole<ByteBuffer>() {
+
+				@Override
+				public void onMessage(ByteBuffer byteBuffer) {
+					try {
+						RemoteEndpoint.Basic basic = session.getBasicRemote();
+
+						basic.sendBinary(byteBuffer);
 					}
 					catch (IOException ioe) {
 						throw new RuntimeException(ioe);

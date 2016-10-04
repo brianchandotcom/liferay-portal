@@ -74,6 +74,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<name>property</name>
 		<tag-class>com.liferay.taglib.util.PropertyTag</tag-class>
 		<body-content>empty</body-content>

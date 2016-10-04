@@ -1749,6 +1749,64 @@
 		</if>
 	</command>
 
+	<command name="loginUserOpenIDPG">
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="AssertClick" locator1="Link#OPENID" value1="OpenID" />
+
+		<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="http://${openIDUsername}.openid.org.cn/" />
+
+		<execute function="Click" locator1="Button#SIGN_IN" />
+
+		<execute function="Type" locator1="OpenIDLogin#LOGIN_OPENID_FIELD" value1="${openIDUsername}" />
+		<execute function="Type" locator1="OpenIDLogin#LOGIN_PASSWORD_FIELD" value1="${openIDPassword}" />
+
+		<execute function="AssertClick" locator1="OpenIDLogin#LOGIN_BUTTON" value1="Login" />
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
+			<then>
+				<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#PASSWORD" />
+			<then>
+				<if>
+					<and>
+						<isset var="syntaxCheckingEnabled" />
+						<equals arg1="${syntaxCheckingEnabled}" arg2="true" />
+					</and>
+					<then>
+						<execute function="Type" locator1="TextInput#PASSWORD" value1="${resetPassword}" />
+						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${resetPassword}" />
+					</then>
+					<else>
+						<execute function="Type" locator1="TextInput#PASSWORD" value1="test" />
+						<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="test" />
+					</else>
+				</if>
+
+				<execute macro="Button#clickSave" />
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
+			<then>
+				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+				<execute macro="Button#clickSave" />
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+	</command>
+
 	<command name="loginUserPG">
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
 

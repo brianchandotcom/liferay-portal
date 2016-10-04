@@ -103,13 +103,13 @@
 </tr>
 <!--OPTIONS-->
 <tr>
-	<td>OPTIONS_ADD_ROW_BUTTON</td>
-	<td>//button[contains(@class,'add-row')]</td>
+	<td>OPTIONS_DELETE_ROW_BUTTON</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//button[contains(@class,'close-modal')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_DELETE_ROW_BUTTON</td>
-	<td>//button[contains(@class,'delete-row')]</td>
+	<td>OPTIONS_DRAG_ICON</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -120,6 +120,11 @@
 <tr>
 	<td>OPTIONS_OPTION_VALUE_FIELD</td>
 	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_OPTION_VALUE_FIELD_VISIBLE</td>
+	<td>//div[@class='options']//div[@hidden='hidden']/following-sibling::div[contains(@class,'form-field-container')][${key_rowNumber}]//input</td>
 	<td></td>
 </tr>
 <tr>

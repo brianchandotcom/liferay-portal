@@ -26,13 +26,52 @@ processResources {
 }
 
 processSanitizerConfiguration {
-	File sanitizerConfigurationFile = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/sanitizer-configuration.xml")
+	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
 
 	filter {
 		String line ->
 
 		if (line.contains('<directive name="maxInputSize" value="20000"/>')) {
 			line = line.replace "20000", "200000"
+		}
+		else if (line.contains('<tag-rules>')) {
+			line = """
+				|	<allowed-empty-tags>
+				|		<literal-list>
+				|			<literal value="br"/>
+				|			<literal value="hr"/>
+				|			<literal value="a"/>
+				|			<literal value="img"/>
+				|			<literal value="param"/>
+				|			<literal value="input"/>
+				|			<literal value="textarea"/>
+				|			<literal value="basefont"/>
+				|			<literal value="col"/>
+				|			<literal value="div"/>
+				|			<literal value="source"/>
+				|		</literal-list>
+				|	</allowed-empty-tags>
+				|
+				|${line}
+				|		<tag name="picture" action="validate" />
+				|		<tag name="source" action="validate">
+				|			<attribute name="srcset">
+				|				<regexp-list>
+				|					<regexp name="onsiteURL"/>
+				|					<regexp name="offsiteURL"/>
+				|				</regexp-list>
+				|			</attribute>
+				|			<attribute name="media">
+				|				<regexp-list>
+				|					<regexp name="anything" />
+				|				</regexp-list>
+				|			</attribute>
+				|			<attribute name="type">
+				|				<regexp-list>
+				|					<regexp value="[a-zA-Z0-9\\-]+/[a-zA-Z0-9\\-]+" />
+				|				</regexp-list>
+				|			</attribute>
+				|		</tag>""".stripMargin()
 		}
 
 		return line
@@ -43,6 +82,10 @@ processSanitizerConfiguration {
 	}
 
 	into sanitizerConfigurationFile.parentFile
+
+	onlyIf {
+		!sanitizerConfigurationFile.exists()
+	}
 
 	rename {
 		sanitizerConfigurationFile.name

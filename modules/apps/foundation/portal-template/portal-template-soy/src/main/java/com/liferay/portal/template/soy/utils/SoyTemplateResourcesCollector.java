@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.portlet.bridge.soy.internal;
+package com.liferay.portal.template.soy.utils;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;

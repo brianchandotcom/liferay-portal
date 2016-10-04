@@ -38,6 +38,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -184,17 +185,31 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		Javadoc javadoc, AppJavadocBuilderExtension appJavadocBuilderExtension,
 		Project subproject) {
 
+		Logger logger = javadoc.getLogger();
+
 		TaskContainer taskContainer = subproject.getTasks();
 
 		Task task = taskContainer.findByName(JavaPlugin.JAVADOC_TASK_NAME);
 
 		if (!(task instanceof Javadoc)) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Excluding {} from {} because it is not a valid Java " +
+						"project",
+					subproject, javadoc, JavaPlugin.JAVADOC_TASK_NAME);
+			}
+
 			return;
 		}
 
 		Spec<Project> spec = appJavadocBuilderExtension.getOnlyIf();
 
 		if (!spec.isSatisfiedBy(subproject)) {
+			if (logger.isInfoEnabled()) {
+				logger.info(
+					"Explicitly excluding {} from {}", subproject, javadoc);
+			}
+
 			return;
 		}
 

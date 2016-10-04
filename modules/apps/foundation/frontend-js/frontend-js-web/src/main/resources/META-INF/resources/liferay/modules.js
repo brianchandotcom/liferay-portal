@@ -598,7 +598,6 @@
 							'dd-drag',
 							'dd-drop',
 							'dd-proxy',
-							'liferay-store',
 							'plugin'
 						]
 					},

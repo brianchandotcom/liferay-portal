@@ -31,18 +31,4 @@ if (rowChecker != null) {
 </c:if>
 
 <div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %> lfr-search-container-wrapper <%= displayStyle.equals(SearchIteratorTag.DEFAULT_DISPLAY_STYLE) ? StringPool.BLANK : "main-content-body" %>">
-	<c:if test="<%= rowMover != null %>">
-
-		<%
-		String dragAndDropState = GetterUtil.getString(SessionClicks.get(request, namespace + id + "_searchContainerMove", null));
-		%>
-
-		<div class="checkbox search-container-dd-toggle">
-			<label>
-				<input <%= dragAndDropState %> type="checkbox" value="">
-				<liferay-ui:message key="enable-drag-and-drop" />
-			</label>
-		</div>
-	</c:if>
-
 	<div id="<%= namespace + id %>SearchContainer">

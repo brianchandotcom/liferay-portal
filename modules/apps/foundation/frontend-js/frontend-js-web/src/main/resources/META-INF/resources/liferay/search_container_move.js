@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-search-container-move',
 	function(A) {
+		var AUA = A.UA;
+
 		var Lang = A.Lang;
 
 		var STR_BLANK = '';
@@ -15,9 +17,15 @@ AUI.add(
 
 		var STR_NODE = 'node';
 
+		var TOUCH_ENABLED = AUA.mobile && AUA.touchEnabled;
+
 		var SearchContainerMove = A.Component.create(
 			{
 				ATTRS: {
+					ddConfig: {
+						valueFn: '_valueDDConfig'
+					},
+
 					dropTargets: {
 						validator: Lang.isArray
 					},
@@ -44,8 +52,6 @@ AUI.add(
 						var instance = this;
 
 						instance._initDragAndDrop();
-
-						instance._initDragAndDropToggle();
 
 						instance._initDropTargets();
 					},
@@ -83,57 +89,38 @@ AUI.add(
 						var host = instance.get(STR_HOST);
 
 						instance._ddHandler = new A.DD.Delegate(
-							{
-								container: host.get(STR_CONTENT_BOX),
-								nodes: instance.get('rowSelector'),
-								on: {
-									'drag:drophit': A.bind('_onDragDropHit', instance),
-									'drag:enter': A.bind('_onDragEnter', instance),
-									'drag:exit': A.bind('_onDragExit', instance),
-									'drag:start': A.bind('_onDragStart', instance)
-								}
-							}
+							A.merge(
+								{
+									container: host.get(STR_CONTENT_BOX),
+									nodes: instance.get('rowSelector'),
+									on: {
+										'drag:drophit': A.bind('_onDragDropHit', instance),
+										'drag:enter': A.bind('_onDragEnter', instance),
+										'drag:exit': A.bind('_onDragExit', instance),
+										'drag:start': A.bind('_onDragStart', instance)
+									}
+								},
+								instance.get('ddConfig')
+							)
 						);
 
-						var dd = instance._ddHandler.dd;
-
-						dd.set('groups', [host.get('id')]);
-						dd.set('offsetNode', false);
-
-						dd.plug(
+						instance._ddHandler.dd.plug(
 							[
 								{
 									cfg: {
 										moveOnEnd: false
 									},
 									fn: A.Plugin.DDProxy
+								},
+								{
+									cfg: {
+										horizontal: false,
+										scrollDelay: 100,
+										vertical: true
+									},
+									fn: A.Plugin.DDWinScroll
 								}
 							]
-						);
-					},
-
-					_initDragAndDropToggle: function() {
-						var instance = this;
-
-						var host = instance.get(STR_HOST);
-						var container = host.get(STR_CONTENT_BOX);
-						var searchContainerWrapper = container.get('parentNode');
-						var toggle = searchContainerWrapper.one('.search-container-dd-toggle input[type="checkbox"]');
-
-						var checked = toggle ? toggle.get('checked') : false;
-
-						instance._ddHandler.dd.set('lock', !checked);
-
-						searchContainerWrapper.delegate(
-							'change',
-							function(event) {
-								checked = event.currentTarget.get('checked');
-
-								instance._ddHandler.dd.set('lock', !checked);
-
-								Liferay.Store(host.get('id') + '_searchContainerMove', checked ? 'checked' : '');
-							},
-							'.search-container-dd-toggle input[type="checkbox]'
 						);
 					},
 
@@ -301,6 +288,19 @@ AUI.add(
 						proxyNode.html(Lang.sub(moveText, [selectedItemsCount]));
 
 						proxyNode.addClass(instance.get('tooltipClass'));
+					},
+
+					_valueDDConfig: function() {
+						var instance = this;
+
+						var host = instance.get(STR_HOST);
+
+						return {
+							clickPixelThresh: TOUCH_ENABLED ? 100000 : 50,
+							clickTimeThresh: TOUCH_ENABLED ? 150000 : 1000,
+							groups: [host.get('id')],
+							offsetNode: false
+						};
 					}
 				}
 			}
@@ -310,6 +310,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'liferay-store', 'plugin']
+		requires: ['aui-component', 'dd-constrain', 'dd-delegate', 'dd-drag', 'dd-drop', 'dd-proxy', 'plugin']
 	}
 );

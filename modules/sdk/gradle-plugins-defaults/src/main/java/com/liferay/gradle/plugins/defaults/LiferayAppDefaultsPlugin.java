@@ -32,6 +32,7 @@ import java.util.Properties;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
 
@@ -80,6 +81,30 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	protected void configureAppJavadocBuilder(Project project) {
 		AppJavadocBuilderExtension appJavadocBuilderExtension =
 			GradleUtil.getExtension(project, AppJavadocBuilderExtension.class);
+
+		appJavadocBuilderExtension.onlyIf(
+			new Spec<Project>() {
+
+				@Override
+				public boolean isSatisfiedBy(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					WritePropertiesTask recordArtifactTask =
+						(WritePropertiesTask)taskContainer.findByName(
+							LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
+
+					if (recordArtifactTask != null) {
+						File outputFile = recordArtifactTask.getOutputFile();
+
+						if (outputFile.exists()) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+			});
 
 		appJavadocBuilderExtension.setGroupNameClosure(
 			new Closure<String>(project) {

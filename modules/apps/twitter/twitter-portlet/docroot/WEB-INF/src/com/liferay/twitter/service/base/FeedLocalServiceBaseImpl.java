@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import com.liferay.social.kernel.service.persistence.SocialActivityPersistence;
+
 import com.liferay.twitter.model.Feed;
 import com.liferay.twitter.service.FeedLocalService;
 import com.liferay.twitter.service.persistence.FeedPersistence;
@@ -456,6 +458,44 @@ public abstract class FeedLocalServiceBaseImpl extends BaseLocalServiceImpl
 		this.userPersistence = userPersistence;
 	}
 
+	/**
+	 * Returns the social activity local service.
+	 *
+	 * @return the social activity local service
+	 */
+	public com.liferay.social.kernel.service.SocialActivityLocalService getSocialActivityLocalService() {
+		return socialActivityLocalService;
+	}
+
+	/**
+	 * Sets the social activity local service.
+	 *
+	 * @param socialActivityLocalService the social activity local service
+	 */
+	public void setSocialActivityLocalService(
+		com.liferay.social.kernel.service.SocialActivityLocalService socialActivityLocalService) {
+		this.socialActivityLocalService = socialActivityLocalService;
+	}
+
+	/**
+	 * Returns the social activity persistence.
+	 *
+	 * @return the social activity persistence
+	 */
+	public SocialActivityPersistence getSocialActivityPersistence() {
+		return socialActivityPersistence;
+	}
+
+	/**
+	 * Sets the social activity persistence.
+	 *
+	 * @param socialActivityPersistence the social activity persistence
+	 */
+	public void setSocialActivityPersistence(
+		SocialActivityPersistence socialActivityPersistence) {
+		this.socialActivityPersistence = socialActivityPersistence;
+	}
+
 	public void afterPropertiesSet() {
 		Class<?> clazz = getClass();
 
@@ -533,7 +573,7 @@ public abstract class FeedLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = com.liferay.twitter.service.FeedLocalService.class)
+	@BeanReference(type = FeedLocalService.class)
 	protected FeedLocalService feedLocalService;
 	@BeanReference(type = FeedPersistence.class)
 	protected FeedPersistence feedPersistence;
@@ -549,6 +589,10 @@ public abstract class FeedLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@BeanReference(type = com.liferay.social.kernel.service.SocialActivityLocalService.class)
+	protected com.liferay.social.kernel.service.SocialActivityLocalService socialActivityLocalService;
+	@BeanReference(type = SocialActivityPersistence.class)
+	protected SocialActivityPersistence socialActivityPersistence;
 	private ClassLoader _classLoader;
 	private FeedLocalServiceClpInvoker _clpInvoker = new FeedLocalServiceClpInvoker();
 }

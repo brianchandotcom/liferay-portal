@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.liferay.twitter.exception.NoSuchFeedException;
 import com.liferay.twitter.model.Feed;
@@ -55,6 +53,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -174,7 +173,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 			Feed feed = (Feed)result;
 
 			if ((userId != feed.getUserId()) ||
-					!Validator.equals(twitterScreenName,
+					!Objects.equals(twitterScreenName,
 						feed.getTwitterScreenName())) {
 				result = null;
 			}
@@ -225,11 +224,15 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 						finderArgs, list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"FeedPersistenceImpl.fetchByU_TSN(long, String, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"FeedPersistenceImpl.fetchByU_TSN(long, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
 					}
 
 					Feed feed = list.get(0);
@@ -723,12 +726,14 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 	 */
 	@Override
 	public Feed fetchByPrimaryKey(Serializable primaryKey) {
-		Feed feed = (Feed)entityCache.getResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
+		Serializable serializable = entityCache.getResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
 				FeedImpl.class, primaryKey);
 
-		if (feed == _nullFeed) {
+		if (serializable == nullModel) {
 			return null;
 		}
+
+		Feed feed = (Feed)serializable;
 
 		if (feed == null) {
 			Session session = null;
@@ -743,7 +748,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 				}
 				else {
 					entityCache.putResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
-						FeedImpl.class, primaryKey, _nullFeed);
+						FeedImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
@@ -797,18 +802,20 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Feed feed = (Feed)entityCache.getResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
+			Serializable serializable = entityCache.getResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
 					FeedImpl.class, primaryKey);
 
-			if (feed == null) {
-				if (uncachedPrimaryKeys == null) {
-					uncachedPrimaryKeys = new HashSet<Serializable>();
-				}
+			if (serializable != nullModel) {
+				if (serializable == null) {
+					if (uncachedPrimaryKeys == null) {
+						uncachedPrimaryKeys = new HashSet<Serializable>();
+					}
 
-				uncachedPrimaryKeys.add(primaryKey);
-			}
-			else {
-				map.put(primaryKey, feed);
+					uncachedPrimaryKeys.add(primaryKey);
+				}
+				else {
+					map.put(primaryKey, (Feed)serializable);
+				}
 			}
 		}
 
@@ -850,7 +857,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				entityCache.putResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
-					FeedImpl.class, primaryKey, _nullFeed);
+					FeedImpl.class, primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -1084,22 +1091,4 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Feed exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Feed exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(FeedPersistenceImpl.class);
-	private static final Feed _nullFeed = new FeedImpl() {
-			@Override
-			public Object clone() {
-				return this;
-			}
-
-			@Override
-			public CacheModel<Feed> toCacheModel() {
-				return _nullFeedCacheModel;
-			}
-		};
-
-	private static final CacheModel<Feed> _nullFeedCacheModel = new CacheModel<Feed>() {
-			@Override
-			public Feed toEntityModel() {
-				return _nullFeed;
-			}
-		};
 }

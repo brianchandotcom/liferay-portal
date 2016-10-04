@@ -269,19 +269,19 @@ public interface FeedModel extends AuditedModel, BaseModel<Feed>, ShardedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.twitter.model.Feed feed);
+	public int compareTo(Feed feed);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.twitter.model.Feed> toCacheModel();
+	public CacheModel<Feed> toCacheModel();
 
 	@Override
-	public com.liferay.twitter.model.Feed toEscapedModel();
+	public Feed toEscapedModel();
 
 	@Override
-	public com.liferay.twitter.model.Feed toUnescapedModel();
+	public Feed toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -291,6 +291,7 @@
 		</attributes>
 	</component>
 	<component name="Component">
+		<description>Deprecated as of 7.0.0, with no direct replacement.</description>
 		<attributes>
 			<attribute>
 				<name>defineVar</name>

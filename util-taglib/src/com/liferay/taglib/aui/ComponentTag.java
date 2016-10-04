@@ -30,7 +30,9 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Eduardo Lundgren
  * @author Bruno Basto
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ComponentTag extends BaseComponentTag {
 
 	protected boolean isEventAttribute(String key) {

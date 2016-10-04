@@ -33,45 +33,55 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 	protected void deleteEmptyMBDiscussion() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("create table threadId_TEMP_TABLE (threadId LONG)");
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("insert into threadId_TEMP_TABLE select T.threadId ");
+			sb.append("from MBThread T, MBMessage M where T.threadId = ");
+			sb.append("M.threadId and T.categoryId = ");
+			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			sb.append(" group by M.threadId having count(M.messageId) = 1");
+
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
 
-			StringBundler sb = new StringBundler(6);
+			sb = new StringBundler(5);
 
 			sb.append("delete from AssetEntry where classPK in (");
-			sb.append("select messageId from MBMessage where threadId in (");
-			sb.append("select threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)) and classNameId = ");
+			sb.append("select M.messageId from MBMessage M inner join ");
+			sb.append("threadId_TEMP_TABLE T on M.threadId = T.threadId) and ");
+			sb.append("classNameId = ");
 			sb.append(classNameId);
 
 			runSQL(sb.toString());
 
-			sb = new StringBundler(4);
+			sb = new StringBundler(2);
 
-			sb.append("delete from MBDiscussion where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append("delete from MBDiscussion where threadId in (");
+			sb.append("select threadId from threadId_TEMP_TABLE)");
 
 			runSQL(sb.toString());
 
-			sb = new StringBundler(4);
+			sb = new StringBundler(2);
 
-			sb.append("delete from MBMessage where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append("delete from MBMessage where threadId in (");
+			sb.append("select threadId from threadId_TEMP_TABLE)");
 
 			runSQL(sb.toString());
 
-			runSQL(
-				"delete from MBThread where categoryId = " +
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-						" and messageCount = 1");
+			sb = new StringBundler(2);
+
+			sb.append("delete from MBThread where threadId in (");
+			sb.append("select threadId from threadId_TEMP_TABLE)");
+
+			runSQL(sb.toString());
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
+		}
+		finally {
+			runSQL("drop table threadId_TEMP_TABLE");
 		}
 	}
 

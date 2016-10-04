@@ -14,13 +14,14 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
-import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -33,6 +34,7 @@ import org.hibernate.SessionFactory;
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
+@ProviderType
 public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
@@ -48,13 +50,13 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
 	public Session openSession() throws ORMException {
-		SessionFactory sessionFactory = getSessionFactory();
+		SessionFactory sessionFactory = getSessionFactoryImplementor();
 
 		org.hibernate.Session session = null;
 
 		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
 			Connection connection = CurrentConnectionUtil.getConnection(
-				getDataSource());
+				_dataSource);
 
 			if (connection == null) {
 				session = sessionFactory.getCurrentSession();
@@ -81,36 +83,6 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	public void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
-	}
-
-	protected SessionFactory createSessionFactory(DataSource dataSource) {
-		PortletHibernateConfiguration portletHibernateConfiguration =
-			new PortletHibernateConfiguration(
-				getSessionFactoryClassLoader(), dataSource);
-
-		portletHibernateConfiguration.setDataSource(dataSource);
-
-		SessionFactory sessionFactory = null;
-
-		try {
-			sessionFactory =
-				portletHibernateConfiguration.buildSessionFactory();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
-		}
-
-		return sessionFactory;
-	}
-
-	protected DataSource getDataSource() {
-		return _dataSource;
-	}
-
-	protected SessionFactory getSessionFactory() {
-		return getSessionFactoryImplementor();
 	}
 
 	@Override

@@ -58,10 +58,6 @@ public class SessionFactoryImpl implements SessionFactory {
 		return new DialectImpl(_sessionFactoryImplementor.getDialect());
 	}
 
-	public ClassLoader getSessionFactoryClassLoader() {
-		return _sessionFactoryClassLoader;
-	}
-
 	public SessionFactoryImplementor getSessionFactoryImplementor() {
 		return _sessionFactoryImplementor;
 	}
@@ -135,17 +131,11 @@ public class SessionFactoryImpl implements SessionFactory {
 	}
 
 	protected Session wrapSession(org.hibernate.Session session) {
-		Session liferaySession = new SessionImpl(session);
 
-		if (_sessionFactoryClassLoader != null) {
+		// LPS-4190
 
-			// LPS-4190
-
-			liferaySession = new ClassLoaderSession(
-				liferaySession, _sessionFactoryClassLoader);
-		}
-
-		return liferaySession;
+		return new ClassLoaderSession(
+			new SessionImpl(session), _sessionFactoryClassLoader);
 	}
 
 	private static final String[] _PRELOAD_CLASS_NAMES =

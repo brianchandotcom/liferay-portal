@@ -11,6 +11,16 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="assertVisibleNoSPAWait">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="assertVisible" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="pauseAssertVisible">
 		<execute function="WaitForSPARefresh" />
 

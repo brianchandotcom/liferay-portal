@@ -1206,6 +1206,8 @@
 	</command>
 
 	<command name="ReorderFieldOptions" priority="3">
+		<description message="This is a use case for LPS-68381." />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />
 		</execute>

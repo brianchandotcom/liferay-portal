@@ -339,6 +339,11 @@ version in the `npm-shrinkwrap.json` file, if present.
 ### Changed
 - [LPS-68485]: Update the [Liferay Gradle Plugins] dependency to version 2.0.48.
 
+## 1.2.40 - 2016-10-04
+
+### Changed
+- [LPS-68504]: Update the [Liferay Gradle Plugins] dependency to version 2.0.49.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
@@ -363,5 +368,6 @@ version in the `npm-shrinkwrap.json` file, if present.
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
+[LPS-68504]: https://issues.liferay.com/browse/LPS-68504
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

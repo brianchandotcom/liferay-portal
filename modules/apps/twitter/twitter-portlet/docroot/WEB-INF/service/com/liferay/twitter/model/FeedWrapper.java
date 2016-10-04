@@ -20,13 +20,13 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -128,6 +128,16 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	}
 
 	@Override
+	public Feed toEscapedModel() {
+		return new FeedWrapper(_feed.toEscapedModel());
+	}
+
+	@Override
+	public Feed toUnescapedModel() {
+		return new FeedWrapper(_feed.toUnescapedModel());
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _feed.isCachedModel();
 	}
@@ -148,22 +158,12 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<com.liferay.twitter.model.Feed> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel<Feed> toCacheModel() {
 		return _feed.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.twitter.model.Feed toEscapedModel() {
-		return new FeedWrapper(_feed.toEscapedModel());
-	}
-
-	@Override
-	public com.liferay.twitter.model.Feed toUnescapedModel() {
-		return new FeedWrapper(_feed.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(com.liferay.twitter.model.Feed feed) {
+	public int compareTo(Feed feed) {
 		return _feed.compareTo(feed);
 	}
 
@@ -480,7 +480,7 @@ public class FeedWrapper implements Feed, ModelWrapper<Feed> {
 
 		FeedWrapper feedWrapper = (FeedWrapper)obj;
 
-		if (Validator.equals(_feed, feedWrapper._feed)) {
+		if (Objects.equals(_feed, feedWrapper._feed)) {
 			return true;
 		}
 

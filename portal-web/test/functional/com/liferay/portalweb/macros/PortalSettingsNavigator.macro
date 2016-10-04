@@ -7,11 +7,7 @@
 		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
 	</command>
 
-	<command name="gotoLDAP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+	<command name="gotoAuthenticationOpenID">
+		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
 	</command>
 </definition>

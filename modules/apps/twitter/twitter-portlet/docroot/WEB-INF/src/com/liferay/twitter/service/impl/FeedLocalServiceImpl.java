@@ -172,6 +172,7 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(FeedLocalServiceImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		FeedLocalServiceImpl.class);
 
 }

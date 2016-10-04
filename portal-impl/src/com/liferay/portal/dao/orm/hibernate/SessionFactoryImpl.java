@@ -58,6 +58,10 @@ public class SessionFactoryImpl implements SessionFactory {
 		return new DialectImpl(_sessionFactoryImplementor.getDialect());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public ClassLoader getSessionFactoryClassLoader() {
 		return _sessionFactoryClassLoader;
 	}

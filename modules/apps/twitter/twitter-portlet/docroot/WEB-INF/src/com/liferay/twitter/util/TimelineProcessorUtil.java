@@ -33,7 +33,7 @@ public class TimelineProcessorUtil {
 			twitterScreenName, sinceId);
 	}
 
-	private static TimelineProcessor _timelineProcessor;
+	private static final TimelineProcessor _timelineProcessor;
 
 	static {
 		try {

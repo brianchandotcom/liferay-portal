@@ -120,15 +120,16 @@ public class HttpTimelineProcessor implements TimelineProcessor {
 		"Opera/12.80 (Windows NT 5.1; U; en) Presto/2.10.289 Version/12.02"
 	};
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		HttpTimelineProcessor.class);
 
-	private Format _dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-		"EEE MMM d hh:mm:ss Z yyyy", LocaleUtil.US);
-	private Pattern _pattern = Pattern.compile(
+	private final Format _dateFormat =
+		FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"EEE MMM d hh:mm:ss Z yyyy", LocaleUtil.US);
+	private final Pattern _pattern = Pattern.compile(
 		"data-item-id=\"([0-9]+)\".*?data-user-id=\"([0-9]+)\".*?data-time=\"" +
 			"([0-9]+)\".*?<p class=\".*?js-tweet-text.*?\">(.*?)</p>",
 		Pattern.DOTALL);
-	private Random _random = new Random();
+	private final Random _random = new Random();
 
 }

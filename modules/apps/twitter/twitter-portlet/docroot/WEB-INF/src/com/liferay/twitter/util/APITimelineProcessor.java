@@ -49,6 +49,7 @@ public class APITimelineProcessor implements TimelineProcessor {
 	private static final String _URL =
 		"http://api.twitter.com/1/statuses/user_timeline/";
 
-	private static Log _log = LogFactoryUtil.getLog(APITimelineProcessor.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		APITimelineProcessor.class);
 
 }

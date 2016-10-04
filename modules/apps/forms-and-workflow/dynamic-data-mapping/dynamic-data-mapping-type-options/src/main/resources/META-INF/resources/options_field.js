@@ -248,7 +248,7 @@ AUI.add(
 						instance.evaluate();
 					},
 
-					_afterRender: function(option) {
+					_afterRenderOption: function(option) {
 						var instance = this;
 
 						instance._bindListEvents();
@@ -315,9 +315,11 @@ AUI.add(
 					_bindOptionUI: function(option) {
 						var instance = this;
 
-						option.after('render', A.bind('_afterRender', instance, option));
+						option.after('render', A.bind('_afterRenderOption', instance, option));
 
 						option.bindContainerEvent('click', A.bind('_onOptionClickClose', instance, option), '.close');
+
+						option.on('destroy', A.bind('_onDestroyOption', instance, option));
 						option.on('valueChanged', A.bind('_onOptionValueChange', instance));
 					},
 
@@ -374,6 +376,12 @@ AUI.add(
 						var container = instance.get('container');
 
 						return container.one('.options');
+					},
+
+					_onDestroyOption: function(option) {
+						var instance = this;
+
+						A.DD.DDM.getDrag(option.get('container')).destroy();
 					},
 
 					_onFocusOption: function(event) {

@@ -1,0 +1,31 @@
+<definition component-name="portal-user-interface">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="User Interface" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="Smoke" priority="5">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute function="AssertVisible#assertVisibleNoSPAWait" locator1="//html[contains(@class,'lfr-spa-loading')]" />
+	</command>
+</definition>

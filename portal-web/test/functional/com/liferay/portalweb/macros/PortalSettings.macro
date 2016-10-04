@@ -603,18 +603,15 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#OPEN_ID" value1="OpenID" />
-
+		<execute function="AssertClick" locator1="NavTab#OPENID" value1="OpenID" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
 	</command>
-
 	<command name="viewAuthenticationOpenSSOCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#OPEN_SSO" value1="OpenSSO" />
-
+		<execute function="AssertClick" locator1="NavTab#OPENSSO" value1="OpenSSO" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER" value1="Login URL" />

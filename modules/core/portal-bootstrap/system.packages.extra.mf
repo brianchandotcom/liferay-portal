@@ -2338,7 +2338,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  portal.dao.jdbc.util;uses:="com.liferay.portal.dao.jdbc.spring";versi
  on="1.0.0",com.liferay.portal.dao.orm.common;uses:="com.liferay.porta
  l.kernel.dao.orm,com.liferay.portal.kernel.security.pacl";version="1.
- 0.0",com.liferay.portal.dao.orm.hibernate;version="1.0.2";uses:="com.
+ 0.0",com.liferay.portal.dao.orm.hibernate;version="1.0.3";uses:="com.
  liferay.portal.kernel.dao.orm,com.liferay.portal.kernel.security.pacl
  ,com.liferay.portal.kernel.util,org.hibernate,org.hibernate.criterion
  ,org.hibernate.dialect,org.hibernate.engine,org.hibernate.property,or
@@ -2610,13 +2610,13 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  portal.kernel.exception,javax.portlet",com.liferay.portal.kernel.nio.
  charset;version="6.3.0",com.liferay.portal.kernel.nio.intraband;versi
  on="7.0.0",com.liferay.portal.kernel.nio.intraband.blocking;version="
- 6.2.0";uses:="com.liferay.portal.kernel.nio.intraband",com.liferay.po
+ 6.3.0";uses:="com.liferay.portal.kernel.nio.intraband",com.liferay.po
  rtal.kernel.nio.intraband.mailbox;version="6.3.0";uses:="com.liferay.
  portal.kernel.nio.intraband",com.liferay.portal.kernel.nio.intraband.
  messaging;version="6.3.0";uses:="com.liferay.portal.kernel.messaging,
  com.liferay.portal.kernel.nio.intraband,com.liferay.portal.kernel.pro
  cess,com.liferay.portal.kernel.resiliency.spi",com.liferay.portal.ker
- nel.nio.intraband.nonblocking;version="6.2.0";uses:="com.liferay.port
+ nel.nio.intraband.nonblocking;version="6.3.0";uses:="com.liferay.port
  al.kernel.nio.intraband",com.liferay.portal.kernel.nio.intraband.prox
  y;version="1.0.0";uses:="com.liferay.portal.kernel.io,com.liferay.por
  tal.kernel.nio.intraband",com.liferay.portal.kernel.nio.intraband.pro

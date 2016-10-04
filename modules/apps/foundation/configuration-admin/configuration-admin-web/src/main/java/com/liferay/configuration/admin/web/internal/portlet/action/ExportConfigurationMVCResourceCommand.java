@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
 import java.io.FileInputStream;
-import java.io.OutputStream;
 
 import java.util.List;
 import java.util.Map;
@@ -284,13 +283,12 @@ public class ExportConfigurationMVCResourceCommand
 
 		Properties properties = getProperties(languageId, factoryPid, pid);
 
-		OutputStream outputStream = new UnsyncByteArrayOutputStream();
+		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+			new UnsyncByteArrayOutputStream();
 
-		ConfigurationHandler.write(outputStream, properties);
+		ConfigurationHandler.write(unsyncByteArrayOutputStream, properties);
 
-		String propertiesString = outputStream.toString();
-
-		return propertiesString.getBytes();
+		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
 	@Reference

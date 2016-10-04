@@ -116,8 +116,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_assetPublisherPortletDisplayTemplateImportCapability,
-				_referencedStagedModelImporterCapability
+				_assetPublisherPortletDisplayTemplateImportCapability
 			});
 	}
 
@@ -146,6 +145,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		throws PortletDataException {
 
 		try {
+			importLayoutReferences(portletDataContext);
+
+			_referencedStagedModelImporterCapability.process(
+				portletDataContext, portletPreferences);
+
 			return updateImportPortletPreferences(
 				portletDataContext, portletPreferences);
 		}
@@ -471,6 +475,35 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 
 		return null;
+	}
+
+	protected void importLayoutReferences(PortletDataContext portletDataContext)
+		throws PortletDataException {
+
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		Element referencesElement = importDataRootElement.element("references");
+
+		if (referencesElement == null) {
+			return;
+		}
+
+		List<Element> referenceElements = referencesElement.elements();
+
+		for (Element referenceElement : referenceElements) {
+			String className = referenceElement.attributeValue("class-name");
+
+			if (!className.equals(Layout.class.getName())) {
+				continue;
+			}
+
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, className, classPK);
+		}
 	}
 
 	protected void mergeAnyCategoryIds(
@@ -805,9 +838,34 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 					layout.getGroupId(), layout.isPrivateLayout(),
 					scopeIdLayoutId);
 
+				if (plid != scopeIdLayout.getPlid()) {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletDataContext.getPortletId(),
+						scopeIdLayout);
+				}
+
 				newValues[i] =
 					AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX +
 						scopeIdLayout.getUuid();
+			}
+			else if (oldValue.startsWith(
+						AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX)) {
+
+				String scopeLayoutUuid = oldValue.substring(
+					AssetPublisherUtil.SCOPE_ID_LAYOUT_UUID_PREFIX.length());
+
+				Layout scopeUuidLayout =
+					_layoutLocalService.getLayoutByUuidAndGroupId(
+						scopeLayoutUuid, portletDataContext.getGroupId(),
+						portletDataContext.isPrivateLayout());
+
+				if (plid != scopeUuidLayout.getPlid()) {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletDataContext.getPortletId(),
+						scopeUuidLayout);
+				}
+
+				newValues[i] = oldValue;
 			}
 			else {
 				newValues[i] = oldValue;

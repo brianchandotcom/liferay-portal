@@ -247,7 +247,7 @@ public class DDMFormEvaluatorHelper {
 
 		String valueString = value.getString(_locale);
 
-		if (Validator.isNull(valueString)) {
+		if (Validator.isNull(StringUtil.trim(valueString))) {
 			return true;
 		}
 

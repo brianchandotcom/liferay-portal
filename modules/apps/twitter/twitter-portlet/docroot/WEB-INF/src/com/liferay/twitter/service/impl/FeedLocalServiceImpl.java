@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.twitter.exception.FeedTwitterScreenNameException;
 import com.liferay.twitter.model.Feed;
 import com.liferay.twitter.service.base.FeedLocalServiceBaseImpl;
@@ -160,7 +159,7 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 
 				extraDataJSONObject.put("text", text);
 
-				SocialActivityLocalServiceUtil.addActivity(
+				socialActivityLocalService.addActivity(
 					user.getUserId(), 0, createDate, Feed.class.getName(),
 					statusId, TwitterActivityKeys.ADD_STATUS,
 					extraDataJSONObject.toString(), 0);

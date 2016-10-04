@@ -341,10 +341,17 @@ version in the `npm-shrinkwrap.json` file, if present.
 
 ## 1.2.40 - 2016-10-04
 
+### Added
+- [LPS-68506]: Exclude unpublished projects from the API documentation generated
+by the `appJavadoc` task.
+
 ### Changed
 - [LPS-68504]: Update the [Liferay Gradle Plugins] dependency to version 2.0.49.
+- [LPS-68506]: Update the [Liferay Gradle Plugins App Javadoc Builder]
+dependency to version 1.1.0.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
@@ -369,5 +376,6 @@ version in the `npm-shrinkwrap.json` file, if present.
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504
+[LPS-68506]: https://issues.liferay.com/browse/LPS-68506
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

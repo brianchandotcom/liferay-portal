@@ -35,10 +35,15 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -111,12 +116,18 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 
 		Document document = getBaseModelDocument(CLASS_NAME, assetVocabulary);
 
+		Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
+			assetVocabulary.getGroupId());
+
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, assetVocabulary.getVocabularyId());
-		document.addLocalizedText(
-			Field.DESCRIPTION, assetVocabulary.getDescriptionMap());
+		_addLocalizedField(
+			document, Field.DESCRIPTION, siteDefaultLocale,
+			assetVocabulary.getDescriptionMap());
 		document.addText(Field.NAME, assetVocabulary.getName());
-		document.addLocalizedText(Field.TITLE, assetVocabulary.getTitleMap());
+		_addLocalizedField(
+			document, Field.TITLE, siteDefaultLocale,
+			assetVocabulary.getTitleMap());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Document " + assetVocabulary + " indexed successfully");
@@ -189,6 +200,26 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
+	}
+
+	private void _addLocalizedField(
+		Document document, String field, Locale siteDefaultLocale,
+		Map<Locale, String> map) {
+
+		for (Entry<Locale, String> entry : map.entrySet()) {
+			Locale locale = entry.getKey();
+
+			if (locale.equals(siteDefaultLocale)) {
+				document.addText(field, entry.getValue());
+			}
+			else {
+				String languageId = LocaleUtil.toLanguageId(locale);
+
+				document.addText(
+					LocalizationUtil.getLocalizedName(field, languageId),
+					entry.getValue());
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

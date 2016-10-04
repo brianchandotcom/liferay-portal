@@ -9,3 +9,15 @@ app.artifacts-2.0.0=\
 app.change.log-2.0.0=LPS-61099 LPS-61420 LPS-64031 LPS-64713 LPS-64931 LPS-65012 LPS-65150 LPS-65204 LPS-65225 LPS-65323 LPS-65362
 
 app.git.id-2.0.0=794304598dbef2585c8bed583cad98415018d573
+
+#
+# Liferay App Version 2.1.0
+#
+
+app.artifacts-2.1.0=\
+	com.liferay.screens.api-3.2.0.jar,\
+	com.liferay.screens.service-1.0.11.jar
+
+app.change.log-2.1.0=LPS-67386
+
+app.git.id-2.1.0=1fc0838cf0cf46e8796c21734661af3c67d228f4

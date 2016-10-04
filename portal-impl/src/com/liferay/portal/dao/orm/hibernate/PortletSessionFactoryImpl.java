@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -33,6 +35,7 @@ import org.hibernate.SessionFactory;
  * @author Shuyang Zhou
  * @author Alexander Chow
  */
+@ProviderType
 public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
@@ -48,13 +51,13 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
 	public Session openSession() throws ORMException {
-		SessionFactory sessionFactory = getSessionFactory();
+		SessionFactory sessionFactory = getSessionFactoryImplementor();
 
 		org.hibernate.Session session = null;
 
 		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
 			Connection connection = CurrentConnectionUtil.getConnection(
-				getDataSource());
+				_dataSource);
 
 			if (connection == null) {
 				session = sessionFactory.getCurrentSession();
@@ -83,6 +86,10 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		_dataSource = dataSource;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected SessionFactory createSessionFactory(DataSource dataSource) {
 		PortletHibernateConfiguration portletHibernateConfiguration =
 			new PortletHibernateConfiguration(
@@ -105,10 +112,18 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 		return sessionFactory;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected DataSource getDataSource() {
 		return _dataSource;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected SessionFactory getSessionFactory() {
 		return getSessionFactoryImplementor();
 	}

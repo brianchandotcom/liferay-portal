@@ -29,6 +29,10 @@
 			<finder-column name="userId" />
 			<finder-column name="twitterScreenName" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 	</entity>
 	<exceptions>
 		<exception>FeedTwitterScreenName</exception>

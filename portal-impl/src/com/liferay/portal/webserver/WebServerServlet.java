@@ -286,6 +286,9 @@ public class WebServerServlet extends HttpServlet {
 
 			TransactionConfig.Builder builder = new TransactionConfig.Builder();
 
+			builder.setReadOnly(true);
+			builder.setRollbackForClasses(Exception.class);
+
 			TransactionInvokerUtil.invoke(
 				builder.build(),
 				_createFileServingCallable(request, response, user));
@@ -304,8 +307,8 @@ public class WebServerServlet extends HttpServlet {
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
 		}
-		catch (Throwable e) {
-			e.printStackTrace();
+		catch (Throwable t) {
+			PortalUtil.sendError(new Exception(t), request, response);
 		}
 	}
 

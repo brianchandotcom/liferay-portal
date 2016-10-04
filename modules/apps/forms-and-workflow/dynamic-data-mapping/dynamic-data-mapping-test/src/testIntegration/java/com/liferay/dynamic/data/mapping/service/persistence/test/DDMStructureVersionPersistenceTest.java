@@ -253,7 +253,7 @@ public class DDMStructureVersionPersistenceTest {
 			"structureVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"structureId", true, "version", true, "parentStructureId", true,
-			"name", true, "storageType", true, "type", true, "status", true,
+			"storageType", true, "type", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 

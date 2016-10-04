@@ -87,7 +87,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			{ "structureId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "parentStructureId", Types.BIGINT },
-			{ "name", Types.VARCHAR },
+			{ "name", Types.CLOB },
 			{ "description", Types.CLOB },
 			{ "definition", Types.CLOB },
 			{ "storageType", Types.VARCHAR },
@@ -109,7 +109,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parentStructureId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("name", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("definition", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("storageType", Types.VARCHAR);
@@ -120,7 +120,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name TEXT null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureVersion.structureVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructureVersion.structureVersionId ASC";

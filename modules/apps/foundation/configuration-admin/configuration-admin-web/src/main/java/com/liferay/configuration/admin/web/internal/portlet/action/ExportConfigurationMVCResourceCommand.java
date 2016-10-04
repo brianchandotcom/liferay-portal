@@ -35,10 +35,9 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
@@ -231,27 +230,11 @@ public class ExportConfigurationMVCResourceCommand
 		return fileName + ".config";
 	}
 
-	protected byte[] getPropertiesAsBytes(
+	protected Properties getProperties(
 			String languageId, String factoryPid, String pid)
 		throws Exception {
 
-		Dictionary propertiesDictionary = getPropertiesDictionary(
-			languageId, factoryPid, pid);
-
-		OutputStream outputStream = new UnsyncByteArrayOutputStream();
-
-		ConfigurationHandler.write(outputStream, propertiesDictionary);
-
-		String propertiesString = outputStream.toString();
-
-		return propertiesString.getBytes();
-	}
-
-	protected Dictionary<String, Object> getPropertiesDictionary(
-			String languageId, String factoryPid, String pid)
-		throws Exception {
-
-		Dictionary propertiesDictionary = new Hashtable<>();
+		Properties properties = new Properties();
 
 		Map<String, ConfigurationModel> configurationModels =
 			_configurationModelRetriever.getConfigurationModels(languageId);
@@ -263,14 +246,14 @@ public class ExportConfigurationMVCResourceCommand
 		}
 
 		if (configurationModel == null) {
-			return propertiesDictionary;
+			return properties;
 		}
 
 		Configuration configuration =
 			_configurationModelRetriever.getConfiguration(pid);
 
 		if (configuration == null) {
-			return propertiesDictionary;
+			return properties;
 		}
 
 		ExtendedObjectClassDefinition extendedObjectClassDefinition =
@@ -285,15 +268,29 @@ public class ExportConfigurationMVCResourceCommand
 				attributeDefinition, configuration);
 
 			if (values.length == 1) {
-				propertiesDictionary.put(
-					attributeDefinition.getID(), values[0]);
+				properties.put(attributeDefinition.getID(), values[0]);
 			}
 			else if (values.length > 1) {
-				propertiesDictionary.put(attributeDefinition.getID(), values);
+				properties.put(attributeDefinition.getID(), values);
 			}
 		}
 
-		return propertiesDictionary;
+		return properties;
+	}
+
+	protected byte[] getPropertiesAsBytes(
+			String languageId, String factoryPid, String pid)
+		throws Exception {
+
+		Properties properties = getProperties(languageId, factoryPid, pid);
+
+		OutputStream outputStream = new UnsyncByteArrayOutputStream();
+
+		ConfigurationHandler.write(outputStream, properties);
+
+		String propertiesString = outputStream.toString();
+
+		return propertiesString.getBytes();
 	}
 
 	@Reference

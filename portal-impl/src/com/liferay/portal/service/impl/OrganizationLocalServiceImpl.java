@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.OrganizationNameException;
@@ -69,6 +70,7 @@ import com.liferay.portal.service.base.OrganizationLocalServiceBaseImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.usersadmin.search.OrganizationUsersSearcher;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -605,6 +607,55 @@ public class OrganizationLocalServiceImpl
 		}
 
 		return organizations;
+	}
+
+	/**
+	 * Returns all the organizations and users belonging to the parent organization.
+	 *
+	 * @param  companyId the primary key of the organization and user's company
+	 * @param  parentOrganizationId the primary key of the organization and user's
+	 *         parent organization
+	 * @param  status the user's workflow status
+	 * @param  start the lower bound of the range of organizations and users to return
+	 * @param  end the upper bound of the range of organizations and users to return
+	 *         (not inclusive)
+	 * @param  obc the comparator to order the organizations and users (optionally
+	 *         <code>null</code>)
+	 * @return the organizations and users belonging to the parent organization
+	 */
+	@Override
+	public List<Object> getOrganizationsAndUsers(
+		long companyId, long parentOrganizationId, int status, int start,
+		int end, OrderByComparator<?> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, false, 0, false, start, end,
+			(OrderByComparator<Object>)obc);
+
+		return organizationFinder.findO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
+	}
+
+	/**
+	 * Returns the number of organizations and users belonging to the parent
+	 * organization.
+	 *
+	 * @param  companyId the primary key of the organization and user's company
+	 * @param  parentOrganizationId the primary key of the organization and user's
+	 *         parent organization
+	 * @param  status the user's workflow status
+	 * @return the number of organizations and users belonging to the parent organization
+	 */
+	@Override
+	public int getOrganizationsAndUsersCount(
+		long companyId, long parentOrganizationId, int status) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, false, 0, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+
+		return organizationFinder.countO_U_ByC_P(
+			companyId, parentOrganizationId, queryDefinition);
 	}
 
 	/**
@@ -1536,6 +1587,70 @@ public class OrganizationLocalServiceImpl
 	}
 
 	/**
+	 * Returns the organizations and users that match the keywords specified for
+	 * them and belong to the parent organization.
+	 *
+	 * @param  companyId the primary key of the organization and user's company
+	 * @param  parentOrganizationId the primary key of the organization and user's
+	 *         parent organization
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         organization's name, type, or location fields or user's first name,
+	 *         middle name, last name, screen name, email address, or address fields
+	 * @param  status user's workflow status
+	 * @param  params the finder parameters (optionally <code>null</code>).
+	 * @param  start the lower bound of the range of organizations and users to return
+	 * @param  end the upper bound of the range of organizations and users to return
+	 *         (not inclusive)
+	 * @return the matching organizations and users
+	 */
+	@Override
+	public Hits searchOrganizationsAndUsers(
+			long companyId, long parentOrganizationId, String keywords,
+			int status, LinkedHashMap<String, Object> params, int start,
+			int end, Sort[] sorts)
+		throws PortalException {
+
+		Indexer indexer = OrganizationUsersSearcher.getInstance();
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, parentOrganizationId, keywords, status, params, start,
+			end, sorts);
+
+		return indexer.search(searchContext);
+	}
+
+	/**
+	 * Returns the number of organizations and users that match the keywords specified
+	 * for them and belong to the parent organization.
+	 *
+	 * @param  companyId the primary key of the organization and user's company
+	 * @param  parentOrganizationId the primary key of the organization and user's
+	 *         parent organization
+	 * @param  keywords the keywords (space separated), which may occur in the
+	 *         organization's name, type, or location fields or user's first name,
+	 *         middle name, last name, screen name, email address, or address fields
+	 * @param  status user's workflow status
+	 * @param  params the finder parameters (optionally <code>null</code>).
+	 * @return the number of matching organizations and users
+	 */
+	@Override
+	public int searchOrganizationsAndUsersCount(
+			long companyId, long parentOrganizationId, String keywords,
+			int status, LinkedHashMap<String, Object> params)
+		throws PortalException {
+
+		Indexer indexer = OrganizationUsersSearcher.getInstance();
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, parentOrganizationId, keywords, status, params,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		Hits hits = indexer.search(searchContext);
+
+		return hits.getLength();
+	}
+
+	/**
 	 * Removes the organizations from the group.
 	 *
 	 * @param groupId the primary key of the group
@@ -1818,6 +1933,75 @@ public class OrganizationLocalServiceImpl
 				addSuborganizations(allSuborganizations, suborganizations);
 			}
 		}
+	}
+
+	protected SearchContext buildSearchContext(
+		long companyId, long parentOrganizationId, String keywords, int status,
+		LinkedHashMap<String, Object> params, int start, int end,
+		Sort[] sorts) {
+
+		String city = null;
+		String country = null;
+		String emailAddress = null;
+		String firstName = null;
+		String fullName = null;
+		String lastName = null;
+		String middleName = null;
+		String name = null;
+		String region = null;
+		String screenName = null;
+		String street = null;
+		String type = null;
+		String zip = null;
+		boolean andOperator = false;
+
+		if (Validator.isNotNull(keywords)) {
+			city = keywords;
+			country = keywords;
+			emailAddress = keywords;
+			firstName = keywords;
+			fullName = keywords;
+			lastName = keywords;
+			middleName = keywords;
+			name = keywords;
+			region = keywords;
+			screenName = keywords;
+			street = keywords;
+			type = keywords;
+			zip = keywords;
+		}
+		else {
+			andOperator = true;
+		}
+
+		if (params == null) {
+			params = new LinkedHashMap<>();
+		}
+
+		params.put("keywords", keywords);
+		params.put("usersOrgs", parentOrganizationId);
+
+		SearchContext searchContext = buildSearchContext(
+			companyId, parentOrganizationId, name, type, street, city, zip,
+			region, country, params, andOperator, start, end, null);
+
+		Map<String, Serializable> attributes = searchContext.getAttributes();
+
+		attributes.put("emailAddress", emailAddress);
+		attributes.put("firstName", firstName);
+		attributes.put("fullName", fullName);
+		attributes.put("lastName", lastName);
+		attributes.put("middleName", middleName);
+		attributes.put("screenName", screenName);
+		attributes.put("status", status);
+
+		searchContext.setAttributes(attributes);
+
+		if (sorts != null) {
+			searchContext.setSorts(sorts);
+		}
+
+		return searchContext;
 	}
 
 	protected SearchContext buildSearchContext(

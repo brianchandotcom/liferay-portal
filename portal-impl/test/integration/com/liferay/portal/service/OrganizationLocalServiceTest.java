@@ -16,12 +16,15 @@ package com.liferay.portal.service;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -30,7 +33,9 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
@@ -310,6 +315,84 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrganizationsAndUsers() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization);
+
+		_organizations.add(organization);
+
+		UserLocalServiceUtil.addOrganizationUser(
+			organization.getOrganizationId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(2, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertEquals(2, results.size());
+		Assert.assertTrue(results.contains(suborganization));
+		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
+	}
+
+	@Test
+	public void testGetOrganizationsAndUsersWithNoSuborganizations()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		UserLocalServiceUtil.addOrganizationUser(
+			organization.getOrganizationId(), TestPropsValues.getUserId());
+
+		Assert.assertEquals(1, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertEquals(1, results.size());
+		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
+	}
+
+	@Test
+	public void testGetOrganizationsAndUsersWithNoUsers() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			false);
+
+		_organizations.add(suborganization);
+
+		_organizations.add(organization);
+
+		Assert.assertEquals(1, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertEquals(1, results.size());
+		Assert.assertTrue(results.contains(suborganization));
+	}
+
+	@Test
+	public void testGetOrganizationsAndUsersWithRootOrganization()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		Assert.assertEquals(0, getOrganizationsAndUsersCount(organization));
+
+		List<Object> results = getOrganizationsAndUsers(organization);
+
+		Assert.assertTrue(results.isEmpty());
+	}
+
+	@Test
 	public void testHasUserOrganization1() throws Exception {
 		Organization organizationA = OrganizationTestUtil.addOrganization(
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
@@ -509,7 +592,147 @@ public class OrganizationLocalServiceTest {
 			organizationB.getGroupId(), groupAA.getParentGroupId());
 	}
 
+	@Test
+	public void testSearchOrganizationsAndUsers() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), "Organization1", false);
+
+		_organizations.add(suborganization);
+
+		_organizations.add(organization);
+
+		_user = UserTestUtil.addUser("user1", TestPropsValues.getGroupId());
+
+		UserLocalServiceUtil.addOrganizationUsers(
+			organization.getOrganizationId(), new long[] {_user.getUserId()});
+
+		Hits hits = searchOrganizationsAndUsers(organization, null);
+
+		Assert.assertEquals(2, hits.getLength());
+
+		hits = searchOrganizationsAndUsers(organization, "Organization1");
+
+		Assert.assertEquals(
+			String.valueOf(suborganization.getOrganizationId()),
+			hits.doc(0).get(Field.ORGANIZATION_ID));
+
+		hits = searchOrganizationsAndUsers(organization, "user1");
+
+		Assert.assertEquals(
+			String.valueOf(_user.getUserId()), hits.doc(0).get(Field.USER_ID));
+	}
+
+	@Test
+	public void testSearchOrganizationsAndUsersWhenNoOrganizations()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		_user = UserTestUtil.addUser("user1", TestPropsValues.getGroupId());
+
+		UserLocalServiceUtil.addOrganizationUsers(
+			organization.getOrganizationId(), new long[] {_user.getUserId()});
+
+		Hits hits = searchOrganizationsAndUsers(organization, null);
+
+		Assert.assertEquals(1, hits.getLength());
+
+		Assert.assertEquals(
+			String.valueOf(_user.getUserId()), hits.doc(0).get(Field.USER_ID));
+
+		hits = searchOrganizationsAndUsers(organization, "Organization1");
+
+		Assert.assertEquals(0, hits.getLength());
+
+		hits = searchOrganizationsAndUsers(organization, "user1");
+
+		Assert.assertEquals(
+			String.valueOf(_user.getUserId()), hits.doc(0).get(Field.USER_ID));
+	}
+
+	@Test
+	public void testSearchOrganizationsAndUsersWhenNoUsers() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), "Organization1", false);
+
+		_organizations.add(suborganization);
+
+		_organizations.add(organization);
+
+		Hits hits = searchOrganizationsAndUsers(organization, null);
+
+		Assert.assertEquals(1, hits.getLength());
+
+		Assert.assertEquals(
+			String.valueOf(suborganization.getOrganizationId()),
+			hits.doc(0).get(Field.ORGANIZATION_ID));
+
+		hits = searchOrganizationsAndUsers(organization, "Organization1");
+
+		Assert.assertEquals(
+			String.valueOf(suborganization.getOrganizationId()),
+			hits.doc(0).get(Field.ORGANIZATION_ID));
+
+		hits = searchOrganizationsAndUsers(organization, "user1");
+
+		Assert.assertEquals(0, hits.getLength());
+	}
+
+	@Test
+	public void testSearchOrganizationsAndUsersWithRootOrganization()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizations.add(organization);
+
+		Hits hits = searchOrganizationsAndUsers(organization, null);
+
+		Assert.assertEquals(0, hits.getLength());
+
+		hits = searchOrganizationsAndUsers(organization, "Organization1");
+
+		Assert.assertEquals(0, hits.getLength());
+
+		hits = searchOrganizationsAndUsers(organization, "user1");
+
+		Assert.assertEquals(0, hits.getLength());
+	}
+
+	protected List<Object> getOrganizationsAndUsers(Organization organization) {
+		return OrganizationLocalServiceUtil.getOrganizationsAndUsers(
+				organization.getCompanyId(), organization.getOrganizationId(),
+				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
+	}
+
+	protected int getOrganizationsAndUsersCount(Organization organization) {
+		return OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
+			organization.getCompanyId(), organization.getOrganizationId(),
+			WorkflowConstants.STATUS_ANY);
+	}
+
+	protected Hits searchOrganizationsAndUsers(
+			Organization parentOrganization, String keywords)
+		throws Exception {
+
+		return OrganizationLocalServiceUtil.searchOrganizationsAndUsers(
+			parentOrganization.getCompanyId(),
+			parentOrganization.getOrganizationId(), keywords,
+			WorkflowConstants.STATUS_ANY, null, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
 	@DeleteAfterTestRun
 	private final List<Organization> _organizations = new ArrayList<>();
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

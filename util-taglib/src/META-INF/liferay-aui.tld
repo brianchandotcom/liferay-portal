@@ -1606,7 +1606,7 @@
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>
-		<description><![CDATA[Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.]]></description>
+		<description><![CDATA[Deprecated as of 7.0.0, with no direct replacement. Creates a spacer component that enables JSP 2.1 server-side trimming of white spaces.]]></description>
 		<name>spacer</name>
 		<tag-class>com.liferay.taglib.aui.SpacerTag</tag-class>
 		<body-content>JSP</body-content>

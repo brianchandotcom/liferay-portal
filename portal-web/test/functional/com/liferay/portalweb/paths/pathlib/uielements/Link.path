@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPENID</td>
+	<td>//span[contains(.,'OpenID')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_LOCALE</td>
 	<td>//div[contains(@id,'portalMessageContainer')]/a[contains(.,'${key_pageLocale}')]</td>
 	<td></td>

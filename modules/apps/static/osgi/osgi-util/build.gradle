@@ -1,13 +1,15 @@
-buildscript {
-	ext.gradleScriptsPath = "https://raw.githubusercontent.com/liferay/liferay-portal/master/modules"
+import com.liferay.gradle.util.copy.RenameDependencyClosure
 
-	if (!project.parent) {
-		apply from: "${gradleScriptsPath}/build-buildscript.gradle", to: buildscript
-	}
+task copyTestLibs(type: Copy)
+
+configurations {
+	testLibs
 }
 
-if (!project.parent) {
-	apply from: "${gradleScriptsPath}/build-module.gradle"
+copyTestLibs {
+	from configurations.testLibs
+	into "test-lib"
+	rename new RenameDependencyClosure(project, configurations.testLibs.name)
 }
 
 dependencies {
@@ -19,4 +21,11 @@ dependencies {
 	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "4.4.0"
 	testIntegrationCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
 	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
+
+	testLibs "org.jboss.arquillian.osgi:arquillian-osgi-bundle:2.1.0.Final"
+}
+
+testIntegration {
+	dependsOn copyTestLibs
+	finalizedBy cleanCopyTestLibs
 }

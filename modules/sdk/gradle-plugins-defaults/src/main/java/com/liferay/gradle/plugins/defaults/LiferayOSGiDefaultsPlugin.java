@@ -2039,6 +2039,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureTaskTestJvmArgs(test, "junit.java.integration.gc");
 		configureTaskTestLogging(test);
 
+		test.systemProperty("org.apache.maven.offline", Boolean.TRUE);
+
 		File resultsDir = project.file("test-results/integration");
 
 		test.setBinResultsDir(new File(resultsDir, "binary/testIntegration"));

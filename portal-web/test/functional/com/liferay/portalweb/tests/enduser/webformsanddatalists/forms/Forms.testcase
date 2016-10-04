@@ -1205,6 +1205,70 @@
 		<execute macro="Form#viewFormNotPublished" />
 	</command>
 
+	<command name="ReorderFieldOptions" priority="3">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Multiple Selection" />
+		</execute>
+
+		<for list="1,2,3" param="number">
+			<execute macro="FormFields#editOptionsRow">
+				<var name="optionName" value="Checkbox${number}" />
+				<var name="optionValue" value="Checkbox ${number}" />
+				<var name="rowNumber" value="${number}" />
+			</execute>
+
+			<execute macro="FormFields#viewOptionsRowFieldName">
+				<var name="fieldName" value="Checkbox${number}" />
+				<var name="rowNumber" value="${number}" />
+			</execute>
+		</for>
+
+		<execute macro="FormFields#moveOptionsRow">
+			<var name="rowNumberEnd" value="1" />
+			<var name="rowNumberStart" value="3" />
+		</execute>
+
+		<execute macro="FormFields#viewOptionsRowFieldValue">
+			<var name="fieldValue" value="Checkbox 3" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="FormFields#viewOptionsRowFieldValue">
+			<var name="fieldValue" value="Checkbox 1" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="FormFields#viewOptionsRowFieldValue">
+			<var name="fieldValue" value="Checkbox 2" />
+			<var name="rowNumber" value="3" />
+		</execute>
+
+		<execute macro="FormFields#deleteOptionsRow">
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="FormFields#moveOptionsRow">
+			<var name="rowNumberEnd" value="1" />
+			<var name="rowNumberStart" value="2" />
+		</execute>
+
+		<execute macro="FormFields#viewOptionsRowFieldValue">
+			<var name="fieldValue" value="Checkbox 2" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="FormFields#viewOptionsRowFieldValue">
+			<var name="fieldValue" value="Checkbox 3" />
+			<var name="rowNumber" value="2" />
+		</execute>
+	</command>
+
 	<command name="SearchFormRecordMultipleEntries" priority="4">
 		<description message="This is a use case for LPS-59336." />
 

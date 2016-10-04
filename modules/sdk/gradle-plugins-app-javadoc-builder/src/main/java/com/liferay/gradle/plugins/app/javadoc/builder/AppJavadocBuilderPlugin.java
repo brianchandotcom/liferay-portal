@@ -43,6 +43,7 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
 import org.gradle.api.reporting.ReportingExtension;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
@@ -188,6 +189,12 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 		Task task = taskContainer.findByName(JavaPlugin.JAVADOC_TASK_NAME);
 
 		if (!(task instanceof Javadoc)) {
+			return;
+		}
+
+		Spec<Project> spec = appJavadocBuilderExtension.getOnlyIf();
+
+		if (!spec.isSatisfiedBy(subproject)) {
 			return;
 		}
 

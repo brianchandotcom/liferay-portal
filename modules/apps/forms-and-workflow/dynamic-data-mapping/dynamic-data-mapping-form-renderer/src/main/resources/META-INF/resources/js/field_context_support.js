@@ -44,9 +44,9 @@ AUI.add(
 				var context = instance.get('context');
 
 				var setAttributeChangeEvent = function(attributeName) {
-					var attributeState = EXTENDS.ATTRS[attributeName].state;
+					var stateAttribute = EXTENDS.ATTRS[attributeName].state;
 
-					if (attributeState) {
+					if (stateAttribute) {
 						if (context[attributeName]) {
 							instance.set(attributeName, context[attributeName]);
 						}
@@ -57,7 +57,7 @@ AUI.add(
 						instance.after(attributeName + 'Change', A.bind(instance._afterAttributeChange, instance, attributeName));
 					}
 
-					instance._setUnrepaintableAttributeValue(attributeName, !attributeState);
+					instance._setUnrepaintableAttributeValue(attributeName, !stateAttribute);
 				};
 
 				for (var attr in context) {

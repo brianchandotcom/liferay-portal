@@ -469,8 +469,9 @@ public class SourceFormatter {
 
 	private static final List<String> _defaultExcludes = Arrays.asList(
 		"**/.git/**", "**/.gradle/**", "**/bin/**", "**/build/**",
-		"**/classes/**", "**/node_modules/**", "**/test-classes/**",
-		"**/test-coverage/**", "**/test-results/**", "**/tmp/**");
+		"**/classes/**", "**/node_modules/**", "**/npm-shrinkwrap.json",
+		"**/test-classes/**", "**/test-coverage/**", "**/test-results/**",
+		"**/tmp/**");
 
 	private volatile SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _modifiedFileNames =

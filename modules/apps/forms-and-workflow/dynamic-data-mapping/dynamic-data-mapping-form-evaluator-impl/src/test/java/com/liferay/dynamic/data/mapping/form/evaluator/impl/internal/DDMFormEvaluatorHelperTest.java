@@ -60,7 +60,7 @@ public class DDMFormEvaluatorHelperTest {
 	}
 
 	@Test
-	public void testRequiredValidation() throws Exception {
+	public void testRequiredValidationWithCheckboxField() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
 		DDMFormField ddmFormField = createDDMFormField(
@@ -148,6 +148,47 @@ public class DDMFormEvaluatorHelperTest {
 			StringPool.BLANK,
 			field1DDMFormFieldEvaluationResult.getErrorMessage());
 		Assert.assertTrue(field1DDMFormFieldEvaluationResult.isValid());
+	}
+
+	@Test
+	public void testRequiredValidationWithTextField() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField = createDDMFormField(
+			"field0", "text", FieldConstants.STRING);
+
+		ddmFormField.setRequired(true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("\n")));
+
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
+				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				_jsonFactory, LocaleUtil.US);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluatorHelper.evaluate();
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		Assert.assertEquals(1, ddmFormFieldEvaluationResultMap.size());
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"field0", "field0_instanceId");
+
+		Assert.assertEquals(
+			"This field is required.",
+			ddmFormFieldEvaluationResult.getErrorMessage());
+		Assert.assertFalse(ddmFormFieldEvaluationResult.isValid());
 	}
 
 	@Test

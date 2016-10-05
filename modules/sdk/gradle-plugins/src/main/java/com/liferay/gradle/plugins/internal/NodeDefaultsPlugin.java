@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -31,6 +32,8 @@ import org.gradle.api.tasks.TaskContainer;
  * @author Andrea Di Giorgi
  */
 public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
+
+	public static final Plugin<Project> INSTANCE = new NodeDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
@@ -42,6 +45,9 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	@Override
 	protected Class<NodePlugin> getPluginClass() {
 		return NodePlugin.class;
+	}
+
+	private NodeDefaultsPlugin() {
 	}
 
 	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {

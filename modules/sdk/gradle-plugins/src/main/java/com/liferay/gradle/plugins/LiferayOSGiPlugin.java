@@ -575,35 +575,34 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
-		GradleUtil.applyPlugin(project, AlloyTaglibDefaultsPlugin.class);
-		GradleUtil.applyPlugin(project, CSSBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, EclipseDefaultsPlugin.class);
-		GradleUtil.applyPlugin(project, IdeaDefaultsPlugin.class);
-		GradleUtil.applyPlugin(
-			project, JSModuleConfigGeneratorDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JSModuleConfigGeneratorPlugin.class);
 		GradleUtil.applyPlugin(project, JSTranspilerPlugin.class);
-		GradleUtil.applyPlugin(project, JavadocFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, JspCDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, JspCPlugin.class);
-		GradleUtil.applyPlugin(project, LangBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, ServiceBuilderDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, SoyTranslationPlugin.class);
 		GradleUtil.applyPlugin(project, TLDDocBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, TLDFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
-		GradleUtil.applyPlugin(project, TestIntegrationDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, TestIntegrationPlugin.class);
-		GradleUtil.applyPlugin(
-			project, UpgradeTableBuilderDefaultsPlugin.class);
-		GradleUtil.applyPlugin(project, WSDDBuilderDefaultsPlugin.class);
-		GradleUtil.applyPlugin(project, XMLFormatterDefaultsPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
+
+		AlloyTaglibDefaultsPlugin.INSTANCE.apply(project);
+		CSSBuilderDefaultsPlugin.INSTANCE.apply(project);
+		EclipseDefaultsPlugin.INSTANCE.apply(project);
+		IdeaDefaultsPlugin.INSTANCE.apply(project);
+		JSModuleConfigGeneratorDefaultsPlugin.INSTANCE.apply(project);
+		JavadocFormatterDefaultsPlugin.INSTANCE.apply(project);
+		JspCDefaultsPlugin.INSTANCE.apply(project);
+		LangBuilderDefaultsPlugin.INSTANCE.apply(project);
+		ServiceBuilderDefaultsPlugin.INSTANCE.apply(project);
+		TLDFormatterDefaultsPlugin.INSTANCE.apply(project);
+		TestIntegrationDefaultsPlugin.INSTANCE.apply(project);
+		UpgradeTableBuilderDefaultsPlugin.INSTANCE.apply(project);
+		WSDDBuilderDefaultsPlugin.INSTANCE.apply(project);
+		XMLFormatterDefaultsPlugin.INSTANCE.apply(project);
 	}
 
 	private void _configureArchivesBaseName(Project project) {

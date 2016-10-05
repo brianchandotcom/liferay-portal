@@ -26,6 +26,7 @@ import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.TaskContainer;
@@ -39,6 +40,9 @@ public class XMLFormatterDefaultsPlugin
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
 	public static final String FORMAT_XSD_TASK_NAME = "formatXSD";
+
+	public static final Plugin<Project> INSTANCE =
+		new XMLFormatterDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -63,6 +67,9 @@ public class XMLFormatterDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private XMLFormatterDefaultsPlugin() {
 	}
 
 	private FormatXMLTask _addTaskFormatWSDL(

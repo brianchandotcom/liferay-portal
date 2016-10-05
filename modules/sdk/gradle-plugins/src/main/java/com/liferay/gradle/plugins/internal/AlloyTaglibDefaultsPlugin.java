@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.alloy.taglib.BuildTaglibsTask;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.plugins.JavaPlugin;
@@ -31,6 +32,9 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class AlloyTaglibDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<AlloyTaglibPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new AlloyTaglibDefaultsPlugin();
 
 	protected Configuration addPortalToolConfiguration(final Project project) {
 		final Configuration configuration = GradleUtil.addConfiguration(
@@ -99,6 +103,9 @@ public class AlloyTaglibDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private AlloyTaglibDefaultsPlugin() {
 	}
 
 	private void _configureTaskBuildTaglibs(BuildTaglibsTask buildTaglibsTask) {

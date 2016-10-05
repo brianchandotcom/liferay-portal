@@ -21,6 +21,7 @@ import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.util.Validator;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -30,6 +31,9 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class SourceFormatterDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<SourceFormatterPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new SourceFormatterDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -53,6 +57,9 @@ public class SourceFormatterDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private SourceFormatterDefaultsPlugin() {
 	}
 
 	private void _configureTasksFormatSource(

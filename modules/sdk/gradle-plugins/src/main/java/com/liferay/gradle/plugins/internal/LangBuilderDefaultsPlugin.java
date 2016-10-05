@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -28,6 +29,9 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class LangBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<LangBuilderPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new LangBuilderDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -51,6 +55,9 @@ public class LangBuilderDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private LangBuilderDefaultsPlugin() {
 	}
 
 	private void _configureTaskBuildLang(BuildLangTask buildLangTask) {

@@ -23,6 +23,7 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -31,6 +32,9 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class CSSBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<CSSBuilderPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new CSSBuilderDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -58,6 +62,9 @@ public class CSSBuilderDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private CSSBuilderDefaultsPlugin() {
 	}
 
 	private void _configureTaskBuildCSS(BuildCSSTask buildCSSTask) {

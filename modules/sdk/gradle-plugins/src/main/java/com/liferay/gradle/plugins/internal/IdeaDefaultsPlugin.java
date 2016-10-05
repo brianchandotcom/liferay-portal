@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.Set;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.XmlProvider;
@@ -44,6 +45,8 @@ import org.w3c.dom.NodeList;
  * @author Andrea Di Giorgi
  */
 public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
+
+	public static final Plugin<Project> INSTANCE = new IdeaDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -66,6 +69,9 @@ public class IdeaDefaultsPlugin extends BaseDefaultsPlugin<IdeaPlugin> {
 	@Override
 	protected Class<IdeaPlugin> getPluginClass() {
 		return IdeaPlugin.class;
+	}
+
+	private IdeaDefaultsPlugin() {
 	}
 
 	private void _configureIdeaModuleExcludeDirs(

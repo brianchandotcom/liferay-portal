@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugi
 import java.io.File;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 
@@ -30,6 +31,9 @@ import org.gradle.api.tasks.TaskContainer;
  */
 public class UpgradeTableBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<UpgradeTableBuilderPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new UpgradeTableBuilderDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -53,6 +57,9 @@ public class UpgradeTableBuilderDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private UpgradeTableBuilderDefaultsPlugin() {
 	}
 
 	private void _configureTaskBuildUpgradeTable(

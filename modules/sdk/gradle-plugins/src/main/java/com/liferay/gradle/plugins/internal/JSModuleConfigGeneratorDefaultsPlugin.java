@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.js.module.config.generator.ConfigJSModulesTask
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorExtension;
 import com.liferay.gradle.plugins.js.module.config.generator.JSModuleConfigGeneratorPlugin;
 
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 /**
@@ -27,6 +28,9 @@ import org.gradle.api.Project;
  */
 public class JSModuleConfigGeneratorDefaultsPlugin
 	extends BaseDefaultsPlugin<JSModuleConfigGeneratorPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new JSModuleConfigGeneratorDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -40,6 +44,9 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 	@Override
 	protected Class<JSModuleConfigGeneratorPlugin> getPluginClass() {
 		return JSModuleConfigGeneratorPlugin.class;
+	}
+
+	private JSModuleConfigGeneratorDefaultsPlugin() {
 	}
 
 	private void _configureJSModuleConfigGenerator(final Project project) {

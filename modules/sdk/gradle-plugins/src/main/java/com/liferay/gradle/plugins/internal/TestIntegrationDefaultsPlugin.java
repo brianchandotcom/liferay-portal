@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 
 /**
@@ -37,6 +38,9 @@ import org.gradle.api.Project;
  */
 public class TestIntegrationDefaultsPlugin
 	extends BaseDefaultsPlugin<TestIntegrationPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new TestIntegrationDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -59,6 +63,9 @@ public class TestIntegrationDefaultsPlugin
 	@Override
 	protected Class<TestIntegrationPlugin> getPluginClass() {
 		return TestIntegrationPlugin.class;
+	}
+
+	private TestIntegrationDefaultsPlugin() {
 	}
 
 	private void _configureTaskSetUpTestableTomcat(

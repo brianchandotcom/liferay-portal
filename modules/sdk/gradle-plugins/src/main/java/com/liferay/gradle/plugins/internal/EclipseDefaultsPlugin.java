@@ -22,6 +22,7 @@ import groovy.lang.Closure;
 import java.util.Iterator;
 import java.util.List;
 
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.plugins.ide.api.FileContentMerger;
@@ -37,6 +38,8 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
  */
 public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
+	public static final Plugin<Project> INSTANCE = new EclipseDefaultsPlugin();
+
 	@Override
 	protected void configureDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
@@ -48,6 +51,9 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	@Override
 	protected Class<EclipsePlugin> getPluginClass() {
 		return EclipsePlugin.class;
+	}
+
+	private EclipseDefaultsPlugin() {
 	}
 
 	private void _configureEclipseClasspathFile(Project project) {

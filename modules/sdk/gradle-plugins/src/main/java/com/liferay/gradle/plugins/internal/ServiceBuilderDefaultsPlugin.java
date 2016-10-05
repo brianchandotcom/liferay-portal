@@ -28,6 +28,7 @@ import java.util.concurrent.Callable;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
@@ -41,6 +42,9 @@ public class ServiceBuilderDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<ServiceBuilderPlugin> {
 
 	public static final String BUILD_DB_TASK_NAME = "buildDB";
+
+	public static final Plugin<Project> INSTANCE =
+		new ServiceBuilderDefaultsPlugin();
 
 	@Override
 	protected void configureDefaults(
@@ -91,6 +95,9 @@ public class ServiceBuilderDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private ServiceBuilderDefaultsPlugin() {
 	}
 
 	private BuildDBTask _addTaskBuildDB(final Project project) {

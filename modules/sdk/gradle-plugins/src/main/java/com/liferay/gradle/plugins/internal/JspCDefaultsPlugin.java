@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.ConfigurableFileCollection;
@@ -36,6 +37,8 @@ import org.gradle.api.tasks.bundling.Jar;
  */
 public class JspCDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<JspCPlugin> {
+
+	public static final Plugin<Project> INSTANCE = new JspCDefaultsPlugin();
 
 	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
 
@@ -90,6 +93,9 @@ public class JspCDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private JspCDefaultsPlugin() {
 	}
 
 	private Task _addTaskUnzipJar(final Project project) {

@@ -27,6 +27,8 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.MapUtil;
 
@@ -201,7 +203,18 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			ExportImportDateUtil.updateLastPublishDate(
 				(StagedGroupedModel)stagedModel, _dateRange, endDate);
 
-			stagedModelRepository.saveStagedModel(stagedModel);
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setModifiedDate(stagedModel.getModifiedDate());
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			try {
+				stagedModelRepository.saveStagedModel(stagedModel);
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 
 			return null;
 		}

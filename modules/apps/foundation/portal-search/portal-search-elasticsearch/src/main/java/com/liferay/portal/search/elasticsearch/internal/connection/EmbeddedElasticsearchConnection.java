@@ -113,6 +113,8 @@ public class EmbeddedElasticsearchConnection
 	protected void configureClustering() {
 		settingsBuilder.put(
 			"cluster.name", elasticsearchConfiguration.clusterName());
+		settingsBuilder.put(
+			"cluster.routing.allocation.disk.threshold_enabled", false);
 		settingsBuilder.put("discovery.zen.ping.multicast.enabled", false);
 	}
 

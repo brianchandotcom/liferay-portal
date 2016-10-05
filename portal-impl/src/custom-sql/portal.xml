@@ -471,6 +471,19 @@
 				(CAST_CLOB_TEXT(PortletPreferences.preferences) LIKE ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByC_N_S_R">
+		<![CDATA[
+			SELECT
+				resourcePermission.primKey
+			FROM
+				ResourcePermission resourcePermission
+			WHERE
+				(resourcePermission.companyId = ?) AND
+				(resourcePermission.name = ?) AND
+				(resourcePermission.scope = ?) AND
+				(resourcePermission.roleId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByGroupId">
 		<![CDATA[
 			SELECT

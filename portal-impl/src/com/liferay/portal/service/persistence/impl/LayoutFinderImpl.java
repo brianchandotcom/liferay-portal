@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.service.persistence.RoleUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
@@ -60,6 +59,9 @@ public class LayoutFinderImpl
 	public static final String FIND_BY_C_P_P =
 		LayoutFinder.class.getName() + ".findByC_P_P";
 
+	public static final String FIND_BY_C_N_S_R =
+		LayoutFinder.class.getName() + ".findByC_N_S_R";
+
 	@Override
 	public List<Layout> findByNoPermissions(long roleId) {
 		Role role = RoleUtil.fetchByPrimaryKey(roleId);
@@ -83,13 +85,7 @@ public class LayoutFinderImpl
 
 			Set<Number> plids = new HashSet<>(q.list(true));
 
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("SELECT primKey from ResourcePermission WHERE ");
-			sb.append("(companyId = ?) AND (name = ?) AND (scope = ?) AND ");
-			sb.append("(roleId = ?)");
-
-			sql = sb.toString();
+			sql = CustomSQLUtil.get(FIND_BY_C_N_S_R);
 
 			q = session.createSynchronizedSQLQuery(sql);
 

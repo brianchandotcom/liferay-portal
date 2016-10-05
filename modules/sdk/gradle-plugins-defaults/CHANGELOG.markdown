@@ -360,11 +360,24 @@ dependency to version 1.1.0.
 - [LPS-68540]: Fail the `uploadArchives` task execution if the project directory
 contains the marker file `.lfrbuild-missing-resources-importer`.
 
+## 1.2.42 - 2016-10-05
+
+### Added
+- [LPS-66396]: By setting the following system properties to `true`, it is now
+possible to exclude specific project types from the build:
+	- `build.exclude.ant.plugin` to exclude all the projects that contain a `build.xml` file from the build
+	- `build.exclude.module` to exclude all the projects that contain a `bnd.bnd` file from the build
+	- `build.exclude.theme` to exclude all the project that contain a `gulpfile.js` file from the build
+
+### Removed
+- [LPS-66396]: The `modules.only.build` system property is no longer available.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

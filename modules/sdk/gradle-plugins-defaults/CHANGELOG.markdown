@@ -354,6 +354,12 @@ by the `appJavadoc` task.
 - [LPS-68506]: Update the [Liferay Gradle Plugins App Javadoc Builder]
 dependency to version 1.1.0.
 
+## 1.2.41 - 2016-10-05
+
+### Added
+- [LPS-68540]: Fail the `uploadArchives` task execution if the project directory
+contains the marker file `.lfrbuild-missing-resources-importer`.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
@@ -382,5 +388,6 @@ dependency to version 1.1.0.
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504
 [LPS-68506]: https://issues.liferay.com/browse/LPS-68506
+[LPS-68540]: https://issues.liferay.com/browse/LPS-68540
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

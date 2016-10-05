@@ -61,6 +61,7 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import java.nio.charset.StandardCharsets;
@@ -83,10 +84,10 @@ import org.dm.gradle.plugins.bundle.BundleUtils;
 import org.dm.gradle.plugins.bundle.JarBuilder;
 
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -643,8 +644,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		try {
 			bundleProperties = FileUtil.readProperties(project, "bnd.bnd");
 		}
-		catch (Exception e) {
-			throw new GradleException("Unable to read bundle properties", e);
+		catch (IOException ioe) {
+			throw new UncheckedIOException(ioe);
 		}
 
 		Enumeration<Object> keys = bundleProperties.keys();

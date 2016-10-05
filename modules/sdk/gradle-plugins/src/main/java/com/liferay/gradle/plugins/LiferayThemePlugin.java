@@ -39,10 +39,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.ConfigurablePublishArtifact;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
@@ -134,8 +134,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 							json.getBytes(StandardCharsets.UTF_8));
 					}
 					catch (IOException ioe) {
-						throw new GradleException(
-							"Unable to write " + liferayThemeJsonFile, ioe);
+						throw new UncheckedIOException(ioe);
 					}
 				}
 

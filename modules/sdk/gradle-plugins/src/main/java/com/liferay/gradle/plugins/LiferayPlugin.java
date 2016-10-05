@@ -23,9 +23,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.UncheckedIOException;
 
 /**
  * @author Andrea Di Giorgi
@@ -100,7 +100,7 @@ public class LiferayPlugin implements Plugin<Project> {
 				Files.readAllBytes(gulpFile.toPath()), StandardCharsets.UTF_8);
 		}
 		catch (IOException ioe) {
-			throw new GradleException("Unable to read " + gulpFile, ioe);
+			throw new UncheckedIOException(ioe);
 		}
 
 		if (gulpFileContent.contains("require('liferay-theme-tasks')")) {

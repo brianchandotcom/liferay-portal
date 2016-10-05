@@ -68,6 +68,9 @@ import java.rmi.RemoteException;
 @Deprecated
 @ProviderType
 public class BlogsEntryServiceSoap {
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap addEntry(
 		java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,
@@ -96,6 +99,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void deleteEntry(long entryId) throws RemoteException {
 		try {
 			BlogsEntryServiceUtil.deleteEntry(entryId);
@@ -107,6 +113,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap[] getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int max)
 		throws RemoteException {
@@ -124,6 +133,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap getEntry(
 		long entryId) throws RemoteException {
 		try {
@@ -138,6 +150,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap getEntry(
 		long groupId, java.lang.String urlTitle) throws RemoteException {
 		try {
@@ -266,6 +281,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap[] getGroupsEntries(
 		long companyId, long groupId, java.util.Date displayDate, int status,
 		int max) throws RemoteException {
@@ -349,6 +367,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap[] getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int max)
 		throws RemoteException {
@@ -366,6 +387,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap moveEntryToTrash(
 		long entryId) throws RemoteException {
 		try {
@@ -380,6 +404,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void restoreEntryFromTrash(long entryId)
 		throws RemoteException {
 		try {
@@ -392,6 +419,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void subscribe(long groupId) throws RemoteException {
 		try {
 			BlogsEntryServiceUtil.subscribe(groupId);
@@ -403,6 +433,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void unsubscribe(long groupId) throws RemoteException {
 		try {
 			BlogsEntryServiceUtil.unsubscribe(groupId);
@@ -414,6 +447,9 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntrySoap updateEntry(
 		long entryId, java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,

@@ -36,6 +36,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
 	String, String, int, int, int, int, int, boolean, boolean,
 	String[], String, ImageSelector, ImageSelector,
@@ -60,6 +61,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			smallImageInputStream, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		java.lang.String title, java.lang.String subtitle,
@@ -79,12 +83,18 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryService.getEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry getEntry(long groupId,
 		java.lang.String urlTitle)
@@ -92,6 +102,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		return _blogsEntryService.getEntry(groupId, urlTitle);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry moveEntryToTrash(
 		long entryId)
@@ -100,6 +113,7 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	String, String, String, int, int, int, int, int, boolean,
 	boolean, String[], String, ImageSelector, ImageSelector,
@@ -124,6 +138,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			smallImageFileName, smallImageInputStream, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateEntry(long entryId,
 		java.lang.String title, java.lang.String subtitle,
@@ -168,6 +185,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			statuses);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public java.lang.String getCompanyEntriesRSS(long companyId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
@@ -180,6 +200,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			themeDisplay);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public java.lang.String getGroupEntriesRSS(long groupId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
@@ -202,6 +225,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 		return _blogsEntryService.getOSGiServiceIdentifier();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public java.lang.String getOrganizationEntriesRSS(long organizationId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
@@ -214,6 +240,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			entryURL, themeDisplay);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getCompanyEntries(
 		long companyId, java.util.Date displayDate, int status, int max)
@@ -272,6 +301,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			statuses, start, end, obc);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getGroupsEntries(
 		long companyId, long groupId, java.util.Date displayDate, int status,
@@ -280,6 +312,9 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			displayDate, status, max);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public java.util.List<com.liferay.blogs.kernel.model.BlogsEntry> getOrganizationEntries(
 		long organizationId, java.util.Date displayDate, int status, int max)
@@ -288,24 +323,36 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 			displayDate, status, max);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryService.deleteEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void restoreEntryFromTrash(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryService.restoreEntryFromTrash(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void subscribe(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryService.subscribe(groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void unsubscribe(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

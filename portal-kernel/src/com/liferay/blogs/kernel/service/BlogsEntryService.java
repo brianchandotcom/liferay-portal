@@ -63,6 +63,7 @@ public interface BlogsEntryService extends BaseService {
 	 */
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(String, String,
 	String, String, int, int, int, int, int, boolean, boolean,
 	String[], String, ImageSelector, ImageSelector,
@@ -78,6 +79,9 @@ public interface BlogsEntryService extends BaseService {
 		java.lang.String smallImageFileName, InputStream smallImageInputStream,
 		ServiceContext serviceContext) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry addEntry(java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
@@ -88,16 +92,26 @@ public interface BlogsEntryService extends BaseService {
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long entryId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException;
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
 	String, String, String, int, int, int, int, int, boolean,
 	boolean, String[], String, ImageSelector, ImageSelector,
@@ -113,6 +127,9 @@ public interface BlogsEntryService extends BaseService {
 		java.lang.String smallImageFileName, InputStream smallImageInputStream,
 		ServiceContext serviceContext) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry updateEntry(long entryId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
@@ -136,6 +153,9 @@ public interface BlogsEntryService extends BaseService {
 	public int getGroupUserEntriesCount(long groupId, long userId,
 		int[] statuses);
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCompanyEntriesRSS(long companyId,
 		Date displayDate, int status, int max, java.lang.String type,
@@ -143,6 +163,9 @@ public interface BlogsEntryService extends BaseService {
 		java.lang.String feedURL, java.lang.String entryURL,
 		ThemeDisplay themeDisplay) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getGroupEntriesRSS(long groupId, Date displayDate,
 		int status, int max, java.lang.String type, double version,
@@ -157,6 +180,9 @@ public interface BlogsEntryService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getOrganizationEntriesRSS(long organizationId,
 		Date displayDate, int status, int max, java.lang.String type,
@@ -164,6 +190,9 @@ public interface BlogsEntryService extends BaseService {
 		java.lang.String feedURL, java.lang.String entryURL,
 		ThemeDisplay themeDisplay) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getCompanyEntries(long companyId, Date displayDate,
 		int status, int max) throws PortalException;
@@ -195,19 +224,37 @@ public interface BlogsEntryService extends BaseService {
 	public List<BlogsEntry> getGroupUserEntries(long groupId, long userId,
 		int[] statuses, int start, int end, OrderByComparator<BlogsEntry> obc);
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getGroupsEntries(long companyId, long groupId,
 		Date displayDate, int status, int max) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BlogsEntry> getOrganizationEntries(long organizationId,
 		Date displayDate, int status, int max) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void deleteEntry(long entryId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void restoreEntryFromTrash(long entryId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void subscribe(long groupId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void unsubscribe(long groupId) throws PortalException;
 }

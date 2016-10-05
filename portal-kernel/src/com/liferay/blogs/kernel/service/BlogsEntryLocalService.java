@@ -86,15 +86,22 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry addBlogsEntry(BlogsEntry blogsEntry);
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String content, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String content, Date displayDate,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, String,
 	String, String, String, int, int, int, int, int, boolean,
 	boolean, String[], String, ImageSelector, ImageSelector,
@@ -110,6 +117,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		java.lang.String smallImageFileName, InputStream smallImageInputStream,
 		ServiceContext serviceContext) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
 		java.lang.String content, int displayDateMonth, int displayDateDay,
@@ -120,6 +130,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry addEntry(long userId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
@@ -157,6 +170,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public BlogsEntry deleteBlogsEntry(long entryId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public BlogsEntry deleteEntry(BlogsEntry entry) throws PortalException;
@@ -197,9 +213,15 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long entryId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getEntry(long groupId, java.lang.String urlTitle)
 		throws PortalException;
@@ -211,6 +233,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param userId the primary key of the user moving the blogs entry
 	* @param entry the blogs entry to be moved
 	* @return the moved blogs entry
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry moveEntryToTrash(long userId, BlogsEntry entry)
@@ -222,6 +245,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param userId the primary key of the user moving the blogs entry
 	* @param entryId the primary key of the blogs entry to be moved
 	* @return the moved blogs entry
+	* @throws PortalException
 	*/
 	public BlogsEntry moveEntryToTrash(long userId, long entryId)
 		throws PortalException;
@@ -233,6 +257,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	* @param userId the primary key of the user restoring the blogs entry
 	* @param entryId the primary key of the blogs entry to be restored
 	* @return the restored blogs entry from the recycle bin
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry restoreEntryFromTrash(long userId, long entryId)
@@ -247,11 +272,15 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry);
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry updateEntry(long userId, long entryId,
 		java.lang.String title, java.lang.String content,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	String, String, String, String, int, int, int, int, int,
 	boolean, boolean, String[], String, ImageSelector,
@@ -268,6 +297,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public BlogsEntry updateEntry(long userId, long entryId,
 		java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,
@@ -279,6 +311,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		ImageSelector smallImageImageSelector, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry updateEntry(long userId, long entryId,
 		java.lang.String title, java.lang.String subtitle,
@@ -290,6 +325,7 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
@@ -297,12 +333,18 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public BlogsEntry updateStatus(long userId, long entryId, int status,
 		ServiceContext serviceContext) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public BlogsEntry updateStatus(long userId, long entryId, int status,
 		ServiceContext serviceContext,
 		Map<java.lang.String, Serializable> workflowContext)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry[] getEntriesPrevAndNext(long entryId)
 		throws PortalException;
@@ -331,6 +373,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException;
 
@@ -478,6 +523,9 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public List<BlogsEntry> getOrganizationEntries(long organizationId,
 		Date displayDate, QueryDefinition<BlogsEntry> queryDefinition);
 
+	/**
+	* @throws PortalException
+	*/
 	public long addOriginalImageFileEntry(long userId, long groupId,
 		long entryId, ImageSelector imageSelector) throws PortalException;
 
@@ -499,47 +547,92 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
 
+	/**
+	* @throws PortalException
+	*/
 	public void addCoverImage(long entryId, ImageSelector imageSelector)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void addEntryResources(BlogsEntry entry,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void addEntryResources(BlogsEntry entry,
 		ModelPermissions modelPermissions) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void addEntryResources(long entryId, boolean addGroupPermissions,
 		boolean addGuestPermissions) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void addEntryResources(long entryId,
 		ModelPermissions modelPermissions) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void addSmallImage(long entryId, ImageSelector imageSelector)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void checkEntries() throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void deleteEntries(long groupId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void deleteEntry(long entryId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void moveEntriesToTrash(long groupId, long userId)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void subscribe(long userId, long groupId) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void unsubscribe(long userId, long groupId)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void updateAsset(long userId, BlogsEntry entry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds, java.lang.Double priority)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void updateEntryResources(BlogsEntry entry,
 		ModelPermissions modelPermissions) throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void updateEntryResources(BlogsEntry entry,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;

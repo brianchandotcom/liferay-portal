@@ -55,6 +55,9 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().addBlogsEntry(blogsEntry);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		long userId, java.lang.String title, java.lang.String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -62,6 +65,9 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().addEntry(userId, title, content, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		long userId, java.lang.String title, java.lang.String content,
 		java.util.Date displayDate,
@@ -72,6 +78,7 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, String,
 	String, String, String, int, int, int, int, int, boolean,
 	boolean, String[], String, ImageSelector, ImageSelector,
@@ -96,6 +103,9 @@ public class BlogsEntryLocalServiceUtil {
 			smallImageInputStream, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		long userId, java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,
@@ -115,6 +125,9 @@ public class BlogsEntryLocalServiceUtil {
 			smallImageImageSelector, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry addEntry(
 		long userId, java.lang.String title, java.lang.String subtitle,
 		java.lang.String description, java.lang.String content,
@@ -167,6 +180,9 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().deleteBlogsEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry deleteEntry(
 		com.liferay.blogs.kernel.model.BlogsEntry entry)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -217,12 +233,18 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().getBlogsEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry getEntry(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry getEntry(
 		long groupId, java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -236,6 +258,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @param userId the primary key of the user moving the blogs entry
 	* @param entry the blogs entry to be moved
 	* @return the moved blogs entry
+	* @throws PortalException
 	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry moveEntryToTrash(
 		long userId, com.liferay.blogs.kernel.model.BlogsEntry entry)
@@ -249,6 +272,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @param userId the primary key of the user moving the blogs entry
 	* @param entryId the primary key of the blogs entry to be moved
 	* @return the moved blogs entry
+	* @throws PortalException
 	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry moveEntryToTrash(
 		long userId, long entryId)
@@ -263,6 +287,7 @@ public class BlogsEntryLocalServiceUtil {
 	* @param userId the primary key of the user restoring the blogs entry
 	* @param entryId the primary key of the blogs entry to be restored
 	* @return the restored blogs entry from the recycle bin
+	* @throws PortalException
 	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry restoreEntryFromTrash(
 		long userId, long entryId)
@@ -281,6 +306,9 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().updateBlogsEntry(blogsEntry);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
 		long userId, long entryId, java.lang.String title,
 		java.lang.String content,
@@ -291,6 +319,7 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	String, String, String, String, int, int, int, int, int,
 	boolean, boolean, String[], String, ImageSelector,
@@ -316,6 +345,9 @@ public class BlogsEntryLocalServiceUtil {
 			smallImageInputStream, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
 		long userId, long entryId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
@@ -335,6 +367,9 @@ public class BlogsEntryLocalServiceUtil {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateEntry(
 		long userId, long entryId, java.lang.String title,
 		java.lang.String subtitle, java.lang.String description,
@@ -353,6 +388,7 @@ public class BlogsEntryLocalServiceUtil {
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
@@ -364,6 +400,9 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().updateStatus(userId, entryId, status, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry updateStatus(
 		long userId, long entryId, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext,
@@ -374,6 +413,9 @@ public class BlogsEntryLocalServiceUtil {
 			workflowContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.blogs.kernel.model.BlogsEntry[] getEntriesPrevAndNext(
 		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -412,6 +454,9 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -621,6 +666,9 @@ public class BlogsEntryLocalServiceUtil {
 			queryDefinition);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static long addOriginalImageFileEntry(long userId, long groupId,
 		long entryId,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
@@ -654,12 +702,18 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addCoverImage(long entryId,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addCoverImage(entryId, imageSelector);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -668,6 +722,9 @@ public class BlogsEntryLocalServiceUtil {
 			.addEntryResources(entry, addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
@@ -675,6 +732,9 @@ public class BlogsEntryLocalServiceUtil {
 		getService().addEntryResources(entry, modelPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addEntryResources(long entryId,
 		boolean addGroupPermissions, boolean addGuestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -682,48 +742,75 @@ public class BlogsEntryLocalServiceUtil {
 			.addEntryResources(entryId, addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addEntryResources(long entryId,
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addEntryResources(entryId, modelPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addSmallImage(long entryId,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addSmallImage(entryId, imageSelector);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkEntries();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntries(groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void moveEntriesToTrash(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().moveEntriesToTrash(groupId, userId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void subscribe(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().subscribe(userId, groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void unsubscribe(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().unsubscribe(userId, groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void updateAsset(long userId,
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
@@ -734,6 +821,9 @@ public class BlogsEntryLocalServiceUtil {
 			assetLinkEntryIds, priority);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void updateEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
@@ -741,6 +831,9 @@ public class BlogsEntryLocalServiceUtil {
 		getService().updateEntryResources(entry, modelPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void updateEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)

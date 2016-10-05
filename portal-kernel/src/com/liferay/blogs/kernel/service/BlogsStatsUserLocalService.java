@@ -116,6 +116,9 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 	public BlogsStatsUser getBlogsStatsUser(long statsUserId)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsStatsUser getStatsUser(long groupId, long userId)
 		throws PortalException;
@@ -274,15 +277,24 @@ public interface BlogsStatsUserLocalService extends BaseLocalService,
 
 	public void deleteStatsUser(BlogsStatsUser statsUsers);
 
+	/**
+	* @throws PortalException
+	*/
 	public void deleteStatsUser(long statsUserId) throws PortalException;
 
 	public void deleteStatsUserByGroupId(long groupId);
 
 	public void deleteStatsUserByUserId(long userId);
 
+	/**
+	* @throws PortalException
+	*/
 	public void updateStatsUser(long groupId, long userId)
 		throws PortalException;
 
+	/**
+	* @throws PortalException
+	*/
 	public void updateStatsUser(long groupId, long userId, Date displayDate)
 		throws PortalException;
 }

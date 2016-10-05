@@ -107,6 +107,9 @@ public class BlogsStatsUserLocalServiceWrapper
 		return _blogsStatsUserLocalService.getBlogsStatsUser(statsUserId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsStatsUser getStatsUser(
 		long groupId, long userId)
@@ -348,6 +351,9 @@ public class BlogsStatsUserLocalServiceWrapper
 		_blogsStatsUserLocalService.deleteStatsUser(statsUsers);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void deleteStatsUser(long statsUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -364,12 +370,18 @@ public class BlogsStatsUserLocalServiceWrapper
 		_blogsStatsUserLocalService.deleteStatsUserByUserId(userId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void updateStatsUser(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsStatsUserLocalService.updateStatsUser(groupId, userId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void updateStatsUser(long groupId, long userId,
 		java.util.Date displayDate)

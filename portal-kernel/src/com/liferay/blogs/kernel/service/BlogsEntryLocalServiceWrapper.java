@@ -48,6 +48,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.addBlogsEntry(blogsEntry);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String content,
@@ -57,6 +60,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String content,
@@ -68,6 +74,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, String,
 	String, String, String, int, int, int, int, int, boolean,
 	boolean, String[], String, ImageSelector, ImageSelector,
@@ -92,6 +99,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			smallImageFileName, smallImageInputStream, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String subtitle,
@@ -111,6 +121,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry addEntry(long userId,
 		java.lang.String title, java.lang.String subtitle,
@@ -166,6 +179,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.deleteBlogsEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry deleteEntry(
 		com.liferay.blogs.kernel.model.BlogsEntry entry)
@@ -222,12 +238,18 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry getEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsEntryLocalService.getEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry getEntry(long groupId,
 		java.lang.String urlTitle)
@@ -242,6 +264,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	* @param userId the primary key of the user moving the blogs entry
 	* @param entry the blogs entry to be moved
 	* @return the moved blogs entry
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry moveEntryToTrash(
@@ -256,6 +279,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	* @param userId the primary key of the user moving the blogs entry
 	* @param entryId the primary key of the blogs entry to be moved
 	* @return the moved blogs entry
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry moveEntryToTrash(
@@ -271,6 +295,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	* @param userId the primary key of the user restoring the blogs entry
 	* @param entryId the primary key of the blogs entry to be restored
 	* @return the restored blogs entry from the recycle bin
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry restoreEntryFromTrash(
@@ -291,6 +316,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.updateBlogsEntry(blogsEntry);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateEntry(long userId,
 		long entryId, java.lang.String title, java.lang.String content,
@@ -301,6 +329,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	String, String, String, String, int, int, int, int, int,
 	boolean, boolean, String[], String, ImageSelector,
@@ -326,6 +355,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateEntry(long userId,
 		long entryId, java.lang.String title, java.lang.String subtitle,
@@ -345,6 +377,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateEntry(long userId,
 		long entryId, java.lang.String title, java.lang.String subtitle,
@@ -363,6 +398,7 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	/**
+	* @throws PortalException
 	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
 	int, ServiceContext, Map)}
 	*/
@@ -376,6 +412,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			serviceContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry updateStatus(long userId,
 		long entryId, int status,
@@ -386,6 +425,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			serviceContext, workflowContext);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.blogs.kernel.model.BlogsEntry[] getEntriesPrevAndNext(
 		long entryId)
@@ -431,6 +473,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
 		long userId, long groupId)
@@ -656,6 +701,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			displayDate, queryDefinition);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public long addOriginalImageFileEntry(long userId, long groupId,
 		long entryId,
@@ -692,6 +740,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			projection);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addCoverImage(long entryId,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
@@ -699,6 +750,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.addCoverImage(entryId, imageSelector);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
@@ -708,6 +762,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			addGuestPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
@@ -716,6 +773,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.addEntryResources(entry, modelPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addEntryResources(long entryId, boolean addGroupPermissions,
 		boolean addGuestPermissions)
@@ -724,6 +784,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			addGuestPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addEntryResources(long entryId,
 		com.liferay.portal.kernel.service.permission.ModelPermissions modelPermissions)
@@ -731,6 +794,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.addEntryResources(entryId, modelPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addSmallImage(long entryId,
 		com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector imageSelector)
@@ -738,42 +804,63 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.addSmallImage(entryId, imageSelector);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.checkEntries();
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void deleteEntries(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.deleteEntries(groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.deleteEntry(entryId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void moveEntriesToTrash(long groupId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.moveEntriesToTrash(groupId, userId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void subscribe(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.subscribe(userId, groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void unsubscribe(long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsEntryLocalService.unsubscribe(userId, groupId);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
@@ -784,6 +871,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 			assetTagNames, assetLinkEntryIds, priority);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void updateEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,
@@ -792,6 +882,9 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		_blogsEntryLocalService.updateEntryResources(entry, modelPermissions);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void updateEntryResources(
 		com.liferay.blogs.kernel.model.BlogsEntry entry,

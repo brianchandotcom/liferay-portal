@@ -34,7 +34,6 @@ import java.sql.ResultSet;
 public class UpgradeMessageBoards extends UpgradeProcess {
 
 	protected void deleteEmptyMBDiscussion() throws Exception {
-
 		String tempTableName = "TEMP_TABLE_" + StringUtil.randomString(4);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
@@ -48,7 +47,8 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			sb.append("where MBThread.threadId = MBMessage.threadId and ");
 			sb.append("MBThread.categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" group by MBMessage.threadId having count(MBMessage.messageId) = 1");
+			sb.append(" group by MBMessage.threadId having ");
+			sb.append("count(MBMessage.messageId) = 1");
 
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());

@@ -100,6 +100,8 @@ AUI.add(
 									textMode: false
 								}
 							).render();
+
+							instance._alloyEditor.getNativeEditor().on('afterCommandExec', A.bind(instance._afterCommandExec, instance));
 						}
 
 						return instance;
@@ -113,6 +115,12 @@ AUI.add(
 						if (instance._alloyEditor && value !== instance.getValue()) {
 							instance._alloyEditor.setHTML(value);
 						}
+					},
+
+					_afterCommandExec: function() {
+						var instance = this;
+
+						instance._onChangeEditor(instance.getValue());
 					},
 
 					_onChangeEditor: function(value) {

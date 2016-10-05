@@ -166,6 +166,14 @@
 		<execute function="Click" locator1="FormFields#TEXT_FIELD_LINE_OPTION" />
 	</command>
 
+	<command name="viewAutoCompleteOptions">
+		<var name="key_autocompleteOption" value="${autocompleteOption}" />
+
+		<execute function="AssertTextEquals" locator1="FormFields#AUTOCOMPLETE_OPTION" value1="${autocompleteOption}" />
+
+		<execute function="AssertTextNotPresent" locator1="FormFields#AUTOCOMPLETE_LIST" value1="${autocompleteOptionNotVisible}" />
+	</command>
+
 	<command name="viewCaptchaField">
 		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD" />
 		<execute function="AssertElementPresent#assertVisible" locator1="FormFields#CAPTCHA_FIELD_REFRESH" />

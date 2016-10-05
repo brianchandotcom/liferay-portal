@@ -321,6 +321,11 @@
 </tr>
 <!--AUTOCOMPLETE-->
 <tr>
+	<td>AUTOCOMPLETE_LIST</td>
+	<td>//ul[@role='listbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUTOCOMPLETE_OPTION</td>
 	<td>//li[@data-text='${key_autocompleteOption}']</td>
 	<td></td>

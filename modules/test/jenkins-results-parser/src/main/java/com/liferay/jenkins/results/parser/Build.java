@@ -52,7 +52,7 @@ public interface Build {
 
 	public String getStatus();
 
-	public Map<String, String>getStartProperties();
+	public Map<String, String> getStartProperties();
 
 	public long getStatusAge();
 
@@ -62,7 +62,7 @@ public interface Build {
 
 	public String getStatusSummary();
 
-	public Map<String, String>getStopProperties();
+	public Map<String, String> getStopProperties();
 
 	public boolean hasBuildURL(String buildURL);
 

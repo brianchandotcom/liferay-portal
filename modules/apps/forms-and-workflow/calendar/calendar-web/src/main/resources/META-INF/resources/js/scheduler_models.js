@@ -209,8 +209,13 @@ AUI.add(
 
 					isRecurring: function() {
 						var instance = this;
+						var isRecurring = false;
 
-						return (instance.get('recurrence') !== STR_BLANK) || (instance.get('calendarBookingId') != instance.get('recurringCalendarBookingId'));
+						if (instance.get('recurrence') !== STR_BLANK || instance.get('calendarBookingId') !== instance.get('recurringCalendarBookingId')) {
+							isRecurring = true;
+						}
+
+						return isRecurring;
 					},
 
 					syncNodeColorUI: function() {

@@ -12,7 +12,7 @@ To use the plugin, include it in the build script of the root project:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.0.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.app.javadoc.builder", version: "1.1.0"
 	}
 
 	repositories {
@@ -39,6 +39,13 @@ Property Name | Type | Default Value | Description
 `doclintDisabled` | `boolean` | `true` on JDK8+, `false` otherwise. | Whether to ignore Javadoc errors. It sets the Javadoc [`-Xdoclint`](docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#BEJEFABE) and [`-quiet`](http://docs.oracle.com/javase/8/docs/technotes/tools/windows/javadoc.html#CHDGFHAA) arguments for the [`appJavadoc`](#appjavadoc) task.
 `groupNameClosure` | `Closure<String>` | The subproject's description, or the subproject's name if the description is empty. | The closure invoked in order to get the group heading for a subproject. The given closure is passed a [`Project`](https://docs.gradle.org/current/javadoc/org/gradle/api/Project.html) as its parameter. If `groupPackages` is `false`, this property is not used.
 `groupPackages` | `boolean` | `true` | Whether to separate packages on the overview page based on the subprojects they belong to. It sets the [`-group`](docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html#CHDIGGII) argument for the [`appJavadoc`](#appjavadoc) task.
+
+The same extension exposes the following methods:
+
+Method | Description
+------ | -----------
+`AppJavadocBuilderExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Include a subproject in the API documentation only if the given closure returns `true`. The closure will be evaluated at the end of the subproject configuration phase. The closure will be passed a single parameter, the subproject. If the closure returns `false`, the subproject will not be included in the API documentation.
+`AppJavadocBuilderExtension onlyIf(Spec<Project> onlyIfSpec)` | Include a subproject in the API documentation only if the given spec is satisfied. The spec will be evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject will not be included in the API documentation.
 
 ## Tasks
 

@@ -455,16 +455,28 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskUploadArchives(
-		Project project, Task updateThemeVersionTask) {
-
-		if (GradleUtil.isSnapshot(project)) {
-			return;
-		}
+		final Project project, Task updateThemeVersionTask) {
 
 		Task uploadArchivesTask = GradleUtil.getTask(
 			project, BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 
-		uploadArchivesTask.finalizedBy(updateThemeVersionTask);
+		if (FileUtil.exists(project, ".lfrbuild-missing-resources-importer")) {
+			uploadArchivesTask.doFirst(
+				new Action<Task>() {
+
+					@Override
+					public void execute(Task task) {
+						throw new GradleException(
+							"Unable to publish " + project +
+								", resources-importer directory is missing");
+					}
+
+				});
+		}
+
+		if (!GradleUtil.isSnapshot(project)) {
+			uploadArchivesTask.finalizedBy(updateThemeVersionTask);
+		}
 	}
 
 	protected boolean getPluginPackageProperty(Project project, String key) {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cache.internal.dao.orm;
 
-import com.liferay.portal.cache.internal.mvcc.MVCCPortalCacheFactory;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -106,19 +105,18 @@ public class EntityCacheImpl
 
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-		portalCache =
-			(PortalCache<Serializable, Serializable>)
-				_multiVMPool.getPortalCache(
-					groupKey, _valueObjectEntityBlockingCacheEnabled);
+		boolean mvcc = false;
 
 		if (_valueObjectMVCCEntityCacheEnabled &&
 			MVCCModel.class.isAssignableFrom(clazz)) {
 
-			portalCache =
-				(PortalCache<Serializable, Serializable>)
-					MVCCPortalCacheFactory.createMVCCEhcachePortalCache(
-						portalCache);
+			mvcc = true;
 		}
+
+		portalCache =
+			(PortalCache<Serializable, Serializable>)
+				_multiVMPool.getPortalCache(
+					groupKey, _valueObjectEntityBlockingCacheEnabled, mvcc);
 
 		PortalCache<Serializable, Serializable> previousPortalCache =
 			_portalCaches.putIfAbsent(className, portalCache);

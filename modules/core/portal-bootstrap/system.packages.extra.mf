@@ -2460,7 +2460,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  feray.portal.kernel.backgroundtask,com.liferay.portal.kernel.json,com
  .liferay.portal.kernel.template",com.liferay.portal.kernel.bean;versi
  on="7.0.0";uses:="javax.portlet,javax.servlet.http",com.liferay.porta
- l.kernel.cache;version="7.0.0";uses:="com.liferay.portal.kernel.nio.i
+ l.kernel.cache;version="7.1.0";uses:="com.liferay.portal.kernel.nio.i
  ntraband.proxy.annotation,com.liferay.portal.kernel.spring.osgi",com.
  liferay.portal.kernel.cache.configurator;version="1.0.0",com.liferay.
  portal.kernel.cache.index;version="6.2.0";uses:="com.liferay.portal.k
@@ -3499,7 +3499,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ttp";version="1.0.0",com.liferay.portal.xsl;uses:="com.liferay.portal
  .kernel.template,javax.xml.transform";version="1.0.0",com.liferay.por
  tal.zip;uses:="com.liferay.portal.kernel.zip";version="1.0.0",com.lif
- eray.portlet;version="1.3.0";uses:="com.liferay.asset.kernel.model,co
+ eray.portlet;version="1.4.0";uses:="com.liferay.asset.kernel.model,co
  m.liferay.expando.kernel.model,com.liferay.exportimport.kernel.lar,co
  m.liferay.portal.kernel.atom,com.liferay.portal.kernel.exception,com.
  liferay.portal.kernel.model,com.liferay.portal.kernel.notifications,c

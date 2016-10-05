@@ -260,6 +260,14 @@ public class ToolDependencies {
 		}
 
 		@Override
+		public PortalCache<? extends Serializable, ? extends Serializable>
+			getPortalCache(
+				String portalCacheName, boolean blocking, boolean mvcc) {
+
+			return getPortalCache(portalCacheName);
+		}
+
+		@Override
 		public PortalCacheManager
 			<? extends Serializable, ? extends Serializable>
 				getPortalCacheManager() {

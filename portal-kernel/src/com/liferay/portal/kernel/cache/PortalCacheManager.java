@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.cache;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.nio.intraband.proxy.annotation.Proxy;
 
 import java.io.Serializable;
@@ -25,6 +27,7 @@ import java.util.Set;
 /**
  * @author Joseph Shum
  */
+@ProviderType
 public interface PortalCacheManager<K extends Serializable, V> {
 
 	public static final String PORTAL_CACHE_MANAGER_NAME =
@@ -43,6 +46,10 @@ public interface PortalCacheManager<K extends Serializable, V> {
 
 	public PortalCache<K, V> getPortalCache(
 			String portalCacheName, boolean blocking)
+		throws PortalCacheException;
+
+	public PortalCache<K, V> getPortalCache(
+			String portalCacheName, boolean blocking, boolean mvcc)
 		throws PortalCacheException;
 
 	public Set<PortalCacheManagerListener> getPortalCacheManagerListeners();

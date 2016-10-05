@@ -128,6 +128,14 @@ public class PortalPreferencesImpl
 		}
 	}
 
+	public long getMvccVersion() {
+		if (_portalPreferences == null) {
+			return -1;
+		}
+
+		return _portalPreferences.getMvccVersion();
+	}
+
 	@Override
 	public long getUserId() {
 		return _userId;

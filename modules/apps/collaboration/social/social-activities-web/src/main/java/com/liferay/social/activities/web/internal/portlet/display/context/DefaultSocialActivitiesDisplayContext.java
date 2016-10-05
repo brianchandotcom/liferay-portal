@@ -125,12 +125,13 @@ public class DefaultSocialActivitiesDisplayContext
 		SocialActivitiesQueryHelper.Scope scope =
 			SocialActivitiesQueryHelper.Scope.fromValue(getSelectedTabName());
 
-		int start = _socialActivitiesRequestHelper.getEnd();
+		int max = _socialActivitiesRequestHelper.getMax();
+
+		int start = _socialActivitiesRequestHelper.getEnd() - max;
 
 		_socialActivitySets =
 			_socialActivitiesQueryHelper.getSocialActivitySets(
-				group, layout, scope, 0,
-				start + _socialActivitiesRequestHelper.getMax());
+				group, layout, scope, start, start + max);
 
 		return _socialActivitySets;
 	}

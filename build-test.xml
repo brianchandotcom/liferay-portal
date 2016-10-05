@@ -4037,7 +4037,7 @@ go]]></replacevalue>
 						import java.util.regex.Matcher;
 						import java.util.regex.Pattern;
 
-						Pattern failurePattern = Pattern.compile("<failure message=\"(?<failureMessage>[^\"]*)\" />");
+						Pattern failurePattern = Pattern.compile("<failure message=\"(?<failureMessage>[^\"]*)\"");
 						Pattern testrayTestcaseNamePattern = Pattern.compile("<property name=\"testray.testcase.name\" value=\"(?<testrayTestcaseName>[^\"]*)\" ?/>");
 
 						BufferedReader bufferedReader = null;

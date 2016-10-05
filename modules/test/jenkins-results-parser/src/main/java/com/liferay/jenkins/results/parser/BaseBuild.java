@@ -660,6 +660,7 @@ public abstract class BaseBuild implements Build {
 		sb.append("/");
 		sb.append(getJobName());
 		sb.append("/");
+
 		String jobVariant = getParameterValue("JOB_VARIANT");
 
 		if ((jobVariant != null) && !jobVariant.isEmpty()) {

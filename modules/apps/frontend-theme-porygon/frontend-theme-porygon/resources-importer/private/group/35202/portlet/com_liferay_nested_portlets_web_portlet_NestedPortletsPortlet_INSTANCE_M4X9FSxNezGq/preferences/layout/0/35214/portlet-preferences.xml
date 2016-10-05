@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="35214" portlet-id="com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet_INSTANCE_M4X9FSxNezGq">
+	
+	<preference>
+		
+		<name>portletSetupUseCustomTitle</name>
+		
+		<value>false</value>
+	
+	</preference>
+	
+	<preference>
+		
+		<name>layoutTemplateId</name>
+		
+		<value>porygon_70_30_width_limited</value>
+	
+	</preference>
+	
+	<preference>
+		
+		<name>portletSetupCss</name>
+		
+		<value>{"textData":{"fontFamily":"","color":"","textAlign":"","wordSpacing":"","letterSpacing":"","fontSize":"","lineHeight":"","textDecoration":"","fontStyle":"","fontWeight":""},"spacingData":{"padding":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""},"bottom":{"unit":"px","value":""},"right":{"unit":"px","value":""},"sameForAll":true},"margin":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""},"bottom":{"unit":"px","value":""},"right":{"unit":"px","value":""},"sameForAll":true}},"borderData":{"borderColor":{"top":"","left":"","bottom":"","right":"","sameForAll":true},"borderWidth":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""},"bottom":{"unit":"px","value":""},"right":{"unit":"px","value":""},"sameForAll":true},"borderStyle":{"top":"","left":"","bottom":"","right":"","sameForAll":true}},"bgData":{"backgroundColor":"","useBgImage":false,"backgroundImage":"","backgroundPosition":{"top":{"unit":"px","value":""},"left":{"unit":"px","value":""}},"backgroundRepeat":""},"defaultPortletTitles":{"en_US":"Nested Portlets"},"advancedData":{"customCSSClassName":"","customCSS":""}}</value>
+	
+	</preference>
+	
+	<preference>
+		
+		<name>portletSetupPortletDecoratorId</name>
+		
+		<value>barebone</value>
+	
+	</preference>
+</portlet-preferences>

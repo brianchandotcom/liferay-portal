@@ -1,0 +1,16 @@
+#footer {
+	background-color: $main-black-color;
+	color: $brand-color-3;
+	min-height: 280px;
+	padding-bottom: 0;
+
+	a {
+		color: $brand-color-3;
+		font-size: 12px;
+
+		&:hover, &:focus, &.active, &.open {
+			color: $secondary-header-color;
+			text-decoration: none;
+		}
+	}
+}

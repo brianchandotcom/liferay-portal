@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="35242" portlet-id="com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_footer_navigation_menu">
+	
+	
+	<preference>
+		
+		
+		<name>displayDepth</name>
+		
+		
+		<value>1</value>
+	
+	
+	</preference>
+	
+	
+	<preference>
+		
+		
+		<name>portletSetupPortletDecoratorId</name>
+		
+		
+		<value>barebone</value>
+	
+	
+	</preference>
+</portlet-preferences>

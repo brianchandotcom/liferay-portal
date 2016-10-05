@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<expando-tables>
+	<expando-table class-name="com.liferay.dynamic.data.mapping.model.DDMTemplate"/>
+	<expando-table class-name="com.liferay.journal.model.JournalArticle"/>
+	<expando-table class-name="com.liferay.document.library.kernel.model.DLFileEntry"/>
+	<expando-table class-name="com.liferay.dynamic.data.mapping.model.DDMStructure"/>
+	<expando-table class-name="com.liferay.portal.kernel.model.LayoutFriendlyURL"/>
+	<expando-table class-name="com.liferay.asset.kernel.model.AssetTag"/>
+	<expando-table class-name="com.liferay.portal.kernel.model.Layout"/>
+</expando-tables>

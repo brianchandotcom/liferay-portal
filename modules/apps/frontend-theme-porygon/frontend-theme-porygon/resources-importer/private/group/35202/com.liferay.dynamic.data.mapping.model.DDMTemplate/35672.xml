@@ -1,0 +1,156 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>303f86a4-89da-f483-bcee-b69962b977b6</__uuid>
+  <__originalUuid>303f86a4-89da-f483-bcee-b69962b977b6</__originalUuid>
+  <__templateId>35672</__templateId>
+  <__groupId>35202</__groupId>
+  <__originalGroupId>35202</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20164</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-09-20 13:38:26.146</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-09-20 13:38:26.146</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>20011</__classNameId>
+  <__originalClassNameId>20011</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__resourceClassNameId>29901</__resourceClassNameId>
+  <__templateKey>33478</__templateKey>
+  <__originalTemplateKey>33478</__originalTemplateKey>
+  <__version>1.0</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Blog - Card - ADT&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__originalType>display</__originalType>
+  <__mode></__mode>
+  <__originalMode></__originalMode>
+  <__language>ftl</__language>
+  <__originalLanguage>ftl</__originalLanguage>
+  <__script>&lt;#if !entries?has_content&gt;
+	&lt;#if !themeDisplay.isSignedIn()&gt;
+		${renderRequest.setAttribute(&quot;PORTLET_CONFIGURATOR_VISIBILITY&quot;, true)}
+	&lt;/#if&gt;
+
+	&lt;div class=&quot;alert alert-info&quot;&gt;
+		&lt;@liferay_ui[&quot;message&quot;]
+			key=&quot;there-are-no-results&quot;
+		/&gt;
+	&lt;/div&gt;
+&lt;/#if&gt;
+
+&lt;div class=&quot;col-no-padding&quot;&gt;
+	&lt;#list entries as entry&gt;
+		&lt;#assign entry = entry /&gt;
+
+		&lt;#if (entry.getClassName() == &quot;com.liferay.blogs.kernel.model.BlogsEntry&quot;)&gt;
+			&lt;#assign assetRenderer = entry.getAssetRenderer() /&gt;
+
+			&lt;#assign blog = assetRenderer.getAssetObject() /&gt;
+
+			&lt;#assign entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale)) /&gt;
+
+			&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry) /&gt;
+
+			&lt;#assign coverImageURL = blog.getCoverImageURL(themeDisplay)!&quot;&quot; /&gt;
+
+			&lt;#if assetLinkBehavior != &quot;showFullContent&quot;&gt;
+				&lt;#assign viewURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, entry, true) /&gt;
+			&lt;/#if&gt;
+
+			&lt;#if entry_index == 0 &gt;
+				&lt;#assign aspectRatio = &quot;aspect-ratio-9-to-16&quot; /&gt;
+			&lt;#else&gt;
+				&lt;#assign aspectRatio = &quot;aspect-ratio-16-to-9&quot; /&gt;
+			&lt;/#if&gt;
+				&lt;div class=&quot;blog-list-card col-sm-6&quot;&gt;
+					&lt;div class=&quot;asset-abstract&quot;&gt;
+
+					&lt;#if validator.isNotNull(coverImageURL)&gt;
+						&lt;div class=&quot;aspect-ratio ${aspectRatio} aspect-ratio-bg-center aspect-ratio-bg-cover&quot; style=&quot;background-image: url(&apos;${coverImageURL}&apos;&quot;&gt;
+					&lt;#else&gt;
+						&lt;div class=&quot;aspect-ratio ${aspectRatio} aspect-ratio-bg-center aspect-ratio-bg-cover&quot;&gt;
+					&lt;/#if&gt;
+						&lt;@getEditIcon /&gt;
+						&lt;div class=&quot;blog-list-card-content container-fluid&quot;&gt;
+							&lt;h2 class=&quot;asset-title&quot;&gt;
+								&lt;a href=&quot;${viewURL}&quot;&gt;
+									${entryTitle}
+								&lt;/a&gt;
+							&lt;/h2&gt;
+
+							&lt;div class=&quot;asset-content&quot;&gt;
+								&lt;span class=&quot;asset-user-name&quot;&gt;
+									&lt;@liferay.language key=&quot;by&quot; /&gt;
+									${portalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName())}
+								&lt;/span&gt;
+
+								&lt;@getDiscussion /&gt;
+							&lt;/div&gt;
+						&lt;/div&gt;
+					&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/#if&gt;
+	&lt;/#list&gt;
+&lt;/div&gt;
+&lt;div class=&quot;clearfix&quot;&gt;&lt;/div&gt;
+
+&lt;#macro getDiscussion&gt;
+	&lt;#if getterUtil.getBoolean(enableComments) &amp;&amp; assetRenderer.isCommentable()&gt;
+		&lt;br /&gt;
+
+		&lt;#assign discussionURL = renderResponse.createActionURL() /&gt;
+
+		${discussionURL.setParameter(&quot;javax.portlet.action&quot;, &quot;invokeTaglibDiscussion&quot;)}
+
+		&lt;@liferay_ui[&quot;discussion&quot;]
+			className=entry.getClassName()
+			classPK=entry.getClassPK()
+			formAction=discussionURL?string
+			formName=&quot;fm&quot; + entry.getClassPK()
+			ratingsEnabled=getterUtil.getBoolean(enableCommentRatings)
+			redirect=currentURL
+			userId=assetRenderer.getUserId()
+		/&gt;
+	&lt;/#if&gt;
+&lt;/#macro&gt;
+
+&lt;#macro getEditIcon&gt;
+	&lt;#if assetRenderer.hasEditPermission(themeDisplay.getPermissionChecker())&gt;
+		&lt;#assign redirectURL = renderResponse.createRenderURL() /&gt;
+
+		${redirectURL.setParameter(&quot;mvcPath&quot;, &quot;/add_asset_redirect.jsp&quot;)}
+		${redirectURL.setWindowState(&quot;pop_up&quot;)}
+
+		&lt;#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState(&quot;pop_up&quot;), redirectURL)!&quot;&quot; /&gt;
+
+		&lt;#if validator.isNotNull(editPortletURL)&gt;
+			&lt;#assign title = languageUtil.format(locale, &quot;edit-x&quot;, entryTitle, false) /&gt;
+
+			&lt;@liferay_ui[&quot;icon&quot;]
+				cssClass=&quot;sticker sticker-default sticker-right icon-monospaced visible-interaction&quot;
+				icon=&quot;pencil&quot;
+				markupView=&quot;lexicon&quot;
+				message=title
+				url=&quot;javascript:Liferay.Util.openWindow({id:&apos;&quot; + renderResponse.getNamespace() + &quot;editAsset&apos;, title: &apos;&quot; + title + &quot;&apos;, uri:&apos;&quot; + htmlUtil.escapeURL(editPortletURL.toString()) + &quot;&apos;});&quot;
+			/&gt;
+		&lt;/#if&gt;
+	&lt;/#if&gt;
+&lt;/#macro&gt;</__script>
+  <__cacheable>false</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>35673</__smallImageId>
+  <__originalSmallImageId>35673</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

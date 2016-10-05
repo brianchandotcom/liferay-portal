@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet_INSTANCE_M4X9FSxNezGq" root-portlet-id="com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet" old-plid="35214" scope-group-id="35202" private-layout="true">
+	<portlet-preferences path="/group/35202/portlet/com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet_INSTANCE_M4X9FSxNezGq/preferences/layout/0/35214/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+</portlet>

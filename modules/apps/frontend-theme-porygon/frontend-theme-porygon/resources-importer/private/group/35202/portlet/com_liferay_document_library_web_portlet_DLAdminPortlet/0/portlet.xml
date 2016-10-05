@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<portlet portlet-id="com_liferay_document_library_web_portlet_DLAdminPortlet" root-portlet-id="com_liferay_document_library_web_portlet_DLAdminPortlet" old-plid="0" scope-group-id="35202" scope-layout-type="" scope-layout-uuid="" private-layout="false">
+	<portlet-preferences path="/group/35202/portlet/com_liferay_document_library_web_portlet_DLAdminPortlet/preferences/group/35202/0/portlet-preferences.xml">
+		<preference-data/>
+	</portlet-preferences>
+</portlet>

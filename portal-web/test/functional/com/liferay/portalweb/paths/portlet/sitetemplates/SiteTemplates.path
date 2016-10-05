@@ -76,7 +76,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_TEMPLATE_TABLE_DESCRITPION</td>
+	<td>SITE_TEMPLATE_TABLE_DESCRIPTION</td>
 	<td>//tr[contains(.,'${key_siteTemplateDescription}')]/td[3]</td>
 	<td></td>
 </tr>

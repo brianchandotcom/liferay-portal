@@ -149,6 +149,14 @@
 		</execute>
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteTemplateName} Edit" />
+
+		<if>
+			<isset var="siteTemplateDescription" />
+			<then>
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${siteTemplateDescription}" />
+			</then>
+		</if>
+
 		<execute macro="Button#clickSave" />
 	</command>
 
@@ -251,11 +259,18 @@
 	</command>
 
 	<command name="viewCP">
-		<for list="${siteTemplateNameList}" param="siteTemplateName" >
+		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}">
 			<var name="key_siteTemplateName" value="${siteTemplateName}" />
+		</execute>
 
-			<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
-		</for>
+		<if>
+			<isset var="siteTemplateDescription" />
+			<then>
+				<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${siteTemplateDescription}">
+					<var name="key_siteTemplateDescription" value="${siteTemplateDescription}" />
+				</execute>
+			</then>
+		</if>
 	</command>
 
 	<command name="viewDefaultCP">
@@ -278,14 +293,8 @@
 		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation" >
 			<var name="key_siteTemplateDescription" value="${DescriptionTranslation}" />
 
-			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRITPION" value1="${DescriptionTranslation}" />
+			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION" value1="${DescriptionTranslation}" />
 		</for>
-	</command>
-
-	<command name="viewEditCP">
-		<var name="key_siteTemplateName" value="${siteTemplateName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName} Edit" />
 	</command>
 
 	<command name="viewNoInfoMessage">

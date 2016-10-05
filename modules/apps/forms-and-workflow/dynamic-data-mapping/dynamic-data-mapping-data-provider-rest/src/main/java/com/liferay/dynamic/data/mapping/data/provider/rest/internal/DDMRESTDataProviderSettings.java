@@ -20,11 +20,22 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
 /**
  * @author Marcellus Tavares
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"setVisible('filterKey', true)",
+				"setRequired('filterKey', true)"
+			},
+			condition = "equals(getValue('filter'), true)"
+		)
+	}
+)
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(
@@ -35,7 +46,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 							size = 12,
 							value = {
 								"url", "key", "value", "username", "password",
-								"cacheable"
+								"filter", "filterKey", "cacheable"
 							}
 						)
 					}
@@ -51,6 +62,20 @@ public interface DDMRESTDataProviderSettings {
 		properties = "showAsSwitcher=true"
 	)
 	public boolean cacheable();
+
+	@DDMFormField(
+			label = "%filter-with-keyword", properties = "showAsSwitcher=true"
+	)
+	public boolean filter();
+
+	@DDMFormField(
+		label = "%filter-key",
+		properties = {
+			"placeholder=%enter-the-attribute-to-be-used-as-keyword",
+			"tooltip=%the-attribute-whose-value-is-used-as-a-filter"
+		}
+	)
+	public String filterKey();
 
 	@DDMFormField(
 		label = "%displayed-json-attribute",

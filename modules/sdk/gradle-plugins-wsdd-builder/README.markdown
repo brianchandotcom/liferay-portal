@@ -1,8 +1,8 @@
 # WSDD Builder Gradle Plugin
 
-The WSDD Builder Gradle plugin allows you to run the Liferay WSDD Builder tool
-in order to generate the [Apache Axis](http://axis.apache.org/axis/) Web Service
-Deployment Descriptor (WSDD) files from a [Service Builder](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/what-is-service-builder)
+The WSDD Builder Gradle plugin allows you to run the [Liferay WSDD Builder](https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-wsdd-builder)
+tool in order to generate the [Apache Axis](http://axis.apache.org/axis/) Web
+Service Deployment Descriptor (WSDD) files from a [Service Builder](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/what-is-service-builder)
 `service.xml` file.
 
 ## Usage

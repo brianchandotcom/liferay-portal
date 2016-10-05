@@ -1,7 +1,8 @@
 # Source Formatter Gradle Plugin
 
 The Source Formatter Gradle plugin allows you to format project files using the
-Liferay Source Formatter tool.
+[Liferay Source Formatter](https://github.com/liferay/liferay-portal/tree/master/modules/util/source-formatter)
+tool.
 
 ## Usage
 

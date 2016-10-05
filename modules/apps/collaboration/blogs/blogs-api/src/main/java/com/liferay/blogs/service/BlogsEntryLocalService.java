@@ -144,6 +144,9 @@ public interface BlogsEntryLocalService extends BaseLocalService {
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BlogsEntry fetchEntry(long groupId, java.lang.String urlTitle);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BlogsEntry getBlogsEntryByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 

@@ -134,7 +134,7 @@ Navigation bar styles
     background-color: #1B75BB;
     color: #FFF;
     font-size: 1em;
-    height: auto;/*height:1.8em;*/
+    height: auto;
     margin: 0;
     padding: 0.8em 0.5em 0.4em 0.8em;
 }
@@ -164,8 +164,8 @@ Navigation bar styles
 }
 
 .subNav {
-    border-bottom: 1px solid #9EADC0;
     background-color: #8BB8E8;
+    border-bottom: 1px solid #9EADC0;
     float: left;
     overflow: hidden;
     width: 100%;
@@ -306,7 +306,7 @@ Page layout container styles
 }
 
 .indexContainer {
-    font-size: 1.0em;
+    font-size: 1em;
     margin: 10px;
     position: relative;
 }
@@ -442,10 +442,7 @@ caption a:link, caption a:hover, caption a:active, caption a:visited {
     vertical-align: top;
 }
 
-.contentContainer ul li table th.colLast, .classUseContainer ul li table th.colLast, .constantValuesContainer ul li table th.colLast,
-.contentContainer ul li table td.colLast, .classUseContainer ul li table td.colLast, .constantValuesContainer ul li table td.colLast,
-.contentContainer ul li table th.colOne, .classUseContainer ul li table th.colOne,
-.contentContainer ul li table td.colOne, .classUseContainer ul li table td.colOne {
+.contentContainer ul li table th.colLast, .classUseContainer ul li table th.colLast, .constantValuesContainer ul li table th.colLast, .contentContainer ul li table td.colLast, .classUseContainer ul li table td.colLast, .constantValuesContainer ul li table td.colLast, .contentContainer ul li table th.colOne, .classUseContainer ul li table th.colOne, .contentContainer ul li table td.colOne, .classUseContainer ul li table td.colOne {
     padding-right: 3px;
 }
 
@@ -603,8 +600,7 @@ table.overviewSummary  {
     padding: 0;
 }
 
-table.overviewSummary td.colFirst, table.overviewSummary th.colFirst,
-table.overviewSummary td.colOne, table.overviewSummary th.colOne {
+table.overviewSummary td.colFirst, table.overviewSummary th.colFirst, table.overviewSummary td.colOne, table.overviewSummary th.colOne {
     vertical-align: middle;
     width: 25%;
 }

@@ -423,7 +423,8 @@ public class DefaultWikiListPagesDisplayContext
 			List<MenuItem> menuItems, WikiPage wikiPage)
 		throws PortalException {
 
-		if (!WikiNodePermissionChecker.contains(
+		if (Validator.isNull(wikiPage.getContent()) ||
+			!WikiNodePermissionChecker.contains(
 				_wikiRequestHelper.getPermissionChecker(), wikiPage.getNodeId(),
 				ActionKeys.ADD_PAGE)) {
 

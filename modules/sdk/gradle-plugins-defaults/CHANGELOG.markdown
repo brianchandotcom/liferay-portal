@@ -326,7 +326,7 @@ include the projects containing a `.lfrbuild-portal-pre` marker file.
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.47.
 
-## 1.2.38 - 2016-09-30
+## 1.2.38 - 2016-10-01
 
 ### Added
 - [LPS-68448]: Fail the build of an OSGi project if the version in the
@@ -336,15 +336,26 @@ version in the `npm-shrinkwrap.json` file, if present.
 
 ## 1.2.39 - 2016-10-03
 
+### Added
+- [LPS-68402]: Set the [`org.apache.maven.offline`](https://github.com/shrinkwrap/resolver#system-properties)
+system property to `true` for the `testIntegration` task.
+
 ### Changed
 - [LPS-68485]: Update the [Liferay Gradle Plugins] dependency to version 2.0.48.
 
 ## 1.2.40 - 2016-10-04
 
+### Added
+- [LPS-68506]: Exclude unpublished projects from the API documentation generated
+by the `appJavadoc` task.
+
 ### Changed
 - [LPS-68504]: Update the [Liferay Gradle Plugins] dependency to version 2.0.49.
+- [LPS-68506]: Update the [Liferay Gradle Plugins App Javadoc Builder]
+dependency to version 1.1.0.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
+[Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
@@ -366,8 +377,10 @@ version in the `npm-shrinkwrap.json` file, if present.
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
 [LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
+[LPS-68402]: https://issues.liferay.com/browse/LPS-68402
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504
+[LPS-68506]: https://issues.liferay.com/browse/LPS-68506
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -200,5 +200,9 @@
 			<contains>No score point assigners available</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-65131">
+			<contains></contains>
+			<matches>.*Table.*does not exist.*</matches>
+		</ignore-error>
 	</log>
 </ignore-errors>

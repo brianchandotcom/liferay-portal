@@ -50,6 +50,8 @@ public interface Build {
 
 	public String getResult();
 
+	public Map<String, String> getStartProperties();
+
 	public String getStatus();
 
 	public long getStatusAge();
@@ -57,6 +59,10 @@ public interface Build {
 	public String getStatusReport();
 
 	public String getStatusReport(int indentSize);
+
+	public String getStatusSummary();
+
+	public Map<String, String> getStopProperties();
 
 	public boolean hasBuildURL(String buildURL);
 

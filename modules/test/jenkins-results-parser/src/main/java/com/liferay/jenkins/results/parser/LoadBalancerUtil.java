@@ -195,10 +195,7 @@ public class LoadBalancerUtil {
 			String... overridePropertiesArray)
 		throws Exception {
 
-		return getMostAvailableMasterURL(
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-				"/liferay-jenkins-ee/commands/build.properties",
-			overridePropertiesArray);
+		return getMostAvailableMasterURL(null, overridePropertiesArray);
 	}
 
 	public static String getMostAvailableMasterURL(
@@ -207,10 +204,16 @@ public class LoadBalancerUtil {
 
 		Properties properties = new Properties();
 
-		String propertiesString = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(propertiesURL), false);
+		if (propertiesURL == null) {
+			properties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		else {
+			properties = new Properties();
+			String propertiesString = JenkinsResultsParserUtil.toString(
+				JenkinsResultsParserUtil.getLocalURL(propertiesURL), false);
 
-		properties.load(new StringReader(propertiesString));
+			properties.load(new StringReader(propertiesString));
+		}
 
 		if ((overridePropertiesArray != null) &&
 			(overridePropertiesArray.length > 0) &&

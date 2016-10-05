@@ -31,7 +31,7 @@ AUI.add(
 
 				instance._eventHandlers = [];
 
-				instance._unrepaintableAttributes = {};
+				instance._stateRepaintableAttributes = {};
 
 				instance.bindFieldClassAttributesStatus(fieldClass);
 			},
@@ -57,7 +57,7 @@ AUI.add(
 						instance.after(attributeName + 'Change', A.bind(instance._afterAttributeChange, instance, attributeName));
 					}
 
-					instance._setUnrepaintableAttributeValue(attributeName, !stateAttribute);
+					instance._setStateRepaintableAttributeValue(attributeName, stateAttribute);
 				};
 
 				for (var attr in context) {
@@ -87,7 +87,7 @@ AUI.add(
 
 				var context = instance.get('context');
 
-				return context && context.hasOwnProperty(attributeName) && !instance._unrepaintableAttributes[attributeName];
+				return context && context.hasOwnProperty(attributeName) && instance._stateRepaintableAttributes[attributeName];
 			},
 
 			_afterAttributeChange: function(name) {
@@ -128,10 +128,10 @@ AUI.add(
 				}
 			},
 
-			_isUnrepaintableAttributeDefined: function(attributeName) {
+			_isStateRepaintableAttributeDefined: function(attributeName) {
 				var instance = this;
 
-				return instance._unrepaintableAttributes.hasOwnProperty(attributeName);
+				return instance._stateRepaintableAttributes.hasOwnProperty(attributeName);
 			},
 
 			_setContext: function(val) {
@@ -140,11 +140,11 @@ AUI.add(
 				return A.merge(instance.get('context'), val);
 			},
 
-			_setUnrepaintableAttributeValue: function(attributeName, value) {
+			_setStateRepaintableAttributeValue: function(attributeName, value) {
 				var instance = this;
 
-				if (!instance._isUnrepaintableAttributeDefined(attributeName)) {
-					instance._unrepaintableAttributes[attributeName] = false;
+				if (!instance._isStateRepaintableAttributeDefined(attributeName)) {
+					instance._stateRepaintableAttributes[attributeName] = value;
 				}
 			}
 		};

@@ -37,7 +37,7 @@ public abstract class BasePortalToolsTask extends JavaExec {
 	public BasePortalToolsTask() {
 		project = getProject();
 
-		addConfiguration();
+		_addConfiguration();
 	}
 
 	@Override
@@ -86,38 +86,6 @@ public abstract class BasePortalToolsTask extends JavaExec {
 		throw new UnsupportedOperationException();
 	}
 
-	protected Configuration addConfiguration() {
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		Configuration configuration = configurationContainer.findByName(
-			getConfigurationName());
-
-		if (configuration != null) {
-			return configuration;
-		}
-
-		configuration = GradleUtil.addConfiguration(
-			project, getConfigurationName());
-
-		configuration.setDescription(
-			"Configures the " + getToolName() + " tool for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addDependencies();
-				}
-
-			});
-
-		return configuration;
-	}
-
 	protected void addDependencies() {
 		addDependency(
 			"com.liferay.portal", "com.liferay.portal.impl", "default");
@@ -158,5 +126,37 @@ public abstract class BasePortalToolsTask extends JavaExec {
 	protected abstract String getToolName();
 
 	protected final Project project;
+
+	private Configuration _addConfiguration() {
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration configuration = configurationContainer.findByName(
+			getConfigurationName());
+
+		if (configuration != null) {
+			return configuration;
+		}
+
+		configuration = GradleUtil.addConfiguration(
+			project, getConfigurationName());
+
+		configuration.setDescription(
+			"Configures the " + getToolName() + " tool for this project.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependencies();
+				}
+
+			});
+
+		return configuration;
+	}
 
 }

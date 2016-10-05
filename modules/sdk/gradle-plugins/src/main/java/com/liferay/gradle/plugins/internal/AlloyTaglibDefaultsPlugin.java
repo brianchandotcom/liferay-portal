@@ -83,31 +83,7 @@ public class AlloyTaglibDefaultsPlugin
 
 		super.configureDefaults(project, alloyTaglibPlugin);
 
-		configureTasksBuildTaglibs(project);
-	}
-
-	protected void configureTaskBuildTaglibs(
-		BuildTaglibsTask buildTaglibsTask) {
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			buildTaglibsTask.getProject(), getPortalToolConfigurationName());
-
-		buildTaglibsTask.setClasspath(configuration);
-	}
-
-	protected void configureTasksBuildTaglibs(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildTaglibsTask.class,
-			new Action<BuildTaglibsTask>() {
-
-				@Override
-				public void execute(BuildTaglibsTask buildTaglibsTask) {
-					configureTaskBuildTaglibs(buildTaglibsTask);
-				}
-
-			});
+		_configureTasksBuildTaglibs(project);
 	}
 
 	@Override
@@ -123,6 +99,28 @@ public class AlloyTaglibDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private void _configureTaskBuildTaglibs(BuildTaglibsTask buildTaglibsTask) {
+		Configuration configuration = GradleUtil.getConfiguration(
+			buildTaglibsTask.getProject(), getPortalToolConfigurationName());
+
+		buildTaglibsTask.setClasspath(configuration);
+	}
+
+	private void _configureTasksBuildTaglibs(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildTaglibsTask.class,
+			new Action<BuildTaglibsTask>() {
+
+				@Override
+				public void execute(BuildTaglibsTask buildTaglibsTask) {
+					_configureTaskBuildTaglibs(buildTaglibsTask);
+				}
+
+			});
 	}
 
 	private static final String _PORTAL_TOOL_CONFIGURATION_NAME = "alloyTaglib";

@@ -33,11 +33,16 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		Project project,
 		JSModuleConfigGeneratorPlugin jsModuleConfigGeneratorPlugin) {
 
-		configureJSModuleConfigGenerator(project);
-		configureTaskConfigJSModules(project);
+		_configureJSModuleConfigGenerator(project);
+		_configureTaskConfigJSModules(project);
 	}
 
-	protected void configureJSModuleConfigGenerator(final Project project) {
+	@Override
+	protected Class<JSModuleConfigGeneratorPlugin> getPluginClass() {
+		return JSModuleConfigGeneratorPlugin.class;
+	}
+
+	private void _configureJSModuleConfigGenerator(final Project project) {
 		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
 			GradleUtil.getExtension(
 				project, JSModuleConfigGeneratorExtension.class);
@@ -49,7 +54,7 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		jsModuleConfigGeneratorExtension.setVersion(version);
 	}
 
-	protected void configureTaskConfigJSModules(Project project) {
+	private void _configureTaskConfigJSModules(Project project) {
 		ConfigJSModulesTask configJSModulesTask =
 			(ConfigJSModulesTask)GradleUtil.getTask(
 				project,
@@ -59,11 +64,6 @@ public class JSModuleConfigGeneratorDefaultsPlugin
 		configJSModulesTask.setIgnorePath(true);
 		configJSModulesTask.setModuleExtension("");
 		configJSModulesTask.setModuleFormat("/_/g,-");
-	}
-
-	@Override
-	protected Class<JSModuleConfigGeneratorPlugin> getPluginClass() {
-		return JSModuleConfigGeneratorPlugin.class;
 	}
 
 	private static final String _VERSION = "1.1.10";

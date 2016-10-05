@@ -35,36 +35,7 @@ public class LangBuilderDefaultsPlugin
 
 		super.configureDefaults(project, langBuilderPlugin);
 
-		configureTasksBuildLang(project);
-	}
-
-	protected void configureTaskBuildLang(BuildLangTask buildLangTask) {
-		String translateClientId = GradleUtil.getProperty(
-			buildLangTask.getProject(), "microsoft.translator.client.id",
-			(String)null);
-
-		buildLangTask.setTranslateClientId(translateClientId);
-
-		String translateClientSecret = GradleUtil.getProperty(
-			buildLangTask.getProject(), "microsoft.translator.client.secret",
-			(String)null);
-
-		buildLangTask.setTranslateClientSecret(translateClientSecret);
-	}
-
-	protected void configureTasksBuildLang(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildLangTask.class,
-			new Action<BuildLangTask>() {
-
-				@Override
-				public void execute(BuildLangTask buildLangTask) {
-					configureTaskBuildLang(buildLangTask);
-				}
-
-			});
+		_configureTasksBuildLang(project);
 	}
 
 	@Override
@@ -80,6 +51,35 @@ public class LangBuilderDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private void _configureTaskBuildLang(BuildLangTask buildLangTask) {
+		String translateClientId = GradleUtil.getProperty(
+			buildLangTask.getProject(), "microsoft.translator.client.id",
+			(String)null);
+
+		buildLangTask.setTranslateClientId(translateClientId);
+
+		String translateClientSecret = GradleUtil.getProperty(
+			buildLangTask.getProject(), "microsoft.translator.client.secret",
+			(String)null);
+
+		buildLangTask.setTranslateClientSecret(translateClientSecret);
+	}
+
+	private void _configureTasksBuildLang(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildLangTask.class,
+			new Action<BuildLangTask>() {
+
+				@Override
+				public void execute(BuildLangTask buildLangTask) {
+					_configureTaskBuildLang(buildLangTask);
+				}
+
+			});
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.lang.builder";

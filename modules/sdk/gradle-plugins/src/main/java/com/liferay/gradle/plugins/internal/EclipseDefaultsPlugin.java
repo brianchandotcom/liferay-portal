@@ -41,11 +41,16 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 	protected void configureDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
 
-		configureEclipseClasspathFile(project);
-		configureTaskEclipse(project, eclipsePlugin);
+		_configureEclipseClasspathFile(project);
+		_configureTaskEclipse(project, eclipsePlugin);
 	}
 
-	protected void configureEclipseClasspathFile(Project project) {
+	@Override
+	protected Class<EclipsePlugin> getPluginClass() {
+		return EclipsePlugin.class;
+	}
+
+	private void _configureEclipseClasspathFile(Project project) {
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
 
@@ -85,17 +90,12 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		fileContentMerger.whenMerged(closure);
 	}
 
-	protected void configureTaskEclipse(
+	private void _configureTaskEclipse(
 		Project project, EclipsePlugin eclipsePlugin) {
 
 		Task task = eclipsePlugin.getLifecycleTask();
 
 		task.dependsOn(eclipsePlugin.getCleanTask());
-	}
-
-	@Override
-	protected Class<EclipsePlugin> getPluginClass() {
-		return EclipsePlugin.class;
 	}
 
 }

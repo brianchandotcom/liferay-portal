@@ -37,10 +37,25 @@ public class SourceFormatterDefaultsPlugin
 
 		super.configureDefaults(project, sourceFormatterPlugin);
 
-		configureTasksFormatSource(project);
+		_configureTasksFormatSource(project);
 	}
 
-	protected void configureTasksFormatSource(
+	@Override
+	protected Class<SourceFormatterPlugin> getPluginClass() {
+		return SourceFormatterPlugin.class;
+	}
+
+	@Override
+	protected String getPortalToolConfigurationName() {
+		return SourceFormatterPlugin.CONFIGURATION_NAME;
+	}
+
+	@Override
+	protected String getPortalToolName() {
+		return _PORTAL_TOOL_NAME;
+	}
+
+	private void _configureTasksFormatSource(
 		FormatSourceTask formatSourceTask) {
 
 		String gitWorkingBranchName = GradleUtil.getProperty(
@@ -78,7 +93,7 @@ public class SourceFormatterDefaultsPlugin
 		}
 	}
 
-	protected void configureTasksFormatSource(Project project) {
+	private void _configureTasksFormatSource(Project project) {
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -87,25 +102,10 @@ public class SourceFormatterDefaultsPlugin
 
 				@Override
 				public void execute(FormatSourceTask formatSourceTask) {
-					configureTasksFormatSource(formatSourceTask);
+					_configureTasksFormatSource(formatSourceTask);
 				}
 
 			});
-	}
-
-	@Override
-	protected Class<SourceFormatterPlugin> getPluginClass() {
-		return SourceFormatterPlugin.class;
-	}
-
-	@Override
-	protected String getPortalToolConfigurationName() {
-		return SourceFormatterPlugin.CONFIGURATION_NAME;
-	}
-
-	@Override
-	protected String getPortalToolName() {
-		return _PORTAL_TOOL_NAME;
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

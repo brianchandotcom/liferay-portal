@@ -37,34 +37,7 @@ public class UpgradeTableBuilderDefaultsPlugin
 
 		super.configureDefaults(project, upgradeTableBuilderPlugin);
 
-		configureTasksBuildUpgradeTable(project);
-	}
-
-	protected void configureTaskBuildUpgradeTable(
-		BuildUpgradeTableTask buildUpgradeTableTask) {
-
-		File file = GradleUtil.getProperty(
-			buildUpgradeTableTask.getProject(), "upgrade.table.dir",
-			(File)null);
-
-		buildUpgradeTableTask.setUpgradeTableDir(file);
-	}
-
-	protected void configureTasksBuildUpgradeTable(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildUpgradeTableTask.class,
-			new Action<BuildUpgradeTableTask>() {
-
-				@Override
-				public void execute(
-					BuildUpgradeTableTask buildUpgradeTableTask) {
-
-					configureTaskBuildUpgradeTable(buildUpgradeTableTask);
-				}
-
-			});
+		_configureTasksBuildUpgradeTable(project);
 	}
 
 	@Override
@@ -80,6 +53,33 @@ public class UpgradeTableBuilderDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private void _configureTaskBuildUpgradeTable(
+		BuildUpgradeTableTask buildUpgradeTableTask) {
+
+		File file = GradleUtil.getProperty(
+			buildUpgradeTableTask.getProject(), "upgrade.table.dir",
+			(File)null);
+
+		buildUpgradeTableTask.setUpgradeTableDir(file);
+	}
+
+	private void _configureTasksBuildUpgradeTable(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			BuildUpgradeTableTask.class,
+			new Action<BuildUpgradeTableTask>() {
+
+				@Override
+				public void execute(
+					BuildUpgradeTableTask buildUpgradeTableTask) {
+
+					_configureTaskBuildUpgradeTable(buildUpgradeTableTask);
+				}
+
+			});
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

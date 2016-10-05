@@ -50,9 +50,9 @@ public interface Build {
 
 	public String getResult();
 
-	public String getStatus();
-
 	public Map<String, String> getStartProperties();
+
+	public String getStatus();
 
 	public long getStatusAge();
 

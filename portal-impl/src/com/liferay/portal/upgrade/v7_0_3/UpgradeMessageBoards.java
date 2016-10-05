@@ -37,11 +37,11 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append("insert into threadId_TEMP_TABLE select T.threadId ");
-			sb.append("from MBThread T, MBMessage M where T.threadId = ");
-			sb.append("M.threadId and T.categoryId = ");
+			sb.append("insert into threadId_TEMP_TABLE select MBThread.threadId ");
+			sb.append("from MBThread, MBMessage where MBThread.threadId = ");
+			sb.append("MBMessage.threadId and MBThread.categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" group by M.threadId having count(M.messageId) = 1");
+			sb.append(" group by MBMessage.threadId having count(MBMessage.messageId) = 1");
 
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
@@ -49,8 +49,8 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 			sb = new StringBundler(5);
 
 			sb.append("delete from AssetEntry where classPK in (");
-			sb.append("select M.messageId from MBMessage M inner join ");
-			sb.append("threadId_TEMP_TABLE T on M.threadId = T.threadId) and ");
+			sb.append("select MBMessage.messageId from MBMessage inner join ");
+			sb.append("threadId_TEMP_TABLE on MBMessage.threadId = threadId_TEMP_TABLE.threadId) and ");
 			sb.append("classNameId = ");
 			sb.append(classNameId);
 

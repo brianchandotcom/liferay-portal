@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,46 +34,68 @@ import java.sql.ResultSet;
 public class UpgradeMessageBoards extends UpgradeProcess {
 
 	protected void deleteEmptyMBDiscussion() throws Exception {
+		String tempTableName = "TEMP_TABLE_" + StringUtil.randomString(4);
+
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			runSQL("create table " + tempTableName + " (threadId LONG)");
+
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(
+				"insert into threadId_TEMP_TABLE select MBThread.threadId ");
+			sb.append("from MBThread, MBMessage where MBThread.threadId = ");
+			sb.append("MBMessage.threadId and MBThread.categoryId = ");
+			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
+			sb.append(" group by MBMessage.threadId having ");
+			sb.append("count(MBMessage.messageId) = 1");
+
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());
 
-			StringBundler sb = new StringBundler(6);
+			sb = new StringBundler(5);
 
 			sb.append("delete from AssetEntry where classPK in (");
-			sb.append("select messageId from MBMessage where threadId in (");
-			sb.append("select threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)) and classNameId = ");
+			sb.append("select MBMessage.messageId from MBMessage inner join ");
+			sb.append(tempTableName);
+			sb.append(" on MBMessage.threadId = ");
+			sb.append(tempTableName);
+			sb.append(".threadId) and classNameId = ");
 			sb.append(classNameId);
 
 			runSQL(sb.toString());
 
-			sb = new StringBundler(4);
+			sb = new StringBundler(2);
 
-			sb.append("delete from MBDiscussion where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBMessage where threadId in (select ");
-			sb.append("threadId from MBThread where categoryId = ");
-			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
-			sb.append(" and messageCount = 1)");
+			sb.append("delete from MBDiscussion where threadId in (");
+			sb.append("select threadId from ");
+			sb.append(tempTableName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
 
 			runSQL(sb.toString());
 
-			runSQL(
-				"delete from MBThread where categoryId = " +
-					MBCategoryConstants.DISCUSSION_CATEGORY_ID +
-						" and messageCount = 1");
+			sb = new StringBundler(2);
+
+			sb.append("delete from MBMessage where threadId in (");
+			sb.append("select threadId from ");
+			sb.append(tempTableName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			runSQL(sb.toString());
+
+			sb = new StringBundler(2);
+
+			sb.append("delete from MBThread where threadId in (");
+			sb.append("select threadId from ");
+			sb.append(tempTableName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			runSQL(sb.toString());
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
+		}
+		finally {
+			runSQL("drop table " + tempTableName);
 		}
 	}
 

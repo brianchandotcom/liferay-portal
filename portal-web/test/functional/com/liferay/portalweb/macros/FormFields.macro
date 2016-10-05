@@ -171,7 +171,12 @@
 
 		<execute function="AssertTextEquals" locator1="FormFields#AUTOCOMPLETE_OPTION" value1="${autocompleteOption}" />
 
-		<execute function="AssertTextNotPresent" locator1="FormFields#AUTOCOMPLETE_LIST" value1="${autocompleteOptionNotVisible}" />
+		<if>
+			<isset var="autocompleteOptionNotVisible" />
+			<then>
+				<execute function="AssertTextNotPresent" locator1="FormFields#AUTOCOMPLETE_LIST" value1="${autocompleteOptionNotVisible}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="viewCaptchaField">

@@ -375,8 +375,6 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderDescription" value="DM Folder Description" />
 			<var name="dmFolderName" value="DM Folder Name" />

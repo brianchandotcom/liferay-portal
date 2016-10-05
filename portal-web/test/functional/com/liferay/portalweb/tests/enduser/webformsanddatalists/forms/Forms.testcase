@@ -30,6 +30,137 @@
 		</if>
 	</tear-down>
 
+	<command name="ConfigureAutocompleteWithManualInput" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutoCompleteWithManualInput" />
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field With Autocomplete" />
+		</execute>
+
+		<execute macro="Form#gotoAdvancedTab" />
+
+		<execute macro="Form#gotoAutocompleteConfiguration" />
+
+		<execute macro="FormFields#selectRadioOption">
+			<var name="fieldName" value="dataSourceType" />
+			<var name="radioOption" value="Manually" />
+		</execute>
+
+		<execute macro="FormFields#editOptionsRow">
+			<var name="optionName" value="One" />
+			<var name="optionValue" value="One" />
+		</execute>
+
+		<execute macro="FormFields#editOptionsRow">
+			<var name="optionName" value="Two" />
+			<var name="optionValue" value="Two" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm" />
+
+		<execute macro="FormPortletConfiguration#selectForm" />
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="TextFieldWithAutocomplete" />
+			<var name="fieldValue" value="n" />
+		</execute>
+
+		<execute macro="FormFields#viewAutoCompleteOptions">
+			<var name="autocompleteOption" value="One" />
+			<var name="autocompleteOptionNotVisible" value="Two" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="TextFieldWithAutocomplete" />
+			<var name="fieldValue" value="T" />
+		</execute>
+
+		<execute macro="FormFields#viewAutoCompleteOptions">
+			<var name="autocompleteOption" value="Two" />
+			<var name="autocompleteOptionNotVisible" value="One" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="TextFieldWithAutocomplete" />
+			<var name="fieldValue" value="O" />
+		</execute>
+
+		<execute macro="FormFields#viewAutoCompleteOptions">
+			<var name="autocompleteOption" value="One" />
+		</execute>
+
+		<execute macro="FormFields#viewAutoCompleteOptions">
+			<var name="autocompleteOption" value="Two" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="TextFieldWithAutocomplete" />
+			<var name="fieldValue" value="On" />
+		</execute>
+
+		<execute macro="FormFields#selectAutoCompleteOption">
+			<var name="autocompleteOption" value="One" />
+		</execute>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormTableEntry">
+			<var name="fieldLabel" value="Text Field With Autocomplete" />
+			<var name="fieldValue" value="One" />
+		</execute>
+	</command>
+
 	<command name="ConfigureAutocompleteWithTextField" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutoCompleteWithTextField" />

@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -72,6 +73,12 @@ public class DDMRESTDataProviderTest {
 				"cacheable", Boolean.FALSE.toString()));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"filter", Boolean.FALSE.toString()));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"filterKey", StringPool.BLANK));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"key", "countryId"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -102,6 +109,58 @@ public class DDMRESTDataProviderTest {
 			Assert.assertTrue(
 				actualKeyValuePairs.contains(expectedKeyValuePair));
 		}
+	}
+
+	@Test
+	public void testGetCountryByName() throws Exception {
+		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
+
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(ddmDataProviderSettings);
+
+		String url =
+			"http://localhost:8080/api/jsonws/country/get-country-by-name";
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"cacheable", Boolean.FALSE.toString()));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"filter", Boolean.TRUE.toString()));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"filterKey", "name"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"key", "countryId"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"password", "test"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"url", url));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"username", "test@liferay.com"));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"value", "nameCurrentValue"));
+
+		DDMDataProviderContext ddmDataProviderContext =
+			new DDMDataProviderContext(ddmFormValues);
+
+		ddmDataProviderContext.addParameter("filterValue", "Brazil");
+
+		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
+			ddmDataProviderContext);
+
+		Assert.assertEquals(1, actualKeyValuePairs.size());
+
+		Assert.assertTrue(
+			actualKeyValuePairs.contains(new KeyValuePair("48", "Brazil")));
 	}
 
 	protected List<KeyValuePair> createExpectedKeyValuePairs() {

@@ -20,7 +20,7 @@
 String facebookDisplayStyle = "button_count";
 
 if (displayStyle.equals("simple")) {
-	facebookDisplayStyle = "standard";
+	facebookDisplayStyle = "button";
 }
 else if (displayStyle.equals("vertical")) {
 	facebookDisplayStyle = "box_count";

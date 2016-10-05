@@ -45,6 +45,20 @@
 
 	.entry-info {
 		margin-top: 15px;
+
+		.social-bookmarks {
+			margin-top: 1em;
+			text-align: center;
+
+			@include respond-to(desktop) {
+				float: right;
+				margin-top: 0;
+			}
+
+			ul {
+				margin: 0;
+			}
+		}
 	}
 
 	.edit-actions {
@@ -108,6 +122,7 @@
 
 			.taglib-social-bookmarks {
 				display: inline-block;
+				margin-top: 5px;
 				vertical-align: middle;
 			}
 
@@ -205,6 +220,45 @@
 		}
 	}
 
+	.entry-title {
+		display: block;
+		position: relative;
+
+		h1 {
+			font-size: 60px;
+			line-height: 80px;
+			margin-bottom: 25px;
+			text-align: center;
+		}
+
+		h2 {
+			margin-right: 30px;
+			margin-top: 0;
+
+			.alloy-editor-placeholder p {
+				margin-bottom: 0;
+			}
+		}
+
+		.social-bookmarks {
+			z-index: 1;
+
+			@include respond-to(desktop) {
+				display: inline-block;
+				right: 35px;
+				top: 0;
+
+				&:not(.pull-right) {
+					position: absolute;
+				}
+			}
+
+			ul {
+				margin-top: 6px;
+			}
+		}
+	}
+
 	.nameplate-content {
 		padding-left: 0;
 		vertical-align: middle;
@@ -290,27 +344,13 @@
 	}
 
 	.entry-title {
-		display: block;
-		position: relative;
-
 		h1 {
-			font-size: 60px;
-			line-height: 80px;
-			margin-bottom: 25px;
-			text-align: center;
 			word-wrap: break-word;
 		}
 
 		h2 {
-			margin-right: 30px;
-			margin-top: 0;
-
 			.alloy-editor-placeholder {
 				color: #32A8E6;
-
-				p {
-					margin-bottom: 0;
-				}
 			}
 
 			& > a {

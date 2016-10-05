@@ -142,7 +142,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							<liferay-ui:message key="status" />
 						</dt>
 						<dd>
-							<span class="text-capitalize"><%= HtmlUtil.escape(KBUtil.getStatusLabel(kbArticle.getStatus())) %></span>
+							<liferay-ui:message key="<%= KBUtil.getStatusLabel(kbArticle.getStatus()) %>" />
 						</dd>
 						<dt class="h5">
 							<liferay-ui:message key="priority" />

@@ -44,8 +44,8 @@ The same extension exposes the following methods:
 
 Method | Description
 ------ | -----------
-`AppJavadocBuilderExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Include a subproject in the API documentation only if the given closure returns `true`. The closure will be evaluated at the end of the subproject configuration phase. The closure will be passed a single parameter, the subproject. If the closure returns `false`, the subproject will not be included in the API documentation.
-`AppJavadocBuilderExtension onlyIf(Spec<Project> onlyIfSpec)` | Include a subproject in the API documentation only if the given spec is satisfied. The spec will be evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject will not be included in the API documentation.
+`AppJavadocBuilderExtension onlyIf(Closure<Boolean> onlyIfClosure)` | Includes a subproject in the API documentation if the given closure returns `true`. The closure is evaluated at the end of the subproject configuration phase. The closure is passed a single parameter, the subproject. If the closure returns `false`, the subproject is not included in the API documentation.
+`AppJavadocBuilderExtension onlyIf(Spec<Project> onlyIfSpec)` | Includes a subproject in the API documentation if the given spec is satisfied. The spec is evaluated at the end of the subproject configuration phase. If the spec is not satisfied, the subproject is not included in the API documentation.
 
 ## Tasks
 

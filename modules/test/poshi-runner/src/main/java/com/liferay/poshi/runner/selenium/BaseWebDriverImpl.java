@@ -126,7 +126,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			_TEST_DEPENDENCIES_DIR_NAME + "//sikuli//linux//";
 		String testDependenciesDirName = _TEST_DEPENDENCIES_DIR_NAME;
 
-		if (OSDetector.isWindows()) {
+		if (OSDetector.isApple()) {
+			sikuliImagesDirName = StringUtil.replace(
+				sikuliImagesDirName, "linux", "osx");
+		}
+		else if (OSDetector.isWindows()) {
 			outputDirName = StringUtil.replace(outputDirName, "//", "\\");
 
 			sikuliImagesDirName = StringUtil.replace(

@@ -20,7 +20,7 @@
 	<div class="lfr-translation-manager-content">
 		<label class="lfr-translation-manager-default-locale-label" for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="web-content-default-language" />:</label>
 
-		<span class="lfr-translation-manager-default-locale-text lfr-translation-manager-translation lfr-translation-manager-translation-editing">
+		<span class="badge badge-default badge-lg lfr-translation-manager-default-locale-text lfr-translation-manager-translation lfr-translation-manager-translation-editing">
 
 			<%
 			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
@@ -31,7 +31,7 @@
 			<%= defaultLocale.getDisplayName(locale) %>
 		</span>
 
-		<select class="hide lfr-translation-manager-default-locale">
+		<select class="form-control hide lfr-translation-manager-default-locale">
 
 			<%
 			Set<Locale> locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
@@ -48,7 +48,7 @@
 		</select>
 
 		<c:if test="<%= changeableDefaultLanguage %>">
-			<a class="lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
+			<a class="badge badge-default badge-lg lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
 		</c:if>
 
 		<c:if test="<%= !readOnly %>">

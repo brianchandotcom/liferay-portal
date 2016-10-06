@@ -55,7 +55,7 @@ AUI.add(
 				'<label>' + Liferay.Language.get('available-translations') + '</label>' +
 			'</div>';
 
-		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' +
+		var TPL_AVAILABLE_TRANSLATION_LINK = '<span class="badge badge-default badge-lg ' + CSS_TRANSLATION + ' {cssClass}" locale="{locale}">' +
 				TPL_LOCALE_IMAGE + '{displayName} ' +
 				'<i class="' + CSS_DELETE_TRANSLATION + ' icon icon-remove"></i>' +
 			'</span>';

@@ -4,6 +4,11 @@
 	min-height: 1.8em;
 
 	.lfr-translation-manager-content {
+		.lfr-translation-manager-default-locale {
+			display: inline-block;
+			width: auto;
+		}
+
 		.lfr-translation-manager-icon-menu {
 			float: none;
 			padding: 0.4em 0;

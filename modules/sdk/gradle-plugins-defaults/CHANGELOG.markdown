@@ -380,11 +380,20 @@ following system properties to `true`:
 ### Changed
 - [LPS-68334]: Update the [Liferay Gradle Plugins] dependency to version 2.0.50.
 
+## 1.2.44 - 2016-10-06
+
+### Changed
+- [LPS-66396]: Update the [Liferay Gradle Plugins] dependency to version 3.0.0.
+
+### Fixed
+- [LPS-66396]: Remove dependency from Java 8 class.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906

@@ -67,12 +67,10 @@ public class ThemeBuilderTest {
 	}
 
 	@Test
-	public void testThemeBuilderStyled() throws IOException {
-		ThemeBuilder themeBuilder = new ThemeBuilder(
+	public void testThemeBuilderStyled() throws Exception {
+		buildTheme(
 			_diffsDir, _NAME, temporaryFolder.getRoot(), _styledJarFile,
 			ThemeBuilder.STYLED, "ftl", _unstyledJarFile);
-
-		themeBuilder.build();
 
 		_assertEquals("css/custom.scss", ".text { color: black; }");
 		_assertExists("images/thumbnail.png");
@@ -82,12 +80,10 @@ public class ThemeBuilderTest {
 	}
 
 	@Test
-	public void testThemeBuilderUnstyled() throws IOException {
-		ThemeBuilder themeBuilder = new ThemeBuilder(
+	public void testThemeBuilderUnstyled() throws Exception {
+		buildTheme(
 			_diffsDir, _NAME, temporaryFolder.getRoot(), null,
 			ThemeBuilder.UNSTYLED, "vm", _unstyledJarFile);
-
-		themeBuilder.build();
 
 		_assertEquals("css/custom.scss", ".text { color: black; }");
 		_assertNotExists("templates/init.ftl");
@@ -97,6 +93,18 @@ public class ThemeBuilderTest {
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	protected void buildTheme(
+			File diffsDir, String name, File outputDir, File parentDir,
+			String parentName, String templateExtension, File unstyledDir)
+		throws Exception {
+
+		ThemeBuilder themeBuilder = new ThemeBuilder(
+			diffsDir, name, outputDir, parentDir, parentName, templateExtension,
+			unstyledDir);
+
+		themeBuilder.build();
+	}
 
 	private void _assertEquals(String fileName, String expected)
 		throws IOException {

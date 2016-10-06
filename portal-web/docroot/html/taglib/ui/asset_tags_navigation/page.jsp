@@ -28,7 +28,7 @@ String tag = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-String tagsNavigation = _buildTagsNavigation(scopeGroupId, themeDisplay.getSiteGroupId(), tag, portletURL, classNameId, displayStyle, maxAssetTags, showAssetCount, showZeroAssetCount);
+String tagsNavigation = _buildTagsNavigation(scopeGroupId, tag, portletURL, classNameId, displayStyle, maxAssetTags, showAssetCount, showZeroAssetCount);
 
 if (Validator.isNotNull(tagsNavigation)) {
 %>
@@ -58,14 +58,14 @@ if (Validator.isNotNull(tag)) {
 %>
 
 <%!
-private String _buildTagsNavigation(long scopeGroupId, long siteGroupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
+private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
 	List<AssetTag> tags = null;
 
 	if (showAssetCount && (classNameId > 0)) {
 		tags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
 	}
 	else {
-		tags = AssetTagServiceUtil.getGroupTags(siteGroupId, 0, maxAssetTags, new AssetTagCountComparator());
+		tags = AssetTagServiceUtil.getGroupTags(scopeGroupId, 0, maxAssetTags, new AssetTagCountComparator());
 	}
 
 	if (tags.isEmpty()) {

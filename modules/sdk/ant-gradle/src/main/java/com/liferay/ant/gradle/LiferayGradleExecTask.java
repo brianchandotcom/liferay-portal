@@ -18,6 +18,7 @@ import java.io.File;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.Environment.Variable;
 
 /**
  * @author Andrea Di Giorgi
@@ -27,6 +28,8 @@ public class LiferayGradleExecTask extends GradleExecTask {
 	@Override
 	public void execute() throws BuildException {
 		_addArguments();
+
+		_addEnvironmentVariables();
 
 		super.execute();
 	}
@@ -52,6 +55,10 @@ public class LiferayGradleExecTask extends GradleExecTask {
 		_portalPreBuild = portalPreBuild;
 	}
 
+	public void setWebsphereHome(String websphereHome) {
+		_websphereHome = websphereHome;
+	}
+
 	private void _addArguments() {
 		Project project = getProject();
 
@@ -74,8 +81,31 @@ public class LiferayGradleExecTask extends GradleExecTask {
 		addArgument("-Dportal.pre.build=" + _portalPreBuild);
 	}
 
+	private void _addEnvironmentVariables() {
+		addEnv(_getWebsphereHomeVar());
+	}
+
+	private Variable _getWebsphereHomeVar() {
+		String value;
+		Variable websphereHomeVar = new Variable();
+
+		websphereHomeVar.setKey("WAS_HOME");
+
+		if (_websphereHome == null) {
+			value = getProject().getProperty("app.server.websphere.dir");
+		}
+		else {
+			value = _websphereHome;
+		}
+
+		websphereHomeVar.setValue(value);
+
+		return websphereHomeVar;
+	}
+
 	private boolean _forcedCacheEnabled = true;
 	private boolean _portalBuild = true;
 	private boolean _portalPreBuild;
+	private String _websphereHome;
 
 }

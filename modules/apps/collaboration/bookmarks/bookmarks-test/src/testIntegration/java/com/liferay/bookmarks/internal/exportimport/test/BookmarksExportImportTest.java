@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.lar.test;
+package com.liferay.bookmarks.internal.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;

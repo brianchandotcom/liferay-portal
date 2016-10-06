@@ -146,7 +146,7 @@ public class NodePlugin implements Plugin<Project> {
 			project, NPM_INSTALL_TASK_NAME, NpmInstallTask.class);
 
 		npmInstallTask.setDescription(
-			"Install Node packages from package.json.");
+			"Installs Node packages from package.json.");
 
 		return npmInstallTask;
 	}

@@ -25,10 +25,13 @@ import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
@@ -36,6 +39,8 @@ import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.net.MalformedURLException;
@@ -45,12 +50,17 @@ import java.net.URLClassLoader;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import javax.sql.DataSource;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -60,6 +70,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.mock.web.MockServletContext;
 
 /**
@@ -105,8 +116,20 @@ public class PACLTestRule implements TestRule {
 	}
 
 	protected void afterClass(
-		Description description, HotDeployEvent hotDeployEvent,
-		PortletContextLoaderListener portletContextLoaderListener) {
+			Description description, HotDeployEvent hotDeployEvent,
+			PortletContextLoaderListener portletContextLoaderListener)
+		throws Exception {
+
+		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
+			(LazyConnectionDataSourceProxy)InfrastructureUtil.getDataSource();
+
+		DataSource paclDataSource =
+			lazyConnectionDataSourceProxy.getTargetDataSource();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			paclDataSource.getClass(), "_dataSource");
+
+		field.set(paclDataSource, _originalDataSource);
 
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
 
@@ -129,7 +152,7 @@ public class PACLTestRule implements TestRule {
 	protected HotDeployEvent beforeClass(
 			Description description,
 			PortletContextLoaderListener portletContextLoaderListener)
-		throws ReflectiveOperationException {
+		throws Exception {
 
 		_testClass = _loadTestClass(description.getTestClass());
 
@@ -183,7 +206,118 @@ public class PACLTestRule implements TestRule {
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 
+		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
+			(LazyConnectionDataSourceProxy)InfrastructureUtil.getDataSource();
+
+		DataSource paclDataSource =
+			lazyConnectionDataSourceProxy.getTargetDataSource();
+
+		Field field = ReflectionUtil.getDeclaredField(
+			paclDataSource.getClass(), "_dataSource");
+
+		_originalDataSource = (DataSource)field.get(paclDataSource);
+
+		field.set(paclDataSource, getDummyDataSource());
+
 		return hotDeployEvent;
+	}
+
+	protected DataSource getDummyDataSource() {
+		Class<?> clazz = PACLTestRule.class;
+
+		final ClassLoader classLoader = clazz.getClassLoader();
+
+		final java.sql.Statement statment =
+			(java.sql.Statement)ProxyUtil.newProxyInstance(
+				classLoader, new Class<?>[] {java.sql.Statement.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+							Object proxy, Method method, Object[] args)
+						throws Throwable {
+
+						String methodName = method.getName();
+
+						if (methodName.equals("execute")) {
+							return Boolean.TRUE;
+						}
+						else if (methodName.equals("executeUpdate")) {
+							return Integer.MAX_VALUE;
+						}
+
+						return null;
+					}
+
+				});
+
+		final PreparedStatement preparedStatement =
+			(PreparedStatement)ProxyUtil.newProxyInstance(
+				classLoader, new Class<?>[] {PreparedStatement.class},
+				new InvocationHandler() {
+
+					@Override
+					public Object invoke(
+							Object proxy, Method method, Object[] args)
+						throws Throwable {
+
+						String methodName = method.getName();
+
+						if (methodName.equals("execute")) {
+							return Boolean.TRUE;
+						}
+						else if (methodName.equals("executeUpdate")) {
+							return Integer.MAX_VALUE;
+						}
+
+						return null;
+					}
+
+				});
+
+		final Connection connection = (Connection)ProxyUtil.newProxyInstance(
+			classLoader, new Class<?>[] {Connection.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(Object proxy, Method method, Object[] args)
+					throws Throwable {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("createStatement")) {
+						return statment;
+					}
+					else if (methodName.equals("prepareStatement")) {
+						return preparedStatement;
+					}
+					else if (methodName.equals("getAutoCommit")) {
+						return Boolean.TRUE;
+					}
+
+					return null;
+				}
+
+			});
+
+		return (DataSource)ProxyUtil.newProxyInstance(
+			classLoader, new Class<?>[] {DataSource.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("getConnection")) {
+						return connection;
+					}
+
+					return null;
+				}
+
+			});
 	}
 
 	protected HotDeployEvent getHotDeployEvent(
@@ -261,6 +395,7 @@ public class PACLTestRule implements TestRule {
 	}
 
 	private Object _instance;
+	private DataSource _originalDataSource;
 	private Class<?> _testClass;
 
 	private static class PACLClassLoader extends URLClassLoader {

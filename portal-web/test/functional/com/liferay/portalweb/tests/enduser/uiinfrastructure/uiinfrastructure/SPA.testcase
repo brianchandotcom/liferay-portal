@@ -20,6 +20,8 @@
 	</tear-down>
 
 	<command name="Smoke" priority="5">
+		<property name="portal.acceptance" value="pending" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

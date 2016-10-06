@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.lar.test;
+package com.liferay.mobile.device.rules.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.mobile.device.rules.model.MDRAction;

@@ -12,27 +12,22 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.lar.test;
+package com.liferay.mobile.device.rules.internal.exportimport.data.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
 import com.liferay.mobile.device.rules.util.test.MDRTestUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +43,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class MDRRuleGroupInstanceStagedModelDataHandlerTest
+public class MDRRuleStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
@@ -58,24 +53,6 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE,
 			TransactionalTestRule.INSTANCE);
-
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-
-		layout = LayoutTestUtil.addLayout(stagingGroup);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setUuid(layout.getUuid());
-
-		LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), liveGroup.getGroupId(),
-			layout.getPrivateLayout(), layout.getParentLayoutId(),
-			layout.getName(), layout.getTitle(), layout.getDescription(),
-			layout.getType(), layout.getHidden(), layout.getFriendlyURL(),
-			serviceContext);
-	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -95,8 +72,8 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 
 	@Override
 	protected StagedModel addStagedModel(
-			Group group,
-			Map<String, List<StagedModel>> dependentStagedModelsMap)
+			Group group, Map<String,
+			List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
@@ -104,17 +81,14 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 
 		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
 
-		return MDRTestUtil.addRuleGroupInstance(
-			group.getGroupId(), Layout.class.getName(), layout.getPlid(),
-			ruleGroup.getRuleGroupId());
+		return MDRTestUtil.addRule(ruleGroup.getRuleGroupId());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return MDRRuleGroupInstanceLocalServiceUtil.
-				getMDRRuleGroupInstanceByUuidAndGroupId(
-					uuid, group.getGroupId());
+			return MDRRuleLocalServiceUtil.getMDRRuleByUuidAndGroupId(
+				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -123,7 +97,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return MDRRuleGroupInstance.class;
+		return MDRRule.class;
 	}
 
 	@Override
@@ -150,16 +124,13 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 
 		super.validateImportedStagedModel(stagedModel, importedStagedModel);
 
-		MDRRuleGroupInstance ruleGroupInstance =
-			(MDRRuleGroupInstance)stagedModel;
-		MDRRuleGroupInstance importedRuleGroupInstance =
-			(MDRRuleGroupInstance)importedStagedModel;
+		MDRRule rule = (MDRRule)stagedModel;
+		MDRRule importedRule = (MDRRule)importedStagedModel;
 
+		Assert.assertEquals(rule.getName(), importedRule.getName());
 		Assert.assertEquals(
-			ruleGroupInstance.getPriority(),
-			importedRuleGroupInstance.getPriority());
+			rule.getDescription(), importedRule.getDescription());
+		Assert.assertEquals(rule.getType(), importedRule.getType());
 	}
-
-	protected Layout layout;
 
 }

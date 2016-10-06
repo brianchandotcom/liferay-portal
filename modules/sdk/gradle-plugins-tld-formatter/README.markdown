@@ -1,6 +1,6 @@
 # TLD Formatter Gradle Plugin
 
-The TLD Formatter Gradle plugin allows you to format project TLD files using the
+The TLD Formatter Gradle plugin lets you format a project's TLD files using the
 [Liferay TLD Formatter](https://github.com/liferay/liferay-portal/tree/master/modules/util/tld-formatter)
 tool.
 

@@ -363,11 +363,14 @@ contains the marker file `.lfrbuild-missing-resources-importer`.
 ## 1.2.42 - 2016-10-05
 
 ### Added
-- [LPS-66396]: By setting the following system properties to `true`, it is now
-possible to exclude specific project types from the build:
-	- `build.exclude.ant.plugin` to exclude all the projects that contain a `build.xml` file from the build
-	- `build.exclude.module` to exclude all the projects that contain a `bnd.bnd` file from the build
-	- `build.exclude.theme` to exclude all the project that contain a `gulpfile.js` file from the build
+- [LPS-66396]: Exclude specific project types from the build by setting the
+following system properties to `true`:
+	- `build.exclude.ant.plugin` to exclude all projects that contain a
+	`build.xml` file from the build.
+	- `build.exclude.module` to exclude all projects that contain a `bnd.bnd`
+	file from the build.
+	- `build.exclude.theme` to exclude all projects that contain a `gulpfile.js`
+	file from the build.
 
 ### Removed
 - [LPS-66396]: The `modules.only.build` system property is no longer available.

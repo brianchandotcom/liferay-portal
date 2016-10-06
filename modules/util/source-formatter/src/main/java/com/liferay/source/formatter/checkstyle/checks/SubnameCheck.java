@@ -14,13 +14,10 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
-
-import java.util.List;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
 
 /**
  * @author Hugo Huijser
@@ -51,7 +48,7 @@ public class SubnameCheck extends AbstractCheck {
 
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
 			if (name.matches("(^_?sub|.*Sub)[A-Z].*") &&
-				!_hasAnnotation(detailAST, "Override")) {
+				!AnnotationUtility.containsAnnotation(detailAST, "Override")) {
 
 				log(detailAST.getLineNo(), MSG_METHOD_INVALID_NAME, name);
 			}
@@ -64,23 +61,6 @@ public class SubnameCheck extends AbstractCheck {
 				log(detailAST.getLineNo(), MSG_VARIABLE_INVALID_NAME, name);
 			}
 		}
-	}
-
-	private boolean _hasAnnotation(DetailAST detailAST, String annotationName) {
-		List<DetailAST> annotationASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, TokenTypes.ANNOTATION, true);
-
-		for (DetailAST annotationAST : annotationASTList) {
-			DetailAST nameAST = annotationAST.findFirstToken(TokenTypes.IDENT);
-
-			String name = nameAST.getText();
-
-			if (name.equals(annotationName)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 }

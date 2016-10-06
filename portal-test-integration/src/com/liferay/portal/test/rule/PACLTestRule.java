@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -115,21 +116,43 @@ public class PACLTestRule implements TestRule {
 		};
 	}
 
+	public static class PACLTestRuleThreadLocal {
+
+		public static boolean isDummyDataSourceEnabled() {
+			return _dummyDataSourceEnabled.get();
+		}
+
+		public static void setDummyDataSourceEnabled(
+			boolean dummyDataSourceEnabled) {
+
+			_dummyDataSourceEnabled.set(dummyDataSourceEnabled);
+		}
+
+		private static final ThreadLocal<Boolean> _dummyDataSourceEnabled =
+			new InitialThreadLocal<>(
+				PACLTestRuleThreadLocal.class + "._dummyDataSourceEnabled",
+				false);
+
+	}
+
 	protected void afterClass(
 			Description description, HotDeployEvent hotDeployEvent,
 			PortletContextLoaderListener portletContextLoaderListener)
 		throws Exception {
 
-		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
-			(LazyConnectionDataSourceProxy)InfrastructureUtil.getDataSource();
+		if (PACLTestRuleThreadLocal.isDummyDataSourceEnabled()) {
+			LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
+				(LazyConnectionDataSourceProxy)
+					InfrastructureUtil.getDataSource();
 
-		DataSource paclDataSource =
-			lazyConnectionDataSourceProxy.getTargetDataSource();
+			DataSource paclDataSource =
+				lazyConnectionDataSourceProxy.getTargetDataSource();
 
-		Field field = ReflectionUtil.getDeclaredField(
-			paclDataSource.getClass(), "_dataSource");
+			Field field = ReflectionUtil.getDeclaredField(
+				paclDataSource.getClass(), "_dataSource");
 
-		field.set(paclDataSource, _originalDataSource);
+			field.set(paclDataSource, _originalDataSource);
+		}
 
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
 
@@ -206,18 +229,21 @@ public class PACLTestRule implements TestRule {
 			PortletClassLoaderUtil.setServletContextName(null);
 		}
 
-		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
-			(LazyConnectionDataSourceProxy)InfrastructureUtil.getDataSource();
+		if (PACLTestRuleThreadLocal.isDummyDataSourceEnabled()) {
+			LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
+				(LazyConnectionDataSourceProxy)
+					InfrastructureUtil.getDataSource();
 
-		DataSource paclDataSource =
-			lazyConnectionDataSourceProxy.getTargetDataSource();
+			DataSource paclDataSource =
+				lazyConnectionDataSourceProxy.getTargetDataSource();
 
-		Field field = ReflectionUtil.getDeclaredField(
-			paclDataSource.getClass(), "_dataSource");
+			Field field = ReflectionUtil.getDeclaredField(
+				paclDataSource.getClass(), "_dataSource");
 
-		_originalDataSource = (DataSource)field.get(paclDataSource);
+			_originalDataSource = (DataSource)field.get(paclDataSource);
 
-		field.set(paclDataSource, getDummyDataSource());
+			field.set(paclDataSource, getDummyDataSource());
+		}
 
 		return hotDeployEvent;
 	}

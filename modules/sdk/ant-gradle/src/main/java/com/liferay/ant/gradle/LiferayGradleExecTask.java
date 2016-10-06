@@ -54,8 +54,8 @@ public class LiferayGradleExecTask extends GradleExecTask {
 		_portalPreBuild = portalPreBuild;
 	}
 
-	public void setWebsphereHome(String websphereHome) {
-		_websphereHome = websphereHome;
+	public void setWebsphereHomeDir(String websphereHomeDir) {
+		_websphereHomeDir = websphereHomeDir;
 	}
 
 	private void _addArguments() {
@@ -81,30 +81,33 @@ public class LiferayGradleExecTask extends GradleExecTask {
 	}
 
 	private void _addEnvironmentVariables() {
-		addEnv(_getWebsphereHomeVar());
+		String websphereHomeDir = _getWebsphereHomeDir();
+
+		if ((websphereHomeDir != null) && !websphereHomeDir.isEmpty()) {
+			Variable variable = new Variable();
+
+			variable.setKey("WAS_HOME");
+			variable.setValue(websphereHomeDir);
+
+			addEnv(variable);
+		}
 	}
 
-	private Variable _getWebsphereHomeVar() {
-		String value;
-		Variable websphereHomeVar = new Variable();
+	private String _getWebsphereHomeDir() {
+		String websphereHomeDir = _websphereHomeDir;
 
-		websphereHomeVar.setKey("WAS_HOME");
+		if ((websphereHomeDir == null) || websphereHomeDir.isEmpty()) {
+			Project project = getProject();
 
-		if (_websphereHome == null) {
-			value = getProject().getProperty("app.server.websphere.dir");
-		}
-		else {
-			value = _websphereHome;
+			websphereHomeDir = project.getProperty("app.server.websphere.dir");
 		}
 
-		websphereHomeVar.setValue(value);
-
-		return websphereHomeVar;
+		return websphereHomeDir;
 	}
 
 	private boolean _forcedCacheEnabled = true;
 	private boolean _portalBuild = true;
 	private boolean _portalPreBuild;
-	private String _websphereHome;
+	private String _websphereHomeDir;
 
 }

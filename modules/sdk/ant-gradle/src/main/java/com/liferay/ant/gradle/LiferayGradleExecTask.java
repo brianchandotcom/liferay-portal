@@ -28,7 +28,6 @@ public class LiferayGradleExecTask extends GradleExecTask {
 	@Override
 	public void execute() throws BuildException {
 		_addArguments();
-
 		_addEnvironmentVariables();
 
 		super.execute();

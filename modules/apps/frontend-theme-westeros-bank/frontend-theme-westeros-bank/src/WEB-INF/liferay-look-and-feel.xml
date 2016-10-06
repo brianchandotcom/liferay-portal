@@ -15,12 +15,12 @@
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>
-		<portlet-decorator id="solid" name="Solid">
-			<portlet-decorator-css-class>portlet-solid</portlet-decorator-css-class>
-		</portlet-decorator>
 		<portlet-decorator id="decorate" name="Decorate">
 			<default-portlet-decorator>true</default-portlet-decorator>
 			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="solid" name="Solid">
+			<portlet-decorator-css-class>portlet-solid</portlet-decorator-css-class>
 		</portlet-decorator>
 		<layout-templates>
 			<custom>

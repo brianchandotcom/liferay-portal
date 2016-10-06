@@ -1645,12 +1645,14 @@ public class FileSystemImporter extends BaseImporter {
 				}
 				catch (SearchException se) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Cannot index entry: className=" +
-								JournalArticle.class.getName() +
-								", primaryKey=" +
-								journalArticle.getPrimaryKey(),
-							se);
+						StringBundler sb = new StringBundler();
+
+						sb.append("Cannot index entry: className=");
+						sb.append(JournalArticle.class.getName());
+						sb.append(", primaryKey=");
+						sb.append(journalArticle.getPrimaryKey());
+
+						_log.warn(sb.toString(), se);
 					}
 				}
 			}

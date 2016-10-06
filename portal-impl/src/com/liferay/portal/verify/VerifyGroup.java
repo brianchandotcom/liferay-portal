@@ -137,11 +137,17 @@ public class VerifyGroup extends VerifyProcess {
 						String screenName = user.getScreenName();
 
 						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Updating user screen name " + screenName +
-									" to " + userId + " because it is " +
-									"generating an invalid friendly URL " +
-									friendlyURL);
+							StringBundler sb = new StringBundler(7);
+
+							sb.append("Updating user screen name ");
+							sb.append(screenName);
+							sb.append(" to ");
+							sb.append(userId);
+							sb.append(" because it is generating an invalid ");
+							sb.append("friendly URL ");
+							sb.append(friendlyURL);
+
+							_log.warn(sb.toString());
 						}
 
 						UserLocalServiceUtil.updateScreenName(

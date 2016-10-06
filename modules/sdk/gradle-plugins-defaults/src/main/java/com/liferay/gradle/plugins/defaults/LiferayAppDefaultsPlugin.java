@@ -36,6 +36,7 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
+import org.gradle.external.javadoc.StandardJavadocDocletOptions;
 
 /**
  * @author Andrea Di Giorgi
@@ -135,16 +136,29 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	protected void configureTaskAppJavadoc(
 		Project project, String appTitle, String appVersion) {
 
-		if (Validator.isNull(appTitle) || Validator.isNull(appVersion)) {
-			return;
-		}
-
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME);
 
-		String title = String.format("%s %s API", appTitle, appVersion);
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
 
-		javadoc.setTitle(title);
+		if (portalRootDir != null) {
+			File stylesheetFile = new File(
+				portalRootDir, "tools/styles/javadoc.css");
+
+			if (stylesheetFile.exists()) {
+				StandardJavadocDocletOptions standardJavadocDocletOptions =
+					(StandardJavadocDocletOptions)javadoc.getOptions();
+
+				standardJavadocDocletOptions.setStylesheetFile(stylesheetFile);
+			}
+		}
+
+		if (Validator.isNotNull(appTitle) && Validator.isNotNull(appVersion)) {
+			String title = String.format("%s %s API", appTitle, appVersion);
+
+			javadoc.setTitle(title);
+		}
 	}
 
 	protected String getAppJavadocGroupName(Project project) {

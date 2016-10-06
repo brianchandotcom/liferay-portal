@@ -3,6 +3,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
-	testIntegrationCompile project(":apps:friendly-url:friendly-url-api")
-	testIntegrationCompile project(":apps:friendly-url:friendly-url-service")
+	testIntegrationCompile project(":apps:foundation:friendly-url:friendly-url-api")
+	testIntegrationCompile project(":apps:foundation:friendly-url:friendly-url-service")
 }

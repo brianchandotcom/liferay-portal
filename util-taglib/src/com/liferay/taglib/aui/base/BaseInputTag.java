@@ -125,10 +125,6 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		return _label;
 	}
 
-	public boolean getLocalizeLabel() {
-		return _localizeLabel;
-	}
-
 	public java.lang.String getLanguageId() {
 		return _languageId;
 	}
@@ -141,16 +137,20 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		return _localized;
 	}
 
+	public boolean getLocalizeLabel() {
+		return _localizeLabel;
+	}
+
 	public java.lang.Object getMax() {
 		return _max;
 	}
 
-	public java.lang.Class<?> getModel() {
-		return _model;
-	}
-
 	public java.lang.Object getMin() {
 		return _min;
+	}
+
+	public java.lang.Class<?> getModel() {
+		return _model;
 	}
 
 	public boolean getMultiple() {
@@ -355,12 +355,6 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		setScopedAttribute("label", label);
 	}
 
-	public void setLocalizeLabel(boolean localizeLabel) {
-		_localizeLabel = localizeLabel;
-
-		setScopedAttribute("localizeLabel", localizeLabel);
-	}
-
 	public void setLanguageId(java.lang.String languageId) {
 		_languageId = languageId;
 
@@ -379,22 +373,28 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		setScopedAttribute("localized", localized);
 	}
 
+	public void setLocalizeLabel(boolean localizeLabel) {
+		_localizeLabel = localizeLabel;
+
+		setScopedAttribute("localizeLabel", localizeLabel);
+	}
+
 	public void setMax(java.lang.Object max) {
 		_max = max;
 
 		setScopedAttribute("max", max);
 	}
 
-	public void setModel(java.lang.Class<?> model) {
-		_model = model;
-
-		setScopedAttribute("model", model);
-	}
-
 	public void setMin(java.lang.Object min) {
 		_min = min;
 
 		setScopedAttribute("min", min);
+	}
+
+	public void setModel(java.lang.Class<?> model) {
+		_model = model;
+
+		setScopedAttribute("model", model);
 	}
 
 	public void setMultiple(boolean multiple) {
@@ -520,13 +520,13 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		_inlineField = false;
 		_inlineLabel = null;
 		_label = null;
-		_localizeLabel = true;
 		_languageId = null;
 		_last = false;
 		_localized = false;
+		_localizeLabel = true;
 		_max = null;
-		_model = null;
 		_min = null;
+		_model = null;
 		_multiple = false;
 		_name = null;
 		_onChange = null;
@@ -575,13 +575,13 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 		setNamespacedAttribute(request, "inlineField", _inlineField);
 		setNamespacedAttribute(request, "inlineLabel", _inlineLabel);
 		setNamespacedAttribute(request, "label", _label);
-		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "languageId", _languageId);
 		setNamespacedAttribute(request, "last", _last);
 		setNamespacedAttribute(request, "localized", _localized);
+		setNamespacedAttribute(request, "localizeLabel", _localizeLabel);
 		setNamespacedAttribute(request, "max", _max);
-		setNamespacedAttribute(request, "model", _model);
 		setNamespacedAttribute(request, "min", _min);
+		setNamespacedAttribute(request, "model", _model);
 		setNamespacedAttribute(request, "multiple", _multiple);
 		setNamespacedAttribute(request, "name", _name);
 		setNamespacedAttribute(request, "onChange", _onChange);
@@ -628,13 +628,13 @@ public abstract class BaseInputTag extends com.liferay.taglib.BaseValidatorTagSu
 	private boolean _inlineField = false;
 	private java.lang.String _inlineLabel = null;
 	private java.lang.String _label = null;
-	private boolean _localizeLabel = true;
 	private java.lang.String _languageId = null;
 	private boolean _last = false;
 	private boolean _localized = false;
+	private boolean _localizeLabel = true;
 	private java.lang.Object _max = null;
-	private java.lang.Class<?> _model = null;
 	private java.lang.Object _min = null;
+	private java.lang.Class<?> _model = null;
 	private boolean _multiple = false;
 	private java.lang.String _name = null;
 	private java.lang.String _onChange = null;

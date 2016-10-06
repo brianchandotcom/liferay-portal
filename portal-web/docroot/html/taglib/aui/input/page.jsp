@@ -35,9 +35,9 @@
 		</c:if>
 
 		<c:if test='<%= required && showRequiredLabel && !type.equals("radio") %>'>
-			<span class="icon-asterisk text-warning">
-				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-			</span>
+			<aui:icon cssClass="text-warning" image="asterisk" markupView="lexicon" />
+
+			<span class="hide-accessible"><liferay-ui:message key="required" /></span>
 		</c:if>
 
 		<c:if test='<%= Validator.isNotNull(helpMessage) && !type.equals("toggle-switch") %>'>

@@ -1157,6 +1157,11 @@ public class JavaClass {
 				}
 
 				javaTermName = (String)tuple.getObject(0);
+
+				if (!Validator.isVariableName(javaTermName)) {
+					return Collections.emptySet();
+				}
+
 				javaTermStartPosition = javaTermEndPosition;
 				javaTermType = (Integer)tuple.getObject(1);
 

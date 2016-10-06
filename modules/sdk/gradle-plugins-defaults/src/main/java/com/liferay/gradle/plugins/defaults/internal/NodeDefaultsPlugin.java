@@ -31,10 +31,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
-		nodeExtension.setNodeVersion(_NODE_VERSION);
+		_configureNode(project);
 	}
 
 	@Override
@@ -43,6 +40,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private NodeDefaultsPlugin() {
+	}
+
+	private void _configureNode(Project project) {
+		NodeExtension nodeExtension = GradleUtil.getExtension(
+			project, NodeExtension.class);
+
+		nodeExtension.setNodeVersion(_NODE_VERSION);
 	}
 
 	private static final String _NODE_VERSION = "6.6.0";

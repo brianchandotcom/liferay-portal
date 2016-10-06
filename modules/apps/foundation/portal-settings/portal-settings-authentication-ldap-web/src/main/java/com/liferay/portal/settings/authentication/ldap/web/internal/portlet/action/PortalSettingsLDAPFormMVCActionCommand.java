@@ -76,6 +76,11 @@ public class PortalSettingsLDAPFormMVCActionCommand
 			themeDisplay.getCompanyId(), LDAPConstants.AUTH_ENABLED,
 			LDAPConstants.AUTH_REQUIRED, LDAPConstants.PASSWORD_POLICY_ENABLED);
 
+		updateStringProperties(
+			actionRequest, _ldapAuthConfigurationProvider,
+			themeDisplay.getCompanyId(), LDAPConstants.AUTH_METHOD,
+			LDAPConstants.PASSWORD_ENCRYPTION_ALGORITHM);
+
 		updateBooleanProperties(
 			actionRequest, _ldapExportConfigurationProvider,
 			themeDisplay.getCompanyId(), LDAPConstants.EXPORT_ENABLED);
@@ -155,6 +160,24 @@ public class PortalSettingsLDAPFormMVCActionCommand
 
 		for (String propertyName : propertyNames) {
 			boolean value = ParamUtil.getBoolean(
+				actionRequest, "ldap--" + propertyName + "--");
+
+			properties.put(propertyName, value);
+		}
+
+		configurationProvider.updateProperties(companyId, properties);
+	}
+
+	protected void updateStringProperties(
+		ActionRequest actionRequest,
+		ConfigurationProvider<?> configurationProvider, long companyId,
+		String... propertyNames) {
+
+		Dictionary<String, Object> properties =
+			configurationProvider.getConfigurationProperties(companyId);
+
+		for (String propertyName : propertyNames) {
+			String value = ParamUtil.getString(
 				actionRequest, "ldap--" + propertyName + "--");
 
 			properties.put(propertyName, value);

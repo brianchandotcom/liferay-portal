@@ -1,0 +1,19 @@
+<definition>
+	<command name="gotoRoleType">
+		<if>
+			<equals arg1="${roleType}" arg2="Organization" />
+			<then>
+				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION_ROLES" value1="Organization Roles" />
+			</then>
+			<elseif>
+				<equals arg1="${roleType}" arg2="Site" />
+				<then>
+					<execute function="AssertClick" locator1="MenuItem#SITE_ROLES" value1="Site Roles" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertClick" locator1="MenuItem#REGULAR_ROLES" value1="Regular Roles" />
+			</else>
+		</if>
+	</command>
+</definition>

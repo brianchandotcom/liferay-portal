@@ -117,6 +117,8 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 		String shrinkwrapJson = JsonOutput.prettyPrint(
 			JsonOutput.toJson(shrinkwrap));
 
+		shrinkwrapJson = shrinkwrapJson.replace("    ", "\t");
+
 		Files.write(
 			shrinkwrapJsonFile.toPath(),
 			shrinkwrapJson.getBytes(StandardCharsets.UTF_8));

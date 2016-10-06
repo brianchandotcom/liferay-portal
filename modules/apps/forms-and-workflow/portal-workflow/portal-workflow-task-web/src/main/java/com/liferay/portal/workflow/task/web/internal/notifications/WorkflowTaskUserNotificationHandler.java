@@ -21,12 +21,17 @@ import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.workflow.task.web.internal.permission.WorkflowTaskPermissionChecker;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,7 +67,7 @@ public class WorkflowTaskUserNotificationHandler
 		WorkflowTask workflowTask = WorkflowTaskManagerUtil.fetchWorkflowTask(
 			serviceContext.getCompanyId(), workflowTaskId);
 
-		if (workflowTask == null) {
+		if (!isWorkflowTaskVisible(workflowTask, serviceContext)) {
 			_userNotificationEventLocalService.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
@@ -96,6 +101,27 @@ public class WorkflowTaskUserNotificationHandler
 			workflowTaskId, serviceContext);
 	}
 
+	protected boolean isWorkflowTaskVisible(
+		WorkflowTask workflowTask, ServiceContext serviceContext) {
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+		long groupId = MapUtil.getLong(
+				workflowTask.getOptionalAttributes(), "groupId",
+				themeDisplay.getSiteGroupId());
+
+		boolean isVisible = true;
+
+		if (Objects.isNull(workflowTask) ||
+			!_workflowTaskPermissionChecker.hasPermission(
+				groupId, workflowTask, themeDisplay.getPermissionChecker())) {
+
+			isVisible = false;
+		}
+
+		return isVisible;
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserNotificationEventLocalService(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
@@ -105,5 +131,7 @@ public class WorkflowTaskUserNotificationHandler
 
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
+	private final WorkflowTaskPermissionChecker _workflowTaskPermissionChecker =
+		new WorkflowTaskPermissionChecker();
 
 }

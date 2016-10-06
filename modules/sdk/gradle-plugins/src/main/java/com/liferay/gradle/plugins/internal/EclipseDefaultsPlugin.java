@@ -22,6 +22,7 @@ import groovy.lang.Closure;
 import java.util.Iterator;
 import java.util.List;
 
+import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.plugins.ide.api.FileContentMerger;
@@ -37,15 +38,25 @@ import org.gradle.plugins.ide.eclipse.model.EclipseModel;
  */
 public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 
+	public static final Plugin<Project> INSTANCE = new EclipseDefaultsPlugin();
+
 	@Override
 	protected void configureDefaults(
 		Project project, EclipsePlugin eclipsePlugin) {
 
-		configureEclipseClasspathFile(project);
-		configureTaskEclipse(project, eclipsePlugin);
+		_configureEclipseClasspathFile(project);
+		_configureTaskEclipse(eclipsePlugin);
 	}
 
-	protected void configureEclipseClasspathFile(Project project) {
+	@Override
+	protected Class<EclipsePlugin> getPluginClass() {
+		return EclipsePlugin.class;
+	}
+
+	private EclipseDefaultsPlugin() {
+	}
+
+	private void _configureEclipseClasspathFile(Project project) {
 		EclipseModel eclipseModel = GradleUtil.getExtension(
 			project, EclipseModel.class);
 
@@ -85,17 +96,10 @@ public class EclipseDefaultsPlugin extends BaseDefaultsPlugin<EclipsePlugin> {
 		fileContentMerger.whenMerged(closure);
 	}
 
-	protected void configureTaskEclipse(
-		Project project, EclipsePlugin eclipsePlugin) {
-
+	private void _configureTaskEclipse(EclipsePlugin eclipsePlugin) {
 		Task task = eclipsePlugin.getLifecycleTask();
 
 		task.dependsOn(eclipsePlugin.getCleanTask());
-	}
-
-	@Override
-	protected Class<EclipsePlugin> getPluginClass() {
-		return EclipsePlugin.class;
 	}
 
 }

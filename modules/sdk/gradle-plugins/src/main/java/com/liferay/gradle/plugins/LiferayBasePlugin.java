@@ -51,19 +51,19 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		LiferayExtension liferayExtension = addLiferayExtension(project);
+		LiferayExtension liferayExtension = _addLiferayExtension(project);
 
-		GradleUtil.applyPlugin(project, NodeDefaultsPlugin.class);
-		GradleUtil.applyPlugin(project, SourceFormatterDefaultsPlugin.class);
+		NodeDefaultsPlugin.INSTANCE.apply(project);
+		SourceFormatterDefaultsPlugin.INSTANCE.apply(project);
 
-		addConfigurationPortal(project, liferayExtension);
-		addTaskDeploy(project, liferayExtension);
+		_addConfigurationPortal(project, liferayExtension);
+		_addTaskDeploy(project, liferayExtension);
 
-		configureConfigurations(project, liferayExtension);
-		configureTasksDirectDeploy(project, liferayExtension);
+		_configureConfigurations(project, liferayExtension);
+		_configureTasksDirectDeploy(project, liferayExtension);
 	}
 
-	protected Configuration addConfigurationPortal(
+	private Configuration _addConfigurationPortal(
 		final Project project, final LiferayExtension liferayExtension) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -74,7 +74,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					addDependenciesPortal(project, liferayExtension);
+					_addDependenciesPortal(project, liferayExtension);
 				}
 
 			});
@@ -86,7 +86,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected void addDependenciesPortal(
+	private void _addDependenciesPortal(
 		Project project, LiferayExtension liferayExtension) {
 
 		File appServerClassesPortalDir = new File(
@@ -131,7 +131,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		appServer.addAdditionalDependencies(PORTAL_CONFIGURATION_NAME);
 	}
 
-	protected LiferayExtension addLiferayExtension(Project project) {
+	private LiferayExtension _addLiferayExtension(Project project) {
 		LiferayExtension liferayExtension = GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 
@@ -143,7 +143,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		return liferayExtension;
 	}
 
-	protected Copy addTaskDeploy(
+	private Copy _addTaskDeploy(
 		Project project, final LiferayExtension liferayExtension) {
 
 		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
@@ -164,7 +164,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		return copy;
 	}
 
-	protected void configureConfigurations(
+	private void _configureConfigurations(
 		Project project, final LiferayExtension liferayExtension) {
 
 		ConfigurationContainer configurationContainer =
@@ -207,7 +207,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 		configurationContainer.all(action);
 	}
 
-	protected void configureTaskDirectDeploy(
+	private void _configureTaskDirectDeploy(
 		DirectDeployTask directDeployTask,
 		final LiferayExtension liferayExtension) {
 
@@ -252,7 +252,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTasksDirectDeploy(
+	private void _configureTasksDirectDeploy(
 		Project project, final LiferayExtension liferayExtension) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -263,7 +263,7 @@ public class LiferayBasePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DirectDeployTask directDeployTask) {
-					configureTaskDirectDeploy(
+					_configureTaskDirectDeploy(
 						directDeployTask, liferayExtension);
 				}
 

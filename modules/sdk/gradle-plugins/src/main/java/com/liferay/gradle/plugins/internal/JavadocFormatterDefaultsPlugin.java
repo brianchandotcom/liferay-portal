@@ -17,11 +17,17 @@ package com.liferay.gradle.plugins.internal;
 import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 
+import org.gradle.api.Plugin;
+import org.gradle.api.Project;
+
 /**
  * @author Andrea Di Giorgi
  */
 public class JavadocFormatterDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<JavadocFormatterPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new JavadocFormatterDefaultsPlugin();
 
 	@Override
 	protected Class<JavadocFormatterPlugin> getPluginClass() {
@@ -36,6 +42,9 @@ public class JavadocFormatterDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private JavadocFormatterDefaultsPlugin() {
 	}
 
 	private static final String _PORTAL_TOOL_NAME =

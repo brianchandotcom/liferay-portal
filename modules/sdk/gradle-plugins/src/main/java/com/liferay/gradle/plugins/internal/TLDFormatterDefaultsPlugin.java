@@ -17,11 +17,17 @@ package com.liferay.gradle.plugins.internal;
 import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 
+import org.gradle.api.Plugin;
+import org.gradle.api.Project;
+
 /**
  * @author Andrea Di Giorgi
  */
 public class TLDFormatterDefaultsPlugin
 	extends BasePortalToolDefaultsPlugin<TLDFormatterPlugin> {
+
+	public static final Plugin<Project> INSTANCE =
+		new TLDFormatterDefaultsPlugin();
 
 	@Override
 	protected Class<TLDFormatterPlugin> getPluginClass() {
@@ -36,6 +42,9 @@ public class TLDFormatterDefaultsPlugin
 	@Override
 	protected String getPortalToolName() {
 		return _PORTAL_TOOL_NAME;
+	}
+
+	private TLDFormatterDefaultsPlugin() {
 	}
 
 	private static final String _PORTAL_TOOL_NAME = "com.liferay.tld.formatter";

@@ -39,13 +39,14 @@ import org.osgi.service.log.LogService;
  */
 public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 
-	public ServerEndpointConfigWrapper(String path, LogService logService) {
+	public ServerEndpointConfigWrapper(
+		String path, List<Class<? extends Decoder>> decoders,
+		List<Class<? extends Encoder>> encoders, List<String> subprotocols,
+		LogService logService) {
+
 		_logService = logService;
 
-		ServerEndpointConfig.Builder builder =
-			ServerEndpointConfig.Builder.create(Endpoint.class, path);
-
-		_serverEndpointConfig = builder.build();
+		_init(path, decoders, encoders, subprotocols);
 	}
 
 	@Override
@@ -95,6 +96,14 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 		return _serverEndpointConfig.getUserProperties();
 	}
 
+	public void override(
+		List<Class<? extends Decoder>> decoders,
+		List<Class<? extends Encoder>> encoders, List<String> subprotocols) {
+
+		_init(
+			_serverEndpointConfig.getPath(), decoders, encoders, subprotocols);
+	}
+
 	public ServiceObjectsConfigurator removeConfigurator(
 		ServiceReference<Endpoint> reference) {
 
@@ -108,22 +117,7 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 		_endpoints.put(serviceReference, serviceObjectsConfigurator);
 	}
 
-	private final Configurator _configurator =
-		new ServerEndpointConfig.Configurator() {
-
-			@Override
-			public <T> T getEndpointInstance(Class<T> endpointClass) {
-				return (T)new NullEndpoint();
-			}
-
-		};
-
-	private final ConcurrentNavigableMap<ServiceReference<Endpoint>,
-		ServiceObjectsConfigurator> _endpoints = new ConcurrentSkipListMap<>();
-	private final LogService _logService;
-	private final ServerEndpointConfig _serverEndpointConfig;
-
-	private final class NullEndpoint extends Endpoint {
+	public final class NullEndpoint extends Endpoint {
 
 		@Override
 		public void onOpen(Session session, EndpointConfig config) {
@@ -140,5 +134,36 @@ public class ServerEndpointConfigWrapper implements ServerEndpointConfig {
 		}
 
 	}
+
+	private void _init(
+		String path, List<Class<? extends Decoder>> decoders,
+		List<Class<? extends Encoder>> encoders, List<String> subprotocols) {
+
+		ServerEndpointConfig.Builder builder =
+			ServerEndpointConfig.Builder.create(Endpoint.class, path);
+
+		builder.decoders(decoders);
+		builder.encoders(encoders);
+		builder.subprotocols(subprotocols);
+
+		_serverEndpointConfig = builder.build();
+
+		_endpoints = new ConcurrentSkipListMap<>();
+	}
+
+	private final Configurator _configurator =
+		new ServerEndpointConfig.Configurator() {
+
+			@Override
+			public <T> T getEndpointInstance(Class<T> endpointClass) {
+				return (T)new NullEndpoint();
+			}
+
+		};
+
+	private ConcurrentNavigableMap<ServiceReference<Endpoint>,
+		ServiceObjectsConfigurator> _endpoints;
+	private final LogService _logService;
+	private ServerEndpointConfig _serverEndpointConfig;
 
 }

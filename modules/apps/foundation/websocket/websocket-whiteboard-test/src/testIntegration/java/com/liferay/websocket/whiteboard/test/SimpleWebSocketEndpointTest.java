@@ -14,8 +14,8 @@
 
 package com.liferay.websocket.whiteboard.test;
 
-import com.liferay.websocket.whiteboard.test.client.BinaryWebSocketClient;
-import com.liferay.websocket.whiteboard.test.client.TextWebSocketClient;
+import com.liferay.websocket.whiteboard.test.simple.client.BinaryWebSocketClient;
+import com.liferay.websocket.whiteboard.test.simple.client.TextWebSocketClient;
 
 import java.net.URI;
 import java.net.URL;
@@ -41,7 +41,7 @@ import org.junit.runner.RunWith;
  * @author Cristina González
  */
 @RunWith(Arquillian.class)
-public class TestWebSocketEndpointTest {
+public class SimpleWebSocketEndpointTest {
 
 	@RunAsClient
 	@Test

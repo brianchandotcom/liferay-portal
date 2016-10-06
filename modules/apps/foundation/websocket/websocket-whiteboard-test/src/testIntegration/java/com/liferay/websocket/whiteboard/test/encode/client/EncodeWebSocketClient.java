@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.websocket.whiteboard.test.client;
+package com.liferay.websocket.whiteboard.test.encode.client;
+
+import com.liferay.websocket.whiteboard.test.encode.data.Example;
+import com.liferay.websocket.whiteboard.test.encode.data.ExampleDecoder;
+import com.liferay.websocket.whiteboard.test.encode.data.ExampleEncoder;
 
 import java.io.IOException;
-
-import java.nio.ByteBuffer;
 
 import java.util.concurrent.BlockingQueue;
 
 import javax.websocket.ClientEndpoint;
+import javax.websocket.EncodeException;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.RemoteEndpoint.Basic;
@@ -29,18 +32,20 @@ import javax.websocket.Session;
 /**
  * @author Cristina González
  */
-@ClientEndpoint
-public class BinaryWebSocketClient {
+@ClientEndpoint(
+	decoders = ExampleDecoder.class, encoders = ExampleEncoder.class
+)
+public class EncodeWebSocketClient {
 
-	public BinaryWebSocketClient(BlockingQueue<ByteBuffer> blockingQueue) {
+	public EncodeWebSocketClient(BlockingQueue<Example> blockingQueue) {
 		_blockingQueue = blockingQueue;
 	}
 
 	@OnMessage
-	public void onMessage(ByteBuffer byteBuffer, Session session)
+	public void onMessage(Example text, Session session)
 		throws InterruptedException {
 
-		_blockingQueue.put(byteBuffer);
+		_blockingQueue.put(text);
 	}
 
 	@OnOpen
@@ -48,13 +53,13 @@ public class BinaryWebSocketClient {
 		_session = session;
 	}
 
-	public void sendMessage(ByteBuffer byteBuffer) throws IOException {
+	public void sendMessage(Example data) throws EncodeException, IOException {
 		Basic basic = _session.getBasicRemote();
 
-		basic.sendBinary(byteBuffer);
+		basic.sendObject(data);
 	}
 
-	private final BlockingQueue<ByteBuffer> _blockingQueue;
+	private final BlockingQueue<Example> _blockingQueue;
 	private Session _session;
 
 }

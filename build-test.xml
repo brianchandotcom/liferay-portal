@@ -6048,6 +6048,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="marketplace.url" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					marketplace.url=${marketplace.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="osb.lcs.portlet.host.name" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

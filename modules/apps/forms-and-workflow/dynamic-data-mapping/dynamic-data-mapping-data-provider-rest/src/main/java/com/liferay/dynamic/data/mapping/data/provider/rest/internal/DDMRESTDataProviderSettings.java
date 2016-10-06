@@ -29,10 +29,10 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 	rules = {
 		@DDMFormRule(
 			actions = {
-				"setVisible('filterKey', true)",
-				"setRequired('filterKey', true)"
+				"setVisible('filterParameterName', true)",
+				"setRequired('filterParameterName', true)"
 			},
-			condition = "equals(getValue('filter'), true)"
+			condition = "equals(getValue('filterable'), true)"
 		)
 	}
 )
@@ -46,7 +46,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 							size = 12,
 							value = {
 								"url", "key", "value", "username", "password",
-								"filter", "filterKey", "cacheable"
+								"filterable", "filterParameterName", "cacheable"
 							}
 						)
 					}
@@ -64,18 +64,19 @@ public interface DDMRESTDataProviderSettings {
 	public boolean cacheable();
 
 	@DDMFormField(
-			label = "%filter-with-keyword", properties = "showAsSwitcher=true"
+		label = "%support-filtering-by-keyword",
+		properties = "showAsSwitcher=true"
 	)
-	public boolean filter();
+	public boolean filterable();
 
 	@DDMFormField(
-		label = "%filter-key",
+		label = "%filter-parameter-name",
 		properties = {
-			"placeholder=%enter-the-attribute-to-be-used-as-keyword",
-			"tooltip=%the-attribute-whose-value-is-used-as-a-filter"
+			"placeholder=%enter-a-name-that-matches-one-of-the-rest-providers-parameters",
+			"tooltip=%the-parameter-whose-value-will-be-used-as-a-filter-by-the-rest-provider"
 		}
 	)
-	public String filterKey();
+	public String filterParameterName();
 
 	@DDMFormField(
 		label = "%displayed-json-attribute",

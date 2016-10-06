@@ -73,10 +73,10 @@ public class DDMRESTDataProviderTest {
 				"cacheable", Boolean.FALSE.toString()));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"filter", Boolean.FALSE.toString()));
+				"filterable", Boolean.FALSE.toString()));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"filterKey", StringPool.BLANK));
+				"filterParameterName", StringPool.BLANK));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"key", "countryId"));
@@ -129,10 +129,10 @@ public class DDMRESTDataProviderTest {
 				"cacheable", Boolean.FALSE.toString()));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"filter", Boolean.TRUE.toString()));
+				"filterable", Boolean.TRUE.toString()));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
-				"filterKey", "name"));
+				"filterParameterName", "name"));
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
 				"key", "countryId"));
@@ -152,15 +152,15 @@ public class DDMRESTDataProviderTest {
 		DDMDataProviderContext ddmDataProviderContext =
 			new DDMDataProviderContext(ddmFormValues);
 
-		ddmDataProviderContext.addParameter("filterValue", "Brazil");
+		ddmDataProviderContext.addParameter("filterParameterValue", "Brazil");
 
 		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
 			ddmDataProviderContext);
 
 		Assert.assertEquals(1, actualKeyValuePairs.size());
 
-		Assert.assertTrue(
-			actualKeyValuePairs.contains(new KeyValuePair("48", "Brazil")));
+		Assert.assertEquals(
+			new KeyValuePair("48", "Brazil"), actualKeyValuePairs.get(0));
 	}
 
 	protected List<KeyValuePair> createExpectedKeyValuePairs() {

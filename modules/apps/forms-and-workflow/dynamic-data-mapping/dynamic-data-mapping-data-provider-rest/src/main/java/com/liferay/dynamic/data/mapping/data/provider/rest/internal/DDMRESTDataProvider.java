@@ -156,10 +156,10 @@ public class DDMRESTDataProvider
 
 		httpRequest.query(ddmDataProviderContext.getParameters());
 
-		if (ddmRESTDataProviderSettings.filter()) {
+		if (ddmRESTDataProviderSettings.filterable()) {
 			httpRequest.query(
-				ddmRESTDataProviderSettings.filterKey(),
-				ddmDataProviderContext.getParameter("filterValue"));
+				ddmRESTDataProviderSettings.filterParameterName(),
+				ddmDataProviderContext.getParameter("filterParameterValue"));
 		}
 
 		String cacheKey = getCacheKey(httpRequest);

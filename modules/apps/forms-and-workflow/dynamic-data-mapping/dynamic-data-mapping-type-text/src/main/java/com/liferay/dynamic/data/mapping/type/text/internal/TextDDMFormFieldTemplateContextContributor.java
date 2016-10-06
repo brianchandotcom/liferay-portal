@@ -118,7 +118,7 @@ public class TextDDMFormFieldTemplateContextContributor
 		}
 
 		ddmDataProviderContext.addParameter(
-			"filterValue",
+			"filterParameterValue",
 			String.valueOf(ddmFormFieldRenderingContext.getValue()));
 	}
 

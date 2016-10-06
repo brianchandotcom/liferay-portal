@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
@@ -259,13 +260,21 @@ public class ResourcesImporterHotDeployMessageListener
 			importer.importResources();
 
 			if (_log.isInfoEnabled()) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("Importing resources from ");
+				sb.append(servletContext.getServletContextName());
+				sb.append(" to group ");
+				sb.append(importer.getGroupId());
+				sb.append(" takes ");
+
 				long endTime = System.currentTimeMillis() - startTime;
 
-				_log.info(
-					"Importing resources from " +
-						servletContext.getServletContextName() +
-						" to group " + importer.getGroupId() + " takes " +
-							endTime + " ms");
+				sb.append(endTime);
+
+				sb.append(" ms");
+
+				_log.info(sb.toString());
 			}
 
 			Message message = new Message();

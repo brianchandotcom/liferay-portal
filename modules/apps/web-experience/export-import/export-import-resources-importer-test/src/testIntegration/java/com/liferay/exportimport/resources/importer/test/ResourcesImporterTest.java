@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.shrinkwrap.osgi.api.BndProjectBuilder;
@@ -224,12 +225,16 @@ public class ResourcesImporterTest {
 			webArchive,
 			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT" +
 				"/Basic Article.xml");
-		addWebInfResource(
-			webArchive,
-			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT" +
-				"/Basic Web Content Parent Folder" +
-					"/Basic Web Content Child Folder" +
-						"/Basic Article in Child Folder.xml");
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("classes/resources-importer/journal/articles");
+		sb.append("/BASIC_WEB_CONTENT/Basic Web Content Parent Folder");
+		sb.append("/Basic Web Content Child Folder");
+		sb.append("/Basic Article in Child Folder.xml");
+
+		addWebInfResource(webArchive, sb.toString());
+
 		addWebInfResource(
 			webArchive,
 			"classes/resources-importer/journal/articles/BASIC_WEB_CONTENT" +

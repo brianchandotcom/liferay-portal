@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.checkstyle.util;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -183,6 +185,22 @@ public class DetailASTUtil {
 		}
 
 		return startLine;
+	}
+
+	public static boolean hasParentWithTokenType(
+		DetailAST detailAST, int... tokenTypes) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (parentAST != null) {
+			if (ArrayUtil.contains(tokenTypes, parentAST.getType())) {
+				return true;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+
+		return false;
 	}
 
 	public static boolean isCollection(DetailAST detailAST) {

@@ -312,12 +312,16 @@ public class InstrumentationAgent {
 		if ((classData.getBranchCoverageRate() != 1.0) ||
 			(classData.getLineCoverageRate() != 1.0)) {
 
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("%n[Whip] %s is not fully covered.%n[Whip]Branch ");
+			sb.append("coverage rate : %.2f, line coverage rate : ");
+			sb.append("%.2f.%n[Whip]Please rerun test with ");
+			sb.append("-Djunit.code.coverage=true to see coverage report.%n");
+
 			System.out.printf(
-				"%n[Whip] %s is not fully covered.%n[Whip]Branch coverage " +
-					"rate : %.2f, line coverage rate : %.2f.%n[Whip]Please " +
-						"rerun test with -Djunit.code.coverage=true to see " +
-							"coverage report.%n",
-				classData.getName(), classData.getBranchCoverageRate(),
+				sb.toString(), classData.getName(),
+				classData.getBranchCoverageRate(),
 				classData.getLineCoverageRate());
 
 			for (LineData lineData : classData.getLines()) {

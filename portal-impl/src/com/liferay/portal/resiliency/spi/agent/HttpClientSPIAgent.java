@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.ReadOnlyServletResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.InetAddressUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -70,11 +71,17 @@ public class HttpClientSPIAgent implements SPIAgent {
 		socketBlockingQueue = new ArrayBlockingQueue<>(
 			PropsValues.PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE);
 
-		String httpServletRequestContentString =
-			"POST " + SPI_AGENT_CONTEXT_PATH + MAPPING_PATTERN +
-				" HTTP/1.1\r\nHost: localhost:" +
-					spiConfiguration.getConnectorPort() + "\r\n" +
-						"Content-Length: 8\r\n\r\n";
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("POST ");
+		sb.append(SPI_AGENT_CONTEXT_PATH);
+		sb.append(MAPPING_PATTERN);
+		sb.append(" HTTP/1.1\r\nHost: localhost:");
+		sb.append(spiConfiguration.getConnectorPort());
+		sb.append("\r\n");
+		sb.append("Content-Length: 8\r\n\r\n");
+
+		String httpServletRequestContentString = sb.toString();
 
 		httpServletRequestContent = httpServletRequestContentString.getBytes(
 			Charset.forName("US-ASCII"));

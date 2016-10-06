@@ -124,12 +124,18 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 			File reportFile = new File(sampleDir, jobCount + "-report.html");
 
-			JenkinsResultsParserUtil.write(
-				reportFile,
-				"<h5 job-result=\"" + jsonObject.getString("result") +
-					"\"><a href=\"" + urlString + "\">" +
-						jobNameMatcher.group("jobName") + "</a></h5>" +
-				project.getProperty("report.html.content"));
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("<h5 job-result=\"");
+			sb.append(jsonObject.getString("result"));
+			sb.append("\"><a href=\"");
+			sb.append(urlString);
+			sb.append("\">");
+			sb.append(jobNameMatcher.group("jobName"));
+			sb.append("</a></h5>");
+			sb.append(project.getProperty("report.html.content"));
+
+			JenkinsResultsParserUtil.write(reportFile, sb.toString());
 
 			if (reportFilesSB.length() > 0) {
 				reportFilesSB.append(" ");

@@ -79,11 +79,15 @@ public class LayoutTemplateLocalServiceImpl
 				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID, standard, themeId);
 
 			if (layoutTemplate == null) {
-				_log.error(
-					"Layout template " + layoutTemplateId +
-						" and default layout template " +
-							PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID +
-								" do not exist");
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Layout template ");
+				sb.append(layoutTemplateId);
+				sb.append(" and default layout template ");
+				sb.append(PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+				sb.append(" do not exist");
+
+				_log.error(sb.toString());
 
 				return StringPool.BLANK;
 			}

@@ -17,6 +17,7 @@ package com.liferay.wiki.internal.translator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -161,15 +162,16 @@ public class MediaWikiToCreoleTranslatorTest {
 			"test1 [[Image:Sample1.png]] test2 [[Image:Sample2.png]] test3 " +
 				"[[Image:Sample3.png]] test4";
 
-		String expected =
-			MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS +
-				"test1 {{SharedImages/sample1.png}} test2 " +
-					"{{SharedImages/sample2.png}} test3 " +
-						"{{SharedImages/sample3.png}} test4";
-		String actual = _mediaWikiToCreoleTranslator.postProcess(
-			_translate(content));
+		StringBundler sb = new StringBundler(4);
 
-		Assert.assertEquals(expected, actual);
+		sb.append(MediaWikiToCreoleTranslator.TABLE_OF_CONTENTS);
+		sb.append("test1 {{SharedImages/sample1.png}} test2 ");
+		sb.append("{{SharedImages/sample2.png}} test3 ");
+		sb.append("{{SharedImages/sample3.png}} test4");
+
+		Assert.assertEquals(
+			sb.toString(),
+			_mediaWikiToCreoleTranslator.postProcess(_translate(content)));
 	}
 
 	@Test

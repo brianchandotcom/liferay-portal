@@ -414,11 +414,15 @@ public class PoshiRunnerGetterUtil {
 				Throwable throwable = e1.getCause();
 
 				if (throwable instanceof StaleElementReferenceException) {
-					System.out.println(
-						"\nElement turned stale while running " + commandName +
-							". Retrying in " +
-								PropsValues.TEST_RETRY_COMMAND_WAIT_TIME +
-									"seconds.");
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("\nElement turned stale while running ");
+					sb.append(commandName);
+					sb.append(". Retrying in ");
+					sb.append(PropsValues.TEST_RETRY_COMMAND_WAIT_TIME);
+					sb.append("seconds.");
+
+					System.out.println(sb.toString());
 
 					try {
 						returnObject = method.invoke(

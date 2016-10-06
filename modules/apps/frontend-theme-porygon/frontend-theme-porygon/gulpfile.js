@@ -1,32 +1,45 @@
 'use strict';
 
 var ConfigGenerator = require('liferay-module-config-generator/lib/config-generator');
+var fs = require('fs');
 var gulp = require('gulp');
 var liferayThemeTasks = require('liferay-theme-tasks');
 var metal = require('gulp-metal');
 var path = require('path');
 var runSequence = require('run-sequence').use(gulp);
 
+var outputFolder = path.join(__dirname, 'build', 'META-INF');
+
+var configModules = function(done) {
+	var configGenerator = new ConfigGenerator(
+		{
+			args: [path.join(__dirname, 'build', 'js')],
+			config: '',
+			extension: '',
+			filePattern: '**/*.es.js',
+			format: ['/-/g', '_'],
+			ignorePath: true,
+			moduleConfig: path.join(__dirname, 'package.json'),
+			moduleRoot: path.join(__dirname, 'build'),
+			output: path.join(outputFolder, 'config.json')
+		}
+	);
+};
+
 gulp.task(
 	'configModules',
 	function(done) {
-		var configGenerator = new ConfigGenerator(
-			{
-				args: [path.join(__dirname, 'build', 'js')],
-				config: '',
-				extension: '',
-				filePattern: '**/*.es.js',
-				format: ['/-/g', '_'],
-				ignorePath: true,
-				moduleConfig: path.join(__dirname, 'package.json'),
-				moduleRoot: path.join(__dirname, 'build'),
-				output: path.join(__dirname, 'build', 'META-INF', 'config.json')
-			}
-		);
+		console.log('holakease');
+		fs.open(
+			outputFolder,
+			'wx',
+			function(error, fd) {
+				console.log(error);
+				if (error && error.code !== 'EEXIST') {
+					throw error;
+				}
 
-		configGenerator.process().then(
-			function() {
-				done();
+				configModules(done);
 			}
 		);
 	}

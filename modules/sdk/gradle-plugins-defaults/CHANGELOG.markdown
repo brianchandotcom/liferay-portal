@@ -375,6 +375,11 @@ following system properties to `true`:
 ### Removed
 - [LPS-66396]: The `modules.only.build` system property is no longer available.
 
+## 1.2.43 - 2016-10-05
+
+### Changed
+- [LPS-68334]: Update the [Liferay Gradle Plugins] dependency to version 2.0.50.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
@@ -399,6 +404,7 @@ following system properties to `true`:
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
 [LPS-68305]: https://issues.liferay.com/browse/LPS-68305
 [LPS-68306]: https://issues.liferay.com/browse/LPS-68306
+[LPS-68334]: https://issues.liferay.com/browse/LPS-68334
 [LPS-68402]: https://issues.liferay.com/browse/LPS-68402
 [LPS-68448]: https://issues.liferay.com/browse/LPS-68448
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485

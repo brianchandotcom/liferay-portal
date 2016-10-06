@@ -22,6 +22,15 @@ import java.util.concurrent.Callable;
 public class TransactionInvokerUtil {
 
 	public static <T> T invoke(
+			Object platformTransactionManager,
+			TransactionConfig transactionConfig, Callable<T> callable)
+		throws Throwable {
+
+		return _transactionInvoker.invoke(
+			platformTransactionManager, transactionConfig, callable);
+	}
+
+	public static <T> T invoke(
 			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable {
 

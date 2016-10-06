@@ -33,11 +33,12 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 
 	@Override
 	public <T> T invoke(
+			Object platformTransactionManager,
 			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable {
 
 		return (T)_transactionExecutor.execute(
-			_platformTransactionManager,
+			(PlatformTransactionManager)platformTransactionManager,
 			new TransactionAttributeAdapter(
 				TransactionAttributeBuilder.build(
 					true, transactionConfig.getIsolation(),
@@ -49,6 +50,14 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 					transactionConfig.getNoRollbackForClasses(),
 					transactionConfig.getNoRollbackForClassNames())),
 			new CallableMethodInvocation(callable));
+	}
+
+	@Override
+	public <T> T invoke(
+			TransactionConfig transactionConfig, Callable<T> callable)
+		throws Throwable {
+
+		return invoke(_platformTransactionManager, transactionConfig, callable);
 	}
 
 	public void setPlatformTransactionManager(

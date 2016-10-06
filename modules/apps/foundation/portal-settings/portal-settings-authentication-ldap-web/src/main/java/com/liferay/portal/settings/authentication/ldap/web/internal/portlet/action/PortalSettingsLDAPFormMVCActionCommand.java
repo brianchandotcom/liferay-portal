@@ -83,7 +83,8 @@ public class PortalSettingsLDAPFormMVCActionCommand
 
 		updateBooleanProperties(
 			actionRequest, _ldapExportConfigurationProvider,
-			themeDisplay.getCompanyId(), LDAPConstants.EXPORT_ENABLED);
+			themeDisplay.getCompanyId(), LDAPConstants.EXPORT_ENABLED,
+			LDAPConstants.EXPORT_GROUP_ENABLED);
 
 		updateBooleanProperties(
 			actionRequest, _ldapImportConfigurationProvider,

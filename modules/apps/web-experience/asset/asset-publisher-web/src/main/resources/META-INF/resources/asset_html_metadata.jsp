@@ -28,7 +28,7 @@ if (Validator.isNull(title)) {
 
 String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletRequest, liferayPortletResponse), assetPublisherDisplayContext.getAbstractLength());
 
-PortalUtil.setPageSubtitle(title, request);
+PortalUtil.setPageTitle(title, request);
 PortalUtil.setPageDescription(summary, request);
 PortalUtil.setPageKeywords(AssetUtil.getAssetKeywords(assetEntry.getClassName(), assetEntry.getClassPK()), request);
 %>

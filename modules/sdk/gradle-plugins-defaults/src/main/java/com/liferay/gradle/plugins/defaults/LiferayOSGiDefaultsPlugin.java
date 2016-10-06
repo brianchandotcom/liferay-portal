@@ -1923,6 +1923,18 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		standardJavadocDocletOptions.tags("generated");
+
+		File portalRootDir = GradleUtil.getRootDir(
+			project.getRootProject(), "portal-impl");
+
+		if (portalRootDir != null) {
+			File stylesheetFile = new File(
+				portalRootDir, "tools/styles/javadoc.css");
+
+			if (stylesheetFile.exists()) {
+				standardJavadocDocletOptions.setStylesheetFile(stylesheetFile);
+			}
+		}
 	}
 
 	protected void configureTaskPmd(Pmd pmd) {

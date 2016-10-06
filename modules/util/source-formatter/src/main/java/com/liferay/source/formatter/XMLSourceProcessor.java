@@ -425,6 +425,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("-log4j.xml")) {
 			formatLog4jXML(fileName, newContent);
 		}
+		else if (fileName.endsWith("-look-and-feel.xml")) {
+			formatLookAndFeelXML(fileName, newContent);
+		}
 		else if (fileName.endsWith("-model-hints.xml")) {
 			formatModelHintsXML(fileName, newContent);
 		}
@@ -815,6 +818,28 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		checkOrder(
 			fileName, document.getRootElement(), "category", null,
 			new ElementComparator(true));
+	}
+
+	protected void formatLookAndFeelXML(String fileName, String content)
+		throws Exception {
+
+		Document document = readXML(content);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> themeElements = rootElement.elements("theme");
+
+		for (Element themeElement : themeElements) {
+			checkOrder(
+				fileName, themeElement, "portlet-decorator", null,
+				new ElementComparator("id"));
+
+			Element settingsElement = themeElement.element("settings");
+
+			checkOrder(
+				fileName, settingsElement, "setting", null,
+				new ElementComparator("key"));
+		}
 	}
 
 	protected void formatModelHintsXML(String fileName, String content)

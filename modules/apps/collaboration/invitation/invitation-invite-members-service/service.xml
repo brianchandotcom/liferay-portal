@@ -2,7 +2,7 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
 <service-builder auto-namespace-tables="true" package-path="com.liferay.invitation.invite.members">
-	<namespace>SO</namespace>
+	<namespace>IM</namespace>
 	<entity local-service="true" name="MemberRequest" remote-service="false">
 
 		<!-- PK fields -->

@@ -117,7 +117,7 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 		String shrinkwrapJson = JsonOutput.prettyPrint(
 			JsonOutput.toJson(shrinkwrap));
 
-		shrinkwrapJson = shrinkwrapJson.replace("    ", "\t");
+		shrinkwrapJson = shrinkwrapJson.replace(_FOUR_SPACES, "\t");
 
 		Files.write(
 			shrinkwrapJsonFile.toPath(),
@@ -145,6 +145,16 @@ public class NpmShrinkwrapTask extends ExecuteNpmTask {
 
 			_removeExcludedDependencies(valueMap, excludedDependencies);
 		}
+	}
+
+	private static final String _FOUR_SPACES;
+
+	static {
+		char[] spaces = new char[4];
+
+		Arrays.fill(spaces, ' ');
+
+		_FOUR_SPACES = new String(spaces);
 	}
 
 	private final Set<Object> _excludedDependencies = new LinkedHashSet<>();

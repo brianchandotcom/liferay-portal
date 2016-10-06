@@ -292,6 +292,8 @@ version 1.0.128.
 ## 3.0.0 - 2016-10-06
 
 ### Changed
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.291.
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 
 ### Removed

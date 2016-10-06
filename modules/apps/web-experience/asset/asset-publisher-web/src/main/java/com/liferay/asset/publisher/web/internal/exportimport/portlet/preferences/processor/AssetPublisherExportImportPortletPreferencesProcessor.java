@@ -694,10 +694,24 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		String anyAssetTypeString = portletPreferences.getValue(
+			"anyAssetType", null);
+
+		String selectionStyle = portletPreferences.getValue(
+			"selectionStyle", null);
+
+		if (Validator.isNotNull(selectionStyle) &&
+			selectionStyle.equals("manual")) {
+
+			portletPreferences.reset("anyAssetType");
+
+			anyAssetTypeString = portletPreferences.getValue(
+				"anyAssetType", null);
+		}
+
 		String anyAssetTypeClassName = StringPool.BLANK;
 
-		long anyAssetType = GetterUtil.getLong(
-			portletPreferences.getValue("anyAssetType", null));
+		long anyAssetType = GetterUtil.getLong(anyAssetTypeString);
 
 		if (anyAssetType > 0) {
 			anyAssetTypeClassName = PortalUtil.getClassName(anyAssetType);

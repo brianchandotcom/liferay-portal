@@ -630,7 +630,6 @@
 
 			<tag description="{$generated.description}" name="generated" />
 		</javadoc>
-
 	</target>
 
 	<target name="javadoc-portal-cmd">
@@ -665,7 +664,6 @@
 
 			<tag description="{$generated.description}" name="generated" />
 		</javadoc>
-
 	</target>
 
 	<target name="prepare-generated-files">

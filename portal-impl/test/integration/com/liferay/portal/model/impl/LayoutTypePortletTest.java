@@ -303,7 +303,7 @@ public class LayoutTypePortletTest {
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 
 		for (Portlet portlet : portlets) {
-			Assert.assertTrue(portlet.isStatic());
+			Assert.assertTrue(portlet + " is not static", portlet.isStatic());
 		}
 	}
 

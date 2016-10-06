@@ -281,7 +281,7 @@ public class BlogsEntryStatusTransitionTest {
 
 	@Test
 	public void testScheduledByUpdateToApproved() throws Exception {
-		BlogsEntryLocalServiceUtil.updateStatus(
+		entry = BlogsEntryLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), entry.getEntryId(),
 			WorkflowConstants.STATUS_APPROVED, getServiceContext(entry),
 			new HashMap<String, Serializable>());

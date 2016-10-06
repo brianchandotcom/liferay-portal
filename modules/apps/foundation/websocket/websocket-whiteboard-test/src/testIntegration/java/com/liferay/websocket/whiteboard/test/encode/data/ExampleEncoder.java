@@ -30,7 +30,6 @@ public class ExampleEncoder implements Encoder.Text<Example> {
 
 	@Override
 	public void destroy() {
-		//NO OP
 	}
 
 	@Override
@@ -53,7 +52,6 @@ public class ExampleEncoder implements Encoder.Text<Example> {
 
 	@Override
 	public void init(EndpointConfig endpointConfig) {
-		//NO OP
 	}
 
 }

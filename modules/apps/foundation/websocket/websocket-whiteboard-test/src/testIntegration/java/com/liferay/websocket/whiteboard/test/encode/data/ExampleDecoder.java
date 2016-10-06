@@ -45,12 +45,10 @@ public class ExampleDecoder implements Decoder.Text<Example> {
 
 	@Override
 	public void destroy() {
-		//NO OP
 	}
 
 	@Override
 	public void init(EndpointConfig endpointConfig) {
-		//NO OP
 	}
 
 	@Override

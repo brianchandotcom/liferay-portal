@@ -54,7 +54,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		Configuration tlddocConfiguration = _addConfigurationTLDDoc(project);
+		Configuration tlddocConfiguration = addConfigurationTLDDoc(project);
 
 		ValidateSchemaTask validateTLDTask = _addTaskValidateTLD(project);
 
@@ -65,7 +65,9 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 		_configureTasksTLDDoc(project, tlddocConfiguration);
 	}
 
-	private Configuration _addConfigurationTLDDoc(final Project project) {
+	protected static Configuration addConfigurationTLDDoc(
+		final Project project) {
+
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, CONFIGURATION_NAME);
 
@@ -86,7 +88,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	private void _addDependenciesTLDDoc(Project project) {
+	private static void _addDependenciesTLDDoc(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "taglibrarydoc", "tlddoc", "1.3");
 	}

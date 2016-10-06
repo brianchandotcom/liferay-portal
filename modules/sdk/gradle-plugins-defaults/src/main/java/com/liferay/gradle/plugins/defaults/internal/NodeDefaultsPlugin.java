@@ -18,6 +18,9 @@ import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
+
+import java.util.Collections;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -32,6 +35,7 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
 		_configureNode(project);
+		_configureTaskNpmShrinkwrap(project);
 	}
 
 	@Override
@@ -49,6 +53,19 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		nodeExtension.setNodeVersion(_NODE_VERSION);
 	}
 
+	private void _configureTaskNpmShrinkwrap(Project project) {
+		NpmShrinkwrapTask npmShrinkwrapTask =
+			(NpmShrinkwrapTask)GradleUtil.getTask(
+				project, NodePlugin.NPM_SHRINKWRAP_TASK_NAME);
+
+		npmShrinkwrapTask.excludeDependencies(
+			_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES);
+	}
+
 	private static final String _NODE_VERSION = "6.6.0";
+
+	private static final Iterable<String>
+		_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES = Collections.singleton(
+			"fsevents");
 
 }

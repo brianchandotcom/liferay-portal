@@ -6,7 +6,7 @@
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.41.
 - [LPS-67656]: Use Liferay 7.0.2 GA3 by default.
 
-## 1.1.0 - 2016-09-27
+## 1.1.0 - 2016-09-28
 
 ### Added
 - [LPS-68293]: Add support for WAR projects, contained in the `wars` directory

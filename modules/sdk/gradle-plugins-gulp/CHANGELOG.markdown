@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins Gulp Change Log
 
-## 1.0.10 - 2016-08-26
+## 1.0.10 - 2016-08-27
 
 ### Changed
 - [LPS-67023]: Update the [Liferay Gradle Plugins Node] dependency to version

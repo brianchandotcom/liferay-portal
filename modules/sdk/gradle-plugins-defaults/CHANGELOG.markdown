@@ -9,12 +9,12 @@
 - [LPS-67658]: Compile the plugin against Gradle 2.14 to make it compatible with
 both Gradle 2.14+ and Gradle 3.0.
 
-## 1.1.4 - 2016-08-22
+## 1.1.4 - 2016-08-23
 
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.11.
 
-## 1.1.5 - 2016-08-22
+## 1.1.5 - 2016-08-23
 
 ### Changed
 - [LPS-67694]: Disable the `install` and `uploadArchives` tasks and all their
@@ -65,7 +65,7 @@ Jenkins:
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 2.0.17.
 
-## 1.1.12 - 2016-08-29
+## 1.1.12 - 2016-08-30
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 2.0.18.

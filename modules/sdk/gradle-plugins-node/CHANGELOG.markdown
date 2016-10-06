@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins Node Change Log
 
-## 1.0.22 - 2016-08-26
+## 1.0.22 - 2016-08-27
 
 ### Changed
 - [LPS-67023]: A `DownloadNodeModuleTask` task is automatically disabled if the

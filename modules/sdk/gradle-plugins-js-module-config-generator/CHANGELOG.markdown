@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins JS Module Config Generator Change Log
 
-## 1.0.31 - 2016-08-26
+## 1.0.31 - 2016-08-27
 
 ### Changed
 - [LPS-67023]: Update the [Liferay Gradle Plugins Node] dependency to version

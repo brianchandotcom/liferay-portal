@@ -14,9 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-
 import org.aopalliance.intercept.MethodInvocation;
 
 import org.springframework.transaction.PlatformTransactionManager;
@@ -33,21 +30,8 @@ public class CounterTransactionExecutor
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		try {
-			platformTransactionManager.commit(
-				transactionStatusAdapter.getTransactionStatus());
-		}
-		catch (RuntimeException re) {
-			_log.error(
-				"Application exception overridden by commit exception", re);
-
-			throw re;
-		}
-		catch (Error e) {
-			_log.error("Application exception overridden by commit error", e);
-
-			throw e;
-		}
+		platformTransactionManager.commit(
+			transactionStatusAdapter.getTransactionStatus());
 	}
 
 	@Override
@@ -91,28 +75,22 @@ public class CounterTransactionExecutor
 				platformTransactionManager.rollback(
 					transactionStatusAdapter.getTransactionStatus());
 			}
-			catch (RuntimeException re) {
-				re.addSuppressed(throwable);
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
 
-				_log.error(
-					"Application exception overridden by rollback exception",
-					re);
-
-				throw re;
-			}
-			catch (Error e) {
-				e.addSuppressed(throwable);
-
-				_log.error(
-					"Application exception overridden by rollback error", e);
-
-				throw e;
+				throw t;
 			}
 		}
 		else {
-			commit(
-				platformTransactionManager, transactionAttributeAdapter,
-				transactionStatusAdapter);
+			try {
+				platformTransactionManager.commit(
+					transactionStatusAdapter.getTransactionStatus());
+			}
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
+
+				throw t;
+			}
 		}
 
 		throw throwable;
@@ -127,8 +105,5 @@ public class CounterTransactionExecutor
 			platformTransactionManager.getTransaction(
 				transactionAttributeAdapter));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CounterTransactionExecutor.class);
 
 }

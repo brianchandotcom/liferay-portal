@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleManager;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -35,38 +33,9 @@ public class DefaultTransactionExecutor
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		TransactionStatusAdapter transactionStatusAdapter) {
 
-		Throwable throwable = null;
-
-		try {
-			platformTransactionManager.commit(
-				transactionStatusAdapter.getTransactionStatus());
-		}
-		catch (RuntimeException re) {
-			_log.error(
-				"Application exception overridden by commit exception", re);
-
-			throwable = re;
-
-			throw re;
-		}
-		catch (Error e) {
-			_log.error("Application exception overridden by commit error", e);
-
-			throwable = e;
-
-			throw e;
-		}
-		finally {
-			if (throwable != null) {
-				TransactionLifecycleManager.fireTransactionRollbackedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter,
-					throwable);
-			}
-			else {
-				TransactionLifecycleManager.fireTransactionCommittedEvent(
-					transactionAttributeAdapter, transactionStatusAdapter);
-			}
-		}
+		_commit(
+			platformTransactionManager, transactionAttributeAdapter,
+			transactionStatusAdapter, null);
 	}
 
 	@Override
@@ -110,22 +79,10 @@ public class DefaultTransactionExecutor
 				platformTransactionManager.rollback(
 					transactionStatusAdapter.getTransactionStatus());
 			}
-			catch (RuntimeException re) {
-				re.addSuppressed(throwable);
+			catch (Throwable t) {
+				t.addSuppressed(throwable);
 
-				_log.error(
-					"Application exception overridden by rollback exception",
-					re);
-
-				throw re;
-			}
-			catch (Error e) {
-				e.addSuppressed(throwable);
-
-				_log.error(
-					"Application exception overridden by rollback error", e);
-
-				throw e;
+				throw t;
 			}
 			finally {
 				TransactionLifecycleManager.fireTransactionRollbackedEvent(
@@ -134,9 +91,9 @@ public class DefaultTransactionExecutor
 			}
 		}
 		else {
-			commit(
+			_commit(
 				platformTransactionManager, transactionAttributeAdapter,
-				transactionStatusAdapter);
+				transactionStatusAdapter, throwable);
 		}
 
 		throw throwable;
@@ -158,7 +115,38 @@ public class DefaultTransactionExecutor
 		return transactionStatusAdapter;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultTransactionExecutor.class);
+	private void _commit(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionAttributeAdapter transactionAttributeAdapter,
+		TransactionStatusAdapter transactionStatusAdapter,
+		Throwable applicationThrowable) {
+
+		Throwable throwable = null;
+
+		try {
+			platformTransactionManager.commit(
+				transactionStatusAdapter.getTransactionStatus());
+		}
+		catch (Throwable t) {
+			if (applicationThrowable != null) {
+				t.addSuppressed(applicationThrowable);
+			}
+
+			throwable = t;
+
+			throw t;
+		}
+		finally {
+			if (throwable != null) {
+				TransactionLifecycleManager.fireTransactionRollbackedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter,
+					throwable);
+			}
+			else {
+				TransactionLifecycleManager.fireTransactionCommittedEvent(
+					transactionAttributeAdapter, transactionStatusAdapter);
+			}
+		}
+	}
 
 }

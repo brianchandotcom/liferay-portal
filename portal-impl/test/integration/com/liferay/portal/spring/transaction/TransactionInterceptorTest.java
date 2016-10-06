@@ -23,14 +23,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.ClassNameUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.model.impl.ClassNameImpl;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.util.List;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -54,60 +47,44 @@ public class TransactionInterceptorTest {
 
 	@Test
 	public void testFailOnCommit() {
-		try (CaptureAppender captureAppender =
-				Log4JLoggerTestUtil.configureLog4JLogger(
-					DefaultTransactionExecutor.class.getName(), Level.ERROR)) {
+		CacheRegistryUtil.clear();
 
-			CacheRegistryUtil.clear();
+		long classNameId = CounterLocalServiceUtil.increment();
 
-			long classNameId = CounterLocalServiceUtil.increment();
+		ClassName className = ClassNameUtil.create(classNameId);
 
-			ClassName className = ClassNameUtil.create(classNameId);
+		PlatformTransactionManager platformTransactionManager =
+			(PlatformTransactionManager)
+				InfrastructureUtil.getTransactionManager();
 
-			PlatformTransactionManager platformTransactionManager =
-				(PlatformTransactionManager)
-					InfrastructureUtil.getTransactionManager();
+		MockPlatformTransactionManager platformTransactionManagerWrapper =
+			new MockPlatformTransactionManager(platformTransactionManager);
 
-			MockPlatformTransactionManager platformTransactionManagerWrapper =
-				new MockPlatformTransactionManager(platformTransactionManager);
+		TransactionInterceptor transactionInterceptor =
+			(TransactionInterceptor)PortalBeanLocatorUtil.locate(
+				"transactionAdvice");
 
-			TransactionInterceptor transactionInterceptor =
-				(TransactionInterceptor)PortalBeanLocatorUtil.locate(
-					"transactionAdvice");
+		transactionInterceptor.setPlatformTransactionManager(
+			platformTransactionManagerWrapper);
 
-			transactionInterceptor.setPlatformTransactionManager(
-				platformTransactionManagerWrapper);
+		try {
+			ClassNameLocalServiceUtil.addClassName(className);
 
-			try {
-				ClassNameLocalServiceUtil.addClassName(className);
-
-				Assert.fail();
-			}
-			catch (RuntimeException re) {
-				Assert.assertEquals(
-					"MockPlatformTransactionManager", re.getMessage());
-			}
-			finally {
-				transactionInterceptor.setPlatformTransactionManager(
-					platformTransactionManager);
-			}
-
-			List<LoggingEvent> loggingEvents =
-				captureAppender.getLoggingEvents();
-
-			Assert.assertEquals(1, loggingEvents.size());
-
-			LoggingEvent loggingEvent = loggingEvents.get(0);
-
-			Assert.assertEquals(
-				"Application exception overridden by commit exception",
-				loggingEvent.getMessage());
-
-			ClassName cachedClassName = (ClassName)EntityCacheUtil.getResult(
-				true, ClassNameImpl.class, classNameId);
-
-			Assert.assertNull(cachedClassName);
+			Assert.fail();
 		}
+		catch (RuntimeException re) {
+			Assert.assertEquals(
+				"MockPlatformTransactionManager", re.getMessage());
+		}
+		finally {
+			transactionInterceptor.setPlatformTransactionManager(
+				platformTransactionManager);
+		}
+
+		ClassName cachedClassName = (ClassName)EntityCacheUtil.getResult(
+			true, ClassNameImpl.class, classNameId);
+
+		Assert.assertNull(cachedClassName);
 	}
 
 	private static class MockPlatformTransactionManager

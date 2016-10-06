@@ -22,9 +22,9 @@
 			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 			<c:if test="<%= required && showRequiredLabel %>">
-				<span class="icon-asterisk text-warning">
-					<span class="hide-accessible"><liferay-ui:message key="required" /></span>
-				</span>
+				<aui:icon cssClass="text-warning" image="asterisk" markupView="lexicon" />
+
+				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(helpMessage) %>">

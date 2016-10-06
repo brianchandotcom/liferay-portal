@@ -1,3 +1,6 @@
 Bundle-Name: Liferay Gradle Plugins TLDDoc Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.tlddoc.builder
 Bundle-Version: 1.0.4
+Export-Package:\
+	com.liferay.gradle.plugins.tlddoc.builder,\
+	com.liferay.gradle.plugins.tlddoc.builder.tasks

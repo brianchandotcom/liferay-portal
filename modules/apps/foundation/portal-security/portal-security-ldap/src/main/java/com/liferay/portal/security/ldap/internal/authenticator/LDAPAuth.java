@@ -40,6 +40,7 @@ import com.liferay.portal.security.ldap.authenticator.configuration.LDAPAuthConf
 import com.liferay.portal.security.ldap.configuration.ConfigurationProvider;
 import com.liferay.portal.security.ldap.configuration.LDAPServerConfiguration;
 import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
+import com.liferay.portal.security.ldap.constants.LDAPConstants;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 
@@ -73,11 +74,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = Authenticator.class
 )
 public class LDAPAuth implements Authenticator {
-
-	public static final String AUTH_METHOD_BIND = "bind";
-
-	public static final String AUTH_METHOD_PASSWORD_COMPARE =
-		"password-compare";
 
 	public static final String RESULT_PASSWORD_EXP_WARNING =
 		"2.16.840.1.113730.3.4.5";
@@ -162,7 +158,7 @@ public class LDAPAuth implements Authenticator {
 		SystemLDAPConfiguration systemLDAPConfiguration =
 			_systemLDAPConfigurationProvider.getConfiguration(companyId);
 
-		if (authMethod.equals(AUTH_METHOD_BIND)) {
+		if (authMethod.equals(LDAPConstants.AUTH_METHOD_BIND)) {
 			Hashtable<String, Object> env =
 				(Hashtable<String, Object>)ctx.getEnvironment();
 
@@ -214,7 +210,9 @@ public class LDAPAuth implements Authenticator {
 				}
 			}
 		}
-		else if (authMethod.equals(AUTH_METHOD_PASSWORD_COMPARE)) {
+		else if (authMethod.equals(
+					LDAPConstants.AUTH_METHOD_PASSWORD_COMPARE)) {
+
 			ldapAuthResult = new LDAPAuthResult();
 
 			Attribute userPassword = attributes.get("userPassword");

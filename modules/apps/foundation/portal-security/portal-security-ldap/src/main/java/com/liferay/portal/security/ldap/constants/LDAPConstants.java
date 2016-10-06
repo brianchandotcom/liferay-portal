@@ -23,6 +23,11 @@ public class LDAPConstants {
 
 	public static final String AUTH_METHOD = "method";
 
+	public static final String AUTH_METHOD_BIND = "bind";
+
+	public static final String AUTH_METHOD_PASSWORD_COMPARE =
+		"password-compare";
+
 	public static final String AUTH_REQUIRED = "required";
 
 	public static final String AUTH_SEARCH_FILTER = "authSearchFilter";
@@ -30,6 +35,8 @@ public class LDAPConstants {
 	public static final String BASE_DN = "baseDN";
 
 	public static final String BASE_PROVIDER_URL = "baseProviderURL";
+
+	public static final String BCRYPT = "BCRYPT";
 
 	public static final String COMPANY_ID = "companyId";
 
@@ -110,6 +117,12 @@ public class LDAPConstants {
 
 	public static final String LDAP_SERVER_ID = "ldapServerId";
 
+	public static final String MD2 = "MD2";
+
+	public static final String MD5 = "MD5";
+
+	public static final String NONE = "NONE";
+
 	public static final String PAGE_SIZE = "pageSize";
 
 	public static final String PASSWORD_ENCRYPTION_ALGORITHM =
@@ -127,6 +140,16 @@ public class LDAPConstants {
 	public static final String SECURITY_PRINCIPAL = "securityPrincipal";
 
 	public static final String SERVER_NAME = "serverName";
+
+	public static final String SHA = "SHA";
+
+	public static final String SHA_256 = "SHA-256";
+
+	public static final String SHA_384 = "SHA-384";
+
+	public static final String SSHA = "SSHA";
+
+	public static final String UFC_CRYPT = "UFC-CRYPT";
 
 	public static final String USER_CUSTOM_MAPPINGS = "userCustomMappings";
 

@@ -19,6 +19,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.AnnotationUtility;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -47,21 +48,8 @@ public class MethodNameCheck
 
 	@Override
 	protected boolean mustCheckName(DetailAST detailAST) {
-		List<DetailAST> annotationASTList = DetailASTUtil.getAllChildTokens(
-			detailAST, TokenTypes.ANNOTATION, true);
-
-		for (DetailAST annotationAST : annotationASTList) {
-			DetailAST nameAST = annotationAST.findFirstToken(TokenTypes.IDENT);
-
-			if (nameAST == null) {
-				continue;
-			}
-
-			String name = nameAST.getText();
-
-			if (name.equals("Reference")) {
-				return false;
-			}
+		if (AnnotationUtility.containsAnnotation(detailAST, "Reference")) {
+			return false;
 		}
 
 		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);

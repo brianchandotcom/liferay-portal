@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.portlet.bridge.soy.internal.SoyPortletHelper;
-import com.liferay.portal.portlet.bridge.soy.internal.SoyTemplateResourcesCollector;
+import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
 
 import java.io.IOException;
 import java.io.Writer;

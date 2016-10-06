@@ -631,12 +631,6 @@
 			<tag description="{$generated.description}" name="generated" />
 		</javadoc>
 
-		<copy todir="${doc.dir}/javadocs/images">
-			<fileset
-				dir="${project.dir}/tools/styles/images"
-			/>
-		</copy>
-
 	</target>
 
 	<target name="javadoc-portal-cmd">
@@ -671,12 +665,6 @@
 
 			<tag description="{$generated.description}" name="generated" />
 		</javadoc>
-
-		<copy todir="${doc.dir}/javadocs/images">
-			<fileset
-				dir="${project.dir}/tools/styles/images"
-			/>
-		</copy>
 
 	</target>
 

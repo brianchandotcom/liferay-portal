@@ -1,6 +1,6 @@
 # CSS Builder Gradle Plugin
 
-The CSS Builder Gradle plugin allows you to run the [Liferay CSS Builder](https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder)
+The CSS Builder Gradle plugin lets you run the [Liferay CSS Builder](https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder)
 tool in order to compile [Sass](http://sass-lang.com/) files in your project.
 
 ## Usage

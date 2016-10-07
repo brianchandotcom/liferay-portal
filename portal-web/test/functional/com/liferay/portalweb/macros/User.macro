@@ -1725,6 +1725,19 @@
 		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
+	<command name="loginUserCASPG">
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="Type" locator1="CAS#NETID_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="CAS#PASSWORD_FIELD" value1="${userScreenName}" />
+
+		<execute function="AssertClick" locator1="CAS#LOGIN_BUTTON" value1="LOGIN" />
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+	</command>
+
 	<command name="loginUserInvalidPG">
 		<execute macro="Navigator#openURL" />
 

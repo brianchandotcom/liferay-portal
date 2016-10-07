@@ -143,6 +143,11 @@ public class KBArticleServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #getAllDescendantKBArticles(
+	long, long, int, OrderByComparator)}
+	*/
+	@Deprecated
 	public static com.liferay.knowledge.base.model.KBArticleSoap[] getAllDescendantKBArticles(
 		long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
@@ -151,6 +156,24 @@ public class KBArticleServiceSoap {
 			java.util.List<com.liferay.knowledge.base.model.KBArticle> returnValue =
 				KBArticleServiceUtil.getAllDescendantKBArticles(resourcePrimKey,
 					status, orderByComparator);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticleSoap[] getAllDescendantKBArticles(
+		long groupId, long resourcePrimKey, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBArticle> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.knowledge.base.model.KBArticle> returnValue =
+				KBArticleServiceUtil.getAllDescendantKBArticles(groupId,
+					resourcePrimKey, status, orderByComparator);
 
 			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModels(returnValue);
 		}

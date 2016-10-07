@@ -1725,19 +1725,6 @@
 		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
-	<command name="loginUserCASPG">
-		<execute macro="Navigator#openURL" />
-
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-		<execute function="Type" locator1="CAS#NETID_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="CAS#PASSWORD_FIELD" value1="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="CAS#LOGIN_BUTTON" value1="LOGIN" />
-
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
-	</command>
-
 	<command name="loginUserInvalidPG">
 		<execute macro="Navigator#openURL" />
 
@@ -1777,8 +1764,23 @@
 		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
+	<command name="loginUserWithCASEnabledPG">
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password} with CAS authentication enabled." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="Type" locator1="CAS#NETID_FIELD" value1="${userScreenName}" />
+		<execute function="Type" locator1="CAS#PASSWORD_FIELD" value1="${userScreenName}" />
+
+		<execute function="AssertClick" locator1="CAS#LOGIN_BUTTON" value1="LOGIN" />
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+	</command>
+
 	<command name="loginUserWithOpenIDEnabledPG">
-		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password} with OpenID authentication enabled." />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2114,6 +2116,13 @@
 		<execute function="AssertElementNotPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 		<execute function="AssertElementNotPresent" locator1="ControlMenu#ADD" />
 		<execute function="AssertTextEquals" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+	</command>
+
+	<command name="viewLoggedOutWithCASEnabledPG">
+		<execute function="AssertTextEquals" locator1="CAS#APP_NAME_HEADER" value1="Central Authentication Service (CAS)" />
+		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_HEADER" value1="Logout successful" />
+		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_1" value1="You have successfully logged out of the Central Authentication Service." />
+		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_2" value1="For security reasons, exit your web browser." />
 	</command>
 
 	<command name="viewLoginPG">

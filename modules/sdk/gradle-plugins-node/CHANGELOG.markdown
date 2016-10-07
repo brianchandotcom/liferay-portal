@@ -24,6 +24,13 @@ Node.js via the environment variables `http_proxy`, `https_proxy`, and
 - [LPS-67573]: Move utility classes to the
 `com.liferay.gradle.plugins.node.internal` package.
 
+## 1.2.0 - 2016-10-06
+
+### Added
+- [LPS-68564]: Add task `npmShrinkwrap` to call `npm shrinkwrap` and exclude
+unwanted dependencies from the generated `npm-shrinkwrap.json` file.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
+[LPS-68564]: https://issues.liferay.com/browse/LPS-68564

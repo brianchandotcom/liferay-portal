@@ -402,6 +402,11 @@ the `fsevents` dependency from the generated `npm-shrinkwrap.json` files.
 ### Changed
 - [LPS-68564]: Update the [Liferay Gradle Plugins] dependency to version 3.0.2.
 
+## 1.2.47 - 2016-10-07
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.3.
+
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
@@ -40,7 +40,6 @@ import com.liferay.portal.test.mock.AutoDeployMockServletContext;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
@@ -145,13 +144,9 @@ public class PACLTestRule implements TestRule {
 				(LazyConnectionDataSourceProxy)
 					InfrastructureUtil.getDataSource();
 
-			DataSource paclDataSource =
-				lazyConnectionDataSourceProxy.getTargetDataSource();
-
-			Field field = ReflectionUtil.getDeclaredField(
-				paclDataSource.getClass(), "_dataSource");
-
-			field.set(paclDataSource, _originalDataSource);
+			ReflectionTestUtil.setFieldValue(
+				lazyConnectionDataSourceProxy.getTargetDataSource(),
+				"_dataSource", _originalDataSource);
 		}
 
 		HotDeployUtil.fireUndeployEvent(hotDeployEvent);
@@ -234,15 +229,9 @@ public class PACLTestRule implements TestRule {
 				(LazyConnectionDataSourceProxy)
 					InfrastructureUtil.getDataSource();
 
-			DataSource paclDataSource =
-				lazyConnectionDataSourceProxy.getTargetDataSource();
-
-			Field field = ReflectionUtil.getDeclaredField(
-				paclDataSource.getClass(), "_dataSource");
-
-			_originalDataSource = (DataSource)field.get(paclDataSource);
-
-			field.set(paclDataSource, getDummyDataSource());
+			_originalDataSource = ReflectionTestUtil.getAndSetFieldValue(
+				lazyConnectionDataSourceProxy.getTargetDataSource(),
+				"_dataSource", getDummyDataSource());
 		}
 
 		return hotDeployEvent;

@@ -73,7 +73,7 @@ public class MethodNameCheck
 		DetailAST parentAST = detailAST.getParent();
 
 		List<DetailAST> methodDefASTList = DetailASTUtil.getAllChildTokens(
-			parentAST, TokenTypes.METHOD_DEF, false);
+			parentAST, false, TokenTypes.METHOD_DEF);
 
 		for (DetailAST methodDefAST : methodDefASTList) {
 			String methodName = _getMethodName(methodDefAST);

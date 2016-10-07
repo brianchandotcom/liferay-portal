@@ -55,7 +55,7 @@ public class LocalPatternCheck extends AbstractCheck {
 		DetailAST expressionAST = elistAST.findFirstToken(TokenTypes.EXPR);
 
 		List<DetailAST> childASTList = DetailASTUtil.getAllChildTokens(
-			expressionAST, DetailASTUtil.ALL_TYPES, true);
+			expressionAST, true, DetailASTUtil.ALL_TYPES);
 
 		for (DetailAST childAST : childASTList) {
 			if ((childAST.getType() != TokenTypes.PLUS) &&

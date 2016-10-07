@@ -31,7 +31,7 @@ public class DetailASTUtil {
 
 	public static DetailAST findTypeAST(DetailAST methodAST, String name) {
 		List<DetailAST> localVariableDefASTList = getAllChildTokens(
-			methodAST, TokenTypes.VARIABLE_DEF, true);
+			methodAST, true, TokenTypes.VARIABLE_DEF);
 
 		DetailAST typeAST = _findTypeAST(localVariableDefASTList, name);
 
@@ -51,7 +51,7 @@ public class DetailASTUtil {
 
 		while (classAST != null) {
 			List<DetailAST> globalVariableDefASTList = getAllChildTokens(
-				classAST, TokenTypes.VARIABLE_DEF, false);
+				classAST, false, TokenTypes.VARIABLE_DEF);
 
 			typeAST = _findTypeAST(globalVariableDefASTList, name);
 
@@ -66,16 +66,16 @@ public class DetailASTUtil {
 	}
 
 	public static List<DetailAST> getAllChildTokens(
-		DetailAST detailAST, int tokenType, boolean recursive) {
+		DetailAST detailAST, boolean recursive, int... tokenTypes) {
 
-		return _getAllChildTokens(detailAST, tokenType, recursive, null);
+		return _getAllChildTokens(detailAST, recursive, null, tokenTypes);
 	}
 
 	public static int getEndLine(DetailAST detailAST) {
 		int endLine = detailAST.getLineNo();
 
 		for (DetailAST childAST :
-				getAllChildTokens(detailAST, ALL_TYPES, true)) {
+				getAllChildTokens(detailAST, true, ALL_TYPES)) {
 
 			if (childAST.getLineNo() > endLine) {
 				endLine = childAST.getLineNo();
@@ -91,7 +91,7 @@ public class DetailASTUtil {
 		List<DetailAST> list = new ArrayList<>();
 
 		List<DetailAST> methodCallASTList = getAllChildTokens(
-			detailAST, TokenTypes.METHOD_CALL, true);
+			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallAST : methodCallASTList) {
 			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
@@ -101,7 +101,7 @@ public class DetailASTUtil {
 			}
 
 			List<DetailAST> nameASTList = getAllChildTokens(
-				dotAST, TokenTypes.IDENT, false);
+				dotAST, false, TokenTypes.IDENT);
 
 			if (nameASTList.size() != 2) {
 				continue;
@@ -137,7 +137,7 @@ public class DetailASTUtil {
 		}
 
 		List<DetailAST> nameASTList = getAllChildTokens(
-			dotAST, TokenTypes.IDENT, false);
+			dotAST, false, TokenTypes.IDENT);
 
 		DetailAST methodNameAST = nameASTList.get(nameASTList.size() - 1);
 
@@ -157,7 +157,7 @@ public class DetailASTUtil {
 			TokenTypes.PARAMETERS);
 
 		return getAllChildTokens(
-			parametersAST, TokenTypes.PARAMETER_DEF, false);
+			parametersAST, false, TokenTypes.PARAMETER_DEF);
 	}
 
 	public static List<String> getParameterNames(DetailAST detailAST) {
@@ -177,7 +177,7 @@ public class DetailASTUtil {
 		int startLine = detailAST.getLineNo();
 
 		for (DetailAST childAST :
-				getAllChildTokens(detailAST, ALL_TYPES, true)) {
+				getAllChildTokens(detailAST, true, ALL_TYPES)) {
 
 			if (childAST.getLineNo() < startLine) {
 				startLine = childAST.getLineNo();
@@ -245,8 +245,8 @@ public class DetailASTUtil {
 	}
 
 	private static List<DetailAST> _getAllChildTokens(
-		DetailAST detailAST, int tokenType, boolean recursive,
-		List<DetailAST> list) {
+		DetailAST detailAST, boolean recursive, List<DetailAST> list,
+		int... tokenTypes) {
 
 		if (list == null) {
 			list = new ArrayList<>();
@@ -255,12 +255,14 @@ public class DetailASTUtil {
 		DetailAST childAST = detailAST.getFirstChild();
 
 		while (childAST != null) {
-			if ((tokenType == childAST.getType()) || (tokenType == ALL_TYPES)) {
+			if (ArrayUtil.contains(tokenTypes, childAST.getType()) ||
+				ArrayUtil.contains(tokenTypes, ALL_TYPES)) {
+
 				list.add(childAST);
 			}
 
 			if (recursive) {
-				list = _getAllChildTokens(childAST, tokenType, recursive, list);
+				list = _getAllChildTokens(childAST, recursive, list, tokenTypes);
 			}
 
 			childAST = childAST.getNextSibling();

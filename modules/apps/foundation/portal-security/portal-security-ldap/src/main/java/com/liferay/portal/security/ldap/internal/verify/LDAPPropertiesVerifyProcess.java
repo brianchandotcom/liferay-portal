@@ -181,10 +181,6 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 		Dictionary<String, Object> dictionary = new HashMapDictionary<>();
 
 		dictionary.put(
-			LDAPConstants.AUTH_REQUIRED,
-			_prefsProps.getBoolean(
-				companyId, LegacyLDAPPropsKeys.LDAP_AUTH_REQUIRED, false));
-		dictionary.put(
 			LDAPConstants.EXPORT_ENABLED,
 			_prefsProps.getBoolean(
 				companyId, LegacyLDAPPropsKeys.LDAP_EXPORT_ENABLED, false));
@@ -192,17 +188,6 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			LDAPConstants.EXPORT_GROUP_ENABLED,
 			_prefsProps.getBoolean(
 				companyId, LegacyLDAPPropsKeys.LDAP_EXPORT_GROUP_ENABLED,
-				false));
-		dictionary.put(
-			LDAPConstants.PASSWORD_ENCRYPTION_ALGORITHM,
-			_prefsProps.getString(
-				companyId,
-				LegacyLDAPPropsKeys.LDAP_AUTH_PASSWORD_ENCRYPTION_ALGORITHM,
-				"NONE"));
-		dictionary.put(
-			LDAPConstants.PASSWORD_POLICY_ENABLED,
-			_prefsProps.getBoolean(
-				companyId, LegacyLDAPPropsKeys.LDAP_PASSWORD_POLICY_ENABLED,
 				false));
 
 		if (_log.isInfoEnabled()) {

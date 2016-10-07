@@ -292,9 +292,6 @@ public class PACLTestRule implements TestRule {
 						if (methodName.equals("execute")) {
 							return Boolean.TRUE;
 						}
-						else if (methodName.equals("executeUpdate")) {
-							return Integer.MAX_VALUE;
-						}
 
 						return null;
 					}

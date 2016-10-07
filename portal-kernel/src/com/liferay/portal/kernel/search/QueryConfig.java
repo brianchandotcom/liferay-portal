@@ -254,7 +254,8 @@ public class QueryConfig implements Serializable {
 		int collatedSpellCheckResultScoresThreshold) {
 
 		_attributes.put(
-			PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD,
+			PropsKeys.
+				INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD,
 			collatedSpellCheckResultScoresThreshold);
 	}
 

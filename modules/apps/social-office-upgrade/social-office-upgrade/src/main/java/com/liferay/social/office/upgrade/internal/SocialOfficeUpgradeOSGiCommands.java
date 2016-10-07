@@ -168,9 +168,27 @@ public class SocialOfficeUpgradeOSGiCommands {
 						"com_liferay_calendar_web_portlet_CalendarPortlet",
 						StringUtil.randomId());
 
-					_updateLayout(layout, newPortletId);
+					String typeSettings = layout.getTypeSettings();
 
-					_updatePortletPreferences(layout, newPortletId);
+					typeSettings = typeSettings.replace(
+						"1_WAR_eventsdisplayportlet", newPortletId);
+
+					layout.setTypeSettings(typeSettings);
+
+					_layoutLocalService.updateLayout(layout);
+
+					List<PortletPreferences> preferencesList =
+						_portletPreferencesLocalService.getPortletPreferences(
+							layout.getPlid(), "1_WAR_eventsdisplayportlet");
+
+					for (PortletPreferences preferences : preferencesList) {
+						_addPreferences(preferences);
+
+						preferences.setPortletId(newPortletId);
+
+						_portletPreferencesLocalService.updatePortletPreferences(
+							preferences);
+					}
 
 					atomicInteger.incrementAndGet();
 				}
@@ -227,35 +245,6 @@ public class SocialOfficeUpgradeOSGiCommands {
 					preferenceElement.add(valueElement);
 
 					rootElement.add(preferenceElement);
-				}
-
-				private void _updateLayout(Layout layout, String newPortletId) {
-					String typeSettings = layout.getTypeSettings();
-
-					typeSettings = typeSettings.replace(
-						"1_WAR_eventsdisplayportlet", newPortletId);
-
-					layout.setTypeSettings(typeSettings);
-
-					_layoutLocalService.updateLayout(layout);
-				}
-
-				private void _updatePortletPreferences(
-						Layout layout, String newPortletId)
-					throws PortalException {
-
-					List<PortletPreferences> preferencesList =
-						_portletPreferencesLocalService.getPortletPreferences(
-							layout.getPlid(), "1_WAR_eventsdisplayportlet");
-
-					for (PortletPreferences preferences : preferencesList) {
-						_addPreferences(preferences);
-
-						preferences.setPortletId(newPortletId);
-
-						_portletPreferencesLocalService.
-							updatePortletPreferences(preferences);
-					}
 				}
 
 			});

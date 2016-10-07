@@ -38,7 +38,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -46,28 +45,18 @@ import org.junit.Test;
  */
 public class ProjectTemplateFilesTest {
 
-	@BeforeClass
-	public static void setUpClass() throws IOException {
-		_projectTemplateDirPaths = new HashSet<>();
-
-		try (DirectoryStream<Path> directoryStream =
-				FileTestUtil.getProjectTemplatesDirectoryStream()) {
-
-			for (Path path : directoryStream) {
-				_projectTemplateDirPaths.add(path);
-			}
-		}
-	}
-
 	@Test
 	public void testProjectTemplateFiles() throws IOException {
 		String gitIgnoreTemplate = FileTestUtil.read(
 			"com/liferay/project/templates/dependencies" +
 				"/archetype_resources_gitignore.tmpl");
 
-		for (Path projectTemplateDirPath : _projectTemplateDirPaths) {
-			_testProjectTemplateFiles(
-				projectTemplateDirPath, gitIgnoreTemplate);
+		try (DirectoryStream<Path> directoryStream =
+				FileTestUtil.getProjectTemplatesDirectoryStream()) {
+
+			for (Path path : directoryStream) {
+				_testProjectTemplateFiles(path, gitIgnoreTemplate);
+			}
 		}
 	}
 
@@ -291,7 +280,6 @@ public class ProjectTemplateFilesTest {
 	private static final String _XML_DECLARATION =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 
-	private static Set<Path> _projectTemplateDirPaths;
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));

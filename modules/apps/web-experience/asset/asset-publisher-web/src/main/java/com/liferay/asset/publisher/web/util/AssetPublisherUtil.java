@@ -1926,7 +1926,7 @@ public class AssetPublisherUtil {
 			List<AssetEntry> assetEntries)
 		throws PortalException {
 
-		if (getEmailAssetEntryAddedEnabled(portletPreferences)) {
+		if (!getEmailAssetEntryAddedEnabled(portletPreferences)) {
 			return;
 		}
 

@@ -194,12 +194,11 @@
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="${casLoginURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="${casLogoutURL}" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="${casServerURL}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVICE_URL_FIELD" value1="${casServiceURL}" />
 
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_TEST_CAS_CONFIGURATION_BUTTON" value1="Test CAS Configuration" />
 
-		<execute function="AssertTextEquals" locator1="Message#LOGIN_URL_SUCCESS" value1="Pass" />
-		<execute function="AssertTextEquals" locator1="Message#LOGOUT_URL_SUCCESS" value1="Pass" />
-		<execute function="AssertTextEquals" locator1="Message#SERVER_URL_SUCCESS" value1="Pass" />
+		<execute function="AssertElementNotPresent" locator1="//span[.='Unreachable']" />
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 

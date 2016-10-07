@@ -117,7 +117,7 @@
 
 		<execute macro="JSONRole#getRoleName">
 			<var name="roleId" value="${roleId}" />
-			<return from="roleName" name="roleName" />
+			<return from="roleTitle" name="roleTitle" />
 		</execute>
 
 		<execute macro="JSONUser#getUserEmailAddress">
@@ -129,7 +129,7 @@
 
 		<echo>## * Group Name: ${groupName}</echo>
 
-		<echo>## * Role Name: ${roleName}</echo>
+		<echo>## * Role Name: ${roleTitle}</echo>
 
 		<echo>## * User Email Address: ${userEmailAddress}</echo>
 
@@ -257,10 +257,10 @@
 
 		<if>
 			<not>
-				<isset var="roleName" />
+				<isset var="roleTitle" />
 			</not>
 			<then>
-				<fail message="Please set 'roleName'." />
+				<fail message="Please set 'roleTitle'." />
 			</then>
 		</if>
 
@@ -279,7 +279,7 @@
 		</execute>
 
 		<execute macro="JSONRole#getRoleIdByName">
-			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<return from="roleId" name="roleId" />
 		</execute>
 

@@ -167,12 +167,12 @@
 <!--ROLES_ORGANIZATION_ROLES-->
 <tr>
 	<td>ROLES_ORGANIZATION_ROLES_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLES_ORGANIZATION_ROLES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[2]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -188,17 +188,17 @@
 <!--ROLES_REGULAR_ROLES-->
 <tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLES_REGULAR_ROLES_TABLE</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[2]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLES_REGULAR_ROLES_TABLE_REMOVE_LINK</td>
-	<td>//tr[contains(.,'${key_roleName}')]/td[2]//a</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]/td[2]//a</td>
 	<td></td>
 </tr>
 <tr>

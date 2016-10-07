@@ -30,6 +30,7 @@ String name = role.getName();
 			<portlet:param name="mvcPath" value="/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
+			<portlet:param name="tabs1" value="details" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon
@@ -63,17 +64,6 @@ String name = role.getName();
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
 		/>
-	</c:if>
-
-	<c:if test="<%= !name.equals(RoleConstants.ADMINISTRATOR) && !name.equals(RoleConstants.SITE_OWNER) && !name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_OWNER) && !name.equals(RoleConstants.OWNER) && !name.equals(RoleConstants.SITE_ADMINISTRATOR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DEFINE_PERMISSIONS) %>">
-		<portlet:renderURL var="editRolePermissionsURL">
-			<portlet:param name="mvcPath" value="/edit_role_permissions.jsp" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon message="define-permissions" url="<%= editRolePermissionsURL %>" />
 	</c:if>
 
 	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">

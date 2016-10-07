@@ -1519,6 +1519,7 @@
 		</field>
 		<field localized="true" name="title" type="String">
 			<hint name="max-length">4000</hint>
+			<validator name="required" />
 		</field>
 		<field localized="true" name="description" type="String">
 			<hint-collection name="TEXTAREA" />

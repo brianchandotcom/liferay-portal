@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEFINE_PERMISSIONS</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Define Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(@class,'dropdown-toggle')]/span[contains(.,'Details')]</td>
 	<td></td>

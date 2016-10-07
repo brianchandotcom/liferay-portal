@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = (String)request.getAttribute("edit_role_assignments.jsp-tabs2");
+String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
 
 int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
@@ -29,7 +29,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
-if (tabs2.equals("available")) {
+if (tabs3.equals("available")) {
 	rowChecker = new GroupRoleChecker(renderResponse, role);
 }
 %>
@@ -51,7 +51,7 @@ if (tabs2.equals("available")) {
 
 	groupParams.put("site", Boolean.TRUE);
 
-	if (tabs2.equals("current")) {
+	if (tabs3.equals("current")) {
 		groupParams.put("groupsRoles", Long.valueOf(role.getRoleId()));
 	}
 

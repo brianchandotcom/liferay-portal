@@ -255,12 +255,12 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_ROLE_NAME_SEARCH</td>
-	<td>//input[@name='roleName']</td>
+	<td>//input[@name='roleTitle']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_NOTIFICATIONS_RECIPIENT_EDITOR_SEARCH_LIST_RESULT</td>
-	<td>//ul[@role='listbox']/li[@data-text='${key_roleName}' and contains(text(),'${key_roleName}')]</td>
+	<td>//ul[@role='listbox']/li[@data-text='${key_roleTitle}' and contains(text(),'${key_roleTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

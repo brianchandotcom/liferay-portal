@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = (String)request.getAttribute("edit_role_assignments.jsp-tabs2");
+String tabs3 = (String)request.getAttribute("edit_role_assignments.jsp-tabs3");
 
 int cur = (Integer)request.getAttribute("edit_role_assignments.jsp-cur");
 
@@ -29,7 +29,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 
 EmptyOnClickRowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 
-if (tabs2.equals("available")) {
+if (tabs3.equals("available")) {
 	rowChecker = new UserGroupRoleChecker(renderResponse, role);
 }
 %>
@@ -49,7 +49,7 @@ if (tabs2.equals("available")) {
 
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
-	if (tabs2.equals("current")) {
+	if (tabs3.equals("current")) {
 		userGroupParams.put(UserGroupFinderConstants.PARAM_KEY_USER_GROUPS_ROLES, Long.valueOf(role.getRoleId()));
 	}
 	%>

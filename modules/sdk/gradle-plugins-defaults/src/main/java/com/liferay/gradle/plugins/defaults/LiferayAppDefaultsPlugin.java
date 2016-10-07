@@ -74,6 +74,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		_applyPlugins(project);
 
+		LiferayOSGiDefaultsPlugin.configureRepositories(project);
+
 		configureAppJavadocBuilder(project);
 		configureProject(project, appDescription, appVersion);
 		configureTaskAppJavadoc(project, appTitle, appVersion);

@@ -92,8 +92,8 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Javadoc">
 			<message key="javadoc.empty.line" value="First or last line in javadoc should not be empty" />
-			<message key="javadoc.incorrect.first.line" value="Javadoc should start with '/**'" />
-			<message key="javadoc.incorrect.last.line" value="Javadoc should end with '*/'" />
+			<message key="javadoc.incorrect.first.line" value="Javadoc should start with ''/**''" />
+			<message key="javadoc.incorrect.last.line" value="Javadoc should end with ''*/''" />
 			<message key="javadoc.multiple" value="''{0}'' has multiple javadocs" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LocalPattern">

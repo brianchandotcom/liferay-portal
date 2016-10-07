@@ -247,12 +247,16 @@ public class LayoutTypePortletTest {
 
 		_user = UserTestUtil.addUser(layout.getGroupId());
 
+		List<Portlet> initialPortlets = _layoutTypePortlet.getAllPortlets();
+
+		int initialPortletsSize = initialPortlets.size();
+
 		final String portletId = _layoutTypePortlet.addPortletId(
 			_user.getUserId(), PortletKeys.TEST);
 
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 
-		Assert.assertEquals(1, portlets.size());
+		Assert.assertEquals(initialPortletsSize + 1, portlets.size());
 
 		final long companyId = TestPropsValues.getCompanyId();
 
@@ -286,7 +290,7 @@ public class LayoutTypePortletTest {
 		try {
 			portlets = _layoutTypePortlet.getAllPortlets();
 
-			Assert.assertEquals(1, portlets.size());
+			Assert.assertEquals(initialPortletsSize + 1, portlets.size());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -295,10 +299,12 @@ public class LayoutTypePortletTest {
 	}
 
 	@Test
-	public void testGetAllPortletsWithNoPortlets() throws Exception {
+	public void testGetAllPortletsWithOnlyStaticPortlets() throws Exception {
 		List<Portlet> portlets = _layoutTypePortlet.getAllPortlets();
 
-		Assert.assertEquals(0, portlets.size());
+		for (Portlet portlet : portlets) {
+			Assert.assertTrue(portlet + " is not static", portlet.isStatic());
+		}
 	}
 
 	@DeleteAfterTestRun

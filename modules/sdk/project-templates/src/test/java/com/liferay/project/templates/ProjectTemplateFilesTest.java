@@ -150,7 +150,7 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertEquals(
 			"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
-			FileTestUtil.read(gitIgnorePath));
+			FileUtil.read(gitIgnorePath));
 
 		Assert.assertFalse(
 			"Forbidden Gradle wrapper in " + archetypeResourcesDirPath,
@@ -215,7 +215,7 @@ public class ProjectTemplateFilesTest {
 	private void _testTextFile(Path path, String fileName, String extension)
 		throws IOException {
 
-		String text = FileTestUtil.read(path);
+		String text = FileUtil.read(path);
 
 		boolean trailingEmptyLine = false;
 

@@ -79,13 +79,6 @@ public class FileTestUtil {
 			});
 	}
 
-	public static String read(Path path) throws IOException {
-		String content = new String(
-			Files.readAllBytes(path), StandardCharsets.UTF_8);
-
-		return content.replace("\r\n", "\n");
-	}
-
 	public static String read(String name) throws IOException {
 		StringBuilder sb = new StringBuilder();
 

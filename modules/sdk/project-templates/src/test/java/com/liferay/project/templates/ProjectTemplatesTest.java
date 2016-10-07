@@ -16,6 +16,7 @@ package com.liferay.project.templates;
 
 import aQute.bnd.main.bnd;
 
+import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
@@ -903,7 +904,7 @@ public class ProjectTemplatesTest {
 
 			Path buildGradlePath = buildGradleFile.toPath();
 
-			String buildGradle = FileTestUtil.read(buildGradlePath);
+			String buildGradle = FileUtil.read(buildGradlePath);
 
 			buildGradle = buildGradle.replace(
 				"\"" + _REPOSITORY_CDN_URL + "\"",
@@ -1123,7 +1124,7 @@ public class ProjectTemplatesTest {
 
 		File file = _testExists(dir, fileName);
 
-		String content = FileTestUtil.read(file.toPath());
+		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
 			Assert.assertTrue(
@@ -1146,7 +1147,7 @@ public class ProjectTemplatesTest {
 
 		File file = _testExists(dir, fileName);
 
-		String content = FileTestUtil.read(file.toPath());
+		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
 			Assert.assertFalse(

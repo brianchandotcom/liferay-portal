@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -165,6 +166,13 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static String read(Path path) throws IOException {
+		String content = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		return content.replace("\r\n", "\n");
 	}
 
 }

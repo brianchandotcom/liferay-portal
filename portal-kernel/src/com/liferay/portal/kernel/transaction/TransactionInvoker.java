@@ -14,12 +14,20 @@
 
 package com.liferay.portal.kernel.transaction;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.concurrent.Callable;
 
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface TransactionInvoker {
+
+	public <T> T invoke(
+			Object platformTransactionManager,
+			TransactionConfig transactionConfig, Callable<T> callable)
+		throws Throwable;
 
 	public <T> T invoke(
 			TransactionConfig transactionConfig, Callable<T> callable)

@@ -242,6 +242,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		return _modelClass;
 	}
 
+	public Object getTransactionManager() {
+		return _transactionManager;
+	}
+
 	@Override
 	public Session openNewSession(Connection connection) throws ORMException {
 		return _sessionFactory.openNewSession(connection);
@@ -319,6 +323,10 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			PropsUtil.get(
 				PropsKeys.DATABASE_ORDER_BY_MAX_COLUMNS,
 				new Filter(dbType.getName())));
+	}
+
+	public void setTransactionManager(Object transactionManager) {
+		_transactionManager = transactionManager;
 	}
 
 	@Override
@@ -549,6 +557,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private Dialect _dialect;
 	private Class<T> _modelClass;
 	private SessionFactory _sessionFactory;
+	private Object _transactionManager;
 
 	private static class NullModel
 		implements BaseModel<NullModel>, CacheModel<NullModel>, MVCCModel {

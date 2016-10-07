@@ -22,6 +22,7 @@
 	<bean abstract="true" id="basePersistence">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
+		<property name="transactionManager" ref="liferayTransactionManager" />
 	</bean>
 	<bean class="com.liferay.portal.spring.aop.SkipAdvice" id="serviceAdvice">
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />

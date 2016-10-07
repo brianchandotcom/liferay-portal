@@ -16,8 +16,6 @@ package com.liferay.wysiwyg.converter.internal.upgrade;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
@@ -27,14 +25,13 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -46,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.util.PortalInstances;
 import com.liferay.wysiwyg.converter.internal.constants.WysiwygConstants;
 
 import java.sql.Connection;
@@ -97,13 +93,8 @@ public class WysiwygConvertHelper {
 					long userId = rs.getLong("userId");
 
 					if (userId == 0) {
-						if (!_ddmInitialized) {
-							_setGlobalUserFromDDMStructure();
-							_ddmInitialized = true;
-						}
-
-						groupId = _portalDefaultCompanyGroupId;
-						userId = _portalDefaultCompanyUserId;
+						userId = UserLocalServiceUtil.getDefaultUserId(
+							companyId);
 					}
 
 					String portletId = rs.getString("portletId");
@@ -147,23 +138,6 @@ public class WysiwygConvertHelper {
 			"com/liferay/wysiwyg/converter/internal/dependencies" +
 				"/wysiwyg-web-content-structure.xml",
 			serviceContext);
-	}
-
-	private void _setGlobalUserFromDDMStructure() throws PortalException {
-		long portalDefaultCompanyId = PortalInstances.getDefaultCompanyId();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			portalDefaultCompanyId);
-
-		_portalDefaultCompanyGroupId = company.getGroupId();
-
-		DDMStructure defaultDDMStructure =
-			DDMStructureLocalServiceUtil.getStructure(
-				_portalDefaultCompanyGroupId,
-				PortalUtil.getClassNameId(JournalArticle.class),
-				WysiwygConstants.STRUCTURE_KEY);
-
-		_portalDefaultCompanyUserId = defaultDDMStructure.getUserId();
 	}
 
 	private JournalArticle _convertWysiwygContent(
@@ -379,12 +353,6 @@ public class WysiwygConvertHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WysiwygConvertHelper.class);
-
-	private boolean _ddmInitialized = false;
-
-	private long _portalDefaultCompanyGroupId;
-
-	private long _portalDefaultCompanyUserId;
 
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
 }

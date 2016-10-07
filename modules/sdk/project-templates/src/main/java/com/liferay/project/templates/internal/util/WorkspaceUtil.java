@@ -18,8 +18,8 @@ import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -27,84 +27,42 @@ import java.util.regex.Pattern;
  */
 public class WorkspaceUtil {
 
-	public static boolean isWorkspace(File dir) {
-		File workspaceDir = _getWorkspaceDir(dir);
+	public static boolean isWorkspace(File dir) throws IOException {
+		Path rootDirPath = FileUtil.getRootDir(
+			dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);
 
-		File gradleFile = new File(workspaceDir, _SETTINGS_GRADLE_FILE_NAME);
-
-		if (!gradleFile.exists()) {
+		if (rootDirPath == null) {
 			return false;
 		}
 
-		try {
-			String script = _read(gradleFile);
+		String settingsGradle = FileUtil.read(
+			rootDirPath.resolve(_SETTINGS_GRADLE_FILE_NAME));
 
-			Matcher matcher = _PATTERN_WORKSPACE_PLUGIN.matcher(script);
-
-			if (matcher.find()) {
-				return true;
-			}
-			else {
-				//For workspace plugin < 1.0.5
-
-				gradleFile = new File(workspaceDir, _BUILD_GRADLE_FILE_NAME);
-
-				script = _read(gradleFile);
-
-				matcher = _PATTERN_WORKSPACE_PLUGIN.matcher(script);
-
-				return matcher.find();
-			}
+		if (StringUtil.contains(settingsGradle, _PATTERN_WORKSPACE_PLUGIN)) {
+			return true;
 		}
-		catch (Exception e) {
+
+		// For Workspace plugin < 1.0.5
+
+		Path buildGradlePath = rootDirPath.resolve(_BUILD_GRADLE_FILE_NAME);
+
+		if (Files.notExists(buildGradlePath)) {
 			return false;
 		}
-	}
 
-	private static File _findParentFile(
-		File dir, String[] fileNames, boolean checkParents) {
+		String buildGradle = FileUtil.read(buildGradlePath);
 
-		if (dir == null) {
-			return null;
+		if (StringUtil.contains(buildGradle, _PATTERN_WORKSPACE_PLUGIN)) {
+			return true;
 		}
 
-		for (String fileName : fileNames) {
-			File file = new File(dir, fileName);
-
-			if (file.exists()) {
-				return dir;
-			}
-		}
-
-		if (checkParents) {
-			return _findParentFile(
-				dir.getParentFile(), fileNames, checkParents);
-		}
-
-		return null;
-	}
-
-	private static File _getWorkspaceDir(File dir) {
-		return _findParentFile(
-			dir,
-			new String[] {
-				_SETTINGS_GRADLE_FILE_NAME, _GRADLE_PROPERTIES_FILE_NAME
-			},
-			true);
-	}
-
-	private static String _read(File file) throws IOException {
-		return new String(Files.readAllBytes(file.toPath()));
+		return false;
 	}
 
 	private static final String _BUILD_GRADLE_FILE_NAME = "build.gradle";
 
-	private static final String _GRADLE_PROPERTIES_FILE_NAME =
-		"gradle.properties";
-
 	private static final Pattern _PATTERN_WORKSPACE_PLUGIN = Pattern.compile(
-		".*apply\\s*plugin\\s*:\\s*[\'\"]com\\.liferay\\.workspace[\'\"]\\s*$",
-		Pattern.MULTILINE | Pattern.DOTALL);
+		"apply\\s+plugin\\s*:\\s*['\"]com\\.liferay\\.workspace['\"]");
 
 	private static final String _SETTINGS_GRADLE_FILE_NAME = "settings.gradle";
 

@@ -168,6 +168,20 @@ public class FileUtil {
 		return new File(url.toURI());
 	}
 
+	public static Path getRootDir(Path dirPath, String markerFileName) {
+		while (true) {
+			if (Files.exists(dirPath.resolve(markerFileName))) {
+				return dirPath;
+			}
+
+			dirPath = dirPath.getParent();
+
+			if (dirPath == null) {
+				return null;
+			}
+		}
+	}
+
 	public static String read(Path path) throws IOException {
 		String content = new String(
 			Files.readAllBytes(path), StandardCharsets.UTF_8);

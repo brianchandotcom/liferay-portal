@@ -34,7 +34,8 @@ public class CMISAtomPubRepositoryDefiner extends BaseCMISRepositoryDefiner {
 		RepositoryConfigurationBuilder repositoryConfigurationBuilder =
 			new RepositoryConfigurationBuilder(
 				getResourceBundleLoader(),
-				CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER,
+				CMISRepositoryConstants.
+					CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER,
 				CMISRepositoryConstants.CMIS_ATOMPUB_URL_PARAMETER);
 
 		_repositoryConfiguration = repositoryConfigurationBuilder.build();

@@ -43,12 +43,14 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			sb.append("insert into ");
 			sb.append(tempTableName);
-			sb.append(" select MBThread.threadId from MBThread, MBMessage ");
+			sb.append(" select MBMessage.threadId from MBThread, MBMessage ");
 			sb.append("where MBThread.threadId = MBMessage.threadId and ");
 			sb.append("MBThread.categoryId = ");
 			sb.append(MBCategoryConstants.DISCUSSION_CATEGORY_ID);
 			sb.append(" group by MBMessage.threadId having ");
 			sb.append("count(MBMessage.messageId) = 1");
+
+			runSQL(sb.toString());
 
 			long classNameId = PortalUtil.getClassNameId(
 				MBDiscussion.class.getName());

@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
 public class WorkspaceUtil {
 

@@ -110,6 +110,9 @@ public interface LiferaySelenium {
 	public void assertPartialText(String locator, String pattern)
 		throws Exception;
 
+	public void assertPartialTextAceEditor(String locator, String pattern)
+		throws Exception;
+
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception;
 
@@ -643,6 +646,9 @@ public interface LiferaySelenium {
 	public void waitForPageToLoad(String timeout);
 
 	public void waitForPartialText(String locator, String value)
+		throws Exception;
+
+	public void waitForPartialTextAceEditor(String locator, String value)
 		throws Exception;
 
 	public void waitForPopUp(String windowID, String timeout);

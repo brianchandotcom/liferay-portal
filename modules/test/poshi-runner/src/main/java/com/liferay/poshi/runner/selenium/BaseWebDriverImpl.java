@@ -491,6 +491,20 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 	}
 
+	public void assertPartialTextAceEditor(String locator, String pattern)
+		throws Exception {
+
+		assertElementPresent(locator);
+
+		if (isNotPartialTextAceEditor(locator, pattern)) {
+			String text = getTextAceEditor(locator);
+
+			throw new Exception(
+				"\"" + text + "\" does not contain \"" + pattern + "\" at \"" +
+					locator + "\"");
+		}
+	}
+
 	@Override
 	public void assertSelectedLabel(String selectLocator, String pattern)
 		throws Exception {
@@ -1582,6 +1596,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return !isPartialText(locator, value);
 	}
 
+	public boolean isNotPartialTextAceEditor(String locator, String value) {
+		return !isPartialTextAceEditor(locator, value);
+	}
+
 	@Override
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
 		return WebDriverHelper.isNotSelectedLabel(this, selectLocator, pattern);
@@ -1610,6 +1628,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public boolean isPartialText(String locator, String value) {
 		return WebDriverHelper.isPartialText(this, locator, value);
+	}
+
+	public boolean isPartialTextAceEditor(String locator, String value) {
+		return WebDriverHelper.isPartialTextAceEditor(this, locator, value);
 	}
 
 	@Override
@@ -3078,6 +3100,28 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			try {
 				if (isPartialText(locator, value)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	public void waitForPartialTextAceEditor(String locator, String value)
+		throws Exception {
+
+		value = RuntimeVariables.replace(value);
+
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertPartialTextAceEditor(locator, value);
+			}
+
+			try {
+				if (isPartialTextAceEditor(locator, value)) {
 					break;
 				}
 			}

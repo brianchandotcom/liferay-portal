@@ -23,7 +23,7 @@ buildscript {
 }
 ```
 
-There are additional Soy plugins you can apply to your Soy Gradle plugin:
+There are two Soy Gradle plugins you can apply to your project:
 
 - Apply the [*Soy Plugin*](#soy-plugin) to compile Closure Templates into
 JavaScript functions:

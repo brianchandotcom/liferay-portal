@@ -407,6 +407,19 @@ the `fsevents` dependency from the generated `npm-shrinkwrap.json` files.
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.3.
 
+## 1.2.48 - 2016-10-07
+
+### Added
+- [LRDOCS-3023]: The `com.liferay.app.defaults.plugin` now automatically adds
+the local Maven and the [Liferay CDN] repositories to the project.
+- [LRDOCS-3023]: The `com.liferay.app.defaults.plugin` now automatically applies
+the `com.liferay.app.tlddoc.builder` plugin.
+
+### Changed
+- [LRDOCS-3023]: Update the [Liferay Gradle Plugins] dependency to version
+3.0.4.
+
+[Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
@@ -443,3 +456,4 @@ the `fsevents` dependency from the generated `npm-shrinkwrap.json` files.
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981
+[LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

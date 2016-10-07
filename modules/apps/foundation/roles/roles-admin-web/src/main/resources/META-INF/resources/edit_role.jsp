@@ -91,7 +91,9 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 				</c:otherwise>
 			</c:choose>
 
-			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title">
+				<aui:validator name="required" />
+			</aui:input>
 
 			<aui:input name="description" />
 

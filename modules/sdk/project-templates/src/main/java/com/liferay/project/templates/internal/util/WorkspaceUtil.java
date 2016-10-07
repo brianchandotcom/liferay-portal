@@ -39,7 +39,7 @@ public class WorkspaceUtil {
 		String settingsGradle = FileUtil.read(
 			rootDirPath.resolve(_SETTINGS_GRADLE_FILE_NAME));
 
-		if (StringUtil.contains(settingsGradle, _PATTERN_WORKSPACE_PLUGIN)) {
+		if (StringUtil.contains(settingsGradle, _pattern)) {
 			return true;
 		}
 
@@ -53,7 +53,7 @@ public class WorkspaceUtil {
 
 		String buildGradle = FileUtil.read(buildGradlePath);
 
-		if (StringUtil.contains(buildGradle, _PATTERN_WORKSPACE_PLUGIN)) {
+		if (StringUtil.contains(buildGradle, _pattern)) {
 			return true;
 		}
 
@@ -62,9 +62,9 @@ public class WorkspaceUtil {
 
 	private static final String _BUILD_GRADLE_FILE_NAME = "build.gradle";
 
-	private static final Pattern _PATTERN_WORKSPACE_PLUGIN = Pattern.compile(
-		"apply\\s+plugin\\s*:\\s*['\"]com\\.liferay\\.workspace['\"]");
-
 	private static final String _SETTINGS_GRADLE_FILE_NAME = "settings.gradle";
+
+	private static final Pattern _pattern = Pattern.compile(
+		"apply\\s+plugin\\s*:\\s*['\"]com\\.liferay\\.workspace['\"]");
 
 }

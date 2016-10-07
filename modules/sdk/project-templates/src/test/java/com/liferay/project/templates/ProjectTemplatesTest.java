@@ -818,19 +818,14 @@ public class ProjectTemplatesTest {
 		_testExists(projectDir, ".gitignore");
 		_testExists(projectDir, "build.gradle");
 
-		String[] testFiles = {
-			"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
-			"gradle/wrapper/gradle-wrapper.properties"
-		};
-
 		if (WorkspaceUtil.isWorkspace(destinationDir)) {
-			for (String testFile : testFiles) {
-				_testNotExists(projectDir, testFile);
+			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
+				_testNotExists(projectDir, fileName);
 			}
 		}
 		else {
-			for (String testFile : testFiles) {
-				_testExists(projectDir, testFile);
+			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
+				_testExists(projectDir, fileName);
 			}
 		}
 
@@ -1224,6 +1219,11 @@ public class ProjectTemplatesTest {
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
+
+	private static final String[] _STANDALONE_ONLY_FILE_NAMES = {
+		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
+		"gradle/wrapper/gradle-wrapper.properties"
+	};
 
 	private static URI _gradleDistribution;
 	private static String _httpProxyHost;

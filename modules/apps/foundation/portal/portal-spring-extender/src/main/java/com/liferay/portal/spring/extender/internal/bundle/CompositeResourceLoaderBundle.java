@@ -39,7 +39,7 @@ import org.osgi.framework.Version;
 public class CompositeResourceLoaderBundle implements Bundle {
 
 	public CompositeResourceLoaderBundle(Bundle... bundles) {
-		this._bundles = bundles;
+		_bundles = bundles;
 	}
 
 	@Override

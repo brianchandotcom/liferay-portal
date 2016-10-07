@@ -59,7 +59,7 @@ public class BaseDLEditFileEntryDisplayContext
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 			try {
-				this.dlFileEntryType = dlFileEntry.getDLFileEntryType();
+				dlFileEntryType = dlFileEntry.getDLFileEntryType();
 			}
 			catch (PortalException pe) {
 				throw new SystemException(pe);

@@ -189,7 +189,7 @@ public class ByteArrayFileInputStream extends InputStream {
 			return;
 		}
 
-		int arraySize = (int)this.fileSize;
+		int arraySize = (int)fileSize;
 
 		data = new byte[arraySize];
 

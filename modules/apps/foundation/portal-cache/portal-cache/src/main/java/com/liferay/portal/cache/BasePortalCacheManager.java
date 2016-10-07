@@ -189,7 +189,7 @@ public abstract class BasePortalCacheManager<K extends Serializable, V>
 	}
 
 	public void setClusterAware(boolean clusterAware) {
-		this._clusterAware = clusterAware;
+		_clusterAware = clusterAware;
 	}
 
 	public void setMpiOnly(boolean mpiOnly) {

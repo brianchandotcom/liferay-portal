@@ -38,7 +38,7 @@ public class AuthVerifierConfiguration {
 	}
 
 	public void setAuthVerifierClassName(String authVerifierClassName) {
-		this._authVerifierClassName = authVerifierClassName;
+		_authVerifierClassName = authVerifierClassName;
 	}
 
 	public void setProperties(Properties properties) {

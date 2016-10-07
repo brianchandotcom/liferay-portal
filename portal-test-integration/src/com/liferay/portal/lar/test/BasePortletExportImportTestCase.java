@@ -450,7 +450,7 @@ public abstract class BasePortletExportImportTestCase
 		throws Exception {
 
 		String portletId = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), this.layout, getPortletId(),
+			TestPropsValues.getUserId(), layout, getPortletId(),
 			"column-1", preferenceMap);
 
 		exportImportPortlet(portletId);

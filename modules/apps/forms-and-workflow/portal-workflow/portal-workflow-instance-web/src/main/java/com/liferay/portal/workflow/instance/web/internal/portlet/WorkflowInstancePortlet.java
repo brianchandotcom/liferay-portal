@@ -119,7 +119,7 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		this.workflowInstanceWebConfiguration =
+		workflowInstanceWebConfiguration =
 			ConfigurableUtil.createConfigurable(
 				WorkflowInstanceWebConfiguration.class, properties);
 	}

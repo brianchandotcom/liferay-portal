@@ -192,7 +192,7 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 	}
 
 	public void setType(String type) {
-		this._type = type;
+		_type = type;
 	}
 
 	private String _analyzer;

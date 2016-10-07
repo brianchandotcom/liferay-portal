@@ -60,7 +60,7 @@ public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
 	@Modified
 	@Override
 	protected void activate(Map<String, Object> properties) {
-		this.workflowInstanceWebConfiguration =
+		workflowInstanceWebConfiguration =
 			ConfigurableUtil.createConfigurable(
 				WorkflowInstanceWebConfiguration.class, properties);
 	}

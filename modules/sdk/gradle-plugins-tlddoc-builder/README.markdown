@@ -58,7 +58,7 @@ Property Name | Default Value with the `java` plugin
 [`includes`](#includes) | `["**/*.tld"]`
 [`source`](#source) | `project.sourceSets.main.resources.srcDirs`
 
-If the `java`plugin is applied, the `validateTLD` task is similarly configured
+If the `java` plugin is applied, the `validateTLD` task is similarly configured
 with the following sensible defaults:
 
 Property Name | Default Value with the `java` plugin

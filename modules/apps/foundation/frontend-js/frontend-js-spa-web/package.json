@@ -1,4 +1,10 @@
 {
+	"dependencies": {
+		"metal": "^2.4.7",
+		"metal-dom": "^2.4.7",
+		"metal-uri": "^2.0.2",
+		"senna": "^2.0.1"
+	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^2.0.2"

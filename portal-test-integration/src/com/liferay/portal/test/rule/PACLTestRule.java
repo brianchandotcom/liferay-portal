@@ -231,105 +231,10 @@ public class PACLTestRule implements TestRule {
 
 			_originalDataSource = ReflectionTestUtil.getAndSetFieldValue(
 				lazyConnectionDataSourceProxy.getTargetDataSource(),
-				"_dataSource", getDummyDataSource());
+				"_dataSource", _createDummyDataSource());
 		}
 
 		return hotDeployEvent;
-	}
-
-	protected DataSource getDummyDataSource() {
-		Class<?> clazz = PACLTestRule.class;
-
-		final ClassLoader classLoader = clazz.getClassLoader();
-
-		final java.sql.Statement statment =
-			(java.sql.Statement)ProxyUtil.newProxyInstance(
-				classLoader, new Class<?>[] {java.sql.Statement.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						String methodName = method.getName();
-
-						if (methodName.equals("execute")) {
-							return Boolean.TRUE;
-						}
-						else if (methodName.equals("executeUpdate")) {
-							return Integer.MAX_VALUE;
-						}
-
-						return null;
-					}
-
-				});
-
-		final PreparedStatement preparedStatement =
-			(PreparedStatement)ProxyUtil.newProxyInstance(
-				classLoader, new Class<?>[] {PreparedStatement.class},
-				new InvocationHandler() {
-
-					@Override
-					public Object invoke(
-							Object proxy, Method method, Object[] args)
-						throws Throwable {
-
-						String methodName = method.getName();
-
-						if (methodName.equals("execute")) {
-							return Boolean.TRUE;
-						}
-
-						return null;
-					}
-
-				});
-
-		final Connection connection = (Connection)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {Connection.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(Object proxy, Method method, Object[] args)
-					throws Throwable {
-
-					String methodName = method.getName();
-
-					if (methodName.equals("createStatement")) {
-						return statment;
-					}
-					else if (methodName.equals("prepareStatement")) {
-						return preparedStatement;
-					}
-					else if (methodName.equals("getAutoCommit")) {
-						return Boolean.TRUE;
-					}
-
-					return null;
-				}
-
-			});
-
-		return (DataSource)ProxyUtil.newProxyInstance(
-			classLoader, new Class<?>[] {DataSource.class},
-			new InvocationHandler() {
-
-				@Override
-				public Object invoke(
-					Object proxy, Method method, Object[] args) {
-
-					String methodName = method.getName();
-
-					if (methodName.equals("getConnection")) {
-						return connection;
-					}
-
-					return null;
-				}
-
-			});
 	}
 
 	protected HotDeployEvent getHotDeployEvent(
@@ -376,6 +281,100 @@ public class PACLTestRule implements TestRule {
 			new URL[] {codeSource.getLocation()}, clazz.getClassLoader());
 
 		return Class.forName(clazz.getName(), true, classLoader);
+	}
+
+	private DataSource _createDummyDataSource() {
+		Object statment = ProxyUtil.newProxyInstance(
+			ClassLoader.getSystemClassLoader(),
+			new Class<?>[] {java.sql.Statement.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("execute")) {
+						return Boolean.TRUE;
+					}
+
+					if (methodName.equals("executeUpdate")) {
+						return Integer.MAX_VALUE;
+					}
+
+					return null;
+				}
+
+			});
+
+		Object preparedStatement = ProxyUtil.newProxyInstance(
+			ClassLoader.getSystemClassLoader(),
+			new Class<?>[] {PreparedStatement.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("execute")) {
+						return Boolean.TRUE;
+					}
+
+					return null;
+				}
+
+			});
+
+		Object connection = ProxyUtil.newProxyInstance(
+			ClassLoader.getSystemClassLoader(),
+			new Class<?>[] {Connection.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("createStatement")) {
+						return statment;
+					}
+
+					if (methodName.equals("prepareStatement")) {
+						return preparedStatement;
+					}
+
+					if (methodName.equals("getAutoCommit")) {
+						return Boolean.TRUE;
+					}
+
+					return null;
+				}
+
+			});
+
+		return (DataSource)ProxyUtil.newProxyInstance(
+			ClassLoader.getSystemClassLoader(),
+			new Class<?>[] {DataSource.class},
+			new InvocationHandler() {
+
+				@Override
+				public Object invoke(
+					Object proxy, Method method, Object[] args) {
+
+					String methodName = method.getName();
+
+					if (methodName.equals("getConnection")) {
+						return connection;
+					}
+
+					return null;
+				}
+
+			});
 	}
 
 	private static final String _PACKAGE_PATH =

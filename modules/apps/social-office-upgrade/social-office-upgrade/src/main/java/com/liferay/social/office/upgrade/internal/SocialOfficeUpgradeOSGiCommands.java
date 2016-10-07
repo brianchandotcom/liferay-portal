@@ -20,12 +20,10 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -135,54 +133,7 @@ public class SocialOfficeUpgradeOSGiCommands {
 			atomicInteger.get());
 	}
 
-	public void updateEventsDisplay() throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			_layoutLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(
-						RestrictionsFactoryUtil.like(
-							"typeSettings", "%1_WAR_eventsdisplayportlet%"));
-				}
-
-			});
-
-		final AtomicInteger atomicInteger = new AtomicInteger(0);
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<Layout>() {
-
-				public void performAction(Layout layout)
-					throws PortalException {
-
-					String newPortletId = PortletConstants.assemblePortletId(
-						"com_liferay_calendar_web_portlet_CalendarPortlet",
-						StringUtil.randomId());
-
-					String typeSettings = layout.getTypeSettings();
-
-					typeSettings = typeSettings.replace(
-						"1_WAR_eventsdisplayportlet", newPortletId);
-
-					layout.setTypeSettings(typeSettings);
-
-					_layoutLocalService.updateLayout(layout);
-
-					atomicInteger.incrementAndGet();
-				}
-
-			});
-
-		actionableDynamicQuery.performActions();
-
-		System.out.printf(
-			"[socialOffice:updateEventsDisplay] %d Events Display instances " +
-				"converted to Calendar.%n",
-			atomicInteger.get());
+	public void updateEventDisplay() throws PortalException {
 	}
 
 	public void updateTheme() throws PortalException {

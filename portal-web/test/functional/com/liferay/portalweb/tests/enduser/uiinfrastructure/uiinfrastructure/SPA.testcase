@@ -19,8 +19,8 @@
 		</if>
 	</tear-down>
 
-	<command name="Smoke" priority="5">
-		<property name="portal.acceptance" value="pending" />
+	<command name="AssertLoadingBar" priority="5">
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Navigator#openURL" />
 

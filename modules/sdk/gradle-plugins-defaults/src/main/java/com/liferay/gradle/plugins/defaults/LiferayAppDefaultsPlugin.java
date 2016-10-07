@@ -20,6 +20,7 @@ import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
+import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderPlugin;
 import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
@@ -71,7 +72,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 			throw new UncheckedIOException(ioe);
 		}
 
-		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
+		_applyPlugins(project);
 
 		configureAppJavadocBuilder(project);
 		configureProject(project, appDescription, appVersion);
@@ -186,6 +187,11 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return groupName;
+	}
+
+	private void _applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
 	}
 
 }

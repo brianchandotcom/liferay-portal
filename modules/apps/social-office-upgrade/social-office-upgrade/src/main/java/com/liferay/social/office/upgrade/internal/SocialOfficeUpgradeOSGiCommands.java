@@ -26,12 +26,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.osgi.service.component.annotations.Component;
@@ -177,74 +172,7 @@ public class SocialOfficeUpgradeOSGiCommands {
 
 					_layoutLocalService.updateLayout(layout);
 
-					List<PortletPreferences> preferencesList =
-						_portletPreferencesLocalService.getPortletPreferences(
-							layout.getPlid(), "1_WAR_eventsdisplayportlet");
-
-					for (PortletPreferences preferences : preferencesList) {
-						_addPreferences(preferences);
-
-						preferences.setPortletId(newPortletId);
-
-						_portletPreferencesLocalService.updatePortletPreferences(
-							preferences);
-					}
-
 					atomicInteger.incrementAndGet();
-				}
-
-				private void _addPreferences(
-						PortletPreferences portletPreferences)
-					throws PortalException {
-
-					Document document;
-
-					try {
-						document = SAXReaderUtil.read(
-							portletPreferences.getPreferences());
-					}
-					catch (DocumentException de) {
-						throw new PortalException(de);
-					}
-
-					Element preferencesElement = document.getRootElement();
-
-					_addPreference(
-						preferencesElement, "displaySchedulerHeader", "false");
-					_addPreference(
-						preferencesElement, "showMonthView", "false");
-					_addPreference(
-						preferencesElement, "showAgendaView", "true");
-					_addPreference(preferencesElement, "showWeekView", "false");
-					_addPreference(preferencesElement, "showDayView", "false");
-					_addPreference(preferencesElement, "defaultView", "agenda");
-					_addPreference(
-						preferencesElement, "displaySchedulerOnly", "true");
-					_addPreference(
-						preferencesElement, "showUserEvents", "false");
-
-					portletPreferences.setPreferences(
-						preferencesElement.asXML());
-				}
-
-				private void _addPreference(
-					Element rootElement, String name, String value) {
-
-					Element nameElement = SAXReaderUtil.createElement("name");
-
-					nameElement.setText(name);
-
-					Element valueElement = SAXReaderUtil.createElement("value");
-
-					valueElement.setText(value);
-
-					Element preferenceElement = SAXReaderUtil.createElement(
-						"preference");
-
-					preferenceElement.add(nameElement);
-					preferenceElement.add(valueElement);
-
-					rootElement.add(preferenceElement);
 				}
 
 			});

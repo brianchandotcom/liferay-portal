@@ -61,7 +61,7 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`plugin` | `boolean` | `true` | Whether to format all the TLD files contained in the [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir) directory. If `false`, all `liferay-portlet-ext.tld` files are ignored.
+`plugin` | `boolean` | `true` | Whether to format all the TLD files contained in the [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir) directory. If `false`, all `liferay-portlet-ext.tld` files are ignored. It sets the `tld.plugin` argument.
 
 ## Additional Configuration
 

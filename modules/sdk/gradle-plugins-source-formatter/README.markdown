@@ -85,22 +85,22 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`autoFix` | `boolean` | `false` | Whether to automatically fix source formatting errors.
-`baseDir` | `File` |  | The Source Formatter base directory. *(Read-only)*
+`autoFix` | `boolean` | `false` | Whether to automatically fix source formatting errors. It sets the `source.auto.fix` argument.
+`baseDir` | `File` |  | The Source Formatter base directory. It sets the `source.base.dir` argument. *(Read-only)*
 `baseDirName` | `String` | `"./"` | The name of the Source Formatter base directory, relative to the project directory.
-`copyrightFile` | `File` | | The file containing the copyright header enforced by Source Formatter. *(Read-only)*
+`copyrightFile` | `File` | | The file containing the copyright header enforced by Source Formatter. It sets the `source.copyright.file` argument. *(Read-only)*
 `copyrightFileName` | `String` | `"copyright.txt"` | The name of the file containing the copyright header enforced by Source Formatter, relative to the project directory.
-`files` | `List<File>` | | The list of files to format. *(Read-only)*
+`files` | `List<File>` | | The list of files to format. It sets the `source.files` argument. *(Read-only)*
 `fileNames` | `List<String>` | `null` | The file names to format, relative to the project directory. If `null`, all files contained in `baseDir` will be formatted.
-`formatCurrentBranch` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the current Git branch.
-`formatLatestAuthor` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the latest Git commits of the same author.
-`formatLocalChanges` | `boolean` | `false` | Whether to format only the unstaged files contained in `baseDir`.
-`includeSubrepositories` | `boolean` | `false` | Whether to format files that are in read-only subrepositories.
-`maxLineLength` | `int` | `80` | The maximum number of characters allowed in Java files.
-`printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream.
-`processThreadCount` | `int` | `5` | The number of threads used by Source Formatter.
-`throwException` | `boolean` | `false` | Whether to fail the build if formatting errors are found.
-`useProperties` | `boolean` | `false` | Whether to use a properties file and only format files that have been modified since the last time Source Formatter was executed.
+`formatCurrentBranch` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the current Git branch. It sets the `format.current.branch` argument.
+`formatLatestAuthor` | `boolean` | `false` | Whether to format only the files contained in `baseDir` that are added or modified in the latest Git commits of the same author. It sets the `format.latest.author` argument.
+`formatLocalChanges` | `boolean` | `false` | Whether to format only the unstaged files contained in `baseDir`. It sets the `format.local.changes` argument.
+`includeSubrepositories` | `boolean` | `false` | Whether to format files that are in read-only subrepositories. It sets the `include.subrepositories` argument.
+`maxLineLength` | `int` | `80` | The maximum number of characters allowed in Java files. It sets the `max.line.length` argument.
+`printErrors` | `boolean` | `true` | Whether to print formatting errors on the Standard Output stream. It sets the `source.print.errors` argument.
+`processThreadCount` | `int` | `5` | The number of threads used by Source Formatter. It sets the `processor.thread.count` argument.
+`throwException` | `boolean` | `false` | Whether to fail the build if formatting errors are found. It sets the `source.throw.exception` argument.
+`useProperties` | `boolean` | `false` | Whether to use a properties file and only format files that have been modified since the last time Source Formatter was executed. It sets the `source.use.properties` argument.
 
 ## Additional Configuration
 

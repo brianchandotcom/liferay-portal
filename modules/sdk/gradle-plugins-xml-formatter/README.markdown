@@ -62,7 +62,7 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `classpath` | [`FileCollection`](https://docs.gradle.org/current/javadoc/org/gradle/api/file/FileCollection.html) | [`project.configurations.xmlFormatter`](#liferay-xml-formatter-dependency) | The classpath for executing the main class.
 `mainClassName` | `String` | `"com.liferay.xml.formatter.XMLFormatter"` | The fully qualified name of the XML Formatter Main class.
-`stripComments` | `boolean` | `false` | Whether to remove all the comments from the XML files.
+`stripComments` | `boolean` | `false` | Whether to remove all the comments from the XML files. It sets the `xml.formatter.strip.comments` argument.
 
 ## Additional Configuration
 

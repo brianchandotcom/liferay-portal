@@ -37,11 +37,11 @@ public class Three {
 	}
 
 	public void setFlag(boolean flag) {
-		this._flag = flag;
+		_flag = flag;
 	}
 
 	public void setIgnore(String ignore) {
-		this._ignore = ignore;
+		_ignore = ignore;
 	}
 
 	private static final boolean _FEATURE = true;

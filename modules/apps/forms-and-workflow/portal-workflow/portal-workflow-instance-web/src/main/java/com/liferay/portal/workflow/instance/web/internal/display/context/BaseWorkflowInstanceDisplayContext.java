@@ -40,10 +40,10 @@ public abstract class BaseWorkflowInstanceDisplayContext {
 		this.liferayPortletRequest = liferayPortletRequest;
 		this.liferayPortletResponse = liferayPortletResponse;
 
-		this.request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
+		request = PortalUtil.getHttpServletRequest(liferayPortletRequest);
 
-		this.portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+		portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
+			request);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)liferayPortletRequest.getAttribute(

@@ -95,7 +95,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 			boolean expressionReferencesVariable = false;
 
 			List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
-				nextSibling, TokenTypes.IDENT, true);
+				nextSibling, true, TokenTypes.IDENT);
 
 			for (DetailAST identAST : identASTList) {
 				String identName = identAST.getText();
@@ -157,7 +157,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 		}
 
 		List<DetailAST> identASTList = DetailASTUtil.getAllChildTokens(
-			nextSibling, TokenTypes.IDENT, true);
+			nextSibling, true, TokenTypes.IDENT);
 
 		for (DetailAST identAST : identASTList) {
 			String identName = identAST.getText();

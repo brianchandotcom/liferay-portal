@@ -21,7 +21,7 @@ public abstract class OrderByComparatorAdapter<T, V>
 	extends OrderByComparator<T> {
 
 	public OrderByComparatorAdapter(OrderByComparator<V> orderByComparator) {
-		this._orderByComparator = orderByComparator;
+		_orderByComparator = orderByComparator;
 	}
 
 	public abstract V adapt(T t);

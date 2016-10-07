@@ -275,7 +275,7 @@ public class PlusStatementCheck extends AbstractCheck {
 			}
 
 			List<DetailAST> nameASTList = DetailASTUtil.getAllChildTokens(
-				firstChild, TokenTypes.IDENT, false);
+				firstChild, false, TokenTypes.IDENT);
 
 			if (nameASTList.size() != 2) {
 				return false;

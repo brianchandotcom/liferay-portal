@@ -39,11 +39,11 @@ public class SearchContainerResults<R> {
 	}
 
 	public void setResults(List<R> results) {
-		this._results = results;
+		_results = results;
 	}
 
 	public void setTotal(int total) {
-		this._total = total;
+		_total = total;
 	}
 
 	private List<R> _results = new ArrayList<>();

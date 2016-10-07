@@ -209,7 +209,7 @@ public class DDMPortlet extends MVCPortlet {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		this.ddmWebConfiguration = ConfigurableUtil.createConfigurable(
+		ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
 	}
 

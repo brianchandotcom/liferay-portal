@@ -4549,7 +4549,36 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-lcs-environment-token">
-		<move todir="${liferay.home}/data">
+		<get-testcase-property property.name="app.server.bundles.size" />
+
+		<if>
+			<isset property="app.server.bundles.size" />
+			<then>
+				<var name="app.server.bundle.index" value="1" />
+
+				<antelope:repeat count="${app.server.bundles.size}">
+
+					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}-${app.server.bundle.index}" />
+
+					<copy todir="${test.app.server.parent.dir}/data">
+						<fileset dir="${selenium.output.dir.name}" includes="lcs-aatf-*.aatf" />
+					</copy>
+
+					<math
+						datatype="int"
+						operand1="${app.server.bundle.index}"
+						operand2="1"
+						operation="+"
+						result="app.server.bundle.index"
+					/>
+				</antelope:repeat>
+
+				<var name="app.server.bundle.index" unset="true" />
+				<var name="test.app.server.parent.dir" unset="true" />
+			</then>
+		</if>
+
+		<move todir="${app.server.parent.dir}/data">
 			<fileset dir="${selenium.output.dir.name}" includes="lcs-aatf-*.aatf" />
 		</move>
 	</target>

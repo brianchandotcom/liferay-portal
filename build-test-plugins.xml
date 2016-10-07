@@ -257,6 +257,18 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 								<ant dir="${plugin.path}" inheritAll="false" target="deploy" />
 							</else>
 						</if>
+
+						<if>
+							<equals arg1="cas-web" arg2="@{plugin}" />
+							<then>
+								<move todir="${app.server.dir}/webapps">
+								  <fileset dir="${app.server.dir}/webapps">
+								    <include name="cas-web-*.war" />
+								  </fileset>
+								  <mapper from="*" to="cas-web.war" type="glob" />
+								</move>
+							</then>
+						</if>
 					</else>
 				</if>
 			</sequential>

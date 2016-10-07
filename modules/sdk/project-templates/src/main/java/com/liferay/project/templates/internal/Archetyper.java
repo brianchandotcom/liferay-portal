@@ -282,7 +282,7 @@ public class Archetyper {
 
 							String name = jarEntry.getName();
 
-							if (!name.startsWith(artifactId)) {
+							if (!name.startsWith(artifactId + "-")) {
 								continue;
 							}
 

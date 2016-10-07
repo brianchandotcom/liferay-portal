@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Header</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Header</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>H2_TITLE</td>
+	<td>//h2[contains(.,'${key_title}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

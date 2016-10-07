@@ -15,6 +15,7 @@
 package com.liferay.project.templates;
 
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.Validator;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.BufferedReader;
@@ -148,9 +149,17 @@ public class ProjectTemplateFilesTest {
 		Assert.assertTrue(
 			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
 
-		Assert.assertEquals(
-			"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
-			FileUtil.read(gitIgnorePath));
+		Path projectTemplateDirNamePath = projectTemplateDirPath.getFileName();
+
+		String projectTemplateDirName = projectTemplateDirNamePath.toString();
+
+		if (!projectTemplateDirName.equals(
+				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX + "workspace")) {
+
+			Assert.assertEquals(
+				"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
+				FileUtil.read(gitIgnorePath));
+		}
 
 		Assert.assertFalse(
 			"Forbidden Gradle wrapper in " + archetypeResourcesDirPath,
@@ -260,7 +269,7 @@ public class ProjectTemplateFilesTest {
 				"#if (" + condition.trim() + ")", matcher.group());
 		}
 
-		if (extension.equals("xml")) {
+		if (extension.equals("xml") && Validator.isNotNull(text)) {
 			String xmlDeclaration = _XML_DECLARATION;
 
 			if (fileName.equals("service.xml")) {

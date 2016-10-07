@@ -60,7 +60,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 		Copy copyTLDDocResourcesTask = _addTaskCopyTLDDocResources(project);
 
-		_addTaskTLDDoc(project, copyTLDDocResourcesTask, validateTLDTask);
+		_addTaskTLDDoc(copyTLDDocResourcesTask, validateTLDTask);
 
 		_configureTasksTLDDoc(project, tlddocConfiguration);
 	}
@@ -118,8 +118,9 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 	}
 
 	private TLDDocTask _addTaskTLDDoc(
-		Project project, Copy copyTLDDocResourcesTask,
-		ValidateSchemaTask validateTLDTask) {
+		Copy copyTLDDocResourcesTask, ValidateSchemaTask validateTLDTask) {
+
+		Project project = copyTLDDocResourcesTask.getProject();
 
 		final TLDDocTask tlddocTask = GradleUtil.addTask(
 			project, TLDDOC_TASK_NAME, TLDDocTask.class);

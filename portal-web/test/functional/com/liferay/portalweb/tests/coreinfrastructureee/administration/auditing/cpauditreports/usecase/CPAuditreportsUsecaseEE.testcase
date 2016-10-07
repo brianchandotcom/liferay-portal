@@ -167,7 +167,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Role1" />
+			<var name="roleTitle" value="Role1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -175,7 +175,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Role1" />
+			<var name="roleTitle" value="Role1" />
 			<var name="userScreenName" value="test1" />
 		</execute>
 

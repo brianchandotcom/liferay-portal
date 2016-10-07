@@ -2019,7 +2019,7 @@
 
 		<execute macro="Site#assignSiteRoleCP">
 			<var name="resourceName" value="UG UserGroup Name" />
-			<var name="roleName" value="Site Administrator" />
+			<var name="roleTitle" value="Site Administrator" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -2123,7 +2123,7 @@
 
 		<execute macro="PermissionsInline#viewPermissionsChecked">
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="Guest" />
+			<var name="roleTitle" value="Guest" />
 		</execute>
 
 		<execute macro="IFrame#closeFrame" />
@@ -2165,7 +2165,7 @@
 
 		<execute macro="PermissionsInline#viewPermissionsChecked">
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="Guest" />
+			<var name="roleTitle" value="Guest" />
 		</execute>
 
 		<execute macro="IFrame#closeFrame" />

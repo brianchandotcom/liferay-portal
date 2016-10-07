@@ -681,7 +681,7 @@
 			<var name="permissionDefinitionValue" value="Add Entry" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="roleName" value="Organization User" />
+			<var name="roleTitle" value="Organization User" />
 			<var name="roleType" value="Organization" />
 		</execute>
 
@@ -694,7 +694,7 @@
 			<var name="permissionDefinitionValue" value="Manage Pages" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
 			<var name="permissionNavigationValue" value="Site Pages" />
-			<var name="roleName" value="Organization User" />
+			<var name="roleTitle" value="Organization User" />
 			<var name="roleType" value="Organization" />
 		</execute>
 
@@ -802,7 +802,7 @@
 
 		<execute macro="Organization#assignOrgRoleCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="roleName" value="Organization Content Reviewer" />
+			<var name="roleTitle" value="Organization Content Reviewer" />
 			<var name="userFirstName" value="userfncr" />
 			<var name="userLastName" value="userlncr" />
 			<var name="userScreenName" value="usersncr" />
@@ -850,7 +850,7 @@
 
 		<execute macro="Organization#assignOrgRoleCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="roleName" value="Organization Administrator" />
+			<var name="roleTitle" value="Organization Administrator" />
 			<var name="userFirstName" value="userfnoa" />
 			<var name="userLastName" value="userlnoa" />
 			<var name="userScreenName" value="usersnoa" />
@@ -1026,7 +1026,7 @@
 			<var name="permissionDefinitionValue" value="Add Entry" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="roleName" value="Organization User" />
+			<var name="roleTitle" value="Organization User" />
 			<var name="roleType" value="Organization" />
 		</execute>
 	</command>

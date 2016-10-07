@@ -596,7 +596,7 @@
 		</execute>
 
 		<execute macro="User#assignOrgRoleCP">
-			<var name="roleName" value="Organization Content Reviewer" />
+			<var name="roleTitle" value="Organization Content Reviewer" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -1359,7 +1359,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleName" value="Portal Content Reviewer" />
+			<var name="roleTitle" value="Portal Content Reviewer" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1818,7 +1818,7 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
-			<var name="roleName" value="Site Member" />
+			<var name="roleTitle" value="Site Member" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -1829,7 +1829,7 @@
 		<execute macro="Role#definePermissionCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Entry" />
-			<var name="roleName" value="Site Member" />
+			<var name="roleTitle" value="Site Member" />
 			<var name="roleType" value="Site" />
 		</execute>
 

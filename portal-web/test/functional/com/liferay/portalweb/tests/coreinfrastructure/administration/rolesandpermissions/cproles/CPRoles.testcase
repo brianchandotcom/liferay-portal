@@ -32,7 +32,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleTitle" value="Roles Orgrole Name" />
 			<var name="roleType" value="Organization" />
 		</execute>
 
@@ -41,7 +41,7 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleName" value="Roles Orgrole Name" />
+			<var name="roleTitle" value="Roles Orgrole Name" />
 			<var name="roleType" value="Organization" />
 		</execute>
 	</command>
@@ -54,7 +54,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -62,7 +62,7 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleName" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 			<var name="roleType" value="Regular" />
 		</execute>
 	</command>
@@ -75,7 +75,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleTitle" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -84,7 +84,7 @@
 		</execute>
 
 		<execute macro="Role#viewCP">
-			<var name="roleName" value="Roles Siterole Name" />
+			<var name="roleTitle" value="Roles Siterole Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 	</command>
@@ -97,7 +97,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -105,7 +105,7 @@
 		</execute>
 
 		<execute macro="Role#deleteCP">
-			<var name="roleName" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -113,7 +113,7 @@
 		</execute>
 
 		<execute macro="Role#viewDefaultCP">
-			<var name="roleName" value="Roles Regrole Name" />
+			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 	</command>
 </definition>

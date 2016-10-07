@@ -62,31 +62,20 @@
 			<var name="casLoginURL" value="http://localhost:8080/cas-web/login" />
 			<var name="casLogoutURL" value="http://localhost:8080/cas-web/logout" />
 			<var name="casServerURL" value="http://localhost:8080/cas-web" />
+			<var name="casServiceURL" value="http://localhost:8080/c/portal/login" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
-		<execute function="AssertTextEquals" locator1="CAS#APP_NAME_HEADER" value1="Central Authentication Service (CAS)" />
-		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_HEADER" value1="Logout successful" />
-		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_1" value1="You have successfully logged out of the Central Authentication Service." />
-		<execute function="AssertTextEquals" locator1="CAS#LOGOUT_SUCCESSFUL_MESSAGE_2" value1="For security reasons, exit your web browser." />
+		<execute macro="User#viewLoggedOutWithCASEnabledPG" />
 
-		<execute macro="Navigator#openURL" />
-
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-		<execute function="Type" locator1="CAS#NETID_FIELD" value1="${userScreenName}" />
-		<execute function="Type" locator1="CAS#PASSWORD_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="CAS#LOGIN_BUTTON" value1="LOGIN" />
-
-		<var name="key_pageName" value="Welcome" />
-
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Welcome" />
+		<execute macro="User#loginUserWithCASEnabledPG">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="User#loginPG">
-			<var name="authenticationMethod" value="By Screen Name" />
+		<execute macro="User#loginUserWithCASEnabledPG">
 			<var name="userScreenName" value="test" />
 		</execute>
 	</command>

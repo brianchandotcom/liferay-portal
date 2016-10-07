@@ -711,7 +711,9 @@ public class ProjectTemplatesTest {
 				String template = fileName.substring(
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
 
-				expectedTemplates.add(template);
+				if (!template.equals("workspace")) {
+					expectedTemplates.add(template);
+				}
 			}
 		}
 

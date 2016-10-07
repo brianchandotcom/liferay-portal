@@ -672,7 +672,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateWorkspace() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
-			"workspace", "foows");
+			WorkspaceUtil.WORKSPACE, "foows");
 
 		_testExists(workspaceProjectDir, "configs/dev/portal-ext.properties");
 		_testExists(workspaceProjectDir, "gradle.properties");
@@ -711,7 +711,7 @@ public class ProjectTemplatesTest {
 				String template = fileName.substring(
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
 
-				if (!template.equals("workspace")) {
+				if (!template.equals(WorkspaceUtil.WORKSPACE)) {
 					expectedTemplates.add(template);
 				}
 			}

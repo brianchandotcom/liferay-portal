@@ -28,6 +28,8 @@ import java.util.regex.Pattern;
  */
 public class WorkspaceUtil {
 
+	public static final String WORKSPACE = "workspace";
+
 	public static boolean isWorkspace(File dir) throws IOException {
 		Path rootDirPath = FileUtil.getRootDir(
 			dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);

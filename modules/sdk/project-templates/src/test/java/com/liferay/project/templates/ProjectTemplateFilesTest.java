@@ -16,6 +16,7 @@ package com.liferay.project.templates;
 
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.BufferedReader;
@@ -143,7 +144,8 @@ public class ProjectTemplateFilesTest {
 		String projectTemplateDirName = projectTemplateDirNamePath.toString();
 
 		if (!projectTemplateDirName.equals(
-				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX + "workspace")) {
+				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +
+					WorkspaceUtil.WORKSPACE)) {
 
 			Assert.assertEquals(
 				"Incorrect " + gitIgnorePath, gitIgnoreTemplate,

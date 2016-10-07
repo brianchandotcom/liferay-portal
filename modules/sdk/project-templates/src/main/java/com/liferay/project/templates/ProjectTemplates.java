@@ -74,7 +74,7 @@ public class ProjectTemplates {
 
 					template = template.replace('.', '-');
 
-					if (!template.startsWith("workspace")) {
+					if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 						templates.add(template);
 					}
 				}
@@ -100,7 +100,7 @@ public class ProjectTemplates {
 
 						template = template.replace('.', '-');
 
-						if (!template.startsWith("workspace")) {
+						if (!template.startsWith(WorkspaceUtil.WORKSPACE)) {
 							templates.add(template);
 						}
 					}

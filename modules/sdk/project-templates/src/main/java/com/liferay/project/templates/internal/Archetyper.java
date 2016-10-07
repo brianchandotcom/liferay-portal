@@ -81,7 +81,7 @@ public class Archetyper {
 		String projectType = "standalone";
 
 		if (WorkspaceUtil.isWorkspace(destinationDir)) {
-			projectType = "workspace";
+			projectType = WorkspaceUtil.WORKSPACE;
 		}
 
 		String service = projectTemplatesArgs.getService();

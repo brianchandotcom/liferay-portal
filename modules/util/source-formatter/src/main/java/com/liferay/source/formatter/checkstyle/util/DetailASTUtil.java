@@ -262,7 +262,8 @@ public class DetailASTUtil {
 			}
 
 			if (recursive) {
-				list = _getAllChildTokens(childAST, recursive, list, tokenTypes);
+				list = _getAllChildTokens(
+					childAST, recursive, list, tokenTypes);
 			}
 
 			childAST = childAST.getNextSibling();

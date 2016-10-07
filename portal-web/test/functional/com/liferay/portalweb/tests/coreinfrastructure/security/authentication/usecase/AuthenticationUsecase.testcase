@@ -92,4 +92,86 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 	</command>
+
+	<command name="ImportLDAPUserWithBlankPassword" priority="3">
+		<description message="This is a use case for LPS-65498." />
+
+		<property name="apacheds.blank.user.password.enabled" value="true" />
+		<property name="apacheds.enabled" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
+
+		<for list="ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED,USE_LDAP_PASSWORD_POLICY" param="enableCheckboxKey">
+			<execute macro="PortalSettingsNavigator#gotoLDAP" />
+
+			<execute macro="PortalSettings#enableLDAPSetting">
+				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
+			</execute>
+
+			<execute macro="PortalSettingsNavigator#gotoLDAP" />
+
+			<execute macro="PortalSettings#viewEnabledLDAPSetting">
+				<var name="enableCheckboxKey" value="${enableCheckboxKey}" />
+			</execute>
+		</for>
+
+		<execute macro="PortalSettings#addLDAPServer">
+			<var name="LDAPServerName" value="ApacheDS Server" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
+
+		<execute macro="PortalSettings#editLDAPServer">
+			<var name="LDAPServerName" value="ApacheDS Server" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="LDAP Import" />
+		</execute>
+
+		<execute macro="SystemSettings#enableImportEntry" />
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="Unable to encrypt blank password" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="ldapuseremail@liferay.com" />
+			<var name="userFirstName" value="ldapusergivenname" />
+			<var name="userLastName" value="ldapusersn" />
+			<var name="userScreenName" value="ldapusercn" />
+		</execute>
+
+		<execute function="AssertConsoleTextNotPresent" value1="Unable to encrypt blank password" />
+	</command>
 </definition>

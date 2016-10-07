@@ -290,84 +290,6 @@
 		</execute>
 	</command>
 
-	<command name="TestLDAPConnectionAndEntries" priority="3">
-		<property name="apacheds.enabled" value="true" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
-
-		<execute macro="PortalSettings#addLDAPServer">
-			<var name="LDAPServerName" value="ApacheDS Server" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
-
-		<execute macro="PortalSettings#editLDAPServer">
-			<var name="LDAPServerName" value="ApacheDS Server" />
-		</execute>
-
-		<execute macro="PortalSettings#testLDAPConnection" />
-	</command>
-
-	<command name="ViewAuthenticationCAS" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationCASCP" />
-	</command>
-
-	<command name="ViewAuthenticationGeneral" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationGeneralCP" />
-	</command>
-
-	<command name="ViewAuthenticationLDAP" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationLDAPCP" />
-	</command>
-
-	<command name="ViewAuthenticationNTLM" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationNTLMCP" />
-	</command>
-
-	<command name="ViewAuthenticationOpenID" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationOpenIDCP" />
-	</command>
-
-	<command name="ViewAuthenticationOpenSSO" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#viewAuthenticationOpenSSOCP" />
-	</command>
-
 	<command name="ViewContentSharingDisabledAcrossSitesViaAP" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
@@ -658,40 +580,6 @@
 		</execute>
 
 		<execute macro="PortalSettings#viewEmailNotificationsSenderCP" />
-	</command>
-
-	<command name="ViewInstanceSettingEnableLDAPAuthNotAffectSystemSetting" priority="3">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#viewConfiguration">
-			<var name="configurationName" value="LDAP Auth" />
-			<var name="enableLDAP" value="false" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="PortalSettings#enableLDAPCP" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#viewConfiguration">
-			<var name="configurationName" value="LDAP Auth" />
-			<var name="enableLDAP" value="false" />
-		</execute>
 	</command>
 
 	<command name="ViewReservedCredentialsScreenNames" priority="3">

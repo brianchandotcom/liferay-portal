@@ -7,6 +7,7 @@
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
 
 		<execute function="Type" locator1="PortalSettingsAuthentication#LDAP_SERVER_SERVER_NAME" value1="${LDAPServerName}" />
+
 		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_APACHE_DIRECTORY_SERVER_RADIO" />
 
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
@@ -129,6 +130,7 @@
 					<condition function="IsElementPresent" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
 					<then>
 						<execute function="AddSelection" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="index=0" />
+
 						<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
 					</then>
 				</while>
@@ -137,7 +139,9 @@
 					<var name="currentPortalLanguage" value="${currentPortalLanguage}" />
 
 					<execute function="AddSelection" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentPortalLanguage}" />
+
 					<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+
 					<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentPortalLanguage}" />
 				</for>
 			</then>
@@ -172,7 +176,7 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
 
 		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 
@@ -182,7 +186,7 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
 
 		<execute function="AssertNotChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 	</command>
@@ -329,7 +333,9 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
+
 		<execute function="Type#typeCKEditor" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD" value1="[$USER_PASSWORD$]" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -355,6 +361,7 @@
 
 	<command name="editDefaultLandingPageCP">
 		<execute function="Type" locator1="PortalSettings#DEFAULT_LANDING_PAGE_FIELD" value1="${defaultLandingPage}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -366,18 +373,20 @@
 
 	<command name="editVirtualHostCP">
 		<execute function="Type" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
+
 		<execute macro="PortletEntry#save" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 	</command>
 
-	<command name="enableLDAPCP">
+	<command name="enableImportLDAPCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
 
-		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
 
 		<execute macro="PortletEntry#save" />
 
@@ -385,9 +394,15 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
 
-		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
+		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
+	</command>
+
+	<command name="enableLDAPSetting">
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_${enableCheckboxKey}_CHECKBOX" />
+
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="enterReservedEmailAddressCP">
@@ -451,10 +466,13 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
+
 		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
+
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_FIELD" value1="https://localhost:8443/cas-web/login" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGOUT_URL_FIELD" value1="https://localhost:8443/cas-web/logout" />
 		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_SERVER_URL_FIELD" value1="https://localhost:8443/cas-web" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -468,13 +486,17 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
 		<execute function="Type" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
+
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_FIELD" value1="" />
 		<execute function="Type" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
+
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="PortalSettings#configureContentSharingAcrossSitesCP">
@@ -510,6 +532,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#CAS" value1="CAS" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_ENABLED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_IMPORT_FROM_LDAP_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_CAS_LOGIN_URL_HEADER" value1="Login URL" />
@@ -533,6 +556,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#GENERAL" value1="General" />
+
 		<execute function="AssertSelectedLabel" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_HOW_DO_USERS_AUTHENTICATE_SELECT" value1="By Email Address" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_AUTOMATICALLY_LOGIN_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_GENERAL_ALLOW_USERS_TO_REQUEST_FORGOTTEN_PASSWORDS_CHECKBOX" />
@@ -547,7 +571,8 @@
 			<var name="panelHeading" value="Authentication" />
 		</execute>
 
-		<execute function="AssertClick" locator1="NavTab#LDAP" value1="LDAP" />
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_REQUIRED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
@@ -555,8 +580,11 @@
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_USE_LDAP_PASSWORD_POLICY_CHECKBOX" />
 
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ADD_BUTTON" value1="Add" />
+
 		<execute function="Click" locator1="PortalSettingsAuthentication#LDAP_SERVER_DEFAULT_VALUES_MICROSOFT_ACTIVE_DIRECTORY_SERVER_RADIO" />
+
 		<execute function="AssertClick" locator1="PortalSettingsAuthentication#LDAP_SERVER_RESET_VALUES_BUTTON" value1="Reset Values" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_HEADER" value1="Base Provider URL" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_PROVIDER_URL_FIELD" value1="ldap://localhost:389" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#LDAP_SERVER_CONNECTION_BASE_DN_HEADER" value1="Base DN" />
@@ -576,6 +604,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#NTLM" value1="NTLM" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_ENABLED_CHECKBOX" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_HEADER" value1="Domain Controller" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsAuthentication#AUTHENTICATION_NTLM_DOMAIN_CONTROLLER_FIELD" value1="127.0.0.1" />
@@ -595,6 +624,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#OPEN_ID" value1="OpenID" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_ID_ENABLED_CHECKBOX" />
 	</command>
 
@@ -604,6 +634,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#OPEN_SSO" value1="OpenSSO" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_IMPORT_FROM_LDAP_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_HEADER" value1="Login URL" />
@@ -639,6 +670,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="Type#clickAtType" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="${roleName}" />
 	</command>
 
@@ -648,6 +680,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="${siteName}" />
 	</command>
 
@@ -657,6 +690,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="${userGroupName}" />
 	</command>
 
@@ -682,6 +716,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#DEFAULT_USER_ASSOCIATIONS" value1="Default User Associations" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsUsers#APPLY_TO_EXISTING_USERS_CHECKBOX" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_HEADER" value1="Sites" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
@@ -699,6 +734,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#ACCOUNT_CREATED_NOTIFICATION" value1="Account Created Notification" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_ENABLED_CHECKBOX" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_HEADER" value1="Subject" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Account" />
@@ -714,6 +750,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#PASSWORD_CHANGED_NOTIFICATION" value1="Password Changed Notification" />
+
 		<execute function="AssertElementPresent" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_HEADER" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_SUBJECT_FIELD" value1="[$PORTAL_URL$]: Your New Password" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_PASSWORD_CHANGED_NOTIFICATION_BODY_HEADER" value1="Body" />
@@ -726,10 +763,15 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#SENDER" value1="Sender" />
+
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_HEADER" value1="Name" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD" value1="Joe Bloggs" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_HEADER" value1="Address" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_ADDRESS_FIELD" value1="test@liferay.com" />
+	</command>
+
+	<command name="viewEnabledLDAPSetting">
+		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_${enableCheckboxKey}_CHECKBOX" />
 	</command>
 
 	<command name="viewReservedCredentialsScreenNamesCP">
@@ -738,6 +780,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="NavTab#RESERVED_CREDENTIALS" value1="Reserved Credentials" />
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_HEADER" value1="Screen Names" />
 		<execute function="AssertTextEquals" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_SCREEN_NAMES_FIELD" value1="" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsUsers#RESERVED_CREDENTIALS_EMAIL_ADDRESSES_HEADER" value1="Email Addresses" />

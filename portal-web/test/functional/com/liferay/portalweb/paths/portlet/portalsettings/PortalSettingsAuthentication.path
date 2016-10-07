@@ -152,6 +152,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTHENTICATION_LDAP_IMPORT_ON_STARTUP_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@id,'importOnStartup')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AUTHENTICATION_LDAP_EXPORT_ENABLED_CHECKBOX</td>
 	<td>//input[contains(@id,'ldapExportEnabled')]</td>
 	<td></td>

@@ -27,20 +27,28 @@
 		</execute>
 
 		<execute macro="Site#addSiteTemplateCP">
-			<var name="siteName" value="Fjord Theme Site" />
-			<var name="siteTemplateName" value="Fjord Theme" />
+			<var name="siteName" value="Westeros Bank Theme Site" />
+			<var name="siteTemplateName" value="Westeros Bank Theme" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Fjord Theme Site" />
+			<var name="site" value="Westeros Bank Theme Site" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Home#PAGE" value1="Home">
-			<var name="key_pageName" value="Home" />
+		<execute function="AssertClick" locator1="Home#PAGE" value1="FOR YOU">
+			<var name="key_pageName" value="For You" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Header#H2_TITLE" value1="Dynamic and Customizable for a Healthier You">
-			<var name="key_title" value="Dynamic and Customizable for a Healthier You" />
+		<execute function="MouseOver" locator1="Home#PAGE">
+			<var name="key_pageName" value="Checking and Credit Cards" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Home#PAGE_CHILD_PAGE" value1="All credit cards">
+			<var name="key_childPageName" value="All credit cards" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Header#H2_TITLE" value1="We help you to achieve your goals">
+			<var name="key_title" value="We help you to achieve your goals" />
 		</execute>
 	</command>
 </definition>

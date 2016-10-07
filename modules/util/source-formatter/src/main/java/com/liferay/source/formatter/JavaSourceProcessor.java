@@ -4249,9 +4249,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// Find suppressions files in any parent directory
 
-		String parentDirName = sourceFormatterArgs.getBaseDirName() + "../";
+		int maxDirLevel = PLUGINS_MAX_DIR_LEVEL;
+		String parentDirName = sourceFormatterArgs.getBaseDirName();
 
-		for (int i = 0; i < PORTAL_MAX_DIR_LEVEL - 1; i++) {
+		if (portalSource) {
+			maxDirLevel = PORTAL_MAX_DIR_LEVEL - 1;
+			parentDirName += "../";
+		}
+
+		for (int i = 0; i < maxDirLevel; i++) {
 			File suppressionsFile = new File(parentDirName + fileName);
 
 			if (suppressionsFile.exists()) {
@@ -4259,6 +4265,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			parentDirName += "../";
+		}
+
+		if (!portalSource) {
+			return suppressionsFiles;
 		}
 
 		// Find suppressions files in any child directory

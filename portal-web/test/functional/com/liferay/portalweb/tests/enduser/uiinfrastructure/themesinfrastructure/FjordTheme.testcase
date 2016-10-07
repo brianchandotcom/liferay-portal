@@ -1,0 +1,44 @@
+<definition component-name="portal-user-interface">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="User Interface" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="Smoke" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Fjord Theme Site" />
+			<var name="siteTemplateName" value="Fjord Theme" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Fjord Theme Site" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Home#PAGE" value1="Home">
+			<var name="key_pageName" value="Home" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Header#H2_TITLE" value1="Dynamic and Customizable for a Healthier You">
+			<var name="key_title" value="Dynamic and Customizable for a Healthier You" />
+		</execute>
+	</command>
+</definition>

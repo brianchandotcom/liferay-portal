@@ -180,6 +180,12 @@
 	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
+<!--RULE_BUILDER-->
+<tr>
+	<td>RULE_BUILDER_ADD_RULE_BUTTON</td>
+	<td>//button[contains(@class,'add-rule-button-icon')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

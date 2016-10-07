@@ -49,7 +49,7 @@ if (assetCategoryId != 0) {
 
 <liferay-util:buffer var="removeCategory">
 	<c:if test="<%= assetCategoryId != 0 %>">
-		<span class="asset-entry">
+		<span class="asset-entry badge badge-default badge-sm">
 			<%= assetCategoryTitle %>
 
 			<portlet:renderURL var="viewURLWithoutCategory">
@@ -57,7 +57,7 @@ if (assetCategoryId != 0) {
 			</portlet:renderURL>
 
 			<a href="<%= viewURLWithoutCategory %>" title="<liferay-ui:message key="remove" />">
-				<span class="icon icon-remove textboxlistentry-remove"></span>
+				<aui:icon cssClass="textboxlistentry-remove" image="times" markupView="lexicon" />
 			</a>
 		</span>
 	</c:if>
@@ -65,7 +65,7 @@ if (assetCategoryId != 0) {
 
 <liferay-util:buffer var="removeTag">
 	<c:if test="<%= Validator.isNotNull(assetTagName) %>">
-		<span class="asset-entry">
+		<span class="asset-entry badge badge-default badge-sm">
 			<%= HtmlUtil.escape(assetTagName) %>
 
 			<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="viewURLWithoutTag">
@@ -73,7 +73,7 @@ if (assetCategoryId != 0) {
 			</liferay-portlet:renderURL>
 
 			<a href="<%= viewURLWithoutTag %>" title="<liferay-ui:message key="remove" />">
-				<span class="icon icon-remove textboxlistentry-remove"></span>
+				<aui:icon cssClass="textboxlistentry-remove" image="times" markupView="lexicon" />
 			</a>
 		</span>
 	</c:if>

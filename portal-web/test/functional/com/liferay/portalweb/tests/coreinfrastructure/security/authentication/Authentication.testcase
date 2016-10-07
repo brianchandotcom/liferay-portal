@@ -1,0 +1,144 @@
+<definition component-name="portal-security">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Authentication" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="PortalSettings#tearDownAuthenticationCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="TestLDAPConnectionAndEntries" priority="3">
+		<property name="apacheds.enabled" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+
+		<execute macro="PortalSettings#addLDAPServer">
+			<var name="LDAPServerName" value="ApacheDS Server" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+
+		<execute macro="PortalSettings#editLDAPServer">
+			<var name="LDAPServerName" value="ApacheDS Server" />
+		</execute>
+
+		<execute macro="PortalSettings#testLDAPConnection" />
+	</command>
+
+	<command name="ViewAuthenticationCAS" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationCASCP" />
+	</command>
+
+	<command name="ViewAuthenticationGeneral" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationGeneralCP" />
+	</command>
+
+	<command name="ViewAuthenticationLDAP" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationLDAPCP" />
+	</command>
+
+	<command name="ViewAuthenticationNTLM" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationNTLMCP" />
+	</command>
+
+	<command name="ViewAuthenticationOpenID" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationOpenIDCP" />
+	</command>
+
+	<command name="ViewAuthenticationOpenSSO" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewAuthenticationOpenSSOCP" />
+	</command>
+
+	<command name="ViewInstanceSettingEnableLDAPAuthNotAffectSystemSetting" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#viewConfiguration">
+			<var name="configurationName" value="LDAP Auth" />
+			<var name="enableLDAP" value="false" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#enableLDAPSetting">
+			<var name="enableCheckboxKey" value="ENABLED" />
+		</execute>
+
+		<execute macro="PortalSettings#viewEnabledLDAPSetting">
+			<var name="enableCheckboxKey" value="ENABLED" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#viewConfiguration">
+			<var name="configurationName" value="LDAP Auth" />
+			<var name="enableLDAP" value="false" />
+		</execute>
+	</command>
+</definition>

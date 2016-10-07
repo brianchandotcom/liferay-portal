@@ -2,9 +2,20 @@
 	<command name="editConfiguration">
 		<var name="key_rowEntry" value="${configurationName}" />
 
+		<while>
+			<condition function="IsElementNotPresent" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+			<then>
+				<execute function="Click" locator1="Pagination#NEXT_LINK" />
+			</then>
+		</while>
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+	</command>
+
+	<command name="enableImportEntry">
+		<execute function="Check" locator1="SystemSettings#IMPORT_ENABLED_CHECKBOX" />
 	</command>
 
 	<command name="exitEditConfiguration">

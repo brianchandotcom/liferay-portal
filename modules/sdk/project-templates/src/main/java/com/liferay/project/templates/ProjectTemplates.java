@@ -74,7 +74,9 @@ public class ProjectTemplates {
 
 					template = template.replace('.', '-');
 
-					templates.add(template);
+					if (!template.startsWith("workspace")) {
+						templates.add(template);
+					}
 				}
 			}
 		}
@@ -98,7 +100,9 @@ public class ProjectTemplates {
 
 						template = template.replace('.', '-');
 
-						templates.add(template);
+						if (!template.startsWith("workspace")) {
+							templates.add(template);
+						}
 					}
 				}
 			}

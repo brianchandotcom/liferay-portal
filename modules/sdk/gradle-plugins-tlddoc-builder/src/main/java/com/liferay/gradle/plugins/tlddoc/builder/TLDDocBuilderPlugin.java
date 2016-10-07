@@ -112,7 +112,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 
 			});
 
-		copy.setDescription("Copies Tag Library documentation resources.");
+		copy.setDescription("Copies tag library documentation resources.");
 
 		return copy;
 	}
@@ -126,7 +126,7 @@ public class TLDDocBuilderPlugin implements Plugin<Project> {
 			project, TLDDOC_TASK_NAME, TLDDocTask.class);
 
 		tlddocTask.dependsOn(copyTLDDocResourcesTask, validateTLDTask);
-		tlddocTask.setDescription("Generates Tag Library documentation.");
+		tlddocTask.setDescription("Generates tag library documentation.");
 		tlddocTask.setGroup(JavaBasePlugin.DOCUMENTATION_GROUP);
 
 		PluginContainer pluginContainer = project.getPlugins();

@@ -1,0 +1,12 @@
+<definition>
+	<command name="selectRuleCondition">
+		<var name="key_condition" value="${condition}" />
+
+		<var method="StringUtil#upperCase('${condition}')" name="condition" />
+
+		<execute function="Click" locator1="Form#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
+
+		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
+	</command>
+</definition>
+

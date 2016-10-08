@@ -186,6 +186,16 @@
 	<td>//button[contains(@class,'add-rule-button-icon')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RULE_BUILDER_RULE_CONDITION_DROPDOWN</td>
+	<td>//button[contains(@class,'dropdown-toggle-operator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_RULE_CONDITION</td>
+	<td>//ul[@class='dropdown-menu']//li[contains(.,'${key_condition}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1,4 +1,22 @@
 <definition>
+	<command name="defineConditionValue">
+		<if>
+			<equals arg1="${conditionValueType}" arg2="Other Field" />
+			<then>
+				<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD" value1="${conditionValueField}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${conditionValueType}" arg2="Value" />
+			<then>
+				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+
+				<execute function="Type" locator1="Form#RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD" value1="${conditionFieldValue}" />
+			</then>
+		</if>
+	</command>
+	
 	<command name="selectRuleCondition">
 		<var name="key_condition" value="${condition}" />
 
@@ -7,6 +25,24 @@
 		<execute function="Click" locator1="Form#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
 
 		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
+	</command>
+
+	<command name="selectConditionField">
+		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+
+		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_FIELD" value1="${conditionField}" />
+	</command>
+
+	<command name="selectConditionOperator">
+		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+
+		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_OPERATOR" value1="${conditionOperator}" />
+	</command>
+
+	<command name="selectConditionValue">
+		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+
+		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE" value1="${conditionValueType}" />
 	</command>
 </definition>
 

@@ -196,6 +196,31 @@
 	<td>//ul[@class='dropdown-menu']//li[contains(.,'${key_condition}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_FIELD</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-if')]//select[contains(@id,'condition-first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_OPERATOR</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-operator')]//select[contains(@id,'condition-operator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-the')]//select[contains(@id,'type')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//select[contains(@id,'select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//input[@type='text']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -29,8 +29,16 @@ public class DDMDataProviderContext {
 		_ddmFormValues = ddmFormValues;
 	}
 
+	public void addParameter(String key, String value) {
+		_parameters.put(key, value);
+	}
+
 	public void addParameters(Map<String, String> parameters) {
 		_parameters.putAll(parameters);
+	}
+
+	public String getParameter(String key) {
+		return _parameters.get(key);
 	}
 
 	public Map<String, String> getParameters() {

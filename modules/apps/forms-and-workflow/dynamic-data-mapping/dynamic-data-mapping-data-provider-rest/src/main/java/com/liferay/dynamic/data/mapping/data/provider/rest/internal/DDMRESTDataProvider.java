@@ -81,18 +81,7 @@ public class DDMRESTDataProvider
 
 			HttpResponse httpResponse = httpRequest.send();
 
-			String httpResponseBody = httpResponse.body();
-
-			JSONArray jsonArray = null;
-
-			try {
-				jsonArray = _jsonFactory.createJSONArray(httpResponseBody);
-			}
-			catch (JSONException jsone) {
-				jsonArray = _jsonFactory.createJSONArray();
-
-				jsonArray.put(_jsonFactory.createJSONObject(httpResponseBody));
-			}
+			JSONArray jsonArray = getValue(httpResponse.body());
 
 			return createDDMDataProviderConsumerResponse(jsonArray);
 		}
@@ -167,6 +156,12 @@ public class DDMRESTDataProvider
 
 		httpRequest.query(ddmDataProviderContext.getParameters());
 
+		if (ddmRESTDataProviderSettings.filterable()) {
+			httpRequest.query(
+				ddmRESTDataProviderSettings.filterParameterName(),
+				ddmDataProviderContext.getParameter("filterParameterValue"));
+		}
+
 		String cacheKey = getCacheKey(httpRequest);
 
 		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
@@ -180,7 +175,7 @@ public class DDMRESTDataProvider
 
 		HttpResponse httpResponse = httpRequest.send();
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray(httpResponse.body());
+		JSONArray jsonArray = getValue(httpResponse.body());
 
 		List<KeyValuePair> results = new ArrayList<>();
 
@@ -219,6 +214,19 @@ public class DDMRESTDataProvider
 		}
 
 		return jsonObject.get(key);
+	}
+
+	protected JSONArray getValue(String valueString) throws JSONException {
+		try {
+			return _jsonFactory.createJSONArray(valueString);
+		}
+		catch (JSONException jsone) {
+			JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+			jsonArray.put(_jsonFactory.createJSONObject(valueString));
+
+			return jsonArray;
+		}
 	}
 
 	@Reference(unbind = "-")

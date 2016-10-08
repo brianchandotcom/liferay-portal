@@ -20,11 +20,22 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 
 /**
  * @author Marcellus Tavares
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"setVisible('filterParameterName', true)",
+				"setRequired('filterParameterName', true)"
+			},
+			condition = "equals(getValue('filterable'), true)"
+		)
+	}
+)
 @DDMFormLayout(
 	{
 		@DDMFormLayoutPage(
@@ -35,7 +46,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 							size = 12,
 							value = {
 								"url", "key", "value", "username", "password",
-								"cacheable"
+								"filterable", "filterParameterName", "cacheable"
 							}
 						)
 					}
@@ -51,6 +62,21 @@ public interface DDMRESTDataProviderSettings {
 		properties = "showAsSwitcher=true"
 	)
 	public boolean cacheable();
+
+	@DDMFormField(
+		label = "%support-filtering-by-keyword",
+		properties = "showAsSwitcher=true"
+	)
+	public boolean filterable();
+
+	@DDMFormField(
+		label = "%filter-parameter-name",
+		properties = {
+			"placeholder=%enter-a-name-that-matches-one-of-the-rest-providers-parameters",
+			"tooltip=%the-parameter-whose-value-will-be-used-as-a-filter-by-the-rest-provider"
+		}
+	)
+	public String filterParameterName();
 
 	@DDMFormField(
 		label = "%displayed-json-attribute",

@@ -95,10 +95,13 @@ public class TextDDMFormFieldTemplateContextContributor
 	}
 
 	protected void addDDMDataProviderContextParameters(
-		HttpServletRequest request,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
 		DDMDataProviderContext ddmDataProviderContext,
 		List<DDMDataProviderContextContributor>
 			ddmDataProviderContextContributors) {
+
+		HttpServletRequest request =
+			ddmFormFieldRenderingContext.getHttpServletRequest();
 
 		for (DDMDataProviderContextContributor
 				ddmDataProviderContextContributor :
@@ -113,6 +116,10 @@ public class TextDDMFormFieldTemplateContextContributor
 
 			ddmDataProviderContext.addParameters(parameters);
 		}
+
+		ddmDataProviderContext.addParameter(
+			"filterParameterValue",
+			String.valueOf(ddmFormFieldRenderingContext.getValue()));
 	}
 
 	protected DDMFormFieldOptions getDDMFormFieldOptions(
@@ -129,7 +136,7 @@ public class TextDDMFormFieldTemplateContextContributor
 				(List<Map<String, String>>)
 					ddmFormFieldRenderingContext.getProperty("options");
 
-			if (keyValuePairs.size() == 0) {
+			if (keyValuePairs.isEmpty()) {
 				return ddmFormField.getDDMFormFieldOptions();
 			}
 
@@ -177,8 +184,8 @@ public class TextDDMFormFieldTemplateContextContributor
 							ddmDataProviderInstance.getType());
 
 			addDDMDataProviderContextParameters(
-				ddmFormFieldRenderingContext.getHttpServletRequest(),
-				ddmDataProviderContext, ddmDataProviderContextContributors);
+				ddmFormFieldRenderingContext, ddmDataProviderContext,
+				ddmDataProviderContextContributors);
 
 			List<KeyValuePair> keyValuePairs = ddmDataProvider.getData(
 				ddmDataProviderContext);

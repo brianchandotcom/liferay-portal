@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<project basedir="." name="portal-test-authentication" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="login-with-token">
+		<exec executable="curl" outputproperty="curl.output">
+		    <arg line="-H SM_USER:test@liferay.com localhost:8080" />
+		</exec>
+
+		<echo>${curl.output}</echo>
+
+		<if>
+			<contains string="${curl.output}" substring="Test Test" />
+			<then>
+				<echo>Signed in successfully.</echo>
+			</then>
+			<else>
+				<fail>Token-based SSO failed.</fail>
+			</else>
+		</if>
+	</target>
+</project>

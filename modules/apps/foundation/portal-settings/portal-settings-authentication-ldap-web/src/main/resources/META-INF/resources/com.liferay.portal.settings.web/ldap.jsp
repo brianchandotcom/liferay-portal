@@ -53,15 +53,15 @@ boolean ldapExportEnabled = !(ldapImportConfiguration.importUserPasswordAutogene
 	</aui:select>
 
 	<aui:select label="password-encryption-algorithm" name='<%= "ldap--" + LDAPConstants.PASSWORD_ENCRYPTION_ALGORITHM + "--" %>' value="<%= ldapPasswordEncryptionAlgorithm %>">
-		<aui:option label="bcrypt" value="<%= LDAPConstants.BCRYPT %>" />
-		<aui:option label="md2" value="<%= LDAPConstants.MD2 %>" />
-		<aui:option label="md5" value="<%= LDAPConstants.MD5 %>" />
-		<aui:option label="none" value="<%= LDAPConstants.NONE %>" />
-		<aui:option label="sha" value="<%= LDAPConstants.SHA %>" />
-		<aui:option label="sha-256" value="<%= LDAPConstants.SHA_256 %>" />
-		<aui:option label="sha-384" value="<%= LDAPConstants.SHA_384 %>" />
-		<aui:option label="ssha" value="<%= LDAPConstants.SSHA %>" />
-		<aui:option label="ufc-crypt" value="<%= LDAPConstants.UFC_CRYPT %>" />
+		<aui:option label="bcrypt" value="<%= LDAPSettingsConstants.BCRYPT %>" />
+		<aui:option label="md2" value="<%= LDAPSettingsConstants.MD2 %>" />
+		<aui:option label="md5" value="<%= LDAPSettingsConstants.MD5 %>" />
+		<aui:option label="none" value="<%= LDAPSettingsConstants.NONE %>" />
+		<aui:option label="sha" value="<%= LDAPSettingsConstants.SHA %>" />
+		<aui:option label="sha-256" value="<%= LDAPSettingsConstants.SHA_256 %>" />
+		<aui:option label="sha-384" value="<%= LDAPSettingsConstants.SHA_384 %>" />
+		<aui:option label="ssha" value="<%= LDAPSettingsConstants.SSHA %>" />
+		<aui:option label="ufc-crypt" value="<%= LDAPSettingsConstants.UFC_CRYPT %>" />
 	</aui:select>
 </aui:fieldset>
 
@@ -189,15 +189,15 @@ boolean ldapExportEnabled = !(ldapImportConfiguration.importUserPasswordAutogene
 	<aui:input label="import-interval" name='<%= "ldap--" + LDAPConstants.IMPORT_INTERVAL + "--" %>' type="text" value="<%= ldapImportInterval %>" />
 
 	<aui:select label="import-method" name='<%= "ldap--" + LDAPConstants.IMPORT_METHOD + "--" %>' value="<%= ldapImportMethod %>">
-		<aui:option label="group" value="<%= LDAPConstants.IMPORT_METHOD_GROUP %>" />
-		<aui:option label="user" value="<%= LDAPConstants.IMPORT_METHOD_USER %>" />
+		<aui:option label="group" value="<%= LDAPSettingsConstants.IMPORT_METHOD_GROUP %>" />
+		<aui:option label="user" value="<%= LDAPSettingsConstants.IMPORT_METHOD_USER %>" />
 	</aui:select>
 
 	<aui:input label="lock-expiration-time" name='<%= "ldap--" + LDAPConstants.IMPORT_LOCK_EXPIRATION_TIME + "--" %>' type="text" value="<%= ldapImportLockExpirationTime %>" />
 
 	<aui:select label="import-user-sync-strategy" name='<%= "ldap--" + LDAPConstants.IMPORT_USER_SYNC_STRATEGY + "--" %>' value="<%= ldapImportUserSyncStrategy %>">
-		<aui:option label="auth-type" value="<%= LDAPConstants.IMPORT_USER_SYNC_STRATEGY_AUTH_TYPE %>" />
-		<aui:option label="uuid" value="<%= LDAPConstants.IMPORT_USER_SYNC_STRATEGY_UUID %>" />
+		<aui:option label="auth-type" value="<%= LDAPSettingsConstants.IMPORT_USER_SYNC_STRATEGY_AUTH_TYPE %>" />
+		<aui:option label="uuid" value="<%= LDAPSettingsConstants.IMPORT_USER_SYNC_STRATEGY_UUID %>" />
 	</aui:select>
 
 	<aui:input label="enable-user-password" name='<%= "ldap--" + LDAPConstants.IMPORT_USER_PASSWORD_ENABLED + "--" %>' type="checkbox" value="<%= ldapImportUserPasswordEnabled %>" />

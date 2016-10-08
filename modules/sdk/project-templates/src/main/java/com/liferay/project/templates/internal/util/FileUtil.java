@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -42,6 +43,34 @@ import java.util.jar.JarFile;
  * @author Andrea Di Giorgi
  */
 public class FileUtil {
+
+	public static void deleteDir(Path dirPath) throws IOException {
+		Files.walkFileTree(
+			dirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path dirPath, IOException ioe)
+					throws IOException {
+
+					Files.delete(dirPath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
 
 	public static void extractDirectory(
 			String dirName, final Path destinationDirPath)
@@ -139,6 +168,27 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	public static Path getRootDir(Path dirPath, String markerFileName) {
+		while (true) {
+			if (Files.exists(dirPath.resolve(markerFileName))) {
+				return dirPath;
+			}
+
+			dirPath = dirPath.getParent();
+
+			if (dirPath == null) {
+				return null;
+			}
+		}
+	}
+
+	public static String read(Path path) throws IOException {
+		String content = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		return content.replace("\r\n", "\n");
 	}
 
 }

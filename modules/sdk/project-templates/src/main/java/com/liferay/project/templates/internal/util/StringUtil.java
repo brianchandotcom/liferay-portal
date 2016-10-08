@@ -14,6 +14,9 @@
 
 package com.liferay.project.templates.internal.util;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -35,6 +38,16 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
+
+	public static boolean contains(String s, Pattern pattern) {
+		if ((s == null) || s.isEmpty()) {
+			return false;
+		}
+
+		Matcher matcher = pattern.matcher(s);
+
+		return matcher.find();
 	}
 
 	public static String removeChar(String s, char c) {

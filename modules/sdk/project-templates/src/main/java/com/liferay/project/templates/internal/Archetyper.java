@@ -19,6 +19,7 @@ import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.internal.util.WorkspaceUtil;
 
 import java.io.File;
 
@@ -31,6 +32,7 @@ import java.net.URLClassLoader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.Enumeration;
 import java.util.List;
@@ -78,8 +80,8 @@ public class Archetyper {
 
 		String projectType = "standalone";
 
-		if (projectTemplatesArgs.getWorkspaceDir() != null) {
-			projectType = "workspace";
+		if (WorkspaceUtil.isWorkspace(destinationDir)) {
+			projectType = WorkspaceUtil.WORKSPACE;
 		}
 
 		String service = projectTemplatesArgs.getService();
@@ -288,8 +290,8 @@ public class Archetyper {
 								"temp-archetype", null);
 
 							Files.copy(
-								jarFile.getInputStream(jarEntry),
-								archetypePath);
+								jarFile.getInputStream(jarEntry), archetypePath,
+								StandardCopyOption.REPLACE_EXISTING);
 
 							archetypeFile = archetypePath.toFile();
 

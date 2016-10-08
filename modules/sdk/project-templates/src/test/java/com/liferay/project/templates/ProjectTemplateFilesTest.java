@@ -15,6 +15,8 @@
 package com.liferay.project.templates;
 
 import com.liferay.project.templates.internal.util.FileUtil;
+import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 
 import java.io.BufferedReader;
@@ -37,7 +39,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -45,28 +46,18 @@ import org.junit.Test;
  */
 public class ProjectTemplateFilesTest {
 
-	@BeforeClass
-	public static void setUpClass() throws IOException {
-		_projectTemplateDirPaths = new HashSet<>();
-
-		try (DirectoryStream<Path> directoryStream =
-				FileTestUtil.getProjectTemplatesDirectoryStream()) {
-
-			for (Path path : directoryStream) {
-				_projectTemplateDirPaths.add(path);
-			}
-		}
-	}
-
 	@Test
 	public void testProjectTemplateFiles() throws IOException {
 		String gitIgnoreTemplate = FileTestUtil.read(
 			"com/liferay/project/templates/dependencies" +
 				"/archetype_resources_gitignore.tmpl");
 
-		for (Path projectTemplateDirPath : _projectTemplateDirPaths) {
-			_testProjectTemplateFiles(
-				projectTemplateDirPath, gitIgnoreTemplate);
+		try (DirectoryStream<Path> directoryStream =
+				FileTestUtil.getProjectTemplatesDirectoryStream()) {
+
+			for (Path path : directoryStream) {
+				_testProjectTemplateFiles(path, gitIgnoreTemplate);
+			}
 		}
 	}
 
@@ -148,9 +139,18 @@ public class ProjectTemplateFilesTest {
 		Assert.assertTrue(
 			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
 
-		Assert.assertEquals(
-			"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
-			FileTestUtil.read(gitIgnorePath));
+		Path projectTemplateDirNamePath = projectTemplateDirPath.getFileName();
+
+		String projectTemplateDirName = projectTemplateDirNamePath.toString();
+
+		if (!projectTemplateDirName.equals(
+				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX +
+					WorkspaceUtil.WORKSPACE)) {
+
+			Assert.assertEquals(
+				"Incorrect " + gitIgnorePath, gitIgnoreTemplate,
+				FileUtil.read(gitIgnorePath));
+		}
 
 		Assert.assertFalse(
 			"Forbidden Gradle wrapper in " + archetypeResourcesDirPath,
@@ -215,7 +215,7 @@ public class ProjectTemplateFilesTest {
 	private void _testTextFile(Path path, String fileName, String extension)
 		throws IOException {
 
-		String text = FileTestUtil.read(path);
+		String text = FileUtil.read(path);
 
 		boolean trailingEmptyLine = false;
 
@@ -260,7 +260,7 @@ public class ProjectTemplateFilesTest {
 				"#if (" + condition.trim() + ")", matcher.group());
 		}
 
-		if (extension.equals("xml")) {
+		if (extension.equals("xml") && Validator.isNotNull(text)) {
 			String xmlDeclaration = _XML_DECLARATION;
 
 			if (fileName.equals("service.xml")) {
@@ -282,7 +282,6 @@ public class ProjectTemplateFilesTest {
 	private static final String _XML_DECLARATION =
 		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
 
-	private static Set<Path> _projectTemplateDirPaths;
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));

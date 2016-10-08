@@ -5,20 +5,3 @@ dependencies {
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi214], dir: new File(rootProject.buildDir, "gradle-2.14"))
 }
-
-jarSources {
-	into("samples") {
-		exclude ".gradle"
-		exclude "build"
-
-		filesMatching("settings.gradle") {
-			filter {
-				String line ->
-
-				line.replace "latest.release", project.version
-			}
-		}
-
-		from "samples"
-	}
-}

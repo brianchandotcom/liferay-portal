@@ -59,10 +59,6 @@ public class ProjectTemplatesArgs {
 		return _template;
 	}
 
-	public File getWorkspaceDir() {
-		return _workspaceDir;
-	}
-
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -93,10 +89,6 @@ public class ProjectTemplatesArgs {
 
 	public void setTemplate(String template) {
 		_template = template;
-	}
-
-	public void setWorkspaceDir(File workspaceDir) {
-		_workspaceDir = workspaceDir;
 	}
 
 	protected boolean isHelp() {
@@ -166,11 +158,5 @@ public class ProjectTemplatesArgs {
 		names = "--template"
 	)
 	private String _template = "mvc-portlet";
-
-	@Parameter(
-		description = "The root directory of the Liferay Workspace where the new project is being created.",
-		names = "--workspace"
-	)
-	private File _workspaceDir;
 
 }

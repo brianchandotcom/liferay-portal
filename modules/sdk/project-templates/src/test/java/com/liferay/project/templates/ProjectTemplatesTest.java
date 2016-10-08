@@ -16,7 +16,9 @@ package com.liferay.project.templates;
 
 import aQute.bnd.main.bnd;
 
+import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
+import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 
@@ -668,6 +670,30 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateWorkspace() throws Exception {
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "foows");
+
+		_testExists(workspaceProjectDir, "configs/dev/portal-ext.properties");
+		_testExists(workspaceProjectDir, "gradle.properties");
+
+		_testContains(
+			workspaceProjectDir, "settings.gradle", "version: \"1.0.40\"");
+
+		File moduleProjectDir = _buildTemplateWithGradle(
+			new File(workspaceProjectDir, "modules"), "", "foo-portlet");
+
+		_testNotContains(
+			moduleProjectDir, "build.gradle", "buildscript", "repositories");
+
+		_executeGradle(
+			workspaceProjectDir,
+			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
+	}
+
+	@Test
 	public void testListTemplates() throws Exception {
 		Set<String> templates = new HashSet<>(
 			Arrays.asList(ProjectTemplates.getTemplates()));
@@ -685,7 +711,9 @@ public class ProjectTemplatesTest {
 				String template = fileName.substring(
 					FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length());
 
-				expectedTemplates.add(template);
+				if (!template.equals(WorkspaceUtil.WORKSPACE)) {
+					expectedTemplates.add(template);
+				}
 			}
 		}
 
@@ -791,10 +819,18 @@ public class ProjectTemplatesTest {
 
 		_testExists(projectDir, ".gitignore");
 		_testExists(projectDir, "build.gradle");
-		_testExists(projectDir, "gradlew");
-		_testExists(projectDir, "gradlew.bat");
-		_testExists(projectDir, "gradle/wrapper/gradle-wrapper.jar");
-		_testExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
+
+		if (WorkspaceUtil.isWorkspace(destinationDir)) {
+			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
+				_testNotExists(projectDir, fileName);
+			}
+		}
+		else {
+			for (String fileName : _STANDALONE_ONLY_FILE_NAMES) {
+				_testExists(projectDir, fileName);
+			}
+		}
+
 		_testNotExists(projectDir, "pom.xml");
 
 		return projectDir;
@@ -865,7 +901,7 @@ public class ProjectTemplatesTest {
 
 			Path buildGradlePath = buildGradleFile.toPath();
 
-			String buildGradle = FileTestUtil.read(buildGradlePath);
+			String buildGradle = FileUtil.read(buildGradlePath);
 
 			buildGradle = buildGradle.replace(
 				"\"" + _REPOSITORY_CDN_URL + "\"",
@@ -1085,7 +1121,7 @@ public class ProjectTemplatesTest {
 
 		File file = _testExists(dir, fileName);
 
-		String content = FileTestUtil.read(file.toPath());
+		String content = FileUtil.read(file.toPath());
 
 		for (String s : strings) {
 			Assert.assertTrue(
@@ -1099,6 +1135,21 @@ public class ProjectTemplatesTest {
 		File file = new File(dir, fileName);
 
 		Assert.assertTrue("Missing " + fileName, file.exists());
+
+		return file;
+	}
+
+	private File _testNotContains(File dir, String fileName, String... strings)
+		throws IOException {
+
+		File file = _testExists(dir, fileName);
+
+		String content = FileUtil.read(file.toPath());
+
+		for (String s : strings) {
+			Assert.assertFalse(
+				"Found in " + fileName + ": " + s, content.contains(s));
+		}
 
 		return file;
 	}
@@ -1170,6 +1221,11 @@ public class ProjectTemplatesTest {
 	private static final String _REPOSITORY_CDN_URL =
 		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
 			"/public";
+
+	private static final String[] _STANDALONE_ONLY_FILE_NAMES = {
+		"gradlew", "gradlew.bat", "gradle/wrapper/gradle-wrapper.jar",
+		"gradle/wrapper/gradle-wrapper.properties"
+	};
 
 	private static URI _gradleDistribution;
 	private static String _httpProxyHost;

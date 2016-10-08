@@ -72,6 +72,7 @@ import java.util.concurrent.Future;
 
 import javax.naming.Context;
 
+import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.Result;
@@ -93,6 +94,9 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 
 		try {
 			List<Class<?>> classes = scanTestClasses();
+
+			Assume.assumeFalse(
+				"No PACL test available, skip running.", classes.isEmpty());
 
 			ProcessChannel<Result> processChannel =
 				localProcessExecutor.execute(

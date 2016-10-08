@@ -23,25 +23,32 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutReference;
 import com.liferay.portal.kernel.model.LayoutSoap;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.persistence.LayoutFinder;
 import com.liferay.portal.kernel.service.persistence.LayoutUtil;
+import com.liferay.portal.kernel.service.persistence.RoleUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class LayoutFinderImpl
 	extends LayoutFinderBaseImpl implements LayoutFinder {
-
-	public static final String FIND_BY_NO_PERMISSIONS =
-		LayoutFinder.class.getName() + ".findByNoPermissions";
 
 	public static final String FIND_BY_NULL_FRIENDLY_URL =
 		LayoutFinder.class.getName() + ".findByNullFriendlyURL";
@@ -52,26 +59,65 @@ public class LayoutFinderImpl
 	public static final String FIND_BY_C_P_P =
 		LayoutFinder.class.getName() + ".findByC_P_P";
 
+	public static final String FIND_BY_C_N_S_R =
+		LayoutFinder.class.getName() + ".findByC_N_S_R";
+
 	@Override
 	public List<Layout> findByNoPermissions(long roleId) {
+		Role role = RoleUtil.fetchByPrimaryKey(roleId);
+
+		if (role == null) {
+			return Collections.emptyList();
+		}
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_NO_PERMISSIONS);
+			String sql = "SELECT plid FROM Layout WHERE companyId = ?";
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addEntity("Layout", LayoutImpl.class);
-
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(role.getCompanyId());
+
+			Set<Number> plids = new HashSet<>(q.list(true));
+
+			sql = CustomSQLUtil.get(FIND_BY_C_N_S_R);
+
+			q = session.createSynchronizedSQLQuery(sql);
+
+			qPos = QueryPos.getInstance(q);
+
+			qPos.add(role.getCompanyId());
 			qPos.add(Layout.class.getName());
 			qPos.add(ResourceConstants.SCOPE_INDIVIDUAL);
 			qPos.add(roleId);
 
-			return q.list(true);
+			Iterator<String> it = q.iterate(false);
+
+			while (it.hasNext()) {
+				String primKey = it.next();
+
+				plids.remove(GetterUtil.getLong(primKey));
+			}
+
+			Class<?>[] layoutClassArray = new Class<?>[] {Layout.class};
+			ClassLoader layoutClassLoader = Layout.class.getClassLoader();
+
+			List<Layout> layouts = new ArrayList<>(plids.size());
+
+			for (Number plid : plids) {
+				Layout layout = (Layout)ProxyUtil.newProxyInstance(
+					layoutClassLoader, layoutClassArray,
+					new LayoutPlidOnlyInvocationHandler(plid.longValue()));
+
+				layouts.add(layout);
+			}
+
+			return layouts;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -216,6 +262,29 @@ public class LayoutFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private class LayoutPlidOnlyInvocationHandler implements InvocationHandler {
+
+		public LayoutPlidOnlyInvocationHandler(long plid) {
+			_plid = plid;
+		}
+
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			String methodName = method.getName();
+
+			if (methodName.equals("getPlid")) {
+				return _plid;
+			}
+			else {
+				throw new UnsupportedOperationException(methodName);
+			}
+		}
+
+		private final long _plid;
+
 	}
 
 }

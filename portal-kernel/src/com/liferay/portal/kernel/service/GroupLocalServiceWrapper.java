@@ -100,8 +100,9 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	@Override
-	public boolean isActive(com.liferay.portal.kernel.model.Group group) {
-		return _groupLocalService.isActive(group);
+	public boolean isLiveGroupActive(
+		com.liferay.portal.kernel.model.Group group) {
+		return _groupLocalService.isLiveGroupActive(group);
 	}
 
 	@Override

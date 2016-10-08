@@ -602,7 +602,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			if (ArrayUtil.contains(classNames, Group.class.getName())) {
 				for (Group group : userBag.getUserGroups()) {
-					if (groupLocalService.isActive(group) && group.isSite()) {
+					if (groupLocalService.isLiveGroupActive(group) &&
+						group.isSite()) {
+
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
 
@@ -619,7 +621,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			if (ArrayUtil.contains(classNames, Organization.class.getName())) {
 				for (Group group : userBag.getUserOrgGroups()) {
-					if (groupLocalService.isActive(group) && group.isSite()) {
+					if (groupLocalService.isLiveGroupActive(group) &&
+						group.isSite()) {
+
 						if (userSiteGroups.add(group) &&
 							(userSiteGroups.size() == max)) {
 

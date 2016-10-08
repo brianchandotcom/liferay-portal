@@ -1894,7 +1894,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean isActive(Group group) {
+	public boolean isLiveGroupActive(Group group) {
 		if (!group.isStagingGroup()) {
 			return group.isActive();
 		}
@@ -3602,7 +3602,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Filter by active
 
 			if (active != null) {
-				if (active != isActive(group)) {
+				if (active != isLiveGroupActive(group)) {
 					iterator.remove();
 
 					continue;

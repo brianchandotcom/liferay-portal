@@ -187,6 +187,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_BUILDER_ADD_CONDITION</td>
+	<td>//a[contains(@class,'form-builder-rule-add-condition')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RULE_BUILDER_RULE_CONDITION_DROPDOWN</td>
 	<td>//button[contains(@class,'dropdown-toggle-operator')]</td>
 	<td></td>
@@ -219,6 +224,11 @@
 <tr>
 	<td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>
 	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_TIMELINE_RULE_CONDITION</td>
+	<td>//li[contains(@class,'condition-container') and contains(@class,'timeline-item')][${key_conditonRowNumber}]//div[contains(.,'${key_condition}')]</td>
 	<td></td>
 </tr>
 </tbody>

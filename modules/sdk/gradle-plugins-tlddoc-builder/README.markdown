@@ -12,7 +12,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "1.0.3"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "1.1.0"
 	}
 
 	repositories {
@@ -21,9 +21,25 @@ buildscript {
 		}
 	}
 }
-
-apply plugin: "com.liferay.tlddoc.builder"
 ```
+
+There are two TLDDoc Builder Gradle plugins you can apply to your project:
+
+- Apply the [*TLDDoc Builder Plugin*](#tlddoc-builder-plugin) to generate tag
+library documentation for your project:
+
+	```gradle
+	apply plugin: "com.liferay.tlddoc.builder"
+	```
+
+- Apply the [*App TLDDoc Builder Plugin*](#app-tlddoc-builder-plugin) in a
+parent project to generate the tag library documentation as a single, combined
+HTML document for an application that spans different subprojects, each one
+representing a different component of the same application:
+
+	```gradle
+	apply plugin: "com.liferay.app.tlddoc.builder"
+	```
 
 Since the plugin automatically resolves the Tag Library Documentation Generator
 library as a dependency, you must configure a repository that hosts the
@@ -38,15 +54,15 @@ repositories {
 }
 ```
 
-## Tasks
+## TLDDoc Builder Plugin
 
 The plugin adds three tasks to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`copyTLDDocResources` | \- | [`Copy`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) | Copies the tag library documentation resources from `src/main/tlddoc` to the [destination directory](#destinationdir) of the `tlddoc` task.
+<a name="copytlddocresources"></a>`copyTLDDocResources` | \- | [`Copy`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) | Copies the tag library documentation resources from `src/main/tlddoc` to the [destination directory](#destinationdir) of the `tlddoc` task.
 `tlddoc` | `copyTLDDocResources`, `validateTLD` | [`TLDDocTask`](#tlddoctask) | Generates the tag library documentation.
-`validateTLD` | \- | [`ValidateSchemaTask`](#validateschematask) | Validates the TLD files in the project.
+<a name="validatetld"></a>`validateTLD` | \- | [`ValidateSchemaTask`](#validateschematask) | Validates the TLD files in the project.
 
 The `tlddoc` task is automatically configured with sensible defaults,
 depending on whether the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
@@ -58,7 +74,7 @@ Property Name | Default Value with the `java` plugin
 [`includes`](#includes) | `["**/*.tld"]`
 [`source`](#source) | `project.sourceSets.main.resources.srcDirs`
 
-If the `java`plugin is applied, the `validateTLD` task is similarly configured
+If the `java` plugin is applied, the `validateTLD` task is similarly configured
 with the following sensible defaults:
 
 Property Name | Default Value with the `java` plugin
@@ -79,6 +95,33 @@ reference it in a TLD file contained in the `src/main/resources` directory:
 ```xml
 <description>Hello World <![CDATA[<img src="../images/breadcrumb.png"]]></description>
 ```
+
+## App TLDDoc Builder Plugin
+
+In order to use the App TLDDoc Builder plugin, it is required to apply the
+`com.liferay.app.tlddoc.builder` plugin in a parent project (that is, a project
+that is a common ancestor of all the subprojects representing the various
+components of the app). It is also required to apply the
+[`com.liferay.tlddoc.builder`](#tlddoc-builder-plugin) plugin to all the
+subprojects that contain TLD files.
+
+The App TLDDoc Builder plugin automatically applies the [`base`](https://docs.gradle.org/current/userguide/standard_plugins.html#N135C1)
+plugin. It also adds three tasks to your project:
+
+Name | Depends On | Type | Description
+---- | ---------- | ---- | -----------
+`appTLDDoc` | `copyAppTLDDocResources`, the [`validateTLD`](#validatetld) tasks of the subprojects | [`TLDDocTask`](#tlddoctask) | Generates tag library documentation for the app.
+`copyAppTLDDocResources` | \- | [`Copy`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Copy.html) | Copies the tag library documentation resources defined as [inputs](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/TaskInputs.html#getFiles()) for the [`copyTDLDocResources`](#copytlddocresources) tasks of the subprojects, aggregating them into the [destination directory](#destinationdir) of the `appTLDDoc` task.
+`jarAppTLDDoc` | `appTLDDoc` | [`Jar`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.bundling.Jar.html) | Assembles a JAR archive containing the tag library documentation files for this app.
+
+The `appTLDDoc` task is automatically configured with sensible defaults:
+
+Property Name | Default Value
+------------- | -------------
+[`destinationDir`](#destinationdir) | `${project.buildDir}/docs/tlddoc`
+[`source`](#source) | The sum of all the `tlddoc.source` values of the subprojects
+
+## Tasks
 
 ### TLDDocTask
 

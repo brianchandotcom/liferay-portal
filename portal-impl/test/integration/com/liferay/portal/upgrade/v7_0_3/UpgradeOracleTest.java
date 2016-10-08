@@ -110,9 +110,9 @@ public class UpgradeOracleTest {
 
 		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = connection.prepareStatement(
-				"select char_length from user_tab_columns where " +
-					"table_name = '" + tableName + "' and column_name = '" +
-					tableColumn + "'")) {
+				"select char_length from user_tab_columns where table_name = " +
+					"'" + tableName + "' and column_name = '" + tableColumn +
+					"'")) {
 
 			ResultSet rs = ps.executeQuery();
 
@@ -127,9 +127,8 @@ public class UpgradeOracleTest {
 
 		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = connection.prepareStatement(
-				"select char_used from user_tab_columns where " +
-					"table_name = '" + tableName + "' and column_name = '" +
-					tableColumn + "'")) {
+				"select char_used from user_tab_columns where table_name = '" +
+					tableName + "' and column_name = '" + tableColumn + "'")) {
 
 			ResultSet rs = ps.executeQuery();
 

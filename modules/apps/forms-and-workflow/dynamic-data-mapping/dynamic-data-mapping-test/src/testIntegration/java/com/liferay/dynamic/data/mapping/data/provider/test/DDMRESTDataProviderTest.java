@@ -152,7 +152,7 @@ public class DDMRESTDataProviderTest {
 		DDMDataProviderContext ddmDataProviderContext =
 			new DDMDataProviderContext(ddmFormValues);
 
-		ddmDataProviderContext.addParameter("filterParameterValue", "Brazil");
+		ddmDataProviderContext.addParameter("filterParameterValue", "brazil");
 
 		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
 			ddmDataProviderContext);

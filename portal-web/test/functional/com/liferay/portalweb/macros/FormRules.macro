@@ -1,4 +1,28 @@
 <definition>
+	<command name="configureConditionOptions">
+		<execute macro="FormRules#selectConditionField">
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
+			<var name="conditionField" value="${conditionField}" />
+		</execute>
+
+		<execute macro="FormRules#selectConditionOperator">
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
+			<var name="conditionOperator" value="${conditionOperator}" />
+		</execute>
+
+		<execute macro="FormRules#selectConditionValue">
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
+			<var name="conditionValueType" value="${conditionValueType}" />
+		</execute>
+
+		<execute macro="FormRules#defineConditionValue">
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
+			<var name="conditionValueType" value="${conditionValueType}" />
+			<var name="conditionFieldValue" value="${conditionFieldValue}" />
+			<var name="conditionValueField" value="${conditionValueField}" />
+		</execute>
+	</command>
+
 	<command name="defineConditionValue">
 		<if>
 			<equals arg1="${conditionValueType}" arg2="Other Field" />

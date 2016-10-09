@@ -474,14 +474,14 @@
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByC_N_S_R">
 		<![CDATA[
 			SELECT
-				resourcePermission.primKey
+				primKeyId
 			FROM
-				ResourcePermission resourcePermission
+				ResourcePermission
 			WHERE
-				(resourcePermission.companyId = ?) AND
-				(resourcePermission.name = ?) AND
-				(resourcePermission.scope = ?) AND
-				(resourcePermission.roleId = ?)
+				(companyId = ?) AND
+				(name = ?) AND
+				(scope = ?) AND
+				(roleId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByGroupId">

@@ -96,12 +96,12 @@ public class LayoutFinderImpl
 			qPos.add(ResourceConstants.SCOPE_INDIVIDUAL);
 			qPos.add(roleId);
 
-			Iterator<String> it = q.iterate(false);
+			Iterator<Long> it = q.iterate(false);
 
 			while (it.hasNext()) {
-				String primKey = it.next();
+				long primKeyId = it.next();
 
-				plids.remove(GetterUtil.getLong(primKey));
+				plids.remove(primKeyId);
 			}
 
 			Class<?>[] layoutClassArray = new Class<?>[] {Layout.class};

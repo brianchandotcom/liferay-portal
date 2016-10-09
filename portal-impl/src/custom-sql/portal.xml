@@ -362,7 +362,7 @@
 		<![CDATA[
 			INNER JOIN
 				ResourcePermission ON
-					(ResourcePermission.primKey = CAST_TEXT(Group_.groupId))
+					(ResourcePermission.primKeyId = Group_.groupId)
 			WHERE
 				(Group_.liveGroupId = 0) AND
 				(ResourcePermission.name = ?) AND

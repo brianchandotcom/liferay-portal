@@ -94,7 +94,9 @@ public class SearchUtil {
 								entryGroup.getParentGroupId());
 						}
 
-						if (!GroupLocalServiceUtil.isLiveGroupActive(entryGroup)) {
+						if (!GroupLocalServiceUtil.isLiveGroupActive(
+								entryGroup)) {
+
 							totalRows--;
 
 							continue;

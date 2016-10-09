@@ -1844,7 +1844,7 @@
 
 		<var name="key_portletTitleName" value="Asset Publisher" />
 
-		<execute function="AssertElementNotPresent" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
+		<execute function="AssertTextEquals" locator1="Portlet#SPECIFIC_TITLE" value1="Asset Publisher" />
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="This is a thread by usersn1" />

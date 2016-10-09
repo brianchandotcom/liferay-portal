@@ -427,23 +427,6 @@
 				(Users_Groups.userId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNoPermissions">
-		<![CDATA[
-			SELECT
-				{Layout.*}
-			FROM
-				Layout
-			LEFT JOIN
-				ResourcePermission ON
-					(ResourcePermission.companyId = Layout.companyId) AND
-					(ResourcePermission.name = ?) AND
-					(ResourcePermission.scope = ?) AND
-					(ResourcePermission.primKey = CAST_TEXT(Layout.plid)) AND
-					(ResourcePermission.roleId = ?)
-			WHERE
-				ResourcePermission.primKey IS NULL
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNullFriendlyURL">
 		<![CDATA[
 			SELECT
@@ -486,6 +469,19 @@
 					(PortletPreferences.portletId LIKE ?)
 				) AND
 				(CAST_CLOB_TEXT(PortletPreferences.preferences) LIKE ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByC_N_S_R">
+		<![CDATA[
+			SELECT
+				primKeyId
+			FROM
+				ResourcePermission
+			WHERE
+				(companyId = ?) AND
+				(name = ?) AND
+				(scope = ?) AND
+				(roleId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.OrganizationFinder.countO_ByGroupId">

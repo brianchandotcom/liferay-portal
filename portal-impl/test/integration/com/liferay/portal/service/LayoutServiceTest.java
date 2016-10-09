@@ -16,7 +16,13 @@ package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -27,9 +33,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -48,6 +56,36 @@ public class LayoutServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetNoPermissionLayouts() throws Exception {
+		Role role = RoleLocalServiceUtil.getRole(
+			_group.getCompanyId(), RoleConstants.OWNER);
+
+		List<Layout> layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
+			role.getRoleId());
+
+		int initialNoPermissionLayoutsCount = layouts.size();
+
+		Layout layout = LayoutTestUtil.addLayout(_group);
+
+		List<ResourcePermission> resourcePermissions =
+			ResourcePermissionLocalServiceUtil.getResourcePermissions(
+				layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()));
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+				resourcePermission.getResourcePermissionId());
+		}
+
+		layouts = LayoutLocalServiceUtil.getNoPermissionLayouts(
+			role.getRoleId());
+
+		Assert.assertEquals(
+			initialNoPermissionLayoutsCount + 1, layouts.size());
 	}
 
 	@Test

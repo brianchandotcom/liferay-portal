@@ -9,10 +9,10 @@ Main-Class: com.liferay.portal.tools.wsdd.merger.WSDDBuilder
 -includeresource:\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ImportPackage.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ImportsFormatter.class,\
+	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/JavaImportsFormatter.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ToolsUtil.class,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/sourceformatter/ImportPackage.class,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/sourceformatter/ImportsFormatter.class,\
-	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/sourceformatter/JavaImportsFormatter.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/util/EntityResolver.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/xml/SAXReaderFactory.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/exception/NestableRuntimeException.class,\

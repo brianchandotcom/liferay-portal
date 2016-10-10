@@ -45,7 +45,7 @@
 						</a>
 					</#if>
 
-					<#if show_site_name || page_group.isUser()>
+					<#if show_site_name>
 						<div class="pull-left site-name" title="#language_format ("go-to-x", [$site_name])">
 							${layout_set_title}
 						</div>

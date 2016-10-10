@@ -159,6 +159,17 @@ public interface KBArticleService extends BaseService {
 		java.lang.String tempFolderName) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<KBArticle> getAllDescendantKBArticles(long groupId,
+		long resourcePrimKey, int status,
+		OrderByComparator<KBArticle> orderByComparator)
+		throws PortalException;
+
+	/**
+	* @deprecated As of 1.1.0, replaced by {@link #getAllDescendantKBArticles(
+	long, long, int, OrderByComparator)}
+	*/
+	@java.lang.Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBArticle> getAllDescendantKBArticles(long resourcePrimKey,
 		int status, OrderByComparator<KBArticle> orderByComparator)
 		throws PortalException;

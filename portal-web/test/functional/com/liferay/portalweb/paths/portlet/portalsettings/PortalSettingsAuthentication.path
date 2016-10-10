@@ -135,6 +135,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUTHENTICATION_GOOGLE-->
+<tr>
+	<td>AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@name,'google--enabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GOOGLE_CLIENT_ID</td>
+	<td>//input[contains(@name,'google--clientId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_GOOGLE_CLIENT_SECRET</td>
+	<td>//input[contains(@name,'google--clientSecret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>

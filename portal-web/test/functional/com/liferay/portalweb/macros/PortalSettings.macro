@@ -172,21 +172,13 @@
 	</command>
 
 	<command name="disableLDAPCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute function="Uncheck" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute function="AssertNotChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 	</command>
@@ -380,21 +372,13 @@
 	</command>
 
 	<command name="enableImportLDAPCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
 
 		<execute macro="PortletEntry#save" />
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute function="AssertChecked" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_IMPORT_ENABLED_CHECKBOX" />
 	</command>
@@ -567,11 +551,7 @@
 	</command>
 
 	<command name="viewAuthenticationLDAPCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationLDAP" />
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_ENABLED_CHECKBOX" />
 		<execute function="AssertElementPresent" locator1="PortalSettingsAuthentication#AUTHENTICATION_LDAP_REQUIRED_CHECKBOX" />

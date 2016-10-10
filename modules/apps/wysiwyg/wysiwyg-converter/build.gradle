@@ -1,6 +1,7 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.service", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.journal.content.web", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.journal.service", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.xml", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.3.0"

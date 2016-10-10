@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -66,9 +67,9 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 
 		WysiwygConvertHelper wysiwygConvertHelper = new WysiwygConvertHelper(
 			_assetEntryLocalService, _defaultDDMStructureHelper,
-			_journalArticleLocalService, _journalFolderLocalService,
-			_layoutLocalService, _portletPreferencesLocalService,
-			_userLocalService);
+			_groupLocalService, _journalArticleLocalService,
+			_journalFolderLocalService, _layoutLocalService,
+			_portletPreferencesLocalService, _userLocalService);
 
 		wysiwygConvertHelper.convert();
 	}
@@ -85,6 +86,11 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 		DefaultDDMStructureHelper defaultDDMStructureHelper) {
 
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -127,6 +133,7 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private GroupLocalService _groupLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalFolderLocalService _journalFolderLocalService;
 	private LayoutLocalService _layoutLocalService;

@@ -176,6 +176,10 @@
 			<contains></contains>
 			<matches>.*Unable to process message.*product-app-theme.*</matches>
 		</ignore-error>
+		<ignore-error description="LPS-67925">
+			<contains></contains>
+			<matches>.*HotDeployException\: Error registering plugins for opensocial\-portlet.*</matches>
+		</ignore-error>
 		<ignore-error description="LPS-68366">
 			<contains></contains>
 			<matches>.*ServerAdminPortlet\_tabs1\=resources generates exception.*NullPointerException.*</matches>

@@ -333,7 +333,11 @@ public class Recurrence implements Serializable {
 	 * @return Calendar
 	 */
 	public Calendar getUntil() {
-		return (until != null) ? (Calendar)until.clone() : null;
+		if (until != null) {
+			return (Calendar)until.clone();
+		}
+
+		return null;
 	}
 
 	/**
@@ -744,8 +748,7 @@ public class Recurrence implements Serializable {
 			throw new IllegalArgumentException("Not a constant length field");
 		}
 
-		int fieldLength =
-			start.getMaximum(field) - start.getMinimum(field) + 1;
+		int fieldLength = start.getMaximum(field) - start.getMinimum(field) + 1;
 		int delta = start.get(field) - candidate.get(field);
 
 		if (delta > 0) {

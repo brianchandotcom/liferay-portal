@@ -14,10 +14,15 @@
 
 package com.liferay.wysiwyg.converter.internal.upgrade;
 
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -61,14 +66,24 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 			new DummyUpgradeStep());
 
 		WysiwygConvertHelper wysiwygConvertHelper = new WysiwygConvertHelper(
-			_defaultDDMStructureHelper);
+			_assetEntryLocalService, _defaultDDMStructureHelper,
+			_journalArticleLocalService, _journalFolderLocalService,
+			_layoutLocalService, _portletPreferencesLocalService,
+			_userLocalService);
 
 		wysiwygConvertHelper.convert();
 	}
 
+	@Reference(unbind = "-")
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
 	/**
-	* Converter depends DDM being deployed
-	*/
+	 * Converter depends DDM being deployed
+	 */
 	@Reference(unbind = "-")
 	protected void setDDMStructureLocalService(
 		DDMStructureLocalService ddmStructureLocalService) {
@@ -81,19 +96,50 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
 	}
 
-	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
-
-	/**
-	* Converter depends Journal Service being deployed
-	*/
 	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArtcileLocalService) {
+
+		_journalArticleLocalService = journalArtcileLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setJournalFolderLocalService(
+		JournalFolderLocalService journalFolderLocalService) {
+
+		_journalFolderLocalService = journalFolderLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortletPreferencesLocalService(
+		PortletPreferencesLocalService portletPreferencesLocalService) {
+
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalFolderLocalService _journalFolderLocalService;
+	private LayoutLocalService _layoutLocalService;
+	private PortletPreferencesLocalService _portletPreferencesLocalService;
+	private UserLocalService _userLocalService;
 
 }

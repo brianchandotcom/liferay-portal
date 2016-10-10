@@ -219,7 +219,7 @@ public class WysiwygConvertHelper {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("<portlet-preferences><preference>");
 		sb.append("<name>ddmTemplateKey</name>");

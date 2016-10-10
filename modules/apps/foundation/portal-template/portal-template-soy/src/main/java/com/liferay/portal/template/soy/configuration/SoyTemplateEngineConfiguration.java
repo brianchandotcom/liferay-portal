@@ -23,7 +23,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.template.soy.configuration.SoyTemplateEngineConfiguration"
+	id = "com.liferay.portal.template.soy.configuration.SoyTemplateEngineConfiguration",
+	localization = "content/Language",
+	name = "soy.template.engine.configuration.name"
 )
 public interface SoyTemplateEngineConfiguration {
 

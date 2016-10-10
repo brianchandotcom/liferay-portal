@@ -15,12 +15,12 @@
 package com.liferay.wysiwyg.converter.internal.upgrade;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,7 +50,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -60,9 +59,21 @@ import java.util.Map;
 public class WysiwygConvertHelper {
 
 	public WysiwygConvertHelper(
-		DefaultDDMStructureHelper defaultDDMStructureHelper) {
+		AssetEntryLocalService assetEntryLocalService,
+		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		JournalArticleLocalService journalArticleLocalService,
+		JournalFolderLocalService journalFolderLocalService,
+		LayoutLocalService layoutLocalService,
+		PortletPreferencesLocalService portletPreferencesLocalService,
+		UserLocalService userLocalService) {
 
+		_assetEntryLocalService = assetEntryLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_journalArticleLocalService = journalArticleLocalService;
+		_journalFolderLocalService = journalFolderLocalService;
+		_layoutLocalService = layoutLocalService;
+		_portletPreferencesLocalService = portletPreferencesLocalService;
+		_userLocalService = userLocalService;
 	}
 
 	public void convert() {
@@ -90,7 +101,7 @@ public class WysiwygConvertHelper {
 				long userId = rs.getLong("userId");
 
 				if (userId == 0) {
-					userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+					userId = _userLocalService.getDefaultUserId(companyId);
 				}
 
 				String portletId = rs.getString("portletId");
@@ -134,11 +145,10 @@ public class WysiwygConvertHelper {
 
 		String xmlContent = _getContentAsXml(content, companyId);
 
-		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.addArticle(
-				userId, groupId, journalFolderId, titleMap, titleMap,
-				xmlContent, WysiwygConstants.WYSIWYG_STRUCTURE_KEY,
-				WysiwygConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
+		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
+			userId, groupId, journalFolderId, titleMap, titleMap, xmlContent,
+			WysiwygConstants.WYSIWYG_STRUCTURE_KEY,
+			WysiwygConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
 
 		return journalArticle;
 	}
@@ -203,11 +213,11 @@ public class WysiwygConvertHelper {
 			long userId, long groupId, ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalFolder journalFolder = JournalFolderLocalServiceUtil.fetchFolder(
+		JournalFolder journalFolder = _journalFolderLocalService.fetchFolder(
 			groupId, 0, WysiwygConstants.FOLDER_NAME);
 
 		if (journalFolder == null) {
-			journalFolder = JournalFolderLocalServiceUtil.addFolder(
+			journalFolder = _journalFolderLocalService.addFolder(
 				userId, groupId, 0, WysiwygConstants.FOLDER_NAME,
 				WysiwygConstants.FOLDER_DESCRIPTION, serviceContext);
 		}
@@ -216,7 +226,7 @@ public class WysiwygConvertHelper {
 	}
 
 	private String _getJournalPortletPreferences(JournalArticle article) {
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
 		StringBundler sb = new StringBundler(23);
@@ -317,20 +327,20 @@ public class WysiwygConvertHelper {
 			journalArticle);
 
 		PortletPreferences modifiedPortletPreferences =
-			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+			_portletPreferencesLocalService.getPortletPreferences(
 				portletPreferencesId);
 
 		modifiedPortletPreferences.setPortletId(journalPortletId);
 		modifiedPortletPreferences.setPreferences(journalPreference);
 
-		PortletPreferencesLocalServiceUtil.updatePortletPreferences(
+		_portletPreferencesLocalService.updatePortletPreferences(
 			modifiedPortletPreferences);
 	}
 
 	private void _updatePortletReferenceInLayout(long plid)
 		throws PortalException {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		Layout layout = _layoutLocalService.getLayout(plid);
 
 		String typedSettings = layout.getTypeSettings();
 
@@ -340,12 +350,19 @@ public class WysiwygConvertHelper {
 
 		layout.setTypeSettings(updatedTypedSettings);
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		_layoutLocalService.updateLayout(layout);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WysiwygConvertHelper.class);
 
+	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final JournalArticleLocalService _journalArticleLocalService;
+	private final JournalFolderLocalService _journalFolderLocalService;
+	private final LayoutLocalService _layoutLocalService;
+	private final PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+	private final UserLocalService _userLocalService;
 
 }

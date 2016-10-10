@@ -342,6 +342,14 @@ to version 1.1.0.
 - [LPS-68611]: Update the [Liferay Portal Tools WSDD Builder] dependency to
 version 1.0.6.
 
+## 3.0.6 - 2016-10-10
+
+### Changed
+- [LPS-68618]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.2.
+- [LPS-68618]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.0.3.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -382,5 +390,5 @@ version 1.0.6.
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68504]: https://issues.liferay.com/browse/LPS-68504
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
-[LPS-68611]: https://issues.liferay.com/browse/LPS-68611
+[LPS-68618]: https://issues.liferay.com/browse/LPS-68618
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

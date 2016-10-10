@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -82,9 +81,7 @@ public class EmbeddedPortletTest {
 		@ClassRule
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
-			new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
-				TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule();
 
 		@Before
 		public void setUp() throws Exception {
@@ -208,9 +205,7 @@ public class EmbeddedPortletTest {
 		@ClassRule
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
-			new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
-				TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule();
 
 		@Before
 		@Override
@@ -328,9 +323,7 @@ public class EmbeddedPortletTest {
 		@ClassRule
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
-			new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
-				TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule();
 
 		@Before
 		@Override
@@ -414,9 +407,7 @@ public class EmbeddedPortletTest {
 		@ClassRule
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
-			new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
-				TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule();
 
 		@Before
 		@Override

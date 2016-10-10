@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.NoSuchAccountException;
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyException;
-import com.liferay.portal.kernel.exception.NoSuchPreferencesException;
 import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.exception.RequiredCompanyException;
 import com.liferay.portal.kernel.model.Account;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -58,11 +58,13 @@ import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerB
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -82,6 +84,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -106,8 +109,7 @@ public class CompanyLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -397,14 +399,25 @@ public class CompanyLocalServiceTest {
 	public void testDeleteCompanyDeletesNonDefaultPasswordPolicies()
 		throws Throwable {
 
-		Company company = addCompany();
+		final Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		int count = PasswordPolicyUtil.countByC_DP(
-			company.getCompanyId(), false);
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
 
-		Assert.assertEquals(0, count);
+				@Override
+				public Void call() throws Exception {
+					int count = PasswordPolicyUtil.countByC_DP(
+						company.getCompanyId(), false);
+
+					Assert.assertEquals(0, count);
+
+					return null;
+				}
+
+			});
 	}
 
 	@Test
@@ -433,14 +446,29 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
-	@Test(expected = NoSuchPreferencesException.class)
+	@Test
 	public void testDeleteCompanyDeletesPortalPreferences() throws Throwable {
 		final Company company = addCompany();
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		PortalPreferencesUtil.findByO_O(
-			company.getCompanyId(), PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					PortalPreferences portalPreferences =
+						PortalPreferencesUtil.fetchByO_O(
+							company.getCompanyId(),
+							PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+					Assert.assertNull(portalPreferences);
+
+					return null;
+				}
+
+			});
 	}
 
 	@Test
@@ -449,9 +477,21 @@ public class CompanyLocalServiceTest {
 
 		CompanyLocalServiceUtil.deleteCompany(company);
 
-		int count = PortletUtil.countByCompanyId(company.getCompanyId());
+		TransactionInvokerUtil.invoke(
+			_transactionConfig,
+			new Callable<Void>() {
 
-		Assert.assertEquals(0, count);
+				@Override
+				public Void call() {
+					int count = PortletUtil.countByCompanyId(
+						company.getCompanyId());
+
+					Assert.assertEquals(0, count);
+
+					return null;
+				}
+
+		});
 	}
 
 	@Test
@@ -710,6 +750,18 @@ public class CompanyLocalServiceTest {
 		}
 
 		CompanyLocalServiceUtil.deleteCompany(company.getCompanyId());
+	}
+
+	private static final TransactionConfig _transactionConfig;
+
+	static {
+		TransactionConfig.Builder builder = new TransactionConfig.Builder();
+
+		builder.setPropagation(Propagation.SUPPORTS);
+		builder.setReadOnly(true);
+		builder.setRollbackForClasses(Exception.class);
+
+		_transactionConfig = builder.build();
 	}
 
 	private long _companyId;

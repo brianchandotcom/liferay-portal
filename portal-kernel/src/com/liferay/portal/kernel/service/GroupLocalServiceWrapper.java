@@ -100,6 +100,12 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	@Override
+	public boolean isLiveGroupActive(
+		com.liferay.portal.kernel.model.Group group) {
+		return _groupLocalService.isLiveGroupActive(group);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _groupLocalService.getActionableDynamicQuery();
 	}

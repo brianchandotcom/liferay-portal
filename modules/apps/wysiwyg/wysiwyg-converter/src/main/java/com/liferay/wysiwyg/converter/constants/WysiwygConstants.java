@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wysiwyg.converter.internal.constants;
+package com.liferay.wysiwyg.converter.constants;
 
 /**
  * @author Peter Fellwock

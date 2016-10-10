@@ -25,9 +25,11 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -61,6 +63,7 @@ public class WysiwygConvertHelper {
 	public WysiwygConvertHelper(
 		AssetEntryLocalService assetEntryLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
+		GroupLocalService groupLocalService,
 		JournalArticleLocalService journalArticleLocalService,
 		JournalFolderLocalService journalFolderLocalService,
 		LayoutLocalService layoutLocalService,
@@ -69,6 +72,7 @@ public class WysiwygConvertHelper {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
+		_groupLocalService = groupLocalService;
 		_journalArticleLocalService = journalArticleLocalService;
 		_journalFolderLocalService = journalFolderLocalService;
 		_layoutLocalService = layoutLocalService;
@@ -153,20 +157,27 @@ public class WysiwygConvertHelper {
 		return journalArticle;
 	}
 
-	private void _createDDMStructure(long groupId, long userId)
+	private void _createDDMStructure(long companyId, long userId)
 		throws Exception {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
 
-		serviceContext.setScopeGroupId(groupId);
+		Group group = _groupLocalService.getCompanyGroup(companyId);
+
+		serviceContext.setScopeGroupId(group.getGroupId());
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
 
 		Class<?> clazz = getClass();
 
 		_defaultDDMStructureHelper.addDDMStructures(
-			userId, groupId, PortalUtil.getClassNameId(JournalArticle.class),
+			userId, group.getGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class),
 			clazz.getClassLoader(),
 			"com/liferay/wysiwyg/converter/internal/dependencies" +
 				"/wysiwyg-web-content-structure.xml",
@@ -291,7 +302,7 @@ public class WysiwygConvertHelper {
 		long plid, String portletId, String content) {
 
 		try {
-			_createDDMStructure(groupId, userId);
+			_createDDMStructure(companyId, userId);
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -358,6 +369,7 @@ public class WysiwygConvertHelper {
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final GroupLocalService _groupLocalService;
 	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JournalFolderLocalService _journalFolderLocalService;
 	private final LayoutLocalService _layoutLocalService;

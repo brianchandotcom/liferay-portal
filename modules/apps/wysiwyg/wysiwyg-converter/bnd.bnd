@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Wysiwyg Converter
 Bundle-SymbolicName: com.liferay.wysiwyg.converter
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.wysiwyg.converter.constants,\
+	com.liferay.wysiwyg.converter.upgrade
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /wysiwyg-converter

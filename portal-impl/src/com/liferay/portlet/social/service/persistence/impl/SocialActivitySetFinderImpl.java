@@ -34,6 +34,9 @@ import java.util.List;
 public class SocialActivitySetFinderImpl
 	extends SocialActivitySetFinderBaseImpl implements SocialActivitySetFinder {
 
+	public static final String COUNT_BY_ORGANIZATION_ID =
+		SocialActivitySetFinder.class.getName() + ".countByOrganizationId";
+
 	public static final String COUNT_BY_RELATION =
 		SocialActivitySetFinder.class.getName() + ".countByRelation";
 
@@ -60,6 +63,41 @@ public class SocialActivitySetFinderImpl
 
 	public static final String FIND_BY_USER_GROUPS =
 		SocialActivitySetFinder.class.getName() + ".findByUserGroups";
+
+	@Override
+	public int countByOrganizationId(long organizationId) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_ORGANIZATION_ID);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(organizationId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public int countByRelation(long userId) {

@@ -89,5 +89,17 @@
 
 		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
 	</command>
+
+	<command name="configureActionOptions">
+		<execute macro="FormRules#selectAction">
+			<var name="action" value="${action}" />
+			<var name="actionRowNumber" value="${actionRowNumber}" />
+		</execute>
+
+		<execute macro="FormRules#selectActionTarget">
+			<var name="actionTarget" value="${actionTarget}" />
+			<var name="actionRowNumber" value="${actionRowNumber}" />
+		</execute>
+	</command>
 </definition>
 

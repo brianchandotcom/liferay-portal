@@ -66,7 +66,6 @@ public class WysiwygConvertHelper {
 	}
 
 	public void convert() {
-
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("select PortletPreferences.portletPreferencesId, ");
@@ -79,45 +78,69 @@ public class WysiwygConvertHelper {
 		sb.append(WysiwygConstants.WYSIWYG_PORTLET_KEY);
 		sb.append("%'");
 
-		try {
-			try (Connection con = DataAccess.getUpgradeOptimizedConnection();
+		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
 			PreparedStatement ps = con.prepareStatement(sb.toString());
 			ResultSet rs = ps.executeQuery()) {
 
-				while (rs.next()) {
-					long portletPreferencesId = rs.getLong(
-						"portletPreferencesId");
-					long companyId = rs.getLong("companyId");
-					long groupId = rs.getLong("groupId");
-					long plid = rs.getLong("plid");
-					long userId = rs.getLong("userId");
+			while (rs.next()) {
+				long portletPreferencesId = rs.getLong("portletPreferencesId");
+				long companyId = rs.getLong("companyId");
+				long groupId = rs.getLong("groupId");
+				long plid = rs.getLong("plid");
+				long userId = rs.getLong("userId");
 
-					if (userId == 0) {
-						userId = UserLocalServiceUtil.getDefaultUserId(
-							companyId);
-					}
+				if (userId == 0) {
+					userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+				}
 
-					String portletId = rs.getString("portletId");
-					String preferences = rs.getString("preferences");
+				String portletId = rs.getString("portletId");
+				String preferences = rs.getString("preferences");
 
-					javax.portlet.PortletPreferences preferenceMap =
-						PortletPreferencesFactoryUtil.fromXML(
-							companyId, 0, 0, plid, portletId, preferences);
+				javax.portlet.PortletPreferences preferenceMap =
+					PortletPreferencesFactoryUtil.fromXML(
+						companyId, 0, 0, plid, portletId, preferences);
 
-					String content = preferenceMap.getValue(
-						"message", StringPool.BLANK);
+				String content = preferenceMap.getValue(
+					"message", StringPool.BLANK);
 
-					if (Validator.isNotNull(content)) {
-						_migrateDataAndPortlet(
-							portletPreferencesId, companyId, groupId, userId,
-							plid, portletId, content);
-					}
+				if (Validator.isNotNull(content)) {
+					_migrateDataAndPortlet(
+						portletPreferencesId, companyId, groupId, userId, plid,
+						portletId, content);
 				}
 			}
 		}
 		catch (Exception e) {
 			_log.error("Unable to process conversion for WYSIWYG Portlet ", e);
 		}
+	}
+
+	private JournalArticle _convertWysiwygContent(
+			long userId, long companyId, long groupId, String content,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long journalFolderId = _getFolderId(userId, groupId, serviceContext);
+
+		String title = _getTitleFromContent(content, 3);
+
+		String defaultLocaleId = UpgradeProcessUtil.getDefaultLanguageId(
+			companyId);
+
+		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLocaleId);
+
+		Map<Locale, String> titleMap = Collections.singletonMap(
+			defaultLocale, title);
+
+		String xmlContent = _getContentAsXml(content, companyId);
+
+		JournalArticle journalArticle =
+			JournalArticleLocalServiceUtil.addArticle(
+				userId, groupId, journalFolderId, titleMap, titleMap,
+				xmlContent, WysiwygConstants.WYSIWYG_STRUCTURE_KEY,
+				WysiwygConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
+
+		return journalArticle;
 	}
 
 	private void _createDDMStructure(long groupId, long userId)
@@ -138,34 +161,6 @@ public class WysiwygConvertHelper {
 			"com/liferay/wysiwyg/converter/internal/dependencies" +
 				"/wysiwyg-web-content-structure.xml",
 			serviceContext);
-	}
-
-	private JournalArticle _convertWysiwygContent(
-		long userId, long companyId, long groupId, String content,
-		ServiceContext serviceContext)
-	throws Exception {
-
-		String defaultLocaleId = UpgradeProcessUtil.getDefaultLanguageId(
-			companyId);
-
-		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLocaleId);
-
-		long journalFolderId = _getFolderId(userId, groupId, serviceContext);
-
-		String xmlContent = _getContentAsXml(content, companyId);
-
-		String title = _getTitleFromContent(content, 3);
-
-		Map<Locale, String> titleMap = Collections.singletonMap(
-			defaultLocale, title);
-
-		JournalArticle journalArticle =
-			JournalArticleLocalServiceUtil.addArticle(
-				userId, groupId, journalFolderId, titleMap, titleMap,
-				xmlContent, WysiwygConstants.WYSIWYG_STRUCTURE_KEY,
-				WysiwygConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
-
-		return journalArticle;
 	}
 
 	private String _getContentAsXml(String content, long companyId)
@@ -205,24 +200,19 @@ public class WysiwygConvertHelper {
 	}
 
 	private long _getFolderId(
-		long userId, long groupId, ServiceContext serviceContext)
-	throws PortalException {
+			long userId, long groupId, ServiceContext serviceContext)
+		throws PortalException {
 
-		List<JournalFolder> journalFolders =
-			JournalFolderLocalServiceUtil.getFolders(groupId, 0);
+		JournalFolder journalFolder = JournalFolderLocalServiceUtil.fetchFolder(
+			groupId, 0, WysiwygConstants.FOLDER_NAME);
 
-		for (JournalFolder journalFolder : journalFolders) {
-			if (WysiwygConstants.FOLDER_NAME.equals(journalFolder.getName())) {
-				return journalFolder.getFolderId();
-			}
-	}
-
-		JournalFolder existingJournalFolder =
-			JournalFolderLocalServiceUtil.addFolder(
+		if (journalFolder == null) {
+			journalFolder = JournalFolderLocalServiceUtil.addFolder(
 				userId, groupId, 0, WysiwygConstants.FOLDER_NAME,
 				WysiwygConstants.FOLDER_DESCRIPTION, serviceContext);
+		}
 
-		return existingJournalFolder.getFolderId();
+		return journalFolder.getFolderId();
 	}
 
 	private String _getJournalPortletPreferences(JournalArticle article) {
@@ -271,14 +261,16 @@ public class WysiwygConvertHelper {
 				spaceIndex = text.indexOf(' ');
 
 				sb.append(text.substring(0, spaceIndex + 1));
+
 				text = text.substring(spaceIndex + 1, text.length());
 			}
 			else {
 				sb.append(text.substring(0, text.length()));
+
 				counter = wordCount + 1;
 			}
 
-		counter++;
+			counter++;
 		}
 
 		return sb.toString();
@@ -313,9 +305,9 @@ public class WysiwygConvertHelper {
 	}
 
 	private void _updatePortletPreferences(
-		long portletPreferencesId, JournalArticle journalArticle,
-		String portletId)
-	throws PortalException {
+			long portletPreferencesId, JournalArticle journalArticle,
+			String portletId)
+		throws PortalException {
 
 		String journalPortletId = StringUtil.replace(
 			portletId, WysiwygConstants.WYSIWYG_PORTLET_KEY,
@@ -354,5 +346,6 @@ public class WysiwygConvertHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WysiwygConvertHelper.class);
 
-	private DefaultDDMStructureHelper _defaultDDMStructureHelper;
+	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;
+
 }

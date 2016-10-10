@@ -149,10 +149,16 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			String portletId, int ownerType)
 		throws Exception {
 
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("select portletPreferencesId, ownerId, ownerType, plid, ");
+		sb.append("portletId, preferences from PortletPreferences where ");
+		sb.append("ownerType = ? and portletId = ? and preferences not like ");
+		sb.append("'%<portlet-preferences %/>%'");
+
 		PreparedStatement ps = connection.prepareStatement(
-			"select portletPreferencesId, ownerId, ownerType, plid, " +
-				"portletId, preferences from PortletPreferences where " +
-					"ownerType = ? and portletId = ?");
+			sb.toString(), ResultSet.TYPE_FORWARD_ONLY,
+			ResultSet.CONCUR_UPDATABLE);
 
 		ps.setInt(1, ownerType);
 		ps.setString(2, portletId);
@@ -170,12 +176,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				PortletPreferencesRow portletPreferencesRow =
-					_getPortletPreferencesRow(rs);
+				String preferences = rs.getString("preferences");
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
-					PortletPreferencesFactoryUtil.fromDefaultXML(
-						portletPreferencesRow.getPreferences());
+					PortletPreferencesFactoryUtil.fromDefaultXML(preferences);
+
+				boolean resetKey = false;
 
 				Enumeration<String> names = jxPortletPreferences.getNames();
 
@@ -186,15 +192,25 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 						if (name.startsWith(key)) {
 							jxPortletPreferences.reset(key);
 
+							resetKey = true;
+
 							break;
 						}
 					}
 				}
 
-				portletPreferencesRow.setPreferences(
-					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+				if (!resetKey) {
+					continue;
+				}
 
-				updatePortletPreferences(portletPreferencesRow);
+				String newPreferences = PortletPreferencesFactoryUtil.toXML(
+					jxPortletPreferences);
+
+				if (!newPreferences.equals(preferences)) {
+					rs.updateString("preferences", newPreferences);
+
+					rs.updateRow();
+				}
 			}
 		}
 	}

@@ -59,6 +59,12 @@
 		<execute function="AssertClick" locator1="FormsAdmin#FORMS_TABLE_NAME" value1="${formName}" />
 	</command>
 
+	<command name="gotoFormBuilder">
+		<var name="key_assetTitle" value="Builder" />
+
+		<execute function="AssertClick" locator1="NavBar#ASSET_TITLE" value1="Builder" />
+	</command>
+
 	<command name="gotoPreviewForm">
 		<execute function="AssertClick" locator1="Message#INFO_LINK" value1="Click here to preview the form in a new window." />
 	</command>

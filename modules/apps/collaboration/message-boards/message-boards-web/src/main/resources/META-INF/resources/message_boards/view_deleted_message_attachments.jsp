@@ -112,22 +112,3 @@ iteratorURL.setParameter("messageId", String.valueOf(messageId));
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
-
-<portlet:actionURL name="/message_boards/edit_message_attachments" var="checkEntryURL">
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.CHECK %>" />
-</portlet:actionURL>
-
-<portlet:renderURL var="duplicateEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/message_boards/restore_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
-
-<aui:script use="liferay-restore-entry">
-	new Liferay.RestoreEntry(
-	{
-			checkEntryURL: '<%= checkEntryURL.toString() %>',
-			duplicateEntryURL: '<%= duplicateEntryURL.toString() %>',
-			namespace: '<portlet:namespace />'
-		}
-	);
-</aui:script>

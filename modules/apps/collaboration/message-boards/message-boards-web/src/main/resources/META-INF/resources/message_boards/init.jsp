@@ -154,8 +154,6 @@ page import="com.liferay.portlet.messageboards.service.permission.MBPermission" 
 page import="com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil" %><%@
 page import="com.liferay.portlet.messageboards.util.MBUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.trash.kernel.model.TrashEntry" %><%@
-page import="com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.text.Format" %><%@

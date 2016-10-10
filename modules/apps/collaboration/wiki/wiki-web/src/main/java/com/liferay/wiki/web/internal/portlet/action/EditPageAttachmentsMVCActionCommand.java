@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.taglib.util.RestoreEntryUtil;
 import com.liferay.trash.kernel.util.TrashUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
@@ -144,15 +143,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			else if (cmd.equals(Constants.ADD)) {
 				_wikiAttachmentsHelper.addAttachments(actionRequest);
 			}
-			else if (cmd.equals(Constants.CHECK)) {
-				JSONObject jsonObject = RestoreEntryUtil.checkEntry(
-					actionRequest);
-
-				JSONPortletResponseUtil.writeJSON(
-					actionRequest, actionResponse, jsonObject);
-
-				return;
-			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteAttachment(actionRequest, false);
 			}
@@ -161,9 +151,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteAttachment(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RENAME)) {
-				_wikiAttachmentsHelper.restoreRename(actionRequest);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				_wikiAttachmentsHelper.restoreEntries(actionRequest);
@@ -174,9 +161,6 @@ public class EditPageAttachmentsMVCActionCommand extends BaseMVCActionCommand {
 				if (Validator.isNotNull(redirect)) {
 					actionResponse.sendRedirect(redirect);
 				}
-			}
-			else if (cmd.equals(Constants.OVERRIDE)) {
-				_wikiAttachmentsHelper.restoreOverride(actionRequest);
 			}
 		}
 		catch (NoSuchNodeException | NoSuchPageException |

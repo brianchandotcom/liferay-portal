@@ -36,7 +36,7 @@ KBArticleURLHelper kbArticleURLHelper = (KBArticleURLHelper)request.getAttribute
 List<KBArticle> childKBArticles = null;
 
 if (maxNestingLevelReached) {
-	childKBArticles = KBArticleServiceUtil.getAllDescendantKBArticles(parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, new KBArticlePriorityComparator(true));
+	childKBArticles = KBArticleServiceUtil.getAllDescendantKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, new KBArticlePriorityComparator(true));
 }
 else {
 	childKBArticles = KBArticleServiceUtil.getKBArticles(themeDisplay.getScopeGroupId(), parentResourcePrimKey, WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new KBArticlePriorityComparator(true));

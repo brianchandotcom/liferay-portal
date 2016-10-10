@@ -57,7 +57,7 @@ public class InetAddressTask extends Task {
 					StringUtil.extractDigits(localHost.getHostName()));
 
 				getProject().setUserProperty(
-					_vmId2Property, String.valueOf((id * 2)));
+					_vmId2Property, String.valueOf(id * 2));
 			}
 		}
 		catch (UnknownHostException uhe) {

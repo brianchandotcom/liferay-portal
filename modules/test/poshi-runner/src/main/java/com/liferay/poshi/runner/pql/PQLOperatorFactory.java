@@ -58,10 +58,10 @@ public class PQLOperatorFactory {
 					Boolean pqlResultBoolean2 = (Boolean)pqlResultObject2;
 
 					if (operator.equals("AND")) {
-						return (pqlResultBoolean1 && pqlResultBoolean2);
+						return pqlResultBoolean1 && pqlResultBoolean2;
 					}
 					else if (operator.equals("OR")) {
-						return (pqlResultBoolean1 || pqlResultBoolean2);
+						return pqlResultBoolean1 || pqlResultBoolean2;
 					}
 
 					throw new Exception("Unsupported operator: " + operator);
@@ -203,16 +203,16 @@ public class PQLOperatorFactory {
 						}
 
 						if (operator.equals("<")) {
-							return (pqlResultDouble1 < pqlResultDouble2);
+							return pqlResultDouble1 < pqlResultDouble2;
 						}
 						else if (operator.equals("<=")) {
-							return (pqlResultDouble1 <= pqlResultDouble2);
+							return pqlResultDouble1 <= pqlResultDouble2;
 						}
 						else if (operator.equals(">")) {
-							return (pqlResultDouble1 > pqlResultDouble2);
+							return pqlResultDouble1 > pqlResultDouble2;
 						}
 						else if (operator.equals(">=")) {
-							return (pqlResultDouble1 >= pqlResultDouble2);
+							return pqlResultDouble1 >= pqlResultDouble2;
 						}
 
 						throw new Exception(

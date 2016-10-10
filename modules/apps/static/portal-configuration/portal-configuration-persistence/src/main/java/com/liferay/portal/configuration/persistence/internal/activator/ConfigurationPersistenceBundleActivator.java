@@ -64,7 +64,7 @@ public class ConfigurationPersistenceBundleActivator
 
 		Dictionary<String, Object> properties = new Hashtable<>();
 
-		properties.put(Constants.SERVICE_RANKING, (Integer.MAX_VALUE - 1000));
+		properties.put(Constants.SERVICE_RANKING, Integer.MAX_VALUE - 1000);
 
 		_serviceRegistration = bundleContext.registerService(
 			new String[] {

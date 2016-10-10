@@ -414,7 +414,7 @@ public class ObjectServiceTrackerMapTest {
 	public void testGetServiceWithServiceTrackerCustomizerAndServiceReferenceMapper() {
 		ServiceTrackerMap<String, TrackedTwo> serviceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
-				_bundleContext, TrackedOne.class, ("(target=*)"),
+				_bundleContext, TrackedOne.class, "(target=*)",
 				new ServiceReferenceMapper<String, TrackedOne>() {
 
 					@Override

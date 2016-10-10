@@ -456,14 +456,14 @@ public class DiffImpl implements com.liferay.portal.kernel.diff.Diff {
 			for (Difference difference : differences) {
 				if (difference.getDeletedEnd() != Difference.NONE) {
 					deletedChars +=
-						(difference.getDeletedEnd() -
-							difference.getDeletedStart() + 1);
+						difference.getDeletedEnd() -
+							difference.getDeletedStart() + 1;
 				}
 
 				if (difference.getAddedEnd() != Difference.NONE) {
 					addedChars +=
-						(difference.getAddedEnd() - difference.getAddedStart() +
-							1);
+						difference.getAddedEnd() - difference.getAddedStart() +
+							1;
 				}
 			}
 		}

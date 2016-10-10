@@ -465,7 +465,7 @@ public class MailEngine {
 			return null;
 		}
 
-		int end = ((index + 1) * batchSize);
+		int end = (index + 1) * batchSize;
 
 		if (end > addresses.length) {
 			end = addresses.length;

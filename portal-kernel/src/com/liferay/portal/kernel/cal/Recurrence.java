@@ -333,7 +333,7 @@ public class Recurrence implements Serializable {
 	 * @return Calendar
 	 */
 	public Calendar getUntil() {
-		return ((until != null) ? (Calendar)until.clone() : null);
+		return (until != null) ? (Calendar)until.clone() : null;
 	}
 
 	/**
@@ -745,7 +745,7 @@ public class Recurrence implements Serializable {
 		}
 
 		int fieldLength =
-			(start.getMaximum(field) - start.getMinimum(field) + 1);
+			start.getMaximum(field) - start.getMinimum(field) + 1;
 		int delta = start.get(field) - candidate.get(field);
 
 		if (delta > 0) {

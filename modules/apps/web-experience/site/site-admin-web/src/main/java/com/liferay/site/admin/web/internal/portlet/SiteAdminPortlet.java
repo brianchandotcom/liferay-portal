@@ -867,7 +867,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 				actionRequest, "layoutSetVisibility");
 			boolean layoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "layoutSetPrototypeLinkEnabled",
-				(layoutSetPrototypeId > 0));
+				layoutSetPrototypeId > 0);
 
 			if (layoutSetVisibility == _LAYOUT_SET_VISIBILITY_PRIVATE) {
 				privateLayoutSetPrototypeId = layoutSetPrototypeId;

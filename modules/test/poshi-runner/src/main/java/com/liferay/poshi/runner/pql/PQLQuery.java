@@ -170,7 +170,7 @@ public class PQLQuery extends PQLEntity {
 
 		int operatorIndex = -1;
 
-		for (int i = (prioritizedOperatorList.size() - 1); i >= 0; i--) {
+		for (int i = prioritizedOperatorList.size() - 1; i >= 0; i--) {
 			List<String> operators = prioritizedOperatorList.get(i);
 
 			for (int j = 0; j < tokens.size(); j++) {

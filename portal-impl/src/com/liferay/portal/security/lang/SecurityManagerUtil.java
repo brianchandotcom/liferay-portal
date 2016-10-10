@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class SecurityManagerUtil {
 
-	public static final boolean ENABLED = (System.getSecurityManager() != null);
+	public static final boolean ENABLED = System.getSecurityManager() != null;
 
 	public static void destroy() {
 		if (_portalSecurityManager == null) {

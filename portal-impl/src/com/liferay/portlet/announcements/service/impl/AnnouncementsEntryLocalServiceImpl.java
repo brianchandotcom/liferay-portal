@@ -586,7 +586,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			LanguageUtil.get(locale, entry.getType()), "[$ENTRY_URL$]",
 			entry.getUrl(), "[$PORTLET_NAME$]",
 			LanguageUtil.get(
-				locale, (entry.isAlert() ? "alert" : "announcement")));
+				locale, entry.isAlert() ? "alert" : "announcement"));
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());

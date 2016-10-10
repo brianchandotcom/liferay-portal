@@ -306,7 +306,7 @@ public class DDMFormPagesTemplateContextFactoryTest {
 		List<DDMFormLayoutColumn> ddmFormLayoutColumns = new ArrayList<>();
 
 		int ddmFormLayoutColumnSize =
-			(DDMFormLayoutColumn.FULL / ddmFormFieldNames.length);
+			DDMFormLayoutColumn.FULL / ddmFormFieldNames.length;
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {
 			ddmFormLayoutColumns.add(

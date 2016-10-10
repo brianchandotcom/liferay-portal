@@ -79,7 +79,7 @@ public class S3FileCacheImpl implements S3FileCache {
 
 			long lastModified = System.currentTimeMillis();
 
-			lastModified -= (_cacheDirCleanUpExpunge.intValue() * Time.DAY);
+			lastModified -= _cacheDirCleanUpExpunge.intValue() * Time.DAY;
 
 			cleanUpCacheFiles(cacheDir, lastModified);
 		}

@@ -391,7 +391,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					lastIntervalStart + max, comparator);
 
 			lastIntervalStart += max;
-			listNotExhausted = (messageList.size() == max);
+			listNotExhausted = messageList.size() == max;
 
 			for (MBMessage message : messageList) {
 				if (messages.size() >= max) {
@@ -437,7 +437,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					lastIntervalStart + max, comparator);
 
 			lastIntervalStart += max;
-			listNotExhausted = (messageList.size() == max);
+			listNotExhausted = messageList.size() == max;
 
 			for (MBMessage message : messageList) {
 				if (messages.size() >= max) {
@@ -491,7 +491,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					comparator);
 
 			lastIntervalStart += max;
-			listNotExhausted = (messageList.size() == max);
+			listNotExhausted = messageList.size() == max;
 
 			for (MBMessage message : messageList) {
 				if (messages.size() >= max) {
@@ -542,7 +542,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					lastIntervalStart + max, comparator);
 
 			lastIntervalStart += max;
-			listNotExhausted = (messageList.size() == max);
+			listNotExhausted = messageList.size() == max;
 
 			for (MBMessage message : messageList) {
 				if (messages.size() >= max) {

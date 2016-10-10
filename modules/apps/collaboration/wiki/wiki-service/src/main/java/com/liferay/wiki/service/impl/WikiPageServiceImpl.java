@@ -320,7 +320,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 				nodeId, true, lastIntervalStart, lastIntervalStart + max);
 
 			lastIntervalStart += max;
-			listNotExhausted = (pageList.size() == max);
+			listNotExhausted = pageList.size() == max;
 
 			for (WikiPage page : pageList) {
 				if (pages.size() >= max) {

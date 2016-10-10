@@ -179,6 +179,9 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/api/Foo.java",
 			"public interface Foo");
+		_testContains(
+			gradleProjectDir, "src/main/resources/foo/api/packageinfo",
+			"1.0.0");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"api", "foo", "-DclassName=Foo", "-Dpackage=foo");

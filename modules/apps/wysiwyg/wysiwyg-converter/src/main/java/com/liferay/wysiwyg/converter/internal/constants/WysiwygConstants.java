@@ -19,9 +19,9 @@ package com.liferay.wysiwyg.converter.internal.constants;
  */
 public class WysiwygConstants {
 
-	public static final String FOLDER_DESCRIPTION = "WYSIWYG Content";
+	public static final String FOLDER_DESCRIPTION = "WYSIWYG";
 
-	public static final String FOLDER_NAME = "WYSIWYG Content";
+	public static final String FOLDER_NAME = "WYSIWYG";
 
 	public static final String WYSIWYG_PORTLET_KEY = "1_WAR_wysiwygportlet";
 

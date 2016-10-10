@@ -111,8 +111,6 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="PortalSettingsNavigator#gotoLDAP" />
-
 		<for list="ENABLED,IMPORT_ENABLED,IMPORT_ON_STARTUP_ENABLED,USE_LDAP_PASSWORD_POLICY" param="enableCheckboxKey">
 			<execute macro="PortalSettingsNavigator#gotoLDAP" />
 

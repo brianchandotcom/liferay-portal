@@ -28,6 +28,8 @@ public class AssetBrowserWebConfigurationUtil {
 
 	private static final Configuration _configuration =
 		ConfigurationFactoryUtil.getConfiguration(
-			AssetBrowserWebConfigurationUtil.class.getClassLoader(), "portlet");
+			AssetBrowserWebConfigurationUtil.class.
+				getClassLoader(),
+			"portlet");
 
 }

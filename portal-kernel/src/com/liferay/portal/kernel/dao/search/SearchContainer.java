@@ -525,7 +525,7 @@ public class SearchContainer<R> {
 
 		if (isRecalculateCur()) {
 			if ((_total % _delta) == 0) {
-				_cur = (_total / _delta);
+				_cur = _total / _delta;
 			}
 			else {
 				_cur = (_total / _delta) + 1;

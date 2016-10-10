@@ -3415,7 +3415,7 @@ public class StringUtil {
 
 		int curLength = length;
 
-		for (int j = (curLength - suffix.length() + 1), offset; j > 0; j--) {
+		for (int j = curLength - suffix.length() + 1, offset; j > 0; j--) {
 			offset = s.offsetByCodePoints(0, j);
 
 			if (Character.isWhitespace(s.codePointBefore(offset))) {

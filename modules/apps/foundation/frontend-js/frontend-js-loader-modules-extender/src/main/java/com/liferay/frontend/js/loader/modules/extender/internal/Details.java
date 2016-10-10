@@ -32,7 +32,7 @@ public @interface Details {
 
 	public static final String CONTENT_TYPE = "text/javascript; charset=UTF-8";
 
-	public static final int MAX_VALUE_LESS_1K = (Integer.MAX_VALUE - 1000);
+	public static final int MAX_VALUE_LESS_1K = Integer.MAX_VALUE - 1000;
 
 	public static final String OSGI_WEBRESOURCE = "osgi.webresource";
 

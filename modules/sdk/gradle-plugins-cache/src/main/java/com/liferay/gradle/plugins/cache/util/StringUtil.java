@@ -34,7 +34,7 @@ public class StringUtil extends com.liferay.gradle.util.StringUtil {
 
 			for (int i = 1; i < strings.length; i++) {
 				if (!firstString.regionMatches(
-						index, strings[i], index, (nextIndex - index + 1))) {
+						index, strings[i], index, nextIndex - index + 1)) {
 
 					match = false;
 

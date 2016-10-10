@@ -225,29 +225,29 @@ public class KaleoTaskInstanceTokenFinderImpl
 				sql,
 				getDueDateGT(
 					kaleoTaskInstanceTokenQuery,
-					(ArrayUtil.isEmpty(
+					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
 					ArrayUtil.isEmpty(
-						kaleoTaskInstanceTokenQuery.getAssetTypes()))));
+						kaleoTaskInstanceTokenQuery.getAssetTypes())));
 			sql = CustomSQLUtil.appendCriteria(
 				sql,
 				getDueDateLT(
 					kaleoTaskInstanceTokenQuery,
-					(ArrayUtil.isEmpty(
+					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
 					 ArrayUtil.isEmpty(
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
-					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null))));
+					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null)));
 			sql = CustomSQLUtil.appendCriteria(
 				sql,
 				getTaskName(
 					kaleoTaskInstanceTokenQuery,
-					(ArrayUtil.isEmpty(
+					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
 					 ArrayUtil.isEmpty(
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
-					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null))));
+					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null)));
 			sql = CustomSQLUtil.appendCriteria(sql, ")");
 
 			sql = CustomSQLUtil.replaceAndOperator(

@@ -254,7 +254,7 @@ public class UpgradePermission extends UpgradeProcess {
 					}
 
 					updateResourcePermission(
-						resourcePermissionId, (actionIds - bitwiseValue));
+						resourcePermissionId, actionIds - bitwiseValue);
 
 					if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
 						if (primKey.contains("_LAYOUT_")) {

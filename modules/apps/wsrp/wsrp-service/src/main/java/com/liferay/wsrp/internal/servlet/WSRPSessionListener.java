@@ -54,7 +54,7 @@ public class WSRPSessionListener implements HttpSessionListener {
 			Object value = session.getAttribute(name);
 
 			if (value instanceof TransientValue) {
-				TransientValue<?> transientValue = ((TransientValue<?>)value);
+				TransientValue<?> transientValue = (TransientValue<?>)value;
 
 				releaseSessions(transientValue.getValue());
 			}

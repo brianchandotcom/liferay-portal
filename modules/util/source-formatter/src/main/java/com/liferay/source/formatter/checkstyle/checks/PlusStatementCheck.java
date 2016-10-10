@@ -146,7 +146,7 @@ public class PlusStatementCheck extends AbstractCheck {
 		}
 
 		int pos = _getStringBreakPos(
-			literalString1, literalString2, (_maxLineLength - lineLength1));
+			literalString1, literalString2, _maxLineLength - lineLength1);
 
 		if (pos != -1) {
 			log(

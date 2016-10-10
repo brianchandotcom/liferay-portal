@@ -537,7 +537,7 @@ public abstract class LiferayConverter {
 
 		long videoSeconds = inputIContainer.getDuration() / 1000000L;
 
-		long seekSeconds = ((videoSeconds * percentage) / 100L);
+		long seekSeconds = (videoSeconds * percentage) / 100L;
 
 		for (int i = 0; i < inputIContainer.getNumStreams(); i++) {
 			IStream inputIStream = inputIContainer.getStream(i);

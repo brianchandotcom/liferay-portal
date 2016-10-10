@@ -212,7 +212,7 @@ public class Time {
 		}
 		else if ((millisAgo < Time.DAY) || (daysBetween == 0)) {
 			return LanguageUtil.format(
-				locale, "x-hours-ago", (millisAgo / Time.HOUR), false);
+				locale, "x-hours-ago", millisAgo / Time.HOUR, false);
 		}
 		else if (daysBetween == 1) {
 			return LanguageUtil.format(

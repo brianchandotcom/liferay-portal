@@ -1805,7 +1805,7 @@ public class ExpandoValueLocalServiceImpl
 		if (string.startsWith(StringPool.OPEN_BRACKET) &&
 			string.endsWith(StringPool.CLOSE_BRACKET)) {
 
-			string = string.substring(1, (string.length() - 1));
+			string = string.substring(1, string.length() - 1);
 		}
 
 		return string;

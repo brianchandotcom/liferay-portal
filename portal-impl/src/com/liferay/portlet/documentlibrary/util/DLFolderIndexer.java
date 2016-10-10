@@ -111,7 +111,7 @@ public class DLFolderIndexer
 		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
 		document.addKeyword(Field.FOLDER_ID, dlFolder.getParentFolderId());
 		document.addKeyword(
-			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
+			Field.HIDDEN, dlFolder.isHidden() || dlFolder.isInHiddenFolder());
 
 		String title = dlFolder.getName();
 

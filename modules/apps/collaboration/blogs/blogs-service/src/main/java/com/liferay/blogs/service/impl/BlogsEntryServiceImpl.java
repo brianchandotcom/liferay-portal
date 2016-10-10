@@ -208,7 +208,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 			queryDefinition.setStart(queryDefinition.getStart() + max);
 
-			listNotExhausted = (entryList.size() == max);
+			listNotExhausted = entryList.size() == max;
 
 			for (BlogsEntry entry : entryList) {
 				if (entries.size() >= max) {
@@ -390,7 +390,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 			queryDefinition.setStart(queryDefinition.getStart() + max);
 
-			listNotExhausted = (entryList.size() == max);
+			listNotExhausted = entryList.size() == max;
 
 			for (BlogsEntry entry : entryList) {
 				if (entries.size() >= max) {
@@ -477,7 +477,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 
 			queryDefinition.setStart(queryDefinition.getStart() + max);
 
-			listNotExhausted = (entryList.size() == max);
+			listNotExhausted = entryList.size() == max;
 
 			for (BlogsEntry entry : entryList) {
 				if (entries.size() >= max) {

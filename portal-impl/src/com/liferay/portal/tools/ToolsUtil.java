@@ -199,7 +199,7 @@ public class ToolsUtil {
 				if (c == delimeter) {
 					int precedingBackSlashCount = 0;
 
-					for (int j = (i - 1); j >= 0; j--) {
+					for (int j = i - 1; j >= 0; j--) {
 						if (line.charAt(j) == CharPool.BACK_SLASH) {
 							precedingBackSlashCount += 1;
 						}

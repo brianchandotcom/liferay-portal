@@ -33,7 +33,7 @@ to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`gulp<Task>` | `downloadNode` | [`ExecuteGulpTask`](#executegulptask) | Executes a named Gulp task.
+`gulp<Task>` | `downloadNode`, `npmInstall` | [`ExecuteGulpTask`](#executegulptask) | Executes a named Gulp task.
 
 ### ExecuteGulpTask
 
@@ -47,14 +47,7 @@ Property Name | Default Value
 
 Gulp must be already installed in the `node_modules` directory of the project;
 otherwise, it will not be downloaded by the task. In order to ensure Gulp is
-installed, you can add the Gulp dependency to the project's `package.json` file
-and then declare a dependency on the `npmInstall` task:
-
-```gradle
-tasks.withType(ExecuteGulpTask) {
-	dependsOn npmInstall
-}
-```
+installed, you can add the Gulp dependency to the project's `package.json` file.
 
 #### Task Properties
 

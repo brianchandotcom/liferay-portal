@@ -17,6 +17,7 @@ package com.liferay.wysiwyg.converter.internal.upgrade;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -332,7 +333,7 @@ public class WysiwygConvertHelper {
 
 		String journalPortletId = StringUtil.replace(
 			portletId, WysiwygConstants.WYSIWYG_PORTLET_KEY,
-			WysiwygConstants.JOURNAL_PORTLET_KEY);
+			JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		String journalPreference = _getJournalPortletPreferences(
 			journalArticle);
@@ -357,7 +358,7 @@ public class WysiwygConvertHelper {
 
 		String updatedTypedSettings = StringUtil.replace(
 			typedSettings, WysiwygConstants.WYSIWYG_PORTLET_KEY,
-			WysiwygConstants.JOURNAL_PORTLET_KEY);
+			JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		layout.setTypeSettings(updatedTypedSettings);
 

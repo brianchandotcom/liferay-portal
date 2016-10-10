@@ -1749,7 +1749,22 @@
 		</if>
 	</command>
 
-	<command name="loginUserOpenIDPG">
+	<command name="loginUserPG">
+		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
+		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
+
+		<execute function="Click" locator1="Button#SIGN_IN" />
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+	</command>
+
+	<command name="loginUserWithOpenIDEnabledPG">
 		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
 
 		<execute macro="Navigator#openURL" />
@@ -1758,7 +1773,7 @@
 
 		<execute function="AssertClick" locator1="Link#OPENID" value1="OpenID" />
 
-		<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="http://${openIDUsername}.openid.org.cn/" />
+		<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="http://${openIDUsername}.openid.org.cn" />
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
@@ -1803,21 +1818,6 @@
 				<execute macro="Button#clickSave" />
 			</then>
 		</if>
-
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
-	</command>
-
-	<command name="loginUserPG">
-		<description message="Log into Liferay Portal as ${userEmailAddress} using the password ${password}." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
-
-		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
-		<execute function="Type" locator1="TextInput#PASSWORD" value1="${password}" />
-
-		<execute function="Click" locator1="Button#SIGN_IN" />
 
 		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>

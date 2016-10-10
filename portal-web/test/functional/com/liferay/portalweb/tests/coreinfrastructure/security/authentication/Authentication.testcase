@@ -120,6 +120,8 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
+		<execute macro="PortalSettingsNavigator#gotoLDAP" />
+
 		<execute macro="PortalSettings#enableLDAPSetting">
 			<var name="enableCheckboxKey" value="ENABLED" />
 		</execute>

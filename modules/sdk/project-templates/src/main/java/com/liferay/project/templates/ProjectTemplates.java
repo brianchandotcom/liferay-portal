@@ -87,7 +87,7 @@ public class ProjectTemplates {
 				while (enumeration.hasMoreElements()) {
 					JarEntry jarEntry = enumeration.nextElement();
 
-					if (!jarEntry.isDirectory()) {
+					if (jarEntry.isDirectory()) {
 						continue;
 					}
 

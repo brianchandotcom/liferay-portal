@@ -1837,6 +1837,21 @@
 		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
 	</command>
 
+	<command name="loginUserWithGoogleSSOEnabledPG">
+		<execute macro="GoogleLogin#accountSignIn">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="GoogleLogin#acceptConditions" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+	</command>
+
 	<command name="logoutAndLoginPG">
 		<execute macro="Navigator#openURL" />
 

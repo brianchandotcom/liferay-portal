@@ -470,11 +470,11 @@
 		</execute>
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Text Field 1" />
+			<var name="conditionField" value="Text Field 1" />=
+			<var name="conditionFieldValue" value="test" />
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueType" value="Value" />
-			<var name="conditionFieldValue" value="test" />
 		</execute>
 
 		<execute macro="FormRules#addCondition">
@@ -484,10 +484,10 @@
 
 		<execute macro="FormRules#configureConditionOptions">
 			<var name="conditionField" value="Text Field 2" />
+			<var name="conditionFieldValue" value="test" />
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="2" />
 			<var name="conditionValueType" value="Value" />
-			<var name="conditionFieldValue" value="test" />
 		</execute>
 
 		<execute macro="FormRules#configureActionOptions">

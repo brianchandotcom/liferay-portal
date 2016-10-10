@@ -8,15 +8,27 @@
 		<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
 	</command>
 
+	<command name="configureActionOptions">
+ 		<execute macro="FormRules#selectAction">
+ 			<var name="action" value="${action}" />
+ 			<var name="actionRowNumber" value="${actionRowNumber}" />
+ 		</execute>
+ 
+ 		<execute macro="FormRules#selectActionTarget">
+ 			<var name="actionTarget" value="${actionTarget}" />
+ 			<var name="actionRowNumber" value="${actionRowNumber}" />
+ 		</execute>
+ 	</command>
+
 	<command name="configureConditionOptions">
 		<execute macro="FormRules#selectConditionField">
-			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 			<var name="conditionField" value="${conditionField}" />
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 		</execute>
 
 		<execute macro="FormRules#selectConditionOperator">
-			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 			<var name="conditionOperator" value="${conditionOperator}" />
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 		</execute>
 
 		<execute macro="FormRules#selectConditionValue">
@@ -25,10 +37,10 @@
 		</execute>
 
 		<execute macro="FormRules#defineConditionValue">
-			<var name="conditionRowNumber" value="${conditionRowNumber}" />
-			<var name="conditionValueType" value="${conditionValueType}" />
 			<var name="conditionFieldValue" value="${conditionFieldValue}" />
+			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 			<var name="conditionValueField" value="${conditionValueField}" />
+			<var name="conditionValueType" value="${conditionValueType}" />
 		</execute>
 	</command>
 
@@ -49,16 +61,22 @@
 			</then>
 		</if>
 	</command>
-	
-	<command name="selectRuleCondition">
-		<var name="key_condition" value="${condition}" />
 
-		<var method="StringUtil#upperCase('${condition}')" name="condition" />
-
-		<execute function="Click" locator1="Form#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
-
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
+	<command name="save">
+		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SAVE_BUTTON" value1="Save" />
 	</command>
+
+	<command name="selectAction">
+ 		<var name="key_actionRowNumber" value="${actionRowNumber}" />
+ 		
+ 		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_ACTION" value1="${action}" />
+ 	</command>
+
+	<command name="selectActionTarget">
+ 		<var name="key_actionRowNumber" value="${actionRowNumber}" />
+ 
+ 		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
+ 	</command>
 
 	<command name="selectConditionField">
 		<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
@@ -78,32 +96,13 @@
 		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE" value1="${conditionValueType}" />
 	</command>
 
-	<command name="selectAction">
-		<var name="key_actionRowNumber" value="${actionRowNumber}" />
-		
-		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_ACTION" value1="${action}" />
-	</command>
+	<command name="selectRuleCondition">
+		<var name="key_condition" value="${condition}" />
 
-	<command name="selectActionTarget">
-		<var name="key_actionRowNumber" value="${actionRowNumber}" />
+		<var method="StringUtil#upperCase('${condition}')" name="condition" />
 
-		<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
-	</command>
+		<execute function="Click" locator1="Form#RULE_BUILDER_RULE_CONDITION_DROPDOWN" />
 
-	<command name="configureActionOptions">
-		<execute macro="FormRules#selectAction">
-			<var name="action" value="${action}" />
-			<var name="actionRowNumber" value="${actionRowNumber}" />
-		</execute>
-
-		<execute macro="FormRules#selectActionTarget">
-			<var name="actionTarget" value="${actionTarget}" />
-			<var name="actionRowNumber" value="${actionRowNumber}" />
-		</execute>
-	</command>
-
-	<command name="save">
-		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_RULE_CONDITION" value1="${condition}" />
 	</command>
 </definition>
-

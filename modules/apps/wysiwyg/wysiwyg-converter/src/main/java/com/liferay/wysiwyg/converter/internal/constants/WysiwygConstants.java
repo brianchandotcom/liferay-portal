@@ -26,10 +26,6 @@ public class WysiwygConstants {
 	public static final String JOURNAL_PORTLET_KEY =
 		"com_liferay_journal_content_web_portlet_JournalContentPortlet";
 
-	public static final String STRUCTURE_KEY = "BASIC-WEB-CONTENT";
-
-	public static final String TEMPLATE_KEY = "BASIC-WEB-CONTENT";
-
 	public static final String WYSIWYG_PORTLET_KEY = "1_WAR_wysiwygportlet";
 
 	public static final String WYSIWYG_STRUCTURE_KEY = "WYSIWYG-WEB-CONTENT";

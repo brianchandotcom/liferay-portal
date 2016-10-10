@@ -101,5 +101,9 @@
 			<var name="actionRowNumber" value="${actionRowNumber}" />
 		</execute>
 	</command>
+
+	<command name="save">
+		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SAVE_BUTTON" value1="Save" />
+	</command>
 </definition>
 

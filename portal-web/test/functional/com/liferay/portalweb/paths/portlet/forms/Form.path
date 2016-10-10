@@ -241,6 +241,11 @@
 	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target')]//select[contains(@id,'action')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RULE_BUILDER_SAVE_BUTTON</td>
+	<td>//button[contains(@class,'form-builder-rule-settings-save')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

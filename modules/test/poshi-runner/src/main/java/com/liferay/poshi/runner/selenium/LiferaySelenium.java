@@ -357,6 +357,8 @@ public interface LiferaySelenium {
 
 	public boolean isNotPartialText(String locator, String value);
 
+	public boolean isNotPartialTextAceEditor(String locator, String value);
+
 	public boolean isNotSelectedLabel(String selectLocator, String pattern);
 
 	public boolean isNotText(String locator, String value) throws Exception;
@@ -368,6 +370,8 @@ public interface LiferaySelenium {
 	public boolean isOrdered(String locator1, String locator2);
 
 	public boolean isPartialText(String locator, String value);
+
+	public boolean isPartialTextAceEditor(String locator, String value);
 
 	public boolean isPromptPresent();
 

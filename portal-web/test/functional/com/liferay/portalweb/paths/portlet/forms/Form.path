@@ -231,6 +231,16 @@
 	<td>//li[contains(@class,'condition-container') and contains(@class,'timeline-item')][${key_conditonRowNumber}]//div[contains(.,'${key_condition}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_ACTION</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'action')]//select[contains(@id,'target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_ACTION_TARGET</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target')]//select[contains(@id,'action')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

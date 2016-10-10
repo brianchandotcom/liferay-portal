@@ -189,6 +189,11 @@ public class SocialActivitySetLocalServiceWrapper
 	}
 
 	@Override
+	public int getOrganizationActivitySetsCount(long organizationId) {
+		return _socialActivitySetLocalService.getOrganizationActivitySetsCount(organizationId);
+	}
+
+	@Override
 	public int getRelationActivitySetsCount(long userId) {
 		return _socialActivitySetLocalService.getRelationActivitySetsCount(userId);
 	}

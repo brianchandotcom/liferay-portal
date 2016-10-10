@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -22,7 +23,10 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.v7_0_0.util.GroupTable;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -46,20 +50,48 @@ public class UpgradeGroup extends UpgradeProcess {
 	}
 
 	protected void updateGlobalGroupName() throws Exception {
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			localizedValuesMap.put(locale, LanguageUtil.get(locale, "global"));
-		}
-
-		String nameXML = LocalizationUtil.getXml(localizedValuesMap, "global");
+		List<Long> companyIds = new ArrayList<>();
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"update Group_ set name = ? where friendlyURL = '/global'")) {
+			"select companyId from Company")) {
 
-			ps.setString(1, nameXML);
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					companyIds.add(rs.getLong("companyId"));
+				}
+			}
+		}
 
-			ps.executeUpdate();
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			for (Long id : companyIds) {
+				LocalizedValuesMap localizedValuesMap =
+					new LocalizedValuesMap();
+
+				CompanyThreadLocal.setCompanyId(id);
+
+				for (Locale locale : LanguageUtil.getAvailableLocales()) {
+					localizedValuesMap.put(
+						locale, LanguageUtil.get(locale, "global"));
+				}
+
+				String nameXML = LocalizationUtil.getXml(
+					localizedValuesMap, "global");
+
+				try (PreparedStatement ps = connection.prepareStatement(
+					"update Group_ set name = ? where companyId = ? AND " +
+					"friendlyURL = '/global'")) {
+
+					ps.setString(1, nameXML);
+					ps.setLong(2, id);
+
+					ps.executeUpdate();
+				}
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
 		}
 	}
 

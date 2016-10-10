@@ -15,7 +15,6 @@
 package com.liferay.wysiwyg.converter.internal.upgrade;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
@@ -79,14 +78,6 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	/**
-	 * Converter depends DDM being deployed
-	 */
-	@Reference(unbind = "-")
-	protected void setDDMStructureLocalService(
-		DDMStructureLocalService ddmStructureLocalService) {
 	}
 
 	@Reference(unbind = "-")

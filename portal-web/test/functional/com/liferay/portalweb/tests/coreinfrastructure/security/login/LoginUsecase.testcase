@@ -22,37 +22,6 @@
 		</if>
 	</tear-down>
 
-	<command name="OpenIDSmoke" priority="4">
-		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
-		<var method="TestPropsUtil#get('openid.username')" name="openIDUsername" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Instance Settings" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Authentication" />
-		</execute>
-
-		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenID" />
-
-		<execute macro="PortalSettings#enableOpenIDCP" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserOpenIDPG">
-			<var name="openIDPassword" value="${openIDPassword}" />
-			<var name="openIDUsername" value="${openIDUsername}" />
-		</execute>
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginUserPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-		</execute>
-	</command>
-
 	<command name="SessionTimeout" priority="4">
 		<property name="web.xml.timeout" value="1" />
 

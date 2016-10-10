@@ -1,7 +1,7 @@
 # Theme Builder Gradle Plugin
 
-The Theme Builder Gradle plugin allows you to run the [Liferay Theme Builder](https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-theme-builder)
-tool in order to build the Liferay theme files in your project.
+The Theme Builder Gradle plugin lets you run the [Liferay Theme Builder](https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-theme-builder)
+tool to build the Liferay theme files in your project.
 
 ## Usage
 
@@ -25,7 +25,7 @@ apply plugin: "com.liferay.portal.tools.theme.builder"
 
 The Theme Builder plugin automatically applies the [`war`](https://docs.gradle.org/current/userguide/war_plugin.html)
 plugin. It also applies the [`com.liferay.css.builder`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-css-builder)
-plugin in order to compile the [Sass](http://sass-lang.com/) files in the theme.
+plugin to compile the [Sass](http://sass-lang.com/) files in the theme.
 
 Since the plugin automatically resolves the Liferay Theme Builder library as a
 dependency, you have to configure a repository that hosts the library and its
@@ -64,11 +64,11 @@ Property Name | Default Value
 ------------- | -------------
 [`diffsDir`](#diffsdir) | `"${project.webAppDir}/_diffs"`
 [`outputDir`](#outputdir) | `project.webAppDir`
-[`parentDir`](#parentdir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/${buildTheme.parentName}` directory
+[`parentDir`](#parentdir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/${buildTheme.parentName}` directory.
 [`parentName`](#parentname) | `"_styled"`
 [`templateExtension`](#templateextension) | `"ftl"`
 [`themeName`](#themename) | `project.name`
-[`unstyledDir`](#unstyleddir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/_unstyled` directory
+[`unstyledDir`](#unstyleddir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/_unstyled` directory.
 
 ### BuildThemeTask
 
@@ -87,17 +87,17 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`diffsDir` | `File` | `null` | The directory that contains the files to copy over the parent theme. It sets the `--diffs-dir` argument.
-`outputDir` | `File` | `null` | The directory where to build the theme. It sets the `--output-dir` argument.
-`parentDir` | `File` | `null` | The directory or the JAR file of the parent theme. It sets the `--parent-path` argument.
-`parentName` | `String` | `null` | The name of the parent theme. It sets the `--parent-name` argument.
-`templateExtension` | `String` | `null` | The extension of the template files, usually `"ftl"` or `"vm"`. It sets the `--template-extension` argument.
-`themeName` | `String` | `null` | The name of the new theme. It sets the `--name` argument.
-`unstyledDir` | `File` | `null` | The directory or the JAR file of [Liferay Frontend Theme Unstyled](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-theme/frontend-theme-unstyled). It sets the `--unstyled-dir` argument.
+<a name="diffsdir"></a>`diffsDir` | `File` | `null` | The directory that contains the files to copy over the parent theme. It sets the `--diffs-dir` argument.
+<a name="outputdir"></a>`outputDir` | `File` | `null` | The directory where to build the theme. It sets the `--output-dir` argument.
+<a name="parentdir"></a>`parentDir` | `File` | `null` | The directory or the JAR file of the parent theme. It sets the `--parent-path` argument.
+<a name="parentname"></a>`parentName` | `String` | `null` | The name of the parent theme. It sets the `--parent-name` argument.
+<a name="templateextenstion"></a>`templateExtension` | `String` | `null` | The extension of the template files, usually `"ftl"` or `"vm"`. It sets the `--template-extension` argument.
+<a name="themename"></a>`themeName` | `String` | `null` | The name of the new theme. It sets the `--name` argument.
+<a name="unstyleddir"></a>`unstyledDir` | `File` | `null` | The directory or the JAR file of [Liferay Frontend Theme Unstyled](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-theme/frontend-theme-unstyled). It sets the `--unstyled-dir` argument.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 Moreover, it is possible to use Closures and Callables as values for the
-`String` properties, to defer evaluation until task execution.
+`String` properties to defer evaluation until task execution.
 
 ## Additional Configuration
 

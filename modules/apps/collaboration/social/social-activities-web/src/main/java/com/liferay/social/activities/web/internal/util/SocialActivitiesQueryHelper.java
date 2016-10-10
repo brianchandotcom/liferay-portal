@@ -76,6 +76,47 @@ public class SocialActivitiesQueryHelper {
 		}
 	}
 
+	public int getSocialActivitySetsCount(
+		Group group, Layout layout, Scope scope) {
+
+		if (scope == Scope.ALL) {
+			if (!group.isUser()) {
+				return _socialActivitySetLocalService.getGroupActivitySetsCount(
+					group.getGroupId());
+			}
+
+			return _socialActivitySetLocalService.getUserActivitySetsCount(
+				group.getClassPK());
+		}
+		else if (group.isOrganization()) {
+			return _socialActivitySetLocalService.
+				getOrganizationActivitySetsCount(group.getOrganizationId());
+		}
+		else if (!group.isUser()) {
+			return _socialActivitySetLocalService.getGroupActivitySetsCount(
+				group.getGroupId());
+		}
+		else if (layout.isPublicLayout() || (scope == Scope.ME)) {
+			return _socialActivitySetLocalService.getUserActivitySetsCount(
+				group.getClassPK());
+		}
+		else if (scope == Scope.CONNECTIONS) {
+			return _socialActivitySetLocalService.getRelationActivitySetsCount(
+				group.getClassPK(), SocialRelationConstants.TYPE_BI_CONNECTION);
+		}
+		else if (scope == Scope.FOLLOWING) {
+			return _socialActivitySetLocalService.getRelationActivitySetsCount(
+				group.getClassPK(), SocialRelationConstants.TYPE_UNI_FOLLOWER);
+		}
+		else if (scope == Scope.MY_SITES) {
+			return _socialActivitySetLocalService.
+				getUserGroupsActivitySetsCount(group.getClassPK());
+		}
+		else {
+			return 0;
+		}
+	}
+
 	public enum Scope {
 
 		ALL("all"), CONNECTIONS("connections"), FOLLOWING("following"),

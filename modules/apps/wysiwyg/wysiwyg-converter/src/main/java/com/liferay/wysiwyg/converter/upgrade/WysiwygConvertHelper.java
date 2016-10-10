@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wysiwyg.converter.internal.upgrade;
+package com.liferay.wysiwyg.converter.upgrade;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.wysiwyg.converter.internal.constants.WysiwygConstants;
+import com.liferay.wysiwyg.converter.constants.WysiwygConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

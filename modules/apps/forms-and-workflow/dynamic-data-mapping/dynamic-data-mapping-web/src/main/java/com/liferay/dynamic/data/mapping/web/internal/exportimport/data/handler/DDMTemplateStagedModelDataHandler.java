@@ -423,13 +423,12 @@ public class DDMTemplateStagedModelDataHandler
 				}
 				else {
 					importedTemplate = _ddmTemplateLocalService.updateTemplate(
-						userId, existingTemplate.getTemplateId(),
-						template.getClassPK(), template.getNameMap(),
-						template.getDescriptionMap(), template.getType(),
-						template.getMode(), template.getLanguage(),
-						template.getScript(), template.isCacheable(),
-						template.isSmallImage(), template.getSmallImageURL(),
-						smallFile, serviceContext);
+						userId, existingTemplate.getTemplateId(), classPK,
+						template.getNameMap(), template.getDescriptionMap(),
+						template.getType(), template.getMode(),
+						template.getLanguage(), template.getScript(),
+						template.isCacheable(), template.isSmallImage(),
+						template.getSmallImageURL(), smallFile, serviceContext);
 				}
 			}
 			else {

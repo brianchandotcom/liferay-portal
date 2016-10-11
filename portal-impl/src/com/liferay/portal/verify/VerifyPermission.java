@@ -429,7 +429,7 @@ public class VerifyPermission extends VerifyProcess {
 			Role userRole = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.USER);
 
-			sb = new StringBundler(19);
+			sb = new StringBundler(24);
 
 			sb.append("update ResourcePermission r1 set roleId = ");
 			sb.append(userRole.getRoleId());
@@ -449,7 +449,12 @@ public class VerifyPermission extends VerifyProcess {
 			sb.append(userGroupClassNameId);
 			sb.append(") and Layout.type_ = '");
 			sb.append(LayoutConstants.TYPE_PORTLET);
-			sb.append("')");
+			sb.append("') and not exists (select resourcePermissionId from ");
+			sb.append("ResourcePermission r2 where r1.companyId = ");
+			sb.append("r2.companyId and r1.name = r2.name and r1.scope = ");
+			sb.append("r2.scope and r1.primKey = r2.primKey and r2.roleId = ");
+			sb.append(userRole.getRoleId());
+			sb.append(")");
 
 			runSQL(sb.toString());
 		}

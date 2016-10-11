@@ -28,11 +28,13 @@ import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.service.util.AdminUtil;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticleModifiedDateComparator;
+import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -157,6 +159,42 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 		kbArticleLocalService.deleteTempAttachment(
 			groupId, getUserId(), fileName, tempFolderName);
+	}
+
+	@Override
+	public KBArticle fetchFirstChildKBArticle(
+		long groupId, long parentResourcePrimKey) {
+
+		List<KBArticle> kbArticles = kbArticlePersistence.filterFindByG_P_L(
+			groupId, parentResourcePrimKey, true, 0, 1,
+			new KBArticlePriorityComparator(true));
+
+		if (kbArticles.isEmpty()) {
+			return null;
+		}
+
+		return kbArticles.get(0);
+	}
+
+	@Override
+	public KBArticle fetchKBArticleByUrlTitle(
+			long groupId, long kbFolderId, String urlTitle)
+		throws PortalException {
+
+		KBArticle kbArticle = kbArticleLocalService.fetchKBArticleByUrlTitle(
+			groupId, kbFolderId, urlTitle);
+
+		if (kbArticle == null) {
+			return null;
+		}
+
+		if (KBArticlePermission.contains(
+				getPermissionChecker(), kbArticle, ActionKeys.VIEW)) {
+
+			return kbArticle;
+		}
+
+		return null;
 	}
 
 	@Override

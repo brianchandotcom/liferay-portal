@@ -74,6 +74,14 @@ public interface KBArticleService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle fetchFirstChildKBArticle(long groupId,
+		long parentResourcePrimKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle fetchKBArticleByUrlTitle(long groupId, long kbFolderId,
+		java.lang.String urlTitle) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBArticle fetchLatestKBArticle(long resourcePrimKey, int status)
 		throws PortalException;
 

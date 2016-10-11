@@ -125,8 +125,12 @@ public class DefaultSocialActivitiesDisplayContext
 		SocialActivitiesQueryHelper.Scope scope =
 			SocialActivitiesQueryHelper.Scope.fromValue(getSelectedTabName());
 
-		return _socialActivitiesQueryHelper.getSocialActivitySets(
-			group, layout, scope, 0, _socialActivitiesRequestHelper.getEnd());
+		_socialActivitySets =
+			_socialActivitiesQueryHelper.getSocialActivitySets(
+				group, layout, scope, 0,
+				_socialActivitiesRequestHelper.getEnd());
+
+		return _socialActivitySets;
 	}
 
 	@Override

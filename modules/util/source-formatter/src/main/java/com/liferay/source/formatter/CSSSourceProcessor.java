@@ -69,6 +69,23 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(excludes, getIncludes());
 	}
 
+	protected String fixHexColors(String content) {
+		Matcher matcher = _hexColorPattern.matcher(content);
+
+		while (matcher.find()) {
+			String hexColor = matcher.group(1);
+
+			if (Validator.isNumber(hexColor) || (hexColor.length() < 3)) {
+				continue;
+			}
+
+			content = StringUtil.replace(
+				content, hexColor, StringUtil.toUpperCase(hexColor));
+		}
+
+		return content;
+	}
+
 	protected String formatComments(String content) {
 		Matcher commentMatcher = _commentPattern.matcher(content);
 
@@ -107,23 +124,6 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 			content = StringUtil.replaceFirst(
 				content, commentMatcher.group(),
 				"/* ---------- " + comment + " ---------- */");
-		}
-
-		return content;
-	}
-
-	protected String fixHexColors(String content) {
-		Matcher matcher = _hexColorPattern.matcher(content);
-
-		while (matcher.find()) {
-			String hexColor = matcher.group(1);
-
-			if (Validator.isNumber(hexColor) || (hexColor.length() < 3)) {
-				continue;
-			}
-
-			content = StringUtil.replace(
-				content, hexColor, StringUtil.toUpperCase(hexColor));
 		}
 
 		return content;

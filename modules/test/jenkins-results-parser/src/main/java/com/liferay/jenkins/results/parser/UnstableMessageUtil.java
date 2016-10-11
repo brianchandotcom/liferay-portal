@@ -182,6 +182,9 @@ public class UnstableMessageUtil {
 		throws Exception {
 
 		int failureCount = 0;
+		int firefoxVNCFailureCount = 0;
+
+		int messageBeginIndex = sb.length();
 
 		for (String runBuildURL : runBuildURLs) {
 			JSONObject runBuildURLJSONObject =
@@ -196,15 +199,32 @@ public class UnstableMessageUtil {
 					failureCount++;
 
 					sb.append("<li>...</li>");
-
-					return failureCount;
 				}
 
-				_getFailureMessage(runBuildURL, sb);
+				if (failureCount < 3) {
+					_getFailureMessage(runBuildURL, sb);
+				}
 
 				failureCount++;
 
 				continue;
+			}
+
+			if (result.equals("UNSTABLE")) {
+				String consoleText = JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						runBuildURL + "/consoleText"));
+				System.out.println("loaded.");
+
+				int cursor = consoleText.indexOf(_FF_VNC_ERROR_MARKER);
+
+				while (cursor != -1) {
+					firefoxVNCFailureCount++;
+
+					cursor = consoleText.indexOf(
+						_FF_VNC_ERROR_MARKER,
+						cursor + _FF_VNC_ERROR_MARKER.length());
+				}
 			}
 
 			JSONObject testReportJSONObject =
@@ -236,109 +256,154 @@ public class UnstableMessageUtil {
 						failureCount++;
 
 						sb.append("<li>...</li>");
-
-						return failureCount;
 					}
 
-					sb.append("<li><a href=\"");
+					if (failureCount < 3) {
+						sb.append("<li><a href=\"");
 
-					String runBuildHREF = runBuildURL;
+						String runBuildHREF = runBuildURL;
 
-					runBuildHREF = runBuildHREF.replace("[", "_");
-					runBuildHREF = runBuildHREF.replace("]", "_");
-					runBuildHREF = runBuildHREF.replace("#", "_");
+						runBuildHREF = runBuildHREF.replace("[", "_");
+						runBuildHREF = runBuildHREF.replace("]", "_");
+						runBuildHREF = runBuildHREF.replace("#", "_");
 
-					sb.append(runBuildHREF);
+						sb.append(runBuildHREF);
 
-					sb.append("/testReport/");
+						sb.append("/testReport/");
 
-					String testClassName = caseJSONObject.getString(
-						"className");
+						String testClassName = caseJSONObject.getString(
+							"className");
 
-					int x = testClassName.lastIndexOf(".");
+						int x = testClassName.lastIndexOf(".");
 
-					String testPackageName = testClassName.substring(0, x);
+						String testPackageName = testClassName.substring(0, x);
 
-					sb.append(testPackageName);
-
-					sb.append("/");
-
-					String testSimpleClassName = testClassName.substring(x + 1);
-
-					sb.append(testSimpleClassName);
-
-					sb.append("/");
-
-					String testMethodName = caseJSONObject.getString("name");
-
-					String testMethodNameURL = testMethodName;
-
-					testMethodNameURL = testMethodNameURL.replace("[", "_");
-					testMethodNameURL = testMethodNameURL.replace("]", "_");
-					testMethodNameURL = testMethodNameURL.replace("#", "_");
-
-					if (testPackageName.equals("junit.framework")) {
-						testMethodNameURL = testMethodNameURL.replace(".", "_");
-					}
-
-					sb.append(testMethodNameURL);
-
-					sb.append("\">");
-
-					String jobVariant = JenkinsResultsParserUtil.getJobVariant(
-						runBuildURLJSONObject);
-
-					if (jobVariant.contains("functional")) {
-						String testName = testMethodName.substring(
-							5, testMethodName.length() - 1);
-
-						sb.append(testName);
-
-						sb.append("</a> - ");
-						sb.append("<a href=\"");
-
-						String logURL = _getLogURL(
-							jobVariant, project, runBuildURLJSONObject);
-
-						sb.append(logURL);
+						sb.append(testPackageName);
 
 						sb.append("/");
-						sb.append(testName.replace("#", "_"));
-						sb.append("/index.html.gz\">Poshi Report</a> - ");
-						sb.append("<a href=\"");
-						sb.append(logURL);
+
+						String testSimpleClassName = testClassName.substring(
+							x + 1);
+
+						sb.append(testSimpleClassName);
+
 						sb.append("/");
-						sb.append(testName.replace("#", "_"));
-						sb.append("/summary.html.gz\">Poshi Summary</a> - ");
-						sb.append("<a href=\"");
-						sb.append(logURL);
-						sb.append(
-							"/jenkins-console.txt.gz\">Console Output</a>");
 
-						if (Boolean.parseBoolean(
-								project.getProperty("record.liferay.log"))) {
+						String testMethodName = caseJSONObject.getString(
+							"name");
 
-							sb.append(" - ");
+						String testMethodNameURL = testMethodName;
+
+						testMethodNameURL = testMethodNameURL.replace("[", "_");
+						testMethodNameURL = testMethodNameURL.replace("]", "_");
+						testMethodNameURL = testMethodNameURL.replace("#", "_");
+
+						if (testPackageName.equals("junit.framework")) {
+							testMethodNameURL = testMethodNameURL.replace(
+								".", "_");
+						}
+
+						sb.append(testMethodNameURL);
+
+						sb.append("\">");
+
+						String jobVariant =
+							JenkinsResultsParserUtil.getJobVariant(
+								runBuildURLJSONObject);
+
+						if (jobVariant.contains("functional")) {
+							String testName = testMethodName.substring(
+								5, testMethodName.length() - 1);
+
+							sb.append(testName);
+
+							sb.append("</a> - ");
+							sb.append("<a href=\"");
+
+							String logURL = _getLogURL(
+								jobVariant, project, runBuildURLJSONObject);
+
+							sb.append(logURL);
+
+							sb.append("/");
+							sb.append(testName.replace("#", "_"));
+							sb.append("/index.html.gz\">Poshi Report</a> - ");
 							sb.append("<a href=\"");
 							sb.append(logURL);
-							sb.append("/liferay-log.txt.gz\">Liferay Log</a>");
+							sb.append("/");
+							sb.append(testName.replace("#", "_"));
+							sb.append(
+								"/summary.html.gz\">Poshi Summary</a> - ");
+							sb.append("<a href=\"");
+							sb.append(logURL);
+							sb.append(
+								"/jenkins-console.txt.gz\">Console Output</a>");
+
+							if (Boolean.parseBoolean(
+									project.getProperty(
+										"record.liferay.log"))) {
+
+								sb.append(" - ");
+								sb.append("<a href=\"");
+								sb.append(logURL);
+								sb.append(
+									"/liferay-log.txt.gz\">Liferay Log</a>");
+							}
 						}
-					}
-					else {
-						sb.append(testSimpleClassName);
-						sb.append(".");
-						sb.append(testMethodName);
-						sb.append("</a>");
-					}
+						else {
+							sb.append(testSimpleClassName);
+							sb.append(".");
+							sb.append(testMethodName);
+							sb.append("</a>");
+						}
 
-					sb.append("</li>");
+						sb.append("</li>");
 
-					failureCount++;
+						failureCount++;
+					}
 				}
 			}
 		}
 
+		if (firefoxVNCFailureCount > 0) {
+			sb.delete(messageBeginIndex, sb.length());
+
+			if (firefoxVNCFailureCount == failureCount) {
+				sb.append("All tests failed due to the Firefox VNC error. ");
+			}
+			else {
+				sb.append(firefoxVNCFailureCount);
+				sb.append(" tests failed due to the Firefox VNC error. ");
+				sb.append(failureCount - firefoxVNCFailureCount);
+				sb.append(" additional tests failed for other reasons. ");
+			}
+
+			sb.append("See <a href=\"https://issues.liferay.com");
+			sb.append("/browse/LRQA-28169\">LRQA-28169</a> for more details.");
+
+			String hostName = JenkinsResultsParserUtil.getHostName("UNKNOWN");
+
+			StringBuilder toSB = new StringBuilder();
+
+			toSB.append("peter.yoo@liferay.com,");
+			toSB.append("michael.hashimoto@liferay.com,");
+			toSB.append("leslie.wong@liferay.com,");
+			toSB.append("kevin.yen@liferay.com,");
+			toSB.append("kiyoshi.lee@liferay.com");
+
+			String message = hostName + " VNC Failure";
+
+			String from = "root@" + hostName;
+
+			JenkinsResultsParserUtil.sendEmail(
+				message, from, message, toSB.toString());
+		}
+
 		return failureCount;
 	}
+
+	private static final String _FF_VNC_ERROR_MARKER =
+		"org.openqa.selenium.WebDriverException: Failed to " +
+		"connect to binary FirefoxBinary";
 
 }

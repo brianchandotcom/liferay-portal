@@ -528,7 +528,7 @@
 
 		<execute macro="FormFields#viewDateFieldNotPresent">
 			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="date" />
+			<var name="fieldName" value="Date" />
 		</execute>
 
 		<execute macro="FormFields#editText">
@@ -538,7 +538,7 @@
 
 		<execute macro="FormFields#viewDateField">
 			<var name="fieldLabel" value="Date Field" />
-			<var name="fieldName" value="date" />
+			<var name="fieldName" value="Date" />
 		</execute>
 	</command>
 

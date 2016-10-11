@@ -17,6 +17,8 @@ package com.liferay.portal.increment;
 import com.liferay.portal.kernel.concurrent.IncreasableEntry;
 import com.liferay.portal.kernel.increment.Increment;
 
+import java.util.Arrays;
+
 import org.aopalliance.intercept.MethodInvocation;
 
 /**
@@ -50,7 +52,10 @@ public class BufferedIncreasableEntry<K, T>
 
 	@Override
 	public String toString() {
-		return _methodInvocation.toString();
+		Object[] arguments = _methodInvocation.getArguments();
+
+		return _methodInvocation.toString() + " - " +
+			Arrays.toString(arguments);
 	}
 
 	private final MethodInvocation _methodInvocation;

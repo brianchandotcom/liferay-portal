@@ -107,7 +107,7 @@ public class UnstableMessageUtil {
 			runBuildURLs.add(buildURL);
 		}
 
-		int failureCount = _getUnstableMessage(project, runBuildURLs, sb);
+		int failureCount = _getFailureCount(project, runBuildURLs, sb);
 
 		sb.append("</ol>");
 
@@ -121,63 +121,7 @@ public class UnstableMessageUtil {
 		return sb.toString();
 	}
 
-	private static void _getFailureMessage(
-			String failureBuildURL, StringBuilder sb)
-		throws Exception {
-
-		sb.append("<li><strong><a href=\"");
-		sb.append(failureBuildURL);
-		sb.append("\">");
-
-		JSONObject failureJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(failureBuildURL + "api/json"));
-
-		sb.append(
-			JenkinsResultsParserUtil.fixJSON(
-				failureJSONObject.getString("fullDisplayName")));
-
-		sb.append("</a></strong>");
-
-		GenericFailureMessageGenerator genericFailureMessageGenerator =
-			new GenericFailureMessageGenerator();
-
-		String consoleOutput = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(
-				failureBuildURL + "/logText/progressiveText"));
-
-		sb.append(
-			genericFailureMessageGenerator.getMessage(
-				failureBuildURL, consoleOutput, null));
-
-		sb.append("</li>");
-	}
-
-	private static String _getLogURL(
-			String jobVariant, Project project,
-			JSONObject runBuildURLJSONObject)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(project.getProperty("log.base.url"));
-		sb.append("/");
-		sb.append(project.getProperty("env.MASTER_HOSTNAME"));
-		sb.append("/");
-		sb.append(project.getProperty("env.TOP_LEVEL_START_TIME"));
-		sb.append("/");
-		sb.append(project.getProperty("env.JOB_NAME"));
-		sb.append("/");
-		sb.append(project.getProperty("env.BUILD_NUMBER"));
-		sb.append("/");
-		sb.append(jobVariant);
-		sb.append("/");
-		sb.append(
-			JenkinsResultsParserUtil.getAxisVariable(runBuildURLJSONObject));
-
-		return sb.toString();
-	}
-
-	private static int _getUnstableMessage(
+	private static int _getFailureCount(
 			Project project, List<String> runBuildURLs, StringBuilder sb)
 		throws Exception {
 
@@ -398,6 +342,62 @@ public class UnstableMessageUtil {
 		}
 
 		return failureCount;
+	}
+
+	private static void _getFailureMessage(
+			String failureBuildURL, StringBuilder sb)
+		throws Exception {
+
+		sb.append("<li><strong><a href=\"");
+		sb.append(failureBuildURL);
+		sb.append("\">");
+
+		JSONObject failureJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(failureBuildURL + "api/json"));
+
+		sb.append(
+			JenkinsResultsParserUtil.fixJSON(
+				failureJSONObject.getString("fullDisplayName")));
+
+		sb.append("</a></strong>");
+
+		GenericFailureMessageGenerator genericFailureMessageGenerator =
+			new GenericFailureMessageGenerator();
+
+		String consoleOutput = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(
+				failureBuildURL + "/logText/progressiveText"));
+
+		sb.append(
+			genericFailureMessageGenerator.getMessage(
+				failureBuildURL, consoleOutput, null));
+
+		sb.append("</li>");
+	}
+
+	private static String _getLogURL(
+			String jobVariant, Project project,
+			JSONObject runBuildURLJSONObject)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(project.getProperty("log.base.url"));
+		sb.append("/");
+		sb.append(project.getProperty("env.MASTER_HOSTNAME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.TOP_LEVEL_START_TIME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.JOB_NAME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.BUILD_NUMBER"));
+		sb.append("/");
+		sb.append(jobVariant);
+		sb.append("/");
+		sb.append(
+			JenkinsResultsParserUtil.getAxisVariable(runBuildURLJSONObject));
+
+		return sb.toString();
 	}
 
 	private static final String _FF_VNC_ERROR_MARKER =

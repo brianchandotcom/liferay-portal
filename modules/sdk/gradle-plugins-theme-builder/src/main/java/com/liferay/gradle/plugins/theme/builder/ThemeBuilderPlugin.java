@@ -297,6 +297,8 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		war.setIncludeEmptyDirs(false);
 	}
 
 	private File _getThemeFile(Iterable<File> files, String name)

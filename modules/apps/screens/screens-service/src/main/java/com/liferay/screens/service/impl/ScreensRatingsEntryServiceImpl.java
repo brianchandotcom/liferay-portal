@@ -79,7 +79,7 @@ public class ScreensRatingsEntryServiceImpl
 			}
 		}
 
-		if (ratingsEntries.size() > 0) {
+		if (!ratingsEntries.isEmpty()) {
 			jsonObject.put("average", totalScore / ratingsEntries.size());
 		}
 		else {

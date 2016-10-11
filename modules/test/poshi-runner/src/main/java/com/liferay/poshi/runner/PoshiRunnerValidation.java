@@ -811,7 +811,7 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		if (attributeNames.size() < 1) {
+		if (attributeNames.isEmpty()) {
 			_exceptions.add(
 				new Exception(
 					"Invalid or missing attribute\n" + filePath + ":" +

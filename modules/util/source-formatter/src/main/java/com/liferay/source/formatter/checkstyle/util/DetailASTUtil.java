@@ -86,6 +86,12 @@ public class DetailASTUtil {
 	}
 
 	public static List<DetailAST> getMethodCalls(
+		DetailAST detailAST, String methodName) {
+
+		return getMethodCalls(detailAST, null, methodName);
+	}
+
+	public static List<DetailAST> getMethodCalls(
 		DetailAST detailAST, String className, String methodName) {
 
 		List<DetailAST> list = new ArrayList<>();
@@ -113,7 +119,8 @@ public class DetailASTUtil {
 			String methodCallClassName = classNameAST.getText();
 			String methodCallMethodName = methodNameAST.getText();
 
-			if (methodCallClassName.equals(className) &&
+			if (((className == null) ||
+				 methodCallClassName.equals(className)) &&
 				methodCallMethodName.equals(methodName)) {
 
 				list.add(methodCallAST);

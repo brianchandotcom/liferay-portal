@@ -128,7 +128,7 @@ public class LoadBalancerUtil {
 					continue;
 				}
 
-				if (maxIndices.size() > 0) {
+				if (!maxIndices.isEmpty()) {
 					x = maxIndices.get(
 						getRandomValue(0, maxIndices.size() - 1));
 				}

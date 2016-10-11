@@ -73,7 +73,7 @@ public class RadioDDMFormFieldTemplateContextContributor
 				(List<Map<String, String>>)
 					ddmFormFieldRenderingContext.getProperty("options");
 
-			if (keyValuePairs.size() == 0) {
+			if (keyValuePairs.isEmpty()) {
 				return ddmFormField.getDDMFormFieldOptions();
 			}
 

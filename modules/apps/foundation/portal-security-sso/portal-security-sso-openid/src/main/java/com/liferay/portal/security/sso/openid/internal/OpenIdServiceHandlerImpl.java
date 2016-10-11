@@ -439,7 +439,7 @@ public class OpenIdServiceHandlerImpl implements OpenIdServiceHandler {
 	}
 
 	protected String getFirstValue(List<String> values) {
-		if ((values == null) || (values.size() < 1)) {
+		if ((values == null) || values.isEmpty()) {
 			return null;
 		}
 

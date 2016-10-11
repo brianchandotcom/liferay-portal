@@ -23,11 +23,13 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.io.Writer;
 
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
+import java.net.UnknownHostException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -347,6 +349,17 @@ public class JenkinsResultsParserUtil {
 		properties.load(new StringReader(toString(getLocalURL(url))));
 
 		return properties;
+	}
+
+	public static String getHostName(String defaultHostName) {
+		try {
+			InetAddress address = InetAddress.getLocalHost();
+
+			return address.getHostName();
+		}
+		catch (UnknownHostException uhe) {
+			return defaultHostName;
+		}
 	}
 
 	public static String getJobVariant(JSONObject jsonObject) throws Exception {

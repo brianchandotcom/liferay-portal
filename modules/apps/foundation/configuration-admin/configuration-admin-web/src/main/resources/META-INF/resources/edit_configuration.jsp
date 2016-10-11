@@ -36,6 +36,15 @@ String configurationModelName = (componentResourceBundle != null) ? LanguageUtil
 renderResponse.setTitle(configurationModelName);
 %>
 
+<liferay-ui:error exception="<%= ConfigurationModelListenerException.class %>">
+
+	<%
+	ConfigurationModelListenerException cmle = (ConfigurationModelListenerException)errorException;
+	%>
+
+	<liferay-ui:message key="<%= cmle.causeMessage %>" localizeKey="<%= false %>" />
+</liferay-ui:error>
+
 <portlet:actionURL name="bindConfiguration" var="bindConfigurationActionURL" />
 <portlet:actionURL name="deleteConfiguration" var="deleteConfigurationActionURL" />
 

@@ -2146,6 +2146,18 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
 		<for list="1,2" param="userNumber">
 			<execute macro="ProductMenu#gotoControlPanelUsers">
 				<var name="portlet" value="Users and Organizations" />
@@ -2172,12 +2184,22 @@
 			</execute>
 
 			<execute macro="User#editUserSiteCP">
-				<var name="siteName" value="${siteName}" />
+				<var name="siteName" value="Site Name" />
 				<var name="userScreenName" value="usersn${userNumber}" />
 			</execute>
 		</for>
 
 		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Teams" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams. You can add a site team by clicking the plus button on the bottom right corner." />
 
 		<execute macro="ProductMenu#gotoSitesMembers">
 			<var name="portlet" value="Site Teams" />
@@ -2193,26 +2215,8 @@
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesMembers">
-			<var name="portlet" value="Site Teams" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no site teams. You can add a site team by clicking the plus button on the bottom right corner." />
-
-		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -2220,8 +2224,9 @@
 			<var name="pageTemplateName" value="Blog" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoPagePG">
@@ -2257,8 +2262,9 @@
 			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="USA Ice Hockey Team Blog" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<for list="Blogs,Tag Cloud,Recent Bloggers" param="portletTitleName">

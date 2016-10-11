@@ -78,7 +78,9 @@
 			<var name="configurationName" value="LDAP Import" />
 		</execute>
 
-		<execute macro="SystemSettings#enableImportEntry" />
+		<execute macro="SystemSettings#enableSetting">
+			<var name="setting" value="IMPORT_ENABLED_CHECKBOX" />
+		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
 

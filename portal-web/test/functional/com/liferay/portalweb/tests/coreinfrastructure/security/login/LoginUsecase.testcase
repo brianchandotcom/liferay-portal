@@ -68,26 +68,4 @@
 
 		<execute function="AssertElementPresent" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 	</command>
-
-	<command name="TokenBasedSSOSmoke" priority="5">
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="System Settings" />
-		</execute>
-
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Foundation" />
-		</execute>
-
-		<execute macro="SystemSettings#viewConfiguration">
-			<var name="configurationName" value="Token Based SSO" />
-		</execute>
-
-		<execute function="Check" locator1="SystemSettings#ENABLED_CHECKBOX" />
-
-		<execute macro="PortletEntry#save" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute function="AntCommand" locator1="build-test-authentication.xml" value1="login-with-token" />
-	</command>
 </definition>

@@ -107,7 +107,7 @@ public class UnstableMessageUtil {
 			runBuildURLs.add(buildURL);
 		}
 
-		int failureCount = _getUnstableMessage(project, runBuildURLs, sb);
+		int failureCount = _getFailureCount(project, runBuildURLs, sb);
 
 		sb.append("</ol>");
 
@@ -177,7 +177,7 @@ public class UnstableMessageUtil {
 		return sb.toString();
 	}
 
-	private static int _getUnstableMessage(
+	private static int _getFailureCount(
 			Project project, List<String> runBuildURLs, StringBuilder sb)
 		throws Exception {
 

@@ -62,14 +62,14 @@ public class UpgradeGroup extends UpgradeProcess {
 			}
 		}
 
-		long companyId = CompanyThreadLocal.getCompanyId();
+		long currentCompanyId = CompanyThreadLocal.getCompanyId();
 
 		try {
-			for (Long id : companyIds) {
+			for (Long companyId : companyIds) {
 				LocalizedValuesMap localizedValuesMap =
 					new LocalizedValuesMap();
 
-				CompanyThreadLocal.setCompanyId(id);
+				CompanyThreadLocal.setCompanyId(companyId);
 
 				for (Locale locale : LanguageUtil.getAvailableLocales()) {
 					localizedValuesMap.put(
@@ -80,18 +80,18 @@ public class UpgradeGroup extends UpgradeProcess {
 					localizedValuesMap, "global");
 
 				try (PreparedStatement ps = connection.prepareStatement(
-					"update Group_ set name = ? where companyId = ? AND " +
+					"update Group_ set name = ? where companyId = ? and " +
 					"friendlyURL = '/global'")) {
 
 					ps.setString(1, nameXML);
-					ps.setLong(2, id);
+					ps.setLong(2, companyId);
 
 					ps.executeUpdate();
 				}
 			}
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(companyId);
+			CompanyThreadLocal.setCompanyId(currentCompanyId);
 		}
 	}
 

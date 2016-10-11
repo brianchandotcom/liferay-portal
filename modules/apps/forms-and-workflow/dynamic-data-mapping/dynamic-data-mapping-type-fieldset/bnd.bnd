@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Dynamic Data Mapping Type Field Set
+Bundle-SymbolicName: com.liferay.dynamic.data.mapping.type.fieldset
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/config.js
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+Web-ContextPath: /dynamic-data-mapping-type-fieldset

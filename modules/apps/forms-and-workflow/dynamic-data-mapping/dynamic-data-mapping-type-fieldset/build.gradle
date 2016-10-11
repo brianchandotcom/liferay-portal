@@ -1,0 +1,37 @@
+apply plugin: "com.liferay.lang.merger"
+
+dependencies {
+	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "javax.portlet", name: "portlet-api", version: "2.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-api")
+	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
+}
+
+task wrapSoyTemplates
+
+classes {
+	dependsOn wrapSoyTemplates
+}
+
+transpileJS {
+	soySrcIncludes = ""
+	srcIncludes = "**/*.es.js"
+}
+
+wrapSoyTemplates {
+	doLast {
+		FileTree soyJsFileTree = fileTree(dir: "classes", include: "**/*.soy.js")
+
+		String soyJsWrapperHeader = "AUI.add('liferay-ddm-form-field-fieldset-template', function(A) {"
+		String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";
+
+		soyJsFileTree.each {
+			File soyJsFile ->
+
+			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }") + soyJsWrapperFooter
+		}
+	}
+}

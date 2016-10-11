@@ -40,6 +40,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 	@Before
 	public void setUp() throws Exception {
 		downloadSample(
+			"ff-vnc-1", "37", "test-portal-acceptance-pullrequest(master)",
+			"test-1-12");
+		downloadSample(
 			"generic-1", "1609", "test-portal-acceptance-pullrequest(master)",
 			"test-1-1");
 		downloadSample(

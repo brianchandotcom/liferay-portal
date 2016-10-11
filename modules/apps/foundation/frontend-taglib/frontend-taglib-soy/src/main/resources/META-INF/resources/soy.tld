@@ -14,19 +14,19 @@
 		<tag-class>com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>The id of the component that can be referenced by Liferay.component().</description>
+			<description>The ID of the component that can be referenced by <![CDATA[<code>Liferay.component()</code>]]>.</description>
 			<name>componentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The context map for chosen template.</description>
+			<description>The context map for the chosen template.</description>
 			<name>context</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The AMD module of the component JavaScript.</description>
+			<description>The AMD module of the component's JavaScript.</description>
 			<name>module</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

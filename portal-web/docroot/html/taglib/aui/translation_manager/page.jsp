@@ -20,7 +20,7 @@
 	<div class="lfr-translation-manager-content">
 		<label class="lfr-translation-manager-default-locale-label" for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="web-content-default-language" />:</label>
 
-		<span class="badge badge-default badge-lg lfr-translation-manager-default-locale-text lfr-translation-manager-translation lfr-translation-manager-translation-editing">
+		<span class="label label-default label-lg lfr-translation-manager-default-locale-text lfr-translation-manager-translation lfr-translation-manager-translation-editing">
 
 			<%
 			Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
@@ -48,7 +48,7 @@
 		</select>
 
 		<c:if test="<%= changeableDefaultLanguage %>">
-			<a class="badge badge-default badge-lg lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
+			<a class="label label-default label-lg lfr-translation-manager-change-default-locale" href="javascript:;"><liferay-ui:message key="change" /></a>
 		</c:if>
 
 		<c:if test="<%= !readOnly %>">
@@ -97,7 +97,7 @@
 							}
 						%>
 
-							<span class="lfr-translation-manager-translation" locale="<%= availableLocales[i] %>">
+							<span class="label label-default label-lg lfr-translation-manager-translation" locale="<%= availableLocales[i] %>">
 								<img alt="<%= HtmlUtil.escapeAttribute(availableLocales[i].getDisplayName(locale)) %>" src="<%= themeDisplay.getPathThemeImages() %>/language/<%= LocaleUtil.toLanguageId(availableLocales[i]) %>.png" />
 
 								<%= availableLocales[i].getDisplayName(locale) %>

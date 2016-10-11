@@ -202,14 +202,21 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		return buildThemeTask;
 	}
 
-	private void _configureTaskBuildCSS(BuildThemeTask buildThemeTask) {
-		Project project = buildThemeTask.getProject();
-
+	private void _configureTaskBuildCSS(final BuildThemeTask buildThemeTask) {
 		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
-			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+			buildThemeTask.getProject(), CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		buildCSSTask.dependsOn(buildThemeTask);
-		buildCSSTask.setDocrootDir(project.getProjectDir());
+
+		buildCSSTask.setDocrootDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildThemeTask.getOutputDir();
+				}
+
+			});
 	}
 
 	private void _configureTasksBuildTheme(

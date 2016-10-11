@@ -121,7 +121,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 
 			if (kbCommentClassName.equals(KBArticle.class.getName())) {
 				KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
-					activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
+					kbComment.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
 				return KnowledgeBaseUtil.getKBArticleURL(
 					serviceContext.getPlid(), kbArticle.getResourcePrimKey(),

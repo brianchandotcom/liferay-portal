@@ -256,111 +256,109 @@ public class UnstableMessageUtil {
 						failureCount++;
 
 						sb.append("<li>...</li>");
+
+						continue;
 					}
 
-					if (failureCount < 3) {
-						sb.append("<li><a href=\"");
+					if (failureCount > 3) {
+						continue;
+					}
 
-						String runBuildHREF = runBuildURL;
+					sb.append("<li><a href=\"");
 
-						runBuildHREF = runBuildHREF.replace("[", "_");
-						runBuildHREF = runBuildHREF.replace("]", "_");
-						runBuildHREF = runBuildHREF.replace("#", "_");
+					String runBuildHREF = runBuildURL;
 
-						sb.append(runBuildHREF);
+					runBuildHREF = runBuildHREF.replace("[", "_");
+					runBuildHREF = runBuildHREF.replace("]", "_");
+					runBuildHREF = runBuildHREF.replace("#", "_");
 
-						sb.append("/testReport/");
+					sb.append(runBuildHREF);
 
-						String testClassName = caseJSONObject.getString(
-							"className");
+					sb.append("/testReport/");
 
-						int x = testClassName.lastIndexOf(".");
+					String testClassName = caseJSONObject.getString(
+						"className");
 
-						String testPackageName = testClassName.substring(0, x);
+					int x = testClassName.lastIndexOf(".");
 
-						sb.append(testPackageName);
+					String testPackageName = testClassName.substring(0, x);
+
+					sb.append(testPackageName);
+
+					sb.append("/");
+
+					String testSimpleClassName = testClassName.substring(x + 1);
+
+					sb.append(testSimpleClassName);
+
+					sb.append("/");
+
+					String testMethodName = caseJSONObject.getString("name");
+
+					String testMethodNameURL = testMethodName;
+
+					testMethodNameURL = testMethodNameURL.replace("[", "_");
+					testMethodNameURL = testMethodNameURL.replace("]", "_");
+					testMethodNameURL = testMethodNameURL.replace("#", "_");
+
+					if (testPackageName.equals("junit.framework")) {
+						testMethodNameURL = testMethodNameURL.replace(".", "_");
+					}
+
+					sb.append(testMethodNameURL);
+
+					sb.append("\">");
+
+					String jobVariant = JenkinsResultsParserUtil.getJobVariant(
+						runBuildURLJSONObject);
+
+					if (jobVariant.contains("functional")) {
+						String testName = testMethodName.substring(
+							5, testMethodName.length() - 1);
+
+						sb.append(testName);
+
+						sb.append("</a> - ");
+						sb.append("<a href=\"");
+
+						String logURL = _getLogURL(
+							jobVariant, project, runBuildURLJSONObject);
+
+						sb.append(logURL);
 
 						sb.append("/");
+						sb.append(testName.replace("#", "_"));
+						sb.append("/index.html.gz\">Poshi Report</a> - ");
+						sb.append("<a href=\"");
+						sb.append(logURL);
+						sb.append("/");
+						sb.append(testName.replace("#", "_"));
+						sb.append("/summary.html.gz\">Poshi Summary</a> - ");
+						sb.append("<a href=\"");
+						sb.append(logURL);
+						sb.append(
+							"/jenkins-console.txt.gz\">Console Output</a>");
 
-						String testSimpleClassName = testClassName.substring(
-							x + 1);
+						if (Boolean.parseBoolean(
+								project.getProperty(
+									"record.liferay.log"))) {
 
+							sb.append(" - ");
+							sb.append("<a href=\"");
+							sb.append(logURL);
+							sb.append("/liferay-log.txt.gz\">Liferay Log</a>");
+						}
+					}
+					else {
 						sb.append(testSimpleClassName);
-
-						sb.append("/");
-
-						String testMethodName = caseJSONObject.getString(
-							"name");
-
-						String testMethodNameURL = testMethodName;
-
-						testMethodNameURL = testMethodNameURL.replace("[", "_");
-						testMethodNameURL = testMethodNameURL.replace("]", "_");
-						testMethodNameURL = testMethodNameURL.replace("#", "_");
-
-						if (testPackageName.equals("junit.framework")) {
-							testMethodNameURL = testMethodNameURL.replace(
-								".", "_");
-						}
-
-						sb.append(testMethodNameURL);
-
-						sb.append("\">");
-
-						String jobVariant =
-							JenkinsResultsParserUtil.getJobVariant(
-								runBuildURLJSONObject);
-
-						if (jobVariant.contains("functional")) {
-							String testName = testMethodName.substring(
-								5, testMethodName.length() - 1);
-
-							sb.append(testName);
-
-							sb.append("</a> - ");
-							sb.append("<a href=\"");
-
-							String logURL = _getLogURL(
-								jobVariant, project, runBuildURLJSONObject);
-
-							sb.append(logURL);
-
-							sb.append("/");
-							sb.append(testName.replace("#", "_"));
-							sb.append("/index.html.gz\">Poshi Report</a> - ");
-							sb.append("<a href=\"");
-							sb.append(logURL);
-							sb.append("/");
-							sb.append(testName.replace("#", "_"));
-							sb.append(
-								"/summary.html.gz\">Poshi Summary</a> - ");
-							sb.append("<a href=\"");
-							sb.append(logURL);
-							sb.append(
-								"/jenkins-console.txt.gz\">Console Output</a>");
-
-							if (Boolean.parseBoolean(
-									project.getProperty(
-										"record.liferay.log"))) {
-
-								sb.append(" - ");
-								sb.append("<a href=\"");
-								sb.append(logURL);
-								sb.append(
-									"/liferay-log.txt.gz\">Liferay Log</a>");
-							}
-						}
-						else {
-							sb.append(testSimpleClassName);
-							sb.append(".");
-							sb.append(testMethodName);
-							sb.append("</a>");
-						}
-
-						sb.append("</li>");
-
-						failureCount++;
+						sb.append(".");
+						sb.append(testMethodName);
+						sb.append("</a>");
 					}
+
+					sb.append("</li>");
+
+					failureCount++;
 				}
 			}
 		}

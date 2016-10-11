@@ -48,8 +48,6 @@ public class SizeIsZeroCheck extends AbstractCheck {
 	private void _checkMethodCall(
 		DetailAST detailAST, DetailAST methodCallAST) {
 
-		DetailAST parentAST = methodCallAST.getParent();
-
 		DetailAST nextSibling = methodCallAST.getNextSibling();
 
 		if ((nextSibling == null) ||
@@ -59,6 +57,8 @@ public class SizeIsZeroCheck extends AbstractCheck {
 		}
 
 		int compareCount = GetterUtil.getInteger(nextSibling.getText());
+
+		DetailAST parentAST = methodCallAST.getParent();
 
 		if (((compareCount != 0) ||
 			 ((parentAST.getType() != TokenTypes.EQUAL) &&

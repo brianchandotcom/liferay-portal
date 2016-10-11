@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.module.configuration.internal;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.Constructor;
@@ -63,6 +64,67 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private Object _getValueOrNull(Class<?> returnType, String key)
+		throws NoSuchMethodException, IllegalAccessException,
+		InvocationTargetException, InstantiationException {
+
+		if (returnType.equals(boolean.class) ||
+			returnType.equals(double.class) || returnType.equals(float.class) ||
+			returnType.equals(int.class) || returnType.equals(long.class) ||
+			returnType.equals(String.class)) {
+
+			String value = _typedSettings.getValue(key, null);
+
+			if ((value == null) || returnType.equals(String.class)) {
+				return value;
+			}
+			else if (returnType.equals(boolean.class)) {
+				return GetterUtil.getBoolean(value);
+			}
+			else if (returnType.equals(double.class)) {
+				return GetterUtil.getDouble(value);
+			}
+			else if (returnType.equals(float.class)) {
+				return GetterUtil.getFloat(value);
+			}
+			else if (returnType.equals(int.class)) {
+				return GetterUtil.getInteger(value);
+			}
+			else if (returnType.equals(long.class)) {
+				return GetterUtil.getLong(value);
+			}
+		}
+		else if (returnType.equals(LocalizedValuesMap.class)) {
+			LocalizedValuesMap value = _typedSettings.getLocalizedValuesMap(
+				key);
+
+			if (value.getDefaultValue() == null) {
+				return null;
+			}
+
+			return value;
+		}
+		else if (returnType.equals(String[].class)) {
+			return _typedSettings.getValues(key, null);
+		}
+		else if (returnType.isEnum()) {
+			String value = _typedSettings.getValue(key, null);
+
+			if (value == null) {
+				return value;
+			}
+
+			Method valueOfMethod = returnType.getDeclaredMethod(
+				"valueOf", String.class);
+
+			return valueOfMethod.invoke(returnType, value);
+		}
+
+		Constructor<?> constructor = returnType.getConstructor(String.class);
+
+		return constructor.newInstance(_typedSettings.getValue(key, null));
 	}
 
 	private Object _invokeConfigurationOverride(Method method, Object[] args)

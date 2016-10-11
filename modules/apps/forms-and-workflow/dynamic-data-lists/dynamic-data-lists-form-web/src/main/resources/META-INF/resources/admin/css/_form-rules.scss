@@ -1,0 +1,136 @@
+.liferay-ddl-form-rule-builder {
+	.ddl-form-basic-info {
+		display: none;
+	}
+
+	.ddl-form-builder-app {
+		margin-top: 0;
+	}
+
+	.footer-button {
+		margin-left: 56px;
+		margin-top: 12px;
+		padding: 12px 24px;
+	}
+}
+
+.liferay-ddl-form-rule-builder-timeline {
+	margin-bottom: 0;
+
+	&.can-remove-item {
+		.timeline-item:hover > .container-trash {
+			display: block;
+		}
+	}
+
+	.container-trash {
+		cursor: pointer;
+		display: none;
+		padding: 10px;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		&:hover {
+			color: #65B6F0;
+		}
+	}
+
+	&.liferay-ddl-form-builder-rule-action-list {
+		.timeline-item:last-child::before {
+			bottom: 42px;
+		}
+
+		& + div div::before {
+			bottom: 20px;
+			top: -72px;
+		}
+	}
+
+	.panel-body {
+		position: relative;
+
+		.dropdown {
+			display: block;
+			margin-right: 20px;
+			margin-top: 8px;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		button {
+			padding: 4px 12px;
+		}
+	}
+
+	&.liferay-ddl-form-builder-rule-condition-list {
+		.timeline-item {
+			&:first-child::before {
+				top: 35px;
+			}
+
+			&:last-child > .operator {
+				display: none;
+			}
+
+			.operator {
+				border-radius: 4px;
+				font-size: 14px;
+				margin-top: 10px;
+				position: relative;
+
+				.panel-body {
+					padding: 5px 17px;
+				}
+			}
+
+			.panel-inline {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.liferay-ddl-form-rule-builder-footer {
+	margin: $baseline * 3 0;
+	padding: 12px 24px;
+}
+
+.liferay-ddl-form-builder-rule-content {
+	.lfr-ddm-form-field-container {
+		padding: 0;
+	}
+}
+
+.form-builder-rule-builder-rules-list {
+	margin-top: $baseline * 4;
+}
+
+.timeline-increment-icon.add-condition {
+	padding-bottom: $baseline * 2;
+	padding-top: $baseline * 2;
+	position: relative;
+
+	&::before {
+		background-color: #869CAD;
+		bottom: 0;
+		content: '';
+		display: block;
+		left: 20px;
+		position: absolute;
+		top: -10px;
+		width: 2px;
+		z-index: -1;
+	}
+
+	.form-builder-timeline-add-item {
+		border-radius: 100%;
+		margin-left: 3px;
+		padding: 0;
+	}
+}
+
+.form-builder-rule-builder-rule-description {
+	padding: $baseline;
+}

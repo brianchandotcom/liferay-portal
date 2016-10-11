@@ -180,6 +180,72 @@
 	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
+<!--RULE_BUILDER-->
+<tr>
+	<td>RULE_BUILDER_ADD_RULE_BUTTON</td>
+	<td>//button[contains(@class,'add-rule-button-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_ADD_CONDITION</td>
+	<td>//a[contains(@class,'form-builder-rule-add-condition')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_RULE_CONDITION_DROPDOWN</td>
+	<td>//button[contains(@class,'dropdown-toggle-operator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_RULE_CONDITION</td>
+	<td>//ul[@class='dropdown-menu']//li[contains(.,'${key_condition}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_FIELD</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-if')]//select[contains(@id,'condition-first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_OPERATOR</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-operator')]//select[contains(@id,'condition-operator')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_TYPE</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-the')]//select[contains(@id,'type')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//select[contains(@id,'select')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_TIMELINE_RULE_CONDITION</td>
+	<td>//li[contains(@class,'condition-container') and contains(@class,'timeline-item')][${key_conditonRowNumber}]//div[contains(.,'${key_condition}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_ACTION</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'action')]//select[contains(@id,'target')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SELECT_ACTION_TARGET</td>
+	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//div[contains(@class,'target')]//select[contains(@id,'action')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_SAVE_BUTTON</td>
+	<td>//button[contains(@class,'form-builder-rule-settings-save')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

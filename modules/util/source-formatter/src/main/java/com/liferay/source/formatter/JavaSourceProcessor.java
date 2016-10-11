@@ -3678,18 +3678,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int pos = trimmedPreviousLine.lastIndexOf(
 				CharPool.OPEN_PARENTHESIS, trimmedPreviousLine.length() - 2);
 
-			if ((pos > 0) &&
-				Character.isLetterOrDigit(
-					trimmedPreviousLine.charAt(pos -1))) {
+			if (pos > 0) {
+				char c = trimmedPreviousLine.charAt(pos - 1);
 
-				String filePart = trimmedPreviousLine.substring(pos + 1);
+				if ((c != CharPool.OPEN_PARENTHESIS) &&
+					!Character.isWhitespace(c)) {
 
-				if (!filePart.contains(StringPool.CLOSE_PARENTHESIS) &&
-					!filePart.contains(StringPool.QUOTE)) {
+					String filePart = trimmedPreviousLine.substring(pos + 1);
 
-					return getCombinedLinesContent(
-						content, fileName, line, trimmedLine, lineLength,
-						lineCount, previousLine, filePart, false, false, 0);
+					if (!filePart.contains(StringPool.CLOSE_PARENTHESIS) &&
+						!filePart.contains(StringPool.QUOTE)) {
+
+						return getCombinedLinesContent(
+							content, fileName, line, trimmedLine, lineLength,
+							lineCount, previousLine, filePart, false, false, 0);
+					}
 				}
 			}
 		}

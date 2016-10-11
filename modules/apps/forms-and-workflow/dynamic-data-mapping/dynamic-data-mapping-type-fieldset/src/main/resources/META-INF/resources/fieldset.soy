@@ -1,0 +1,64 @@
+{namespace ddm}
+
+/**
+ * Defines the delegated template for the fieldset field.
+ */
+{deltemplate ddm.field autoescape="deprecated-contextual" variant="'fieldset'"}
+	{call .fieldset data="all" /}
+{/deltemplate}
+
+/**
+ * Prints all rows.
+ *
+ * @param rows
+ */
+{template .fieldset_rows autoescape="deprecated-contextual"}
+	{foreach $row in $rows}
+		<div class="row">
+			{call ddm.fieldset_row_columns data="all"}
+				{param columns: $row.columns /}
+			{/call}
+		</div>
+	{/foreach}
+{/template}
+
+/**
+ * Prints a column.
+ *
+ * @param column
+ */
+{template .fieldset_row_column autoescape="deprecated-contextual"}
+	<div class="col-md-{$column.size}">
+		{call ddm.fields data="all"}
+			{param fields: $column.fields /}
+		{/call}
+	</div>
+{/template}
+
+/**
+ * Prints all columns.
+ *
+ * @param columns
+ */
+{template .fieldset_row_columns autoescape="deprecated-contextual"}
+	{foreach $column in $columns}
+		{call ddm.fieldset_row_column data="all"}
+			{param column: $column /}
+		{/call}
+	{/foreach}
+{/template}
+
+/**
+ * Prints the DDM form fieldset field.
+ *
+ * @param name
+ * @param rows
+ * @param visible
+ */
+{template .fieldset autoescape="deprecated-contextual"}
+	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-fieldset" data-fieldname="{$name}">
+		{call ddm.fieldset_rows data="all"}
+			{param rows: $rows /}
+		{/call}
+	</div>
+{/template}

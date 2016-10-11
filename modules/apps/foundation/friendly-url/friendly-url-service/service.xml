@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="friendlyUrlId" primary="true" type="long" />
+		<column name="friendlyURLId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

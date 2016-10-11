@@ -212,13 +212,12 @@ public class AssetVocabularyIndexer extends BaseIndexer<AssetVocabulary> {
 			if (locale.equals(siteDefaultLocale)) {
 				document.addText(field, entry.getValue());
 			}
-			else {
-				String languageId = LocaleUtil.toLanguageId(locale);
 
-				document.addText(
-					LocalizationUtil.getLocalizedName(field, languageId),
-					entry.getValue());
-			}
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(field, languageId),
+				entry.getValue());
 		}
 	}
 

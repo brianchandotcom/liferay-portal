@@ -128,8 +128,8 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 			</p>
 		</c:if>
 
-		<div class="permissions-table-container">
-			<table class="lfr-table responsive-table-horizontal <%= (inputPermissionsShowOptions || !supportedActions.contains(ActionKeys.VIEW)) ? "" : "hide" %>" id="<%= uniqueNamespace %>inputPermissionsTable">
+		<div class="permissions-table-container tabl-responsive">
+			<table class="table table-list <%= (inputPermissionsShowOptions || !supportedActions.contains(ActionKeys.VIEW)) ? "" : "hide" %>" id="<%= uniqueNamespace %>inputPermissionsTable">
 				<thead>
 					<tr>
 						<th>
@@ -206,7 +206,7 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 							checkboxFieldId = checkboxFieldId + StringPool.UNDERLINE + action;
 						%>
 
-							<td <%= (action.equals(ActionKeys.VIEW)) ? "class=\"hide\"" : "" %>>
+							<td class='table-list-field <%= (action.equals(ActionKeys.VIEW)) ? "hide" : "" %>'>
 								<label class="hidden-label" for="<%= checkboxFieldId %>"><liferay-ui:message arguments="<%= new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())} %>" key="give-x-permission-to-users-with-role-x" translateArguments="<%= false %>" /></label>
 
 								<input <%= checked ? "checked" : "" %> <%= disabled ? "disabled" : "" %> id="<%= checkboxFieldId %>" name="<%= checkboxFieldName %>" title='<%= LanguageUtil.format(request, "give-x-permission-to-users-with-role-x", new Object[] {ResourceActionsUtil.getAction(request, action), role.getTitle(themeDisplay.getLocale())}, false) %>' type="checkbox" value="<%= action %>" />

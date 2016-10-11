@@ -8,7 +8,7 @@
 			text-align: center;
 
 			&:first-child {
-				text-align: left;
+				text-align: center;
 			}
 		}
 	}
@@ -33,12 +33,6 @@
 				display: block;
 				overflow: hidden;
 				width: 10px;
-			}
-		}
-
-		.responsive-table-horizontal {
-			input[type="checkbox"] {
-				margin-top: 0;
 			}
 		}
 	}

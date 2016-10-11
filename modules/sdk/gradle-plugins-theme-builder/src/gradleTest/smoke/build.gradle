@@ -1,3 +1,5 @@
+import java.util.zip.ZipFile
+
 apply plugin: "com.liferay.portal.tools.theme.builder"
 
 task runGradleTest
@@ -11,27 +13,37 @@ repositories {
 }
 
 runGradleTest {
-	dependsOn buildTheme
+	dependsOn war
 
 	doLast {
-		File generatedCustomCssFile = file("build/buildTheme/css/_custom.scss")
-		File expectedCustomCssFile = file("src/main/webapp/css/_custom.scss")
+		ZipFile zipFile = new ZipFile(war.archivePath)
 
-		assert expectedCustomCssFile.text.normalize() == generatedCustomCssFile.text.normalize()
-
-		String[] fileNames = [
-			"build/buildTheme/WEB-INF/liferay-look-and-feel.xml",
-			"build/buildTheme/css/main.scss",
-			"build/buildTheme/images/screenshot.png",
-			"build/buildTheme/images/thumbnail.png",
-			"build/buildTheme/js/main.js",
-			"build/buildTheme/templates/init.ftl"
+		String[] expectedFileNames = [
+			"WEB-INF/liferay-look-and-feel.xml",
+			"css/aui.css",
+			"css/aui_rtl.css",
+			"css/main.css",
+			"css/main_rtl.css",
+			"fonts/.gitkeep",
+			"images/screenshot.png",
+			"images/thumbnail.png",
+			"js/main.js",
+			"templates/init.ftl"
 		]
 
-		for (String fileName in fileNames) {
-			File generatedFile = file(fileName)
+		String[] unexpectedFileNames = [
+			"css/_custom.scss",
+			"templates/init.vm"
+		]
 
-			assert generatedFile.exists()
+		zipFile.withCloseable {
+			for (String fileName in expectedFileNames) {
+				assert zipFile.getEntry(fileName) != null
+			}
+
+			for (String fileName in unexpectedFileNames) {
+				assert zipFile.getEntry(fileName) == null
+			}
 		}
 	}
 }

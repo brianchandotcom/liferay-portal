@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -406,7 +408,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private Method _dynamicQueryMethod;
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
-	private int _interval = Indexer.DEFAULT_INTERVAL;
+	private int _interval = GetterUtil.getInteger(
+		PropsUtil.get(PropsKeys.INDEX_DEFAULT_INTERVAL));
 	private Class<?> _modelClass;
 	private boolean _parallel;
 

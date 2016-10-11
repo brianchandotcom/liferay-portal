@@ -12,19 +12,19 @@ GoogleFilePicker.prototype = {
 
 		if (!instance._authAPILoaded) {
 			gapi.load(
-			    'auth',
-			    {
-			        'callback': instance._onAuthAPILoad.bind(instance)
-			    }
+				'auth',
+				{
+					'callback': instance._onAuthAPILoad.bind(instance)
+				}
 			);
 		}
 
 		if (!instance._pickerAPILoaded) {
 			gapi.load(
-			    'picker',
-			    {
-			        'callback': instance._onPickerAPILoad.bind(instance)
-			    }
+				'picker',
+				{
+					'callback': instance._onPickerAPILoad.bind(instance)
+				}
 			);
 		}
 	},
@@ -33,31 +33,31 @@ GoogleFilePicker.prototype = {
 		var instance = this;
 
 		if (instance._pickerAPILoaded && instance._authAPILoaded) {
-		    var viewId = google.picker.ViewId;
+			var viewId = google.picker.ViewId;
 
-		    var groupDocuments = new google.picker.ViewGroup(viewId.DOCS);
+			var groupDocuments = new google.picker.ViewGroup(viewId.DOCS);
 
-		    groupDocuments.addView(viewId.DOCUMENTS);
-		    groupDocuments.addView(viewId.SPREADSHEETS);
-		    groupDocuments.addView(viewId.PRESENTATIONS);
+			groupDocuments.addView(viewId.DOCUMENTS);
+			groupDocuments.addView(viewId.SPREADSHEETS);
+			groupDocuments.addView(viewId.PRESENTATIONS);
 
-		    var groupPhotos = new google.picker.ViewGroup(viewId.PHOTOS);
+			var groupPhotos = new google.picker.ViewGroup(viewId.PHOTOS);
 
-		    groupPhotos.addView(viewId.PHOTO_UPLOAD);
-		    groupPhotos.addView(viewId.WEBCAM);
+			groupPhotos.addView(viewId.PHOTO_UPLOAD);
+			groupPhotos.addView(viewId.WEBCAM);
 
-		    var picker = new google.picker.PickerBuilder();
+			var picker = new google.picker.PickerBuilder();
 
-		    picker.addViewGroup(groupDocuments);
-		    picker.addViewGroup(groupPhotos);
+			picker.addViewGroup(groupDocuments);
+			picker.addViewGroup(groupPhotos);
 
-		    picker.addView(viewId.RECENTLY_PICKED);
+			picker.addView(viewId.RECENTLY_PICKED);
 
-		    picker.setOAuthToken(instance._oauthToken);
-		    picker.setDeveloperKey(GoogleFilePicker.API_KEY);
-		    picker.setCallback(instance._pickerCallback);
+			picker.setOAuthToken(instance._oauthToken);
+			picker.setDeveloperKey(GoogleFilePicker.API_KEY);
+			picker.setCallback(instance._pickerCallback);
 
-		    picker.build().setVisible(true);
+			picker.build().setVisible(true);
 		}
 	},
 
@@ -65,20 +65,20 @@ GoogleFilePicker.prototype = {
 		var instance = this;
 
 		window.gapi.auth.authorize(
-		    {
-			    'client_id': GoogleFilePicker.CLIENT_ID,
-			    'immediate': false,
-			    'scope': GoogleFilePicker.SCOPE
-		    },
-		    function(authResult) {
-			    if (authResult && !authResult.error) {
-				    instance._oauthToken = authResult.access_token;
+			{
+				'client_id': GoogleFilePicker.CLIENT_ID,
+				'immediate': false,
+				'scope': GoogleFilePicker.SCOPE
+			},
+			function(authResult) {
+				if (authResult && !authResult.error) {
+					instance._oauthToken = authResult.access_token;
 
-				    instance._authAPILoaded = true;
+					instance._authAPILoaded = true;
 
-				    instance._createPicker();
-			    }
-		    }
+					instance._createPicker();
+				}
+			}
 		);
 	},
 
@@ -92,7 +92,7 @@ GoogleFilePicker.prototype = {
 
 	_pickerCallback: function(data) {
 		if (data[google.picker.Response.ACTION] === google.picker.Action.PICKED) {
-		    var doc = data[google.picker.Response.DOCUMENTS][0];
+			var doc = data[google.picker.Response.DOCUMENTS][0];
 
 			var googlePickerDoc = google.picker.Document;
 

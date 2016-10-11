@@ -520,7 +520,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 					containerModel = trashHandler.getParentContainerModel(this);
 				}
 				catch (NoSuchModelException nsme) {
-	            	return null;
+					return null;
 				}
 
 				while (containerModel != null) {

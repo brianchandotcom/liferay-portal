@@ -56,17 +56,22 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 				"Liferay-Releng-App-Description");
 		}
 
-		File relengDir = LiferayRelengPlugin.getRelengDir(project);
+		Properties appProperties = null;
 
-		if (relengDir != null) {
-			File appPropertiesFile = new File(relengDir, "app.properties");
+		Project privateProject = project.findProject(
+			":private" + project.getPath());
 
-			if (appPropertiesFile.exists()) {
-				Properties properties = GUtil.loadProperties(appPropertiesFile);
+		if (privateProject != null) {
+			appProperties = _getAppProperties(privateProject);
+		}
 
-				appTitle = properties.getProperty("app.marketplace.title");
-				appVersion = properties.getProperty("app.marketplace.version");
-			}
+		if (appProperties == null) {
+			appProperties = _getAppProperties(project);
+		}
+
+		if (appProperties != null) {
+			appTitle = appProperties.getProperty("app.marketplace.title");
+			appVersion = appProperties.getProperty("app.marketplace.version");
 		}
 
 		_applyPlugins(project);
@@ -210,6 +215,20 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
+	}
+
+	private Properties _getAppProperties(Project project) {
+		File relengDir = LiferayRelengPlugin.getRelengDir(project);
+
+		if (relengDir != null) {
+			File appPropertiesFile = new File(relengDir, "app.properties");
+
+			if (appPropertiesFile.exists()) {
+				return GUtil.loadProperties(appPropertiesFile);
+			}
+		}
+
+		return null;
 	}
 
 }

@@ -61,7 +61,6 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.OutputStream;
 
 import java.nio.charset.StandardCharsets;
@@ -87,7 +86,6 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.UncheckedIOException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -112,6 +110,7 @@ import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
 import org.gradle.internal.Factory;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -635,26 +634,23 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		bundleExtension.setFailOnError(true);
 
-		Map<String, String> bundleInstructions = _getBundleInstructions(
-			bundleExtension);
+		File file = project.file("bnd.bnd");
 
-		Properties bundleProperties = null;
+		if (file.exists()) {
+			Map<String, String> bundleInstructions = _getBundleInstructions(
+				bundleExtension);
 
-		try {
-			bundleProperties = FileUtil.readProperties(project, "bnd.bnd");
-		}
-		catch (IOException ioe) {
-			throw new UncheckedIOException(ioe);
-		}
+			Properties properties = GUtil.loadProperties(file);
 
-		Enumeration<Object> keys = bundleProperties.keys();
+			Enumeration<Object> keys = properties.keys();
 
-		while (keys.hasMoreElements()) {
-			String key = (String)keys.nextElement();
+			while (keys.hasMoreElements()) {
+				String key = (String)keys.nextElement();
 
-			String value = bundleProperties.getProperty(key);
+				String value = properties.getProperty(key);
 
-			bundleInstructions.put(key, value);
+				bundleInstructions.put(key, value);
+			}
 		}
 	}
 

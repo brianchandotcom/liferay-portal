@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Gradle Plugins Theme Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.theme.builder
-Bundle-Version: 1.0.1
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.gradle.plugins.theme.builder

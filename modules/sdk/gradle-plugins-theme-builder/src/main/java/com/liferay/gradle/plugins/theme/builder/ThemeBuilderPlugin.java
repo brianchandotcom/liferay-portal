@@ -60,6 +60,9 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WarPlugin.class);
 
+		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
+			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 		WarPluginConvention warPluginConvention = GradleUtil.getConvention(
 			project, WarPluginConvention.class);
 
@@ -71,8 +74,8 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		BuildThemeTask buildThemeTask = _addTaskBuildTheme(
 			project, parentThemesConfiguration, warPluginConvention);
 
-		_configureTaskBuildCSS(buildThemeTask);
-		_configureTaskWar(buildThemeTask);
+		_configureTaskBuildCSS(buildCSSTask, buildThemeTask);
+		_configureTaskWar(war, buildCSSTask, buildThemeTask);
 
 		_configureTasksBuildTheme(project, themeBuilderConfiguration);
 	}
@@ -202,9 +205,8 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		return buildThemeTask;
 	}
 
-	private void _configureTaskBuildCSS(final BuildThemeTask buildThemeTask) {
-		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
-			buildThemeTask.getProject(), CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+	private void _configureTaskBuildCSS(
+		BuildCSSTask buildCSSTask, final BuildThemeTask buildThemeTask) {
 
 		buildCSSTask.dependsOn(buildThemeTask);
 
@@ -236,11 +238,35 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 			});
 	}
 
-	private void _configureTaskWar(final BuildThemeTask buildThemeTask) {
-		War war = (War)GradleUtil.getTask(
-			buildThemeTask.getProject(), WarPlugin.WAR_TASK_NAME);
+	private void _configureTaskWar(
+		War war, final BuildCSSTask buildCSSTask,
+		final BuildThemeTask buildThemeTask) {
 
 		war.dependsOn(buildThemeTask);
+
+		war.eachFile(
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					String dirName = buildCSSTask.getOutputDirName();
+
+					dirName = dirName.replace('\\', '/');
+
+					if (dirName.charAt(0) != '/') {
+						dirName = '/' + dirName;
+					}
+
+					if (dirName.charAt(dirName.length() - 1) != '/') {
+						dirName = dirName + '/';
+					}
+
+					String path = fileCopyDetails.getPath();
+
+					fileCopyDetails.setPath(path.replace(dirName, "/"));
+				}
+
+			});
 
 		war.exclude(
 			new Spec<FileTreeElement>() {
@@ -261,19 +287,6 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 			});
 
 		war.exclude("**/*.scss");
-
-		war.filesMatching(
-			"**/.sass-cache/",
-			new Action<FileCopyDetails>() {
-
-				@Override
-				public void execute(FileCopyDetails fileCopyDetails) {
-					String path = fileCopyDetails.getPath();
-
-					fileCopyDetails.setPath(path.replace(".sass-cache/", ""));
-				}
-
-			});
 
 		war.from(buildThemeTask.getOutputDir());
 	}

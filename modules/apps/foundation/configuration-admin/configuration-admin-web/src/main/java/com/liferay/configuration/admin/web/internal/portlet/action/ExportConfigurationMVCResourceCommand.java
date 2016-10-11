@@ -15,12 +15,12 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.AttributeDefinitionUtil;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,8 +42,6 @@ import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import org.apache.felix.cm.file.ConfigurationHandler;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.component.annotations.Component;
@@ -130,8 +128,8 @@ public class ExportConfigurationMVCResourceCommand
 
 					zipWriter.addEntry(
 						curFileName,
-						getPropertiesAsBytes(
-							languageId, curFactoryPid, curPid));
+						ConfigurationExporter.getPropertiesAsBytes(
+							getProperties(languageId, curFactoryPid, curPid)));
 				}
 			}
 			else if (configurationModel.hasConfiguration()) {
@@ -141,7 +139,8 @@ public class ExportConfigurationMVCResourceCommand
 
 				zipWriter.addEntry(
 					curFileName,
-					getPropertiesAsBytes(languageId, curPid, curPid));
+					ConfigurationExporter.getPropertiesAsBytes(
+						getProperties(languageId, curPid, curPid)));
 			}
 		}
 
@@ -184,7 +183,8 @@ public class ExportConfigurationMVCResourceCommand
 
 			zipWriter.addEntry(
 				curFileName,
-				getPropertiesAsBytes(languageId, factoryPid, curPid));
+				ConfigurationExporter.getPropertiesAsBytes(
+					getProperties(languageId, factoryPid, curPid)));
 		}
 
 		String fileName =
@@ -213,7 +213,8 @@ public class ExportConfigurationMVCResourceCommand
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName,
-			getPropertiesAsBytes(languageId, factoryPid, pid),
+			ConfigurationExporter.getPropertiesAsBytes(
+				getProperties(languageId, factoryPid, pid)),
 			ContentTypes.TEXT_XML_UTF8);
 	}
 
@@ -275,20 +276,6 @@ public class ExportConfigurationMVCResourceCommand
 		}
 
 		return properties;
-	}
-
-	protected byte[] getPropertiesAsBytes(
-			String languageId, String factoryPid, String pid)
-		throws Exception {
-
-		Properties properties = getProperties(languageId, factoryPid, pid);
-
-		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-			new UnsyncByteArrayOutputStream();
-
-		ConfigurationHandler.write(unsyncByteArrayOutputStream, properties);
-
-		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
 	@Reference

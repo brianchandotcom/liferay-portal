@@ -450,9 +450,9 @@ public class VerifyPermission extends VerifyProcess {
 			sb.append(") and Layout.type_ = '");
 			sb.append(LayoutConstants.TYPE_PORTLET);
 			sb.append("') and not exists (select resourcePermissionId from ");
-			sb.append("ResourcePermission r2 where r1.companyId = ");
-			sb.append("r2.companyId and r1.name = r2.name and r1.scope = ");
-			sb.append("r2.scope and r1.primKey = r2.primKey and r2.roleId = ");
+			sb.append("ResourcePermission r2 where r1.name = r2.name and ");
+			sb.append("r1.scope = r2.scope and r1.primKey = r2.primKey and ");
+			sb.append("r2.roleId = ");
 			sb.append(userRole.getRoleId());
 			sb.append(")");
 

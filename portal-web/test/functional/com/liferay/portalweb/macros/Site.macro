@@ -327,7 +327,7 @@
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="Check" locator1="Card#SPECIFIC_CHECKBOX">
-			<var name="key_cardText" value="${roleName}" />
+			<var name="key_cardText" value="${roleTitle}" />
 		</execute>
 
 		<execute function="SelectFrameTop" />
@@ -1321,7 +1321,7 @@
 			<var name="key_cardText" value="${resourceName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${roleName}">
+		<execute function="AssertTextEquals" locator1="Card#SPECIFIC_SMALL_TEXT" value1="${roleTitle}">
 			<var name="key_cardText" value="${resourceName}" />
 		</execute>
 	</command>

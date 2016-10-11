@@ -35,7 +35,7 @@
 
 	<command name="AddOrganizationRegRole" priority="4">
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -48,7 +48,7 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Control Panel" />
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -65,7 +65,7 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ORGANIZATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Organization" />
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -82,7 +82,7 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_ORGANIZATION_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add Organization" />
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -96,7 +96,7 @@
 
 	<command name="AddUserRegRole" priority="4">
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userEmailAddress" value="userea@liferay.com" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
@@ -109,7 +109,7 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_USERS_USERS_AND_ORGANIZATIONS_GENERAL_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Access in Control Panel" />
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -126,7 +126,7 @@
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add User" />
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>
@@ -145,7 +145,7 @@
 		<execute macro="Permissions#removePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="CONTROL_PANEL_GENERAL_PERMISSIONS_ADD_USER_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Add User" />
-			<var name="roleName" value="Regrole Name" />
+			<var name="roleTitle" value="Regrole Name" />
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
 			<var name="userLoginFullName" value="userfn userln" />
 		</execute>

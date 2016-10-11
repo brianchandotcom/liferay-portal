@@ -1429,7 +1429,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="WC Author" />
+			<var name="roleTitle" value="WC Author" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1438,7 +1438,7 @@
 
 		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX,SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX" />
-			<var name="roleName" value="WC Author" />
+			<var name="roleTitle" value="WC Author" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1471,7 +1471,7 @@
 			</execute>
 
 			<execute macro="Role#assignRegRoleCP">
-				<var name="roleName" value="WC Author" />
+				<var name="roleTitle" value="WC Author" />
 				<var name="userScreenName" value="${userScreenName}" />
 			</execute>
 

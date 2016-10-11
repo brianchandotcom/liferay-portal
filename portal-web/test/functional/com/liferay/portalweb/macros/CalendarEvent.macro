@@ -54,7 +54,7 @@
 			<equals arg1="${optionSetValue}" arg2="permissions" />
 			<then>
 				<var name="key_permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="key_roleName" value="${roleName}" />
+				<var name="key_roleTitle" value="${roleTitle}" />
 
 				<execute function="Check" locator1="CalendarEditEvent#DETAILS_PERMISSIONS_CHECKBOX" />
 			</then>

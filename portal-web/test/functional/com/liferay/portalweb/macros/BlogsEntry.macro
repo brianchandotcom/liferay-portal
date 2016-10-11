@@ -305,7 +305,7 @@
 				</if>
 
 				<var name="key_permissionDefinitionKey" value="${permissionDefinitionKey}" />
-				<var name="key_roleName" value="${roleName}" />
+				<var name="key_roleTitle" value="${roleTitle}" />
 
 				<execute function="Check" locator1="AssetPermissions#PERMISSIONS_CHECKBOX" />
 			</then>
@@ -446,8 +446,8 @@
 
 	<command name="removeViewPermissionsPG">
 		<var name="key_assetHeader" value="${entryTitle}" />
-		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
-		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
+		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
+		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 
 		<execute function="Click" locator1="Icon#DESCRIPTIVE_HEADER_VERTICAL_ELLIPSIS" />
 
@@ -455,7 +455,7 @@
 
 		<execute macro="IFrame#selectPermissionsFrame" />
 
-		<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+		<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
 
 		<execute macro="Button#clickSave" />
 
@@ -1145,8 +1145,8 @@
 
 	<command name="viewViewPermissionsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
-		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
-		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
+		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
+		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
 
 		<execute function="AssertClick" locator1="Link#PERMISSIONS" value1="Permissions" />
 
@@ -1155,16 +1155,16 @@
 		<if>
 			<equals arg1="${viewPermissionValue}" arg2="checked" />
 			<then>
-				<execute function="AssertChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				<execute function="AssertChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
 			</then>
 			<elseif>
 				<equals arg1="${viewPermissionValue}" arg2="unchecked" />
 				<then>
-					<execute function="AssertNotChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+					<execute function="AssertNotChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
+				<execute function="AssertChecked" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleTitle}" />
 			</else>
 		</if>
 

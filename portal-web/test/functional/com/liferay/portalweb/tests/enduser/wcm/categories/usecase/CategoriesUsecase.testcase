@@ -240,7 +240,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -253,7 +253,7 @@
 			<var name="permissionDefinitionValue" value="Access in Site Administration" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -266,7 +266,7 @@
 			<var name="permissionDefinitionValue" value="Add Category" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Tags" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -279,7 +279,7 @@
 			<var name="permissionDefinitionValue" value="Add Vocabulary" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Tags" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -292,7 +292,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -305,7 +305,7 @@
 			<var name="permissionDefinitionValue" value="Add Category" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_CATEGORIES" />
 			<var name="permissionNavigationValue" value="Categories" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -694,13 +694,13 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
 		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX,SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_CONFIGURATION_CHECKBOX,SITE_ADMIN_CONTENT_CATEGORIES_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_CATEGORY_CHECKBOX,SITE_ADMIN_CONTENT_CATEGORIES_RESOURCE_PERMISSIONS_ASSET_ENTRIES_ADD_VOCABULARY_CHECKBOX" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -710,7 +710,7 @@
 
 		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX,SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_CONFIGURATION_CHECKBOX,SITE_ADMIN_APPLICATIONS_CATEGORIES_NAVIGATION_APPLICATION_PERMISSIONS_VIEW_CHECKBOX" />
-			<var name="roleName" value="Category Role Name" />
+			<var name="roleTitle" value="Category Role Name" />
 			<var name="roleType" value="Site" />
 		</execute>
 

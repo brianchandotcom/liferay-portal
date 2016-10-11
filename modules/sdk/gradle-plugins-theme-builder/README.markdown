@@ -55,8 +55,15 @@ Name | Depends On
 [`buildCSS`](https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-css-builder#tasks) | `buildTheme`
 [`war`](https://docs.gradle.org/current/userguide/war_plugin.html#sec:war_default_settings) | `buildTheme`
 
-Moreover, the `war` task is configured to exclude the directory specified in the
-[`buildTheme.diffsDir`](#diffsdir) property from the WAR file.
+The `buildCSS` is configured to compile the Sass files contained in the
+directory specified by the [`buildTheme.outputDir`](#outputdir) property.
+Moreover, the `war` task is configured as follows:
+
+- exclude the directory specified in the [`buildTheme.diffsDir`](#diffsdir)
+property from the WAR file.
+- include the files contained in the [`buildTheme.outputDir`](#outputdir)
+directory into the WAR file.
+- include only the compiled CSS files, and not the SCSS ones, into the WAR file.
 
 The `buildTheme` task is automatically configured with sensible defaults:
 
@@ -64,11 +71,11 @@ Property Name | Default Value
 ------------- | -------------
 [`diffsDir`](#diffsdir) | `project.webAppDir`
 [`outputDir`](#outputdir) | `"${project.buildDir}/buildTheme"`
-[`parentDir`](#parentdir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/${buildTheme.parentName}` directory.
+[`parentFile`](#parentfile) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/${buildTheme.parentName}` directory.
 [`parentName`](#parentname) | `"_styled"`
 [`templateExtension`](#templateextension) | `"ftl"`
 [`themeName`](#themename) | `project.name`
-[`unstyledDir`](#unstyleddir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/_unstyled` directory.
+[`unstyledFile`](#unstyledfile) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/_unstyled` directory.
 
 ### BuildThemeTask
 
@@ -89,11 +96,13 @@ Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 <a name="diffsdir"></a>`diffsDir` | `File` | `null` | The directory that contains the files to copy over the parent theme. It sets the `--diffs-dir` argument.
 <a name="outputdir"></a>`outputDir` | `File` | `null` | The directory where to build the theme. It sets the `--output-dir` argument.
-<a name="parentdir"></a>`parentDir` | `File` | `null` | The directory or the JAR file of the parent theme. It sets the `--parent-path` argument.
+<a name="parentdir"></a>`parentDir` | `File` | `null` | The directory of the parent theme. It sets the `--parent-path` argument.
+<a name="parentfile"></a>`parentFile` | `File` | `null` | The JAR file of the parent theme. If `parentDir` is specified, this property has no effect. It sets the `--parent-path` argument.
 <a name="parentname"></a>`parentName` | `String` | `null` | The name of the parent theme. It sets the `--parent-name` argument.
 <a name="templateextenstion"></a>`templateExtension` | `String` | `null` | The extension of the template files, usually `"ftl"` or `"vm"`. It sets the `--template-extension` argument.
 <a name="themename"></a>`themeName` | `String` | `null` | The name of the new theme. It sets the `--name` argument.
-<a name="unstyleddir"></a>`unstyledDir` | `File` | `null` | The directory or the JAR file of [Liferay Frontend Theme Unstyled](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-theme/frontend-theme-unstyled). It sets the `--unstyled-dir` argument.
+<a name="unstyleddir"></a>`unstyledDir` | `File` | `null` | The directory of [Liferay Frontend Theme Unstyled](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-theme/frontend-theme-unstyled). It sets the `--unstyled-dir` argument.
+<a name="unstyledfile"></a>`unstyledFile` | `File` | `null` | The JAR file of [Liferay Frontend Theme Unstyled](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-theme/frontend-theme-unstyled). If `unstyledDir` is specified, this property has no effect. It sets the `--unstyled-dir` argument.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 Moreover, it is possible to use Closures and Callables as values for the

@@ -134,12 +134,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPEN_ID</td>
+	<td>OPENID</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'OpenID')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>OPEN_SSO</td>
+	<td>OPENSSO</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'OpenSSO')]</td>
 	<td></td>
 </tr>

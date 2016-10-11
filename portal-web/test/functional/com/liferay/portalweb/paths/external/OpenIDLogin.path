@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>OpenIDLogin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OpenIDLogin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>LOGIN_BUTTON</td>
+	<td>//button[.='Login']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_OPENID_FIELD</td>
+	<td>//input[@id='username']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PASSWORD_FIELD</td>
+	<td>//input[@id='password']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.configuration.module.configuration.internal;
 
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -143,6 +145,18 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 			   InvocationTargetException, InstantiationException {
 
 		Class<?> returnType = method.getReturnType();
+
+		Object value = null;
+
+		Meta.AD annotation = method.getAnnotation(Meta.AD.class);
+
+		if ((annotation != null) && !Meta.NULL.equals(annotation.id())) {
+			value = _getValueOrNull(returnType, annotation.id());
+		}
+
+		if (value != null) {
+			return value;
+		}
 
 		if (returnType.equals(boolean.class)) {
 			return _typedSettings.getBooleanValue(method.getName());

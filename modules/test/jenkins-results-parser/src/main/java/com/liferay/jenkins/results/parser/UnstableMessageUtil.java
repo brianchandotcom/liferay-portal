@@ -383,11 +383,11 @@ public class UnstableMessageUtil {
 
 			StringBuilder toSB = new StringBuilder();
 
-			toSB.append("peter.yoo@liferay.com,");
-			toSB.append("michael.hashimoto@liferay.com,");
-			toSB.append("leslie.wong@liferay.com,");
 			toSB.append("kevin.yen@liferay.com,");
-			toSB.append("kiyoshi.lee@liferay.com");
+			toSB.append("kiyoshi.lee@liferay.com,");
+			toSB.append("leslie.wong@liferay.com,");
+			toSB.append("michael.hashimoto@liferay.com,");
+			toSB.append("peter.yoo@liferay.com");
 
 			String message = hostName + " VNC Failure";
 

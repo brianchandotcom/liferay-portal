@@ -34,6 +34,15 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 		<aui:input name="mvcPath" type="hidden" value="/admin/import.jsp" />
 		<aui:input name="parentKBFolderId" type="hidden" value="<%= String.valueOf(parentKBFolderId) %>" />
 
+		<liferay-ui:error exception="<%= KBArticleImportException.MustHaveACategory.class %>">
+
+			<%
+				String cause = LanguageUtil.get(request, "missing-category");
+			%>
+
+			<%= LanguageUtil.format(request, "an-unexpected-error-occurred-while-importing-articles-x", cause) %>
+		</liferay-ui:error>
+
 		<liferay-ui:error exception="<%= KBArticleImportException.class %>">
 
 			<%

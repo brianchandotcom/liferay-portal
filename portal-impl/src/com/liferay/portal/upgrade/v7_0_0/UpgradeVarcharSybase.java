@@ -37,11 +37,11 @@ public class UpgradeVarcharSybase extends UpgradeProcess {
 
 			PreparedStatement ps = connection.prepareStatement(
 				"select o.name, c.name " +
-				"from sysobjects o, syscolumns c, systypes t" +
-				"where o.id = c.id " +
-				"and c.type = t.type " +
-				"and t.name = 'varchar' " +
-				"and c.length = 1000");
+					"from sysobjects o, syscolumns c, systypes t" +
+					"where o.id = c.id " +
+					"and c.type = t.type " +
+					"and t.name = 'varchar' " +
+					"and c.length = 1000");
 
 			ResultSet rs = ps.executeQuery()) {
 
@@ -52,8 +52,8 @@ public class UpgradeVarcharSybase extends UpgradeProcess {
 
 				try {
 					runSQL(
-						"alter table " + tableName + " modify " +
-						columnName + " varchar(4000)");
+						"alter table " + tableName + " modify " + columnName +
+							" varchar(4000)");
 				}
 				catch (SQLException sqle) {
 					if (sqle.getErrorCode() == 1441) {
@@ -64,8 +64,8 @@ public class UpgradeVarcharSybase extends UpgradeProcess {
 							sb.append(columnName);
 							sb.append(" for table ");
 							sb.append(tableName);
-							sb.append(" because it contains values that are ");
-							sb.append("larger than the new column length");
+							sb.append(" because it contains values larger ");
+							sb.append("than the new column length");
 
 							_log.warn(sb.toString());
 						}
@@ -86,7 +86,7 @@ public class UpgradeVarcharSybase extends UpgradeProcess {
 			return;
 		}
 
-		alterNVarcharColumns();
+		alterVarcharColumns();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

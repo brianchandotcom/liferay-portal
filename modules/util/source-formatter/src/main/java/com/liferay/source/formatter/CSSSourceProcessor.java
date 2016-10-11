@@ -46,6 +46,9 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = trimContent(content, false);
 
+		newContent = StringUtil.replace(
+			newContent, StringPool.DOUBLE_SPACE, StringPool.SPACE);
+
 		newContent = sortProperties(newContent);
 
 		newContent = fixComments(newContent);

@@ -1,7 +1,6 @@
-/* Javadoc style sheet */
-/*
-Overall document style
-*/
+/* ---------- Javadoc style sheet ---------- */
+
+/* ---------- Overall document style ---------- */
 
 body {
 	background-color: #FFF;
@@ -84,9 +83,7 @@ sup {
 	font-size: 0.6em;
 }
 
-/*
-Document title and Copyright styles
-*/
+/* ---------- Document title and copyright styles ---------- */
 
 .clear {
 	clear: both;
@@ -126,9 +123,7 @@ Document title and Copyright styles
 	width: 5em;
 }
 
-/*
-Navigation bar styles
-*/
+/* ---------- Navigation bar styles ---------- */
 
 .bar {
 	background-color: #1B75BB;
@@ -224,9 +219,7 @@ div.bottomNav .skipNav {
 	margin: auto 5px;
 }
 
-/*
-Page header and footer styles
-*/
+/* ---------- Page header and footer styles ---------- */
 
 .header, .footer {
 	clear: both;
@@ -266,9 +259,7 @@ Page header and footer styles
 	list-style: none;
 }
 
-/*
-Heading styles
-*/
+/* ---------- Heading styles ---------- */
 
 div.details ul.blockList ul.blockList ul.blockList li.blockList h4, div.details ul.blockList ul.blockList ul.blockListLast li.blockList h4 {
 	background-color: #DEE3E9;
@@ -295,9 +286,7 @@ ul.blockList li.blockList h2 {
 	padding: 0 0 20px 0;
 }
 
-/*
-Page layout container styles
-*/
+/* ---------- Page layout container styles ---------- */
 
 .contentContainer, .sourceContainer, .classUseContainer, .serializedFormContainer, .constantValuesContainer {
 	clear: both;
@@ -349,9 +338,7 @@ Page layout container styles
 	margin: 0 0 0 1px;
 }
 
-/*
-List styles
-*/
+/* ---------- List styles ---------- */
 
 ul.horizontal li {
 	display: inline;
@@ -416,9 +403,7 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
 	margin-top: 0;
 }
 
-/*
-Table styles
-*/
+/* ---------- Table styles ---------- */
 
 caption a:link, caption a:hover, caption a:active, caption a:visited {
 	color: #FFF;
@@ -610,9 +595,7 @@ table.packageSummary td.colFirst, table.overviewSummary th.colFirst {
 	width: 25%;
 }
 
-/*
-Content styles
-*/
+/* ---------- Content styles ---------- */
 
 .description pre {
 	margin-top: 0;
@@ -627,9 +610,7 @@ Content styles
 	padding: 0;
 }
 
-/*
-Formatting effect styles
-*/
+/* ---------- Formatting effect styles ---------- */
 
 .sourceLineNo {
 	color: green;

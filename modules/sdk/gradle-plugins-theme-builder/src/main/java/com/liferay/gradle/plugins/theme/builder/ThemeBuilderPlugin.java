@@ -251,6 +251,23 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		war.exclude("**/*.scss");
+
+		war.filesMatching(
+			"**/.sass-cache/",
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					String path = fileCopyDetails.getPath();
+
+					fileCopyDetails.setPath(path.replace(".sass-cache/", ""));
+				}
+
+			});
+
+		war.from(buildThemeTask.getOutputDir());
 	}
 
 	private File _getThemeFile(Iterable<File> files, String name)

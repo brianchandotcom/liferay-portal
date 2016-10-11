@@ -285,7 +285,8 @@ public class VerifyAuditedModel extends VerifyProcess {
 					AutoBatchPreparedStatementUtil.autoBatch(
 						_createPreparedStatement(
 							con, verifiableAuditedModel.getTableName(),
-							verifiableAuditedModel.getPrimaryKeyColumnName(),
+							verifiableAuditedModel.
+								getPrimaryKeyColumnName(),
 							verifiableAuditedModel.isUpdateDates()))) {
 
 				while (rs.next()) {

@@ -341,7 +341,8 @@ public class LDAPAuth implements Authenticator {
 						companyId);
 
 				for (String errorUserLockoutKeyword :
-						systemLDAPConfiguration.errorUserLockoutKeywords()) {
+						systemLDAPConfiguration.
+							errorUserLockoutKeywords()) {
 
 					if (errorMessage.contains(errorUserLockoutKeyword)) {
 						throw new UserLockoutException.LDAPLockout(

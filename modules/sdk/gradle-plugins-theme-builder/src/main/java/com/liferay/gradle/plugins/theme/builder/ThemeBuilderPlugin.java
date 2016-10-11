@@ -288,7 +288,15 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 		war.exclude("**/*.scss");
 
-		war.from(buildThemeTask.getOutputDir());
+		war.from(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildThemeTask.getOutputDir();
+				}
+
+			});
 	}
 
 	private File _getThemeFile(Iterable<File> files, String name)

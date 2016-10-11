@@ -18,10 +18,15 @@ import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.gradle.api.JavaVersion;
 import org.gradle.api.Project;
 import org.gradle.api.specs.AndSpec;
 import org.gradle.api.specs.Spec;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -49,6 +54,8 @@ public class AppJavadocBuilderExtension {
 			}
 
 		};
+
+		_subprojects.addAll(project.getSubprojects());
 	}
 
 	public Closure<String> getGroupNameClosure() {
@@ -57,6 +64,10 @@ public class AppJavadocBuilderExtension {
 
 	public Spec<Project> getOnlyIf() {
 		return _onlyIfSpec;
+	}
+
+	public Set<Project> getSubprojects() {
+		return _subprojects;
 	}
 
 	public boolean isCopyTags() {
@@ -109,10 +120,33 @@ public class AppJavadocBuilderExtension {
 		_onlyIfSpec = new AndSpec<>(onlyIfSpec);
 	}
 
+	public void setSubprojects(Iterable<Project> subprojects) {
+		_subprojects.clear();
+
+		subprojects(subprojects);
+	}
+
+	public void setSubprojects(Project... subprojects) {
+		setSubprojects(Arrays.asList(subprojects));
+	}
+
+	public AppJavadocBuilderExtension subprojects(
+		Iterable<Project> subprojects) {
+
+		GUtil.addToCollection(_subprojects, subprojects);
+
+		return this;
+	}
+
+	public AppJavadocBuilderExtension subprojects(Project... subprojects) {
+		return subprojects(Arrays.asList(subprojects));
+	}
+
 	private boolean _copyTags = true;
 	private boolean _doclintDisabled;
 	private Closure<String> _groupNameClosure;
 	private boolean _groupPackages = true;
 	private AndSpec<Project> _onlyIfSpec = new AndSpec<>();
+	private final Set<Project> _subprojects = new LinkedHashSet<>();
 
 }

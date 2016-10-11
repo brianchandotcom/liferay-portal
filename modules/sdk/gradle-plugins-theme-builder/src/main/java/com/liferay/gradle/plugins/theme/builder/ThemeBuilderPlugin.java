@@ -33,6 +33,7 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTreeElement;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.WarPlugin;
@@ -135,7 +136,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 	}
 
 	private BuildThemeTask _addTaskBuildTheme(
-		Project project, final Iterable<File> parentThemeFiles,
+		final Project project, final Iterable<File> parentThemeFiles,
 		final WarPluginConvention warPluginConvention) {
 
 		final BuildThemeTask buildThemeTask = GradleUtil.addTask(
@@ -148,8 +149,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return new File(
-						warPluginConvention.getWebAppDir(), "_diffs");
+					return warPluginConvention.getWebAppDir();
 				}
 
 			});
@@ -161,7 +161,8 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return warPluginConvention.getWebAppDir();
+					return new File(
+						project.getBuildDir(), BUILD_THEME_TASK_NAME);
 				}
 
 			});
@@ -200,10 +201,14 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskBuildCSS(BuildThemeTask buildThemeTask) {
+		Project project = buildThemeTask.getProject();
+
 		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
-			buildThemeTask.getProject(), CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		buildCSSTask.dependsOn(buildThemeTask);
+
+		buildCSSTask.setDocrootDir(project.getProjectDir());
 	}
 
 	private void _configureTasksBuildTheme(

@@ -62,8 +62,8 @@ The `buildTheme` task is automatically configured with sensible defaults:
 
 Property Name | Default Value
 ------------- | -------------
-[`diffsDir`](#diffsdir) | `"${project.webAppDir}/_diffs"`
-[`outputDir`](#outputdir) | `project.webAppDir`
+[`diffsDir`](#diffsdir) | `project.webAppDir`
+[`outputDir`](#outputdir) | `"${project.buildDir}/buildTheme"`
 [`parentDir`](#parentdir) | The first JAR file in the [`parentThemes`](#parent-theme-dependencies) configuration that contains a `META-INF/resources/${buildTheme.parentName}` directory.
 [`parentName`](#parentname) | `"_styled"`
 [`templateExtension`](#templateextension) | `"ftl"`

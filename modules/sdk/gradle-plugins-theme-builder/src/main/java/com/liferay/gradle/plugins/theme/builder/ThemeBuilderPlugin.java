@@ -136,7 +136,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 	}
 
 	private BuildThemeTask _addTaskBuildTheme(
-		final Project project, final Iterable<File> parentThemeFiles,
+		Project project, final Iterable<File> parentThemeFiles,
 		final WarPluginConvention warPluginConvention) {
 
 		final BuildThemeTask buildThemeTask = GradleUtil.addTask(
@@ -161,8 +161,10 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
+					Project project = buildThemeTask.getProject();
+
 					return new File(
-						project.getBuildDir(), BUILD_THEME_TASK_NAME);
+						project.getBuildDir(), buildThemeTask.getName());
 				}
 
 			});
@@ -207,7 +209,6 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
 		buildCSSTask.dependsOn(buildThemeTask);
-
 		buildCSSTask.setDocrootDir(project.getProjectDir());
 	}
 

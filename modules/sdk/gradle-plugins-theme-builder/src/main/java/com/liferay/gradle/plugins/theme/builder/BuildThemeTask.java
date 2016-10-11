@@ -24,6 +24,7 @@ import java.util.List;
 
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectory;
@@ -55,10 +56,16 @@ public class BuildThemeTask extends JavaExec {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
-	@Input
+	@InputDirectory
 	@Optional
 	public File getParentDir() {
 		return GradleUtil.toFile(getProject(), _parentDir);
+	}
+
+	@InputFile
+	@Optional
+	public File getParentFile() {
+		return GradleUtil.toFile(getProject(), _parentFile);
 	}
 
 	@Input
@@ -77,10 +84,16 @@ public class BuildThemeTask extends JavaExec {
 		return GradleUtil.toString(_themeName);
 	}
 
-	@Input
+	@InputDirectory
 	@Optional
 	public File getUnstyledDir() {
 		return GradleUtil.toFile(getProject(), _unstyledDir);
+	}
+
+	@InputFile
+	@Optional
+	public File getUnstyledFile() {
+		return GradleUtil.toFile(getProject(), _unstyledFile);
 	}
 
 	public void setDiffsDir(Object diffsDir) {
@@ -93,6 +106,10 @@ public class BuildThemeTask extends JavaExec {
 
 	public void setParentDir(Object parentDir) {
 		_parentDir = parentDir;
+	}
+
+	public void setParentFile(Object parentFile) {
+		_parentFile = parentFile;
 	}
 
 	public void setParentName(Object parentName) {
@@ -109,6 +126,10 @@ public class BuildThemeTask extends JavaExec {
 
 	public void setUnstyledDir(Object unstyledDir) {
 		_unstyledDir = unstyledDir;
+	}
+
+	public void setUnstyledFile(Object unstyledFile) {
+		_unstyledFile = unstyledFile;
 	}
 
 	private static void _addArg(List<String> args, String name, File file) {
@@ -131,19 +152,41 @@ public class BuildThemeTask extends JavaExec {
 		_addArg(args, "--name", getThemeName());
 		_addArg(args, "--output-dir", getOutputDir());
 		_addArg(args, "--parent-name", getParentName());
-		_addArg(args, "--parent-path", getParentDir());
+		_addArg(args, "--parent-path", _getParentPath());
 		_addArg(args, "--template-extension", getTemplateExtension());
-		_addArg(args, "--unstyled-path", getUnstyledDir());
+		_addArg(args, "--unstyled-path", _getUnstyledPath());
 
 		return args;
+	}
+
+	private File _getParentPath() {
+		File parentPath = getParentDir();
+
+		if (parentPath == null) {
+			parentPath = getParentFile();
+		}
+
+		return parentPath;
+	}
+
+	private File _getUnstyledPath() {
+		File unstyledPath = getUnstyledDir();
+
+		if (unstyledPath == null) {
+			unstyledPath = getUnstyledFile();
+		}
+
+		return unstyledPath;
 	}
 
 	private Object _diffsDir;
 	private Object _outputDir;
 	private Object _parentDir;
+	private Object _parentFile;
 	private Object _parentName;
 	private Object _templateExtension;
 	private Object _themeName;
 	private Object _unstyledDir;
+	private Object _unstyledFile;
 
 }

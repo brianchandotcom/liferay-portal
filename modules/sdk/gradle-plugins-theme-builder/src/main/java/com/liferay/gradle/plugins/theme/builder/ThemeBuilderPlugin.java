@@ -172,7 +172,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 
 			});
 
-		buildThemeTask.setParentDir(
+		buildThemeTask.setParentFile(
 			new Callable<File>() {
 
 				@Override
@@ -192,7 +192,7 @@ public class ThemeBuilderPlugin implements Plugin<Project> {
 		buildThemeTask.setTemplateExtension("ftl");
 		buildThemeTask.setThemeName(project.getName());
 
-		buildThemeTask.setUnstyledDir(
+		buildThemeTask.setUnstyledFile(
 			new Callable<File>() {
 
 				@Override

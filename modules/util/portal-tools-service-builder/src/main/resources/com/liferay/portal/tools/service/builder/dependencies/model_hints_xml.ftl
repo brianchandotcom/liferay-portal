@@ -77,7 +77,7 @@
 							<sanitize content-type="${contentType}" modes="${modes}" />
 						</#if>
 
-					    <#if modelHintsUtil.getValidators(modelName, column.name)??>
+						<#if modelHintsUtil.getValidators(modelName, column.name)??>
 							<#assign validators = modelHintsUtil.getValidators(modelName, column.name) />
 
 							<#list validators as validator>

@@ -1483,7 +1483,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 	<#if entity.badNamedColumnsList?size != 0>
 		@Override
-	    public Set<String> getBadColumnNames() {
+		public Set<String> getBadColumnNames() {
 			return _badColumnNames;
 		}
 	</#if>

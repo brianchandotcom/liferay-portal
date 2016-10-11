@@ -2891,31 +2891,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		line = StringUtil.trimTrailing(line);
 
-		if (allowLeadingSpaces || !line.startsWith(StringPool.SPACE) ||
-			line.startsWith(" *")) {
-
+		if (allowLeadingSpaces || line.startsWith(" *")) {
 			return line;
 		}
 
-		if (!line.startsWith(StringPool.FOUR_SPACES)) {
-			while (line.startsWith(StringPool.SPACE)) {
-				line = StringUtil.replaceFirst(
-					line, StringPool.SPACE, StringPool.BLANK);
-			}
+		while (line.matches("^\t*    .*")) {
+			line = StringUtil.replaceFirst(
+				line, StringPool.FOUR_SPACES, StringPool.TAB);
 		}
-		else {
-			int pos = 0;
 
-			String temp = line;
-
-			while (temp.startsWith(StringPool.FOUR_SPACES)) {
-				line = StringUtil.replaceFirst(
-					line, StringPool.FOUR_SPACES, StringPool.TAB);
-
-				pos++;
-
-				temp = line.substring(pos);
-			}
+		while (line.startsWith(StringPool.SPACE)) {
+			line = StringUtil.replaceFirst(
+				line, StringPool.SPACE, StringPool.BLANK);
 		}
 
 		return line;

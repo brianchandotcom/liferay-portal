@@ -2377,9 +2377,25 @@ public class ServiceBuilder {
 	}
 
 	private void _createHbmXml() throws Exception {
+		File xmlFile = new File(_hbmFileName);
+
+		List<Entity> entities = new ArrayList<>();
+
+		for (Entity entity : _ejbList) {
+			if (entity.hasColumns()) {
+				entities.add(entity);
+			}
+		}
+
+		if (entities.isEmpty()) {
+			xmlFile.delete();
+
+			return;
+		}
+
 		Map<String, Object> context = _getContext();
 
-		context.put("entities", _ejbList);
+		context.put("entities", entities);
 
 		// Content
 
@@ -2392,8 +2408,6 @@ public class ServiceBuilder {
 		String imports = content.substring(0, lastImportEnd);
 
 		content = content.substring(lastImportEnd + 1);
-
-		File xmlFile = new File(_hbmFileName);
 
 		if (!xmlFile.exists()) {
 			StringBundler sb = new StringBundler(5);

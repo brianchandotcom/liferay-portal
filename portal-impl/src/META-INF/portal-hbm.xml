@@ -15,8 +15,6 @@
 	<import class="com.liferay.blogs.kernel.model.BlogsEntry" />
 	<import class="com.liferay.blogs.kernel.model.BlogsStatsUser" />
 	<import class="com.liferay.counter.kernel.model.Counter" />
-	<import class="com.liferay.document.library.kernel.model.DLApp" />
-	<import class="com.liferay.document.library.kernel.model.DLAppHelper" />
 	<import class="com.liferay.document.library.kernel.model.DLContent" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntry" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntryMetadata" />
@@ -26,14 +24,11 @@
 	<import class="com.liferay.document.library.kernel.model.DLFileVersion" />
 	<import class="com.liferay.document.library.kernel.model.DLFolder" />
 	<import class="com.liferay.document.library.kernel.model.DLSyncEvent" />
-	<import class="com.liferay.document.library.kernel.model.DLTrash" />
 	<import class="com.liferay.expando.kernel.model.ExpandoColumn" />
 	<import class="com.liferay.expando.kernel.model.ExpandoRow" />
 	<import class="com.liferay.expando.kernel.model.ExpandoTable" />
 	<import class="com.liferay.expando.kernel.model.ExpandoValue" />
-	<import class="com.liferay.exportimport.kernel.model.ExportImport" />
 	<import class="com.liferay.exportimport.kernel.model.ExportImportConfiguration" />
-	<import class="com.liferay.exportimport.kernel.model.Staging" />
 	<import class="com.liferay.message.boards.kernel.model.MBBan" />
 	<import class="com.liferay.message.boards.kernel.model.MBCategory" />
 	<import class="com.liferay.message.boards.kernel.model.MBDiscussion" />
@@ -61,7 +56,6 @@
 	<import class="com.liferay.portal.kernel.model.LayoutSet" />
 	<import class="com.liferay.portal.kernel.model.LayoutSetBranch" />
 	<import class="com.liferay.portal.kernel.model.LayoutSetPrototype" />
-	<import class="com.liferay.portal.kernel.model.LayoutTemplate" />
 	<import class="com.liferay.portal.kernel.model.ListType" />
 	<import class="com.liferay.portal.kernel.model.MembershipRequest" />
 	<import class="com.liferay.portal.kernel.model.Organization" />
@@ -70,10 +64,8 @@
 	<import class="com.liferay.portal.kernel.model.PasswordPolicy" />
 	<import class="com.liferay.portal.kernel.model.PasswordPolicyRel" />
 	<import class="com.liferay.portal.kernel.model.PasswordTracker" />
-	<import class="com.liferay.portal.kernel.model.Permission" />
 	<import class="com.liferay.portal.kernel.model.Phone" />
 	<import class="com.liferay.portal.kernel.model.PluginSetting" />
-	<import class="com.liferay.portal.kernel.model.Portal" />
 	<import class="com.liferay.portal.kernel.model.PortalPreferences" />
 	<import class="com.liferay.portal.kernel.model.Portlet" />
 	<import class="com.liferay.portal.kernel.model.PortletItem" />
@@ -85,7 +77,6 @@
 	<import class="com.liferay.portal.kernel.model.Release" />
 	<import class="com.liferay.portal.kernel.model.Repository" />
 	<import class="com.liferay.portal.kernel.model.RepositoryEntry" />
-	<import class="com.liferay.portal.kernel.model.Resource" />
 	<import class="com.liferay.portal.kernel.model.ResourceAction" />
 	<import class="com.liferay.portal.kernel.model.ResourceBlock" />
 	<import class="com.liferay.portal.kernel.model.ResourceBlockPermission" />
@@ -96,7 +87,6 @@
 	<import class="com.liferay.portal.kernel.model.Subscription" />
 	<import class="com.liferay.portal.kernel.model.SystemEvent" />
 	<import class="com.liferay.portal.kernel.model.Team" />
-	<import class="com.liferay.portal.kernel.model.Theme" />
 	<import class="com.liferay.portal.kernel.model.Ticket" />
 	<import class="com.liferay.portal.kernel.model.User" />
 	<import class="com.liferay.portal.kernel.model.UserGroup" />
@@ -118,13 +108,11 @@
 	<import class="com.liferay.social.kernel.model.SocialActivity" />
 	<import class="com.liferay.social.kernel.model.SocialActivityAchievement" />
 	<import class="com.liferay.social.kernel.model.SocialActivityCounter" />
-	<import class="com.liferay.social.kernel.model.SocialActivityInterpreter" />
 	<import class="com.liferay.social.kernel.model.SocialActivityLimit" />
 	<import class="com.liferay.social.kernel.model.SocialActivitySet" />
 	<import class="com.liferay.social.kernel.model.SocialActivitySetting" />
 	<import class="com.liferay.social.kernel.model.SocialRelation" />
 	<import class="com.liferay.social.kernel.model.SocialRequest" />
-	<import class="com.liferay.social.kernel.model.SocialRequestInterpreter" />
 	<import class="com.liferay.trash.kernel.model.TrashEntry" />
 	<import class="com.liferay.trash.kernel.model.TrashVersion" />
 	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">

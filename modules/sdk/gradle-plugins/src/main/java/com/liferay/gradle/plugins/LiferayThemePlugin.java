@@ -19,7 +19,6 @@ import com.liferay.gradle.plugins.gulp.ExecuteGulpTask;
 import com.liferay.gradle.plugins.gulp.GulpPlugin;
 import com.liferay.gradle.plugins.internal.util.FileUtil;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.util.Validator;
 
@@ -202,8 +201,7 @@ public class LiferayThemePlugin implements Plugin<Project> {
 	private void _configureTaskExecuteGulp(
 		ExecuteGulpTask executeGulpTask, Task createLiferayThemeJsonTask) {
 
-		executeGulpTask.dependsOn(
-			createLiferayThemeJsonTask, NodePlugin.NPM_INSTALL_TASK_NAME);
+		executeGulpTask.dependsOn(createLiferayThemeJsonTask);
 	}
 
 	private void _configureTasksExecuteGulp(

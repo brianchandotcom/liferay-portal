@@ -51,6 +51,9 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
+		final Task npmInstallTask = GradleUtil.getTask(
+			project, NodePlugin.NPM_INSTALL_TASK_NAME);
+
 		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
 			GradleUtil.addExtension(
 				project, EXTENSION_NAME,
@@ -68,7 +71,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					_configureTasksConfigJSModules(
-						project, downloadLiferayModuleConfigGeneratorTask);
+						project, downloadLiferayModuleConfigGeneratorTask,
+						npmInstallTask);
 				}
 
 			});
@@ -142,7 +146,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 	private void _configureTaskConfigJSModules(
 		ConfigJSModulesTask configJSModulesTask,
-		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask) {
+		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask,
+		Task npmInstallTask) {
 
 		File file = configJSModulesTask.getModuleConfigFile();
 
@@ -155,7 +160,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 			return;
 		}
 
-		configJSModulesTask.dependsOn(downloadLiferayModuleConfigGeneratorTask);
+		configJSModulesTask.dependsOn(
+			downloadLiferayModuleConfigGeneratorTask, npmInstallTask);
 
 		configJSModulesTask.setScriptFile(
 			new Callable<File>() {
@@ -215,7 +221,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 
 	private void _configureTasksConfigJSModules(
 		Project project,
-		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask) {
+		final DownloadNodeModuleTask downloadLiferayModuleConfigGeneratorTask,
+		final Task npmInstallTask) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -227,7 +234,8 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 				public void execute(ConfigJSModulesTask configJSModulesTask) {
 					_configureTaskConfigJSModules(
 						configJSModulesTask,
-						downloadLiferayModuleConfigGeneratorTask);
+						downloadLiferayModuleConfigGeneratorTask,
+						npmInstallTask);
 				}
 
 			});

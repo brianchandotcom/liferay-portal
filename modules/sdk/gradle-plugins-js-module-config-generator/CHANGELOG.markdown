@@ -25,9 +25,15 @@
 - [LPS-68564]: Update the [Liferay Gradle Plugins Node] dependency to version
 1.2.0.
 
+## 2.0.3 - 2016-10-10
+
+### Added
+- [LPS-68618]: All `ConfigJSModulesTask` instances now depend on `npmInstall`.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
+[LPS-68618]: https://issues.liferay.com/browse/LPS-68618

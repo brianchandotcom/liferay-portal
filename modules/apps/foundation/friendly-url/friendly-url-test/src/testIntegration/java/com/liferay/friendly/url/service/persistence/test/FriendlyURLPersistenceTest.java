@@ -148,8 +148,8 @@ public class FriendlyURLPersistenceTest {
 
 		Assert.assertEquals(existingFriendlyURL.getUuid(),
 			newFriendlyURL.getUuid());
-		Assert.assertEquals(existingFriendlyURL.getFriendlyUrlId(),
-			newFriendlyURL.getFriendlyUrlId());
+		Assert.assertEquals(existingFriendlyURL.getFriendlyURLId(),
+			newFriendlyURL.getFriendlyURLId());
 		Assert.assertEquals(existingFriendlyURL.getGroupId(),
 			newFriendlyURL.getGroupId());
 		Assert.assertEquals(existingFriendlyURL.getCompanyId(),
@@ -270,7 +270,7 @@ public class FriendlyURLPersistenceTest {
 
 	protected OrderByComparator<FriendlyURL> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("FriendlyURL", "uuid", true,
-			"friendlyUrlId", true, "groupId", true, "companyId", true,
+			"friendlyURLId", true, "groupId", true, "companyId", true,
 			"createDate", true, "modifiedDate", true, "classNameId", true,
 			"classPK", true, "urlTitle", true, "main", true);
 	}
@@ -403,8 +403,8 @@ public class FriendlyURLPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURL.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("friendlyUrlId",
-				newFriendlyURL.getFriendlyUrlId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("friendlyURLId",
+				newFriendlyURL.getFriendlyURLId()));
 
 		List<FriendlyURL> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -420,7 +420,7 @@ public class FriendlyURLPersistenceTest {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(FriendlyURL.class,
 				_dynamicQueryClassLoader);
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("friendlyUrlId",
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("friendlyURLId",
 				RandomTestUtil.nextLong()));
 
 		List<FriendlyURL> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -437,20 +437,20 @@ public class FriendlyURLPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"friendlyUrlId"));
+				"friendlyURLId"));
 
-		Object newFriendlyUrlId = newFriendlyURL.getFriendlyUrlId();
+		Object newFriendlyURLId = newFriendlyURL.getFriendlyURLId();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("friendlyUrlId",
-				new Object[] { newFriendlyUrlId }));
+		dynamicQuery.add(RestrictionsFactoryUtil.in("friendlyURLId",
+				new Object[] { newFriendlyURLId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(1, result.size());
 
-		Object existingFriendlyUrlId = result.get(0);
+		Object existingFriendlyURLId = result.get(0);
 
-		Assert.assertEquals(existingFriendlyUrlId, newFriendlyUrlId);
+		Assert.assertEquals(existingFriendlyURLId, newFriendlyURLId);
 	}
 
 	@Test
@@ -459,9 +459,9 @@ public class FriendlyURLPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"friendlyUrlId"));
+				"friendlyURLId"));
 
-		dynamicQuery.add(RestrictionsFactoryUtil.in("friendlyUrlId",
+		dynamicQuery.add(RestrictionsFactoryUtil.in("friendlyURLId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

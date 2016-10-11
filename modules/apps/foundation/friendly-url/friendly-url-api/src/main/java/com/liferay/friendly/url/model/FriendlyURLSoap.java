@@ -34,7 +34,7 @@ public class FriendlyURLSoap implements Serializable {
 		FriendlyURLSoap soapModel = new FriendlyURLSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setFriendlyUrlId(model.getFriendlyUrlId());
+		soapModel.setFriendlyURLId(model.getFriendlyURLId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -88,11 +88,11 @@ public class FriendlyURLSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _friendlyUrlId;
+		return _friendlyURLId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setFriendlyUrlId(pk);
+		setFriendlyURLId(pk);
 	}
 
 	public String getUuid() {
@@ -103,12 +103,12 @@ public class FriendlyURLSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getFriendlyUrlId() {
-		return _friendlyUrlId;
+	public long getFriendlyURLId() {
+		return _friendlyURLId;
 	}
 
-	public void setFriendlyUrlId(long friendlyUrlId) {
-		_friendlyUrlId = friendlyUrlId;
+	public void setFriendlyURLId(long friendlyURLId) {
+		_friendlyURLId = friendlyURLId;
 	}
 
 	public long getGroupId() {
@@ -180,7 +180,7 @@ public class FriendlyURLSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _friendlyUrlId;
+	private long _friendlyURLId;
 	private long _groupId;
 	private long _companyId;
 	private Date _createDate;

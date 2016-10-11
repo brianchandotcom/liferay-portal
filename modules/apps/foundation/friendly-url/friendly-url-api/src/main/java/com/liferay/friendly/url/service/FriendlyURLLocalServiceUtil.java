@@ -73,12 +73,12 @@ public class FriendlyURLLocalServiceUtil {
 	/**
 	* Creates a new friendly u r l with the primary key. Does not add the friendly u r l to the database.
 	*
-	* @param friendlyUrlId the primary key for the new friendly u r l
+	* @param friendlyURLId the primary key for the new friendly u r l
 	* @return the new friendly u r l
 	*/
 	public static com.liferay.friendly.url.model.FriendlyURL createFriendlyURL(
-		long friendlyUrlId) {
-		return getService().createFriendlyURL(friendlyUrlId);
+		long friendlyURLId) {
+		return getService().createFriendlyURL(friendlyURLId);
 	}
 
 	/**
@@ -95,14 +95,14 @@ public class FriendlyURLLocalServiceUtil {
 	/**
 	* Deletes the friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyUrlId the primary key of the friendly u r l
+	* @param friendlyURLId the primary key of the friendly u r l
 	* @return the friendly u r l that was removed
 	* @throws PortalException if a friendly u r l with the primary key could not be found
 	*/
 	public static com.liferay.friendly.url.model.FriendlyURL deleteFriendlyURL(
-		long friendlyUrlId)
+		long friendlyURLId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteFriendlyURL(friendlyUrlId);
+		return getService().deleteFriendlyURL(friendlyURLId);
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
@@ -119,8 +119,8 @@ public class FriendlyURLLocalServiceUtil {
 	}
 
 	public static com.liferay.friendly.url.model.FriendlyURL fetchFriendlyURL(
-		long friendlyUrlId) {
-		return getService().fetchFriendlyURL(friendlyUrlId);
+		long friendlyURLId) {
+		return getService().fetchFriendlyURL(friendlyURLId);
 	}
 
 	/**
@@ -138,14 +138,14 @@ public class FriendlyURLLocalServiceUtil {
 	/**
 	* Returns the friendly u r l with the primary key.
 	*
-	* @param friendlyUrlId the primary key of the friendly u r l
+	* @param friendlyURLId the primary key of the friendly u r l
 	* @return the friendly u r l
 	* @throws PortalException if a friendly u r l with the primary key could not be found
 	*/
 	public static com.liferay.friendly.url.model.FriendlyURL getFriendlyURL(
-		long friendlyUrlId)
+		long friendlyURLId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getFriendlyURL(friendlyUrlId);
+		return getService().getFriendlyURL(friendlyURLId);
 	}
 
 	/**

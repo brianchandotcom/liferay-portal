@@ -61,7 +61,7 @@ public class FriendlyURLWrapper implements FriendlyURL,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("friendlyUrlId", getFriendlyUrlId());
+		attributes.put("friendlyURLId", getFriendlyURLId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
@@ -82,10 +82,10 @@ public class FriendlyURLWrapper implements FriendlyURL,
 			setUuid(uuid);
 		}
 
-		Long friendlyUrlId = (Long)attributes.get("friendlyUrlId");
+		Long friendlyURLId = (Long)attributes.get("friendlyURLId");
 
-		if (friendlyUrlId != null) {
-			setFriendlyUrlId(friendlyUrlId);
+		if (friendlyURLId != null) {
+			setFriendlyURLId(friendlyURLId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -303,13 +303,13 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the friendly url ID of this friendly u r l.
+	* Returns the friendly u r l ID of this friendly u r l.
 	*
-	* @return the friendly url ID of this friendly u r l
+	* @return the friendly u r l ID of this friendly u r l
 	*/
 	@Override
-	public long getFriendlyUrlId() {
-		return _friendlyURL.getFriendlyUrlId();
+	public long getFriendlyURLId() {
+		return _friendlyURL.getFriendlyURLId();
 	}
 
 	/**
@@ -404,13 +404,13 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the friendly url ID of this friendly u r l.
+	* Sets the friendly u r l ID of this friendly u r l.
 	*
-	* @param friendlyUrlId the friendly url ID of this friendly u r l
+	* @param friendlyURLId the friendly u r l ID of this friendly u r l
 	*/
 	@Override
-	public void setFriendlyUrlId(long friendlyUrlId) {
-		_friendlyURL.setFriendlyUrlId(friendlyUrlId);
+	public void setFriendlyURLId(long friendlyURLId) {
+		_friendlyURL.setFriendlyURLId(friendlyURLId);
 	}
 
 	/**

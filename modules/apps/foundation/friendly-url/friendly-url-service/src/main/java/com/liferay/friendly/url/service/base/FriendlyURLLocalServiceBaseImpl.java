@@ -99,26 +99,26 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 	/**
 	 * Creates a new friendly u r l with the primary key. Does not add the friendly u r l to the database.
 	 *
-	 * @param friendlyUrlId the primary key for the new friendly u r l
+	 * @param friendlyURLId the primary key for the new friendly u r l
 	 * @return the new friendly u r l
 	 */
 	@Override
-	public FriendlyURL createFriendlyURL(long friendlyUrlId) {
-		return friendlyURLPersistence.create(friendlyUrlId);
+	public FriendlyURL createFriendlyURL(long friendlyURLId) {
+		return friendlyURLPersistence.create(friendlyURLId);
 	}
 
 	/**
 	 * Deletes the friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param friendlyUrlId the primary key of the friendly u r l
+	 * @param friendlyURLId the primary key of the friendly u r l
 	 * @return the friendly u r l that was removed
 	 * @throws PortalException if a friendly u r l with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public FriendlyURL deleteFriendlyURL(long friendlyUrlId)
+	public FriendlyURL deleteFriendlyURL(long friendlyURLId)
 		throws PortalException {
-		return friendlyURLPersistence.remove(friendlyUrlId);
+		return friendlyURLPersistence.remove(friendlyURLId);
 	}
 
 	/**
@@ -217,8 +217,8 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 	}
 
 	@Override
-	public FriendlyURL fetchFriendlyURL(long friendlyUrlId) {
-		return friendlyURLPersistence.fetchByPrimaryKey(friendlyUrlId);
+	public FriendlyURL fetchFriendlyURL(long friendlyURLId) {
+		return friendlyURLPersistence.fetchByPrimaryKey(friendlyURLId);
 	}
 
 	/**
@@ -237,14 +237,14 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 	/**
 	 * Returns the friendly u r l with the primary key.
 	 *
-	 * @param friendlyUrlId the primary key of the friendly u r l
+	 * @param friendlyURLId the primary key of the friendly u r l
 	 * @return the friendly u r l
 	 * @throws PortalException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL getFriendlyURL(long friendlyUrlId)
+	public FriendlyURL getFriendlyURL(long friendlyURLId)
 		throws PortalException {
-		return friendlyURLPersistence.findByPrimaryKey(friendlyUrlId);
+		return friendlyURLPersistence.findByPrimaryKey(friendlyURLId);
 	}
 
 	@Override
@@ -255,7 +255,7 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(FriendlyURL.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("friendlyUrlId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("friendlyURLId");
 
 		return actionableDynamicQuery;
 	}
@@ -269,7 +269,7 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(FriendlyURL.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"friendlyUrlId");
+			"friendlyURLId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -280,7 +280,7 @@ public abstract class FriendlyURLLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(FriendlyURL.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("friendlyUrlId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("friendlyURLId");
 	}
 
 	@Override

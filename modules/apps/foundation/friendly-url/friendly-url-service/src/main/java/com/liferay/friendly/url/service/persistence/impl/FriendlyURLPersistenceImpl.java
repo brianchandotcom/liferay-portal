@@ -396,17 +396,17 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Returns the friendly u r ls before and after the current friendly u r l in the ordered set where uuid = &#63;.
 	 *
-	 * @param friendlyUrlId the primary key of the current friendly u r l
+	 * @param friendlyURLId the primary key of the current friendly u r l
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next friendly u r l
 	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL[] findByUuid_PrevAndNext(long friendlyUrlId,
+	public FriendlyURL[] findByUuid_PrevAndNext(long friendlyURLId,
 		String uuid, OrderByComparator<FriendlyURL> orderByComparator)
 		throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = findByPrimaryKey(friendlyUrlId);
+		FriendlyURL friendlyURL = findByPrimaryKey(friendlyURLId);
 
 		Session session = null;
 
@@ -1223,7 +1223,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Returns the friendly u r ls before and after the current friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param friendlyUrlId the primary key of the current friendly u r l
+	 * @param friendlyURLId the primary key of the current friendly u r l
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1231,11 +1231,11 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL[] findByUuid_C_PrevAndNext(long friendlyUrlId,
+	public FriendlyURL[] findByUuid_C_PrevAndNext(long friendlyURLId,
 		String uuid, long companyId,
 		OrderByComparator<FriendlyURL> orderByComparator)
 		throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = findByPrimaryKey(friendlyUrlId);
+		FriendlyURL friendlyURL = findByPrimaryKey(friendlyURLId);
 
 		Session session = null;
 
@@ -1795,7 +1795,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Returns the friendly u r ls before and after the current friendly u r l in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
-	 * @param friendlyUrlId the primary key of the current friendly u r l
+	 * @param friendlyURLId the primary key of the current friendly u r l
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1803,11 +1803,11 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL[] findByG_C_PrevAndNext(long friendlyUrlId,
+	public FriendlyURL[] findByG_C_PrevAndNext(long friendlyURLId,
 		long groupId, long classNameId,
 		OrderByComparator<FriendlyURL> orderByComparator)
 		throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = findByPrimaryKey(friendlyUrlId);
+		FriendlyURL friendlyURL = findByPrimaryKey(friendlyURLId);
 
 		Session session = null;
 
@@ -2393,7 +2393,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Returns the friendly u r ls before and after the current friendly u r l in the ordered set where companyId = &#63; and groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
-	 * @param friendlyUrlId the primary key of the current friendly u r l
+	 * @param friendlyURLId the primary key of the current friendly u r l
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
@@ -2403,11 +2403,11 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL[] findByC_G_C_C_PrevAndNext(long friendlyUrlId,
+	public FriendlyURL[] findByC_G_C_C_PrevAndNext(long friendlyURLId,
 		long companyId, long groupId, long classNameId, long classPK,
 		OrderByComparator<FriendlyURL> orderByComparator)
 		throws NoSuchFriendlyURLException {
-		FriendlyURL friendlyURL = findByPrimaryKey(friendlyUrlId);
+		FriendlyURL friendlyURL = findByPrimaryKey(friendlyURLId);
 
 		Session session = null;
 
@@ -3941,15 +3941,15 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Creates a new friendly u r l with the primary key. Does not add the friendly u r l to the database.
 	 *
-	 * @param friendlyUrlId the primary key for the new friendly u r l
+	 * @param friendlyURLId the primary key for the new friendly u r l
 	 * @return the new friendly u r l
 	 */
 	@Override
-	public FriendlyURL create(long friendlyUrlId) {
+	public FriendlyURL create(long friendlyURLId) {
 		FriendlyURL friendlyURL = new FriendlyURLImpl();
 
 		friendlyURL.setNew(true);
-		friendlyURL.setPrimaryKey(friendlyUrlId);
+		friendlyURL.setPrimaryKey(friendlyURLId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -3963,14 +3963,14 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Removes the friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param friendlyUrlId the primary key of the friendly u r l
+	 * @param friendlyURLId the primary key of the friendly u r l
 	 * @return the friendly u r l that was removed
 	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL remove(long friendlyUrlId)
+	public FriendlyURL remove(long friendlyURLId)
 		throws NoSuchFriendlyURLException {
-		return remove((Serializable)friendlyUrlId);
+		return remove((Serializable)friendlyURLId);
 	}
 
 	/**
@@ -4217,7 +4217,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 		friendlyURLImpl.setPrimaryKey(friendlyURL.getPrimaryKey());
 
 		friendlyURLImpl.setUuid(friendlyURL.getUuid());
-		friendlyURLImpl.setFriendlyUrlId(friendlyURL.getFriendlyUrlId());
+		friendlyURLImpl.setFriendlyURLId(friendlyURL.getFriendlyURLId());
 		friendlyURLImpl.setGroupId(friendlyURL.getGroupId());
 		friendlyURLImpl.setCompanyId(friendlyURL.getCompanyId());
 		friendlyURLImpl.setCreateDate(friendlyURL.getCreateDate());
@@ -4257,14 +4257,14 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Returns the friendly u r l with the primary key or throws a {@link NoSuchFriendlyURLException} if it could not be found.
 	 *
-	 * @param friendlyUrlId the primary key of the friendly u r l
+	 * @param friendlyURLId the primary key of the friendly u r l
 	 * @return the friendly u r l
 	 * @throws NoSuchFriendlyURLException if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL findByPrimaryKey(long friendlyUrlId)
+	public FriendlyURL findByPrimaryKey(long friendlyURLId)
 		throws NoSuchFriendlyURLException {
-		return findByPrimaryKey((Serializable)friendlyUrlId);
+		return findByPrimaryKey((Serializable)friendlyURLId);
 	}
 
 	/**
@@ -4318,12 +4318,12 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	/**
 	 * Returns the friendly u r l with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param friendlyUrlId the primary key of the friendly u r l
+	 * @param friendlyURLId the primary key of the friendly u r l
 	 * @return the friendly u r l, or <code>null</code> if a friendly u r l with the primary key could not be found
 	 */
 	@Override
-	public FriendlyURL fetchByPrimaryKey(long friendlyUrlId) {
-		return fetchByPrimaryKey((Serializable)friendlyUrlId);
+	public FriendlyURL fetchByPrimaryKey(long friendlyURLId) {
+		return fetchByPrimaryKey((Serializable)friendlyURLId);
 	}
 
 	@Override
@@ -4641,7 +4641,7 @@ public class FriendlyURLPersistenceImpl extends BasePersistenceImpl<FriendlyURL>
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_FRIENDLYURL = "SELECT friendlyURL FROM FriendlyURL friendlyURL";
-	private static final String _SQL_SELECT_FRIENDLYURL_WHERE_PKS_IN = "SELECT friendlyURL FROM FriendlyURL friendlyURL WHERE friendlyUrlId IN (";
+	private static final String _SQL_SELECT_FRIENDLYURL_WHERE_PKS_IN = "SELECT friendlyURL FROM FriendlyURL friendlyURL WHERE friendlyURLId IN (";
 	private static final String _SQL_SELECT_FRIENDLYURL_WHERE = "SELECT friendlyURL FROM FriendlyURL friendlyURL WHERE ";
 	private static final String _SQL_COUNT_FRIENDLYURL = "SELECT COUNT(friendlyURL) FROM FriendlyURL friendlyURL";
 	private static final String _SQL_COUNT_FRIENDLYURL_WHERE = "SELECT COUNT(friendlyURL) FROM FriendlyURL friendlyURL WHERE ";

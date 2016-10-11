@@ -52,7 +52,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		FriendlyURLCacheModel friendlyURLCacheModel = (FriendlyURLCacheModel)obj;
 
-		if (friendlyUrlId == friendlyURLCacheModel.friendlyUrlId) {
+		if (friendlyURLId == friendlyURLCacheModel.friendlyURLId) {
 			return true;
 		}
 
@@ -61,7 +61,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, friendlyUrlId);
+		return HashUtil.hash(0, friendlyURLId);
 	}
 
 	@Override
@@ -70,8 +70,8 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", friendlyUrlId=");
-		sb.append(friendlyUrlId);
+		sb.append(", friendlyURLId=");
+		sb.append(friendlyURLId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -104,7 +104,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 			friendlyURLImpl.setUuid(uuid);
 		}
 
-		friendlyURLImpl.setFriendlyUrlId(friendlyUrlId);
+		friendlyURLImpl.setFriendlyURLId(friendlyURLId);
 		friendlyURLImpl.setGroupId(groupId);
 		friendlyURLImpl.setCompanyId(companyId);
 
@@ -143,7 +143,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		friendlyUrlId = objectInput.readLong();
+		friendlyURLId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -169,7 +169,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(friendlyUrlId);
+		objectOutput.writeLong(friendlyURLId);
 
 		objectOutput.writeLong(groupId);
 
@@ -192,7 +192,7 @@ public class FriendlyURLCacheModel implements CacheModel<FriendlyURL>,
 	}
 
 	public String uuid;
-	public long friendlyUrlId;
+	public long friendlyURLId;
 	public long groupId;
 	public long companyId;
 	public long createDate;

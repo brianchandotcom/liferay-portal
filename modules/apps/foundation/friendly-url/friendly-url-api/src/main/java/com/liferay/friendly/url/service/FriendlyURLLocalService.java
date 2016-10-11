@@ -85,10 +85,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	/**
 	* Creates a new friendly u r l with the primary key. Does not add the friendly u r l to the database.
 	*
-	* @param friendlyUrlId the primary key for the new friendly u r l
+	* @param friendlyURLId the primary key for the new friendly u r l
 	* @return the new friendly u r l
 	*/
-	public FriendlyURL createFriendlyURL(long friendlyUrlId);
+	public FriendlyURL createFriendlyURL(long friendlyURLId);
 
 	/**
 	* Deletes the friendly u r l from the database. Also notifies the appropriate model listeners.
@@ -102,12 +102,12 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	/**
 	* Deletes the friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyUrlId the primary key of the friendly u r l
+	* @param friendlyURLId the primary key of the friendly u r l
 	* @return the friendly u r l that was removed
 	* @throws PortalException if a friendly u r l with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public FriendlyURL deleteFriendlyURL(long friendlyUrlId)
+	public FriendlyURL deleteFriendlyURL(long friendlyURLId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -119,7 +119,7 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		long classNameId, java.lang.String urlTitle);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURL fetchFriendlyURL(long friendlyUrlId);
+	public FriendlyURL fetchFriendlyURL(long friendlyURLId);
 
 	/**
 	* Returns the friendly u r l matching the UUID and group.
@@ -135,12 +135,12 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	/**
 	* Returns the friendly u r l with the primary key.
 	*
-	* @param friendlyUrlId the primary key of the friendly u r l
+	* @param friendlyURLId the primary key of the friendly u r l
 	* @return the friendly u r l
 	* @throws PortalException if a friendly u r l with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public FriendlyURL getFriendlyURL(long friendlyUrlId)
+	public FriendlyURL getFriendlyURL(long friendlyURLId)
 		throws PortalException;
 
 	/**

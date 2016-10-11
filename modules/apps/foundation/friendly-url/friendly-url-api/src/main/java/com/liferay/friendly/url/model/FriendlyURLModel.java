@@ -84,18 +84,18 @@ public interface FriendlyURLModel extends AttachedModel, BaseModel<FriendlyURL>,
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the friendly url ID of this friendly u r l.
+	 * Returns the friendly u r l ID of this friendly u r l.
 	 *
-	 * @return the friendly url ID of this friendly u r l
+	 * @return the friendly u r l ID of this friendly u r l
 	 */
-	public long getFriendlyUrlId();
+	public long getFriendlyURLId();
 
 	/**
-	 * Sets the friendly url ID of this friendly u r l.
+	 * Sets the friendly u r l ID of this friendly u r l.
 	 *
-	 * @param friendlyUrlId the friendly url ID of this friendly u r l
+	 * @param friendlyURLId the friendly u r l ID of this friendly u r l
 	 */
-	public void setFriendlyUrlId(long friendlyUrlId);
+	public void setFriendlyURLId(long friendlyURLId);
 
 	/**
 	 * Returns the group ID of this friendly u r l.

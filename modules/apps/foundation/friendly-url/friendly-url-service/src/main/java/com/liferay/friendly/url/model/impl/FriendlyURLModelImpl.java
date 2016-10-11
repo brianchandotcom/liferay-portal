@@ -67,7 +67,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	public static final String TABLE_NAME = "FriendlyURL";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "friendlyUrlId", Types.BIGINT },
+			{ "friendlyURLId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
@@ -81,7 +81,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("friendlyUrlId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("friendlyURLId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -92,10 +92,10 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		TABLE_COLUMNS_MAP.put("main", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyUrlId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(75) null,main BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table FriendlyURL (uuid_ VARCHAR(75) null,friendlyURLId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,urlTitle VARCHAR(75) null,main BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table FriendlyURL";
-	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURL.friendlyUrlId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURL.friendlyUrlId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY friendlyURL.friendlyURLId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY FriendlyURL.friendlyURLId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -124,17 +124,17 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 	@Override
 	public long getPrimaryKey() {
-		return _friendlyUrlId;
+		return _friendlyURLId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setFriendlyUrlId(primaryKey);
+		setFriendlyURLId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _friendlyUrlId;
+		return _friendlyURLId;
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("friendlyUrlId", getFriendlyUrlId());
+		attributes.put("friendlyURLId", getFriendlyURLId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
@@ -181,10 +181,10 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			setUuid(uuid);
 		}
 
-		Long friendlyUrlId = (Long)attributes.get("friendlyUrlId");
+		Long friendlyURLId = (Long)attributes.get("friendlyURLId");
 
-		if (friendlyUrlId != null) {
-			setFriendlyUrlId(friendlyUrlId);
+		if (friendlyURLId != null) {
+			setFriendlyURLId(friendlyURLId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -260,13 +260,13 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	}
 
 	@Override
-	public long getFriendlyUrlId() {
-		return _friendlyUrlId;
+	public long getFriendlyURLId() {
+		return _friendlyURLId;
 	}
 
 	@Override
-	public void setFriendlyUrlId(long friendlyUrlId) {
-		_friendlyUrlId = friendlyUrlId;
+	public void setFriendlyURLId(long friendlyURLId) {
+		_friendlyURLId = friendlyURLId;
 	}
 
 	@Override
@@ -493,7 +493,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		FriendlyURLImpl friendlyURLImpl = new FriendlyURLImpl();
 
 		friendlyURLImpl.setUuid(getUuid());
-		friendlyURLImpl.setFriendlyUrlId(getFriendlyUrlId());
+		friendlyURLImpl.setFriendlyURLId(getFriendlyURLId());
 		friendlyURLImpl.setGroupId(getGroupId());
 		friendlyURLImpl.setCompanyId(getCompanyId());
 		friendlyURLImpl.setCreateDate(getCreateDate());
@@ -605,7 +605,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 			friendlyURLCacheModel.uuid = null;
 		}
 
-		friendlyURLCacheModel.friendlyUrlId = getFriendlyUrlId();
+		friendlyURLCacheModel.friendlyURLId = getFriendlyURLId();
 
 		friendlyURLCacheModel.groupId = getGroupId();
 
@@ -652,8 +652,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", friendlyUrlId=");
-		sb.append(getFriendlyUrlId());
+		sb.append(", friendlyURLId=");
+		sb.append(getFriendlyURLId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -688,8 +688,8 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>friendlyUrlId</column-name><column-value><![CDATA[");
-		sb.append(getFriendlyUrlId());
+			"<column><column-name>friendlyURLId</column-name><column-value><![CDATA[");
+		sb.append(getFriendlyURLId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -735,7 +735,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _friendlyUrlId;
+	private long _friendlyURLId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

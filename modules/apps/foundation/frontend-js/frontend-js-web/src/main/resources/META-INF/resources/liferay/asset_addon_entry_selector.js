@@ -42,9 +42,7 @@ AUI.add(
 				'<span class="label label-default">' +
 					'{label}' +
 					'<a class="remove-button" href="javascript:;">' +
-						'<svg class="lexicon-icon">' +
-							'<use xlink:href="' + themeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" />' +
-						'</svg>' +
+						Liferay.Util.getLexiconIconTpl('times') +
 					'</a>' +
 				'</span>' +
 			'</li>';

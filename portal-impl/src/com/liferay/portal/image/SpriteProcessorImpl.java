@@ -77,7 +77,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 			int maxWidth, int maxSize)
 		throws IOException {
 
-		if (imageURLs.size() < 1) {
+		if (imageURLs.isEmpty()) {
 			return null;
 		}
 

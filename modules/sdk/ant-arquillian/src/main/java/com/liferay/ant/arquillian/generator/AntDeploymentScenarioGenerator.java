@@ -36,7 +36,7 @@ public class AntDeploymentScenarioGenerator
 			super.generate(testClass);
 
 		if ((defaultDeploymentDescriptions != null) &&
-			(defaultDeploymentDescriptions.size() > 0)) {
+			!defaultDeploymentDescriptions.isEmpty()) {
 
 			return defaultDeploymentDescriptions;
 		}

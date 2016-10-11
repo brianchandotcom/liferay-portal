@@ -377,7 +377,7 @@ public class ResourcePermissionLocalServiceImpl
 				}
 			}
 
-			if (availableActionIds.size() > 0) {
+			if (!availableActionIds.isEmpty()) {
 				roleIdsToActionIds.put(
 					resourcePermission.getRoleId(), availableActionIds);
 			}

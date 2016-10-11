@@ -143,7 +143,7 @@ public class WabDirURLStreamHandlerService
 
 		String themeId = null;
 
-		if ((nodes != null) && (nodes.size() > 0)) {
+		if ((nodes != null) && !nodes.isEmpty()) {
 			Node themeNode = nodes.get(0);
 
 			themeId = themeNode.getText();

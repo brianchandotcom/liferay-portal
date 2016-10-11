@@ -346,7 +346,7 @@ public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 			List<DDMFormFieldValue> ddmFormFieldValues)
 		throws DDMFormValuesValidationException {
 
-		if (ddmFormField.isRequired() && (ddmFormFieldValues.size() == 0)) {
+		if (ddmFormField.isRequired() && ddmFormFieldValues.isEmpty()) {
 			throw new RequiredValue(ddmFormField.getName());
 		}
 

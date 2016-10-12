@@ -386,7 +386,9 @@ following system properties to `true`:
 - [LPS-66396]: Update the [Liferay Gradle Plugins] dependency to version 3.0.0.
 
 ### Fixed
-- [LPS-66396]: Remove dependency from Java 8 class.
+- [LPS-66396]: Update import in several classes from
+`java.io.UncheckedIOException` to `org.gradle.api.UncheckedIOException` to
+remove Java 8 dependency.
 
 ## 1.2.45 - 2016-10-06
 

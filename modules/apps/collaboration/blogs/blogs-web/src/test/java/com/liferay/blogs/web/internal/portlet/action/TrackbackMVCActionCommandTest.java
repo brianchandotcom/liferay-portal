@@ -16,10 +16,12 @@ package com.liferay.blogs.web.internal.portlet.action;
 
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.web.internal.trackback.Trackback;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.Http;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.blogs.trackback.Trackback;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -166,7 +167,10 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	protected void addTrackback() throws Exception {
 		TrackbackMVCActionCommand trackbackMVCActionCommand =
-			new TrackbackMVCActionCommand(_trackback);
+			new TrackbackMVCActionCommand();
+
+		ReflectionTestUtil.setFieldValue(
+			trackbackMVCActionCommand, "_trackback", _trackback);
 
 		trackbackMVCActionCommand.addTrackback(_actionRequest, _actionResponse);
 	}

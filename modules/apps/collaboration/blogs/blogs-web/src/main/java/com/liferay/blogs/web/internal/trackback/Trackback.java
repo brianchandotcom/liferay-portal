@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.trackback;
+package com.liferay.blogs.web.internal.trackback;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Function;
@@ -28,26 +27,25 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
  * @author André de Oliveira
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.web.internal.Trackback)}
  */
-@Deprecated
-public class TrackbackImpl implements Trackback {
+@Component(service = Trackback.class)
+public class Trackback {
 
-	@Override
 	public void addTrackback(
 			BlogsEntry entry, ThemeDisplay themeDisplay, String excerpt,
 			String url, String blogName, String title,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(
+		long userId = _userLocalService.getDefaultUserId(
 			themeDisplay.getCompanyId());
 		long groupId = entry.getGroupId();
 		String className = BlogsEntry.class.getName();
@@ -55,29 +53,13 @@ public class TrackbackImpl implements Trackback {
 
 		String body = buildBody(themeDisplay, excerpt, url);
 
-		long commentId = CommentManagerUtil.addComment(
+		long commentId = _commentManager.addComment(
 			userId, groupId, className, classPK, blogName, title, body,
 			serviceContextFunction);
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
 		LinkbackConsumerUtil.addNewTrackback(commentId, url, entryURL);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setCommentManager(CommentManager commentManager) {
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void setLinkbackConsumer(LinkbackConsumer linkbackConsumer) {
 	}
 
 	protected String buildBBCodeBody(
@@ -138,5 +120,11 @@ public class TrackbackImpl implements Trackback {
 
 		return sb.toString();
 	}
+
+	@Reference
+	private CommentManager _commentManager;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

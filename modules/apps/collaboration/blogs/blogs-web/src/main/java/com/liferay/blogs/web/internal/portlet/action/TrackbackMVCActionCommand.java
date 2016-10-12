@@ -18,6 +18,7 @@ import com.liferay.blogs.kernel.exception.NoSuchEntryException;
 import com.liferay.blogs.kernel.exception.TrackbackValidationException;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.blogs.web.internal.trackback.Trackback;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
@@ -36,8 +37,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.blogs.trackback.Trackback;
-import com.liferay.portlet.blogs.trackback.TrackbackImpl;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,6 +46,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -63,14 +63,6 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
-
-	public TrackbackMVCActionCommand() {
-		_trackback = new TrackbackImpl();
-	}
-
-	public TrackbackMVCActionCommand(Trackback trackback) {
-		_trackback = trackback;
-	}
 
 	public void addTrackback(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -239,6 +231,7 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TrackbackMVCActionCommand.class);
 
-	private final Trackback _trackback;
+	@Reference
+	private Trackback _trackback;
 
 }

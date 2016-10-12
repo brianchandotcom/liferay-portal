@@ -2129,32 +2129,54 @@ public class ConsumerPortlet extends MVCPortlet {
 		serviceHolder.setSessionContext(sessionContext);
 	}
 
-	private static final String _BLOCKING_ACTION_TEMPLATE =
-		"wsrp_rewrite?wsrp-urlType=blockingAction&" +
-		"wsrp-navigationalState={wsrp-navigationalState}&" +
-		"wsrp-navigationalValues={wsrp-navigationalValues}&" +
-		"wsrp-interactionState={wsrp-interactionState}&" +
-		"wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}" +
-		"&wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite";
+	private static final String _BLOCKING_ACTION_TEMPLATE;
+
+	static {
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("wsrp_rewrite?wsrp-urlType=blockingAction&");
+		sb.append("wsrp-navigationalState={wsrp-navigationalState}&");
+		sb.append("wsrp-navigationalValues={wsrp-navigationalValues}&");
+		sb.append("wsrp-interactionState={wsrp-interactionState}&");
+		sb.append("wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}");
+		sb.append("&wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite");
+
+		_BLOCKING_ACTION_TEMPLATE = sb.toString();
+	}
 
 	private static final String[] _CHAR_SETS = {StringPool.UTF8};
 
 	private static final String[] _MIME_TYPES = {ContentTypes.TEXT_HTML};
 
-	private static final String _RENDER_TEMPLATE =
-		"wsrp_rewrite?wsrp-urlType=render&" +
-		"wsrp-navigationalState={wsrp-navigationalState}&" +
-		"wsrp-navigationalValues={wsrp-navigationalValues}&" +
-		"wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}&" +
-		"wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite";
+	private static final String _RENDER_TEMPLATE;
 
-	private static final String _RESOURCE_TEMPLATE =
-		"wsrp_rewrite?wsrp-urlType=resource&wsrp-url={wsrp-url}&" +
-		"wsrp-resourceID={wsrp-resourceID}&" +
-		"wsrp-preferOperation={wsrp-preferOperation}&" +
-		"wsrp-resourceState={wsrp-resourceState}&" +
-		"wsrp-requiresRewrite={wsrp-requiresRewrite}&" +
-		"wsrp-resourceCacheability={wsrp-resourceCacheability}/wsrp_rewrite";
+	static {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("wsrp_rewrite?wsrp-urlType=render&");
+		sb.append("wsrp-navigationalState={wsrp-navigationalState}&");
+		sb.append("wsrp-navigationalValues={wsrp-navigationalValues}&");
+		sb.append("wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}&");
+		sb.append("wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite");
+
+		_RENDER_TEMPLATE = sb.toString();
+	}
+
+	private static final String _RESOURCE_TEMPLATE;
+
+	static {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("wsrp_rewrite?wsrp-urlType=resource&wsrp-url={wsrp-url}&");
+		sb.append("wsrp-resourceID={wsrp-resourceID}&");
+		sb.append("wsrp-preferOperation={wsrp-preferOperation}&");
+		sb.append("wsrp-resourceState={wsrp-resourceState}&");
+		sb.append("wsrp-requiresRewrite={wsrp-requiresRewrite}&");
+		sb.append("wsrp-resourceCacheability={wsrp-resourceCacheability}");
+		sb.append("/wsrp_rewrite");
+
+		_RESOURCE_TEMPLATE = sb.toString();
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConsumerPortlet.class);

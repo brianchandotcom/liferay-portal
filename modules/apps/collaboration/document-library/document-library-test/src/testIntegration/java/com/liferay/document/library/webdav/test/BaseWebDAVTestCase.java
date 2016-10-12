@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
@@ -336,24 +337,38 @@ public class BaseWebDAVTestCase {
 
 	private static final String _GROUP_FRIENDLY_URL = "/guest";
 
-	private static final String _LOCK_XML =
-		"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
-		"<D:lockinfo xmlns:D='DAV:'>\n" +
-		"<D:lockscope><D:exclusive/></D:lockscope>\n" +
-		"<D:locktype><D:write/></D:locktype>\n" +
-		"<D:owner>\n" +
-		"<D:href>http://www.liferay.com</D:href>\n" +
-		"</D:owner>\n" +
-		"</D:lockinfo>\n";
+	private static final String _LOCK_XML;
+
+	static {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+		sb.append("<D:lockinfo xmlns:D='DAV:'>\n");
+		sb.append("<D:lockscope><D:exclusive/></D:lockscope>\n");
+		sb.append("<D:locktype><D:write/></D:locktype>\n");
+		sb.append("<D:owner>\n");
+		sb.append("<D:href>http://www.liferay.com</D:href>\n");
+		sb.append("</D:owner>\n");
+		sb.append("</D:lockinfo>\n");
+
+		_LOCK_XML = sb.toString();
+	}
 
 	private static final String _PATH_INFO_PREFACE =
 		_GROUP_FRIENDLY_URL + "/document_library/" + _FOLDER_NAME + "/";
 
-	private static final String _PROPFIND_XML =
-		"<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n" +
-		"<D:propfind xmlns:D=\"DAV:\">\n" +
-		"<D:allprop/>\n" +
-		"</D:propfind>";
+	private static final String _PROPFIND_XML;
+
+	static {
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+		sb.append("<D:propfind xmlns:D=\"DAV:\">\n");
+		sb.append("<D:allprop/>\n");
+		sb.append("</D:propfind>");
+
+		_PROPFIND_XML = sb.toString();
+	}
 
 	private static final String _SERVLET_PATH = "";
 

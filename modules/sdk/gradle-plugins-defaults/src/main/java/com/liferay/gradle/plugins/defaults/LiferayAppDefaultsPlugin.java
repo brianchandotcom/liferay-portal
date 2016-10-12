@@ -19,6 +19,7 @@ import com.liferay.gradle.plugins.app.javadoc.builder.AppJavadocBuilderPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
+import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderExtension;
 import com.liferay.gradle.plugins.tlddoc.builder.AppTLDDocBuilderPlugin;
 import com.liferay.gradle.util.Validator;
 
@@ -79,6 +80,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		LiferayOSGiDefaultsPlugin.configureRepositories(project);
 
 		_configureAppJavadocBuilder(project, privateProject);
+		_configureAppTLDDocBuilder(project, privateProject);
 		configureProject(project, appDescription, appVersion);
 		configureTaskAppJavadoc(project, appTitle, appVersion);
 	}
@@ -230,6 +232,19 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 			appJavadocBuilderExtension.subprojects(
 				privateProject.getSubprojects());
 		}
+	}
+
+	private void _configureAppTLDDocBuilder(
+		Project project, Project privateProject) {
+
+		if (privateProject == null) {
+			return;
+		}
+
+		AppTLDDocBuilderExtension appTLDDocBuilderExtension =
+			GradleUtil.getExtension(project, AppTLDDocBuilderExtension.class);
+
+		appTLDDocBuilderExtension.subprojects(privateProject.getSubprojects());
 	}
 
 	private Properties _getAppProperties(Project project) {

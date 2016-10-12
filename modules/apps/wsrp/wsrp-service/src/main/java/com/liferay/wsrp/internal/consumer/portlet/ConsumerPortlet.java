@@ -2164,20 +2164,6 @@ public class ConsumerPortlet extends MVCPortlet {
 
 	private static final String _RESOURCE_TEMPLATE;
 
-	static {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("wsrp_rewrite?wsrp-urlType=resource&wsrp-url={wsrp-url}&");
-		sb.append("wsrp-resourceID={wsrp-resourceID}&");
-		sb.append("wsrp-preferOperation={wsrp-preferOperation}&");
-		sb.append("wsrp-resourceState={wsrp-resourceState}&");
-		sb.append("wsrp-requiresRewrite={wsrp-requiresRewrite}&");
-		sb.append("wsrp-resourceCacheability={wsrp-resourceCacheability}");
-		sb.append("/wsrp_rewrite");
-
-		_RESOURCE_TEMPLATE = sb.toString();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConsumerPortlet.class);
 
@@ -2194,6 +2180,20 @@ public class ConsumerPortlet extends MVCPortlet {
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");
 	private static WebsiteLocalService _websiteLocalService;
+
+	static {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("wsrp_rewrite?wsrp-urlType=resource&wsrp-url={wsrp-url}&");
+		sb.append("wsrp-resourceID={wsrp-resourceID}&");
+		sb.append("wsrp-preferOperation={wsrp-preferOperation}&");
+		sb.append("wsrp-resourceState={wsrp-resourceState}&");
+		sb.append("wsrp-requiresRewrite={wsrp-requiresRewrite}&");
+		sb.append("wsrp-resourceCacheability={wsrp-resourceCacheability}");
+		sb.append("/wsrp_rewrite");
+
+		_RESOURCE_TEMPLATE = sb.toString();
+	}
 
 	private volatile WSRPGroupServiceConfiguration
 		_wsrpGroupServiceConfiguration;

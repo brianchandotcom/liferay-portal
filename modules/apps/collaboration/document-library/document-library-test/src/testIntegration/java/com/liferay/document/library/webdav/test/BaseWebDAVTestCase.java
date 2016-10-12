@@ -359,6 +359,8 @@ public class BaseWebDAVTestCase {
 
 	private static final String _PROPFIND_XML;
 
+	private static final String _SERVLET_PATH = "";
+
 	static {
 		StringBundler sb = new StringBundler(4);
 
@@ -369,7 +371,5 @@ public class BaseWebDAVTestCase {
 
 		_PROPFIND_XML = sb.toString();
 	}
-
-	private static final String _SERVLET_PATH = "";
 
 }

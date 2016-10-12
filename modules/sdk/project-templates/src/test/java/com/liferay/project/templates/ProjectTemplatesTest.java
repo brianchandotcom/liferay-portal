@@ -1037,12 +1037,13 @@ public class ProjectTemplatesTest {
 			":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
 
 		File gradleApiBundleFile = _testExists(
-			gradleProjectDir, apiProjectName + "/build/libs/" +
-				packageName + ".api-1.0.0.jar");
+			gradleProjectDir,
+			apiProjectName + "/build/libs/" + packageName + ".api-1.0.0.jar");
 
 		File gradleServiceBundleFile = _testExists(
-			gradleProjectDir, serviceProjectName +
-				"/build/libs/" + packageName + ".service-1.0.0.jar");
+			gradleProjectDir,
+			serviceProjectName + "/build/libs/" + packageName +
+				".service-1.0.0.jar");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"service-builder", name, "-Dpackage=" + packageName);

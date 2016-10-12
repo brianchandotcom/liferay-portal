@@ -17,16 +17,19 @@ package com.liferay.gradle.plugins.tlddoc.builder;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.util.GradleUtil;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
+import java.util.Set;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.PluginContainer;
@@ -46,9 +49,15 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 
 	public static final String JAR_APP_TLDDOC_TASK_NAME = "jarAppTLDDoc";
 
+	public static final String PLUGIN_NAME = "appTLDDocBuilder";
+
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, BasePlugin.class);
+
+		final AppTLDDocBuilderExtension appTLDDocBuilderExtension =
+			GradleUtil.addExtension(
+				project, PLUGIN_NAME, AppTLDDocBuilderExtension.class);
 
 		Configuration tlddocConfiguration =
 			TLDDocBuilderPlugin.addConfigurationTLDDoc(project);
@@ -61,26 +70,28 @@ public class AppTLDDocBuilderPlugin implements Plugin<Project> {
 
 		_addTaskJarAppTLDDoc(appTLDDocTask);
 
-		for (Project subproject : project.getSubprojects()) {
-			subproject.afterEvaluate(
-				new Action<Project>() {
+		Gradle gradle = project.getGradle();
 
-					@Override
-					public void execute(Project subproject) {
-						PluginContainer pluginContainer =
-							subproject.getPlugins();
+		gradle.afterProject(
+			new Closure<Void>(project) {
 
-						if (pluginContainer.hasPlugin(
-								TLDDocBuilderPlugin.class)) {
+				@SuppressWarnings("unused")
+				public void doCall(Project subproject) {
+					Set<Project> subprojects =
+						appTLDDocBuilderExtension.getSubprojects();
 
-							_configureTaskAppTLDDoc(appTLDDocTask, subproject);
-							_configureTaskCopyAppTLDDocResources(
-								copyAppTLDDocResourcesTask, subproject);
-						}
+					PluginContainer pluginContainer = subproject.getPlugins();
+
+					if (subprojects.contains(subproject) &&
+						pluginContainer.hasPlugin(TLDDocBuilderPlugin.class)) {
+
+						_configureTaskAppTLDDoc(appTLDDocTask, subproject);
+						_configureTaskCopyAppTLDDocResources(
+							copyAppTLDDocResourcesTask, subproject);
 					}
+				}
 
-				});
-		}
+			});
 	}
 
 	private TLDDocTask _addTaskAppTLDDoc(

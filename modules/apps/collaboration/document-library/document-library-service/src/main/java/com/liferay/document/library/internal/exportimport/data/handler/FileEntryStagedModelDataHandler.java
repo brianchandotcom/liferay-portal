@@ -373,7 +373,7 @@ public class FileEntryStagedModelDataHandler
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"No file found for file entry " +
-						fileEntry.getFileEntryId());
+							fileEntry.getFileEntryId());
 				}
 
 				return;

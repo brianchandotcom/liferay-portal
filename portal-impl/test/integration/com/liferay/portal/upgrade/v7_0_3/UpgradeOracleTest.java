@@ -112,7 +112,7 @@ public class UpgradeOracleTest {
 			PreparedStatement ps = connection.prepareStatement(
 				"select char_length from user_tab_columns where table_name = " +
 					"'" + tableName + "' and column_name = '" + columnName +
-					"'")) {
+						"'")) {
 
 			ResultSet rs = ps.executeQuery();
 

@@ -212,8 +212,8 @@ public class CalendarBookingLocalServiceTest {
 
 		String mailMessageSubject =
 			"Calendar: Event Reminder for " + StringPool.QUOTE +
-			calendarBooking.getTitle(LocaleUtil.getDefault()) +
-			StringPool.QUOTE;
+				calendarBooking.getTitle(LocaleUtil.getDefault()) +
+					StringPool.QUOTE;
 
 		List<com.dumbster.smtp.MailMessage> mailMessages =
 			MailServiceTestUtil.getMailMessages("Subject", mailMessageSubject);

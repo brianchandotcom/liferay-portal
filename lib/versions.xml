@@ -2175,35 +2175,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/jsonrpc.jar</file-name>
-				<version>1.0</version>
-				<project-name>JSON-RPC-Java</project-name>
-				<project-url>http://oss.metaparadigm.com/jsonrpc</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) Metaparadigm Pte. Ltd. 2004.</copyright-notice>
-					</license>
-				</licenses>
-				<comments>
-					Removed org.json.* because it conflicts with jabsorb.jar. This JAR
-					is still necessary until JSPWiki upgrades to jabsorb.jar.
-				</comments>
-			</library>
-			<library>
-				<file-name>lib/portal/jspwiki.jar</file-name>
-				<version>2.8.4</version>
-				<project-name>JSPWiki</project-name>
-				<project-url>http://www.jspwiki.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jsr107cache.jar</file-name>
 				<version>1.0</version>
 				<project-name>JSR 107</project-name>
@@ -2478,23 +2449,6 @@
 						<copyright-notice>Copyright (c) 2000-2002 The Apache Software Foundation. All rights reserved.</copyright-notice>
 					</license>
 				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/oscache.jar</file-name>
-				<version>2.4.1</version>
-				<project-name>OSCache</project-name>
-				<project-url>http://www.opensymphony.com/oscache</project-url>
-				<licenses>
-					<license>
-						<license-name>Symphony License For OSCache</license-name>
-						<license-url>https://wiki.kuali.org/display/KULFOUND/Open+Symphony+License</license-url>
-						<copyright-notice>Copyright (c) 2001-2004 The OpenSymphony Group. All rights reserved.</copyright-notice>
-					</license>
-				</licenses>
-				<comments>
-					This JAR is no longer used directly by Liferay but is included
-					because it is a runtime requirement for JSPWiki.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/pdfbox.jar</file-name>

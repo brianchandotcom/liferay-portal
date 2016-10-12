@@ -244,6 +244,31 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkIfClauseParentheses(
+		String trimmedLine, String fileName, int lineCount,
+		boolean javaSource) {
+
+		if (javaSource) {
+			if ((trimmedLine.startsWith("if (") ||
+				 trimmedLine.startsWith("else if (") ||
+				 trimmedLine.startsWith("while (")) &&
+				trimmedLine.endsWith(") {")) {
+
+				checkIfClauseParentheses(trimmedLine, fileName, lineCount);
+			}
+
+			return;
+		}
+
+		Matcher matcher = _testTagPattern.matcher(trimmedLine);
+
+		if (matcher.find()) {
+			String ifClause = "if (" + matcher.group(2) + ") {";
+
+			checkIfClauseParentheses(ifClause, fileName, lineCount);
+		}
+	}
+
 	protected void checkSubnames(String fileName, String content) {
 		Matcher matcher = _subnamePattern.matcher(content);
 
@@ -812,15 +837,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (javaSource &&
-					(trimmedLine.startsWith("if (") ||
-					 trimmedLine.startsWith("else if (") ||
-					 trimmedLine.startsWith("while (")) &&
-					trimmedLine.endsWith(") {")) {
-
-					checkIfClauseParentheses(trimmedLine, fileName, lineCount);
-				}
-
-				if (javaSource &&
 					trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 
 					processMessage(
@@ -828,15 +844,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 				}
 
-				Matcher matcher = _testTagPattern.matcher(trimmedLine);
+				checkIfClauseParentheses(
+					trimmedLine, fileName, lineCount, javaSource);
 
-				if (matcher.find()) {
-					String ifClause = "if (" + matcher.group(2) + ") {";
-
-					checkIfClauseParentheses(ifClause, fileName, lineCount);
-				}
-
-				matcher = _jspTaglibPattern.matcher(line);
+				Matcher matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
 					line = formatAttributes(

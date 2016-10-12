@@ -59,12 +59,20 @@ public class ProjectTemplatesArgs {
 		return _template;
 	}
 
+	public boolean isForce() {
+		return _force;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
 
 	public void setDestinationDir(File destinationDir) {
 		_destinationDir = destinationDir;
+	}
+
+	public void setForce(boolean force) {
+		_force = force;
 	}
 
 	public void setHostBundleSymbolicName(String hostBundleSymbolicName) {
@@ -110,6 +118,12 @@ public class ProjectTemplatesArgs {
 		names = "--destination"
 	)
 	private File _destinationDir;
+
+	@Parameter(
+		description = "Forces creation of workspace even if target directory contains files",
+		names = "--force"
+	)
+	private boolean _force;
 
 	@Parameter(
 		description = "Print this message.", help = true,

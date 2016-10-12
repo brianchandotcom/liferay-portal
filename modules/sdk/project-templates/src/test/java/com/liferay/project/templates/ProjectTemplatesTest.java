@@ -731,6 +731,24 @@ public class ProjectTemplatesTest {
 		_testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateWorkspaceExistingFile() throws Exception {
+		File destinationDir = temporaryFolder.newFolder("existing-file");
+
+		new File(destinationDir, "foo").createNewFile();
+
+		_buildTemplateWithGradle(destinationDir, "workspace", "foo");
+	}
+
+	@Test
+	public void testBuildTemplateWorkspaceForce() throws Exception {
+		File destinationDir = temporaryFolder.newFolder("existing-file");
+
+		new File(destinationDir, "foo").createNewFile();
+
+		_buildTemplateWithGradle(destinationDir, "workspace", "forced", "--force");
+	}
+
 	@Test
 	public void testListTemplates() throws Exception {
 		Set<String> templates = new HashSet<>(

@@ -256,8 +256,14 @@ public class ProjectTemplates {
 			throw new IllegalArgumentException("Destination dir is required");
 		}
 
-		if (destinationDir.exists()) {
-			String[] fileNames = destinationDir.list();
+		File checkDir = new File(destinationDir, name);
+
+		if (Validator.isNotNull(name)) {
+			checkDir = destinationDir;
+		}
+
+		if (checkDir.exists() && !projectTemplatesArgs.isForce()) {
+			String[] fileNames = checkDir.list();
 
 			if ((fileNames == null) || (fileNames.length > 0)) {
 				throw new IllegalArgumentException(
@@ -284,7 +290,7 @@ public class ProjectTemplates {
 		projectTemplatesArgs.setClassName(className);
 
 		if (Validator.isNull(projectTemplatesArgs.getPackageName()) &&
-				Validator.isNotNull(name)) {
+			Validator.isNotNull(name)) {
 			projectTemplatesArgs.setPackageName(_getPackageName(name));
 		}
 	}

@@ -14,15 +14,12 @@
 
 package com.liferay.portal.words;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.jazzy.InvalidWord;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.words.Words;
-import com.liferay.util.ContentUtil;
 
 import com.swabunga.spell.engine.SpellDictionaryHashMap;
 import com.swabunga.spell.event.DefaultWordFinder;
@@ -30,7 +27,10 @@ import com.swabunga.spell.event.SpellChecker;
 import com.swabunga.spell.event.StringWordTokenizer;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -45,7 +45,7 @@ public class WordsImpl implements Words {
 	@Override
 	public List<InvalidWord> checkSpelling(String text) {
 		SpellChecker spellChecker = new SpellChecker(
-			getSpellDictionaryHashMap());
+			SpellDictionaryHashMapHolder._spellDictionaryHashMap);
 
 		BasicSpellCheckListener basicSpellCheckListener =
 			new BasicSpellCheckListener(text);
@@ -60,23 +60,12 @@ public class WordsImpl implements Words {
 
 	@Override
 	public List<String> getDictionaryList() {
-		if (_dictionaryList == null) {
-			_dictionaryList = ListUtil.fromArray(
-				StringUtil.splitLines(
-					ContentUtil.get(
-						"com/liferay/portal/words/dependencies/words.txt")));
-		}
-
-		return _dictionaryList;
+		return DictionaryListSetHolder._dictionaryList;
 	}
 
 	@Override
 	public Set<String> getDictionarySet() {
-		if (_dictionarySet == null) {
-			_dictionarySet = new HashSet<>(getDictionaryList());
-		}
-
-		return _dictionarySet;
+		return DictionaryListSetHolder._dictionarySet;
 	}
 
 	@Override
@@ -97,39 +86,76 @@ public class WordsImpl implements Words {
 		return dictionarySet.contains(word);
 	}
 
-	protected SpellDictionaryHashMap getSpellDictionaryHashMap() {
-		if (_spellDictionaryHashMap != null) {
-			return _spellDictionaryHashMap;
-		}
-
-		try {
-			_spellDictionaryHashMap = new SpellDictionaryHashMap();
-
-			String[] dics = new String[] {
-				"center.dic", "centre.dic", "color.dic", "colour.dic",
-				"eng_com.dic", "english.0", "english.1", "ise.dic", "ize.dic",
-				"labeled.dic", "labelled.dic", "yse.dic", "yze.dic"
-			};
-
-			for (int i = 0; i < dics.length; i++) {
-				_spellDictionaryHashMap.addDictionary(
-					new UnsyncStringReader(
-						ContentUtil.get(
-							"com/liferay/portal/words/dependencies/" +
-								dics[i])));
-			}
-		}
-		catch (IOException ioe) {
-			_log.error(ioe);
-		}
-
-		return _spellDictionaryHashMap;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(WordsImpl.class);
 
-	private List<String> _dictionaryList;
-	private Set<String> _dictionarySet;
-	private SpellDictionaryHashMap _spellDictionaryHashMap;
+	private static class DictionaryListSetHolder {
+
+		private static final List<String> _dictionaryList;
+		private static final Set<String> _dictionarySet;
+
+		static {
+			List<String> dictionaryList = new ArrayList<>();
+
+			try (InputStream is = WordsImpl.class.getResourceAsStream(
+					"dependencies/words.txt");
+				UnsyncBufferedReader unsyncBufferedReader =
+					new UnsyncBufferedReader(new InputStreamReader(is))) {
+
+				String line = null;
+
+				while ((line = unsyncBufferedReader.readLine()) != null) {
+					dictionaryList.add(line);
+				}
+			}
+			catch (IOException ioe) {
+				_log.error(ioe, ioe);
+			}
+
+			_dictionaryList = dictionaryList;
+			_dictionarySet = new HashSet<>(dictionaryList);
+		}
+
+	}
+
+	private static class SpellDictionaryHashMapHolder {
+
+		private static final SpellDictionaryHashMap _spellDictionaryHashMap;
+
+		static {
+			SpellDictionaryHashMap spellDictionaryHashMap = null;
+
+			try {
+				spellDictionaryHashMap = new SpellDictionaryHashMap();
+
+				String[] dics = new String[] {
+					"center.dic", "centre.dic", "color.dic", "colour.dic",
+					"eng_com.dic", "english.0", "english.1", "ise.dic",
+					"ize.dic", "labeled.dic", "labelled.dic", "yse.dic",
+					"yze.dic"
+				};
+
+				for (String dic : dics) {
+					try (InputStream is = WordsImpl.class.getResourceAsStream(
+							"dependencies/" + dic);
+						UnsyncBufferedReader unsyncBufferedReader =
+							new UnsyncBufferedReader(
+								new InputStreamReader(is))) {
+
+						spellDictionaryHashMap.addDictionary(
+							unsyncBufferedReader);
+					}
+					catch (IOException ioe) {
+						_log.error(ioe, ioe);
+					}
+				}
+			}
+			catch (IOException ioe) {
+				_log.error(ioe);
+			}
+
+			_spellDictionaryHashMap = spellDictionaryHashMap;
+		}
+
+	}
 
 }

@@ -40,7 +40,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 %>
 
 <c:choose>
-	<c:when test="<%= (ListUtil.isEmpty(entries) && ListUtil.isNotEmpty(folders) && (folders.size() == 1)) %>">
+	<c:when test="<%= ListUtil.isEmpty(entries) && ListUtil.isNotEmpty(folders) && (folders.size() == 1) %>">
 
 		<%
 		BookmarksFolder folder = folders.get(0);

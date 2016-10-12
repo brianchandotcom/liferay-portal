@@ -197,7 +197,7 @@ if (organization != null) {
 							%>
 
 							<c:choose>
-								<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
+								<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && filterManageableOrganizations %>">
 									<liferay-ui:search-container-results>
 
 										<%

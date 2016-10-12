@@ -87,7 +87,7 @@ decimalFormat.setMinimumFractionDigits(2);
 	<c:choose>
 		<c:when test="<%= windowState.equals(WindowState.NORMAL) %>">
 			<c:choose>
-				<c:when test="<%= (symbols.length > 0) %>">
+				<c:when test="<%= symbols.length > 0 %>">
 					<table class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr>

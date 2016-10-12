@@ -45,7 +45,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 %>
 
 <c:choose>
-	<c:when test="<%= (ListUtil.isEmpty(kbArticles) && ListUtil.isNotEmpty(kbFolders) && (kbFolders.size() == 1)) %>">
+	<c:when test="<%= ListUtil.isEmpty(kbArticles) && ListUtil.isNotEmpty(kbFolders) && (kbFolders.size() == 1) %>">
 
 		<%
 		KBFolder kbFolder = kbFolders.get(0);

@@ -198,7 +198,7 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= MBMessagePermission.contains(permissionChecker, message, ActionKeys.DELETE) && !thread.isLocked() %>">
 					<portlet:renderURL var="parentCategoryURL">
 						<c:choose>
-							<c:when test="<%= ((category == null) || (category.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) %>">
+							<c:when test="<%= (category == null) || (category.getCategoryId() == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) %>">
 								<portlet:param name="mvcRenderCommandName" value="/message_boards/view" />
 							</c:when>
 							<c:otherwise>

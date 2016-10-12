@@ -2139,7 +2139,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
 	private final Pattern _ifTagPattern = Pattern.compile(
-		"^<c:if test=('|\")<%= (.+) %>('|\")>$");
+		"^<c:(if|when) test=['\"]<%= (.+) %>['\"]>$");
 	private final List<String> _importClassNames = new ArrayList<>();
 	private final Map<String, Integer> _importCountMap = new HashMap<>();
 	private final Pattern _importsPattern = Pattern.compile(

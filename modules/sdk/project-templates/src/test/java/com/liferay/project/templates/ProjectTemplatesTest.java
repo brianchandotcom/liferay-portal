@@ -14,8 +14,6 @@
 
 package com.liferay.project.templates;
 
-import static org.junit.Assert.assertTrue;
-
 import aQute.bnd.main.bnd;
 
 import com.liferay.project.templates.internal.util.FileUtil;
@@ -571,7 +569,7 @@ public class ProjectTemplatesTest {
 		File destinationDir = new File(
 			workspaceProjectDir, "modules/nested/path");
 
-		assertTrue(destinationDir.mkdirs());
+		Assert.assertTrue(destinationDir.mkdirs());
 
 		File gradleProjectDir = _buildTemplateWithGradle(
 			destinationDir, "service-builder", "sample", "--package-name",
@@ -737,7 +735,9 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateWorkspaceExistingFile() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("existing-file");
 
-		new File(destinationDir, "foo").createNewFile();
+		File file = new File(destinationDir, "foo");
+
+		Assert.assertTrue(file.createNewFile());
 
 		_buildTemplateWithGradle(destinationDir, "workspace", "foo");
 	}
@@ -746,7 +746,9 @@ public class ProjectTemplatesTest {
 	public void testBuildTemplateWorkspaceForce() throws Exception {
 		File destinationDir = temporaryFolder.newFolder("existing-file");
 
-		new File(destinationDir, "foo").createNewFile();
+		File file = new File(destinationDir, "foo");
+
+		Assert.assertTrue(file.createNewFile());
 
 		_buildTemplateWithGradle(
 			destinationDir, "workspace", "forced", "--force");
@@ -1070,11 +1072,13 @@ public class ProjectTemplatesTest {
 		String apiProjectName = name + "-api";
 		String serviceProjectName = name + "-service";
 
-		if (!WorkspaceUtil.isWorkspace(gradleProjectDir)) {
+		boolean workspace = WorkspaceUtil.isWorkspace(gradleProjectDir);
+
+		if (!workspace) {
 			_testContains(
 				gradleProjectDir, "settings.gradle",
 				"include \"" + apiProjectName + "\", \"" + serviceProjectName +
-				"\"");
+					"\"");
 		}
 
 		_testContains(
@@ -1086,15 +1090,16 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, serviceProjectName + "/bnd.bnd",
 			"Liferay-Service: true");
 
-		if (!WorkspaceUtil.isWorkspace(gradleProjectDir)) {
+		if (!workspace) {
 			_testContains(
 				gradleProjectDir, serviceProjectName + "/build.gradle",
 				"compileOnly project(\":" + apiProjectName + "\")");
 		}
 
 		_executeGradle(
-			rootProject, projectPath + ":" + serviceProjectName +
-			_GRADLE_TASK_PATH_BUILD_SERVICE);
+			rootProject,
+			projectPath + ":" + serviceProjectName +
+				_GRADLE_TASK_PATH_BUILD_SERVICE);
 
 		_executeGradle(
 			rootProject,

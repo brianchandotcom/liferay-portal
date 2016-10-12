@@ -24,7 +24,7 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
-		<requiredProperty key="apiPath" >
+		<requiredProperty key="apiPath">
 			<defaultValue>:${artifactId}-api</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="buildType">

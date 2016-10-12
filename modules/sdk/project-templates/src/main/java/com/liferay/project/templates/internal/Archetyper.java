@@ -78,11 +78,11 @@ public class Archetyper {
 		String hostBundleVersion = projectTemplatesArgs.getHostBundleVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
 
+		File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
+
 		String projectType = "standalone";
 
-		boolean workspace = WorkspaceUtil.isWorkspace(destinationDir);
-
-		if (workspace) {
+		if (workspaceDir != null) {
 			projectType = WorkspaceUtil.WORKSPACE;
 		}
 
@@ -109,26 +109,24 @@ public class Archetyper {
 
 		Properties properties = new Properties();
 
-		if ("service-builder".equals(template)) {
+		if (template.equals("service-builder")) {
 			String apiPath = ":" + artifactId + "-api";
 
-			if (workspace) {
-				File workspaceDir = WorkspaceUtil.getWorkspaceDir(
-					destinationDir);
+			if (workspaceDir != null) {
+				Path destinationDirPath = destinationDir.toPath();
+				Path workspaceDirPath = workspaceDir.toPath();
 
-				Path workspacePath = workspaceDir.getAbsoluteFile().toPath();
+				destinationDirPath = destinationDirPath.toAbsolutePath();
+				workspaceDirPath = workspaceDirPath.toAbsolutePath();
 
-				Path destinationPath =
-					destinationDir.getAbsoluteFile().toPath();
+				Path relativePath = workspaceDirPath.relativize(
+					destinationDirPath);
 
-				String relativePath = workspacePath.relativize(
-					destinationPath).toString();
+				String path = relativePath.toString();
 
-				String normalizedPath = relativePath.replaceAll("\\\\", "/");
+				path = path.replace(File.separatorChar, ':');
 
-				normalizedPath = normalizedPath.replaceAll("\\/", ":");
-
-				apiPath = ":" + normalizedPath + ":" + artifactId + apiPath;
+				apiPath = ":" + path + ":" + artifactId + apiPath;
 			}
 
 			_setProperty(properties, "apiPath", apiPath);

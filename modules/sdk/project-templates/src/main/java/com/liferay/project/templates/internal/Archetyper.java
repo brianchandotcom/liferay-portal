@@ -80,7 +80,9 @@ public class Archetyper {
 
 		String projectType = "standalone";
 
-		if (WorkspaceUtil.isWorkspace(destinationDir)) {
+		boolean workspace = WorkspaceUtil.isWorkspace(destinationDir);
+
+		if (workspace) {
 			projectType = WorkspaceUtil.WORKSPACE;
 		}
 
@@ -106,6 +108,21 @@ public class Archetyper {
 		archetypeGenerationRequest.setPackage(packageName);
 
 		Properties properties = new Properties();
+
+		if ("service-builder".equals(template)) {
+			String apiPath = ":" + artifactId + "-api";
+
+			if (workspace) {
+				File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
+				Path workspacePath = workspaceDir.getAbsoluteFile().toPath();
+				Path destinationPath = destinationDir.getAbsoluteFile().toPath();
+				String relativePath = workspacePath.relativize(destinationPath).toString();
+
+				apiPath = ":" + relativePath.replaceAll("\\\\", "/").replaceAll("\\/", ":") + ":" + artifactId + apiPath;
+			}
+
+			_setProperty(properties, "apiPath", apiPath);
+		}
 
 		_setProperty(properties, "buildType", "gradle");
 		_setProperty(properties, "className", className);

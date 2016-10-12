@@ -1,0 +1,211 @@
+{namespace ddl.rule}
+
+/**
+ * Prints the DDL rule settings.
+ *
+ * @param actions
+ * @param conditions
+ * @param deleteIcon
+ * @param logicalOperator
+ * @param plusIcon
+ * @param strings
+ */
+{template .settings autoescape="deprecated-contextual"}
+	<h2 class="form-builder-section-title text-default">{$strings.title}</h2>
+	<h4 class="text-default">{$strings.description}</h4>
+
+	<div class="ddl-form-body-content">
+		<ul class="liferay-ddl-form-builder-rule-condition-list liferay-ddl-form-rule-builder-timeline timeline {length($conditions) > 1 ? 'can-remove-item' : ''}">
+			{call .rulesHeader}
+				{param logicalOperator: $logicalOperator /}
+				{param title: 'Condition' /}
+				{param extraContent kind="html"}
+					{call .logicOperatorDropDown data="all" /}
+				{/param}
+			{/call}
+
+			{foreach $condition in $conditions}
+				{call .condition}
+					{param index: index($condition) /}
+					{param deleteIcon: $deleteIcon /}
+					{param logicOperator: $logicalOperator /}
+				{/call}
+				{ifempty}
+					{call .condition}
+						{param index: 0 /}
+						{param deleteIcon: $deleteIcon /}
+						{param logicOperator: $logicalOperator /}
+					{/call}
+			{/foreach}
+		</ul>
+
+		{call .btnAddNewTimelineItem}
+			{param plusIcon: $plusIcon /}
+			{param cssClass: 'form-builder-rule-add-condition' /}
+		{/call}
+
+		<ul class="action-list liferay-ddl-form-builder-rule-action-list liferay-ddl-form-rule-builder-timeline timeline {length($actions) > 1 ? 'can-remove-item' : ''}">
+			{call .rulesHeader}
+				{param logicalOperator: $logicalOperator /}
+				{param title: 'Actions' /}
+			{/call}
+
+			{foreach $action in $actions}
+				{call .action}
+					{param index: index($action) /}
+					{param deleteIcon: $deleteIcon /}
+				{/call}
+				{ifempty}
+					{call .action}
+						{param index: 0 /}
+						{param deleteIcon: $deleteIcon /}
+					{/call}
+			{/foreach}
+		</ul>
+
+		{call .btnAddNewTimelineItem}
+			{param plusIcon: $plusIcon /}
+			{param cssClass: 'form-builder-rule-add-action' /}
+		{/call}
+
+		<div class="liferay-ddl-form-rule-builder-footer">
+			<button class="btn btn-default btn-lg btn-primary ddl-button form-builder-rule-settings-save" type="button">
+				<span class="form-builder-rule-settings-save-label">{$strings.save}</span>
+			</button>
+			<button class="btn btn-cancel btn-default btn-lg btn-link form-builder-rule-settings-cancel" type="button">
+				<span class="lfr-btn-label">{$strings.cancel}</span>
+			</button>
+		</div>
+	</div>
+{/template}
+
+/**
+ * Prints the DDL rule condition.
+ *
+ * @param index
+ * @param deleteIcon
+ * @param logicOperator
+ */
+{template .condition autoescape="deprecated-contextual"}
+	<li class="form-builder-rule-condition-container-{$index} timeline-item">
+		<div class="panel panel-default">
+			<div class="flex-container panel-body">
+				<h4>If</h4>
+
+				<div class="condition-if-{$index} form-group"></div>
+				<div class="condition-operator-{$index} form-group"></div>
+				<div class="condition-the-{$index} form-group"></div>
+				<div class="condition-type-value-{$index} form-group"></div>
+				<div class="condition-type-value-options-{$index} form-group"></div>
+
+				<div class="timeline-increment-icon">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="operator panel panel-default panel-inline">
+			<div class="panel-body text-uppercase">{$logicOperator}</div>
+		</div>
+
+		<div class="container-trash">
+			<button
+				class="btn btn-link condition-card-delete icon-monospaced"
+				data-card-id="{$index}"
+				href="javascript:;"
+				type="button">
+				{$deleteIcon|noAutoescape}
+			</button>
+		</div>
+	</li>
+{/template}
+
+/**
+ * Prints the DDL rule condition.
+ *
+ * @param plusIcon
+ * @param? cssClass
+ */
+{template .btnAddNewTimelineItem autoescape="deprecated-contextual"}
+	<div class="addbutton-timeline-item">
+		<div class="add-condition timeline-increment-icon">
+			<a aria-role="button" class="btn btn-primary btn-xs form-builder-timeline-add-item {$cssClass or ''}" href="javascript:;">
+				{$plusIcon|noAutoescape}
+			</a>
+		</div>
+	</div>
+{/template}
+
+/**
+ * @param title
+ * @param? extraContent
+ */
+{template .rulesHeader autoescape="deprecated-contextual"}
+	<li class="timeline-item">
+		<div class="panel panel-default">
+			<div class="flex-container panel-body">
+				<div class="h4 panel-title">
+					{$title}
+				</div>
+
+				{if $extraContent}
+					{$extraContent|noAutoescape}
+				{/if}
+
+				<div class="timeline-increment-icon">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+	</li>
+{/template}
+
+/**
+ * Prints Logic Operator Dropdown
+ * @param? logicalOperator
+ */
+{template .logicOperatorDropDown autoescape="strict" kind="html"}
+	<div class="btn-group dropdown" style="block">
+		<button class="btn btn-default dropdown-toggle dropdown-toggle-operator text-uppercase" data-toggle="dropdown" type="button">
+			<span class="dropdown-toggle-selected-value">{$logicalOperator}</span> <span class="caret"></span>
+		</button>
+
+		<ul class="dropdown-menu">
+			<li class="logic-operator text-uppercase"><a href="#">or</a></li>
+			<li class="divider"></li>
+			<li class="logic-operator text-uppercase"><a href="#">and</a></li>
+		</ul>
+	</div>
+{/template}
+
+/**
+ * Prints the DDL property change action.
+ *
+ * @param index
+ * @param deleteIcon
+ */
+{template .action autoescape="deprecated-contextual"}
+	<li class="form-builder-rule-action-container-{$index} timeline-item">
+		<div class="panel panel-default">
+			<div class="flex-container panel-body">
+				<h4>Do</h4>
+
+				<div class="action-{$index} form-group"></div>
+				<div class="form-group target-{$index}"></div>
+
+				<div class="timeline-increment-icon">
+					<span class="timeline-icon"></span>
+				</div>
+			</div>
+		</div>
+		<div class="container-trash">
+			<button
+				class="btn btn-link action-card-delete icon-monospaced"
+				data-card-id="{$index}"
+				href="javascript:;"
+				type="button">
+				{$deleteIcon|noAutoescape}
+			</button>
+		</div>
+	</li>
+{/template}

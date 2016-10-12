@@ -45,12 +45,23 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-select',
 
 				prototype: {
+					cleanSelect: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						inputNode.setAttribute('selected', false);
+
+						instance.set('value', []);
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
+								strings: instance.get('strings'), //to be removed after diogo's pr
 								options: instance.get('options'),
 								value: instance.getValueArray()
 							}

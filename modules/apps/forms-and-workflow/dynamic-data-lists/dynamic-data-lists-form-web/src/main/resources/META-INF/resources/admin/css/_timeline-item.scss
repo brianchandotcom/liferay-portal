@@ -1,0 +1,31 @@
+.timeline-item {
+	color: #869CAD;
+	position: relative;
+
+	.action-panel {
+		display: table;
+		width: 100%;
+	}
+
+	&:first-child {
+		.timeline-icon {
+			background-color: #869CAD;
+		}
+	}
+
+	.form-control {
+		color: #869CAD;
+	}
+
+	.form-group {
+		margin: 0 10px;
+	}
+
+	.rule-choose-box {
+		display: table-cell;
+	}
+
+	& .timeline-icon {
+		border: 2px solid #869CAD;
+	}
+}

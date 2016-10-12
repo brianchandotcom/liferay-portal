@@ -88,6 +88,7 @@ AUI.add(
 					},
 
 					value: {
+						state: false,
 						value: ''
 					},
 

@@ -120,7 +120,7 @@ public class ProjectTemplatesArgs {
 	private File _destinationDir;
 
 	@Parameter(
-		description = "Forces creation of workspace even if target directory contains files",
+		description = "Forces creation of new project even if target directory contains files.",
 		names = "--force"
 	)
 	private boolean _force;

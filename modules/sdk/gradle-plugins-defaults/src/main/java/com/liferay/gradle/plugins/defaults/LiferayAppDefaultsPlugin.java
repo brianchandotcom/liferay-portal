@@ -27,14 +27,21 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Properties;
 
+import org.gradle.StartParameter;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.internal.GradleInternal;
+import org.gradle.api.internal.project.ProjectInternal;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.javadoc.Javadoc;
+import org.gradle.execution.ProjectConfigurer;
 import org.gradle.external.javadoc.StandardJavadocDocletOptions;
+import org.gradle.internal.service.ServiceRegistry;
 import org.gradle.util.GUtil;
 
 /**
@@ -83,6 +90,26 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		_configureAppTLDDocBuilder(project, privateProject);
 		configureProject(project, appDescription, appVersion);
 		configureTaskAppJavadoc(project, appTitle, appVersion);
+
+		if (privateProject != null) {
+			Gradle gradle = project.getGradle();
+
+			StartParameter startParameter = gradle.getStartParameter();
+
+			List<String> taskNames = startParameter.getTaskNames();
+
+			if (taskNames.contains(
+					AppJavadocBuilderPlugin.APP_JAVADOC_TASK_NAME) ||
+				taskNames.contains(
+					AppJavadocBuilderPlugin.JAR_APP_JAVADOC_TASK_NAME) ||
+				taskNames.contains(
+					AppTLDDocBuilderPlugin.APP_TLDDOC_TASK_NAME) ||
+				taskNames.contains(
+					AppTLDDocBuilderPlugin.JAR_APP_TLDDOC_TASK_NAME)) {
+
+				_forceProjectHierarchyEvaluation(privateProject);
+			}
+		}
 	}
 
 	/**
@@ -245,6 +272,17 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 			GradleUtil.getExtension(project, AppTLDDocBuilderExtension.class);
 
 		appTLDDocBuilderExtension.subprojects(privateProject.getSubprojects());
+	}
+
+	private void _forceProjectHierarchyEvaluation(Project project) {
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
+
+		ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		projectConfigurer.configureHierarchy((ProjectInternal)project);
 	}
 
 	private Properties _getAppProperties(Project project) {

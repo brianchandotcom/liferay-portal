@@ -15,6 +15,7 @@
 package com.liferay.blogs.verify;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyProcess;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 
 import java.util.List;
 
@@ -127,7 +127,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 				mbMessage.getCompanyId());
 
 			if (mbMessage.getUserId() == defaultUserId) {
-				LinkbackConsumerUtil.verifyTrackback(
+				_linkbackConsumer.verifyTrackback(
 					mbMessage.getMessageId(), url, entryURL);
 			}
 		}
@@ -137,6 +137,10 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 		VerifyBlogsTrackbacks.class);
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private LinkbackConsumer _linkbackConsumer;
+
 	private MBMessageLocalService _mbMessageLocalService;
 	private UserLocalService _userLocalService;
 

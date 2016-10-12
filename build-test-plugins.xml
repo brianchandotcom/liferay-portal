@@ -259,7 +259,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 						</if>
 
 						<if>
-							<equals arg1="cas-web" arg2="@{plugin}" />
+							<equals arg1="@{plugin}" arg2="cas-web" />
 							<then>
 								<move todir="${app.server.dir}/webapps">
 								  <fileset dir="${app.server.dir}/webapps">

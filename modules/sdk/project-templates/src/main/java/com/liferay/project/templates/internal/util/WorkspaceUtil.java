@@ -34,31 +34,15 @@ public class WorkspaceUtil {
 		Path rootDirPath = FileUtil.getRootDir(
 			dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);
 
-		if (rootDirPath != null) {
-			String settingsGradle = FileUtil.read(
-				rootDirPath.resolve(_SETTINGS_GRADLE_FILE_NAME));
-
-			if (StringUtil.contains(settingsGradle, _pattern)) {
-				return rootDirPath.toFile();
-			}
-		}
-
-		return null;
-	}
-
-	public static boolean isWorkspace(File dir) throws IOException {
-		Path rootDirPath = FileUtil.getRootDir(
-			dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);
-
 		if (rootDirPath == null) {
-			return false;
+			return null;
 		}
 
 		String settingsGradle = FileUtil.read(
 			rootDirPath.resolve(_SETTINGS_GRADLE_FILE_NAME));
 
 		if (StringUtil.contains(settingsGradle, _pattern)) {
-			return true;
+			return rootDirPath.toFile();
 		}
 
 		// For Workspace plugin < 1.0.5
@@ -66,12 +50,22 @@ public class WorkspaceUtil {
 		Path buildGradlePath = rootDirPath.resolve(_BUILD_GRADLE_FILE_NAME);
 
 		if (Files.notExists(buildGradlePath)) {
-			return false;
+			return null;
 		}
 
 		String buildGradle = FileUtil.read(buildGradlePath);
 
 		if (StringUtil.contains(buildGradle, _pattern)) {
+			return rootDirPath.toFile();
+		}
+
+		return null;
+	}
+
+	public static boolean isWorkspace(File dir) throws IOException {
+		File workspaceDir = getWorkspaceDir(dir);
+
+		if (workspaceDir != null) {
 			return true;
 		}
 

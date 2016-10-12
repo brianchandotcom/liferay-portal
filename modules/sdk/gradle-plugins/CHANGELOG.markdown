@@ -299,9 +299,9 @@ version 1.0.128.
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 
 ### Removed
-- [LPS-66396]: The task classes `BuildThumbnailsTask` and `CompileThemeTask` in
-`com.liferay.gradle.plugins.tasks` are no longer available. Please use
-[Liferay Gradle Plugins Theme Builder] instead.
+- [LPS-66396]: Remove the task classes `BuildThumbnailsTask` and
+`CompileThemeTask` from `com.liferay.gradle.plugins.tasks`. The
+[Liferay Gradle Plugins Theme Builder] should be used instead.
 - [LPS-67573]: To reduce the number of plugins applied to a project and improve
 performance, plugins in `com.liferay.gradle.plugins.internal` are no longer
 applied via `apply plugin`.

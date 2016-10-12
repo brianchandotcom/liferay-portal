@@ -828,7 +828,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 				}
 
-				Matcher matcher = _ifTagPattern.matcher(trimmedLine);
+				Matcher matcher = _testTagPattern.matcher(trimmedLine);
 
 				if (matcher.find()) {
 					String ifClause = "if (" + matcher.group(2) + ") {";
@@ -2138,7 +2138,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
-	private final Pattern _ifTagPattern = Pattern.compile(
+	private final Pattern _testTagPattern = Pattern.compile(
 		"^<c:(if|when) test=['\"]<%= (.+) %>['\"]>$");
 	private final List<String> _importClassNames = new ArrayList<>();
 	private final Map<String, Integer> _importCountMap = new HashMap<>();

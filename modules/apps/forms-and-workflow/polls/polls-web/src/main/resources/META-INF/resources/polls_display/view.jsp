@@ -75,39 +75,44 @@ catch (NoSuchQuestionException nsqe) {
 			<liferay-ui:error exception="<%= DuplicateVoteException.class %>" message="you-may-only-vote-once" />
 			<liferay-ui:error exception="<%= NoSuchChoiceException.class %>" message="please-select-an-option" />
 
-			<%= StringUtil.replace(question.getDescription(locale), CharPool.NEW_LINE, "<br />") %>
+			<aui:fieldset-group markupView="lexicon">
+				<aui:fieldset>
+					<h2>
+						<%= StringUtil.replace(question.getDescription(locale), CharPool.NEW_LINE, "<br />") %>
+					</h2>
 
-			<c:choose>
-				<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
-					<aui:fieldset>
-						<aui:field-wrapper>
+					<c:choose>
+						<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 
 							<%
 							for (PollsChoice choice : choices) {
 								choice = choice.toEscapedModel();
 							%>
 
-								<aui:input label='<%= "<strong>" + choice.getName() + ".</strong> " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+								<aui:field-wrapper cssClass="radio">
+									<aui:input label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+								</aui:field-wrapper>
 
 							<%
 							}
 							%>
 
-						</aui:field-wrapper>
+							<aui:button-row>
+								<aui:button type="submit" value="vote[action]" />
+							</aui:button-row>
+						</c:when>
+						<c:otherwise>
+							<%@ include file="/polls/view_question_results.jspf" %>
 
-						<aui:button type="submit" value="vote[action]" />
-					</aui:fieldset>
-				</c:when>
-				<c:otherwise>
-					<%@ include file="/polls/view_question_results.jspf" %>
-
-					<c:if test="<%= !themeDisplay.isSignedIn() && !question.isExpired() && !PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
-						<div class="alert alert-info">
-							<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-vote" /></a>
-						</div>
-					</c:if>
-				</c:otherwise>
-			</c:choose>
+							<c:if test="<%= !themeDisplay.isSignedIn() && !question.isExpired() && !PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+								<div class="alert alert-info">
+									<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-vote" /></a>
+								</div>
+							</c:if>
+						</c:otherwise>
+					</c:choose>
+				</aui:fieldset>
+			</aui:fieldset-group>
 		</aui:form>
 	</c:otherwise>
 </c:choose>

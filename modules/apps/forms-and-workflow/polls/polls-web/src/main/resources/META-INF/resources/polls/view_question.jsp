@@ -59,26 +59,24 @@ portletDisplay.setURLBack(redirect);
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
-			<span>
+			<h2>
 				<%= StringUtil.replace(question.getDescription(locale), CharPool.NEW_LINE, "<br />") %>
-			</span>
+			</h2>
 
 			<c:choose>
 				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
-					<aui:field-wrapper>
 
 						<%
 						for (PollsChoice choice : choices) {
 							choice = choice.toEscapedModel();
 						%>
-
-							<aui:input label='<%= "<strong>" + choice.getName() + ".</strong> " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+							<aui:field-wrapper cssClass="radio">
+								<aui:input cssClass="radio-inline" label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+							</aui:field-wrapper>
 
 						<%
 						}
 						%>
-
-					</aui:field-wrapper>
 
 					<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 						<portlet:renderURL var="viewResultsURL">

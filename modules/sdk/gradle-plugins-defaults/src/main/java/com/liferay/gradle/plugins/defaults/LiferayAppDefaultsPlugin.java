@@ -233,9 +233,10 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 							LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
 
 					if (recordArtifactTask != null) {
-						File outputFile = recordArtifactTask.getOutputFile();
+						File artifactPropertiesFile =
+							recordArtifactTask.getOutputFile();
 
-						if (outputFile.exists()) {
+						if (artifactPropertiesFile.exists()) {
 							return true;
 						}
 					}

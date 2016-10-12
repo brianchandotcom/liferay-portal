@@ -78,48 +78,17 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		LiferayOSGiDefaultsPlugin.configureRepositories(project);
 
-		configureAppJavadocBuilder(project);
+		_configureAppJavadocBuilder(project, privateProject);
 		configureProject(project, appDescription, appVersion);
 		configureTaskAppJavadoc(project, appTitle, appVersion);
 	}
 
+	/**
+	 * @deprecated As of 1.2.0
+	 */
+	@Deprecated
 	protected void configureAppJavadocBuilder(Project project) {
-		AppJavadocBuilderExtension appJavadocBuilderExtension =
-			GradleUtil.getExtension(project, AppJavadocBuilderExtension.class);
-
-		appJavadocBuilderExtension.onlyIf(
-			new Spec<Project>() {
-
-				@Override
-				public boolean isSatisfiedBy(Project project) {
-					TaskContainer taskContainer = project.getTasks();
-
-					WritePropertiesTask recordArtifactTask =
-						(WritePropertiesTask)taskContainer.findByName(
-							LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
-
-					if (recordArtifactTask != null) {
-						File outputFile = recordArtifactTask.getOutputFile();
-
-						if (outputFile.exists()) {
-							return true;
-						}
-					}
-
-					return false;
-				}
-
-			});
-
-		appJavadocBuilderExtension.setGroupNameClosure(
-			new Closure<String>(project) {
-
-				@SuppressWarnings("unused")
-				public String doCall(Project subproject) {
-					return getAppJavadocGroupName(subproject);
-				}
-
-			});
+		_configureAppJavadocBuilder(project, null);
 	}
 
 	protected void configureProject(
@@ -215,6 +184,52 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
+	}
+
+	private void _configureAppJavadocBuilder(
+		Project project, Project privateProject) {
+
+		AppJavadocBuilderExtension appJavadocBuilderExtension =
+			GradleUtil.getExtension(project, AppJavadocBuilderExtension.class);
+
+		appJavadocBuilderExtension.onlyIf(
+			new Spec<Project>() {
+
+				@Override
+				public boolean isSatisfiedBy(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					WritePropertiesTask recordArtifactTask =
+						(WritePropertiesTask)taskContainer.findByName(
+							LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
+
+					if (recordArtifactTask != null) {
+						File outputFile = recordArtifactTask.getOutputFile();
+
+						if (outputFile.exists()) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+			});
+
+		appJavadocBuilderExtension.setGroupNameClosure(
+			new Closure<String>(project) {
+
+				@SuppressWarnings("unused")
+				public String doCall(Project subproject) {
+					return getAppJavadocGroupName(subproject);
+				}
+
+			});
+
+		if (privateProject != null) {
+			appJavadocBuilderExtension.subprojects(
+				privateProject.getSubprojects());
+		}
 	}
 
 	private Properties _getAppProperties(Project project) {

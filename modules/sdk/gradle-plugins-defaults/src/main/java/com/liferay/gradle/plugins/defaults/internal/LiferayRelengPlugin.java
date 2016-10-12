@@ -44,7 +44,6 @@ import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -70,6 +69,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.Upload;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -87,18 +87,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	public static final String RECORD_ARTIFACT_TASK_NAME = "recordArtifact";
 
 	public static final String UPDATE_VERSION_TASK_NAME = "updateVersion";
-
-	public static Properties getArtifactProperties(
-		WritePropertiesTask recordArtifactTask) {
-
-		try {
-			return FileUtil.readProperties(recordArtifactTask.getOutputFile());
-		}
-		catch (IOException ioe) {
-			throw new GradleException(
-				"Unable to read artifact properties", ioe);
-		}
-	}
 
 	public static File getRelengDir(Project project) {
 		File rootDir = GradleUtil.getRootDir(project, ".releng");
@@ -465,8 +453,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Properties artifactProperties = getArtifactProperties(
-						recordArtifactTask);
+					Properties artifactProperties;
+
+					File artifactPropertiesFile =
+						recordArtifactTask.getOutputFile();
+
+					if (artifactPropertiesFile.exists()) {
+						artifactProperties = GUtil.loadProperties(
+							artifactPropertiesFile);
+					}
+					else {
+						artifactProperties = new Properties();
+					}
 
 					return isStale(
 						recordArtifactTask.getProject(), artifactProperties);

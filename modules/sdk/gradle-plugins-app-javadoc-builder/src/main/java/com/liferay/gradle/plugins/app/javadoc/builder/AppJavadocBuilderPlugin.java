@@ -38,6 +38,7 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -80,19 +81,24 @@ public class AppJavadocBuilderPlugin implements Plugin<Project> {
 
 		_addTaskJarAppJavadoc(appJavadocTask);
 
-		for (Project subproject : project.getSubprojects()) {
-			subproject.afterEvaluate(
-				new Action<Project>() {
+		Gradle gradle = project.getGradle();
 
-					@Override
-					public void execute(Project subproject) {
+		gradle.afterProject(
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(Project subproject) {
+					Set<Project> subprojects =
+						appJavadocBuilderExtension.getSubprojects();
+
+					if (subprojects.contains(subproject)) {
 						_configureTaskAppJavadoc(
 							appJavadocTask, appJavadocBuilderExtension,
 							subproject);
 					}
+				}
 
-				});
-		}
+			});
 
 		project.afterEvaluate(
 			new Action<Project>() {

@@ -12,7 +12,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "1.1.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.tlddoc.builder", version: "1.2.0"
 	}
 
 	repositories {
@@ -120,6 +120,22 @@ Property Name | Default Value
 ------------- | -------------
 [`destinationDir`](#destinationdir) | `${project.buildDir}/docs/tlddoc`
 [`source`](#source) | The sum of all the `tlddoc.source` values of the subprojects
+
+## Project Extension
+
+The App TLDDoc Builder plugin exposes the following properties through the
+extension named `appTLDDocBuilder`:
+
+Property Name | Type | Default Value | Description
+------------- | ---- | ------------- | -----------
+`subprojects` | `Set<Project>` | `project.subprojects` | The subprojects to include in the tag library documentation of the app.
+
+The same extension exposes the following methods:
+
+Method | Description
+------ | -----------
+`AppTLDDocBuilderExtension subprojects(Iterable<Project> subprojects)` | Include additional projects in the tag library documentation of the app.
+`AppTLDDocBuilderExtension subprojects(Project... subprojects)` | Include additional projects in the tag library documentation of the app.
 
 ## Tasks
 

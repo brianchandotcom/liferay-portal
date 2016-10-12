@@ -299,9 +299,9 @@ version 1.0.128.
 - [LPS-67573]: Make most methods private in order to reduce API surface.
 
 ### Removed
-- [LPS-66396]: The task classes `BuildThumbnailsTask` and `CompileThemeTask` in
-`com.liferay.gradle.plugins.tasks` are no longer available. Please use
-[Liferay Gradle Plugins Theme Builder] instead.
+- [LPS-66396]: Remove the task classes `BuildThumbnailsTask` and
+`CompileThemeTask` from `com.liferay.gradle.plugins.tasks`. The
+[Liferay Gradle Plugins Theme Builder] should be used instead.
 - [LPS-67573]: To reduce the number of plugins applied to a project and improve
 performance, plugins in `com.liferay.gradle.plugins.internal` are no longer
 applied via `apply plugin`.
@@ -362,6 +362,20 @@ version 1.0.14.
 - [LPS-68598]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.129.
 
+## 3.0.8 - 2016-10-11
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.29.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.295.
+
+## 3.0.9 - 2016-10-12
+
+### Changed
+- [LPS-68666]: Update the [Liferay Gradle Plugins TLDDoc Builder] dependency
+to version 1.2.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -404,4 +418,5 @@ version 1.0.129.
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68598]: https://issues.liferay.com/browse/LPS-68598
 [LPS-68618]: https://issues.liferay.com/browse/LPS-68618
+[LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

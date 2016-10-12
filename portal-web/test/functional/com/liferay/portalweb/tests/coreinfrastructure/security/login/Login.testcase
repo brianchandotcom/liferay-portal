@@ -139,4 +139,28 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+
+	<command name="TokenBasedSSOSmoke" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
+		<execute macro="SystemSettings#viewConfiguration">
+			<var name="configurationName" value="Token Based SSO" />
+		</execute>
+
+		<execute macro="SystemSettings#enableSetting">
+			<var name="setting" value="ENABLED_CHECKBOX" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute function="AntCommand" locator1="build-test-authentication.xml" value1="verify-token-based-login" />
+	</command>
 </definition>

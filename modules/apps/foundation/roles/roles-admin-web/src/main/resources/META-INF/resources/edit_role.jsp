@@ -74,14 +74,14 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
 			<c:choose>
-				<c:when test="<%= ((role == null) && (type == 0)) %>">
+				<c:when test="<%= (role == null) && (type == 0) %>">
 					<aui:select name="type">
 						<aui:option label="regular" value="<%= RoleConstants.TYPE_REGULAR %>" />
 						<aui:option label="site" value="<%= RoleConstants.TYPE_SITE %>" />
 						<aui:option label="organization" value="<%= RoleConstants.TYPE_ORGANIZATION %>" />
 					</aui:select>
 				</c:when>
-				<c:when test="<%= (role == null) %>">
+				<c:when test="<%= role == null %>">
 					<aui:input label="type" name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, RoleConstants.getTypeLabel(type)) %>" />
 
 					<aui:input name="type" type="hidden" value="<%= String.valueOf(type) %>" />

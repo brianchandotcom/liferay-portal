@@ -93,7 +93,7 @@ renderResponse.setTitle(item.getName());
 
 				<h6 class="text-default">
 					<c:choose>
-						<c:when test="<%= (itemPrice.getMinQuantity()) == 0 && (itemPrice.getMaxQuantity() == 0) %>">
+						<c:when test="<%= (itemPrice.getMinQuantity() == 0) && (itemPrice.getMaxQuantity() == 0) %>">
 							<liferay-ui:message key="price" />:
 						</c:when>
 						<c:when test="<%= itemPrice.getMaxQuantity() != 0 %>">

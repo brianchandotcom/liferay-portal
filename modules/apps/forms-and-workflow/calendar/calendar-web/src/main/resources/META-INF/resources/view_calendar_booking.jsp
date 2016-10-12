@@ -181,12 +181,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 				%>
 
 				<c:choose>
-					<c:when test="<%= (untilJCalendar != null) %>">
+					<c:when test="<%= untilJCalendar != null %>">
 						endValue = 'on';
 
 						untilDate = new Date('<%= dateFormatLongDate.format(untilJCalendar.getTimeInMillis()) %>');
 					</c:when>
-					<c:when test="<%= (recurrence.getCount() > 0) %>">
+					<c:when test="<%= recurrence.getCount() > 0 %>">
 						endValue = 'after';
 					</c:when>
 				</c:choose>

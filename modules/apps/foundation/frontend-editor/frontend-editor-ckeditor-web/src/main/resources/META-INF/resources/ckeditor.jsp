@@ -408,7 +408,7 @@ name = HtmlUtil.escapeJS(name);
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
 				if (!ckEditorContent) {
 					<c:choose>
-						<c:when test="<%= (contents != null) %>">
+						<c:when test="<%= contents != null %>">
 							ckEditorContent = '<%= UnicodeFormatter.toString(contents) %>';
 						</c:when>
 						<c:otherwise>

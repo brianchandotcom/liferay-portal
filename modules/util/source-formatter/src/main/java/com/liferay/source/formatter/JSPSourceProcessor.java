@@ -244,6 +244,31 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkIfClauseParentheses(
+		String trimmedLine, String fileName, int lineCount,
+		boolean javaSource) {
+
+		if (javaSource) {
+			if ((trimmedLine.startsWith("if (") ||
+				 trimmedLine.startsWith("else if (") ||
+				 trimmedLine.startsWith("while (")) &&
+				trimmedLine.endsWith(") {")) {
+
+				checkIfClauseParentheses(trimmedLine, fileName, lineCount);
+			}
+
+			return;
+		}
+
+		Matcher matcher = _testTagPattern.matcher(trimmedLine);
+
+		if (matcher.find()) {
+			String ifClause = "if (" + matcher.group(2) + ") {";
+
+			checkIfClauseParentheses(ifClause, fileName, lineCount);
+		}
+	}
+
 	protected void checkSubnames(String fileName, String content) {
 		Matcher matcher = _subnamePattern.matcher(content);
 
@@ -812,15 +837,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (javaSource &&
-					(trimmedLine.startsWith("if (") ||
-					 trimmedLine.startsWith("else if (") ||
-					 trimmedLine.startsWith("while (")) &&
-					trimmedLine.endsWith(") {")) {
-
-					checkIfClauseParentheses(trimmedLine, fileName, lineCount);
-				}
-
-				if (javaSource &&
 					trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 
 					processMessage(
@@ -828,15 +844,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 				}
 
-				Matcher matcher = _ifTagPattern.matcher(trimmedLine);
+				checkIfClauseParentheses(
+					trimmedLine, fileName, lineCount, javaSource);
 
-				if (matcher.find()) {
-					String ifClause = "if (" + matcher.group(2) + ") {";
-
-					checkIfClauseParentheses(ifClause, fileName, lineCount);
-				}
-
-				matcher = _jspTaglibPattern.matcher(line);
+				Matcher matcher = _jspTaglibPattern.matcher(line);
 
 				while (matcher.find()) {
 					line = formatAttributes(
@@ -2138,8 +2149,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
 	private final Pattern _emptyJavaSourceTagPattern = Pattern.compile(
 		"\n\t*<%\n+\t*%>\n");
-	private final Pattern _ifTagPattern = Pattern.compile(
-		"^<c:if test=('|\")<%= (.+) %>('|\")>$");
 	private final List<String> _importClassNames = new ArrayList<>();
 	private final Map<String, Integer> _importCountMap = new HashMap<>();
 	private final Pattern _importsPattern = Pattern.compile(
@@ -2191,6 +2200,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			"(?:'|\").+(?:'|\"))");
 	private final Pattern _taglibVariablePattern = Pattern.compile(
 		"(\n\t*String (taglib\\w+) = (.*);)\n\\s*%>\\s+(<[\\S\\s]*?>)\n");
+	private final Pattern _testTagPattern = Pattern.compile(
+		"^<c:(if|when) test=['\"]<%= (.+) %>['\"]>$");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

@@ -198,7 +198,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 				<div class="index-action-wrapper pull-right" data-type="portal">
 					<c:choose>
-						<c:when test="<%= backgroundTaskDisplay == null || !backgroundTaskDisplay.hasPercentage() %>">
+						<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
 
 							<%
 							long timeout = ParamUtil.getLong(request, "timeout");
@@ -238,7 +238,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 
 					<div class="index-action-wrapper pull-right" data-type="<%= indexer.getClassName() %>">
 						<c:choose>
-							<c:when test="<%= backgroundTaskDisplay == null || !backgroundTaskDisplay.hasPercentage() %>">
+							<c:when test="<%= (backgroundTaskDisplay == null) || !backgroundTaskDisplay.hasPercentage() %>">
 								<aui:button cssClass="save-server-button" data-classname="<%= indexer.getClassName() %>" data-cmd="reindex" disabled="<%= !indexer.isIndexerEnabled() %>" value="execute" />
 							</c:when>
 							<c:otherwise>

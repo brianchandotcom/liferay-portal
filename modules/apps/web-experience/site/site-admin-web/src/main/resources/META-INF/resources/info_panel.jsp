@@ -41,7 +41,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 %>
 
 <c:choose>
-	<c:when test="<%= (ListUtil.isNotEmpty(groups) && (groups.size() == 1)) %>">
+	<c:when test="<%= ListUtil.isNotEmpty(groups) && (groups.size() == 1) %>">
 
 		<%
 		Group group = groups.get(0);

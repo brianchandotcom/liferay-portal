@@ -35,6 +35,8 @@ public class PlusStatementCheck extends AbstractCheck {
 	public static final String MSG_COMBINE_LITERAL_STRINGS =
 		"literal.string.combine";
 
+	public static final String MSG_INCORRECT_TABBING = "tabbing.incorrect";
+
 	public static final String MSG_INVALID_END_CHARACTER =
 		"end.character.invalid";
 
@@ -58,6 +60,7 @@ public class PlusStatementCheck extends AbstractCheck {
 	@Override
 	public void visitToken(DetailAST detailAST) {
 		_checkMultiLinesPlusStatement(detailAST);
+		_checkTabbing(detailAST);
 
 		if (detailAST.getChildCount() != 2) {
 			return;
@@ -185,6 +188,31 @@ public class PlusStatementCheck extends AbstractCheck {
 
 		if (lineNumbers.size() > 3) {
 			log(detailAST.getLineNo(), MSG_STATEMENT_TOO_LONG);
+		}
+	}
+
+	private void _checkTabbing(DetailAST detailAST) {
+		DetailAST afterPlusAST = detailAST.getLastChild();
+
+		if (afterPlusAST.getType() == TokenTypes.RPAREN) {
+			while (afterPlusAST.getType() != TokenTypes.LPAREN) {
+				afterPlusAST = afterPlusAST.getPreviousSibling();
+			}
+		}
+
+		int afterPlusLineNo = DetailASTUtil.getStartLine(afterPlusAST);
+
+		if (afterPlusLineNo == detailAST.getLineNo()) {
+			return;
+		}
+
+		String line1 = getLine(detailAST.getLineNo() - 1);
+		String line2 = getLine(afterPlusLineNo - 1);
+
+		int tabCount = _getLeadingTabCount(line1);
+
+		if ((tabCount + 1) != _getLeadingTabCount(line2)) {
+			log(afterPlusLineNo, MSG_INCORRECT_TABBING, tabCount + 1);
 		}
 	}
 

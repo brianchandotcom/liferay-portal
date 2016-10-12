@@ -107,7 +107,7 @@ public class UnstableMessageUtil {
 			runBuildURLs.add(buildURL);
 		}
 
-		int failureCount = _getUnstableMessage(project, runBuildURLs, sb);
+		int failureCount = _getFailureCount(project, runBuildURLs, sb);
 
 		sb.append("</ol>");
 
@@ -121,67 +121,14 @@ public class UnstableMessageUtil {
 		return sb.toString();
 	}
 
-	private static void _getFailureMessage(
-			String failureBuildURL, StringBuilder sb)
-		throws Exception {
-
-		sb.append("<li><strong><a href=\"");
-		sb.append(failureBuildURL);
-		sb.append("\">");
-
-		JSONObject failureJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			JenkinsResultsParserUtil.getLocalURL(failureBuildURL + "api/json"));
-
-		sb.append(
-			JenkinsResultsParserUtil.fixJSON(
-				failureJSONObject.getString("fullDisplayName")));
-
-		sb.append("</a></strong>");
-
-		GenericFailureMessageGenerator genericFailureMessageGenerator =
-			new GenericFailureMessageGenerator();
-
-		String consoleOutput = JenkinsResultsParserUtil.toString(
-			JenkinsResultsParserUtil.getLocalURL(
-				failureBuildURL + "/logText/progressiveText"));
-
-		sb.append(
-			genericFailureMessageGenerator.getMessage(
-				failureBuildURL, consoleOutput, null));
-
-		sb.append("</li>");
-	}
-
-	private static String _getLogURL(
-			String jobVariant, Project project,
-			JSONObject runBuildURLJSONObject)
-		throws Exception {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(project.getProperty("log.base.url"));
-		sb.append("/");
-		sb.append(project.getProperty("env.MASTER_HOSTNAME"));
-		sb.append("/");
-		sb.append(project.getProperty("env.TOP_LEVEL_START_TIME"));
-		sb.append("/");
-		sb.append(project.getProperty("env.JOB_NAME"));
-		sb.append("/");
-		sb.append(project.getProperty("env.BUILD_NUMBER"));
-		sb.append("/");
-		sb.append(jobVariant);
-		sb.append("/");
-		sb.append(
-			JenkinsResultsParserUtil.getAxisVariable(runBuildURLJSONObject));
-
-		return sb.toString();
-	}
-
-	private static int _getUnstableMessage(
+	private static int _getFailureCount(
 			Project project, List<String> runBuildURLs, StringBuilder sb)
 		throws Exception {
 
 		int failureCount = 0;
+		int firefoxVNCFailureCount = 0;
+
+		int messageBeginIndex = sb.length();
 
 		for (String runBuildURL : runBuildURLs) {
 			JSONObject runBuildURLJSONObject =
@@ -196,15 +143,32 @@ public class UnstableMessageUtil {
 					failureCount++;
 
 					sb.append("<li>...</li>");
-
-					return failureCount;
 				}
 
-				_getFailureMessage(runBuildURL, sb);
+				if (failureCount < 3) {
+					_getFailureMessage(runBuildURL, sb);
+				}
 
 				failureCount++;
 
 				continue;
+			}
+
+			if (result.equals("UNSTABLE")) {
+				String consoleText = JenkinsResultsParserUtil.toString(
+					JenkinsResultsParserUtil.getLocalURL(
+						runBuildURL + "/consoleText"));
+				System.out.println("loaded.");
+
+				int cursor = consoleText.indexOf(_FF_VNC_ERROR_MARKER);
+
+				while (cursor != -1) {
+					firefoxVNCFailureCount++;
+
+					cursor = consoleText.indexOf(
+						_FF_VNC_ERROR_MARKER,
+						cursor + _FF_VNC_ERROR_MARKER.length());
+				}
 			}
 
 			JSONObject testReportJSONObject =
@@ -237,7 +201,11 @@ public class UnstableMessageUtil {
 
 						sb.append("<li>...</li>");
 
-						return failureCount;
+						continue;
+					}
+
+					if (failureCount > 3) {
+						continue;
 					}
 
 					sb.append("<li><a href=\"");
@@ -316,7 +284,8 @@ public class UnstableMessageUtil {
 							"/jenkins-console.txt.gz\">Console Output</a>");
 
 						if (Boolean.parseBoolean(
-								project.getProperty("record.liferay.log"))) {
+								project.getProperty(
+									"record.liferay.log"))) {
 
 							sb.append(" - ");
 							sb.append("<a href=\"");
@@ -338,7 +307,101 @@ public class UnstableMessageUtil {
 			}
 		}
 
+		if (firefoxVNCFailureCount > 0) {
+			sb.delete(messageBeginIndex, sb.length());
+
+			if (firefoxVNCFailureCount == failureCount) {
+				sb.append("All tests failed due to the Firefox VNC error. ");
+			}
+			else {
+				sb.append(firefoxVNCFailureCount);
+				sb.append(" tests failed due to the Firefox VNC error. ");
+				sb.append(failureCount - firefoxVNCFailureCount);
+				sb.append(" additional tests failed for other reasons. ");
+			}
+
+			sb.append("See <a href=\"https://issues.liferay.com");
+			sb.append("/browse/LRQA-28169\">LRQA-28169</a> for more details.");
+
+			String hostName = JenkinsResultsParserUtil.getHostName("UNKNOWN");
+
+			StringBuilder toSB = new StringBuilder();
+
+			toSB.append("kevin.yen@liferay.com, ");
+			toSB.append("kiyoshi.lee@liferay.com, ");
+			toSB.append("leslie.wong@liferay.com, ");
+			toSB.append("michael.hashimoto@liferay.com, ");
+			toSB.append("peter.yoo@liferay.com");
+
+			String message = hostName + " VNC Failure";
+
+			String from = "root@" + hostName;
+
+			JenkinsResultsParserUtil.sendEmail(
+				message, from, message, toSB.toString());
+		}
+
 		return failureCount;
 	}
+
+	private static void _getFailureMessage(
+			String failureBuildURL, StringBuilder sb)
+		throws Exception {
+
+		sb.append("<li><strong><a href=\"");
+		sb.append(failureBuildURL);
+		sb.append("\">");
+
+		JSONObject failureJSONObject = JenkinsResultsParserUtil.toJSONObject(
+			JenkinsResultsParserUtil.getLocalURL(failureBuildURL + "api/json"));
+
+		sb.append(
+			JenkinsResultsParserUtil.fixJSON(
+				failureJSONObject.getString("fullDisplayName")));
+
+		sb.append("</a></strong>");
+
+		GenericFailureMessageGenerator genericFailureMessageGenerator =
+			new GenericFailureMessageGenerator();
+
+		String consoleOutput = JenkinsResultsParserUtil.toString(
+			JenkinsResultsParserUtil.getLocalURL(
+				failureBuildURL + "/logText/progressiveText"));
+
+		sb.append(
+			genericFailureMessageGenerator.getMessage(
+				failureBuildURL, consoleOutput, null));
+
+		sb.append("</li>");
+	}
+
+	private static String _getLogURL(
+			String jobVariant, Project project,
+			JSONObject runBuildURLJSONObject)
+		throws Exception {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(project.getProperty("log.base.url"));
+		sb.append("/");
+		sb.append(project.getProperty("env.MASTER_HOSTNAME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.TOP_LEVEL_START_TIME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.JOB_NAME"));
+		sb.append("/");
+		sb.append(project.getProperty("env.BUILD_NUMBER"));
+		sb.append("/");
+		sb.append(jobVariant);
+		sb.append("/");
+		sb.append(
+			JenkinsResultsParserUtil.getAxisVariable(runBuildURLJSONObject));
+
+		return sb.toString();
+	}
+
+	private static final String _FF_VNC_ERROR_MARKER =
+		"org.openqa.selenium.WebDriverException: Failed to " +
+		"connect to binary FirefoxBinary";
 
 }

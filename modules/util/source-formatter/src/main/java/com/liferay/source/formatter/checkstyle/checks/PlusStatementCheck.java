@@ -108,15 +108,10 @@ public class PlusStatementCheck extends AbstractCheck {
 			return;
 		}
 
-		String[] lines = getLines();
+		String line1 = getLine(lastChild.getLineNo() - 2);
+		String line2 = getLine(lastChild.getLineNo() - 1);
 
-		String line1 = lines[lastChild.getLineNo() - 2];
-		String line2 = lines[lastChild.getLineNo() - 1];
-
-		int tabCount1 = _getLeadingTabCount(line1);
-		int tabCount2 = _getLeadingTabCount(line2);
-
-		if (tabCount1 == tabCount2) {
+		if (_getLeadingTabCount(line1) == _getLeadingTabCount(line2)) {
 			return;
 		}
 

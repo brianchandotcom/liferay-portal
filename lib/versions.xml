@@ -1628,18 +1628,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/fastutil.jar</file-name>
-				<version>5.0.5</version>
-				<project-name>Fastutil</project-name>
-				<project-url>http://fastutil.dsi.unimi.it</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/fontbox.jar</file-name>
 				<version>1.8.12</version>
 				<project-name>PDFBox</project-name>

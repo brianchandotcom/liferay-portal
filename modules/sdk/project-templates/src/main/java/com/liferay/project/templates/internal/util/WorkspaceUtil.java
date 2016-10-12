@@ -30,6 +30,22 @@ public class WorkspaceUtil {
 
 	public static final String WORKSPACE = "workspace";
 
+	public static File getWorkspaceDir(File dir) throws IOException {
+		Path rootDirPath = FileUtil.getRootDir(
+			dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);
+
+		if (rootDirPath != null) {
+			String settingsGradle = FileUtil.read(
+				rootDirPath.resolve(_SETTINGS_GRADLE_FILE_NAME));
+
+			if (StringUtil.contains(settingsGradle, _pattern)) {
+				return rootDirPath.toFile();
+			}
+		}
+
+		return null;
+	}
+
 	public static boolean isWorkspace(File dir) throws IOException {
 		Path rootDirPath = FileUtil.getRootDir(
 			dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);
@@ -60,19 +76,6 @@ public class WorkspaceUtil {
 		}
 
 		return false;
-	}
-
-	public static File getWorkspaceDir(File dir) throws IOException {
-		Path rootDirPath = FileUtil.getRootDir(dir.toPath(), _SETTINGS_GRADLE_FILE_NAME);
-
-		if (rootDirPath != null) {
-			String settingsGradle = FileUtil.read(rootDirPath.resolve(_SETTINGS_GRADLE_FILE_NAME));
-
-			if (StringUtil.contains(settingsGradle, _pattern)) {
-				return rootDirPath.toFile();
-			}
-		}
-		return null;
 	}
 
 	private static final String _BUILD_GRADLE_FILE_NAME = "build.gradle";

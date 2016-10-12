@@ -566,14 +566,16 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateServiceBuilderNestedPath() throws Exception {
 		File workspaceProjectDir = _buildTemplateWithGradle(
-				WorkspaceUtil.WORKSPACE, "ws-nested-path");
+			WorkspaceUtil.WORKSPACE, "ws-nested-path");
 
-		File destinationDir = new File(workspaceProjectDir, "modules/nested/path");
+		File destinationDir = new File(
+			workspaceProjectDir, "modules/nested/path");
 
-		assertTrue(
-			destinationDir.mkdirs());
+		assertTrue(destinationDir.mkdirs());
 
-		File gradleProjectDir = _buildTemplateWithGradle(destinationDir, "service-builder", "sample", "--package-name", "com.test.sample");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			destinationDir, "service-builder", "sample", "--package-name",
+			"com.test.sample");
 
 		_testContains(
 			gradleProjectDir, "sample-service/build.gradle",
@@ -746,7 +748,8 @@ public class ProjectTemplatesTest {
 
 		new File(destinationDir, "foo").createNewFile();
 
-		_buildTemplateWithGradle(destinationDir, "workspace", "forced", "--force");
+		_buildTemplateWithGradle(
+			destinationDir, "workspace", "forced", "--force");
 	}
 
 	@Test
@@ -1094,7 +1097,8 @@ public class ProjectTemplatesTest {
 			_GRADLE_TASK_PATH_BUILD_SERVICE);
 
 		_executeGradle(
-			rootProject, projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+			rootProject,
+			projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
 
 		File gradleApiBundleFile = _testExists(
 			gradleProjectDir,

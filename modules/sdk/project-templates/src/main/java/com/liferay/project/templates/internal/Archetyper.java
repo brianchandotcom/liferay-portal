@@ -113,12 +113,22 @@ public class Archetyper {
 			String apiPath = ":" + artifactId + "-api";
 
 			if (workspace) {
-				File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
-				Path workspacePath = workspaceDir.getAbsoluteFile().toPath();
-				Path destinationPath = destinationDir.getAbsoluteFile().toPath();
-				String relativePath = workspacePath.relativize(destinationPath).toString();
+				File workspaceDir = WorkspaceUtil.getWorkspaceDir(
+					destinationDir);
 
-				apiPath = ":" + relativePath.replaceAll("\\\\", "/").replaceAll("\\/", ":") + ":" + artifactId + apiPath;
+				Path workspacePath = workspaceDir.getAbsoluteFile().toPath();
+
+				Path destinationPath =
+					destinationDir.getAbsoluteFile().toPath();
+
+				String relativePath = workspacePath.relativize(
+					destinationPath).toString();
+
+				String normalizedPath = relativePath.replaceAll("\\\\", "/");
+
+				normalizedPath = normalizedPath.replaceAll("\\/", ":");
+
+				apiPath = ":" + normalizedPath + ":" + artifactId + apiPath;
 			}
 
 			_setProperty(properties, "apiPath", apiPath);

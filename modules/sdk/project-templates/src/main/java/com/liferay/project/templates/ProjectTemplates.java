@@ -264,7 +264,7 @@ public class ProjectTemplates {
 			dir = new File(dir, name);
 		}
 
-		if (dir.exists() && !projectTemplatesArgs.isForce()) {
+		if (!projectTemplatesArgs.isForce() && dir.exists()) {
 			String[] fileNames = dir.list();
 
 			if ((fileNames == null) || (fileNames.length > 0)) {

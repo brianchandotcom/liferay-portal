@@ -14,8 +14,8 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
-	<command name="enableImportEntry">
-		<execute function="Check" locator1="SystemSettings#IMPORT_ENABLED_CHECKBOX" />
+	<command name="enableSetting">
+		<execute function="Check" locator1="SystemSettings#${checkboxSetting}" />
 	</command>
 
 	<command name="exitEditConfiguration">

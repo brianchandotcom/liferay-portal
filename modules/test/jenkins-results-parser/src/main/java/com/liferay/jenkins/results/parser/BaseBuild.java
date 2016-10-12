@@ -741,7 +741,7 @@ public abstract class BaseBuild implements Build {
 		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 			"http://" + master +
 				"/queue/api/json?tree=items[actions[parameters" +
-				"[name,value]],task[name,url]]",
+					"[name,value]],task[name,url]]",
 			false);
 
 		return jsonObject.getJSONArray("items");

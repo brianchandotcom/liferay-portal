@@ -238,9 +238,15 @@ public class ProjectTemplates {
 	}
 
 	private void _checkArgs(ProjectTemplatesArgs projectTemplatesArgs) {
+		String template = projectTemplatesArgs.getTemplate();
+
+		if (Validator.isNull(projectTemplatesArgs.getTemplate())) {
+			throw new IllegalArgumentException("Template is required");
+		}
+
 		String name = projectTemplatesArgs.getName();
 
-		if (Validator.isNull(name)) {
+		if ((Validator.isNull(name)) && !("workspace".equals(template))) {
 			throw new IllegalArgumentException("Name is required");
 		}
 
@@ -250,26 +256,18 @@ public class ProjectTemplates {
 			throw new IllegalArgumentException("Destination dir is required");
 		}
 
-		File dir = new File(destinationDir, name);
-
-		if (dir.exists()) {
-			String[] fileNames = dir.list();
+		if (destinationDir.exists()) {
+			String[] fileNames = destinationDir.list();
 
 			if ((fileNames == null) || (fileNames.length > 0)) {
 				throw new IllegalArgumentException(
-					dir + " is not empty or it is a file");
+					destinationDir + " is not empty or it is a file");
 			}
-		}
-
-		String template = projectTemplatesArgs.getTemplate();
-
-		if (Validator.isNull(projectTemplatesArgs.getTemplate())) {
-			throw new IllegalArgumentException("Template is required");
 		}
 
 		String className = projectTemplatesArgs.getClassName();
 
-		if (Validator.isNull(className)) {
+		if ((Validator.isNull(className)) && Validator.isNotNull(name)) {
 			className = _getClassName(name);
 		}
 
@@ -285,7 +283,8 @@ public class ProjectTemplates {
 
 		projectTemplatesArgs.setClassName(className);
 
-		if (Validator.isNull(projectTemplatesArgs.getPackageName())) {
+		if (Validator.isNull(projectTemplatesArgs.getPackageName()) &&
+				Validator.isNotNull(name)) {
 			projectTemplatesArgs.setPackageName(_getPackageName(name));
 		}
 	}

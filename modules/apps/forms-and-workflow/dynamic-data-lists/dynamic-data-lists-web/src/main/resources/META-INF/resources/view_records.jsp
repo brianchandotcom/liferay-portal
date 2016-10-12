@@ -122,9 +122,11 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 		/>
 	</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>' icon="trash" label="delete" />
-	</liferay-frontend:management-bar-action-buttons>
+	<c:if test="<%= hasDeletePermission%>">
+		<liferay-frontend:management-bar-action-buttons>
+			<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteRecords();" %>' icon="trash" label="delete" />
+		</liferay-frontend:management-bar-action-buttons>
+	</c:if>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 view-records-container" id="<portlet:namespace />formContainer">

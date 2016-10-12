@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
@@ -136,8 +137,10 @@ public class AutoLoginFilter extends BasePortalFilter {
 					redirect = redirect.concat(autoLoginRedirect);
 				}
 				else {
-					redirect = redirect.concat(
+					String currentURL = HttpUtil.encodeURL(
 						PortalUtil.getCurrentCompleteURL(request));
+
+					redirect = redirect.concat(currentURL);
 				}
 			}
 

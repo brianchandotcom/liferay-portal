@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
@@ -91,13 +93,23 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			String className, SearchContext searchContext)
 		throws Exception {
 
-		BooleanFilter booleanFilter = super.getFacetBooleanFilter(
-			DDLRecordSet.class.getName(), searchContext);
+		BooleanFilter facetBooleanFilter = new BooleanFilter();
 
-		booleanFilter.addTerm(
+		facetBooleanFilter.addTerm(
 			Field.ENTRY_CLASS_NAME, DDLRecord.class.getName());
 
-		return booleanFilter;
+		if (searchContext.getUserId() > 0) {
+			SearchPermissionChecker searchPermissionChecker =
+				SearchEngineHelperUtil.getSearchPermissionChecker();
+
+			facetBooleanFilter =
+				searchPermissionChecker.getPermissionBooleanFilter(
+					searchContext.getCompanyId(), searchContext.getGroupIds(),
+					searchContext.getUserId(), DDLRecordSet.class.getName(),
+					facetBooleanFilter, searchContext);
+		}
+
+		return facetBooleanFilter;
 	}
 
 	@Override

@@ -17,6 +17,7 @@ package com.liferay.site.item.selector.web.internal.display.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
@@ -79,6 +80,10 @@ public class RecentSitesItemSelectorViewDisplayContext
 		List<Group> results = _recentGroupManager.getRecentGroups(request);
 
 		groupSearch.setTotal(results.size());
+
+		results = ListUtil.subList(
+			results, groupSearch.getStart(), groupSearch.getEnd());
+
 		groupSearch.setResults(results);
 
 		return groupSearch;

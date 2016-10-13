@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.blogs.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.util.BlogsEntryAttachmentFileEntryReference}
  */
-@Deprecated
 public class BlogsEntryAttachmentFileEntryReference {
 
 	public BlogsEntryAttachmentFileEntryReference(

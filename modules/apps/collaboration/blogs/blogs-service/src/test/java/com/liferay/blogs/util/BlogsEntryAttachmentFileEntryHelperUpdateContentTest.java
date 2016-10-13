@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.blogs.util;
 
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -74,7 +74,7 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 			testUpdateContentWithEmptyBlogsEntryAttachmentFileEntryReferences()
 		throws Exception {
 
-		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
+		String content = BlogsEntryAttachmentFileEntryHelper.updateContent(
 			populateContentWithSingleImgTag(_tempFileEntryImgTag),
 			Collections.<BlogsEntryAttachmentFileEntryReference>emptyList());
 
@@ -86,7 +86,7 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 
 	@Test
 	public void testUpdateContentWithMultipleImgTags() throws Exception {
-		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
+		String content = BlogsEntryAttachmentFileEntryHelper.updateContent(
 			populateContentWithMultipleImgTags(_tempFileEntryImgTag),
 			_blogsEntryAttachmentFileEntryReferences);
 
@@ -98,7 +98,7 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 
 	@Test
 	public void testUpdateContentWithoutImgTag() throws Exception {
-		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
+		String content = BlogsEntryAttachmentFileEntryHelper.updateContent(
 			populateContentWithSingleImgTag(StringPool.BLANK),
 			_blogsEntryAttachmentFileEntryReferences);
 
@@ -110,7 +110,7 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 
 	@Test
 	public void testUpdateContentWithSingleImgTag() throws Exception {
-		String content = _blogsEntryAttachmentFileEntryHelper.updateContent(
+		String content = BlogsEntryAttachmentFileEntryHelper.updateContent(
 			populateContentWithSingleImgTag(_tempFileEntryImgTag),
 			_blogsEntryAttachmentFileEntryReferences);
 
@@ -146,9 +146,6 @@ public class BlogsEntryAttachmentFileEntryHelperUpdateContentTest
 	private static final String _TEMP_FILE_ENTRY_IMAGE_URL =
 		"www.liferay.com/temp_logo";
 
-	private final BlogsEntryAttachmentFileEntryHelper
-		_blogsEntryAttachmentFileEntryHelper =
-			new BlogsEntryAttachmentFileEntryHelper();
 	private final List<BlogsEntryAttachmentFileEntryReference>
 		_blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
 

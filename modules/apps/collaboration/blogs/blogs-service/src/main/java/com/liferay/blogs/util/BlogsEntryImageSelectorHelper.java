@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.blogs.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -23,10 +23,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 
 /**
  * @author Roberto Díaz
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.util.BlogsEntryImageSelectorHelper}
  */
-@Deprecated
 public class BlogsEntryImageSelectorHelper {
 
 	public BlogsEntryImageSelectorHelper(

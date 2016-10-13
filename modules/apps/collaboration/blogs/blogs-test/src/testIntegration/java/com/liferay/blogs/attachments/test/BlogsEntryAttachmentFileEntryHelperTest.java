@@ -17,6 +17,8 @@ package com.liferay.blogs.attachments.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryHelper;
+import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -40,8 +42,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
-import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import java.io.InputStream;
@@ -126,7 +126,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 					null, tempFileEntry, StringPool.BLANK));
 
 		List<FileEntry> tempBlogsEntryAttachmentFileEntries =
-			_blogsEntryAttachmentFileEntryHelper.
+			BlogsEntryAttachmentFileEntryHelper.
 				getTempBlogsEntryAttachmentFileEntries(
 					getContent(tempFileEntryImgTag));
 
@@ -153,7 +153,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			tempFileEntry);
 
 		List<FileEntry> tempBlogsEntryAttachmentFileEntries =
-			_blogsEntryAttachmentFileEntryHelper.
+			BlogsEntryAttachmentFileEntryHelper.
 				getTempBlogsEntryAttachmentFileEntries(
 					getContent(tempFileEntryImgTag));
 
@@ -189,7 +189,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_user.getUserId(), _group.getGroupId());
 
 		return
-			_blogsEntryAttachmentFileEntryHelper.
+			BlogsEntryAttachmentFileEntryHelper.
 				addBlogsEntryAttachmentFileEntries(
 					_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
 					folder.getFolderId(), tempFileEntries);
@@ -238,10 +238,6 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	private static final String _TEMP_FOLDER_NAME = BlogsEntry.class.getName();
-
-	private final BlogsEntryAttachmentFileEntryHelper
-		_blogsEntryAttachmentFileEntryHelper =
-			new BlogsEntryAttachmentFileEntryHelper();
 
 	@DeleteAfterTestRun
 	private Group _group;

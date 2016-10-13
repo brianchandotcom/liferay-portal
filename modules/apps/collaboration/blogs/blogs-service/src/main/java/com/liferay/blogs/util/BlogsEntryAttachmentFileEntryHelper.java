@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
+package com.liferay.blogs.util;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.editor.EditorConstants;
@@ -38,13 +38,10 @@ import java.util.regex.Pattern;
 /**
  * @author Sergio González
  * @author Roberto Díaz
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.util.BlogsEntryAttachmentFileEntryHelper}
  */
-@Deprecated
 public class BlogsEntryAttachmentFileEntryHelper {
 
-	public List<BlogsEntryAttachmentFileEntryReference>
+	public static List<BlogsEntryAttachmentFileEntryReference>
 			addBlogsEntryAttachmentFileEntries(
 				long groupId, long userId, long blogsEntryId, long folderId,
 				List<FileEntry> tempFileEntries)
@@ -69,12 +66,12 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		return blogsEntryAttachmentFileEntryReferences;
 	}
 
-	public FileEntry addBlogsEntryAttachmentFileEntry(
+	public static FileEntry addBlogsEntryAttachmentFileEntry(
 			long groupId, long userId, long blogsEntryId, long folderId,
 			String fileName, String mimeType, byte[] bytes)
 		throws PortalException {
 
-		String uniqueFileName = getUniqueFileName(groupId, fileName, folderId);
+		String uniqueFileName = _getUniqueFileName(groupId, fileName, folderId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
@@ -82,12 +79,12 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			mimeType, true);
 	}
 
-	public FileEntry addBlogsEntryAttachmentFileEntry(
+	public static FileEntry addBlogsEntryAttachmentFileEntry(
 			long groupId, long userId, long blogsEntryId, long folderId,
 			String fileName, String mimeType, File file)
 		throws PortalException {
 
-		String uniqueFileName = getUniqueFileName(groupId, fileName, folderId);
+		String uniqueFileName = _getUniqueFileName(groupId, fileName, folderId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
@@ -95,12 +92,12 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			mimeType, true);
 	}
 
-	public FileEntry addBlogsEntryAttachmentFileEntry(
+	public static FileEntry addBlogsEntryAttachmentFileEntry(
 			long groupId, long userId, long blogsEntryId, long folderId,
 			String fileName, String mimeType, InputStream is)
 		throws PortalException {
 
-		String uniqueFileName = getUniqueFileName(groupId, fileName, folderId);
+		String uniqueFileName = _getUniqueFileName(groupId, fileName, folderId);
 
 		return PortletFileRepositoryUtil.addPortletFileEntry(
 			groupId, userId, BlogsEntry.class.getName(), blogsEntryId,
@@ -108,7 +105,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 			true);
 	}
 
-	public List<FileEntry> getTempBlogsEntryAttachmentFileEntries(
+	public static List<FileEntry> getTempBlogsEntryAttachmentFileEntries(
 			String content)
 		throws PortalException {
 
@@ -131,7 +128,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		return tempBlogsEntryAttachmentFileEntries;
 	}
 
-	public String updateContent(
+	public static String updateContent(
 		String content,
 		List<BlogsEntryAttachmentFileEntryReference>
 			blogsEntryAttachmentFileEntryReferences) {
@@ -155,7 +152,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 
 			content = content.replaceAll(
 				sb.toString(),
-				getBlogsEntryAttachmentFileEntryImgTag(
+				_getBlogsEntryAttachmentFileEntryImgTag(
 					blogsEntryAttachmentFileEntryReference.
 						getBlogsEntryAttachmentFileEntry()));
 		}
@@ -163,7 +160,23 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		return content;
 	}
 
-	protected String getBlogsEntryAttachmentFileEntryImgTag(
+	private static FileEntry _fetchPortletFileEntry(
+		long groupId, String fileName, long folderId) {
+
+		try {
+			return PortletFileRepositoryUtil.getPortletFileEntry(
+				groupId, folderId, fileName);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
+			return null;
+		}
+	}
+
+	private static String _getBlogsEntryAttachmentFileEntryImgTag(
 		FileEntry blogsEntryAttachmentFileEntry) {
 
 		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
@@ -172,7 +185,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		return "<img src=\"" + fileEntryURL + "\" />";
 	}
 
-	protected String getUniqueFileName(
+	private static String _getUniqueFileName(
 			long groupId, String fileName, long folderId)
 		throws PortalException {
 
@@ -203,22 +216,6 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		throw new PortalException(
 			"Unable to get a unique file name for " + fileName + " in folder " +
 				folderId);
-	}
-
-	private FileEntry _fetchPortletFileEntry(
-		long groupId, String fileName, long folderId) {
-
-		try {
-			return PortletFileRepositoryUtil.getPortletFileEntry(
-				groupId, folderId, fileName);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-
-			return null;
-		}
 	}
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =

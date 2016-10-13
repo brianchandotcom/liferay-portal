@@ -166,10 +166,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 				DDMDataProviderResponse ddmDataProviderResponse =
 					ddmDataProvider.getData(ddmDataProviderRequest);
 
-				List<Map<Object, Object>> data =
-					ddmDataProviderResponse.getData();
+				for (Map<Object, Object> map :
+						ddmDataProviderResponse.getData()) {
 
-				for (Map<Object, Object> map : data) {
 					for (Entry<Object, Object> entry : map.entrySet()) {
 						ddmFormFieldOptions.addOptionLabel(
 							String.valueOf(entry.getValue()),

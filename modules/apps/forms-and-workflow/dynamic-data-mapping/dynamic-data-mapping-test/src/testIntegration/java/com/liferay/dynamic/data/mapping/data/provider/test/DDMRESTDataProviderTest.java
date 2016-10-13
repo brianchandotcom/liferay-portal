@@ -161,12 +161,12 @@ public class DDMRESTDataProviderTest {
 		DDMDataProviderRequest ddmDataProviderRequest =
 			new DDMDataProviderRequest(ddmDataProviderContext);
 
-		DDMDataProviderResponse ddmDtaProviderResponse =
+		DDMDataProviderResponse ddmDataProviderResponse =
 			_ddmDataProvider.getData(ddmDataProviderRequest);
 
-		Assert.assertNotNull(ddmDtaProviderResponse);
+		Assert.assertNotNull(ddmDataProviderResponse);
 
-		List<Map<Object, Object>> data = ddmDtaProviderResponse.getData();
+		List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
 
 		Assert.assertEquals(1, data.size());
 
@@ -183,21 +183,25 @@ public class DDMRESTDataProviderTest {
 		Map<Object, Object> map = new HashMap<>();
 
 		map.put("3", "France");
+
 		expectedData.add(map);
 
 		map = new HashMap<>();
 
 		map.put("15", "Spain");
+
 		expectedData.add(map);
 
 		map = new HashMap<>();
 
 		map.put("19", "United States");
+
 		expectedData.add(map);
 
 		map = new HashMap<>();
 
 		map.put("48", "Brazil");
+
 		expectedData.add(map);
 
 		return expectedData;

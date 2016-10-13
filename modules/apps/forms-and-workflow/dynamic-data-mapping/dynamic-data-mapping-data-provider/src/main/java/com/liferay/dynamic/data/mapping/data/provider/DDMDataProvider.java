@@ -52,12 +52,7 @@ public interface DDMDataProvider {
 			map.put(keyValuePair.getKey(), keyValuePair.getValue());
 		}
 
-		DDMDataProviderResponse ddmDataProviderResponse =
-			new DDMDataProviderResponse();
-
-		ddmDataProviderResponse.setData(data);
-
-		return ddmDataProviderResponse;
+		return new DDMDataProviderResponse(data);
 	}
 
 	public Class<?> getSettings();

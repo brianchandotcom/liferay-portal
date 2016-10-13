@@ -188,11 +188,9 @@ public class DDMDataProviderServlet extends HttpServlet {
 	protected JSONArray toJSONArray(
 		DDMDataProviderResponse ddmDataProviderResponse) {
 
-		List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (Map<Object, Object> map : data) {
+		for (Map<Object, Object> map : ddmDataProviderResponse.getData()) {
 			for (Entry<Object, Object> entry : map.entrySet()) {
 				JSONObject jsonObject = _jsonFactory.createJSONObject();
 

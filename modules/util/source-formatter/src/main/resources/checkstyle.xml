@@ -43,6 +43,10 @@
 		</module>
 		<module name="NoWhitespaceBefore" />
 		<module name="OneStatementPerLine" />
+		<module name="OperatorWrap">
+			<property name="option" value="eol" />
+			<property name="tokens" value="ASSIGN, BAND, BAND_ASSIGN, BOR, BOR_ASSIGN, BSR, BSR_ASSIGN, BXOR, BXOR_ASSIGN, COLON, DIV, DIV_ASSIGN, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR, LT, MINUS, MINUS_ASSIGN, MOD, MOD_ASSIGN, NOT_EQUAL, PLUS, PLUS_ASSIGN, QUESTION, SL, SL_ASSIGN, SR, SR_ASSIGN, STAR, STAR_ASSIGN, TYPE_EXTENSION_AND" />
+		</module>
 		<module name="PackageName" />
 		<module name="ParameterName">
 			<message key="name.invalidPattern" value="Parameter ''{0}'' must match pattern ''{1}''" />

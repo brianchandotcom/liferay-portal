@@ -48,12 +48,14 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						var boundingBox = instance.get('boundingBox');
+
 						var eventHandlers;
 
 						eventHandlers = [
 							instance.after('open', instance._afterSidebarOpen),
 							instance.after('open:start', instance._afterOpenStart),
-							instance.after('openChange', instance._afterOpenChange)
+							boundingBox.on('clickoutside', A.bind(instance._onClickOutside, instance))
 						];
 
 						instance._eventHandlers = eventHandlers;
@@ -105,32 +107,6 @@ AUI.add(
 						var currentFieldSettings = instance.getFieldSettings();
 
 						return JSON.stringify(previousContext) !== JSON.stringify(currentFieldSettings.context);
-					},
-
-					_afterOpenChange: function(value) {
-						var instance = this;
-
-						var eventHandlers = [];
-
-						if (value) {
-							eventHandlers.push(
-								A.one(document).on('click', function(event) {
-									var target = event.target;
-
-									var isChield = instance.get('boundingBox').contains(target);
-
-									var isConfirmationChield = A.one('.modal-content').contains(target);
-
-									if (!isConfirmationChield && !isChield && !target.hasClass('form-builder-field-content-target')) {
-										instance.close();
-									}
-								})
-							);
-						}
-						else {
-							console.log('oi');
-							(new A.EventHandle(eventHandlers)).detach();
-						}
 					},
 
 					_afterOpenStart: function() {
@@ -221,6 +197,9 @@ AUI.add(
 
 						container.addClass('invisible');
 					},
+					_isNotAlloyEditorNode: function(node) {
+						return node.ancestorsByClassName('ae-ui').isEmpty();
+					},
 
 					_loadFieldSettingsForm: function(field) {
 						var instance = this;
@@ -251,6 +230,16 @@ AUI.add(
 								);
 							}
 						);
+					},
+
+					_onClickOutside: function(event) {
+						var instance = this;
+
+						var target = event.target;
+
+						if (instance.get('open') && instance._isNotAlloyEditorNode(target)) {
+							instance.close();
+						}
 					},
 
 					_removeLoading: function() {

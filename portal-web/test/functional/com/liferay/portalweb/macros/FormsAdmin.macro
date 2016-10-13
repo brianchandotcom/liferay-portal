@@ -160,6 +160,12 @@
 		</execute>
 	</command>
 
+	<command name="viewNoDuplicateForms">
+		<var name="key_formName" value="${formName}" />
+
+		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORMS_TABLE_NAME_2" value1="${formName}" />
+	</command>
+
 	<command name="viewNoFormEntries">
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>

@@ -207,6 +207,12 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_CONFIGURATION_SITE_SETTINGS_RESOURCE_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_CONFIGURATION_SITE_SETTINGS_RESOURCE_PERMISSIONS_SITE_VIEW_SITE_ADMINISTRATION_MENU_CHECKBOX</td>
+	<td>//input[@type='checkbox' and contains(@value,'GroupVIEW_SITE_ADMINISTRATION')]</td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
@@ -626,6 +632,23 @@
 <tr>
 	<td></td>
 	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_FORMS_GENERAL_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_FORMS_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
+	<td>//h4[contains(.,'General')]/following-sibling::div[contains(@class,'search-container')]//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_FORMS_GENERAL_PERMISSIONS_ACCESS_IN_SITE_ADMINISTRATION_CHECKBOX</td>
+	<td>//input[contains(@value,'FormAdminPortletACCESS_IN_CONTROL_PANEL')]</td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_FORMS_RESOURCE_PERMISSIONS-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_FORMS_ADMIN_RESOURCE_PERMISSIONS_LISTS_ACTION_CHECKBOX</td>
+	<td>//h4[contains(.,'Resource')]/following-sibling::div/h5[contains(.,'Lists')][1]/..//div[contains(@class,'search-container')][1]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <!--SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS-->

@@ -496,6 +496,13 @@
 					</then>
 				</elseif>
 				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONFIGURATION_SITE_SETTINGS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONFIGURATION_SITE_SETTINGS" />
+						<var name="permissionNavigationValue" value="Site Settings" />
+					</then>
+				</elseif>
+				<elseif>
 					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_BLOGS" />
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
@@ -528,6 +535,13 @@
 					<then>
 						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
 						<var name="permissionNavigationValue" value="Dynamic Data Lists" />
+					</then>
+				</elseif>
+				<elseif>
+					<contains string="${permissionDefinitionKey}" substring="SITE_ADMIN_CONTENT_FORMS" />
+					<then>
+						<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_FORMS" />
+						<var name="permissionNavigationValue" value="Forms" />
 					</then>
 				</elseif>
 				<elseif>

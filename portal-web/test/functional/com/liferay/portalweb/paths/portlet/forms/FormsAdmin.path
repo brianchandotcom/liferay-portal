@@ -20,6 +20,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORMS_TABLE_NAME_2</td>
+	<td>//div[contains(@class,'searchcontainer')]//li[2]//h4[contains(.,'${key_formName}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORMS_TABLE_DESCRIPTION</td>
 	<td>//div[contains(@class,'searchcontainer')]//h5[contains(.,'${key_formDescription}')]</td>
 	<td></td>

@@ -16,10 +16,10 @@ package com.liferay.dynamic.data.mapping.data.provider.rest.internal;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumer;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerRequest;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderException;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,13 +56,13 @@ public class DDMRESTDataProvider
 	implements DDMDataProvider, DDMDataProviderConsumer {
 
 	@Override
-	public DDMDataProviderConsumerResponse execute(
-			DDMDataProviderConsumerRequest ddmDataProviderConsumerRequest)
+	public DDMDataProviderResponse execute(
+			DDMDataProviderRequest ddmDataProviderRequest)
 		throws DDMDataProviderException {
 
 		try {
 			DDMDataProviderContext ddmDataProviderContext =
-				ddmDataProviderConsumerRequest.getDDMDataProviderContext();
+				ddmDataProviderRequest.getDDMDataProviderContext();
 
 			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
 				ddmDataProviderContext.getSettingsInstance(
@@ -83,7 +83,7 @@ public class DDMRESTDataProvider
 
 			JSONArray jsonArray = getValue(httpResponse.body());
 
-			return createDDMDataProviderConsumerResponse(jsonArray);
+			return createDDMDataProviderResponse(jsonArray);
 		}
 		catch (Exception e) {
 			throw new DDMDataProviderException(e);
@@ -108,8 +108,8 @@ public class DDMRESTDataProvider
 		return DDMRESTDataProviderSettings.class;
 	}
 
-	protected DDMDataProviderConsumerResponse
-		createDDMDataProviderConsumerResponse(JSONArray jsonArray) {
+	protected DDMDataProviderResponse
+		createDDMDataProviderResponse(JSONArray jsonArray) {
 
 		List<Map<Object, Object>> data = new ArrayList<>();
 
@@ -129,12 +129,12 @@ public class DDMRESTDataProvider
 			}
 		}
 
-		DDMDataProviderConsumerResponse ddmDataProviderConsumerResponse =
-			new DDMDataProviderConsumerResponse();
+		DDMDataProviderResponse ddmDataProviderResponse =
+			new DDMDataProviderResponse();
 
-		ddmDataProviderConsumerResponse.setData(data);
+		ddmDataProviderResponse.setData(data);
 
-		return ddmDataProviderConsumerResponse;
+		return ddmDataProviderResponse;
 	}
 
 	protected List<KeyValuePair> doGetData(

@@ -15,10 +15,10 @@
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumer;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerRequest;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -79,13 +79,13 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		String resultMapExpression = String.valueOf(parameters[2]);
 
 		try {
-			DDMDataProviderConsumerResponse ddmDataProviderConsumerResponse =
+			DDMDataProviderResponse ddmDataProviderResponse =
 				executeDataProvider(
 					ddmDataProviderInstanceUUID, paramsExpression);
 
 			Map<String, Object> resultMap = extractResults(resultMapExpression);
 
-			setDDMFormFieldValues(ddmDataProviderConsumerResponse, resultMap);
+			setDDMFormFieldValues(ddmDataProviderResponse, resultMap);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -125,7 +125,7 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		}
 	}
 
-	protected DDMDataProviderConsumerResponse executeDataProvider(
+	protected DDMDataProviderResponse executeDataProvider(
 			String ddmDataProviderInstanceUUID, String paramsExpression)
 		throws PortalException {
 
@@ -150,10 +150,10 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		addDDMDataProviderContextParameters(
 			ddmDataProviderContext, paramsExpression);
 
-		DDMDataProviderConsumerRequest ddmDataProviderConsumerRequest =
-			new DDMDataProviderConsumerRequest(ddmDataProviderContext);
+		DDMDataProviderRequest ddmDataProviderRequest =
+			new DDMDataProviderRequest(ddmDataProviderContext);
 
-		return ddmDataProviderConsumer.execute(ddmDataProviderConsumerRequest);
+		return ddmDataProviderConsumer.execute(ddmDataProviderRequest);
 	}
 
 	protected void extractDDMFormFieldValue(
@@ -297,11 +297,10 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 	}
 
 	protected void setDDMFormFieldValues(
-		DDMDataProviderConsumerResponse ddmDataProviderConsumerResponse,
+		DDMDataProviderResponse ddmDataProviderResponse,
 		Map<String, Object> results) {
 
-		List<Map<Object, Object>> data =
-			ddmDataProviderConsumerResponse.getData();
+		List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
 
 		for (Map.Entry<String, Object> entry : results.entrySet()) {
 			Object value = entry.getValue();

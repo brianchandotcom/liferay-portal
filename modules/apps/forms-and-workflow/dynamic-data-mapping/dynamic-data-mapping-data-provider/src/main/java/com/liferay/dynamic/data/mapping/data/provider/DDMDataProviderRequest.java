@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.data.provider;
 /**
  * @author Leonardo Barros
  */
-public class DDMDataProviderConsumerRequest {
+public class DDMDataProviderRequest {
 
-	public DDMDataProviderConsumerRequest(
+	public DDMDataProviderRequest(
 		DDMDataProviderContext ddmDataProviderContext) {
 
 		_ddmDataProviderContext = ddmDataProviderContext;

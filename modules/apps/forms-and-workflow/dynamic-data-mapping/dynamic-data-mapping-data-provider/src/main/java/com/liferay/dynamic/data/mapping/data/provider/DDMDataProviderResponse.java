@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class DDMDataProviderConsumerResponse {
+public class DDMDataProviderResponse {
 
 	public List<Map<Object, Object>> getData() {
 		return _data;

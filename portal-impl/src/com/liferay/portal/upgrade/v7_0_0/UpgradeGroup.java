@@ -80,8 +80,8 @@ public class UpgradeGroup extends UpgradeProcess {
 					localizedValuesMap, "global");
 
 				try (PreparedStatement ps = connection.prepareStatement(
-					"update Group_ set name = ? where companyId = ? and " +
-					"friendlyURL = '/global'")) {
+						"update Group_ set name = ? where companyId = ? and " +
+							"friendlyURL = '/global'")) {
 
 					ps.setString(1, nameXML);
 					ps.setLong(2, companyId);

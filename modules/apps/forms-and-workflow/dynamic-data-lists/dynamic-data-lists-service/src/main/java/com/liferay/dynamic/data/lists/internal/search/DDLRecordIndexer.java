@@ -93,22 +93,23 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			String className, SearchContext searchContext)
 		throws Exception {
 
-		BooleanFilter booleanFilter = new BooleanFilter();
+		BooleanFilter facetBooleanFilter = new BooleanFilter();
 
-		booleanFilter.addTerm(
+		facetBooleanFilter.addTerm(
 			Field.ENTRY_CLASS_NAME, DDLRecord.class.getName());
 
 		if (searchContext.getUserId() > 0) {
 			SearchPermissionChecker searchPermissionChecker =
 				SearchEngineHelperUtil.getSearchPermissionChecker();
 
-			booleanFilter = searchPermissionChecker.getPermissionBooleanFilter(
-				searchContext.getCompanyId(), searchContext.getGroupIds(),
-				searchContext.getUserId(), DDLRecordSet.class.getName(),
-				booleanFilter, searchContext);
+			facetBooleanFilter =
+				searchPermissionChecker.getPermissionBooleanFilter(
+					searchContext.getCompanyId(), searchContext.getGroupIds(),
+					searchContext.getUserId(), DDLRecordSet.class.getName(),
+					facetBooleanFilter, searchContext);
 		}
 
-		return booleanFilter;
+		return facetBooleanFilter;
 	}
 
 	@Override

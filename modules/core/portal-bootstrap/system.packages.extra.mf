@@ -2022,7 +2022,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ion="1.1.0";uses:="com.liferay.asset.kernel.model,com.liferay.portal.
  kernel.exception",com.liferay.asset.kernel.exception;version="1.0.0";
  uses:="com.liferay.asset.kernel.model,com.liferay.portal.kernel.excep
- tion",com.liferay.asset.kernel.model;version="1.1.0";uses:="com.lifer
+ tion",com.liferay.asset.kernel.model;version="1.2.0";uses:="com.lifer
  ay.dynamic.data.mapping.kernel,com.liferay.expando.kernel.model,com.l
  iferay.exportimport.kernel.lar,com.liferay.portal.kernel.annotation,c
  om.liferay.portal.kernel.bean,com.liferay.portal.kernel.exception,com
@@ -2051,7 +2051,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  e,com.liferay.portal.kernel.model,javax.portlet,javax.servlet,javax.s
  ervlet.http",com.liferay.asset.kernel.util.comparator;version="1.0.0"
  ;uses:="com.liferay.asset.kernel.model,com.liferay.portal.kernel.util
- ",com.liferay.asset.kernel.validator;version="1.0.0";uses:="com.lifer
+ ",com.liferay.asset.kernel.validator;version="1.1.0";uses:="com.lifer
  ay.portal.kernel.exception",com.liferay.background.task.kernel.util.c
  omparator;version="1.0.0";uses:="com.liferay.portal.kernel.background
  task,com.liferay.portal.kernel.util",com.liferay.blogs.kernel.excepti

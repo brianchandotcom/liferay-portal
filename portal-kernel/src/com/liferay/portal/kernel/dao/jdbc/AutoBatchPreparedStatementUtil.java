@@ -85,8 +85,6 @@ public class AutoBatchPreparedStatementUtil {
 	private static final Method _addBatchMethod;
 	private static final Method _closeMethod;
 	private static final Method _executeBatch;
-	private static final Class<?>[] _interfaces =
-		new Class<?>[] {PreparedStatement.class};
 
 	static {
 		try {
@@ -98,6 +96,9 @@ public class AutoBatchPreparedStatementUtil {
 			throw new ExceptionInInitializerError(nsme);
 		}
 	}
+
+	private static final Class<?>[] _interfaces =
+		new Class<?>[] {PreparedStatement.class};
 
 	private static class BatchInvocationHandler implements InvocationHandler {
 

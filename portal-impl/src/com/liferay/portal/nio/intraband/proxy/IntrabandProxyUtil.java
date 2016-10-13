@@ -1039,8 +1039,6 @@ public class IntrabandProxyUtil {
 			Arrays.asList(
 				Type.getDescriptor(Id.class), Type.getDescriptor(Proxy.class)));
 	private static final Method _defineClassMethod;
-	private static final Comparator<Method> _methodComparator =
-		new MethodComparator();
 
 	static {
 		try {
@@ -1052,6 +1050,9 @@ public class IntrabandProxyUtil {
 			throw new ExceptionInInitializerError(t);
 		}
 	}
+
+	private static final Comparator<Method> _methodComparator =
+		new MethodComparator();
 
 	private static class SkeletonDispatchTableSwitchGenerator
 		implements TableSwitchGenerator {

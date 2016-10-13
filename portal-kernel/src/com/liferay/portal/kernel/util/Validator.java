@@ -1353,9 +1353,6 @@ public class Validator {
 
 	private static final Pattern _ipv6AddressPattern;
 
-	private static final Pattern _variableNamePattern = Pattern.compile(
-		"[_a-zA-Z]+[_a-zA-Z0-9]*");
-
 	static {
 		StringBundler sb = new StringBundler(28);
 
@@ -1390,5 +1387,8 @@ public class Validator {
 
 		_ipv6AddressPattern = Pattern.compile(sb.toString());
 	}
+
+	private static final Pattern _variableNamePattern = Pattern.compile(
+		"[_a-zA-Z]+[_a-zA-Z0-9]*");
 
 }

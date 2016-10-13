@@ -45,7 +45,6 @@ public class ConnectionUtil {
 	}
 
 	private static final Method _closeMethod;
-	private static final Class<?>[] _interfaces = {Connection.class};
 
 	static {
 		try {
@@ -55,6 +54,8 @@ public class ConnectionUtil {
 			throw new ExceptionInInitializerError(roe);
 		}
 	}
+
+	private static final Class<?>[] _interfaces = {Connection.class};
 
 	private static class UncloseableInvocationHandler
 		implements InvocationHandler {

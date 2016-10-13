@@ -122,8 +122,6 @@ public class CMISRepositoryUtil {
 	}
 
 	private static final OperationContext _operationContext;
-	private static final SessionFactory _sessionFactory =
-		SessionFactoryImpl.newInstance();
 
 	static {
 		Set<String> defaultFilterSet = new HashSet<>();
@@ -160,5 +158,8 @@ public class CMISRepositoryUtil {
 			defaultFilterSet, false, true, false, IncludeRelationships.NONE,
 			null, false, "cmis:name ASC", true, 1000);
 	}
+
+	private static final SessionFactory _sessionFactory =
+		SessionFactoryImpl.newInstance();
 
 }

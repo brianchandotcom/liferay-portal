@@ -811,6 +811,140 @@
 		</execute>
 	</command>
 
+	<command name="AddSelectFieldWithTranslationAndViewInSpreadsheetView" priority="4">
+		<description message="This is a use case for LPS-68216." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="SelectENG" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="SelectENG" />
+			<var name="fieldName" value="Select" />
+			<var name="fieldOptionsNames" value="ENGOption1" />
+			<var name="fieldOptionsValue" value="value 1" />
+		</execute>
+
+		<execute macro="DDLRecord#editTranslation">
+			<var name="localizedLanguage" value="Japanese (Japan)" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editField">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="SelectENG" />
+			<var name="fieldFieldLabelEdit" value="SelectJA" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldOptions">
+			<var name="field" value="Select" />
+			<var name="fieldFieldLabel" value="SelectJA" />
+			<var name="fieldName" value="Select" />
+			<var name="fieldOptionsNames" value="JAOption1" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListName" value="DDL List" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+		</execute>
+
+		<execute macro="DDLList#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlListName" value="DDL List" />
+		</execute>
+
+		<execute macro="DDLRecord#populateFieldSelect">
+			<var name="ddlRecordFieldData" value="ENGOption1" />
+			<var name="fieldFieldLabel" value="SelectENG" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Dynamic Data Lists Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Dynamic Data Lists Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Dynamic Data Lists Display" />
+		</execute>
+
+		<execute macro="DDLList#selectViaDDLDisplayPG">
+			<var name="ddlListName" value="DDL List" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Dynamic Data Lists Page" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#configureListViewPG">
+			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
+			<var name="configureChecked" value="true" />
+			<var name="ddlListName" value="DDL List" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Dynamic Data Lists Page" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#viewFieldSelectViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="ENGOption1" />
+			<var name="ddlRecordRow" value="1" />
+			<var name="fieldName" value="Select" />
+		</execute>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:8080/ja/" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Dynamic Data Lists Page" />
+		</execute>
+
+		<execute macro="DDLDisplayPortlet#viewFieldSelectViaSpreadsheetView">
+			<var name="ddlRecordFieldData" value="JAOption1" />
+			<var name="ddlRecordRow" value="1" />
+			<var name="fieldName" value="Select" />
+		</execute>
+	</command>
+
 	<command name="AddXSSToHTMLField" priority="4">
 		<description message="This is a use case for LPS-50549." />
 

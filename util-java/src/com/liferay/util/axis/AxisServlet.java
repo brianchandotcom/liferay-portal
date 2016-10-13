@@ -274,12 +274,6 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 
 	private static final Field _CACHE_FIELD;
 
-	private static final String _HTML_BOTTOM_WRAPPER = "</body></html>";
-
-	private static final String _HTML_TOP_WRAPPER = "<html><body>";
-
-	private static final Log _log = LogFactoryUtil.getLog(AxisServlet.class);
-
 	static {
 		try {
 			_CACHE_FIELD = ReflectionUtil.getDeclaredField(
@@ -289,6 +283,12 @@ public class AxisServlet extends org.apache.axis.transport.http.AxisServlet {
 			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
+
+	private static final String _HTML_BOTTOM_WRAPPER = "</body></html>";
+
+	private static final String _HTML_TOP_WRAPPER = "<html><body>";
+
+	private static final Log _log = LogFactoryUtil.getLog(AxisServlet.class);
 
 	private String _correctLongArray;
 	private String _correctOrderByComparator;

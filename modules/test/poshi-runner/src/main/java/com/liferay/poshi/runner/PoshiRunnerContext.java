@@ -1196,9 +1196,6 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final List<String> _testCaseRequiredPropertyNames =
 		new ArrayList<>();
-	private static String _testClassCommandName;
-	private static String _testClassName;
-	private static final Set<String> _testToggleNames = new HashSet<>();
 
 	static {
 		_componentNames.addAll(
@@ -1232,5 +1229,9 @@ public class PoshiRunnerContext {
 				Arrays.asList(StringUtil.split(testCaseRequiredPropertyNames)));
 		}
 	}
+
+	private static String _testClassCommandName;
+	private static String _testClassName;
+	private static final Set<String> _testToggleNames = new HashSet<>();
 
 }

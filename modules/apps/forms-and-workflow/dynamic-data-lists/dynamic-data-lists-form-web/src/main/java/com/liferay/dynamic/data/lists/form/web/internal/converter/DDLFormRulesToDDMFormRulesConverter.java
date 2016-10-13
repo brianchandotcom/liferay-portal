@@ -164,7 +164,6 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	private static final Map<String, String> _operatorFunctionNameMap =
 		new HashMap<>();
 	private static final Map<String, String> _operatorMap = new HashMap<>();
-	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
 		_actionFunctionNameMap.put("show", "setVisible");
@@ -182,5 +181,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		_operatorMap.put("less-than", "<");
 		_operatorMap.put("less-than-equals", "<=");
 	}
+
+	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 }

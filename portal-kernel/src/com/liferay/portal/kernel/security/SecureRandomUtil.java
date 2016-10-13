@@ -113,7 +113,6 @@ public class SecureRandomUtil {
 	private static final Random _gapRandom = new Random();
 	private static final AtomicInteger _index = new AtomicInteger();
 	private static final Random _random = new SecureRandom();
-	private static final AtomicBoolean _reloadingFlag = new AtomicBoolean();
 
 	static {
 		int bufferSize = GetterUtil.getInteger(
@@ -132,5 +131,7 @@ public class SecureRandomUtil {
 
 		_gapRandom.setSeed(_random.nextLong());
 	}
+
+	private static final AtomicBoolean _reloadingFlag = new AtomicBoolean();
 
 }

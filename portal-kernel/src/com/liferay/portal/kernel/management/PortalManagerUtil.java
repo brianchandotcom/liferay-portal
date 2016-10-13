@@ -102,8 +102,6 @@ public class PortalManagerUtil {
 
 	private static final Method _MANAGE_METHOD;
 
-	private static PortalManager _portalManager;
-
 	static {
 		try {
 			_MANAGE_METHOD = PortalManagerUtil.class.getDeclaredMethod(
@@ -113,5 +111,7 @@ public class PortalManagerUtil {
 			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
+
+	private static PortalManager _portalManager;
 
 }

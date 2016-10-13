@@ -72,6 +72,19 @@ public class FinalizeManager {
 	public static final boolean THREAD_ENABLED = Boolean.getBoolean(
 		FinalizeManager.class.getName() + ".thread.enabled");
 
+	static {
+		if (THREAD_ENABLED) {
+			Thread thread = new FinalizeThread("Finalize Thread");
+
+			thread.setContextClassLoader(
+				FinalizeManager.class.getClassLoader());
+
+			thread.setDaemon(true);
+
+			thread.start();
+		}
+	}
+
 	public static final ReferenceFactory WEAK_REFERENCE_FACTORY =
 		new ReferenceFactory() {
 
@@ -92,19 +105,6 @@ public class FinalizeManager {
 			}
 
 		};
-
-	static {
-		if (THREAD_ENABLED) {
-			Thread thread = new FinalizeThread("Finalize Thread");
-
-			thread.setContextClassLoader(
-				FinalizeManager.class.getClassLoader());
-
-			thread.setDaemon(true);
-
-			thread.start();
-		}
-	}
 
 	public static <T> Reference<T> register(
 		T reference, FinalizeAction finalizeAction,

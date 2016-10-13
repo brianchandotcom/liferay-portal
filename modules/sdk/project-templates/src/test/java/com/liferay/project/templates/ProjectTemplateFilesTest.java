@@ -275,19 +275,6 @@ public class ProjectTemplateFilesTest {
 
 	private static final String _SERVICE_XML_DECLARATION;
 
-	private static final String[] _SOURCESET_NAMES = {
-		"main", "test", "testIntegration"
-	};
-
-	private static final String _XML_DECLARATION =
-		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
-
-	private static final Set<String> _textFileExtensions = new HashSet<>(
-		Arrays.asList(
-			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
-	private static final Pattern _velocityIfPattern = Pattern.compile(
-		"#if\\s*\\(\\s*(.+)\\s*\\)");
-
 	static {
 		StringBuilder sb = new StringBuilder();
 
@@ -300,5 +287,18 @@ public class ProjectTemplateFilesTest {
 
 		_SERVICE_XML_DECLARATION = sb.toString();
 	}
+
+	private static final String[] _SOURCESET_NAMES = {
+		"main", "test", "testIntegration"
+	};
+
+	private static final String _XML_DECLARATION =
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n";
+
+	private static final Set<String> _textFileExtensions = new HashSet<>(
+		Arrays.asList(
+			"bnd", "gradle", "java", "jsp", "jspf", "properties", "xml"));
+	private static final Pattern _velocityIfPattern = Pattern.compile(
+		"#if\\s*\\(\\s*(.+)\\s*\\)");
 
 }

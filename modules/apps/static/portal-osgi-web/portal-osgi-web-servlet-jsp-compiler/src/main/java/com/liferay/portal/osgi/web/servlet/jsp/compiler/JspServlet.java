@@ -557,14 +557,15 @@ public class JspServlet extends HttpServlet {
 			File.separator;
 
 	private static final Map<Method, Method> _contextAdapterMethods;
-	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
-		JspServlet.class);
-	private static final Pattern _originalJspPattern = Pattern.compile(
-		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
 
 	static {
 		_contextAdapterMethods = _createContextAdapterMethods();
 	}
+
+	private static final Bundle _jspBundle = FrameworkUtil.getBundle(
+		JspServlet.class);
+	private static final Pattern _originalJspPattern = Pattern.compile(
+		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
 
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;

@@ -86,13 +86,13 @@ public class ThemeBuilderArgs {
 
 	protected static final String DEFAULT_NAME;
 
-	protected static final String DEFAULT_TEMPLATE_EXTENSION = "ftl";
-
 	static {
 		File userDir = new File(System.getProperty("user.dir"));
 
 		DEFAULT_NAME = userDir.getName();
 	}
+
+	protected static final String DEFAULT_TEMPLATE_EXTENSION = "ftl";
 
 	@Parameter(
 		converter = FileConverter.class,

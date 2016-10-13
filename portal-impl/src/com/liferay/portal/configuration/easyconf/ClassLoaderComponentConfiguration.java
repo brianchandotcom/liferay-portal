@@ -139,9 +139,6 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 
 	private static final Constructor<ComponentProperties> _CONSTRUCTOR;
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ClassLoaderComponentConfiguration.class);
-
 	static {
 		Constructor<ComponentProperties> constructor = null;
 
@@ -157,6 +154,9 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 
 		_CONSTRUCTOR = constructor;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClassLoaderComponentConfiguration.class);
 
 	private final ClassLoader _classLoader;
 	private final String _companyId;

@@ -294,7 +294,6 @@ public class StringBundler implements Serializable {
 
 	private static final ThreadLocal<UnsafeStringBuilder>
 		_unsafeStringBuilderThreadLocal;
-	private static final long serialVersionUID = 1L;
 
 	static {
 		int threadLocalBufferLimit = GetterUtil.getInteger(
@@ -315,6 +314,8 @@ public class StringBundler implements Serializable {
 			_unsafeStringBuilderThreadLocal = null;
 		}
 	}
+
+	private static final long serialVersionUID = 1L;
 
 	private String[] _array;
 	private int _arrayIndex;

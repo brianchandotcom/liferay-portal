@@ -2735,17 +2735,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private void _configureTaskJavadocTitle(Javadoc javadoc) {
 		Project project = javadoc.getProject();
 
-		String bundleName = getBundleInstruction(
-			project, Constants.BUNDLE_NAME);
+		StringBuilder sb = new StringBuilder();
 
-		if (Validator.isNull(bundleName)) {
-			return;
+		sb.append("Module ");
+		sb.append(GradleUtil.getArchivesBaseName(project));
+		sb.append(' ');
+		sb.append(project.getVersion());
+		sb.append(" - ");
+
+		String moduleName = project.getDescription();
+
+		if (Validator.isNull(moduleName)) {
+			moduleName = project.getName();
 		}
 
-		String title = String.format(
-			"%s %s API", bundleName, project.getVersion());
+		sb.append(moduleName);
 
-		javadoc.setTitle(title);
+		javadoc.setTitle(sb.toString());
 	}
 
 	private void _configureTaskReplaceRegexJSMatches(

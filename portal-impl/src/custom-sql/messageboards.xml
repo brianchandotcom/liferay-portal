@@ -69,6 +69,8 @@
 			SELECT
 				DISTINCT MBCategory.categoryId AS modelId,
 				0 AS priority,
+				'' AS modifiedDate,
+				MBCategory.name AS name,
 				0 AS modelCategory
 			FROM
 				MBCategory
@@ -82,6 +84,8 @@
 			SELECT
 				DISTINCT MBCategory.categoryId AS modelId,
 				0 AS priority,
+				'' AS modifiedDate,
+				MBCategory.name AS name,
 				0 AS modelCategory
 			FROM
 				MBCategory
@@ -115,6 +119,8 @@
 			SELECT
 				DISTINCT MBThread.threadId AS modelId,
 				MBThread.priority AS priority,
+				MBThread.modifiedDate AS modifiedDate,
+				'' AS name,
 				1 AS modelCategory
 			FROM
 				MBThread
@@ -128,6 +134,8 @@
 			SELECT
 				DISTINCT MBThread.threadId AS modelId,
 				MBThread.priority AS priority,
+				MBThread.modifiedDate AS modifiedDate,
+				'' AS name,
 				1 AS modelCategory
 			FROM
 				MBThread

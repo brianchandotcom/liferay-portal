@@ -37,7 +37,7 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("select DDMDataProviderInstance.definition, ");
 		sb.append("DDMDataProviderInstance.dataProviderInstanceId ");
@@ -87,21 +87,21 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 	protected void upgradeDataProviderInstanceFieldValues(
 		JSONArray fieldValuesJSONArray) {
 
-		JSONObject fieldJSONObject = _jsonFactory.createJSONObject();
+		JSONObject fieldValueJSONObject = _jsonFactory.createJSONObject();
 
-		fieldJSONObject.put("instanceId", StringUtil.randomString(8));
-		fieldJSONObject.put("name", "filterable");
-		fieldJSONObject.put("value", "false");
+		fieldValueJSONObject.put("instanceId", StringUtil.randomString(8));
+		fieldValueJSONObject.put("name", "filterable");
+		fieldValueJSONObject.put("value", "false");
 
-		fieldValuesJSONArray.put(fieldJSONObject);
+		fieldValuesJSONArray.put(fieldValueJSONObject);
 
-		fieldJSONObject = _jsonFactory.createJSONObject();
+		fieldValueJSONObject = _jsonFactory.createJSONObject();
 
-		fieldJSONObject.put("instanceId", StringUtil.randomString(8));
-		fieldJSONObject.put("name", "filterParameterName");
-		fieldJSONObject.put("value", "");
+		fieldValueJSONObject.put("instanceId", StringUtil.randomString(8));
+		fieldValueJSONObject.put("name", "filterParameterName");
+		fieldValueJSONObject.put("value", "");
 
-		fieldValuesJSONArray.put(fieldJSONObject);
+		fieldValuesJSONArray.put(fieldValueJSONObject);
 	}
 
 	private final JSONFactory _jsonFactory;

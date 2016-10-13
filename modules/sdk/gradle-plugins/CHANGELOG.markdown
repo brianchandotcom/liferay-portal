@@ -384,6 +384,14 @@ to version 1.0.30.
 - [LPS-68666]: Update the [Liferay Gradle Plugins TLDDoc Builder] dependency
 to version 1.2.0.
 
+## 3.0.11 - 2016-10-13
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.31.
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.297.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

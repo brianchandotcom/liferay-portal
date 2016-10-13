@@ -37,7 +37,7 @@ AUI.add(
 
 					tooltipClass: {
 						validator: Lang.isString,
-						value: 'btn btn-group btn-primary'
+						value: 'btn btn-default btn-group'
 					}
 				},
 

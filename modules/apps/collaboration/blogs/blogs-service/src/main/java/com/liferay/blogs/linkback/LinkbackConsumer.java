@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.linkback;
+package com.liferay.blogs.linkback;
 
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -24,21 +24,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alexander Chow
  * @author André de Oliveira
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.linkback.LinkbackConsumer)}
  */
-@Deprecated
-public class LinkbackConsumerImpl implements LinkbackConsumer {
+@Component(service = LinkbackConsumer.class)
+public class LinkbackConsumer {
 
-	@Override
 	public void addNewTrackback(long commentId, String url, String entryURL) {
 		_trackbacks.add(new Tuple(commentId, url, entryURL));
 	}
 
-	@Override
 	public void verifyNewTrackbacks() {
 		Tuple tuple = null;
 
@@ -55,7 +54,6 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		}
 	}
 
-	@Override
 	public void verifyTrackback(long commentId, String url, String entryURL) {
 		try {
 			String result = HttpUtil.URLtoString(url);
@@ -68,7 +66,7 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 		}
 
 		try {
-			CommentManagerUtil.deleteComment(commentId);
+			_commentManager.deleteComment(commentId);
 		}
 		catch (Exception e) {
 			_log.error("Unable to delete trackback comment " + commentId, e);
@@ -76,7 +74,10 @@ public class LinkbackConsumerImpl implements LinkbackConsumer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LinkbackConsumerImpl.class);
+		LinkbackConsumer.class);
+
+	@Reference
+	private CommentManager _commentManager;
 
 	private final List<Tuple> _trackbacks = Collections.synchronizedList(
 		new ArrayList<Tuple>());

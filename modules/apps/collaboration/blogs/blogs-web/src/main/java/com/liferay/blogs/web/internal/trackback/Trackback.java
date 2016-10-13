@@ -15,6 +15,7 @@
 package com.liferay.blogs.web.internal.trackback;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -59,7 +59,7 @@ public class Trackback {
 
 		String entryURL = buildEntryURL(entry, themeDisplay);
 
-		LinkbackConsumerUtil.addNewTrackback(commentId, url, entryURL);
+		_linkbackConsumer.addNewTrackback(commentId, url, entryURL);
 	}
 
 	protected String buildBBCodeBody(
@@ -123,6 +123,9 @@ public class Trackback {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private LinkbackConsumer _linkbackConsumer;
 
 	@Reference
 	private UserLocalService _userLocalService;

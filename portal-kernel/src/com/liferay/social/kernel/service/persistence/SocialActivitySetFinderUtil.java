@@ -41,6 +41,10 @@ public class SocialActivitySetFinderUtil {
 		return getFinder().countByUserGroups(userId);
 	}
 
+	public static int countByOrganizationId(long organizationId) {
+		return getFinder().countByOrganizationId(organizationId);
+	}
+
 	public static java.util.List<com.liferay.social.kernel.model.SocialActivitySet> findByOrganizationId(
 		long organizationId, int start, int end) {
 		return getFinder().findByOrganizationId(organizationId, start, end);

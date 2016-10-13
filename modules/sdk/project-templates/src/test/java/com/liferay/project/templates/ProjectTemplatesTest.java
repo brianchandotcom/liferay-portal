@@ -179,6 +179,9 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "src/main/java/foo/api/Foo.java",
 			"public interface Foo");
+		_testContains(
+			gradleProjectDir, "src/main/resources/foo/api/packageinfo",
+			"1.0.0");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"api", "foo", "-DclassName=Foo", "-Dpackage=foo");
@@ -548,14 +551,49 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateServiceBuilder() throws Exception {
+		String name = "guestbook";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName);
+
 		_testBuildTemplateServiceBuilder(
-			"guestbook", "com.liferay.docs.guestbook");
+			gradleProjectDir, gradleProjectDir, name, packageName, "");
+	}
+
+	@Test
+	public void testBuildTemplateServiceBuilderNestedPath() throws Exception {
+		File workspaceProjectDir = _buildTemplateWithGradle(
+			WorkspaceUtil.WORKSPACE, "ws-nested-path");
+
+		File destinationDir = new File(
+			workspaceProjectDir, "modules/nested/path");
+
+		Assert.assertTrue(destinationDir.mkdirs());
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			destinationDir, "service-builder", "sample", "--package-name",
+			"com.test.sample");
+
+		_testContains(
+			gradleProjectDir, "sample-service/build.gradle",
+			"compileOnly project(\":modules:nested:path:sample:sample-api\")");
+
+		_testBuildTemplateServiceBuilder(
+			gradleProjectDir, workspaceProjectDir, "sample", "com.test.sample",
+			":modules:nested:path:sample");
 	}
 
 	@Test
 	public void testBuildTemplateServiceBuilderWithDashes() throws Exception {
+		String name = "backend-integration";
+		String packageName = "com.liferay.docs.guestbook";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"service-builder", name, "--package-name", packageName);
+
 		_testBuildTemplateServiceBuilder(
-			"backend-integration", "com.liferay.backend.integration");
+			gradleProjectDir, gradleProjectDir, name, packageName, "");
 	}
 
 	@Test
@@ -693,6 +731,29 @@ public class ProjectTemplatesTest {
 		_testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testBuildTemplateWorkspaceExistingFile() throws Exception {
+		File destinationDir = temporaryFolder.newFolder("existing-file");
+
+		File file = new File(destinationDir, "foo");
+
+		Assert.assertTrue(file.createNewFile());
+
+		_buildTemplateWithGradle(destinationDir, "workspace", "foo");
+	}
+
+	@Test
+	public void testBuildTemplateWorkspaceForce() throws Exception {
+		File destinationDir = temporaryFolder.newFolder("existing-file");
+
+		File file = new File(destinationDir, "foo");
+
+		Assert.assertTrue(file.createNewFile());
+
+		_buildTemplateWithGradle(
+			destinationDir, "workspace", "forced", "--force");
+	}
+
 	@Test
 	public void testListTemplates() throws Exception {
 		Set<String> templates = new HashSet<>(
@@ -800,8 +861,11 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("--destination");
 		completeArgs.add(destinationDir.getPath());
-		completeArgs.add("--name");
-		completeArgs.add(name);
+
+		if (Validator.isNotNull(name)) {
+			completeArgs.add("--name");
+			completeArgs.add(name);
+		}
 
 		if (Validator.isNotNull(template)) {
 			completeArgs.add("--template");
@@ -1001,19 +1065,21 @@ public class ProjectTemplatesTest {
 	}
 
 	private void _testBuildTemplateServiceBuilder(
-			String name, String packageName)
+			File gradleProjectDir, File rootProject, String name,
+			String packageName, String projectPath)
 		throws Exception {
-
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"service-builder", name, "--package-name", packageName);
 
 		String apiProjectName = name + "-api";
 		String serviceProjectName = name + "-service";
 
-		_testContains(
-			gradleProjectDir, "settings.gradle",
-			"include \"" + apiProjectName + "\", \"" + serviceProjectName +
-				"\"");
+		boolean workspace = WorkspaceUtil.isWorkspace(gradleProjectDir);
+
+		if (!workspace) {
+			_testContains(
+				gradleProjectDir, "settings.gradle",
+				"include \"" + apiProjectName + "\", \"" + serviceProjectName +
+					"\"");
+		}
 
 		_testContains(
 			gradleProjectDir, apiProjectName + "/bnd.bnd", "Export-Package:\\",
@@ -1024,17 +1090,20 @@ public class ProjectTemplatesTest {
 			gradleProjectDir, serviceProjectName + "/bnd.bnd",
 			"Liferay-Service: true");
 
-		_testContains(
-			gradleProjectDir, serviceProjectName + "/build.gradle",
-			"compileOnly project(\":" + apiProjectName + "\")");
+		if (!workspace) {
+			_testContains(
+				gradleProjectDir, serviceProjectName + "/build.gradle",
+				"compileOnly project(\":" + apiProjectName + "\")");
+		}
 
 		_executeGradle(
-			gradleProjectDir,
-			":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD_SERVICE);
+			rootProject,
+			projectPath + ":" + serviceProjectName +
+				_GRADLE_TASK_PATH_BUILD_SERVICE);
 
 		_executeGradle(
-			gradleProjectDir, ":" + apiProjectName + _GRADLE_TASK_PATH_BUILD,
-			":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
+			rootProject,
+			projectPath + ":" + serviceProjectName + _GRADLE_TASK_PATH_BUILD);
 
 		File gradleApiBundleFile = _testExists(
 			gradleProjectDir,

@@ -57,22 +57,23 @@ public class DDMTemplateStagedModelDataHandlerTest
 	@Test
 	public void testPublishTemplateToLiveBeforeStructure() throws Exception {
 		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
-				stagingGroup.getGroupId(), 0,
-				PortalUtil.getClassNameId(_CLASS_NAME));
+			stagingGroup.getGroupId(), 0,
+			PortalUtil.getClassNameId(_CLASS_NAME));
 
 		DDMStructure structure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), _CLASS_NAME);
 
-		publishTemplateToLive(template);
+		exportImportTemplate(template);
 
 		template.setClassPK(structure.getStructureId());
+
 		DDMTemplateLocalServiceUtil.updateDDMTemplate(template);
 
-		publishTemplateWithStructureToLive(template, structure);
+		exportImportTemplateAndStructure(template, structure);
 
 		DDMStructure importedStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-					structure.getUuid(), liveGroup.getGroupId());
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				structure.getUuid(), liveGroup.getGroupId());
 
 		DDMTemplate importedTemplate = (DDMTemplate)getStagedModel(
 			template.getUuid(), liveGroup);
@@ -82,8 +83,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 		Assert.assertNotNull(importedStructure);
 
 		Assert.assertEquals(
-				importedStructure.getStructureId(),
-				importedTemplate.getClassPK());
+			importedStructure.getStructureId(), importedTemplate.getClassPK());
 	}
 
 	@Override
@@ -119,11 +119,20 @@ public class DDMTemplateStagedModelDataHandlerTest
 			PortalUtil.getClassNameId(_CLASS_NAME));
 	}
 
-	protected void exportTemplate(DDMTemplate template) throws Exception {
-		exportTemplateWithStructure(template, null);
+	protected void exportImportTemplate(DDMTemplate template) throws Exception {
+		exportTemplateAndStructure(template, null);
+		importTemplateAndStructure(template, null);
 	}
 
-	protected void exportTemplateWithStructure(
+	protected void exportImportTemplateAndStructure(
+			DDMTemplate template, DDMStructure structure)
+		throws Exception {
+
+		exportTemplateAndStructure(template, structure);
+		importTemplateAndStructure(template, structure);
+	}
+
+	protected void exportTemplateAndStructure(
 			DDMTemplate template, DDMStructure structure)
 		throws Exception {
 
@@ -156,11 +165,7 @@ public class DDMTemplateStagedModelDataHandlerTest
 		return DDMTemplate.class;
 	}
 
-	protected void importTemplate(DDMTemplate template) throws Exception {
-		importTemplateWithStructure(template, null);
-	}
-
-	protected void importTemplateWithStructure(
+	protected void importTemplateAndStructure(
 			DDMTemplate template, DDMStructure structure)
 		throws Exception {
 
@@ -181,21 +186,6 @@ public class DDMTemplateStagedModelDataHandlerTest
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, exportedTemplate);
 		}
-	}
-
-	protected void publishTemplateToLive(DDMTemplate template)
-		throws Exception {
-
-		exportTemplate(template);
-		importTemplate(template);
-	}
-
-	protected void publishTemplateWithStructureToLive(
-			DDMTemplate template, DDMStructure structure)
-		throws Exception {
-
-		exportTemplateWithStructure(template, structure);
-		importTemplateWithStructure(template, structure);
 	}
 
 	@Override

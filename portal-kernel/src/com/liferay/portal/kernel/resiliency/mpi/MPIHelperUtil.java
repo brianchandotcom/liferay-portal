@@ -417,10 +417,6 @@ public class MPIHelperUtil {
 	private static final Intraband _intraband;
 	private static final MPI _mpi;
 	private static final MPI _mpiImpl;
-	private static final ConcurrentMap<String, SPIProviderContainer>
-		_spiProviderContainers = new ConcurrentHashMap<>();
-	private static final ThreadLocal<SPI> _unregisteringSPIThreadLocal =
-		new CentralizedThreadLocal<>(true);
 
 	static {
 
@@ -453,6 +449,11 @@ public class MPIHelperUtil {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
+
+	private static final ConcurrentMap<String, SPIProviderContainer>
+		_spiProviderContainers = new ConcurrentHashMap<>();
+	private static final ThreadLocal<SPI> _unregisteringSPIThreadLocal =
+		new CentralizedThreadLocal<>(true);
 
 	private static class MPIImpl implements MPI {
 

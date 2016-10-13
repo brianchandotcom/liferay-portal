@@ -161,9 +161,6 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 
 	private static final Field _cacheClassNamesField;
 	private static final Field _classIntrospectorField;
-	private static final Map<Class<?>, ModelFactory> _modelFactories =
-		new ConcurrentReferenceKeyHashMap<>(
-			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 	static {
 		try {
@@ -181,5 +178,9 @@ public class LiferayObjectWrapper extends DefaultObjectWrapper {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
+
+	private static final Map<Class<?>, ModelFactory> _modelFactories =
+		new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.SOFT_REFERENCE_FACTORY);
 
 }

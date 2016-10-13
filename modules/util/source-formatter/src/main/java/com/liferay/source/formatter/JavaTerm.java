@@ -282,6 +282,10 @@ public class JavaTerm {
 		_customSQLContent = customSQLContent;
 	}
 
+	public void setName(String name) {
+		_name = name;
+	}
+
 	public void setType(int type) {
 		_type = type;
 	}
@@ -435,7 +439,7 @@ public class JavaTerm {
 	private final JavaSourceProcessor _javaSourceProcessor =
 		new JavaSourceProcessor();
 	private final int _lineCount;
-	private final String _name;
+	private String _name;
 	private List<String> _parameterNames;
 	private List<String> _parameterTypes;
 	private String _returnType;

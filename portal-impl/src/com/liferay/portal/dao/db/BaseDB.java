@@ -1178,8 +1178,6 @@ public abstract class BaseDB implements DB {
 	private static final Pattern _columnLengthPattern = Pattern.compile(
 		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final Pattern _templatePattern;
-	private static final Pattern _timestampPattern = Pattern.compile(
-		"SPECIFIC_TIMESTAMP_\\d+");
 
 	static {
 		StringBundler sb = new StringBundler(TEMPLATE.length * 5 - 6);
@@ -1205,6 +1203,9 @@ public abstract class BaseDB implements DB {
 
 		_templatePattern = Pattern.compile(sb.toString());
 	}
+
+	private static final Pattern _timestampPattern = Pattern.compile(
+		"SPECIFIC_TIMESTAMP_\\d+");
 
 	private final DBType _dbType;
 	private final int _majorVersion;

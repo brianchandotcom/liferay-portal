@@ -350,8 +350,6 @@ public class InstrumentationAgent {
 	private static String[] _includes;
 	private static Instrumentation _instrumentation;
 	private static final File _lockFile;
-	private static List<OriginalClassDefinition> _originalClassDefinitions;
-	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	static {
 		_dataFile = new File(System.getProperty("whip.datafile"));
@@ -375,6 +373,9 @@ public class InstrumentationAgent {
 			throw new ExceptionInInitializerError(ioe);
 		}
 	}
+
+	private static List<OriginalClassDefinition> _originalClassDefinitions;
+	private static WhipClassFileTransformer _whipClassFileTransformer;
 
 	private static class OriginalClassDefinition {
 

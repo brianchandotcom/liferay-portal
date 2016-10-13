@@ -648,11 +648,6 @@ public class LicenseUtil {
 		new MethodHandler(new MethodKey(LicenseUtil.class, "getServerInfo"));
 	private static final Set<String> _ipAddresses;
 	private static final Set<String> _macAddresses;
-	private static final MethodKey _registerOrderMethodKey = new MethodKey(
-		LicenseUtil.class, "registerOrder", String.class, String.class,
-		int.class);
-	private static byte[] _serverIdBytes;
-	private static Key _symmetricKey;
 
 	static {
 		_initKeys();
@@ -660,5 +655,11 @@ public class LicenseUtil {
 		_ipAddresses = _getIPAddresses();
 		_macAddresses = _getMACAddresses();
 	}
+
+	private static final MethodKey _registerOrderMethodKey = new MethodKey(
+		LicenseUtil.class, "registerOrder", String.class, String.class,
+		int.class);
+	private static byte[] _serverIdBytes;
+	private static Key _symmetricKey;
 
 }

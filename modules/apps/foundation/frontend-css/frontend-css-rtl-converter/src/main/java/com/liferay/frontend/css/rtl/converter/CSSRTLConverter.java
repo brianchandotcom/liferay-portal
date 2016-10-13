@@ -480,8 +480,6 @@ public class CSSRTLConverter {
 			"-moz-border-radius", "-webkit-border-radius", "border-radius");
 	private static final Map<String, String> _yui3ReplacementCursors =
 		new HashMap<>();
-	private static final Pattern _yui3ResizeHandleInnerPattern =
-		Pattern.compile("\\.yui3-resize-handle-inner-(tr|tl|br|bl)");
 
 	static {
 		_replacementIcons.put("\"\\f053\"", "\"\\f054\"");
@@ -510,6 +508,9 @@ public class CSSRTLConverter {
 		_yui3ReplacementCursors.put("se-resize", "sw-resize");
 		_yui3ReplacementCursors.put("sw-resize", "se-resize");
 	}
+
+	private static final Pattern _yui3ResizeHandleInnerPattern =
+		Pattern.compile("\\.yui3-resize-handle-inner-(tr|tl|br|bl)");
 
 	private final CSSWriter _cssWriter;
 	private final CSSWriterSettings _cssWriterSettings;

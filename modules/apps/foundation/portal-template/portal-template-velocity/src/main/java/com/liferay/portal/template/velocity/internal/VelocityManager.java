@@ -279,8 +279,6 @@ public class VelocityManager extends BaseSingleTemplateManager {
 	}
 
 	private static final Method _layoutIconMethod;
-	private static volatile VelocityEngineConfiguration
-		_velocityEngineConfiguration;
 
 	static {
 		try {
@@ -291,6 +289,9 @@ public class VelocityManager extends BaseSingleTemplateManager {
 			throw new ExceptionInInitializerError(nsme);
 		}
 	}
+
+	private static volatile VelocityEngineConfiguration
+		_velocityEngineConfiguration;
 
 	private VelocityEngine _velocityEngine;
 

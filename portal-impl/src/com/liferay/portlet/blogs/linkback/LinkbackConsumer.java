@@ -17,7 +17,7 @@ package com.liferay.portlet.blogs.linkback;
 /**
  * @author André de Oliveira
  * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.linkback.LinkbackConsumer)}
+ *             com.liferay.blogs.linkback.LinkbackConsumer}
  */
 @Deprecated
 public interface LinkbackConsumer {

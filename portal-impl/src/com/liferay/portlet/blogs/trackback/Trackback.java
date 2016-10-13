@@ -25,7 +25,7 @@ import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
 /**
  * @author André de Oliveira
  * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.web.internal.Trackback)}
+ *             com.liferay.blogs.web.internal.Trackback}
  */
 @Deprecated
 public interface Trackback {

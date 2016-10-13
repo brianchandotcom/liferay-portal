@@ -1,6 +1,12 @@
 [
 	{
 		"actions": [
+			"setVisible('Field2', true)"
+		],
+		"condition": "not(equals(getValue('Field1'), 'Joe')) OR not(contains(getValue('Field1'), 'Blogs'))"
+	},
+	{
+		"actions": [
 			"setEnabled('Field3', true)"
 		],
 		"condition": "contains(getValue('Field1'), getValue('Field2')) AND getValue('Field2') < 4"

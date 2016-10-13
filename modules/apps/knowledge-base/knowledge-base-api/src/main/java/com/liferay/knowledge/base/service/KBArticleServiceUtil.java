@@ -61,6 +61,19 @@ public class KBArticleServiceUtil {
 		return getService().deleteKBArticle(resourcePrimKey);
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticle fetchFirstChildKBArticle(
+		long groupId, long parentResourcePrimKey) {
+		return getService()
+				   .fetchFirstChildKBArticle(groupId, parentResourcePrimKey);
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
+		long groupId, long kbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchKBArticleByUrlTitle(groupId, kbFolderId, urlTitle);
+	}
+
 	public static com.liferay.knowledge.base.model.KBArticle fetchLatestKBArticle(
 		long resourcePrimKey, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {

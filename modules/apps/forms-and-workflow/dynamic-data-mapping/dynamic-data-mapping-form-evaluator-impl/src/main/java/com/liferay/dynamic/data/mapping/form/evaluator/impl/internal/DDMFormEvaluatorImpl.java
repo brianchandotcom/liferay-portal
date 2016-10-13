@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
@@ -48,10 +48,9 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		try {
 			DDMFormEvaluatorHelper ddmFormRuleEvaluatorHelper =
 				new DDMFormEvaluatorHelper(
-					_ddmDataProviderConsumerTracker,
-					_ddmDataProviderInstanceService, _ddmExpressionFactory,
-					ddmForm, ddmFormValues, _ddmFormValuesJSONDeserializer,
-					_jsonFactory, locale);
+					_ddmDataProviderTracker, _ddmDataProviderInstanceService,
+					_ddmExpressionFactory, ddmForm, ddmFormValues,
+					_ddmFormValuesJSONDeserializer, _jsonFactory, locale);
 
 			return ddmFormRuleEvaluatorHelper.evaluate();
 		}
@@ -60,9 +59,6 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 		}
 	}
 
-	@Reference
-	private DDMDataProviderConsumerTracker _ddmDataProviderConsumerTracker;
-
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -70,6 +66,9 @@ public class DDMFormEvaluatorImpl implements DDMFormEvaluator {
 	)
 	private volatile DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
+
+	@Reference
+	private DDMDataProviderTracker _ddmDataProviderTracker;
 
 	@Reference
 	private DDMExpressionFactory _ddmExpressionFactory;

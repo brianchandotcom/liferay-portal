@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumer;
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -50,7 +50,7 @@ import java.util.Map;
 public class CallFunction extends BaseDDMFormRuleFunction {
 
 	public CallFunction(
-		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
+		DDMDataProviderTracker ddmDataProviderTracker,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		Map<String, List<DDMFormFieldEvaluationResult>>
 			ddmFormFieldEvaluationResults,
@@ -59,7 +59,7 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 
 		super(ddmFormFieldEvaluationResults);
 
-		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
+		_ddmDataProviderTracker = ddmDataProviderTracker;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
@@ -133,12 +133,11 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 			_ddmDataProviderInstanceService.getDataProviderInstanceByUuid(
 				ddmDataProviderInstanceUUID);
 
-		DDMDataProviderConsumer ddmDataProviderConsumer =
-			_ddmDataProviderConsumerTracker.getDDMDataProviderConsumer(
+		DDMDataProvider ddmDataProvider =
+			_ddmDataProviderTracker.getDDMDataProvider(
 				ddmDataProviderInstance.getType());
 
-		DDMForm ddmForm = DDMFormFactory.create(
-			ddmDataProviderConsumer.getSettings());
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProvider.getSettings());
 
 		DDMFormValues ddmFormValues =
 			_ddmFormValuesJSONDeserializer.deserialize(
@@ -153,7 +152,7 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 		DDMDataProviderRequest ddmDataProviderRequest =
 			new DDMDataProviderRequest(ddmDataProviderContext);
 
-		return ddmDataProviderConsumer.execute(ddmDataProviderRequest);
+		return ddmDataProvider.getData(ddmDataProviderRequest);
 	}
 
 	protected void extractDDMFormFieldValue(
@@ -321,10 +320,9 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 
 	private static final Log _log = LogFactoryUtil.getLog(CallFunction.class);
 
-	private final DDMDataProviderConsumerTracker
-		_ddmDataProviderConsumerTracker;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
+	private final DDMDataProviderTracker _ddmDataProviderTracker;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>
 		_ddmFormFieldEvaluationResults;
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;

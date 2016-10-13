@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.evaluator.impl.internal;
 
-import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderConsumerTracker;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -60,14 +60,14 @@ import java.util.Objects;
 public class DDMFormEvaluatorHelper {
 
 	public DDMFormEvaluatorHelper(
-		DDMDataProviderConsumerTracker ddmDataProviderConsumerTracker,
+		DDMDataProviderTracker ddmDataProviderTracker,
 		DDMDataProviderInstanceService ddmDataProviderInstanceService,
 		DDMExpressionFactory ddmExpressionFactory, DDMForm ddmForm,
 		DDMFormValues ddmFormValues,
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer,
 		JSONFactory jsonFactory, Locale locale) {
 
-		_ddmDataProviderConsumerTracker = ddmDataProviderConsumerTracker;
+		_ddmDataProviderTracker = ddmDataProviderTracker;
 		_ddmDataProviderInstanceService = ddmDataProviderInstanceService;
 		_ddmExpressionFactory = ddmExpressionFactory;
 		_ddmForm = ddmForm;
@@ -290,8 +290,7 @@ public class DDMFormEvaluatorHelper {
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"call",
 			new CallFunction(
-				_ddmDataProviderConsumerTracker,
-				_ddmDataProviderInstanceService,
+				_ddmDataProviderTracker, _ddmDataProviderInstanceService,
 				_ddmFormFieldEvaluationResultsMap,
 				_ddmFormValuesJSONDeserializer, _jsonFactory));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
@@ -484,10 +483,9 @@ public class DDMFormEvaluatorHelper {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEvaluatorHelper.class);
 
-	private final DDMDataProviderConsumerTracker
-		_ddmDataProviderConsumerTracker;
 	private final DDMDataProviderInstanceService
 		_ddmDataProviderInstanceService;
+	private final DDMDataProviderTracker _ddmDataProviderTracker;
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMForm _ddmForm;
 	private final Map<String, List<DDMFormFieldEvaluationResult>>

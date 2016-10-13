@@ -17,12 +17,18 @@ package com.liferay.dynamic.data.mapping.data.provider;
 /**
  * @author Leonardo Barros
  */
-public interface DDMDataProviderConsumer {
+public class DDMDataProviderRequest {
 
-	public DDMDataProviderConsumerResponse execute(
-			DDMDataProviderConsumerRequest ddmDataProviderConsumerRequest)
-		throws DDMDataProviderException;
+	public DDMDataProviderRequest(
+		DDMDataProviderContext ddmDataProviderContext) {
 
-	public Class<?> getSettings();
+		_ddmDataProviderContext = ddmDataProviderContext;
+	}
+
+	public DDMDataProviderContext getDDMDataProviderContext() {
+		return _ddmDataProviderContext;
+	}
+
+	private final DDMDataProviderContext _ddmDataProviderContext;
 
 }

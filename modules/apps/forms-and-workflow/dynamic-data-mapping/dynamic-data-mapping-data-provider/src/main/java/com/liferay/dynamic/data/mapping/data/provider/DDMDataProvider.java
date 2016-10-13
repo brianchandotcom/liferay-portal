@@ -16,16 +16,44 @@ package com.liferay.dynamic.data.mapping.data.provider;
 
 import com.liferay.portal.kernel.util.KeyValuePair;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Luca Comin
  */
 public interface DDMDataProvider {
 
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #getData(
+	 *             DDMDataProviderRequest)}
+	 */
+	@Deprecated
 	public List<KeyValuePair> getData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException;
+
+	public default DDMDataProviderResponse getData(
+			DDMDataProviderRequest ddmDataProviderRequest)
+		throws DDMDataProviderException {
+
+		List<KeyValuePair> keyValuePairs = getData(
+			ddmDataProviderRequest.getDDMDataProviderContext());
+
+		List<Map<Object, Object>> data = new ArrayList<>();
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			Map<Object, Object> map = new HashMap<>();
+
+			data.add(map);
+
+			map.put(keyValuePair.getKey(), keyValuePair.getValue());
+		}
+
+		return new DDMDataProviderResponse(data);
+	}
 
 	public Class<?> getSettings();
 

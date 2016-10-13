@@ -14,21 +14,22 @@
 
 package com.liferay.dynamic.data.mapping.data.provider;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Leonardo Barros
  */
-public class DDMDataProviderConsumerRequest {
+public class DDMDataProviderResponse {
 
-	public DDMDataProviderConsumerRequest(
-		DDMDataProviderContext ddmDataProviderContext) {
-
-		_ddmDataProviderContext = ddmDataProviderContext;
+	public DDMDataProviderResponse(List<Map<Object, Object>> data) {
+		_data = data;
 	}
 
-	public DDMDataProviderContext getDDMDataProviderContext() {
-		return _ddmDataProviderContext;
+	public List<Map<Object, Object>> getData() {
+		return _data;
 	}
 
-	private final DDMDataProviderContext _ddmDataProviderContext;
+	private final List<Map<Object, Object>> _data;
 
 }

@@ -441,7 +441,7 @@
 					(ResourcePermission.primKeyId = Layout.plid) AND
 					(ResourcePermission.roleId = ?)
 			WHERE
-				ResourcePermission.primKey IS NULL
+				ResourcePermission.primKeyId IS NULL
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.LayoutFinder.findByNullFriendlyURL">

@@ -111,8 +111,8 @@ public class Dom4jUtil {
 
 		XMLReader xmlReader = null;
 
-		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
-				!= null) {
+		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider() !=
+				null) {
 
 			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
 		}

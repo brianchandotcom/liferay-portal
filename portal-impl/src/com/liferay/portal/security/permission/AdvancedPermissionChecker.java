@@ -775,8 +775,8 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		}
 
 		else if (primKey.equals("0") ||
-				 primKey.equals(String.valueOf(ResourceConstants.PRIMKEY_DNE))
-					 ||
+				 primKey.equals(
+					 String.valueOf(ResourceConstants.PRIMKEY_DNE)) ||
 				 (primKey.equals(String.valueOf(companyId)) &&
 				  !name.equals(Company.class.getName()))) {
 

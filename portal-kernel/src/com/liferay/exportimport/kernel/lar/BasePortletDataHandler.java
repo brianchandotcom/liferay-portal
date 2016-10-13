@@ -727,8 +727,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			long modelAdditionCount = manifestSummary.getModelAdditionCount(
 				stagedModelType);
 
-			if (portletDataHandlerControl
-					instanceof PortletDataHandlerBoolean) {
+			if (portletDataHandlerControl instanceof
+					PortletDataHandlerBoolean) {
 
 				PortletDataHandlerBoolean portletDataHandlerBoolean =
 					(PortletDataHandlerBoolean)portletDataHandlerControl;

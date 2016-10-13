@@ -159,8 +159,8 @@ public class LiferayTemplateCache extends TemplateCache {
 			MaybeMissingTemplate maybeMissingTemplate =
 				_constructor.newInstance(template);
 
-			if (_freemarkerEngineConfiguration.resourceModificationCheck()
-					!= 0) {
+			if (_freemarkerEngineConfiguration.resourceModificationCheck() !=
+					0) {
 
 				_portalCache.put(templateResource, maybeMissingTemplate);
 			}

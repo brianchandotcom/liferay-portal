@@ -2293,8 +2293,8 @@ public class HookHotDeployListener
 		String[] value = null;
 
 		if (initPhase) {
-			if (stringArraysContainer
-					instanceof OverrideStringArraysContainer) {
+			if (stringArraysContainer instanceof
+					OverrideStringArraysContainer) {
 
 				OverrideStringArraysContainer overrideStringArraysContainer =
 					(OverrideStringArraysContainer)stringArraysContainer;

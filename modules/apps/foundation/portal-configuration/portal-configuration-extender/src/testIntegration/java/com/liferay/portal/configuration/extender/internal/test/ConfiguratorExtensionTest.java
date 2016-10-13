@@ -367,8 +367,8 @@ public class ConfiguratorExtensionTest {
 		public ConfigurationDescription create(
 			NamedConfigurationContent namedConfigurationContent) {
 
-			if (namedConfigurationContent
-					instanceof StringSingleNamedConfigurationContent) {
+			if (namedConfigurationContent instanceof
+					StringSingleNamedConfigurationContent) {
 
 				final StringSingleNamedConfigurationContent ssncc =
 					(StringSingleNamedConfigurationContent)

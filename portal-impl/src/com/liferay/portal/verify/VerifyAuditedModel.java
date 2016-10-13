@@ -294,9 +294,7 @@ public class VerifyAuditedModel extends VerifyProcess {
 						verifiableAuditedModel.getPrimaryKeyColumnName());
 					long previousUserId = rs.getLong("userId");
 
-					if (verifiableAuditedModel.getJoinByTableName()
-							!= null) {
-
+					if (verifiableAuditedModel.getJoinByTableName() != null) {
 						long relatedPrimKey = rs.getLong(
 							verifiableAuditedModel.getJoinByTableName());
 

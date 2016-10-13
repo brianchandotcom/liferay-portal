@@ -237,19 +237,10 @@ AUI.add(
 						if (schedulerEvent.isRecurring()) {
 							var scheduler = schedulerEvent.get('scheduler');
 
-							var eventRecorder = scheduler.get('eventRecorder');
-
-							eventRecorder.hidePopover();
-
 							scheduler.load();
 						}
+
 						if (calendarBooking.status === CalendarWorkflow.STATUS_DENIED) {
-							var scheduler = schedulerEvent.get('scheduler');
-
-							var eventRecorder = scheduler.get('eventRecorder');
-
-							eventRecorder.hidePopover();
-
 							CalendarUtil.destroyEvent(schedulerEvent);
 						}
 						else {

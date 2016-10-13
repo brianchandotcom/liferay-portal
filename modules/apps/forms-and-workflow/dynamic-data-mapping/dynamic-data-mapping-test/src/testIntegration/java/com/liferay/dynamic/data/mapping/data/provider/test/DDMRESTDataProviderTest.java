@@ -17,17 +17,20 @@ package com.liferay.dynamic.data.mapping.data.provider.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,18 +100,19 @@ public class DDMRESTDataProviderTest {
 		DDMDataProviderContext ddmDataProviderContext =
 			new DDMDataProviderContext(ddmFormValues);
 
-		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
-			ddmDataProviderContext);
+		DDMDataProviderRequest ddmDataProviderRequest =
+			new DDMDataProviderRequest(ddmDataProviderContext);
 
-		Assert.assertNotNull(actualKeyValuePairs);
+		DDMDataProviderResponse ddmDtaProviderResponse =
+			_ddmDataProvider.getData(ddmDataProviderRequest);
 
-		List<KeyValuePair> expectedKeyValuePairs =
-			createExpectedKeyValuePairs();
+		List<Map<Object, Object>> data = ddmDtaProviderResponse.getData();
 
-		for (KeyValuePair expectedKeyValuePair : expectedKeyValuePairs) {
-			Assert.assertTrue(
-				actualKeyValuePairs.contains(expectedKeyValuePair));
-		}
+		Assert.assertFalse(data.isEmpty());
+
+		List<Map<Object, Object>> expectedData = createExpectedData();
+
+		Assert.assertTrue(data.containsAll(expectedData));
 	}
 
 	@Test
@@ -154,24 +158,49 @@ public class DDMRESTDataProviderTest {
 
 		ddmDataProviderContext.addParameter("filterParameterValue", "brazil");
 
-		List<KeyValuePair> actualKeyValuePairs = _ddmDataProvider.getData(
-			ddmDataProviderContext);
+		DDMDataProviderRequest ddmDataProviderRequest =
+			new DDMDataProviderRequest(ddmDataProviderContext);
 
-		Assert.assertEquals(1, actualKeyValuePairs.size());
+		DDMDataProviderResponse ddmDtaProviderResponse =
+			_ddmDataProvider.getData(ddmDataProviderRequest);
 
-		Assert.assertEquals(
-			new KeyValuePair("48", "Brazil"), actualKeyValuePairs.get(0));
+		Assert.assertNotNull(ddmDtaProviderResponse);
+
+		List<Map<Object, Object>> data = ddmDtaProviderResponse.getData();
+
+		Assert.assertEquals(1, data.size());
+
+		Map<Object, Object> map = new HashMap<>();
+
+		map.put("48", "Brazil");
+
+		Assert.assertTrue(data.contains(map));
 	}
 
-	protected List<KeyValuePair> createExpectedKeyValuePairs() {
-		List<KeyValuePair> expectedKeyValuePairs = new ArrayList<>();
+	protected List<Map<Object, Object>> createExpectedData() {
+		List<Map<Object, Object>> expectedData = new ArrayList<>();
 
-		expectedKeyValuePairs.add(new KeyValuePair("3", "France"));
-		expectedKeyValuePairs.add(new KeyValuePair("15", "Spain"));
-		expectedKeyValuePairs.add(new KeyValuePair("19", "United States"));
-		expectedKeyValuePairs.add(new KeyValuePair("48", "Brazil"));
+		Map<Object, Object> map = new HashMap<>();
 
-		return expectedKeyValuePairs;
+		map.put("3", "France");
+		expectedData.add(map);
+
+		map = new HashMap<>();
+
+		map.put("15", "Spain");
+		expectedData.add(map);
+
+		map = new HashMap<>();
+
+		map.put("19", "United States");
+		expectedData.add(map);
+
+		map = new HashMap<>();
+
+		map.put("48", "Brazil");
+		expectedData.add(map);
+
+		return expectedData;
 	}
 
 	private DDMDataProvider _ddmDataProvider;

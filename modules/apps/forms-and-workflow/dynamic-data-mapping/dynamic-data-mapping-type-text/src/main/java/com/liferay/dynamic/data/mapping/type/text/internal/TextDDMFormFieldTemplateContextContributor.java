@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.type.text.internal;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContextContributor;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
@@ -35,13 +37,13 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -187,14 +189,21 @@ public class TextDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext, ddmDataProviderContext,
 				ddmDataProviderContextContributors);
 
-			List<KeyValuePair> keyValuePairs = ddmDataProvider.getData(
-				ddmDataProviderContext);
+			DDMDataProviderRequest ddmDataProviderRequest =
+				new DDMDataProviderRequest(ddmDataProviderContext);
 
-			for (KeyValuePair keyValuePair : keyValuePairs) {
-				ddmFormFieldOptions.addOptionLabel(
-					keyValuePair.getValue(),
-					ddmFormFieldRenderingContext.getLocale(),
-					keyValuePair.getKey());
+			DDMDataProviderResponse ddmDataProviderResponse =
+				ddmDataProvider.getData(ddmDataProviderRequest);
+
+			List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
+
+			for (Map<Object, Object> map : data) {
+				for (Entry<Object, Object> entry : map.entrySet()) {
+					ddmFormFieldOptions.addOptionLabel(
+						String.valueOf(entry.getValue()),
+						ddmFormFieldRenderingContext.getLocale(),
+						String.valueOf(entry.getKey()));
+				}
 			}
 
 			return ddmFormFieldOptions;

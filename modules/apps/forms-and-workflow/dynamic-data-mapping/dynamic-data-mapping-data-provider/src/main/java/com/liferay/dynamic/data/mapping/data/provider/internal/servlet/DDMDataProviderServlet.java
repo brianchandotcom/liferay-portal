@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.mapping.data.provider.internal.servlet;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContextContributor;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderTracker;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
@@ -33,7 +35,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -41,6 +42,7 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -138,8 +140,13 @@ public class DDMDataProviderServlet extends HttpServlet {
 				request, ddmDataProviderContext,
 				ddmDataProviderContextContributors);
 
-			JSONArray jsonArray = toJSONArray(
-				ddmDataProvider.getData(ddmDataProviderContext));
+			DDMDataProviderRequest ddmDataProviderRequest =
+				new DDMDataProviderRequest(ddmDataProviderContext);
+
+			DDMDataProviderResponse ddmDataProviderResponse =
+				ddmDataProvider.getData(ddmDataProviderRequest);
+
+			JSONArray jsonArray = toJSONArray(ddmDataProviderResponse);
 
 			return jsonArray.toString();
 		}
@@ -178,23 +185,29 @@ public class DDMDataProviderServlet extends HttpServlet {
 		_jsonFactory = jsonFactory;
 	}
 
-	protected JSONArray toJSONArray(List<KeyValuePair> keyValuePairs) {
+	protected JSONArray toJSONArray(
+		DDMDataProviderResponse ddmDataProviderResponse) {
+
+		List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
+
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (KeyValuePair keyValuePair : keyValuePairs) {
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
+		for (Map<Object, Object> map : data) {
+			for (Entry<Object, Object> entry : map.entrySet()) {
+				JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-			JSONObject labelJSONObject = _jsonFactory.createJSONObject();
+				JSONObject labelJSONObject = _jsonFactory.createJSONObject();
 
-			labelJSONObject.put(
-				LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
-				keyValuePair.getKey());
+				labelJSONObject.put(
+					LanguageUtil.getLanguageId(LocaleUtil.getDefault()),
+					entry.getKey());
 
-			jsonObject.put("label", labelJSONObject);
+				jsonObject.put("label", labelJSONObject);
 
-			jsonObject.put("value", keyValuePair.getValue());
+				jsonObject.put("value", entry.getValue());
 
-			jsonArray.put(jsonObject);
+				jsonArray.put(jsonObject);
+			}
 		}
 
 		return jsonArray;

@@ -299,8 +299,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (!CompanyThreadLocal.isDeleteInProcess()) {
-			int count = userLocalService.getUserGroupUsersCount(
-				userGroup.getUserGroupId(), WorkflowConstants.STATUS_APPROVED);
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+			params.put(
+				"usersUserGroups", Long.valueOf(userGroup.getUserGroupId()));
+
+			int count = userFinder.countByKeywords(
+				userGroup.getCompanyId(), null,
+				WorkflowConstants.STATUS_APPROVED, params);
 
 			if (count > 0) {
 				throw new RequiredUserGroupException();

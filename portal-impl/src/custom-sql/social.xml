@@ -519,6 +519,22 @@
 				SocialActivity.createDate DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByOrganizationId">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				SocialActivitySet
+			INNER JOIN
+				Group_ ON
+					(Group_.groupId = SocialActivitySet.groupId)
+			INNER JOIN
+				Organization_ ON
+					(Organization_.organizationId = Group_.classPK)
+			WHERE
+				(Organization_.organizationId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.social.kernel.service.persistence.SocialActivitySetFinder.countByRelation">
 		<![CDATA[
 			SELECT

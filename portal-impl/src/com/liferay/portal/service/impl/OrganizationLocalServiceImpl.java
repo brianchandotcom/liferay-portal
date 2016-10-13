@@ -330,15 +330,21 @@ public class OrganizationLocalServiceImpl
 	public Organization deleteOrganization(Organization organization)
 		throws PortalException {
 
-		if (!CompanyThreadLocal.isDeleteInProcess() &&
-			((userLocalService.getOrganizationUsersCount(
-				organization.getOrganizationId(),
-				WorkflowConstants.STATUS_APPROVED) > 0) ||
-			 (organizationPersistence.countByC_P(
-				 organization.getCompanyId(),
-				 organization.getOrganizationId()) > 0))) {
+		if (!CompanyThreadLocal.isDeleteInProcess()) {
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-			throw new RequiredOrganizationException();
+			params.put(
+				"usersOrgs", Long.valueOf(organization.getOrganizationId()));
+
+			if ((organizationPersistence.countByC_P(
+					organization.getCompanyId(),
+					organization.getOrganizationId()) > 0) ||
+				(userFinder.countByKeywords(
+					organization.getCompanyId(), null,
+					WorkflowConstants.STATUS_APPROVED, params) > 0)) {
+
+				throw new RequiredOrganizationException();
+			}
 		}
 
 		// Asset

@@ -57,6 +57,42 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		throws DDMDataProviderException {
 
 		try {
+			DDMDataProviderResponse ddmDataProviderResponse = doGetData(
+				ddmDataProviderContext);
+
+			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
+					ddmDataProviderContext.getSettingsInstance(
+						DDMRESTDataProviderSettings.class);
+
+			List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
+
+			List<KeyValuePair> results = new ArrayList<>();
+
+			for (Map<Object, Object> map : data) {
+				String key = String.valueOf(
+					map.get(ddmRESTDataProviderSettings.key()));
+				String value = String.valueOf(
+					map.get(ddmRESTDataProviderSettings.value()));
+
+				results.add(new KeyValuePair(key, value));
+			}
+
+			return results;
+		}
+		catch (PortalException pe) {
+			throw new DDMDataProviderException(pe);
+		}
+	}
+
+	@Override
+	public DDMDataProviderResponse getData(
+			DDMDataProviderRequest ddmDataProviderRequest)
+		throws DDMDataProviderException {
+
+		try {
+			DDMDataProviderContext ddmDataProviderContext =
+				ddmDataProviderRequest.getDDMDataProviderContext();
+
 			return doGetData(ddmDataProviderContext);
 		}
 		catch (PortalException pe) {
@@ -69,64 +105,93 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 		return DDMRESTDataProviderSettings.class;
 	}
 
-	protected List<KeyValuePair> doGetData(
-			DDMDataProviderContext ddmDataProviderContext)
-		throws PortalException {
+	protected DDMDataProviderResponse createDDMDataProviderResponse(
+		JSONArray jsonArray,
+		DDMRESTDataProviderSettings ddmRESTDataProviderSettings) {
 
-		DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
-			ddmDataProviderContext.getSettingsInstance(
-				DDMRESTDataProviderSettings.class);
-
-		HttpRequest httpRequest = HttpRequest.get(
-			ddmRESTDataProviderSettings.url());
-
-		if (Validator.isNotNull(ddmRESTDataProviderSettings.username())) {
-			httpRequest.basicAuthentication(
-				ddmRESTDataProviderSettings.username(),
-				ddmRESTDataProviderSettings.password());
-		}
-
-		httpRequest.query(ddmDataProviderContext.getParameters());
-
-		if (ddmRESTDataProviderSettings.filterable()) {
-			httpRequest.query(
-				ddmRESTDataProviderSettings.filterParameterName(),
-				ddmDataProviderContext.getParameter("filterParameterValue"));
-		}
-
-		String cacheKey = getCacheKey(httpRequest);
-
-		DDMRESTDataProviderResult ddmRESTDataProviderResult = _portalCache.get(
-			cacheKey);
-
-		if ((ddmRESTDataProviderResult != null) &&
-			ddmRESTDataProviderSettings.cacheable()) {
-
-			return ddmRESTDataProviderResult.getKeyValuePairs();
-		}
-
-		HttpResponse httpResponse = httpRequest.send();
-
-		JSONArray jsonArray = getValue(httpResponse.body());
-
-		List<KeyValuePair> results = new ArrayList<>();
+		List<Map<Object, Object>> data = new ArrayList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			Map<Object, Object> map = new HashMap<>();
+
+			data.add(map);
+
 			String key = jsonObject.getString(
 				ddmRESTDataProviderSettings.key());
+
 			String value = jsonObject.getString(
 				ddmRESTDataProviderSettings.value());
 
-			results.add(new KeyValuePair(key, value));
+			map.put(key, value);
 		}
 
-		if (ddmRESTDataProviderSettings.cacheable()) {
-			_portalCache.put(cacheKey, new DDMRESTDataProviderResult(results));
-		}
+		DDMDataProviderResponse ddmDataProviderResponse =
+			new DDMDataProviderResponse();
 
-		return results;
+		ddmDataProviderResponse.setData(data);
+
+		return ddmDataProviderResponse;
+	}
+
+	protected DDMDataProviderResponse doGetData(
+			DDMDataProviderContext ddmDataProviderContext)
+		throws DDMDataProviderException {
+
+		try {
+			DDMRESTDataProviderSettings ddmRESTDataProviderSettings =
+				ddmDataProviderContext.getSettingsInstance(
+					DDMRESTDataProviderSettings.class);
+
+			HttpRequest httpRequest = HttpRequest.get(
+				ddmRESTDataProviderSettings.url());
+
+			if (Validator.isNotNull(ddmRESTDataProviderSettings.username())) {
+				httpRequest.basicAuthentication(
+					ddmRESTDataProviderSettings.username(),
+					ddmRESTDataProviderSettings.password());
+			}
+
+			httpRequest.query(ddmDataProviderContext.getParameters());
+
+			if (ddmRESTDataProviderSettings.filterable()) {
+				httpRequest.query(
+					ddmRESTDataProviderSettings.filterParameterName(),
+					ddmDataProviderContext.getParameter(
+						"filterParameterValue"));
+			}
+
+			String cacheKey = getCacheKey(httpRequest);
+
+			DDMRESTDataProviderResult ddmRESTDataProviderResult =
+				_portalCache.get(cacheKey);
+
+			if ((ddmRESTDataProviderResult != null) &&
+				ddmRESTDataProviderSettings.cacheable()) {
+
+				return ddmRESTDataProviderResult.getDDMDataProviderResponse();
+			}
+
+			HttpResponse httpResponse = httpRequest.send();
+
+			JSONArray jsonArray = getValue(httpResponse.body());
+
+			DDMDataProviderResponse ddmDataProviderResponse =
+				createDDMDataProviderResponse(
+					jsonArray, ddmRESTDataProviderSettings);
+
+			if (ddmRESTDataProviderSettings.cacheable()) {
+				_portalCache.put(
+					cacheKey,
+					new DDMRESTDataProviderResult(ddmDataProviderResponse));
+			}
+
+			return ddmDataProviderResponse;
+		}
+		catch (Exception e) {
+			throw new DDMDataProviderException(e);
+		}
 	}
 
 	protected String getCacheKey(HttpRequest httpRequest) {
@@ -163,15 +228,17 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 	private static class DDMRESTDataProviderResult implements Serializable {
 
-		public DDMRESTDataProviderResult(List<KeyValuePair> keyValuePairs) {
-			_keyValuePairs = keyValuePairs;
+		public DDMRESTDataProviderResult(
+			DDMDataProviderResponse ddmDataProviderResponse) {
+
+			_ddmDataProviderResponse = ddmDataProviderResponse;
 		}
 
-		public List<KeyValuePair> getKeyValuePairs() {
-			return _keyValuePairs;
+		public DDMDataProviderResponse getDDMDataProviderResponse() {
+			return _ddmDataProviderResponse;
 		}
 
-		private final List<KeyValuePair> _keyValuePairs;
+		private final DDMDataProviderResponse _ddmDataProviderResponse;
 
 	}
 

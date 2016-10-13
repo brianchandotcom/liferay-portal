@@ -371,6 +371,21 @@ public interface SyncDLObjectModel extends BaseModel<SyncDLObject>, ShardedModel
 	public void setEvent(String event);
 
 	/**
+	 * Returns the lan token key of this sync d l object.
+	 *
+	 * @return the lan token key of this sync d l object
+	 */
+	@AutoEscape
+	public String getLanTokenKey();
+
+	/**
+	 * Sets the lan token key of this sync d l object.
+	 *
+	 * @param lanTokenKey the lan token key of this sync d l object
+	 */
+	public void setLanTokenKey(String lanTokenKey);
+
+	/**
 	 * Returns the last permission change date of this sync d l object.
 	 *
 	 * @return the last permission change date of this sync d l object

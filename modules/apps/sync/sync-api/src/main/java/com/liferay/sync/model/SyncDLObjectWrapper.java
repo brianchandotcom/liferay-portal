@@ -78,6 +78,7 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 		attributes.put("size", getSize());
 		attributes.put("checksum", getChecksum());
 		attributes.put("event", getEvent());
+		attributes.put("lanTokenKey", getLanTokenKey());
 		attributes.put("lastPermissionChangeDate", getLastPermissionChangeDate());
 		attributes.put("lockExpirationDate", getLockExpirationDate());
 		attributes.put("lockUserId", getLockUserId());
@@ -209,6 +210,12 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 
 		if (event != null) {
 			setEvent(event);
+		}
+
+		String lanTokenKey = (String)attributes.get("lanTokenKey");
+
+		if (lanTokenKey != null) {
+			setLanTokenKey(lanTokenKey);
 		}
 
 		Date lastPermissionChangeDate = (Date)attributes.get(
@@ -373,6 +380,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public java.lang.String getExtraSettings() {
 		return _syncDLObject.getExtraSettings();
+	}
+
+	/**
+	* Returns the lan token key of this sync d l object.
+	*
+	* @return the lan token key of this sync d l object
+	*/
+	@Override
+	public java.lang.String getLanTokenKey() {
+		return _syncDLObject.getLanTokenKey();
 	}
 
 	/**
@@ -734,6 +751,16 @@ public class SyncDLObjectWrapper implements SyncDLObject,
 	@Override
 	public void setExtraSettings(java.lang.String extraSettings) {
 		_syncDLObject.setExtraSettings(extraSettings);
+	}
+
+	/**
+	* Sets the lan token key of this sync d l object.
+	*
+	* @param lanTokenKey the lan token key of this sync d l object
+	*/
+	@Override
+	public void setLanTokenKey(java.lang.String lanTokenKey) {
+		_syncDLObject.setLanTokenKey(lanTokenKey);
 	}
 
 	/**

@@ -36,6 +36,7 @@ import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.base.SyncDLObjectLocalServiceBaseImpl;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.util.SyncUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -47,6 +48,13 @@ import java.util.List;
 public class SyncDLObjectLocalServiceImpl
 	extends SyncDLObjectLocalServiceBaseImpl {
 
+	/**
+	 * @deprecated As of 1.3.0, replaced by {@link #addSyncDLObject(long, long,
+	 *             String, long, long, long, String, String, String, String,
+	 *             String, String, String, String, long, long, String, String,
+	 *             String, Date, long, String, String, long, String)}
+	 */
+	@Deprecated
 	@Override
 	public SyncDLObject addSyncDLObject(
 			long companyId, long userId, String userName, long modifiedTime,
@@ -56,6 +64,25 @@ public class SyncDLObjectLocalServiceImpl
 			long versionId, long size, String checksum, String event,
 			Date lockExpirationDate, long lockUserId, String lockUserName,
 			String type, long typePK, String typeUuid)
+		throws PortalException {
+
+		return addSyncDLObject(
+			companyId, userId, userName, modifiedTime, repositoryId,
+			parentFolderId, treePath, name, extension, mimeType, description,
+			changeLog, extraSettings, version, versionId, size, checksum, event,
+			StringPool.BLANK, lockExpirationDate, lockUserId, lockUserName,
+			type, typePK, typeUuid);
+	}
+
+	@Override
+	public SyncDLObject addSyncDLObject(
+			long companyId, long userId, String userName, long modifiedTime,
+			long repositoryId, long parentFolderId, String treePath,
+			String name, String extension, String mimeType, String description,
+			String changeLog, String extraSettings, String version,
+			long versionId, long size, String checksum, String event,
+			String lanTokenKey, Date lockExpirationDate, long lockUserId,
+			String lockUserName, String type, long typePK, String typeUuid)
 		throws PortalException {
 
 		if (!isDefaultRepository(parentFolderId)) {
@@ -135,6 +162,7 @@ public class SyncDLObjectLocalServiceImpl
 		syncDLObject.setSize(size);
 		syncDLObject.setChecksum(checksum);
 		syncDLObject.setEvent(event);
+		syncDLObject.setLanTokenKey(lanTokenKey);
 
 		if (event.equals(SyncDLObjectConstants.EVENT_MOVE)) {
 			syncDLObject.setLastPermissionChangeDate(new Date());
@@ -336,6 +364,10 @@ public class SyncDLObjectLocalServiceImpl
 					syncDLObject.setModifiedTime(
 						parentSyncDLObject.getModifiedTime());
 					syncDLObject.setEvent(SyncDLObjectConstants.EVENT_RESTORE);
+					syncDLObject.setLanTokenKey(
+						SyncUtil.getLanTokenKey(
+							parentSyncDLObject.getModifiedTime(),
+							syncDLObject.getTypePK(), false));
 
 					syncDLObjectPersistence.update(syncDLObject);
 				}

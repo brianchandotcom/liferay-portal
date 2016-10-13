@@ -97,6 +97,25 @@ public interface SyncDLObjectLocalService extends BaseLocalService,
 		java.lang.String description, java.lang.String changeLog,
 		java.lang.String extraSettings, java.lang.String version,
 		long versionId, long size, java.lang.String checksum,
+		java.lang.String event, java.lang.String lanTokenKey,
+		Date lockExpirationDate, long lockUserId,
+		java.lang.String lockUserName, java.lang.String type, long typePK,
+		java.lang.String typeUuid) throws PortalException;
+
+	/**
+	* @deprecated As of 1.3.0, replaced by {@link #addSyncDLObject(long, long,
+	String, long, long, long, String, String, String, String,
+	String, String, String, String, long, long, String, String,
+	String, Date, long, String, String, long, String)}
+	*/
+	@java.lang.Deprecated
+	public SyncDLObject addSyncDLObject(long companyId, long userId,
+		java.lang.String userName, long modifiedTime, long repositoryId,
+		long parentFolderId, java.lang.String treePath, java.lang.String name,
+		java.lang.String extension, java.lang.String mimeType,
+		java.lang.String description, java.lang.String changeLog,
+		java.lang.String extraSettings, java.lang.String version,
+		long versionId, long size, java.lang.String checksum,
 		java.lang.String event, Date lockExpirationDate, long lockUserId,
 		java.lang.String lockUserName, java.lang.String type, long typePK,
 		java.lang.String typeUuid) throws PortalException;

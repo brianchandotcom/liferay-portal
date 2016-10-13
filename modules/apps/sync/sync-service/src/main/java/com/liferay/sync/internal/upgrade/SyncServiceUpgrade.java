@@ -47,6 +47,10 @@ public class SyncServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.sync.service", "1.0.2", "1.0.3",
 			new com.liferay.sync.internal.upgrade.v1_0_3.UpgradeSchema());
+
+		registry.register(
+			"com.liferay.sync.service", "1.0.3", "1.0.4",
+			new com.liferay.sync.internal.upgrade.v1_0_4.UpgradeSchema());
 	}
 
 	@Reference(unbind = "-")

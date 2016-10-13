@@ -6694,6 +6694,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		syncDLObjectImpl.setSize(syncDLObject.getSize());
 		syncDLObjectImpl.setChecksum(syncDLObject.getChecksum());
 		syncDLObjectImpl.setEvent(syncDLObject.getEvent());
+		syncDLObjectImpl.setLanTokenKey(syncDLObject.getLanTokenKey());
 		syncDLObjectImpl.setLastPermissionChangeDate(syncDLObject.getLastPermissionChangeDate());
 		syncDLObjectImpl.setLockExpirationDate(syncDLObject.getLockExpirationDate());
 		syncDLObjectImpl.setLockUserId(syncDLObject.getLockUserId());

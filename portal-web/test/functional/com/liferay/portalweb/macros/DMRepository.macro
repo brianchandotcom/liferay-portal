@@ -28,6 +28,10 @@
 	<command name="gotoCP">
 		<var name="key_dmRepositoryName" value="${dmRepositoryName}" />
 
+		<execute macro="Portlet#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute function="AssertClick" locator1="DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW" value1="${dmRepositoryName}" />
 
 		<var name="key_dmFolderName" value="${dmRepositoryName}" />
@@ -52,17 +56,25 @@
 					<condition function="IsElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_GENERIC" />
 					<then>
 						<execute function="Check" locator1="DocumentsAndMedia#TOOLBAR_SELECT_ALL_CHECKBOX" />
+
 						<execute function="Pause" locator1="1000" />
+
 						<execute function="AssertClick#waitForDMHomeAssertTextEqualsClick" locator1="DocumentsAndMedia#TOOLBAR_ACTIONS" value1="Actions" />
+
 						<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 						<execute function="Confirm" value1="Are you sure you want to delete the selected entries? They will be deleted immediately." />
+
 						<execute macro="Alert#viewSuccessMessage" />
 					</then>
 				</if>
 
 				<execute function="Click" locator1="DocumentsAndMedia#FILTER_REPOSITORY_ACTIONS_GENERIC" />
+
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>

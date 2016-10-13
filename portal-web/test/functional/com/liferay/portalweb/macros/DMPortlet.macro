@@ -54,6 +54,7 @@
 					<condition function="IsElementPresent" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
 					<then>
 						<execute function="Click" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEW_CURRENT_PRESENT" />
+
 						<execute function="Click" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
 					</then>
 				</while>
@@ -65,7 +66,9 @@
 					<then>
 						<for list="${currentDisplayStyleViews}" param="currentDisplayStyleView">
 							<execute function="Select" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
+
 							<execute function="Click" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+
 							<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />
 						</for>
 					</then>
@@ -97,18 +100,27 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_SELECT_BUTTON" value1="Select" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#SELECT_FOLDER" />
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER" value1="${dmFolderName}" />
+
 		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#FOLDER_TABLE_FOLDER_CHOOSE" value1="Choose" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -169,6 +181,7 @@
 		<execute function="AssertChecked" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
 		<execute function="AssertTextEquals#assertValue" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MAXIMUM_ENTRIES_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="AssertChecked" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -193,7 +206,9 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_ROOT_FOLDER_FIELD" value1="${dmFolderName}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

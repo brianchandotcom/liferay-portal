@@ -326,6 +326,14 @@
 			<var name="recycleBinDisabled" value="true" />
 		</execute>
 
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
@@ -333,8 +341,6 @@
 		<execute macro="DMDocument#cannotViewCP">
 			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
-
-		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
 	<command name="DeleteDocumentInSubfolder" priority="5">
@@ -815,7 +821,7 @@
 		</execute>
 
 		<execute macro="DMRepository#viewBreadcrumb">
-			<var name="dmRepositoryName" value="DOCUMENTUM REPOSITORY NAME" />
+			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>
 	</command>
 </definition>

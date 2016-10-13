@@ -41,8 +41,8 @@ public class ConfigurationDescriptionFactoryImpl
 	public ConfigurationDescription create(
 		NamedConfigurationContent namedConfigurationContent) {
 
-		if (!(namedConfigurationContent
-				instanceof PropertiesFileNamedConfigurationContent)) {
+		if (!(namedConfigurationContent instanceof
+				PropertiesFileNamedConfigurationContent)) {
 
 			return null;
 		}

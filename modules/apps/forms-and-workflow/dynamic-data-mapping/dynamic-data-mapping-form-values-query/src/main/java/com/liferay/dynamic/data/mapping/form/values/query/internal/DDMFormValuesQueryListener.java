@@ -171,8 +171,8 @@ public class DDMFormValuesQueryListener extends DDMFormValuesQueryBaseListener {
 
 		String text = StringUtil.unquote(stringLiteral.getText());
 
-		if (lastDDMFormFieldValueMatcher
-				instanceof DDMFormFieldValueTypeMatcher) {
+		if (lastDDMFormFieldValueMatcher instanceof
+				DDMFormFieldValueTypeMatcher) {
 
 			DDMFormFieldValueTypeMatcher ddmFormFieldValueTypeMatcher =
 				(DDMFormFieldValueTypeMatcher)lastDDMFormFieldValueMatcher;

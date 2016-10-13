@@ -323,23 +323,25 @@ public class TableMapperTest {
 		new TableMapperFactory();
 
 		Assert.assertTrue(
-			_tableMapperImpl.addTableMappingSqlUpdate
-				instanceof MockAddMappingSqlUpdate);
+			_tableMapperImpl.addTableMappingSqlUpdate instanceof
+				MockAddMappingSqlUpdate);
 		Assert.assertTrue(
-			_tableMapperImpl.deleteLeftPrimaryKeyTableMappingsSqlUpdate
-				instanceof MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate);
+			_tableMapperImpl.
+				deleteLeftPrimaryKeyTableMappingsSqlUpdate instanceof
+					MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate);
 		Assert.assertTrue(
-			_tableMapperImpl.deleteRightPrimaryKeyTableMappingsSqlUpdate
-				instanceof MockDeleteRightPrimaryKeyTableMappingsSqlUpdate);
+			_tableMapperImpl.
+				deleteRightPrimaryKeyTableMappingsSqlUpdate instanceof
+					MockDeleteRightPrimaryKeyTableMappingsSqlUpdate);
 		Assert.assertTrue(
-			_tableMapperImpl.deleteTableMappingSqlUpdate
-				instanceof MockDeleteMappingSqlUpdate);
+			_tableMapperImpl.deleteTableMappingSqlUpdate instanceof
+				MockDeleteMappingSqlUpdate);
 		Assert.assertTrue(
-			_tableMapperImpl.getLeftPrimaryKeysSqlQuery
-				instanceof MockGetLeftPrimaryKeysSqlQuery);
+			_tableMapperImpl.getLeftPrimaryKeysSqlQuery instanceof
+				MockGetLeftPrimaryKeysSqlQuery);
 		Assert.assertTrue(
-			_tableMapperImpl.getRightPrimaryKeysSqlQuery
-				instanceof MockGetRightPrimaryKeysSqlQuery);
+			_tableMapperImpl.getRightPrimaryKeysSqlQuery instanceof
+				MockGetRightPrimaryKeysSqlQuery);
 		Assert.assertSame(
 			_leftBasePersistence, _tableMapperImpl.leftBasePersistence);
 		Assert.assertEquals(_LEFT_COLUMN_NAME, _tableMapperImpl.leftColumnName);

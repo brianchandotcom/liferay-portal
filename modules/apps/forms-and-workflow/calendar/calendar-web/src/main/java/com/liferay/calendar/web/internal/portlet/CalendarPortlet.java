@@ -661,8 +661,8 @@ public class CalendarPortlet extends MVCPortlet {
 	protected void getCalendarBooking(PortletRequest portletRequest)
 		throws Exception {
 
-		if (portletRequest.getAttribute(CalendarWebKeys.CALENDAR_BOOKING)
-				!= null) {
+		if (portletRequest.getAttribute(CalendarWebKeys.CALENDAR_BOOKING) !=
+				null) {
 
 			return;
 		}

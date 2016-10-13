@@ -22,14 +22,14 @@ import java.util.Map;
  */
 public class DDMDataProviderResponse {
 
+	public DDMDataProviderResponse(List<Map<Object, Object>> data) {
+		_data = data;
+	}
+
 	public List<Map<Object, Object>> getData() {
 		return _data;
 	}
 
-	public void setData(List<Map<Object, Object>> data) {
-		_data = data;
-	}
-
-	private List<Map<Object, Object>> _data;
+	private final List<Map<Object, Object>> _data;
 
 }

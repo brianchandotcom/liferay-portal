@@ -17,6 +17,7 @@ package com.liferay.blogs.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.kernel.exception.EntryContentException;
 import com.liferay.blogs.kernel.exception.EntryTitleException;
 import com.liferay.blogs.kernel.exception.NoSuchEntryException;
@@ -57,7 +58,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 

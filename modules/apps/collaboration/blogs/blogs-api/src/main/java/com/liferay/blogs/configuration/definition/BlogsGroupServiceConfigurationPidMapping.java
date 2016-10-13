@@ -15,8 +15,8 @@
 package com.liferay.blogs.configuration.definition;
 
 import com.liferay.blogs.configuration.BlogsGroupServiceConfiguration;
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import org.osgi.service.component.annotations.Component;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.attachments.test;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import java.io.InputStream;
 

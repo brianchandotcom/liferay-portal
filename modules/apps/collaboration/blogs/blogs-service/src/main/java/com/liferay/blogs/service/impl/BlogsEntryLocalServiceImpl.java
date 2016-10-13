@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.exception.EntryUrlTitleException;
 import com.liferay.blogs.kernel.exception.EntryContentException;
 import com.liferay.blogs.kernel.exception.EntryCoverImageCropException;
@@ -97,7 +98,6 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.blogs.social.BlogsActivityKeys;
 import com.liferay.portlet.blogs.util.BlogsUtil;

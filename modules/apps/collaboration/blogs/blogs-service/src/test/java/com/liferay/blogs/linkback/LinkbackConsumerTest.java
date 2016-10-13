@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.linkback;
+package com.liferay.blogs.linkback;
 
 import com.liferay.portal.kernel.comment.CommentManager;
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,7 +44,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({BlogsUtil.class, PortalSocketPermission.class})
 @RunWith(PowerMockRunner.class)
-public class LinkbackConsumerImplTest extends PowerMockito {
+public class LinkbackConsumerTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -56,10 +55,10 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 		setUpBlogsUtil();
 		setUpHttpUtil();
 
-		ReflectionTestUtil.setFieldValue(
-			CommentManagerUtil.class, "_commentManager", _commentManager);
+		_linkbackConsumer = new LinkbackConsumer();
 
-		_linkbackConsumer = new LinkbackConsumerImpl();
+		ReflectionTestUtil.setFieldValue(
+			_linkbackConsumer, "_commentManager", _commentManager);
 	}
 
 	@Test
@@ -170,6 +169,6 @@ public class LinkbackConsumerImplTest extends PowerMockito {
 	@Mock
 	private Http _http;
 
-	private LinkbackConsumerImpl _linkbackConsumer;
+	private LinkbackConsumer _linkbackConsumer;
 
 }

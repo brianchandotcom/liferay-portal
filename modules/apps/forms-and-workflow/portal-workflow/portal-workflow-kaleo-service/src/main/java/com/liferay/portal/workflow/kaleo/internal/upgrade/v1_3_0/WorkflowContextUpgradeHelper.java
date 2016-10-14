@@ -114,8 +114,6 @@ public class WorkflowContextUpgradeHelper {
 		WorkflowContextUpgradeHelper.class);
 
 	private static final Map<String, String> _classNamesMap = new HashMap<>();
-	private static final Pattern _javaClassPattern = Pattern.compile(
-		"\"javaClass\":\"(com.liferay.portal.[^\"]+)\"");
 
 	static {
 		_classNamesMap.put(
@@ -158,5 +156,8 @@ public class WorkflowContextUpgradeHelper {
 			"com.liferay.portlet.wiki.model.WikiPage",
 			"com.liferay.wiki.model.WikiPage");
 	}
+
+	private static final Pattern _javaClassPattern = Pattern.compile(
+		"\"javaClass\":\"(com.liferay.portal.[^\"]+)\"");
 
 }

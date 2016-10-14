@@ -788,6 +788,16 @@ public class PropsValues {
 
 	public static boolean LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED));
 
+	static {
+		if (!LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
+			LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;
+		}
+
+		if (!LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
+			LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
+		}
+	}
+
 	public static boolean LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED));
 
 	public static final String LIFERAY_HOME = PropsUtil.get(PropsKeys.LIFERAY_HOME);
@@ -1663,15 +1673,5 @@ public class PropsValues {
 	public static final boolean YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_PRESERVE_ALL_SEMICOLONS));
 
 	public static final boolean YUI_COMPRESSOR_JS_VERBOSE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.YUI_COMPRESSOR_JS_VERBOSE));
-
-	static {
-		if (!LAYOUT_USER_PRIVATE_LAYOUTS_ENABLED) {
-			LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;
-		}
-
-		if (!LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
-			LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
-		}
-	}
 
 }

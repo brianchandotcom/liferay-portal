@@ -219,8 +219,12 @@ public class JavaClass {
 
 				String staticBlockContent = staticBlock.getContent();
 
-				if (staticBlockContent.contains(javaTerm.getName())) {
-					staticBlock.setType(javaTerm.getType() + 1);
+				if (staticBlockContent.matches(
+						"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
+
+					staticBlock.setName(
+						javaTerm.getName() + StringPool.UNDERLINE);
+					staticBlock.setType(javaTerm.getType());
 
 					newJavaTerms.add(staticBlock);
 
@@ -695,6 +699,9 @@ public class JavaClass {
 				requiresEmptyLine = true;
 			}
 			else if (!javaTerm.isVariable()) {
+				requiresEmptyLine = true;
+			}
+			else if (javaTermContent.startsWith(_indent + "static {")) {
 				requiresEmptyLine = true;
 			}
 			else if ((StringUtil.isUpperCase(javaTermName) &&

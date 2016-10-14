@@ -91,6 +91,10 @@ public class SortJavaTerms1 {
 
 	private static final String _VAR_2;
 
+	static {
+		_VAR_2 = "test";
+	}
+
 	private static final String _VAR_10 = "hello";
 
 	private static final int _VAR_11 = 10;

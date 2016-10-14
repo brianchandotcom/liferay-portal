@@ -227,8 +227,6 @@ public class SQLTransformerOracleCastClobTextTest {
 
 	private static final String _BIG_TEXT_A_4001;
 
-	private static DB _db;
-
 	static {
 		char[] chars = new char[3999];
 
@@ -246,5 +244,7 @@ public class SQLTransformerOracleCastClobTextTest {
 
 		_BIG_TEXT_A_4001 = _BIG_TEXT_A_4000 + _A;
 	}
+
+	private static DB _db;
 
 }

@@ -98,16 +98,6 @@ public class MailboxUtil {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.INTRABAND_MAILBOX_REAPER_THREAD_ENABLED));
 
-	private static final long _INTRABAND_MAILBOX_STORAGE_LIFE =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE));
-
-	private static final Map<Long, ByteBuffer> _mailMap =
-		new ConcurrentHashMap<>();
-	private static final BlockingQueue<ReceiptStub> _overdueMailQueue =
-		new DelayQueue<>();
-	private static final AtomicLong _receiptGenerator = new AtomicLong();
-
 	static {
 		if (_INTRABAND_MAILBOX_REAPER_THREAD_ENABLED) {
 			Thread thread = new OverdueMailReaperThread(
@@ -119,6 +109,16 @@ public class MailboxUtil {
 			thread.start();
 		}
 	}
+
+	private static final long _INTRABAND_MAILBOX_STORAGE_LIFE =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.INTRABAND_MAILBOX_STORAGE_LIFE));
+
+	private static final Map<Long, ByteBuffer> _mailMap =
+		new ConcurrentHashMap<>();
+	private static final BlockingQueue<ReceiptStub> _overdueMailQueue =
+		new DelayQueue<>();
+	private static final AtomicLong _receiptGenerator = new AtomicLong();
 
 	private static class OverdueMailReaperThread extends Thread {
 

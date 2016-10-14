@@ -1200,7 +1200,6 @@ public class DLImpl implements DL {
 	private static final Set<String> _allMediaGalleryMimeTypes =
 		new TreeSet<>();
 	private static final Set<String> _fileIcons = new HashSet<>();
-	private static final Map<String, String> _genericNames = new HashMap<>();
 
 	static {
 		_allMediaGalleryMimeTypes.addAll(
@@ -1254,6 +1253,8 @@ public class DLImpl implements DL {
 			_populateGenericNamesMap(genericName);
 		}
 	}
+
+	private static final Map<String, String> _genericNames = new HashMap<>();
 
 	private final ServiceTrackerList<PortletLayoutFinder> _serviceTrackerList =
 		ServiceTrackerCollections.openList(

@@ -46,19 +46,6 @@ public class TestPropsValues {
 
 	public static final String COMPANY_WEB_ID;
 
-	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
-		GetterUtil.getBoolean(
-			TestPropsUtil.get(
-				"dl.file.entry.processors.trigger.synchronously"));
-
-	public static final int JUNIT_DELAY_FACTOR = GetterUtil.getInteger(
-		TestPropsUtil.get("junit.delay.factor"));
-
-	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
-
-	public static final String USER_PASSWORD = TestPropsUtil.get(
-		"user.password");
-
 	static {
 		String companyWebId = TestPropsUtil.get("company.web.id");
 
@@ -78,6 +65,19 @@ public class TestPropsValues {
 
 		COMPANY_WEB_ID = companyWebId;
 	}
+
+	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
+		GetterUtil.getBoolean(
+			TestPropsUtil.get(
+				"dl.file.entry.processors.trigger.synchronously"));
+
+	public static final int JUNIT_DELAY_FACTOR = GetterUtil.getInteger(
+		TestPropsUtil.get("junit.delay.factor"));
+
+	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");
+
+	public static final String USER_PASSWORD = TestPropsUtil.get(
+		"user.password");
 
 	public static long getCompanyId() throws PortalException {
 		if (_companyId > 0) {

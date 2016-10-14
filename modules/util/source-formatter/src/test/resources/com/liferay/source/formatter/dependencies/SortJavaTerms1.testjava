@@ -54,6 +54,10 @@ public class SortJavaTerms1 {
 
 	}
 
+	static {
+		_VAR_2 = "test";
+	}
+
 	public class Class3 {
 
 		public Class3() {

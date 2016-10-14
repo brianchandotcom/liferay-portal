@@ -2429,11 +2429,6 @@ public class IntrabandProxyUtilTest {
 		new HashMap<>();
 	private static final Map<Class<?>, Object> _sampleValueMap =
 		new HashMap<>();
-	private static final Type[] _types = {
-		Type.BOOLEAN_TYPE, Type.BYTE_TYPE, Type.CHAR_TYPE, Type.DOUBLE_TYPE,
-		Type.FLOAT_TYPE, Type.INT_TYPE, Type.LONG_TYPE, Type.SHORT_TYPE,
-		Type.getType(String.class), Type.getType(Object.class)
-	};
 
 	static {
 		_autoboxingMap.put(boolean.class, Boolean.class);
@@ -2471,6 +2466,12 @@ public class IntrabandProxyUtilTest {
 		_sampleValueMap.put(Object.class, new Locale("en"));
 		_sampleValueMap.put(void.class, null);
 	}
+
+	private static final Type[] _types = {
+		Type.BOOLEAN_TYPE, Type.BYTE_TYPE, Type.CHAR_TYPE, Type.DOUBLE_TYPE,
+		Type.FLOAT_TYPE, Type.INT_TYPE, Type.LONG_TYPE, Type.SHORT_TYPE,
+		Type.getType(String.class), Type.getType(Object.class)
+	};
 
 	private static class AutoReplyMockIntraband extends MockIntraband {
 

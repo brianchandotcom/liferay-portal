@@ -121,9 +121,6 @@ public class URLCodecTest {
 		"/abc/def", "abc <def> ghi"
 	};
 
-	private static final String[] _UNICODE_CATS_AND_DOGS =
-		{"1f408", "1f431", "1f415", "1f436"};
-
 	static {
 		try {
 			for (int i = 0; i < _RAW_URLS.length; i++) {
@@ -138,5 +135,8 @@ public class URLCodecTest {
 			throw new LoggedExceptionInInitializerError(e);
 		}
 	}
+
+	private static final String[] _UNICODE_CATS_AND_DOGS =
+		{"1f408", "1f431", "1f415", "1f436"};
 
 }

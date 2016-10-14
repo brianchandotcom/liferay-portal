@@ -54,16 +54,16 @@ AUI.add(
 						);
 					},
 
-					setValue: function(value) {
-						var instance = this;
-
-						instance.set('text', value || '');
-					},
-
 					getValue: function() {
 						var instance = this;
 
 						return '';
+					},
+
+					setValue: function(value) {
+						var instance = this;
+
+						instance.set('text', value || '');
 					},
 
 					_renderErrorMessage: Lang.emptyFn

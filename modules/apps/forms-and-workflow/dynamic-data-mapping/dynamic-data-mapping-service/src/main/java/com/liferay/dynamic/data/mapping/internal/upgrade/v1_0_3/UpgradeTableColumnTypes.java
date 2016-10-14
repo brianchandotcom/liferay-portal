@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Christopher Kian
  */
-public class UpgradeDDMName extends UpgradeProcess {
+public class UpgradeTableColumnTypes extends UpgradeProcess {
 
 	protected void doUpgrade() throws Exception {
 		alter(

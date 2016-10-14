@@ -43,6 +43,30 @@
 		</for>
 	</command>
 
+	<command name="DeleteOrganization" priority="5">
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="MyAccount#addOrganization">
+			<var name="organizationName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#deleteCP">
+			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewNoOrganizationsFoundCP" />
+	</command>
+
 	<command name="EditOrganizationSite" priority="5">
 		<execute macro="ProductMenu#gotoUserMyAccount">
 			<var name="portlet" value="My Organizations" />

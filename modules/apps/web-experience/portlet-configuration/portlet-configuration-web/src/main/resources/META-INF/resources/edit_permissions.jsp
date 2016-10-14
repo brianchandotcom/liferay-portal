@@ -111,6 +111,9 @@ definePermissionsURL.setParameter("backURL", currentURL);
 definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
 definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
+
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
@@ -125,6 +128,8 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 		<portlet:param name="resourceGroupId" value="<%= String.valueOf(resourceGroupId) %>" />
 		<portlet:param name="resourcePrimKey" value="<%= resourcePrimKey %>" />
 		<portlet:param name="roleTypes" value="<%= roleTypesParam %>" />
+		<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
+		<portlet:param name="delta" value="<%= String.valueOf(delta) %>" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= updateRolePermissionsURL.toString() %>" cssClass="form" method="post" name="fm">
@@ -263,10 +268,11 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 				%>
 
 				<liferay-ui:search-container
+					iteratorURL="<%= currentURLObj %>"
 					total="<%= roles.size() %>"
 				>
 					<liferay-ui:search-container-results
-						results="<%= roles %>"
+						results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 					/>
 
 					<liferay-ui:search-container-row
@@ -370,7 +376,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+					<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 				</liferay-ui:search-container>
 			</div>
 		</div>

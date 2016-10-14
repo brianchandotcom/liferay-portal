@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.io.IOException;
 
 import java.sql.Connection;
@@ -131,43 +133,58 @@ public class UpgradeCompanyId
 
 			// Company
 
-			String selectSQL =
-				"select companyId from Company where Company.companyId = " +
-					"PortletPreferences.ownerId";
+			String selectSQL = _getSelectSQL(
+				"Company", "companyId", "ownerId");
 
 			runSQL(connection, getUpdateSQL(selectSQL));
 
 			// Group
 
-			selectSQL =
-				"select companyId from Group_ where Group_.groupId = " +
-					"PortletPreferences.ownerId";
+			updateSQL = _getSelectSQL(
+				"Group_", "groupId", "ownerId");
 
 			runSQL(connection, getUpdateSQL(selectSQL));
 
 			// Layout
 
-			selectSQL =
-				"select companyId from Layout where Layout.plid = " +
-					"PortletPreferences.ownerId";
+			updateSQL = _getSelectSQL(
+				"Layout", "plid", "plid");
 
 			runSQL(connection, getUpdateSQL(selectSQL));
 
 			// Organization
 
-			selectSQL =
-				"select companyId from Organization_ where " +
-					"Organization_.organizationId = PortletPreferences.ownerId";
+			updateSQL = _getSelectSQL(
+				"Organization_", "organizationId", "ownerId");
 
 			runSQL(connection, getUpdateSQL(selectSQL));
 
 			// User_
 
-			selectSQL =
-				"select companyId from User_ where User_.userId = " +
-					"PortletPreferences.ownerId";
+			updateSQL = _getSelectSQL(
+				"User_", "userId", "ownerId");
 
 			runSQL(connection, getUpdateSQL(selectSQL));
+		}
+
+		private String _getSelectSQL(
+			String foreignTableName, String foreignColumnName,
+			String columnName) {
+
+			StringBundler sb = new StringBundler(10);
+
+			sb.append("select companyId from ");
+			sb.append(foreignTableName);
+			sb.append(" where ");
+			sb.append(foreignTableName);
+			sb.append(".");
+			sb.append(foreignColumnName);
+			sb.append(" = ");
+			sb.append(getTableName());
+			sb.append(".");
+			sb.append(columnName);
+
+			return sb.toString();
 		}
 
 	}

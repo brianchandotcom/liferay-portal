@@ -300,7 +300,6 @@ public class CalendarUtil {
 		jsonObject.put(
 			"recurringCalendarBookingId",
 			calendarBooking.getRecurringCalendarBookingId());
-
 		jsonObject.put("secondReminder", calendarBooking.getSecondReminder());
 		jsonObject.put(
 			"secondReminderType", calendarBooking.getSecondReminder());

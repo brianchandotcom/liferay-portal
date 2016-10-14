@@ -180,7 +180,8 @@ public class DDMFormTemplateContextFactoryTest {
 			new String[] {"Field0", "Field2", "Field4"});
 
 		Set<String> actualEvaluableFieldNames =
-			ddmFormTemplateContextFactoryIml.getEvaluableFieldNames(ddmForm);
+			ddmFormTemplateContextFactoryIml.getEvaluableDDMFormFieldNames(
+				ddmForm);
 
 		Assert.assertEquals(
 			expectedEvaluableFieldNames, actualEvaluableFieldNames);

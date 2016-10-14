@@ -125,7 +125,7 @@ public class DDMFormFieldTemplateContextFactory {
 				ddmFormFieldValue, ddmFormFieldParameterName);
 
 		setDDMFormFieldTemplateContextEvaluable(
-				ddmFormFieldTemplateContext, ddmFormField.getProperty("evaluable"));
+			ddmFormFieldTemplateContext, ddmFormField.getProperty("evaluable"));
 		setDDMFormFieldTemplateContextNestedTemplateContexts(
 			ddmFormFieldTemplateContext, nestedDDMFormFieldTemplateContext);
 
@@ -283,6 +283,16 @@ public class DDMFormFieldTemplateContextFactory {
 			"dir", LanguageUtil.get(_locale, LanguageConstants.KEY_DIR));
 	}
 
+	protected void setDDMFormFieldTemplateContextEvaluable(
+		Map<String, Object> ddmFormFieldTemplateContext, Object evaluable) {
+
+		if (evaluable == null) {
+			return;
+		}
+
+		ddmFormFieldTemplateContext.put("evaluable", evaluable);
+	}
+
 	protected void setDDMFormFieldTemplateContextLocalizedValue(
 		Map<String, Object> ddmFormFieldTemplateContext, String propertyName,
 		LocalizedValue localizedValue) {
@@ -340,16 +350,6 @@ public class DDMFormFieldTemplateContextFactory {
 		}
 
 		ddmFormFieldTemplateContext.put("options", list);
-	}
-
-	protected void setDDMFormFieldTemplateContextEvaluable(
-		Map<String, Object> ddmFormFieldTemplateContext,Object evaluable) {
-		
-		if (evaluable == null) {
-			return;
-		}
-		
-		ddmFormFieldTemplateContext.put("evaluable",   evaluable);
 	}
 
 	protected void setDDMFormFieldTemplateContextReadOnly(

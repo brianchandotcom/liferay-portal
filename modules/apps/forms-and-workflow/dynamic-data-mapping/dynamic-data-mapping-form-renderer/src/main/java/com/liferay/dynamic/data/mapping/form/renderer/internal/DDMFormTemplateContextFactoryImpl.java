@@ -29,7 +29,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
@@ -111,13 +110,12 @@ public class DDMFormTemplateContextFactoryImpl
 			containerId = StringUtil.randomId();
 		}
 
-		setEvaluableFieldNamesJSONArray(ddmForm);
-
 		templateContext.put("containerId", containerId);
+
+		setDDMFormFieldsEvaluableProperty(ddmForm);
 
 		templateContext.put(
 			"definition", _ddmFormJSONSerializer.serialize(ddmForm));
-
 		templateContext.put(
 			"evaluatorURL", getDDMFormContextProviderServletURL());
 
@@ -184,32 +182,32 @@ public class DDMFormTemplateContextFactoryImpl
 			"/dynamic-data-mapping-form-context-provider/");
 	}
 
-	protected Set<String> getEvaluableFieldNames(DDMForm ddmForm) {
-		Set<String> evaluableFieldNames = new HashSet<>();
+	protected Set<String> getEvaluableDDMFormFieldNames(DDMForm ddmForm) {
+		Set<String> evaluableDDMFormFieldNames = new HashSet<>();
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
 		Set<String> ddmFormFieldNames = ddmFormFieldsMap.keySet();
 
-		evaluableFieldNames.addAll(
+		evaluableDDMFormFieldNames.addAll(
 			getReferencedFieldNamesByDDMFormRules(
 				ddmForm.getDDMFormRules(), ddmFormFieldNames));
 
 		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
 			if (isDDMFormFieldEvaluable(ddmFormField)) {
-				evaluableFieldNames.add(ddmFormField.getName());
+				evaluableDDMFormFieldNames.add(ddmFormField.getName());
 			}
 
 			String visibilityExpression =
 				ddmFormField.getVisibilityExpression();
 
-			evaluableFieldNames.addAll(
+			evaluableDDMFormFieldNames.addAll(
 				getReferencedFieldNamesByExpression(
 					visibilityExpression, ddmFormFieldNames));
 		}
 
-		return evaluableFieldNames;
+		return evaluableDDMFormFieldNames;
 	}
 
 	protected Map<String, String> getLanguageStringsMap(
@@ -348,12 +346,15 @@ public class DDMFormTemplateContextFactoryImpl
 		return false;
 	}
 
-	protected void setEvaluableFieldNamesJSONArray(DDMForm ddmForm) {
+	protected void setDDMFormFieldsEvaluableProperty(DDMForm ddmForm) {
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
-		for (String ddmFormFieldName : getEvaluableFieldNames(ddmForm)) {
-			DDMFormField ddmFormField = ddmFormFieldsMap.get(ddmFormFieldName);
+		for (String evaluableDDMFormFieldName :
+				getEvaluableDDMFormFieldNames(ddmForm)) {
+
+			DDMFormField ddmFormField = ddmFormFieldsMap.get(
+				evaluableDDMFormFieldName);
 
 			ddmFormField.setProperty("evaluable", true);
 		}

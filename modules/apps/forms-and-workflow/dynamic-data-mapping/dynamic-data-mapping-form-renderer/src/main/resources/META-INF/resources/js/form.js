@@ -112,6 +112,24 @@ AUI.add(
 						return (formNode || container).one('[type="submit"]');
 					},
 
+					hasFocus: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var fieldFocused = false;
+
+						instance.eachField(
+							function(field) {
+								if (field.hasFocus()) {
+									fieldFocused = true;
+								}
+							}
+						);
+
+						return fieldFocused || container.contains(document.activeElement);
+					},
+
 					submit: function() {
 						var instance = this;
 

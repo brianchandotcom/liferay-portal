@@ -1,28 +1,44 @@
 <definition>
 	<command name="acceptConditions">
-		<execute function="AssertClick" locator1="GoogleLogin#ACCEPT" value1="Accept" />
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="GoogleLogin#ALLOW" value1="Allow" />
+			<then>
+				<execute function="Click" locator1="GoogleLogin#ALLOW" />
+			</then>
+		</if>
 
-		<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
+			<then>
+				<execute function="Click" locator1="Button#I_AGREE" />
+			</then>
+		</if>
 
-		<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+		<if>
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="TextInput#ANSWER" />
+			<then>
+				<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
 
-		<execute macro="Button#clickSave" />
+				<execute function="KeyPress" locator1="TextInput#ANSWER" value1="\RETURN" />
+			</then>
+		</if>
 	</command>
 
 	<command name="accountSignIn">
-		<if>
-			<condition function="IsElementPresent" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" />
-			<then>
-				<execute function="Type" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+		<execute macro="Navigator#openURL" />
 
-				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
 
-				<execute function="Type" locator1="GoogleLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+		<execute function="Click" locator1="Link#GOOGLE_LOGIN" />
 
-				<execute function="Click" locator1="GoogleLogin#LOGIN_SIGN_IN_BUTTON" />
+		<execute function="SelectWindow" locator1="GoogleLogin#PAGE_TITLE" />
 
-				<execute function="Pause" locator1="5000" />
-			</then>
-		</if>
+		<execute function="Type" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+
+		<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+
+		<execute function="Type" locator1="GoogleLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
+		<execute function="Click" locator1="GoogleLogin#LOGIN_SIGN_IN_BUTTON" />
 	</command>
 </definition>

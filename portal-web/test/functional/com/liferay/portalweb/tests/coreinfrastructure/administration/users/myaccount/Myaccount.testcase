@@ -22,6 +22,27 @@
 		</if>
 	</tear-down>
 
+	<command name="AddOrganizations" priority="4">
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<for list="1,2,3" param="i">
+			<execute macro="MyAccount#addOrganization">
+				<var name="organizationName" value="Organization Name ${i}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoUserMyAccount">
+				<var name="portlet" value="My Organizations" />
+			</execute>
+
+			<execute macro="Organization#searchCP">
+				<var name="orgName" value="Organization Name ${i}" />
+				<var name="searchTerm" value="Organization Name ${i}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="ViewMyAccount" priority="4">
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />

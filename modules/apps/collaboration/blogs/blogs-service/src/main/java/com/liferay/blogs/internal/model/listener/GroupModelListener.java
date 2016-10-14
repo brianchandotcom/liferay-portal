@@ -12,26 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.model;
+package com.liferay.blogs.internal.model.listener;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.internal.model.listener.GroupModelListener}
  */
-@Deprecated
+@Component(immediate = true, service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
-			SubscriptionLocalServiceUtil.deleteSubscriptions(
+			_subscriptionLocalService.deleteSubscriptions(
 				group.getCompanyId(), BlogsEntry.class.getName(),
 				group.getGroupId());
 		}
@@ -39,5 +41,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

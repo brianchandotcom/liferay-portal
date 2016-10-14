@@ -22,6 +22,5 @@
 	<bean class="com.liferay.portlet.announcements.model.GroupModelListener" id="com.liferay.portlet.announcements.model.GroupModelListener" />
 	<bean class="com.liferay.portlet.announcements.model.RoleModelListener" id="com.liferay.portlet.announcements.model.RoleModelListener" />
 	<bean class="com.liferay.portlet.asset.model.AssetEntryModelListener" id="com.liferay.portlet.asset.model.AssetEntryModelListener" />
-	<bean class="com.liferay.portlet.blogs.model.GroupModelListener" id="com.liferay.portlet.blogs.model.GroupModelListener" />
 	<bean class="com.liferay.portlet.messageboards.model.LayoutModelListener" id="com.liferay.portlet.messageboards.model.LayoutModelListener" />
 </beans>

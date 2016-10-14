@@ -22,6 +22,52 @@
 		</if>
 	</tear-down>
 
+	<command name="AddOrganizationMember" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="MyAccount#addOrganization">
+			<var name="organizationName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#gotoCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchToken" value="Organization" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
+			<var name="userName" value="userfn userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
 	<command name="AddOrganizations" priority="4">
 		<execute macro="ProductMenu#gotoUserMyAccount">
 			<var name="portlet" value="My Organizations" />

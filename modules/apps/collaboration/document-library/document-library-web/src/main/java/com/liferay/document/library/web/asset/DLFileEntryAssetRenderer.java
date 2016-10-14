@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.kernel.model.DDMFormValuesReader;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -57,6 +58,8 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -385,6 +388,22 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
+	public boolean isCategorizable(long groupId) {
+		long classPk = getClassPK();
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			classPk);
+
+		if ((dlFileEntry == null) ||
+			(dlFileEntry.getRepositoryId() != groupId)) {
+
+			return false;
+		}
+
+		return super.isCategorizable(groupId);
+	}
+
+	@Override
 	public boolean isConvertible() {
 		return true;
 	}
@@ -394,6 +413,14 @@ public class DLFileEntryAssetRenderer
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setDLFileEntryLocalService(
+		DLFileEntryLocalService dlFileEntryLocalService) {
+
+		_dlFileEntryLocalService = dlFileEntryLocalService;
+	}
+
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 	private final FileEntry _fileEntry;
 	private FileVersion _fileVersion;
 

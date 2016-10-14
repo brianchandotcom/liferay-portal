@@ -48,14 +48,12 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var boundingBox = instance.get('boundingBox');
-
 						var eventHandlers;
 
 						eventHandlers = [
 							instance.after('open', instance._afterSidebarOpen),
 							instance.after('open:start', instance._afterOpenStart),
-							boundingBox.on('clickoutside', A.bind(instance._onClickOutside, instance))
+							A.one(document).on('click', A.bind(instance._onClickWindow, instance))
 						];
 
 						instance._eventHandlers = eventHandlers;
@@ -197,8 +195,11 @@ AUI.add(
 
 						container.addClass('invisible');
 					},
-					_isNotAlloyEditorNode: function(node) {
-						return node.ancestorsByClassName('ae-ui').isEmpty();
+
+					_isClickInSidebar: function(node) {
+						var instance = this;
+
+						return instance.get('boundingBox').contains(node);
 					},
 
 					_loadFieldSettingsForm: function(field) {
@@ -232,12 +233,13 @@ AUI.add(
 						);
 					},
 
-					_onClickOutside: function(event) {
+					_onClickWindow: function(event) {
 						var instance = this;
 
 						var target = event.target;
 
-						if (instance.get('open') && instance._isNotAlloyEditorNode(target)) {
+						if (instance.get('open') &&
+							!(instance._isClickInSidebar(target) || instance.settingsForm.hasFocus())) {
 							instance.close();
 						}
 					},

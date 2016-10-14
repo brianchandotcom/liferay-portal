@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -131,6 +133,16 @@ public class UpgradeCompanyId
 		public void update(Connection connection)
 			throws IOException, SQLException {
 
+			List<Long> companyIds = getCompanyIds(connection);
+
+			if (companyIds.size() == 1) {
+				String selectSQL = String.valueOf(companyIds.get(0));
+
+				runSQL(connection, getUpdateSQL(selectSQL));
+
+				return;
+			}
+
 			// Company
 
 			String selectSQL = _getSelectSQL(
@@ -168,8 +180,15 @@ public class UpgradeCompanyId
 		}
 
 		private String _getSelectSQL(
-			String foreignTableName, String foreignColumnName,
-			String columnName) {
+				String foreignTableName, String foreignColumnName,
+				String columnName)
+			throws IOException, SQLException {
+
+			List<Long> companyIds = getCompanyIds(connection, foreignTableName);
+
+			if (companyIds.size() == 1) {
+				return String.valueOf(companyIds.get(0));
+			}
 
 			StringBundler sb = new StringBundler(10);
 

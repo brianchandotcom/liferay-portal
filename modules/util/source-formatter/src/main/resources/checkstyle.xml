@@ -134,6 +134,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.NotRequireThis">
 			<message key="variable.not.require.this" value="Reference to variable ''{0}'' does not need ''.this''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOrder">
+			<message key="left.argument.literal.or.num" value="''{0}'' should be on the right hand side of the operator" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatement">
 			<property name="maxLineLength" value="80" />
 			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />

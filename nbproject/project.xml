@@ -421,8 +421,6 @@
 				<classpath mode="compile">lib/portal/jrcs-diff.jar</classpath>
 				<classpath mode="compile">lib/portal/json-java.jar</classpath>
 				<classpath mode="compile">lib/portal/json-schema-validator.jar</classpath>
-				<classpath mode="compile">lib/portal/jsonrpc.jar</classpath>
-				<classpath mode="compile">lib/portal/jspwiki.jar</classpath>
 				<classpath mode="compile">lib/portal/jsr107cache.jar</classpath>
 				<classpath mode="compile">lib/portal/jstl-api.jar</classpath>
 				<classpath mode="compile">lib/portal/jstl-impl.jar</classpath>
@@ -445,7 +443,6 @@
 				<classpath mode="compile">lib/portal/netty-all.jar</classpath>
 				<classpath mode="compile">lib/portal/odmg.jar</classpath>
 				<classpath mode="compile">lib/portal/oro.jar</classpath>
-				<classpath mode="compile">lib/portal/oscache.jar</classpath>
 				<classpath mode="compile">lib/portal/pdfbox.jar</classpath>
 				<classpath mode="compile">lib/portal/poi-ooxml-schemas.jar</classpath>
 				<classpath mode="compile">lib/portal/poi-ooxml.jar</classpath>

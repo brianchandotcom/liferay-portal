@@ -202,7 +202,10 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		List<String> actions = new ArrayList<>();
 
-		actions.add("call(" + dataProviderInstance1.getUuid() + ")");
+		String action = String.format(
+			"call(\"%s\",\"\",\"\")", dataProviderInstance1.getUuid());
+
+		actions.add(action);
 
 		DDMFormRule ddmFormRule = new DDMFormRule("TRUE", actions);
 
@@ -663,8 +666,14 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		List<String> actions = new ArrayList<>();
 
-		actions.add("call(" + dataProviderInstance1.getUuid() + ")");
-		actions.add("call(" + dataProviderInstance2.getUuid() + ")");
+		String action1 = String.format(
+			"call(\"%s\",\"\",\"\")", dataProviderInstance1.getUuid());
+
+		String action2 = String.format(
+			"call(\"%s\",\"\",\"\")", dataProviderInstance2.getUuid());
+
+		actions.add(action1);
+		actions.add(action2);
 
 		DDMFormRule ddmFormRule1 = new DDMFormRule("TRUE", actions);
 
@@ -672,7 +681,7 @@ public class DDMStructureLocalServiceTest extends BaseDDMServiceTestCase {
 
 		actions = new ArrayList<>();
 
-		actions.add("call(" + dataProviderInstance1.getUuid() + ")");
+		actions.add(action1);
 
 		DDMFormRule ddmFormRule2 = new DDMFormRule("FALSE", actions);
 

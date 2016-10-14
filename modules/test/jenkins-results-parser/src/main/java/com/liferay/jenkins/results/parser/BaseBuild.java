@@ -346,6 +346,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke() {
+		String hostName = JenkinsResultsParserUtil.getHostName("");
+
+		if (!hostName.startsWith("cloud-10-0")) {
+			System.out.println("A Build may not be reinvoked by " + hostName);
+		}
+
 		result = null;
 
 		String invocationURL = getInvocationURL();
@@ -353,6 +359,8 @@ public abstract class BaseBuild implements Build {
 		badBuildNumbers.add(getBuildNumber());
 
 		setBuildNumber(-1);
+
+		downstreamBuilds.clear();
 
 		try {
 			JenkinsResultsParserUtil.toString(

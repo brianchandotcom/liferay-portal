@@ -2252,8 +2252,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
 					if (line.contains(StringPool.TAB + StringPool.SPACE) &&
-						!previousLine.endsWith("&&") &&
-						!previousLine.endsWith("|") &&
+						!previousLine.matches(".*[&|^]") &&
 						!previousLine.contains(StringPool.TAB + "((") &&
 						!previousLine.contains(
 							StringPool.TAB + StringPool.LESS_THAN) &&

@@ -2633,23 +2633,36 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		Keyboard keyboard = new DesktopKeyboard();
 
-		keyboard.keyDown(Key.CTRL);
-
-		keyboard.type("a");
-
-		keyboard.keyUp(Key.CTRL);
-
 		String filePath =
 			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
 				FileUtil.getSeparator() + value;
 
 		filePath = LiferaySeleniumHelper.getSourceDirFilePath(filePath);
 
-		if (OSDetector.isWindows()) {
-			filePath = StringUtil.replace(filePath, "/", "\\");
-		}
+		filePath = StringUtil.replace(filePath, "/", FileUtil.getSeparator());
 
-		sikuliType(image, filePath);
+		if (OSDetector.isApple()) {
+			keyboard.keyDown(Key.CMD);
+			keyboard.keyDown(Key.SHIFT);
+
+			keyboard.type("g");
+
+			keyboard.keyUp(Key.CMD);
+			keyboard.keyUp(Key.SHIFT);
+
+			sikuliType(image, filePath);
+
+			keyboard.type(Key.ENTER);
+		}
+		else {
+			keyboard.keyDown(Key.CTRL);
+
+			keyboard.type("a");
+
+			keyboard.keyUp(Key.CTRL);
+
+			sikuliType(image, filePath);
+		}
 
 		keyboard.type(Key.ENTER);
 	}

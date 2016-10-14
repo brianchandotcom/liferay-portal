@@ -1378,48 +1378,6 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void sikuliUploadCommonFile(
-			LiferaySelenium liferaySelenium, String image, String value)
-		throws Exception {
-
-		sikuliClick(liferaySelenium, image);
-
-		Keyboard keyboard = new DesktopKeyboard();
-
-		String filePath =
-			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
-				FileUtil.getSeparator() + value;
-
-		filePath = getSourceDirFilePath(filePath);
-
-		filePath = StringUtil.replace(filePath, "/", FileUtil.getSeparator());
-
-		if (OSDetector.isApple()) {
-			keyboard.keyDown(Key.CMD);
-			keyboard.keyDown(Key.SHIFT);
-
-			keyboard.type("g");
-
-			keyboard.keyUp(Key.CMD);
-			keyboard.keyUp(Key.SHIFT);
-
-			sikuliType(liferaySelenium, image, filePath);
-
-			keyboard.type(Key.ENTER);
-		}
-		else {
-			keyboard.keyDown(Key.CTRL);
-
-			keyboard.type("a");
-
-			keyboard.keyUp(Key.CTRL);
-
-			sikuliType(liferaySelenium, image, filePath);
-		}
-
-		keyboard.type(Key.ENTER);
-	}
-
 	public static void sikuliUploadTCatFile(
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {

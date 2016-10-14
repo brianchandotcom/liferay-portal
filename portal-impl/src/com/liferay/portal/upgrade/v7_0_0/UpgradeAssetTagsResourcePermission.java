@@ -33,7 +33,7 @@ public class UpgradeAssetTagsResourcePermission extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			runSQL(
 				"delete from ResourcePermission where name = '" +
-					AssetTag.class.getName() + "' and scope = " +
+					"com.liferay.portlet.asset.model.AssetTag' and scope = " +
 						ResourceConstants.SCOPE_INDIVIDUAL);
 		}
 	}

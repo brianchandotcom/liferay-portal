@@ -370,6 +370,14 @@
 		<execute function="AssertTextEquals" locator1="PortalSettings#VIRTUAL_HOST_FIELD" value1="${virtualHostName}" />
 	</command>
 
+	<command name="enableGoogleSSOCP">
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_CLIENT_ID" value1="${googleClientID}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_CLIENT_SECRET" value1="${googleClientSecret}" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="enableImportLDAPCP">
 		<execute macro="PortalSettingsNavigator#gotoLDAP" />
 

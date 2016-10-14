@@ -63,10 +63,10 @@ public class JCIFSEngine implements NTLMEngine {
 		int type2Flags = type2Message.getFlags();
 
 		int type3Flags =
-				type2Flags &
-				(0xffffffff ^
-				(NtlmFlags.NTLMSSP_TARGET_TYPE_DOMAIN |
-				  NtlmFlags.NTLMSSP_TARGET_TYPE_SERVER));
+			type2Flags &
+			(0xffffffff ^
+			 (NtlmFlags.NTLMSSP_TARGET_TYPE_DOMAIN |
+			  NtlmFlags.NTLMSSP_TARGET_TYPE_SERVER));
 
 		if (domain == null) {
 			domain = _domain;

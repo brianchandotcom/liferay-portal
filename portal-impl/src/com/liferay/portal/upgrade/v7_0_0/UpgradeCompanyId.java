@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
@@ -145,38 +146,42 @@ public class UpgradeCompanyId
 
 			// Company
 
-			String selectSQL = _getSelectSQL(
-				"Company", "companyId", "ownerId");
+			String updateSQL = _getUpdateSQL(
+				"Company", "companyId", "ownerId",
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-			runSQL(connection, getUpdateSQL(selectSQL));
+			runSQL(connection, updateSQL);
 
 			// Group
 
-			updateSQL = _getSelectSQL(
-				"Group_", "groupId", "ownerId");
+			updateSQL = _getUpdateSQL(
+				"Group_", "groupId", "ownerId",
+				PortletKeys.PREFS_OWNER_TYPE_GROUP);
 
-			runSQL(connection, getUpdateSQL(selectSQL));
+			runSQL(connection, updateSQL);
 
 			// Layout
 
-			updateSQL = _getSelectSQL(
-				"Layout", "plid", "plid");
+			updateSQL = _getUpdateSQL(
+				"Layout", "plid", "plid", PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
 
-			runSQL(connection, getUpdateSQL(selectSQL));
+			runSQL(connection, updateSQL);
 
 			// Organization
 
-			updateSQL = _getSelectSQL(
-				"Organization_", "organizationId", "ownerId");
+			updateSQL = _getUpdateSQL(
+				"Organization_", "organizationId", "ownerId",
+				PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION);
 
-			runSQL(connection, getUpdateSQL(selectSQL));
+			runSQL(connection, updateSQL);
 
 			// User_
 
-			updateSQL = _getSelectSQL(
-				"User_", "userId", "ownerId");
+			updateSQL = _getUpdateSQL(
+				"User_", "userId", "ownerId",
+				PortletKeys.PREFS_OWNER_TYPE_USER);
 
-			runSQL(connection, getUpdateSQL(selectSQL));
+			runSQL(connection, updateSQL);
 		}
 
 		private String _getSelectSQL(
@@ -202,6 +207,24 @@ public class UpgradeCompanyId
 			sb.append(getTableName());
 			sb.append(".");
 			sb.append(columnName);
+
+			return sb.toString();
+		}
+
+		private String _getUpdateSQL(
+				String foreignTableName, String foreignColumnName,
+				String columnName, int ownerType)
+			throws IOException, SQLException {
+
+			String selectSQL = _getSelectSQL(
+				foreignTableName, foreignColumnName, columnName);
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(getUpdateSQL(selectSQL));
+			sb.append(" where ownerType = ");
+			sb.append(ownerType);
+			sb.append(" and (companyId is null or companyId = 0)");
 
 			return sb.toString();
 		}

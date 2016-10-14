@@ -166,6 +166,9 @@ public interface SocialActivitySetLocalService extends BaseLocalService,
 	public int getGroupActivitySetsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getOrganizationActivitySetsCount(long organizationId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRelationActivitySetsCount(long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

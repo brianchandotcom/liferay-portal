@@ -137,6 +137,11 @@ public class SocialActivitySetLocalServiceImpl
 	}
 
 	@Override
+	public int getOrganizationActivitySetsCount(long organizationId) {
+		return socialActivitySetFinder.countByOrganizationId(organizationId);
+	}
+
+	@Override
 	public List<SocialActivitySet> getRelationActivitySets(
 		long userId, int start, int end) {
 

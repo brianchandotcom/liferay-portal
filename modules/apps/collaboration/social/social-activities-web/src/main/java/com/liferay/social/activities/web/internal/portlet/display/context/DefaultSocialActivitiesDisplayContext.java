@@ -125,12 +125,10 @@ public class DefaultSocialActivitiesDisplayContext
 		SocialActivitiesQueryHelper.Scope scope =
 			SocialActivitiesQueryHelper.Scope.fromValue(getSelectedTabName());
 
-		int start = _socialActivitiesRequestHelper.getEnd();
-
 		_socialActivitySets =
 			_socialActivitiesQueryHelper.getSocialActivitySets(
 				group, layout, scope, 0,
-				start + _socialActivitiesRequestHelper.getMax());
+				_socialActivitiesRequestHelper.getEnd());
 
 		return _socialActivitySets;
 	}
@@ -164,9 +162,16 @@ public class DefaultSocialActivitiesDisplayContext
 
 	@Override
 	public boolean isSeeMoreControlVisible() {
-		List<SocialActivitySet> socialActivitySets = getSocialActivitySets();
+		Group group = _socialActivitiesRequestHelper.getScopeGroup();
+		Layout layout = _socialActivitiesRequestHelper.getLayout();
 
-		if (socialActivitySets.size() == getMax()) {
+		SocialActivitiesQueryHelper.Scope scope =
+			SocialActivitiesQueryHelper.Scope.fromValue(getSelectedTabName());
+
+		int count = _socialActivitiesQueryHelper.getSocialActivitySetsCount(
+			group, layout, scope);
+
+		if (_socialActivitiesRequestHelper.getEnd() < count) {
 			return true;
 		}
 

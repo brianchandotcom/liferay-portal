@@ -183,6 +183,7 @@
 		<execute function="AssertClickNoError" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="Pause" locator1="5000" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<var name="key_assetTitle" value="${webContentTitle}" />
@@ -876,6 +877,7 @@
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
 		<execute function="Pause" locator1="3000" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -1703,6 +1705,7 @@
 		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
@@ -1915,6 +1918,7 @@
 		<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${webContentContent}" />
+
 		<execute function="SelectFrameTop" />
 	</command>
 

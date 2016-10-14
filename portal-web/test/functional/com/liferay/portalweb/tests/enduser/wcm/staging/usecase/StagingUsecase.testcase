@@ -1054,7 +1054,7 @@
 
 		<execute macro="DMMetadataSet#save" />
 
-		<execute function="Pause" locator1="3000" />
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Staging Test Page" />

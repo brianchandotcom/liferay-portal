@@ -336,6 +336,9 @@ public class OrganizationLocalServiceTest {
 		Assert.assertEquals(2, results.size());
 		Assert.assertTrue(results.contains(suborganization));
 		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
+
+		UserLocalServiceUtil.deleteOrganizationUser(
+			organization.getOrganizationId(), TestPropsValues.getUser());
 	}
 
 	@Test
@@ -355,6 +358,9 @@ public class OrganizationLocalServiceTest {
 
 		Assert.assertEquals(1, results.size());
 		Assert.assertTrue(results.contains(TestPropsValues.getUser()));
+
+		UserLocalServiceUtil.deleteOrganizationUser(
+			organization.getOrganizationId(), TestPropsValues.getUser());
 	}
 
 	@Test
@@ -416,6 +422,9 @@ public class OrganizationLocalServiceTest {
 			OrganizationLocalServiceUtil.hasUserOrganization(
 				TestPropsValues.getUserId(), organizationB.getOrganizationId(),
 				false, false));
+
+		UserLocalServiceUtil.deleteOrganizationUser(
+			organizationA.getOrganizationId(), TestPropsValues.getUser());
 	}
 
 	@Test
@@ -442,6 +451,9 @@ public class OrganizationLocalServiceTest {
 			OrganizationLocalServiceUtil.hasUserOrganization(
 				TestPropsValues.getUserId(), organizationA.getOrganizationId(),
 				true, true));
+
+		UserLocalServiceUtil.deleteOrganizationUser(
+			organizationAA.getOrganizationId(), TestPropsValues.getUser());
 	}
 
 	@Test
@@ -622,6 +634,9 @@ public class OrganizationLocalServiceTest {
 
 		Assert.assertEquals(
 			String.valueOf(_user.getUserId()), hits.doc(0).get(Field.USER_ID));
+
+		UserLocalServiceUtil.deleteOrganizationUser(
+			organization.getOrganizationId(), _user);
 	}
 
 	@Test
@@ -652,6 +667,9 @@ public class OrganizationLocalServiceTest {
 
 		Assert.assertEquals(
 			String.valueOf(_user.getUserId()), hits.doc(0).get(Field.USER_ID));
+
+		UserLocalServiceUtil.deleteOrganizationUser(
+			organization.getOrganizationId(), _user);
 	}
 
 	@Test

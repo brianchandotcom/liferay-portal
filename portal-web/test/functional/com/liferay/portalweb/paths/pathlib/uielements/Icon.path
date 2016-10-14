@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ASTERISK</td>
-	<td>//span[contains(@class,'icon-asterisk')]</td>
+	<td>//*[name()='svg'][contains(@class,'icon-asterisk')]</td>
 	<td></td>
 </tr>
 <tr>

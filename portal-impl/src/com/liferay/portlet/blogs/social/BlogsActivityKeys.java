@@ -16,7 +16,10 @@ package com.liferay.portlet.blogs.social;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.blogs.social.BlogsActivityKeys}
  */
+@Deprecated
 public class BlogsActivityKeys {
 
 	public static final int ADD_COMMENT = 1;

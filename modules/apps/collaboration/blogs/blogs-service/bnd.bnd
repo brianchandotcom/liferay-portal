@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.blogs.linkback,\
 	com.liferay.blogs.service.permission,\
 	com.liferay.blogs.settings,\
+	com.liferay.blogs.social,\
 	com.liferay.blogs.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs

@@ -14,11 +14,11 @@
 
 package com.liferay.blogs.web.internal.upgrade.v1_0_0;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 /**
  * @author Sergio González

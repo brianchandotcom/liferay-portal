@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.internal.upload;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import java.io.InputStream;
 

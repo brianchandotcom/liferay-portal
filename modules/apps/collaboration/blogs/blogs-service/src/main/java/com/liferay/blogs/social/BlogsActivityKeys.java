@@ -12,16 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.constants;
+package com.liferay.blogs.social;
 
 /**
- * @author Iván Zaera
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.constants.BlogsConstants}
+ * @author Brian Wing Shun Chan
  */
-@Deprecated
-public class BlogsConstants {
+public class BlogsActivityKeys {
 
-	public static final String SERVICE_NAME = "com.liferay.blogs";
+	public static final int ADD_COMMENT = 1;
+
+	public static final int ADD_ENTRY = 2;
+
+	public static final int UPDATE_ENTRY = 3;
 
 }

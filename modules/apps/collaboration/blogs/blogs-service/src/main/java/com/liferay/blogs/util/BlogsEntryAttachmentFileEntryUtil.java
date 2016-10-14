@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.util;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.blogs.constants.BlogsConstants;
 
 import java.io.File;
 import java.io.InputStream;

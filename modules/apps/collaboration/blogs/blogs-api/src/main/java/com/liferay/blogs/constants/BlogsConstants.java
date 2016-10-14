@@ -12,14 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.constants;
+package com.liferay.blogs.constants;
 
 /**
  * @author Iván Zaera
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.constants.BlogsConstants}
  */
-@Deprecated
 public class BlogsConstants {
 
 	public static final String SERVICE_NAME = "com.liferay.blogs";

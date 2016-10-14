@@ -258,7 +258,7 @@ public class DDMDataProviderInstancePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDMDataProviderInstance",
 			"uuid", true, "dataProviderInstanceId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "type", true);
+			true, "modifiedDate", true, "type", true);
 	}
 
 	@Test

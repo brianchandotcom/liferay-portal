@@ -274,6 +274,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					'invokeTransition',
 					function() {
 						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value = 'true';
+						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value = 'false';
 						submitForm(document.<portlet:namespace />fm);
 					},
 					function() {

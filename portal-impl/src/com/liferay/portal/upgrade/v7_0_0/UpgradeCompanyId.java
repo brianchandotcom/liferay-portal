@@ -190,6 +190,14 @@ public class UpgradeCompanyId
 				PortletKeys.PREFS_OWNER_TYPE_USER);
 
 			runSQL(connection, updateSQL);
+
+			// PortletItem
+
+			updateSQL = _getUpdateSQL(
+				"PortletItem", "portletItemId", "ownerId",
+				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
+
+			runSQL(connection, updateSQL);
 		}
 
 		private String _getSelectSQL(

@@ -71,7 +71,7 @@ portletDisplay.setURLBack(redirect);
 							choice = choice.toEscapedModel();
 						%>
 							<aui:field-wrapper cssClass="radio">
-								<aui:input cssClass="radio-inline" label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+								<aui:input label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
 							</aui:field-wrapper>
 
 						<%

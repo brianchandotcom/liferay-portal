@@ -22,7 +22,7 @@
 			<liferay-ui:message key="<%= label %>" localizeKey="<%= localizeLabel %>" />
 
 			<c:if test="<%= required && showRequiredLabel %>">
-				<aui:icon cssClass="text-warning" image="asterisk" markupView="lexicon" />
+				<aui:icon cssClass="reference-mark text-warning" image="asterisk" markupView="lexicon" />
 
 				<span class="hide-accessible"><liferay-ui:message key="required" /></span>
 			</c:if>

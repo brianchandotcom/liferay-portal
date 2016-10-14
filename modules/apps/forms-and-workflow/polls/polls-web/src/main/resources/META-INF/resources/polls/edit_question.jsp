@@ -95,7 +95,7 @@ portletDisplay.setURLBack(redirect);
 
 			<aui:input dateTogglerCheckboxLabel="never-expire" disabled="<%= neverExpire %>" name="expirationDate" />
 
-			<aui:field-wrapper label="choices">
+			<aui:field-wrapper cssClass="form-group input-choices-wrapper" label="choices">
 
 				<%
 				for (int i = 1; i <= choicesCount; i++) {
@@ -117,17 +117,17 @@ portletDisplay.setURLBack(redirect);
 					}
 				%>
 
-					<div class="form-group form-inline">
-						<div class="form-group">
-							<aui:model-context bean="<%= choice %>" model="<%= PollsChoice.class %>" />
+					<div class="input-group-default">
+						<aui:model-context bean="<%= choice %>" model="<%= PollsChoice.class %>" />
 
-							<aui:input name="<%= EditQuestionMVCActionCommand.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
+						<aui:input name="<%= EditQuestionMVCActionCommand.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
 
-							<aui:input fieldParam="<%= paramName %>" label="<%= c + StringPool.PERIOD %>" name="description" />
-						</div>
+						<aui:input fieldParam="<%= paramName %>" label="<%= c + StringPool.PERIOD %>" name="description" />
 
 						<c:if test="<%= (((question == null) && (choicesCount > 2)) || ((question != null) && (choicesCount > oldChoicesCount))) && (i == choicesCount) %>">
-							<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
+							<div class="input-group-addon">
+								<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
+							</div>
 						</c:if>
 					</div>
 

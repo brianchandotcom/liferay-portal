@@ -714,8 +714,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			// Reset the locale
 
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
+			HttpServletRequest request = PortalUtil.getOriginalServletRequest(
+				PortalUtil.getHttpServletRequest(actionRequest));
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
 			HttpSession session = request.getSession();

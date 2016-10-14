@@ -361,7 +361,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 
-				if (updateLanguageId) {
+				if (updateLanguageId && themeDisplay.isI18n()) {
 					String i18nLanguageId = user.getLanguageId();
 
 					int pos = i18nLanguageId.indexOf(CharPool.UNDERLINE);
@@ -372,17 +372,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 					String i18nPath = StringPool.SLASH + i18nLanguageId;
 
-					if (themeDisplay.isI18n()) {
-						redirect = StringUtil.replace(
-							redirect, themeDisplay.getI18nPath(), i18nPath);
-					}
-					else {
-						String path = HttpUtil.getPath(redirect);
-
-						i18nPath += path;
-
-						redirect = StringUtil.replace(redirect, path, i18nPath);
-					}
+					redirect = StringUtil.replace(
+						redirect, themeDisplay.getI18nPath(), i18nPath);
 				}
 
 				redirect = HttpUtil.setParameter(

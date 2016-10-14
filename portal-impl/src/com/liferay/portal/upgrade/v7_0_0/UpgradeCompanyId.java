@@ -167,6 +167,14 @@ public class UpgradeCompanyId
 
 			runSQL(connection, updateSQL);
 
+			// LayoutRevision
+
+			updateSQL = _getUpdateSQL(
+				"LayoutRevision", "layoutRevisionId", "plid",
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT);
+
+			runSQL(connection, updateSQL);
+
 			// Organization
 
 			updateSQL = _getUpdateSQL(

@@ -18,6 +18,7 @@ import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsStatsUserLocalService;
+import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -29,7 +30,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import java.util.List;
 

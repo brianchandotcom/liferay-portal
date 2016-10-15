@@ -16,6 +16,7 @@ package com.liferay.blogs.web.internal.upload;
 
 import com.liferay.blogs.kernel.exception.EntryImageNameException;
 import com.liferay.blogs.kernel.exception.EntryImageSizeException;
+import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

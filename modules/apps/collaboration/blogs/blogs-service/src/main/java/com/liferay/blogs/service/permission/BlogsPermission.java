@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service.permission;
+package com.liferay.blogs.service.permission;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,17 +21,13 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.service.permission.BlogsPermission}
  */
-@Deprecated
-@OSGiBeanProperties(
-	property = {"resource.name=" + BlogsPermission.RESOURCE_NAME}
-)
+@Component(property = {"resource.name=" + BlogsPermission.RESOURCE_NAME})
 public class BlogsPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.blogs";

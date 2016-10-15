@@ -195,6 +195,14 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public void verifyPatchLevels() throws PatchInconsistencyException {
+		Properties portalKernelJARProperties = _getProperties(
+			PATCHER_SERVICE_PROPERTIES);
+
+		String[] kernelJARPatches = _getInstalledPatches(
+			portalKernelJARProperties);
+
+		Arrays.sort(kernelJARPatches);
+
 		Properties portalImplJARProperties = _getProperties(PATCHER_PROPERTIES);
 
 		String[] portalImplJARPatches = _getInstalledPatches(
@@ -202,15 +210,7 @@ public class PatcherImpl implements Patcher {
 
 		Arrays.sort(portalImplJARPatches);
 
-		Properties portalServiceJARProperties = _getProperties(
-			PATCHER_SERVICE_PROPERTIES);
-
-		String[] serviceJARPatches = _getInstalledPatches(
-			portalServiceJARProperties);
-
-		Arrays.sort(serviceJARPatches);
-
-		if (!Arrays.equals(portalImplJARPatches, serviceJARPatches)) {
+		if (!Arrays.equals(portalImplJARPatches, kernelJARPatches)) {
 			_log.error("Inconsistent patch level detected");
 
 			if (_log.isWarnEnabled()) {
@@ -224,14 +224,14 @@ public class PatcherImpl implements Patcher {
 							Arrays.toString(portalImplJARPatches));
 				}
 
-				if (ArrayUtil.isEmpty(serviceJARPatches)) {
+				if (ArrayUtil.isEmpty(kernelJARPatches)) {
 					_log.warn(
 						"There are no patches installed on portal-kernel.jar");
 				}
 				else {
 					_log.warn(
 						"Patch level on portal-kernel.jar: " +
-							Arrays.toString(serviceJARPatches));
+							Arrays.toString(kernelJARPatches));
 				}
 			}
 

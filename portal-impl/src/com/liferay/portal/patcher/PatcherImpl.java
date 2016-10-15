@@ -174,7 +174,13 @@ public class PatcherImpl implements Patcher {
 			return _properties;
 		}
 
-		return _getProperties(PATCHER_PROPERTIES);
+		_properties = _getProperties(PATCHER_PROPERTIES);
+
+		if (!_properties.isEmpty()) {
+			_configured = true;
+		}
+
+		return _properties;
 	}
 
 	@Override
@@ -271,8 +277,6 @@ public class PatcherImpl implements Patcher {
 		else {
 			try {
 				properties.load(inputStream);
-
-				_configured = true;
 			}
 			catch (IOException ioe) {
 				_log.error(ioe, ioe);
@@ -282,9 +286,7 @@ public class PatcherImpl implements Patcher {
 			}
 		}
 
-		_properties = properties;
-
-		return _properties;
+		return properties;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PatcherImpl.class);

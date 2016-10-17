@@ -59,6 +59,8 @@ public class ConfigurationExportImportTest {
 			"test.pid", StringPool.QUESTION);
 
 		_file = new File("test-configuration-export.config");
+
+		_properties = new Hashtable<>();
 	}
 
 	@After
@@ -70,42 +72,55 @@ public class ConfigurationExportImportTest {
 
 	@Test
 	public void testExportImportBlankString() throws Exception {
-		_properties.put("key", StringPool.BLANK);
+		String blankStringKey = "blankStringKey";
+		String blankStringValue = StringPool.BLANK;
+
+		_properties.put(blankStringKey, blankStringValue);
 
 		exportImportProperties(_properties);
 
 		Assert.assertEquals(
-			StringPool.BLANK, _configuration.getProperties().get("key"));
+			blankStringValue,
+			_configuration.getProperties().get(blankStringKey));
 	}
 
 	@Test
 	public void testExportImportBoolean() throws Exception {
-		_properties.put("key", true);
+		String booleanKey = "booleanKey";
+
+		_properties.put(booleanKey, true);
 
 		exportImportProperties(_properties);
 
-		Assert.assertTrue((boolean)_configuration.getProperties().get("key"));
+		Assert.assertTrue(
+			(boolean)_configuration.getProperties().get(booleanKey));
 	}
 
 	@Test
 	public void testExportImportString() throws Exception {
-		_properties.put("key", "value");
+		String stringKey = "stringKey";
+		String stringValue = "stringValue";
+
+		_properties.put(stringKey, stringValue);
 
 		exportImportProperties(_properties);
 
-		Assert.assertEquals("value", _configuration.getProperties().get("key"));
+		Assert.assertEquals(
+			stringValue, _configuration.getProperties().get(stringKey));
 	}
 
 	@Test
 	public void testExportImportStringArray() throws Exception {
-		String[] values = new String[] {"value1", "value2", "value3"};
+		String arrayKey = "arrayKey";
+		String[] arrayValues = new String[] {"value1", "value2", "value3"};
 
-		_properties.put("key", values);
+		_properties.put(arrayKey, arrayValues);
 
 		exportImportProperties(_properties);
 
 		Assert.assertArrayEquals(
-			values, (String[])_configuration.getProperties().get("key"));
+			arrayValues,
+			(String[])_configuration.getProperties().get(arrayKey));
 	}
 
 	protected void exportImportProperties(Dictionary properties)
@@ -130,7 +145,7 @@ public class ConfigurationExportImportTest {
 	private Configuration _configuration;
 	private ConfigurationAdmin _configurationAdmin;
 	private File _file;
-	private final Dictionary _properties = new Hashtable<>();
+	private Dictionary _properties;
 	private ServiceReference<ConfigurationAdmin> _serviceReference;
 
 }

@@ -62,7 +62,7 @@ public class SetupWizardSampleDataUtil {
 			companyId, PropsValues.COMPANY_DEFAULT_NAME,
 			PropsValues.DEFAULT_ADMIN_FIRST_NAME,
 			PropsValues.DEFAULT_ADMIN_LAST_NAME,
-			PropsValues.ADMIN_EMAIL_FROM_NAME, false);
+			PropsValues.ADMIN_EMAIL_FROM_ADDRESS, false);
 	}
 
 	public static void addSampleData(

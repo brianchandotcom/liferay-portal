@@ -39,11 +39,16 @@ public class BuildFactory {
 
 				String jobVariant = batchBuild.getParameterValue("JOB_VARIANT");
 
-				if ((jobVariant != null) &&
-					jobVariant.contains("modules-integration")) {
+				if (jobVariant != null) {
+					if (jobVariant.contains("functional")) {
+						batchBuild = new FunctionalBatchBuild(url, (TopLevelBuild)parentBuild);
+					}
 
-					batchBuild = new ModulesIntegrationBatchBuild(
-						url, (TopLevelBuild)parentBuild);
+					if (jobVariant.contains("modules-integration")) {
+
+						batchBuild = new ModulesIntegrationBatchBuild(
+							url, (TopLevelBuild)parentBuild);
+					}
 				}
 
 				return batchBuild;

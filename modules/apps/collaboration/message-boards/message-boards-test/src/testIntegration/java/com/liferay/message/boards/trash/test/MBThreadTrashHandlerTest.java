@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
@@ -61,7 +60,6 @@ import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Collections;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -181,15 +179,6 @@ public class MBThreadTrashHandlerTest
 		super.setUp();
 
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
-
-		_testMode = PortalRunMode.isTestMode();
-
-		PortalRunMode.setTestMode(true);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Test
@@ -368,7 +357,6 @@ public class MBThreadTrashHandlerTest
 
 	private static final String _SUBJECT = "Subject";
 
-	private boolean _testMode;
 	private final WhenIsAssetable _whenIsAssetable =
 		new DefaultWhenIsAssetable();
 	private final WhenIsIndexableBaseModel _whenIsIndexableBaseModel =

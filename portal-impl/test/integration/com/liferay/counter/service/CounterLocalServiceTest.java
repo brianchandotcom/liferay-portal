@@ -132,6 +132,8 @@ public class CounterLocalServiceTest {
 		arguments.add("-Xmx1024m");
 		arguments.add("-XX:MaxPermSize=200m");
 
+		arguments.add("-Dliferay.mode=test");
+
 		for (String property :
 				HypersonicServerTestRule.INSTANCE.getJdbcProperties()) {
 

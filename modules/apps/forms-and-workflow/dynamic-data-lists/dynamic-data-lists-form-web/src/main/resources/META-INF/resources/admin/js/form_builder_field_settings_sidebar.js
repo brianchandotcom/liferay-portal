@@ -48,15 +48,11 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var eventHandlers;
-
-						eventHandlers = [
+						instance._eventHandlers = [
+							A.getDoc().on('click', A.bind(instance._onClickDocument, instance)),
 							instance.after('open', instance._afterSidebarOpen),
-							instance.after('open:start', instance._afterOpenStart),
-							A.one(document).on('click', A.bind(instance._onClickWindow, instance))
+							instance.after('open:start', instance._afterOpenStart)
 						];
-
-						instance._eventHandlers = eventHandlers;
 					},
 
 					destructor: function() {
@@ -86,9 +82,7 @@ AUI.add(
 
 						var settingsForm = instance.settingsForm;
 
-						var settings = field.getSettings(settingsForm);
-
-						return settings;
+						return field.getSettings(settingsForm);
 					},
 
 					getPreviousContext: function() {
@@ -163,6 +157,12 @@ AUI.add(
 						settingsForm.getFirstPageField().focus();
 					},
 
+					_containsNode: function(node) {
+						var instance = this;
+
+						return instance.get('boundingBox').contains(node);
+					},
+
 					_createToolbar: function() {
 						var instance = this;
 
@@ -188,12 +188,6 @@ AUI.add(
 								instance.set('title', settingsForm.getField('label').getValue());
 							}
 						);
-					},
-
-					_isClickInSidebar: function(node) {
-						var instance = this;
-
-						return instance.get('boundingBox').contains(node);
 					},
 
 					_loadFieldSettingsForm: function(field) {
@@ -226,13 +220,14 @@ AUI.add(
 						);
 					},
 
-					_onClickWindow: function(event) {
+					_onClickDocument: function(event) {
 						var instance = this;
+
+						var settingsForm = instance.settingsForm;
 
 						var target = event.target;
 
-						if (instance.get('open') &&
-							!(instance._isClickInSidebar(target) || instance.settingsForm.hasFocus())) {
+						if (instance.get('open') && !instance._containsNode(target) && !settingsForm.hasFocus()) {
 							instance.close();
 						}
 					},

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util.test;
+package com.liferay.blogs.util.test;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceUtil;

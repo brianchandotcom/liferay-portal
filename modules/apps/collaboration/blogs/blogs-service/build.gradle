@@ -23,4 +23,5 @@ dependencies {
 	provided project(":apps:web-experience:export-import:export-import-service")
 
 	testCompile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
+	testCompile project(":apps:collaboration:blogs:blogs-test-util")
 }

@@ -2427,6 +2427,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final Properties versionOverrides = GUtil.loadProperties(
 			versionOverrideFile);
 
+		// Bundle-Version
+
 		String bundleVersion = versionOverrides.getProperty(
 			Constants.BUNDLE_VERSION);
 
@@ -2438,6 +2440,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 			project.setVersion(bundleVersion);
 		}
+
+		// Dependencies
 
 		ConfigurationContainer configurationContainer =
 			project.getConfigurations();
@@ -2512,6 +2516,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				projectConfigurer.configure(dependencyProject);
 			}
 		}
+
+		// Package versions
 
 		final Copy copy = (Copy)GradleUtil.getTask(
 			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);

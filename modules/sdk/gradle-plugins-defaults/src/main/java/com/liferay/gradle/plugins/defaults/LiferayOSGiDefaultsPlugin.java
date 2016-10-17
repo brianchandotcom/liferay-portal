@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.util.BackupFilesBuildAdapter;
 import com.liferay.gradle.plugins.defaults.internal.util.FileUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
@@ -249,6 +250,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_applyVersionOverrides(project, versionOverrideFile);
 
 		Gradle gradle = project.getGradle();
+
+		gradle.addBuildListener(_backupFilesBuildAdapter);
 
 		StartParameter startParameter = gradle.getStartParameter();
 
@@ -2417,6 +2420,35 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return replaceRegexTask;
 	}
 
+	private void _applyVersionOverrideJson(Project project, String fileName)
+		throws IOException {
+
+		File file = project.file(fileName);
+
+		if (!file.exists()) {
+			return;
+		}
+
+		Path path = file.toPath();
+
+		_backupFilesBuildAdapter.backUp(path);
+
+		String json = new String(
+			Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		Matcher matcher = _jsonVersionPattern.matcher(json);
+
+		if (!matcher.find()) {
+			return;
+		}
+
+		json =
+			json.substring(0, matcher.start(1)) + project.getVersion() +
+				json.substring(matcher.end(1));
+
+		Files.write(path, json.getBytes(StandardCharsets.UTF_8));
+	}
+
 	private void _applyVersionOverrides(
 		Project project, File versionOverrideFile) {
 
@@ -2439,6 +2471,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			bundleInstructions.put(Constants.BUNDLE_VERSION, bundleVersion);
 
 			project.setVersion(bundleVersion);
+
+			try {
+				_applyVersionOverrideJson(project, "npm-shrinkwrap.json");
+				_applyVersionOverrideJson(project, "package.json");
+			}
+			catch (IOException ioe) {
+				throw new UncheckedIOException(ioe);
+			}
 		}
 
 		// Dependencies
@@ -2804,13 +2844,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		File npmShrinkwrapJsonFile = project.file("npm-shrinkwrap.json");
 
 		if (npmShrinkwrapJsonFile.exists()) {
-			replaceRegexTask.match(_JSON_VERSION_REGEX, npmShrinkwrapJsonFile);
+			replaceRegexTask.match(
+				_jsonVersionPattern.pattern(), npmShrinkwrapJsonFile);
 		}
 
 		File packageJsonFile = project.file("package.json");
 
 		if (packageJsonFile.exists()) {
-			replaceRegexTask.match(_JSON_VERSION_REGEX, packageJsonFile);
+			replaceRegexTask.match(
+				_jsonVersionPattern.pattern(), packageJsonFile);
 		}
 	}
 
@@ -3204,9 +3246,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final JavaVersion _JAVA_VERSION = JavaVersion.VERSION_1_7;
 
-	private static final String _JSON_VERSION_REGEX =
-		"\\n\\t\"version\": \"(.+)\"";
-
 	private static final Version _LOWEST_BASELINE_VERSION = new Version(
 		1, 0, 0);
 
@@ -3232,5 +3271,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";
+
+	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
+		new BackupFilesBuildAdapter();
+	private static final Pattern _jsonVersionPattern = Pattern.compile(
+		"\\n\\t\"version\": \"(.+)\"");
 
 }

@@ -1337,6 +1337,9 @@ public class Validator {
 		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
 			"(?:[a-zA-Z0-9](?:-*[a-zA-Z0-9])?\\.*)+");
 	private static final Pattern _ipv4AddressPattern;
+	private static final Pattern _ipv6AddressPattern;
+	private static final Pattern _variableNamePattern = Pattern.compile(
+		"[_a-zA-Z]+[_a-zA-Z0-9]*");
 
 	static {
 		StringBundler sb = new StringBundler(6);
@@ -1349,15 +1352,8 @@ public class Validator {
 		sb.append("$");
 
 		_ipv4AddressPattern = Pattern.compile(sb.toString());
-	}
 
-	private static final Pattern _ipv6AddressPattern;
-
-	private static final Pattern _variableNamePattern = Pattern.compile(
-		"[_a-zA-Z]+[_a-zA-Z0-9]*");
-
-	static {
-		StringBundler sb = new StringBundler(28);
+		sb = new StringBundler(28);
 
 		sb.append("^");
 		sb.append("\\s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|");

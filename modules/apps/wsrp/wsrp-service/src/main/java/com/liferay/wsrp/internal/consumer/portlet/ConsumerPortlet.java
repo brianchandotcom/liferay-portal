@@ -2131,36 +2131,11 @@ public class ConsumerPortlet extends MVCPortlet {
 
 	private static final String _BLOCKING_ACTION_TEMPLATE;
 
-	static {
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("wsrp_rewrite?wsrp-urlType=blockingAction&");
-		sb.append("wsrp-navigationalState={wsrp-navigationalState}&");
-		sb.append("wsrp-navigationalValues={wsrp-navigationalValues}&");
-		sb.append("wsrp-interactionState={wsrp-interactionState}&");
-		sb.append("wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}");
-		sb.append("&wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite");
-
-		_BLOCKING_ACTION_TEMPLATE = sb.toString();
-	}
-
 	private static final String[] _CHAR_SETS = {StringPool.UTF8};
 
 	private static final String[] _MIME_TYPES = {ContentTypes.TEXT_HTML};
 
 	private static final String _RENDER_TEMPLATE;
-
-	static {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("wsrp_rewrite?wsrp-urlType=render&");
-		sb.append("wsrp-navigationalState={wsrp-navigationalState}&");
-		sb.append("wsrp-navigationalValues={wsrp-navigationalValues}&");
-		sb.append("wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}&");
-		sb.append("wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite");
-
-		_RENDER_TEMPLATE = sb.toString();
-	}
 
 	private static final String _RESOURCE_TEMPLATE;
 
@@ -2182,7 +2157,28 @@ public class ConsumerPortlet extends MVCPortlet {
 	private static WebsiteLocalService _websiteLocalService;
 
 	static {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("wsrp_rewrite?wsrp-urlType=blockingAction&");
+		sb.append("wsrp-navigationalState={wsrp-navigationalState}&");
+		sb.append("wsrp-navigationalValues={wsrp-navigationalValues}&");
+		sb.append("wsrp-interactionState={wsrp-interactionState}&");
+		sb.append("wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}");
+		sb.append("&wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite");
+
+		_BLOCKING_ACTION_TEMPLATE = sb.toString();
+
+		sb = new StringBundler(5);
+
+		sb.append("wsrp_rewrite?wsrp-urlType=render&");
+		sb.append("wsrp-navigationalState={wsrp-navigationalState}&");
+		sb.append("wsrp-navigationalValues={wsrp-navigationalValues}&");
+		sb.append("wsrp-mode={wsrp-mode}&wsrp-windowState={wsrp-windowState}&");
+		sb.append("wsrp-fragmentID={wsrp-fragmentID}/wsrp_rewrite");
+
+		_RENDER_TEMPLATE = sb.toString();
+
+		sb = new StringBundler(7);
 
 		sb.append("wsrp_rewrite?wsrp-urlType=resource&wsrp-url={wsrp-url}&");
 		sb.append("wsrp-resourceID={wsrp-resourceID}&");

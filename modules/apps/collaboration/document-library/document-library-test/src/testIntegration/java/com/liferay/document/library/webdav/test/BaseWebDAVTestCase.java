@@ -339,6 +339,13 @@ public class BaseWebDAVTestCase {
 
 	private static final String _LOCK_XML;
 
+	private static final String _PATH_INFO_PREFACE =
+		_GROUP_FRIENDLY_URL + "/document_library/" + _FOLDER_NAME + "/";
+
+	private static final String _PROPFIND_XML;
+
+	private static final String _SERVLET_PATH = "";
+
 	static {
 		StringBundler sb = new StringBundler(8);
 
@@ -352,17 +359,8 @@ public class BaseWebDAVTestCase {
 		sb.append("</D:lockinfo>\n");
 
 		_LOCK_XML = sb.toString();
-	}
 
-	private static final String _PATH_INFO_PREFACE =
-		_GROUP_FRIENDLY_URL + "/document_library/" + _FOLDER_NAME + "/";
-
-	private static final String _PROPFIND_XML;
-
-	private static final String _SERVLET_PATH = "";
-
-	static {
-		StringBundler sb = new StringBundler(4);
+		sb = new StringBundler(4);
 
 		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
 		sb.append("<D:propfind xmlns:D=\"DAV:\">\n");

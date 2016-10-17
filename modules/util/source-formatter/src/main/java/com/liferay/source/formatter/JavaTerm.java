@@ -27,9 +27,9 @@ import java.util.List;
  */
 public class JavaTerm {
 
-	public static final int TYPE_CLASS_PRIVATE = 24;
+	public static final int TYPE_CLASS_PRIVATE = 25;
 
-	public static final int TYPE_CLASS_PRIVATE_STATIC = 23;
+	public static final int TYPE_CLASS_PRIVATE_STATIC = 24;
 
 	public static final int TYPE_CLASS_PROTECTED = 16;
 
@@ -57,9 +57,15 @@ public class JavaTerm {
 
 	public static final int TYPE_METHOD_PUBLIC_STATIC = 3;
 
-	public static final int TYPE_STATIC_BLOCK = 21;
+	public static final int TYPE_STATIC_BLOCK = 22;
 
-	public static final int TYPE_VARIABLE_PRIVATE = 22;
+	public static final int TYPE_STATIC_BLOCK_PRIVATE = 21;
+
+	public static final int TYPE_STATIC_BLOCK_PROTECTED = 13;
+
+	public static final int TYPE_STATIC_BLOCK_PUBLIC = 2;
+
+	public static final int TYPE_VARIABLE_PRIVATE = 23;
 
 	public static final int TYPE_VARIABLE_PRIVATE_STATIC = 20;
 

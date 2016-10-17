@@ -196,48 +196,6 @@ public class JavaClass {
 		return _classContent;
 	}
 
-	protected Set<JavaTerm> addStaticBlocks(
-		Set<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
-
-		Set<JavaTerm> newJavaTerms = new TreeSet<>(new JavaTermComparator());
-
-		Iterator<JavaTerm> javaTermsIterator = javaTerms.iterator();
-
-		while (javaTermsIterator.hasNext()) {
-			JavaTerm javaTerm = javaTermsIterator.next();
-
-			if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
-				newJavaTerms.add(javaTerm);
-
-				continue;
-			}
-
-			Iterator<JavaTerm> staticBlocksIterator = staticBlocks.iterator();
-
-			while (staticBlocksIterator.hasNext()) {
-				JavaTerm staticBlock = staticBlocksIterator.next();
-
-				String staticBlockContent = staticBlock.getContent();
-
-				if (staticBlockContent.contains(javaTerm.getName())) {
-					staticBlock.setType(javaTerm.getType() + 1);
-
-					newJavaTerms.add(staticBlock);
-
-					staticBlocksIterator.remove();
-				}
-			}
-
-			newJavaTerms.add(javaTerm);
-		}
-
-		if (!staticBlocks.isEmpty()) {
-			newJavaTerms.addAll(staticBlocks);
-		}
-
-		return newJavaTerms;
-	}
-
 	protected void checkAnnotationForMethod(
 		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
 		int requiredMethodType) {
@@ -644,6 +602,31 @@ public class JavaClass {
 			javaTerm, "Test", "^.*test", JavaTerm.TYPE_METHOD_PUBLIC);
 	}
 
+	protected boolean combineStaticBlocks(List<JavaTerm> staticBlocks) {
+		for (int i = 0; i < staticBlocks.size(); i++) {
+			JavaTerm staticBlock1 = staticBlocks.get(i);
+
+			for (int j = i + 1; j < staticBlocks.size(); j++) {
+				JavaTerm staticBlock2 = staticBlocks.get(j);
+
+				if (staticBlock1.getType() != staticBlock2.getType()) {
+					continue;
+				}
+
+				_classContent = StringUtil.replaceFirst(
+					_classContent, staticBlock2.getContent(), StringPool.BLANK);
+				_classContent = StringUtil.replaceFirst(
+					_classContent, staticBlock1.getContent(),
+					getCombinedStaticBlocks(
+						staticBlock1.getContent(), staticBlock2.getContent()));
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected void fixJavaTermsDividers(
 		Set<JavaTerm> javaTerms, List<String> javaTermSortExcludes) {
 
@@ -981,6 +964,18 @@ public class JavaClass {
 		return _cleanUpMethodContent;
 	}
 
+	protected String getCombinedStaticBlocks(
+		String staticBlock1, String staticBlock2) {
+
+		int x = staticBlock1.lastIndexOf(StringPool.CLOSE_CURLY_BRACE);
+
+		x = staticBlock1.lastIndexOf(StringPool.NEW_LINE, x - 1);
+
+		int y = staticBlock2.indexOf(StringPool.OPEN_CURLY_BRACE) + 1;
+
+		return staticBlock1.substring(0, x + 1) + staticBlock2.substring(y);
+	}
+
 	protected String getConstructorOrMethodName(String line, int pos) {
 		line = line.substring(0, pos);
 
@@ -1092,7 +1087,7 @@ public class JavaClass {
 			return _javaTerms;
 		}
 
-		Set<JavaTerm> javaTerms = new TreeSet<>(new JavaTermComparator(false));
+		TreeSet<JavaTerm> javaTerms = new TreeSet<>(new JavaTermComparator());
 		List<JavaTerm> staticBlocks = new ArrayList<>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
@@ -1215,7 +1210,15 @@ public class JavaClass {
 			}
 		}
 
-		_javaTerms = addStaticBlocks(javaTerms, staticBlocks);
+		staticBlocks = processStaticBlocks(javaTerms, staticBlocks);
+
+		if (combineStaticBlocks(staticBlocks)) {
+			return getJavaTerms();
+		}
+
+		javaTerms.addAll(staticBlocks);
+
+		_javaTerms = javaTerms;
 
 		return _javaTerms;
 	}
@@ -1475,6 +1478,39 @@ public class JavaClass {
 		}
 
 		return false;
+	}
+
+	protected List<JavaTerm> processStaticBlocks(
+		TreeSet<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
+
+		for (int i = 0; i < staticBlocks.size(); i++) {
+			JavaTerm staticBlock = staticBlocks.get(i);
+
+			String staticBlockContent = staticBlock.getContent();
+
+			Iterator<JavaTerm> javaTermsIterator =
+				javaTerms.descendingIterator();
+
+			while (javaTermsIterator.hasNext()) {
+				JavaTerm javaTerm = javaTermsIterator.next();
+
+				if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
+					continue;
+				}
+
+				if (staticBlockContent.matches(
+						"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
+
+					staticBlock.setType(javaTerm.getType() + 1);
+
+					staticBlocks.set(i, staticBlock);
+
+					break;
+				}
+			}
+		}
+
+		return staticBlocks;
 	}
 
 	protected void sortJavaTerms(

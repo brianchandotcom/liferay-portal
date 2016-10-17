@@ -48,15 +48,15 @@ public class EscapableLocalizableFunction implements Serializable {
 	}
 
 	public String getOriginalValue(Locale locale) {
-		return String.valueOf(_function.apply(locale));
+		return _function.apply(locale);
 	}
 
 	protected String escape(Locale locale) {
-		return HtmlUtil.escape(String.valueOf(getOriginalValue(locale)));
+		return HtmlUtil.escape(getOriginalValue(locale));
 	}
 
 	private final boolean _escape;
 	private String _escapedValue;
-	private final Function _function;
+	private final Function<Locale, String> _function;
 
 }

@@ -13,8 +13,6 @@ AUI.add(
 				);
 
 				instance._domEvents = [];
-
-				instance._bindDefaultEvents();
 			},
 
 			bindContainerEvent: function(eventName, callback, selector, volatile) {
@@ -83,43 +81,31 @@ AUI.add(
 				instance.bindInputEvent(instance.getChangeEventName(), instance._onValueChange, true);
 			},
 
+			_getEventPayload: function(originalEvent) {
+				var instance = this;
+
+				return {
+					field: instance,
+					originalEvent: originalEvent
+				};
+			},
+
 			_onInputBlur: function(event) {
 				var instance = this;
 
-				instance.fire(
-					'blur',
-					{
-						domEvent: event,
-						field: instance
-					}
-				);
+				instance.fire('blur', instance._getEventPayload(event));
 			},
 
 			_onInputFocus: function(event) {
 				var instance = this;
 
-				instance.fire(
-					'focus',
-					{
-						domEvent: event,
-						field: instance
-					}
-				);
+				instance.fire('focus', instance._getEventPayload(event));
 			},
 
 			_onValueChange: function(event) {
 				var instance = this;
 
-				if (instance.get('rendered')) {
-					instance.fire(
-						'valueChanged',
-						{
-							domEvent: event,
-							field: instance,
-							value: instance.getValue()
-						}
-					);
-				}
+				instance.set('value', instance.getValue());
 			}
 		};
 

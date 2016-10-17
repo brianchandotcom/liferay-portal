@@ -123,13 +123,7 @@ AUI.add(
 						if (inputNode && !Util.compare(value, inputNode.val())) {
 							inputNode.val(value);
 
-							instance.fire(
-								'valueChanged',
-								{
-									field: instance,
-									value: value
-								}
-							);
+							instance.set('value', value);
 						}
 					}
 				}

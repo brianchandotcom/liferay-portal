@@ -247,6 +247,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE</td>
+	<td>//div[@class='options']/div[${key_rowNumber}]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_LABEL</td>
 	<td>//div[contains(@data-fieldname,'${key_fieldName}')]//label</td>
 	<td></td>

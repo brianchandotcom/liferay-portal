@@ -9,6 +9,10 @@ AUI.add(
 				value: true
 			},
 
+			evaluationTriggerEvents: {
+				value: ['valueChange']
+			},
+
 			evaluator: {
 				getter: '_getEvaluator'
 			}
@@ -18,8 +22,10 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				var evaluationTriggerEvents = instance.get('evaluationTriggerEvents');
+
 				instance._eventHandlers.push(
-					instance.after('valueChanged', instance._afterValueChanged)
+					instance.after(evaluationTriggerEvents, instance.evaluate)
 				);
 			},
 
@@ -28,7 +34,7 @@ AUI.add(
 
 				var evaluator = instance.get('evaluator');
 
-				if (evaluator) {
+				if (evaluator && instance.get('rendered')) {
 					evaluator.evaluate(instance);
 				}
 			},
@@ -37,12 +43,6 @@ AUI.add(
 				var instance = this;
 
 				return context;
-			},
-
-			_afterValueChanged: function() {
-				var instance = this;
-
-				instance.evaluate();
 			},
 
 			_getEvaluator: function() {

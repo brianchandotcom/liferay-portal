@@ -106,13 +106,14 @@ import org.gradle.api.artifacts.ComponentSelectionRules;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
-import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.DependencySubstitutions;
+import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
 import org.gradle.api.artifacts.ModuleDependency;
-import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolveException;
+import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
 import org.gradle.api.artifacts.dsl.DependencyHandler;
@@ -2448,29 +2449,38 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				ResolutionStrategy resolutionStrategy =
 					configuration.getResolutionStrategy();
 
-				resolutionStrategy.eachDependency(
-					new Action<DependencyResolveDetails>() {
+				DependencySubstitutions dependencySubstitutions =
+					resolutionStrategy.getDependencySubstitution();
 
-						@Override
-						public void execute(
-							DependencyResolveDetails dependencyResolveDetails) {
+				for (String key : versionOverrides.stringPropertyNames()) {
+					if (key.indexOf(_DEPENDENCY_KEY_SEPARATOR) == -1) {
+						continue;
+					}
 
-							ModuleVersionSelector moduleVersionSelector =
-								dependencyResolveDetails.getRequested();
+					String dependencyNotation = key.replace(
+						_DEPENDENCY_KEY_SEPARATOR, ':');
 
-							String key =
-								moduleVersionSelector.getGroup() +
-									_DEPENDENCY_KEY_SEPARATOR +
-										moduleVersionSelector.getName();
+					ComponentSelector componentSelector =
+						dependencySubstitutions.module(dependencyNotation);
 
-							String version = versionOverrides.getProperty(key);
+					Substitution substitution =
+						dependencySubstitutions.substitute(componentSelector);
 
-							if (Validator.isNotNull(version)) {
-								dependencyResolveDetails.useVersion(version);
-							}
-						}
+					ComponentSelector newComponentSelector;
 
-					});
+					String value = versionOverrides.getProperty(key);
+
+					if (value.indexOf(':') != -1) {
+						newComponentSelector = dependencySubstitutions.project(
+							value);
+					}
+					else {
+						newComponentSelector = dependencySubstitutions.module(
+							dependencyNotation + ":" + value);
+					}
+
+					substitution.with(newComponentSelector);
+				}
 			}
 
 		};

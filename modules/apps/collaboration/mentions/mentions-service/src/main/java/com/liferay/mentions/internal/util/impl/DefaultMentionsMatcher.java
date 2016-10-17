@@ -14,6 +14,8 @@
 
 package com.liferay.mentions.internal.util.impl;
 
+import com.liferay.mentions.matcher.MentionsMatcher;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
@@ -22,9 +24,10 @@ import java.util.regex.Pattern;
 /**
  * @author Adolfo Pérez
  */
-public class MentionsMatcher {
+public class DefaultMentionsMatcher implements MentionsMatcher {
 
-	public static Iterable<String> match(String s) {
+	@Override
+	public Iterable<String> match(String s) {
 		return new MentionsIterable(_pattern.matcher(s));
 	}
 

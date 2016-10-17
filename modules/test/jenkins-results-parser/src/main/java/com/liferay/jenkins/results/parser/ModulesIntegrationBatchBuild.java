@@ -65,7 +65,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 			String axisBuildConsoleText = axisBuild.getConsoleText();
 
-			if (axisBuildConsoleText.contains(_ARQUILLIAN_ERROR)) {
+			if (axisBuildConsoleText.contains(_ARQUILLIAN_ERROR_MARKER)) {
 				arquillianErrorAxisBuild = axisBuild;
 
 				break;
@@ -111,7 +111,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 	protected List<Build> verifiedAxisBuilds = new ArrayList<>();
 
-	private static final String _ARQUILLIAN_ERROR =
+	private static final String _ARQUILLIAN_ERROR_MARKER =
 		"org.jboss.arquillian.protocol.jmx.JMXMethodExecutor.invoke" +
 			"(JMXMethodExecutor.java";
 

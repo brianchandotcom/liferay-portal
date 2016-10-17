@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.struts;
+package com.liferay.blogs.portlet.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.portlet.BasePortletLayoutFinder;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
@@ -26,6 +28,8 @@ import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -34,6 +38,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -42,11 +47,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
@@ -55,8 +62,9 @@ import org.springframework.mock.web.MockHttpServletRequest;
  * @author Laszlo Csontos
  * @author Eduardo Garcia
  */
+@RunWith(Arquillian.class)
 @Sync
-public class FindActionTest {
+public class PortletLayoutFinderTest {
 
 	@ClassRule
 	@Rule
@@ -82,6 +90,21 @@ public class FindActionTest {
 			}
 
 		};
+
+		User user = TestPropsValues.getUser();
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Test
@@ -120,7 +143,9 @@ public class FindActionTest {
 
 		HttpServletRequest request = getHttpServletRequest();
 
-		BaseFindActionHelper.setTargetLayout(
+		ReflectionTestUtil.invoke(
+			BaseFindActionHelper.class, "setTargetLayout",
+			new Class<?>[] {HttpServletRequest.class, long.class, long.class},
 			request, _blogsEntryGroupId, _blogLayout.getPlid());
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
@@ -135,7 +160,9 @@ public class FindActionTest {
 
 		HttpServletRequest request = getHttpServletRequest();
 
-		BaseFindActionHelper.setTargetLayout(
+		ReflectionTestUtil.invoke(
+			BaseFindActionHelper.class, "setTargetLayout",
+			new Class<?>[] {HttpServletRequest.class, long.class, long.class},
 			request, _blogsEntryGroupId, _blogLayout.getPlid());
 
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
@@ -164,7 +191,7 @@ public class FindActionTest {
 		preferenceMap.put("assetLinkBehavior", new String[] {"viewInPortlet"});
 
 		PortletInstance portletInstance = new PortletInstance(
-			com.liferay.portlet.util.test.PortletKeys.TEST);
+			"com_liferay_hello_world_web_portlet_HelloWorldPortlet");
 
 		_testPortletId = portletInstance.getPortletInstanceKey();
 
@@ -215,6 +242,7 @@ public class FindActionTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	private PermissionChecker _originalPermissionChecker;
 	private PortletLayoutFinder _portletLayoutFinder;
 	private String _testPortletId;
 

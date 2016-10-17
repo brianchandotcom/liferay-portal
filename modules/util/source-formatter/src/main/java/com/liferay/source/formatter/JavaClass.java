@@ -196,39 +196,6 @@ public class JavaClass {
 		return _classContent;
 	}
 
-	protected List<JavaTerm> processStaticBlocks(
-		TreeSet<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
-
-		for (int i = 0; i < staticBlocks.size(); i++) {
-			JavaTerm staticBlock = staticBlocks.get(i);
-
-			String staticBlockContent = staticBlock.getContent();
-
-			Iterator<JavaTerm> javaTermsIterator =
-				javaTerms.descendingIterator();
-
-			while (javaTermsIterator.hasNext()) {
-				JavaTerm javaTerm = javaTermsIterator.next();
-
-				if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
-					continue;
-				}
-
-				if (staticBlockContent.matches(
-						"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
-
-					staticBlock.setType(javaTerm.getType() + 1);
-
-					staticBlocks.set(i, staticBlock);
-
-					break;
-				}
-			}
-		}
-
-		return staticBlocks;
-	}
-
 	protected void checkAnnotationForMethod(
 		JavaTerm javaTerm, String annotation, String requiredMethodNameRegex,
 		int requiredMethodType) {
@@ -1511,6 +1478,39 @@ public class JavaClass {
 		}
 
 		return false;
+	}
+
+	protected List<JavaTerm> processStaticBlocks(
+		TreeSet<JavaTerm> javaTerms, List<JavaTerm> staticBlocks) {
+
+		for (int i = 0; i < staticBlocks.size(); i++) {
+			JavaTerm staticBlock = staticBlocks.get(i);
+
+			String staticBlockContent = staticBlock.getContent();
+
+			Iterator<JavaTerm> javaTermsIterator =
+				javaTerms.descendingIterator();
+
+			while (javaTermsIterator.hasNext()) {
+				JavaTerm javaTerm = javaTermsIterator.next();
+
+				if (!javaTerm.isStatic() || !javaTerm.isVariable()) {
+					continue;
+				}
+
+				if (staticBlockContent.matches(
+						"[\\s\\S]*\\W" + javaTerm.getName() + "\\W[\\s\\S]*")) {
+
+					staticBlock.setType(javaTerm.getType() + 1);
+
+					staticBlocks.set(i, staticBlock);
+
+					break;
+				}
+			}
+		}
+
+		return staticBlocks;
 	}
 
 	protected void sortJavaTerms(

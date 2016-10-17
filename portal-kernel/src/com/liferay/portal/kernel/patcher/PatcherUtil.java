@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -30,11 +31,11 @@ public class PatcherUtil {
 		return getPatcher().applyPatch(patchFile);
 	}
 
-	public static String[] getFixedIssues() {
+	public static List<String> getFixedIssues() {
 		return getPatcher().getFixedIssues();
 	}
 
-	public static String[] getInstalledPatches() {
+	public static List<String> getInstalledPatches() {
 		return getPatcher().getInstalledPatches();
 	}
 
@@ -56,7 +57,7 @@ public class PatcherUtil {
 		return getPatcher().getPatchingToolVersionDisplayName();
 	}
 
-	public static String[] getPatchLevels() {
+	public static List<String> getPatchLevels() {
 		return getPatcher().getPatchLevels();
 	}
 

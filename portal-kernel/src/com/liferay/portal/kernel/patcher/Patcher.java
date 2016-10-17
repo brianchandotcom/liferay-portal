@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -49,9 +50,9 @@ public interface Patcher {
 
 	public boolean applyPatch(File patchFile);
 
-	public String[] getFixedIssues();
+	public List<String> getFixedIssues();
 
-	public String[] getInstalledPatches();
+	public List<String> getInstalledPatches();
 
 	public File getPatchDirectory();
 
@@ -59,7 +60,7 @@ public interface Patcher {
 
 	public String getPatchingToolVersionDisplayName();
 
-	public String[] getPatchLevels();
+	public List<String> getPatchLevels();
 
 	public Properties getProperties();
 

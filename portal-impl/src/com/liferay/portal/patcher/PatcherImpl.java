@@ -19,19 +19,21 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
 import com.liferay.portal.kernel.patcher.Patcher;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -43,6 +45,30 @@ import java.util.Properties;
  */
 @DoPrivileged
 public class PatcherImpl implements Patcher {
+
+	public PatcherImpl() {
+		_propertiesMap = _getPropertiesMap(PATCHER_PROPERTIES);
+
+		_fixedIssueKeys = Collections.unmodifiableList(
+			ListUtil.fromString(
+				_propertiesMap.get(PROPERTY_FIXED_ISSUES), StringPool.COMMA));
+
+		_installedPatchNames = Collections.unmodifiableList(
+			ListUtil.fromString(
+				_propertiesMap.get(PROPERTY_INSTALLED_PATCHES),
+				StringPool.COMMA));
+
+		_patchDirectory = getPatchDirectory();
+
+		_patchLevels = Collections.unmodifiableList(
+			ListUtil.fromString(
+				_propertiesMap.get(PROPERTY_PATCH_LEVELS), StringPool.COMMA));
+
+		_patchingToolVersion = GetterUtil.getInteger(
+			_propertiesMap.get(PROPERTY_PATCHING_TOOL_VERSION));
+
+		_patchingToolVersionDisplayName = getPatchingToolVersionDisplayName();
+	}
 
 	@Override
 	public boolean applyPatch(File patchFile) {
@@ -70,26 +96,13 @@ public class PatcherImpl implements Patcher {
 	}
 
 	@Override
-	public String[] getFixedIssues() {
-		if (_fixedIssueKeys != null) {
-			return _fixedIssueKeys;
-		}
-
-		Properties properties = getProperties();
-
-		_fixedIssueKeys = StringUtil.split(
-			properties.getProperty(PROPERTY_FIXED_ISSUES));
-
+	public List<String> getFixedIssues() {
 		return _fixedIssueKeys;
 	}
 
 	@Override
-	public String[] getInstalledPatches() {
-		if (_installedPatchNames != null) {
-			return _installedPatchNames;
-		}
-
-		return _getInstalledPatches(null);
+	public List<String> getInstalledPatches() {
+		return _installedPatchNames;
 	}
 
 	@Override
@@ -98,15 +111,15 @@ public class PatcherImpl implements Patcher {
 			return _patchDirectory;
 		}
 
-		Properties properties = getProperties();
-
-		String patchDirectoryName = properties.getProperty(
+		String patchDirectoryName = _propertiesMap.get(
 			PROPERTY_PATCH_DIRECTORY);
 
-		if (Validator.isNotNull(patchDirectoryName)) {
-			_patchDirectory = new File(patchDirectoryName);
+		File patchDirectory = null;
 
-			if (!_patchDirectory.exists()) {
+		if (Validator.isNotNull(patchDirectoryName)) {
+			patchDirectory = new File(patchDirectoryName);
+
+			if (!patchDirectory.exists()) {
 				_log.error("The patch directory does not exist");
 			}
 		}
@@ -114,22 +127,11 @@ public class PatcherImpl implements Patcher {
 			_log.error("The patch directory is not specified");
 		}
 
-		return _patchDirectory;
+		return patchDirectory;
 	}
 
 	@Override
 	public int getPatchingToolVersion() {
-		if (_patchingToolVersion != 0) {
-			return _patchingToolVersion;
-		}
-
-		Properties properties = getProperties();
-
-		if (properties.containsKey(PROPERTY_PATCHING_TOOL_VERSION)) {
-			_patchingToolVersion = GetterUtil.getInteger(
-				properties.getProperty(PROPERTY_PATCHING_TOOL_VERSION));
-		}
-
 		return _patchingToolVersion;
 	}
 
@@ -139,48 +141,27 @@ public class PatcherImpl implements Patcher {
 			return _patchingToolVersionDisplayName;
 		}
 
-		Properties properties = getProperties();
+		String patchingToolVersionDisplayName =
+			"1.0." + getPatchingToolVersion();
 
-		if (properties.containsKey(
+		if (_propertiesMap.containsKey(
 				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
 
-			_patchingToolVersionDisplayName = properties.getProperty(
+			patchingToolVersionDisplayName = _propertiesMap.get(
 				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME);
 		}
-		else {
-			_patchingToolVersionDisplayName = "1.0." + getPatchingToolVersion();
-		}
 
-		return _patchingToolVersionDisplayName;
+		return patchingToolVersionDisplayName;
 	}
 
 	@Override
-	public String[] getPatchLevels() {
-		if (_patchLevels != null) {
-			return _patchLevels;
-		}
-
-		Properties properties = getProperties();
-
-		_patchLevels = StringUtil.split(
-			properties.getProperty(PROPERTY_PATCH_LEVELS));
-
+	public List<String> getPatchLevels() {
 		return _patchLevels;
 	}
 
 	@Override
 	public Properties getProperties() {
-		if (_properties != null) {
-			return _properties;
-		}
-
-		_properties = _getProperties(PATCHER_PROPERTIES);
-
-		if (!_properties.isEmpty()) {
-			_configured = true;
-		}
-
-		return _properties;
+		return PropertiesUtil.fromMap(_propertiesMap);
 	}
 
 	@Override
@@ -190,48 +171,52 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public boolean isConfigured() {
-		return _configured;
+		return !_propertiesMap.isEmpty();
 	}
 
 	@Override
 	public void verifyPatchLevels() throws PatchInconsistencyException {
-		Properties portalKernelJARProperties = _getProperties(
+		Map<String, String> portalKernelJARProperties = _getPropertiesMap(
 			PATCHER_SERVICE_PROPERTIES);
 
-		String[] kernelJARPatches = _getInstalledPatches(
+		List<String> kernelJARPatches = _getInstalledPatches(
 			portalKernelJARProperties);
 
-		Arrays.sort(kernelJARPatches);
+		Collections.sort(kernelJARPatches);
 
-		Properties portalImplJARProperties = _getProperties(PATCHER_PROPERTIES);
+		Map<String, String> portalImplJARProperties = _getPropertiesMap(
+			PATCHER_PROPERTIES);
 
-		String[] portalImplJARPatches = _getInstalledPatches(
+		List<String> portalImplJARPatches = _getInstalledPatches(
 			portalImplJARProperties);
 
-		Arrays.sort(portalImplJARPatches);
+		Collections.sort(portalImplJARPatches);
 
-		if (!Arrays.equals(portalImplJARPatches, kernelJARPatches)) {
+		if (!portalImplJARPatches.equals(kernelJARPatches)) {
 			_log.error("Inconsistent patch level detected");
 
 			if (_log.isWarnEnabled()) {
-				if (ArrayUtil.isEmpty(portalImplJARPatches)) {
+				if (portalImplJARPatches.isEmpty()) {
 					_log.warn(
 						"There are no patches installed on portal-impl.jar");
 				}
 				else {
 					_log.warn(
 						"Patch level on portal-impl.jar: " +
-							Arrays.toString(portalImplJARPatches));
+							String.join(
+								StringPool.COMMA_AND_SPACE,
+								portalImplJARPatches));
 				}
 
-				if (ArrayUtil.isEmpty(kernelJARPatches)) {
+				if (kernelJARPatches.isEmpty()) {
 					_log.warn(
 						"There are no patches installed on portal-kernel.jar");
 				}
 				else {
 					_log.warn(
 						"Patch level on portal-kernel.jar: " +
-							Arrays.toString(kernelJARPatches));
+							String.join(
+								StringPool.COMMA_AND_SPACE, kernelJARPatches));
 				}
 			}
 
@@ -241,18 +226,16 @@ public class PatcherImpl implements Patcher {
 		}
 	}
 
-	private String[] _getInstalledPatches(Properties properties) {
-		if (properties == null) {
-			properties = getProperties();
-		}
+	private List<String> _getInstalledPatches(
+		Map<String, String> propertiesMap) {
 
-		_installedPatchNames = StringUtil.split(
-			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
+		List<String> installedPatchNames = ListUtil.fromString(
+			propertiesMap.get(PROPERTY_INSTALLED_PATCHES), StringPool.COMMA);
 
-		return _installedPatchNames;
+		return installedPatchNames;
 	}
 
-	private Properties _getProperties(String fileName) {
+	private Map<String, String> _getPropertiesMap(String fileName) {
 		if (Validator.isNull(fileName)) {
 			fileName = PATCHER_PROPERTIES;
 		}
@@ -286,19 +269,21 @@ public class PatcherImpl implements Patcher {
 			}
 		}
 
-		return properties;
+		@SuppressWarnings("unchecked")
+		Map<String, String> propertiesMap = PropertiesUtil.toMap(properties);
+
+		return Collections.unmodifiableMap(propertiesMap);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PatcherImpl.class);
 
-	private boolean _configured;
-	private String[] _fixedIssueKeys;
+	private final List<String> _fixedIssueKeys;
 	private boolean _inconsistentPatchLevels;
-	private String[] _installedPatchNames;
-	private File _patchDirectory;
-	private int _patchingToolVersion;
-	private String _patchingToolVersionDisplayName;
-	private String[] _patchLevels;
-	private Properties _properties;
+	private final List<String> _installedPatchNames;
+	private final File _patchDirectory;
+	private final int _patchingToolVersion;
+	private final String _patchingToolVersionDisplayName;
+	private final List<String> _patchLevels;
+	private final Map<String, String> _propertiesMap;
 
 }

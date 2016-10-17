@@ -69,7 +69,7 @@
 			SELECT
 				DISTINCT MBCategory.categoryId AS modelId,
 				0 AS priority,
-				'' AS modifiedDate,
+				[$NULL_DATE$] AS modifiedDate,
 				MBCategory.name AS name,
 				0 AS modelCategory
 			FROM
@@ -84,7 +84,7 @@
 			SELECT
 				DISTINCT MBCategory.categoryId AS modelId,
 				0 AS priority,
-				'' AS modifiedDate,
+				[$NULL_DATE$] AS modifiedDate,
 				MBCategory.name AS name,
 				0 AS modelCategory
 			FROM

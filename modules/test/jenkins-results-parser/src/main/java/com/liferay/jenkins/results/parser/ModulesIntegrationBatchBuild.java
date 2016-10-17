@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.Properties;
+
 /**
  * @author Peter Yoo
  */
@@ -58,15 +60,37 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 		}
 
 		if (arquillianErrorAxisBuild != null) {
-			StringBuilder sb = new StringBuilder();
+			try {
+				Properties buildProperties =
+					JenkinsResultsParserUtil.getBuildProperties();
 
-			sb.append("Arquillian broken connection failure detected at ");
-			sb.append(arquillianErrorAxisBuild.getBuildURL());
-			sb.append(" This batch will be re-invoked.");
+				String modulesIntegrationBatchMaxRetries =
+					buildProperties.getProperty(
+						"modules.integration.batch.max.retries");
 
-			System.out.println(sb);
+				if ((modulesIntegrationBatchMaxRetries != null) &&
+					!modulesIntegrationBatchMaxRetries.isEmpty()) {
 
-			reinvoke();
+					if (badBuildNumbers.size() <
+							Integer.parseInt(
+								modulesIntegrationBatchMaxRetries)) {
+
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Arquillian broken connection failure ");
+						sb.append("detected at ");
+						sb.append(arquillianErrorAxisBuild.getBuildURL());
+						sb.append(" This batch will be re-invoked.");
+
+						System.out.println(sb);
+
+						reinvoke();
+					}
+				}
+			}
+			catch (Exception e) {
+				throw new RuntimeException(e);
+			}
 		}
 	}
 

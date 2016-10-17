@@ -69,13 +69,13 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`author` | `String` | `"Brian Wing Shun Chan"` | The value of the `@author` tag to add at class level if missing.
-`generateXML` | `boolean` | `false` | Whether to generate a XML representation of the Javadoc comments. The XML files are generated in the `src/main/resources` directory only if the Java files are contained in `src/main/java`.
-`initializeMissingJavadocs` | `boolean` | `false` | Whether to add comment stubs at the class, field, and method levels. If `false`, only the class-level `@author` is added.
-`limits` | `List<String>` | `[]` | The Java file name patterns, relative to [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir), to include when formatting Javadoc comments. The patterns must be specified without the `.java` file type suffix. If empty, all Java files are formatted.
-`lowestSupportedJavaVersion` | `double` | `1.7` | If a method is annotated with the [`@SinceJava`](https://github.com/liferay/liferay-portal/blob/master/modules/util/javadoc-formatter/src/main/java/com/liferay/javadoc/formatter/SinceJava.java) annotation and its `value` argument is greater than the value specified for the `lowestSupportedJavaVersion` property, then the `@Override` annotation is not automatically added, even if it is missing. See [LPS-37353](https://issues.liferay.com/browse/LPS-37353).
-`outputFilePrefix` | `String` | `"javadocs"` | The file name prefix of the XML representation of the Javadoc comments. If `generateXML` is `false`, this property is not used.
-`updateJavadocs` | `boolean` | `false` | Whether to fix existing comment blocks by adding missing tags.
+`author` | `String` | `"Brian Wing Shun Chan"` | The value of the `@author` tag to add at class level if missing. It sets the `javadoc.author` argument.
+`generateXML` | `boolean` | `false` | Whether to generate a XML representation of the Javadoc comments. The XML files are generated in the `src/main/resources` directory only if the Java files are contained in `src/main/java`. It sets the `javadoc.generate.xml` argument.
+`initializeMissingJavadocs` | `boolean` | `false` | Whether to add comment stubs at the class, field, and method levels. If `false`, only the class-level `@author` is added. It sets the `javadoc.init` argument.
+`limits` | `List<String>` | `[]` | The Java file name patterns, relative to [`workingDir`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:workingDir), to include when formatting Javadoc comments. The patterns must be specified without the `.java` file type suffix. If empty, all Java files are formatted. It sets the `javadoc.limit` argument.
+`lowestSupportedJavaVersion` | `double` | `1.7` | If a method is annotated with the [`@SinceJava`](https://github.com/liferay/liferay-portal/blob/master/modules/util/javadoc-formatter/src/main/java/com/liferay/javadoc/formatter/SinceJava.java) annotation and its `value` argument is greater than the value specified for the `lowestSupportedJavaVersion` property, then the `@Override` annotation is not automatically added, even if it is missing. It sets the `javadoc.lowest.supported.java.version` argument. See [LPS-37353](https://issues.liferay.com/browse/LPS-37353).
+`outputFilePrefix` | `String` | `"javadocs"` | The file name prefix of the XML representation of the Javadoc comments. If `generateXML` is `false`, this property is not used. It sets the `javadoc.output.file.prefix` argument.
+`updateJavadocs` | `boolean` | `false` | Whether to fix existing comment blocks by adding missing tags. It sets the `javadoc.update` argument.
 
 It is possible to use Closures and Callables as values for the `String`
 properties, to defer evaluation until task execution.

@@ -40,7 +40,7 @@ Property Name | Type | Default Value | Description
 
 It is possible to override the default value of the `download` property by
 setting the `nodeDownload` project property. For example, this can be done via
-command-line argument:
+command line argument:
 
 ```bash
 ./gradlew -PnodeDownload=false npmInstall

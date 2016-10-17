@@ -117,17 +117,17 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						var fieldFocused = false;
+						var hasFocus = false;
 
 						instance.eachField(
 							function(field) {
-								if (field.hasFocus()) {
-									fieldFocused = true;
-								}
+								hasFocus = field.hasFocus();
+
+								return hasFocus;
 							}
 						);
 
-						return fieldFocused || container.contains(document.activeElement);
+						return hasFocus || container.contains(document.activeElement);
 					},
 
 					submit: function() {

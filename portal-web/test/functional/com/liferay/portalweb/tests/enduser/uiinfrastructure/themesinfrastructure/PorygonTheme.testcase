@@ -22,6 +22,7 @@
 	<command name="AddThemeSite" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="PorygonTheme#AddThemeSite" />
+		<property name="themes.delayed.deployment" value="true" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

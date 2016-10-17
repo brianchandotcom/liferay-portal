@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -117,6 +119,8 @@ public abstract class BaseBuild implements Build {
 
 		Map<String, String> parameters = getParameters();
 
+		parameters.put("token", "raen3Aib");
+
 		for (Map.Entry<String, String> parameter : parameters.entrySet()) {
 			String value = parameter.getValue();
 
@@ -130,7 +134,14 @@ public abstract class BaseBuild implements Build {
 
 		sb.deleteCharAt(sb.length() - 1);
 
-		return sb.toString();
+		try {
+			URL url = JenkinsResultsParserUtil.encode(new URL(sb.toString()));
+
+			return url.toExternalForm();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override

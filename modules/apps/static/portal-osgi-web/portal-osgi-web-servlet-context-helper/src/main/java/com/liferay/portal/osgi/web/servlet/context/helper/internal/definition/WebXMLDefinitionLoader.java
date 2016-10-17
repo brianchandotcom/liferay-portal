@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -35,6 +36,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Enumeration;
 import java.util.EventListener;
@@ -45,8 +47,13 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Stack;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebListener;
+import javax.servlet.annotation.WebServlet;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -54,6 +61,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -471,6 +479,22 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			}
 		}
 
+		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+
+		WebXMLDefinition webXMLDefinitionAnnotation = new WebXMLDefinition();
+
+		Collection<String> classResources = bundleWiring.listResources(
+			"/", "*.class", BundleWiring.LISTRESOURCES_RECURSE);
+
+		if (classResources == null) {
+			classResources = new ArrayList<>(0);
+		}
+
+		_collectAnnotatedClasses(
+			webXMLDefinitionAnnotation, classResources, _bundle);
+
+		webXMLDefinitions.add(webXMLDefinitionAnnotation);
+
 		List<WebXMLDefinition> orderedWebXMLDefinitions = new ArrayList<>();
 
 		if (ListUtil.isNotEmpty(webXMLDefinitions)) {
@@ -842,6 +866,186 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 		}
 
 		return assembledWebXMLDefinition;
+	}
+
+	private void _collectAnnotatedClasses(
+			WebXMLDefinition webXMLDefinitionAnnotation,
+			Collection<String> classResources, Bundle bundle)
+		throws Exception {
+
+		for (String classResource : classResources) {
+			URL urlClassResource = _bundle.getResource(classResource);
+
+			if (urlClassResource == null) {
+				continue;
+			}
+
+			String className = classResource.replaceAll("\\.class$", "");
+
+			className = className.replaceAll("/", ".");
+
+			Class<?> annotatedClass = null;
+
+			try {
+				annotatedClass = bundle.loadClass(className);
+			}
+			catch (Throwable t) {
+				_logger.log(Logger.LOG_DEBUG, t.getMessage());
+
+				return;
+			}
+
+			WebServlet webServlet = annotatedClass.getAnnotation(
+				WebServlet.class);
+
+			if (webServlet != null) {
+				ServletDefinition servletDefinition = new ServletDefinition();
+
+				servletDefinition.setAsyncSupported(
+					webServlet.asyncSupported());
+
+				WebInitParam[] initParams = webServlet.initParams();
+
+				if (!ArrayUtil.isEmpty(initParams)) {
+					Map<String, String> initParameters =
+						servletDefinition.getInitParameters();
+
+					for (WebInitParam initParam : initParams) {
+						initParameters.put(initParam.name(), initParam.value());
+					}
+				}
+
+				String name = webServlet.name();
+
+				if (Validator.isNotNull(name)) {
+					servletDefinition.setName(name);
+				}
+				else {
+					servletDefinition.setName(
+						annotatedClass.getCanonicalName());
+				}
+
+				//Value and urlPatterns should be checked in this order
+
+				String[] value = webServlet.value();
+
+				if (!ArrayUtil.isEmpty(value)) {
+					for (String urlPattern : value) {
+						servletDefinition.addURLPattern(urlPattern);
+					}
+				}
+
+				String[] urlPatterns = webServlet.urlPatterns();
+
+				if (!ArrayUtil.isEmpty(urlPatterns)) {
+					if (ListUtil.isNotEmpty(
+							servletDefinition.getURLPatterns())) {
+
+						throw new IllegalStateException(
+							"Cannot declare both value and urlPatterns");
+					}
+
+					for (String urlPattern : urlPatterns) {
+						servletDefinition.addURLPattern(urlPattern);
+					}
+				}
+
+				servletDefinition.setServlet(
+					_getServletInstance(annotatedClass.getCanonicalName()));
+
+				webXMLDefinitionAnnotation.setServletDefinition(
+					servletDefinition.getName(), servletDefinition);
+			}
+
+			WebFilter webFilter = annotatedClass.getAnnotation(WebFilter.class);
+
+			if (webFilter != null) {
+				FilterDefinition filterDefinition = new FilterDefinition();
+
+				filterDefinition.setAsyncSupported(webFilter.asyncSupported());
+
+				DispatcherType[] dispatcherTypes = webFilter.dispatcherTypes();
+
+				if (!ArrayUtil.isEmpty(dispatcherTypes)) {
+					for (DispatcherType dispatcherType : dispatcherTypes) {
+						filterDefinition.addDispatcher(dispatcherType.name());
+					}
+				}
+
+				filterDefinition.setFilter(
+					_getFilterInstance(annotatedClass.getCanonicalName()));
+
+				WebInitParam[] initParams = webFilter.initParams();
+
+				if (!ArrayUtil.isEmpty(initParams)) {
+					Map<String, String> initParameters =
+						filterDefinition.getInitParameters();
+
+					for (WebInitParam initParam : initParams) {
+						initParameters.put(initParam.name(), initParam.value());
+					}
+				}
+
+				String filterName = webFilter.filterName();
+
+				if (Validator.isNotNull(filterName)) {
+					filterDefinition.setName(filterName);
+				}
+				else {
+					filterDefinition.setName(annotatedClass.getCanonicalName());
+				}
+
+				String[] servletNames = webFilter.servletNames();
+
+				if (!ArrayUtil.isEmpty(servletNames)) {
+					for (String servletName : servletNames) {
+						filterDefinition.addServletName(servletName);
+					}
+				}
+
+				//Value and urlPatterns should be checked in this order
+
+				String[] value = webFilter.value();
+
+				if (!ArrayUtil.isEmpty(value)) {
+					for (String urlPattern : value) {
+						filterDefinition.addURLPattern(urlPattern);
+					}
+				}
+
+				String[] urlPatterns = webFilter.urlPatterns();
+
+				if (!ArrayUtil.isEmpty(urlPatterns)) {
+					if (ListUtil.isNotEmpty(
+							filterDefinition.getURLPatterns())) {
+
+						throw new IllegalStateException(
+							"Cannot declare both value and urlPatterns");
+					}
+
+					for (String urlPattern : urlPatterns) {
+						filterDefinition.addURLPattern(urlPattern);
+					}
+				}
+
+				webXMLDefinitionAnnotation.setFilterDefinition(
+					filterDefinition.getName(), filterDefinition);
+			}
+
+			WebListener webListener = annotatedClass.getAnnotation(
+				WebListener.class);
+
+			if (webListener != null) {
+				ListenerDefinition listenerDefinition =
+					new ListenerDefinition();
+
+				listenerDefinition.setEventListener(
+					_getListenerInstance(annotatedClass.getCanonicalName()));
+
+				webXMLDefinitionAnnotation.addListenerDefinition(
+					listenerDefinition);
+			}
+		}
 	}
 
 	private Filter _getFilterInstance(String filterClassName) {

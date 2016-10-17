@@ -2487,6 +2487,32 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		configurationContainer.all(action);
 
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
+
+		ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		for (String key : versionOverrides.stringPropertyNames()) {
+			if (key.indexOf(_DEPENDENCY_KEY_SEPARATOR) == -1) {
+				continue;
+			}
+
+			String value = versionOverrides.getProperty(key);
+
+			if (value.indexOf(':') == -1) {
+				continue;
+			}
+
+			ProjectInternal dependencyProject =
+				(ProjectInternal)project.findProject(value);
+
+			if (dependencyProject != null) {
+				projectConfigurer.configure(dependencyProject);
+			}
+		}
+
 		final Copy copy = (Copy)GradleUtil.getTask(
 			project, JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 

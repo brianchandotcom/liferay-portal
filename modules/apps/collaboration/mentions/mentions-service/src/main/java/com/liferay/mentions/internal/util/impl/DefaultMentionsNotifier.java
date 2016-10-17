@@ -59,7 +59,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		throws PortalException {
 
 		String[] mentionedUsersScreenNames = getMentionedUsersScreenNames(
-			userId, content);
+			userId, className, content);
 
 		if (ArrayUtil.isEmpty(mentionedUsersScreenNames)) {
 			return;
@@ -136,7 +136,8 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		return StringPool.BLANK;
 	}
 
-	protected String[] getMentionedUsersScreenNames(long userId, String content)
+	protected String[] getMentionedUsersScreenNames(
+			long userId, String className, String content)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -148,7 +149,10 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 		Set<String> mentionedUsersScreenNames = new HashSet<>();
 
-		for (String mentionedUserScreenName : _mentionsMatcher.match(content)) {
+		MentionsMatcher mentionsMatcher =
+			_mentionsMatcherRegistry.getMentionsMatcher(className);
+
+		for (String mentionedUserScreenName : mentionsMatcher.match(content)) {
 			List<User> users = _mentionsUserFinder.getUsers(
 				user.getCompanyId(), userId, mentionedUserScreenName,
 				socialInteractionsConfiguration);
@@ -167,6 +171,13 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMentionsMatcherRegistry(
+		MentionsMatcherRegistry mentionsMatcherRegistry) {
+
+		_mentionsMatcherRegistry = mentionsMatcherRegistry;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMentionsUserFinder(
 		MentionsUserFinder mentionsUserFinder) {
 
@@ -178,8 +189,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		_userLocalService = userLocalService;
 	}
 
-	private final MentionsMatcher _mentionsMatcher =
-		new DefaultMentionsMatcher();
+	private MentionsMatcherRegistry _mentionsMatcherRegistry;
 	private MentionsUserFinder _mentionsUserFinder;
 	private UserLocalService _userLocalService;
 

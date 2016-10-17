@@ -21,9 +21,18 @@ import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = {
+		"model.class.name=*", "service.ranking:Integer=" + Integer.MIN_VALUE
+	},
+	service = MentionsMatcher.class
+)
 public class DefaultMentionsMatcher implements MentionsMatcher {
 
 	@Override

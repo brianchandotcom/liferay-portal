@@ -130,12 +130,6 @@ AUI.add(
 
 						var toolbar = instance.get('toolbar');
 
-						if (instance.settingsForm) {
-							instance._hideSettingsForm();
-						}
-
-						instance._showLoading();
-
 						var fieldType = FieldTypes.get(field.get('type'));
 
 						instance.set('description', fieldType.get('label'));
@@ -162,14 +156,7 @@ AUI.add(
 							}
 						);
 
-						var evaluator = settingsForm.get('evaluator');
-
-						evaluator.after(
-							'evaluationStarted',
-							function() {
-								instance.set('title', settingsForm.getField('label').getValue());
-							}
-						);
+						instance._handleEvaluation();
 
 						settingsForm.render();
 
@@ -188,12 +175,19 @@ AUI.add(
 						return toolbar;
 					},
 
-					_hideSettingsForm: function() {
+					_handleEvaluation: function() {
 						var instance = this;
 
-						var container = instance.settingsForm.get('container');
+						var settingsForm = instance.settingsForm;
 
-						container.addClass('invisible');
+						var evaluator = settingsForm.get('evaluator');
+
+						evaluator.after(
+							'evaluationStarted',
+							function() {
+								instance.set('title', settingsForm.getField('label').getValue());
+							}
+						);
 					},
 
 					_isClickInSidebar: function(node) {
@@ -213,7 +207,6 @@ AUI.add(
 
 								settingsForm.evaluate(
 									function() {
-										instance._showSettingsForm();
 										instance._removeLoading();
 									}
 								);
@@ -249,7 +242,7 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
-						boundingBox.one('.loading-icon').remove();
+						boundingBox.removeClass('loading-data');
 					},
 
 					_saveCurrentContext: function() {
@@ -280,18 +273,13 @@ AUI.add(
 						var instance = this;
 
 						var contentBox = instance.get('contentBox');
+						var boundingBox = instance.get('boundingBox');
 
 						if (!contentBox.one('.loading-icon')) {
 							contentBox.append(TPL_LOADING);
 						}
-					},
 
-					_showSettingsForm: function() {
-						var instance = this;
-
-						var container = instance.settingsForm.get('container');
-
-						container.removeClass('invisible');
+						boundingBox.addClass('loading-data');
 					}
 				}
 			}

@@ -14,12 +14,8 @@
 
 package com.liferay.mentions.internal.util.impl;
 
+import com.liferay.mentions.matcher.BaseRegularExpressionMentionsMatcher;
 import com.liferay.mentions.matcher.MentionsMatcher;
-
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,71 +29,12 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = MentionsMatcher.class
 )
-public class DefaultMentionsMatcher implements MentionsMatcher {
+public class DefaultMentionsMatcher
+	extends BaseRegularExpressionMentionsMatcher {
 
 	@Override
-	public Iterable<String> match(String s) {
-		return new MentionsIterable(_pattern.matcher(s));
-	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|[^@<>.,\\[\\]\\s])+)");
-
-	private static class MentionsIterable implements Iterable<String> {
-
-		public MentionsIterable(Matcher matcher) {
-			_matcher = matcher;
-		}
-
-		@Override
-		public Iterator<String> iterator() {
-			_matcher.reset();
-
-			return new MentionsIterator(_matcher);
-		}
-
-		private final Matcher _matcher;
-
-	}
-
-	private static class MentionsIterator implements Iterator<String> {
-
-		public MentionsIterator(Matcher matcher) {
-			_matcher = matcher;
-		}
-
-		@Override
-		public boolean hasNext() {
-			if (_hasNext == null) {
-				_hasNext = _matcher.find();
-			}
-
-			return _hasNext;
-		}
-
-		@Override
-		public String next() {
-			if (_hasNext == null) {
-				_hasNext = hasNext();
-			}
-
-			if (!_hasNext) {
-				throw new NoSuchElementException();
-			}
-
-			_hasNext = null;
-
-			return _matcher.group(1);
-		}
-
-		@Override
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-		private Boolean _hasNext;
-		private final Matcher _matcher;
-
+	protected String getRegularExpression() {
+		return "(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|[^@<>.,\\[\\]\\s])+)";
 	}
 
 }

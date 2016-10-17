@@ -17,6 +17,7 @@ package com.liferay.mentions.internal.util.impl;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.mentions.constants.MentionsConstants;
+import com.liferay.mentions.matcher.MentionsMatcher;
 import com.liferay.mentions.util.MentionsNotifier;
 import com.liferay.mentions.util.MentionsUserFinder;
 import com.liferay.mentions.web.constants.MentionsPortletKeys;
@@ -147,7 +148,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 
 		Set<String> mentionedUsersScreenNames = new HashSet<>();
 
-		for (String mentionedUserScreenName : MentionsMatcher.match(content)) {
+		for (String mentionedUserScreenName : _mentionsMatcher.match(content)) {
 			List<User> users = _mentionsUserFinder.getUsers(
 				user.getCompanyId(), userId, mentionedUserScreenName,
 				socialInteractionsConfiguration);
@@ -177,6 +178,8 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		_userLocalService = userLocalService;
 	}
 
+	private final MentionsMatcher _mentionsMatcher =
+		new DefaultMentionsMatcher();
 	private MentionsUserFinder _mentionsUserFinder;
 	private UserLocalService _userLocalService;
 

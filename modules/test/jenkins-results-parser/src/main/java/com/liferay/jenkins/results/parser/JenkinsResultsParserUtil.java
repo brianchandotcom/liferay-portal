@@ -346,7 +346,7 @@ public class JenkinsResultsParserUtil {
 			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
 				"/liferay-jenkins-ee/commands/build.properties";
 
-		properties.load(new StringReader(toString(getLocalURL(url))));
+		properties.load(new StringReader(toString(getLocalURL(url), false)));
 
 		return properties;
 	}

@@ -237,6 +237,13 @@ public class FriendlyURLLocalServiceWrapper implements FriendlyURLLocalService,
 		return _friendlyURLLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.lang.String getUniqueUrlTitle(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle) {
+		return _friendlyURLLocalService.getUniqueUrlTitle(companyId, groupId,
+			classNameId, classPK, urlTitle);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

@@ -203,6 +203,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getUniqueUrlTitle(long companyId, long groupId,
+		long classNameId, long classPK, java.lang.String urlTitle);
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

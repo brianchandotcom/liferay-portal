@@ -223,6 +223,13 @@ public class FriendlyURLLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.lang.String getUniqueUrlTitle(long companyId,
+		long groupId, long classNameId, long classPK, java.lang.String urlTitle) {
+		return getService()
+				   .getUniqueUrlTitle(companyId, groupId, classNameId, classPK,
+			urlTitle);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

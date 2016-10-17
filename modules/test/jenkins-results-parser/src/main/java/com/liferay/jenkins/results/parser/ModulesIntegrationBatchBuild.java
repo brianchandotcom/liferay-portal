@@ -50,6 +50,10 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	public void update() {
 		super.update();
 
+		if (badBuildNumbers.size() > 0) {
+			return;
+		}
+
 		Build arquillianErrorAxisBuild = null;
 
 		for (Build axisBuild : getDownstreamBuilds("completed")) {
@@ -75,37 +79,16 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 		}
 
 		if (arquillianErrorAxisBuild != null) {
-			try {
-				Properties buildProperties =
-					JenkinsResultsParserUtil.getBuildProperties();
+			StringBuilder sb = new StringBuilder();
 
-				String modulesIntegrationBatchMaxRetries =
-					buildProperties.getProperty(
-						"modules.integration.batch.max.retries");
+			sb.append("Arquillian broken connection failure ");
+			sb.append("detected at ");
+			sb.append(arquillianErrorAxisBuild.getBuildURL());
+			sb.append(" This batch will be re-invoked.");
 
-				if ((modulesIntegrationBatchMaxRetries != null) &&
-					!modulesIntegrationBatchMaxRetries.isEmpty()) {
+			System.out.println(sb);
 
-					if (badBuildNumbers.size() <
-							Integer.parseInt(
-								modulesIntegrationBatchMaxRetries)) {
-
-						StringBuilder sb = new StringBuilder();
-
-						sb.append("Arquillian broken connection failure ");
-						sb.append("detected at ");
-						sb.append(arquillianErrorAxisBuild.getBuildURL());
-						sb.append(" This batch will be re-invoked.");
-
-						System.out.println(sb);
-
-						reinvoke();
-					}
-				}
-			}
-			catch (Exception e) {
-				throw new RuntimeException(e);
-			}
+			reinvoke();
 		}
 	}
 

@@ -99,6 +99,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
@@ -895,6 +896,25 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			new String[selectedFieldNameSet.size()]);
 
 		queryConfig.setSelectedFieldNames(selectedFieldNames);
+	}
+
+	protected void addLocalizedField(
+		Document document, String field, Locale siteDefaultLocale,
+		Map<Locale, String> map) {
+
+		for (Entry<Locale, String> entry : map.entrySet()) {
+			Locale locale = entry.getKey();
+
+			if (locale.equals(siteDefaultLocale)) {
+				document.addText(field, entry.getValue());
+			}
+
+			String languageId = LocaleUtil.toLanguageId(locale);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(field, languageId),
+				entry.getValue());
+		}
 	}
 
 	protected void addSearchAssetCategoryIds(

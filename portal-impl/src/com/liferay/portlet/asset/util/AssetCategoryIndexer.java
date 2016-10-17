@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
@@ -46,8 +44,6 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -178,11 +174,11 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		document.addKeyword(
 			Field.ASSET_VOCABULARY_ID, assetCategory.getVocabularyId());
 
-		_addLocalizedField(
+		addLocalizedField(
 			document, Field.DESCRIPTION, siteDefaultLocale,
 			assetCategory.getDescriptionMap());
 		document.addText(Field.NAME, assetCategory.getName());
-		_addLocalizedField(
+		addLocalizedField(
 			document, Field.TITLE, siteDefaultLocale,
 			assetCategory.getTitleMap());
 
@@ -259,25 +255,6 @@ public class AssetCategoryIndexer extends BaseIndexer<AssetCategory> {
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 
 		indexableActionableDynamicQuery.performActions();
-	}
-
-	private void _addLocalizedField(
-		Document document, String field, Locale siteDefaultLocale,
-		Map<Locale, String> map) {
-
-		for (Entry<Locale, String> entry : map.entrySet()) {
-			Locale locale = entry.getKey();
-
-			if (locale.equals(siteDefaultLocale)) {
-				document.addText(field, entry.getValue());
-			}
-
-			String languageId = LocaleUtil.toLanguageId(locale);
-
-			document.addText(
-				LocalizationUtil.getLocalizedName(field, languageId),
-				entry.getValue());
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

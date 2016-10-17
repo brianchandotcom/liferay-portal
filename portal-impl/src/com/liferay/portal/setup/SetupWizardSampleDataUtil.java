@@ -291,7 +291,8 @@ public class SetupWizardSampleDataUtil {
 				String screenName = sb.toString();
 
 				String emailAddress =
-					screenName + defaultUserEmailAddressParts[1];
+					screenName + StringPool.AT +
+						defaultUserEmailAddressParts[1];
 
 				String lastName = organizationPrefix + StringPool.SPACE + i;
 

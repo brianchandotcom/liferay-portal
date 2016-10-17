@@ -2381,14 +2381,23 @@ public class ServiceBuilder {
 
 		List<Entity> entities = new ArrayList<>();
 
+		boolean hasDeprecated = false;
+
 		for (Entity entity : _ejbList) {
 			if (entity.hasColumns()) {
-				entities.add(entity);
+				if (entity.isDeprecated()) {
+					hasDeprecated = true;
+				}
+				else {
+					entities.add(entity);
+				}
 			}
 		}
 
 		if (entities.isEmpty()) {
-			xmlFile.delete();
+			if (!hasDeprecated) {
+				xmlFile.delete();
+			}
 
 			return;
 		}

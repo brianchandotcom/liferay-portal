@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -38,12 +40,23 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	}
 
 	@Override
+	public void reinvoke() {
+		super.reinvoke();
+
+		verifiedAxisBuilds.clear();
+	}
+
+	@Override
 	public void update() {
 		super.update();
 
 		Build arquillianErrorAxisBuild = null;
 
 		for (Build axisBuild : getDownstreamBuilds("completed")) {
+			if (verifiedAxisBuilds.contains(axisBuild)) {
+				continue;
+			}
+
 			String axisBuildResult = axisBuild.getResult();
 
 			if (axisBuildResult.equals("SUCCESS")) {
@@ -57,6 +70,8 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 				break;
 			}
+
+			verifiedAxisBuilds.add(axisBuild);
 		}
 
 		if (arquillianErrorAxisBuild != null) {
@@ -93,6 +108,8 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 			}
 		}
 	}
+
+	protected List<Build> verifiedAxisBuilds = new ArrayList<>();
 
 	private static final String _ARQUILLIAN_ERROR =
 		"org.jboss.arquillian.protocol.jmx.JMXMethodExecutor.invoke" +

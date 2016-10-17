@@ -25,6 +25,7 @@ public class FunctionalBatchBuild extends BatchBuild {
 
 	public FunctionalBatchBuild(String url, TopLevelBuild topLevelBuild)
 		throws Exception {
+
 		super(url, topLevelBuild);
 	}
 
@@ -32,7 +33,7 @@ public class FunctionalBatchBuild extends BatchBuild {
 	public void update() {
 		super.update();
 
-		if ((badBuildNumbers.size() > 0)) {
+		if (badBuildNumbers.size() > 0) {
 			return;
 		}
 
@@ -41,7 +42,9 @@ public class FunctionalBatchBuild extends BatchBuild {
 		for (Build axisBuild : getDownstreamBuilds("completed")) {
 			String axisBuildResult = axisBuild.getResult();
 
-			if ((axisBuildResult == null) || axisBuildResult.equals("SUCCESS")) {
+			if ((axisBuildResult == null) ||
+				axisBuildResult.equals("SUCCESS")) {
+
 				continue;
 			}
 
@@ -62,4 +65,5 @@ public class FunctionalBatchBuild extends BatchBuild {
 			reinvoke();
 		}
 	}
+
 }

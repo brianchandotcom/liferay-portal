@@ -41,11 +41,11 @@ public class BuildFactory {
 
 				if (jobVariant != null) {
 					if (jobVariant.contains("functional")) {
-						batchBuild = new FunctionalBatchBuild(url, (TopLevelBuild)parentBuild);
+						batchBuild = new FunctionalBatchBuild(
+							url, (TopLevelBuild)parentBuild);
 					}
 
 					if (jobVariant.contains("modules-integration")) {
-
 						batchBuild = new ModulesIntegrationBatchBuild(
 							url, (TopLevelBuild)parentBuild);
 					}

@@ -339,6 +339,22 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
+	public static String getAxisVariable(String buildURL) throws Exception {
+		String url = decode(buildURL);
+
+		int x = url.indexOf("AXIS_VARIABLE=");
+
+		if (x != -1) {
+			url = url.substring(x + 14);
+
+			int y = url.indexOf(",");
+
+			return url.substring(0, y);
+		}
+
+		return "";
+	}
+
 	public static Properties getBuildProperties() throws Exception {
 		Properties properties = new Properties();
 

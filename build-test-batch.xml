@@ -2375,4 +2375,24 @@ ${output.content}</echo>
 	<target name="upstream-functional-tomcat8-mysql56-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mysql" />
 	</target>
+
+	<target name="wsdd-builder-jdk8">
+		<run-batch-test>
+			<test-action>
+				<ant dir="portal-impl" target="build-wsdds" />
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
 </project>

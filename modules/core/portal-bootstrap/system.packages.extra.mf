@@ -2254,7 +2254,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ,com.liferay.portal.kernel.model,com.liferay.portal.kernel.repository
  .model,com.liferay.portal.kernel.service,com.liferay.portal.kernel.tr
  ash,com.liferay.portal.kernel.util,com.liferay.trash.kernel.model",co
- m.liferay.message.boards.kernel.service;version="1.0.0";uses:="com.li
+ m.liferay.message.boards.kernel.service;version="1.1.0";uses:="com.li
  feray.exportimport.kernel.lar,com.liferay.message.boards.kernel.model
  ,com.liferay.portal.kernel.dao.orm,com.liferay.portal.kernel.exceptio
  n,com.liferay.portal.kernel.increment,com.liferay.portal.kernel.jsonw

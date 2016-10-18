@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.ldap.LDAPSettings;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -273,13 +274,17 @@ public class LDAPPropertiesVerifyProcess extends VerifyProcess {
 			for (Company company : companies) {
 				long companyId = company.getCompanyId();
 
+				long[] ldapServerIds = StringUtil.split(
+					_prefsProps.getString(companyId, "ldap.server.ids"), 0L);
+
+				if (ArrayUtil.isEmpty(ldapServerIds)) {
+					continue;
+				}
+
 				verifyLDAPAuthProperties(companyId);
 				verifyLDAPExportProperties(companyId);
 				verifyLDAPImportProperties(companyId);
 				verifySystemLDAPConfiguration(companyId);
-
-				long[] ldapServerIds = StringUtil.split(
-					_prefsProps.getString(companyId, "ldap.server.ids"), 0L);
 
 				Set<String> keys = new HashSet<>();
 

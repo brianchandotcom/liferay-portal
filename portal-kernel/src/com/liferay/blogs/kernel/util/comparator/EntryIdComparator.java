@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Christopher Kian
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.blogs.util.comparator.EntryIdComparator}
  */
+@Deprecated
 public class EntryIdComparator extends OrderByComparator<BlogsEntry> {
 
 	public static final String ORDER_BY_ASC = "BlogsEntry.entryId ASC";

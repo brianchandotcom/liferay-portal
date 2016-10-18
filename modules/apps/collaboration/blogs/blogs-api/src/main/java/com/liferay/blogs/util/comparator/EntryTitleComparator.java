@@ -12,52 +12,36 @@
  * details.
  */
 
-package com.liferay.blogs.kernel.util.comparator;
+package com.liferay.blogs.util.comparator;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Roberto Díaz
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.util.comparator.EntryModifiedDateComparator}
+ * @author Sergio González
  */
-@Deprecated
-public class EntryModifiedDateComparator extends OrderByComparator<BlogsEntry> {
+public class EntryTitleComparator extends OrderByComparator<BlogsEntry> {
 
-	public static final String ORDER_BY_ASC =
-		"BlogsEntry.modifiedDate ASC, BlogsEntry.entryId ASC";
+	public static final String ORDER_BY_ASC = "BlogsEntry.title ASC";
 
-	public static final String[] ORDER_BY_CONDITION_FIELDS =
-		{"modifiedDate", "entryId"};
+	public static final String ORDER_BY_DESC = "BlogsEntry.title DESC";
 
-	public static final String ORDER_BY_DESC =
-		"BlogsEntry.modifiedDate DESC, BlogsEntry.entryId DESC";
+	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public static final String[] ORDER_BY_FIELDS = {"modifiedDate", "entryId"};
-
-	public EntryModifiedDateComparator() {
+	public EntryTitleComparator() {
 		this(false);
 	}
 
-	public EntryModifiedDateComparator(boolean ascending) {
+	public EntryTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(BlogsEntry entry1, BlogsEntry entry2) {
-		int value = DateUtil.compareTo(
-			entry1.getModifiedDate(), entry2.getModifiedDate());
+		String title1 = entry1.getTitle();
+		String title2 = entry2.getTitle();
 
-		if (value == 0) {
-			if (entry1.getEntryId() < entry2.getEntryId()) {
-				value = -1;
-			}
-			else if (entry1.getEntryId() > entry2.getEntryId()) {
-				value = 1;
-			}
-		}
+		int value = title1.compareTo(title2);
 
 		if (_ascending) {
 			return value;
@@ -75,11 +59,6 @@ public class EntryModifiedDateComparator extends OrderByComparator<BlogsEntry> {
 		else {
 			return ORDER_BY_DESC;
 		}
-	}
-
-	@Override
-	public String[] getOrderByConditionFields() {
-		return ORDER_BY_CONDITION_FIELDS;
 	}
 
 	@Override

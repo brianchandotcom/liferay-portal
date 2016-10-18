@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator}
  */
+@Deprecated
 public class StatsUserLastPostDateComparator
 	extends OrderByComparator<BlogsStatsUser> {
 

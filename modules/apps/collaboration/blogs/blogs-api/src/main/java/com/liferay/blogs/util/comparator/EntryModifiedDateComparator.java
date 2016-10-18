@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.kernel.util.comparator;
+package com.liferay.blogs.util.comparator;
 
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Roberto Díaz
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.blogs.util.comparator.EntryModifiedDateComparator}
  */
-@Deprecated
 public class EntryModifiedDateComparator extends OrderByComparator<BlogsEntry> {
 
 	public static final String ORDER_BY_ASC =

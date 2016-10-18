@@ -16,10 +16,7 @@ package com.liferay.mentions.internal.util.impl;
 
 import com.liferay.mentions.matcher.BaseRegularExpressionMentionsMatcher;
 import com.liferay.mentions.matcher.MentionsMatcher;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.mentions.matcher.MentionsMatcherUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,23 +35,12 @@ public class DefaultMentionsMatcher
 
 	@Override
 	protected String getRegularExpression() {
-		String specialCharacters = PropsUtil.get(
-			PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS);
-
-		String quotedSpecialCharacters = StringUtil.replace(
-			specialCharacters,
-			new String[] {
-				StringPool.AMPERSAND, StringPool.CARET,
-				StringPool.CLOSE_BRACKET, StringPool.DASH,
-				StringPool.OPEN_BRACKET
-			},
-			new String[] {"\\&", "\\^", "\\]", "\\-", "\\["});
-
 		return String.format(
-			_MENTIONS_REGULAR_EXPRESSION_TEMPLATE, quotedSpecialCharacters);
+			_MENTIONS_REGULAR_EXPRESSION_TEMPLATE,
+			MentionsMatcherUtil.getScreenNameRegularExpression());
 	}
 
 	private static final String _MENTIONS_REGULAR_EXPRESSION_TEMPLATE =
-		"(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|[%s]|[^@<>.,\\[\\]\\s])+)";
+		"(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|%s|[^@<>.,\\[\\]\\s])+)";
 
 }

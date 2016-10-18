@@ -45,6 +45,11 @@
 					display: none;
 				}
 			}
+
+			.taglib-icon-label {
+				display: inline-flex;
+				width: 70%;
+			}
 		}
 
 		@include respond-to(phone) {

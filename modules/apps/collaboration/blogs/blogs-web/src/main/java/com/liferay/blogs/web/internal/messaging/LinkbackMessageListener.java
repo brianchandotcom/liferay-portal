@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
-import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
+import com.liferay.portal.linkback.LinkbackProducerUtil;
 
 import java.util.Map;
 

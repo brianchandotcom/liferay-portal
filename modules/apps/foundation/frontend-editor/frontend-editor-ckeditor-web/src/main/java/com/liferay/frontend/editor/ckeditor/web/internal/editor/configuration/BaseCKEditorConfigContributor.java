@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Map;
 
@@ -47,10 +48,17 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		String cssPath = HtmlUtil.escape(themeDisplay.getPathThemeCss());
+		jsonArray.put(
+			HtmlUtil.escape(
+				PortalUtil.getStaticResourceURL(
+					themeDisplay.getRequest(),
+					themeDisplay.getPathThemeCss() + "/aui.css")));
 
-		jsonArray.put(cssPath + "/aui.css");
-		jsonArray.put(cssPath + "/main.css");
+		jsonArray.put(
+			HtmlUtil.escape(
+				PortalUtil.getStaticResourceURL(
+					themeDisplay.getRequest(),
+					themeDisplay.getPathThemeCss() + "/main.css")));
 
 		jsonObject.put("contentsCss", jsonArray);
 

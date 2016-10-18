@@ -6,6 +6,6 @@ dependencies {
 	compile group: "org.jboss.osgi.metadata", name: "jbosgi-metadata", version: "4.0.0.CR1"
 	compile group: "org.osgi", name: "org.osgi.enterprise", version: "5.0.0"
 
-	runtime group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.3"
-	runtime group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.3"
+	runtime group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-container-liferay", version: "1.0.4"
+	runtime group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"
 }

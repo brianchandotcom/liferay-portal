@@ -21,10 +21,6 @@ buildscript {
 }
 
 apply plugin: "com.liferay.deployment.helper"
-
-buildDeploymentHelper {
-	deploymentFiles = ["license.xml"]
-}
 ```
 
 Since the plugin automatically resolves the Liferay Deployment Helper library as
@@ -45,7 +41,7 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`buildDeploymentHelper` | \- | [`BuildDeploymentHelperTask`](#buildeploymenthelper) | Takes a list of files and builds a war with them to be copied when the war is deployed.
+`buildDeploymentHelper` | \- | [`BuildDeploymentHelperTask`](#buildeploymenthelper) | Builds a WAR which contains one or more files that will be copied once the WAR is deployed.
 
 ### BuildDeploymentHelperTask
 
@@ -58,19 +54,26 @@ Property Name | Default Value
 ------------- | -------------
 [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args) | Deployment Helper command line arguments
 [`classpath`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:classpath) | [`project.configurations.deploymentHelper`](#liferay-deployment-helper-dependency)
+[`deploymentFiles`](#deploymentfiles) | The output files of the [`jar`](https://docs.gradle.org/current/userguide/java_plugin.html#sec:jar) tasks of this project and all its sub-projects.
 [`main`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:main) | `"com.liferay.deployment.helper.DeploymentHelper"`
+[`outputFile`](#outputfile) | `"${project.buildDir}/${project.name}.war"`
 
 #### Task Properties
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-`deploymentFiles` | `FileCollection` | \- | The list of files to deploy.
-`deploymentPath` | `File` | `null` | The absolute path to which files will be deployed to.
-`outputFile` | `String` | `"${project.buildDir}/${project.name}.war"` | The name of the war created.
+<a name="deploymentfiles"></a>`deploymentFiles` | `FileCollection` | `[]` | The files or directories to include in the WAR and copy once the WAR is deployed. If a directory is added to this collection, all the JAR files contained in the directory will be included in the WAR.
+`deploymentPath` | `File` | `null` | The directory where the included files will be copied to.
+<a name="outputfile"></a>`outputFile` | `File` | `null` | The WAR file to build.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
-Moreover, it is possible to use Closures and Callables as values for the
-`String` properties, to defer evaluation until task execution.
+
+#### Task Methods
+
+Method | Description
+------ | -----------
+`BuildDeploymentHelperTask deploymentFiles(Iterable<?> deploymentFiles)` | Adds files or directories to include in the WAR and copy once the WAR is deployed. The values are evaluated as per [`project.files`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:files(java.lang.Object[])).
+`BuildDeploymentHelperTask deploymentFiles(Object... deploymentFiles)` | Adds files or directories to include in the WAR and copy once the WAR is deployed. The values are evaluated as per [`project.files`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:files(java.lang.Object[])).
 
 ## Additional Configuration
 

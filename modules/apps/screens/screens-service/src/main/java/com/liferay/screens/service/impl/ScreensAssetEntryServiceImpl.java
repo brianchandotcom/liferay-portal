@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.journal.model.JournalArticle;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portlet.asset.service.permission.AssetEntryPermission;
 import com.liferay.screens.service.base.ScreensAssetEntryServiceBaseImpl;
 
@@ -213,7 +215,7 @@ public class ScreensAssetEntryServiceImpl
 	protected JSONObject getBlogsEntryJSONObject(AssetEntry assetEntry)
 		throws PortalException {
 
-		BlogsEntry blogsEntry = blogsEntryService.getEntry(
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(
 			assetEntry.getClassPK());
 
 		JSONObject blogsEntryJSONObject = JSONFactoryUtil.createJSONObject();
@@ -346,5 +348,8 @@ public class ScreensAssetEntryServiceImpl
 		jsonObject.put("title", assetEntry.getTitle(locale));
 		return jsonObject;
 	}
+
+	@ServiceReference(type = BlogsEntryService.class)
+	private BlogsEntryService _blogsEntryService;
 
 }

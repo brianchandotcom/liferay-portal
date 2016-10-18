@@ -62,7 +62,9 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 			String axisBuildResult = axisBuild.getResult();
 
-			if ((axisBuildResult == null) || axisBuildResult.equals("SUCCESS")) {
+			if ((axisBuildResult == null) ||
+				axisBuildResult.equals("SUCCESS")) {
+
 				continue;
 			}
 

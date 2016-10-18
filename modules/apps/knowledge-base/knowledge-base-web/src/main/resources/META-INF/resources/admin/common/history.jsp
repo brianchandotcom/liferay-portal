@@ -186,29 +186,6 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 			</liferay-ui:search-container-row>
 
-			<h1>
-				<liferay-ui:diff-html diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), sourceVersion, targetVersion, "title") %>' />
-			</h1>
-
-			<div class="kb-article-tools">
-
-				<%
-				PortletURL viewKBArticleURL = kbArticleURLHelper.createViewURL(kbArticle);
-				%>
-
-				<liferay-ui:icon
-					iconCssClass="icon-file-alt"
-					label="<%= true %>"
-					message="latest-version"
-					method="get"
-					url="<%= viewKBArticleURL.toString() %>"
-				/>
-			</div>
-
-			<div id="<portlet:namespace /><%= kbArticle.getResourcePrimKey() %>">
-				<liferay-ui:diff-html diffHtmlResults='<%= AdminUtil.getKBArticleDiff(kbArticle.getResourcePrimKey(), sourceVersion, targetVersion, "content") %>' />
-			</div>
-
 			<aui:button-row>
 				<aui:button type="submit" value="compare-versions" />
 			</aui:button-row>

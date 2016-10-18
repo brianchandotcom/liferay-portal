@@ -114,13 +114,8 @@ buildLexicon {
 
 buildLiferayAMDLoader {
 	dependsOn npmInstall
-
 	eachFile new StripPathSegmentsAction(2)
-
-	from {
-		fileTree(dir: "node_modules")
-	}
-
+	from npmInstall.nodeModulesDir
 	include "liferay-amd-loader/dist/loader.js"
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")

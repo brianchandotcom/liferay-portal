@@ -31,12 +31,28 @@ public class PatcherUtil {
 		return getPatcher().applyPatch(patchFile);
 	}
 
-	public static List<String> getFixedIssues() {
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFixedIssuesList()}
+	 */
+	@Deprecated
+	public static String[] getFixedIssues() {
 		return getPatcher().getFixedIssues();
 	}
 
-	public static List<String> getInstalledPatches() {
+	public static List<String> getFixedIssuesList() {
+		return getPatcher().getFixedIssuesList();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getInstalledPatchesList()}
+	 */
+	@Deprecated
+	public static String[] getInstalledPatches() {
 		return getPatcher().getInstalledPatches();
+	}
+
+	public static List<String> getInstalledPatchesList() {
+		return getPatcher().getInstalledPatchesList();
 	}
 
 	public static File getPatchDirectory() {
@@ -57,8 +73,16 @@ public class PatcherUtil {
 		return getPatcher().getPatchingToolVersionDisplayName();
 	}
 
-	public static List<String> getPatchLevels() {
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPatchLevelsList()}
+	 */
+	@Deprecated
+	public static String[] getPatchLevels() {
 		return getPatcher().getPatchLevels();
+	}
+
+	public static List<String> getPatchLevelsList() {
+		return getPatcher().getPatchLevelsList();
 	}
 
 	public static Properties getProperties() {

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
 import com.liferay.portal.kernel.patcher.Patcher;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -95,13 +96,31 @@ public class PatcherImpl implements Patcher {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFixedIssuesList()}
+	 */
+	@Deprecated
 	@Override
-	public List<String> getFixedIssues() {
-		return _fixedIssueKeys;
+	public String[] getFixedIssues() {
+		return ArrayUtil.toStringArray(getFixedIssuesList());
 	}
 
 	@Override
-	public List<String> getInstalledPatches() {
+	public List<String> getFixedIssuesList() {
+		return _fixedIssueKeys;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getInstalledPatchesList()}
+	 */
+	@Deprecated
+	@Override
+	public String[] getInstalledPatches() {
+		return ArrayUtil.toStringArray(getInstalledPatchesList());
+	}
+
+	@Override
+	public List<String> getInstalledPatchesList() {
 		return _installedPatchNames;
 	}
 
@@ -154,8 +173,17 @@ public class PatcherImpl implements Patcher {
 		return patchingToolVersionDisplayName;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getPatchLevelsList()}
+	 */
+	@Deprecated
 	@Override
-	public List<String> getPatchLevels() {
+	public String[] getPatchLevels() {
+		return ArrayUtil.toStringArray(getPatchLevelsList());
+	}
+
+	@Override
+	public List<String> getPatchLevelsList() {
 		return _patchLevels;
 	}
 

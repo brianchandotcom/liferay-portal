@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginPackageIndexer;
@@ -111,8 +110,9 @@ public class StartupAction extends SimpleAction {
 		// Installed patches
 
 		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
-			String installedPatches = StringUtil.merge(
-				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
+			String installedPatches = String.join(
+				StringPool.COMMA_AND_SPACE,
+				PatcherUtil.getInstalledPatchesList());
 
 			if (Validator.isNull(installedPatches)) {
 				_log.info("There are no patches installed");

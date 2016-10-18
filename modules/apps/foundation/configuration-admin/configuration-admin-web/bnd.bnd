@@ -4,3 +4,4 @@ Bundle-Version: 1.0.12
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
 Private-Package: com.liferay.configuration.admin.web.*
+-includeresource: @org.apache.felix.fileinstall-[0-9]*.jar!/org/apache/felix/cm/file/ConfigurationHandler.class

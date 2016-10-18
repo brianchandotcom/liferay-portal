@@ -66,17 +66,18 @@ portletDisplay.setURLBack(redirect);
 			<c:choose>
 				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 
-						<%
-						for (PollsChoice choice : choices) {
-							choice = choice.toEscapedModel();
-						%>
-							<aui:field-wrapper cssClass="radio">
-								<aui:input label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
-							</aui:field-wrapper>
+					<%
+					for (PollsChoice choice : choices) {
+						choice = choice.toEscapedModel();
+					%>
 
-						<%
-						}
-						%>
+						<aui:field-wrapper cssClass="radio">
+							<aui:input label='<%= choice.getName() + ". " + choice.getDescription(locale) %>' name="choiceId" type="radio" value="<%= choice.getChoiceId() %>" />
+						</aui:field-wrapper>
+
+					<%
+					}
+					%>
 
 					<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 						<portlet:renderURL var="viewResultsURL">

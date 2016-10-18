@@ -54,6 +54,7 @@ page import="com.liferay.blogs.service.BlogsEntryServiceUtil" %><%@
 page import="com.liferay.blogs.service.permission.BlogsEntryPermission" %><%@
 page import="com.liferay.blogs.service.permission.BlogsPermission" %><%@
 page import="com.liferay.blogs.settings.BlogsGroupServiceSettings" %><%@
+page import="com.liferay.blogs.util.BlogsUtil" %><%@
 page import="com.liferay.blogs.web.configuration.BlogsPortletInstanceConfiguration" %><%@
 page import="com.liferay.blogs.web.constants.BlogsPortletKeys" %><%@
 page import="com.liferay.blogs.web.constants.BlogsWebKeys" %><%@
@@ -137,7 +138,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
-page import="com.liferay.portlet.blogs.util.BlogsUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %>
 

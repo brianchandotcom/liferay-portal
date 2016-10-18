@@ -304,13 +304,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 
-		if (Validator.isNotNull(urlTitle)) {
-			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
-				user.getCompanyId(), groupId, BlogsEntry.class, entryId,
-				urlTitle);
-
-			entry.setUrlTitle(friendlyURL.getUrlTitle());
+		if (Validator.isNull(urlTitle)) {
+			urlTitle = _getUniqueUrlTitle(entry);
 		}
+
+		FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
+			user.getCompanyId(), groupId, BlogsEntry.class, entryId,
+			urlTitle);
+
+		entry.setUrlTitle(friendlyURL.getUrlTitle());
 
 		entry.setDescription(description);
 		entry.setContent(content);
@@ -1286,7 +1288,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setTitle(title);
 		entry.setSubtitle(subtitle);
 
-		if (Validator.isNotNull(urlTitle)) {
+		if (Validator.isNotNull(urlTitle) &&
+			!urlTitle.equals(entry.getUrlTitle())) {
+
 			FriendlyURL friendlyURL = friendlyURLLocalService.addFriendlyURL(
 				entry.getCompanyId(), entry.getGroupId(), BlogsEntry.class,
 				entry.getEntryId(), urlTitle);

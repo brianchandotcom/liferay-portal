@@ -656,34 +656,6 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testURLTitleIsNotSavedWhenAddingDraftEntry() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
-
-		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_DRAFT);
-
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
-
-		Assert.assertTrue(Validator.isNull(entry.getUrlTitle()));
-	}
-
-	@Test
-	public void testURLTitleIsNotSavedWhenAddingDraftEntryWithWorkflow()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
-
-		BlogsEntry entry = BlogsTestUtil.addEntryWithWorkflow(
-			_user.getUserId(), RandomTestUtil.randomString(), false,
-			serviceContext);
-
-		Assert.assertTrue(Validator.isNull(entry.getUrlTitle()));
-	}
-
-	@Test
 	public void testURLTitleIsNotUpdatedWhenUpdatingEntryTitle()
 		throws Exception {
 
@@ -758,6 +730,34 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(
 			BlogsUtil.getUrlTitle(entry.getEntryId(), title),
 			entry.getUrlTitle());
+	}
+
+	@Test
+	public void testURLTitleIsSavedWhenAddingDraftEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.STATUS_DRAFT);
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
+
+		Assert.assertTrue(Validator.isNotNull(entry.getUrlTitle()));
+	}
+
+	@Test
+	public void testURLTitleIsSavedWhenAddingDraftEntryWithWorkflow()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntry entry = BlogsTestUtil.addEntryWithWorkflow(
+			_user.getUserId(), RandomTestUtil.randomString(), false,
+			serviceContext);
+
+		Assert.assertTrue(Validator.isNotNull(entry.getUrlTitle()));
 	}
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {

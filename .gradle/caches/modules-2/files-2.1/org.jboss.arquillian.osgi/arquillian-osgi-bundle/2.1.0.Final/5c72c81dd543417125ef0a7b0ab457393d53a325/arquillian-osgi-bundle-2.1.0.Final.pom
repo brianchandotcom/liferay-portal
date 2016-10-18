@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Parent -->
+    <parent>
+        <groupId>org.jboss.arquillian.osgi</groupId>
+        <artifactId>arquillian-osgi</artifactId>
+        <version>2.1.0.Final</version>
+    </parent>
+
+    <!-- Artifact Configuration -->
+    <artifactId>arquillian-osgi-bundle</artifactId>
+    <name>Arquillian OSGi :: Bundle</name>
+    <packaging>bundle</packaging>
+
+    <!-- Dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.arquillian.protocol</groupId>
+            <artifactId>arquillian-protocol-jmx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-container-impl-base</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.test</groupId>
+            <artifactId>arquillian-test-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.test</groupId>
+            <artifactId>arquillian-test-impl-base</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.testenricher</groupId>
+            <artifactId>arquillian-testenricher-osgi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Activator>org.jboss.arquillian.osgi.ArquillianBundleActivator</Bundle-Activator>
+                        <Export-Package />
+                        <Import-Package>
+                        	!org.jboss.arquillian.config.*,
+                        	!org.jboss.shrinkwrap.descriptor.api,
+                            javax.activation,
+                            javax.management*,
+                            javax.naming,
+                            org.osgi.framework;version="[1.5,2.0)",
+                            org.osgi.framework.startlevel;version="[1.0,2.0)",
+                            org.osgi.service.packageadmin;version="[1.2,2.0)",
+                            org.osgi.service.startlevel;version="[1.1,2.0)",
+                            org.osgi.util.tracker;version="[1.4,2.0)",
+                        </Import-Package>
+                        <Private-Package>
+                            org.jboss.arquillian.osgi,
+                        </Private-Package>
+                        <Embed-Transitive>true</Embed-Transitive>
+                        <Embed-Dependency>
+                            arquillian-core-api;inline=false,
+                            arquillian-core-impl-base;inline=false,
+                            arquillian-core-spi;inline=false,
+                            arquillian-test-api;inline=false,
+                            arquillian-test-impl-base;inline=false,
+                            arquillian-test-spi;inline=false,
+                            arquillian-container-impl-base;inline=false,
+                            arquillian-container-spi;inline=false,
+                            arquillian-container-test-api;inline=false,
+                            arquillian-container-test-impl-base;inline=false,
+                            arquillian-container-test-spi;inline=false,
+                            arquillian-junit-core;inline=false,
+                            arquillian-junit-container;inline=false,
+                            arquillian-testenricher-osgi;inline=false,
+                            arquillian-protocol-jmx;inline=false,
+                            shrinkwrap-api;inline=false,
+                            shrinkwrap-impl-base;inline=false,
+                            shrinkwrap-spi;inline=false,
+                            hamcrest-core;inline=false,
+                            junit;inline=false,
+                        </Embed-Dependency>
+                        <_exportcontents>
+                            org.jboss.arquillian.container.test.api;version=${version.jboss.arquillian.core},
+                            org.jboss.arquillian.test.api;version=${version.jboss.arquillian.core},
+                            org.jboss.arquillian.container.test.api;version=${version.jboss.arquillian.core},
+                            org.jboss.arquillian.junit;version=${version.jboss.arquillian.core},
+                            org.jboss.arquillian.osgi;version=${project.version},
+                            org.jboss.shrinkwrap.api;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.asset;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.container;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.exporter;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.formatter;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.importer;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.serialization;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.spec;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.importer;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.formatter;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.exporter;version=${version.jboss.shrinkwrap},
+                            org.jboss.shrinkwrap.api.container;version=${version.jboss.shrinkwrap},
+                            org.junit.runner;version=${version.junit},
+                            org.junit.runners.model;version=${version.junit},
+                            org.junit;version=${version.junit},
+                            org.junit.rules;version=${version.junit},
+                            org.hamcrest;version=${version.hamcrest-core},
+                            org.hamcrest.core;version=${version.hamcrest-core}
+                        </_exportcontents>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <!-- PluginManagement -->
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <version>2.1.0</version>
+                    <extensions>true</extensions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+</project>

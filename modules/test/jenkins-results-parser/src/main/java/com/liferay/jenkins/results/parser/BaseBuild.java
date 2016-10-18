@@ -53,6 +53,26 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public List<String> getBadBuildURLs() {
+		List<String> badBuildURLs = new ArrayList<>();
+
+		String jobURL = getJobURL();
+
+		for (Integer badBuildNumber : badBuildNumbers) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(jobURL);
+			sb.append("/");
+			sb.append(badBuildNumber);
+			sb.append("/");
+
+			badBuildURLs.add(sb.toString());
+		}
+
+		return badBuildURLs;
+	}
+
+	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
 	}

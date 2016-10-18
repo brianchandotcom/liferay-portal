@@ -5,7 +5,6 @@ configurations {
 	alloyUI
 	jQuery
 	lexicon
-	liferayAMDLoader
 	lodash
 	svg4everybody
 }
@@ -22,7 +21,6 @@ String alloyUIVersion = "3.1.0-deprecated.1"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
 String lexiconVersion = "1.0.10"
-String liferayAMDLoaderVersion = "1.5.3"
 String lodashVersion = "3.10.1"
 String svg4everybodyVersion = "2.0.0"
 
@@ -115,13 +113,10 @@ buildLexicon {
 }
 
 buildLiferayAMDLoader {
-	eachFile new StripPathSegmentsAction(6)
-
-	from {
-		zipTree(configurations.liferayAMDLoader.singleFile)
-	}
-
-	include "META-INF/resources/webjars/liferay-amd-loader/${liferayAMDLoaderVersion}/dist/loader.js"
+	dependsOn npmInstall
+	eachFile new StripPathSegmentsAction(2)
+	from npmInstall.nodeModulesDir
+	include "liferay-amd-loader/dist/loader.js"
 	includeEmptyDirs = false
 	into new File(jsDestinationDir, "loader")
 }
@@ -178,8 +173,6 @@ dependencies {
 	jQuery group: "org.webjars.npm", name: "jquery", transitive: false, version: jQueryVersion
 
 	lexicon group: "com.liferay.webjars", name: "com.liferay.webjars.lexicon", transitive: false, version: lexiconVersion
-
-	liferayAMDLoader group: "com.liferay.webjars", name: "com.liferay.webjars.liferay-amd-loader", transitive: false, version: liferayAMDLoaderVersion
 
 	lodash group: "org.webjars.bower", name: "lodash", transitive: false, version: lodashVersion
 

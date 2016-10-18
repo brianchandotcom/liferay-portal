@@ -1,0 +1,9 @@
+{
+	"devDependencies": {
+		"liferay-amd-loader": "^1.5.5",
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^2.1.2"
+	},
+	"name": "frontend-js-web",
+	"version": "1.0.16"
+}

@@ -47,18 +47,6 @@ if (portletTitleBasedNavigation) {
 	/>
 </c:if>
 
-<liferay-portlet:renderURL varImpl="compareVersionsURL">
-	<portlet:param name="mvcPath" value='<%= templatePath + "history.jsp" %>' />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
-	<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-</liferay-portlet:renderURL>
-
-<aui:form action="<%= compareVersionsURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
-	<liferay-portlet:renderURLParams varImpl="compareVersionsURL" />
-	<aui:input name="sourceVersion" type="hidden" value="<%= sourceVersion %>" />
-	<aui:input name="targetVersion" type="hidden" value="<%= targetVersion %>" />
-
 	<aui:fieldset cssClass='<%= portletTitleBasedNavigation ? "container-fluid-1280 main-content-card panel" : StringPool.BLANK %>' markupView="lexicon">
 
 		<%
@@ -193,7 +181,6 @@ if (portletTitleBasedNavigation) {
 			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:fieldset>
-</aui:form>
 
 <aui:script>
 	Liferay.provide(

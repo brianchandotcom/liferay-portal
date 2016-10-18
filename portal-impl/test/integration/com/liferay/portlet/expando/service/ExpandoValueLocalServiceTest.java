@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.expando.service;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.expando.kernel.exception.ValueDataException;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
@@ -56,7 +56,7 @@ public class ExpandoValueLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_classNameId = PortalUtil.getClassNameId(BlogsEntry.class);
+		_classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_frLocale = LocaleUtil.fromLanguageId("fr_FR");

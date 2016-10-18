@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.ratings;
+package com.liferay.portlet.documentlibrary.ratings;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;

@@ -125,6 +125,11 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 
 		syncAccount.setBatchFileMaxSize(batchFileMaxSize);
 
+		syncAccount.setLanCertificate(syncContext.getLanCertificate());
+		syncAccount.setLanEnabled(syncContext.getLanEnabled());
+		syncAccount.setLanKey(syncContext.getLanKey());
+		syncAccount.setLanServerUuid(syncContext.getLanServerUuid());
+
 		int maxConnections = GetterUtil.getInteger(
 			portletPreferencesMap.get(
 				SyncContext.PREFERENCE_KEY_MAX_CONNECTIONS),

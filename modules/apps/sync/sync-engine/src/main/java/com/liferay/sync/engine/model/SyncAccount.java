@@ -85,6 +85,22 @@ public class SyncAccount extends StateAwareModel {
 		return filePathName;
 	}
 
+	public String getLanCertificate() {
+		return lanCertificate;
+	}
+
+	public boolean getLanEnabled() {
+		return lanEnabled;
+	}
+
+	public String getLanKey() {
+		return lanKey;
+	}
+
+	public String getLanServerUuid() {
+		return lanServerUuid;
+	}
+
 	public String getLogin() {
 		return login;
 	}
@@ -166,6 +182,10 @@ public class SyncAccount extends StateAwareModel {
 		return getActive();
 	}
 
+	public boolean isLanEnabled() {
+		return getLanEnabled();
+	}
+
 	public boolean isOAuthEnabled() {
 		return getOAuthEnabled();
 	}
@@ -194,6 +214,22 @@ public class SyncAccount extends StateAwareModel {
 
 	public void setFilePathName(String filePathName) {
 		this.filePathName = filePathName;
+	}
+
+	public void setLanCertificate(String lanCertificate) {
+		this.lanCertificate = lanCertificate;
+	}
+
+	public void setLanEnabled(boolean lanEnabled) {
+		this.lanEnabled = lanEnabled;
+	}
+
+	public void setLanKey(String lanKey) {
+		this.lanKey = lanKey;
+	}
+
+	public void setLanServerUuid(String lanServerUuid) {
+		this.lanServerUuid = lanServerUuid;
 	}
 
 	public void setLogin(String login) {
@@ -279,6 +315,18 @@ public class SyncAccount extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String filePathName;
+
+	@DatabaseField(useGetSet = true, width = 16777216)
+	protected String lanCertificate;
+
+	@DatabaseField(useGetSet = true)
+	protected boolean lanEnabled;
+
+	@DatabaseField(useGetSet = true, width = 16777216)
+	protected String lanKey;
+
+	@DatabaseField(index = true, useGetSet = true)
+	protected String lanServerUuid;
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String login;

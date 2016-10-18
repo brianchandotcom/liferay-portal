@@ -33,6 +33,10 @@ public class SyncProp extends BaseModel {
 	public static final String KEY_GLOBAL_MAX_UPLOAD_RATE =
 		"globalMaxUploadRate";
 
+	public static final String KEY_LAN_ENABLED = "lanEnabled";
+
+	public static final String KEY_SYNC_LAN_CLIENT_UUID = "syncLanClientUuid";
+
 	public String getKey() {
 		return key;
 	}

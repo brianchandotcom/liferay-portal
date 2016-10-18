@@ -13,6 +13,22 @@
 		</encoder>
 	</appender>
 
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="LAN_SERVER_LOG_FILE">
+		<file>${sync.logs.directory}/lan-server.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${sync.logs.directory}/archive/lan-server%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<charset>UTF-8</charset>
+
+			<pattern>%d{HH:mm:ss.SSS} %p [%t] [%logger{0}:%L] %m%n</pattern>
+		</encoder>
+	</appender>
+
 	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="SYNC_LOG_FILE">
 		<file>${sync.logs.directory}/sync.log</file>
 
@@ -44,6 +60,10 @@
 			<pattern>%d{HH:mm:ss.SSS} %m%n</pattern>
 		</encoder>
 	</appender>
+
+	<logger additivity="false" level="DEBUG" name="com.liferay.sync.engine.lan.server">
+		<appender-ref ref="LAN_SERVER_LOG_FILE" />
+	</logger>
 
 	<logger additivity="false" name="WATCHER_EVENTS_LOGGER">
 		<appender-ref ref="WATCHER_EVENTS_LOG_FILE" />

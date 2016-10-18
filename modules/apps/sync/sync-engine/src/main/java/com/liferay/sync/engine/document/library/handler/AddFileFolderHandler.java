@@ -75,6 +75,7 @@ public class AddFileFolderHandler extends BaseJSONHandler {
 		localSyncFile.setCreateTime(remoteSyncFile.getCreateTime());
 		localSyncFile.setExtension(remoteSyncFile.getExtension());
 		localSyncFile.setExtraSettings(remoteSyncFile.getExtraSettings());
+		localSyncFile.setLanTokenKey(remoteSyncFile.getLanTokenKey());
 		localSyncFile.setLockExpirationDate(
 			remoteSyncFile.getLockExpirationDate());
 		localSyncFile.setLockUserId(remoteSyncFile.getLockUserId());

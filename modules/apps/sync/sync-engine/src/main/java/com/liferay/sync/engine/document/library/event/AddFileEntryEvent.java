@@ -19,6 +19,9 @@ import com.liferay.sync.engine.document.library.handler.AddFileFolderHandler;
 import com.liferay.sync.engine.document.library.handler.Handler;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
+import com.liferay.sync.engine.util.FileUtil;
+
+import java.nio.file.Paths;
 
 import java.util.Map;
 
@@ -44,6 +47,9 @@ public class AddFileEntryEvent extends BaseEvent {
 	protected void processRequest() throws Exception {
 		SyncFile syncFile = (SyncFile)getParameterValue("syncFile");
 
+		syncFile.setPreviousModifiedTime(
+			FileUtil.getLastModifiedTime(
+				Paths.get(syncFile.getFilePathName())));
 		syncFile.setState(SyncFile.STATE_IN_PROGRESS);
 		syncFile.setUiEvent(SyncFile.UI_EVENT_UPLOADING);
 

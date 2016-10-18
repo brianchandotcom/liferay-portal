@@ -215,6 +215,20 @@ public class SyncSiteService {
 		}
 	}
 
+	public static Set<Long> getActiveGroupIds(long syncAccountId) {
+		try {
+			return new HashSet<>(
+				_syncSitePersistence.findByA_S(true, syncAccountId, "groupId"));
+		}
+		catch (SQLException sqle) {
+			if (_logger.isDebugEnabled()) {
+				_logger.debug(sqle.getMessage(), sqle);
+			}
+
+			return Collections.emptySet();
+		}
+	}
+
 	public static Set<Long> getActiveSyncSiteIds(long syncAccountId) {
 		try {
 			Set<Long> activeSyncSiteIds = _activeSyncSiteIds.get(syncAccountId);
@@ -224,7 +238,8 @@ public class SyncSiteService {
 			}
 
 			activeSyncSiteIds = new HashSet<>(
-				_syncSitePersistence.findByA_S(true, syncAccountId));
+				_syncSitePersistence.findByA_S(
+					true, syncAccountId, "syncSiteId"));
 
 			_activeSyncSiteIds.put(syncAccountId, activeSyncSiteIds);
 

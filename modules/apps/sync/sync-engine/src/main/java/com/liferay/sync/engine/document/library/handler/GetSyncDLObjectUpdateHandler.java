@@ -327,6 +327,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			tempFilePath, String.valueOf(targetSyncFile.getSyncFileId()),
 			false);
 
+		FileUtil.setModifiedTime(
+			tempFilePath, targetSyncFile.getModifiedTime());
+
 		Watcher watcher = WatcherManager.getWatcher(getSyncAccountId());
 
 		watcher.addDownloadedFilePathName(targetSyncFile.getFilePathName());
@@ -616,6 +619,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			downloadFile(sourceSyncFile, null, 0, false);
 		}
 
+		sourceSyncFile.setLanTokenKey(targetSyncFile.getLanTokenKey());
 		sourceSyncFile.setModifiedTime(targetSyncFile.getModifiedTime());
 		sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_MOVED_REMOTE);
 
@@ -815,6 +819,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		sourceSyncFile.setDescription(targetSyncFile.getDescription());
 		sourceSyncFile.setExtension(targetSyncFile.getExtension());
 		sourceSyncFile.setExtraSettings(targetSyncFile.getExtraSettings());
+		sourceSyncFile.setLanTokenKey(targetSyncFile.getLanTokenKey());
 		sourceSyncFile.setLockExpirationDate(
 			targetSyncFile.getLockExpirationDate());
 		sourceSyncFile.setLockUserId(targetSyncFile.getLockUserId());

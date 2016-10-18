@@ -179,6 +179,10 @@ public class SyncFile extends StateAwareModel {
 		return filePathName;
 	}
 
+	public String getLanTokenKey() {
+		return lanTokenKey;
+	}
+
 	public String getLocalExtraSettings() {
 		return localExtraSettings;
 	}
@@ -349,6 +353,10 @@ public class SyncFile extends StateAwareModel {
 		this.filePathName = filePathName;
 	}
 
+	public void setLanTokenKey(String lanTokenKey) {
+		this.lanTokenKey = lanTokenKey;
+	}
+
 	public void setLocalExtraSetting(String key, Object value)
 		throws IOException {
 
@@ -490,6 +498,9 @@ public class SyncFile extends StateAwareModel {
 
 	@DatabaseField(uniqueIndex = true, useGetSet = true, width = 16777216)
 	protected String filePathName;
+
+	@DatabaseField(useGetSet = true)
+	protected String lanTokenKey;
 
 	@DatabaseField(useGetSet = true, width = 16777216)
 	protected String localExtraSettings;

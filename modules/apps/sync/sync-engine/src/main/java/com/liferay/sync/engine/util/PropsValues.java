@@ -57,6 +57,63 @@ public class PropsValues {
 	public static final int SYNC_HTTP_SOCKET_TIMEOUT = Integer.parseInt(
 		PropsUtil.get(PropsKeys.SYNC_HTTP_SOCKET_TIMEOUT));
 
+	public static final int SYNC_LAN_SERVER_BROADCAST_INTERVAL =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SERVER_BROADCAST_INTERVAL));
+
+	public static final int SYNC_LAN_SERVER_MAX_CONNECTIONS = Integer.parseInt(
+		PropsUtil.get(PropsKeys.SYNC_LAN_SERVER_MAX_CONNECTIONS));
+
+	public static final int SYNC_LAN_SERVER_PORT = Integer.parseInt(
+		PropsUtil.get(PropsKeys.SYNC_LAN_SERVER_PORT));
+
+	public static final long SYNC_LAN_SERVER_WRITE_DELAY = Long.parseLong(
+		PropsUtil.get(PropsKeys.SYNC_LAN_SERVER_WRITE_DELAY));
+
+	public static final int SYNC_LAN_SESSION_DOWNLOAD_CONNECT_TIMEOUT =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_DOWNLOAD_CONNECT_TIMEOUT));
+
+	public static final int SYNC_LAN_SESSION_DOWNLOAD_MAX_PER_ROUTE =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_DOWNLOAD_MAX_PER_ROUTE));
+
+	public static final int SYNC_LAN_SESSION_DOWNLOAD_MAX_TOTAL =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_DOWNLOAD_MAX_TOTAL));
+
+	public static final int SYNC_LAN_SESSION_DOWNLOAD_SOCKET_TIMEOUT =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_DOWNLOAD_SOCKET_TIMEOUT));
+
+	public static final int SYNC_LAN_SESSION_QUERY_CONNECT_TIMEOUT =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUERY_CONNECT_TIMEOUT));
+
+	public static final int SYNC_LAN_SESSION_QUERY_POOL_MAX_SIZE =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUERY_POOL_MAX_SIZE));
+
+	public static final int SYNC_LAN_SESSION_QUERY_SOCKET_TIMEOUT =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUERY_SOCKET_TIMEOUT));
+
+	public static final int SYNC_LAN_SESSION_QUERY_TOTAL_TIMEOUT =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUERY_TOTAL_TIMEOUT));
+
+	public static final int SYNC_LAN_SESSION_QUEUE_CHECK_INTERVAL =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUEUE_CHECK_INTERVAL));
+
+	public static final int SYNC_LAN_SESSION_QUEUE_DURATION_RATE =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUEUE_DURATION_RATE));
+
+	public static final int SYNC_LAN_SESSION_QUEUE_MAX_DURATION =
+		Integer.parseInt(
+			PropsUtil.get(PropsKeys.SYNC_LAN_SESSION_QUEUE_MAX_DURATION));
+
 	public static final String SYNC_LOGGER_CONFIGURATION_FILE = PropsUtil.get(
 		PropsKeys.SYNC_LOGGER_CONFIGURATION_FILE);
 
@@ -71,8 +128,5 @@ public class PropsValues {
 
 	public static final String SYNC_OAUTH_WEBSITE_URL = PropsUtil.get(
 		PropsKeys.SYNC_OAUTH_WEBSITE_URL);
-
-	public static final boolean SYNC_SELECTIVE_SYNC_ENABLED = Boolean.valueOf(
-		PropsUtil.get(PropsKeys.SYNC_SELECTIVE_SYNC_ENABLED));
 
 }

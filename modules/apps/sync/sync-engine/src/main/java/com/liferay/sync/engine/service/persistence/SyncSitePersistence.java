@@ -75,12 +75,13 @@ public class SyncSitePersistence extends BasePersistenceImpl<SyncSite, Long> {
 		return queryForEq("syncAccountId", syncAccountId);
 	}
 
-	public List<Long> findByA_S(boolean active, long syncAccountId)
+	public List<Long> findByA_S(
+			boolean active, long syncAccountId, String column)
 		throws SQLException {
 
 		QueryBuilder<SyncSite, Long> queryBuilder = queryBuilder();
 
-		queryBuilder.selectColumns("syncSiteId");
+		queryBuilder.selectColumns(column);
 
 		Where<SyncSite, Long> where = queryBuilder.where();
 

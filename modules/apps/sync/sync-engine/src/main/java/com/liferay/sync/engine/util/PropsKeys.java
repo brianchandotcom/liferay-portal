@@ -68,6 +68,50 @@ public interface PropsKeys {
 	public static final String SYNC_HTTP_SOCKET_TIMEOUT =
 		"sync.http.socket.timeout";
 
+	public static final String SYNC_LAN_SERVER_BROADCAST_INTERVAL =
+		"sync.lan.server.broadcast.interval";
+
+	public static final String SYNC_LAN_SERVER_MAX_CONNECTIONS =
+		"sync.lan.server.max.connections";
+
+	public static final String SYNC_LAN_SERVER_PORT = "sync.lan.server.port";
+
+	public static final String SYNC_LAN_SERVER_WRITE_DELAY =
+		"sync.lan.server.write.delay";
+
+	public static final String SYNC_LAN_SESSION_DOWNLOAD_CONNECT_TIMEOUT =
+		"sync.lan.session.download.connect.timeout";
+
+	public static final String SYNC_LAN_SESSION_DOWNLOAD_MAX_PER_ROUTE =
+		"sync.lan.session.download.max.per.route";
+
+	public static final String SYNC_LAN_SESSION_DOWNLOAD_MAX_TOTAL =
+		"sync.lan.session.download.max.total";
+
+	public static final String SYNC_LAN_SESSION_DOWNLOAD_SOCKET_TIMEOUT =
+		"sync.lan.session.download.socket.timeout";
+
+	public static final String SYNC_LAN_SESSION_QUERY_CONNECT_TIMEOUT =
+		"sync.lan.session.query.connect.timeout";
+
+	public static final String SYNC_LAN_SESSION_QUERY_POOL_MAX_SIZE =
+		"sync.lan.session.query.pool.max.size";
+
+	public static final String SYNC_LAN_SESSION_QUERY_SOCKET_TIMEOUT =
+		"sync.lan.session.query.socket.timeout";
+
+	public static final String SYNC_LAN_SESSION_QUERY_TOTAL_TIMEOUT =
+		"sync.lan.session.query.total.timeout";
+
+	public static final String SYNC_LAN_SESSION_QUEUE_CHECK_INTERVAL =
+		"sync.lan.session.queue.check.interval";
+
+	public static final String SYNC_LAN_SESSION_QUEUE_DURATION_RATE =
+		"sync.lan.session.queue.duration.rate";
+
+	public static final String SYNC_LAN_SESSION_QUEUE_MAX_DURATION =
+		"sync.lan.session.queue.max.duration";
+
 	public static final String SYNC_LOGGER_CONFIGURATION_FILE =
 		"sync.logger.configuration.file";
 
@@ -85,8 +129,5 @@ public interface PropsKeys {
 
 	public static final String SYNC_OAUTH_WEBSITE_URL =
 		"sync.oauth.website.url";
-
-	public static final String SYNC_SELECTIVE_SYNC_ENABLED =
-		"sync.selective.sync.enabled";
 
 }

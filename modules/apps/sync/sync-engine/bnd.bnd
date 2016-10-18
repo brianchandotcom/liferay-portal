@@ -2,12 +2,15 @@ Bundle-Name: Liferay Sync Engine
 Bundle-SymbolicName: com.liferay.sync.engine
 Bundle-Version: 3.3.1
 -includeresource:\
+	@bcpkix-jdk15on-[0-9]*.jar,\
+	@bcprov-jdk15on-[0-9]*.jar,\
 	@ch.securityvision.xattrj-[0-9]*.jar,\
 	@com.barbarysoftware.watchservice-[0-9]*.jar,\
 	@com.btr.proxy.vole-[0-9]*.jar,\
 	@com.liferay.petra.io.delta-[0-9]*.jar,\
 	@com.liferay.sync.encryptor-[0-9]*.jar,\
 	@commons-codec-[0-9]*.jar,\
+	@commons-collections4-[0-9]*.jar,\
 	@commons-configuration-[0-9]*.jar,\
 	@commons-io-[0-9]*.jar,\
 	@commons-lang-[0-9]*.jar,\
@@ -23,6 +26,7 @@ Bundle-Version: 3.3.1
 	@logback-classic-[0-9]*.jar,\
 	@logback-core-[0-9]*.jar,\
 	@net.sf.jpathwatch-[0-9]*.jar,\
+	@netty-all-[0-9]*.jar,\
 	@ormlite-core-[0-9]*.jar,\
 	@ormlite-jdbc-[0-9]*.jar,\
 	@poi-[0-9]*.jar,\

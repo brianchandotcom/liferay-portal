@@ -143,7 +143,9 @@ public class PatcherImpl implements Patcher {
 			}
 		}
 		else {
-			_log.error("The patch directory is not specified");
+			if (_log.isDebugEnabled()) {
+				_log.debug("The patch directory is not specified");
+			}
 		}
 
 		return patchDirectory;

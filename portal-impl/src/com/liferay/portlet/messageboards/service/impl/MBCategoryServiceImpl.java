@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.service.base.MBCategoryServiceBaseImpl;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
@@ -202,6 +203,18 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			status, start, end, null);
+
+		return mbCategoryFinder.filterFindC_T_ByG_C(
+			groupId, categoryId, queryDefinition);
+	}
+
+	@Override
+	public List<Object> getCategoriesAndThreads(
+		long groupId, long categoryId, int status, int start, int end,
+		OrderByComparator<?> obc) {
+
+		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
+			status, start, end, obc);
 
 		return mbCategoryFinder.filterFindC_T_ByG_C(
 			groupId, categoryId, queryDefinition);

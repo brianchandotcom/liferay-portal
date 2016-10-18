@@ -50,5 +50,10 @@ dependencies {
 
 testIntegration {
 	dependsOn copyTestLibs
+
+	doLast {
+		delete "test-configuration-export.config"
+	}
+
 	finalizedBy cleanCopyTestLibs
 }

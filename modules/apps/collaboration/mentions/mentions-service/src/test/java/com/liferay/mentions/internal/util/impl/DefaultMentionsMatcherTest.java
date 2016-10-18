@@ -14,6 +14,8 @@
 
 package com.liferay.mentions.internal.util.impl;
 
+import com.liferay.mentions.matcher.MentionsMatcher;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -23,26 +25,27 @@ import org.junit.Test;
 /**
  * @author Adolfo Pérez
  */
-public class MentionsMatcherTest {
+public class DefaultMentionsMatcherTest {
 
 	@Test
 	public void testMatchBBCodeAtMention() {
-		assertEquals("user1", MentionsMatcher.match("[span]@user1[span]"));
+		assertEquals("user1", _mentionsMatcher.match("[span]@user1[span]"));
 	}
 
 	@Test
 	public void testMatchBBCodeXMLEntityMention() {
-		assertEquals("user1", MentionsMatcher.match("[span]&#64;user1[span]"));
+		assertEquals("user1", _mentionsMatcher.match("[span]&#64;user1[span]"));
 	}
 
 	@Test
 	public void testMatchHTMLAtMention() {
-		assertEquals("user1", MentionsMatcher.match("<span>@user1</span>"));
+		assertEquals("user1", _mentionsMatcher.match("<span>@user1</span>"));
 	}
 
 	@Test
 	public void testMatchHTMLXMLEntityMention() {
-		assertEquals("user1", MentionsMatcher.match("<span>&#64;user1</span>"));
+		assertEquals(
+			"user1", _mentionsMatcher.match("<span>&#64;user1</span>"));
 	}
 
 	@Test
@@ -54,31 +57,31 @@ public class MentionsMatcherTest {
 
 		assertEquals(
 			Arrays.asList("user1", "user2", "user3", "user4"),
-			MentionsMatcher.match(content));
+			_mentionsMatcher.match(content));
 	}
 
 	@Test
 	public void testMatchSimpleAtMention() {
-		assertEquals("user1", MentionsMatcher.match("@user1"));
+		assertEquals("user1", _mentionsMatcher.match("@user1"));
 	}
 
 	@Test
 	public void testMatchSimpleAtMentions() {
 		assertEquals(
 			Arrays.asList("user1", "user2"),
-			MentionsMatcher.match("@user1 @user2"));
+			_mentionsMatcher.match("@user1 @user2"));
 	}
 
 	@Test
 	public void testMatchSimpleXMLEntityMention() {
-		assertEquals("user1", MentionsMatcher.match("&#64;user1"));
+		assertEquals("user1", _mentionsMatcher.match("&#64;user1"));
 	}
 
 	@Test
 	public void testMatchSimpleXMLEntityMentions() {
 		assertEquals(
 			Arrays.asList("user1", "user2"),
-			MentionsMatcher.match("&#64;user1 &#64;user2"));
+			_mentionsMatcher.match("&#64;user1 &#64;user2"));
 	}
 
 	protected <T> void assertEquals(
@@ -121,5 +124,8 @@ public class MentionsMatcherTest {
 	protected <T> void assertEquals(T value, Iterable<T> iterable) {
 		assertEquals(Arrays.asList(value), iterable);
 	}
+
+	private final MentionsMatcher _mentionsMatcher =
+		new DefaultMentionsMatcher();
 
 }

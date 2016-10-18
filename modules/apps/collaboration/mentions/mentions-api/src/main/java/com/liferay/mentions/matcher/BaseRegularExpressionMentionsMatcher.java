@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.internal.util.impl;
+package com.liferay.mentions.matcher;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -22,14 +22,25 @@ import java.util.regex.Pattern;
 /**
  * @author Adolfo Pérez
  */
-public class MentionsMatcher {
+public abstract class BaseRegularExpressionMentionsMatcher
+	implements MentionsMatcher {
 
-	public static Iterable<String> match(String s) {
-		return new MentionsIterable(_pattern.matcher(s));
+	@Override
+	public Iterable<String> match(String s) {
+		return new MentionsIterable(getMatcher(s));
 	}
 
-	private static final Pattern _pattern = Pattern.compile(
-		"(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|[^@<>.,\\[\\]\\s])+)");
+	protected Matcher getMatcher(String s) {
+		if (_pattern == null) {
+			_pattern = Pattern.compile(getRegularExpression());
+		}
+
+		return _pattern.matcher(s);
+	}
+
+	protected abstract String getRegularExpression();
+
+	private volatile Pattern _pattern;
 
 	private static class MentionsIterable implements Iterable<String> {
 

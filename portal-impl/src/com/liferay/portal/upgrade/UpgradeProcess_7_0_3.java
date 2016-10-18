@@ -17,7 +17,9 @@ package com.liferay.portal.upgrade;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeMessageBoards;
+import com.liferay.portal.upgrade.v7_0_3.UpgradeNVarcharSQLServer;
 import com.liferay.portal.upgrade.v7_0_3.UpgradeOracle;
+import com.liferay.portal.upgrade.v7_0_3.UpgradeVarcharSybase;
 
 /**
  * @author Adolfo Pérez
@@ -32,7 +34,9 @@ public class UpgradeProcess_7_0_3 extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		upgrade(UpgradeMessageBoards.class);
+		upgrade(UpgradeNVarcharSQLServer.class);
 		upgrade(UpgradeOracle.class);
+		upgrade(UpgradeVarcharSybase.class);
 
 		clearIndexesCache();
 	}

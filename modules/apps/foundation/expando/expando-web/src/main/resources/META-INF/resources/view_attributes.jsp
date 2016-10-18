@@ -118,21 +118,21 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 			<%@ include file="/attribute_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, ExpandoPortletKeys.EXPANDO, ActionKeys.ADD_EXPANDO) %>">
-			<portlet:renderURL var="addExpandoURL">
-				<portlet:param name="mvcPath" value="/edit_expando.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="modelResource" value="<%= modelResource %>" />
-			</portlet:renderURL>
-
-			<aui:button-row cssClass="text-center">
-				<aui:button cssClass="btn-lg" href="<%= addExpandoURL %>" primary="<%= true %>" value="add-custom-field" />
-			</aui:button-row>
-		</c:if>
-
 		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, ExpandoPortletKeys.EXPANDO, ActionKeys.ADD_EXPANDO) %>">
+	<portlet:renderURL var="addExpandoURL">
+		<portlet:param name="mvcPath" value="/edit_expando.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="modelResource" value="<%= modelResource %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-custom-field") %>' url="<%= addExpandoURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script>
 	$('#<portlet:namespace />deleteCustomFields').on(

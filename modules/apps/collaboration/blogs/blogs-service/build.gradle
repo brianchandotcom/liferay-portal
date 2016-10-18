@@ -21,6 +21,7 @@ dependencies {
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
+	provided project(":core:registry-api")
 
 	testCompile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
 	testCompile project(":apps:collaboration:blogs:blogs-test-util")

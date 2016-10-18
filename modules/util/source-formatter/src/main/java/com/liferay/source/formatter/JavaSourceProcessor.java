@@ -3396,10 +3396,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (((trimmedLine.length() + previousLineLength) <= _maxLineLength) &&
-			(previousLine.endsWith(StringPool.PERIOD) ||
-			 (previousLine.endsWith(StringPool.OPEN_BRACKET) ||
-			  previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
-			 line.endsWith(StringPool.SEMICOLON))) {
+			((previousLine.endsWith(StringPool.PERIOD) &&
+			  !line.endsWith(StringPool.OPEN_PARENTHESIS)) ||
+			 ((previousLine.endsWith(StringPool.OPEN_BRACKET) ||
+			   previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
+			  line.endsWith(StringPool.SEMICOLON)))) {
 
 			return getCombinedLinesContent(
 				content, fileName, line, trimmedLine, lineLength, lineCount,

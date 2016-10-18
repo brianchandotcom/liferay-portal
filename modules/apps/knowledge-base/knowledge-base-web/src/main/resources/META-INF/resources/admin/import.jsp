@@ -37,7 +37,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 		<liferay-ui:error exception="<%= KBArticleImportException.MustHaveACategory.class %>">
 
 			<%
-				String cause = LanguageUtil.get(request, "missing-category");
+				String cause = LanguageUtil.get(request, "there-are-one-or-more-mandatory-vocabularies-assigned-to-knowledge-base-article");
 			%>
 
 			<%= LanguageUtil.format(request, "an-unexpected-error-occurred-while-importing-articles-x", cause) %>

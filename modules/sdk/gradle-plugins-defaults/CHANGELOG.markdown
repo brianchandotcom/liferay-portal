@@ -507,6 +507,11 @@ dependencies in the `.version-override-${project.name}.properties` file:
 
 		[artifact group]/[artifact name]=[project path]
 
+## 1.2.62 - 2016-10-17
+
+### Changed
+- [LPS-68779]: Update the [Liferay Gradle Plugins] dependency to version 3.0.14.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -548,6 +553,7 @@ dependencies in the `.version-override-${project.name}.properties` file:
 [LPS-68650]: https://issues.liferay.com/browse/LPS-68650
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LPS-68772]: https://issues.liferay.com/browse/LPS-68772
+[LPS-68779]: https://issues.liferay.com/browse/LPS-68779
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

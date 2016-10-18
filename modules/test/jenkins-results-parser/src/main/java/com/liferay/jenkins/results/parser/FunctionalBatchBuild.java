@@ -58,7 +58,7 @@ public class FunctionalBatchBuild extends BatchBuild {
 
 			sb.append("Functional test failure detected at ");
 			sb.append(failedAxisBuild.getBuildURL());
-			sb.append(" This batch will be re-invoked.");
+			sb.append(" This batch will be reinvoked.");
 
 			System.out.println(sb);
 

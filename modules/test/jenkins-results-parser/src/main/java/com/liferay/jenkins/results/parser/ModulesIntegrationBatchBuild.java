@@ -83,7 +83,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 			sb.append("Arquillian broken connection failure ");
 			sb.append("detected at ");
 			sb.append(arquillianErrorAxisBuild.getBuildURL());
-			sb.append(" This batch will be re-invoked.");
+			sb.append(" This batch will be reinvoked.");
 
 			System.out.println(sb);
 

@@ -89,6 +89,8 @@
 
 module.framework.properties.osgi.console=11312</echo>
 
+					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
+
 					<zip
 						basedir="${tstamp.value}"
 						destfile="${test.build.liferay.portal.zip.file.name}"
@@ -106,6 +108,8 @@ module.framework.properties.osgi.console=11312</echo>
 					<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
 module.framework.properties.osgi.console=11312</echo>
+
+					<print-file file.name="${app.server.classes.portal.dir}/portal-ext.properties" />
 				</else>
 			</if>
 		</sequential>

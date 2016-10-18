@@ -22,11 +22,11 @@ dependencies {
 	provided project(":core:registry-api")
 	provided project(":core:registry-impl")
 
-	testCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"
-	testCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"
-	testCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "5.4.0"
-	testCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
-	testCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
+	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.framework", version: "5.4.0"
+	testIntegrationCompile group: "org.apache.felix", name: "org.apache.felix.main", version: "5.4.0"
+	testIntegrationCompile group: "org.jboss.arquillian.container", name: "arquillian-container-felix-embedded", version: "2.1.0.Final"
+	testIntegrationCompile group: "org.jboss.arquillian.junit", name: "arquillian-junit-container", version: "1.1.10.Final"
 
 	testLibs "org.jboss.arquillian.osgi:arquillian-osgi-bundle:2.1.0.Final"
 }

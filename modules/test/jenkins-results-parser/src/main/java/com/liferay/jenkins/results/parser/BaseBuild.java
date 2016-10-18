@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,6 +50,26 @@ public abstract class BaseBuild implements Build {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public List<String> getBadBuildURLs() {
+		List<String> badBuildURLs = new ArrayList<>();
+
+		String jobURL = getJobURL();
+
+		for (Integer badBuildNumber : badBuildNumbers) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(jobURL);
+			sb.append("/");
+			sb.append(badBuildNumber);
+			sb.append("/");
+
+			badBuildURLs.add(sb.toString());
+		}
+
+		return badBuildURLs;
 	}
 
 	@Override
@@ -117,6 +139,8 @@ public abstract class BaseBuild implements Build {
 
 		Map<String, String> parameters = getParameters();
 
+		parameters.put("token", "raen3Aib");
+
 		for (Map.Entry<String, String> parameter : parameters.entrySet()) {
 			String value = parameter.getValue();
 
@@ -130,7 +154,14 @@ public abstract class BaseBuild implements Build {
 
 		sb.deleteCharAt(sb.length() - 1);
 
-		return sb.toString();
+		try {
+			URL url = JenkinsResultsParserUtil.encode(new URL(sb.toString()));
+
+			return url.toExternalForm();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -346,6 +377,12 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void reinvoke() {
+		String hostName = JenkinsResultsParserUtil.getHostName("");
+
+		if (!hostName.startsWith("cloud-10-0")) {
+			System.out.println("A Build may not be reinvoked by " + hostName);
+		}
+
 		result = null;
 
 		String invocationURL = getInvocationURL();
@@ -353,6 +390,8 @@ public abstract class BaseBuild implements Build {
 		badBuildNumbers.add(getBuildNumber());
 
 		setBuildNumber(-1);
+
+		downstreamBuilds.clear();
 
 		try {
 			JenkinsResultsParserUtil.toString(

@@ -24,6 +24,8 @@ public interface Build {
 
 	public void addDownstreamBuilds(String... urls);
 
+	public List<String> getBadBuildURLs();
+
 	public int getBuildNumber();
 
 	public String getBuildURL();

@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.importer;
 
+import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
@@ -121,6 +122,9 @@ public class KBArticleImporter {
 
 				serviceContext.setWorkflowAction(workflowAction);
 			}
+		}
+		catch (AssetCategoryException ace) {
+			throw new KBArticleImportException.MustHaveACategory(ace);
 		}
 		catch (Exception e) {
 			StringBundler sb = new StringBundler(4);

@@ -34,7 +34,7 @@
 				<setup-sdk />
 
 				<gradle-execute dir="${project.dir}/modules" task="clean">
-					<arg value="-Dportal.build=true" />
+					<arg value="-Dbuild.profile=${build.profile}" />
 				</gradle-execute>
 			</sequential>
 
@@ -118,7 +118,7 @@
 
 		<gradle-execute dir="modules" task="deploy">
 			<arg value="--parallel" />
-			<arg value="-Dportal.pre.build=true" />
+			<arg value="-Dbuild.profile=portal-pre" />
 			<arg value="-Pforced.deploy.dir=${project.dir}/tmp/lib-pre" />
 		</gradle-execute>
 
@@ -249,7 +249,7 @@
 			<then>
 				<gradle-execute dir="${project.dir}/modules" task="deploy">
 					<arg value="--parallel" />
-					<arg value="-Dportal.pre.build=true" />
+					<arg value="-Dbuild.profile=portal-pre" />
 				</gradle-execute>
 
 				<if>
@@ -261,19 +261,19 @@
 								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
 									<arg value="deploy" />
 									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
+									<arg value="-Dbuild.profile=${build.profile}" />
 									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 								</gradle-execute>
 							</then>
 							<else>
 								<gradle-execute dir="${project.dir}/modules" task="deploy">
 									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
+									<arg value="-Dbuild.profile=${build.profile}" />
 									<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 								</gradle-execute>
 
 								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="-Dportal.build=true" />
+									<arg value="-Dbuild.profile=${build.profile}" />
 								</gradle-execute>
 							</else>
 						</if>
@@ -281,7 +281,7 @@
 					<else>
 						<gradle-execute dir="${project.dir}/modules" task="deploy">
 							<arg value="--parallel" />
-							<arg value="-Dportal.build=true" />
+							<arg value="-Dbuild.profile=${build.profile}" />
 							<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 						</gradle-execute>
 					</else>
@@ -290,7 +290,7 @@
 			<else>
 				<gradle-execute dir="${project.dir}/modules/core" task="deploy">
 					<arg value="--parallel" />
-					<arg value="-Dportal.build=true" />
+					<arg value="-Dbuild.profile=${build.profile}" />
 				</gradle-execute>
 
 				<pathconvert property="build.app.server.lib.marker.files" setonempty="false">
@@ -302,7 +302,7 @@
 					<then>
 						<gradle-execute dir="${project.dir}/modules" task="deployTool">
 							<arg value="--parallel" />
-							<arg value="-Dportal.build=true" />
+							<arg value="-Dbuild.profile=${build.profile}" />
 							<arg value="deployAppServerLib" />
 							<arg value="deployConfigs" />
 						</gradle-execute>
@@ -310,7 +310,7 @@
 					<else>
 						<gradle-execute dir="${project.dir}/modules" task="deployTool">
 							<arg value="--parallel" />
-							<arg value="-Dportal.build=true" />
+							<arg value="-Dbuild.profile=${build.profile}" />
 							<arg value="deployConfigs" />
 						</gradle-execute>
 					</else>
@@ -324,12 +324,12 @@
 							<then>
 								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
 									<arg value="--parallel" />
-									<arg value="-Dportal.build=true" />
+									<arg value="-Dbuild.profile=${build.profile}" />
 								</gradle-execute>
 							</then>
 							<else>
 								<gradle-execute dir="${project.dir}/modules" task="compileJSP">
-									<arg value="-Dportal.build=true" />
+									<arg value="-Dbuild.profile=${build.profile}" />
 								</gradle-execute>
 							</else>
 						</if>

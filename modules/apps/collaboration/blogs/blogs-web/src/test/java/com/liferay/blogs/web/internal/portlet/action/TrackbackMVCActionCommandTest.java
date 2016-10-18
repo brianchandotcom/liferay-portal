@@ -80,6 +80,8 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	@Test
 	public void testDisabledComments() throws Exception {
+		whenGetEntryThenReturn(_blogsEntry);
+
 		when(
 			_portletPreferences.getValue("enableComments", null)
 		).thenReturn(
@@ -93,6 +95,8 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	@Test
 	public void testMismatchedIPAddress() throws Exception {
+		whenGetEntryThenReturn(_blogsEntry);
+
 		initURL("123");
 
 		addTrackback();
@@ -102,6 +106,8 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	@Test
 	public void testMissingURL() throws Exception {
+		whenGetEntryThenReturn(_blogsEntry);
+
 		addTrackback();
 
 		assertError("Trackback requires a valid permanent URL");
@@ -130,6 +136,8 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	@Test
 	public void testSuccess() throws Exception {
+		whenGetEntryThenReturn(_blogsEntry);
+
 		_mockOriginalServletRequest.setParameter("blog_name", "__blogName__");
 		_mockOriginalServletRequest.setParameter("excerpt", "__excerpt__");
 		_mockOriginalServletRequest.setParameter("title", "__title__");
@@ -152,6 +160,8 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	@Test
 	public void testTrackbacksNotEnabled() throws Exception {
+		whenGetEntryThenReturn(_blogsEntry);
+
 		when(
 			_blogsEntry.isAllowTrackbacks()
 		).thenReturn(
@@ -292,6 +302,14 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 
 	protected void setUpPropsUtil() throws Exception {
 		PropsUtil.setProps(mock(Props.class));
+	}
+
+	protected void whenGetEntryThenReturn(BlogsEntry blogsEntry) {
+		stub(
+			method(ActionUtil.class, "getEntry", PortletRequest.class)
+		).toReturn(
+			blogsEntry
+		);
 	}
 
 	protected void whenGetEntryThenThrow(Throwable toBeThrown)

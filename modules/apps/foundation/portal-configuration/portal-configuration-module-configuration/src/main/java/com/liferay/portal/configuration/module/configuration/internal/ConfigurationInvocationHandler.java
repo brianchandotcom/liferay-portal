@@ -74,12 +74,11 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 		if (returnType.equals(boolean.class) ||
 			returnType.equals(double.class) || returnType.equals(float.class) ||
-			returnType.equals(int.class) || returnType.equals(long.class) ||
-			returnType.equals(String.class)) {
+			returnType.equals(int.class) || returnType.equals(long.class)) {
 
 			String value = _typedSettings.getValue(key, null);
 
-			if ((value == null) || returnType.equals(String.class)) {
+			if (value == null) {
 				return value;
 			}
 			else if (returnType.equals(boolean.class)) {
@@ -107,6 +106,9 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 			}
 
 			return value;
+		}
+		else if (returnType.equals(String.class)) {
+			return _typedSettings.getValue(key, null);
 		}
 		else if (returnType.equals(String[].class)) {
 			return _typedSettings.getValues(key, null);

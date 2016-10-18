@@ -4,7 +4,7 @@
 
 		<execute function="AssertClick" locator1="CustomFields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_CUSTOM_FIELD" value1="Add Custom Field" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<var method="StringUtil#lowerCase('${customFieldName}')" name="customFieldKey" />
 

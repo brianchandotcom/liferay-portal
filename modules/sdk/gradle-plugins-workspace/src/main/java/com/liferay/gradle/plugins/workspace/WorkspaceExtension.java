@@ -48,17 +48,10 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
-		_bundleUrl = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "bundle.url",
-			_BUNDLE_URL);
-		_configsDir = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "configs.dir",
-			_CONFIGS_DIR);
-		_environment = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "environment",
-			_ENVIRONMENT);
-		_homeDir = GradleUtil.getProperty(
-			settings, WorkspacePlugin.PROPERTY_PREFIX + "home.dir", _HOME_DIR);
+		_bundleUrl = _getProperty(settings, "bundle.url", _BUNDLE_URL);
+		_configsDir = _getProperty(settings, "configs.dir", _CONFIGS_DIR);
+		_environment = _getProperty(settings, "environment", _ENVIRONMENT);
+		_homeDir = _getProperty(settings, "home.dir", _HOME_DIR);
 	}
 
 	public String getBundleUrl() {
@@ -109,6 +102,13 @@ public class WorkspaceExtension {
 
 	public void setHomeDir(Object homeDir) {
 		_homeDir = homeDir;
+	}
+
+	private String _getProperty(
+		Object object, String keySuffix, String defaultValue) {
+
+		return GradleUtil.getProperty(
+			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix, defaultValue);
 	}
 
 	private static final String _BUNDLE_URL =

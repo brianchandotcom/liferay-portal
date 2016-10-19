@@ -8506,6 +8506,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="openam.enabled" />
+
+		<if>
+			<equals arg1="${openam.enabled}" arg2="true" />
+			<then>
+				<ant antfile="build-test-authentication.xml" target="setup-openam" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 		<if>
@@ -8737,6 +8746,15 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<print-file file.name="${elastic.kibana.dir}/bin/kibana.log" />
 
 				<ant antfile="build-test-elasticsearch.xml" target="stop-kibana" />
+			</then>
+		</if>
+
+		<get-testcase-property property.name="openam.enabled" />
+
+		<if>
+			<equals arg1="${openam.enabled}" arg2="true" />
+			<then>
+				<delete dir="${openam.config.dir}" />
 			</then>
 		</if>
 

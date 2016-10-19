@@ -1660,14 +1660,26 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			byte[] iconBytes, ServiceContext serviceContext)
 		throws PortalException {
 
-		LayoutPermissionUtil.check(
-			getPermissionChecker(), groupId, privateLayout, layoutId,
-			ActionKeys.UPDATE);
+		Layout layout = layoutLocalService.getLayout(
+			groupId, privateLayout, layoutId);
 
-		return layoutLocalService.updateLayout(
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.UPDATE);
+
+		boolean wasLayoutTypePortlet =
+			layout.getLayoutType() instanceof LayoutTypePortlet;
+
+		Layout result = layoutLocalService.updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
 			hidden, friendlyURLMap, iconImage, iconBytes, serviceContext);
+
+		if (!wasLayoutTypePortlet) {
+			checkLayoutTypeSettings(
+				layout, StringPool.BLANK, result.getTypeSettings());
+		}
+
+		return result;
 	}
 
 	/**

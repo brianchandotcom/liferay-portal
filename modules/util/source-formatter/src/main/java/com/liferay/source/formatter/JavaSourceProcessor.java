@@ -1015,6 +1015,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern2);
 
+		newContent = sortExceptions(newContent);
+
 		newContent = formatArray(newContent);
 
 		newContent = formatClassLine(newContent);
@@ -2354,8 +2356,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					line = StringUtil.replaceLast(line, "{", " {");
 				}
-
-				line = sortExceptions(line);
 
 				int lineLeadingTabCount = getLeadingTabCount(line);
 				int previousLineLeadingTabCount = getLeadingTabCount(
@@ -4632,51 +4632,45 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String sortExceptions(String line) {
-		if (!line.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-			!line.endsWith(StringPool.SEMICOLON)) {
+	protected String sortExceptions(String content) {
+		Matcher matcher = _throwsExceptionsPattern.matcher(content);
 
-			return line;
+		while (matcher.find()) {
+			String match = matcher.group();
+
+			String exceptions = matcher.group(1);
+
+			exceptions = StringUtil.replace(
+				exceptions, new String[] {StringPool.TAB, StringPool.NEW_LINE},
+				new String[] {StringPool.SPACE, StringPool.SPACE});
+
+			String previousException = StringPool.BLANK;
+
+			for (String exception :
+					StringUtil.split(exceptions, StringPool.COMMA_AND_SPACE)) {
+
+				exception = StringUtil.trim(exception);
+
+				if (Validator.isNotNull(previousException) &&
+					(previousException.compareToIgnoreCase(exception) > 0)) {
+
+					String replacement = match.replaceAll(
+						"(\\W)" + exception + "(\\W)",
+						"$1" + previousException + "$2");
+
+					replacement = replacement.replaceFirst(
+						"(\\W)" + previousException + "(\\W)",
+						"$1" + exception + "$2");
+
+					return sortExceptions(
+						StringUtil.replace(content, match, replacement));
+				}
+
+				previousException = exception;
+			}
 		}
 
-		int x = line.indexOf("throws ");
-
-		if (x == -1) {
-			return line;
-		}
-
-		String previousException = StringPool.BLANK;
-
-		String[] exceptions = StringUtil.split(
-			line.substring(x), CharPool.SPACE);
-
-		for (int i = 1; i < exceptions.length; i++) {
-			String exception = exceptions[i];
-
-			if (exception.equals(StringPool.OPEN_CURLY_BRACE)) {
-				break;
-			}
-
-			if (exception.endsWith(StringPool.COMMA) ||
-				exception.endsWith(StringPool.SEMICOLON)) {
-
-				exception = exception.substring(0, exception.length() - 1);
-			}
-
-			if (Validator.isNotNull(previousException) &&
-				(previousException.compareToIgnoreCase(exception) > 0)) {
-
-				line = StringUtil.replace(
-					line, previousException + ", " + exception,
-					exception + ", " + previousException);
-
-				return sortExceptions(line);
-			}
-
-			previousException = exception;
-		}
-
-		return line;
+		return content;
 	}
 
 	private static final String[] _INCLUDES = new String[] {"**/*.java"};
@@ -4807,6 +4801,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
 	private List<String> _staticLogVariableExcludes;
 	private List<String> _testAnnotationsExcludes;
+	private final Pattern _throwsExceptionsPattern = Pattern.compile(
+		"\\sthrows ([\\s\\w,]*)[;{]\n");
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
 		"(\n\t+.*)throws(.*) SystemException(.*)( \\{|;\n)");
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();

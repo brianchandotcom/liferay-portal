@@ -24,8 +24,10 @@ import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class BlogsEntryFinderBaseImpl extends BasePersistenceImpl<BlogsEntry> {
 	@Override
 	public Set<String> getBadColumnNames() {

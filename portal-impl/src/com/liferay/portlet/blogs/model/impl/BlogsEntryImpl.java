@@ -30,7 +30,10 @@ import java.util.Date;
 /**
  * @author Brian Wing Shun Chan
  * @author Juan Fernández
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.blogs.model.impl.BlogsEntryImpl}
  */
+@Deprecated
 public class BlogsEntryImpl extends BlogsEntryBaseImpl {
 
 	@Override

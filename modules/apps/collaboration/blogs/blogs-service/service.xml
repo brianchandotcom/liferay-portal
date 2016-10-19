@@ -3,10 +3,170 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.blogs">
 	<namespace>Blogs</namespace>
-	<entity local-service="true" name="BlogsEntry" remote-service="true">
+	<entity local-service="true" name="BlogsEntry" remote-service="true" trash-enabled="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="entryId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="title" type="String" />
+		<column name="subtitle" type="String" />
+		<column name="urlTitle" type="String" />
+		<column name="description" type="String" />
+		<column name="content" type="String" />
+		<column name="displayDate" type="Date" />
+		<column name="allowPingbacks" type="boolean" />
+		<column name="allowTrackbacks" type="boolean" />
+		<column name="trackbacks" type="String" />
+		<column name="coverImageCaption" type="String" />
+		<column name="coverImageFileEntryId" type="long" />
+		<column name="coverImageURL" type="String" />
+		<column name="smallImage" type="boolean" />
+		<column name="smallImageFileEntryId" type="long" />
+		<column name="smallImageId" type="long" />
+		<column name="smallImageURL" type="String" />
+		<column name="lastPublishDate" type="Date" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="displayDate" />
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="G_UT" return-type="BlogsEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="urlTitle" />
+		</finder>
+		<finder name="G_LtD" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+		</finder>
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="C_U" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+		</finder>
+		<finder name="C_LtD" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+		</finder>
+		<finder name="C_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_LtD" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+		</finder>
+		<finder name="G_U_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column arrayable-operator="OR" name="status" />
+		</finder>
+		<finder name="G_U_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="G_D_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_GtD_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&gt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_LtD_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_LtD_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="C_U_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_U_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="userId" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="C_LtD_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_LtD_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="G_U_LtD_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_LtD_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column comparator="&lt;" name="displayDate" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
 
 		<!-- References -->
 
+		<reference entity="BlogsStatsUser" package-path="com.liferay.blogs" />
 		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Image" package-path="com.liferay.portal" />
@@ -18,16 +178,79 @@
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
-		<reference entity="BlogsStatsUser" package-path="com.liferay.portlet.blogs" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="TrashEntry" package-path="com.liferay.portlet.trash" />
 	</entity>
 	<entity local-service="true" name="BlogsStatsUser" remote-service="false">
 
+		<!-- PK fields -->
+
+		<column name="statsUserId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="entryCount" type="int" />
+		<column name="lastPostDate" type="Date" />
+		<column name="ratingsTotalEntries" type="int" />
+		<column name="ratingsTotalScore" type="double" />
+		<column name="ratingsAverageScore" type="double" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="entryCount" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="G_U" return-type="BlogsStatsUser" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+		</finder>
+		<finder name="G_NotE" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column comparator="!=" name="entryCount" />
+		</finder>
+		<finder name="C_NotE" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column comparator="!=" name="entryCount" />
+		</finder>
+		<finder name="U_L" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="lastPostDate" />
+		</finder>
+
 		<!-- References -->
 
+		<reference entity="BlogsEntry" package-path="com.liferay.blogs" />
 		<reference entity="Group" package-path="com.liferay.portal" />
-		<reference entity="BlogsEntry" package-path="com.liferay.portlet.blogs" />
 	</entity>
+	<exceptions>
+		<exception>EntryContent</exception>
+		<exception>EntryCoverImageCrop</exception>
+		<exception>EntryDescription</exception>
+		<exception>EntryDisplayDate</exception>
+		<exception>EntryImageName</exception>
+		<exception>EntryImageSize</exception>
+		<exception>EntrySmallImageName</exception>
+		<exception>EntrySmallImageScale</exception>
+		<exception>EntryTitle</exception>
+		<exception>TrackbackValidation</exception>
+	</exceptions>
 </service-builder>

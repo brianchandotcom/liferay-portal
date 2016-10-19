@@ -33,8 +33,11 @@ import java.util.Date;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl
  * @see BlogsEntryUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.blogs.model.impl.BlogsEntryImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface BlogsEntryPersistence extends BasePersistence<BlogsEntry> {
 	/*

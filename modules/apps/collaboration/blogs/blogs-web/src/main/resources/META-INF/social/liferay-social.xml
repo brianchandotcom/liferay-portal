@@ -3,7 +3,7 @@
 
 <liferay-social>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_ADD_COMMENT}</activity-type>
 		<language-key>ADD_COMMENT</language-key>
 		<log-activity>true</log-activity>
@@ -24,7 +24,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.blogs.social.BlogsActivityKeys.ADD_ENTRY}</activity-type>
 		<language-key>ADD_ENTRY</language-key>
 		<log-activity>true</log-activity>
@@ -37,7 +37,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_ADD_VOTE}</activity-type>
 		<language-key>ADD_VOTE</language-key>
 		<contribution-value>5</contribution-value>
@@ -53,19 +53,19 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_SUBSCRIBE}</activity-type>
 		<language-key>SUBSCRIBE</language-key>
 		<contribution-value>2</contribution-value>
@@ -85,7 +85,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_UNSUBSCRIBE}</activity-type>
 		<language-key>UNSUBSCRIBE</language-key>
 		<contribution-limit enabled="false" />
@@ -103,7 +103,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>3</activity-type>
 		<language-key>UPDATE_ENTRY</language-key>
 		<log-activity>true</log-activity>
@@ -115,7 +115,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<activity-type>${com.liferay.social.kernel.model.SocialActivityConstants.TYPE_VIEW}</activity-type>
 		<language-key>VIEW</language-key>
 		<participation-value>1</participation-value>

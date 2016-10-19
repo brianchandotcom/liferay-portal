@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.internal.service.permission;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
 	service = PermissionUpdateHandler.class
 )
 public class BlogsEntryPermissionUpdateHandler

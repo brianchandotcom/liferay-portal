@@ -38,8 +38,11 @@ import java.util.Date;
  * @see BlogsStatsUser
  * @see com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl
  * @see com.liferay.portlet.blogs.model.impl.BlogsStatsUserModelImpl
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.model.impl.BlogsStatsUserImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface BlogsStatsUserModel extends BaseModel<BlogsStatsUser>,
 	ShardedModel {

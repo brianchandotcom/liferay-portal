@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.internal.trash;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.permission.BlogsEntryPermission;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"},
+	property = {"model.class.name=com.liferay.blogs.model.BlogsEntry"},
 	service = TrashHandler.class
 )
 public class BlogsEntryTrashHandler extends BaseTrashHandler {

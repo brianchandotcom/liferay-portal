@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.util.comparator;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**

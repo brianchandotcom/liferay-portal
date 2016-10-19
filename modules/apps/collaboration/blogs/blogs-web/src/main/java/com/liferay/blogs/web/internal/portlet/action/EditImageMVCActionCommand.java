@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
-import com.liferay.blogs.kernel.exception.NoSuchEntryException;
+import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;

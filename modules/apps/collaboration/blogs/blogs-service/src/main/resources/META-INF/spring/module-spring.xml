@@ -3,5 +3,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl" id="com.liferay.blogs.service.BlogsEntryLocalService" />
 	<bean class="com.liferay.blogs.service.impl.BlogsEntryServiceImpl" id="com.liferay.blogs.service.BlogsEntryService" />
+	<bean class="com.liferay.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" id="com.liferay.blogs.service.persistence.BlogsEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.blogs.service.persistence.impl.BlogsEntryFinderImpl" id="com.liferay.blogs.service.persistence.BlogsEntryFinder" parent="basePersistence" />
 	<bean class="com.liferay.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.service.BlogsStatsUserLocalService" />
+	<bean class="com.liferay.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" id="com.liferay.blogs.service.persistence.BlogsStatsUserPersistence" parent="basePersistence" />
+	<bean class="com.liferay.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" id="com.liferay.blogs.service.persistence.BlogsStatsUserFinder" parent="basePersistence" />
 </beans>

@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public class BlogsEntryFinderUtil {
 	public static int countByOrganizationId(long organizationId,

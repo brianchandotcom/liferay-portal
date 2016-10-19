@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface BlogsEntryFinder {
 	public int countByOrganizationId(long organizationId,

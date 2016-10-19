@@ -205,7 +205,7 @@ entriesSearchContainer.setResults(entriesResults);
 			searchContainer="<%= entriesSearchContainer %>"
 		>
 			<liferay-ui:search-container-row
-				className="com.liferay.blogs.kernel.model.BlogsEntry"
+				className="com.liferay.blogs.model.BlogsEntry"
 				escapedModel="<%= true %>"
 				keyProperty="entryId"
 				modelVar="entry"

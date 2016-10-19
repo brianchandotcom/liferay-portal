@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.internal.upgrade.v1_1_0;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.friendly.url.service.FriendlyURLLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

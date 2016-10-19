@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.util.comparator;
 
-import com.liferay.blogs.kernel.model.BlogsStatsUser;
+import com.liferay.blogs.model.BlogsStatsUser;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.web.internal.trackback;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.linkback.LinkbackConsumer;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;

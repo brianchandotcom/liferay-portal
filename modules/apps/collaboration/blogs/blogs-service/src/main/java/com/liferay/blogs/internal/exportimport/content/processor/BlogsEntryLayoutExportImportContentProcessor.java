@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.internal.exportimport.content.processor;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseLayoutExportImportContentProcessor;
 
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {
 		"content.processor.order=2",
-		"model.class.name=com.liferay.blogs.kernel.model.BlogsEntry"
+		"model.class.name=com.liferay.blogs.model.BlogsEntry"
 	},
 	service = {ExportImportContentProcessor.class}
 )

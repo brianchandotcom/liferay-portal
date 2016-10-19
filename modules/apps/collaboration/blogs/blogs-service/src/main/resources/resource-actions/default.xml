@@ -28,7 +28,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.blogs.kernel.model.BlogsEntry</model-name>
+		<model-name>com.liferay.blogs.model.BlogsEntry</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_blogs_web_portlet_BlogsAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_blogs_web_portlet_BlogsPortlet</portlet-name>

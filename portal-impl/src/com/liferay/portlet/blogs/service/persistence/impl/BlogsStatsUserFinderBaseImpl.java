@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated
  * @generated
  */
+@Deprecated
 public class BlogsStatsUserFinderBaseImpl extends BasePersistenceImpl<BlogsStatsUser> {
 	/**
 	 * Returns the blogs stats user persistence.

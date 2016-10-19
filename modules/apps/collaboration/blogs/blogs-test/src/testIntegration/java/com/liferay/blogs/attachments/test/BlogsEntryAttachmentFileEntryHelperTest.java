@@ -15,7 +15,7 @@
 package com.liferay.blogs.attachments.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryReference;
 import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryUtil;

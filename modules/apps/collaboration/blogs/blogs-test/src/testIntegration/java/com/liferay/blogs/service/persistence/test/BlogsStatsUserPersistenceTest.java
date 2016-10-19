@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.service.persistence.test;
+package com.liferay.blogs.service.persistence.test;
 
-import com.liferay.blogs.kernel.exception.NoSuchStatsUserException;
-import com.liferay.blogs.kernel.model.BlogsStatsUser;
-import com.liferay.blogs.kernel.service.BlogsStatsUserLocalServiceUtil;
-import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence;
-import com.liferay.blogs.kernel.service.persistence.BlogsStatsUserUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.blogs.exception.NoSuchStatsUserException;
+import com.liferay.blogs.model.BlogsStatsUser;
+import com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil;
+import com.liferay.blogs.service.persistence.BlogsStatsUserPersistence;
+import com.liferay.blogs.service.persistence.BlogsStatsUserUtil;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -46,6 +48,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -58,6 +62,7 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class BlogsStatsUserPersistenceTest {
 	@ClassRule
 	@Rule

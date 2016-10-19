@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.verify;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.linkback.LinkbackConsumer;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;

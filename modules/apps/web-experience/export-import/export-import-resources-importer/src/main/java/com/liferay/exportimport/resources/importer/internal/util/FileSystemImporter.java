@@ -1971,7 +1971,7 @@ public class FileSystemImporter extends BaseImporter {
 			{"asset_category", "com.liferay.asset.kernel.model.AssetCategory"},
 			{"asset_entry", "com.liferay.asset.kernel.model.AssetEntry"},
 			{"asset_tag", "com.liferay.asset.kernel.model.AssetTag"},
-			{"blogs_entry", "com.liferay.blogs.kernel.model.BlogsEntry"},
+			{"blogs_entry", "com.liferay.blogs.model.BlogsEntry"},
 			{
 				"bread_crumb",
 				"com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry"

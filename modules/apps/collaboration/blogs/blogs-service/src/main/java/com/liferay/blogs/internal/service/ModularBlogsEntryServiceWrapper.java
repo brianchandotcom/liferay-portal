@@ -65,11 +65,14 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		return _blogsEntryService.addEntry(
-			title, description, content, displayDateMonth, displayDateDay,
-			displayDateYear, displayDateHour, displayDateMinute, allowPingbacks,
-			allowTrackbacks, trackbacks, smallImage, smallImageURL,
-			smallImageFileName, smallImageInputStream, serviceContext);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.addEntry(
+				title, description, content, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				allowPingbacks, allowTrackbacks, trackbacks, smallImage,
+				smallImageURL, smallImageFileName, smallImageInputStream,
+				serviceContext));
 	}
 
 	@Override
@@ -83,11 +86,14 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _blogsEntryService.addEntry(
-			title, subtitle, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.addEntry(
+				title, subtitle, description, content, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+				coverImageCaption, coverImageImageSelector,
+				smallImageImageSelector, serviceContext));
 	}
 
 	@Override
@@ -100,8 +106,10 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			long companyId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		return _blogsEntryService.getCompanyEntries(
-			companyId, displayDate, status, max);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getCompanyEntries(
+				companyId, displayDate, status, max));
 	}
 
 	@Override
@@ -118,42 +126,52 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 
 	@Override
 	public BlogsEntry getEntry(long entryId) throws PortalException {
-		return _blogsEntryService.getEntry(entryId);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class, _blogsEntryService.getEntry(entryId));
 	}
 
 	@Override
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException {
 
-		return _blogsEntryService.getEntry(groupId, urlTitle);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class, _blogsEntryService.getEntry(groupId, urlTitle));
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int max) {
 
-		return _blogsEntryService.getGroupEntries(
-			groupId, displayDate, status, max);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupEntries(
+				groupId, displayDate, status, max));
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, Date displayDate, int status, int start, int end) {
 
-		return _blogsEntryService.getGroupEntries(
-			groupId, displayDate, status, start, end);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupEntries(
+				groupId, displayDate, status, start, end));
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(long groupId, int status, int max) {
-		return _blogsEntryService.getGroupEntries(groupId, status, max);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupEntries(groupId, status, max));
 	}
 
 	@Override
 	public List<BlogsEntry> getGroupEntries(
 		long groupId, int status, int start, int end) {
 
-		return _blogsEntryService.getGroupEntries(groupId, status, start, end);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupEntries(groupId, status, start, end));
 	}
 
 	@Override
@@ -161,8 +179,11 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 		long groupId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		return _blogsEntryService.getGroupEntries(
-			groupId, status, start, end, obc);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupEntries(
+				groupId, status, start, end,
+				ModelAdaptorUtil.adapt(BlogsEntry.class, obc)));
 	}
 
 	@Override
@@ -195,8 +216,10 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			long companyId, long groupId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		return _blogsEntryService.getGroupsEntries(
-			companyId, groupId, displayDate, status, max);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupsEntries(
+				companyId, groupId, displayDate, status, max));
 	}
 
 	@Override
@@ -204,8 +227,11 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 		long groupId, long userId, int status, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		return _blogsEntryService.getGroupUserEntries(
-			groupId, userId, status, start, end, obc);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupUserEntries(
+				groupId, userId, status, start, end,
+				ModelAdaptorUtil.adapt(BlogsEntry.class, obc)));
 	}
 
 	@Override
@@ -213,8 +239,11 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 		long groupId, long userId, int[] statuses, int start, int end,
 		OrderByComparator<BlogsEntry> obc) {
 
-		return _blogsEntryService.getGroupUserEntries(
-			groupId, userId, statuses, start, end, obc);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getGroupUserEntries(
+				groupId, userId, statuses, start, end,
+				ModelAdaptorUtil.adapt(BlogsEntry.class, obc)));
 	}
 
 	@Override
@@ -236,8 +265,10 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			long organizationId, Date displayDate, int status, int max)
 		throws PortalException {
 
-		return _blogsEntryService.getOrganizationEntries(
-			organizationId, displayDate, status, max);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.getOrganizationEntries(
+				organizationId, displayDate, status, max));
 	}
 
 	@Override
@@ -264,7 +295,8 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 
 	@Override
 	public BlogsEntry moveEntryToTrash(long entryId) throws PortalException {
-		return _blogsEntryService.moveEntryToTrash(entryId);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class, _blogsEntryService.moveEntryToTrash(entryId));
 	}
 
 	@Override
@@ -304,12 +336,14 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			InputStream smallImageInputStream, ServiceContext serviceContext)
 		throws PortalException {
 
-		return _blogsEntryService.updateEntry(
-			entryId, title, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, smallImage,
-			smallImageURL, smallImageFileName, smallImageInputStream,
-			serviceContext);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.updateEntry(
+				entryId, title, description, content, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+				smallImage, smallImageURL, smallImageFileName,
+				smallImageInputStream, serviceContext));
 	}
 
 	@Override
@@ -324,11 +358,15 @@ public class ModularBlogsEntryServiceWrapper extends BlogsEntryServiceWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _blogsEntryService.updateEntry(
-			entryId, title, subtitle, description, content, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			allowPingbacks, allowTrackbacks, trackbacks, coverImageCaption,
-			coverImageImageSelector, smallImageImageSelector, serviceContext);
+		return ModelAdaptorUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryService.updateEntry(
+				entryId, title, subtitle, description, content,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, allowPingbacks,
+				allowTrackbacks, trackbacks, coverImageCaption,
+				coverImageImageSelector, smallImageImageSelector,
+				serviceContext));
 	}
 
 	@Reference

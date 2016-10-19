@@ -12,8 +12,6 @@
 	<import class="com.liferay.asset.kernel.model.AssetTag" />
 	<import class="com.liferay.asset.kernel.model.AssetTagStats" />
 	<import class="com.liferay.asset.kernel.model.AssetVocabulary" />
-	<import class="com.liferay.blogs.kernel.model.BlogsEntry" />
-	<import class="com.liferay.blogs.kernel.model.BlogsStatsUser" />
 	<import class="com.liferay.counter.kernel.model.Counter" />
 	<import class="com.liferay.document.library.kernel.model.DLContent" />
 	<import class="com.liferay.document.library.kernel.model.DLFileEntry" />
@@ -1312,52 +1310,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="settings_" name="settings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.blogs.model.impl.BlogsEntryImpl" table="BlogsEntry">
-		<id name="entryId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="subtitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="urlTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="displayDate" type="org.hibernate.type.TimestampType" />
-		<property name="allowPingbacks" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="allowTrackbacks" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="trackbacks" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
-		<property name="coverImageCaption" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="coverImageFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="coverImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="smallImageFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="statusDate" type="org.hibernate.type.TimestampType" />
-	</class>
-	<class name="com.liferay.portlet.blogs.model.impl.BlogsStatsUserImpl" table="BlogsStatsUser">
-		<id name="statsUserId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="entryCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="lastPostDate" type="org.hibernate.type.TimestampType" />
-		<property name="ratingsTotalEntries" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="ratingsTotalScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
-		<property name="ratingsAverageScore" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
 	<class name="com.liferay.portlet.documentlibrary.model.impl.DLContentImpl" table="DLContent">
 		<id name="contentId" type="long">

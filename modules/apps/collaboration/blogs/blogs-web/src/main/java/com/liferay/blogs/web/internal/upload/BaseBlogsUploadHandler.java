@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.web.internal.upload;
 
-import com.liferay.blogs.kernel.exception.EntryImageNameException;
-import com.liferay.blogs.kernel.exception.EntryImageSizeException;
+import com.liferay.blogs.exception.EntryImageNameException;
+import com.liferay.blogs.exception.EntryImageSizeException;
 import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

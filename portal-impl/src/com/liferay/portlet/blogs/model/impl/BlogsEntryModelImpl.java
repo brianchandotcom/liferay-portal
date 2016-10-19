@@ -71,8 +71,11 @@ import java.util.Map;
  * @see BlogsEntryImpl
  * @see BlogsEntry
  * @see BlogsEntryModel
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.blogs.model.impl.BlogsEntryImpl}
  * @generated
  */
+@Deprecated
 @JSON(strict = true)
 @ProviderType
 public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>

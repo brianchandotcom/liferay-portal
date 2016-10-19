@@ -38,7 +38,7 @@
 				${dateUtil.getDate(entry.getCreateDate(), "dd MMM yyyy - HH:mm:ss", locale)}
 			</span>
 
-			<#assign blogsEntryClassName = "com.liferay.blogs.kernel.model.BlogsEntry" />
+			<#assign blogsEntryClassName = "com.liferay.blogs.model.BlogsEntry" />
 
 			<#if blogsPortletInstanceConfiguration.enableFlags()>
 				<@liferay_flags["flags"]

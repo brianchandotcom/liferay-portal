@@ -15,7 +15,7 @@
 package com.liferay.blogs.util;
 
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

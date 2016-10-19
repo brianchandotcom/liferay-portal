@@ -14,9 +14,9 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
-import com.liferay.blogs.kernel.exception.NoSuchEntryException;
-import com.liferay.blogs.kernel.exception.TrackbackValidationException;
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.exception.NoSuchEntryException;
+import com.liferay.blogs.exception.TrackbackValidationException;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.blogs.web.internal.trackback.Trackback;
 import com.liferay.portal.kernel.log.Log;

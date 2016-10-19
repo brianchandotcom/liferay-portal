@@ -5,7 +5,6 @@
 	<resource file="resource-actions/portal.xml" />
 	<resource file="resource-actions/announcements.xml" />
 	<resource file="resource-actions/asset.xml" />
-	<resource file="resource-actions/blogs.xml" />
 	<resource file="resource-actions/documentlibrary.xml" />
 	<resource file="resource-actions/expando.xml" />
 	<resource file="resource-actions/messageboards.xml" />

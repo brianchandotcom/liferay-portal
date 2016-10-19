@@ -23,8 +23,8 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.blogs.kernel.model.BlogsEntry" %><%@
-page import="com.liferay.blogs.kernel.model.BlogsStatsUser" %><%@
+<%@ page import="com.liferay.blogs.model.BlogsEntry" %><%@
+page import="com.liferay.blogs.model.BlogsStatsUser" %><%@
 page import="com.liferay.blogs.service.BlogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
 page import="com.liferay.blogs.util.comparator.StatsUserLastPostDateComparator" %><%@

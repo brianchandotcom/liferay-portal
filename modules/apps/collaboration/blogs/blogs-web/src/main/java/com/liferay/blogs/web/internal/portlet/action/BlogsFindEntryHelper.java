@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.web.internal.portlet.action;
 
-import com.liferay.blogs.kernel.model.BlogsEntry;
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.PortletLayoutFinder;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.blogs.kernel.model.BlogsEntry",
+	property = "model.class.name=com.liferay.blogs.model.BlogsEntry",
 	service = FindActionHelper.class
 )
 public class BlogsFindEntryHelper extends BaseFindActionHelper {
@@ -106,7 +106,7 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.blogs.kernel.model.BlogsEntry)",
+		target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)",
 		unbind = "-"
 	)
 	protected void setPortletLayoutFinder(

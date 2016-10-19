@@ -60,7 +60,7 @@ public class RatingsDataTransformerUtilTest {
 		PortletPreferences oldPortletPreferences = new PortletPreferencesImpl();
 
 		oldPortletPreferences.setValue(
-			"com.liferay.blogs.kernel.model.BlogsEntry_RatingsType", "like");
+			"com.liferay.blogs.model.BlogsEntry_RatingsType", "like");
 		oldPortletPreferences.setValue(
 			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "like");
 		oldPortletPreferences.setValue(
@@ -82,7 +82,7 @@ public class RatingsDataTransformerUtilTest {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.setProperty(
-			"com.liferay.blogs.kernel.model.BlogsEntry_RatingsType", "stars");
+			"com.liferay.blogs.model.BlogsEntry_RatingsType", "stars");
 		unicodeProperties.setProperty(
 			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "stars");
 		unicodeProperties.setProperty(
@@ -114,7 +114,7 @@ public class RatingsDataTransformerUtilTest {
 		UnicodeProperties oldUnicodeProperties = new UnicodeProperties();
 
 		oldUnicodeProperties.setProperty(
-			"com.liferay.blogs.kernel.model.BlogsEntry_RatingsType", "like");
+			"com.liferay.blogs.model.BlogsEntry_RatingsType", "like");
 		oldUnicodeProperties.setProperty(
 			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "like");
 		oldUnicodeProperties.setProperty(
@@ -136,7 +136,7 @@ public class RatingsDataTransformerUtilTest {
 		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 		unicodeProperties.setProperty(
-			"com.liferay.blogs.kernel.model.BlogsEntry_RatingsType", "stars");
+			"com.liferay.blogs.model.BlogsEntry_RatingsType", "stars");
 		unicodeProperties.setProperty(
 			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "stars");
 		unicodeProperties.setProperty(

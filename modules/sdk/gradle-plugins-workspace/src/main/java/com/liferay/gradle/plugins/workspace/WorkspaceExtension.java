@@ -48,10 +48,16 @@ public class WorkspaceExtension {
 		_projectConfigurators.add(new ThemesProjectConfigurator(settings));
 		_projectConfigurators.add(new WarsProjectConfigurator(settings));
 
+		_bundleDistRootDirName = _getProperty(
+			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
 		_bundleUrl = _getProperty(settings, "bundle.url", _BUNDLE_URL);
 		_configsDir = _getProperty(settings, "configs.dir", _CONFIGS_DIR);
 		_environment = _getProperty(settings, "environment", _ENVIRONMENT);
 		_homeDir = _getProperty(settings, "home.dir", _HOME_DIR);
+	}
+
+	public String getBundleDistRootDirName() {
+		return GradleUtil.toString(_bundleDistRootDirName);
 	}
 
 	public String getBundleUrl() {
@@ -88,6 +94,10 @@ public class WorkspaceExtension {
 		throw new MissingPropertyException(name, ProjectConfigurator.class);
 	}
 
+	public void setBundleDistRootDirName(Object bundleDistRootDirName) {
+		_bundleDistRootDirName = bundleDistRootDirName;
+	}
+
 	public void setBundleUrl(Object bundleUrl) {
 		_bundleUrl = bundleUrl;
 	}
@@ -111,6 +121,8 @@ public class WorkspaceExtension {
 			object, WorkspacePlugin.PROPERTY_PREFIX + keySuffix, defaultValue);
 	}
 
+	private static final String _BUNDLE_DIST_ROOT_DIR_NAME = null;
+
 	private static final String _BUNDLE_URL =
 		"https://sourceforge.net/projects/lportal/files/Liferay Portal" +
 			"/7.0.2 GA3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip";
@@ -121,6 +133,7 @@ public class WorkspaceExtension {
 
 	private static final String _HOME_DIR = "bundles";
 
+	private Object _bundleDistRootDirName;
 	private Object _bundleUrl;
 	private Object _configsDir;
 	private Object _environment;

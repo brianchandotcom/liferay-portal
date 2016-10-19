@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.workspace.internal.configurators;
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import de.undercouch.gradle.tasks.download.Download;
@@ -90,13 +91,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, downloadBundleTask, workspaceExtension);
 
 		Tar distBundleTarTask = _addTaskDistBundle(
-			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask);
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
+			workspaceExtension);
 
 		distBundleTarTask.setCompression(Compression.GZIP);
 		distBundleTarTask.setExtension("tar.gz");
 
 		_addTaskDistBundle(
-			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask);
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask,
+			workspaceExtension);
 
 		_addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
 	}
@@ -212,11 +215,37 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
-		Project project, String taskName, Class<T> clazz, Copy distBundleTask) {
+		Project project, String taskName, Class<T> clazz,
+		final Copy distBundleTask,
+		final WorkspaceExtension workspaceExtension) {
 
 		T task = GradleUtil.addTask(project, taskName, clazz);
 
-		task.from(distBundleTask);
+		task.into(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					String bundleDistRootDirName =
+						workspaceExtension.getBundleDistRootDirName();
+
+					if (Validator.isNull(bundleDistRootDirName)) {
+						bundleDistRootDirName = "";
+					}
+
+					return bundleDistRootDirName;
+				}
+
+			},
+			new Closure<Void>(task) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.from(distBundleTask);
+				}
+
+			});
+
 		task.setBaseName(project.getName());
 		task.setDescription("Assembles the Liferay bundle and zips it up.");
 		task.setDestinationDir(project.getBuildDir());

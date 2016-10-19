@@ -144,6 +144,14 @@ public interface CalendarBookingService extends BaseService {
 		long calendarBookingId, long offset, long duration)
 		throws PortalException;
 
+	public CalendarBooking invokeTransition(long calendarBookingId, int status,
+		int instanceIndex, boolean updateInstance, boolean allFollowing,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CalendarBooking invokeTransition(long calendarBookingId, int status,
+		long startTime, boolean updateInstance, boolean allFollowing,
+		ServiceContext serviceContext) throws PortalException;
+
 	public CalendarBooking moveCalendarBookingToTrash(long calendarBookingId)
 		throws PortalException;
 
@@ -307,6 +315,11 @@ public interface CalendarBookingService extends BaseService {
 	public void deleteCalendarBookingInstance(long calendarBookingId,
 		long startTime, boolean allFollowing) throws PortalException;
 
+	/**
+	* @deprecated As of 2.2.0, replaced by {@link #invokeTransition(long, int,
+	long, boolean, boolean, ServiceContext)}
+	*/
+	@java.lang.Deprecated
 	public void invokeTransition(long calendarBookingId, int status,
 		ServiceContext serviceContext) throws PortalException;
 }

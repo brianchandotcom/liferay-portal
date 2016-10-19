@@ -30,8 +30,10 @@ import java.net.URL;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -42,6 +44,8 @@ import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileCopyDetails;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.tasks.AbstractCopyTask;
 import org.gradle.api.tasks.Copy;
@@ -207,6 +211,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, INIT_BUNDLE_TASK_NAME, Copy.class);
 
 		_configureTaskCopyBundle(copy, downloadBundleTask, workspaceExtension);
+		_configureTaskCopyPreserveTimeStamps(copy);
 
 		copy.doFirst(
 			new Action<Task>() {
@@ -327,6 +332,49 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			});
 
 		abstractCopyTask.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+	}
+
+	private void _configureTaskCopyPreserveTimeStamps(Copy copy) {
+		final Set<FileCopyDetails> fileCopyDetailsSet = new HashSet<>();
+
+		copy.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Copy copy = (Copy)task;
+
+					Logger logger = copy.getLogger();
+
+					for (FileCopyDetails fileCopyDetails : fileCopyDetailsSet) {
+						File file = new File(
+							copy.getDestinationDir(),
+							fileCopyDetails.getPath());
+
+						if (file.exists()) {
+							boolean success = file.setLastModified(
+								fileCopyDetails.getLastModified());
+
+							if (!success) {
+								logger.error(
+									"Unable to set last modified time of {}",
+									file);
+							}
+						}
+					}
+				}
+
+			});
+
+		copy.eachFile(
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					fileCopyDetailsSet.add(fileCopyDetails);
+				}
+
+			});
 	}
 
 }

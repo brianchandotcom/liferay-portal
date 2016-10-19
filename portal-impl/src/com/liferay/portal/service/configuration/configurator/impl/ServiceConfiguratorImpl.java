@@ -37,7 +37,6 @@ import com.liferay.registry.ServiceRegistrar;
 import java.net.URL;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -182,7 +181,7 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		}
 
 		try {
-			_resourceActions.read(
+			_resourceActions.readAndCheck(
 				null, classLoader,
 				StringUtil.split(
 					configuration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
@@ -192,22 +191,6 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 				"Unable to read resource actions config in " +
 					PropsKeys.RESOURCE_ACTIONS_CONFIGS,
 				e);
-		}
-
-		String[] portletIds = StringUtil.split(
-			configuration.get("service.configurator.portlet.ids"));
-
-		for (String portletId : portletIds) {
-			List<String> modelNames = _resourceActions.getPortletModelResources(
-				portletId);
-
-			for (String modelName : modelNames) {
-				List<String> modelActions =
-					_resourceActions.getModelResourceActions(modelName);
-
-				_resourceActionLocalService.checkResourceActions(
-					modelName, modelActions);
-			}
 		}
 	}
 

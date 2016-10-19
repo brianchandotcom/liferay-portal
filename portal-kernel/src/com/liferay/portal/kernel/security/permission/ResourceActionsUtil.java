@@ -254,6 +254,14 @@ public class ResourceActionsUtil {
 		getResourceActions().read(servletContextName, classLoader, source);
 	}
 
+	public static void read(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception {
+
+		getResourceActions().read(servletContextName, classLoader, sources);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */

@@ -1,4 +1,4 @@
-buildscript {
+#if (${projectType} != "workspace")buildscript {
 	dependencies {
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "latest.release"
 	}
@@ -17,5 +17,5 @@ repositories {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
 	}
 }
-
+#end
 apply plugin: "com.liferay.portal.tools.theme.builder"

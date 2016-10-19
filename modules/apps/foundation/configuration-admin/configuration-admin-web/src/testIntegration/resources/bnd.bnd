@@ -1,0 +1,12 @@
+Bundle-Name: Liferay Configuration Admin Web Test
+Bundle-SymbolicName: com.liferay.configuration.admin.web.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	!javax.*,\
+	*
+-includeresource:\
+	com/liferay/configuration/admin/web/internal/exporter=../../../classes/com/liferay/configuration/admin/web/internal/exporter,\
+	@../../../test-lib/com.liferay.portal.kernel.jar,\
+	@../../../test-lib/com.liferay.registry.api.jar,\
+	@../../../test-lib/org.apache.felix.fileinstall.jar,\
+	@../../../test-lib/org.osgi.service.log.jar!/org/osgi/service/log/*

@@ -15,6 +15,7 @@
 package com.liferay.configuration.admin.web.internal.portlet.action;
 
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminPortletKeys;
+import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.configuration.admin.web.internal.util.AttributeDefinitionUtil;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationModelRetriever;
@@ -25,10 +26,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -130,8 +128,8 @@ public class ExportConfigurationMVCResourceCommand
 
 					zipWriter.addEntry(
 						curFileName,
-						getPropertiesAsBytes(
-							languageId, curFactoryPid, curPid));
+						ConfigurationExporter.getPropertiesAsBytes(
+							getProperties(languageId, curFactoryPid, curPid)));
 				}
 			}
 			else if (configurationModel.hasConfiguration()) {
@@ -141,7 +139,8 @@ public class ExportConfigurationMVCResourceCommand
 
 				zipWriter.addEntry(
 					curFileName,
-					getPropertiesAsBytes(languageId, curPid, curPid));
+					ConfigurationExporter.getPropertiesAsBytes(
+						getProperties(languageId, curPid, curPid)));
 			}
 		}
 
@@ -184,7 +183,8 @@ public class ExportConfigurationMVCResourceCommand
 
 			zipWriter.addEntry(
 				curFileName,
-				getPropertiesAsBytes(languageId, factoryPid, curPid));
+				ConfigurationExporter.getPropertiesAsBytes(
+					getProperties(languageId, factoryPid, curPid)));
 		}
 
 		String fileName =
@@ -213,7 +213,8 @@ public class ExportConfigurationMVCResourceCommand
 
 		PortletResponseUtil.sendFile(
 			resourceRequest, resourceResponse, fileName,
-			getPropertiesAsBytes(languageId, factoryPid, pid),
+			ConfigurationExporter.getPropertiesAsBytes(
+				getProperties(languageId, factoryPid, pid)),
 			ContentTypes.TEXT_XML_UTF8);
 	}
 
@@ -226,7 +227,7 @@ public class ExportConfigurationMVCResourceCommand
 			fileName = factoryPid + StringPool.DASH + factoryInstanceId;
 		}
 
-		return fileName + ".cfg";
+		return fileName + ".config";
 	}
 
 	protected Properties getProperties(
@@ -266,46 +267,15 @@ public class ExportConfigurationMVCResourceCommand
 			String[] values = AttributeDefinitionUtil.getProperty(
 				attributeDefinition, configuration);
 
-			String value = null;
-
-			// See http://goo.gl/JhYK7g
-
 			if (values.length == 1) {
-				value = values[0];
+				properties.put(attributeDefinition.getID(), values[0]);
 			}
 			else if (values.length > 1) {
-				value = StringUtil.merge(values, "\n");
+				properties.put(attributeDefinition.getID(), values);
 			}
-
-			if (value == null) {
-				value = StringPool.BLANK;
-			}
-
-			properties.setProperty(attributeDefinition.getID(), value);
 		}
 
 		return properties;
-	}
-
-	protected byte[] getPropertiesAsBytes(
-			String languageId, String factoryPid, String pid)
-		throws Exception {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("##\n## To apply the configuration, place this file in the ");
-		sb.append("Liferay installation's osgi/modules folder. Make sure it ");
-		sb.append("is named ");
-		sb.append(getFileName(factoryPid, pid));
-		sb.append(".\n##\n\n");
-
-		Properties properties = getProperties(languageId, factoryPid, pid);
-
-		sb.append(PropertiesUtil.toString(properties));
-
-		String propertiesString = sb.toString();
-
-		return propertiesString.getBytes();
 	}
 
 	@Reference

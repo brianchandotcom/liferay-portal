@@ -37,7 +37,9 @@ public class MentionsMatcherUtil {
 			},
 			new String[] {"\\&", "\\^", "\\]", "\\-", "\\["});
 
-		return "[" + quotedSpecialCharacters + "]";
+		return String.format(
+			"(?:\\w|[%s])(?:\\w|\\d|[%s])*", quotedSpecialCharacters,
+			quotedSpecialCharacters);
 	}
 
 }

@@ -41,6 +41,6 @@ public class DefaultMentionsMatcher
 	}
 
 	private static final String _MENTIONS_REGULAR_EXPRESSION_TEMPLATE =
-		"(?:\\s|^|\\]|>)(?:@|&#64;)((?:&(?!#64;)|%s|[^@<>.,\\[\\]\\s])+)";
+		"(?:\\s|^|\\]|>)(?:@|&#64;)(%s)(?=[<\\[\\s]|$)";
 
 }

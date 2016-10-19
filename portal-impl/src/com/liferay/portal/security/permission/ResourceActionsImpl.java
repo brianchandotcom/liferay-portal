@@ -700,6 +700,17 @@ public class ResourceActionsImpl implements ResourceActions {
 		read(servletContextName, document);
 	}
 
+	@Override
+	public void read(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception {
+
+		for (String source : sources) {
+			read(servletContextName, classLoader, source);
+		}
+	}
+
 	/**
 	 * @deprecated As of 7.0.0
 	 */

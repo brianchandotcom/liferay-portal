@@ -1037,17 +1037,15 @@ public class PortletTracker
 
 		Properties properties = configuration.getProperties();
 
-		String[] resourceActionConfigs = StringUtil.split(
-			properties.getProperty(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
-
-		for (String resourceActionConfig : resourceActionConfigs) {
-			try {
-				ResourceActionsUtil.read(
-					null, classLoader, resourceActionConfig);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			ResourceActionsUtil.read(
+				null, classLoader,
+				StringUtil.split(
+					properties.getProperty(
+						PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<hint-collection name="CLOB">
+		<hint name="max-length">2000000</hint>
+	</hint-collection>
+	<hint-collection name="EDITOR">
+		<hint name="editor">true</hint>
+		<hint name="max-length">2000000</hint>
+	</hint-collection>
+	<hint-collection name="SEARCHABLE-DATE">
+		<hint name="month-nullable">true</hint>
+		<hint name="day-nullable">true</hint>
+		<hint name="year-nullable">true</hint>
+		<hint name="show-time">false</hint>
+	</hint-collection>
+	<hint-collection name="TEXTAREA">
+		<hint name="display-height">105</hint>
+		<hint name="display-width">500</hint>
+		<hint name="max-length">4000</hint>
+	</hint-collection>
+	<hint-collection name="URL">
+		<hint name="max-length">4000</hint>
+	</hint-collection>
+	<model name="com.liferay.portal.kernel.model.ClassName">
+		<field name="mvccVersion" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="value" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portal.kernel.model.Release">
+		<field name="mvccVersion" type="long" />
+		<field name="releaseId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="servletContextName" type="String" />
+		<field name="schemaVersion" type="String" />
+		<field name="buildNumber" type="int" />
+		<field name="buildDate" type="Date" />
+		<field name="verified" type="boolean" />
+		<field name="state" type="int" />
+		<field name="testString" type="String">
+			<hint name="max-length">1024</hint>
+		</field>
+	</model>
+	<model name="com.liferay.portal.kernel.model.ServiceComponent">
+		<field name="mvccVersion" type="long" />
+		<field name="serviceComponentId" type="long" />
+		<field name="buildNamespace" type="String" />
+		<field name="buildNumber" type="long" />
+		<field name="buildDate" type="long" />
+		<field name="data" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+</model-hints>

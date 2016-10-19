@@ -14,10 +14,45 @@
 
 package com.liferay.portal.slim.runtime.internal;
 
+import com.liferay.portal.events.StartupHelperUtil;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.impl.ReleaseLocalServiceImpl;
 
 /**
  * @author Raymond Augé
  */
 public class SlimReleaseLocalServiceImpl extends ReleaseLocalServiceImpl {
+
+	@Override
+	public void createTablesAndPopulate() {
+		try {
+			if (_log.isInfoEnabled()) {
+				_log.info("Create tables and populate with default data");
+			}
+
+			DB db = DBManagerUtil.getDB();
+
+			db.runSQLTemplate("slim/portal-tables.sql", false);
+			db.runSQLTemplate("slim/portal-data-common.sql", false);
+			db.runSQLTemplate("slim/portal-data-counter.sql", false);
+			db.runSQLTemplate("slim/portal-data-release.sql", false);
+			db.runSQLTemplate("slim/indexes.sql", false);
+			db.runSQLTemplate("slim/sequences.sql", false);
+
+			StartupHelperUtil.setDbNew(true);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new SystemException(e);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SlimReleaseLocalServiceImpl.class);
+
 }

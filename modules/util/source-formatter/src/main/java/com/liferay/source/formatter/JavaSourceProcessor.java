@@ -30,15 +30,11 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaSource;
 
 import java.io.File;
 import java.io.IOException;
-
-import java.net.UnknownHostException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -4538,22 +4534,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void postFormat() throws Exception {
 		checkBndInheritAnnotationOption();
-
-		try {
-			processCheckStyle();
-		}
-		catch (CheckstyleException ce) {
-			Throwable cause = ce.getCause();
-
-			if (cause instanceof UnknownHostException) {
-				System.out.println(
-					"Could not perform Checkstyle checks. Please check your " +
-						"network connection.");
-			}
-			else {
-				throw ce;
-			}
-		}
+		processCheckStyle();
 	}
 
 	@Override

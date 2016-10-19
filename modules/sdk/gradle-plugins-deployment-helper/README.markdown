@@ -1,7 +1,7 @@
 # Deployment Helper Gradle Plugin
 
 The Deployment Helper Gradle plugin lets you run the [Liferay Deployment Helper](https://github.com/liferay/liferay-portal/tree/master/modules/util/deployment-helper)
-tool in order to create a cluster deployable WAR from your OSGi artifacts.
+tool to create a cluster deployable WAR from your OSGi artifacts.
 
 ## Usage
 
@@ -41,18 +41,18 @@ The plugin adds one task to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
-`buildDeploymentHelper` | \- | [`BuildDeploymentHelperTask`](#buildeploymenthelper) | Builds a WAR which contains one or more files that will be copied once the WAR is deployed.
+`buildDeploymentHelper` | \- | [`BuildDeploymentHelperTask`](#builddeploymenthelpertask) | Builds a WAR which contains one or more files that are copied once the WAR is deployed.
 
 ### BuildDeploymentHelperTask
 
 Tasks of type `BuildDeploymentHelperTask` extend [`JavaExec`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html),
-so all its properties and methods, such as [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.css.Iterable))
+so all its properties and methods, such as [`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args(java.lang.Iterable))
 and [`maxHeapSize`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:maxHeapSize),
 are available. They also have the following properties set by default:
 
 Property Name | Default Value
 ------------- | -------------
-[`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args) | Deployment Helper command line arguments
+[`args`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:args) | The Deployment Helper command line arguments.
 [`classpath`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:classpath) | [`project.configurations.deploymentHelper`](#liferay-deployment-helper-dependency)
 [`deploymentFiles`](#deploymentfiles) | The output files of the [`jar`](https://docs.gradle.org/current/userguide/java_plugin.html#sec:jar) tasks of this project and all its sub-projects.
 [`main`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.JavaExec.html#org.gradle.api.tasks.JavaExec:main) | `"com.liferay.deployment.helper.DeploymentHelper"`
@@ -62,11 +62,12 @@ Property Name | Default Value
 
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
-<a name="deploymentfiles"></a>`deploymentFiles` | `FileCollection` | `[]` | The files or directories to include in the WAR and copy once the WAR is deployed. If a directory is added to this collection, all the JAR files contained in the directory will be included in the WAR.
-`deploymentPath` | `File` | `null` | The directory where the included files will be copied to.
+<a name="deploymentfiles"></a>`deploymentFiles` | `FileCollection` | `[]` | The files or directories to include in the WAR and copy once the WAR is deployed. If a directory is added to this collection, all the JAR files contained in the directory are included in the WAR.
+`deploymentPath` | `File` | `null` | The directory to which the included files are copied.
 <a name="outputfile"></a>`outputFile` | `File` | `null` | The WAR file to build.
 
-The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
+The properties of type `File` support any type that can be resolved by
+[`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 
 #### Task Methods
 

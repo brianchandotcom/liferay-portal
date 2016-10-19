@@ -311,8 +311,8 @@ public class SQLTransformer {
 		newSQL = _replaceCrossJoin(newSQL);
 		newSQL = _replaceInStr(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
-		newSQL = _replaceSubstr(newSQL);
 		newSQL = _replaceNullDate(newSQL);
+		newSQL = _replaceSubstr(newSQL);
 
 		if (_vendorDB2) {
 			newSQL = _replaceLike(newSQL);

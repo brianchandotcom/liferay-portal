@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author David Zhang
  */
-public class MBObjectTitleComparator<T> extends OrderByComparator<T> {
+public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
 		"modelCategory ASC, priority DESC, name ASC, modifiedDate DESC, " +
@@ -35,11 +35,11 @@ public class MBObjectTitleComparator<T> extends OrderByComparator<T> {
 		"modelCategory", "priority", "name", "modifiedDate", "modelId"
 	};
 
-	public MBObjectTitleComparator() {
+	public CategoryTitleComparator() {
 		this(false);
 	}
 
-	public MBObjectTitleComparator(boolean ascending) {
+	public CategoryTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

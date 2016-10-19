@@ -110,6 +110,10 @@ public class ReferencedStagedModelImporterCapability implements Capability {
 							_log.info(sb.toString());
 						}
 
+						if (_log.isDebugEnabled()) {
+							_log.debug(nsle, nsle);
+						}
+
 						continue;
 					}
 					catch (PortalException pe) {

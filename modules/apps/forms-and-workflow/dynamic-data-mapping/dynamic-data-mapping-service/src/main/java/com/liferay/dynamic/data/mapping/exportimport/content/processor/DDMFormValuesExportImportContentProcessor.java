@@ -315,7 +315,8 @@ public class DDMFormValuesExportImportContentProcessor<S extends StagedModel>
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to find file entry with uuid " + uuid +
-								" and groupId " + groupId);
+								" and groupId " + groupId,
+							nsfee);
 					}
 				}
 			}

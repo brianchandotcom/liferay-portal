@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -127,6 +129,12 @@ public class DDLRecordStagedModelRepository
 				ddlRecord.getRecordSet());
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		List<StagedModel> dependencyStagedModels = new ArrayList<>();
@@ -286,6 +294,9 @@ public class DDLRecordStagedModelRepository
 
 		return recordVersionDynamicQuery;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLRecordStagedModelRepository.class);
 
 	@Reference
 	private DDLRecordLocalService _ddlRecordLocalService;

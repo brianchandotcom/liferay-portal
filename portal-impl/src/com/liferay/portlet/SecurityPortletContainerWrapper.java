@@ -126,6 +126,13 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			_portletContainer.render(request, response, portlet);
 		}
 		catch (PrincipalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			processRenderException(request, response, portlet);
 		}
 		catch (PortletContainerException pce) {

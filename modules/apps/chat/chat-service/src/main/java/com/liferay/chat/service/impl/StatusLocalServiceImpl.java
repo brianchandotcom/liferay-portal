@@ -132,7 +132,8 @@ public class StatusLocalServiceImpl extends StatusLocalServiceBaseImpl {
 			}
 			catch (JSONException jsone) {
 				_log.error(
-					"Unable to create a JSON object from " + activePanelIds);
+					"Unable to create a JSON object from " + activePanelIds,
+					jsone);
 			}
 
 			status.setActivePanelIds(activePanelIds);

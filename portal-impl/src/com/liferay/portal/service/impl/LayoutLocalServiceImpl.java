@@ -624,6 +624,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layoutLocalService.deleteLayout(layout, false, serviceContext);
 			}
 			catch (NoSuchLayoutException nsle) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
 			}
 		}
 

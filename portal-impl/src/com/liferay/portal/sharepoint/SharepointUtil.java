@@ -53,7 +53,7 @@ public class SharepointUtil {
 		}
 		catch (WebDAVException wdave) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get groupId for path " + path);
+				_log.warn("Unable to get groupId for path " + path, wdave);
 			}
 		}
 

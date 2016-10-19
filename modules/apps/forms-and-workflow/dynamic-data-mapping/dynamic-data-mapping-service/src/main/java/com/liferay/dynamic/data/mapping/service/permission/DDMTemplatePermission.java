@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -273,6 +275,13 @@ public class DDMTemplatePermission extends BaseResourcePermissionChecker {
 			return contains(permissionChecker, classPK, actionId);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return false;
 		}
 	}
@@ -311,6 +320,9 @@ public class DDMTemplatePermission extends BaseResourcePermissionChecker {
 
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMTemplatePermission.class);
 
 	private static DDMPermissionSupportTracker _ddmPermissionSupportTracker;
 	private static DDMTemplateLocalService _ddmTemplateLocalService;

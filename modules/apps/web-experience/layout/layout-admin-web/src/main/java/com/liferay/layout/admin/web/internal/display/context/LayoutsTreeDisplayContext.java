@@ -110,6 +110,12 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		deleteLayoutURL.setRefererPlid(themeDisplay.getPlid());
@@ -480,6 +486,12 @@ public class LayoutsTreeDisplayContext extends BaseLayoutDisplayContext {
 						stagingGroup.getGroupId(), isPrivateLayout());
 			}
 			catch (NoSuchLayoutSetBranchException nslsbe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nslsbe, nslsbe);
+				}
 			}
 		}
 

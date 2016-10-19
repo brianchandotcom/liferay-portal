@@ -218,6 +218,13 @@ public class DDMFormEvaluatorHelper {
 			return jsonArray.getString(0);
 		}
 		catch (JSONException jsone) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
+
 			return valueString;
 		}
 	}

@@ -423,6 +423,12 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 				}
 			}
 			catch (NoSuchUserException nsue) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsue, nsue);
+				}
 			}
 		}
 

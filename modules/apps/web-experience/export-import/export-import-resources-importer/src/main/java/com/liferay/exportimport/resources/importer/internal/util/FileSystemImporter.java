@@ -786,6 +786,13 @@ public class FileSystemImporter extends BaseImporter {
 					StringPool.BLANK, inputStream, length, serviceContext);
 			}
 			catch (DuplicateFileEntryException dfee) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(dfee, dfee);
+				}
+
 				fileEntry = dlAppLocalService.getFileEntry(
 					groupId, parentFolderId, title);
 

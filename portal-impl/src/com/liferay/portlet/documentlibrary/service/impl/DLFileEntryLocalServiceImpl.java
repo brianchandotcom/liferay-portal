@@ -2410,6 +2410,13 @@ public class DLFileEntryLocalServiceImpl
 			return fileEntryTypeId;
 		}
 		catch (InvalidFileEntryTypeException ifete) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(ifete, ifete);
+			}
+
 			return dlFileEntryTypeLocalService.getDefaultFileEntryTypeId(
 				dlFileEntry.getFolderId());
 		}

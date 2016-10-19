@@ -67,6 +67,13 @@ public class DLPortletToolbarContributorHelper {
 				folder = _dlAppLocalService.getFolder(rootFolderId);
 			}
 			catch (NoSuchFolderException nsfe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe, nsfe);
+				}
+
 				folder = null;
 			}
 			catch (PortalException pe) {

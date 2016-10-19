@@ -135,7 +135,12 @@ public class AssetCategoryPropertyServiceImpl
 				}
 			}
 			catch (PortalException pe) {
-				continue;
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 			}
 		}
 

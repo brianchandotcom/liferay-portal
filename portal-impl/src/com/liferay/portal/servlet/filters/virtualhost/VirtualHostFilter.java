@@ -111,6 +111,13 @@ public class VirtualHostFilter extends BasePortalFilter {
 						groupId, false, friendlyURL);
 				}
 				catch (NoSuchLayoutException nsle) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nsle, nsle);
+					}
+
 					return true;
 				}
 			}

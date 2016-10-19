@@ -17,6 +17,8 @@ package com.liferay.portal.configuration.settings.internal;
 import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletItem;
@@ -177,6 +179,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 				groupId, name, portletId, PortletPreferences.class.getName());
 		}
 		catch (NoSuchPortletItemException nspie) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nspie, nspie);
+			}
+
 			long userId = PrincipalThreadLocal.getUserId();
 
 			portletItem = _portletItemLocalService.updatePortletItem(
@@ -281,6 +290,9 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 		unregister(configurationPidMapping.getConfigurationPid());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SettingsFactoryImpl.class);
 
 	private final ConcurrentMap<String, FallbackKeys> _fallbackKeysMap =
 		new ConcurrentHashMap<>();

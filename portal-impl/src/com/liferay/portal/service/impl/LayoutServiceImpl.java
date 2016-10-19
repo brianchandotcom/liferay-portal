@@ -22,6 +22,8 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -708,6 +710,13 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				layout = layoutLocalService.getLayout(plid);
 			}
 			catch (NoSuchLayoutException nsle) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
+
 				continue;
 			}
 
@@ -856,7 +865,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 				}
 			}
 			catch (PortalException pe) {
-				continue;
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 			}
 		}
 
@@ -2064,5 +2078,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return filteredLayouts;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutServiceImpl.class);
 
 }

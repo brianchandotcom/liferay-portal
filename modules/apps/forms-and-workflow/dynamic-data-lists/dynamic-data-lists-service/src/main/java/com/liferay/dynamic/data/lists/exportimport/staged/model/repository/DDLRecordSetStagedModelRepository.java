@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -162,6 +164,12 @@ public class DDLRecordSetStagedModelRepository
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return dependencyStagedModels;
@@ -277,6 +285,9 @@ public class DDLRecordSetStagedModelRepository
 			_ddmStructureLocalService.deleteStructure(ddmStructureId);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLRecordSetStagedModelRepository.class);
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;

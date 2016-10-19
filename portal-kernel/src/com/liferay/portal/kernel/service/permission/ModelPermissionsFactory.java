@@ -66,6 +66,12 @@ public class ModelPermissionsFactory {
 					_log.info("Unable to get role " + roleName);
 				}
 
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
 				continue;
 			}
 

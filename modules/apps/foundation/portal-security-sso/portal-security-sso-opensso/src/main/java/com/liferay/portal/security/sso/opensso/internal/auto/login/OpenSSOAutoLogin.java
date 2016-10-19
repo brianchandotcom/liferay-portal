@@ -184,6 +184,12 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 				}
 			}
 			catch (SystemException se) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(se, se);
+				}
 			}
 		}
 		else {

@@ -21,6 +21,8 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -167,6 +169,13 @@ public class PermissionImporter {
 				team = TeamLocalServiceUtil.getTeam(groupId, name);
 			}
 			catch (NoSuchTeamException nste) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nste, nste);
+				}
+
 				team = TeamLocalServiceUtil.addTeam(
 					userId, groupId, name, description, new ServiceContext());
 			}
@@ -277,6 +286,9 @@ public class PermissionImporter {
 
 	private PermissionImporter() {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PermissionImporter.class);
 
 	private static final PermissionImporter _instance =
 		new PermissionImporter();

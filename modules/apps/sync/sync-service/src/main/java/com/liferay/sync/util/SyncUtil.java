@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -569,6 +571,12 @@ public class SyncUtil {
 			}
 			catch (NoSuchFileVersionException nsfve) {
 
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfve, nsfve);
+				}
+
 				// Publishing a checked out file entry on a staged site will
 				// get the staged file entry's lock even though the live
 				// file entry is not checked out
@@ -687,6 +695,8 @@ public class SyncUtil {
 
 		throw new PortalException("Folder must be an instance of DLFolder");
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(SyncUtil.class);
 
 	private static final Map<String, String> _lanTokenKeys =
 		new ConcurrentHashMap<>();

@@ -700,6 +700,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			}
 		}
 		catch (PrincipalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_PERMISSIONS);
 
@@ -708,11 +715,25 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw ree;
 		}
 		catch (RemoteAuthException rae) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(rae, rae);
+			}
+
 			rae.setURL(remoteURL);
 
 			throw rae;
 		}
 		catch (SystemException se) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(se, se);
+			}
+
 			if (!forceDisable) {
 				RemoteExportException ree = new RemoteExportException(
 					RemoteExportException.BAD_CONNECTION);
@@ -744,6 +765,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			GroupServiceHttp.enableStaging(httpPrincipal, remoteGroupId);
 		}
 		catch (NoSuchGroupException nsge) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsge, nsge);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_GROUP);
 
@@ -752,6 +780,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw ree;
 		}
 		catch (PrincipalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_PERMISSIONS);
 
@@ -760,11 +795,25 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw ree;
 		}
 		catch (RemoteAuthException rae) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(rae, rae);
+			}
+
 			rae.setURL(remoteURL);
 
 			throw rae;
 		}
 		catch (SystemException se) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(se, se);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION);
 
@@ -784,6 +833,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				getAssembledFileName(stagingRequestId));
 		}
 		catch (NoSuchFileEntryException nsfee) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
+
 			return null;
 		}
 	}
@@ -960,6 +1016,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				httpPrincipal, remoteGroupId, stagedPortletIds);
 		}
 		catch (NoSuchGroupException nsge) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsge, nsge);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_GROUP);
 
@@ -968,6 +1031,13 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw ree;
 		}
 		catch (PrincipalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.NO_PERMISSIONS);
 
@@ -976,11 +1046,25 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			throw ree;
 		}
 		catch (RemoteAuthException rae) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(rae, rae);
+			}
+
 			rae.setURL(remoteURL);
 
 			throw rae;
 		}
 		catch (SystemException se) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(se, se);
+			}
+
 			RemoteExportException ree = new RemoteExportException(
 				RemoteExportException.BAD_CONNECTION);
 

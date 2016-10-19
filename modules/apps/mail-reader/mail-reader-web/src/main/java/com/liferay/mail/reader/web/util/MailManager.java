@@ -675,6 +675,13 @@ public class MailManager {
 			return createJSONResult("success", "sent-successfully");
 		}
 		catch (FileSizeException fse) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(fse, fse);
+			}
+
 			return createJSONResult("failure", "attachment-is-too-large");
 		}
 		catch (MailException me) {

@@ -18,6 +18,8 @@ import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -90,10 +92,20 @@ public class BookmarksAdminConfigurationAction
 				_bookmarksFolderLocalService.getFolder(rootFolderId);
 			}
 			catch (NoSuchFolderException nsfe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsfe, nsfe);
+				}
+
 				SessionErrors.add(actionRequest, "rootFolderIdInvalid");
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BookmarksAdminConfigurationAction.class);
 
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 

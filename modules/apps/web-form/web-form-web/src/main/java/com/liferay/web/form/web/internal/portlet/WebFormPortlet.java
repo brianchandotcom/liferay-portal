@@ -168,6 +168,13 @@ public class WebFormPortlet extends MVCPortlet {
 				CaptchaUtil.check(actionRequest);
 			}
 			catch (CaptchaTextException cte) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(cte, cte);
+				}
+
 				SessionErrors.add(
 					actionRequest, CaptchaTextException.class.getName());
 

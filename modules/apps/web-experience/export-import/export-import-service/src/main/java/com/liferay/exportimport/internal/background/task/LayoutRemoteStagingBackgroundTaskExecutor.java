@@ -176,7 +176,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 						httpPrincipal, stagingRequestId);
 				}
 				catch (PortalException pe) {
-					_log.warn("Unable to clean up the remote live site");
+					_log.warn("Unable to clean up the remote live site", pe);
 				}
 			}
 		}
@@ -264,6 +264,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				break;
 			}
 			catch (NoSuchLayoutException nsle) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
+
 				missingRemoteParentLayouts.add(parentLayout);
 
 				parentLayoutId = parentLayout.getParentLayoutId();

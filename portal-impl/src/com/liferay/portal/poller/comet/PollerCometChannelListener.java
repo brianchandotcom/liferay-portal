@@ -53,6 +53,12 @@ public class PollerCometChannelListener implements ChannelListener {
 				cometRequest.getCompanyId(), cometRequest.getUserId(), this);
 		}
 		catch (UnknownChannelException uce) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(uce, uce);
+			}
 		}
 		catch (ChannelException ce) {
 			if (_log.isWarnEnabled()) {

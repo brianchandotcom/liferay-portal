@@ -14,6 +14,8 @@
 
 package com.liferay.rss.web.internal.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -124,6 +126,12 @@ public class RSSFeedEntry {
 						null);
 				}
 				catch (SanitizerException se) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(se, se);
+					}
 				}
 			}
 			else {
@@ -165,6 +173,8 @@ public class RSSFeedEntry {
 
 		return syndContents;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(RSSFeedEntry.class);
 
 	private final RSSFeed _rssFeed;
 	private final String _syndEnclosureLink;

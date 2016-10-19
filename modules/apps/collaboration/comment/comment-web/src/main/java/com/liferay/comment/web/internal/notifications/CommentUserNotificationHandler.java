@@ -21,6 +21,8 @@ import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -55,6 +57,13 @@ public class CommentUserNotificationHandler
 			return _mbDiscussionLocalService.fetchDiscussion(classPK);
 		}
 		catch (SystemException se) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(se, se);
+			}
+
 			return null;
 		}
 	}
@@ -144,6 +153,9 @@ public class CommentUserNotificationHandler
 
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommentUserNotificationHandler.class);
 
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 

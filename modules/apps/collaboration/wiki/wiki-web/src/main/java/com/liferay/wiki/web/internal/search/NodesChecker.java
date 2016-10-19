@@ -17,6 +17,8 @@ package com.liferay.wiki.web.internal.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -75,6 +77,13 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 			node = WikiNodeServiceUtil.getNode(nodeId);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return StringPool.BLANK;
 		}
 
@@ -108,6 +117,8 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 			primaryKey, checkBoxRowIds, "'#" + getAllRowIds() + "'",
 			StringPool.BLANK);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(NodesChecker.class);
 
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final PermissionChecker _permissionChecker;

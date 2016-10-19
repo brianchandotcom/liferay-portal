@@ -266,10 +266,14 @@ public class MediaWikiImporter implements WikiImporter {
 		try {
 			DLStoreUtil.validate(fileName, true, inputStream);
 		}
-		catch (PortalException pe) {
-			return false;
-		}
-		catch (SystemException se) {
+		catch (PortalException | SystemException e) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			return false;
 		}
 

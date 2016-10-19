@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.upgrade.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.StagnantRowException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,8 +49,18 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 			return valueMapper.getNewValue(oldValue);
 		}
 		catch (StagnantRowException sre) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sre, sre);
+			}
+
 			return Long.valueOf(0);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultPKMapper.class);
 
 }

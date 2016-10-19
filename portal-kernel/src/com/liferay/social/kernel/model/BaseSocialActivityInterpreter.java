@@ -344,7 +344,7 @@ public abstract class BaseSocialActivityInterpreter
 			}
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to create a JSON object from " + json);
+			_log.error("Unable to create a JSON object from " + json, jsone);
 		}
 
 		return defaultValue;

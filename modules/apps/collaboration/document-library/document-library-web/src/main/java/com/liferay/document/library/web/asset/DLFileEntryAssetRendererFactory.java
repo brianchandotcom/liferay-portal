@@ -28,6 +28,8 @@ import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -97,6 +99,13 @@ public class DLFileEntryAssetRendererFactory
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
+
 			fileVersion = _dlAppLocalService.getFileVersion(classPK);
 
 			fileEntry = fileVersion.getFileEntry();
@@ -234,6 +243,9 @@ public class DLFileEntryAssetRendererFactory
 
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileEntryAssetRendererFactory.class);
 
 	private DLAppLocalService _dlAppLocalService;
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.StagnantRowException;
 import com.liferay.portal.kernel.upgrade.util.ValueMapper;
 
@@ -40,6 +42,13 @@ public class LazyPKUpgradeColumnImpl extends PKUpgradeColumnImpl {
 			newValue = (Long)valueMapper.getNewValue(oldValue);
 		}
 		catch (StagnantRowException sre) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sre, sre);
+			}
+
 			newValue = Long.valueOf(increment());
 
 			valueMapper.mapValue(oldValue, newValue);
@@ -47,5 +56,8 @@ public class LazyPKUpgradeColumnImpl extends PKUpgradeColumnImpl {
 
 		return newValue;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LazyPKUpgradeColumnImpl.class);
 
 }

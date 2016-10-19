@@ -100,7 +100,7 @@ public abstract class BaseSocialNetworkingRequestInterpreter
 			}
 		}
 		catch (JSONException jsone) {
-			_log.error("Unable to create JSON object from " + extraData);
+			_log.error("Unable to create JSON object from " + extraData, jsone);
 		}
 
 		return new SocialRequestFeedEntry(title, body);

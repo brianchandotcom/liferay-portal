@@ -499,7 +499,7 @@ public class HookHotDeployListener
 		}
 		catch (DuplicateCustomJspException dcje) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(servletContextName + " will be undeployed");
+				_log.warn(servletContextName + " will be undeployed", dcje);
 			}
 
 			HotDeployUtil.fireUndeployEvent(

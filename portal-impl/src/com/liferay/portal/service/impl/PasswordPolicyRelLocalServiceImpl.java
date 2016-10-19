@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchPasswordPolicyRelException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PasswordPolicyRel;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -97,6 +99,12 @@ public class PasswordPolicyRelLocalServiceImpl
 			deletePasswordPolicyRel(passwordPolicyRel);
 		}
 		catch (NoSuchPasswordPolicyRelException nsppre) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsppre, nsppre);
+			}
 		}
 	}
 
@@ -187,5 +195,8 @@ public class PasswordPolicyRelLocalServiceImpl
 			return false;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PasswordPolicyRelLocalServiceImpl.class);
 
 }

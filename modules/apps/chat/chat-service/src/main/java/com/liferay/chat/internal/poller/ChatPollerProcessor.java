@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
@@ -146,6 +148,12 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				}
 			}
 			catch (NoSuchLayoutSetException nslse) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nslse, nslse);
+				}
 			}
 
 			curUserJSONObject.put("displayURL", displayURL);
@@ -217,6 +225,13 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 						"fromPortraitId", fromUser.getPortraitId());
 				}
 				catch (NoSuchUserException nsue) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nsue, nsue);
+					}
+
 					continue;
 				}
 			}
@@ -287,6 +302,9 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 				activePanelIds, statusMessage, playSound);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ChatPollerProcessor.class);
 
 	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 	private LayoutSetLocalService _layoutSetLocalService;

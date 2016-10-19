@@ -833,6 +833,12 @@ public class LayoutStagedModelDataHandler
 					"linked-to-layout-uuid", linkedToLayout.getUuid());
 			}
 			catch (NoSuchLayoutException nsle) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
 			}
 		}
 	}
@@ -1734,6 +1740,12 @@ public class LayoutStagedModelDataHandler
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

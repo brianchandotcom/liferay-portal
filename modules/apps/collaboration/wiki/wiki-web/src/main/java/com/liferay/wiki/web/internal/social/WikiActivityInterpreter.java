@@ -15,6 +15,8 @@
 package com.liferay.wiki.web.internal.social;
 
 import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -83,6 +85,12 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 					fileEntryId);
 			}
 			catch (NoSuchModelException nsme) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsme, nsme);
+				}
 			}
 
 			String fileEntryTitle = activity.getExtraDataValue(
@@ -282,6 +290,9 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	private static final String[] _CLASS_NAMES = {WikiPage.class.getName()};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiActivityInterpreter.class);
 
 	private final ResourceBundleLoader _resourceBundleLoader =
 		new ClassResourceBundleLoader(

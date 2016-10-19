@@ -103,7 +103,8 @@ public class StagedGroupStagedModelRepository
 			_log.error(
 				"Unable to fetch Layout Set with groupId " +
 					stagedGroup.getGroupId() + " and private layout " +
-						portletDataContext.isPrivateLayout());
+						portletDataContext.isPrivateLayout(),
+				pe);
 		}
 
 		return childrenStagedModels;

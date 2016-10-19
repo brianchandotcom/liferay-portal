@@ -16,6 +16,8 @@ package com.liferay.site.admin.web.internal.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -77,6 +79,12 @@ public class ManageSiteTemplatesConfigurationIcon
 			return manageSiteTemplateURL.toString();
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return StringPool.BLANK;
@@ -101,5 +109,8 @@ public class ManageSiteTemplatesConfigurationIcon
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ManageSiteTemplatesConfigurationIcon.class);
 
 }

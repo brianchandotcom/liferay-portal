@@ -18,6 +18,8 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ColorScheme;
@@ -95,6 +97,12 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 			_userUuid = user.getUuid();
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 	}
 
@@ -556,6 +564,9 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 	public String toXmlString() {
 		return _layoutSet.toXmlString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagedLayoutSetImpl.class);
 
 	private Date _lastPublishDate;
 	private LayoutSet _layoutSet;

@@ -331,6 +331,12 @@ public class UpgradeSocial extends UpgradeProcess {
 				messageId = jsonObject.getLong("messageId");
 			}
 			catch (JSONException jsone) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsone, jsone);
+				}
 			}
 
 			extraDataJSONObject.put("messageId", messageId);
@@ -379,6 +385,12 @@ public class UpgradeSocial extends UpgradeProcess {
 				messageId = jsonObject.getLong("messageId");
 			}
 			catch (JSONException jsone) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(jsone);
+				}
 			}
 
 			preparedStatement.setLong(1, messageId);

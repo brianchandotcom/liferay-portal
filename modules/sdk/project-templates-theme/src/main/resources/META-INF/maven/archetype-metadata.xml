@@ -2,12 +2,6 @@
 
 <archetype-descriptor name="liferay-module-theme">
 	<fileSets>
-		<fileSet filtered="true" packaged="true">
-			<directory>src/main/java</directory>
-			<includes>
-				<include>**/*.java</include>
-			</includes>
-		</fileSet>
 		<fileSet filtered="true">
 			<directory>src/main/resources</directory>
 			<includes>
@@ -18,14 +12,11 @@
 			<directory></directory>
 			<includes>
 				<include>.gitignore</include>
-				<include>bnd.bnd</include>
 				<include>build.gradle</include>
 			</includes>
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
-		<requiredProperty key="className">
-		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>
 		</requiredProperty>

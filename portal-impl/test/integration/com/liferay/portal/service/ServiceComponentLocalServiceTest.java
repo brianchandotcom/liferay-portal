@@ -240,13 +240,15 @@ public class ServiceComponentLocalServiceTest {
 		}
 
 		@Override
-		public void upgrade(DBProcessContext dbProcessContext) {
+		public void upgrade(DBProcessContext dbProcessContext)
+			throws UpgradeException {
+
 			try {
 				_db.runSQL(
 					"create table " + _TEST_TABLE + " (name VARCHAR(20))");
 			}
 			catch (Exception e) {
-				new UpgradeException(e);
+				throw new UpgradeException(e);
 			}
 		}
 

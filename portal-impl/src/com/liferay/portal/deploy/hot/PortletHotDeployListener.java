@@ -499,13 +499,11 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		String[] resourceActionConfigs = StringUtil.split(
-			portletProperties.getProperty(PropsKeys.RESOURCE_ACTIONS_CONFIGS));
-
-		for (String resourceActionConfig : resourceActionConfigs) {
-			ResourceActionsUtil.read(
-				servletContextName, classLoader, resourceActionConfig);
-		}
+		ResourceActionsUtil.read(
+			servletContextName, classLoader,
+			StringUtil.split(
+				portletProperties.getProperty(
+					PropsKeys.RESOURCE_ACTIONS_CONFIGS)));
 	}
 
 	protected void unbindDataSource(String servletContextName) {

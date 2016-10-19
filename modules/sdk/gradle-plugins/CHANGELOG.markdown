@@ -416,6 +416,22 @@ to version 1.0.15.
 - [LPS-68779]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.130.
 
+## 3.0.15 - 2016-10-18
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.34.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.300.
+
+## 3.0.16 - 2016-10-18
+
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.35.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.301.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

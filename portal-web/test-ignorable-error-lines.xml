@@ -168,6 +168,10 @@
 			<contains>Application exception overridden by commit exception</contains>
 			<matches></matches>
 		</ignore-error>
+		<ignore-error description="LPS-65131">
+			<contains></contains>
+			<matches>.*Table.*does not exist.*</matches>
+		</ignore-error>
 		<ignore-error description="LPS-65878, temporary workaround until Tina Tian fixes it">
 			<contains>The addSearchEngineConfigurator method has thrown an exception</contains>
 			<matches></matches>

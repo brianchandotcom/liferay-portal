@@ -1167,7 +1167,7 @@ public class PortletExportController implements ExportController {
 				"'last-publish-date']");
 
 		for (Node node : nodes) {
-			document.remove(node);
+			node.detach();
 		}
 
 		Element serviceElement = parentElement.addElement("service");

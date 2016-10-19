@@ -196,6 +196,12 @@ public class StagedLayoutSetStagedModelDataHandler
 		Element stagedLayoutSetElement =
 			portletDataContext.getExportDataElement(stagedLayoutSet);
 
+		// Last publish date must not be exported
+
+		UnicodeProperties settings = stagedLayoutSet.getSettingsProperties();
+
+		settings.remove("last-publish-date");
+
 		portletDataContext.addClassedModel(
 			stagedLayoutSetElement,
 			ExportImportPathUtil.getModelPath(stagedLayoutSet),

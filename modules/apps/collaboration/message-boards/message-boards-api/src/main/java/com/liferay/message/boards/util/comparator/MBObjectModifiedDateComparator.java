@@ -23,8 +23,7 @@ import java.util.Date;
 /**
  * @author David Zhang
  */
-public class MBObjectModifiedDateComparator<T>
-	extends OrderByComparator<T> {
+public class MBObjectModifiedDateComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
 		"modelCategory ASC, priority DESC, modifiedDate ASC, name ASC, " +

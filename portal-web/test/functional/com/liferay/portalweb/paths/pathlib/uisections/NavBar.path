@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNEES</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Assignees')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASIC_SEARCH_FIELD</td>
 	<td>//div[contains(@class,'navbar-default')]//input[contains(@id,'keywords')]</td>
 	<td></td>

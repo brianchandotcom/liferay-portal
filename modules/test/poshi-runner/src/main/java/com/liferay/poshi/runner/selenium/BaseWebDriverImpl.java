@@ -2832,7 +2832,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void typeEditor(String locator, String value) {
+	public void typeEditor(String locator, String value) throws Exception {
 		WebDriverHelper.typeEditor(this, locator, value);
 	}
 

@@ -23,11 +23,11 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:d
 <div class="drop-here-info">
 	<div class="drop-here-indicator">
 		<div class="drop-icons">
-			<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+			<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
 
-			<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+			<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
 
-			<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+			<aui:icon cssClass="drop-icon" image="picture" markupView="lexicon" />
 		</div>
 
 		<div class="drop-text">

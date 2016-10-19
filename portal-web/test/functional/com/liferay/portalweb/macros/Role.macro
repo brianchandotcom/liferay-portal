@@ -184,6 +184,8 @@
 
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 
+		<execute function="AssertClick" locator1="NavBar#ASSIGNEES" value1="Assignees" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
@@ -363,18 +365,16 @@
 
 				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleUser}" />
 
-				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
+				<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleUser}" />
 			</then>
 			<else>
 				<var name="key_itemName" value="${roleTitle}" />
 
 				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleTitle}" />
 
-				<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" />
+				<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 			</else>
 		</if>
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertClick" locator1="NavBar#DEFINE_PERMISSIONS" value1="Define Permissions" />
 

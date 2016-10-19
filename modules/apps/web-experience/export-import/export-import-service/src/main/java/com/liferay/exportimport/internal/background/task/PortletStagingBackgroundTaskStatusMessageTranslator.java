@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.background.task;
+package com.liferay.exportimport.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.messaging.Message;
@@ -26,7 +26,7 @@ import java.util.HashMap;
 /**
  * @author Daniel Kocsis
  */
-public class LayoutStagingBackgroundTaskStatusMessageTranslator
+public class PortletStagingBackgroundTaskStatusMessageTranslator
 	extends DefaultExportImportBackgroundTaskStatusMessageTranslator {
 
 	protected long getAllModelAdditionCountersTotal(
@@ -42,19 +42,8 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 			currentModelAdditionCountersTotal;
 	}
 
-	protected long getAllPortletAdditionCounter(
-		BackgroundTaskStatus backgroundTaskStatus) {
-
-		long allPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("allPortletAdditionCounter"));
-		long currentPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute("currentPortletAdditionCounter"));
-
-		return allPortletAdditionCounter + currentPortletAdditionCounter;
-	}
-
 	@Override
-	protected synchronized void translateLayoutMessage(
+	protected synchronized void translatePortletMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
 		String phase = GetterUtil.getString(
@@ -71,15 +60,18 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 
 		backgroundTaskStatus.setAttribute("phase", phase);
 
-		super.translateLayoutMessage(backgroundTaskStatus, message);
+		if (phase.equals(Constants.EXPORT)) {
+			long portletModelAdditionCountersTotal = GetterUtil.getLong(
+				message.get("portletModelAdditionCountersTotal"));
 
-		if (phase.equals(Constants.IMPORT)) {
+			backgroundTaskStatus.setAttribute(
+				"allModelAdditionCountersTotal",
+				portletModelAdditionCountersTotal);
+		}
+		else {
 			backgroundTaskStatus.setAttribute(
 				"allModelAdditionCountersTotal",
 				getAllModelAdditionCountersTotal(backgroundTaskStatus));
-			backgroundTaskStatus.setAttribute(
-				"allPortletAdditionCounter",
-				getAllPortletAdditionCounter(backgroundTaskStatus));
 			backgroundTaskStatus.setAttribute(
 				"allPortletModelAdditionCounters",
 				new HashMap<String, LongWrapper>());
@@ -87,6 +79,8 @@ public class LayoutStagingBackgroundTaskStatusMessageTranslator
 				"currentPortletModelAdditionCounters",
 				new HashMap<String, LongWrapper>());
 		}
+
+		super.translatePortletMessage(backgroundTaskStatus, message);
 	}
 
 }

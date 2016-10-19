@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.xstream;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamUnmarshallingContext;
 
@@ -22,6 +24,7 @@ import com.thoughtworks.xstream.converters.UnmarshallingContext;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class XStreamUnmarshallingContextAdapter
 	implements XStreamUnmarshallingContext {
 

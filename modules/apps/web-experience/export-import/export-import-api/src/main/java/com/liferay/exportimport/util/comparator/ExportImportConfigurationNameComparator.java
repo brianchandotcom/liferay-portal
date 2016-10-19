@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.util.comparator;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportConfigurationNameComparator
 	extends OrderByComparator<ExportImportConfiguration> {
 

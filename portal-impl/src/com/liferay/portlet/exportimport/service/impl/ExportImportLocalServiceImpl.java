@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.controller.ExportController;
@@ -46,6 +48,7 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportLocalServiceImpl
 	extends ExportImportLocalServiceBaseImpl {
 

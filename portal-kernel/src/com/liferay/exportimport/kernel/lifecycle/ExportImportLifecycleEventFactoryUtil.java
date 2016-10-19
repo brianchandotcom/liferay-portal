@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
@@ -21,6 +23,7 @@ import java.io.Serializable;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportLifecycleEventFactoryUtil {
 
 	public static ExportImportLifecycleEvent create(

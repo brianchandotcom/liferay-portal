@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.kernel.configuration;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -27,6 +29,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Akos Thurzo
  */
+@ProviderType
 public class ExportImportConfigurationParameterMapFactory {
 
 	public static Map<String, String[]> buildParameterMap() {

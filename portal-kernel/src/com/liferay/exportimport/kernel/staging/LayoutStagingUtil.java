@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.kernel.staging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public class LayoutStagingUtil {
 
 	public static LayoutRevision getLayoutRevision(Layout layout) {

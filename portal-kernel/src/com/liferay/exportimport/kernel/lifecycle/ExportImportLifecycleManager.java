@@ -14,11 +14,14 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public interface ExportImportLifecycleManager {
 
 	public void fireExportImportLifecycleEvent(

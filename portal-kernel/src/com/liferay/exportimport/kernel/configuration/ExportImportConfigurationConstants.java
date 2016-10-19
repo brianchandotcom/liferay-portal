@@ -14,12 +14,15 @@
 
 package com.liferay.exportimport.kernel.configuration;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Daniel Kocsis
  * @author Akos Thurzo
  */
+@ProviderType
 public class ExportImportConfigurationConstants {
 
 	public static final int TYPE_EXPORT_LAYOUT = 0;

@@ -14,9 +14,12 @@
 
 package com.liferay.exportimport.kernel.xstream;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public interface XStreamHierarchicalStreamWriter {
 
 	public void addAttribute(String key, String value);

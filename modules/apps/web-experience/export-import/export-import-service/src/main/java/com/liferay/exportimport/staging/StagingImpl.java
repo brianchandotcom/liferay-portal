@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.staging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
@@ -160,6 +162,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 @DoPrivileged
+@ProviderType
 public class StagingImpl implements Staging {
 
 	@Override

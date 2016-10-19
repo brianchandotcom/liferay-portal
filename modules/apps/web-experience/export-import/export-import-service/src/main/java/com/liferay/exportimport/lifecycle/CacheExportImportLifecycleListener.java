@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lifecycle.BaseExportImportLifecycleListener;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
@@ -26,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mate Thurzo
  */
 @Component(immediate = true, service = ExportImportLifecycleListener.class)
+@ProviderType
 public class CacheExportImportLifecycleListener
 	extends BaseExportImportLifecycleListener {
 

@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEventFactory;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
@@ -42,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true, service = ExportImportLifecycleManager.class)
+@ProviderType
 public class ExportImportLifecycleManagerImpl
 	implements ExportImportLifecycleManager {
 

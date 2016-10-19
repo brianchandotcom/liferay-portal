@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.staging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.LayoutStaging;
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
@@ -43,6 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 @DoPrivileged
+@ProviderType
 public class LayoutStagingImpl implements LayoutStaging {
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -119,6 +121,7 @@ import org.xml.sax.XMLReader;
  * @author Mate Thurzo
  */
 @Component(immediate = true)
+@ProviderType
 public class ExportImportHelperImpl implements ExportImportHelper {
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.portlet.preferences.processor.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.log.Log;
@@ -31,6 +33,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public abstract class BaseExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {
 

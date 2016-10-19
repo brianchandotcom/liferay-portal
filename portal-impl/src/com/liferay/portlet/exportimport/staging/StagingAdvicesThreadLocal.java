@@ -14,11 +14,14 @@
 
 package com.liferay.portlet.exportimport.staging;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public class StagingAdvicesThreadLocal {
 
 	public static boolean isEnabled() {

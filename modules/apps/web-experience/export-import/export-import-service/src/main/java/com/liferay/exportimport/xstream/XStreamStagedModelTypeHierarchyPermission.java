@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.xstream;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.StagedModel;
 
 import com.thoughtworks.xstream.security.TypePermission;
@@ -21,6 +23,7 @@ import com.thoughtworks.xstream.security.TypePermission;
 /**
  * @author Mate Thurzo
  */
+@ProviderType
 public class XStreamStagedModelTypeHierarchyPermission
 	implements TypePermission {
 

@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portal.kernel.util.ListUtil;
 
@@ -25,6 +27,7 @@ import java.util.List;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportLifecycleEventImpl
 	implements ExportImportLifecycleEvent {
 

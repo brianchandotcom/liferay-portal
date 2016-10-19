@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.kernel.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.concurrent.Callable;
@@ -21,6 +23,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportProcessCallbackRegistryUtil {
 
 	public static void registerCallback(Callable<?> callable) {

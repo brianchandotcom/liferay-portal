@@ -67,7 +67,7 @@ AUI.add(
 							name = key + counter;
 						}
 
-						existingField = builder.findField(name);
+						existingField = builder.findField(name, true);
 
 						counter++;
 					}

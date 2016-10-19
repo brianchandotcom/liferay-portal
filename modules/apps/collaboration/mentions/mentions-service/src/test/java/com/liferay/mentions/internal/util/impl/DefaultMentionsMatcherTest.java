@@ -15,21 +15,57 @@
 package com.liferay.mentions.internal.util.impl;
 
 import com.liferay.mentions.matcher.MentionsMatcher;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Arrays;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.MockitoAnnotations;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultMentionsMatcherTest {
+@PrepareForTest
+@RunWith(PowerMockRunner.class)
+public class DefaultMentionsMatcherTest extends PowerMockito {
+
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+
+		Props props = mock(Props.class);
+
+		when(
+			props.get(PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS)
+		).thenReturn(
+			_SCREEN_NAME_SPECIAL_CHARS
+		);
+
+		PropsUtil.setProps(props);
+	}
 
 	@Test
 	public void testMatchBBCodeAtMention() {
 		assertEquals("user1", _mentionsMatcher.match("[span]@user1[span]"));
+	}
+
+	@Test
+	public void testMatchBBCodeSpecialCharacters() {
+		assertEquals(
+			_SCREEN_NAME_WITH_SPECIAL_CHARS,
+			_mentionsMatcher.match(
+				"[span]@" + _SCREEN_NAME_WITH_SPECIAL_CHARS + "[span]"));
 	}
 
 	@Test
@@ -40,6 +76,14 @@ public class DefaultMentionsMatcherTest {
 	@Test
 	public void testMatchHTMLAtMention() {
 		assertEquals("user1", _mentionsMatcher.match("<span>@user1</span>"));
+	}
+
+	@Test
+	public void testMatchHTMLSpecialCharacters() {
+		assertEquals(
+			_SCREEN_NAME_WITH_SPECIAL_CHARS,
+			_mentionsMatcher.match(
+				"<span>@" + _SCREEN_NAME_WITH_SPECIAL_CHARS + "</span>"));
 	}
 
 	@Test
@@ -124,6 +168,11 @@ public class DefaultMentionsMatcherTest {
 	protected <T> void assertEquals(T value, Iterable<T> iterable) {
 		assertEquals(Arrays.asList(value), iterable);
 	}
+
+	private static final String _SCREEN_NAME_SPECIAL_CHARS = "-._";
+
+	private static final String _SCREEN_NAME_WITH_SPECIAL_CHARS =
+		"user" + _SCREEN_NAME_SPECIAL_CHARS;
 
 	private final MentionsMatcher _mentionsMatcher =
 		new DefaultMentionsMatcher();

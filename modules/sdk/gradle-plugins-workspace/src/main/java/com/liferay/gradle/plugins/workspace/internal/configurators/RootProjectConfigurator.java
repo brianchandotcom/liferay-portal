@@ -40,6 +40,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.tasks.AbstractCopyTask;
@@ -264,6 +265,34 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		abstractCopyTask.dependsOn(downloadBundleTask);
 
 		abstractCopyTask.from(
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public FileCollection doCall() {
+					Map<String, Object> args = new HashMap<>();
+
+					args.put("dir", workspaceExtension.getConfigsDir());
+					args.put("exclude", "**/.touch");
+
+					List<String> includes = Arrays.asList(
+						"common/", workspaceExtension.getEnvironment() + "/");
+
+					args.put("includes", includes);
+
+					return project.fileTree(args);
+				}
+
+			},
+			new Closure<Void>(project) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(new StripPathSegmentsAction(1));
+				}
+
+			});
+
+		abstractCopyTask.from(
 			new Callable<FileCollection>() {
 
 				@Override
@@ -297,33 +326,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 			});
 
-		abstractCopyTask.from(
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public FileCollection doCall() {
-					Map<String, Object> args = new HashMap<>();
-
-					args.put("dir", workspaceExtension.getConfigsDir());
-					args.put("exclude", "**/.touch");
-
-					List<String> includes = Arrays.asList(
-						"common/", workspaceExtension.getEnvironment() + "/");
-
-					args.put("includes", includes);
-
-					return project.fileTree(args);
-				}
-
-			},
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(1));
-				}
-
-			});
+		abstractCopyTask.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 	}
 
 }

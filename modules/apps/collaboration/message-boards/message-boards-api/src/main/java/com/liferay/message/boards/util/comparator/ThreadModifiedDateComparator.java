@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  * @author David Zhang
  */
-public class MBObjectModifiedDateComparator<T> extends OrderByComparator<T> {
+public class ThreadModifiedDateComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
 		"modelCategory ASC, priority DESC, modifiedDate ASC, name ASC, " +
@@ -37,11 +37,11 @@ public class MBObjectModifiedDateComparator<T> extends OrderByComparator<T> {
 		"modelCategory", "priority", "modifiedDate", "modifiedDate", "modelId"
 	};
 
-	public MBObjectModifiedDateComparator() {
+	public ThreadModifiedDateComparator() {
 		this(false);
 	}
 
-	public MBObjectModifiedDateComparator(boolean ascending) {
+	public ThreadModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

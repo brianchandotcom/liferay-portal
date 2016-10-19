@@ -61,6 +61,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -640,11 +641,22 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	}
 
 	protected void processSyncFile(SyncFile targetSyncFile) {
+		SyncFile sourceSyncFile = null;
+
 		String event = targetSyncFile.getEvent();
 
-		SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(
-			targetSyncFile.getRepositoryId(), getSyncAccountId(),
-			targetSyncFile.getTypePK());
+		if (event.equals(SyncFile.EVENT_DELETE) ||
+			event.equals(SyncFile.EVENT_MOVE) ||
+			event.equals(SyncFile.EVENT_TRASH)) {
+
+			sourceSyncFile = SyncFileService.fetchSyncFile(
+				targetSyncFile.getRepositoryId(), getSyncAccountId(),
+				targetSyncFile.getTypePK());
+		}
+		else {
+			sourceSyncFile = SyncFileService.fetchSyncFile(
+				targetSyncFile.getFilePathName());
+		}
 
 		if (event.equals(SyncFile.EVENT_DELETE) ||
 			event.equals(SyncFile.EVENT_TRASH)) {
@@ -808,11 +820,19 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			String filePathName)
 		throws Exception {
 
-		String sourceVersion = sourceSyncFile.getVersion();
-		long sourceVersionId = sourceSyncFile.getVersionId();
+		String previousType = sourceSyncFile.getType();
+		String previousVersion = sourceSyncFile.getVersion();
+		long previousVersionId = sourceSyncFile.getVersionId();
+		String previousFilePathName = sourceSyncFile.getFilePathName();
 
-		boolean filePathChanged = processFilePathChange(
-			sourceSyncFile, targetSyncFile);
+		processFilePathChange(sourceSyncFile, targetSyncFile);
+
+		if (sourceSyncFile.getTypePK() != targetSyncFile.getTypePK()) {
+			_logger.error(
+				"Source type pk {} does not match target {} for {}",
+				sourceSyncFile.getTypePK(), targetSyncFile.getTypePK(),
+				sourceSyncFile.getFilePathName());
+		}
 
 		sourceSyncFile.setChangeLog(targetSyncFile.getChangeLog());
 		sourceSyncFile.setChecksum(targetSyncFile.getChecksum());
@@ -826,6 +846,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		sourceSyncFile.setLockUserName(targetSyncFile.getLockUserName());
 		sourceSyncFile.setModifiedTime(targetSyncFile.getModifiedTime());
 		sourceSyncFile.setSize(targetSyncFile.getSize());
+		sourceSyncFile.setType(targetSyncFile.getType());
+		sourceSyncFile.setTypePK(targetSyncFile.getTypePK());
 		sourceSyncFile.setUserId(targetSyncFile.getUserId());
 		sourceSyncFile.setUserName(targetSyncFile.getUserName());
 		sourceSyncFile.setVersion(targetSyncFile.getVersion());
@@ -838,6 +860,15 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		}
 
 		Path filePath = Paths.get(targetSyncFile.getFilePathName());
+
+		if (!previousType.equals(sourceSyncFile.getType())) {
+			if (previousType.equals(SyncFile.TYPE_FOLDER)) {
+				FileUtils.deleteDirectory(filePath.toFile());
+			}
+			else {
+				Files.deleteIfExists(filePath);
+			}
+		}
 
 		if (!FileUtil.exists(filePath)) {
 			if (targetSyncFile.isFolder()) {
@@ -862,17 +893,17 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				 FileUtil.isModified(targetSyncFile, filePath)) {
 
 			downloadFile(
-				sourceSyncFile, sourceVersion, sourceVersionId,
+				sourceSyncFile, previousVersion, previousVersionId,
 				!IODeltaUtil.isIgnoredFilePatchingExtension(targetSyncFile));
 		}
 		else {
 			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
 
-			if (filePathChanged) {
-				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_RENAMED_REMOTE);
+			if (previousFilePathName.equals(sourceSyncFile.getFilePathName())) {
+				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
 			}
 			else {
-				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
+				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_RENAMED_REMOTE);
 			}
 
 			SyncFileService.update(sourceSyncFile);

@@ -240,7 +240,7 @@ else {
 						}
 					},
 					popover: {
-						zIndex: Liferay.zIndex.OVERLAY
+						zIndex: Liferay.zIndex.POPOVER
 					},
 					trigger: '#<%= nameId %>'
 				}

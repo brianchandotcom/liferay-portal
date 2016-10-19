@@ -173,7 +173,7 @@ public class ExportImportLifecycleEventTest {
 					Level.ERROR);
 			CaptureAppender captureAppender2 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.background.task." +
+					"com.liferay.exportimport.internal.background.task." +
 						"LayoutStagingBackgroundTaskExecutor",
 					Level.WARN)) {
 
@@ -292,7 +292,7 @@ public class ExportImportLifecycleEventTest {
 					Level.ERROR);
 			CaptureAppender captureAppender2 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					"com.liferay.exportimport.background.task." +
+					"com.liferay.exportimport.internal.background.task." +
 						"PortletStagingBackgroundTaskExecutor",
 					Level.WARN)) {
 

@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public interface ExportImportLifecycleEvent extends Serializable {
 
 	public List<Serializable> getAttributes();

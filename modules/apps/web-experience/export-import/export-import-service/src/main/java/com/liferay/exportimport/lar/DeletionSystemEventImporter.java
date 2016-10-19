@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -38,6 +40,7 @@ import org.xml.sax.XMLReader;
 /**
  * @author Zsolt Berentey
  */
+@ProviderType
 public class DeletionSystemEventImporter {
 
 	public static DeletionSystemEventImporter getInstance() {

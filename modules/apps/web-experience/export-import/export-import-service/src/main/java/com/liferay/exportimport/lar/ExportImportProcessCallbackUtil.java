@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.concurrent.Callable;
 /**
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportProcessCallbackUtil {
 
 	public static List<Callable<?>> popCallbackList() {

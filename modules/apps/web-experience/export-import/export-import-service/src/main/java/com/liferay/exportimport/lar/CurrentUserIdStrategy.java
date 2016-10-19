@@ -14,6 +14,8 @@
 
 package com.liferay.exportimport.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Bruno Farache
  */
+@ProviderType
 public class CurrentUserIdStrategy implements UserIdStrategy {
 
 	public CurrentUserIdStrategy(User user) {

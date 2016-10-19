@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.exportimport.service.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.MissingReferences;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +30,7 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public class StagingServiceImpl extends StagingServiceBaseImpl {
 
 	@Override

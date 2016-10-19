@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.background.task.display;
+package com.liferay.exportimport.internal.background.task.display;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.display.BaseBackgroundTaskDisplay;
@@ -231,8 +231,8 @@ public class ExportImportBackgroundTaskDisplay
 	}
 
 	private static final String _DETIALS_TEMPLATE =
-		"com/liferay/exportimport/background/task/display/dependencies" +
-			"/export_import_background_task_details.ftl";
+		"com/liferay/exportimport/internal/background/task/display" +
+			"/dependencies/export_import_background_task_details.ftl";
 
 	private static final int _EXPORT_PHASE_MAX_PERCENTAGE = 50;
 

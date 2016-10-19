@@ -2178,12 +2178,12 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ,com.liferay.expando.kernel.util;version="1.0.0";uses:="com.liferay.e
  xpando.kernel.model,com.liferay.portal.kernel.search,com.liferay.port
  al.kernel.service",com.liferay.exportimport.kernel.background.task;ve
- rsion="1.0.0",com.liferay.exportimport.kernel.configuration;version="
- 1.1.0";uses:="com.liferay.exportimport.kernel.model,com.liferay.porta
+ rsion="1.0.1",com.liferay.exportimport.kernel.configuration;version="
+ 1.1.1";uses:="com.liferay.exportimport.kernel.model,com.liferay.porta
  l.kernel.exception,com.liferay.portal.kernel.model,javax.portlet",com
  .liferay.exportimport.kernel.controller;version="1.0.1";uses:="com.li
  feray.exportimport.kernel.lar,com.liferay.exportimport.kernel.model",
- com.liferay.exportimport.kernel.exception;version="1.0.0";uses:="com.
+ com.liferay.exportimport.kernel.exception;version="1.0.1";uses:="com.
  liferay.exportimport.kernel.lar,com.liferay.portal.kernel.exception",
  com.liferay.exportimport.kernel.lar;version="1.2.0";uses:="com.lifera
  y.asset.kernel.model,com.liferay.expando.kernel.model,com.liferay.exp
@@ -2194,7 +2194,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  .liferay.portal.kernel.theme,com.liferay.portal.kernel.util,com.lifer
  ay.portal.kernel.xml,com.liferay.portal.kernel.zip,com.liferay.rating
  s.kernel.model,javax.portlet",com.liferay.exportimport.kernel.lifecyc
- le;version="1.0.0";uses:="com.liferay.exportimport.kernel.lar,com.lif
+ le;version="1.0.1";uses:="com.liferay.exportimport.kernel.lar,com.lif
  eray.exportimport.kernel.model,com.liferay.portal.kernel.model",com.l
  iferay.exportimport.kernel.model;version="1.0.0";uses:="com.liferay.e
  xpando.kernel.model,com.liferay.portal.kernel.annotation,com.liferay.
@@ -2221,7 +2221,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ray.portal.kernel.xml,javax.portlet,javax.servlet.http",com.liferay.e
  xportimport.kernel.staging.permission;version="1.0.0";uses:="com.life
  ray.portal.kernel.model,com.liferay.portal.kernel.security.permission
- ",com.liferay.exportimport.kernel.xstream;version="1.0.0",com.liferay
+ ",com.liferay.exportimport.kernel.xstream;version="1.0.1",com.liferay
  .image.gallery.display.kernel.display.context;version="1.0.0";uses:="
  com.liferay.portal.kernel.display.context,com.liferay.portal.kernel.e
  xception,com.liferay.portal.kernel.repository.model,com.liferay.porta

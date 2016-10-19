@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.background.task;
+package com.liferay.exportimport.internal.background.task;
 
 import com.liferay.exportimport.kernel.lar.MissingReference;
 import com.liferay.exportimport.kernel.lar.MissingReferences;

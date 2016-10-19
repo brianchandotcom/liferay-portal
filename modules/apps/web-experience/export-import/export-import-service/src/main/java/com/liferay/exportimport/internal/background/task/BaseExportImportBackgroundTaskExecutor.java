@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.exportimport.background.task;
+package com.liferay.exportimport.internal.background.task;
 
-import com.liferay.exportimport.background.task.display.ExportImportBackgroundTaskDisplay;
+import com.liferay.exportimport.internal.background.task.display.ExportImportBackgroundTaskDisplay;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;

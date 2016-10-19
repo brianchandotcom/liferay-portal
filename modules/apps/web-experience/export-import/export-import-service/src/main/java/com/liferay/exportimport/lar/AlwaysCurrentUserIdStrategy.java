@@ -14,12 +14,15 @@
 
 package com.liferay.exportimport.lar;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.model.User;
 
 /**
  * @author Bruno Farache
  */
+@ProviderType
 public class AlwaysCurrentUserIdStrategy implements UserIdStrategy {
 
 	public AlwaysCurrentUserIdStrategy(User user) {

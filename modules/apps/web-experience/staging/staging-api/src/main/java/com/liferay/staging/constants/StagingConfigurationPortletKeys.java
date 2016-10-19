@@ -14,9 +14,12 @@
 
 package com.liferay.staging.constants;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Levente Hudák
  */
+@ProviderType
 public class StagingConfigurationPortletKeys {
 
 	public static final String STAGING_CONFIGURATION =

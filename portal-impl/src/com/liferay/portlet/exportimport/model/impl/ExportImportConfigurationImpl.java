@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.exportimport.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
 import java.io.Serializable;
@@ -24,6 +26,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @author Daniel Kocsis
  */
+@ProviderType
 public class ExportImportConfigurationImpl
 	extends ExportImportConfigurationBaseImpl {
 

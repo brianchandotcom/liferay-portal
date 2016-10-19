@@ -14,11 +14,14 @@
 
 package com.liferay.exportimport.kernel.exception;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Raymond Augé
  */
+@ProviderType
 public class RemoteExportException extends PortalException {
 
 	public static final int BAD_CONNECTION = 1;

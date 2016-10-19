@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+<!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
 	<suppress checks="MemberName" files=".*ContextContributor\.java" />
@@ -32,6 +32,7 @@
 	<suppress checks="MethodName" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
 	<suppress checks="MethodName" files="portal-kernel/src/com/liferay/portal/kernel/util/Http\.java" />
 	<suppress checks="MethodName" files="portal-kernel/src/com/liferay/portal/kernel/util/HttpUtil\.java" />
+	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/service/impl/UserLocalServiceImpl\.java" />
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/fabric/status/JMXProxyUtilTest\.java" />
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/kernel/spring/osgi/OSGiBeanPropertiesTest\.java" />
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />

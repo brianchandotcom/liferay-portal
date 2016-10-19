@@ -1,7 +1,9 @@
 Bundle-Name: Liferay OSGi Utilities Test
 Bundle-SymbolicName: com.liferay.osgi.util.test
 Bundle-Version: 3.0.0
-Import-Package: !org.junit.experimental.runners,*
+Import-Package:\
+	!org.junit.experimental.runners,\
+	*
 -includeresource:\
 	../../../classes,\
 	bundle-util=../../../src/testIntegration/resources/bundle-util,\

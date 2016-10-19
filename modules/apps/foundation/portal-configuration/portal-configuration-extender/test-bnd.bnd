@@ -2,7 +2,9 @@ Bundle-Name: Liferay Portal Configurator Extender
 Bundle-SymbolicName: com.liferay.portal.configuration.extender
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.configuration.extender
-Import-Package: !javax.*,*
+Import-Package:\
+	!javax.*,\
+	*
 -includeresource:\
 	classes,\
 	test-classes/integration,\

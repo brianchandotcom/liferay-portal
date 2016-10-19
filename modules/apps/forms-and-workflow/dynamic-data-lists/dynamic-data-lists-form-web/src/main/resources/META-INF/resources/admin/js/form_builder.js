@@ -233,7 +233,7 @@ AUI.add(
 						instance.showFieldSettingsPanel(field);
 					},
 
-					findField: function(name) {
+					findField: function(name, ignoreCase) {
 						var instance = this;
 
 						var field;
@@ -243,8 +243,15 @@ AUI.add(
 						visitor.set(
 							'fieldHandler',
 							function(currentField) {
-								if (currentField.get('context.fieldName') === name) {
-									field = currentField;
+								if (ignoreCase) {
+									if (currentField.get('context.fieldName').toLowerCase() === name.toLowerCase()) {
+										field = currentField;
+									}
+								}
+								else {
+									if (currentField.get('context.fieldName') === name) {
+										field = currentField;
+									}
 								}
 							}
 						);

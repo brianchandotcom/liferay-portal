@@ -14,35 +14,82 @@
 
 package com.liferay.mentions.internal.util.impl;
 
+import com.liferay.mentions.matcher.MentionsMatcher;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.MockitoAnnotations;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adolfo Pérez
  */
-public class MentionsMatcherTest {
+@PrepareForTest
+@RunWith(PowerMockRunner.class)
+public class DefaultMentionsMatcherTest extends PowerMockito {
+
+	@Before
+	public void setUp() throws Exception {
+		MockitoAnnotations.initMocks(this);
+
+		Props props = mock(Props.class);
+
+		when(
+			props.get(PropsKeys.USERS_SCREEN_NAME_SPECIAL_CHARACTERS)
+		).thenReturn(
+			_SCREEN_NAME_SPECIAL_CHARS
+		);
+
+		PropsUtil.setProps(props);
+	}
 
 	@Test
 	public void testMatchBBCodeAtMention() {
-		assertEquals("user1", MentionsMatcher.match("[span]@user1[span]"));
+		assertEquals("user1", _mentionsMatcher.match("[span]@user1[span]"));
+	}
+
+	@Test
+	public void testMatchBBCodeSpecialCharacters() {
+		assertEquals(
+			_SCREEN_NAME_WITH_SPECIAL_CHARS,
+			_mentionsMatcher.match(
+				"[span]@" + _SCREEN_NAME_WITH_SPECIAL_CHARS + "[span]"));
 	}
 
 	@Test
 	public void testMatchBBCodeXMLEntityMention() {
-		assertEquals("user1", MentionsMatcher.match("[span]&#64;user1[span]"));
+		assertEquals("user1", _mentionsMatcher.match("[span]&#64;user1[span]"));
 	}
 
 	@Test
 	public void testMatchHTMLAtMention() {
-		assertEquals("user1", MentionsMatcher.match("<span>@user1</span>"));
+		assertEquals("user1", _mentionsMatcher.match("<span>@user1</span>"));
+	}
+
+	@Test
+	public void testMatchHTMLSpecialCharacters() {
+		assertEquals(
+			_SCREEN_NAME_WITH_SPECIAL_CHARS,
+			_mentionsMatcher.match(
+				"<span>@" + _SCREEN_NAME_WITH_SPECIAL_CHARS + "</span>"));
 	}
 
 	@Test
 	public void testMatchHTMLXMLEntityMention() {
-		assertEquals("user1", MentionsMatcher.match("<span>&#64;user1</span>"));
+		assertEquals(
+			"user1", _mentionsMatcher.match("<span>&#64;user1</span>"));
 	}
 
 	@Test
@@ -54,31 +101,31 @@ public class MentionsMatcherTest {
 
 		assertEquals(
 			Arrays.asList("user1", "user2", "user3", "user4"),
-			MentionsMatcher.match(content));
+			_mentionsMatcher.match(content));
 	}
 
 	@Test
 	public void testMatchSimpleAtMention() {
-		assertEquals("user1", MentionsMatcher.match("@user1"));
+		assertEquals("user1", _mentionsMatcher.match("@user1"));
 	}
 
 	@Test
 	public void testMatchSimpleAtMentions() {
 		assertEquals(
 			Arrays.asList("user1", "user2"),
-			MentionsMatcher.match("@user1 @user2"));
+			_mentionsMatcher.match("@user1 @user2"));
 	}
 
 	@Test
 	public void testMatchSimpleXMLEntityMention() {
-		assertEquals("user1", MentionsMatcher.match("&#64;user1"));
+		assertEquals("user1", _mentionsMatcher.match("&#64;user1"));
 	}
 
 	@Test
 	public void testMatchSimpleXMLEntityMentions() {
 		assertEquals(
 			Arrays.asList("user1", "user2"),
-			MentionsMatcher.match("&#64;user1 &#64;user2"));
+			_mentionsMatcher.match("&#64;user1 &#64;user2"));
 	}
 
 	protected <T> void assertEquals(
@@ -121,5 +168,13 @@ public class MentionsMatcherTest {
 	protected <T> void assertEquals(T value, Iterable<T> iterable) {
 		assertEquals(Arrays.asList(value), iterable);
 	}
+
+	private static final String _SCREEN_NAME_SPECIAL_CHARS = "-._";
+
+	private static final String _SCREEN_NAME_WITH_SPECIAL_CHARS =
+		"user" + _SCREEN_NAME_SPECIAL_CHARS;
+
+	private final MentionsMatcher _mentionsMatcher =
+		new DefaultMentionsMatcher();
 
 }

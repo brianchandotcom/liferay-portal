@@ -14,44 +14,42 @@
 
 package com.liferay.message.boards.util.comparator;
 
-import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.Date;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author David Zhang
  */
-public class MBObjectModifiedDateComparator<T>
-	extends OrderByComparator<T> {
+public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC =
-		"modelCategory ASC, priority DESC, modifiedDate ASC, name ASC, " +
+		"modelCategory ASC, priority DESC, name ASC, modifiedDate DESC, " +
 			"modelId ASC";
 
 	public static final String ORDER_BY_DESC =
-		"modelCategory ASC, priority DESC, modifiedDate DESC, name ASC, " +
+		"modelCategory ASC, priority DESC, name DESC, modifiedDate DESC, " +
 			"modelId ASC";
 
 	public static final String[] ORDER_BY_FIELDS = {
-		"modelCategory", "priority", "modifiedDate", "name", "modelId"
+		"modelCategory", "priority", "name", "modifiedDate", "modelId"
 	};
 
-	public MBObjectModifiedDateComparator() {
+	public CategoryTitleComparator() {
 		this(false);
 	}
 
-	public MBObjectModifiedDateComparator(boolean ascending) {
+	public CategoryTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(T t1, T t2) {
-		Date modifiedDate1 = getModifiedDate(t1);
-		Date modifiedDate2 = getModifiedDate(t2);
+		String name1 = getCategoryName(t1);
+		String name2 = getCategoryName(t2);
 
-		int value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+		int value = StringUtil.toLowerCase(name1).compareTo(
+			StringUtil.toLowerCase(name2));
 
 		if (_ascending) {
 			return value;
@@ -81,11 +79,11 @@ public class MBObjectModifiedDateComparator<T>
 		return _ascending;
 	}
 
-	protected Date getModifiedDate(Object obj) {
-		if (obj instanceof MBThread) {
-			MBThread mbThread = (MBThread)obj;
+	protected String getCategoryName(Object obj) {
+		if (obj instanceof MBCategory) {
+			MBCategory mbCategory = (MBCategory)obj;
 
-			return mbThread.getModifiedDate();
+			return mbCategory.getName();
 		}
 
 		return null;

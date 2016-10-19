@@ -66,10 +66,10 @@ if (orderByType.equals("asc")) {
 OrderByComparator orderByComparator = null;
 
 if (orderByCol.equals("modified-date")) {
-	orderByComparator = new MBObjectModifiedDateComparator(orderByAsc);
+	orderByComparator = new ThreadModifiedDateComparator(orderByAsc);
 
 }else if(orderByCol.equals("title")) {
-	orderByComparator = new MBObjectTitleComparator(orderByAsc);
+	orderByComparator = new CategoryTitleComparator(orderByAsc);
 }
 %>
 

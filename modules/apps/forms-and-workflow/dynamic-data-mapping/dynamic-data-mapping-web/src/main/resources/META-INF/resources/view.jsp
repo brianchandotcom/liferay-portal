@@ -21,7 +21,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
+long groupId = ParamUtil.getLong(request, "groupId", PortalUtil.getScopeGroupId(request, refererPortletName));
 
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 

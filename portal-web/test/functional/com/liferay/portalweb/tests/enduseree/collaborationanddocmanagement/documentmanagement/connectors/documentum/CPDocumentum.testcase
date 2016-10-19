@@ -671,12 +671,12 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_1.odt" />
-			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
 		<execute macro="DMDocument#moveToFolderCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 			<var name="dmFolderName" value="Home" />
 		</execute>
 
@@ -687,11 +687,11 @@
 		</execute>
 
 		<execute macro="DMNavigator#gotoDocumentCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -705,7 +705,7 @@
 		</execute>
 
 		<execute macro="DMDocument#cannotViewCP">
-			<var name="dmDocumentTitle" value="Document_1.odt" />
+			<var name="dmDocumentTitle" value="Document_1.doc" />
 		</execute>
 	</command>
 
@@ -715,16 +715,16 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_2.odt" />
-			<var name="dmDocumentTitle" value="Document_2.odt" />
+			<var name="dmDocumentFile" value="Document_2.doc" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
 		</execute>
 
 		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_2.odt" />
+			<var name="dmDocumentKeyword" value="Document_2.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_2.odt" />
+			<var name="dmDocumentTitle" value="Document_2.doc" />
 			<var name="dmParentFolder" value="Home » Documentum Repository Name" />
 		</execute>
 	</command>
@@ -735,18 +735,18 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentFile" value="Document_3.odt" />
-			<var name="dmDocumentTitle" value="Document_3.odt" />
+			<var name="dmDocumentFile" value="Document_3.doc" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoHomeCP" />
 
 		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_3.odt" />
+			<var name="dmDocumentKeyword" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewSearchResultsCP">
-			<var name="dmDocumentTitle" value="Document_3.odt" />
+			<var name="dmDocumentTitle" value="Document_3.doc" />
 			<var name="dmParentFolder" value="Home » Documentum Repository Name" />
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>

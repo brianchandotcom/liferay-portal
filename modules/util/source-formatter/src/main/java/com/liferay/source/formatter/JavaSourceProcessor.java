@@ -2786,8 +2786,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								lineLeadingTabCount -
 									previousLineLeadingTabCount;
 
-							if (trimmedLine.startsWith("throws ") &&
-								((diff == 0) || (diff > 1))) {
+							if ((previousLine.contains("\tthrows ") &&
+								 (diff == 0)) ||
+								(trimmedLine.startsWith("throws ") &&
+								 ((diff == 0) || (diff > 1)))) {
 
 								processMessage(
 									fileName, "incorrect indent", lineCount);

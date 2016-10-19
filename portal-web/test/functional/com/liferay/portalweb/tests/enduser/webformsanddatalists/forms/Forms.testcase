@@ -185,7 +185,7 @@
 
 		<execute macro="Form#editDescription" />
 
-		<execute macro="Form#gotoAddFirstField">
+		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
 
@@ -193,7 +193,7 @@
 			<var name="fieldValue" value="Text Field On Spanish Portal" />
 		</execute>
 
-		<execute macro="FormFields#save" />
+		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#save" />
 

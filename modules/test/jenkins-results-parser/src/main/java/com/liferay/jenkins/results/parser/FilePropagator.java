@@ -205,7 +205,7 @@ public class FilePropagator {
 	private String _getMkdirCommand(String fileName) {
 		String dirName = fileName.substring(0, fileName.lastIndexOf("/") + 1);
 
-		return "mkdir -pv " + dirName;
+		return "mkdir -p " + dirName;
 	}
 
 	private final List<String> _busySlaves = new ArrayList<>();

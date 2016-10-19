@@ -715,11 +715,9 @@ public class PoshiRunnerExecutor {
 
 			Element returnElement = executeElement.element("return");
 
-			String returnVariable = returnElement.attributeValue("name");
-
-			if (returnVariable != null) {
+			if (returnElement != null) {
 				PoshiRunnerVariablesUtil.putIntoCommandMap(
-					returnVariable, returnValue);
+					returnElement.attributeValue("name"), returnValue);
 			}
 
 			CommandLoggerHandler.logExternalMethodCommand(

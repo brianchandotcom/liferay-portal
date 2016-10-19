@@ -236,13 +236,13 @@ AUI.add(
 				A.each(
 					schedulerEvents,
 					function(schedulerEvent) {
-						if (calendarBooking.status === CalendarWorkflow.STATUS_DENIED) {
+						if (schedulerEvent.isRecurring()) {
 							var scheduler = schedulerEvent.get('scheduler');
 
-							var eventRecorder = scheduler.get('eventRecorder');
+							scheduler.load();
+						}
 
-							eventRecorder.hidePopover();
-
+						if (calendarBooking.status === CalendarWorkflow.STATUS_DENIED) {
 							CalendarUtil.destroyEvent(schedulerEvent);
 						}
 						else {

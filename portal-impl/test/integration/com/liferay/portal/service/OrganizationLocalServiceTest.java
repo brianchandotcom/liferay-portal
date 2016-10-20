@@ -707,9 +707,9 @@ public class OrganizationLocalServiceTest {
 
 	protected List<Object> getOrganizationsAndUsers(Organization organization) {
 		return OrganizationLocalServiceUtil.getOrganizationsAndUsers(
-				organization.getCompanyId(), organization.getOrganizationId(),
-				WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+			organization.getCompanyId(), organization.getOrganizationId(),
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	protected int getOrganizationsAndUsersCount(Organization organization) {

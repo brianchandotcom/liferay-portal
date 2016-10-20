@@ -171,6 +171,33 @@
 		</execute>
 	</command>
 
+	<command name="OpenSSOSmoke" priority="5">
+		<property name="openam.enabled" value="true" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationOpenSSO" />
+
+		<execute macro="PortalSettings#configureOpenSSO">
+			<var name="OpenSSOLoginURL" value="http://test.able.com:8080/openam/UI/Login?goto=http://www.able.com:8080/c/portal/login" />
+			<var name="OpenSSOLogoutURL" value="http://test.able.com:8080/openam/UI/Logout?goto=http://www.able.com:8080/web/guest/home" />
+			<var name="OpenSSOServiceURL" value="http://test.able.com:8080/openam" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserWithOpenSSOEnabledPG">
+			<var name="password" value="password" />
+			<var name="userScreenName" value="test" />
+		</execute>
+	</command>
+
 	<command name="TokenBasedSSOSmoke" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />

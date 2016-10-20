@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
+import com.liferay.portal.kernel.service.ReleaseLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -63,6 +65,9 @@ public class ServiceComponentLocalServiceTest {
 
 		_serviceComponent1 = addServiceComponent(_SERVICE_COMPONENT_1, 1);
 		_serviceComponent2 = addServiceComponent(_SERVICE_COMPONENT_2, 1);
+
+		_release = ReleaseLocalServiceUtil.addRelease(
+			"SimpleUpgradeStep", "0.0.0");
 	}
 
 	@Test
@@ -121,6 +126,7 @@ public class ServiceComponentLocalServiceTest {
 
 		Map<String, Object> properties = new HashMap<>();
 
+		properties.put("upgrade.bundle.symbolic.name", "SimpleUpgradeStep");
 		properties.put("upgrade.from.schema.version", "0.0.0");
 		properties.put("upgrade.initial.database.creation", true);
 
@@ -162,6 +168,7 @@ public class ServiceComponentLocalServiceTest {
 
 		Map<String, Object> properties = new HashMap<>();
 
+		properties.put("upgrade.bundle.symbolic.name", "SimpleUpgradeStep");
 		properties.put("upgrade.from.schema.version", "0.0.0");
 		properties.put("upgrade.initial.database.creation", false);
 
@@ -199,6 +206,7 @@ public class ServiceComponentLocalServiceTest {
 
 		Map<String, Object> properties = new HashMap<>();
 
+		properties.put("upgrade.bundle.symbolic.name", "SimpleUpgradeStep");
 		properties.put("upgrade.from.schema.version", "0.0.1");
 		properties.put("upgrade.initial.database.creation", true);
 
@@ -303,6 +311,9 @@ public class ServiceComponentLocalServiceTest {
 	private static final String _SERVICE_COMPONENT_2 = "SERVICE_COMPONENT_2";
 
 	private static final String _TEST_TABLE = "TestVerifyDB";
+
+	@DeleteAfterTestRun
+	private Release _release;
 
 	@DeleteAfterTestRun
 	private ServiceComponent _serviceComponent1;

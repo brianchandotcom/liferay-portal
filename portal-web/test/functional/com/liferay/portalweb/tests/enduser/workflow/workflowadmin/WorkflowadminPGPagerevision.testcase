@@ -176,6 +176,7 @@
 
 	<command name="ViewApprovedPageAfterStagingDeactivated" priority="5">
 		<description message="This is a use case for LPS-65319." />
+		<property name="portal.acceptance" value="true" />
 
 		<var name="pageName" value="New Site Page Name" />
 

@@ -503,6 +503,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"There should be a line break before 'throws'",
 				lineCount);
 		}
+
+		if (line.endsWith(StringPool.PERIOD) &&
+			line.contains(StringPool.EQUAL)) {
+
+			processMessage(
+				fileName, "There should be a line break after '='",
+				lineCount);
+		}
+
+		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
+			processMessage(
+				fileName, "There should be a line break after '}'",
+				lineCount);
+		}
 	}
 
 	protected void checkInternalImports(
@@ -2672,20 +2686,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if (trimmedLine.startsWith(StringPool.PERIOD)) {
 						processMessage(
 							fileName, "Line should not start with '.'",
-							lineCount);
-					}
-
-					if (line.endsWith(StringPool.PERIOD) &&
-						line.contains(StringPool.EQUAL)) {
-
-						processMessage(
-							fileName, "There should be a line break after '='",
-							lineCount);
-					}
-
-					if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
-						processMessage(
-							fileName, "There should be a line break after '}'",
 							lineCount);
 					}
 

@@ -49,13 +49,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AVAILABLE_SITES</td>
-	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'Available Sites')]</td>
+	<td>ASSIGNEES</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Assignees')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ASSIGNEES</td>
-	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Assignees')]</td>
+	<td>AVAILABLE_SITES</td>
+	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'Available Sites')]</td>
 	<td></td>
 </tr>
 <tr>

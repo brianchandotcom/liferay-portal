@@ -61,6 +61,12 @@ AUI.add(
 						return value;
 					},
 
+					hasFocus: function() {
+						var instance = this;
+
+						return instance._hasFocus() || instance._hasAlloyEditorFocus();
+					},
+
 					render: function() {
 						var instance = this;
 
@@ -113,6 +119,30 @@ AUI.add(
 						if (instance._alloyEditor && value !== instance.getValue()) {
 							instance._alloyEditor.setHTML(value);
 						}
+					},
+
+					_findAncestor: function(node, ancestorClass) {
+						var child = node;
+
+						while (child && !child.classList.contains(ancestorClass)) {
+							child = child.parentElement;
+						}
+
+						return child;
+					},
+
+					_hasAlloyEditorFocus: function() {
+						var instance = this;
+
+						return !!instance._findAncestor(document.activeElement, 'ae-ui');
+					},
+
+					_hasFocus: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						return container.contains(document.activeElement);
 					},
 
 					_onChangeEditor: function(value) {

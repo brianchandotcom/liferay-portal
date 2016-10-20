@@ -16,6 +16,7 @@
 		<com.liferay.frontend.theme.styled.version>2.0.13</com.liferay.frontend.theme.styled.version>
 		<com.liferay.frontend.theme.unstyled.version>2.0.13</com.liferay.frontend.theme.unstyled.version>
 		<com.liferay.portal.tools.theme.builder.version>1.0.0</com.liferay.portal.tools.theme.builder.version>
+		<com.liferay.portal.tools.theme.builder.outputDir>target/build-theme</com.liferay.portal.tools.theme.builder.outputDir>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -62,7 +63,14 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.0.0</version>
 				<configuration>
-					<packagingExcludes>**/*.scss</packagingExcludes>
+					<webResources>
+						<resource>
+							<directory>${com.liferay.portal.tools.theme.builder.outputDir}</directory>
+							<excludes>
+								<exclude>**/*.scss</exclude>
+							</excludes>
+						</resource>
+					</webResources>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -79,7 +87,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<docrootDirName>target/${project.build.finalName}</docrootDirName>
+					<docrootDirName>${com.liferay.portal.tools.theme.builder.outputDir}</docrootDirName>
 					<outputDirName>/</outputDirName>
 					<portalCommonPath>target/deps/com.liferay.frontend.css.common-${com.liferay.frontend.css.common.version}.jar</portalCommonPath>
 				</configuration>
@@ -97,7 +105,7 @@
 						<configuration>
 							<diffsDir>src/main/webapp/</diffsDir>
 							<name>${artifactId}</name>
-							<outputDir>${project.build.directory}/${project.build.finalName}</outputDir>
+							<outputDir>${com.liferay.portal.tools.theme.builder.outputDir}</outputDir>
 							<parentDir>${project.build.directory}/deps/com.liferay.frontend.theme.styled-${com.liferay.frontend.theme.styled.version}.jar</parentDir>
 							<parentName>_styled</parentName>
 							<templateExtension>ftl</templateExtension>

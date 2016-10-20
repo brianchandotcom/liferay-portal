@@ -68,6 +68,24 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeExtendedASCIICharacters() {
+		StringBuilder sb = new StringBuilder(256);
+
+		for (int i = 0; i < 256; i++) {
+			if (Character.isLetterOrDigit(i)) {
+				sb.append((char)i);
+			}
+		}
+
+		String value = sb.toString();
+
+		Assert.assertEquals(value, _htmlImpl.escape(value));
+
+		Assert.assertEquals(
+			value, _htmlImpl.escape(value, HtmlImpl.ESCAPE_MODE_ATTRIBUTE));
+	}
+
+	@Test
 	public void testEscapeHREF() {
 		Assert.assertNull(_htmlImpl.escapeHREF(null));
 		Assert.assertEquals(

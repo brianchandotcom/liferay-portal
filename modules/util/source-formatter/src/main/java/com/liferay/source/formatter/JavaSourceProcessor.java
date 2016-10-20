@@ -207,12 +207,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			boolean bndInheritRequired = (Boolean)bndInheritTuple.getObject(1);
 
 			if (bndContent.contains("-dsannotations-options: inherit")) {
-				/*if (!bndInheritRequired) {
+				/*
+				if (!bndInheritRequired) {
 					printError(
 						bndFileLocation,
 						"Redundant '-dsannotations-options: inherit': " +
 							bndFileLocation + "bnd.bnd");
-				}*/
+				}
+				*/
 			}
 			else if (bndInheritRequired) {
 				printError(
@@ -301,7 +303,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			(previousLine.endsWith(StringPool.EQUAL) ||
 			 previousLine.endsWith(StringPool.OPEN_PARENTHESIS))) {
 
-			processMessage(fileName, "Line should be indented ", lineCount);
+			processMessage(fileName, "Line should be indented", lineCount);
 		}
 
 		if (Validator.isNotNull(previousLine) &&
@@ -360,8 +362,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String strippedQuotesLine = stripQuotes(trimmedLine);
 
-		int strippedQuotesLineOpenParenthesisCount =
-			StringUtil.count(strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
+		int strippedQuotesLineOpenParenthesisCount = StringUtil.count(
+			strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
 
 		if (!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS) &&
 			trimmedLine.endsWith(") {") &&
@@ -767,8 +769,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String upgradeClassName = matcher2.group(1);
 
 				if ((previousUpgradeClassName != null) &&
-					(previousUpgradeClassName.compareTo(
-						upgradeClassName) > 0)) {
+					(previousUpgradeClassName.compareTo(upgradeClassName) >
+						0)) {
 
 					processMessage(
 						fileName,
@@ -1532,8 +1534,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				String singleLine =
-					matcher.group(1) + StringUtil.trimLeading(matcher.group(2)) +
-						matcher.group(3);
+					matcher.group(1) +
+						StringUtil.trimLeading(matcher.group(2)) +
+							matcher.group(3);
 
 				if (getLineLength(singleLine) <= _maxLineLength) {
 					content = StringUtil.replace(
@@ -3660,7 +3663,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			if (linePart2.matches("[!=<>\\+\\-\\*]+ .*")) {
 				int y = trimmedLine.indexOf(StringPool.SPACE, x + 2);
 
-				if (previousLineLength + y <= _maxLineLength) {
+				if ((previousLineLength + y) <= _maxLineLength) {
 					return getCombinedLinesContent(
 						content, fileName, line, trimmedLine, lineLength,
 						lineCount, previousLine, trimmedLine.substring(0, y),
@@ -4271,10 +4274,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// Find suppressions files in any child directory
 
-		List<String> moduleSuppressionsFileNames =
-			getFileNames(
-				sourceFormatterArgs.getBaseDirName(), null, new String[0],
-				new String[] {"**/modules/**/" + fileName});
+		List<String> moduleSuppressionsFileNames = getFileNames(
+			sourceFormatterArgs.getBaseDirName(), null, new String[0],
+			new String[] {"**/modules/**/" + fileName});
 
 		for (String moduleSuppressionsFileName : moduleSuppressionsFileNames) {
 			moduleSuppressionsFileName = StringUtil.replace(

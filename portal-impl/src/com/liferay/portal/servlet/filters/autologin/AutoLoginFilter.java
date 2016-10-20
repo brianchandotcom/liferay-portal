@@ -128,20 +128,15 @@ public class AutoLoginFilter extends BasePortalFilter {
 				"/portal/protected");
 
 			if (PropsValues.AUTH_FORWARD_BY_LAST_PATH) {
-				String autoLoginRedirect = (String)request.getAttribute(
+				String redirectParam = (String)request.getAttribute(
 					AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE);
 
+				if (Validator.isNull(redirectParam)) {
+					redirectParam = PortalUtil.getCurrentCompleteURL(request);
+				}
+
 				redirect = redirect.concat("?redirect=");
-
-				if (Validator.isNotNull(autoLoginRedirect)) {
-					redirect = redirect.concat(autoLoginRedirect);
-				}
-				else {
-					String currentURL = HttpUtil.encodeURL(
-						PortalUtil.getCurrentCompleteURL(request));
-
-					redirect = redirect.concat(currentURL);
-				}
+				redirect = redirect.concat(HttpUtil.encodeURL(redirectParam));
 			}
 
 			response.sendRedirect(redirect);

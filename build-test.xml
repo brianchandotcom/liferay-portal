@@ -8533,6 +8533,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<equals arg1="${skip.start-app-server}" arg2="true" />
 			</not>
 			<then>
+				<get-testcase-property property.name="themes.delayed.deployment" />
+
+				<if>
+					<equals arg1="${themes.delayed.deployment}" arg2="true" />
+					<then>
+						<mkdir dir="${liferay.home}/tmp" />
+
+						<move todir="${liferay.home}/tmp">
+							<fileset dir="${liferay.home}/deploy" includes="*-theme.war" />
+						</move>
+					</then>
+				</if>
+
 				<start-app-server />
 
 				<get-testcase-property property.name="app.server.bundles.size" />
@@ -8570,6 +8583,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 						</waitfor>
 
 						<antcall target="wait-for-plugins-deployment" />
+					</then>
+				</if>
+
+				<if>
+					<equals arg1="${themes.delayed.deployment}" arg2="true" />
+					<then>
+						<move todir="${liferay.home}/deploy">
+							<fileset dir="${liferay.home}/tmp" includes="*-theme.war" />
+						</move>
+
+						<delete dir="${liferay.home}/tmp" failonerror="false" />
+
+						<sleep seconds="60" />
 					</then>
 				</if>
 			</then>

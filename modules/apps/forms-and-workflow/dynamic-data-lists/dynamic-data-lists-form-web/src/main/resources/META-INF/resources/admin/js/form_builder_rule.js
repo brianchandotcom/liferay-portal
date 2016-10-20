@@ -84,8 +84,8 @@ AUI.add(
 						instance.after(instance._toggleShowRemoveButton, instance, '_addAction');
 						instance.after(instance._toggleShowRemoveButton, instance, '_addCondition');
 
-						instance.on('*:valueChanged', A.bind(instance._handleFieldValueChanged, instance));
-						instance.on('logicOperatorChange', A.bind(instance._onLogicOperatorChanged, instance));
+						instance.on('*:valueChange', A.bind(instance._handleFieldValueChange, instance));
+						instance.on('logicOperatorChange', A.bind(instance._onLogicOperatorChange, instance));
 					},
 
 					render: function(rule) {
@@ -534,10 +534,10 @@ AUI.add(
 						instance._toggleShowRemoveButton();
 					},
 
-					_handleFieldValueChanged: function(event) {
+					_handleFieldValueChange: function(event) {
 						var instance = this;
 
-						var field = event.field;
+						var field = event.target;
 
 						var fieldName = field.get('fieldName');
 
@@ -624,7 +624,7 @@ AUI.add(
 						return false;
 					},
 
-					_onLogicOperatorChanged: function(event) {
+					_onLogicOperatorChange: function(event) {
 						var instance = this;
 
 						var strings = instance.get('strings');

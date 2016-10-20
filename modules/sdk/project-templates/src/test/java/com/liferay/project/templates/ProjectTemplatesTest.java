@@ -50,7 +50,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import net.diibadaaba.zipdiff.DifferenceCalculator;
+import net.diibadaaba.zipdiff.Differences;
+
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
@@ -62,9 +66,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-
-import net.diibadaaba.zipdiff.DifferenceCalculator;
-import net.diibadaaba.zipdiff.Differences;
 
 /**
  * @author Lawrence Lee
@@ -690,8 +691,7 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateTheme() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme", "theme-test");
+		File gradleProjectDir = _buildTemplateWithGradle("theme", "theme-test");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
@@ -703,8 +703,8 @@ public class ProjectTemplatesTest {
 			"name=theme-test");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"theme", "theme-test",
-			"-DclassName=BladeTest", "-Dpackage=blade.test");
+			"theme", "theme-test", "-DclassName=BladeTest",
+			"-Dpackage=blade.test");
 
 		_testContains(
 			mavenProjectDir, "pom.xml",
@@ -1275,15 +1275,16 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
-	private void _testWarDiff(File warFile1, File warFile2)
-			throws Exception {
-
-		DifferenceCalculator calc = new DifferenceCalculator(warFile1, warFile2);
+	private void _testWarDiff(File warFile1, File warFile2) throws Exception {
+		DifferenceCalculator calc = new DifferenceCalculator(
+			warFile1, warFile2);
 
 		Set<String> patterns = new HashSet<>();
+
 		patterns.add(".*META-INF.*");
 
 		calc.setFilenameRegexToIgnore(patterns);
+
 		calc.setIgnoreTimestamps(true);
 
 		Differences differences = calc.getDifferences();
@@ -1293,9 +1294,10 @@ public class ProjectTemplatesTest {
 			Map<String, ZipArchiveEntry> removed = differences.getRemoved();
 			Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
 
-			Exception exception = new Exception("War differences\n" + differences);
+			Exception exception = new Exception(
+				"War differences\n" + differences);
 
-			if (added.size() == 0 && removed.size() == 0 && changed.size() > 0) {
+			if (added.isEmpty() && removed.isEmpty() && !changed.isEmpty()) {
 				boolean realChange = false;
 
 				for (String change : changed.keySet()) {
@@ -1304,7 +1306,7 @@ public class ProjectTemplatesTest {
 					ZipArchiveEntry z1 = entries[0];
 					ZipArchiveEntry z2 = entries[0];
 
-					if ((z1.isDirectory() && z2.isDirectory()) &&
+					if (z1.isDirectory() && z2.isDirectory() &&
 						(z1.getSize() == z2.getSize()) &&
 						(z1.getCompressedSize() <= 2) &&
 						(z2.getCompressedSize() <= 2)) {

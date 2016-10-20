@@ -70,13 +70,12 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="important table-cell-content"
 			href="<%= rowURL %>"
 			name="name"
 			orderable="<%= true %>"
-		>
-			<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= organization.getName() %></strong></aui:a>
-		</liferay-ui:search-container-column-text>
+			value="<%= organization.getName() %>"
+		/>
 
 		<c:if test="<%= Validator.isNotNull(keywords) %>">
 			<liferay-ui:search-container-column-text

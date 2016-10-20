@@ -350,6 +350,52 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			processMessage(fileName, "incorrect indent", lineCount);
 		}
+
+		String strippedQuotesLine = stripQuotes(trimmedLine);
+
+		int strippedQuotesLineOpenParenthesisCount =
+			StringUtil.count(
+				strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
+
+		if (!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS) &&
+			trimmedLine.endsWith(") {") &&
+			(strippedQuotesLineOpenParenthesisCount > 0) &&
+			(getLevel(trimmedLine) > 0)) {
+
+			processMessage(
+				fileName, "Incorrect line break", lineCount);
+		}
+
+		if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
+			int x = line.lastIndexOf(" && ");
+			int y = line.lastIndexOf(" || ");
+
+			int z = Math.max(x, y);
+
+			if (z != -1) {
+				processMessage(
+					fileName,
+					"There should be a line break after '" +
+						line.substring(z + 1, z + 3) + "'",
+					lineCount);
+			}
+
+			int pos = strippedQuotesLine.indexOf(" + ");
+
+			if (pos != -1) {
+				String linePart = strippedQuotesLine.substring(
+					0, pos);
+
+				if ((getLevel(linePart, "(", ")") == 0) &&
+					(getLevel(linePart, "[", "]") == 0)) {
+
+					processMessage(
+						fileName,
+						"There should be a line break after '+'",
+						lineCount);
+				}
+			}
+		}
 	}
 
 	protected void checkInternalImports(
@@ -2437,50 +2483,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					!trimmedLine.startsWith(StringPool.STAR)) {
 
 					String strippedQuotesLine = stripQuotes(trimmedLine);
-
-					int strippedQuotesLineOpenParenthesisCount =
-						StringUtil.count(
-							strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
-
-					if (!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS) &&
-						trimmedLine.endsWith(") {") &&
-						(strippedQuotesLineOpenParenthesisCount > 0) &&
-						(getLevel(trimmedLine) > 0)) {
-
-						processMessage(
-							fileName, "Incorrect line break", lineCount);
-					}
-
-					if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
-						int x = line.lastIndexOf(" && ");
-						int y = line.lastIndexOf(" || ");
-
-						int z = Math.max(x, y);
-
-						if (z != -1) {
-							processMessage(
-								fileName,
-								"There should be a line break after '" +
-									line.substring(z + 1, z + 3) + "'",
-								lineCount);
-						}
-
-						int pos = strippedQuotesLine.indexOf(" + ");
-
-						if (pos != -1) {
-							String linePart = strippedQuotesLine.substring(
-								0, pos);
-
-							if ((getLevel(linePart, "(", ")") == 0) &&
-								(getLevel(linePart, "[", "]") == 0)) {
-
-								processMessage(
-									fileName,
-									"There should be a line break after '+'",
-									lineCount);
-							}
-						}
-					}
 
 					String indent = StringPool.BLANK;
 

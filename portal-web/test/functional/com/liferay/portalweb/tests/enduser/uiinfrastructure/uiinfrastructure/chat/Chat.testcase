@@ -1,0 +1,26 @@
+<definition component-name="portal-user-interface">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="User Interface" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="AssertChatBar" priority="3">
+		<execute function="AssertVisible" locator1="Chat#CHAT_BAR" />
+		<execute function="AssertVisible" locator1="Chat#CHAT_BAR_BUDDY_LIST" />
+	</command>
+</definition>

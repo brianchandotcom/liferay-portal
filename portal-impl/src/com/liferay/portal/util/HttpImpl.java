@@ -1818,6 +1818,8 @@ public class HttpImpl implements Http {
 					 !location.startsWith(Http.HTTPS_WITH_SLASH)) {
 
 				location = Http.HTTP_WITH_SLASH + location;
+
+				uri = new URI(location);
 			}
 
 			HttpHost targetHttpHost = new HttpHost(

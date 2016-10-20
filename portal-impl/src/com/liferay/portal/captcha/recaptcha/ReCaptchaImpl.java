@@ -169,7 +169,8 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 			throw new CaptchaConfigurationException();
 		}
 		catch (JSONException jsone) {
-			_log.error("reCAPTCHA did not return a valid result: " + content);
+			_log.error(
+				"reCAPTCHA did not return a valid result: " + content, jsone);
 
 			throw new CaptchaConfigurationException();
 		}

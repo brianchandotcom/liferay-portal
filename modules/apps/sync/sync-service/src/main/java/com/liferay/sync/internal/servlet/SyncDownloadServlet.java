@@ -24,6 +24,8 @@ import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageConstants;
@@ -363,6 +365,12 @@ public class SyncDownloadServlet extends HttpServlet {
 							targetVersionId, deltaFile);
 				}
 				catch (DuplicateFileException dfe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(dfe, dfe);
+					}
 				}
 
 				return new DownloadServletInputStream(
@@ -570,6 +578,9 @@ public class SyncDownloadServlet extends HttpServlet {
 	}
 
 	private static final String _ERROR_HEADER = "Sync-Error";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SyncDownloadServlet.class);
 
 	private DLAppService _dlAppService;
 	private DLFileEntryLocalService _dlFileEntryLocalService;

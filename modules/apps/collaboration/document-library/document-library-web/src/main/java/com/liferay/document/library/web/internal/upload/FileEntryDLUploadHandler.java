@@ -74,6 +74,13 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 			return DLAppServiceUtil.getFileEntry(groupId, folderId, fileName);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
@@ -108,7 +115,8 @@ public class FileEntryDLUploadHandler extends BaseUploadHandler {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to get URL for file entry " +
-						fileEntry.getFileEntryId());
+						fileEntry.getFileEntryId(),
+					pe);
 			}
 		}
 

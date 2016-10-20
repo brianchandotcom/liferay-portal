@@ -19,6 +19,8 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -73,6 +75,13 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 				groupId, kbArticle.getAttachmentsFolderId(), fileName);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
@@ -86,6 +95,9 @@ public class KBArticleAttachmentKBUploadHandler extends BaseUploadHandler {
 	protected void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBArticleAttachmentKBUploadHandler.class);
 
 	private final long _resourcePrimKey;
 

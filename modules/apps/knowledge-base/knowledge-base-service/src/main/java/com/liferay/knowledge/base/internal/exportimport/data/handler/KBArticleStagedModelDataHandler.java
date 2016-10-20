@@ -405,6 +405,12 @@ public class KBArticleStagedModelDataHandler
 						inputStream = FileEntryUtil.getContentStream(fileEntry);
 					}
 					catch (NoSuchFileException nsfe) {
+
+						// LPS-52675
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(nsfe, nsfe);
+						}
 					}
 				}
 				else {
@@ -432,6 +438,12 @@ public class KBArticleStagedModelDataHandler
 					fileEntry.getFileName(), fileEntry.getMimeType(), true);
 			}
 			catch (DuplicateFileEntryException dfee) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(dfee, dfee);
+				}
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);

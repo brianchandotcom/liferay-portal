@@ -15,6 +15,8 @@
 package com.liferay.exportimport.internal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ResourceBlockLocalServiceUtil;
@@ -54,6 +56,12 @@ public class ExportImportPermissionUtil {
 				companyId, resourceName, resourcePK, existingActionIds);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return existingRoleIdsToActionIds;
@@ -142,5 +150,8 @@ public class ExportImportPermissionUtil {
 				resourcePK, roleIdsToActionIds);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportPermissionUtil.class);
 
 }

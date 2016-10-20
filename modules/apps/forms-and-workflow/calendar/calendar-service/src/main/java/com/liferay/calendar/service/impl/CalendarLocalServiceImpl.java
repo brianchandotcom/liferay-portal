@@ -24,6 +24,8 @@ import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -200,6 +202,13 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			return true;
 		}
 		catch (NoSuchGroupException nsge) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsge, nsge);
+			}
+
 			return false;
 		}
 	}
@@ -227,6 +236,13 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			return group.isStagingGroup();
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return false;
 		}
 	}
@@ -386,5 +402,8 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 			throw new CalendarNameException();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CalendarLocalServiceImpl.class);
 
 }

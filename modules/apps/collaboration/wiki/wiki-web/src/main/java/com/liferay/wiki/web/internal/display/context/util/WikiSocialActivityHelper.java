@@ -18,6 +18,8 @@ import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -341,10 +343,19 @@ public class WikiSocialActivityHelper {
 			return PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
 		}
 		catch (NoSuchFileEntryException nsfee) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
 		}
 
 		return null;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiSocialActivityHelper.class);
 
 	private final WikiRequestHelper _wikiRequestHelper;
 

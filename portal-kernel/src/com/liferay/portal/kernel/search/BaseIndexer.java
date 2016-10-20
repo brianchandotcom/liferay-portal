@@ -529,7 +529,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				reindex(element);
 			}
 			catch (SearchException se) {
-				_log.error("Unable to index object: " + element);
+				_log.error("Unable to index object: " + element, se);
 			}
 		}
 	}
@@ -1274,7 +1274,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to get trash entry for " + trashedModel);
+				_log.debug("Unable to get trash entry for " + trashedModel, pe);
 			}
 		}
 
@@ -1335,7 +1335,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to get trash renderer for " +
-						trashEntry.getClassName());
+						trashEntry.getClassName(),
+					pe);
 			}
 		}
 	}

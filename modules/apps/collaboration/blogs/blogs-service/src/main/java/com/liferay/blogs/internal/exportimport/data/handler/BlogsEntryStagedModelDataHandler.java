@@ -547,6 +547,12 @@ public class BlogsEntryStagedModelDataHandler
 								fileEntry);
 						}
 						catch (NoSuchFileException nsfe) {
+
+							// LPS-52675
+
+							if (_log.isDebugEnabled()) {
+								_log.debug(nsfe, nsfe);
+							}
 						}
 					}
 					else {

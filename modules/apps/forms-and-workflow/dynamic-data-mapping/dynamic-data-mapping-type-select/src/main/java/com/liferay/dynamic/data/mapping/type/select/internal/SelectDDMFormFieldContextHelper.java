@@ -19,6 +19,8 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -75,9 +77,19 @@ public class SelectDDMFormFieldContextHelper {
 			return ArrayUtil.toStringArray(jsonArray);
 		}
 		catch (JSONException jsone) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
+
 			return StringUtil.split(value);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectDDMFormFieldContextHelper.class);
 
 	private final DDMFormFieldOptions _ddmFormFieldOptions;
 	private final JSONFactory _jsonFactory;

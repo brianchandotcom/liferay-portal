@@ -188,7 +188,8 @@ public class KBArticleMarkdownConverter {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to obtain image URL from file entry " +
-								imageFileEntry.getFileEntryId());
+								imageFileEntry.getFileEntryId(),
+							pe);
 					}
 				}
 

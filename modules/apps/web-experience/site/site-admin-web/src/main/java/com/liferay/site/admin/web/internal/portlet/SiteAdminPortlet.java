@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.RequiredGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -392,6 +394,12 @@ public class SiteAdminPortlet extends MVCPortlet {
 			refererGroupId = refererLayout.getGroupId();
 		}
 		catch (NoSuchLayoutException nsle) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsle, nsle);
+			}
 		}
 
 		return refererGroupId;
@@ -925,6 +933,9 @@ public class SiteAdminPortlet extends MVCPortlet {
 	protected UserService userService;
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteAdminPortlet.class);
 
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(

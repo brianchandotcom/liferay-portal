@@ -16,6 +16,8 @@ package com.liferay.site.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
@@ -82,6 +84,13 @@ public class SiteSiteTemplateFormNavigatorEntry
 				group.getGroupId(), false);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return false;
 		}
 
@@ -145,6 +154,9 @@ public class SiteSiteTemplateFormNavigatorEntry
 
 		_layoutSetPrototypeLocalService = layoutSetPrototypeLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteSiteTemplateFormNavigatorEntry.class);
 
 	private LayoutSetLocalService _layoutSetLocalService;
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;

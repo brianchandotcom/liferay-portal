@@ -237,7 +237,8 @@ public class RoleStagedModelDataHandler
 			catch (NoSuchResourceActionException nsrae) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
-						"Skip importing individually scoped permissions");
+						"Skip importing individually scoped permissions",
+						nsrae);
 				}
 			}
 		}

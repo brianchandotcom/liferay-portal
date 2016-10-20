@@ -30,6 +30,8 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
@@ -125,6 +127,13 @@ public class DDLFormDisplayContext {
 			_recordSet = _ddlRecordSetService.fetchRecordSet(getRecordSetId());
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 
@@ -405,6 +414,9 @@ public class DDLFormDisplayContext {
 	}
 
 	private static final String _DDM_FORM_FIELD_NAME_CAPTCHA = "_CAPTCHA_";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLFormDisplayContext.class);
 
 	private final DDLRecordSetService _ddlRecordSetService;
 	private final DDMFormRenderer _ddmFormRenderer;

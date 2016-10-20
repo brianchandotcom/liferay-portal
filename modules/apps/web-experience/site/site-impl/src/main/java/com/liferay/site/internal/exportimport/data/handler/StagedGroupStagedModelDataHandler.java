@@ -734,6 +734,12 @@ public class StagedGroupStagedModelDataHandler
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

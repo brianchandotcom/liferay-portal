@@ -193,6 +193,13 @@ public class OAuthManager {
 				companyId, User.class.getName(), "MP");
 		}
 		catch (DuplicateTableNameException dtne) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(dtne, dtne);
+			}
+
 			table = _expandoTableLocalService.getTable(
 				companyId, User.class.getName(), "MP");
 		}
@@ -212,6 +219,12 @@ public class OAuthManager {
 				ExpandoColumnConstants.STRING);
 		}
 		catch (DuplicateColumnNameException dcne) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(dcne, dcne);
+			}
 		}
 	}
 

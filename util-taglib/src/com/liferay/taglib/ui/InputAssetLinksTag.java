@@ -17,6 +17,8 @@ package com.liferay.taglib.ui;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,6 +49,12 @@ public class InputAssetLinksTag extends AssetLinksTag {
 				}
 			}
 			catch (SystemException se) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(se, se);
+				}
 			}
 		}
 
@@ -59,5 +67,8 @@ public class InputAssetLinksTag extends AssetLinksTag {
 
 	private static final String _PAGE =
 		"/html/taglib/ui/input_asset_links/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		InputAssetLinksTag.class);
 
 }

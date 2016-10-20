@@ -442,6 +442,12 @@ public class LayoutImportController implements ImportController {
 								layoutPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutPrototypeException nslpe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nslpe, nslpe);
+					}
 				}
 			}
 
@@ -486,6 +492,12 @@ public class LayoutImportController implements ImportController {
 								importedLayoutSetPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutSetPrototypeException nslspe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nslspe, nslspe);
+					}
 				}
 			}
 
@@ -1025,6 +1037,13 @@ public class LayoutImportController implements ImportController {
 						layoutSetPrototypeUuid, companyId);
 			}
 			catch (NoSuchLayoutSetPrototypeException nslspe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nslspe, nslspe);
+				}
+
 				String layoutSetPrototypeName = headerElement.attributeValue(
 					"layout-set-prototype-name");
 
@@ -1054,6 +1073,13 @@ public class LayoutImportController implements ImportController {
 							layoutPrototypeUuid, companyId);
 				}
 				catch (NoSuchLayoutPrototypeException nslpe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(nslpe, nslpe);
+					}
+
 					String layoutPrototypeName = GetterUtil.getString(
 						layoutElement.attributeValue("layout-prototype-name"));
 

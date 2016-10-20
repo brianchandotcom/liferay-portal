@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -187,6 +189,13 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			return _jsonFactory.createJSONArray(valueString);
 		}
 		catch (JSONException jsone) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
+
 			JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 			jsonArray.put(_jsonFactory.createJSONObject(valueString));
@@ -206,6 +215,9 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 			(PortalCache<String, DDMRESTDataProviderResult>)
 				multiVMPool.getPortalCache(DDMRESTDataProvider.class.getName());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMRESTDataProvider.class);
 
 	private JSONFactory _jsonFactory;
 	private PortalCache<String, DDMRESTDataProviderResult> _portalCache;

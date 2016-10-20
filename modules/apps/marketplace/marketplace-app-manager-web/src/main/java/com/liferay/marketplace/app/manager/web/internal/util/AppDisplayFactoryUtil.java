@@ -21,6 +21,8 @@ import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -60,6 +62,13 @@ public class AppDisplayFactoryUtil {
 			return createMarketplaceAppDisplay(bundlesMap, app);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
@@ -240,6 +249,9 @@ public class AppDisplayFactoryUtil {
 
 		_moduleLocalService = moduleLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AppDisplayFactoryUtil.class);
 
 	private static AppLocalService _appLocalService;
 	private static ModuleLocalService _moduleLocalService;

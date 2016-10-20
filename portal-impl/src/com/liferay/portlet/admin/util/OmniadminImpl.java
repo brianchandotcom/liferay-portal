@@ -42,6 +42,13 @@ public class OmniadminImpl implements Omniadmin {
 			return isOmniadmin(user);
 		}
 		catch (SystemException se) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(se, se);
+			}
+
 			return false;
 		}
 	}

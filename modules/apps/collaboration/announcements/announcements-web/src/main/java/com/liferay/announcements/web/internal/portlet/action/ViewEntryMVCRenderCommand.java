@@ -19,6 +19,8 @@ import com.liferay.announcements.kernel.model.AnnouncementsFlagConstants;
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.web.constants.AnnouncementsWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;
@@ -57,10 +59,20 @@ public class ViewEntryMVCRenderCommand implements MVCRenderCommand {
 				AnnouncementsFlagConstants.NOT_HIDDEN);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return "/announcements/error.jsp";
 		}
 
 		return "/announcements/view_entry.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewEntryMVCRenderCommand.class);
 
 }

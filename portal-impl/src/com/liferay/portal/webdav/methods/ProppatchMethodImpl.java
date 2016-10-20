@@ -64,6 +64,13 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 			return HttpServletResponse.SC_BAD_REQUEST;
 		}
 		catch (LockException le) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(le, le);
+			}
+
 			return WebDAVUtil.SC_LOCKED;
 		}
 		catch (Exception e) {

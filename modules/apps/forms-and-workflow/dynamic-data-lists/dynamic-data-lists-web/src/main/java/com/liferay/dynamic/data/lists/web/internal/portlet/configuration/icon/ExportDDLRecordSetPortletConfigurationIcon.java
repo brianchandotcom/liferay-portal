@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
@@ -94,6 +96,13 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 				ActionKeys.VIEW);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return false;
 		}
 	}
@@ -111,5 +120,8 @@ public class ExportDDLRecordSetPortletConfigurationIcon
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportDDLRecordSetPortletConfigurationIcon.class);
 
 }

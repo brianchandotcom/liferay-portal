@@ -582,6 +582,13 @@ public class CalEventImporter {
 			user = _userLocalService.getUserById(companyId, userId);
 		}
 		catch (NoSuchUserException nsue) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsue, nsue);
+			}
+
 			user = _userLocalService.getDefaultUser(companyId);
 
 			userId = user.getUserId();
@@ -596,6 +603,13 @@ public class CalEventImporter {
 				groupId, _ASSET_VOCABULARY_NAME);
 		}
 		catch (NoSuchVocabularyException nsve) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsve, nsve);
+			}
+
 			assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 				userId, groupId, _ASSET_VOCABULARY_NAME, serviceContext);
 		}

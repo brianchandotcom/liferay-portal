@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -118,6 +120,12 @@ public class StagedLayoutSetStagedModelRepository
 				ModelAdapterUtil.adapt(group, Group.class, StagedGroup.class));
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return dependencyStagedModels;
@@ -136,6 +144,12 @@ public class StagedLayoutSetStagedModelRepository
 				layoutSet, LayoutSet.class, StagedLayoutSet.class);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
 		return Optional.ofNullable(stagedLayoutSet);
@@ -154,6 +168,13 @@ public class StagedLayoutSetStagedModelRepository
 				layoutSet, LayoutSet.class, StagedLayoutSet.class);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
@@ -247,6 +268,9 @@ public class StagedLayoutSetStagedModelRepository
 		return ModelAdapterUtil.adapt(
 			existingLayoutSet, LayoutSet.class, StagedLayoutSet.class);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StagedLayoutSetStagedModelRepository.class);
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

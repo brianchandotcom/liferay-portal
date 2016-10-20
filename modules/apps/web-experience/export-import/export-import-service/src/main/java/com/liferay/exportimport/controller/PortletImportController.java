@@ -989,6 +989,13 @@ public class PortletImportController implements ImportController {
 			}
 		}
 		catch (NoSuchPortletPreferencesException nsppe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsppe, nsppe);
+			}
+
 			portletPreferences =
 				_portletPreferencesLocalService.addPortletPreferences(
 					companyId, ownerId, ownerType, plid, serviceName, null,
@@ -1087,6 +1094,13 @@ public class PortletImportController implements ImportController {
 					portletDataContext.getCompanyId(), className);
 			}
 			catch (NoSuchTableException nste) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nste, nste);
+				}
+
 				expandoTable = _expandoTableLocalService.addDefaultTable(
 					portletDataContext.getCompanyId(), className);
 			}

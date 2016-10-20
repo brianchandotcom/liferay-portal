@@ -99,7 +99,7 @@ public class AllSitesItemSelectorViewDisplayContext
 				return GroupServiceUtil.getGroup(groupId);
 			}
 			catch (PortalException pe) {
-				_log.error("Unable to obtain group " + groupId);
+				_log.error("Unable to obtain group " + groupId, pe);
 			}
 		}
 

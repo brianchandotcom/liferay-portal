@@ -683,6 +683,13 @@ public class BeanPropertiesImpl implements BeanProperties {
 				month, day, year, hour, minute, user.getTimeZone(), null);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}

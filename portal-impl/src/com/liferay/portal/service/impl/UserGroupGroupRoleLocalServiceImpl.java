@@ -16,6 +16,8 @@ package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchUserGroupGroupRoleException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
@@ -91,6 +93,12 @@ public class UserGroupGroupRoleLocalServiceImpl
 				userGroupGroupRolePersistence.remove(pk);
 			}
 			catch (NoSuchUserGroupGroupRoleException nsuggre) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsuggre, nsuggre);
+				}
 			}
 		}
 	}
@@ -121,6 +129,12 @@ public class UserGroupGroupRoleLocalServiceImpl
 				userGroupGroupRolePersistence.remove(pk);
 			}
 			catch (NoSuchUserGroupGroupRoleException nsuggre) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsuggre, nsuggre);
+				}
 			}
 		}
 	}
@@ -198,5 +212,8 @@ public class UserGroupGroupRoleLocalServiceImpl
 
 		return hasUserGroupGroupRole(userGroupId, groupId, roleId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserGroupGroupRoleLocalServiceImpl.class);
 
 }

@@ -29,6 +29,8 @@ import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -103,6 +105,13 @@ public class KBArticleAssetEntriesUtil {
 				AssetTagServiceUtil.getTag(tagId);
 			}
 			catch (PrincipalException pe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
+
 				continue;
 			}
 
@@ -192,5 +201,8 @@ public class KBArticleAssetEntriesUtil {
 
 		return portletURL.toString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBArticleAssetEntriesUtil.class);
 
 }

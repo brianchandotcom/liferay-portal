@@ -17,6 +17,8 @@ package com.liferay.document.library.internal.store;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -407,11 +409,21 @@ public class IgnoreDuplicatesStore implements Store {
 			storeAction.execute();
 		}
 		catch (DuplicateFileException dfe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(dfe, dfe);
+			}
+
 			recoverStoreAction.execute();
 
 			storeAction.execute();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		IgnoreDuplicatesStore.class);
 
 	private final Store _store;
 

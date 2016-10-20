@@ -17,6 +17,8 @@ package com.liferay.knowledge.base.internal.upgrade.v1_1_0;
 import com.liferay.expando.kernel.exception.NoSuchTableException;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -39,10 +41,20 @@ public class UpgradeExpandoTable extends UpgradeProcess {
 				companyId, Subscription.class.getName(), "KB");
 		}
 		catch (NoSuchTableException nste) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nste, nste);
+			}
+
 			return;
 		}
 
 		ExpandoTableLocalServiceUtil.deleteExpandoTable(expandoTable);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeExpandoTable.class);
 
 }

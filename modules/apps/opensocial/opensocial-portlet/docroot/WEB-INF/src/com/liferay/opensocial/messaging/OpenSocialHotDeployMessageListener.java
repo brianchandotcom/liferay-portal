@@ -20,6 +20,8 @@ import com.liferay.opensocial.model.Gadget;
 import com.liferay.opensocial.service.GadgetLocalServiceUtil;
 import com.liferay.opensocial.shindig.util.ShindigUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.model.Company;
@@ -51,6 +53,13 @@ public class OpenSocialHotDeployMessageListener
 					ShindigUtil.getTableOpenSocial());
 			}
 			catch (NoSuchTableException nste) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nste, nste);
+				}
+
 				ExpandoTableLocalServiceUtil.addTable(
 					company.getCompanyId(), Layout.class.getName(),
 					ShindigUtil.getTableOpenSocial());
@@ -62,6 +71,13 @@ public class OpenSocialHotDeployMessageListener
 					ShindigUtil.getTableOpenSocial());
 			}
 			catch (NoSuchTableException nste) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nste, nste);
+				}
+
 				ExpandoTableLocalServiceUtil.addTable(
 					company.getCompanyId(), User.class.getName(),
 					ShindigUtil.getTableOpenSocial());
@@ -106,5 +122,8 @@ public class OpenSocialHotDeployMessageListener
 	}
 
 	private static final String _GADGETS_CATEGORY = "category.gadgets";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OpenSocialHotDeployMessageListener.class);
 
 }

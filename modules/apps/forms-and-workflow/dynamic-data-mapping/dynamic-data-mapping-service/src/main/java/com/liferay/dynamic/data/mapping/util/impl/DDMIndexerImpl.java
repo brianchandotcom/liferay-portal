@@ -261,7 +261,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 				catch (PortalException pe) {
 					throw new IllegalArgumentException(
 						"Unable to obtain index tpe for field " + fieldName +
-							" and DDM structure ID " + ddmStructureId);
+							" and DDM structure ID " + ddmStructureId,
+						pe);
 				}
 			}
 		}

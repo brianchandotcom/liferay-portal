@@ -97,6 +97,12 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 					uuid, groupId);
 			}
 			catch (PortalException pe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 			}
 
 			try {
@@ -214,6 +220,12 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 							ddmTemplateKey, true);
 				}
 				catch (PortalException pe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(pe, pe);
+					}
 				}
 			}
 		}

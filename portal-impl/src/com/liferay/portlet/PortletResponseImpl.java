@@ -616,6 +616,12 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 					plid = linkedLayout.getPlid();
 				}
 				catch (PortalException pe) {
+
+					// LPS-52675
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(pe, pe);
+					}
 				}
 			}
 		}

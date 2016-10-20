@@ -375,7 +375,8 @@ public class CacheFilter extends BasePortalFilter {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Request is not cacheable " + key +
-							", invalid token received");
+							", invalid token received",
+						pe);
 				}
 
 				processFilter(

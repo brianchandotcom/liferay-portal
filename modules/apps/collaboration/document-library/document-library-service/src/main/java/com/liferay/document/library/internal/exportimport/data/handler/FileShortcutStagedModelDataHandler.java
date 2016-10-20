@@ -192,7 +192,7 @@ public class FileShortcutStagedModelDataHandler
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to fetch file entry " + fileEntryId);
+				_log.warn("Unable to fetch file entry " + fileEntryId, pe);
 			}
 
 			return;

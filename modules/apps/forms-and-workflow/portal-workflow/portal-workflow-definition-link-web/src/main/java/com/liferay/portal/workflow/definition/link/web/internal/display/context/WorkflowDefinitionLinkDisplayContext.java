@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -106,6 +108,13 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
 		}
 		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nswdle, nswdle);
+			}
+
 			return LanguageUtil.get(
 				_workflowDefinitionLinkRequestHelper.getRequest(),
 				"no-workflow");
@@ -423,6 +432,13 @@ public class WorkflowDefinitionLinkDisplayContext {
 			}
 		}
 		catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nswdle, nswdle);
+			}
+
 			return null;
 		}
 	}
@@ -464,6 +480,9 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowDefinitionLinkDisplayContext.class);
 
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;

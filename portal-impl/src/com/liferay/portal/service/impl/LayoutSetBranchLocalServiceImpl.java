@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.NoSuchLayoutSetBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredLayoutSetBranchException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
@@ -529,6 +531,12 @@ public class LayoutSetBranchLocalServiceImpl
 			}
 		}
 		catch (NoSuchLayoutSetBranchException nslsbe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nslsbe, nslsbe);
+			}
 		}
 
 		if (master) {
@@ -545,8 +553,17 @@ public class LayoutSetBranchLocalServiceImpl
 				}
 			}
 			catch (NoSuchLayoutSetBranchException nslsbe) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nslsbe, nslsbe);
+				}
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutSetBranchLocalServiceImpl.class);
 
 }

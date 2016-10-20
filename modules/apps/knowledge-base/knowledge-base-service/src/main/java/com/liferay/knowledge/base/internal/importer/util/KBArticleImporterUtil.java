@@ -167,6 +167,12 @@ public class KBArticleImporterUtil {
 				imageFileName);
 		}
 		catch (NoSuchFileEntryException nsfee) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
 		}
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(

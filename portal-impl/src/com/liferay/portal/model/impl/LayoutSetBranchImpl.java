@@ -72,9 +72,13 @@ public class LayoutSetBranchImpl extends LayoutSetBranchBaseImpl {
 
 			return _layoutSet;
 		}
-		catch (SystemException se) {
-		}
-		catch (PortalException pe) {
+		catch (SystemException | PortalException e) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return _layoutSet;

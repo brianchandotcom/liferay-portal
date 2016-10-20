@@ -65,6 +65,13 @@ public class LayoutSetPrototypeLayoutModelListener
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return;
 		}
 

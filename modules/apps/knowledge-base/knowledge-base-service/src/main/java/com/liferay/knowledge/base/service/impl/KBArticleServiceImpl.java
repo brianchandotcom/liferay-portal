@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -299,6 +301,13 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 				resourcePrimKey, status, orderByComparator);
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return Collections.emptyList();
 		}
 	}
@@ -981,5 +990,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	private static final int _INTERVAL = 200;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBArticleServiceImpl.class);
 
 }

@@ -235,6 +235,13 @@ public class ServicePreAction extends Action {
 			user = PortalUtil.initUser(request);
 		}
 		catch (NoSuchUserException nsue) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsue, nsue);
+			}
+
 			return null;
 		}
 

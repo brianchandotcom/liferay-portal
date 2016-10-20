@@ -639,6 +639,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				break;
 			}
 			catch (NoSuchLayoutException nsle) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nsle, nsle);
+				}
+
 				missingParentLayouts.add(parentLayout);
 
 				parentLayoutId = parentLayout.getParentLayoutId();

@@ -17,6 +17,8 @@ package com.liferay.bookmarks.web.internal.portlet.configuration.icon;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -120,6 +122,13 @@ public class PermissionsPortletConfigurationIcon
 			}
 		}
 		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return false;
 		}
 
@@ -135,5 +144,8 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PermissionsPortletConfigurationIcon.class);
 
 }

@@ -44,6 +44,8 @@ import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.exception.WebsiteURLException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -302,6 +304,12 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (NoSuchLayoutException nsle) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsle, nsle);
+			}
 		}
 	}
 
@@ -515,6 +523,9 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final boolean _AUTO_SCREEN_NAME = false;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CreateAccountMVCActionCommand.class);
 
 	private LayoutLocalService _layoutLocalService;
 	private UserLocalService _userLocalService;

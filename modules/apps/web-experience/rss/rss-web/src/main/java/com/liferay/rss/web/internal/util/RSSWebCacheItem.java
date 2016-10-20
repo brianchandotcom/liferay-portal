@@ -59,10 +59,12 @@ public class RSSWebCacheItem implements WebCacheItem {
 			// http://test.domosoft.com/up/RSS to test if German umlauts show up
 			// correctly.
 
-			/*Reader reader = new StringReader(
+			/*
+			Reader reader = new StringReader(
 				new String(HttpUtil.URLtoByteArray(_url)));
 
-			channel = FeedParser.parse(builder, reader);*/
+			channel = FeedParser.parse(builder, reader);
+			*/
 
 			SyndFeedInput input = new SyndFeedInput();
 

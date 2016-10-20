@@ -88,11 +88,13 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		/*if (actionRequest.getRemoteUser() != null) {
+		/*
+		if (actionRequest.getRemoteUser() != null) {
 			actionResponse.sendRedirect(themeDisplay.getPathMain());
 
 			return;
-		}*/
+		}
+		*/
 
 		try {
 			login(themeDisplay, actionRequest, actionResponse);

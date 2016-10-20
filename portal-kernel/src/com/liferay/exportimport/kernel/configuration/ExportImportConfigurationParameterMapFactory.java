@@ -54,13 +54,15 @@ public class ExportImportConfigurationParameterMapFactory {
 				});
 		}
 
-		/*if (!parameterMap.containsKey(
+		/*
+		if (!parameterMap.containsKey(
 				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS)) {
 
 			parameterMap.put(
 				PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
 				new String[] {Boolean.TRUE.toString()});
-		}*/
+		}
+		*/
 
 		if (!parameterMap.containsKey(
 				PortletDataHandlerKeys.DELETE_PORTLET_DATA)) {

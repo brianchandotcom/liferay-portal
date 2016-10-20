@@ -37,9 +37,11 @@ public class ServicePostAction extends Action {
 
 			// Doesn't this cause a memory leak?
 
-			/*if (requestURI.endsWith("/portal/render_portlet")) {
+			/*
+			if (requestURI.endsWith("/portal/render_portlet")) {
 				return;
-			}*/
+			}
+			*/
 		}
 		catch (Exception e) {
 			_log.error(e);

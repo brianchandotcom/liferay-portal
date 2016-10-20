@@ -145,9 +145,11 @@ public abstract class SimpleXMLDescriptor implements XMLDescriptor {
 	private Element _getChild(Element parent, String childName) {
 		Element child = parent.element(childName);
 
-		/*if (child == null) {
+		/*
+		if (child == null) {
 			child = parent.element(childName, parent.getNamespace());
-		}*/
+		}
+		*/
 
 		return child;
 	}

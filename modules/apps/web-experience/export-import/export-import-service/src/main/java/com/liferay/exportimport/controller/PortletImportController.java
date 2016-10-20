@@ -1261,18 +1261,6 @@ public class PortletImportController implements ImportController {
 			_portletDataHandlerProvider.provide(
 				portletDataContext.getCompanyId(), portletId);
 
-		if (importData || !MergeLayoutPrototypesThreadLocal.isInProgress()) {
-			_portletPreferencesLocalService.updatePreferences(
-				ownerId, ownerType, plid, portletId, xml);
-
-			return;
-		}
-
-		// Portlet preferences to be updated only when importing data
-
-		String[] dataPortletPreferences =
-			portletDataHandler.getDataPortletPreferences();
-
 		// Current portlet preferences
 
 		javax.portlet.PortletPreferences portletPreferences =
@@ -1286,6 +1274,32 @@ public class PortletImportController implements ImportController {
 			PortletPreferencesFactoryUtil.fromXML(
 				portletDataContext.getCompanyId(), ownerId, ownerType, plid,
 				portletId, xml);
+
+		if (importData || !MergeLayoutPrototypesThreadLocal.isInProgress()) {
+			String currentLastPublishDate = portletPreferences.getValue(
+				"last-publish-date", null);
+			String newLastPublishDate = jxPortletPreferences.getValue(
+				"last-publish-date", null);
+
+			if (Validator.isNotNull(currentLastPublishDate)) {
+				jxPortletPreferences.setValue(
+					"last-publish-date", currentLastPublishDate);
+			}
+			else if (Validator.isNotNull(newLastPublishDate)) {
+				jxPortletPreferences.reset("last-publish-date");
+			}
+
+			_portletPreferencesLocalService.updatePreferences(
+				ownerId, ownerType, plid, portletId,
+				PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+
+			return;
+		}
+
+		// Portlet preferences to be updated only when importing data
+
+		String[] dataPortletPreferences =
+			portletDataHandler.getDataPortletPreferences();
 
 		Enumeration<String> enu = jxPortletPreferences.getNames();
 

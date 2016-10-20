@@ -279,6 +279,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
+		if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
+			processMessage(
+				fileName, "There should be a line break after '},'",
+				lineCount);
+		}
+
 		int lineLeadingTabCount = getLeadingTabCount(line);
 		int previousLineLeadingTabCount = getLeadingTabCount(
 			previousLine);
@@ -2404,12 +2410,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (trimmedLine.startsWith(StringPool.EQUAL)) {
 					processMessage(
 						fileName, "Line should not start with '='", lineCount);
-				}
-
-				if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
-					processMessage(
-						fileName, "There should be a line break after '},'",
-						lineCount);
 				}
 
 				if (line.contains("ActionForm form")) {

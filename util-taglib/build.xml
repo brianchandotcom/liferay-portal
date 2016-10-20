@@ -43,14 +43,19 @@
 
 	<target depends="build-common-java.deploy" name="deploy">
 		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<equals arg1="${build.profile}" arg2="slim" />
 			<then>
-				<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
-
-				<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/tld">
-					<fileset dir="classes/META-INF" includes="*.tld" />
-				</copy>
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<then>
+					<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
+
+					<copy preservelastmodified="true" todir="${app.server.portal.dir}/WEB-INF/tld">
+						<fileset dir="classes/META-INF" includes="*.tld" />
+					</copy>
+				</then>
+			</elseif>
 		</if>
 	</target>
 

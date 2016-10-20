@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.counter.kernel.model.Counter" />
+	<import class="com.liferay.portal.kernel.model.ClassName" />
+	<import class="com.liferay.portal.kernel.model.Release" />
+	<import class="com.liferay.portal.kernel.model.ServiceComponent" />
+	<class name="com.liferay.counter.model.impl.CounterImpl" table="Counter">
+		<id name="name" type="java.lang.String">
+			<generator class="assigned" />
+		</id>
+		<property name="currentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.model.impl.ClassNameImpl" table="ClassName_">
+		<id name="classNameId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property name="value" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.model.impl.ReleaseImpl" table="Release_">
+		<id name="releaseId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="servletContextName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="schemaVersion" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="buildDate" type="org.hibernate.type.TimestampType" />
+		<property name="verified" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="state_" name="state" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="testString" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.portal.model.impl.ServiceComponentImpl" table="ServiceComponent">
+		<id name="serviceComponentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property name="buildNamespace" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="buildNumber" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="buildDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property column="data_" name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+	</class>
+</hibernate-mapping>

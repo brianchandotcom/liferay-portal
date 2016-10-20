@@ -711,8 +711,6 @@ public class PoshiRunnerExecutor {
 
 		Element returnElement = executeElement.element("return");
 
-		String returnVariable = returnElement.attributeValue("name");
-
 		String className = executeElement.attributeValue("class");
 		String methodName = executeElement.attributeValue("method");
 
@@ -723,9 +721,9 @@ public class PoshiRunnerExecutor {
 			String returnValue = ExternalMethod.execute(
 				className, methodName, parameters);
 
-			if (returnVariable != null) {
+			if (returnElement != null) {
 				PoshiRunnerVariablesUtil.putIntoCommandMap(
-					returnVariable, returnValue);
+					returnElement.attributeValue("name"), returnValue);
 			}
 
 			CommandLoggerHandler.logExternalMethodCommand(

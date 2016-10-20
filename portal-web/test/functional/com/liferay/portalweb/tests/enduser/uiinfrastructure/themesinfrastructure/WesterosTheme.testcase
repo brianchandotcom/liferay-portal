@@ -19,8 +19,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddThemeSite" priority="5">
-		<property name="portal.acceptance" value="pending" />
+	<command name="AddThemeSite" priority="1">
 		<property name="test.name.skip.portal.instance" value="WesterosTheme#AddThemeSite" />
 		<property name="themes.delayed.deployment" value="true" />
 

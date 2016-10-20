@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Wysiwyg Converter Test
+Bundle-SymbolicName: com.liferay.wysiwyg.converter.test
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-includeresource: test-classes/integration

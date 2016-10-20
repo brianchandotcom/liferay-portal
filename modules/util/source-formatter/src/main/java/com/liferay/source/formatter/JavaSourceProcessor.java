@@ -281,13 +281,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
 			processMessage(
-				fileName, "There should be a line break after '},'",
-				lineCount);
+				fileName, "There should be a line break after '},'", lineCount);
 		}
 
 		int lineLeadingTabCount = getLeadingTabCount(line);
-		int previousLineLeadingTabCount = getLeadingTabCount(
-			previousLine);
+		int previousLineLeadingTabCount = getLeadingTabCount(previousLine);
 
 		if (previousLine.endsWith(StringPool.COMMA) &&
 			previousLine.contains(StringPool.OPEN_PARENTHESIS) &&
@@ -354,16 +352,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String strippedQuotesLine = stripQuotes(trimmedLine);
 
 		int strippedQuotesLineOpenParenthesisCount =
-			StringUtil.count(
-				strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
+			StringUtil.count(strippedQuotesLine, CharPool.OPEN_PARENTHESIS);
 
 		if (!trimmedLine.startsWith(StringPool.OPEN_PARENTHESIS) &&
 			trimmedLine.endsWith(") {") &&
 			(strippedQuotesLineOpenParenthesisCount > 0) &&
 			(getLevel(trimmedLine) > 0)) {
 
-			processMessage(
-				fileName, "Incorrect line break", lineCount);
+			processMessage(fileName, "Incorrect line break", lineCount);
 		}
 
 		if (line.endsWith(StringPool.OPEN_PARENTHESIS)) {
@@ -383,26 +379,21 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int pos = strippedQuotesLine.indexOf(" + ");
 
 			if (pos != -1) {
-				String linePart = strippedQuotesLine.substring(
-					0, pos);
+				String linePart = strippedQuotesLine.substring(0, pos);
 
 				if ((getLevel(linePart, "(", ")") == 0) &&
 					(getLevel(linePart, "[", "]") == 0)) {
 
 					processMessage(
-						fileName,
-						"There should be a line break after '+'",
+						fileName, "There should be a line break after '+'",
 						lineCount);
 				}
 			}
 		}
 
-		if (trimmedLine.matches("^[^(].*\\+$") &&
-			(getLevel(trimmedLine) > 0)) {
-
+		if (trimmedLine.matches("^[^(].*\\+$") && (getLevel(trimmedLine) > 0)) {
 			processMessage(
-				fileName, "There should be a line break after '('",
-				lineCount);
+				fileName, "There should be a line break after '('", lineCount);
 		}
 
 		if (!trimmedLine.contains("\t//") && !line.endsWith("{") &&
@@ -410,8 +401,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			!strippedQuotesLine.contains("}")) {
 
 			processMessage(
-				fileName, "There should be a line break after '{'",
-				lineCount);
+				fileName, "There should be a line break after '{'", lineCount);
 		}
 
 		if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
@@ -420,8 +410,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			int x = -1;
 
 			while (true) {
-				x = trimmedLine.indexOf(
-					StringPool.COMMA_AND_SPACE, x + 1);
+				x = trimmedLine.indexOf(StringPool.COMMA_AND_SPACE, x + 1);
 
 				if (x == -1) {
 					break;
@@ -435,16 +424,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				int level = getLevel(linePart);
 
-				if ((previousLine.endsWith(
-						StringPool.OPEN_PARENTHESIS) &&
+				if ((previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
 					 (level < 0)) ||
-					(previousLine.endsWith(StringPool.PLUS) &&
-					 (level <= 0))) {
+					(previousLine.endsWith(StringPool.PLUS) && (level <= 0))) {
 
 					processMessage(
 						fileName,
-						"There should be a line break after '" +
-							linePart + "'",
+						"There should be a line break after '" + linePart + "'",
 						lineCount);
 				}
 			}
@@ -459,8 +445,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				if (getLevel(linePart) < 0) {
 					processMessage(
 						fileName,
-						"There should be a line break after '" +
-							linePart + "'",
+						"There should be a line break after '" + linePart + "'",
 						lineCount);
 				}
 			}
@@ -469,13 +454,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				 !trimmedLine.startsWith("for (")) {
 
 			if (getLevel(trimmedLine) > 0) {
-				processMessage(
-					fileName, "Incorrect line break", lineCount);
+				processMessage(fileName, "Incorrect line break", lineCount);
 			}
 		}
 
-		if (line.endsWith(" +") || line.endsWith(" -") ||
-			line.endsWith(" *") || line.endsWith(" /")) {
+		if (line.endsWith(" +") || line.endsWith(" -") || line.endsWith(" *") ||
+			line.endsWith(" /")) {
 
 			x = line.indexOf(" = ");
 
@@ -484,8 +468,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				if ((y == -1) || (x < y)) {
 					processMessage(
-						fileName,
-						"There should be a line break after '='",
+						fileName, "There should be a line break after '='",
 						lineCount);
 				}
 			}
@@ -499,8 +482,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			  line.endsWith(StringPool.SEMICOLON)))) {
 
 			processMessage(
-				fileName,
-				"There should be a line break before 'throws'",
+				fileName, "There should be a line break before 'throws'",
 				lineCount);
 		}
 
@@ -508,14 +490,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			line.contains(StringPool.EQUAL)) {
 
 			processMessage(
-				fileName, "There should be a line break after '='",
-				lineCount);
+				fileName, "There should be a line break after '='", lineCount);
 		}
 
 		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 			processMessage(
-				fileName, "There should be a line break after '}'",
-				lineCount);
+				fileName, "There should be a line break after '}'", lineCount);
 		}
 	}
 

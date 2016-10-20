@@ -2042,11 +2042,13 @@ public class JavadocFormatter {
 
 		String javaClassFullyQualifiedName = javaClass.getFullyQualifiedName();
 
-		/*if (!javaClassFullyQualifiedName.contains(".service.") ||
+		/*
+		if (!javaClassFullyQualifiedName.contains(".service.") ||
 			!javaClassFullyQualifiedName.endsWith("ServiceImpl")) {
 
 			return;
-		}*/
+		}
+		*/
 
 		Tuple javadocsXmlTuple = _getJavadocsXmlTuple(fileName);
 

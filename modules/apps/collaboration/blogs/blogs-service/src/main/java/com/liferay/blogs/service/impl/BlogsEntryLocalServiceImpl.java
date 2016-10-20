@@ -503,9 +503,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		FileEntry originalFileEntry =
 			BlogsEntryAttachmentFileEntryUtil.addBlogsEntryAttachmentFileEntry(
-					groupId, userId, entryId, folder.getFolderId(),
-					imageSelector.getImageTitle(),
-					imageSelector.getImageMimeType(), imageBytes);
+				groupId, userId, entryId, folder.getFolderId(),
+				imageSelector.getImageTitle(), imageSelector.getImageMimeType(),
+				imageBytes);
 
 		return originalFileEntry.getFileEntryId();
 	}

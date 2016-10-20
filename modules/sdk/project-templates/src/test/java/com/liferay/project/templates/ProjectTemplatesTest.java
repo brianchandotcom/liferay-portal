@@ -1280,27 +1280,51 @@ public class ProjectTemplatesTest {
 
 		DifferenceCalculator calc = new DifferenceCalculator(warFile1, warFile2);
 
-		calc.setCompareCRCValues(true);
+		Set<String> patterns = new HashSet<>();
+		patterns.add(".*META-INF.*");
+
+		calc.setFilenameRegexToIgnore(patterns);
 		calc.setIgnoreTimestamps(true);
-		calc.setProcessEmbeddedZipFiles(true);
 
 		Differences differences = calc.getDifferences();
 
 		if (differences.hasDifferences()) {
+			Map<String, ZipArchiveEntry> added = differences.getAdded();
+			Map<String, ZipArchiveEntry> removed = differences.getRemoved();
 			Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
 
-			StringBuilder stringBuilder = new StringBuilder();
+			Exception exception = new Exception("War differences\n" + differences);
 
-			for (String change : changed.keySet()) {
-				ZipArchiveEntry[] zipArchiveEntries = changed.get(change);
+			if (added.size() == 0 && removed.size() == 0 && changed.size() > 0) {
+				boolean realChange = false;
 
-				for (ZipArchiveEntry zipArchiveEntry : zipArchiveEntries) {
-					stringBuilder.append(zipArchiveEntry.getName());
-					stringBuilder.append("\n");
+				for (String change : changed.keySet()) {
+					ZipArchiveEntry[] entries = changed.get(change);
+
+					ZipArchiveEntry z1 = entries[0];
+					ZipArchiveEntry z2 = entries[0];
+
+					if ((z1.isDirectory() && z2.isDirectory()) &&
+						(z1.getSize() == z2.getSize()) &&
+						(z1.getCompressedSize() <= 2) &&
+						(z2.getCompressedSize() <= 2)) {
+
+						continue; // skip zipdiff bug
+					}
+					else {
+						realChange = true;
+						break;
+					}
 				}
+
+				if (realChange) {
+					throw exception;
+				}
+
+				return;
 			}
 
-			throw new Exception("War differences encountered\n" + stringBuilder.toString());
+			throw exception;
 		}
 	}
 

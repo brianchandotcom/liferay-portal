@@ -46,9 +46,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.BuildTask;
 import org.gradle.testkit.runner.GradleRunner;
@@ -60,6 +62,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import net.diibadaaba.zipdiff.DifferenceCalculator;
+import net.diibadaaba.zipdiff.Differences;
 
 /**
  * @author Lawrence Lee
@@ -709,6 +714,10 @@ public class ProjectTemplatesTest {
 			mavenProjectDir,
 			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
 			"name=theme-test");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/theme-test.war",
+			"target/theme-test-1.0.0.war");
 	}
 
 	@Test
@@ -878,7 +887,13 @@ public class ProjectTemplatesTest {
 		File mavenBundleFile = _testExists(
 			mavenProjectDir, mavenBundleFileName);
 
-		_testBundlesDiff(gradleBundleFile, mavenBundleFile);
+		if (gradleBundleFileName.endsWith(".jar")) {
+			_testBundlesDiff(gradleBundleFile, mavenBundleFile);
+		}
+
+		if (gradleBundleFileName.endsWith(".war")) {
+			_testWarDiff(gradleBundleFile, mavenBundleFile);
+		}
 	}
 
 	private File _buildTemplateWithGradle(
@@ -1258,6 +1273,35 @@ public class ProjectTemplatesTest {
 		Assert.assertFalse("Unexpected " + fileName, file.exists());
 
 		return file;
+	}
+
+	private void _testWarDiff(File warFile1, File warFile2)
+			throws Exception {
+
+		DifferenceCalculator calc = new DifferenceCalculator(warFile1, warFile2);
+
+		calc.setCompareCRCValues(true);
+		calc.setIgnoreTimestamps(true);
+		calc.setProcessEmbeddedZipFiles(true);
+
+		Differences differences = calc.getDifferences();
+
+		if (differences.hasDifferences()) {
+			Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
+
+			StringBuilder stringBuilder = new StringBuilder();
+
+			for (String change : changed.keySet()) {
+				ZipArchiveEntry[] zipArchiveEntries = changed.get(change);
+
+				for (ZipArchiveEntry zipArchiveEntry : zipArchiveEntries) {
+					stringBuilder.append(zipArchiveEntry.getName());
+					stringBuilder.append("\n");
+				}
+			}
+
+			throw new Exception("War differences encountered\n" + stringBuilder.toString());
+		}
 	}
 
 	private void _writeServiceClass(File projectDir) throws IOException {

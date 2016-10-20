@@ -31,7 +31,7 @@
 			</h5>
 
 			<h6 class="text-default">
-				<span><%= user2.getScreenName() %></span>
+				<%= user2.getScreenName() %>
 			</h6>
 		</liferay-ui:search-container-column-text>
 

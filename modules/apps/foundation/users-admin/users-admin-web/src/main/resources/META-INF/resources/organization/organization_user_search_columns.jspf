@@ -46,7 +46,7 @@
 					</h5>
 
 					<h6 class="text-default">
-						<span><%= LanguageUtil.get(request, curOrganization.getType()) %></span>
+						<%= LanguageUtil.get(request, curOrganization.getType()) %>
 					</h6>
 				</liferay-ui:search-container-column-text>
 
@@ -139,11 +139,11 @@
 					</h5>
 
 					<h6 class="text-default">
-						<span><%= LanguageUtil.get(request, "user") %></span>
+						<%= LanguageUtil.get(request, "user") %>
 					</h6>
 
 					<h6 class="text-default">
-						<span><%= LanguageUtil.get(request, userStatus) %></span>
+						<%= LanguageUtil.get(request, userStatus) %>
 					</h6>
 				</liferay-ui:search-container-column-text>
 

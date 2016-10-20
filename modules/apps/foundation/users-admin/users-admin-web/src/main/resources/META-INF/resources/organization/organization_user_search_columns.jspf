@@ -15,7 +15,7 @@
 --%>
 
 <c:choose>
-	<c:when test="<%= curOrganization != null %>">
+	<c:when test="<%= Validator.isNotNull(curOrganization) %>">
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
 			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
@@ -80,7 +80,9 @@
 					cssClass="table-cell-content"
 					name="name"
 				>
-					<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= curOrganization.getName() %></strong></aui:a>
+					<aui:a href="<%= String.valueOf(rowURL) %>">
+						<strong><%= curOrganization.getName() %></strong>
+					</aui:a>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text
@@ -177,7 +179,9 @@
 					name="name"
 					orderable="<%= true %>"
 				>
-					<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
+					<aui:a href="<%= String.valueOf(rowURL) %>">
+						<strong><%= user2.getFullName() %></strong>
+					</aui:a>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text

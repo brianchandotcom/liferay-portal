@@ -22,6 +22,148 @@
 		</if>
 	</tear-down>
 
+	<command name="AddOrganizationMember" priority="5">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="MyAccount#addOrganization">
+			<var name="organizationName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#gotoCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchToken" value="Organization" />
+		</execute>
+
+		<execute macro="Organization#viewAssignMemberCP">
+			<var name="userName" value="userfn userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command name="AddOrganizations" priority="4">
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<for list="1,2,3" param="i">
+			<execute macro="MyAccount#addOrganization">
+				<var name="organizationName" value="Organization Name ${i}" />
+			</execute>
+
+			<execute macro="ProductMenu#gotoUserMyAccount">
+				<var name="portlet" value="My Organizations" />
+			</execute>
+
+			<execute macro="Organization#searchCP">
+				<var name="orgName" value="Organization Name ${i}" />
+				<var name="searchTerm" value="Organization Name ${i}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="DeleteOrganization" priority="5">
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="MyAccount#addOrganization">
+			<var name="organizationName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#deleteCP">
+			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#viewNoOrganizationsFoundCP" />
+	</command>
+
+	<command name="EditOrganizationSite" priority="5">
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="MyAccount#addOrganization">
+			<var name="organizationName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="Organization Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteMember" value="Organization" />
+			<var name="siteName" value="Organization Name" />
+			<var name="siteType" value="Private" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#editSiteCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="orgNameEdit" value="Organization Name Edit" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoUserMyAccount">
+			<var name="portlet" value="My Organizations" />
+		</execute>
+
+		<execute macro="Organization#searchCP">
+			<var name="orgName" value="Organization Name Edit" />
+			<var name="searchTerm" value="Organization Name Edit" />
+		</execute>
+
+		<execute macro="Organization#viewCP">
+			<var name="orgName" value="Organization Name Edit" />
+			<var name="orgType" value="Organization" />
+		</execute>
+	</command>
+
 	<command name="ViewMyAccount" priority="4">
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
@@ -31,12 +173,6 @@
 	</command>
 
 	<command name="ViewMyAccountUser" priority="4">
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userLoginFullName" value="userfn userln" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>

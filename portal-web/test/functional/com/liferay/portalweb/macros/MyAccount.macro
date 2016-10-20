@@ -1,4 +1,16 @@
 <definition>
+	<command name="addOrganization">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${organizationName}" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="changeUserLanguage">
 		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
 

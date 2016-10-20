@@ -2392,6 +2392,10 @@
 			<finder-column name="buildNamespace" />
 			<finder-column name="buildNumber" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Release" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="Subscription" remote-service="false">
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableListener;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -45,8 +47,9 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -72,15 +75,17 @@ public class ServiceComponentLocalServiceImpl
 				")(upgrade.from.schema.version=0.0.0)(upgrade.initial." +
 					"database.creation=true))");
 
-		_serviceTrackerList = ServiceTrackerCollections.openList(
-			UpgradeStep.class, filter);
+		_upgradeStepServiceTracker = registry.trackServices(
+			filter, new UpgradeStepServiceTrackerCustomizer());
+
+		_upgradeStepServiceTracker.open();
 	}
 
 	@Override
 	public void destroy() {
 		super.destroy();
 
-		_serviceTrackerList.close();
+		_upgradeStepServiceTracker.close();
 	}
 
 	@Override
@@ -229,25 +234,50 @@ public class ServiceComponentLocalServiceImpl
 
 	@Override
 	public void verifyDB() {
-		for (UpgradeStep upgradeStep : _serviceTrackerList) {
-			try {
-				upgradeStep.upgrade(
-					new DBProcessContext() {
+		Object[] services = _upgradeStepServiceTracker.getServices();
 
-						@Override
-						public DBContext getDBContext() {
-							return new DBContext();
-						}
+		for (Object service : services) {
+			ObjectValuePair<String, UpgradeStep> upgradeStepObjectValuePair =
+				(ObjectValuePair<String, UpgradeStep>)service;
 
-						@Override
-						public OutputStream getOutputStream() {
-							return null;
-						}
+			String servletContextName = upgradeStepObjectValuePair.getKey();
+			UpgradeStep upgradeStep = upgradeStepObjectValuePair.getValue();
 
-					});
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+			Release release = releaseLocalService.fetchRelease(
+				servletContextName);
+
+			if ((release == null) ||
+				"0.0.0".equals(release.getSchemaVersion())) {
+
+				try {
+					upgradeStep.upgrade(
+						new DBProcessContext() {
+
+							@Override
+							public DBContext getDBContext() {
+								return new DBContext();
+							}
+
+							@Override
+							public OutputStream getOutputStream() {
+								return null;
+							}
+
+						});
+
+					if (release == null) {
+						releaseLocalService.addRelease(
+							servletContextName, "0.0.1");
+					}
+					else {
+						release.setSchemaVersion("0.0.1");
+
+						releaseLocalService.updateRelease(release);
+					}
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 		}
 	}
@@ -553,7 +583,9 @@ public class ServiceComponentLocalServiceImpl
 
 	private static final PACL _pacl = new NoPACL();
 
-	private final ServiceTrackerList<UpgradeStep> _serviceTrackerList;
+	private final ServiceTracker
+		<UpgradeStep, ObjectValuePair<String, UpgradeStep>>
+			_upgradeStepServiceTracker;
 
 	private static class NoPACL implements PACL {
 
@@ -564,6 +596,40 @@ public class ServiceComponentLocalServiceImpl
 			throws Exception {
 
 			doUpgradeDBPrivilegedExceptionAction.run();
+		}
+
+	}
+
+	private static class UpgradeStepServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<UpgradeStep, ObjectValuePair<String, UpgradeStep>> {
+
+		@Override
+		public ObjectValuePair<String, UpgradeStep> addingService(
+			ServiceReference<UpgradeStep> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			UpgradeStep upgradeStep = registry.getService(serviceReference);
+
+			String servletContextName = (String)serviceReference.getProperty(
+				"upgrade.bundle.symbolic.name");
+
+			return new ObjectValuePair<>(servletContextName, upgradeStep);
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<UpgradeStep> serviceReference,
+			ObjectValuePair<String, UpgradeStep> service) {
+
+			addingService(serviceReference);
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<UpgradeStep> serviceReference,
+			ObjectValuePair<String, UpgradeStep> service) {
 		}
 
 	}

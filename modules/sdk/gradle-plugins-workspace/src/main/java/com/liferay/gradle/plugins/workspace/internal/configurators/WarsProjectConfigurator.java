@@ -73,10 +73,7 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 		_addRepositoryDefault(project);
 		_addTaskDeploy(war, workspaceExtension);
 
-		_configureRootTaskDistBundle(
-			war, RootProjectConfigurator.DIST_BUNDLE_TAR_TASK_NAME);
-		_configureRootTaskDistBundle(
-			war, RootProjectConfigurator.DIST_BUNDLE_ZIP_TASK_NAME);
+		_configureRootTaskDistBundle(war);
 	}
 
 	@Override
@@ -163,15 +160,14 @@ public class WarsProjectConfigurator extends BaseProjectConfigurator {
 		return copy;
 	}
 
-	private void _configureRootTaskDistBundle(
-		final War war, String rootTaskName) {
-
+	private void _configureRootTaskDistBundle(final War war) {
 		Project project = war.getProject();
 
-		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
-			project.getRootProject(), rootTaskName);
+		Copy copy = (Copy)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
 
-		copySpec.into(
+		copy.into(
 			"osgi/war",
 			new Closure<Void>(project) {
 

@@ -26,28 +26,6 @@ import org.json.JSONObject;
  */
 public abstract class OAuthUtil {
 
-	public static String buildURL(
-		String hostName, int port, String protocol, String uri) {
-
-		StringBuilder sb = new StringBuilder(7);
-
-		sb.append(protocol);
-		sb.append(StringPool.COLON);
-		sb.append(StringPool.DOUBLE_SLASH);
-		sb.append(hostName);
-
-		if ((protocol.equals("http") && (port != 80)) ||
-			(protocol.equals("https") && (port != 443))) {
-
-			sb.append(StringPool.COLON);
-			sb.append(port);
-		}
-
-		sb.append(uri);
-
-		return sb.toString();
-	}
-
 	public String getValueFromResponse(String response, String field)
 		throws IOException {
 

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.slim.runtime.internal;
+package com.liferay.slim.runtime.internal;
+
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-
-import com.liferay.portal.kernel.util.ProxyUtil;
 
 /**
  * @author Raymond Augé

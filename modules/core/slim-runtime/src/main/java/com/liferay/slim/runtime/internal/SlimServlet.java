@@ -12,18 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.slim.runtime.internal;
+package com.liferay.slim.runtime.internal;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.events.ShutdownHook;
 import com.liferay.portal.kernel.cache.thread.local.Lifecycle;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
@@ -36,22 +26,28 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.tools.DBUpgrader;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
 
 /**
  * @author Raymond Augé
@@ -123,57 +119,6 @@ public class SlimServlet extends HttpServlet {
 		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
 	}
 
-	@Override
-	protected void service(
-			HttpServletRequest request, HttpServletResponse response)
-		throws IOException, ServletException {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Process service request");
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Shutdown Request - NOT SUPPORTED");
-			_log.debug("Maintenance Request - NOT SUPPORTED");
-			_log.debug("Company - NOT SUPPORTED");
-			_log.debug("Group - NOT SUPPORTED");
-			_log.debug("Set portal port");
-		}
-
-		PortalUtil.setPortalInetSocketAddresses(request);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check variables - NOT SUPPORTED");
-			_log.debug("Portlet Request Processor - NOT SUPPORTED");
-			_log.debug("Tiles Definitions Factory - NOT SUPPORTED");
-			_log.debug("Handle non-serializable request - NOT SUPPORTED");
-			_log.debug("Encrypt request - NOT SUPPORTED");
-			_log.debug("User - NOT SUPPORTED");
-			_log.debug("Login Pre Events - NOT SUPPORTED");
-			_log.debug("Login Post Events - NOT SUPPORTED");
-			_log.debug("Session Thread Local - NOT SUPPORTED");
-			_log.debug("Absolute Redirect checking - NOT SUPPORTED");
-			_log.debug("ThemeDisplay - NOT SUPPORTED");
-			_log.debug("Service Pre Events - NOT SUPPORTED");
-		}
-
-		if (_servlets.isEmpty()) {
-			response.sendError(
-				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
-				"Module framework is unavailable");
-
-			return;
-		}
-
-		HttpServlet httpServlet = _servlets.get(0);
-
-		httpServlet.service(request, response);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Service Post Events - NOT SUPPORTED");
-		}
-	}
-
 	protected void processStartupEvents() throws Exception {
 
 		// Print release information
@@ -185,7 +130,7 @@ public class SlimServlet extends HttpServlet {
 		try (InputStream inputStream = classLoader.getResourceAsStream(
 				"com/liferay/portal/events/dependencies/startup.txt")) {
 
-			System.out.println(IOUtils.toString(inputStream, StringPool.UTF8));
+			System.out.println(_toString(inputStream));
 		}
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo() + "\n");
@@ -279,6 +224,69 @@ public class SlimServlet extends HttpServlet {
 			ServletContext.class, getServletContext(), properties);
 	}
 
+	@Override
+	protected void service(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Process service request");
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Shutdown Request - NOT SUPPORTED");
+			_log.debug("Maintenance Request - NOT SUPPORTED");
+			_log.debug("Company - NOT SUPPORTED");
+			_log.debug("Group - NOT SUPPORTED");
+			_log.debug("Set portal port");
+		}
+
+		PortalUtil.setPortalInetSocketAddresses(request);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Check variables - NOT SUPPORTED");
+			_log.debug("Portlet Request Processor - NOT SUPPORTED");
+			_log.debug("Tiles Definitions Factory - NOT SUPPORTED");
+			_log.debug("Handle non-serializable request - NOT SUPPORTED");
+			_log.debug("Encrypt request - NOT SUPPORTED");
+			_log.debug("User - NOT SUPPORTED");
+			_log.debug("Login Pre Events - NOT SUPPORTED");
+			_log.debug("Login Post Events - NOT SUPPORTED");
+			_log.debug("Session Thread Local - NOT SUPPORTED");
+			_log.debug("Absolute Redirect checking - NOT SUPPORTED");
+			_log.debug("ThemeDisplay - NOT SUPPORTED");
+			_log.debug("Service Pre Events - NOT SUPPORTED");
+		}
+
+		if (_servlets.isEmpty()) {
+			response.sendError(
+				HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+				"Module framework is unavailable");
+
+			return;
+		}
+
+		HttpServlet httpServlet = _servlets.get(0);
+
+		httpServlet.service(request, response);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Service Post Events - NOT SUPPORTED");
+		}
+	}
+
+	private String _toString(InputStream inputStream) {
+		try (Scanner scanner = new Scanner(inputStream, StringPool.UTF8)) {
+			scanner.useDelimiter("\\A");
+
+			if (scanner.hasNext()) {
+				return scanner.next();
+			}
+
+			return "";
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(SlimServlet.class);
 
 	private ServiceRegistration<ModuleServiceLifecycle>
@@ -287,7 +295,6 @@ public class SlimServlet extends HttpServlet {
 		_moduleServiceLifecycleServiceRegistrationPortal;
 	private ServiceRegistration<ServletContext>
 		_servletContextServiceRegistration;
-
 	private final List<HttpServlet> _servlets =
 		ServiceTrackerCollections.openList(
 			HttpServlet.class,

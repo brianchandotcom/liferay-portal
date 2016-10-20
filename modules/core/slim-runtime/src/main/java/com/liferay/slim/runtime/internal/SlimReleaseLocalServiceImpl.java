@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.slim.runtime.internal;
+package com.liferay.slim.runtime.internal;
 
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DB;

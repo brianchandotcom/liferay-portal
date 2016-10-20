@@ -185,8 +185,15 @@ lportal_BS
 		<element name="test-action" />
 
 		<sequential>
-			<var name="database.type" value="@{database.type}" />
-			<var name="database.version" value="@{database.version}" />
+			<var name="database.type" unset="true" />
+			<var name="database.@{database.type}.version" unset="true" />
+
+			<property name="database.type" value="@{database.version}" />
+			<property name="database.@{database.type}.version" value="@{database.version}" />
+
+			<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[
+database.type=@{database.type}
+database.@{database.type}.version=@{database.version}]]></echo>
 
 			<if>
 				<and>
@@ -196,23 +203,22 @@ lportal_BS
 				<then>
 					<var name="database.mysql.service.cmd.start" unset="true" />
 					<var name="database.mysql.service.cmd.stop" unset="true" />
-					<var name="database.mysql.version" unset="true" />
 					<var name="mysql.executable" unset="true" />
 
 					<property name="database.mysql.service.cmd.start" value="mysql55 start" />
 					<property name="database.mysql.service.cmd.stop" value="mysql55 stop" />
-					<property name="database.mysql.version" value="5.5" />
 					<property name="mysql.executable" value="mysql55" />
 
 					<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[
 database.mysql.service.cmd.start=${database.mysql.service.cmd.start}
-database.mysql.service.cmd.stop=${database.mysql.service.cmd.stop}
-database.mysql.version=${database.mysql.version}]]></echo>
+database.mysql.service.cmd.stop=${database.mysql.service.cmd.stop}]]></echo>
 
 					<echo append="true" file="sql/sql.${env.HOSTNAME}.properties"><![CDATA[
 mysql.executable=${mysql.executable}]]></echo>
 				</then>
 			</if>
+
+			<print-file file.name="test.${env.HOSTNAME}.properties" />
 
 			<if>
 				<equals arg1="@{database.type}" arg2="mariadb" />
@@ -225,6 +231,8 @@ mysql.executable=${mysql.executable}]]></echo>
 mariadb.executable=${mariadb.executable}]]></echo>
 				</then>
 			</if>
+
+			<print-file file.name="sql/sql.${env.HOSTNAME}.properties" />
 
 			<database-test-action database.type="@{database.type}">
 				<action>
@@ -817,7 +825,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<test-action>
 					<database-test-run-test database.type="mysql" stop.app.server="true">
 						<test-action>
-							<setup-lpkg-test />
+							<setup-lpkg-test database.type="@{database.type}" />
 
 							<trycatch>
 								<try>
@@ -932,7 +940,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<test-action>
 					<database-test-run-test database.type="mysql" stop.app.server="true">
 						<test-action>
-							<setup-lpkg-test />
+							<setup-lpkg-test database.type="@{database.type}" />
 
 							<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
 								<arg value="test" />
@@ -1093,7 +1101,7 @@ app.server.type=@{app.server.type}]]></echo>
 				<test-action>
 					<database-test-run-test database.type="mysql" stop.app.server="true">
 						<test-action>
-							<setup-lpkg-test />
+							<setup-lpkg-test database.type="@{database.type}" />
 
 							<trycatch>
 								<try>
@@ -1307,6 +1315,8 @@ app.server.type=@{app.server.type}]]></echo>
 	</macrodef>
 
 	<macrodef name="setup-lpkg-test">
+		<attribute name="database.type" />
+
 		<sequential>
 			<antcall inheritAll="false" target="prepare-log4j-ext-xml">
 				<param name="database.type" value="@{database.type}" />

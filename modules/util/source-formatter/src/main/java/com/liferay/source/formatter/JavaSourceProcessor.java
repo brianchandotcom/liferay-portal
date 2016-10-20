@@ -270,6 +270,104 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkIndentationAndLineBreaks(
+		String line, String previousLine, String fileName, int lineCount) {
+
+		int lineLeadingTabCount = getLeadingTabCount(line);
+		int previousLineLeadingTabCount = getLeadingTabCount(
+			previousLine);
+		String trimmedLine = StringUtil.trimLeading(line);
+
+		if (!trimmedLine.startsWith("//")) {
+			if (previousLine.endsWith(StringPool.COMMA) &&
+				previousLine.contains(
+					StringPool.OPEN_PARENTHESIS) &&
+				!previousLine.contains("for (") &&
+				(lineLeadingTabCount >
+					previousLineLeadingTabCount)) {
+
+				processMessage(
+					fileName,
+					"There should be a line break after '('",
+					lineCount - 1);
+			}
+
+			if ((lineLeadingTabCount ==
+					previousLineLeadingTabCount) &&
+				(previousLine.endsWith(StringPool.EQUAL) ||
+				 previousLine.endsWith(
+					 StringPool.OPEN_PARENTHESIS))) {
+
+				processMessage(
+					fileName, "Line should be indented ",
+					lineCount);
+			}
+
+			if (Validator.isNotNull(trimmedLine)) {
+				int expectedTabCount = -1;
+
+				if (previousLine.endsWith(
+						StringPool.OPEN_CURLY_BRACE) &&
+					!trimmedLine.startsWith(
+						StringPool.CLOSE_CURLY_BRACE)) {
+
+					expectedTabCount =
+						previousLineLeadingTabCount + 1;
+				}
+
+				if (previousLine.matches(
+						".*\t(if|for) .*[(:]")) {
+
+					expectedTabCount =
+						previousLineLeadingTabCount + 2;
+				}
+
+				if ((expectedTabCount != -1) &&
+					(lineLeadingTabCount != expectedTabCount)) {
+
+					processMessage(
+						fileName,
+						"Line starts with " +
+							lineLeadingTabCount +
+								" tabs, but should be " +
+									expectedTabCount,
+						lineCount);
+				}
+			}
+
+			if (previousLine.endsWith(StringPool.PERIOD)) {
+				int x = trimmedLine.indexOf(
+					CharPool.OPEN_PARENTHESIS);
+
+				if ((x != -1) &&
+					((getLineLength(previousLine) + x) <
+						_maxLineLength) &&
+					(trimmedLine.endsWith(
+						StringPool.OPEN_PARENTHESIS) ||
+					 (trimmedLine.charAt(x + 1) !=
+						 CharPool.CLOSE_PARENTHESIS))) {
+
+					processMessage(
+						fileName, "Incorrect line break",
+						lineCount);
+				}
+			}
+
+			int diff =
+				lineLeadingTabCount -
+					previousLineLeadingTabCount;
+
+			if ((previousLine.contains("\tthrows ") &&
+				 (diff == 0)) ||
+				(trimmedLine.startsWith("throws ") &&
+				 ((diff == 0) || (diff > 1)))) {
+
+				processMessage(
+					fileName, "incorrect indent", lineCount);
+			}
+		}
+	}
+
 	protected void checkInternalImports(
 		String fileName, String absolutePath, String content) {
 
@@ -2703,105 +2801,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						}
 					}
 					else {
-						if (!trimmedLine.startsWith("//")) {
-							if (previousLine.endsWith(StringPool.COMMA) &&
-								previousLine.contains(
-									StringPool.OPEN_PARENTHESIS) &&
-								!previousLine.contains("for (") &&
-								(lineLeadingTabCount >
-									previousLineLeadingTabCount)) {
+						checkIndentationAndLineBreaks(
+							line, previousLine, fileName, lineCount);
 
-								processMessage(
-									fileName,
-									"There should be a line break after '('",
-									lineCount - 1);
-							}
+						if (!trimmedLine.startsWith("//") &&
+							((lineLeadingTabCount - 2) ==
+								previousLineLeadingTabCount) &&
+							(previousLineLeadingTabCount > 0) &&
+							line.endsWith(StringPool.SEMICOLON) &&
+							!previousLine.contains("\tfor (") &&
+							!previousLine.contains("\ttry (")) {
 
-							if ((lineLeadingTabCount ==
-									previousLineLeadingTabCount) &&
-								(previousLine.endsWith(StringPool.EQUAL) ||
-								 previousLine.endsWith(
-									 StringPool.OPEN_PARENTHESIS))) {
-
-								processMessage(
-									fileName, "Line should be indented ",
-									lineCount);
-							}
-
-							if (Validator.isNotNull(trimmedLine)) {
-								int expectedTabCount = -1;
-
-								if (previousLine.endsWith(
-										StringPool.OPEN_CURLY_BRACE) &&
-									!trimmedLine.startsWith(
-										StringPool.CLOSE_CURLY_BRACE)) {
-
-									expectedTabCount =
-										previousLineLeadingTabCount + 1;
-								}
-
-								if (previousLine.matches(
-										".*\t(if|for) .*[(:]")) {
-
-									expectedTabCount =
-										previousLineLeadingTabCount + 2;
-								}
-
-								if ((expectedTabCount != -1) &&
-									(lineLeadingTabCount != expectedTabCount)) {
-
-									processMessage(
-										fileName,
-										"Line starts with " +
-											lineLeadingTabCount +
-												" tabs, but should be " +
-													expectedTabCount,
-										lineCount);
-								}
-							}
-
-							if (previousLine.endsWith(StringPool.PERIOD)) {
-								int x = trimmedLine.indexOf(
-									CharPool.OPEN_PARENTHESIS);
-
-								if ((x != -1) &&
-									((getLineLength(previousLine) + x) <
-										_maxLineLength) &&
-									(trimmedLine.endsWith(
-										StringPool.OPEN_PARENTHESIS) ||
-									 (trimmedLine.charAt(x + 1) !=
-										 CharPool.CLOSE_PARENTHESIS))) {
-
-									processMessage(
-										fileName, "Incorrect line break",
-										lineCount);
-								}
-							}
-
-							int diff =
-								lineLeadingTabCount -
-									previousLineLeadingTabCount;
-
-							if ((previousLine.contains("\tthrows ") &&
-								 (diff == 0)) ||
-								(trimmedLine.startsWith("throws ") &&
-								 ((diff == 0) || (diff > 1)))) {
-
-								processMessage(
-									fileName, "incorrect indent", lineCount);
-							}
-
-							if ((diff == 2) &&
-								(previousLineLeadingTabCount > 0) &&
-								line.endsWith(StringPool.SEMICOLON) &&
-								!previousLine.contains(
-									StringPool.TAB + "for (") &&
-								!previousLine.contains(
-									StringPool.TAB + "try (")) {
-
-								line = StringUtil.replaceFirst(
-									line, StringPool.TAB, StringPool.BLANK);
-							}
+							line = StringUtil.replaceFirst(
+								line, StringPool.TAB, StringPool.BLANK);
 						}
 
 						String combinedLinesContent = getCombinedLinesContent(

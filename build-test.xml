@@ -6002,7 +6002,11 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<pathconvert pathsep="," property="test.toggle.file.names">
 			<fileset dir="${project.dir}">
-				<include name="modules/**/poshi.toggle" />
+				<include name="modules/*/*/poshi.toggle" />
+				<include name="modules/*/*/*/poshi.toggle" />
+				<include name="modules/*/*/*/*/poshi.toggle" />
+				<include name="modules/*/*/*/*/*/poshi.toggle" />
+				<include name="modules/*/*/*/*/*/*/poshi.toggle" />
 				<include name="portal-web/poshi.toggle" />
 			</fileset>
 		</pathconvert>

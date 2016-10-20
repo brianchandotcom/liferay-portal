@@ -96,7 +96,7 @@
 						</goals>
 						<configuration>
 							<diffsDir>src/main/webapp/</diffsDir>
-							<name>sample-maven-theme</name>
+							<name>${artifactId}</name>
 							<outputDir>${project.build.directory}/${project.build.finalName}</outputDir>
 							<parentDir>${project.build.directory}/deps/com.liferay.frontend.theme.styled-${com.liferay.frontend.theme.styled.version}.jar</parentDir>
 							<parentName>_styled</parentName>

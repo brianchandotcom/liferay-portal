@@ -515,17 +515,17 @@ dependencies in the `.version-override-${project.name}.properties` file:
 ## 1.2.63 - 2016-10-18
 
 ### Added
-- [LPS-68817]: Set the system property `build.profile` to only include the
-projects containing a `.lfrbuild-portal-${build.profile}` marker file.
+- [LPS-68817]: Set the system property `build.profile` to only include projects
+containing a `.lfrbuild-portal-${build.profile}` marker file.
 
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.0.15.
 
 ### Removed
-- [LPS-68817]: The system property `portal.build` is no longer available. Use
-`-Dbuild.profile=portal` instead.
-- [LPS-68817]: The system property `portal.pre.build` is no longer available.
-Use `-Dbuild.profile=portal-pre` instead.
+- [LPS-68817]: The system property `portal.build` is no longer available; use
+the `-Dbuild.profile=portal` parameter instead.
+- [LPS-68817]: The system property `portal.pre.build` is no longer available;
+use the `-Dbuild.profile=portal-pre` parameter instead.
 
 ## 1.2.64 - 2016-10-18
 

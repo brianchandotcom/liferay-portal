@@ -304,6 +304,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			processMessage(fileName, "Line should be indented ", lineCount);
 		}
 
+		if (Validator.isNotNull(previousLine) &&
+			!previousLine.matches(
+				".*\t(abstract|else|extends|for|if|implements|private|" +
+					"protected|public|try|while) .*") &&
+			(previousLineLeadingTabCount <= (lineLeadingTabCount - 2))) {
+
+			processMessage(fileName, "Incorrect indent", lineCount);
+		}
+
 		if (Validator.isNotNull(trimmedLine)) {
 			int expectedTabCount = -1;
 

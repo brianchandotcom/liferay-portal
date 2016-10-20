@@ -1235,6 +1235,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		newContent = fixMissingEmptyLineAfterSettingVariable(newContent);
 
+		newContent = fixMultiLineComment(newContent);
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(
@@ -1697,6 +1699,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected String fixMultiLineComment(String content) {
+		Matcher matcher = _multiLineCommentPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String tabs = matcher.group(1);
+
+		content = StringUtil.insert(content, "\n" + tabs, matcher.end() - 3);
+
+		return StringUtil.insert(content, "\n" + tabs, matcher.end(1) + 2);
 	}
 
 	protected String fixRedundantEmptyLines(String content) {
@@ -4725,6 +4741,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
+	private final Pattern _multiLineCommentPattern = Pattern.compile(
+		"\n(\t*)/\\*[^\n\\*].*?\\*/\n", Pattern.DOTALL);
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;

@@ -17,7 +17,7 @@ package com.liferay.poshi.runner.util;
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
 /**
- * @author Igor Beslic
+ * @author Leslie Wong
  */
 public class OAuth20APIImpl extends DefaultApi20 {
 

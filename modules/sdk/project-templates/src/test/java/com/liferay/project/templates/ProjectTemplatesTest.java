@@ -684,6 +684,34 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateTheme() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"theme", "theme-test");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.portal.tools.theme.builder\"");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
+			"name=theme-test");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"theme", "theme-test",
+			"-DclassName=BladeTest", "-Dpackage=blade.test");
+
+		_testContains(
+			mavenProjectDir, "pom.xml",
+			"com.liferay.portal.tools.theme.builder");
+
+		_testContains(
+			mavenProjectDir,
+			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
+			"name=theme-test");
+	}
+
+	@Test
 	public void testBuildTemplateWithPackageName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"", "barfoo", "--package-name", "foo.bar");

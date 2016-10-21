@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wysiwyg.converter.internal.upgrade.test;
+package com.liferay.journal.wysiwyg.upgrade.internal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -34,8 +34,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.wysiwyg.converter.constants.WysiwygConstants;
-import com.liferay.wysiwyg.converter.upgrade.WysiwygConvertHelper;
+import com.liferay.journal.wysiwyg.upgrade.constants.JournalWysiwygConstants;
+import com.liferay.journal.wysiwyg.upgrade.JournalWysiwygConvertHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,7 +74,8 @@ public class WysiwygConvertHelperTest {
 	public void testConvertWysiwyg() {
 		int initialWysiwygArticleCount =
 			JournalArticleLocalServiceUtil.getStructureArticlesCount(
-				_group.getGroupId(), WysiwygConstants.WYSIWYG_STRUCTURE_KEY);
+				_group.getGroupId(),
+				JournalWysiwygConstants.WYSIWYG_STRUCTURE_KEY);
 
 		Assert.assertEquals(0, initialWysiwygArticleCount);
 
@@ -82,7 +83,8 @@ public class WysiwygConvertHelperTest {
 
 		int wysiwygArticleCount =
 			JournalArticleLocalServiceUtil.getStructureArticlesCount(
-				_group.getGroupId(), WysiwygConstants.WYSIWYG_STRUCTURE_KEY);
+				_group.getGroupId(),
+				JournalWysiwygConstants.WYSIWYG_STRUCTURE_KEY);
 
 		Assert.assertEquals(
 			initialWysiwygArticleCount + 1, wysiwygArticleCount);
@@ -94,7 +96,7 @@ public class WysiwygConvertHelperTest {
 		portletPreferencesMap.put("message", _WYSIWYG_MESSAGE);
 
 		LayoutTestUtil.updateLayoutPortletPreferences(
-			_layout, WysiwygConstants.WYSIWYG_PORTLET_KEY,
+			_layout, JournalWysiwygConstants.WYSIWYG_PORTLET_KEY,
 			portletPreferencesMap);
 	}
 
@@ -125,7 +127,7 @@ public class WysiwygConvertHelperTest {
 		UserLocalService userLocalService = registry.getService(
 			UserLocalService.class);
 
-		_wysiwygConvertHelper = new WysiwygConvertHelper(
+		_wysiwygConvertHelper = new JournalWysiwygConvertHelper(
 			assetEntryLocalService, defaultDDMStructureHelper,
 			groupLocalService, journalArticleLocalService,
 			journalFolderLocalService, layoutLocalService,
@@ -143,6 +145,6 @@ public class WysiwygConvertHelperTest {
 	@DeleteAfterTestRun
 	private User _user;
 
-	private WysiwygConvertHelper _wysiwygConvertHelper;
+	private JournalWysiwygConvertHelper _wysiwygConvertHelper;
 
 }

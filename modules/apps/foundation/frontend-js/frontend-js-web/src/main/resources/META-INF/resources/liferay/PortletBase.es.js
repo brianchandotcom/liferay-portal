@@ -3,20 +3,24 @@ import dom from 'metal-dom/src/dom';
 import State from 'metal-state/src/State';
 
 /**
- * PortletBase
+ * PortletBase provides some helper functions that simplify querying the DOM
+ * for elements related to a specific portlet.
  *
- * This class defines some helper functions that abstract
- * you to work with namespace
+ * @abstract
+ * @extends {State}
  */
 class PortletBase extends State {
 	/**
-	 * Get all elements in the root node that matches
-	 * the specified css selector.
+	 * Returns a NodeList containing all of the matching Element nodes within
+	 * the subtrees of the root object, in tree order. If there are no matching
+	 * nodes, the method returns an empty NodeList.
 	 *
-	 * @param  {!String} selectors Css selector
-	 * @param  {String} root Css selector for find inside a specific node.
-	 * If not specified, will search in portlet's rootNode or in the whole document.
-	 * @return {NodeList object} List of DOM elements
+	 * @param {string} selectors List of one or more CSS relative selectors
+	 * @param {(string|Element|Document)=} root Root node of the search. If not
+	 * specified, the element search will start in the portlet's root node or in
+	 * the document
+	 * @return {NodeList<Element>} List of Elements matching the selectors in
+	 * tree order
 	 */
 	all(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
@@ -25,39 +29,38 @@ class PortletBase extends State {
 	}
 
 	/**
-	 * If the css selector is an id starting with '#',
-	 * this method appends the namespace to it.
-	 * Selector could also be a class, in this case,
-	 * no namespace will be appended.
+	 * Namespaces the list of selectors appending the portlet namespace to the
+	 * selectors of type id. Selectors of other types remain unaltered.
 	 *
-	 * @param  {!String} namespace Portlet's namespace
-	 * @param  {!String} selectors Css selector
-	 * @return {String} namespaced id. '#id1' will return '#_namespace_id1'
 	 * @protected
+	 * @param {string} namespace The portlet's namespace
+	 * @param {string} selectors List of one or more CSS relative selectors
+	 * @return {string} Namespaced id selectors
 	 */
 	namespaceSelectors_(namespace, selectors) {
 		return selectors.replace(new RegExp('(#|\\[id=(\\\"|\\\'))(?!' + namespace + ')', 'g'), '$1' + namespace);
 	}
 
 	/**
-	 * Appends the portlet's namespace to the
-	 * given string.
+	 * Appends the portlet's namespace to the given string or object properties.
 	 *
-	 * @param  {!String} str string
-	 * @return {String} namespace + str.
+	 * @param {!Object|string} The object or string to be namespaced
+	 * @return {Object|string} An object with its properties namespaced using
+	 * the portlet namespace or a namespaced string
 	 */
-	ns(str) {
-		return Liferay.Util.ns(this.namespace, str);
+	ns(obj) {
+		return Liferay.Util.ns(this.namespace, obj);
 	}
 
 	/**
-	 * Get the first element in the root node
-	 * that matches the specified css selector.
+	 * Returns the first matching Element node within the subtrees of the
+	 * root object. If there is no matching Element, the method returns null.
 	 *
-	 * @param  {!String} selectors Css selector
-	 * @param  {String} root Css selector for find inside a specific node.
-	 * If not specified, will search in portlet's rootNode or in whole document.
-	 * @return {DOM element} Element
+	 * @param {string} selectors List of one or more CSS relative selectors
+	 * @param {(string|Element|Document)=} root Root node of the search. If not
+	 * specified, the element search will start in the portlet's root node or in
+	 * the document
+	 * @return {Element|null} List of First Element matching the selectors or null
 	 */
 	one(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
@@ -67,22 +70,27 @@ class PortletBase extends State {
 }
 
 /**
- * PortletBase State definition.
- * @type {!Object}
+ * State definition.
+ * @ignore
  * @static
+ * @type {!Object}
  */
 PortletBase.STATE = {
 	/**
-	 * The portlet namespace
-	 * @type {String}
+	 * Portlet's namespace
+	 * @instance
+	 * @memberof PortletBase
+	 * @type {string}
 	 */
 	namespace: {
 		validator: core.isString
 	},
 
 	/**
-	 * The portlet container
-	 * @type {String} Id of the DOM Element
+	 * Portlet's root node element
+	 * @instance
+	 * @memberof PortletBase
+	 * @type {Element}
 	 */
 	rootNode: {
 		setter: dom.toElement

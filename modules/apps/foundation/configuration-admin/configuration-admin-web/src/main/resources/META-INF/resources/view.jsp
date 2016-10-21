@@ -64,9 +64,11 @@ if (keywords != null) {
 	</c:if>
 
 	<aui:nav-bar-search>
+		<portlet:renderURL var="redirectURL" />
+
 		<portlet:renderURL var="searchURL">
 			<portlet:param name="mvcRenderCommandName" value="/search" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" name="searchFm">

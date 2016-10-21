@@ -24,11 +24,11 @@ import com.liferay.portal.kernel.service.persistence.OrgGroupRolePK;
 import com.liferay.portal.kernel.service.persistence.OrgGroupRolePersistence;
 import com.liferay.portal.kernel.service.persistence.OrgGroupRoleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import org.junit.After;
 import org.junit.Assert;

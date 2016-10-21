@@ -45,9 +45,9 @@
 		</if>
 
 		<if>
-			<isset var="roleName" />
+			<isset var="roleTitle" />
 			<then>
-				<execute function="Type" locator1="TextInput#TITLE" value1="${roleName}" />
+				<execute function="Type" locator1="TextInput#TITLE" value1="${roleTitle}" />
 			</then>
 		</if>
 
@@ -61,8 +61,8 @@
 
 		<execute macro="Role#addCP">
 			<var name="roleDescription" value="${roleDescription}" />
-			<var name="roleKey" value="${roleKey}" />
 			<var name="roleName" value="${roleName}" />
+			<var name="roleTitle" value="${roleTitle}" />
 			<var name="roleType" value="Site" />
 		</execute>
 
@@ -366,11 +366,11 @@
 				<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleUser}" />
 			</then>
 			<else>
-				<var name="key_itemName" value="${roleName}" />
+				<var name="key_itemName" value="${roleTitle}" />
 
-				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleName}" />
+				<execute function="AssertTextEquals" locator1="ListGroupItem#ITEM_NAME" value1="${roleTitle}" />
 
-				<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleName}" />
+				<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 			</else>
 		</if>
 

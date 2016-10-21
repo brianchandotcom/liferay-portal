@@ -39,6 +39,20 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return null;
 	}
 
+	public static boolean toBoolean(Object object) {
+		object = toObject(object);
+
+		if (object instanceof Boolean) {
+			return (Boolean)object;
+		}
+
+		if (object instanceof String) {
+			return Boolean.parseBoolean((String)object);
+		}
+
+		return false;
+	}
+
 	public static File toFile(Project project, Object object) {
 		object = toObject(object);
 

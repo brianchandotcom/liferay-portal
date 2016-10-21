@@ -473,6 +473,21 @@ version 1.0.18.
 - [LPS-68838]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.133.
 
+## 3.0.22 - 2016-10-21
+
+### Changed
+- [LPS-66906]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.3.
+- [LPS-66906]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.0.4.
+- [LPS-66906]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.0.2.
+
+### Removed
+- [LPS-66906]: It is no longer possible to set the `removeShrinkwrappedUrls`
+property of `NpmInstallTask` via the `nodejs.npm.remove.shrinkwrapped.urls`
+project property.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

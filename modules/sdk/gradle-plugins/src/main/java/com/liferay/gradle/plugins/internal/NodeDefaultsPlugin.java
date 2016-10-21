@@ -62,14 +62,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	private void _configureTaskNpmInstall(NpmInstallTask npmInstallTask) {
 		Project project = npmInstallTask.getProject();
 
-		String removeShrinkwrappedUrls = GradleUtil.getProperty(
-			project, "nodejs.npm.remove.shrinkwrapped.urls", (String)null);
-
-		if (Validator.isNotNull(removeShrinkwrappedUrls)) {
-			npmInstallTask.setRemoveShrinkwrappedUrls(
-				Boolean.parseBoolean(removeShrinkwrappedUrls));
-		}
-
 		String sassBinarySite = GradleUtil.getProperty(
 			project, "nodejs.npm.sass.binary.site", (String)null);
 

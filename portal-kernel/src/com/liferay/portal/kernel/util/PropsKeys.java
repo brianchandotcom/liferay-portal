@@ -463,6 +463,8 @@ public interface PropsKeys {
 
 	public static final String CUSTOM_SQL_FUNCTION_ISNULL = "custom.sql.function.isnull";
 
+	public static final String DAO_ORM_ACTIONABLE_DYNAMIC_QUERY_INTERVAL_DEFAULT = "dao.orm.actionable.dynamic.query.interval.default";
+
 	public static final String DATABASE_INDEXES_UPDATE_ON_STARTUP = "database.indexes.update.on.startup";
 
 	public static final String DATABASE_MYSQL_ENGINE = "database.mysql.engine";
@@ -856,8 +858,6 @@ public interface PropsKeys {
 	public static final String IMAGEMAGICK_RESOURCE_LIMIT = "imagemagick.resource.limit.";
 
 	public static final String INDEX_DATE_FORMAT_PATTERN = "index.date.format.pattern";
-
-	public static final String INDEX_DEFAULT_INTERVAL = "index.default.interval";
 
 	public static final String INDEX_DUMP_COMPRESSION_ENABLED = "index.dump.compression.enabled";
 

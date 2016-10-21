@@ -22,7 +22,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.wysiwyg.upgrade.constants.WysiwygConstants;
+import com.liferay.journal.wysiwyg.upgrade.constants.JournalWysiwygConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -59,9 +59,9 @@ import java.util.Map;
 /**
  * @author Peter Fellwock
  */
-public class WysiwygConvertHelper {
+public class JournalWysiwygUpgradeHelper {
 
-	public WysiwygConvertHelper(
+	public JournalWysiwygUpgradeHelper(
 		AssetEntryLocalService assetEntryLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
 		GroupLocalService groupLocalService,
@@ -81,7 +81,7 @@ public class WysiwygConvertHelper {
 		_userLocalService = userLocalService;
 	}
 
-	public void convert() {
+	public void upgrade() {
 		StringBundler sb = new StringBundler(9);
 
 		sb.append("select PortletPreferences.portletPreferencesId, ");
@@ -91,7 +91,7 @@ public class WysiwygConvertHelper {
 		sb.append("PortletPreferences inner join Layout on Layout.plid = ");
 		sb.append("PortletPreferences.plid where ");
 		sb.append("PortletPreferences.portletId like '");
-		sb.append(WysiwygConstants.WYSIWYG_PORTLET_KEY);
+		sb.append(JournalWysiwygConstants.WYSIWYG_PORTLET_KEY);
 		sb.append("%'");
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
@@ -152,8 +152,8 @@ public class WysiwygConvertHelper {
 
 		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
 			userId, groupId, journalFolderId, titleMap, titleMap, xmlContent,
-			WysiwygConstants.WYSIWYG_STRUCTURE_KEY,
-			WysiwygConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
+			JournalWysiwygConstants.WYSIWYG_STRUCTURE_KEY,
+			JournalWysiwygConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
 
 		return journalArticle;
 	}
@@ -226,12 +226,12 @@ public class WysiwygConvertHelper {
 		throws PortalException {
 
 		JournalFolder journalFolder = _journalFolderLocalService.fetchFolder(
-			groupId, 0, WysiwygConstants.FOLDER_NAME);
+			groupId, 0, JournalWysiwygConstants.FOLDER_NAME);
 
 		if (journalFolder == null) {
 			journalFolder = _journalFolderLocalService.addFolder(
-				userId, groupId, 0, WysiwygConstants.FOLDER_NAME,
-				WysiwygConstants.FOLDER_DESCRIPTION, serviceContext);
+				userId, groupId, 0, JournalWysiwygConstants.FOLDER_NAME,
+				JournalWysiwygConstants.FOLDER_DESCRIPTION, serviceContext);
 		}
 
 		return journalFolder.getFolderId();
@@ -332,7 +332,7 @@ public class WysiwygConvertHelper {
 		throws PortalException {
 
 		String journalPortletId = StringUtil.replace(
-			portletId, WysiwygConstants.WYSIWYG_PORTLET_KEY,
+			portletId, JournalWysiwygConstants.WYSIWYG_PORTLET_KEY,
 			JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		String journalPreference = _getJournalPortletPreferences(
@@ -357,7 +357,7 @@ public class WysiwygConvertHelper {
 		String typedSettings = layout.getTypeSettings();
 
 		String updatedTypedSettings = StringUtil.replace(
-			typedSettings, WysiwygConstants.WYSIWYG_PORTLET_KEY,
+			typedSettings, JournalWysiwygConstants.WYSIWYG_PORTLET_KEY,
 			JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		layout.setTypeSettings(updatedTypedSettings);
@@ -366,7 +366,7 @@ public class WysiwygConvertHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		WysiwygConvertHelper.class);
+		JournalWysiwygUpgradeHelper.class);
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DefaultDDMStructureHelper _defaultDDMStructureHelper;

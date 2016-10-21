@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.h3xstream.findsecbugs</groupId>
+        <artifactId>findsecbugs-root-pom</artifactId>
+        <version>1.5.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.h3xstream.findsecbugs</groupId>
+    <artifactId>findsecbugs-plugin</artifactId>
+
+    <packaging>jar</packaging>
+
+    <name>Find Security Bugs Plugin</name>
+    <description>
+        Core module of the project. It include all the FindBugs detectors.
+        The resulting jar is the published plugin.
+    </description>
+
+    <build>
+        <plugins>
+            <!-- Jar packaging -->
+            <plugin>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                    <excludes>
+                        <exclude>metadata/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <!-- Moving findbugs config to root -->
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>ant-magic</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <tasks>
+                                <copy todir="${project.build.outputDirectory}">
+                                    <fileset dir="${project.build.outputDirectory}/metadata"/>
+                                </copy>
+                            </tasks>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- More verbose failure on stdout (for Travis-CI) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>com.h3xstream.testng.VerboseTestListener</value>
+                        </property>
+                    </properties>
+                </configuration>
+            </plugin>
+
+
+            <!-- Compilation of the JSP test pages -->
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-jspc-maven-plugin</artifactId>
+                <version>9.0.7.v20131107</version> <!-- Higher version than 9.0.7 doesn't support smap file -->
+                <executions>
+                    <execution>
+                        <id>jspc</id>
+                        <!-- Needed to make the bytecode available for the tests -->
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>jspc</goal>
+                        </goals>
+                        <configuration>
+                            <!-- Use the test folders to avoid polluting the resulting jar -->
+                            <generatedClasses>${project.build.directory}/test-classes</generatedClasses>
+                            <webAppSourceDirectory>${basedir}/src/test/webapp</webAppSourceDirectory>
+                            <suppressSmap>false</suppressSmap>
+                            <useProvidedScope>true</useProvidedScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Cobertura configuration -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <!-- Needed for coveralls plugin -->
+                        <format>xml</format>
+                    </formats>
+                    <check/>
+                </configuration>
+            </plugin>
+
+            <!-- Coveralls -->
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>4.2.0</version>
+            </plugin>
+            
+
+        </plugins>
+    </build>
+
+    <dependencies>
+
+        <!-- FindBugs API (Detector interface and transitive deps like BCEL..) -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>findbugs</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- Toolkit for easy detector testing -->
+        <dependency>
+            <groupId>com.h3xstream.findsecbugs</groupId>
+            <artifactId>findbugs-test-util</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- Unit Testing libraries -->
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.h3xstream.findsecbugs</groupId>
+            <artifactId>findsecbugs-plugin-deps</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

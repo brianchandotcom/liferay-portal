@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNEES</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Assignees')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>AVAILABLE_SITES</td>
 	<td>//div[contains(@class,'navbar-default')]//a[contains(@title,'Available Sites')]</td>
 	<td></td>
@@ -76,6 +81,11 @@
 <tr>
 	<td>CONTENT_SEARCH_FIELD</td>
 	<td>//input[contains(@id,'searchContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINE_PERMISSIONS</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Define Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

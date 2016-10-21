@@ -351,6 +351,13 @@ public class PortletContainerImpl implements PortletContainer {
 			Portlet portlet)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setId(portlet.getPortletId());
+
 		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 		WindowState windowState = WindowStateFactory.getWindowState(

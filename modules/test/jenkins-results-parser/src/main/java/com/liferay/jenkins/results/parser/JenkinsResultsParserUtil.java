@@ -342,10 +342,12 @@ public class JenkinsResultsParserUtil {
 	public static String getAxisVariable(String buildURL) throws Exception {
 		String url = decode(buildURL);
 
-		int x = url.indexOf("AXIS_VARIABLE=");
+		String label = "AXIS_VARIABLE=";
+
+		int x = url.indexOf(label);
 
 		if (x != -1) {
-			url = url.substring(x + 14);
+			url = url.substring(x + label.length());
 
 			int y = url.indexOf(",");
 

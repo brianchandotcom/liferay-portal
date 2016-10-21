@@ -79,7 +79,7 @@
 		</execute>
 
 		<execute macro="SystemSettings#enableSetting">
-			<var name="setting" value="IMPORT_ENABLED_CHECKBOX" />
+			<var name="checkboxSetting" value="IMPORT_ENABLED_CHECKBOX" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -91,6 +91,8 @@
 		<execute macro="Portlet#startServer">
 			<var name="deleteLiferayHome" value="false" />
 		</execute>
+
+		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

@@ -2,4 +2,11 @@
 
 var metal = require('gulp-metal');
 
-metal.registerTasks({});
+var srcBlob = 'src/**/*.es.js';
+var testBlob = 'test/**/*.es.js';
+
+metal.registerTasks({
+	buildSrc: [srcBlob],
+	formatGlobs: [srcBlob, testBlob],
+	lintGlobs: [srcBlob, testBlob]
+});

@@ -96,7 +96,7 @@ public class CallFunction extends BaseDDMFormRuleFunction {
 			}
 		}
 
-		return null;
+		return true;
 	}
 
 	protected void addDDMDataProviderContextParameters(

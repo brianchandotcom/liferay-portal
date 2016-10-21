@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wysiwyg.converter.upgrade;
+package com.liferay.journal.wysiwyg.upgrade;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -22,6 +22,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.wysiwyg.upgrade.constants.WysiwygConstants;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.wysiwyg.converter.constants.WysiwygConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -180,7 +180,7 @@ public class WysiwygConvertHelper {
 			userId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			clazz.getClassLoader(),
-			"com/liferay/wysiwyg/converter/internal/dependencies" +
+			"com/liferay/journal/wysiwyg/upgrade/internal/dependencies" +
 				"/wysiwyg-web-content-structure.xml",
 			serviceContext);
 	}

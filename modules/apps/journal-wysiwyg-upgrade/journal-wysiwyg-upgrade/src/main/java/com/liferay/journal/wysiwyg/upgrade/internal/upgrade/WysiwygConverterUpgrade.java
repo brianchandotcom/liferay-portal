@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.wysiwyg.converter.internal.upgrade;
+package com.liferay.journal.wysiwyg.upgrade.internal.upgrade;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.wysiwyg.upgrade.WysiwygConvertHelper;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
-import com.liferay.wysiwyg.converter.upgrade.WysiwygConvertHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,7 +45,7 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 
 				@Override
 				protected String getBundleSymbolicName() {
-					return "com.liferay.wysiwyg.converter";
+					return "com.liferay.journal.wysiwyg.upgrade";
 				}
 
 				@Override
@@ -63,7 +63,7 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 		}
 
 		registry.register(
-			"com.liferay.wysiwyg.converter", "0.0.0", "1.0.0",
+			"com.liferay.journal.wysiwyg.upgrade", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
 		WysiwygConvertHelper wysiwygConvertHelper = new WysiwygConvertHelper(

@@ -2899,6 +2899,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!absolutePath.contains("/modules/core/jaxws-osgi-bridge") &&
 			!absolutePath.contains("/modules/core/portal-bootstrap") &&
+			!absolutePath.contains("/modules/core/slim-runtime") &&
 			!absolutePath.contains("/modules/core/registry-") &&
 			(_checkRegistryInTestClasses ||
 			 (!absolutePath.contains("/test/") &&

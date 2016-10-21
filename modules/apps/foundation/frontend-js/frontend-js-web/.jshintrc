@@ -8,13 +8,8 @@
 	"evil": false,
 	"forin": false,
 	"globals": {
-		"afterEach": true,
-		"assert": true,
-		"beforeEach": true,
-		"describe": true,
-		"it": true,
-		"Liferay": true,
-		"sinon": true
+		"document": true,
+		"Liferay": true
 	},
 	"immed": true,
 	"indent": 4,

@@ -3,191 +3,104 @@
 import PortletBase from '../../src/main/resources/META-INF/resources/liferay/PortletBase.es';
 
 describe('PortletBase', () => {
-	let namespace = '_portlet_namespace_';
+	let namespace = '_com_liferay_test_portlet_';
+	let portletBase;
 
-	function createMockedHtml() {
-		let div1 = document.createElement('div');
-		div1.id = namespace + 'div1';
-		div1.className = 'div';
+	afterEach(() => portletBase.dispose());
 
-		let div2 = document.createElement('div');
-		div2.id = namespace + 'div2';
-		div2.className = 'div';
-
-		let div3 = document.createElement('div');
-		div3.id = namespace + 'div3';
-		div3.className = 'div';
-
-		div1.appendChild(div3);
-
-		document.body.appendChild(div1);
-		document.body.appendChild(div2);
-	}
-
-	beforeEach((done) => {
-		createMockedHtml();
-		done();
-	});
-
-	afterEach((done) => {
-		document.body.innerHTML = '';
-		done();
-	});
-
-	it('should get the portlet namespace', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
-
-		assert.strictEqual(portletBase.get('namespace'), namespace);
-
-		done();
-	});
-
-	it('should set the portlet rootNode', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace,
-				rootNode: '#' + namespace + 'div1'
-			}
-		);
-
-		let divElement = document.getElementById(namespace + 'div1');
-
-		assert.strictEqual(portletBase.get('rootNode'), divElement);
-
-		done();
-	});
-
-	it('should get all nodes with a specific class', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
-
-		assert.strictEqual(portletBase.all('.div').length, 3);
-
-		done();
-	});
-
-	it('should get all nodes with a specific class inside a rootNode', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace,
-				rootNode: '#' + namespace + 'div1'
-			}
-		);
-
-		assert.strictEqual(portletBase.all('.div').length, 1);
-
-		let portletBase2 = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
-
-		assert.strictEqual(portletBase2.all('.div', '#' + namespace + 'div1').length, 1);
-
-		done();
-	});
-
-	it('should get all nodes with an id without setting the namespace ', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
-
-		let divById = portletBase.all('#div1');
-
-		assert.strictEqual(divById.length, 1);
-
-		done();
-	});
-
-	it('should append the namespace to the given id', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
-
+	before(() => {
 		window.Liferay = {
 			Util: {
-				ns(a, b) {
-					return a + b;
-				}
+				ns() {}
 			}
 		};
 
-		let stub = sinon.stub(Liferay.Util, 'ns');
-
-		portletBase.ns('test');
-
-		sinon.assert.calledWith(stub, namespace, 'test');
-
-		done();
+		document.body.innerHTML += __html__['test/liferay/fixtures/PortletBase.html'];
 	});
 
-	it('should get a node without setting the namespace', (done) => {
-		let portletBase = new PortletBase(
+	beforeEach(() => {
+		portletBase = new PortletBase(
 			{
 				namespace: namespace
 			}
 		);
-
-		let divElement = document.getElementById(namespace + 'div1');
-
-		assert.strictEqual(portletBase.one('#div1'), divElement);
-
-		done();
 	});
 
-	it('should get a node which is inside a rootNode', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace,
-				rootNode: '#' + namespace + 'div1'
-			}
-		);
+	describe('PortletBase.all', () => {
+		it('should return an empty list if no elements are found', () => {
+			let elements = portletBase.all('.bar');
 
-		let divElement = document.getElementById(namespace + 'div3');
+			assert.isNotNull(elements);
+			assert.strictEqual(elements.length, 0);
+		});
 
-		assert.strictEqual(portletBase.one('#div3'), divElement);
+		it('should get all matching nodes within the root node tree', () => {
+			assert.strictEqual(portletBase.all('.foo').length, 2);
+			assert.strictEqual(portletBase.all('.foo', '#_com_liferay_test_portlet_child_container').length, 1);
+		});
 
-		let portletBase2 = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
+		it('should use the document as root node if one has not been specified or the default has not been found', () => {
+			portletBase = new PortletBase(
+				{
+					namespace: '_com_liferay_unknown_portlet'
+				}
+			);
 
-		assert.strictEqual(portletBase2.one('#div3', '#' + namespace + 'div1'), divElement);
-
-		done();
+			assert.strictEqual(portletBase.all('.foo').length, 4);
+		});
 	});
 
-	it('should not get a node which is outside a specific rootNode', (done) => {
-		let portletBase = new PortletBase(
-			{
-				namespace: namespace,
-				rootNode: '#' + namespace + 'div1'
-			}
-		);
+	describe('PortletBase.ns', () => {
+		it('should namespace objects with the portlet namespace using the provided Liferay.Util.ns helper', () => {
+			let stub = sinon.stub(Liferay.Util, 'ns');
 
-		assert.strictEqual(portletBase.one('#div2'), null);
+			portletBase.ns('test');
 
-		let portletBase2 = new PortletBase(
-			{
-				namespace: namespace
-			}
-		);
-
-		assert.strictEqual(portletBase2.one('#div2', '#' + namespace + 'div1'), null);
-
-		done();
+			sinon.assert.calledWith(stub, namespace, 'test');
+		});
 	});
 
+	describe('PortletBase.one', () => {
+		it('should return null if no element is found', () => {
+			assert.isNull(portletBase.one('.bar'));
+		});
+
+		it('should get the first matching node within the root node tree', () => {
+			assert.strictEqual(portletBase.one('.foo'), document.getElementById('_com_liferay_test_portlet_child_container'));
+			assert.strictEqual(portletBase.one('.foo', '#_com_liferay_test_portlet_child_container'), document.getElementById('_com_liferay_test_portlet_grand_child_container'));
+		});
+
+		it('should use the document as root node if one has not been specified or the default has not been found', () => {
+			portletBase = new PortletBase(
+				{
+					namespace: '_com_liferay_unknown_portlet'
+				}
+			);
+
+			assert.strictEqual(portletBase.one('.foo'), document.getElementById('p_p_id_com_liferay_test_portlet_'));
+		});
+	});
+
+	describe('PortletBase.rootNode', () => {
+		it('should set the root node by default', () => {
+			assert.strictEqual(portletBase.rootNode, document.getElementById('p_p_id' + namespace));
+		});
+
+		it('should use a specified root node', () => {
+			portletBase.rootNode = '#' + namespace + 'child_container';
+
+			assert.strictEqual(portletBase.rootNode, document.getElementById(namespace + 'child_container'));
+		});
+
+		it('should override the default root node if specified', () => {
+			portletBase = new PortletBase(
+				{
+					namespace: namespace,
+					rootNode: '#' + namespace + 'child_container'
+				}
+			);
+
+			assert.strictEqual(portletBase.rootNode, document.getElementById(namespace + 'child_container'));
+		});
+	});
 });

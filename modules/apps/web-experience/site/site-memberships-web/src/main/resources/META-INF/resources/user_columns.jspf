@@ -15,12 +15,16 @@
 --%>
 
 <%
+List<Role> userGroupGroupRoles = RoleLocalServiceUtil.getUserGroupGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId());
+
 List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(user2.getUserId(), siteMembershipsDisplayContext.getGroupId());
 
 List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), user2.getUserId());
 
-List<String> names = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
+Set<String> names = new TreeSet<String>();
 
+names.addAll(ListUtil.toList(userGroupGroupRoles, Role.TITLE_ACCESSOR));
+names.addAll(ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR));
 names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 %>
 
@@ -46,7 +50,7 @@ names.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
 					<liferay-frontend:vertical-card-footer>
 						<span class="text-default">
 							<c:choose>
-								<c:when test="<%= !ListUtil.isEmpty(names) %>">
+								<c:when test="<%= !SetUtil.isEmpty(names) %>">
 									<%= HtmlUtil.escape(StringUtil.merge(names, StringPool.COMMA_AND_SPACE)) %>
 								</c:when>
 								<c:otherwise>

@@ -1,9 +1,9 @@
-Bundle-Name: Liferay Wysiwyg Converter
-Bundle-SymbolicName: com.liferay.wysiwyg.converter
+Bundle-Name: Liferay Journal Wysiwyg Upgrade
+Bundle-SymbolicName: com.liferay.journal.wysiwyg.upgrade
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.wysiwyg.converter.constants,\
-	com.liferay.wysiwyg.converter.upgrade
+	com.liferay.journal.wysiwyg.upgrade,\
+	com.liferay.journal.wysiwyg.upgrade.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /wysiwyg-converter

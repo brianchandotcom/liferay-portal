@@ -13,15 +13,15 @@ class PortletBase extends State {
 	 * Get all elements in the root node that matches
 	 * the specified css selector.
 	 *
-	 * @param  {!String} selector Css selector
+	 * @param  {!String} selectors Css selector
 	 * @param  {String} root Css selector for find inside a specific node.
 	 * If not specified, will search in portlet's rootNode or in the whole document.
 	 * @return {NodeList object} List of DOM elements
 	 */
-	all(selector, root) {
+	all(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
 
-		return root.querySelectorAll(this.namespaceSelector_(this.namespace, selector));
+		return root.querySelectorAll(this.namespaceSelectors_(this.namespace, selectors));
 	}
 
 	/**
@@ -30,13 +30,13 @@ class PortletBase extends State {
 	 * Selector could also be a class, in this case,
 	 * no namespace will be appended.
 	 *
-	 * @param  {!String} ns Portlet's namespace
-	 * @param  {!String} selector Css selector
+	 * @param  {!String} namespace Portlet's namespace
+	 * @param  {!String} selectors Css selector
 	 * @return {String} namespaced id. '#id1' will return '#_namespace_id1'
 	 * @protected
 	 */
-	namespaceSelector_(ns, selector) {
-		return selector.replace(new RegExp('(#|\\[id=(\\\"|\\\'))(?!' + ns + ')', 'g'), '$1' + ns);
+	namespaceSelectors_(namespace, selectors) {
+		return selectors.replace(new RegExp('(#|\\[id=(\\\"|\\\'))(?!' + namespace + ')', 'g'), '$1' + namespace);
 	}
 
 	/**
@@ -54,15 +54,15 @@ class PortletBase extends State {
 	 * Get the first element in the root node
 	 * that matches the specified css selector.
 	 *
-	 * @param  {!String} selector Css selector
+	 * @param  {!String} selectors Css selector
 	 * @param  {String} root Css selector for find inside a specific node.
 	 * If not specified, will search in portlet's rootNode or in whole document.
 	 * @return {DOM element} Element
 	 */
-	one(selector, root) {
+	one(selectors, root) {
 		root = dom.toElement(root) || this.rootNode || document;
 
-		return root.querySelector(this.namespaceSelector_(this.namespace, selector));
+		return root.querySelector(this.namespaceSelectors_(this.namespace, selectors));
 	}
 }
 

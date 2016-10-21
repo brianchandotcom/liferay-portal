@@ -30,7 +30,7 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 
 String keywords = renderRequest.getParameter("keywords");
 
-if (Validator.isNotNull(keywords)) {
+if (keywords != null) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 

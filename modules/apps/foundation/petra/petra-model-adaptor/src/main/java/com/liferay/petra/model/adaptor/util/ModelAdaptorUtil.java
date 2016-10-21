@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.internal.service;
+package com.liferay.petra.model.adaptor.util;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.util.OrderByComparator;

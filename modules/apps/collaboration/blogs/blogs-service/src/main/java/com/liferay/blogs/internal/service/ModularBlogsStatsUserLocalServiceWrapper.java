@@ -17,6 +17,7 @@ package com.liferay.blogs.internal.service;
 import com.liferay.blogs.kernel.model.BlogsStatsUser;
 import com.liferay.blogs.kernel.service.BlogsStatsUserLocalService;
 import com.liferay.blogs.kernel.service.BlogsStatsUserLocalServiceWrapper;
+import com.liferay.petra.model.adaptor.util.ModelAdaptorUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;

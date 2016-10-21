@@ -23,6 +23,7 @@ dependencies {
 	provided group: "rome", name: "rome", version: "1.0"
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
+	provided project(":apps:foundation:petra:petra-model-adaptor")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")
 	provided project(":core:registry-api")

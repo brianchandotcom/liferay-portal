@@ -17,6 +17,7 @@ package com.liferay.blogs.internal.service;
 import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryService;
 import com.liferay.blogs.kernel.service.BlogsEntryServiceWrapper;
+import com.liferay.petra.model.adaptor.util.ModelAdaptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;

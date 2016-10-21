@@ -18,6 +18,7 @@ import com.liferay.blogs.kernel.model.BlogsEntry;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalService;
 import com.liferay.blogs.kernel.service.BlogsEntryLocalServiceWrapper;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.model.adaptor.util.ModelAdaptorUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;

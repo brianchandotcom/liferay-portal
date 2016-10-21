@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Petra Model Adaptor
+Bundle-SymbolicName: com.liferay.petra.model.adaptor
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.petra.model.adaptor.util
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

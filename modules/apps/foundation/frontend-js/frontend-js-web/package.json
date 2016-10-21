@@ -1,8 +1,19 @@
 {
+	"dependencies": {
+		"metal": "^2.4.3",
+		"metal-dom": "^2.4.3",
+		"metal-state": "^2.3.0"
+	},
 	"devDependencies": {
+		"gulp": "^3.9.1",
+		"gulp-metal": "^1.9.8",
+		"karma": "^1.3.0",
+		"karma-html2js-preprocessor": "^1.1.0",
 		"liferay-amd-loader": "^1.5.5",
+		"liferay-karma-config": "0.0.3",
 		"liferay-module-config-generator": "^1.1.10",
-		"metal-cli": "^2.1.2"
+		"metal-cli": "^2.1.2",
+		"metal-karma-config": "^2.1.1"
 	},
 	"name": "frontend-js-web",
 	"version": "1.0.18"

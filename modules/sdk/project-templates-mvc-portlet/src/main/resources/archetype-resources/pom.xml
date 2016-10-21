@@ -67,6 +67,9 @@
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+					<excludes>
+						<exclude>**/META-INF/resources/**/.sass-cache/</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -110,16 +113,6 @@
 				<configuration>
 					<portalCommonPath>/</portalCommonPath>
 					<docrootDirName>src/main/resources</docrootDirName>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<excludes>
-						<exclude>**/META-INF/resources/**/.sass-cache/</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>

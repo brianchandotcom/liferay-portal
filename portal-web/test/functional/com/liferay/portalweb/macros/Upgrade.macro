@@ -522,7 +522,9 @@
 			<var name="eventTitle" value="Calendar Event Title Edited" />
 		</execute>
 
-		<execute macro="CalendarEvent#publish" />
+		<execute macro="CalendarEvent#publishRepeating">
+			<var name="saveOption" value="Entire Series" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Calendar" />

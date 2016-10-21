@@ -1,6 +1,8 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+apply plugin: "com.liferay.gulp"
+
 configurations {
 	alloyUI
 	jQuery
@@ -16,6 +18,7 @@ task buildLexicon(type: Copy)
 task buildLiferayAMDLoader(type: Copy)
 task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
+task testJS
 
 String alloyUIVersion = "3.1.0-deprecated.1"
 String jqueryPluginsFormVersion = "3.51"
@@ -167,9 +170,6 @@ classes {
 	dependsOn buildSvg4everybody
 }
 
-
-apply plugin: "com.liferay.gulp"
-
 dependencies {
 	alloyUI group: "com.liferay.webjars", name: "com.liferay.webjars.alloy-ui", transitive: false, version: alloyUIVersion
 
@@ -194,6 +194,6 @@ gulpTest {
 	dependsOn npmInstall
 }
 
-task testJS {
+testJS {
 	dependsOn gulpTest
 }

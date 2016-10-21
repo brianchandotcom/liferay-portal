@@ -53,8 +53,8 @@ AUI.add(
 					{
 						dialog: {
 							bodyContent: form,
-							height: height,
 							destroyOnHide: true,
+							height: height,
 							toolbars: {
 								footer: [
 									{

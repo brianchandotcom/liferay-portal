@@ -702,18 +702,11 @@ public class ProjectTemplatesTest {
 			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
 			"name=theme-test");
 
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"theme", "theme-test", "-DclassName=BladeTest",
-			"-Dpackage=blade.test");
+		File mavenProjectDir = _buildTemplateWithMaven("theme", "theme-test");
 
 		_testContains(
 			mavenProjectDir, "pom.xml",
 			"com.liferay.portal.tools.theme.builder");
-
-		_testContains(
-			mavenProjectDir,
-			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
-			"name=theme-test");
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/theme-test.war",

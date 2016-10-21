@@ -24,6 +24,12 @@
 ### Added
 - [LPS-68618]: All `ExecuteGulpTask` instances now depend on `npmInstall`.
 
+## 2.0.3 - 2016-10-21
+
+### Changed
+- [LPS-66906]: Update the [Liferay Gradle Plugins Node] dependency to version
+1.3.0.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

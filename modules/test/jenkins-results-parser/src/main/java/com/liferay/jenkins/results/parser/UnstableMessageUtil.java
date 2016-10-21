@@ -266,7 +266,7 @@ public class UnstableMessageUtil {
 						sb.append("<a href=\"");
 
 						String logURL = _getLogURL(
-							jobVariant, project, runBuildURLJSONObject);
+							jobVariant, project, runBuildURL);
 
 						sb.append(logURL);
 
@@ -375,8 +375,7 @@ public class UnstableMessageUtil {
 	}
 
 	private static String _getLogURL(
-			String jobVariant, Project project,
-			JSONObject runBuildURLJSONObject)
+			String jobVariant, Project project, String runBuildURL)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -393,8 +392,7 @@ public class UnstableMessageUtil {
 		sb.append("/");
 		sb.append(jobVariant);
 		sb.append("/");
-		sb.append(
-			JenkinsResultsParserUtil.getAxisVariable(runBuildURLJSONObject));
+		sb.append(JenkinsResultsParserUtil.getAxisVariable(runBuildURL));
 
 		return sb.toString();
 	}

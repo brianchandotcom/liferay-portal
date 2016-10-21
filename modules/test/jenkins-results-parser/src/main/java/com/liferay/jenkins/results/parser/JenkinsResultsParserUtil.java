@@ -339,8 +339,8 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static String getAxisVariable(String buildURL) throws Exception {
-		String url = decode(buildURL);
+	public static String getAxisVariable(String axisBuildURL) throws Exception {
+		String url = decode(axisBuildURL);
 
 		String label = "AXIS_VARIABLE=";
 

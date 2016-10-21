@@ -18,7 +18,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.wysiwyg.upgrade.WysiwygConvertHelper;
+import com.liferay.journal.wysiwyg.upgrade.JournalWysiwygUpgradeHelper;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
+public class JournalWysiwygUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
@@ -66,13 +66,14 @@ public class WysiwygConverterUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.journal.wysiwyg.upgrade", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
-		WysiwygConvertHelper wysiwygConvertHelper = new WysiwygConvertHelper(
-			_assetEntryLocalService, _defaultDDMStructureHelper,
-			_groupLocalService, _journalArticleLocalService,
-			_journalFolderLocalService, _layoutLocalService,
-			_portletPreferencesLocalService, _userLocalService);
+		JournalWysiwygUpgradeHelper wysiwygUpgradeHelper =
+			new JournalWysiwygUpgradeHelper(
+				_assetEntryLocalService, _defaultDDMStructureHelper,
+				_groupLocalService, _journalArticleLocalService,
+				_journalFolderLocalService, _layoutLocalService,
+				_portletPreferencesLocalService, _userLocalService);
 
-		wysiwygConvertHelper.convert();
+		wysiwygUpgradeHelper.upgrade();
 	}
 
 	@Reference(unbind = "-")

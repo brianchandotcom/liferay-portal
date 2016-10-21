@@ -1330,9 +1330,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			_checkRegistryInTestClasses = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.registry.in.test.classes"));
-			_checkUnprocessedExceptions = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.unprocessed.exceptions"));
 		}
 		else {
 			fileNames = getPluginJavaFiles();
@@ -4546,6 +4543,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("allow.use.service.util.in.service.impl"));
 		_checkJavaFieldTypesExcludes = getPropertyList(
 			"check.java.field.types.excludes");
+		_checkUnprocessedExceptions = GetterUtil.getBoolean(
+			getProperty("check.unprocessed.exceptions"));
 		_diamondOperatorExcludes = getPropertyList("diamond.operator.excludes");
 		_fitOnSingleLineExcludes = getPropertyList(
 			"fit.on.single.line.excludes");

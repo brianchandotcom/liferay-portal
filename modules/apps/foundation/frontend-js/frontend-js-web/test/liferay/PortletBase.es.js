@@ -5,7 +5,7 @@ import PortletBase from '../../src/main/resources/META-INF/resources/liferay/Por
 describe('PortletBase', () => {
 	let namespace = '_portlet_namespace_';
 
-	function createMockedHtml(event) {
+	function createMockedHtml() {
 		let div1 = document.createElement('div');
 		div1.id = namespace + 'div1';
 		div1.className = 'div';

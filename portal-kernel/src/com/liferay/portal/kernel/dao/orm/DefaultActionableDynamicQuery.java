@@ -409,7 +409,9 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	private long _groupId;
 	private String _groupIdPropertyName = "groupId";
 	private int _interval = GetterUtil.getInteger(
-		PropsUtil.get(PropsKeys.INDEX_DEFAULT_INTERVAL));
+		PropsUtil.get(
+			PropsKeys.DAO_ORM_ACTIONABLE_DYNAMIC_QUERY_INTERVAL_DEFAULT),
+		10000);
 	private Class<?> _modelClass;
 	private boolean _parallel;
 

@@ -1958,7 +1958,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskFindBugs(FindBugs findBugs) {
-		findBugs.setMaxHeapSize("1g");
+		findBugs.setMaxHeapSize("3g");
 
 		FindBugsReports findBugsReports = findBugs.getReports();
 

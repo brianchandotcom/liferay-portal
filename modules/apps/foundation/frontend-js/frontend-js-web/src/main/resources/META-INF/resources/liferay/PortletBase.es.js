@@ -67,6 +67,17 @@ class PortletBase extends State {
 
 		return root.querySelector(this.namespaceSelectors_(this.namespace, selectors));
 	}
+
+	/**
+	 * Returns the default portlet root node element. By default, this is the
+	 * element with id "p_p_id{portletNamespace}".
+	 *
+	 * @protected
+	 * @return {Element} The portlet's default root node element
+	 */
+	rootNodeValueFn_() {
+		return dom.toElement('#p_p_id' + this.namespace);
+	}
 }
 
 /**
@@ -93,7 +104,8 @@ PortletBase.STATE = {
 	 * @type {Element}
 	 */
 	rootNode: {
-		setter: dom.toElement
+		setter: dom.toElement,
+		valueFn: 'rootNodeValueFn_'
 	}
 };
 

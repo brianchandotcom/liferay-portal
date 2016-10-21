@@ -156,6 +156,11 @@ public class NpmInstallTask extends ExecuteNpmTask {
 		_nodeModulesCacheRemoveBinDirs = nodeModulesCacheRemoveBinDirs;
 	}
 
+	/**
+	 * @deprecated As of 1.3.0, replaced by {@link
+	 *             #setRemoveShrinkwrappedUrls(Object)}
+	 */
+	@Deprecated
 	public void setRemoveShrinkwrappedUrls(boolean removeShrinkwrappedUrls) {
 		_removeShrinkwrappedUrls = removeShrinkwrappedUrls;
 	}

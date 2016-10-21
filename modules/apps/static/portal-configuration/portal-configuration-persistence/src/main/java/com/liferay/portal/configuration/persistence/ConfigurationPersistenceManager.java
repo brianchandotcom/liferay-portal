@@ -14,6 +14,8 @@
 
 package com.liferay.portal.configuration.persistence;
 
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
+import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.io.ReaderInputStream;
@@ -316,6 +318,18 @@ public class ConfigurationPersistenceManager
 			String pid, @SuppressWarnings("rawtypes") Dictionary dictionary)
 		throws IOException {
 
+		ConfigurationModelListener configurationModelListener = null;
+
+		if (hasPid(pid)) {
+			configurationModelListener =
+				ConfigurationModelListenerProvider.
+					getConfigurationModelListener(pid);
+		}
+
+		if (configurationModelListener != null) {
+			configurationModelListener.doBefore(pid, dictionary);
+		}
+
 		Lock lock = _readWriteLock.writeLock();
 
 		try {
@@ -327,6 +341,10 @@ public class ConfigurationPersistenceManager
 		}
 		finally {
 			lock.unlock();
+		}
+
+		if (configurationModelListener != null) {
+			configurationModelListener.doAfter(pid, dictionary);
 		}
 	}
 

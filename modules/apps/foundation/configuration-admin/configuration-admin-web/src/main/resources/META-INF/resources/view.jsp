@@ -30,7 +30,7 @@ portletURL.setParameter("configurationCategory", configurationCategory);
 
 String keywords = renderRequest.getParameter("keywords");
 
-if (Validator.isNotNull(keywords)) {
+if (keywords != null) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
@@ -64,9 +64,11 @@ if (Validator.isNotNull(keywords)) {
 	</c:if>
 
 	<aui:nav-bar-search>
+		<portlet:renderURL var="redirectURL" />
+
 		<portlet:renderURL var="searchURL">
 			<portlet:param name="mvcRenderCommandName" value="/search" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="redirect" value="<%= redirectURL %>" />
 		</portlet:renderURL>
 
 		<aui:form action="<%= searchURL %>" name="searchFm">

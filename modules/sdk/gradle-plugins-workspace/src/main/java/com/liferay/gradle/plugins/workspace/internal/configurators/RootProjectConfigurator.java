@@ -187,6 +187,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, DIST_BUNDLE_TASK_NAME, downloadBundleTask,
 			workspaceExtension);
 
+		_configureTaskDisableUpToDate(copy);
+
 		copy.into(
 			new Callable<File>() {
 
@@ -199,18 +201,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		copy.setDescription("Assembles the Liferay bundle.");
 
-		TaskOutputs taskOutputs = copy.getOutputs();
-
-		taskOutputs.upToDateWhen(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					return false;
-				}
-
-			});
-
 		return copy;
 	}
 
@@ -220,6 +210,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		final WorkspaceExtension workspaceExtension) {
 
 		T task = GradleUtil.addTask(project, taskName, clazz);
+
+		_configureTaskDisableUpToDate(task);
 
 		task.into(
 			new Callable<String>() {
@@ -469,6 +461,20 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@Override
 				public void execute(FileCopyDetails fileCopyDetails) {
 					fileCopyDetailsSet.add(fileCopyDetails);
+				}
+
+			});
+	}
+
+	private void _configureTaskDisableUpToDate(Task task) {
+		TaskOutputs taskOutputs = task.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
 				}
 
 			});

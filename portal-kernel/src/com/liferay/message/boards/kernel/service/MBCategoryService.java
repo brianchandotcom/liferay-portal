@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -175,6 +176,11 @@ public interface MBCategoryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
 		long categoryId, int status, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<java.lang.Object> getCategoriesAndThreads(long groupId,
+		long categoryId, int status, int start, int end,
+		OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<java.lang.Long> getSubcategoryIds(

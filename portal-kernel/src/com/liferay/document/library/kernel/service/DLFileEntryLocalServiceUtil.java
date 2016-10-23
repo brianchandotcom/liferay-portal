@@ -217,6 +217,11 @@ public class DLFileEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFileEntry fetchFileEntry(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchFileEntry(uuid, groupId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFileEntry fetchFileEntry(
 		long groupId, long folderId, java.lang.String title) {
 		return getService().fetchFileEntry(groupId, folderId, title);
 	}

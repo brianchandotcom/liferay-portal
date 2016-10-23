@@ -235,6 +235,13 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
+	public AssetVocabulary fetchGroupVocabulary(long groupId, String name)
+		throws PortalException {
+
+		return assetVocabularyPersistence.fetchByG_N(groupId, name);
+	}
+
+	@Override
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId) {
 		return assetVocabularyPersistence.findByCompanyId(companyId);
 	}

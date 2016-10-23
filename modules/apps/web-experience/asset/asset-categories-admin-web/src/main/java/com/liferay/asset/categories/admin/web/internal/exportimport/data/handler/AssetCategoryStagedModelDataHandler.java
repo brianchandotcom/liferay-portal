@@ -21,7 +21,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.asset.kernel.service.persistence.AssetCategoryUtil;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -289,8 +288,8 @@ public class AssetCategoryStagedModelDataHandler
 			long vocabularyId, int count)
 		throws Exception {
 
-		AssetCategory category = AssetCategoryUtil.fetchByG_P_N_V_First(
-			groupId, parentCategoryId, name, vocabularyId, null);
+		AssetCategory category = _assetCategoryLocalService.fetchCategory(
+			groupId, parentCategoryId, name, vocabularyId);
 
 		if ((category == null) ||
 			(Validator.isNotNull(uuid) && uuid.equals(category.getUuid()))) {

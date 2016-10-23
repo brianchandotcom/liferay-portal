@@ -185,6 +185,12 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFolder fetchFolder(
+		java.lang.String uuid, long groupId) {
+		return _dlFolderLocalService.fetchFolder(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFolder fetchFolder(
 		long folderId) {
 		return _dlFolderLocalService.fetchFolder(folderId);
 	}

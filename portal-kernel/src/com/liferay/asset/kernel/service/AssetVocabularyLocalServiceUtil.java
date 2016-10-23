@@ -135,6 +135,12 @@ public class AssetVocabularyLocalServiceUtil {
 		return getService().fetchAssetVocabularyByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetVocabulary fetchGroupVocabulary(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchGroupVocabulary(groupId, name);
+	}
+
 	/**
 	* Returns the asset vocabulary with the primary key.
 	*

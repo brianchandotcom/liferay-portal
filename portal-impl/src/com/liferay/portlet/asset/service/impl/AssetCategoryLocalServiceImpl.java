@@ -354,6 +354,14 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	public AssetCategory fetchCategory(
+		long groupId, long parentCategoryId, String name, long vocabularyId) {
+
+		return assetCategoryPersistence.fetchByG_P_N_V_First(
+			groupId, parentCategoryId, name, vocabularyId, null);
+	}
+
+	@Override
 	public List<AssetCategory> getCategories() {
 		return assetCategoryPersistence.findAll();
 	}

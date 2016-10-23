@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -79,6 +80,9 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
@@ -86,6 +90,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -368,7 +373,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		long groupId = portletDataContext.getGroupId();
+		final long groupId = portletDataContext.getGroupId();
 		long userId = portletDataContext.getUserId(layout.getUserUuid());
 
 		Element layoutElement =
@@ -379,7 +384,7 @@ public class LayoutStagedModelDataHandler
 
 		long oldLayoutId = layoutId;
 
-		boolean privateLayout = portletDataContext.isPrivateLayout();
+		final boolean privateLayout = portletDataContext.isPrivateLayout();
 
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
@@ -649,10 +654,27 @@ public class LayoutStagedModelDataHandler
 		}
 
 		if (existingLayout == null) {
-			int priority = _layoutLocalServiceHelper.getNextPriority(
-				groupId, privateLayout, parentLayoutId, null, -1);
+			try {
+				final long capturedParentLayoutId = parentLayoutId;
 
-			importedLayout.setPriority(priority);
+				int priority = TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new Callable<Integer>() {
+
+						@Override
+						public Integer call() throws Exception {
+							return _layoutLocalServiceHelper.getNextPriority(
+								groupId, privateLayout, capturedParentLayoutId,
+								null, -1);
+						}
+
+					});
+
+				importedLayout.setPriority(priority);
+			}
+			catch (Throwable t) {
+				ReflectionUtil.throwException(t);
+			}
 		}
 
 		importedLayout.setLayoutPrototypeUuid(layout.getLayoutPrototypeUuid());
@@ -1799,6 +1821,11 @@ public class LayoutStagedModelDataHandler
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);
+
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.SUPPORTS,
+			new Class<?>[] {PortalException.class, SystemException.class});
 
 	private CounterLocalService _counterLocalService;
 	private ExportImportLifecycleManager _exportImportLifecycleManager;

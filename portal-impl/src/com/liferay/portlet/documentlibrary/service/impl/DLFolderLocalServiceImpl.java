@@ -316,6 +316,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public DLFolder fetchFolder(String uuid, long groupId) {
+		return dlFolderPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	@Override
 	public List<DLFolder> getCompanyFolders(
 		long companyId, int start, int end) {
 

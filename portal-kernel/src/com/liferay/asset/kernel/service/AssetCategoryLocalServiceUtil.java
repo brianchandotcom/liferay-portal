@@ -157,6 +157,13 @@ public class AssetCategoryLocalServiceUtil {
 		return getService().fetchCategory(categoryId);
 	}
 
+	public static com.liferay.asset.kernel.model.AssetCategory fetchCategory(
+		long groupId, long parentCategoryId, java.lang.String name,
+		long vocabularyId) {
+		return getService()
+				   .fetchCategory(groupId, parentCategoryId, name, vocabularyId);
+	}
+
 	/**
 	* Returns the asset category with the primary key.
 	*

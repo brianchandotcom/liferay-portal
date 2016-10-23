@@ -234,6 +234,12 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 
 	@Override
 	public com.liferay.document.library.kernel.model.DLFileEntry fetchFileEntry(
+		java.lang.String uuid, long groupId) {
+		return _dlFileEntryLocalService.fetchFileEntry(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.document.library.kernel.model.DLFileEntry fetchFileEntry(
 		long groupId, long folderId, java.lang.String title) {
 		return _dlFileEntryLocalService.fetchFileEntry(groupId, folderId, title);
 	}

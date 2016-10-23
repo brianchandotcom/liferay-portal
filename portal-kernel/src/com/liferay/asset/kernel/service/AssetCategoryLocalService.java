@@ -155,6 +155,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public AssetCategory fetchCategory(long categoryId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AssetCategory fetchCategory(long groupId, long parentCategoryId,
+		java.lang.String name, long vocabularyId);
+
 	/**
 	* Returns the asset category with the primary key.
 	*

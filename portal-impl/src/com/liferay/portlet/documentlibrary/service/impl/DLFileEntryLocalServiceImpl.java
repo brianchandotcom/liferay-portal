@@ -990,6 +990,11 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntry(String uuid, long groupId) {
+		return dlFileEntryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByAnyImageId(long imageId) {
 		return dlFileEntryFinder.fetchByAnyImageId(imageId);
 	}

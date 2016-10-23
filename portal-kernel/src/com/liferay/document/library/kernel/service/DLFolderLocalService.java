@@ -163,6 +163,9 @@ public interface DLFolderLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFolder fetchFolder(java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFolder fetchFolder(long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

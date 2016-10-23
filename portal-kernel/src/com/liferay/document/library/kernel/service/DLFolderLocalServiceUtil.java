@@ -170,6 +170,11 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.document.library.kernel.model.DLFolder fetchFolder(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchFolder(uuid, groupId);
+	}
+
+	public static com.liferay.document.library.kernel.model.DLFolder fetchFolder(
 		long folderId) {
 		return getService().fetchFolder(folderId);
 	}

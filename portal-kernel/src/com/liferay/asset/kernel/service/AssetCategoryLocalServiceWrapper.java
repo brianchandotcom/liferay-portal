@@ -166,6 +166,14 @@ public class AssetCategoryLocalServiceWrapper
 		return _assetCategoryLocalService.fetchCategory(categoryId);
 	}
 
+	@Override
+	public com.liferay.asset.kernel.model.AssetCategory fetchCategory(
+		long groupId, long parentCategoryId, java.lang.String name,
+		long vocabularyId) {
+		return _assetCategoryLocalService.fetchCategory(groupId,
+			parentCategoryId, name, vocabularyId);
+	}
+
 	/**
 	* Returns the asset category with the primary key.
 	*

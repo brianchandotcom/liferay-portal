@@ -139,6 +139,13 @@ public class AssetVocabularyLocalServiceWrapper
 			groupId);
 	}
 
+	@Override
+	public com.liferay.asset.kernel.model.AssetVocabulary fetchGroupVocabulary(
+		long groupId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetVocabularyLocalService.fetchGroupVocabulary(groupId, name);
+	}
+
 	/**
 	* Returns the asset vocabulary with the primary key.
 	*

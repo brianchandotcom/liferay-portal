@@ -266,15 +266,8 @@ public class ServiceComponentLocalServiceImpl
 
 					});
 
-				if (release == null) {
-					releaseLocalService.addRelease(
-						servletContextName, "0.0.1");
-				}
-				else {
-					release.setSchemaVersion("0.0.1");
-
-					releaseLocalService.updateRelease(release);
-				}
+				releaseLocalService.updateRelease(
+					servletContextName, "0.0.1", "0.0.0");
 			}
 			catch (Exception e) {
 				_log.error(e, e);

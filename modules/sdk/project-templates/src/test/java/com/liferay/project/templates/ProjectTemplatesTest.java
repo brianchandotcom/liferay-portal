@@ -44,6 +44,7 @@ import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -696,7 +697,6 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.portal.tools.theme.builder\"");
-
 		_testContains(
 			gradleProjectDir,
 			"src/main/webapp/WEB-INF/liferay-plugin-package.properties",
@@ -883,9 +883,8 @@ public class ProjectTemplatesTest {
 		if (gradleBundleFileName.endsWith(".jar")) {
 			_testBundlesDiff(gradleBundleFile, mavenBundleFile);
 		}
-
-		if (gradleBundleFileName.endsWith(".war")) {
-			_testWarDiff(gradleBundleFile, mavenBundleFile);
+		else if (gradleBundleFileName.endsWith(".war")) {
+			_testWarsDiff(gradleBundleFile, mavenBundleFile);
 		}
 	}
 
@@ -1268,59 +1267,61 @@ public class ProjectTemplatesTest {
 		return file;
 	}
 
-	private void _testWarDiff(File warFile1, File warFile2) throws Exception {
-		DifferenceCalculator calc = new DifferenceCalculator(
+	private void _testWarsDiff(File warFile1, File warFile2)
+		throws IOException {
+
+		DifferenceCalculator differenceCalculator = new DifferenceCalculator(
 			warFile1, warFile2);
 
-		Set<String> patterns = new HashSet<>();
+		differenceCalculator.setFilenameRegexToIgnore(
+			Collections.singleton(".*META-INF.*"));
+		differenceCalculator.setIgnoreTimestamps(true);
 
-		patterns.add(".*META-INF.*");
+		Differences differences = differenceCalculator.getDifferences();
 
-		calc.setFilenameRegexToIgnore(patterns);
+		if (!differences.hasDifferences()) {
+			return;
+		}
 
-		calc.setIgnoreTimestamps(true);
+		Map<String, ZipArchiveEntry> added = differences.getAdded();
+		Map<String, ZipArchiveEntry> removed = differences.getRemoved();
+		Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
 
-		Differences differences = calc.getDifferences();
+		if (added.isEmpty() && removed.isEmpty() && !changed.isEmpty()) {
+			boolean realChange = false;
 
-		if (differences.hasDifferences()) {
-			Map<String, ZipArchiveEntry> added = differences.getAdded();
-			Map<String, ZipArchiveEntry> removed = differences.getRemoved();
-			Map<String, ZipArchiveEntry[]> changed = differences.getChanged();
+			for (String change : changed.keySet()) {
+				ZipArchiveEntry[] zipArchiveEntries = changed.get(change);
 
-			Exception exception = new Exception(
-				"War differences\n" + differences);
+				ZipArchiveEntry zipArchiveEntry1 = zipArchiveEntries[0];
+				ZipArchiveEntry zipArchiveEntry2 = zipArchiveEntries[0];
 
-			if (added.isEmpty() && removed.isEmpty() && !changed.isEmpty()) {
-				boolean realChange = false;
+				if (zipArchiveEntry1.isDirectory() &&
+					zipArchiveEntry2.isDirectory() &&
+					(zipArchiveEntry1.getSize() ==
+						zipArchiveEntry2.getSize()) &&
+					(zipArchiveEntry1.getCompressedSize() <= 2) &&
+					(zipArchiveEntry2.getCompressedSize() <= 2)) {
 
-				for (String change : changed.keySet()) {
-					ZipArchiveEntry[] entries = changed.get(change);
+					// Skip zipdiff bug
 
-					ZipArchiveEntry z1 = entries[0];
-					ZipArchiveEntry z2 = entries[0];
-
-					if (z1.isDirectory() && z2.isDirectory() &&
-						(z1.getSize() == z2.getSize()) &&
-						(z1.getCompressedSize() <= 2) &&
-						(z2.getCompressedSize() <= 2)) {
-
-						continue; // skip zipdiff bug
-					}
-					else {
-						realChange = true;
-						break;
-					}
+					continue;
 				}
+				else {
+					realChange = true;
 
-				if (realChange) {
-					throw exception;
+					break;
 				}
-
-				return;
 			}
 
-			throw exception;
+			if (!realChange) {
+				return;
+			}
 		}
+
+		Assert.fail(
+			"WAR " + warFile1 + " and " + warFile2 + " do not match:\n" +
+				differences);
 	}
 
 	private void _writeServiceClass(File projectDir) throws IOException {

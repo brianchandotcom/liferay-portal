@@ -160,6 +160,15 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return npmInstallTask.getWorkingDir() +
+						"/node_modules/lexicon*/src/**/*.soy";
+				}
+
+			},
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return npmInstallTask.getWorkingDir() +
 						"/node_modules/metal*/src/**/*.soy";
 				}
 

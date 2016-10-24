@@ -80,6 +80,49 @@
 		</execute>
 	</command>
 
+	<command name="FacebookSSOSmoke" priority="4">
+		<var name="facebookApplicationID" property-value="facebook.application.id" />
+		<var name="facebookApplicationSecret" property-value="facebook.application.secret" />
+		<var name="facebookEmail" property-value="facebook.email" />
+		<var name="facebookPassword" property-value="facebook.password" />
+
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Instance Settings" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Authentication" />
+		</execute>
+
+		<execute macro="PortalSettingsNavigator#gotoAuthenticationFacebook" />
+
+		<execute macro="PortalSettings#editConfigurationAuthenticationFacebook">
+			<var name="facebookApplicationID" value="${facebookApplicationID}" />
+			<var name="facebookApplicationSecret" value="${facebookApplicationSecret}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserWithFacebookSSOEnabledPG">
+			<var name="facebookEmail" value="${facebookEmail}" />
+			<var name="facebookPassword" value="${facebookPassword}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutUserPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
 	<command name="GoogleSSOSmoke" priority="4">
 		<var name="googleClientID" property-value="google.client.id" />
 		<var name="googleClientSecret" property-value="google.client.secret" />

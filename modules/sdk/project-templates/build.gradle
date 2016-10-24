@@ -42,6 +42,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-service-wrapper")
 	projectTemplates project(":sdk:project-templates-simulation-panel-entry")
 	projectTemplates project(":sdk:project-templates-template-context-contributor")
+	projectTemplates project(":sdk:project-templates-theme")
 	projectTemplates project(":sdk:project-templates-workspace")
 
 	provided group: "com.beust", name: "jcommander", version: "1.48"
@@ -50,6 +51,7 @@ dependencies {
 	testCompile gradleTestKit()
 	testCompile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
 	testCompile group: "junit", name: "junit", version: "4.12"
+	testCompile group: "net.diibadaaba.zipdiff", name: "zipdiff", version: "1.0"
 }
 
 processResources {

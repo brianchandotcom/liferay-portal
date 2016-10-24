@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<archetype-descriptor name="liferay-module-theme">
+	<fileSets>
+		<fileSet filtered="true">
+			<directory>src/main/resources</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory>src/main/webapp</directory>
+			<includes>
+				<include>**/*</include>
+			</includes>
+		</fileSet>
+		<fileSet filtered="true">
+			<directory></directory>
+			<includes>
+				<include>.gitignore</include>
+				<include>build.gradle</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+	<requiredProperties>
+		<requiredProperty key="projectType">
+			<defaultValue>standalone</defaultValue>
+		</requiredProperty>
+	</requiredProperties>
+</archetype-descriptor>

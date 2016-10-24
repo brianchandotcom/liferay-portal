@@ -326,8 +326,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public PortletSession getPortletSession(boolean create) {
-		/*
-		HttpSession httpSes = _req.getSession(create);
+		/*HttpSession httpSes = _req.getSession(create);
 
 		if (httpSes == null) {
 			return null;
@@ -339,17 +338,14 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 
 			return _ses;
-		}
-		*/
+		}*/
 
-		/*
-		if ((_session == null) && create) {
+		/*if ((_session == null) && create) {
 			_req.getSession(create);
 
 			_session = new PortletSessionImpl(
 				_req.getSession(), _portletContext, _portletName, _plid);
-		}
-		*/
+		}*/
 
 		if (!create && _invalidSession) {
 			return null;

@@ -382,12 +382,11 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 		tiledImage.setData(raster);
 
-		/*
-		javax.media.jai.JAI.create("filestore", tiledImage, "test.png", "PNG");
+		/*javax.media.jai.JAI.create(
+			"filestore", tiledImage, "test.png", "PNG");
 
 		printImage(renderedImage);
-		printImage(tiledImage);
-		*/
+		printImage(tiledImage);*/
 
 		return tiledImage;
 	}

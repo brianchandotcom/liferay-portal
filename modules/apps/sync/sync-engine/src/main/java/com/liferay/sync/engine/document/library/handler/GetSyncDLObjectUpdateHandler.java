@@ -125,7 +125,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			}
 
 			@Override
-			public void run() {
+			protected void doRun() {
 				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 					getSyncAccountId());
 
@@ -142,7 +142,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 					return;
 				}
 
-				super.run();
+				super.doRun();
 			}
 
 			protected void doCancel() {

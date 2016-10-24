@@ -57,6 +57,11 @@ Name | Depends On
 ---- | ----------
 `classes` | `transpileJS`
 
+The plugin adds a new configuration to the project called `soyCompile`. If one
+or more dependencies are added to this configuration, they will be expanded into
+temporary directories and passed to the `transpileJS` task as additional
+[`soyDependencies`](#soydependencies) values.
+
 ### TranspileJSTask
 
 Tasks of type `TranspileJSTask` extend `ExecuteNodeScriptTask`, so all its
@@ -81,7 +86,7 @@ Property Name | Type | Default Value | Description
 `modules` | `String` | `"amd"` | The format(s) that the source files are built to. It sets the `--format` argument.
 <a name="sourcedir"></a>`sourceDir` | `File` | `null` | The directory that contains the files to build.
 `sourceMaps` | `SourceMaps` | `enabled` | Whether to generate source map files. Available values include `disabled`, `enabled`, and `enabled_inline`.
-`soyDependencies` | `Set<String>` | `["${npmInstall.workingDir}/`<br />`node_modules/metal*/src/**/*.soy"]` | The path GLOBs of Soy files that the main source files depend on, but that should not be compiled. It sets the `--soyDeps` argument.
+<a name="soydependencies"></a>`soyDependencies` | `Set<String>` | `["${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy", "${npmInstall.workingDir}/node_modules/metal*/src/**/*.soy"]` | The path GLOBs of Soy files that the main source files depend on, but that should not be compiled. It sets the `--soyDeps` argument.
 `soySkipMetalGeneration` | `boolean` | `false` | Whether to just compile Soy files, without adding Metal.js generated code, like the `component` class. It sets the `--soySkipMetalGeneration` argument.
 `soySrcIncludes` | `Set<String>` | `[]` | The path GLOBs of the Soy files to compile. It sets the `--soySrc` argument.
 `srcIncludes` | `Set<String>` | `[]` | The path GLOBs of the JS files to compile. It sets the `--src` argument.

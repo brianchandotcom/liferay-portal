@@ -1355,7 +1355,7 @@
 	<command name="navigateHomeViaDocumentViewPG">
 		<var name="key_breadcrumbName" value="Home" />
 
-		<execute function="AssertClick" locator1="Breadcrumb#BREADCRUMB_PAGE" value1="HOME" />
+		<execute function="AssertClick" locator1="BreadcrumbPortlet#BREADCRUMB_PAGE" value1="HOME" />
 	</command>
 
 	<command name="populateField">

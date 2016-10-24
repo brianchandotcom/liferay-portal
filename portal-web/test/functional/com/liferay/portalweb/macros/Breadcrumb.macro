@@ -64,7 +64,7 @@
 	<command name="viewADTApplied">
 		<var name="key_breadcrumbADTType" value="${breadcrumbADTType}" />
 
-		<execute function="AssertElementPresent" locator1="Breadcrumb#BREADCRUMB_ADT" />
+		<execute function="AssertElementPresent" locator1="BreadcrumbPortlet#BREADCRUMB_ADT" />
 	</command>
 
 	<command name="viewConfigurationCheckboxes">

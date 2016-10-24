@@ -102,6 +102,7 @@ public class CounterTransactionExecutor
 		TransactionAttributeAdapter transactionAttributeAdapter) {
 
 		return new TransactionStatusAdapter(
+			platformTransactionManager,
 			platformTransactionManager.getTransaction(
 				transactionAttributeAdapter));
 	}

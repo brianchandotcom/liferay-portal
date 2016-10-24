@@ -47,6 +47,7 @@ public class CallbackPreferringTransactionExecutor
 				callbackPreferringPlatformTransactionManager.execute(
 					transactionAttributeAdapter,
 					createTransactionCallback(
+						callbackPreferringPlatformTransactionManager,
 						transactionAttributeAdapter, methodInvocation));
 
 			if (result instanceof ThrowableHolder) {
@@ -63,11 +64,29 @@ public class CallbackPreferringTransactionExecutor
 	}
 
 	protected TransactionCallback<Object> createTransactionCallback(
+		CallbackPreferringPlatformTransactionManager
+			callbackPreferringPlatformTransactionManager,
 		TransactionAttributeAdapter transactionAttributeAdapter,
 		MethodInvocation methodInvocation) {
 
 		return new CallbackPreferringTransactionCallback(
+			callbackPreferringPlatformTransactionManager,
 			transactionAttributeAdapter, methodInvocation);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #createTransactionCallback(
+	 *             CallbackPreferringPlatformTransactionManager,
+	 *             TransactionAttributeAdapter, MethodInvocation)}
+	 */
+	@Deprecated
+	protected TransactionCallback<Object> createTransactionCallback(
+		TransactionAttributeAdapter transactionAttributeAdapter,
+		MethodInvocation methodInvocation) {
+
+		return new CallbackPreferringTransactionCallback(
+			null, transactionAttributeAdapter, methodInvocation);
 	}
 
 	protected static class ThrowableHolder {
@@ -98,7 +117,8 @@ public class CallbackPreferringTransactionExecutor
 		@Override
 		public Object doInTransaction(TransactionStatus transactionStatus) {
 			TransactionStatusAdapter transactionStatusAdapter =
-				new TransactionStatusAdapter(transactionStatus);
+				new TransactionStatusAdapter(
+					_platformTransactionManager, transactionStatus);
 
 			TransactionLifecycleManager.fireTransactionCreatedEvent(
 				_transactionAttributeAdapter, transactionStatusAdapter);
@@ -138,14 +158,17 @@ public class CallbackPreferringTransactionExecutor
 		}
 
 		private CallbackPreferringTransactionCallback(
+			PlatformTransactionManager platformTransactionManager,
 			TransactionAttributeAdapter transactionAttributeAdapter,
 			MethodInvocation methodInvocation) {
 
+			_platformTransactionManager = platformTransactionManager;
 			_transactionAttributeAdapter = transactionAttributeAdapter;
 			_methodInvocation = methodInvocation;
 		}
 
 		private final MethodInvocation _methodInvocation;
+		private final PlatformTransactionManager _platformTransactionManager;
 		private final TransactionAttributeAdapter _transactionAttributeAdapter;
 
 	}

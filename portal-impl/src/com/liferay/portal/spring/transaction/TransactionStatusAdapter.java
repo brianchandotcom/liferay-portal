@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.transaction;
 
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionException;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionStatus;
@@ -25,10 +26,24 @@ public class TransactionStatusAdapter
 	extends DefaultTransactionStatus
 	implements com.liferay.portal.kernel.transaction.TransactionStatus {
 
-	public TransactionStatusAdapter(TransactionStatus transactionStatus) {
+	public TransactionStatusAdapter(
+		PlatformTransactionManager platformTransactionManager,
+		TransactionStatus transactionStatus) {
+
 		super(null, false, false, false, false, null);
 
+		_platformTransactionManager = platformTransactionManager;
 		_transactionStatus = transactionStatus;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #TransactionStatusAdapter(
+	 *             PlatformTransactionManager, TransactionStatus)}
+	 */
+	@Deprecated
+	public TransactionStatusAdapter(TransactionStatus transactionStatus) {
+		this(null, transactionStatus);
 	}
 
 	@Override
@@ -39,6 +54,11 @@ public class TransactionStatusAdapter
 	@Override
 	public void flush() {
 		_transactionStatus.flush();
+	}
+
+	@Override
+	public PlatformTransactionManager getPlatformTransactionManager() {
+		return _platformTransactionManager;
 	}
 
 	public TransactionStatus getTransactionStatus() {
@@ -82,6 +102,7 @@ public class TransactionStatusAdapter
 		_transactionStatus.setRollbackOnly();
 	}
 
+	private final PlatformTransactionManager _platformTransactionManager;
 	private final TransactionStatus _transactionStatus;
 
 }

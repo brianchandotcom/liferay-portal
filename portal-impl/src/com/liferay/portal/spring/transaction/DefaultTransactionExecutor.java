@@ -106,6 +106,7 @@ public class DefaultTransactionExecutor
 
 		TransactionStatusAdapter transactionStatusAdapter =
 			new TransactionStatusAdapter(
+				platformTransactionManager,
 				platformTransactionManager.getTransaction(
 					transactionAttributeAdapter));
 

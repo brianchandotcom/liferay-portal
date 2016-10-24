@@ -36,8 +36,16 @@ public class TransactionInvokerImpl implements TransactionInvoker {
 			TransactionConfig transactionConfig, Callable<T> callable)
 		throws Throwable {
 
+		PlatformTransactionManager platformTransactionManager =
+			CurrentPlatformTransactionManagerUtil.
+				getCurrentPlatformTransactionManager();
+
+		if (platformTransactionManager == null) {
+			platformTransactionManager = _platformTransactionManager;
+		}
+
 		return (T)_transactionExecutor.execute(
-			_platformTransactionManager,
+			platformTransactionManager,
 			new TransactionAttributeAdapter(
 				TransactionAttributeBuilder.build(
 					true, transactionConfig.getIsolation(),

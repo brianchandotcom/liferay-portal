@@ -14,10 +14,15 @@
 
 package com.liferay.portal.kernel.transaction;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Shuyang Zhou
  */
+@ProviderType
 public interface TransactionStatus {
+
+	public Object getPlatformTransactionManager();
 
 	public boolean isCompleted();
 

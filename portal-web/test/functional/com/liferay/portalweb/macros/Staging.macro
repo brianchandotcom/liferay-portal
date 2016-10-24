@@ -821,9 +821,12 @@
 	</command>
 
 	<command name="submitForPublicationPageRevision">
-		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
-
-		<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+		<if>
+			<condition function="IsTextEqual" locator1="Message#WORKFLOW_STATUS" value1="Draft" />
+			<then>
+				<execute function="AssertClick" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+			</then>
+		</if>
 
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_MENU_SUBMIT_FOR_PUBLICATION" />
 

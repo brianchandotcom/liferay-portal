@@ -46,8 +46,7 @@ public class KaleoNotificationLocalServiceImpl
 
 		// Kaleo notification
 
-		User user = userPersistence.findByPrimaryKey(
-			serviceContext.getGuestOrUserId());
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
 		Date now = new Date();
 
 		long kaleoNotificationId = counterLocalService.increment();

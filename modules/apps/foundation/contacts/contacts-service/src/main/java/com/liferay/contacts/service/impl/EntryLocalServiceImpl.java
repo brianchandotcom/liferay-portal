@@ -38,7 +38,7 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			long userId, String fullName, String emailAddress, String comments)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validate(user.getCompanyId(), 0, userId, fullName, emailAddress);
@@ -153,7 +153,8 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 			throw new DuplicateEntryEmailAddressException();
 		}
 
-		User user = userPersistence.fetchByC_EA(companyId, emailAddress);
+		User user = userLocalService.fetchUserByEmailAddress(
+			companyId, emailAddress);
 
 		if (user != null) {
 			throw new DuplicateEntryEmailAddressException();

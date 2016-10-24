@@ -73,7 +73,7 @@ public class ShoppingItemLocalServiceImpl
 
 		// Item
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		sku = StringUtil.toUpperCase(sku.trim());
 
 		byte[] smallImageBytes = null;
@@ -467,7 +467,7 @@ public class ShoppingItemLocalServiceImpl
 
 		ShoppingItem item = shoppingItemPersistence.findByPrimaryKey(itemId);
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		categoryId = getCategory(item, categoryId);
 		sku = StringUtil.toUpperCase(sku.trim());
 

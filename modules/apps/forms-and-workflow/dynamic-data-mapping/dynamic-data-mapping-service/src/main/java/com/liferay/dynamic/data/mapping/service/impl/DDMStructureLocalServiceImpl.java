@@ -127,7 +127,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		if (Validator.isNull(structureKey)) {
 			structureKey = String.valueOf(counterLocalService.increment());
@@ -1540,7 +1540,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		DDMForm parentDDMForm = getParentDDMForm(parentStructureId);
 

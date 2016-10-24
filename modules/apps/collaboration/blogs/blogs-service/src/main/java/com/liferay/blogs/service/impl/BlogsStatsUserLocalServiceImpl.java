@@ -155,7 +155,7 @@ public class BlogsStatsUserLocalServiceImpl
 			groupId, userId);
 
 		if (statsUser == null) {
-			Group group = groupPersistence.findByPrimaryKey(groupId);
+			Group group = groupLocalService.getGroup(groupId);
 
 			long statsUserId = counterLocalService.increment();
 

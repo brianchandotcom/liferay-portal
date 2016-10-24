@@ -62,7 +62,7 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 
 		// Calendar
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		if (color <= 0) {
 			color = CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT;

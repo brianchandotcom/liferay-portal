@@ -61,6 +61,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewActiveEntry">
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY" value1="${breadcrumbNameUppercase}">
+			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+		</execute>
+	</command>
+
 	<command name="viewADTApplied">
 		<var name="key_breadcrumbADTType" value="${breadcrumbADTType}" />
 
@@ -123,6 +129,13 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewEntry">
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}">
+			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+			<var name="key_breadcrumbName" value="${breadcrumbName}" />
+		</execute>
 	</command>
 
 	<command name="viewPG">

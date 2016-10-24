@@ -175,7 +175,7 @@ if (portletTitleBasedNavigation) {
 		</liferay-ui:search-container-row>
 
 		<aui:button-row>
-			<aui:button type="submit" value="compare-versions" />
+			<aui:button cssClass="btn-lg" name="compare" type="submit" value="compare-versions" />
 		</aui:button-row>
 
 		<liferay-ui:search-iterator markupView="lexicon" />
@@ -183,37 +183,28 @@ if (portletTitleBasedNavigation) {
 </aui:fieldset>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />compare',
-		function() {
-			var A = AUI();
+	$('#<portlet:namespace />compare').on(
+		'click',
+		function(event) {
+			var rowIds = $('input[name=<portlet:namespace />rowIds]:checked');
 
-			var rowIds = A.all('input[name=<portlet:namespace />rowIds]:checked');
+			if (rowIds.length === 2) {
+				<portlet:renderURL var="compareVersionURL">
+					<portlet:param name="mvcPath" value='<%= templatePath + "compare_versions.jsp" %>' />
+					<portlet:param name="<%= Constants.CMD %>" value="compareVersions" />
+					<portlet:param name="backURL" value="<%= currentURL %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />
+				</portlet:renderURL>
 
-			var sourceVersion = A.one('input[name="<portlet:namespace />sourceVersion"]');
-			var targetVersion = A.one('input[name="<portlet:namespace />targetVersion"]');
+				var uri = '<%= compareVersionURL %>';
 
-			var rowIdsSize = rowIds.size();
+				uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.eq(1).val(), uri);
+				uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.eq(0).val(), uri);
 
-			if (rowIdsSize === 1) {
-				if (sourceVersion) {
-					sourceVersion.val(rowIds.item(0).val());
-				}
+				location.href = uri;
 			}
-			else if (rowIdsSize == 2) {
-				if (sourceVersion) {
-					sourceVersion.val(rowIds.item(1).val());
-				}
-
-				if (targetVersion) {
-					targetVersion.val(rowIds.item(0).val());
-				}
-			}
-
-			submitForm(document.<portlet:namespace />fm);
-		},
-		['aui-base', 'selector-css3']
+		}
 	);
 
 	Liferay.provide(

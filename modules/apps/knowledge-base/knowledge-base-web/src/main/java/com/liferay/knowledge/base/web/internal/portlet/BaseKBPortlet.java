@@ -37,6 +37,7 @@ import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBCommentService;
 import com.liferay.knowledge.base.service.KBFolderService;
 import com.liferay.knowledge.base.service.KBTemplateService;
+import com.liferay.knowledge.base.service.util.AdminUtil;
 import com.liferay.knowledge.base.service.util.KnowledgeBaseConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -59,6 +60,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -69,11 +71,18 @@ import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -273,6 +282,50 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			if (resourceID.equals("kbArticleRSS")) {
 				serveKBArticleRSS(resourceRequest, resourceResponse);
+			} else if (resourceID.equals("compareVersions")) {
+				long resourcePrimKey = ParamUtil.getLong(
+					resourceRequest, "resourcePrimKey");
+				double sourceVersion = ParamUtil.getDouble(
+					resourceRequest, "filterSourceVersion");
+				double targetVersion = ParamUtil.getDouble(
+					resourceRequest, "filterTargetVersion");
+
+				String diffHtmlResults = null;
+
+				try {
+					diffHtmlResults = AdminUtil.getKBArticleDiff(
+						resourcePrimKey, GetterUtil.getInteger(sourceVersion),
+						GetterUtil.getInteger(targetVersion), "content");
+				}
+				catch (Exception e) {
+					try {
+						HttpServletRequest request =
+							PortalUtil.getHttpServletRequest(resourceRequest);
+
+						HttpServletResponse response =
+							PortalUtil.getHttpServletResponse(resourceResponse);
+
+						PortalUtil.sendError(e, request, response);
+					}
+					catch (ServletException se) {
+					}
+				}
+
+				resourceRequest.setAttribute(
+					WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
+
+				PortletSession portletSession =
+					resourceRequest.getPortletSession();
+
+				PortletContext portletContext =
+					portletSession.getPortletContext();
+
+				PortletRequestDispatcher portletRequestDispatcher =
+					portletContext.getRequestDispatcher(
+						"/admin/common/compare_versions_diff_html.jsp");
+
+				portletRequestDispatcher.include(
+					resourceRequest, resourceResponse);
 			}
 		}
 		catch (IOException ioe) {

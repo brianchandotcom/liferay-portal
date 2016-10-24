@@ -45,7 +45,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="mvcPath" value="/admin/common/compare_versions.jsp" />
+	<portlet:param name="mvcPath" value='<%= templatePath + "compare_versions.jsp" %>' />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 	<portlet:param name="<%= Constants.CMD %>" value="compareVersions" />
 	<portlet:param name="resourcePrimKey" value="<%= String.valueOf(kbArticle.getResourcePrimKey()) %>" />

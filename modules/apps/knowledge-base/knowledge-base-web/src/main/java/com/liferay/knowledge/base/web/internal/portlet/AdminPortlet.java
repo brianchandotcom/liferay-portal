@@ -77,9 +77,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowStateException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -363,46 +361,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			resourceRequest);
 
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			resourceResponse);
-
-		if (resourceID.equals("compareVersions")) {
-			long resourcePrimKey = ParamUtil.getLong(
-				resourceRequest, "resourcePrimKey");
-			double sourceVersion = ParamUtil.getDouble(
-				resourceRequest, "filterSourceVersion");
-			double targetVersion = ParamUtil.getDouble(
-				resourceRequest, "filterTargetVersion");
-
-			String diffHtmlResults = null;
-
-			try {
-				diffHtmlResults = AdminUtil.getKBArticleDiff(
-					resourcePrimKey, GetterUtil.getInteger(sourceVersion),
-					GetterUtil.getInteger(targetVersion), "content");
-			}
-			catch (Exception e) {
-				try {
-					PortalUtil.sendError(e, request, response);
-				}
-				catch (ServletException se) {
-				}
-			}
-
-			resourceRequest.setAttribute(
-				WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-
-			PortletSession portletSession = resourceRequest.getPortletSession();
-
-			PortletContext portletContext = portletSession.getPortletContext();
-
-			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher(
-					"/admin/common/compare_versions_diff_html.jsp");
-
-			portletRequestDispatcher.include(resourceRequest, resourceResponse);
-		}
-		else if (resourceID.equals("infoPanel")) {
+		if (resourceID.equals("infoPanel")) {
 			try {
 				List<KBArticle> kbArticles = getKBArticles(request);
 

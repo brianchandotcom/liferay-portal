@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.js.transpiler;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.File;
@@ -30,11 +31,13 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.PluginContainer;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
@@ -46,6 +49,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
 		"downloadMetalCli";
+
+	public static final String SOY_COMPILE_CONFIGURATION_NAME = "soyCompile";
 
 	public static final String TRANSPILE_JS_TASK_NAME = "transpileJS";
 
@@ -60,18 +65,34 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		final DownloadNodeModuleTask downloadMetalCliTask =
 			_addTaskDownloadMetalCli(project);
 
-		_addTaskTranspileJS(project);
+		final Configuration soyCompileConfiguration =
+			_addConfigurationSoyCompile(project);
+
+		final TranspileJSTask transpileJSTask = _addTaskTranspileJS(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
+					_addTasksExpandSoyCompileDependencies(
+						transpileJSTask, soyCompileConfiguration);
+
 					_configureTasksTranspileJS(
 						project, downloadMetalCliTask, npmInstallTask);
 				}
 
 			});
+	}
+
+	private Configuration _addConfigurationSoyCompile(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, SOY_COMPILE_CONFIGURATION_NAME);
+
+		configuration.setDescription("Configures additional Soy dependencies.");
+		configuration.setVisible(false);
+
+		return configuration;
 	}
 
 	private DownloadNodeModuleTask _addTaskDownloadMetalCli(Project project) {
@@ -83,6 +104,64 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		downloadNodeModuleTask.setModuleVersion(_METAL_CLI_VERSION);
 
 		return downloadNodeModuleTask;
+	}
+
+	private Copy _addTaskExpandSoyCompileDependency(
+		Project project, File file) {
+
+		String taskName = GradleUtil.getTaskName(
+			"expandSoyCompileDependency", file);
+
+		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
+
+		copy.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Copy copy = (Copy)task;
+
+					Project project = copy.getProject();
+
+					project.delete(copy.getDestinationDir());
+				}
+
+			});
+
+		copy.from(project.zipTree(file));
+
+		copy.setDescription(
+			"Expands " + file.getName() + " into a temporary directory.");
+
+		String name = file.getName();
+
+		int pos = name.lastIndexOf('.');
+
+		if (pos != -1) {
+			name = name.substring(0, pos);
+		}
+
+		copy.setDestinationDir(new File(project.getBuildDir(), name));
+
+		return copy;
+	}
+
+	private void _addTasksExpandSoyCompileDependencies(
+		TranspileJSTask transpileJSTask,
+		Iterable<File> soyCompileDependencyFiles) {
+
+		for (File file : soyCompileDependencyFiles) {
+			Copy copy = _addTaskExpandSoyCompileDependency(
+				transpileJSTask.getProject(), file);
+
+			transpileJSTask.dependsOn(copy);
+
+			String path = FileUtil.getAbsolutePath(copy.getDestinationDir());
+
+			path += "/src/**/resources/*.soy";
+
+			transpileJSTask.soyDependency(path);
+		}
 	}
 
 	private TranspileJSTask _addTaskTranspileJS(Project project) {

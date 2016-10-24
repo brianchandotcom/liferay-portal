@@ -121,7 +121,9 @@
 				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<execute function="AssertElementNotPresent" locator1="BreadcrumbConfiguration#BREADCRUMB_PREVIEW_PAGE" />
+					<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_ENTRY">
+						<var name="key_breadcrumbName" value="${breadcrumbName}" />
+					</execute>
 				</for>
 			</then>
 		</if>
@@ -145,7 +147,7 @@
 
 					<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
 
-					<execute function="AssertTextEquals#assertPartialText" locator1="Breadcrumb#BREADCRUMB_${pathLocator}" value1="${breadcrumbNameUppercase}" />
+					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 				</for>
 			</then>
 		</if>
@@ -154,9 +156,9 @@
 			<isset var="breadcrumbListNotVisible" />
 			<then>
 				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
-
-					<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_${pathLocator}" />
+					<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_ENTRY">
+						<var name="key_breadcrumbName" value="${breadcrumbName}" />
+					</execute>
 				</for>
 			</then>
 		</if>

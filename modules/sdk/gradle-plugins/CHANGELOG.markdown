@@ -488,6 +488,12 @@ version 2.0.2.
 property of `NpmInstallTask` via the `nodejs.npm.remove.shrinkwrapped.urls`
 project property.
 
+## 3.0.23 - 2016-10-24
+
+### Changed
+- [LPS-68917]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.1.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -535,4 +541,5 @@ project property.
 [LPS-68779]: https://issues.liferay.com/browse/LPS-68779
 [LPS-68838]: https://issues.liferay.com/browse/LPS-68838
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839
+[LPS-68917]: https://issues.liferay.com/browse/LPS-68917
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

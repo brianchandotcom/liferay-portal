@@ -234,9 +234,7 @@ public class ServiceComponentLocalServiceImpl
 
 	@Override
 	public void verifyDB() {
-		Object[] services = _upgradeStepServiceTracker.getServices();
-
-		for (Object service : services) {
+		for (Object service : _upgradeStepServiceTracker.getServices()) {
 			ObjectValuePair<String, UpgradeStep> upgradeStepObjectValuePair =
 				(ObjectValuePair<String, UpgradeStep>)service;
 
@@ -246,38 +244,40 @@ public class ServiceComponentLocalServiceImpl
 			Release release = releaseLocalService.fetchRelease(
 				servletContextName);
 
-			if ((release == null) ||
-				"0.0.0".equals(release.getSchemaVersion())) {
+			if ((release != null) &&
+				!"0.0.0".equals(release.getSchemaVersion())) {
 
-				try {
-					upgradeStep.upgrade(
-						new DBProcessContext() {
+				continue;
+			}
 
-							@Override
-							public DBContext getDBContext() {
-								return new DBContext();
-							}
+			try {
+				upgradeStep.upgrade(
+					new DBProcessContext() {
 
-							@Override
-							public OutputStream getOutputStream() {
-								return null;
-							}
+						@Override
+						public DBContext getDBContext() {
+							return new DBContext();
+						}
 
-						});
+						@Override
+						public OutputStream getOutputStream() {
+							return null;
+						}
 
-					if (release == null) {
-						releaseLocalService.addRelease(
-							servletContextName, "0.0.1");
-					}
-					else {
-						release.setSchemaVersion("0.0.1");
+					});
 
-						releaseLocalService.updateRelease(release);
-					}
+				if (release == null) {
+					releaseLocalService.addRelease(
+						servletContextName, "0.0.1");
 				}
-				catch (Exception e) {
-					_log.error(e, e);
+				else {
+					release.setSchemaVersion("0.0.1");
+
+					releaseLocalService.updateRelease(release);
 				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
 			}
 		}
 	}

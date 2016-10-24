@@ -86,6 +86,8 @@
 		<var name="facebookEmail" property-value="facebook.email" />
 		<var name="facebookPassword" property-value="facebook.password" />
 
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

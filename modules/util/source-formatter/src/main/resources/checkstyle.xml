@@ -154,6 +154,9 @@
 			<message key="parameter.invalidName" value="'sub' should be followed by a lowercase character for parameter ''{0}''" />
 			<message key="variable.invalidName" value="'sub' should be followed by a lowercase character for variable ''{0}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.TransactionalTestRuleCheck">
+			<message key="import.invalid" value="LPS-68908: Avoid using import TransactionalTestRuleCheck in *StagedModelDataHandlerTest" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameter">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>

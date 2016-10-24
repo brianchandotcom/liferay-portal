@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">Sites</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>SITE_NAME_BREADCRUMB</td>
-	<td>//ul[contains(@class,'breadcrumb')]/li/a[contains(.,'${key_siteName}')]</td>
-	<td></td>
-</tr>
 <!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_CHECKBOX</td>

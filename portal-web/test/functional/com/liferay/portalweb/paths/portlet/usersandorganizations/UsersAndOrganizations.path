@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB</td>
-	<td>//ul[contains(@class,'breadcrumb')]//a</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

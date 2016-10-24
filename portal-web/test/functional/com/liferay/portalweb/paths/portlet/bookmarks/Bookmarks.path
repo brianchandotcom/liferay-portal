@@ -8,17 +8,6 @@
 <tr><td rowspan="1" colspan="3">Bookmarks</td></tr>
 </thead>
 <tbody>
-<!--BREADCRUMB-->
-<tr>
-	<td>BREADCRUMB_FOLDER_NAME</td>
-	<td>//ul[contains(@class,'breadcrumb')]/li/a[contains(.,'${key_folderName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--BOOKMARKS_TABLE-->
 <tr>
 	<td>BOOKMARKS_TABLE_NAME</td>

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -82,6 +83,12 @@ public class SectionPortlet extends BaseKBPortlet {
 				dlMimeTypeDisplayContext);
 
 			KBArticle kbArticle = getKBArticle(renderRequest);
+
+			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
+
+			if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
+				super.compareVersions(renderRequest);
+			}
 
 			renderRequest.setAttribute(
 				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);

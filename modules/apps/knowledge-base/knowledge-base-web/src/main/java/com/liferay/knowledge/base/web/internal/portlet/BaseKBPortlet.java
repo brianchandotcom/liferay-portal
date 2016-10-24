@@ -77,6 +77,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -124,6 +125,30 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
+	}
+
+	public void compareVersions(RenderRequest renderRequest)
+		throws PortletException {
+
+		long resourcePrimKey = ParamUtil.getLong(
+			renderRequest, "resourcePrimKey");
+		double sourceVersion = ParamUtil.getDouble(
+			renderRequest, "sourceVersion");
+		double targetVersion = ParamUtil.getDouble(
+			renderRequest, "targetVersion");
+
+		String diffHtmlResults = null;
+
+		try {
+			diffHtmlResults = AdminUtil.getKBArticleDiff(
+				resourcePrimKey, GetterUtil.getInteger(sourceVersion),
+				GetterUtil.getInteger(targetVersion), "content");
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 	}
 
 	public void deleteKBArticle(
@@ -282,7 +307,8 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			if (resourceID.equals("kbArticleRSS")) {
 				serveKBArticleRSS(resourceRequest, resourceResponse);
-			} else if (resourceID.equals("compareVersions")) {
+			}
+			else if (resourceID.equals("compareVersions")) {
 				long resourcePrimKey = ParamUtil.getLong(
 					resourceRequest, "resourcePrimKey");
 				double sourceVersion = ParamUtil.getDouble(

@@ -75,6 +75,7 @@ public class BuildFactory {
 		return topLevelBuild;
 	}
 
-	private static final String[] _BATCH_INDICATORS = {"-batch", "-dist"};
+	private static final String[] _BATCH_INDICATORS =
+		{"-batch", "-dist", "environment-"};
 
 }

@@ -100,6 +100,12 @@ public class JenkinsResultsParserUtil {
 		return URLDecoder.decode(url, "UTF-8");
 	}
 
+	public static String encode(String url) throws Exception {
+		URL encodedURL = encode(new URL(url));
+
+		return encodedURL.toExternalForm();
+	}
+
 	public static URL encode(URL url) throws Exception {
 		URI uri = new URI(
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),

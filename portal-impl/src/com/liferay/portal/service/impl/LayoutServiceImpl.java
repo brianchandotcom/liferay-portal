@@ -2137,10 +2137,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		container.setTypeSettings(typeSettings);
 
-		LayoutTypePortlet layotTypePortlet =
+		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)container.getLayoutType();
 
-		return layotTypePortlet.getPortletIds();
+		return layoutTypePortlet.getPortletIds();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1,0 +1,75 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	environment = "production"
+	homeDir = new File(buildDir, "bundles")
+}
+
+runGradleTest {
+	dependsOn initBundle
+
+	doLast {
+
+		// Configs
+
+		Map<String, String> configFileNames = [
+			"common.txt": "common",
+			"production.txt" : "production",
+			"license/copyright.txt": "production"
+		]
+
+		configFileNames.each {
+			String fileName, String config ->
+
+			File generatedFile = new File(initBundle.destinationDir, fileName)
+
+			assert generatedFile.exists()
+
+			File expectedFile = file("configs/${config}/${fileName}")
+
+			assert expectedFile.text.normalize() == generatedFile.text.normalize()
+		}
+
+		// Bundle
+
+		String bundleFileName = downloadBundle.src.toString();
+
+		bundleFileName = bundleFileName.substring(bundleFileName.lastIndexOf('/') + 1);
+
+		File bundleFile = new File(downloadBundle.dest, bundleFileName);
+
+		FileTree bundleFileTree
+
+		if (bundleFileName.endsWith(".tar.gz")) {
+			bundleFileTree = tarTree(bundleFile);
+		}
+		else {
+			bundleFileTree = zipTree(bundleFile);
+		}
+
+		bundleFileTree.visit {
+
+			// Skip root directory
+
+			int pos = it.path.indexOf('/')
+
+			if (pos == -1) {
+				return
+			}
+
+			String fileName = it.path.substring(pos + 1)
+
+			if (configFileNames.containsKey(fileName)) {
+				return
+			}
+
+			File generatedFile = new File(initBundle.destinationDir, fileName)
+
+			assert generatedFile.exists()
+
+			if (!it.directory) {
+				assert generatedFile.lastModified() == it.lastModified
+			}
+		}
+	}
+}

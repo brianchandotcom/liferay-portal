@@ -16,9 +16,9 @@ package com.liferay.gradle.plugins.workspace.internal.configurators;
 
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
 import com.liferay.gradle.plugins.workspace.WorkspacePlugin;
+import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.tasks.UpdatePropertiesTask;
-import com.liferay.gradle.util.FileUtil;
 
 import groovy.lang.Closure;
 
@@ -35,6 +35,7 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.tasks.Copy;
 import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 /**
@@ -67,10 +68,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 		_configureTaskWar(project, workspaceExtension, initBundleTask);
 
-		_configureRootTaskDistBundle(
-			project, RootProjectConfigurator.DIST_BUNDLE_TAR_TASK_NAME);
-		_configureRootTaskDistBundle(
-			project, RootProjectConfigurator.DIST_BUNDLE_ZIP_TASK_NAME);
+		_configureRootTaskDistBundle(project);
 	}
 
 	@Override
@@ -146,13 +144,12 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		antBuilder.importBuild("build.xml");
 	}
 
-	private void _configureRootTaskDistBundle(
-		final Project project, String rootTaskName) {
+	private void _configureRootTaskDistBundle(final Project project) {
+		Copy copy = (Copy)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
 
-		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
-			project.getRootProject(), rootTaskName);
-
-		copySpec.into(
+		copy.into(
 			"osgi/modules",
 			new Closure<Void>(project) {
 

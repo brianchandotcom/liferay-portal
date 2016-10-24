@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.workspace.internal.configurators;
 
 import com.liferay.gradle.plugins.workspace.WorkspaceExtension;
+import com.liferay.gradle.plugins.workspace.internal.util.FileUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -28,10 +29,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -40,11 +40,16 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.file.CopySpec;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileCopyDetails;
+import org.gradle.api.file.RelativePath;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
-import org.gradle.api.tasks.AbstractCopyTask;
+import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
@@ -64,6 +69,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
+	public static final String DIST_BUNDLE_TASK_NAME = "distBundle";
+
 	public static final String DIST_BUNDLE_ZIP_TASK_NAME = "distBundleZip";
 
 	public static final String DOWNLOAD_BUNDLE_TASK_NAME = "downloadBundle";
@@ -80,15 +87,18 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Download downloadBundleTask = _addTaskDownloadBundle(
 			project, workspaceExtension);
 
+		Copy distBundleTask = _addTaskDistBundle(
+			project, downloadBundleTask, workspaceExtension);
+
 		Tar distBundleTarTask = _addTaskDistBundle(
-			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, downloadBundleTask,
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
 			workspaceExtension);
 
 		distBundleTarTask.setCompression(Compression.GZIP);
 		distBundleTarTask.setExtension("tar.gz");
 
 		_addTaskDistBundle(
-			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, downloadBundleTask,
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask,
 			workspaceExtension);
 
 		_addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
@@ -113,34 +123,125 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return delete;
 	}
 
-	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
-		Project project, String taskName, Class<T> clazz,
-		Download downloadBundleTask, WorkspaceExtension workspaceExtension) {
+	private Copy _addTaskCopyBundle(
+		Project project, String taskName, Download downloadBundleTask,
+		final WorkspaceExtension workspaceExtension) {
 
-		final T task = GradleUtil.addTask(project, taskName, clazz);
+		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
-		_configureTaskCopyBundle(task, downloadBundleTask, workspaceExtension);
-
-		task.setBaseName(project.getName());
-		task.setDestinationDir(project.getBuildDir());
-		task.setGroup(BUNDLE_GROUP);
-		task.setIncludeEmptyDirs(false);
-
-		project.afterEvaluate(
-			new Action<Project>() {
+		_configureTaskCopyBundleFromConfig(
+			copy,
+			new Callable<File>() {
 
 				@Override
-				public void execute(Project project) {
-					if (Validator.isNotNull(task.getDescription())) {
-						return;
-					}
-
-					task.setDescription(
-						"Assembles the Liferay bundle and zips it up into '" +
-							project.relativePath(task.getArchivePath()) + "'.");
+				public File call() throws Exception {
+					return new File(
+						workspaceExtension.getConfigsDir(),
+						workspaceExtension.getEnvironment());
 				}
 
 			});
+
+		_configureTaskCopyBundleFromConfig(
+			copy,
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(
+						workspaceExtension.getConfigsDir(), "common");
+				}
+
+			});
+
+		_configureTaskCopyBundleFromDownload(copy, downloadBundleTask);
+
+		_configureTaskCopyBundlePreserveTimestamps(copy);
+
+		copy.dependsOn(downloadBundleTask);
+
+		copy.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Copy copy = (Copy)task;
+
+					Project project = copy.getProject();
+
+					project.delete(copy.getDestinationDir());
+				}
+
+			});
+
+		copy.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
+
+		return copy;
+	}
+
+	private Copy _addTaskDistBundle(
+		final Project project, Download downloadBundleTask,
+		WorkspaceExtension workspaceExtension) {
+
+		Copy copy = _addTaskCopyBundle(
+			project, DIST_BUNDLE_TASK_NAME, downloadBundleTask,
+			workspaceExtension);
+
+		_configureTaskDisableUpToDate(copy);
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return new File(project.getBuildDir(), "dist");
+				}
+
+			});
+
+		copy.setDescription("Assembles the Liferay bundle.");
+
+		return copy;
+	}
+
+	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
+		Project project, String taskName, Class<T> clazz,
+		final Copy distBundleTask,
+		final WorkspaceExtension workspaceExtension) {
+
+		T task = GradleUtil.addTask(project, taskName, clazz);
+
+		_configureTaskDisableUpToDate(task);
+
+		task.into(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					String bundleDistRootDirName =
+						workspaceExtension.getBundleDistRootDirName();
+
+					if (Validator.isNull(bundleDistRootDirName)) {
+						bundleDistRootDirName = "";
+					}
+
+					return bundleDistRootDirName;
+				}
+
+			},
+			new Closure<Void>(task) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.from(distBundleTask);
+				}
+
+			});
+
+		task.setBaseName(project.getName());
+		task.setDescription("Assembles the Liferay bundle and zips it up.");
+		task.setDestinationDir(project.getBuildDir());
+		task.setGroup(BUNDLE_GROUP);
 
 		return task;
 	}
@@ -202,75 +303,76 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Project project, Download downloadBundleTask,
 		final WorkspaceExtension workspaceExtension) {
 
-		final Copy copy = GradleUtil.addTask(
-			project, INIT_BUNDLE_TASK_NAME, Copy.class);
+		Copy copy = _addTaskCopyBundle(
+			project, INIT_BUNDLE_TASK_NAME, downloadBundleTask,
+			workspaceExtension);
 
-		_configureTaskCopyBundle(copy, downloadBundleTask, workspaceExtension);
+		copy.into(
+			new Callable<File>() {
 
-		copy.doFirst(
+				@Override
+				public File call() throws Exception {
+					return workspaceExtension.getHomeDir();
+				}
+
+			});
+
+		copy.setDescription("Downloads and unzips the bundle.");
+		copy.setGroup(BUNDLE_GROUP);
+
+		return copy;
+	}
+
+	private void _configureTaskCopyBundleFromConfig(
+		Copy copy, Callable<File> dir) {
+
+		copy.from(
+			dir,
+			new Closure<Void>(copy.getProject()) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.exclude("**/.touch");
+				}
+
+			});
+	}
+
+	private void _configureTaskCopyBundleFromDownload(
+		Copy copy, final Download download) {
+
+		final Project project = copy.getProject();
+
+		final Set<String> rootDirNames = new HashSet<>();
+
+		copy.dependsOn(download);
+
+		copy.doLast(
 			new Action<Task>() {
 
 				@Override
 				public void execute(Task task) {
 					Copy copy = (Copy)task;
 
-					Project project = copy.getProject();
+					File destinationDir = copy.getDestinationDir();
 
-					project.delete(copy.getDestinationDir());
-				}
-
-			});
-
-		copy.into(
-			new Closure<Void>(project) {
-
-				@SuppressWarnings("unused")
-				public File doCall() {
-					return workspaceExtension.getHomeDir();
-				}
-
-			});
-
-		copy.setGroup(BUNDLE_GROUP);
-		copy.setIncludeEmptyDirs(false);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					if (Validator.isNotNull(copy.getDescription())) {
-						return;
+					for (String rootDirName : rootDirNames) {
+						FileUtil.moveTree(
+							new File(destinationDir, rootDirName),
+							destinationDir);
 					}
-
-					copy.setDescription(
-						"Downloads and unzips the bundle into '" +
-							project.relativePath(copy.getDestinationDir()) +
-								"'.");
 				}
 
 			});
 
-		return copy;
-	}
-
-	private void _configureTaskCopyBundle(
-		final AbstractCopyTask abstractCopyTask,
-		final Download downloadBundleTask,
-		final WorkspaceExtension workspaceExtension) {
-
-		final Project project = abstractCopyTask.getProject();
-
-		abstractCopyTask.dependsOn(downloadBundleTask);
-
-		abstractCopyTask.from(
+		copy.from(
 			new Callable<FileCollection>() {
 
 				@Override
 				public FileCollection call() throws Exception {
-					File dir = downloadBundleTask.getDest();
+					File dir = download.getDest();
 
-					URL url = (URL)downloadBundleTask.getSrc();
+					URL url = (URL)download.getSrc();
 
 					String fileName = url.toString();
 
@@ -292,35 +394,87 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
+					copySpec.eachFile(
+						new Action<FileCopyDetails>() {
+
+							@Override
+							public void execute(
+								FileCopyDetails fileCopyDetails) {
+
+								RelativePath relativePath =
+									fileCopyDetails.getRelativePath();
+
+								String[] segments = relativePath.getSegments();
+
+								rootDirNames.add(segments[0]);
+							}
+
+						});
+
 					copySpec.eachFile(new StripPathSegmentsAction(1));
 				}
 
 			});
+	}
 
-		abstractCopyTask.from(
-			new Closure<Void>(project) {
+	private void _configureTaskCopyBundlePreserveTimestamps(Copy copy) {
+		final Set<FileCopyDetails> fileCopyDetailsSet = new HashSet<>();
 
-				@SuppressWarnings("unused")
-				public FileCollection doCall() {
-					Map<String, Object> args = new HashMap<>();
+		copy.doLast(
+			new Action<Task>() {
 
-					args.put("dir", workspaceExtension.getConfigsDir());
-					args.put("exclude", "**/.touch");
+				@Override
+				public void execute(Task task) {
+					Copy copy = (Copy)task;
 
-					List<String> includes = Arrays.asList(
-						"common/", workspaceExtension.getEnvironment() + "/");
+					Logger logger = copy.getLogger();
 
-					args.put("includes", includes);
+					for (FileCopyDetails fileCopyDetails : fileCopyDetailsSet) {
+						File file = new File(
+							copy.getDestinationDir(),
+							fileCopyDetails.getPath());
 
-					return project.fileTree(args);
+						if (!file.exists()) {
+							logger.error(
+								"Unable to set last modified time of {}, it " +
+									"has not been copied",
+								file);
+
+							return;
+						}
+
+						boolean success = file.setLastModified(
+							fileCopyDetails.getLastModified());
+
+						if (!success) {
+							logger.error(
+								"Unable to set last modified time of {}", file);
+						}
+					}
 				}
 
-			},
-			new Closure<Void>(project) {
+			});
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(1));
+		copy.eachFile(
+			new Action<FileCopyDetails>() {
+
+				@Override
+				public void execute(FileCopyDetails fileCopyDetails) {
+					fileCopyDetailsSet.add(fileCopyDetails);
+				}
+
+			});
+	}
+
+	private void _configureTaskDisableUpToDate(Task task) {
+		TaskOutputs taskOutputs = task.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
 				}
 
 			});

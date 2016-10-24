@@ -40,6 +40,7 @@ import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.ExtensionAware;
+import org.gradle.api.tasks.Copy;
 
 /**
  * @author Andrea Di Giorgi
@@ -60,10 +61,7 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 
 		_configureLiferay(project, workspaceExtension);
 
-		_configureRootTaskDistBundle(
-			project, RootProjectConfigurator.DIST_BUNDLE_TAR_TASK_NAME);
-		_configureRootTaskDistBundle(
-			project, RootProjectConfigurator.DIST_BUNDLE_ZIP_TASK_NAME);
+		_configureRootTaskDistBundle(project);
 	}
 
 	@Override
@@ -118,13 +116,12 @@ public class ThemesProjectConfigurator extends BaseProjectConfigurator {
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
 	}
 
-	private void _configureRootTaskDistBundle(
-		final Project project, String rootTaskName) {
+	private void _configureRootTaskDistBundle(final Project project) {
+		Copy copy = (Copy)GradleUtil.getTask(
+			project.getRootProject(),
+			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
 
-		CopySpec copySpec = (CopySpec)GradleUtil.getTask(
-			project.getRootProject(), rootTaskName);
-
-		copySpec.into(
+		copy.into(
 			"osgi/modules",
 			new Closure<Void>(project) {
 

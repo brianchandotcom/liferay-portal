@@ -1,0 +1,89 @@
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+
+task runGradleTest
+
+gradle.liferayWorkspace {
+	bundleDistRootDirName = "foo/bar"
+	environment = "production"
+}
+
+runGradleTest {
+	dependsOn distBundleZip
+
+	doLast {
+		ZipFile zipFile = new ZipFile(distBundleZip.archivePath)
+
+		String zipEntryRootName = gradle.liferayWorkspace.bundleDistRootDirName
+
+		if (zipEntryRootName) {
+			zipEntryRootName += "/"
+		}
+		else {
+			zipEntryRootName = ""
+		}
+
+		zipFile.withCloseable {
+
+			// Configs
+
+			for (String fileName in ["common/common.txt", "production/production.txt", "production/license/copyright.txt"]) {
+				File expectedFile = file("configs/" + fileName)
+
+				String zipEntryName = zipEntryRootName + fileName.substring(fileName.indexOf('/') + 1)
+
+				ZipEntry zipEntry = zipFile.getEntry(zipEntryName)
+
+				assert zipEntry != null : zipEntryName
+
+				InputStream inputStream = zipFile.getInputStream(zipEntry)
+
+				assert expectedFile.text.normalize() == inputStream.text.normalize()
+			}
+
+			// Bundle
+
+			String bundleFileName = downloadBundle.src.toString();
+
+			bundleFileName = bundleFileName.substring(bundleFileName.lastIndexOf('/') + 1);
+
+			File bundleFile = new File(downloadBundle.dest, bundleFileName);
+
+			FileTree bundleFileTree
+
+			if (bundleFileName.endsWith(".tar.gz")) {
+				bundleFileTree = tarTree(bundleFile);
+			}
+			else {
+				bundleFileTree = zipTree(bundleFile);
+			}
+
+			bundleFileTree.visit {
+
+				// Skip root directory
+
+				int pos = it.path.indexOf('/')
+
+				if (pos == -1) {
+					return
+				}
+
+				String zipEntryName = zipEntryRootName + it.path.substring(pos + 1)
+
+				if (it.directory) {
+					zipEntryName += "/"
+				}
+
+				ZipEntry zipEntry = zipFile.getEntry(zipEntryName)
+
+				assert zipEntry != null : zipEntryName
+			}
+
+			// Projects
+
+			String zipEntryName = "${zipEntryRootName}osgi/war/foo.war"
+
+			assert zipFile.getEntry(zipEntryName) != null : zipEntryName
+		}
+	}
+}

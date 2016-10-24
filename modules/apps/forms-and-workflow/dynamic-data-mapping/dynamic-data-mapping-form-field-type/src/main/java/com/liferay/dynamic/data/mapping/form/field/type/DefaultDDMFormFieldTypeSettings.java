@@ -143,7 +143,8 @@ public interface DefaultDDMFormFieldTypeSettings
 		properties = {
 			"placeholder=%equals(Country, \"US\")",
 			"tooltip=%write-a-conditional-expression-to-control-whether-this-field-is-displayed"
-		}
+		},
+		visibilityExpression = "FALSE"
 	)
 	@Deprecated
 	public String visibilityExpression();

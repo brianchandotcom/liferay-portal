@@ -46,18 +46,16 @@
 		</execute>
 
 		<execute macro="IFrame#addCP">
-			<var name="sourceURL" value="http://www.nba.com" />
+			<var name="sourceURL" value="http://iscaliforniaonfire.com" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="IFrame Page" />
 		</execute>
 
-		<execute function="Pause" locator1="2000" />
+		<execute function="SelectFrame" locator1="IFrame#IFRAME_PORTLET" />
 
-		<take-screenshot />
-
-		<execute function="SikuliAssertElementPresent" locator1="IFramePortlet#SCREENSHOTS_NBA_LOGO_PNG" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Embedded#EMBEDDED_TEXT_UPDATED" value1="updated" />
 	</command>
 
 	<command name="SalesDemo" priority="4">

@@ -14,8 +14,8 @@ Liferay-Releng-Module-Group-Title:
 Liferay-Service: true
 Web-ContextPath: /wsrp-service
 -includeresource:\
-	@bcprov-jdk16-1.46.jar,\
+	@bcprov-jdk16-[0-9]*.jar,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/axis/*.class,\
 	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/portlet/PortletProps.class,\
-	@opensaml-1.1.jar,\
-	@wss4j-1.5.12.jar
+	@opensaml-[0-9]*.jar,\
+	@wss4j-[0-9]*.jar

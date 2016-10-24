@@ -108,11 +108,9 @@
 			<isset var="breadcrumbListVisible" />
 			<then>
 				<for list="${breadcrumbListVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
-
-					<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
-
-					<execute function="AssertTextEquals#assertPartialText" locator1="BreadcrumbConfiguration#BREADCRUMB_PREVIEW_PAGE" value1="${breadcrumbNameUppercase}" />
+					<execute macro="Breadcrumb#viewEntry">
+						<var name="breadcrumbName" value="${breadcrumbName}" />
+					</execute>
 				</for>
 			</then>
 		</if>

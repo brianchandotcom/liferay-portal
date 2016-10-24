@@ -195,9 +195,9 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${folderName}" />
 
-		<var name="key_folderName" value="${folderName}" />
-
-		<execute function="AssertVisible" locator1="Bookmarks#BREADCRUMB_FOLDER_NAME" />
+		<execute macro="Breadcrumb#viewActiveEntry">
+			<var name="breadcrumbName" value="${folderName}" />
+		</execute>
 	</command>
 
 	<command name="gotoSubfolderPG">
@@ -221,9 +221,9 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Bookmarks#DESCRIPTIVE_ENTRY_TITLE" value1="${subfolderName}" />
 
-		<var name="key_folderName" value="${subfolderName}" />
-
-		<execute function="AssertVisible" locator1="Bookmarks#BREADCRUMB_FOLDER_NAME" />
+		<execute macro="Breadcrumb#viewActiveEntry">
+			<var name="breadcrumbName" value="${subfolderName}" />
+		</execute>
 	</command>
 
 	<command name="mergeSubfolderToFolderCP">

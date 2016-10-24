@@ -496,7 +496,9 @@
 
 		<execute function="AssertClick" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
-		<execute function="AssertVisible" locator1="UsersAndOrganizations#BREADCRUMB" />
+		<execute macro="Breadcrumb#viewActiveEntry">
+			<var name="breadcrumbName" value="${orgName}" />
+		</execute>
 	</command>
 
 	<command name="gotoIdentificationCP">

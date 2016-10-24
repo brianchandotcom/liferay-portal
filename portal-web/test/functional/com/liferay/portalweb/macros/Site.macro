@@ -1070,9 +1070,9 @@
 			<var name="rowEntry" value="${siteName}" />
 		</execute>
 
-		<var method="StringUtil#upperCase('${siteName}')" name="siteNameUppercase" />
-
-		<execute function="AssertTextEquals" locator1="Sites#SITE_NAME_BREADCRUMB" value1="${siteNameUppercase}" />
+		<execute macro="Breadcrumb#viewActiveEntry">
+			<var name="breadcrumbName" value="${siteName}" />
+		</execute>
 
 		<execute macro="Site#viewCP">
 			<var name="siteName" value="${childSiteName}" />

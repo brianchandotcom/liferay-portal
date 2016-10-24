@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.portal.remote.json.web.service.extender
 Bundle-Version: 2.0.4
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Remote Service Engines
-Private-Package: com.liferay.portal.remote.json.web.service.extender.internal

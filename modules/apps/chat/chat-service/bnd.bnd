@@ -8,5 +8,5 @@ Export-Package:\
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
 -includeresource:\
-	@smack-3.2.1.jar,\
-	@smackx-3.2.1.jar
+	@smack-[0-9]*.jar,\
+	@smackx-[0-9]*.jar

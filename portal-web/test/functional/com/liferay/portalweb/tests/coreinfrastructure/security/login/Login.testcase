@@ -2,26 +2,6 @@
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
-	<set-up>
-		<execute macro="TestCase#setUpPortalInstance" />
-
-		<execute macro="User#firstLoginPG" />
-	</set-up>
-
-	<tear-down>
-		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
-
-		<if>
-			<equals arg1="${testPortalInstance}" arg2="true" />
-			<then>
-				<execute macro="PortalInstances#tearDownCP" />
-			</then>
-			<else>
-				<execute macro="User#firstLoginPG" />
-			</else>
-		</if>
-	</tear-down>
-
 	<command name="CASSmoke" priority="4">
 		<property name="web.plugins.includes" value="cas-web" />
 
@@ -29,6 +9,8 @@
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
+
+		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
@@ -131,6 +113,8 @@
 		<var name="userEmailAddress" property-value="email.address.1" />
 		<var name="userPassword" property-value="email.password.1" />
 
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -189,6 +173,8 @@
 		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
 		<var method="TestPropsUtil#get('openid.username')" name="openIDUsername" />
 
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Instance Settings" />
 		</execute>
@@ -246,6 +232,8 @@
 	</command>
 
 	<command name="TokenBasedSSOSmoke" priority="5">
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>

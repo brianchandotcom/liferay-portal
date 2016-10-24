@@ -172,7 +172,7 @@ public final class DLValidatorImpl implements DLValidator {
 			validateFileSize(fileName, is.available());
 		}
 		catch (IOException ioe) {
-			new FileSizeException(ioe);
+			throw new FileSizeException(ioe);
 		}
 	}
 

@@ -26,7 +26,10 @@ import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.exception.MessageSubjectException;
 import com.liferay.message.boards.kernel.exception.NoSuchMessageException;
 import com.liferay.message.boards.kernel.exception.RequiredMessageException;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.service.MBCategoryService;
 import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
@@ -296,6 +299,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMBCategoryService(MBCategoryService mbCategoryService) {
+		_mbCategoryService = mbCategoryService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMBMessageService(MBMessageService mbMessageService) {
 		_mbMessageService = mbMessageService;
 	}
@@ -388,6 +396,18 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			boolean question = ParamUtil.getBoolean(actionRequest, "question");
+
+			if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+				MBCategory category = _mbCategoryService.getCategory(
+					categoryId);
+
+				String displayStyle = category.getDisplayStyle();
+
+				if (displayStyle.equals("question")) {
+					question = true;
+				}
+			}
+
 			boolean anonymous = ParamUtil.getBoolean(
 				actionRequest, "anonymous");
 			double priority = ParamUtil.getDouble(actionRequest, "priority");
@@ -486,6 +506,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private MBCategoryService _mbCategoryService;
 	private MBMessageService _mbMessageService;
 	private MBThreadLocalService _mbThreadLocalService;
 	private MBThreadService _mbThreadService;

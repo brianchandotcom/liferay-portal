@@ -185,22 +185,7 @@ public class SourceFormatter {
 
 		List<SourceProcessor> sourceProcessors = new ArrayList<>();
 
-		sourceProcessors.add(new BNDSourceProcessor());
-		sourceProcessors.add(new CSSSourceProcessor());
-		sourceProcessors.add(new FTLSourceProcessor());
-		sourceProcessors.add(new GradleSourceProcessor());
-		sourceProcessors.add(new GroovySourceProcessor());
 		sourceProcessors.add(new JavaSourceProcessor());
-		sourceProcessors.add(new JSONSourceProcessor());
-		sourceProcessors.add(new JSPSourceProcessor());
-		sourceProcessors.add(new JSSourceProcessor());
-		sourceProcessors.add(new MarkdownSourceProcessor());
-		sourceProcessors.add(new PropertiesSourceProcessor());
-		sourceProcessors.add(new SHSourceProcessor());
-		sourceProcessors.add(new SoySourceProcessor());
-		sourceProcessors.add(new SQLSourceProcessor());
-		sourceProcessors.add(new TLDSourceProcessor());
-		sourceProcessors.add(new XMLSourceProcessor());
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			sourceProcessors.size());

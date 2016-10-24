@@ -97,15 +97,13 @@ public class DefaultLandingPageAction extends Action {
 		// for forwarding a user to his landing page. See the references to this
 		// class in portal.properties.
 
-		/*
-		Map<String, String[]> params = new HashMap<>();
+		/*Map<String, String[]> params = new HashMap<>();
 
 		params.put("p_l_id", new String[] {"1806"});
 
 		LastPath lastPath = new LastPath("/c", "/portal/layout", params);
 
-		session.setAttribute(WebKeys.LAST_PATH, lastPath);
-		*/
+		session.setAttribute(WebKeys.LAST_PATH, lastPath);*/
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

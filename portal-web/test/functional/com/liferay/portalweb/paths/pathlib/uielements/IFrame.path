@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IFRAME_PORTLET</td>
+	<td>//iframe[contains(@id,'IFramePortlet') and contains(@id,'iframe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVITE_MEMBERS</td>
 	<td>//iframe[contains(@src,'InviteMembersPortlet')]</td>
 	<td></td>

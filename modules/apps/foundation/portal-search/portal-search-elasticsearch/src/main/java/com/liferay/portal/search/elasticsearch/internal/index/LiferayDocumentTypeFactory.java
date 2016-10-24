@@ -57,6 +57,13 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 		}
 	}
 
+	public void createLiferayDocumentTypeMappings(
+		CreateIndexRequestBuilder createIndexRequestBuilder, String mappings) {
+
+		createIndexRequestBuilder.addMapping(
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE, mappings);
+	}
+
 	public void createOptionalDefaultTypeMappings(String indexName) {
 		String name = StringUtil.replace(
 			LiferayTypeMappingsConstants.
@@ -84,9 +91,8 @@ public class LiferayDocumentTypeFactory implements TypeMappingsHelper {
 			LiferayTypeMappingsConstants.
 				LIFERAY_DOCUMENT_TYPE_MAPPING_FILE_NAME);
 
-		createIndexRequestBuilder.addMapping(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			requiredDefaultMappings);
+		createLiferayDocumentTypeMappings(
+			createIndexRequestBuilder, requiredDefaultMappings);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

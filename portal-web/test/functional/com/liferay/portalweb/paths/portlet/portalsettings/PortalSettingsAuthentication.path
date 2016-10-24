@@ -156,6 +156,47 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--AUTHENTICATION_FACEBOOK-->
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@name,'facebook--enabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_APPLICATION_ID</td>
+	<td>//input[contains(@name,'facebook--appId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_APPLICATION_SECRET</td>
+	<td>//input[contains(@name,'facebook--appSecret')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_GRAPH_URL</td>
+	<td>//input[contains(@name,'facebook--graphURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_OAUTH_AUTHENTICATION_URL</td>
+	<td>//input[contains(@name,'facebook--oauthAuthURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_OAUTH_TOKEN_URL</td>
+	<td>//input[contains(@name,'facebook--oauthTokenURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AUTHENTICATION_FACEBOOK_REDIRECT_URL</td>
+	<td>//input[contains(@name,'facebook--oauthRedirectURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--AUTHENTICATION_LDAP-->
 <tr>
 	<td>AUTHENTICATION_LDAP_ENABLED_CHECKBOX</td>

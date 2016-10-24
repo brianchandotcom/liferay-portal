@@ -98,13 +98,11 @@ public class StripFilter extends BasePortalFilter {
 
 		// See LPS-10545
 
-		/*
-		String content = charBuffer.subSequence(0, length).toString();
+		/*String content = charBuffer.subSequence(0, length).toString();
 
 		int position = charBuffer.position();
 
-		charBuffer.position(position + length);
-		*/
+		charBuffer.position(position + length);*/
 
 		CharBuffer duplicateCharBuffer = charBuffer.duplicate();
 

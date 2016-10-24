@@ -277,7 +277,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String trimmedLine = StringUtil.trimLeading(line);
 
-		if (trimmedLine.startsWith("//")) {
+		if (previousLine.contains("\t/*") || trimmedLine.startsWith("//") ||
+			trimmedLine.endsWith("*/")) {
+
 			return;
 		}
 
@@ -1714,17 +1716,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixMultiLineComment(String content) {
-		Matcher matcher = _multiLineCommentPattern.matcher(content);
+		Matcher matcher = _incorrectMultiLineCommentPattern.matcher(content);
 
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String tabs = matcher.group(1);
-
-		content = StringUtil.insert(content, "\n" + tabs, matcher.end() - 3);
-
-		return StringUtil.insert(content, "\n" + tabs, matcher.end(1) + 2);
+		return matcher.replaceAll("$1$2$3");
 	}
 
 	protected String fixRedundantEmptyLines(String content) {
@@ -4752,8 +4746,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
-	private final Pattern _multiLineCommentPattern = Pattern.compile(
-		"\n(\t*)/\\*[^\n\\*].*?\\*/\n", Pattern.DOTALL);
+	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
+		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;

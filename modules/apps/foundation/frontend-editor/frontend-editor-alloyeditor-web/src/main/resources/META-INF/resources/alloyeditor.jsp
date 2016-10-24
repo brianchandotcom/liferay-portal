@@ -161,7 +161,7 @@ if (editorOptions != null) {
 					<aui:icon cssClass="icon-monospaced" image="expand" markupView="lexicon" />
 				</button>
 
-				<button class="btn btn-default btn-xs hide lfr-portal-tooltip" data-title="<%= LanguageUtil.get(resourceBundle, "switch-theme") %>" id="<%= name %>SwitchTheme" type="button">
+				<button class="btn btn-default btn-xs hide lfr-portal-tooltip" data-title="<%= LanguageUtil.get(resourceBundle, "dark-theme") %>" id="<%= name %>SwitchTheme" type="button">
 					<aui:icon cssClass="icon-monospaced" image="moon" markupView="lexicon" />
 				</button>
 

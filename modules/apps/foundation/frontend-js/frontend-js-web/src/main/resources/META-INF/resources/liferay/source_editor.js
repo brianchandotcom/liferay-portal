@@ -57,11 +57,13 @@ AUI.add(
 							return [
 								{
 									cssClass: '',
-									icon: A.one(Liferay.Util.getLexiconIcon('sun'))
+									icon: A.one(Liferay.Util.getLexiconIcon('sun')),
+									tooltip: Liferay.Language.get('light-theme')
 								},
 								{
 									cssClass: 'ace_dark',
-									icon: A.one(Liferay.Util.getLexiconIcon('moon'))
+									icon: A.one(Liferay.Util.getLexiconIcon('moon')),
+									tooltip: Liferay.Language.get('dark-theme')
 								}
 							];
 						}

@@ -4715,6 +4715,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t*)\\{.+(?<!\\}(,|;)?)\n");
 	private final Pattern _incorrectLineBreakPattern7 = Pattern.compile(
 		"\n(\t+\\{)\n(.*[^;])\n\t+(\\},?)");
+	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
+		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _incorrectSynchronizedPattern = Pattern.compile(
 		"([\n\t])(synchronized) (private|public|protected)");
 	private final Pattern _internalImportPattern = Pattern.compile(
@@ -4746,8 +4748,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Map<String, String> _moduleFileContentsMap =
 		new ConcurrentHashMap<>();
 	private Map<String, String> _moduleFileNamesMap;
-	private final Pattern _incorrectMultiLineCommentPattern = Pattern.compile(
-		"(\n\t*/\\*)\n\t*(.*?)\n\t*(\\*/\n)", Pattern.DOTALL);
 	private final Pattern _packagePattern = Pattern.compile(
 		"(\n|^)\\s*package (.*);\n");
 	private String _portalCustomSQLContent;

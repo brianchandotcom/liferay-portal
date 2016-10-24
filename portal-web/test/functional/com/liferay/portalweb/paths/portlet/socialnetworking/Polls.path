@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>POLL_QUESTION_CHOICE</td>
-	<td>//fieldset[contains(@class,'fieldset')]//label[contains(.,'${key_pollsQuestionChoice}')]/input</td>
+	<td>//label[contains(.,'${key_pollsQuestionChoice}')]/input</td>
 	<td></td>
 </tr>
 <tr>

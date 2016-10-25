@@ -1,7 +1,9 @@
 Bundle-Activator: com.liferay.portal.configuration.persistence.internal.activator.ConfigurationPersistenceBundleActivator
 Bundle-Name: Liferay Portal Configuration Persistence
 Bundle-SymbolicName: com.liferay.portal.configuration.persistence
-Bundle-Version: 2.0.6
-Export-Package: com.liferay.portal.configuration.persistence
+Bundle-Version: 2.1.0
+Export-Package:\
+	com.liferay.portal.configuration.persistence,\
+	com.liferay.portal.configuration.persistence.listener
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework

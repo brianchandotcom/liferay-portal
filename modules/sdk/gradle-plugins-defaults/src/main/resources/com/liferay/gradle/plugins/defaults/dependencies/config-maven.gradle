@@ -14,6 +14,8 @@
 
 Closure pomConfigureClosure = {
 	project {
+		description = project.description
+
 		developers {
 			developer {
 				name = project.properties["pom.developer.name"] ?: "Brian Wing Shun Chan"

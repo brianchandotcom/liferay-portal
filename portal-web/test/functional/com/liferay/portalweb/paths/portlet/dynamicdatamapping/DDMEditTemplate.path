@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_CONTENT_FIELD</td>
-	<td>//div[contains(@class,'ace_text-layer')]</td>
+	<td>//div[contains(@id,'richEditor')]</td>
 	<td></td>
 </tr>
 <tr>

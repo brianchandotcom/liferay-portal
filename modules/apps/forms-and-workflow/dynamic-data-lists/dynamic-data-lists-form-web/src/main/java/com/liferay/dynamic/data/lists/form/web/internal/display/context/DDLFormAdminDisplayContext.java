@@ -132,6 +132,14 @@ public class DDLFormAdminDisplayContext {
 			renderRequest);
 	}
 
+	public String getAutosaveInterval() {
+		if (_autosaveInterval == null) {
+			_autosaveInterval = _ddlFormWebConfiguration.autosaveInterval();
+		}
+
+		return _autosaveInterval;
+	}
+
 	public DDLFormViewRecordDisplayContext
 		getDDLFormViewRecordDisplayContext() {
 
@@ -666,6 +674,7 @@ public class DDLFormAdminDisplayContext {
 
 	private static final String[] _DISPLAY_VIEWS = {"descriptive", "list"};
 
+	private String _autosaveInterval;
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private final DDLFormWebConfiguration _ddlFormWebConfiguration;
 	private final DDLRecordLocalService _ddlRecordLocalService;

@@ -40,6 +40,12 @@ liferay {
 	deployDir = "../../../tools/sdk/dependencies/com.liferay.portal.tools.service.builder/lib"
 }
 
+processResources {
+	into("com/liferay/blogs") {
+		from "../../../modules/apps/collaboration/blogs/blogs-service/service.xml"
+	}
+}
+
 updateFileVersions {
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.portal\.tools\.service\.builder=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")

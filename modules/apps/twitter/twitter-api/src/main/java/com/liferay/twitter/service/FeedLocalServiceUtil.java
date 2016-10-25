@@ -16,9 +16,9 @@ package com.liferay.twitter.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableLocalService;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for Feed. This utility wraps
@@ -148,12 +148,6 @@ public class FeedLocalServiceUtil {
 		return getService().getFeedsCount();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -266,28 +260,10 @@ public class FeedLocalServiceUtil {
 		getService().updateFeeds(companyId);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static FeedLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					FeedLocalService.class.getName());
-
-			if (invokableLocalService instanceof FeedLocalService) {
-				_service = (FeedLocalService)invokableLocalService;
-			}
-			else {
-				_service = new FeedLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(FeedLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	private static FeedLocalService _service;
+	private static ServiceTracker<FeedLocalService, FeedLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(FeedLocalService.class);
 }

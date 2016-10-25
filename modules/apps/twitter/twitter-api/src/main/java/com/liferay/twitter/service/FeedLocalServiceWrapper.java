@@ -152,13 +152,6 @@ public class FeedLocalServiceWrapper implements FeedLocalService,
 		return _feedLocalService.getFeedsCount();
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _feedLocalService.invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*

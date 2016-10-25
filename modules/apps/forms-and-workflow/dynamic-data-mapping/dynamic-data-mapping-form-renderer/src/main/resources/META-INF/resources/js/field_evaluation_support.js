@@ -5,8 +5,8 @@ AUI.add(
 		};
 
 		FieldEvaluationSupport.ATTRS = {
-			enableEvaluations: {
-				value: true
+			evaluable: {
+				value: false
 			},
 
 			evaluationTriggerEvents: {
@@ -34,7 +34,7 @@ AUI.add(
 
 				var evaluator = instance.get('evaluator');
 
-				if (evaluator && instance.get('rendered')) {
+				if (evaluator && instance.get('rendered') && instance.get('evaluable')) {
 					evaluator.evaluate(instance);
 				}
 			},

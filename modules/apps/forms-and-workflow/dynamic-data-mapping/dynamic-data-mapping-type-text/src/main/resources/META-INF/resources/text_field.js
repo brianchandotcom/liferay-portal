@@ -46,10 +46,9 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandlers.push(
-							instance.after('optionsChange', instance._afterOptionsChange)
+							instance.after('optionsChange', instance._afterOptionsChange),
+							instance.on('valueChanged', instance._onContentChange)
 						);
-
-						instance.bindInputEvent('focus', instance._onFocusInput);
 					},
 
 					bindInputEvent: function(eventName, callback, volatile) {
@@ -154,19 +153,14 @@ AUI.add(
 						);
 					},
 
-					_onFocusInput: function() {
+					_onContentChange: function() {
 						var instance = this;
 
-						if (instance.get('displayStyle') === 'multiline') {
-							var textAreaNode = instance.getInputNode();
+						var inputNode = instance.getInputNode();
 
-							if (!textAreaNode.autosize) {
-								textAreaNode.plug(A.Plugin.Autosize);
-								textAreaNode.height(textAreaNode.get('scrollHeight'));
-							}
+						var rows = inputNode.val().split('\n');
 
-							textAreaNode.autosize._uiAutoSize();
-						}
+						inputNode.set('rows', rows.length + 1);
 					}
 				}
 			}

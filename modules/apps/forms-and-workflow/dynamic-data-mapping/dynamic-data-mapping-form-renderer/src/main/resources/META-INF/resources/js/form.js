@@ -22,6 +22,10 @@ AUI.add(
 						value: {}
 					},
 
+					enableEvaluations: {
+						value: true
+					},
+
 					layout: {
 						value: {}
 					},

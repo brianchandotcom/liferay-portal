@@ -34,7 +34,8 @@ AUI.add(
 							evaluator.after('evaluationStarted', A.bind('_saveSettings', instance)),
 							instance.after('render', instance._afterSettingsFormRender),
 							instance.on('*:addOption', instance._afterAddOption),
-							instance.on('*:removeOption', instance.alignModal)
+							instance.on('*:removeOption', instance.alignModal),
+							instance.on('*:valueChange', instance._onFieldValueChange)
 						);
 
 						instance._fieldEventHandlers = [];
@@ -262,6 +263,12 @@ AUI.add(
 						advancedSettingsNode.toggleClass('active');
 
 						instance._syncModeToggler();
+					},
+
+					_onFieldValueChange: function() {
+						var instance = this;
+
+						instance._saveSettings();
 					},
 
 					_onKeyUpKeyValueInput: function() {

@@ -14,12 +14,27 @@
 
 package com.liferay.twitter.util;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.twitter.configuration.TwitterGroupServiceConfiguration;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Shinn Lok
+ * @author Peter Fellwock
  */
+@Component(
+	configurationPid = "com.liferay.twitter.configuration.TwitterConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	service = TimelineProcessorUtil.class
+)
 public class TimelineProcessorUtil {
 
 	public static TimelineProcessor getInstance() {
@@ -33,16 +48,23 @@ public class TimelineProcessorUtil {
 			twitterScreenName, sinceId);
 	}
 
-	private static final TimelineProcessor _timelineProcessor;
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_twitterGroupServiceConfiguration = ConfigurableUtil.createConfigurable(
+			TwitterGroupServiceConfiguration.class, properties);
 
-	static {
 		try {
 			_timelineProcessor = (TimelineProcessor)InstanceFactory.newInstance(
-				PortletPropsValues.TWITTER_USERS_TIMELINE_PROCESSOR);
+				_twitterGroupServiceConfiguration.usersTimelineProcessor());
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
+
+	private static TimelineProcessor _timelineProcessor;
+	private static volatile TwitterGroupServiceConfiguration
+		_twitterGroupServiceConfiguration;
 
 }

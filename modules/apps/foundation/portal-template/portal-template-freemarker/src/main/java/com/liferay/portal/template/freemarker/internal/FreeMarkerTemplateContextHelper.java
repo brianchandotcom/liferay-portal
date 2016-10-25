@@ -29,10 +29,10 @@ import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConf
 
 import freemarker.ext.beans.BeansWrapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -163,7 +163,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		target = "(type=" + TemplateContextContributor.TYPE_GLOBAL + ")",
 		unbind = "unregisterTemplateContextContributor"
 	)
-	protected synchronized void registerTemplateContextContributor(
+	protected void registerTemplateContextContributor(
 		TemplateContextContributor templateContextContributor) {
 
 		_templateContextContributors.add(templateContextContributor);
@@ -178,6 +178,6 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 	private final List<TemplateContextContributor>
-		_templateContextContributors = new ArrayList<>();
+		_templateContextContributors = new CopyOnWriteArrayList<>();
 
 }

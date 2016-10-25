@@ -1332,9 +1332,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			_checkRegistryInTestClasses = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.registry.in.test.classes"));
-			_checkUnprocessedExceptions = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.unprocessed.exceptions"));
 		}
 		else {
 			fileNames = getPluginJavaFiles();
@@ -2181,7 +2178,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					matcher.start() - 1);
 			}
 
-			if (!_checkUnprocessedExceptions || fileName.contains("/test/") ||
+			if (fileName.contains("/test/") ||
 				fileName.contains("/testIntegration/")) {
 
 				continue;
@@ -4674,7 +4671,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExcludes;
 	private boolean _checkRegistryInTestClasses;
-	private boolean _checkUnprocessedExceptions;
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
 			"(class|enum|interface) ([\\s\\S]*?) \\{)\n(\\s*)(\\S)");

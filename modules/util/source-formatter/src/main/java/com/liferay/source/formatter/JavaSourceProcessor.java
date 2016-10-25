@@ -30,9 +30,6 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.checkstyle.util.CheckStyleUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
-import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.JavaSource;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -2125,9 +2122,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String content, File file, String packagePath, String fileName)
 		throws IOException {
 
-		List<String> importedExceptionClassNames = null;
-		JavaDocBuilder javaDocBuilder = null;
-
 		Matcher matcher = _catchExceptionPattern.matcher(content);
 
 		int skipVariableNameCheckEndPos = -1;
@@ -2176,87 +2170,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return StringUtil.replaceFirst(
 					content, catchExceptionCodeBlock, catchExceptionReplacement,
 					matcher.start() - 1);
-			}
-
-			if (fileName.contains("/test/") ||
-				fileName.contains("/testIntegration/")) {
-
-				continue;
-			}
-
-			// LPS-36174
-
-			Matcher exceptionVariableMatcher = exceptionVariablePattern.matcher(
-				insideCatchCode);
-
-			if (exceptionVariableMatcher.find()) {
-				continue;
-			}
-
-			if (javaDocBuilder == null) {
-				javaDocBuilder = new JavaDocBuilder();
-
-				javaDocBuilder.addSource(file);
-			}
-
-			if (importedExceptionClassNames == null) {
-				importedExceptionClassNames = getImportedExceptionClassNames(
-					javaDocBuilder);
-			}
-
-			String originalExceptionClassName = exceptionClassName;
-
-			if (!exceptionClassName.contains(StringPool.PERIOD)) {
-				for (String exceptionClass : importedExceptionClassNames) {
-					if (exceptionClass.endsWith(
-							StringPool.PERIOD + exceptionClassName)) {
-
-						exceptionClassName = exceptionClass;
-
-						break;
-					}
-				}
-			}
-
-			if (!exceptionClassName.contains(StringPool.PERIOD)) {
-				exceptionClassName =
-					packagePath + StringPool.PERIOD + exceptionClassName;
-			}
-
-			com.thoughtworks.qdox.model.JavaClass exceptionClass =
-				javaDocBuilder.getClassByName(exceptionClassName);
-
-			while (true) {
-				String packageName = exceptionClass.getPackageName();
-
-				if (!packageName.contains("com.liferay")) {
-					break;
-				}
-
-				exceptionClassName = exceptionClass.getName();
-
-				if (exceptionClassName.equals("PortalException") ||
-					exceptionClassName.equals("SystemException")) {
-
-					int lineCount = getLineCount(content, matcher.start(2));
-
-					processMessage(
-						fileName,
-						"Unprocessed " + originalExceptionClassName +
-							", see LPS-36174",
-						lineCount);
-
-					break;
-				}
-
-				com.thoughtworks.qdox.model.JavaClass exceptionSuperClass =
-					exceptionClass.getSuperJavaClass();
-
-				if (exceptionSuperClass == null) {
-					break;
-				}
-
-				exceptionClass = exceptionSuperClass;
 			}
 		}
 
@@ -3906,24 +3819,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return -1;
-	}
-
-	protected List<String> getImportedExceptionClassNames(
-		JavaDocBuilder javaDocBuilder) {
-
-		List<String> exceptionClassNames = new ArrayList<>();
-
-		JavaSource javaSource = javaDocBuilder.getSources()[0];
-
-		for (String importClassName : javaSource.getImports()) {
-			if (importClassName.endsWith("Exception") &&
-				!exceptionClassNames.contains(importClassName)) {
-
-				exceptionClassNames.add(importClassName);
-			}
-		}
-
-		return exceptionClassNames;
 	}
 
 	protected int getIncorrectLineBreakPos(String line, String previousLine) {

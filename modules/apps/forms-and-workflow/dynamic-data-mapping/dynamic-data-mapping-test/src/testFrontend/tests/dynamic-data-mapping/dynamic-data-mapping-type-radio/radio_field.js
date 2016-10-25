@@ -1,7 +1,5 @@
 'use strict';
 
-var assert = chai.assert;
-
 describe(
 	'DDM Field Radio',
 	function() {
@@ -12,6 +10,7 @@ describe(
 					function(A) {
 						Liferay.DDM.Renderer.FieldTypes.register(
 							{
+								'javaScriptClass': 'Liferay.DDM.Renderer.Radio',
 								'name': 'radio',
 								'templateNamespace': 'ddm.radio'
 							}

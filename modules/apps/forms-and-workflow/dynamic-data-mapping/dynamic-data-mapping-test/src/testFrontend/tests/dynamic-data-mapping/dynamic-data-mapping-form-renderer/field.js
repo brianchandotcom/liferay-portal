@@ -2,16 +2,14 @@
 
 var A = AUI();
 
-var assert = chai.assert;
-
 var FieldTest;
 
 var createField = function(config) {
 	return new FieldTest(
 		A.merge(
 			{
-				value: '',
-				type: 'field'
+				type: 'field',
+				value: ''
 			},
 			config || {}
 		)
@@ -33,23 +31,24 @@ describe(
 					function(A) {
 						Liferay.DDM.Renderer.FieldTypes.register(
 							{
-								'name': 'field',
-								'javaScriptClass': 'Liferay.DDM.Renderer.Field'
+								'javaScriptClass': 'Liferay.DDM.Renderer.Field',
+								'name': 'field'
 							}
 						);
 
-						FieldTest = A.Component.create({
-							EXTENDS: Liferay.DDM.Renderer.Field,
-							prototype: {
-								getTemplateRenderer: function() {
-									var name = this.getQualifiedName();
-
-									return function(context) {
-										return '<input name="' + context.name + '" />';
-									};
+						FieldTest = A.Component.create(
+							{
+								EXTENDS: Liferay.DDM.Renderer.Field,
+								prototype: {
+									getTemplateRenderer: function() {
+										return function(context) {
+											return '<input name="' + context.name + '" />';
+										};
+									}
 								}
 							}
-						});
+						);
+
 						done();
 					}
 				);
@@ -62,12 +61,13 @@ describe(
 				it(
 					'should fire valueChange event',
 					function(done) {
-						var field = createField();
-
-						field.after(
-							'valueChange',
-							function() {
-								done();
+						var field = createField(
+							{
+								after: {
+									valueChange: function() {
+										done();
+									}
+								}
 							}
 						);
 

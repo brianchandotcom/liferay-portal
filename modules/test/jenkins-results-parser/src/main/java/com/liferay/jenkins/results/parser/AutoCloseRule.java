@@ -57,6 +57,10 @@ public class AutoCloseRule {
 
 		if (maxFailPercentage != -1) {
 			failLimit = (int)(maxFailPercentage * downstreamBuilds.size());
+
+			if (failLimit > 0) {
+				failLimit--;
+			}
 		}
 		else {
 			failLimit = maxFailCount;

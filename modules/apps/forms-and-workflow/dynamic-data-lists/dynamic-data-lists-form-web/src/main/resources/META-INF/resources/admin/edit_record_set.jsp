@@ -226,6 +226,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 									'formPortlet',
 									new Liferay.DDL.Portlet(
 										{
+											autosaveInterval: '<%= ddlFormAdminDisplayContext.getAutosaveInterval() %>',
 											autosaveURL: '<%= saveRecordSetURL.toString() %>',
 											definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
 											description: '<%= HtmlUtil.escapeJS(description) %>',

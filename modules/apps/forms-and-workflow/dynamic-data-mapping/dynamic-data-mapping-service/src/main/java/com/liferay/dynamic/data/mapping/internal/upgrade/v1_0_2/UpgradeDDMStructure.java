@@ -24,6 +24,8 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -114,7 +116,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 	}
 
 	protected DDMFormRule getSetVisibleDDMFormRule(
-		String ddmFormFieldName, String visibilityExpression) {
+			String ddmFormFieldName, String visibilityExpression)
+		throws DDMExpressionException {
 
 		try {
 			DDMExpression<Boolean> ddmExpression =
@@ -139,10 +142,19 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				condition, "setVisible('" + ddmFormFieldName + "', true)");
 		}
 		catch (DDMExpressionException ddmee) {
-		}
+			_log.error(
+				String.format(
+					"Unable to upgrade the visibility expression \"%s\" to a " +
+						"form rule",
+					visibilityExpression),
+				ddmee);
 
-		return null;
+			throw ddmee;
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeDDMStructure.class);
 
 	private final DDMExpressionFactory _ddmExpressionFactory;
 	private final DDMFormJSONDeserializer _ddmFormJSONDeserializer;

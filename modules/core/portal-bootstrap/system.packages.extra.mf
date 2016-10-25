@@ -2646,7 +2646,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  "7.0.0";uses:="com.liferay.portal.kernel.exception,javax.servlet.http
  ",com.liferay.portal.kernel.pop;version="6.2.0";uses:="com.liferay.po
  rtal.kernel.exception,javax.mail",com.liferay.portal.kernel.portlet;v
- ersion="7.4.0";uses:="com.liferay.asset.kernel.model,com.liferay.expa
+ ersion="7.5.0";uses:="com.liferay.asset.kernel.model,com.liferay.expa
  ndo.kernel.model,com.liferay.exportimport.kernel.lar,com.liferay.port
  al.kernel.atom,com.liferay.portal.kernel.exception,com.liferay.portal
  .kernel.json,com.liferay.portal.kernel.model,com.liferay.portal.kerne

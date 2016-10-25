@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.twitter.messaging;
+package com.liferay.twitter.internal.model.listener;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;

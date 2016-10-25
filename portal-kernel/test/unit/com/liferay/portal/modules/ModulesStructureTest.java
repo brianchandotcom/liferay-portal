@@ -189,6 +189,22 @@ public class ModulesStructureTest {
 					return FileVisitResult.CONTINUE;
 				}
 
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path fileNamePath = path.getFileName();
+
+					String fileName = fileNamePath.toString();
+
+					if (fileName.equals(".gitignore")) {
+						_testGitIgnoreFile(path);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
 			});
 	}
 
@@ -479,6 +495,36 @@ public class ModulesStructureTest {
 
 		Assert.assertEquals(
 			"Incorrect " + buildGradlePath, _APP_BUILD_GRADLE, buildGradle);
+	}
+
+	private void _testGitIgnoreFile(Path path) throws IOException {
+		Path dirPath = path.getParent();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+			new UnsyncBufferedReader(new FileReader(path.toFile()))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = StringUtil.trim(line);
+
+				if (!StringUtil.startsWith(line, "!/")) {
+					continue;
+				}
+
+				int end = line.indexOf(CharPool.SLASH, 2);
+
+				if (end == -1) {
+					end = line.length();
+				}
+
+				String name = line.substring(2, end);
+
+				Assert.assertTrue(
+					"Incorrect \"" + line + "\" in " + path,
+					Files.exists(dirPath.resolve(name)));
+			}
+		}
 	}
 
 	private void _testGitRepoBuildScripts(

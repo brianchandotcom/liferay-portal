@@ -87,6 +87,27 @@
 		</execute>
 	</command>
 
+	<command name="TestUserDatabaseConnection" priority="3">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Report Admin" />
+		</execute>
+
+		<execute macro="ReportsAdmin#gotoSources" />
+
+		<execute macro="ReportsAdmin#addSource">
+			<var name="reportsDataSourceClass" value="com.mysql.jdbc.Driver" />
+			<var name="reportsDataSourceName" value="Reports Data Source Name" />
+			<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://localhost/lportal?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true]]></var>
+			<var name="reportsDataSourceUser" value="localhost" />
+		</execute>
+
+		<execute macro="ReportsAdmin#testDatabaseConnection" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="ViewDefinitionsPagination" priority="4">
 		<description message="This is a use case for LPS-50501." />
 

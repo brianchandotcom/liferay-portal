@@ -734,7 +734,7 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			String servletName = entry.getKey();
 
 			if (!assembledServletDefinitions.containsKey(servletName)) {
-				fragmentServletDefinitions.put(servletName, entry.getValue());
+				assembledServletDefinitions.put(servletName, entry.getValue());
 
 				continue;
 			}

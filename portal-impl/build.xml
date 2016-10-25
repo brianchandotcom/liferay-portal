@@ -570,7 +570,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<jvmarg value="-Xmx512m" />
 			<jvmarg value="-Xss2048k" />
 			<jvmarg value="-Dsource.formatter.check.registry.in.test.classes=${source.formatter.check.registry.in.test.classes}" />
-			<jvmarg value="-Dsource.formatter.check.unprocessed.exceptions=${source.formatter.check.unprocessed.exceptions}" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
 			<arg value="format.current.branch=${format.current.branch}" />
 			<arg value="format.latest.author=${format.latest.author}" />

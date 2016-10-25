@@ -53,6 +53,14 @@ AUI.add(
 						);
 					},
 
+					showLoadingFeedback: function() {
+						var instance = this;
+
+						FormBuilderSettingsForm.superclass.showLoadingFeedback.apply(instance, arguments);
+
+						instance.get('alert').hide();
+					},
+
 					_afterAddOption: function(event) {
 						var instance = this;
 

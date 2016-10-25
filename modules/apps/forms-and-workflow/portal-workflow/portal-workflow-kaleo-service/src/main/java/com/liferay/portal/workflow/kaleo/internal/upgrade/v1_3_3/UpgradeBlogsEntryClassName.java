@@ -14,10 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_3;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.util.Table;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.WorkflowClassNameUpgradeProcess;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -26,31 +27,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Leonardo Barros
  */
-public class UpgradeBlogsEntryClassName extends UpgradeProcess {
+public class UpgradeBlogsEntryClassName
+	extends WorkflowClassNameUpgradeProcess {
 
 	@Override
-	protected void doUpgrade() throws Exception {
-		updateClassName("KaleoInstance", "className");
-		updateClassName("KaleoInstanceToken", "className");
-		updateClassName("KaleoLog", "currentAssigneeClassName");
-		updateClassName("KaleoLog", "previousAssigneeClassName");
-		updateClassName("KaleoNotificationRecipient", "recipientClassName");
-		updateClassName("KaleoTaskAssignment", "assigneeClassName");
-		updateClassName("KaleoTaskAssignmentInstance", "assigneeClassName");
-		updateClassName("KaleoTaskInstanceToken", "className");
-
-		updateWorkflowContextEntryClassName("KaleoInstance", "kaleoInstanceId");
-		updateWorkflowContextEntryClassName("KaleoLog", "kaleoLogId");
-		updateWorkflowContextEntryClassName(
-			"KaleoTaskInstanceToken", "kaleoTaskInstanceTokenId");
-		updateWorkflowContextEntryClassName(
-			"KaleoTimerInstanceToken", "kaleoTimerInstanceTokenId");
-	}
-
 	protected void updateClassName(String tableName, String columnName) {
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
 			Table table = new Table(tableName);
@@ -61,22 +46,7 @@ public class UpgradeBlogsEntryClassName extends UpgradeProcess {
 		}
 	}
 
-	protected void updateWorkflowContext(
-			String tableName, String primaryKeyName, long primaryKeyValue,
-			String workflowContext)
-		throws Exception {
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"update " + tableName + " set workflowContext = ? where " +
-					primaryKeyName + " = ?")) {
-
-			ps.setString(1, workflowContext);
-			ps.setLong(2, primaryKeyValue);
-
-			ps.executeUpdate();
-		}
-	}
-
+	@Override
 	protected void updateWorkflowContextEntryClassName(
 			String tableName, String primaryKeyName)
 		throws Exception {
@@ -98,8 +68,12 @@ public class UpgradeBlogsEntryClassName extends UpgradeProcess {
 				Map<String, Serializable> workflowContext =
 					WorkflowContextUtil.convert(workflowContextJSON);
 
-				if ("com.liferay.blogs.kernel.model.BlogsEntry".equals(
-						workflowContext.get("entryClassName"))) {
+				String entryClassName = GetterUtil.getString(
+					workflowContext.get("entryClassName"));
+
+				if (Objects.equals(
+						"com.liferay.blogs.kernel.model.BlogsEntry",
+						entryClassName)) {
 
 					workflowContext.put(
 						"entryClassName", "com.liferay.blogs.model.BlogsEntry");

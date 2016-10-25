@@ -39,6 +39,9 @@ if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
+request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBUtil.getCategorySubscriptionClassPKs(user.getUserId()));
+request.setAttribute("view.jsp-threadSubscriptionClassPKs", MBUtil.getThreadSubscriptionClassPKs(user.getUserId()));
+
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-portletURL", portletURL);
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());

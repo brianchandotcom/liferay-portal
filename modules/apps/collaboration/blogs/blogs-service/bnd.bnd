@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Blogs Service
 Bundle-SymbolicName: com.liferay.blogs.service
-Bundle-Version: 1.1.0
+Bundle-Version: 1.1.1
 Export-Package:\
 	com.liferay.blogs.linkback,\
 	com.liferay.blogs.service.permission,\

@@ -38,6 +38,11 @@
 	<td>//button[contains(.,'Test Database Connection')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TEST_DATABASE_CONNECTION_SUCCESS_MESSAGE</td>
+	<td>//div[@class='portlet-msg-success']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

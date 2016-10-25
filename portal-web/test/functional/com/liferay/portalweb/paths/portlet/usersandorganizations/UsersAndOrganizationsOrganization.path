@@ -114,11 +114,6 @@
 </tr>
 <!--USER_TABLE-->
 <tr>
-	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@type='checkbox' and @title='Select All']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>USER_TABLE_CHECKBOX</td>
 	<td>//div[contains(@id,'organizationUsersSearchContainer')]//tr[contains(.,'${key_userName}')]/td[1]//input[@title='Select']</td>
 	<td></td>
@@ -126,11 +121,6 @@
 <tr>
 	<td>USER_TABLE_NAME</td>
 	<td>//div[contains(@id,'organizationUsersSearchContainer')]//tr[contains(.,'${key_userName}')]/td[2]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>USER_TABLE_SCREEN_NAME</td>
-	<td>//div[contains(@id,'usersSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[3]//a</td>
 	<td></td>
 </tr>
 </tbody>

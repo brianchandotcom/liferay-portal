@@ -42,8 +42,7 @@ public class KaleoTaskLocalServiceImpl extends KaleoTaskLocalServiceBaseImpl {
 
 		// Kaleo task
 
-		User user = userPersistence.findByPrimaryKey(
-			serviceContext.getGuestOrUserId());
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
 		Date now = new Date();
 
 		long kaleoTaskId = counterLocalService.increment();

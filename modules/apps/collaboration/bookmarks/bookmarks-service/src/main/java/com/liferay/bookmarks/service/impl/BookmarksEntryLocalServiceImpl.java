@@ -99,7 +99,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Entry
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		if (Validator.isNull(name)) {
 			name = url;
@@ -677,7 +677,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Entry
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		entry.setStatus(status);
 		entry.setStatusByUserId(userId);

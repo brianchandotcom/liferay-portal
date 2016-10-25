@@ -48,8 +48,7 @@ public class KaleoTaskFormInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(
-			serviceContext.getGuestOrUserId());
+		User user = userLocalService.getUser(serviceContext.getGuestOrUserId());
 		Date now = new Date();
 
 		long kaleoTaskFormInstanceId = counterLocalService.increment();

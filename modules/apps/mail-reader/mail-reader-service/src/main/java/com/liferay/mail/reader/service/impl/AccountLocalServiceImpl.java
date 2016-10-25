@@ -41,7 +41,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 			long trashFolderId, boolean defaultSender)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		long accountId = counterLocalService.increment();

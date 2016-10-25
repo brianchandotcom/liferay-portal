@@ -56,7 +56,7 @@ public class PollsQuestionLocalServiceImpl
 
 		// Question
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		long groupId = serviceContext.getScopeGroupId();
 
 		Date expirationDate = null;
@@ -273,7 +273,7 @@ public class PollsQuestionLocalServiceImpl
 
 		// Question
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date expirationDate = null;
 

@@ -85,7 +85,7 @@ public class ShoppingOrderLocalServiceImpl
 
 		// Order
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		String number = getNumber();
 
@@ -602,7 +602,7 @@ public class ShoppingOrderLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(order.getUserId());
+		User user = userLocalService.getUser(order.getUserId());
 
 		Currency currency = Currency.getInstance(
 			shoppingGroupServiceOverriddenConfiguration.getCurrencyId());

@@ -295,7 +295,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Entry
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		long groupId = serviceContext.getScopeGroupId();
 		int status = WorkflowConstants.STATUS_DRAFT;
 
@@ -430,7 +430,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -720,7 +720,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	@Override
 	public BlogsEntry fetchEntry(long groupId, String urlTitle) {
-		Group group = groupPersistence.fetchByPrimaryKey(groupId);
+		Group group = groupLocalService.fetchGroup(groupId);
 
 		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
 			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
@@ -803,7 +803,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public BlogsEntry getEntry(long groupId, String urlTitle)
 		throws PortalException {
 
-		Group group = groupPersistence.fetchByPrimaryKey(groupId);
+		Group group = groupLocalService.fetchGroup(groupId);
 
 		FriendlyURL friendlyURL = friendlyURLLocalService.fetchFriendlyURL(
 			group.getCompanyId(), groupId, BlogsEntry.class, urlTitle);
@@ -1387,7 +1387,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date displayDate = PortalUtil.getDate(
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
@@ -1449,7 +1449,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Entry
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
@@ -1853,7 +1853,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		Group group = groupPersistence.findByPrimaryKey(entry.getGroupId());
+		Group group = groupLocalService.getGroup(entry.getGroupId());
 
 		String entryTitle = entry.getTitle();
 
@@ -1989,7 +1989,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		Group group = groupPersistence.findByPrimaryKey(entry.getGroupId());
+		Group group = groupLocalService.getGroup(entry.getGroupId());
 
 		StringBundler sb = new StringBundler(6);
 
@@ -2172,7 +2172,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String userURL = StringPool.BLANK;
 
 		if (serviceContext.getThemeDisplay() != null) {
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = userLocalService.getUser(userId);
 
 			userPortraitURL = user.getPortraitURL(
 				serviceContext.getThemeDisplay());

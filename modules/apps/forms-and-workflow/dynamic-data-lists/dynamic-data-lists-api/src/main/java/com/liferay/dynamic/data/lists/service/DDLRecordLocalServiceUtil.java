@@ -542,6 +542,10 @@ public class DDLRecordLocalServiceUtil {
 		return getService().getRecordVersionsCount(recordId);
 	}
 
+	public static int getRecordsCount(long recordSetId) {
+		return getService().getRecordsCount(recordSetId);
+	}
+
 	/**
 	* Returns the number of records matching the record set ID and workflow
 	* status.
@@ -554,6 +558,10 @@ public class DDLRecordLocalServiceUtil {
 	*/
 	public static int getRecordsCount(long recordSetId, int status) {
 		return getService().getRecordsCount(recordSetId, status);
+	}
+
+	public static int getRecordsCount(long recordSetId, long userId) {
+		return getService().getRecordsCount(recordSetId, userId);
 	}
 
 	public static java.lang.Long[] getMinAndMaxCompanyRecordIds(
@@ -733,6 +741,12 @@ public class DDLRecordLocalServiceUtil {
 		return getService().getRecords(recordSetId);
 	}
 
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return getService().getRecords(recordSetId, start, end, obc);
+	}
+
 	/**
 	* Returns an ordered range of all the records matching the record set ID
 	* and workflow status.
@@ -774,6 +788,12 @@ public class DDLRecordLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
 		long recordSetId, long userId) {
 		return getService().getRecords(recordSetId, userId);
+	}
+
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return getService().getRecords(recordSetId, userId, start, end, obc);
 	}
 
 	/**

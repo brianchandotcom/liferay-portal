@@ -43,7 +43,7 @@ public class CalendarNotificationTemplateLocalServiceImpl
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Calendar calendar = calendarPersistence.findByPrimaryKey(calendarId);
 		Date now = new Date();
 

@@ -90,7 +90,7 @@ public class DDLRecordSetLocalServiceImpl
 
 		// Record set
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		if (Validator.isNull(recordSetKey)) {
 			recordSetKey = String.valueOf(counterLocalService.increment());

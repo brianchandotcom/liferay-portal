@@ -54,8 +54,7 @@ public class MDRRuleGroupLocalServiceImpl
 
 		// Rule group
 
-		User user = userPersistence.findByPrimaryKey(
-			serviceContext.getUserId());
+		User user = userLocalService.getUser(serviceContext.getUserId());
 
 		long ruleGroupId = counterLocalService.increment();
 

@@ -56,7 +56,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 
 		// Data provider instance
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		validate(nameMap, ddmFormValues);
 
@@ -269,7 +269,7 @@ public class DDMDataProviderInstanceLocalServiceImpl
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		validate(nameMap, ddmFormValues);
 

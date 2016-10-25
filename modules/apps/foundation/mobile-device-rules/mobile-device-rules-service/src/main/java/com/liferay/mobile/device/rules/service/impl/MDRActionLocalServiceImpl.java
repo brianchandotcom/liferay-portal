@@ -45,8 +45,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(
-			serviceContext.getUserId());
+		User user = userLocalService.getUser(serviceContext.getUserId());
 		MDRRuleGroupInstance ruleGroupInstance =
 			mdrRuleGroupInstancePersistence.findByPrimaryKey(
 				ruleGroupInstanceId);

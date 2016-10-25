@@ -230,7 +230,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Company company = companyPersistence.findByPrimaryKey(companyId);
+		Company company = companyLocalService.getCompany(companyId);
 
 		String name = company.getName();
 
@@ -350,7 +350,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Group group = groupPersistence.findByPrimaryKey(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		String name = group.getDescriptiveName();
 
@@ -499,7 +499,7 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		Organization organization = organizationPersistence.findByPrimaryKey(
+		Organization organization = organizationLocalService.getOrganization(
 			organizationId);
 
 		String name = organization.getName();

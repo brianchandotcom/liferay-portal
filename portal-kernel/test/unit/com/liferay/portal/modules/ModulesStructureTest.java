@@ -313,6 +313,10 @@ public class ModulesStructureTest {
 					BasicFileAttributes basicFileAttributes) {
 
 					if (Files.exists(pluginDirPath.resolve("build.xml")) &&
+						(Files.exists(pluginDirPath.resolve("ivy.xml")) ||
+						 Files.exists(
+							 pluginDirPath.resolve(
+								 "docroot/WEB-INF/service.xml"))) &&
 						Files.isDirectory(pluginDirPath.resolve("docroot"))) {
 
 						Path relativePath = dirPath.relativize(pluginDirPath);

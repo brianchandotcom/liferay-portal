@@ -273,6 +273,15 @@ public class SQLTransformer {
 		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
 	}
 
+	private String _replaceNullDate(String newSQL) {
+		if (_vendorPostgreSQL) {
+			return StringUtil.replace(
+				newSQL, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
+		}
+
+		return StringUtil.replace(newSQL, "[$NULL_DATE$]", "NULL");
+	}
+
 	private String _replaceReplace(String newSQL) {
 		return newSQL.replaceAll("(?i)replace\\(", "str_replace(");
 	}
@@ -302,6 +311,7 @@ public class SQLTransformer {
 		newSQL = _replaceCrossJoin(newSQL);
 		newSQL = _replaceInStr(newSQL);
 		newSQL = _replaceIntegerDivision(newSQL);
+		newSQL = _replaceNullDate(newSQL);
 		newSQL = _replaceSubstr(newSQL);
 
 		if (_vendorDB2) {

@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,6 +199,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		throws Exception {
 
 		HttpServletRequest request = themeDisplay.getRequest();
+
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		long groupId = themeDisplay.getScopeGroupId();
@@ -205,7 +207,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		String refererPortletName = ParamUtil.getString(
 			request, portletDisplay.getNamespace() + "refererPortletName");
 
-		if (!refererPortletName.isEmpty()) {
+		if (Validator.isNull(refererPortletName)) {
 			groupId = PortalUtil.getScopeGroupId(request, refererPortletName);
 		}
 

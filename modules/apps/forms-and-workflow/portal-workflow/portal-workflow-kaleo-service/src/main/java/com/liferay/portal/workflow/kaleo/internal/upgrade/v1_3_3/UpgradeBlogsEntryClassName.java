@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * @author Leonardo Barros
  */
-public class UpgradeBlogEntryClassName extends UpgradeProcess {
+public class UpgradeBlogsEntryClassName extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -30,16 +30,15 @@ public class SoyJavaScriptRenderer {
 
 	public SoyJavaScriptRenderer() throws Exception {
 		_javaScriptTPL = _getJavaScriptTPL();
+		_jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 	}
 
 	public String getJavaScript(
 		Map<String, Object> context, String id, Set<String> modules) {
 
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		String contextString = _jsonSerializer.serializeDeep(context);
 
-		String contextString = jsonSerializer.serializeDeep(context);
-
-		String modulesString = jsonSerializer.serialize(modules);
+		String modulesString = _jsonSerializer.serialize(modules);
 
 		return StringUtil.replace(
 			_javaScriptTPL, new String[] {"$CONTEXT", "$ID", "$MODULES"},
@@ -56,5 +55,6 @@ public class SoyJavaScriptRenderer {
 	}
 
 	private final String _javaScriptTPL;
+	private final JSONSerializer _jsonSerializer;
 
 }

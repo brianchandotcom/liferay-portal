@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.web.portal.profile;
+package com.liferay.chat.web.internal.portal.profile;
 
 import com.liferay.chat.web.portlet.ChatPortlet;
 import com.liferay.chat.web.portlet.route.ChatFriendlyURLMapper;

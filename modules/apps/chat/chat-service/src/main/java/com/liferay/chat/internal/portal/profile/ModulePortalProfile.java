@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.portal.profile;
+package com.liferay.chat.internal.portal.profile;
 
 import com.liferay.chat.configuration.ChatGroupServiceConfigurationBeanDeclaration;
 import com.liferay.chat.internal.events.LoginPostAction;

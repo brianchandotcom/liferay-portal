@@ -71,6 +71,7 @@ if (portletTitleBasedNavigation) {
 </c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
+<portlet:actionURL name="/blogs/calculate_reading_time" var="calculateReadingTimeURL" />
 
 <div class="container-fluid-1280">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -168,6 +169,7 @@ if (portletTitleBasedNavigation) {
 						<aui:input name="subtitle" type="hidden" />
 
 						<div class="entry-content">
+							<div class="hide reading-time" id="<portlet:namespace />readingTime"></div>
 							<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 						</div>
 
@@ -381,6 +383,7 @@ if (portletTitleBasedNavigation) {
 
 		if (blogs) {
 			blogs.setDescription(html);
+			blogs.calculateReadingTime(html);
 		}
 	}
 
@@ -418,6 +421,7 @@ if (portletTitleBasedNavigation) {
 				},
 				descriptionLength: '<%= pageAbstractLength %>',
 				editEntryURL: '<%= editEntryURL %>',
+				calculateReadingTimeURL: '<%= calculateReadingTimeURL %>',
 
 				<c:if test="<%= entry != null %>">
 					entry: {

@@ -29,6 +29,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					calculateReadingTimeURL: {
+						validator: Lang.isString
+					},
+
 					entry: {
 						validator: Lang.isObject
 					},
@@ -79,6 +83,8 @@ AUI.add(
 						instance._shortenDescription = !customDescriptionEnabled;
 
 						instance.setDescription(window[instance.ns('contentEditor')].getText());
+
+						instance.calculateReadingTime = A.debounce(instance.calculateReadingTime, 500, instance);
 					},
 
 					destructor: function() {
@@ -409,6 +415,51 @@ AUI.add(
 							instance.one('#workflowAction').val(draft ? constants.ACTION_SAVE_DRAFT : constants.ACTION_PUBLISH);
 
 							submitForm(form);
+						}
+					},
+
+					calculateReadingTime: function(content) {
+						var instance = this;
+						var constants = instance.get('constants');
+						var readingTimeElement = instance.one('#readingTime');
+
+						if (content !== STR_BLANK) {
+
+							var data = instance.ns(
+								{
+									'content': content
+								}
+							);
+
+							A.io.request(
+								instance.get('calculateReadingTimeURL'),
+								{
+									data: data,
+									dataType: 'JSON',
+									on: {
+										failure: function() {
+											readingTimeElement.hide();
+										},
+										start: function() {
+											readingTimeElement.set('innerHTML', '...');
+										},
+										success: function(event, id, obj) {
+											var message = this.get('responseData');
+
+											if (message && message.readingTime && (message.readingTime > 1)) {
+												readingTimeElement.set('innerHTML', message.readingTime);
+												readingTimeElement.show();
+											}
+											else {
+												readingTimeElement.hide();
+											}
+										}
+									}
+								}
+							);
+						}
+						else {
+							readingTimeElement.hide();
 						}
 					},
 

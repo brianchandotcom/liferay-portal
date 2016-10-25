@@ -157,6 +157,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.TransactionalTestRuleCheck">
 			<message key="import.invalid" value="LPS-68908: Avoid using import TransactionalTestRuleCheck in *StagedModelDataHandlerTest" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.UnprocessedException">
+			<message key="exception.unprocessed" value="Unprocessed exception ''{0}'', see LPS-36174" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnusedParameter">
 			<message key="parameter.unused" value="Parameter ''{0}'' is unused" />
 		</module>

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StackTraceUtil;
@@ -127,18 +128,15 @@ public class AutoLoginFilter extends BasePortalFilter {
 				"/portal/protected");
 
 			if (PropsValues.AUTH_FORWARD_BY_LAST_PATH) {
-				String autoLoginRedirect = (String)request.getAttribute(
+				String redirectParam = (String)request.getAttribute(
 					AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE);
 
-				redirect = redirect.concat("?redirect=");
+				if (Validator.isNull(redirectParam)) {
+					redirectParam = PortalUtil.getCurrentCompleteURL(request);
+				}
 
-				if (Validator.isNotNull(autoLoginRedirect)) {
-					redirect = redirect.concat(autoLoginRedirect);
-				}
-				else {
-					redirect = redirect.concat(
-						PortalUtil.getCurrentCompleteURL(request));
-				}
+				redirect = redirect.concat("?redirect=");
+				redirect = redirect.concat(HttpUtil.encodeURL(redirectParam));
 			}
 
 			response.sendRedirect(redirect);

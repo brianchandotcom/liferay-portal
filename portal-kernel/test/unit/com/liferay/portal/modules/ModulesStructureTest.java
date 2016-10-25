@@ -178,7 +178,7 @@ public class ModulesStructureTest {
 							 !_isInGitRepo(dirPath) &&
 							 Files.exists(dirPath.resolve("build.xml"))) {
 
-						_testAntPluginGitIgnoreFiles(dirPath);
+						_testAntPluginIgnoreFiles(dirPath);
 					}
 					else if (dirName.startsWith("frontend-theme-") &&
 							 Files.exists(dirPath.resolve("gulpfile.js"))) {
@@ -447,7 +447,7 @@ public class ModulesStructureTest {
 			s, System.lineSeparator(), StringPool.NEW_LINE);
 	}
 
-	private void _testAntPluginGitIgnoreFiles(Path dirPath) throws IOException {
+	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
 		Path parentDirPath = dirPath.getParent();
 
 		String expectedGitIgnore = _getAntPluginsGitIgnore(parentDirPath, null);

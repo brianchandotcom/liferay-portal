@@ -3,23 +3,23 @@
 <project basedir="." name="portal-test-authentication" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-		<macrodef name="deploy-openam">
+	<macrodef name="deploy-openam">
 		<sequential>
 			<delete dir="${app.server.deploy.dir}/openam" />
 
 			<if>
 				<not>
-					<available file="${app.server.deploy.dir}/openam.war" />
+					<available file="${app.server.dir}/openam.war" />
 				</not>
 				<then>
 					<mirrors-get
-						dest="${app.server.deploy.dir}/${openam.war.name}"
+						dest="${app.server.dir}/${openam.war.name}"
 						src="http://files.liferay.com/private/apps/forgerock/openam/${openam.war.name}"
 						verbose="true"
 					/>
 
 					<move
-						file="${app.server.deploy.dir}/${openam.war.name}"
+						file="${app.server.dir}/${openam.war.name}"
 						tofile="${app.server.deploy.dir}/openam.war"
 					/>
 				</then>
@@ -50,6 +50,10 @@
 			/>
 		</sequential>
 	</macrodef>
+
+	<target name="delete-openam-config">
+		<delete dir="${openam.config.dir}" />
+	</target>
 
 	<target name="setup-openam">
 		<deploy-openam />

@@ -99,8 +99,6 @@
 				<execute function="Type" locator1="ReportsAdminEditSource#JDBC_PASSWORD_FIELD" value1="${reportsDataSourcePassword}" />
 			</then>
 		</if>
-
-		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureDeliveryEmail">

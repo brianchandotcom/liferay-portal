@@ -46,7 +46,7 @@ public class RouterImpl implements Router {
 
 	@Override
 	public List<Route> getRoutes() {
-		return _routes;
+		return new ArrayList<>(_routes);
 	}
 
 	@Override

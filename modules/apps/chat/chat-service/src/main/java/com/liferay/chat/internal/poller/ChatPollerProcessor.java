@@ -62,9 +62,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(
-	configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	property = {"javax.portlet.name=" + ChatPortletKeys.CHAT},
+	configurationPid = "com.liferay.chat.configuration.ChatConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
+	immediate = true, property = {"javax.portlet.name=" + ChatPortletKeys.CHAT},
 	service = PollerProcessor.class
 )
 public class ChatPollerProcessor extends BasePollerProcessor {

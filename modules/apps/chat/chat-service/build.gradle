@@ -8,6 +8,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.chat.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.profile", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
@@ -15,4 +16,6 @@ dependencies {
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.igniterealtime.smack", name: "smack", version: "3.2.1"
 	provided group: "org.igniterealtime.smack", name: "smackx", version: "3.2.1"
+	provided group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
+	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 }

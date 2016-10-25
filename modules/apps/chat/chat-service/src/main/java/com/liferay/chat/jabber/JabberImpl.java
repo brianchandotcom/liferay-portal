@@ -65,9 +65,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bruno Farache
  */
 @Component(
-	configurationPid = "ccom.liferay.chat.configuration.ChatConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
-	service = Jabber.class
+	configurationPid = "com.liferay.chat.configuration.ChatConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
+	immediate = true, service = Jabber.class
 )
 public class JabberImpl implements Jabber {
 

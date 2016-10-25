@@ -4055,8 +4055,6 @@ go]]></replacevalue>
 
 							bufferedReader = new BufferedReader(new FileReader(file));
 
-							String line;
-
 							List lines = new ArrayList();
 
 							int lineNumber = 0;
@@ -4065,7 +4063,7 @@ go]]></replacevalue>
 							Boolean testcaseFailed = null;
 							String testrayTestcaseName = null;
 
-							while ((line = bufferedReader.readLine()) != null) {
+							for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
 								lineNumber++;
 
 								lines.add(line);
@@ -4144,10 +4142,11 @@ go]]></replacevalue>
 
 
 							FileWriter fileWriter = new FileWriter(file);
+
 							BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-							for (String currentLine : lines) {
-								bufferedWriter.write(currentLine);
+							for (String line : lines) {
+								bufferedWriter.write(line);
 								bufferedWriter.write('\n');
 							}
 

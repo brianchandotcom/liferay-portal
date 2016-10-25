@@ -305,6 +305,14 @@ Sincerely,<br />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no sources." />
 	</command>
 
+	<command name="testDatabaseConnection">
+		<execute function="AssertClick" locator1="ReportsAdminEditSource#TEST_DATABASE_CONNECTION_BUTTON" value1="Test Database Connection" />
+
+		<execute function="AssertTextEquals" locator1="ReportsAdminEditSource#TEST_DATABASE_CONNECTION_SUCCESS_MESSAGE" value1="You have successfully connected to the database." />
+
+		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
+	</command>
+
 	<command name="viewNoReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 

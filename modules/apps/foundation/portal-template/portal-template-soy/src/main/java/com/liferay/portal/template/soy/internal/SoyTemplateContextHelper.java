@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,6 +43,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.BundleTracker;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 
@@ -102,6 +107,14 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 		contextObjects.put("locale", themeDisplay.getLocale());
 		contextObjects.put("themeDisplay", themeDisplay);
+
+		// Custom template context contributors
+
+		for (TemplateContextContributor templateContextContributor :
+				_templateContextContributors) {
+
+			templateContextContributor.prepare(contextObjects, request);
+		}
 	}
 
 	@Activate
@@ -123,11 +136,32 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 		_bundleTracker.close();
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + TemplateContextContributor.TYPE_GLOBAL + ")",
+		unbind = "unregisterTemplateContextContributor"
+	)
+	protected void registerTemplateContextContributor(
+		TemplateContextContributor templateContextContributor) {
+
+		_templateContextContributors.add(templateContextContributor);
+	}
+
+	protected synchronized void unregisterTemplateContextContributor(
+		TemplateContextContributor templateContextContributor) {
+
+		_templateContextContributors.remove(templateContextContributor);
+	}
+
 	private final Map<Long, Bundle> _bundleProvidersMap =
 		new ConcurrentHashMap<>();
 	private BundleTracker<List<BundleCapability>> _bundleTracker;
 	private JSONDeserializer<Object> _jsonDeserializer;
 	private JSONSerializer _jsonSerializer;
+	private final List<TemplateContextContributor>
+		_templateContextContributors = new CopyOnWriteArrayList<>();
 
 	@Reference(
 		target = "(lang.type=" + TemplateConstants.LANG_TYPE_SOY + ")",

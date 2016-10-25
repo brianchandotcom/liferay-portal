@@ -64,9 +64,13 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 		DetailAST parameterDefAST = detailAST.findFirstToken(
 			TokenTypes.PARAMETER_DEF);
 
+		String exceptionVariableName = _getName(parameterDefAST);
+
+		_checkUnthrownException(detailAST, exceptionVariableName);
+
 		if (_containsVariable(
 				detailAST.findFirstToken(TokenTypes.SLIST),
-				_getName(parameterDefAST))) {
+				exceptionVariableName)) {
 
 			return;
 		}
@@ -134,6 +138,35 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 			}
 
 			exceptionClass = exceptionSuperClass;
+		}
+	}
+
+	private void _checkUnthrownException(
+		DetailAST detailAST, String variableName) {
+
+		List<DetailAST> literalNewASTList = DetailASTUtil.getAllChildTokens(
+			detailAST, true, TokenTypes.LITERAL_NEW);
+
+		for (DetailAST literalNewAST : literalNewASTList) {
+			String name = _getName(literalNewAST);
+
+			if ((name == null) || !name.endsWith("Exception")) {
+				continue;
+			}
+
+			DetailAST parentAST = literalNewAST.getParent();
+
+			if (parentAST.getType() != TokenTypes.EXPR) {
+				continue;
+			}
+
+			parentAST = parentAST.getParent();
+
+			if (parentAST.getType() == TokenTypes.SLIST) {
+				log(
+					literalNewAST.getLineNo(), MSG_UNPROCESSED_EXCEPTION,
+					variableName);
+			}
 		}
 	}
 

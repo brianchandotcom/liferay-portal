@@ -64,6 +64,16 @@
 	}
 </aui:script>
 
+<aui:script>
+	if (Liferay.Data.ICONS_INLINE_SVG) {
+		svg4everybody(
+			{
+				polyfill: true
+			}
+		);
+	}
+</aui:script>
+
 <%
 Group group = null;
 

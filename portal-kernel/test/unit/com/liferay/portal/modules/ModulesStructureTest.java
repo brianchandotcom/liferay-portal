@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -36,6 +37,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -175,7 +177,6 @@ public class ModulesStructureTest {
 							dirPath, gitRepoGitIgnoreTemplate);
 					}
 					else if (!dirPath.equals(_modulesDirPath) &&
-							 !_isInGitRepo(dirPath) &&
 							 Files.exists(dirPath.resolve("build.xml"))) {
 
 						_testAntPluginIgnoreFiles(dirPath);
@@ -292,6 +293,57 @@ public class ModulesStructureTest {
 		}
 
 		return false;
+	}
+
+	private String _getAntPluginLibGitIgnore(Path dirPath) throws IOException {
+		Path liferayPluginPackagePropertiesPath = dirPath.resolve(
+			"docroot/WEB-INF/liferay-plugin-package.properties");
+
+		if (Files.notExists(liferayPluginPackagePropertiesPath)) {
+			return null;
+		}
+
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(
+				liferayPluginPackagePropertiesPath)) {
+
+			properties.load(inputStream);
+		}
+
+		Set<String> jars = new TreeSet<>();
+
+		jars.add("commons-logging.jar");
+		jars.add("log4j.jar");
+		jars.add("util-bridges.jar");
+		jars.add("util-java.jar");
+		jars.add("util-taglib.jar");
+
+		String[] portalDependencyJars = StringUtil.split(
+			properties.getProperty(
+				"portal-dependency-jars",
+				properties.getProperty("portal.dependency.jars")));
+
+		for (String portalDependencyJar : portalDependencyJars) {
+			jars.add(portalDependencyJar);
+		}
+
+		StringBundler sb = new StringBundler(jars.size() * 3 - 1);
+
+		boolean first = true;
+
+		for (String jar : jars) {
+			if (!first) {
+				sb.append(CharPool.NEW_LINE);
+			}
+
+			first = false;
+
+			sb.append(CharPool.SLASH);
+			sb.append(jar);
+		}
+
+		return sb.toString();
 	}
 
 	private String _getAntPluginsGitIgnore(final Path dirPath, String gitIgnore)
@@ -468,24 +520,16 @@ public class ModulesStructureTest {
 	}
 
 	private void _testAntPluginIgnoreFiles(Path dirPath) throws IOException {
-		Path parentDirPath = dirPath.getParent();
+		_testEquals(
+			dirPath.resolve("docroot/WEB-INF/lib/.gitignore"),
+			_getAntPluginLibGitIgnore(dirPath));
 
-		String expectedGitIgnore = _getAntPluginsGitIgnore(parentDirPath, null);
+		if (!_isInGitRepo(dirPath)) {
+			Path parentDirPath = dirPath.getParent();
 
-		Path gitIgnorePath = parentDirPath.resolve(".gitignore");
-
-		if (Validator.isNotNull(expectedGitIgnore)) {
-			Assert.assertTrue(
-				"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
-
-			String gitIgnore = _read(gitIgnorePath);
-
-			Assert.assertEquals(
-				"Incorrect " + gitIgnorePath, expectedGitIgnore, gitIgnore);
-		}
-		else {
-			Assert.assertFalse(
-				"Forbidden " + gitIgnorePath, Files.exists(gitIgnorePath));
+			_testEquals(
+				parentDirPath.resolve(".gitignore"),
+				_getAntPluginsGitIgnore(parentDirPath, null));
 		}
 	}
 
@@ -499,6 +543,19 @@ public class ModulesStructureTest {
 
 		Assert.assertEquals(
 			"Incorrect " + buildGradlePath, _APP_BUILD_GRADLE, buildGradle);
+	}
+
+	private void _testEquals(Path path, String expected) throws IOException {
+		if (Validator.isNotNull(expected)) {
+			Assert.assertTrue("Missing " + path, Files.exists(path));
+
+			String actual = _read(path);
+
+			Assert.assertEquals("Incorrect " + path, expected, actual);
+		}
+		else {
+			Assert.assertFalse("Forbidden " + path, Files.exists(path));
+		}
 	}
 
 	private void _testGitIgnoreFile(Path path) throws IOException {

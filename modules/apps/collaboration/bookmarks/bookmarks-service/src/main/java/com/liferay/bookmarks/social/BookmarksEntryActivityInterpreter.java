@@ -20,7 +20,9 @@ import com.liferay.bookmarks.service.permission.BookmarksEntryPermissionChecker;
 import com.liferay.bookmarks.util.BookmarksResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -54,7 +56,9 @@ public class BookmarksEntryActivityInterpreter
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return BookmarksResourceBundleLoader.INSTANCE;
+		return new AggregateResourceBundleLoader(
+			BookmarksResourceBundleLoader.INSTANCE,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	@Override

@@ -22,9 +22,11 @@ import com.liferay.calendar.social.CalendarActivityKeys;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
@@ -147,7 +149,9 @@ public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private final ResourceBundleLoader _resourceBundleLoader =
-		new ClassResourceBundleLoader(
-			"content.Language", CalendarActivityInterpreter.class);
+		new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader(
+				"content.Language", CalendarActivityInterpreter.class),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 }

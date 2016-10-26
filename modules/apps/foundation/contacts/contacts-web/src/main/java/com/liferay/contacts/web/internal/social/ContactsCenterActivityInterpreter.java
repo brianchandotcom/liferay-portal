@@ -18,8 +18,10 @@ import com.liferay.contacts.web.internal.constants.ContactsPortletKeys;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -94,7 +96,9 @@ public class ContactsCenterActivityInterpreter
 	private static final String[] _CLASS_NAMES = {User.class.getName()};
 
 	private final ResourceBundleLoader _resourceBundleLoader =
-		new ClassResourceBundleLoader(
-			"content.Language", ContactsCenterActivityInterpreter.class);
+		new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader(
+				"content.Language", ContactsCenterActivityInterpreter.class),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 }

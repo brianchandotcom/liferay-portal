@@ -27,8 +27,10 @@ import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -270,7 +272,9 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 	private KBCommentLocalService _kbCommentLocalService;
 	private KBTemplateLocalService _kbTemplateLocalService;
 	private final ResourceBundleLoader _resourceBundleLoader =
-		new ClassResourceBundleLoader(
-			"content.Language", KBActivityInterpreter.class);
+		new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader(
+				"content.Language", KBActivityInterpreter.class),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 }

@@ -39,11 +39,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 
 /**
  * @author Raymond Augé
  */
 @Component(
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderModulesServlet",
@@ -52,17 +54,18 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {JSLoaderModulesServlet.class, Servlet.class}
 )
+@Designate(ocd = Details.class)
 public class JSLoaderModulesServlet extends HttpServlet {
 
 	@Activate
 	@Modified
 	protected void activate(
-			ComponentContext componentContext, Map<String, Object> properties)
+			ComponentContext componentContext, Details details)
 		throws Exception {
 
 		_logger = new Logger(componentContext.getBundleContext());
 
-		setDetails(Converter.cnv(Details.class, properties));
+		_details = details;
 	}
 
 	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {

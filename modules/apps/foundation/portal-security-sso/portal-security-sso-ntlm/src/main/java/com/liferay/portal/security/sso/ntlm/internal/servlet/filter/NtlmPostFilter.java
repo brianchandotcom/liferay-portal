@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.sso.ntlm.internal.servlet.filter;
 
+import com.liferay.portal.instances.service.PortalInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
-import com.liferay.portal.util.PortalInstances;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -70,7 +70,7 @@ public class NtlmPostFilter extends BaseFilter {
 			return false;
 		}
 
-		long companyId = PortalInstances.getCompanyId(request);
+		long companyId = _portalInstanceLocalService.getCompanyId(request);
 
 		try {
 			NtlmConfiguration ntlmConfiguration =
@@ -141,5 +141,8 @@ public class NtlmPostFilter extends BaseFilter {
 
 	@Reference
 	private NtlmFilter _ntlmFilter;
+
+	@Reference
+	private PortalInstanceLocalService _portalInstanceLocalService;
 
 }

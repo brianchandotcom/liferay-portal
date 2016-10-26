@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * @author Lino Alves
  */
-public class UpgradeClassNames extends WorkflowClassNameUpgradeProcess {
+public class UpgradeClassNames extends BaseUpgradeClassNames {
 
 	@Override
 	protected void updateClassName(String tableName, String columnName) {

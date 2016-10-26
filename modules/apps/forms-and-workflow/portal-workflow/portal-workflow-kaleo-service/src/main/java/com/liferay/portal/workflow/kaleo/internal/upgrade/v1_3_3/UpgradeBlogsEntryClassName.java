@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.upgrade.util.Table;
-import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.WorkflowClassNameUpgradeProcess;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.BaseUpgradeClassNames;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
@@ -32,8 +32,7 @@ import java.util.Objects;
 /**
  * @author Leonardo Barros
  */
-public class UpgradeBlogsEntryClassName
-	extends WorkflowClassNameUpgradeProcess {
+public class UpgradeBlogsEntryClassName extends BaseUpgradeClassNames {
 
 	@Override
 	protected void updateClassName(String tableName, String columnName) {

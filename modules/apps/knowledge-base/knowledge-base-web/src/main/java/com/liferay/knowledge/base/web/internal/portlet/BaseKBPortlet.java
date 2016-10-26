@@ -127,30 +127,6 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 		}
 	}
 
-	public void compareVersions(RenderRequest renderRequest)
-		throws PortletException {
-
-		long resourcePrimKey = ParamUtil.getLong(
-			renderRequest, "resourcePrimKey");
-		double sourceVersion = ParamUtil.getDouble(
-			renderRequest, "sourceVersion");
-		double targetVersion = ParamUtil.getDouble(
-			renderRequest, "targetVersion");
-
-		String diffHtmlResults = null;
-
-		try {
-			diffHtmlResults = AdminUtil.getKBArticleDiff(
-				resourcePrimKey, GetterUtil.getInteger(sourceVersion),
-				GetterUtil.getInteger(targetVersion), "content");
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-
-		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-	}
-
 	public void deleteKBArticle(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -571,6 +547,30 @@ public abstract class BaseKBPortlet extends MVCPortlet {
 
 			throw new PortalException(cause);
 		}
+	}
+
+	protected void compareVersions(RenderRequest renderRequest)
+		throws PortletException {
+
+		long resourcePrimKey = ParamUtil.getLong(
+			renderRequest, "resourcePrimKey");
+		double sourceVersion = ParamUtil.getDouble(
+			renderRequest, "sourceVersion");
+		double targetVersion = ParamUtil.getDouble(
+			renderRequest, "targetVersion");
+
+		String diffHtmlResults = null;
+
+		try {
+			diffHtmlResults = AdminUtil.getKBArticleDiff(
+				resourcePrimKey, GetterUtil.getInteger(sourceVersion),
+				GetterUtil.getInteger(targetVersion), "content");
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		renderRequest.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
 	}
 
 	@Override

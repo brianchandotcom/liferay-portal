@@ -579,7 +579,7 @@
 		</execute>
 	</command>
 
-	<command name="TestUserDatabaseConnection" priority="3">
+	<command name="TestDatabaseConnection" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">

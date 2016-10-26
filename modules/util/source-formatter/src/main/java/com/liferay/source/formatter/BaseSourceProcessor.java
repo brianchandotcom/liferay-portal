@@ -1515,6 +1515,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		linePart = formatIncorrectSyntax(linePart, "catch(", "catch (", true);
 		linePart = formatIncorrectSyntax(linePart, "else{", "else {", true);
+		linePart = formatIncorrectSyntax(
+			linePart, "else if(", "else if (", true);
 		linePart = formatIncorrectSyntax(linePart, "for(", "for (", true);
 		linePart = formatIncorrectSyntax(linePart, "if(", "if (", true);
 		linePart = formatIncorrectSyntax(linePart, "while(", "while (", true);

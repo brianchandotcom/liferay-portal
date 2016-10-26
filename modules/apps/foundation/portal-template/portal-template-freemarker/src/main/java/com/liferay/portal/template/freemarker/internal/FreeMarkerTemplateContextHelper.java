@@ -169,7 +169,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 		_templateContextContributors.add(templateContextContributor);
 	}
 
-	protected synchronized void unregisterTemplateContextContributor(
+	protected void unregisterTemplateContextContributor(
 		TemplateContextContributor templateContextContributor) {
 
 		_templateContextContributors.remove(templateContextContributor);

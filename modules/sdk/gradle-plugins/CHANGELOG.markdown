@@ -484,9 +484,8 @@ dependency to version 2.0.4.
 version 2.0.2.
 
 ### Removed
-- [LPS-66906]: It is no longer possible to set the `removeShrinkwrappedUrls`
-property of `NpmInstallTask` via the `nodejs.npm.remove.shrinkwrapped.urls`
-project property.
+- [LPS-66906]: The `removeShrinkwrappedUrls` property of `NpmInstallTask` can no
+longer be set via the `nodejs.npm.remove.shrinkwrapped.urls` project property.
 
 ## 3.0.23 - 2016-10-24
 

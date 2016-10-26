@@ -33,12 +33,12 @@ unwanted dependencies from the generated `npm-shrinkwrap.json` file.
 ## 1.3.0 - 2016-10-21
 
 ### Added
-- [LPS-66906]: Allow to use callables and closures as value for the
+- [LPS-66906]: Add the ability to use callables and closures as a value for the
 `removeShrinkwrappedUrls` property of `NpmInstallTask`.
 
 ### Changed
-- [LPS-66906]: The `removeShrinkwrappedUrls` property of all tasks that extend
-`NpmInstallTask` is set to `true` by default if the property `registry` has a
+- [LPS-66906]: Set the `removeShrinkwrappedUrls` property of all tasks that
+extend `NpmInstallTask` to `true` by default if the property `registry` has a
 value.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906

@@ -241,14 +241,6 @@ public class HtmlImpl implements Html {
 				if (_VALID_CHARS[c]) {
 					sb.append(c);
 				}
-				else if ((mode == ESCAPE_MODE_ATTRIBUTE) &&
-						 ((c == CharPool.TAB) || (c == CharPool.NEW_LINE) ||
-						  (c == CharPool.RETURN))) {
-
-					sb.append(CharPool.SPACE);
-
-					modified = true;
-				}
 				else {
 					sb.append(prefix);
 

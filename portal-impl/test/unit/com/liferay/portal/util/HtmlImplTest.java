@@ -103,6 +103,17 @@ public class HtmlImplTest {
 	}
 
 	@Test
+	public void testEscapeHtmlAttributeMultiline() {
+		String original = "\tThis is\na multi-line\ntitle\r";
+
+		String escaped = _htmlImpl.escapeAttribute(original);
+
+		String extracted = _htmlImpl.extractText(escaped);
+
+		Assert.assertEquals(original, extracted);
+	}
+
+	@Test
 	public void testEscapeHtmlEncodingAmpersand() {
 		Assert.assertEquals("&amp;", _htmlImpl.escape("&"));
 	}

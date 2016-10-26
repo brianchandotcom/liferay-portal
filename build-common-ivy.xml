@@ -56,6 +56,7 @@
 
 	<macrodef name="mirrors-get">
 		<attribute name="dest" />
+		<attribute default="false" name="force" />
 		<attribute default="false" name="ignoreerrors" />
 		<attribute name="src" />
 		<attribute default="true" name="trylocalnetwork" />
@@ -91,6 +92,16 @@
 				regexp=".+/(.+)"
 				replace="\1"
 			/>
+
+			<if>
+				<and>
+					<equals arg1="@{force}" arg2="true" />
+					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+				</and>
+				<then>
+					<delete file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+				</then>
+			</if>
 
 			<if>
 				<not>

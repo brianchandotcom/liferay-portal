@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.service.persistence.OrganizationUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -140,9 +139,10 @@ public class BlogsAggregatorExportImportPortletPreferencesProcessor
 		String className = clazz.getName();
 
 		if (className.equals(Organization.class.getName())) {
-			Organization organization = OrganizationUtil.fetchByUuid_C_First(
-				portletPreferencesOldValue, portletDataContext.getCompanyId(),
-				null);
+			Organization organization =
+				_organizationLocalService.fetchOrganizationByUuidAndCompanyId(
+					portletPreferencesOldValue,
+					portletDataContext.getCompanyId());
 
 			if (organization != null) {
 				return organization.getOrganizationId();

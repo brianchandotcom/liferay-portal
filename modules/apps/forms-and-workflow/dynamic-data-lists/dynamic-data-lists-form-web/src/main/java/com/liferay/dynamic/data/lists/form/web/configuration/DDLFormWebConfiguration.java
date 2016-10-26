@@ -32,6 +32,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DDLFormWebConfiguration {
 
 	@Meta.AD(
+		deflt = "1", description = "autosave-interval-description",
+		name = "autosave-interval-name", required = false
+	)
+	public int autosaveInterval();
+
+	@Meta.AD(
 		deflt = "descriptive", optionLabels = {"Descriptive", "List"},
 		optionValues = {"descriptive", "list"}, required = false
 	)

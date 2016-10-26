@@ -4,13 +4,16 @@ AUI.add(
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
-		var AUTOSAVE_INTERVAL = 60000;
+		var MINUTE = 60000;
 
 		var TPL_BUTTON_SPINNER = '<span aria-hidden="true"><span class="icon-spinner icon-spin"></span></span>';
 
 		var DDLPortlet = A.Component.create(
 			{
 				ATTRS: {
+					autosaveInterval: {
+					},
+
 					autosaveURL: {
 					},
 
@@ -154,7 +157,11 @@ AUI.add(
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 
-						instance._intervalId = setInterval(A.bind('_autosave', instance), AUTOSAVE_INTERVAL);
+						var autosaveInterval = instance.get('autosaveInterval');
+
+						if (autosaveInterval > 0) {
+							instance._intervalId = setInterval(A.bind('_autosave', instance), autosaveInterval * MINUTE);
+						}
 					},
 
 					destructor: function() {

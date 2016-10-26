@@ -158,7 +158,7 @@
 			<message key="variable.invalidName" value="'sub' should be followed by a lowercase character for variable ''{0}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.TransactionalTestRuleCheck">
-			<message key="import.invalid" value="LPS-68908: Avoid using import TransactionalTestRuleCheck in *StagedModelDataHandlerTest" />
+			<message key="import.invalid" value="Avoid using import TransactionalTestRuleCheck in *StagedModelDataHandlerTest, see LPS-68908" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.UnprocessedException">
 			<message key="exception.unprocessed" value="Unprocessed exception ''{0}'', see LPS-36174" />

@@ -1573,12 +1573,32 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				src="@{patching.tool.zip.url}"
 			/>
 
-			<unzip dest="@{bundles.dir}">
-				<fileset
-					dir="${basedir}"
-					includes="patching-tool*"
-				/>
-			</unzip>
+			<trycatch>
+				<try>
+					<unzip dest="@{bundles.dir}">
+						<fileset
+							dir="${basedir}"
+							includes="patching-tool*"
+						/>
+					</unzip>
+				</try>
+				<catch>
+					<echo>${error.message} Re-fetching zip file. </echo>
+
+					<mirrors-get
+						dest="${basedir}"
+						force="true"
+						src="@{patching.tool.zip.url}"
+					/>
+
+					<unzip dest="@{bundles.dir}">
+						<fileset
+							dir="${basedir}"
+							includes="patching-tool*"
+						/>
+					</unzip>
+				</catch>
+			</trycatch>
 
 			<chmod perm="a+x">
 				<fileset dir="@{bundles.dir}/patching-tool">

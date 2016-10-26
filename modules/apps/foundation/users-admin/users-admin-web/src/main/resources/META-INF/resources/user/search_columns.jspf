@@ -31,7 +31,7 @@
 			</h5>
 
 			<h6 class="text-default">
-				<span><%= user2.getScreenName() %></span>
+				<%= user2.getScreenName() %>
 			</h6>
 		</liferay-ui:search-container-column-text>
 
@@ -62,13 +62,12 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="important table-cell-content"
 			href="<%= rowURL %>"
 			name="name"
 			orderable="<%= true %>"
-		>
-			<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= user2.getFullName() %></strong></aui:a>
-		</liferay-ui:search-container-column-text>
+			value="<%= user2.getFullName() %>"
+		/>
 
 		<liferay-ui:search-container-column-text
 			cssClass="table-cell-content"

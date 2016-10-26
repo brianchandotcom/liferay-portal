@@ -2441,7 +2441,8 @@ ${tomcat-gc-log}
 				]]>
 			</beanshell>
 
-			<echo file="test.class.file.names.properties">${test.class.file.names.properties.content}</echo>
+			<echo file="test.class.file.names.properties">TEST_CLASS_GROUP_0=com/liferay/blogs/service/impl/test/BlogsEntryLocalServiceImplTest.class,com/liferay/portal/service/UserLocalServiceTest.class,com/liferay/source/formatter/SourceFormatterTest.class
+TEST_CLASS_GROUPS=0</echo>
 		</sequential>
 	</macrodef>
 

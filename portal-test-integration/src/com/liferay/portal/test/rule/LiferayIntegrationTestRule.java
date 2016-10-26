@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.BaseTestRule.StatementWrapper;
+import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.portal.kernel.test.rule.callback.CompanyProviderTestCallback;
 import com.liferay.portal.kernel.test.rule.callback.DeleteAfterTestRunTestCallback;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.test.rule.callback.CITimeoutTestCallback;
 import com.liferay.portal.test.rule.callback.ClearThreadLocalTestCallback;
 import com.liferay.portal.test.rule.callback.HotDeployAwaitTestCallback;
 import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
@@ -58,7 +58,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		List<TestRule> testRules = new ArrayList<>();
 
 		if (System.getenv("JENKINS_HOME") != null) {
-			testRules.add(_ciTimeoutTestRule);
+			testRules.add(TimeoutTestRule.INSTANCE);
 		}
 
 		testRules.add(LogAssertionTestRule.INSTANCE);
@@ -74,8 +74,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 		return testRules.toArray(new TestRule[testRules.size()]);
 	}
 
-	private static final TestRule _ciTimeoutTestRule = new BaseTestRule<>(
-		CITimeoutTestCallback.INSTANCE);
 	private static final TestRule _clearThreadLocalTestRule =
 		new BaseTestRule<>(ClearThreadLocalTestCallback.INSTANCE);
 	private static final TestRule _companyProviderTestRule = new BaseTestRule<>(

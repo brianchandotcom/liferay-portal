@@ -158,7 +158,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 			String path = FileUtil.getAbsolutePath(copy.getDestinationDir());
 
-			path += "/src/**/resources/*.soy";
+			path += "/META-INF/resources/**/*.soy";
 
 			transpileJSTask.soyDependency(path);
 		}

@@ -134,6 +134,8 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
 				UpgradeClassNames(),
 			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
+				UpgradeKBComment(),
+			new com.liferay.knowledge.base.internal.upgrade.v2_0_0.
 				UpgradeRepository());
 	}
 

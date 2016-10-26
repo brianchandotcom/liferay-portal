@@ -837,7 +837,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (javaSource &&
-					trimmedLine.matches("^\\} (catch|else|finally) .*")) {
+					trimmedLine.matches("^\\} ?(catch|else|finally) .*")) {
 
 					processMessage(
 						fileName, "There should be a line break after '}'",

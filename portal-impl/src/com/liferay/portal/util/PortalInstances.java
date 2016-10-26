@@ -122,38 +122,6 @@ public class PortalInstances {
 		_instance._removeCompanyId(companyId);
 	}
 
-	public static void sync() {
-		try {
-			long[] initializedCompanyIds = PortalUtil.getCompanyIds();
-
-			List<Long> removeableIds = ListUtil.toList(initializedCompanyIds);
-
-			List<Company> companies = CompanyLocalServiceUtil.getCompanies();
-
-			for (Company company : companies) {
-				long companyId = company.getCompanyId();
-
-				removeableIds.remove(companyId);
-
-				if (ArrayUtil.contains(initializedCompanyIds, companyId)) {
-					continue;
-				}
-
-				ServletContext portalContext = ServletContextPool.get(
-					PortalUtil.getPathContext());
-
-				initCompany(portalContext, company.getWebId());
-			}
-
-			for (long companyId : removeableIds) {
-				removeCompany(companyId);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
 	private PortalInstances() {
 		_companyIds = new long[0];
 		_autoLoginIgnoreHosts = SetUtil.fromArray(

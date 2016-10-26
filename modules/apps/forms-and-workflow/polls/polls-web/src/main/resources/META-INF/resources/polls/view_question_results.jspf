@@ -166,7 +166,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 			}
 
 			if (user2 != null) {
-				row.addText(HtmlUtil.escape(user2.getFullName()), user2.getDisplayURL(themeDisplay));
+				row.addText(HtmlUtil.escape(user2.getFullName()), user2.isActive() ? user2.getDisplayURL(themeDisplay) : null);
 			}
 			else {
 				row.addText(String.valueOf(vote.getUserId()));

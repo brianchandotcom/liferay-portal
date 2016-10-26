@@ -94,7 +94,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									User messageUser = discussionComment.getUser();
 									%>
 
-									<aui:a cssClass="author-link" href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
+									<aui:a cssClass="author-link" href="<%= ((messageUser != null) && messageUser.isActive()) ? messageUser.getDisplayURL(themeDisplay) : null %>">
 										<%= HtmlUtil.escape(discussionComment.getUserName()) %>
 
 										<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">

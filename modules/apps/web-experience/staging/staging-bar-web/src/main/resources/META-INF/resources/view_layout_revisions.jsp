@@ -137,7 +137,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 								%>
 
 								<c:choose>
-									<c:when test="<%= curUser != null %>">
+									<c:when test="<%= (curUser != null) && curUser.isActive() %>">
 										<a class="user-handle" href="<%= curUser.getDisplayURL(themeDisplay) %>">
 											<%= HtmlUtil.escape(curUser.getFullName()) %>
 										</a>

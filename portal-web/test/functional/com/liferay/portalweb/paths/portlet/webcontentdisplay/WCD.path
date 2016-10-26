@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEB_CONTENT_INLINE_IMAGE</td>
+	<td>//img[contains(@src,'Document')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

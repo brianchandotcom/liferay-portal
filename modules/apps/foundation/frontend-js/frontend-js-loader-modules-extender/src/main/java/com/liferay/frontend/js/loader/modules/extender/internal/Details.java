@@ -18,12 +18,14 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+
 /**
  * @author Raymond Augé
  */
 @ExtendedObjectClassDefinition(category = "foundation")
-@Meta.OCD(
-	id = "com.liferay.frontend.js.loader.modules.extender.LoaderModulesServlet",
+@ObjectClassDefinition(
+	id = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	localization = "content/Language", name = "details.configuration.name"
 )
 public @interface Details {

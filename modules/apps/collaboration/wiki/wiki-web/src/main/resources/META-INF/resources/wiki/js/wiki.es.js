@@ -4,6 +4,9 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
 /**
  * WikiPortlet
+ *
+ * @abstract
+ * @extends {Component}
  */
 class WikiPortlet extends PortletBase {
 	/**
@@ -23,28 +26,34 @@ class WikiPortlet extends PortletBase {
 			this.currentFormatLabel = formatSelect.options[formatSelect.selectedIndex].text.trim();
 			this.currentFormatIndex = formatSelect.selectedIndex;
 
-			this.eventHandler_.add(formatSelect.addEventListener('change', (e) => { this.changeWikiFormat_(e); }));
+			this.eventHandler_.add(formatSelect.addEventListener('change', (e) => {
+				this.changeWikiFormat_(e);
+			}));
 		}
 
 		let publishButton = this.one('#publishButton');
 
 		if (publishButton) {
-			this.eventHandler_.add(publishButton.addEventListener('click', (e) => { this.publishPage_(e); }));
+			this.eventHandler_.add(publishButton.addEventListener('click', (e) => {
+				this.publishPage_(e);
+			}));
 		}
 
 		let saveButton = this.one('#saveButton');
 
 		if (saveButton) {
-			this.eventHandler_.add(saveButton.addEventListener('click', (e) => { this.saveDraft_(e); }));
+			this.eventHandler_.add(saveButton.addEventListener('click', (e) => {
+				this.saveDraft_(e);
+			}));
 		}
 	}
 
 	/**
-	 * Changes the wiki page format, only if the
-	 * user accepts that some formatting may lose.
+	 * Changes the wiki page format. Previously user is informed that she
+	 * may lose some formatting with a confirm dialog.
 	 *
-	 * @param  {Event} event The select event that triggered the change action
 	 * @protected
+	 * @param {Event} event The select event that triggered the change action
 	 */
 	changeWikiFormat_(event) {
 		let formatSelect = event.currentTarget;
@@ -59,16 +68,15 @@ class WikiPortlet extends PortletBase {
 
 		if (confirm(confirmMessage)) {
 			this.savePage_();
-		}
-		else {
+		} else {
 			formatSelect.selectedIndex = this.currentFormatIndex;
 		}
 	}
 
 	/**
-	 * Checks if there are images that have not
-	 * been uploaded yet, and removes them if user accepts
-	 * before saving the page
+	 * Checks if there are images that have not been uploaded yet.
+	 * In that case, it removes them after asking
+	 * confirmation to the user and then saves the page.
 	 *
 	 * @protected
 	 */
@@ -78,13 +86,14 @@ class WikiPortlet extends PortletBase {
 		if (tempImages.length > 0) {
 			if (confirm(this.strings.confirmDiscardImages)) {
 				tempImages.forEach(
-					node => { node.parentElement.remove(); }
+					node => {
+						node.parentElement.remove();
+					}
 				);
 
 				this.savePage_();
 			}
-		}
-		else {
+		} else {
 			this.savePage_();
 		}
 	}
@@ -99,7 +108,7 @@ class WikiPortlet extends PortletBase {
 	}
 
 	/**
-	 * Publish the wiki page
+	 * Publish the wiki page.
 	 *
 	 * @protected
 	 */
@@ -109,7 +118,7 @@ class WikiPortlet extends PortletBase {
 	}
 
 	/**
-	 * Saves the wiki page as a draft
+	 * Saves the wiki page as a draft.
 	 *
 	 * @protected
 	 */
@@ -119,7 +128,7 @@ class WikiPortlet extends PortletBase {
 	}
 
 	/**
-	 * Submits the wiki page
+	 * Submits the wiki page.
 	 *
 	 * @protected
 	 */
@@ -144,12 +153,15 @@ class WikiPortlet extends PortletBase {
 
 /**
  * WikiPortlet State definition.
- * @type {!Object}
+ * @ignore
  * @static
+ * @type {!Object}
  */
 WikiPortlet.STATE = {
 	/**
-	 * WikiPortlet Constants
+	 * Portlet's constants
+	 * @instance
+	 * @memberof WikiPortlet
 	 * @type {!Object}
 	 */
 	constants: {
@@ -157,8 +169,10 @@ WikiPortlet.STATE = {
 	},
 
 	/**
-	 * The current action (CMD.ADD, CMD.UPDATE, ...) for the
-	 * wiki page.
+	 * The current action (CMD.ADD, CMD.UPDATE, ...)
+	 * for the wiki page
+	 * @instance
+	 * @memberof WikiPortlet
 	 * @type {String}
 	 */
 	currentAction: {
@@ -166,7 +180,9 @@ WikiPortlet.STATE = {
 	},
 
 	/**
-	 * String messages
+	 * Portlet's messages
+	 * @instance
+	 * @memberof WikiPortlet
 	 * @type {Object}
 	 */
 	strings: {

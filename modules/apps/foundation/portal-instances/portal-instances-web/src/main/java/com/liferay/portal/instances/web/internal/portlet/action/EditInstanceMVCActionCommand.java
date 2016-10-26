@@ -14,9 +14,8 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.service.PortalInstanceLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
 import com.liferay.portal.kernel.exception.CompanyWebIdException;
@@ -29,11 +28,8 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalInstances;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -63,7 +59,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		_companyService.deleteCompany(companyId);
 
-		_syncPortalInstances();
+		synchronizePortalInstances();
 	}
 
 	@Override
@@ -110,9 +106,8 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyService(CompanyService companyService) {
-		_companyService = companyService;
+	protected void synchronizePortalInstances() {
+		_portalInstanceLocalService.synchronizePortalInstances();
 	}
 
 	protected void updateInstance(ActionRequest actionRequest)
@@ -138,7 +133,8 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
 
-			PortalInstances.initCompany(servletContext, company.getWebId());
+			_portalInstanceLocalService.initializePortalInstance(
+				servletContext, company.getWebId());
 		}
 		else {
 
@@ -148,21 +144,13 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 				companyId, virtualHostname, mx, maxUsers, active);
 		}
 
-		_syncPortalInstances();
+		synchronizePortalInstances();
 	}
 
-	private void _syncPortalInstances() {
-		MethodHandler methodHandler = new MethodHandler(_syncMethodKey);
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			methodHandler, true);
-
-		ClusterExecutorUtil.execute(clusterRequest);
-	}
-
-	private static final MethodKey _syncMethodKey = new MethodKey(
-		PortalInstances.class, "sync");
-
+	@Reference
 	private CompanyService _companyService;
+
+	@Reference
+	private PortalInstanceLocalService _portalInstanceLocalService;
 
 }

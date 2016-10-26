@@ -24,6 +24,7 @@ import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.FileText;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -190,37 +191,9 @@ public class UnprocessedExceptionCheck extends AbstractCheck {
 	private String _getExceptionClassName(DetailAST parameterDefAST) {
 		DetailAST typeAST = parameterDefAST.findFirstToken(TokenTypes.TYPE);
 
-		DetailAST dotAST = typeAST.findFirstToken(TokenTypes.DOT);
+		FullIdent typeIdent = FullIdent.createFullIdentBelow(typeAST);
 
-		if (dotAST == null) {
-			DetailAST nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
-
-			if (nameAST != null) {
-				return nameAST.getText();
-			}
-
-			return null;
-		}
-
-		String name = StringPool.BLANK;
-
-		while (true) {
-			DetailAST lastChild = dotAST.getLastChild();
-
-			name = StringPool.PERIOD + lastChild.getText() + name;
-
-			DetailAST firstChild = dotAST.getFirstChild();
-
-			if (firstChild.getType() != TokenTypes.DOT) {
-				name = firstChild.getText() + name;
-
-				break;
-			}
-
-			dotAST = firstChild;
-		}
-
-		return name;
+		return typeIdent.getText();
 	}
 
 	private Set<String> _getImportedExceptionClassNames(

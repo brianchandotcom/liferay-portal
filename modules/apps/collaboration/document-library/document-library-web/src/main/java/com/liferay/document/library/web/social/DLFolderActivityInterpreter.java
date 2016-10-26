@@ -19,7 +19,9 @@ import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.util.DLResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
@@ -53,7 +55,9 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return DLResourceBundleLoader.INSTANCE;
+		return new AggregateResourceBundleLoader(
+			DLResourceBundleLoader.INSTANCE,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	@Override

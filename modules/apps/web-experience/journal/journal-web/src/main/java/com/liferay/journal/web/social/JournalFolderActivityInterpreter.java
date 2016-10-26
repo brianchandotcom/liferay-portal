@@ -20,7 +20,9 @@ import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.web.util.JournalResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
@@ -64,7 +66,9 @@ public class JournalFolderActivityInterpreter
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return JournalResourceBundleLoader.INSTANCE;
+		return new AggregateResourceBundleLoader(
+			JournalResourceBundleLoader.INSTANCE,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	@Override

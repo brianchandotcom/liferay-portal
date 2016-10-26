@@ -50,25 +50,27 @@ public class JarUtil {
 		if (PortalRunMode.isTestMode() &&
 			(protocol.equals(Http.HTTP) || protocol.equals(Http.HTTPS))) {
 
-			try {
-				InetAddress.getAllByName("mirrors");
+			String urlString = url.toExternalForm();
 
-				String urlString = url.toExternalForm();
+			if (!urlString.contains("mirrors")) {
+				try {
+					InetAddress.getAllByName("mirrors");
 
-				String newURLString = StringUtil.replace(
-					urlString, "://", "://mirrors/");
+					String newURLString = StringUtil.replace(
+						urlString, "://", "://mirrors/");
 
-				url = new URL(newURLString);
+					url = new URL(newURLString);
 
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Swapping URL from " + urlString + " to " +
-							newURLString);
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Swapping URL from " + urlString + " to " +
+								newURLString);
+					}
 				}
-			}
-			catch (UnknownHostException uhe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to resolve \"mirrors\"");
+				catch (UnknownHostException uhe) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Unable to resolve \"mirrors\"");
+					}
 				}
 			}
 		}

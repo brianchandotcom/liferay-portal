@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.lists.form.web.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
-import aQute.bnd.annotation.metatype.Meta.Type;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
@@ -34,9 +33,9 @@ public interface DDLFormWebConfiguration {
 
 	@Meta.AD(
 		deflt = "1", description = "autosave-interval-description",
-		name = "autosave-interval-name", required = false, type = Type.Integer
+		name = "autosave-interval-name", required = false
 	)
-	public String autosaveInterval();
+	public int autosaveInterval();
 
 	@Meta.AD(
 		deflt = "descriptive", optionLabels = {"Descriptive", "List"},

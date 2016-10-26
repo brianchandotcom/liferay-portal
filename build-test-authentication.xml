@@ -3,6 +3,64 @@
 <project basedir="." name="portal-test-authentication" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
+	<macrodef name="deploy-openam">
+		<sequential>
+			<delete dir="${app.server.deploy.dir}/openam" />
+
+			<if>
+				<not>
+					<available file="${app.server.dir}/openam.war" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${app.server.dir}/${openam.war.name}"
+						src="http://files.liferay.com/private/apps/forgerock/openam/${openam.war.name}"
+						verbose="true"
+					/>
+
+					<move
+						file="${app.server.dir}/${openam.war.name}"
+						tofile="${app.server.deploy.dir}/openam.war"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="unzip-openam-config">
+		<sequential>
+			<delete dir="${openam.config.dir}" />
+
+			<if>
+				<not>
+					<available file="${app.server.parent.dir}/${openam.config.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${app.server.parent.dir}/${openam.config.zip.name}"
+						src="http://files.liferay.com/private/apps/forgerock/openam/${openam.config.zip.name}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<unzip
+				dest="/root"
+				src="${app.server.parent.dir}/${openam.config.zip.name}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<target name="delete-openam-config">
+		<delete dir="${openam.config.dir}" />
+	</target>
+
+	<target name="setup-openam">
+		<deploy-openam />
+
+		<unzip-openam-config />
+	</target>
+
 	<target name="verify-token-based-login">
 		<exec executable="curl" outputproperty="curl.output">
 		    <arg line="-H SM_USER:test@liferay.com localhost:8080" />

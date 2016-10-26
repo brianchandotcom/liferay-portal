@@ -161,6 +161,15 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
+	<command name="configureOpenSSO">
+		<execute function="Check" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGIN_URL_FIELD" value1="${OpenSSOLoginURL}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_LOGOUT_URL_FIELD" value1="${OpenSSOLogoutURL}" />
+		<execute function="Type" locator1="PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_SERVICE_URL_FIELD" value1="${OpenSSOServiceURL}" />
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="configureTimeZone">
 		<execute macro="Navigator#gotoTab">
 			<var name="tab" value="Miscellaneous" />

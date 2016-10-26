@@ -22,7 +22,6 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -186,13 +185,20 @@ public class BlogsActivityInterpreter extends BaseSocialActivityInterpreter {
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.blogs.web)", unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
 	private static final String[] _CLASS_NAMES = {BlogsEntry.class.getName()};
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
-	private final ResourceBundleLoader _resourceBundleLoader =
-		new AggregateResourceBundleLoader(
-			new ClassResourceBundleLoader(
-				"content.Language", BlogsActivityInterpreter.class),
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

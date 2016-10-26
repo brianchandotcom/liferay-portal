@@ -32,7 +32,6 @@ import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 import com.liferay.social.networking.members.social.MembersActivityKeys;
-import com.liferay.social.networking.web.internal.util.SocialNetworkingResourceBundleLoader;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,9 +78,7 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return new AggregateResourceBundleLoader(
-			SocialNetworkingResourceBundleLoader.INSTANCE,
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -150,6 +147,18 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 		_organizationLocalService = organizationLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.social.networking.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -158,6 +167,7 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 	private static final String[] _CLASS_NAMES = {Organization.class.getName()};
 
 	private OrganizationLocalService _organizationLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 
 }

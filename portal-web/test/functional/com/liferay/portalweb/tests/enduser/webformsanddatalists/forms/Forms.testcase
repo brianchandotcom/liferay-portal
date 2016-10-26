@@ -254,6 +254,63 @@
 		</execute>
 	</command>
 
+	<command name="Autosave" priority="3">
+		<description message="This is a use case for LPS-68418." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Forms and Workflow" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Forms" />
+		</execute>
+
+		<execute macro="FormFields#viewTextLabel">
+			<var name="fieldLabel" value="Autosave interval" />
+			<var name="fieldName" value="Autosaveinterval" />
+		</execute>
+
+		<execute macro="FormFields#viewTextValue">
+			<var name="fieldName" value="2" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute function="Pause" locator1="150000" />
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoEdit" />
+	</command>
+
 	<command name="ConfigureAutocompleteWithTextField" priority="5">
 		<property name="portal.acceptance" value="pending" />
 		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutoCompleteWithTextField" />

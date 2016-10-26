@@ -196,7 +196,7 @@ request.setAttribute("view.jsp-recycleBinEntrySearch", entrySearch);
 					if (Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse))) {
 						actionPath = trashRenderer.renderActions(renderRequest, renderResponse);
 					}
-					else if(trashEntry.getRootEntry() == null) {
+					else if (trashEntry.getRootEntry() == null) {
 						actionPath = "/entry_action.jsp";
 					}
 					else {

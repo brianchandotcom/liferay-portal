@@ -45,7 +45,6 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -87,13 +86,6 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 			configurationAdminServiceReference);
 	}
 
-	@AfterClass
-	public static void tearDownClass()
-		throws InvalidSyntaxException, IOException {
-
-		_bundleContext = null;
-	}
-
 	@After
 	@Override
 	public void tearDown() throws Exception {
@@ -108,8 +100,6 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 			deleteConfigurations(company, LDAPServerConfiguration.class);
 			deleteConfigurations(company, SystemLDAPConfiguration.class);
 		}
-
-		_configureProperties = true;
 	}
 
 	@Test

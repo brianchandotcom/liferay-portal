@@ -25,7 +25,9 @@ import com.liferay.document.library.web.internal.util.DLResourceBundleLoader;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -122,7 +124,9 @@ public class DLFileEntryActivityInterpreter
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return DLResourceBundleLoader.INSTANCE;
+		return new AggregateResourceBundleLoader(
+			DLResourceBundleLoader.INSTANCE,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	@Override

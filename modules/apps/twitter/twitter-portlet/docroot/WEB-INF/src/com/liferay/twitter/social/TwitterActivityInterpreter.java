@@ -19,9 +19,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
@@ -105,7 +107,9 @@ public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 	private static final String[] _CLASS_NAMES = {Feed.class.getName()};
 
 	private final ResourceBundleLoader _resourceBundleLoader =
-		new ClassResourceBundleLoader(
-			"content.Language", TwitterActivityInterpreter.class);
+		new AggregateResourceBundleLoader(
+			new ClassResourceBundleLoader(
+				"content.Language", TwitterActivityInterpreter.class),
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 
 }

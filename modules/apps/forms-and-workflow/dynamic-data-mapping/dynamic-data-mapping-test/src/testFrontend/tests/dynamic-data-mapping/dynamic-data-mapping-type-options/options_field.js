@@ -2,8 +2,6 @@
 
 var A = AUI();
 
-var assert = chai.assert;
-
 var createField = function(config) {
 	return new Liferay.DDM.Field.Options(
 		A.merge(

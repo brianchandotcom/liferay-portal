@@ -503,6 +503,7 @@
 			<var name="orgName" value="Organization Name 1" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
+			<var name="userName" value="userfn1 userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -516,6 +517,7 @@
 			<var name="orgName" value="Organization Name 1" />
 			<var name="userFirstName" value="userfn3" />
 			<var name="userLastName" value="userln3" />
+			<var name="userName" value="userfn3 userln3" />
 			<var name="userScreenName" value="usersn3" />
 		</execute>
 
@@ -529,6 +531,7 @@
 			<var name="orgName" value="Organization Name 1" />
 			<var name="userFirstName" value="userfn5" />
 			<var name="userLastName" value="userln5" />
+			<var name="userName" value="userfn5 userln5" />
 			<var name="userScreenName" value="usersn5" />
 		</execute>
 
@@ -592,6 +595,7 @@
 			<var name="orgName" value="Organization Name 2" />
 			<var name="userFirstName" value="Test" />
 			<var name="userLastName" value="Test" />
+			<var name="userName" value="Test Test" />
 			<var name="userScreenName" value="test" />
 		</execute>
 
@@ -730,6 +734,7 @@
 			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
+			<var name="userName" value="userfn1 userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -770,6 +775,7 @@
 			<var name="orgName" value="Organization Name" />
 			<var name="userFirstName" value="userfn2" />
 			<var name="userLastName" value="userln2" />
+			<var name="userName" value="userfn2 userln2" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 
@@ -848,6 +854,7 @@
 			<var name="orgName" value="Site Name M" />
 			<var name="userFirstName" value="Test" />
 			<var name="userLastName" value="Test" />
+			<var name="userName" value="Test Test" />
 			<var name="userScreenName" value="test" />
 		</execute>
 
@@ -1261,6 +1268,7 @@
 			<var name="orgName" value="Canada" />
 			<var name="userFirstName" value="userfn1" />
 			<var name="userLastName" value="userln1" />
+			<var name="userName" value="userfn1 userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -1274,6 +1282,7 @@
 			<var name="orgName" value="United States" />
 			<var name="userFirstName" value="userfn2" />
 			<var name="userLastName" value="userln2" />
+			<var name="userName" value="userfn2 userln2" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 

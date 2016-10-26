@@ -746,7 +746,7 @@ public class ProjectTemplatesTest {
 		_testExists(workspaceProjectDir, "gradle.properties");
 
 		_testContains(
-			workspaceProjectDir, "settings.gradle", "version: \"1.0.40\"");
+			workspaceProjectDir, "settings.gradle", "version: \"1.2.0\"");
 
 		File moduleProjectDir = _buildTemplateWithGradle(
 			new File(workspaceProjectDir, "modules"), "", "foo-portlet");

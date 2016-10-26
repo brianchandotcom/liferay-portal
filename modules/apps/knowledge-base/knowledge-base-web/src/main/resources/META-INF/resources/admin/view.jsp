@@ -129,12 +129,18 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="infoPanel" var="sidebarPanelURL">
 		<portlet:param name="parentResourceClassNameId" value="<%= String.valueOf(parentResourceClassNameId) %>" />
 		<portlet:param name="parentResourcePrimKey" value="<%= String.valueOf(parentResourcePrimKey) %>" />
+		<portlet:param name="showSidebarHeader" value="<%= Boolean.TRUE.toString() %>" />
 	</liferay-portlet:resourceURL>
 
 	<liferay-frontend:sidebar-panel
 		resourceURL="<%= sidebarPanelURL %>"
 		searchContainerId="kbObjects"
 	>
+
+		<%
+		request.setAttribute(KBWebKeys.SHOW_SIDEBAR_HEADER, true);
+		%>
+
 		<liferay-util:include page="/admin/info_panel.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:sidebar-panel>
 

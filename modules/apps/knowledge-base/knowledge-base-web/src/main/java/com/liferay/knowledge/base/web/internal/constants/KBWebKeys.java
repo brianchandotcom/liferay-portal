@@ -56,4 +56,6 @@ public class KBWebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String KNOWLEDGE_BASE_STATUS = "KNOWLEDGE_BASE_STATUS";
 
+	public static final String SHOW_SIDEBAR_HEADER = "SHOW_SIDEBAR_HEADER";
+
 }

@@ -30,6 +30,7 @@ import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -66,8 +67,20 @@ public class JournalFolderActivityInterpreter
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return new AggregateResourceBundleLoader(
-			JournalResourceBundleLoader.INSTANCE,
+		return _resourceBundleLoader;
+	}
+
+	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.journal.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 

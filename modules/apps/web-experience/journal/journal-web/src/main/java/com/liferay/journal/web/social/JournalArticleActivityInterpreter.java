@@ -79,8 +79,20 @@ public class JournalArticleActivityInterpreter
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return new AggregateResourceBundleLoader(
-			JournalResourceBundleLoader.INSTANCE,
+		return _resourceBundleLoader;
+	}
+
+	private ResourceBundleLoader _resourceBundleLoader;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.journal.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 

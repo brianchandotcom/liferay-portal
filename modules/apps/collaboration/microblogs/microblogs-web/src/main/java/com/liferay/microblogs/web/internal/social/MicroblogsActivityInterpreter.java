@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -129,14 +128,22 @@ public class MicroblogsActivityInterpreter
 		_microblogsEntryLocalService = microblogsEntryLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.microblogs.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
 	private static final String[] _CLASS_NAMES =
 		{MicroblogsEntry.class.getName()};
 
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
-	private final ResourceBundleLoader _resourceBundleLoader =
-		new AggregateResourceBundleLoader(
-			new ClassResourceBundleLoader(
-				"content.Language", MicroblogsActivityInterpreter.class),
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

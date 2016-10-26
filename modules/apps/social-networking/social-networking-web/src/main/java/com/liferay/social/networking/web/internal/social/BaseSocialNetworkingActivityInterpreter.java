@@ -24,7 +24,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.networking.friends.social.FriendsActivityKeys;
-import com.liferay.social.networking.web.internal.util.SocialNetworkingResourceBundleLoader;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -47,9 +48,7 @@ public abstract class BaseSocialNetworkingActivityInterpreter
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return new AggregateResourceBundleLoader(
-			SocialNetworkingResourceBundleLoader.INSTANCE,
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -93,6 +92,20 @@ public abstract class BaseSocialNetworkingActivityInterpreter
 		return true;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.social.networking.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
 	private static final String[] _CLASS_NAMES = {User.class.getName()};
+
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

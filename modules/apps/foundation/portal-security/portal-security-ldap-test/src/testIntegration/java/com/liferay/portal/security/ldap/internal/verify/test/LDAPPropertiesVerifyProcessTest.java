@@ -102,6 +102,43 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 		_bundleContext = null;
 	}
 
+	@Test
+	public void testVerifyConfigurationsNoServers() throws Exception {
+		Exception exception = null;
+
+		try {
+			List<Company> companies = CompanyLocalServiceUtil.getCompanies(
+				false);
+
+			super.doVerify();
+
+			verifyConfigurationsNoServers(companies);
+		}
+		catch (VerifyException ve) {
+			exception = ve;
+		}
+		finally {
+			for (ObjectValuePair<Connection, Exception> objectValuePair :
+					_objectValuePairs) {
+
+				Connection connection = objectValuePair.getKey();
+
+				if (!connection.isClosed()) {
+					if (exception == null) {
+						exception = objectValuePair.getValue();
+					}
+					else {
+						exception.addSuppressed(objectValuePair.getValue());
+					}
+				}
+			}
+
+			if (exception != null) {
+				throw exception;
+			}
+		}
+	}
+
 	protected static void addLDAPServer(
 		UnicodeProperties properties, long ldapServerId) {
 
@@ -229,12 +266,6 @@ public class LDAPPropertiesVerifyProcessTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected void doVerify() throws VerifyException {
-		List<Company> companies = CompanyLocalServiceUtil.getCompanies(false);
-
-		super.doVerify();
-
-		verifyConfigurationsNoServers(companies);
-
 		setUpProperties();
 
 		super.doVerify();

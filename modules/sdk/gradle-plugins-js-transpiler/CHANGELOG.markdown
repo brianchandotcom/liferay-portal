@@ -37,6 +37,12 @@ dependencies for the `transpileJS` task.
 - [LPS-68917]: Add default Lexicon Soy dependency to all `TranspileJSTask`
 instances.
 
+## 2.1.1 - 2016-10-26
+
+### Fixed
+- [LPS-68917]: Fixed search pattern for the additional Soy dependencies in the
+`soyCompile` configuration.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

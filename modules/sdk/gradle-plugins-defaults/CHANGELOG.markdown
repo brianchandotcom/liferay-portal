@@ -587,6 +587,11 @@ version, update the `npm-shrinkwrap.json` and `package.json` files accordingly.
 - [LPS-68935]: Set the Maven description to the project description when
 publishing.
 
+## 1.2.75 - 2016-10-26
+
+### Changed
+- [LPS-68917]: Update the [Liferay Gradle Plugins] dependency to version 3.0.26.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

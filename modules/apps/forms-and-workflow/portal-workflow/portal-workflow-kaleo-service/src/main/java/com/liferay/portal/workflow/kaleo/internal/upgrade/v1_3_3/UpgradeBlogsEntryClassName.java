@@ -12,33 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0;
+package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_3;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.upgrade.util.Table;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v1_3_0.BaseUpgradeClassNames;
 import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
 
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
- * @author Lino Alves
+ * @author Leonardo Barros
  */
-public class UpgradeClassNames extends BaseUpgradeClassNames {
+public class UpgradeBlogsEntryClassName extends BaseUpgradeClassNames {
 
 	@Override
 	protected void updateClassName(String tableName, String columnName) {
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
 			Table table = new Table(tableName);
 
-			for (Map.Entry<String, String> entry :
-					_workflowContextUpgradeHelper.
-						getRenamedClassNamesEntrySet()) {
-
-				table.updateColumnValue(
-					columnName, entry.getKey(), entry.getValue());
-			}
+			table.updateColumnValue(
+				columnName, "com.liferay.blogs.kernel.model.BlogsEntry",
+				"com.liferay.blogs.model.BlogsEntry");
 		}
 	}
 
@@ -46,25 +45,22 @@ public class UpgradeClassNames extends BaseUpgradeClassNames {
 	protected Map<String, Serializable> updateWorkflowContext(
 		String workflowContextJSON) {
 
-		String updatedWorkflowContextJSON =
-			_workflowContextUpgradeHelper.renamePortalClassNames(
-				workflowContextJSON);
-
 		Map<String, Serializable> workflowContext = WorkflowContextUtil.convert(
-			updatedWorkflowContextJSON);
+			workflowContextJSON);
 
-		if (workflowContextJSON.equals(updatedWorkflowContextJSON) &&
-			!_workflowContextUpgradeHelper.isEntryClassNameRenamed(
-				workflowContext)) {
+		String entryClassName = GetterUtil.getString(
+			workflowContext.get("entryClassName"));
 
-			return null;
+		if (Objects.equals(
+				"com.liferay.blogs.kernel.model.BlogsEntry", entryClassName)) {
+
+			workflowContext.put(
+				"entryClassName", "com.liferay.blogs.model.BlogsEntry");
+
+			return workflowContext;
 		}
 
-		return _workflowContextUpgradeHelper.renameEntryClassName(
-			workflowContext);
+		return null;
 	}
-
-	private final WorkflowContextUpgradeHelper _workflowContextUpgradeHelper =
-		new WorkflowContextUpgradeHelper();
 
 }

@@ -1,7 +1,5 @@
 'use strict';
 
-var assert = chai.assert;
-
 describe(
 	'DDM Field Text',
 	function() {
@@ -12,6 +10,7 @@ describe(
 					function(A) {
 						Liferay.DDM.Renderer.FieldTypes.register(
 							{
+								'javaScriptClass': 'Liferay.DDM.Renderer.Text',
 								'name': 'text',
 								'templateNamespace': 'ddm.text'
 							}

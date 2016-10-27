@@ -1,22 +1,18 @@
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-configurations {
-	metalComponents
-}
-
 task buildMetalComponents(type: Copy)
 
-String metalComponentsVersion = "2.3.1"
-
 buildMetalComponents {
-	eachFile new StripPathSegmentsAction(7)
+	dependsOn npmInstall
+
+	eachFile new StripPathSegmentsAction(3)
 
 	from {
-		zipTree(configurations.metalComponents.singleFile)
+		fileTree(dir: "node_modules")
 	}
 
-	include "META-INF/resources/webjars/metal-components/${metalComponentsVersion}/build/amd-jquery/"
-	include "META-INF/resources/webjars/metal-components/${metalComponentsVersion}/build/soy/"
+	include "metal-components/build/amd-jquery/"
+	include "metal-components/build/soy/"
 
 	includeEmptyDirs = false
 	into "classes/META-INF/resources"
@@ -26,8 +22,4 @@ configJSModules {
 	dependsOn buildMetalComponents
 	include "**/*.js*"
 	moduleFormat "/.soy/g,.soy.js"
-}
-
-dependencies {
-	metalComponents group: "com.liferay.webjars", name: "com.liferay.webjars.metal-components", transitive: false, version: metalComponentsVersion
 }

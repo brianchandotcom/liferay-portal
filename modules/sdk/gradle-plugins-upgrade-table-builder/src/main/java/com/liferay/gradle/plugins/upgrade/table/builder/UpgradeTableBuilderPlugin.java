@@ -57,7 +57,7 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(DependencySet dependencySet) {
-					_addUpgradeTableBuilderDependencies(project);
+					_addDependenciesUpgradeTableBuilder(project);
 				}
 
 			});
@@ -67,6 +67,12 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 		configuration.setVisible(false);
 
 		return configuration;
+	}
+
+	private void _addDependenciesUpgradeTableBuilder(Project project) {
+		GradleUtil.addDependency(
+			project, CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.portal.tools.upgrade.table.builder", "latest.release");
 	}
 
 	private BuildUpgradeTableTask _addTaskBuildUpgradeTable(Project project) {
@@ -80,12 +86,6 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 		buildUpgradeTableTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		return buildUpgradeTableTask;
-	}
-
-	private void _addUpgradeTableBuilderDependencies(Project project) {
-		GradleUtil.addDependency(
-			project, CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.portal.tools.upgrade.table.builder", "latest.release");
 	}
 
 	private void _configureTaskBuildUpgradeTableClasspath(

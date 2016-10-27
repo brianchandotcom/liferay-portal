@@ -1,4 +1,7 @@
 {
+	"dependencies": {
+		"metal-components": "^2.3.1"
+	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.1.10",
 		"metal-cli": "^2.0.2"

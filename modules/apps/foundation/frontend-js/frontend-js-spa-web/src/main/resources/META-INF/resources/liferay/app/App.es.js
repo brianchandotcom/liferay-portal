@@ -19,7 +19,7 @@ class LiferayApp extends App {
 		this.timeout = Math.max(Liferay.SPA.requestTimeout, 0) || Utils.getMaxTimeout();
 		this.timeoutAlert = null;
 
-		var exceptionsSelector = ':not([target="_blank"]):not([data-senna-off]):not([data-resource-href])';
+		var exceptionsSelector = Liferay.SPA.navigationExceptionSelectors;
 
 		this.setFormSelector('form' + exceptionsSelector);
 		this.setLinkSelector('a' + exceptionsSelector);

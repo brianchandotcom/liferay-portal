@@ -5160,6 +5160,68 @@ go]]></replacevalue>
 			</then>
 		</if>
 
+		<beanshell>
+			<![CDATA[
+				import java.io.BufferedReader;
+				import java.io.File;
+				import java.io.IOException;
+
+				BufferedReader bufferedReader = null;
+
+				try {
+					File jenkinsResultsXMLSuiteFile = new File(project.getProperty("jenkins.results.xml.suite.file"));
+
+					bufferedReader = new BufferedReader(new FileReader(jenkinsResultsXMLSuiteFile));
+
+					List lines = new ArrayList();
+
+					int failCount = 0;
+					int lineNumber = 0;
+					int summaryLocation = 0;
+					int totalCount = 0;
+
+					for (String line = bufferedReader.readLine(); line != null; line = bufferedReader.readLine()) {
+						lineNumber++;
+
+						lines.add(line);
+
+						if (line.contains("<failure")) {
+							failCount++;
+						}
+						else if (line.contains("<testcase")) {
+							totalCount++;
+						}
+						else if (line.contains("<testsuite")) {
+							summaryLocation = lineNumber;
+						}
+					}
+
+					bufferedReader.close();
+
+					int passCount = totalCount - failCount;
+
+					lines.add(summaryLocation, "\t</summary>");
+					lines.add(summaryLocation, "\t\t<property name=\"FAILED\" value=\"" + Integer.toString(failCount) + "\" />");
+					lines.add(summaryLocation, "\t\t<property name=\"PASSED\" value=\"" + Integer.toString(passCount) + "\" />");
+					lines.add(summaryLocation, "\t<summary>");
+
+					FileWriter fileWriter = new FileWriter(jenkinsResultsXMLSuiteFile);
+
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+					for (String line : lines) {
+						bufferedWriter.write(line);
+						bufferedWriter.write('\n');
+					}
+
+					bufferedWriter.close();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}
+			]]>
+		</beanshell>
+
 		<if>
 			<isset property="jenkins.testray.results.dir" />
 			<then>

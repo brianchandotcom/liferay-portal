@@ -93,9 +93,42 @@
 				replace="\1"
 			/>
 
+			<local name="unzip.error.output" />
+			<local name="unzip.test.result" />
+
+			<var name="unzip.test.result" value="0" />
+
 			<if>
 				<and>
-					<equals arg1="@{force}" arg2="true" />
+					<matches pattern=".*\.zip" string="${mirrors.cache.artifact.file.name}" />
+					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+				</and>
+				<then>
+					<echo>unzip -t ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}</echo>
+
+					<exec errorproperty="unzip.error.output" executable="unzip" resultproperty="unzip.test.result">
+						<arg line="-t ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+					</exec>
+
+					<if>
+						<not>
+							<equals arg1="${unzip.test.result}" arg2="0" />
+						</not>
+						<then>
+							<echo>Invalid zip file ${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}: ${unzip.error.output}. This file will be redownloaded from mirrors.</echo>
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<or>
+						<equals arg1="@{force}" arg2="true" />
+						<not>
+							<equals arg1="${unzip.test.result}" arg2="0" />
+						</not>
+					</or>
 					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
 				</and>
 				<then>

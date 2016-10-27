@@ -120,7 +120,7 @@
 	<command name="viewNoFeedTitle">
 		<var name="key_feedTitle" value="${feedTitle}" />
 
-		<execute function="AssertTextNotPresent" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
+		<execute function="AssertElementNotPresent" locator1="RSSFeed#FEEDS_TITLE" />
 	</command>
 
 	<command name="viewPG">

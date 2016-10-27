@@ -308,6 +308,12 @@
 	<target name="configure-elasticsearch-osgi-bundle-properties">
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">operationMode=REMOTE
 logExceptionsOnly=false</echo>
+	<target name="configure-shield-osgi-bundle-properties">
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration.cfg">password=liferay
+requiresAuthentication=true
+requiresSSL=true
+sslKeystorePath=${elastic.shield.ca.dir}/es-ssl.keystore.jks
+username=liferay</echo>
 	</target>
 
 	<target name="start-elasticsearch">

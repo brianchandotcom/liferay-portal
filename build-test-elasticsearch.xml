@@ -175,6 +175,38 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="prepare-shield">
+		<sequential>
+			<if>
+				<not>
+					<available file="${elasticsearch.dir}/${elastic.shield.zip.name}" />
+				</not>
+				<then>
+					<mirrors-get
+						dest="${elasticsearch.dir}/${elastic.shield.zip.name}"
+						src="${elastic.shield.zip.url}"
+						verbose="true"
+					/>
+				</then>
+			</if>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./plugin install file:///${elasticsearch.dir}/${elastic.shield.zip.name}" />
+					</exec>
+
+					<exec dir="${elasticsearch.dir}/bin/shield" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./esusers useradd liferay -p liferay -r admin" />
+					</exec>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="unzip-elasticsearch">
 		<sequential>
 			<delete dir="${elasticsearch.dir}" />

@@ -32,8 +32,6 @@ public class ModuleHibernateConfiguration
 
 	public ModuleHibernateConfiguration(ClassLoader classLoader) {
 		_classLoader = classLoader;
-
-		setMvccEnabled(false);
 	}
 
 	@Override

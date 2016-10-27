@@ -67,7 +67,8 @@ public class BackgroundTaskPersistenceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.portal.background.task.service"));
 
 	@Before
 	public void setUp() {

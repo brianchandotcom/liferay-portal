@@ -16,16 +16,11 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
-import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
-import com.liferay.portal.util.PropsValues;
-
-import java.sql.Connection;
 
 import javax.sql.DataSource;
 
@@ -38,50 +33,10 @@ import org.hibernate.SessionFactory;
 @ProviderType
 public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
-	@Override
-	public void closeSession(Session session) throws ORMException {
-		if (session != null) {
-			session.flush();
-
-			if (!PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
-				session.close();
-			}
-		}
-	}
-
-	@Override
-	public Session openSession() throws ORMException {
-		SessionFactory sessionFactory = getSessionFactoryImplementor();
-
-		org.hibernate.Session session = null;
-
-		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
-			Connection connection = CurrentConnectionUtil.getConnection(
-				_dataSource);
-
-			if (connection == null) {
-				session = sessionFactory.getCurrentSession();
-			}
-			else {
-				session = sessionFactory.openSession(connection);
-			}
-		}
-		else {
-			session = sessionFactory.openSession();
-		}
-
-		if (_log.isDebugEnabled()) {
-			org.hibernate.impl.SessionImpl sessionImpl =
-				(org.hibernate.impl.SessionImpl)session;
-
-			_log.debug(
-				"Session is using connection release mode " +
-					sessionImpl.getConnectionReleaseMode());
-		}
-
-		return wrapSession(session);
-	}
-
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
 	}

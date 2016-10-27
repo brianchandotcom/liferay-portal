@@ -65,7 +65,8 @@ public class KaleoInstanceTokenPersistenceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED));
+			new TransactionalTestRule(Propagation.REQUIRED,
+				"com.liferay.portal.workflow.kaleo.service"));
 
 	@Before
 	public void setUp() {

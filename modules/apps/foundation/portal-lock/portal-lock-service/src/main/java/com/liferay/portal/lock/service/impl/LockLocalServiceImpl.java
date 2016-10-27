@@ -241,14 +241,16 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 					});
 			}
 			catch (Throwable t) {
+				Throwable cause = t;
+
 				if (t instanceof ORMException) {
-					Throwable cause = t.getCause();
+					cause = t.getCause();
+				}
 
-					if ((cause instanceof ConstraintViolationException) ||
-						(cause instanceof LockAcquisitionException)) {
+				if ((cause instanceof ConstraintViolationException) ||
+					(cause instanceof LockAcquisitionException)) {
 
-						continue;
-					}
+					continue;
 				}
 
 				ReflectionUtil.throwException(t);
@@ -345,7 +347,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 							if (Objects.equals(lock.getOwner(), owner)) {
 								lockPersistence.remove(lock);
-								lockPersistence.flush();
 							}
 
 							return null;
@@ -356,14 +357,16 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 				return;
 			}
 			catch (Throwable t) {
+				Throwable cause = t;
+
 				if (t instanceof ORMException) {
-					Throwable cause = t.getCause();
+					cause = t.getCause();
+				}
 
-					if ((cause instanceof ConstraintViolationException) ||
-						(cause instanceof LockAcquisitionException)) {
+				if ((cause instanceof ConstraintViolationException) ||
+					(cause instanceof LockAcquisitionException)) {
 
-						continue;
-					}
+					continue;
 				}
 
 				ReflectionUtil.throwException(t);

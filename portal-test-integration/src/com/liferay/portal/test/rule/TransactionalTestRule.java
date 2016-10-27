@@ -23,13 +23,20 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.spring.hibernate.PortletTransactionManager;
+import com.liferay.portal.spring.transaction.CurrentPlatformTransactionManagerUtil;
+
+import java.io.Closeable;
 
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import org.junit.Assert;
 import org.junit.internal.runners.statements.RunAfters;
 import org.junit.internal.runners.statements.RunBefores;
 import org.junit.rules.RunRules;
@@ -38,18 +45,33 @@ import org.junit.runner.Description;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+
+import org.springframework.transaction.PlatformTransactionManager;
+
 /**
  * @author Shuyang Zhou
  */
 public class TransactionalTestRule implements TestRule {
 
 	public static final TransactionalTestRule INSTANCE =
-		new TransactionalTestRule(Propagation.SUPPORTS);
+		new TransactionalTestRule(Propagation.SUPPORTS, null);
 
 	public TransactionalTestRule(Propagation propagation) {
+		this(propagation, null);
+	}
+
+	public TransactionalTestRule(
+		Propagation propagation, String originBundleSymbolicName) {
+
 		_transactionConfig = TransactionConfig.Factory.create(
 			propagation,
 			new Class<?>[] {PortalException.class, SystemException.class});
+		_originBundleSymbolicName = originBundleSymbolicName;
 	}
 
 	@Override
@@ -95,24 +117,28 @@ public class TransactionalTestRule implements TestRule {
 
 				@Override
 				public void evaluate() throws Throwable {
-					TransactionInvokerUtil.invoke(
-						getTransactionConfig(
-							description.getAnnotation(Transactional.class)),
-						new Callable<Void>() {
+					try (Closeable closeable = _installTransactionManager(
+							_originBundleSymbolicName)) {
 
-							@Override
-							public Void call() throws Exception {
-								try {
-									statement.evaluate();
+						TransactionInvokerUtil.invoke(
+							getTransactionConfig(
+								description.getAnnotation(Transactional.class)),
+							new Callable<Void>() {
+
+								@Override
+								public Void call() throws Exception {
+									try {
+										statement.evaluate();
+									}
+									catch (Throwable t) {
+										ReflectionUtil.throwException(t);
+									}
+
+									return null;
 								}
-								catch (Throwable t) {
-									ReflectionUtil.throwException(t);
-								}
 
-								return null;
-							}
-
-						});
+							});
+					}
 				}
 
 			};
@@ -151,7 +177,8 @@ public class TransactionalTestRule implements TestRule {
 				new TransactionalFrameworkMethod(
 					frameworkMethod.getMethod(),
 					getTransactionConfig(
-						frameworkMethod.getAnnotation(Transactional.class))));
+						frameworkMethod.getAnnotation(Transactional.class)),
+					_originBundleSymbolicName));
 		}
 
 		ReflectionTestUtil.setFieldValue(statement, name, newFrameworkMethods);
@@ -165,38 +192,100 @@ public class TransactionalTestRule implements TestRule {
 				final Object target, final Object... params)
 			throws Throwable {
 
-			return TransactionInvokerUtil.invoke(
-				_transactionConfig,
-				new Callable<Object>() {
+			try (Closeable closeable = _installTransactionManager(
+					_originBundleSymbolicName)) {
 
-					@Override
-					public Object call() throws Exception {
-						try {
-							return TransactionalFrameworkMethod.super.
-								invokeExplosively(target, params);
+				return TransactionInvokerUtil.invoke(
+					_transactionConfig,
+					new Callable<Object>() {
+
+						@Override
+						public Object call() throws Exception {
+							try {
+								return TransactionalFrameworkMethod.super.
+									invokeExplosively(target, params);
+							}
+							catch (Throwable t) {
+								ReflectionUtil.throwException(t);
+							}
+
+							return null;
 						}
-						catch (Throwable t) {
-							ReflectionUtil.throwException(t);
-						}
 
-						return null;
-					}
-
-				});
+					});
+			}
 		}
 
 		protected TransactionalFrameworkMethod(
-			Method method, TransactionConfig transactionConfig) {
+			Method method, TransactionConfig transactionConfig,
+			String originBundleSymbolicName) {
 
 			super(method);
 
 			_transactionConfig = transactionConfig;
+			_originBundleSymbolicName = originBundleSymbolicName;
 		}
 
+		private final String _originBundleSymbolicName;
 		private final TransactionConfig _transactionConfig;
 
 	}
 
+	private static Closeable _installTransactionManager(
+			String originBundleSymbolicName)
+		throws InvalidSyntaxException {
+
+		if (originBundleSymbolicName == null) {
+			return () -> {
+			};
+		}
+
+		ThreadLocal<Deque<PlatformTransactionManager>>
+			platformTransactionManagersThreadLocal =
+				ReflectionTestUtil.getFieldValue(
+					CurrentPlatformTransactionManagerUtil.class,
+					"_platformTransactionManagersThreadLocal");
+
+		Deque<PlatformTransactionManager> platformTransactionManagers =
+			platformTransactionManagersThreadLocal.get();
+
+		Bundle bundle = FrameworkUtil.getBundle(TransactionalTestRule.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceReference<?>[] serviceReferences =
+			bundleContext.getAllServiceReferences(
+				PortletTransactionManager.class.getName(),
+				"(origin.bundle.symbolic.name=" + originBundleSymbolicName +
+					")");
+
+		Assert.assertEquals(
+			"Expected 1 PortletTransactionManager for " +
+				originBundleSymbolicName + ", actually have " +
+					Arrays.toString(serviceReferences),
+			1, serviceReferences.length);
+
+		ServiceReference<?> serviceReference = serviceReferences[0];
+
+		PortletTransactionManager portletTransactionManager =
+			(PortletTransactionManager)bundleContext.getService(
+				serviceReference);
+
+		if (portletTransactionManager == platformTransactionManagers.peek()) {
+			return () -> {
+			};
+		}
+
+		platformTransactionManagers.push(portletTransactionManager);
+
+		return () -> {
+			platformTransactionManagers.pop();
+
+			bundleContext.ungetService(serviceReference);
+		};
+	}
+
+	private final String _originBundleSymbolicName;
 	private final TransactionConfig _transactionConfig;
 
 }

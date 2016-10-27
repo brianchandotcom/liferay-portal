@@ -21,11 +21,15 @@
 	<bean class="com.liferay.portal.spring.hibernate.PortalHibernateConfiguration" id="liferayHibernateSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />
 	</bean>
-	<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl" id="liferaySessionFactory">
-		<property name="sessionFactoryClassLoader">
-			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
-		</property>
-		<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
+	<bean class="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper" factory-method="createVerifySessionFactoryWrapper" id="liferaySessionFactory">
+		<constructor-arg>
+			<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
+				<property name="sessionFactoryClassLoader">
+					<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
+				</property>
+				<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
+			</bean>
+		</constructor-arg>
 	</bean>
 	<bean class="com.liferay.portal.spring.transaction.TransactionManagerFactory" factory-method="createTransactionManager" id="counterTransactionManager">
 		<constructor-arg ref="counterDataSource" />
@@ -36,7 +40,7 @@
 		<constructor-arg ref="liferayHibernateSessionFactory" />
 	</bean>
 	<bean class="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService" id="com.liferay.portal.dao.orm.hibernate.jmx.HibernateStatisticsService">
-		<property name="sessionFactory" ref="liferaySessionFactory" />
+		<property name="sessionFactoryImplementor" ref="liferayHibernateSessionFactory" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil" id="com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil">
 		<property name="dynamicQueryFactory">

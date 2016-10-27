@@ -2361,6 +2361,7 @@ ${tomcat-gc-log}
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGRevertOverrideVerifyTest.java",
 								"modules/apps/web-experience/export-import/export-import-resources-importer-test/src/testIntegration/java/com/liferay/exportimport/resources/importer/test/ResourcesImporterTest.java",
+								"modules/apps/web-experience/journal/journal-test/src/testIntegration/java/com/liferay/journal/service/persistence/test/*Test.java",
 								"portal-impl/test/integration/com/liferay/portlet/asset/service/AssetTagStatsServiceTest.java",
 								"portal-impl/test/integration/com/liferay/portlet/documentlibrary/service/persistence/DLFileEntryFinderTest.java",
 								"portal-kernel/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",

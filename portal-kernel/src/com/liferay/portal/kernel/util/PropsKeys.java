@@ -2077,6 +2077,8 @@ public interface PropsKeys {
 
 	public static final String SPRING_HIBERNATE_SESSION_FACTORY_PRELOAD_CLASSLOADER_CLASSES = "spring.hibernate.session.factory.preload.classloader.classes";
 
+	public static final String SPRING_HIBERNATE_SESSION_VERIFY_CURRENT_FACTORY_ENABLED = "spring.hibernate.session.verify.current.factory.enabled";
+
 	public static final String SPRING_INFRASTRUCTURE_CONFIGS = "spring.infrastructure.configs";
 
 	public static final String SPRING_PORTLET_CONFIGS = "spring.portlet.configs";

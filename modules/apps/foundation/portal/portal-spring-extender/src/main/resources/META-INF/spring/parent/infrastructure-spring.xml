@@ -8,4 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
 >
 	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getDataSource" id="liferayDataSource" />
+	<bean class="com.liferay.portal.kernel.util.InfrastructureUtil" factory-method="getTransactionManager" id="originalLiferayTransactionManager" />
 </beans>

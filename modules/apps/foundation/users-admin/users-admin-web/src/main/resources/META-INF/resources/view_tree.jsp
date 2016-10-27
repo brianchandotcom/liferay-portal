@@ -256,7 +256,7 @@ if (Validator.isNotNull(organization)) {
 		form.fm('deleteOrganizationIds').val(organizationIds);
 		form.fm('deleteUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'));
 
-		submitForm(form, '<portlet:actionURL name="/users_admin/delete_users_and_organizations" />');
+		submitForm(form, '<portlet:actionURL name="/users_admin/delete_organizations_and_users" />');
 	};
 </aui:script>
 

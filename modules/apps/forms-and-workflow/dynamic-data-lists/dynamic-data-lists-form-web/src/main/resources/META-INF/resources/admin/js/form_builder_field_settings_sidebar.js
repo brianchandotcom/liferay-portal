@@ -101,6 +101,16 @@ AUI.add(
 						return JSON.stringify(previousContext) !== JSON.stringify(currentFieldSettings.context);
 					},
 
+					hasFocus: function(node) {
+						var instance = this;
+
+						var activeElement = A.one(node || document.activeElement);
+
+						var settingsForm = instance.settingsForm;
+
+						return (settingsForm && settingsForm.hasFocus()) || instance._containsNode(activeElement) || instance._isFieldNode(activeElement);
+					},
+
 					_afterOpenStart: function() {
 						var instance = this;
 
@@ -190,7 +200,7 @@ AUI.add(
 						return toolbar;
 					},
 
-					_isClickInAField: function(node) {
+					_isFieldNode: function(node) {
 						var instance = this;
 
 						return node.ancestorsByClassName('.ddm-form-field-container').size();
@@ -229,12 +239,7 @@ AUI.add(
 					_onClickDocument: function(event) {
 						var instance = this;
 
-						var settingsForm = instance.settingsForm;
-
-						var target = event.target;
-
-						if (instance.get('open') && !instance._containsNode(target) &&
-							!settingsForm.hasFocus() && !instance._isClickInAField(target)) {
+						if (instance.get('open') && !instance.hasFocus(event.target)) {
 							instance.close();
 						}
 					},

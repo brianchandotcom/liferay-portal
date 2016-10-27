@@ -498,6 +498,8 @@
 	</command>
 
 	<command name="addWithStructureCP">
+		<execute function="Click" locator1="TextInput#TITLE" />
+
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 
 		<if>

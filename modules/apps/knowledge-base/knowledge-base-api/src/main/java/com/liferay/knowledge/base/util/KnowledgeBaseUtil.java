@@ -64,7 +64,7 @@ public class KnowledgeBaseUtil {
 
 		sb.append(portalURL);
 		sb.append(PortalUtil.getPathMain());
-		sb.append("/portal/knowledge_base/find_kb_article");
+		sb.append("/knowledge_base/find_kb_article");
 		sb.append(StringPool.QUESTION);
 		sb.append("plid");
 		sb.append(StringPool.EQUAL);

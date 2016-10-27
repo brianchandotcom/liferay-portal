@@ -221,11 +221,10 @@
 						verbose="true"
 					/>
 
-					<untar
-						compression="gzip"
-						dest="${app.server.parent.dir}"
-						src="${app.server.parent.dir}/${elastic.kibana.tar.name.mac}"
-					/>
+					<exec dir="${app.server.parent.dir}" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="tar -zxf ${elastic.kibana.tar.name.mac}" />
+					</exec>
 				</then>
 				<elseif>
 					<and>

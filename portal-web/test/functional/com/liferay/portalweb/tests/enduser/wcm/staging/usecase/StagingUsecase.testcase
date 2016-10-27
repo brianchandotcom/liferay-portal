@@ -2546,7 +2546,9 @@
 		</execute>
 	</command>
 
-	<command name="StagingLogo" priority="3">
+	<!-- LRQA-28687 -->
+
+	<!--<command known-issues="LPS-66816" name="StagingLogo" priority="3">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>
@@ -2627,7 +2629,7 @@
 		</execute>
 
 		<execute macro="Page#viewCustomLogoPG" />
-	</command>
+	</command>-->
 
 	<command name="StagingMultipleDM" priority="3">
 		<execute macro="Navigator#gotoSitePage">

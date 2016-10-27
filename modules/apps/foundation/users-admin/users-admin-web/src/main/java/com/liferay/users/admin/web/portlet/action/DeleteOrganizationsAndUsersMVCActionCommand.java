@@ -42,11 +42,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/delete_users_and_organizations"
+		"mvc.command.name=/users_admin/delete_organizations_and_users"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteUsersAndOrganizationsMVCActionCommand
+public class DeleteOrganizationsAndUsersMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	protected void deleteOrganizations(ActionRequest actionRequest)

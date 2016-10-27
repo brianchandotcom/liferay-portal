@@ -169,7 +169,31 @@ describe(
 
 		describe(
 			'regression',
-			function() {}
+			function() {
+				it.only(
+					'shouldn\'t multi-line Text Field changes size on focus',
+					function(done) {
+						var textField = new Liferay.DDM.Field.Text(
+							{
+								context: {
+									name: 'textField',
+									displayStyle: 'multiline'
+								}
+							}
+						).render(document.body);
+
+						var textareaHeight = textField.getInputNode().get('offsetHeight');
+
+						textField.getInputNode().focus();
+
+						textField.syncInputHeight();
+
+						assert.equal(textareaHeight, textField.getInputNode().get('offsetHeight'));
+
+						done();
+					}
+				);
+			}
 		);
 	}
 );

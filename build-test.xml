@@ -3859,6 +3859,7 @@ go]]></replacevalue>
 					<property name="testray.component.names" value="${testray.component.names}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />
+					<property name="testray.case.type.name" value="Automated Functional Test" />
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />
 					<property name="testray.testcase.name" value="${testray.testcase.name}" />
 					<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
@@ -4129,8 +4130,6 @@ go]]></replacevalue>
 
 							for (Integer propertyLocation : propertyLocations) {
 								String testrayTestcaseName = testcasePropertyLocations.get(propertyLocation);
-
-								lines.add(propertyLocation, "<property name=\"testray.case.type.name\" value=\"Automated Functional Test\" />");
 
 								if (testcaseFailures.contains(testrayTestcaseName)) {
 									lines.add(propertyLocation, "<property name=\"testray.testcase.status\" value=\"failed\" />");

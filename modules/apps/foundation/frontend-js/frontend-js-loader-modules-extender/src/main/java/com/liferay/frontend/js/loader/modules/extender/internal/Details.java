@@ -41,7 +41,7 @@ public @interface Details {
 	@Meta.AD(deflt = "true")
 	public boolean applyVersioning() default true;
 
-	@Meta.AD(deflt = "Liferay")
-	public String globalJSVariable() default "Liferay";
+	@Meta.AD(deflt = "true")
+	public boolean exposeGlobal() default true;
 
 }

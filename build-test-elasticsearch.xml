@@ -325,8 +325,10 @@
 	</macrodef>
 
 	<target name="configure-elasticsearch-osgi-bundle-properties">
-		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">operationMode=REMOTE
-logExceptionsOnly=false</echo>
+		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.cfg">logExceptionsOnly=false
+operationMode=REMOTE</echo>
+	</target>
+
 	<target name="configure-shield-osgi-bundle-properties">
 		<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch.shield.configuration.ShieldConfiguration.cfg">password=liferay
 requiresAuthentication=true

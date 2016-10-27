@@ -95,8 +95,8 @@ describe(
 								var textField = new Liferay.DDM.Field.Text(
 									{
 										context: {
-											name: 'textField',
-											displayStyle: 'multiline'
+											displayStyle: 'multiline',
+											name: 'textField'
 										}
 									}
 								).render(document.body);
@@ -145,8 +145,8 @@ describe(
 								var textField = new Liferay.DDM.Field.Text(
 									{
 										context: {
-											name: 'textField',
-											displayStyle: 'multiline'
+											displayStyle: 'multiline',
+											name: 'textField'
 										}
 									}
 								).render(document.body);
@@ -170,14 +170,14 @@ describe(
 		describe(
 			'regression',
 			function() {
-				it.only(
-					'shouldn\'t multi-line Text Field changes size on focus',
+				it(
+					'shouldn\'t change Text Field height when focused',
 					function(done) {
 						var textField = new Liferay.DDM.Field.Text(
 							{
 								context: {
-									name: 'textField',
-									displayStyle: 'multiline'
+									displayStyle: 'multiline',
+									name: 'textField'
 								}
 							}
 						).render(document.body);
@@ -185,8 +185,6 @@ describe(
 						var textareaHeight = textField.getInputNode().get('offsetHeight');
 
 						textField.getInputNode().focus();
-
-						textField.syncInputHeight();
 
 						assert.equal(textareaHeight, textField.getInputNode().get('offsetHeight'));
 

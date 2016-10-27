@@ -47,7 +47,7 @@ AUI.add(
 
 						instance._eventHandlers.push(
 							instance.after('optionsChange', instance._afterOptionsChange),
-							instance.after('valueChange', instance._onContentChange)
+							instance.after('valueChange', instance._onTextFieldValueChange)
 						);
 					},
 
@@ -56,7 +56,7 @@ AUI.add(
 							var instance = this;
 
 							TextField.superclass.evaluate.apply(instance, arguments);
-						}, 
+						},
 						300
 					),
 
@@ -179,7 +179,7 @@ AUI.add(
 						);
 					},
 
-					_onContentChange: function() {
+					_onTextFieldValueChange: function() {
 						var instance = this;
 
 						var inputNode = instance.getInputNode();

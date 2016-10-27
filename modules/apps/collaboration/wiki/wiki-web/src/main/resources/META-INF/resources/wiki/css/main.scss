@@ -121,32 +121,6 @@
 		display: block;
 	}
 
-	.child-pages {
-		margin: 0;
-
-		h2 {
-			background-color: #DDD;
-			border-width: 0;
-			font-weight: normal;
-			margin: 0 0 0.5em;
-			padding: 0.2em;
-		}
-
-		h3 {
-			font-size: 1.2em;
-			margin-bottom: 0.3em;
-		}
-
-		ul {
-			margin-top: 0;
-		}
-
-		li {
-			font-size: 1.1em;
-			font-weight: bold;
-		}
-	}
-
 	.content-body {
 		.wiki-code {
 			background: #FFF;
@@ -178,6 +152,10 @@
 	.node-current {
 		font-weight: bold;
 		text-decoration: none;
+	}
+
+	.list-group-item h3 {
+		margin-top: 5px;
 	}
 
 	.page-actions {
@@ -373,5 +351,13 @@
 		.syntax-help h4 {
 			margin-bottom: 0.3em;
 		}
+	}
+}
+
+/* ---------- Skin ---------- */
+
+.portlet-wiki {
+	.list-group-item a {
+		color: #29353D;
 	}
 }

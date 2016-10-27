@@ -29,7 +29,7 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 		<liferay-ui:message arguments="<%= childKBArticles.size() %>" key="child-articles-x" translateArguments="<%= false %>" />
 	</h4>
 
-	<div>
+	<div class="panel">
 		<ul class="list-group">
 
 			<%
@@ -37,34 +37,32 @@ KBArticleURLHelper kbArticleURLHelper = new KBArticleURLHelper(renderRequest, re
 			%>
 
 				<li class="list-group-item">
-					<div class="list-group-item-content">
-						<h3>
+					<h3>
 
-							<%
-							PortletURL viewKBArticleURL = null;
+						<%
+						PortletURL viewKBArticleURL = null;
 
-							if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
-								viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
-							}
-							else {
-								viewKBArticleURL = kbArticleURLHelper.createViewURL(childrenKBArticle);
-							}
-							%>
+						if (rootPortletId.equals(KBPortletKeys.KNOWLEDGE_BASE_SECTION)) {
+							viewKBArticleURL = kbArticleURLHelper.createViewWithRedirectURL(childrenKBArticle, currentURL);
+						}
+						else {
+							viewKBArticleURL = kbArticleURLHelper.createViewURL(childrenKBArticle);
+						}
+						%>
 
-							<aui:a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(childrenKBArticle.getTitle()) %></aui:a>
-						</h3>
+						<aui:a href="<%= viewKBArticleURL.toString() %>"><%= HtmlUtil.escape(childrenKBArticle.getTitle()) %></aui:a>
+					</h3>
 
-						<p class="text-default">
-							<c:choose>
-								<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
-									<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
-								</c:when>
-								<c:otherwise>
-									<%= HtmlUtil.escape(StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200)) %>
-								</c:otherwise>
-							</c:choose>
-						</p>
-					</div>
+					<p class="text-default">
+						<c:choose>
+							<c:when test="<%= Validator.isNotNull(childrenKBArticle.getDescription()) %>">
+								<%= HtmlUtil.escape(childrenKBArticle.getDescription()) %>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(StringUtil.shorten(HtmlUtil.extractText(childrenKBArticle.getContent()), 200)) %>
+							</c:otherwise>
+						</c:choose>
+					</p>
 				</li>
 
 			<%

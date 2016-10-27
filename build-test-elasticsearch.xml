@@ -167,7 +167,7 @@
 					<then>
 						<exec dir="${elasticsearch.dir}/bin" executable="cmd">
 							<arg value="/c" />
-							<arg line="plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
+							<arg value="plugin install file:///${elasticsearch.dir}/${elasticsearch.marvel-agent.zip.name}" />
 						</exec>
 					</then>
 				</elseif>

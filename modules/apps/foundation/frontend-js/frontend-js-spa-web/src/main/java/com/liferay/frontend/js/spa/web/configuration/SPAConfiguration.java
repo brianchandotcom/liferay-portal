@@ -18,33 +18,43 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+
 /**
  * @author Bruno Basto
  */
 @ExtendedObjectClassDefinition(category = "foundation")
-@Meta.OCD(
+@ObjectClassDefinition(
 	id = "com.liferay.frontend.js.spa.web.configuration.SPAConfiguration",
 	localization = "content/Language", name = "spa.configuration.name"
 )
-public interface SPAConfiguration {
+public @interface SPAConfiguration {
 
 	@Meta.AD(
-		deflt = "-1", description = "cache.expiration.time.description",
-		name = "cache.expiration.time.name", required = true
+		description = "cache.expiration.time.description",
+		name = "cache.expiration.time.name", required = false
 	)
-	public String cacheExpirationTime();
+	public long cacheExpirationTime() default -1;
 
 	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/javascript.single.page.application.timeout}",
+		description = "navigation.exception.selectors.description",
+		name = "navigation.exception.selectors.name", required = false
+	)
+	public String[] navigationExceptionSelectors() default {
+		":not([target=\"_blank\"])", ":not([data-senna-off])",
+		":not([data-resource-href])"
+	};
+
+	@Meta.AD(
 		description = "request.timeout.description",
-		name = "request.timeout.name", required = true
+		name = "request.timeout.name", required = false
 	)
-	public String requestTimeout();
+	public int requestTimeout() default 0;
 
 	@Meta.AD(
-		deflt = "30000", description = "user.notification.timeout.description",
-		name = "user.notification.timeout.name", required = true
+		description = "user.notification.timeout.description",
+		name = "user.notification.timeout.name", required = false
 	)
-	public String userNotificationTimeout();
+	public int userNotificationTimeout() default 30000;
 
 }

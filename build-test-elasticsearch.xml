@@ -331,6 +331,207 @@ logExceptionsOnly=false</echo>
 
 		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
 
+		<get-testcase-property property.name="elastic.shield.enabled" />
+
+		<if>
+			<equals arg1="${elastic.shield.enabled}" arg2="true" />
+			<then>
+				<prepare-shield />
+
+				<antcall target="configure-shield-osgi-bundle-properties" />
+
+				<mkdir dir="${elastic.shield.ca.dir}/certs" />
+
+				<mkdir dir="${elastic.shield.ca.dir}/conf" />
+
+				<mkdir dir="${elastic.shield.ca.dir}/private" />
+
+				<echo file="${elastic.shield.ca.dir}/serial">01</echo>
+
+				<touch file="${elastic.shield.ca.dir}/index.txt" />
+
+				<echo file="${elastic.shield.ca.dir}/conf/caconfig.cnf">#..................................
+[ ca ]
+default_ca = CA_default
+[ CA_default ]
+copy_extensions = copy
+dir = ${elastic.shield.ca.dir}
+serial = $dir/serial
+database = $dir/index.txt
+new_certs_dir = $dir/certs
+certificate = $dir/certs/cacert.pem
+private_key = $dir/private/cakey.pem
+default_days = 712
+default_md = sha256
+preserve = no
+email_in_dn = no
+x509_extensions = v3_ca
+name_opt = ca_default
+cert_opt = ca_default
+policy = policy_anything
+[ policy_anything ]
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional
+[ req ]
+default_bits = 2048 # Size of keys
+default_keyfile = key.pem # name of generated keys
+default_md = sha256 # message digest algorithm
+string_mask = nombstr # permitted characters
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+[ req_distinguished_name ]
+# Variable name Prompt string
+#------------------------- ----------------------------------
+0.organizationName = Organization Name (company)
+organizationalUnitName = Organizational Unit Name (department, division)
+emailAddress = Email Address
+emailAddress_max = 40
+localityName = Locality Name (city, district)
+stateOrProvinceName = State or Province Name (full name)
+countryName = Country Name (2 letter code)
+countryName_min = 2
+countryName_max = 2
+commonName = Common Name (hostname, IP, or your name)
+commonName_max = 64
+# Default values for the above, for consistency and less typing.
+# Variable name Value
+#------------------------ ------------------------------
+0.organizationName_default = Elasticsearch Test Org
+localityName_default = Amsterdam
+stateOrProvinceName_default = Amsterdam
+countryName_default = NL
+emailAddress_default = cacerttest@YOUR.COMPANY.TLD
+commonName_default = localhost
+[ v3_ca ]
+basicConstraints = CA:TRUE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+[ v3_req ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash</echo>
+
+				<exec dir="${elastic.shield.ca.dir}" executable="openssl" failonerror="true">
+					<arg value="req" />
+					<arg value="-batch" />
+					<arg value="-config" />
+					<arg value="${elastic.shield.ca.dir}/conf/caconfig.cnf" />
+					<arg value="-days" />
+					<arg value="1460" />
+					<arg value="-extensions" />
+					<arg value="v3_ca" />
+					<arg value="-keyout" />
+					<arg value="${elastic.shield.ca.dir}/private/cakey.pem" />
+					<arg value="-new" />
+					<arg value="-out" />
+					<arg value="${elastic.shield.ca.dir}/certs/cacert.pem" />
+					<arg value="-passin" />
+					<arg value="pass:liferay" />
+					<arg value="-passout" />
+					<arg value="pass:liferay" />
+					<arg value="-x509" />
+				</exec>
+
+				<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
+					<arg value="-importcert" />
+					<arg value="-alias" />
+					<arg value="es-ssl" />
+					<arg value="-file" />
+					<arg value="certs/cacert.pem" />
+					<arg value="-keystore" />
+					<arg value="es-ssl.keystore.jks" />
+					<arg value="-noprompt" />
+					<arg value="-storepass" />
+					<arg value="liferay" />
+				</exec>
+
+				<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
+					<arg value="-genkey" />
+					<arg value="-alias" />
+					<arg value="es-ssl" />
+					<arg value="-dname" />
+					<arg value="CN=localhost" />
+					<arg value="-keyalg" />
+					<arg value="RSA" />
+					<arg value="-keypass" />
+					<arg value="liferay" />
+					<arg value="-keysize" />
+					<arg value="2048" />
+					<arg value="-keystore" />
+					<arg value="es-ssl.keystore.jks" />
+					<arg value="-storepass" />
+					<arg value="liferay" />
+					<arg value="-validity" />
+					<arg value="3650" />
+				</exec>
+
+				<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
+					<arg value="-certreq" />
+					<arg value="-alias" />
+					<arg value="es-ssl" />
+					<arg value="-dname" />
+					<arg value="CN=localhost" />
+					<arg value="-file" />
+					<arg value="es-ssl.keystore.csr" />
+					<arg value="-keyalg" />
+					<arg value="RSA" />
+					<arg value="-keysize" />
+					<arg value="2048" />
+					<arg value="-keystore" />
+					<arg value="es-ssl.keystore.jks" />
+					<arg value="-storepass" />
+					<arg value="liferay" />
+					<arg value="-validity" />
+					<arg value="3650" />
+				</exec>
+
+				<exec dir="${elastic.shield.ca.dir}" executable="openssl" failonerror="true">
+					<arg value="ca" />
+					<arg value="-batch" />
+					<arg value="-config" />
+					<arg value="conf/caconfig.cnf" />
+					<arg value="-extensions" />
+					<arg value="v3_req" />
+					<arg value="-in" />
+					<arg value="es-ssl.keystore.csr" />
+					<arg value="-notext" />
+					<arg value="-out" />
+					<arg value="es-ssl.keystore-signed.crt" />
+					<arg value="-passin" />
+					<arg value="pass:liferay" />
+				</exec>
+
+				<move file="${elastic.shield.ca.dir}/certs/01.pem" tofile="${elastic.shield.ca.dir}/certs/es-ssl.keystore.pem" />
+
+				<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
+					<arg value="-importcert" />
+					<arg value="-alias" />
+					<arg value="es-ssl" />
+					<arg value="-file" />
+					<arg value="certs/es-ssl.keystore.pem" />
+					<arg value="-keystore" />
+					<arg value="es-ssl.keystore.jks" />
+					<arg value="-storepass" />
+					<arg value="liferay" />
+				</exec>
+
+				<echo file="${elasticsearch.dir}/config/elasticsearch.yml" append="true">shield.authc:
+  realms:
+      esusers:
+          type: esusers
+          order: 0
+shield.http.ssl: true
+shield.ssl.keystore.key_password: liferay
+shield.ssl.keystore.password: liferay
+shield.ssl.keystore.path: ${elastic.shield.ca.dir}/es-ssl.keystore.jks
+shield.transport.ssl: true</echo>
+			</then>
+		</if>
+
 		<local name="elasticsearch.server.not.started" />
 
 		<if>

@@ -254,7 +254,7 @@
 		</execute>
 	</command>
 
-	<command name="Autosave" priority="3">
+	<command name="ConfigureAutosave" priority="3">
 		<description message="This is a use case for LPS-68418." />
 
 		<execute macro="Navigator#openURL" />

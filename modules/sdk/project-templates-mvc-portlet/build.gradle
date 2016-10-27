@@ -1,6 +1,6 @@
 ext {
 	gradlePluginVersions = [
-		"com.liferay.gradle.plugins": "2.0.10"
+		"com.liferay.gradle.plugins": "3.0.23"
 	]
 }
 

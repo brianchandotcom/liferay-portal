@@ -89,9 +89,15 @@ public class BuildUpgradeTableTask extends JavaExec {
 
 		args.add("upgrade.base.dir=" + FileUtil.getAbsolutePath(getBaseDir()));
 		args.add("upgrade.osgi.module=" + isOsgiModule());
-		args.add(
-			"upgrade.release.info.file=" +
-				FileUtil.getAbsolutePath(getReleaseInfoFile()));
+
+		File releaseInfoFile = getReleaseInfoFile();
+
+		if (releaseInfoFile != null) {
+			args.add(
+				"upgrade.release.info.file=" +
+					FileUtil.getAbsolutePath(releaseInfoFile));
+		}
+
 		args.add(
 			"upgrade.table.dir=" +
 				FileUtil.getAbsolutePath(getUpgradeTableDir()));

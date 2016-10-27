@@ -73,10 +73,6 @@ public class LayoutSetPrototypeDisplayContext {
 			return _displayStyle;
 		}
 
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
 

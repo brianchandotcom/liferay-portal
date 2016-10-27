@@ -89,19 +89,17 @@ AUI.add(
 						var host = instance.get(STR_HOST);
 
 						instance._ddHandler = new A.DD.Delegate(
-							A.merge(
-								{
-									container: host.get(STR_CONTENT_BOX),
-									nodes: instance.get('rowSelector'),
-									on: {
-										'drag:drophit': A.bind('_onDragDropHit', instance),
-										'drag:enter': A.bind('_onDragEnter', instance),
-										'drag:exit': A.bind('_onDragExit', instance),
-										'drag:start': A.bind('_onDragStart', instance)
-									}
-								},
-								instance.get('ddConfig')
-							)
+							{
+								container: host.get(STR_CONTENT_BOX),
+								dragConfig: instance.get('ddConfig'),
+								nodes: instance.get('rowSelector'),
+								on: {
+									'drag:drophit': A.bind('_onDragDropHit', instance),
+									'drag:enter': A.bind('_onDragEnter', instance),
+									'drag:exit': A.bind('_onDragExit', instance),
+									'drag:start': A.bind('_onDragStart', instance)
+								}
+							}
 						);
 
 						instance._ddHandler.dd.plug(

@@ -275,30 +275,18 @@
 			<if>
 				<os family="mac" />
 				<then>
-					<copy todir="${elastic.kibana.dir}">
-					   <fileset dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x64" />
-					</copy>
-
-					<delete dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x64" />
+					<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-darwin-x64" tofile="${elastic.kibana.dir}" />
 				</then>
 				<elseif>
 					<os family="unix" />
 					<then>
-						<copy todir="${elastic.kibana.dir}">
-						   <fileset dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x64" />
-						</copy>
-
-						<delete dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x64" />
+						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-linux-x64" tofile="${elastic.kibana.dir}" />
 					</then>
 				</elseif>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<copy todir="${elastic.kibana.dir}">
-						   <fileset dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows" />
-						</copy>
-
-						 <delete dir="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows" />
+						<move file="${app.server.parent.dir}/kibana-${elastic.kibana.version}-windows" tofile="${elastic.kibana.dir}" />
 					</then>
 				</elseif>
 			</if>

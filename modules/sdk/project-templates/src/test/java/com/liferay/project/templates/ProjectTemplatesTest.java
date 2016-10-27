@@ -714,6 +714,42 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateThemeContributor() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"theme-contributor", "blade-test", "--contributor-type",
+			"blade-test");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		_testContains(gradleProjectDir, "bnd.bnd",
+			"Liferay-Theme-Contributor-Type: blade-test");
+
+		_testContains(gradleProjectDir, "bnd.bnd",
+			"Web-ContextPath: /blade-test-theme-contributor");
+
+		_testContains(gradleProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"");
+
+		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
+			"css/blade-test.scss");
+
+		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
+			"js/blade-test.js");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"theme-contributor", "blade-test",
+			"-DclassName=BladeTest", "-Dpackage=blade.test");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir,
+			"build/libs/blade.test-1.0.0.jar", "target/blade-test-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateWithPackageName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"", "barfoo", "--package-name", "foo.bar");

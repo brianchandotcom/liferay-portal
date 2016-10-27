@@ -20,6 +20,8 @@
 List<AssetEntryQueryProcessor> assetEntryQueryProcessors = AssetPublisherUtil.getAssetEntryQueryProcessors();
 
 for (AssetEntryQueryProcessor assetEntryQueryProcessor : assetEntryQueryProcessors) {
-	assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
+	if (assetPublisherCustomizer.isShowAssetEntryQueryProcessor(assetEntryQueryProcessor)) {
+		assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
+	}
 }
 %>

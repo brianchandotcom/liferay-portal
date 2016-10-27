@@ -29,6 +29,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,9 +72,7 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		return "/edit_instance.jsp";
 	}
 
-	protected void getInstance(PortletRequest portletRequest)
-		throws Exception {
-
+	protected void getInstance(PortletRequest portletRequest) throws Exception {
 		HttpServletRequest request = _portal.getHttpServletRequest(
 			portletRequest);
 
@@ -89,9 +88,9 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private Portal _portal;
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private CompanyLocalService _companyLocalService;
+	private Portal _portal;
 
 }

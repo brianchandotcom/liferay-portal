@@ -251,11 +251,12 @@ public class SPAUtil {
 
 		@Override
 		public Object addingService(ServiceReference<Object> reference) {
-			List<String> selectors = StringPlus.asList(reference.getProperty(
-				_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
+			List<String> selectors = StringPlus.asList(
+				reference.getProperty(_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
 
 			Collections.addAll(
-				_navigationExceptionSelectors, selectors.toArray(new String[selectors.size()]));
+				_navigationExceptionSelectors,
+				selectors.toArray(new String[selectors.size()]));
 
 			Object service = _bundleContext.getService(reference);
 
@@ -277,8 +278,8 @@ public class SPAUtil {
 		public void removedService(
 			ServiceReference<Object> reference, Object service) {
 
-			List<String> selectors = StringPlus.asList(reference.getProperty(
-				_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
+			List<String> selectors = StringPlus.asList(
+				reference.getProperty(_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
 
 			_navigationExceptionSelectors.remove(selectors);
 

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"metal-components": "^2.3.1"
+		"metal-components": "^2.3.3"
 	},
 	"devDependencies": {
 		"liferay-module-config-generator": "^1.1.10",

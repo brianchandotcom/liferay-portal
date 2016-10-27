@@ -31,6 +31,10 @@ public class ProjectTemplatesArgs {
 		return _className;
 	}
 
+	public String getContributorType() {
+		return _contributorType;
+	}
+
 	public File getDestinationDir() {
 		return _destinationDir;
 	}
@@ -65,6 +69,10 @@ public class ProjectTemplatesArgs {
 
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setContributorType(String contributorType) {
+		_contributorType = contributorType;
 	}
 
 	public void setDestinationDir(File destinationDir) {
@@ -112,6 +120,12 @@ public class ProjectTemplatesArgs {
 		names = "--class-name"
 	)
 	private String _className;
+
+	@Parameter(
+		description = "Used to identify your module as a Theme Contributor. Also, used to add the Liferay-Theme-Contributor-Type and Web-ContextPath bundle headers.",
+		names = "--contributor-type"
+	)
+	private String _contributorType;
 
 	@Parameter(
 		description = "The directory where to create the new project.",

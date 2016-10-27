@@ -1783,7 +1783,7 @@
 
 		<execute function="Click" locator1="FacebookLogin#LOGIN_BUTTON" />
 
-				<if>
+		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Button#I_AGREE" value1="I Agree" />
 			<then>
 				<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />

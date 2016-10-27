@@ -55,6 +55,21 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
+	public com.liferay.knowledge.base.model.KBArticle fetchFirstChildKBArticle(
+		long groupId, long parentResourcePrimKey) {
+		return _kbArticleService.fetchFirstChildKBArticle(groupId,
+			parentResourcePrimKey);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
+		long groupId, long kbFolderId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.fetchKBArticleByUrlTitle(groupId, kbFolderId,
+			urlTitle);
+	}
+
+	@Override
 	public com.liferay.knowledge.base.model.KBArticle fetchLatestKBArticle(
 		long resourcePrimKey, int status)
 		throws com.liferay.portal.kernel.exception.PortalException {

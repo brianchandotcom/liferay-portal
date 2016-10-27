@@ -100,6 +100,10 @@ page import="com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil" %>
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portal.kernel.search.Hits" %><%@
+page import="com.liferay.portal.kernel.search.SearchResult" %><%@
+page import="com.liferay.portal.kernel.search.SearchResultUtil" %><%@
+page import="com.liferay.portal.kernel.search.Sort" %><%@
 page import="com.liferay.portal.kernel.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyUtil" %><%@
 page import="com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyUtil" %><%@
@@ -177,7 +181,10 @@ page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
 page import="com.liferay.users.admin.web.constants.UsersAdminWebKeys" %><%@
-page import="com.liferay.users.admin.web.search.OrganizationChecker" %>
+page import="com.liferay.users.admin.web.search.OrganizationChecker" %><%@
+page import="com.liferay.users.admin.web.search.OrganizationResultRowSplitter" %><%@
+page import="com.liferay.users.admin.web.search.OrganizationUserChecker" %><%@
+page import="com.liferay.users.admin.web.util.comparator.OrganizationUserNameComparator" %>
 
 <%@ page import="java.text.Format" %>
 

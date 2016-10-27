@@ -28,7 +28,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CaptchaConfiguration {
 
-	@Meta.AD(deflt = "1", required = false)
+	@Meta.AD(deflt = "1", description = "max-challenges-help", required = false)
 	public int maxChallenges();
 
 	@Meta.AD(deflt = "true", required = false)
@@ -45,6 +45,7 @@ public interface CaptchaConfiguration {
 
 	@Meta.AD(
 		deflt = "com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl",
+		description = "captcha-engine-help", name = "captcha-engine",
 		optionLabels = {"SimpleCaptcha", "reCAPTCHA"},
 		optionValues = {
 			"com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl",
@@ -61,54 +62,67 @@ public interface CaptchaConfiguration {
 	public String reCaptchaPrivateKey();
 
 	@Meta.AD(
-		deflt = "https://www.google.com/recaptcha/api.js", required = false
+		deflt = "https://www.google.com/recaptcha/api.js",
+		name = "recaptcha-script-url", required = false
 	)
 	public String reCaptchaScriptUrl();
 
 	@Meta.AD(
 		deflt = "https://www.google.com/recaptcha/api/fallback?k=",
-		required = false
+		name = "recaptcha-no-script-url", required = false
 	)
 	public String reCaptchaNoScriptUrl();
 
 	@Meta.AD(
 		deflt = "https://www.google.com/recaptcha/api/siteverify",
-		required = false
+		name = "recaptcha-verify-url", required = false
 	)
 	public String reCaptchaVerifyUrl();
 
-	@Meta.AD(deflt = "50", required = false)
+	@Meta.AD(
+		deflt = "50", description = "simple-captcha-height-help",
+		name = "simple-captcha-height", required = false
+	)
 	public int simpleCaptchaHeight();
 
-	@Meta.AD(deflt = "150", required = false)
+	@Meta.AD(
+		deflt = "150", description = "simple-captcha-width-help",
+		name = "simple-captcha-width", required = false
+	)
 	public int simpleCaptchaWidth();
 
 	@Meta.AD(
 		deflt = "nl.captcha.backgrounds.FlatColorBackgroundProducer|nl.captcha.backgrounds.GradiatedBackgroundProducer|nl.captcha.backgrounds.SquigglesBackgroundProducer|nl.captcha.backgrounds.TransparentBackgroundProducer",
-		required = false
+		description = "simple-captcha-background-producers-help",
+		name = "simple-captcha-background-producers", required = false
 	)
 	public String[] simpleCaptchaBackgroundProducers();
 
 	@Meta.AD(
 		deflt = "nl.captcha.gimpy.BlockGimpyRenderer|nl.captcha.gimpy.DropShadowGimpyRenderer|nl.captcha.gimpy.FishEyeGimpyRenderer|nl.captcha.gimpy.RippleGimpyRenderer|nl.captcha.gimpy.ShearGimpyRenderer",
-		required = false
+		description = "simple-captcha-gimpy-renderers-help",
+		name = "simple-captcha-gimpy-renderers", required = false
 	)
 	public String[] simpleCaptchaGimpyRenderers();
 
 	@Meta.AD(
 		deflt = "nl.captcha.noise.CurvedLineNoiseProducer|nl.captcha.noise.StraightLineNoiseProducer",
-		required = false
+		description = "simple-captcha-noise-producers-help",
+		name = "simple-captcha-noise-producers", required = false
 	)
 	public String[] simpleCaptchaNoiseProducers();
 
 	@Meta.AD(
 		deflt = "com.liferay.captcha.simplecaptcha.DictionaryWordTextProducer|com.liferay.captcha.simplecaptcha.PinNumberTextProducer|nl.captcha.text.producer.DefaultTextProducer|nl.captcha.text.producer.FiveLetterFirstNameTextProducer",
-		required = false
+		description = "simple-captcha-text-producers-help",
+		name = "simple-captcha-text-producers", required = false
 	)
 	public String[] simpleCaptchaTextProducers();
 
 	@Meta.AD(
-		deflt = "nl.captcha.text.renderer.DefaultWordRenderer", required = false
+		deflt = "nl.captcha.text.renderer.DefaultWordRenderer",
+		description = "simple-captcha-word-renderers-help",
+		name = "simple-captcha-word-renderers", required = false
 	)
 	public String[] simpleCaptchaWordRenderers();
 

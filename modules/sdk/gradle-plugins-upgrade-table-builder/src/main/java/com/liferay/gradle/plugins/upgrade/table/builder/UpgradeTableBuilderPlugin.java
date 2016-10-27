@@ -37,15 +37,15 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 	@Override
 	public void apply(Project project) {
 		Configuration upgradeTableBuilderConfiguration =
-			addConfigurationUpgradeTableBuilder(project);
+			_addConfigurationUpgradeTableBuilder(project);
 
-		addTaskBuildUpgradeTable(project);
+		_addTaskBuildUpgradeTable(project);
 
-		configureTasksBuildUpgradeTable(
+		_configureTasksBuildUpgradeTable(
 			project, upgradeTableBuilderConfiguration);
 	}
 
-	protected Configuration addConfigurationUpgradeTableBuilder(
+	private Configuration _addConfigurationUpgradeTableBuilder(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
@@ -61,7 +61,7 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addUpgradeTableBuilderDependencies(project);
+					_addUpgradeTableBuilderDependencies(project);
 				}
 
 			});
@@ -69,7 +69,7 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected BuildUpgradeTableTask addTaskBuildUpgradeTable(Project project) {
+	private BuildUpgradeTableTask _addTaskBuildUpgradeTable(Project project) {
 		BuildUpgradeTableTask buildUpgradeTableTask = GradleUtil.addTask(
 			project, BUILD_UPGRADE_TABLE_TASK_NAME,
 			BuildUpgradeTableTask.class);
@@ -82,20 +82,20 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 		return buildUpgradeTableTask;
 	}
 
-	protected void addUpgradeTableBuilderDependencies(Project project) {
+	private void _addUpgradeTableBuilderDependencies(Project project) {
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.portal.tools.upgrade.table.builder", "latest.release");
 	}
 
-	protected void configureTaskBuildUpgradeTableClasspath(
+	private void _configureTaskBuildUpgradeTableClasspath(
 		BuildUpgradeTableTask buildUpgradeTableTask,
 		FileCollection fileCollection) {
 
 		buildUpgradeTableTask.setClasspath(fileCollection);
 	}
 
-	protected void configureTasksBuildUpgradeTable(
+	private void _configureTasksBuildUpgradeTable(
 		Project project, final Configuration upgradeTableBuilderConfiguration) {
 
 		TaskContainer taskContainer = project.getTasks();
@@ -108,7 +108,7 @@ public class UpgradeTableBuilderPlugin implements Plugin<Project> {
 				public void execute(
 					BuildUpgradeTableTask buildUpgradeTableTask) {
 
-					configureTaskBuildUpgradeTableClasspath(
+					_configureTaskBuildUpgradeTableClasspath(
 						buildUpgradeTableTask,
 						upgradeTableBuilderConfiguration);
 				}

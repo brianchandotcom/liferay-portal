@@ -369,12 +369,15 @@ logExceptionsOnly=false</echo>
 	<target name="start-kibana">
 		<unzip-kibana />
 
+		<prepare-kibana />
+
 		<replace file="${elastic.kibana.dir}/config/kibana.yml">
 			<replacetoken><![CDATA[# server.basePath: ""]]></replacetoken>
 			<replacevalue><![CDATA[server.basePath: "/o/portal-search-elasticsearch-marvel-web/marvel-proxy"]]></replacevalue>
 		</replace>
 
-		<prepare-kibana />
+		<replace file="${elastic.kibana.dir}/config/kibana.yml" token="# pid.file: /var/run/kibana.pid" value="pid_file: ${elastic.kibana.dir}/bin/pid-kibana" />
+
 		<get-testcase-property property.name="elastic.shield.enabled" />
 
 		<if>
@@ -402,11 +405,6 @@ elasticsearch.password: "liferay"]]></replacevalue>
 				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
 					<arg value="-c" />
 					<arg value="./kibana &gt; kibana.log 2&gt;&amp;1 &amp;" />
-				</exec>
-
-				<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="echo $! &gt; pid-kibana" />
 				</exec>
 			</then>
 			<elseif>

@@ -4,6 +4,8 @@ Bundle-Version: 1.0.15
 Liferay-Export-JS-Submodules:\
 	metal-ajax,\
 	metal-multimap,\
+	metal-path-parser,\
+	metal-structs,\
 	metal-uri,\
 	metal-useragent,\
 	senna

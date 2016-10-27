@@ -24,6 +24,47 @@
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Wikis')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WIKIS_NOT_SPAM_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Not Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKIS_SPAM_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_TABLE-->
+<tr>
+	<td>WIKI_PAGE_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_VERSION</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[3]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_POSTED_BY</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[5]//div/a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

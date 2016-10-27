@@ -1711,7 +1711,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="loginUserInvalidPG">
@@ -1750,7 +1750,7 @@
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="loginUserWithCASEnabledPG">
@@ -1765,7 +1765,7 @@
 
 		<execute function="AssertClick" locator1="CAS#LOGIN_BUTTON" value1="LOGIN" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="loginUserWithFacebookSSOEnabledPG">
@@ -1839,7 +1839,7 @@
 
 		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="loginUserWithOpenIDEnabledPG">
@@ -1897,7 +1897,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="logoutAndLoginPG">

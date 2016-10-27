@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSIGNED_TO_ME_MENULIST_OPTION</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_menuListOption}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

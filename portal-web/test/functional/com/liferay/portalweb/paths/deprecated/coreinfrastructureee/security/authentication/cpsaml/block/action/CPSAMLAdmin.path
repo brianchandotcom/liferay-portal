@@ -29,37 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_GENERAL</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'General')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_IDENTITY_PROVIDER</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SERVICE_PROVIDER_CONNECTIONS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Service Provider Connections')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_IDENTITY_PROVIDER_CONNECTION</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider Connection')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

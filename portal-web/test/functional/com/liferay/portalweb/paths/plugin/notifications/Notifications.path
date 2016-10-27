@@ -142,6 +142,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX</td>
+	<td>//table[contains(.,'Contacts Center')]//tr[contains(.,'sends you a social relationship request.')]//label[contains(.,'Website')]/input[@type='checkbox' and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX</td>
+	<td>//table[contains(.,'Invite Members')]//tr[contains(.,'sends you a membership request.')]//label[contains(.,'Website')]/input[@type='checkbox' and contains(@class,'disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

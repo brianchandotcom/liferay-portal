@@ -273,11 +273,12 @@
 
 		<execute macro="FormFields#viewTextLabel">
 			<var name="fieldLabel" value="Autosave interval" />
-			<var name="fieldName" value="Autosaveinterval" />
+			<var name="fieldName" value="autosaveInterval" />
 		</execute>
 
-		<execute macro="FormFields#viewTextValue">
-			<var name="fieldName" value="2" />
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="autosaveInterval" />
+			<var name="fieldValue" value="2" />
 		</execute>
 
 		<execute macro="SystemSettings#saveConfiguration" />
@@ -290,23 +291,39 @@
 
 		<execute macro="Form#editName" />
 
-		<execute macro="Form#editDescription" />
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field Should Not Be Saved" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute function="Pause" locator1="60000" />
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="FormsAdmin#viewNoForms" />
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
 
 		<execute macro="Form#gotoAddField">
 			<var name="fieldType" value="Text Field" />
 		</execute>
 
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field Will Be Saved" />
+		</execute>
+
 		<execute macro="Form#closeSidebar" />
 
-		<execute function="Pause" locator1="150000" />
+		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Navigator#gotoBack" />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
-		</execute>
 
 		<execute macro="FormsAdminNavigator#gotoEdit" />
 	</command>

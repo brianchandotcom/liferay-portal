@@ -146,6 +146,10 @@
 		<execute function="AssertElementNotPresent" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" />
 	</command>
 
+	<command name="viewNoForms">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no forms. Click on the plus button to add the first one." />
+	</command>
+
 	<command name="viewMultilineTextEntry">
 		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
 

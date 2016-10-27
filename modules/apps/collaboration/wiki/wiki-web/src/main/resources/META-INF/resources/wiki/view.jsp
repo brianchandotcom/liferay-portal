@@ -487,20 +487,18 @@ if (portletTitleBasedNavigation) {
 					%>
 
 						<li class="list-group-item">
-							<div class="list-group-item-content">
-								<h3>
+							<h3>
 
-									<%
-									PortletURL rowURL = PortletURLUtil.clone(viewPageURL, renderResponse);
+								<%
+								PortletURL rowURL = PortletURLUtil.clone(viewPageURL, renderResponse);
 
-									rowURL.setParameter("title", childPage.getTitle());
-									%>
+								rowURL.setParameter("title", childPage.getTitle());
+								%>
 
-									<aui:a href="<%= rowURL.toString() %>"><%= childPage.getTitle() %></aui:a>
-								</h3>
+								<aui:a href="<%= rowURL.toString() %>"><%= childPage.getTitle() %></aui:a>
+							</h3>
 
-								<p class="text-default"><%= StringUtil.shorten(HtmlUtil.extractText(childPage.getContent()), 200) %></p>
-							</div>
+							<p class="text-default"><%= StringUtil.shorten(HtmlUtil.extractText(childPage.getContent()), 200) %></p>
 						</li>
 
 					<%

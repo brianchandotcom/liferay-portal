@@ -201,7 +201,7 @@
 </tr>
 <tr>
 	<td>CHILD_PAGE_TITLE</td>
-	<td>//div[@class='list-group-item-content']//a[contains(.,'${key_kbChildArticleTitle}')]</td>
+	<td>//li[@class='list-group-item']//a[contains(.,'${key_kbChildArticleTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -54,7 +54,7 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	public Boolean getActive() {
-		String navigation = ParamUtil.getString(_request, "navigation");
+		String navigation = getNavigation();
 
 		Boolean active = null;
 
@@ -168,6 +168,10 @@ public class LayoutPrototypeDisplayContext {
 			return false;
 		}
 
+		if (!Objects.equals(getNavigation(), "all")) {
+			return false;
+		}
+
 		return true;
 	}
 
@@ -201,6 +205,16 @@ public class LayoutPrototypeDisplayContext {
 		return false;
 	}
 
+	protected String getNavigation() {
+		if (Validator.isNotNull(_navigation)) {
+			return _navigation;
+		}
+
+		_navigation = ParamUtil.getString(_request, "navigation");
+
+		return _navigation;
+	}
+
 	protected int getTotal() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -210,6 +224,7 @@ public class LayoutPrototypeDisplayContext {
 	}
 
 	private String _displayStyle;
+	private String _navigation;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

@@ -31,7 +31,6 @@
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
-			disabled="<%= false %>"
 			navigationKeys='<%= new String[] {"all", "active", "inactive"} %>'
 			portletURL="<%= layoutPrototypeDisplayContext.getPortletURL() %>"
 		/>

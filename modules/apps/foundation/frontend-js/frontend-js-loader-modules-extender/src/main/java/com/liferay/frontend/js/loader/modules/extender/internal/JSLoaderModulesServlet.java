@@ -84,8 +84,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
 		printWriter.println("(function() {");
-		printWriter.print(_details.globalJSVariable());
-		printWriter.println(".PATHS = {");
+		printWriter.println("Liferay.PATHS = {");
 
 		String delimiter = "";
 		Set<String> processedNames = new HashSet<>();
@@ -120,8 +119,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		}
 
 		printWriter.println("\n};");
-		printWriter.print(_details.globalJSVariable());
-		printWriter.println(".MODULES = {");
+		printWriter.println("Liferay.MODULES = {");
 
 		delimiter = "";
 		processedNames.clear();
@@ -155,8 +153,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		}
 
 		printWriter.println("\n};");
-		printWriter.print(_details.globalJSVariable());
-		printWriter.println(".MAPS = {");
+		printWriter.println("Liferay.MAPS = {");
 
 		delimiter = "";
 		processedNames.clear();
@@ -189,6 +186,9 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		}
 
 		printWriter.println("\n};");
+
+		printWriter.println("Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
+
 		printWriter.println("}());");
 
 		printWriter.close();

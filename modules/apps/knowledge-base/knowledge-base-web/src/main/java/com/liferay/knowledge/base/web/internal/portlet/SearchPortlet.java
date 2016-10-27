@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -84,6 +85,12 @@ public class SearchPortlet extends BaseKBPortlet {
 			if (resourcePrimKey > 0) {
 				kbArticle = kbArticleService.getLatestKBArticle(
 					resourcePrimKey, WorkflowConstants.STATUS_APPROVED);
+			}
+
+			String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
+
+			if (Validator.isNotNull(cmd) && cmd.equals("compareVersions")) {
+				super.compareVersions(renderRequest);
 			}
 
 			renderRequest.setAttribute(

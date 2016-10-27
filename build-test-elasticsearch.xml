@@ -375,6 +375,26 @@ logExceptionsOnly=false</echo>
 		</replace>
 
 		<prepare-kibana />
+		<get-testcase-property property.name="elastic.shield.enabled" />
+
+		<if>
+			<equals arg1="${elastic.shield.enabled}" arg2="true" />
+			<then>
+				<replace file="${elastic.kibana.dir}/config/kibana.yml">
+					<replacetoken><![CDATA[# elasticsearch.username: "user"
+# elasticsearch.password: "pass"]]></replacetoken>
+					<replacevalue><![CDATA[elasticsearch.username: "liferay"
+elasticsearch.password: "liferay"]]></replacevalue>
+				</replace>
+
+				<replace file="${elastic.kibana.dir}/config/kibana.yml">
+					<replacetoken><![CDATA[# elasticsearch.url: "http://localhost:9200"]]></replacetoken>
+					<replacevalue><![CDATA[elasticsearch.url: "https://localhost:9200"]]></replacevalue>
+				</replace>
+
+				<replace file="${elastic.kibana.dir}/config/kibana.yml" token="# elasticsearch.ssl.ca: /path/to/your/CA.pem" value="elasticsearch.ssl.ca: ${elastic.shield.ca.dir}/certs/cacert.pem" />
+			</then>
+		</if>
 
 		<if>
 			<os family="unix" />

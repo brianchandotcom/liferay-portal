@@ -25,6 +25,7 @@
 	</fileSets>
 	<requiredProperties>
 		<requiredProperty key="contributorType">
+			<defaultValue>${artifactId}</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="projectType">
 			<defaultValue>standalone</defaultValue>

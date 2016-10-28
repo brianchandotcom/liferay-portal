@@ -117,12 +117,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 				StringUtil.quote(operand.getValue()));
 		}
 
-		if (Validator.isNumber(operand.getValue())) {
-			return operand.getValue();
-		}
-		else {
-			return StringUtil.quote(operand.getValue());
-		}
+		return StringUtil.quote(operand.getValue());
 	}
 
 	protected String convertOperands(

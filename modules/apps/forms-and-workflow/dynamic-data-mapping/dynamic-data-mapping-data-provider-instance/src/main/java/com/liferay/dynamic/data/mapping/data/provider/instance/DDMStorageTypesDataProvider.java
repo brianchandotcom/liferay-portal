@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider.osgi;
+package com.liferay.dynamic.data.mapping.data.provider.instance;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistry;
 import com.liferay.portal.kernel.util.KeyValuePair;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.data.provider.id=ddm-storage-types"
+	immediate = true,
+	property = "ddm.data.provider.instance.id=ddm-storage-types"
 )
 public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
@@ -44,7 +46,7 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException {
 
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
 		String storageTypeDefault = storageAdapter.getStorageType();
 
-		addToDataList(data, storageTypeDefault);
+		data.add(createMap(storageTypeDefault));
 
 		Set<String> storageTypes = _storageAdapterRegistry.getStorageTypes();
 
@@ -68,24 +70,22 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 				continue;
 			}
 
-			addToDataList(data, storageType);
+			data.add(createMap(storageType));
 		}
 
 		return new DDMDataProviderResponse(data);
 	}
 
 	public Class<?> getSettings() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
-	protected void addToDataList(
-		List<Map<Object, Object>> data, String storageType) {
-
+	protected Map<Object, Object> createMap(String storageType) {
 		Map<Object, Object> map = new HashMap<>();
 
 		map.put(storageType, storageType);
 
-		data.add(map);
+		return map;
 	}
 
 	@Reference

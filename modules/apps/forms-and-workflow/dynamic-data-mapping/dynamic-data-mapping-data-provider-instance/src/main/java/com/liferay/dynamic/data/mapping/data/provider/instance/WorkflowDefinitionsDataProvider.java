@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.data.provider.osgi;
+package com.liferay.dynamic.data.mapping.data.provider.instance;
 
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -44,7 +45,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = "ddm.data.provider.id=workflow-definitions"
+	immediate = true,
+	property = "ddm.data.provider.instance.id=workflow-definitions"
 )
 public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 
@@ -52,7 +54,7 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException {
 
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
@@ -68,55 +70,54 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 		Locale locale = getLocale(
 			ddmDataProviderContext.getHttpServletRequest());
 
-		addToDataList(
-			data, LanguageUtil.get(locale, "no-workflow"), StringPool.BLANK);
+		data.add(
+			createMap(
+				LanguageUtil.get(locale, "no-workflow"), StringPool.BLANK));
 
-		if (_workflowEngineManager.isDeployed()) {
-			try {
-				long companyId = getCompanyId(
-					ddmDataProviderContext.getHttpServletRequest());
+		if (!_workflowEngineManager.isDeployed()) {
+			return new DDMDataProviderResponse(data);
+		}
 
-				List<WorkflowDefinition> workflowDefinitions =
-					_workflowDefinitionManager.getActiveWorkflowDefinitions(
-						companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		try {
+			long companyId = getCompanyId(
+				ddmDataProviderContext.getHttpServletRequest());
 
-				for (WorkflowDefinition workflowDefinition :
-						workflowDefinitions) {
+			List<WorkflowDefinition> workflowDefinitions =
+				_workflowDefinitionManager.getActiveWorkflowDefinitions(
+					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-					String value =
-						workflowDefinition.getName() + StringPool.AT +
-							workflowDefinition.getVersion();
+			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+				String version = LanguageUtil.format(
+					locale, "version-x", workflowDefinition.getVersion(),
+					false);
 
-					String version = LanguageUtil.format(
-						locale, "version-x", workflowDefinition.getVersion(),
-						false);
+				String label =
+					workflowDefinition.getName() + " (" + version + ")";
 
-					String label =
-						workflowDefinition.getName() + " (" + version + ")";
+				String value =
+					workflowDefinition.getName() + StringPool.AT +
+						workflowDefinition.getVersion();
 
-					addToDataList(data, label, value);
-				}
+				data.add(createMap(label, value));
 			}
-			catch (WorkflowException we) {
-				throw new DDMDataProviderException(we);
-			}
+		}
+		catch (WorkflowException we) {
+			throw new DDMDataProviderException(we);
 		}
 
 		return new DDMDataProviderResponse(data);
 	}
 
 	public Class<?> getSettings() {
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
-	protected void addToDataList(
-		List<Map<Object, Object>> data, String label, String value) {
-
+	protected Map<Object, Object> createMap(String label, String value) {
 		Map<Object, Object> map = new HashMap<>();
 
 		map.put(label, value);
 
-		data.add(map);
+		return map;
 	}
 
 	protected long getCompanyId(HttpServletRequest httpServletRequest) {

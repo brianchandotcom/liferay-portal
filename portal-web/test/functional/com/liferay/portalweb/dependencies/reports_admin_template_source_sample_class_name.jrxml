@@ -64,7 +64,7 @@
 					<textFieldExpression class="java.lang.String"><![CDATA[$P{title}]]></textFieldExpression>
 				</textField>
 			</frame>
-			<image>
+			<image isLazy="true" onErrorType="Blank">
 				<reportElement x="0" y="11" width="414" height="58" forecolor="#003366" backcolor="#003366"/>
 				<imageExpression class="java.lang.String"><![CDATA["http://www.liferay.com/image/company_logo"]]></imageExpression>
 			</image>

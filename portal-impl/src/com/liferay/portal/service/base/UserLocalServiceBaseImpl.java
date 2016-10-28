@@ -574,16 +574,20 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addOrganizationUser(long organizationId, long userId) {
+	public void addOrganizationUser(long organizationId, long userId)
+		throws PortalException {
 		organizationPersistence.addUser(organizationId, userId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addOrganizationUser(long organizationId, User user) {
+	public void addOrganizationUser(long organizationId, User user)
+		throws PortalException {
 		organizationPersistence.addUser(organizationId, user);
 	}
 

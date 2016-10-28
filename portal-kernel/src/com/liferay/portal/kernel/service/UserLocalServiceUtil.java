@@ -2619,12 +2619,20 @@ public class UserLocalServiceUtil {
 		getService().addGroupUsers(groupId, userIds);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	public static void addOrganizationUser(long organizationId,
-		com.liferay.portal.kernel.model.User user) {
+		com.liferay.portal.kernel.model.User user)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addOrganizationUser(organizationId, user);
 	}
 
-	public static void addOrganizationUser(long organizationId, long userId) {
+	/**
+	* @throws PortalException
+	*/
+	public static void addOrganizationUser(long organizationId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().addOrganizationUser(organizationId, userId);
 	}
 

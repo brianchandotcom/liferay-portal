@@ -2750,14 +2750,22 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		_userLocalService.addGroupUsers(groupId, userIds);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
 	public void addOrganizationUser(long organizationId,
-		com.liferay.portal.kernel.model.User user) {
+		com.liferay.portal.kernel.model.User user)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userLocalService.addOrganizationUser(organizationId, user);
 	}
 
+	/**
+	* @throws PortalException
+	*/
 	@Override
-	public void addOrganizationUser(long organizationId, long userId) {
+	public void addOrganizationUser(long organizationId, long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userLocalService.addOrganizationUser(organizationId, userId);
 	}
 

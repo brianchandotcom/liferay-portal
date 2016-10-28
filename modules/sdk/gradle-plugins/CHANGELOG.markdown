@@ -572,5 +572,5 @@ version 1.0.134.
 [LPS-68838]: https://issues.liferay.com/browse/LPS-68838
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
-[LPS-68980]: https://issues.liferay.com/browse/LPS-68917
+[LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

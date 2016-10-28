@@ -646,7 +646,7 @@ publishing.
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
 [LPS-68935]: https://issues.liferay.com/browse/LPS-68935
-[LPS-68980]: https://issues.liferay.com/browse/LPS-68917
+[LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

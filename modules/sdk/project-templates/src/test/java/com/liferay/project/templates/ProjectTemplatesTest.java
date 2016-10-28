@@ -755,8 +755,6 @@ public class ProjectTemplatesTest {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"theme-contributor", "my-contributor-default");
 
-		_testExists(gradleProjectDir, "bnd.bnd");
-
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Liferay-Theme-Contributor-Type: my-contributor-default");

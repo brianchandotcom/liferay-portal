@@ -182,11 +182,9 @@ AUI.add(
 					_onTextFieldValueChange: function() {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
-
-						var rows = inputNode.val().split('\n');
-
-						inputNode.set('rows', rows.length + 1);
+						if (instance.get('displayStyle') === 'multiline') {
+							instance.syncInputHeight();
+						}
 					}
 				}
 			}

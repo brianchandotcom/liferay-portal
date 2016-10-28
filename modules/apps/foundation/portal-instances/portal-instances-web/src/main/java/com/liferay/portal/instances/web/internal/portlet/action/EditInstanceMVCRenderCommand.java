@@ -16,15 +16,24 @@ package com.liferay.portal.instances.web.internal.portlet.action;
 
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchCompanyException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
@@ -45,7 +54,7 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getInstance(renderRequest);
+			getInstance(renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCompanyException ||
@@ -62,5 +71,26 @@ public class EditInstanceMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_instance.jsp";
 	}
+
+	protected void getInstance(PortletRequest portletRequest) throws Exception {
+		HttpServletRequest request = _portal.getHttpServletRequest(
+			portletRequest);
+
+		long companyId = ParamUtil.getLong(request, "companyId");
+
+		Company company = null;
+
+		if (companyId > 0) {
+			company = _companyLocalService.getCompanyById(companyId);
+		}
+
+		request.setAttribute(WebKeys.SEL_COMPANY, company);
+	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -16,11 +16,9 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="cancelURL">
-	<portlet:param name="mvcPath" value="/admin/view.jsp" />
-</portlet:renderURL>
-
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
 
 long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
@@ -31,7 +29,7 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 boolean showPublishModal = ParamUtil.getBoolean(request, "showPublishModal");
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(cancelURL.toString());
+portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-form") : LanguageUtil.get(request, "edit-form"));
 %>
@@ -55,7 +53,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 	</div>
 
 	<aui:form action="<%= saveRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
-		<aui:input name="redirect" type="hidden" value="<%= cancelURL.toString() %>" />
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
@@ -165,7 +163,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 				<aui:button cssClass="btn-lg ddl-button" id="save" value="save-form" />
 
-				<aui:button cssClass="btn-lg" href="<%= cancelURL.toString() %>" name="cancelButton" type="cancel" />
+				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</div>
 

@@ -714,39 +714,51 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateThemeContributor() throws Exception {
+	public void testBuildTemplateThemeContributorCustom() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"theme-contributor", "blade-test", "--contributor-type",
-			"blade-test");
+			"theme-contributor", "my-contributor-custom", "--contributor-type",
+			"foo-bar");
+
+		_testContains(gradleProjectDir, "bnd.bnd",
+			"Liferay-Theme-Contributor-Type: foo-bar");
+
+		_testContains(gradleProjectDir, "bnd.bnd",
+			"Web-ContextPath: /foo-bar-theme-contributor");
+
+		_testNotContains(gradleProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
+			"css/foo-bar.scss");
+
+		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
+			"js/foo-bar.js");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"theme-contributor", "my-contributor-custom",
+			"-DcontributorType=foo-bar", "-Dpackage=my.contributor.custom");
+
+		_testContains(mavenProjectDir, "bnd.bnd",
+			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir,
+			"build/libs/my.contributor.custom-1.0.0.jar",
+			"target/my-contributor-custom-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateThemeContributorDefaults() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"theme-contributor", "my-contributor-default");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
 		_testContains(gradleProjectDir, "bnd.bnd",
-			"Liferay-Theme-Contributor-Type: blade-test");
+			"Liferay-Theme-Contributor-Type: my-contributor-default");
 
 		_testContains(gradleProjectDir, "bnd.bnd",
-			"Web-ContextPath: /blade-test-theme-contributor");
-
-		_testContains(gradleProjectDir, "bnd.bnd",
-			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
-
-		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
-			"css/blade-test.scss");
-
-		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
-			"js/blade-test.js");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"theme-contributor", "blade-test",
-			"-DclassName=BladeTest", "-Dpackage=blade.test");
-
-		_buildProjects(
-			gradleProjectDir, mavenProjectDir,
-			"build/libs/blade.test-1.0.0.jar", "target/blade-test-1.0.0.jar");
+			"Web-ContextPath: /my-contributor-default-theme-contributor");
 	}
 
 	@Test

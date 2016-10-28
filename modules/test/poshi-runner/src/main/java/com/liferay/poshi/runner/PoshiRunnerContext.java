@@ -504,8 +504,10 @@ public class PoshiRunnerContext {
 		Multimap<Properties, String> multimap = HashMultimap.create();
 
 		for (String classCommandName : classCommandNames) {
-			Properties properties = _classCommandNamePropertiesMap.get(
-				classCommandName);
+			Properties properties = new Properties();
+
+			properties.putAll(
+				_classCommandNamePropertiesMap.get(classCommandName));
 
 			Set<String> propertyNames = properties.stringPropertyNames();
 

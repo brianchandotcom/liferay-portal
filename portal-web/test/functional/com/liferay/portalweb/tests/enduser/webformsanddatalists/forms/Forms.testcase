@@ -1142,94 +1142,6 @@
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#save" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoEdit">
-			<var name="formName" value="Created Form Name" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="Paragraph" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="ParagraphName" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="TextName" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="Select" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="SelectName" />
-		</execute>
-
-		<execute macro="FormFields#viewOptionsRowFieldName">
-			<var name="fieldName" value="Select1Name" />
-		</execute>
-
-		<execute macro="FormFields#viewOptionsRowFieldName">
-			<var name="fieldName" value="Select2Name" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="Radio" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="RadioName" />
-		</execute>
-
-		<execute macro="FormFields#viewOptionsRowFieldName">
-			<var name="fieldName" value="Option1Name" />
-		</execute>
-
-		<execute macro="FormFields#viewOptionsRowFieldName">
-			<var name="fieldName" value="Option2Name" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="Date" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="DateName" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="FormsAdminNavigator#gotoEditField">
-			<var name="fieldName" value="Checkbox" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="CheckboxName" />
-		</execute>
-
-		<execute macro="Form#closeSidebar" />
-
-		<execute macro="Form#save" />
 	</command>
 
 	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="4">
@@ -4232,10 +4144,6 @@
 			<var name="fieldValue" value=",.?/;:{}[]\|-+!@#$%^*()=_" />
 		</execute>
 
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="text" />
-		</execute>
-
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#gotoAddField">
@@ -4247,16 +4155,8 @@
 			<var name="fieldValue" value="Jump, She exclaimed!" />
 		</execute>
 
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="JumpSheExclaimed" />
-		</execute>
-
 		<execute macro="FormFields#editFieldName">
 			<var name="fieldValue" value="Jump, She exclaimed!" />
-		</execute>
-
-		<execute macro="FormFields#viewFieldName">
-			<var name="fieldName" value="JumpSheExclaimed" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

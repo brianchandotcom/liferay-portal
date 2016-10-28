@@ -328,13 +328,45 @@ Error-Prone was automatically installed. Please rerun your task.
 							/>
 
 							<if>
-								<equals arg1="${fix.pack.requirement.type}" arg2="hotfix" />
+								<and>
+									<not>
+										<isset property="fix.pack.requirement.type" />
+									</not>
+									<contains string="@{fix.pack.requirement}" substring="de=" />
+								</and>
 								<then>
+									<property name="fix.pack.requirement.type" value="de" />
+								</then>
+							</if>
+
+							<if>
+								<equals arg1="${fix.pack.requirement.type}" arg2="de" />
+								<then>
+									<local name="fix.pack.requirement" />
+
+									<propertyregex
+										defaultValue="@{fix.pack.requirement}"
+										input="@{fix.pack.requirement}"
+										property="fix.pack.requirement"
+										override="true"
+										regexp="="
+										replace="-"
+									/>
+
 									<var
 										name="fix.pack.requirement.file.name"
-										value="liferay-@{fix.pack.requirement}-${fix.pack.build.version}.zip"
+										value="liferay-fix-pack-${fix.pack.requirement}-${fix.pack.build.version}.zip"
 									/>
 								</then>
+								<elseif>
+									<equals arg1="${fix.pack.requirement.type}" arg2="hotfix" />
+									<then>
+										<var
+											name="fix.pack.requirement.file.name"
+											value="liferay-@{fix.pack.requirement}-${fix.pack.build.version}.zip"
+										/>
+									</then>
+								</elseif>
 								<else>
 									<var
 										name="fix.pack.requirement.file.name"

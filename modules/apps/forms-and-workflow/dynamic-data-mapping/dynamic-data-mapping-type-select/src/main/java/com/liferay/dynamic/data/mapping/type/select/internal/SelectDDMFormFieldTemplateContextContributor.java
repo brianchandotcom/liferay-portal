@@ -133,7 +133,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 					ddmFormField.getProperty("ddmDataProviderInstanceId"));
 
 				DDMDataProvider ddmDataProvider =
-					ddmDataProviderTracker.getDDMDataProviderById(
+					ddmDataProviderTracker.getDDMDataProviderByInstanceId(
 						ddmDataProviderInstanceId);
 
 				DDMDataProviderContext ddmDataProviderContext = null;

@@ -64,17 +64,17 @@ public class DDMDataProviderTest {
 	}
 
 	@Test
-	public void testGetDDMDataProviderById() {
+	public void testGetDDMDataProviderByInstanceId() {
 		DDMDataProvider testDataProvider =
-			_ddmDataProviderTracker.getDDMDataProviderById("test");
+			_ddmDataProviderTracker.getDDMDataProviderByInstanceId("test");
 
-		Assert.assertTrue(testDataProvider != null);
+		Assert.assertNotNull(testDataProvider);
 	}
 
 	@Test
 	public void testInvokeDataProvider() throws Exception {
 		DDMDataProvider testDataProvider =
-			_ddmDataProviderTracker.getDDMDataProviderById("test");
+			_ddmDataProviderTracker.getDDMDataProviderByInstanceId("test");
 
 		DDMDataProviderRequest ddmDataProviderRequest =
 			new DDMDataProviderRequest(null);
@@ -84,9 +84,8 @@ public class DDMDataProviderTest {
 
 		List<Map<Object, Object>> data = ddmDataProviderResponse.getData();
 
-		Assert.assertTrue(data != null);
-
-		Assert.assertTrue(data.size() == 2);
+		Assert.assertNotNull(data);
+		Assert.assertEquals(2, data.size());
 	}
 
 	protected static void setUpDDMDataProviderTracker() {
@@ -99,7 +98,7 @@ public class DDMDataProviderTest {
 	protected static void setUpTestDDMDataProvider() {
 		Map<String, Object> properties = new HashMap<>();
 
-		properties.put("ddm.data.provider.id", "test");
+		properties.put("ddm.data.provider.instance.id", "test");
 
 		Registry registry = RegistryUtil.getRegistry();
 

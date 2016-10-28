@@ -36,8 +36,8 @@ public class DDMDataProviderTracker {
 		return _ddmDataProviderTypeTrackerMap.getService(type);
 	}
 
-	public DDMDataProvider getDDMDataProviderById(String id) {
-		return _ddmDataProviderIdTrackerMap.getService(id);
+	public DDMDataProvider getDDMDataProviderByInstanceId(String instanceId) {
+		return _ddmDataProviderInstanceIdTrackerMap.getService(instanceId);
 	}
 
 	public List<DDMDataProviderContextContributor>
@@ -67,10 +67,12 @@ public class DDMDataProviderTracker {
 
 		_ddmDataProviderContextContributorTrackerMap.open();
 
-		_ddmDataProviderIdTrackerMap = ServiceTrackerMapFactory.singleValueMap(
-			bundleContext, DDMDataProvider.class, "ddm.data.provider.id");
+		_ddmDataProviderInstanceIdTrackerMap =
+			ServiceTrackerMapFactory.singleValueMap(
+				bundleContext, DDMDataProvider.class,
+				"ddm.data.provider.instance.id");
 
-		_ddmDataProviderIdTrackerMap.open();
+		_ddmDataProviderInstanceIdTrackerMap.open();
 
 		_ddmDataProviderTypeTrackerMap =
 			ServiceTrackerMapFactory.singleValueMap(
@@ -83,7 +85,7 @@ public class DDMDataProviderTracker {
 	protected void deactivate() {
 		_ddmDataProviderContextContributorTrackerMap.close();
 
-		_ddmDataProviderIdTrackerMap.close();
+		_ddmDataProviderInstanceIdTrackerMap.close();
 
 		_ddmDataProviderTypeTrackerMap.close();
 	}
@@ -91,7 +93,7 @@ public class DDMDataProviderTracker {
 	private ServiceTrackerMap<String, List<DDMDataProviderContextContributor>>
 		_ddmDataProviderContextContributorTrackerMap;
 	private ServiceTrackerMap<String, DDMDataProvider>
-		_ddmDataProviderIdTrackerMap;
+		_ddmDataProviderInstanceIdTrackerMap;
 	private ServiceTrackerMap<String, DDMDataProvider>
 		_ddmDataProviderTypeTrackerMap;
 

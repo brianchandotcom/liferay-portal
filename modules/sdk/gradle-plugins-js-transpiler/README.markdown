@@ -84,7 +84,9 @@ Property Name | Type | Default Value | Description
 `globalName` | `String` | `null` | The name of the global variable that holds exported modules. It sets the `--globalName` argument. This is only used by the *globals* format build.
 `moduleName` | `String` | `null` | The name of the project that is being compiled. All built modules are stored in a folder with this name. It sets the `--moduleName` argument. This is only used by the *amd* format build.
 `modules` | `String` | `"amd"` | The format(s) that the source files are built to. It sets the `--format` argument.
+`skipWhenEmpty` | `boolean` | `true` | Whether to disable the task and remove its dependencies if the [`sourceFiles`](#sourcefiles) property does not return any file at the end of the project evaluation.
 <a name="sourcedir"></a>`sourceDir` | `File` | `null` | The directory that contains the files to build.
+<a name="sourcefiles"></a>`sourceFiles` | `FileCollection` | `[]` | The Soy and JS files to compile. *(Read-only)*
 `sourceMaps` | `SourceMaps` | `enabled` | Whether to generate source map files. Available values include `disabled`, `enabled`, and `enabled_inline`.
 <a name="soydependencies"></a>`soyDependencies` | `Set<String>` | `["${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy", "${npmInstall.workingDir}/node_modules/metal*/src/**/*.soy"]` | The path GLOBs of Soy files that the main source files depend on, but that should not be compiled. It sets the `--soyDeps` argument.
 `soySkipMetalGeneration` | `boolean` | `false` | Whether to just compile Soy files, without adding Metal.js generated code, like the `component` class. It sets the `--soySkipMetalGeneration` argument.

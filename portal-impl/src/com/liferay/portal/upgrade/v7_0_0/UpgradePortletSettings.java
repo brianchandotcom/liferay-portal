@@ -156,9 +156,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		sb.append("ownerType = ? and portletId = ? and preferences not like ");
 		sb.append("'%<portlet-preferences %/>%'");
 
-		PreparedStatement ps = connection.prepareStatement(
-			sb.toString(), ResultSet.TYPE_FORWARD_ONLY,
-			ResultSet.CONCUR_UPDATABLE);
+		PreparedStatement ps = connection.prepareStatement(sb.toString());
 
 		ps.setInt(1, ownerType);
 		ps.setString(2, portletId);
@@ -176,12 +174,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
-				String preferences = rs.getString("preferences");
+				PortletPreferencesRow portletPreferencesRow =
+					_getPortletPreferencesRow(rs);
 
 				javax.portlet.PortletPreferences jxPortletPreferences =
-					PortletPreferencesFactoryUtil.fromDefaultXML(preferences);
-
-				boolean resetKey = false;
+					PortletPreferencesFactoryUtil.fromDefaultXML(
+						portletPreferencesRow.getPreferences());
 
 				Enumeration<String> names = jxPortletPreferences.getNames();
 
@@ -192,25 +190,15 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 						if (name.startsWith(key)) {
 							jxPortletPreferences.reset(key);
 
-							resetKey = true;
-
 							break;
 						}
 					}
 				}
 
-				if (!resetKey) {
-					continue;
-				}
+				portletPreferencesRow.setPreferences(
+					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
 
-				String newPreferences = PortletPreferencesFactoryUtil.toXML(
-					jxPortletPreferences);
-
-				if (!newPreferences.equals(preferences)) {
-					rs.updateString("preferences", newPreferences);
-
-					rs.updateRow();
-				}
+				updatePortletPreferences(portletPreferencesRow);
 			}
 		}
 	}

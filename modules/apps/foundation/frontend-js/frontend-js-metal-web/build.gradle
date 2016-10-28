@@ -5,6 +5,6 @@ configJSModules {
 }
 
 transpileJS {
-	sourceDir = "node_modules"
+	sourceDir = npmInstall.nodeModulesDir
 	srcIncludes = "metal*/src/**/*.js"
 }

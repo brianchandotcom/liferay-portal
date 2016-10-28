@@ -2546,9 +2546,9 @@
 		</execute>
 	</command>
 
-	<!-- LRQA-28687 -->
+	<!-- LPS-66816 -->
 
-	<!--<command known-issues="LPS-66816" name="StagingLogo" priority="3">
+	<!--<command name="StagingLogo" priority="3">
 		<execute macro="Navigator#openSiteURL">
 			<var name="siteName" value="Site Name" />
 		</execute>

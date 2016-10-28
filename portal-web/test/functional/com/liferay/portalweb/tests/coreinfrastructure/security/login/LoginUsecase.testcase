@@ -23,7 +23,7 @@
 	</tear-down>
 
 	<command name="SessionTimeout" priority="4">
-		<property name="web.xml.timeout" value="1" />
+		<property name="web.xml.timeout" value="2" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -31,7 +31,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
 
-		<execute function="Pause" locator1="60000" />
+		<execute function="Pause" locator1="120000" />
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 
@@ -43,7 +43,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute function="Pause" locator1="60000" />
+		<execute function="Pause" locator1="120000" />
 		<execute function="AssertElementNotPresent" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" />
 		<execute function="Refresh" />
 
@@ -62,7 +62,7 @@
 
 		<execute function="AssertElementNotPresent" locator1="UserBar#USER_SIGN_IN" />
 
-		<execute function="Pause" locator1="60000" />
+		<execute function="Pause" locator1="120000" />
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE_EXPIRED_SESSION" value1="DangerWarning! Due to inactivity, your session has expired. Please save any data you may have entered before refreshing the page." />
 		<execute function="Refresh" />
 

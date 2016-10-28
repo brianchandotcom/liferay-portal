@@ -241,12 +241,53 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			SettingsDescriptor settingsDescriptor =
 				_settingsFactory.getSettingsDescriptor(serviceName);
 
-			resetPortletPreferencesValues(
-				portletId, ownerType, settingsDescriptor);
+			StringBundler sb = new StringBundler(5);
 
-			resetPortletPreferencesValues(
-				portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
-				settingsDescriptor);
+			sb.append("select portletPreferencesId, ownerId, ownerType, ");
+			sb.append("plid, portletId, preferences from PortletPreferences ");
+			sb.append("where (ownerType = ? or ownerType = ?) and ");
+			sb.append("portletId = ? and preferences not like ");
+			sb.append("'%<portlet-preferences %/>%'");
+
+			try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
+
+				ps.setInt(1, ownerType);
+				ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
+				ps.setString(3, portletId);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						PortletPreferencesRow portletPreferencesRow =
+							_getPortletPreferencesRow(rs);
+
+						javax.portlet.PortletPreferences jxPortletPreferences =
+							PortletPreferencesFactoryUtil.fromDefaultXML(
+								portletPreferencesRow.getPreferences());
+
+						Enumeration<String> names =
+							jxPortletPreferences.getNames();
+
+						while (names.hasMoreElements()) {
+							String name = names.nextElement();
+
+							for (String key : settingsDescriptor.getAllKeys()) {
+								if (name.startsWith(key)) {
+									jxPortletPreferences.reset(key);
+
+									break;
+								}
+							}
+						}
+
+						portletPreferencesRow.setPreferences(
+							PortletPreferencesFactoryUtil.toXML(
+								jxPortletPreferences));
+
+						updatePortletPreferences(portletPreferencesRow);
+					}
+				}
+			}
 		}
 	}
 
@@ -284,12 +325,55 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			SettingsDescriptor serviceSettingsDescriptor =
 				_settingsFactory.getSettingsDescriptor(serviceName);
 
-			resetPortletPreferencesValues(
-				portletId, ownerType, serviceSettingsDescriptor);
+			StringBundler sb = new StringBundler(5);
 
-			resetPortletPreferencesValues(
-				portletId, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
-				serviceSettingsDescriptor);
+			sb.append("select portletPreferencesId, ownerId, ownerType, ");
+			sb.append("plid, portletId, preferences from PortletPreferences ");
+			sb.append("where (ownerType = ? or ownerType = ?) and ");
+			sb.append("portletId = ? and preferences not like ");
+			sb.append("'%<portlet-preferences %/>%'");
+
+			try (PreparedStatement ps = connection.prepareStatement(
+				sb.toString())) {
+
+				ps.setInt(1, ownerType);
+				ps.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
+				ps.setString(3, portletId);
+
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						PortletPreferencesRow portletPreferencesRow =
+							_getPortletPreferencesRow(rs);
+
+						javax.portlet.PortletPreferences jxPortletPreferences =
+							PortletPreferencesFactoryUtil.fromDefaultXML(
+								portletPreferencesRow.getPreferences());
+
+						Enumeration<String> names =
+							jxPortletPreferences.getNames();
+
+						while (names.hasMoreElements()) {
+							String name = names.nextElement();
+
+							for (String key :
+									serviceSettingsDescriptor.getAllKeys()) {
+
+								if (name.startsWith(key)) {
+									jxPortletPreferences.reset(key);
+
+									break;
+								}
+							}
+						}
+
+						portletPreferencesRow.setPreferences(
+							PortletPreferencesFactoryUtil.toXML(
+								jxPortletPreferences));
+
+						updatePortletPreferences(portletPreferencesRow);
+					}
+				}
+			}
 		}
 	}
 

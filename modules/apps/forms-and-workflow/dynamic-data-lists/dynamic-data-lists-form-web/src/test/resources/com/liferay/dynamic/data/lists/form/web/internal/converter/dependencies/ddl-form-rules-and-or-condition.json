@@ -70,7 +70,7 @@
 						"value": "4"
 					}
 				],
-				"operator": "less-than"
+				"operator": "contains"
 			}
 		],
 		"logical-operator": "AND"
@@ -112,7 +112,7 @@
 						"value": "4"
 					}
 				],
-				"operator": "greater-than"
+				"operator": "contains"
 			},
 			{
 				"operands": [
@@ -125,7 +125,7 @@
 						"value": "3"
 					}
 				],
-				"operator": "greater-than-equals"
+				"operator": "equals-to"
 			}
 		],
 		"logical-operator": "OR"

@@ -382,15 +382,15 @@ Error-Prone was automatically installed. Please rerun your task.
 								<then>
 									<trycatch>
 										<try>
-											<get
+											<mirrors-get
 												dest="@{fix.pack.dir}"
-												src="http://mirrors/files.liferay.com/private/ee/fix-packs/${fix.pack.portal.version}/${fix.pack.requirement.type}/${fix.pack.requirement.file.name}"
+												src="http://files.liferay.com/private/ee/fix-packs/${fix.pack.portal.version}/${fix.pack.requirement.type}/${fix.pack.requirement.file.name}"
 											/>
 										</try>
 										<catch>
-											<get
+											<mirrors-get
 												dest="@{fix.pack.dir}"
-												src="http://mirrors/files.liferay.com/private/ee/fix-packs/incubation/${fix.pack.requirement.file.name}"
+												src="http://files.liferay.com/private/ee/fix-packs/incubation/${fix.pack.requirement.file.name}"
 											/>
 										</catch>
 									</trycatch>

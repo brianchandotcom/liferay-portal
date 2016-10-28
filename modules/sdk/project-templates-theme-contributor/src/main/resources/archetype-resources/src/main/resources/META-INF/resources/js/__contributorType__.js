@@ -1,1 +1,1 @@
-// console.log('Hello ${contributorName}');
+// console.log('Hello ${contributorType}');

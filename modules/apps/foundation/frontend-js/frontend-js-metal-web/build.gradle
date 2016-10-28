@@ -1,25 +1,10 @@
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
-
-task buildMetalComponents(type: Copy)
-
-buildMetalComponents {
-	dependsOn npmInstall
-
-	eachFile new StripPathSegmentsAction(3)
-
-	from {
-		fileTree(dir: "node_modules")
-	}
-
-	include "metal-components/build/amd-jquery/"
-	include "metal-components/build/soy/"
-
-	includeEmptyDirs = false
-	into "classes/META-INF/resources"
-}
-
 configJSModules {
-	dependsOn buildMetalComponents
+	dependsOn transpileJS
 	include "**/*.js*"
 	moduleFormat "/.soy/g,.soy.js"
+}
+
+transpileJS {
+	sourceDir = "node_modules"
+	srcIncludes = "metal*/src/**/*.js"
 }

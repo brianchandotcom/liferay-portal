@@ -50,7 +50,7 @@ of the `distBundleTar`, `distBundleZip`, and `initBundle` tasks.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
-[LPS-67352]: https://issues.liferay.com/browse/LPS-66853
+[LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67656]: https://issues.liferay.com/browse/LPS-67656
 [LPS-68293]: https://issues.liferay.com/browse/LPS-68293

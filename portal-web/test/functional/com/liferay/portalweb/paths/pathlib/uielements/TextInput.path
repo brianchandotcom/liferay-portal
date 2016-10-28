@@ -399,6 +399,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_SEARCH_KEYWORDS</td>
+	<td>//input[contains(@name,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKYPE</td>
 	<td>//div[label[contains(.,'Skype')]]//input[@type='text']</td>
 	<td></td>

@@ -404,11 +404,11 @@
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="Select" />
 
-		<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
+		<execute function="SelectFrame" locator1="IFrame#SELECT_USER_SITES" />
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${siteName}" />
+		<execute function="Type" locator1="TextInput#SITE_SEARCH_KEYWORDS" value1="${siteName}" />
 
 		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 

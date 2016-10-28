@@ -1487,9 +1487,9 @@
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="Select" />
 
-		<execute function="SelectFrame" locator1="IFrame#SELECT_SITES" />
+		<execute function="SelectFrame" locator1="IFrame#SELECT_USER_SITES" />
 
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${siteName}" />
+		<execute function="Type" locator1="TextInput#SITE_SEARCH_KEYWORDS" value1="${siteName}" />
 
 		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 
@@ -1824,7 +1824,7 @@
 
 		<execute function="SelectWindow" locator1="title=Welcome - ${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
 	<command name="loginUserWithGoogleSSOEnabledPG">

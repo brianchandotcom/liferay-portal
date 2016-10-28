@@ -753,8 +753,6 @@
 	</command>
 
 	<command name="ViewReportDefinitionParametersFields" priority="3">
-		<description message="This is a use case for LPS-43389." />
-
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
 
 		<execute macro="Navigator#openURL" />
@@ -767,6 +765,6 @@
 
 		<execute macro="ReportsAdminNavigator#gotoAddDefinition" />
 
-		<execute function="SikuliAssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
+		<execute macro="ReportsAdmin#viewDefinitionParameterFields" />
 	</command>
 </definition>

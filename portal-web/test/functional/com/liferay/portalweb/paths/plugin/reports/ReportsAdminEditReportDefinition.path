@@ -19,8 +19,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REPORT_DEFINITION_PARAMETERS_FIELDS_PNG</td>
-	<td>portal/screenshots/reports/report_definition_parameters_fields.png</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPORT_DEFINITION_PARAMETERS-->
+<tr>
+	<td>REPORT_DEFINITION_PARAMETERS_KEY</td>
+	<td>//input[contains(@id,'AdminPortlet_key')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_DEFINITION_PARAMETERS_VALUE</td>
+	<td>//input[contains(@id,'AdminPortlet_value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORT_DEFINITION_PARAMETERS_TYPE</td>
+	<td>//select[contains(@id,'AdminPortlet_type')]</td>
 	<td></td>
 </tr>
 </tbody>

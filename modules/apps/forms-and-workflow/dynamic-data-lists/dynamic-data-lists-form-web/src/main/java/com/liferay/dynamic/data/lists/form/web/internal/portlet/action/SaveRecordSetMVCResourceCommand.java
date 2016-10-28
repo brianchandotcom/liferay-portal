@@ -65,6 +65,7 @@ public class SaveRecordSetMVCResourceCommand extends BaseMVCResourceCommand {
 
 			response.put("ddmStructureId", recordSet.getDDMStructureId());
 			response.put("recordSetId", recordSet.getRecordSetId());
+			response.put("modifiedDate", recordSet.getModifiedDate());
 		}
 		catch (Throwable t) {
 			resourceResponse.setProperty(

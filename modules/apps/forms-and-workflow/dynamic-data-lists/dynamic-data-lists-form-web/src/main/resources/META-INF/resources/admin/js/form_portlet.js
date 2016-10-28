@@ -149,6 +149,7 @@ AUI.add(
 						var formBuilder = instance.get('formBuilder');
 
 						instance._eventHandlers = [
+							instance.after('autosave', instance._afterAutosave),
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
@@ -392,6 +393,21 @@ AUI.add(
 						submitForm(editForm.form);
 					},
 
+					_afterAutosave: function(event) {
+						var instance = this;
+
+						var modifiedDate = new Date(event.modifiedDate);
+
+						var autosaveMessage = A.Lang.sub(
+							Liferay.Language.get('draft-saved-at-x'),
+							[
+								modifiedDate
+							]
+						);
+
+						instance.one('#autosaveMessage').set('innerHTML', autosaveMessage);
+					},
+
 					_afterFormBuilderLayoutBuilderMoveEnd: function() {
 						var instance = this;
 
@@ -425,9 +441,18 @@ AUI.add(
 								{
 									after: {
 										success: function() {
-											instance._defineIds(this.get('responseData'));
+											var responseData = this.get('responseData');
+
+											instance._defineIds(responseData);
 
 											instance.savedState = state;
+
+											instance.fire(
+												'autosave',
+												{
+													modifiedDate: responseData.modifiedDate
+												}
+											);
 										}
 									},
 									data: formData,

@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -55,64 +56,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(2);
-
-		sb.append("select DDMStructure.definition, DDMStructure.structureId ");
-		sb.append("from DDMStructure");
-
-		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-			PreparedStatement ps2 =
-				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update DDMStructure set definition = ? where " +
-						"structureId = ?")) {
-
-			try (ResultSet rs = ps1.executeQuery()) {
-				while (rs.next()) {
-					String definition = rs.getString(1);
-					long structureId = rs.getLong(2);
-
-					DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(
-						definition);
-
-					Map<String, DDMFormField> ddmFormFieldsMap =
-						ddmForm.getDDMFormFieldsMap(true);
-
-					List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
-
-					for (DDMFormField ddmFormField :
-							ddmFormFieldsMap.values()) {
-
-						String visibilityExpression =
-							ddmFormField.getVisibilityExpression();
-
-						if (Validator.isNull(visibilityExpression)) {
-							continue;
-						}
-
-						DDMFormRule ddmFormRule = getSetVisibleDDMFormRule(
-							ddmFormField.getName(), visibilityExpression);
-
-						ddmFormRules.add(ddmFormRule);
-
-						ddmFormField.setVisibilityExpression(StringPool.BLANK);
-					}
-
-					ddmForm.setDDMFormRules(ddmFormRules);
-
-					String newDefinition = _ddmFormJSONSerializer.serialize(
-						ddmForm);
-
-					ps2.setString(1, newDefinition);
-
-					ps2.setLong(2, structureId);
-
-					ps2.addBatch();
-				}
-
-				ps2.executeBatch();
-			}
-		}
+		upgradeDDMStructureDefinition();
+		upgradeDDMStructureVersionDefinition();
 	}
 
 	protected DDMFormRule getSetVisibleDDMFormRule(
@@ -150,6 +95,102 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 				ddmee);
 
 			throw ddmee;
+		}
+	}
+
+	protected String updateDefinition(String definition)
+		throws PortalException {
+
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
+
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
+
+		List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+
+		for (DDMFormField ddmFormField : ddmFormFieldsMap.values()) {
+			String visibilityExpression =
+				ddmFormField.getVisibilityExpression();
+
+			if (Validator.isNull(visibilityExpression)) {
+				continue;
+			}
+
+			DDMFormRule ddmFormRule = getSetVisibleDDMFormRule(
+				ddmFormField.getName(), visibilityExpression);
+
+			ddmFormRules.add(ddmFormRule);
+
+			ddmFormField.setVisibilityExpression(StringPool.BLANK);
+		}
+
+		ddmForm.setDDMFormRules(ddmFormRules);
+
+		return _ddmFormJSONSerializer.serialize(ddmForm);
+	}
+
+	protected void upgradeDDMStructureDefinition() throws Exception {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("select DDMStructure.definition, DDMStructure.structureId ");
+		sb.append("from DDMStructure");
+
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMStructure set definition = ? where " +
+						"structureId = ?")) {
+
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					String definition = rs.getString(1);
+					long structureId = rs.getLong(2);
+
+					String newDefinition = updateDefinition(definition);
+
+					ps2.setString(1, newDefinition);
+
+					ps2.setLong(2, structureId);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
+		}
+	}
+
+	protected void upgradeDDMStructureVersionDefinition() throws Exception {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("select DDMStructureVersion.definition, ");
+		sb.append("DDMStructureVersion.structureVersionId ");
+		sb.append("from DDMStructureVersion");
+
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update DDMStructureVersion set definition = ? where " +
+							"structureVersionId = ?")) {
+
+			try (ResultSet rs = ps1.executeQuery()) {
+				while (rs.next()) {
+					String definition = rs.getString(1);
+					long structureVersionId = rs.getLong(2);
+
+					String newDefinition = updateDefinition(definition);
+
+					ps2.setString(1, newDefinition);
+
+					ps2.setLong(2, structureVersionId);
+
+					ps2.addBatch();
+				}
+
+				ps2.executeBatch();
+			}
 		}
 	}
 

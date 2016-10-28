@@ -1962,7 +1962,9 @@
 		</execute>
 	</command>
 
-	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
+	<!-- LPS-66727 -->
+
+	<!--<command name="CompleteProcessAndViewEmailNotifications" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.smtp.server.enabled" value="true" />
 
@@ -2347,7 +2349,7 @@
 			<var name="fieldLabel" value="Assigned To" />
 			<var name="fieldValue" value="Test Test" />
 		</execute>
-	</command>
+	</command>-->
 
 	<command name="CompleteProcessAndViewNotifications" priority="5">
 		<execute macro="Navigator#openURL" />
@@ -6976,7 +6978,10 @@
 		</execute>
 	</command>
 
-	<command name="ViewApprovedProcessNotificationWithComments" priority="3">
+	<!-- LPS-66727 -->
+
+	<!--<command name="ViewApprovedProcessNotificationWithComments" priority="3">
+
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -7118,7 +7123,7 @@
 		<execute macro="WorkflowAsset#viewNotification">
 			<var name="contentBody" value="Submission reviewed. The reviewer left the following: Process is approved." />
 		</execute>
-	</command>
+	</command>-->
 
 	<command name="ViewApprovedProcessRecords" priority="5">
 		<execute macro="Navigator#openURL" />

@@ -15,11 +15,18 @@
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,8 +50,32 @@ public class SaveRecordSetMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		saveRecordSetMVCCommandHelper.saveRecordSet(
+		DDLRecordSet ddlRecordSet = saveRecordSetMVCCommandHelper.saveRecordSet(
 			actionRequest, actionResponse);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		String mvcPath = ParamUtil.getString(actionRequest, "mvcPath");
+
+		portletURL.setParameter("mvcPath", mvcPath);
+
+		portletURL.setParameter(
+			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
+
+		portletURL.setParameter("redirect", redirect);
+
+		boolean saveAndPublish = ParamUtil.getBoolean(
+			actionRequest, "saveAndPublish");
+
+		portletURL.setParameter(
+			"showPublishModal", String.valueOf(saveAndPublish));
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
 	}
 
 	@Reference

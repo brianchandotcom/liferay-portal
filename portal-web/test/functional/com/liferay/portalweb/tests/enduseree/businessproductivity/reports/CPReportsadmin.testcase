@@ -765,7 +765,7 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute macro="ReportsAdminNavigator#gotoAddDefinition" />
 
 		<execute function="SikuliAssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_FIELDS_PNG" />
 	</command>

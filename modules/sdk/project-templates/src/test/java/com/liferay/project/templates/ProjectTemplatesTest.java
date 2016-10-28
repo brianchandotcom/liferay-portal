@@ -719,26 +719,32 @@ public class ProjectTemplatesTest {
 			"theme-contributor", "my-contributor-custom", "--contributor-type",
 			"foo-bar");
 
-		_testContains(gradleProjectDir, "bnd.bnd",
+		_testContains(
+			gradleProjectDir, "bnd.bnd",
 			"Liferay-Theme-Contributor-Type: foo-bar");
 
-		_testContains(gradleProjectDir, "bnd.bnd",
+		_testContains(
+			gradleProjectDir, "bnd.bnd",
 			"Web-ContextPath: /foo-bar-theme-contributor");
 
-		_testNotContains(gradleProjectDir, "bnd.bnd",
+		_testNotContains(
+			gradleProjectDir, "bnd.bnd",
 			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
 
-		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
-			"css/foo-bar.scss");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/css/foo-bar.scss");
 
-		_testExists(gradleProjectDir, "src/main/resources/META-INF/resources/" +
-			"js/foo-bar.js");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/js/foo-bar.js");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"theme-contributor", "my-contributor-custom",
 			"-DcontributorType=foo-bar", "-Dpackage=my.contributor.custom");
 
-		_testContains(mavenProjectDir, "bnd.bnd",
+		_testContains(
+			mavenProjectDir, "bnd.bnd",
 			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
 
 		_buildProjects(
@@ -754,10 +760,12 @@ public class ProjectTemplatesTest {
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
-		_testContains(gradleProjectDir, "bnd.bnd",
+		_testContains(
+			gradleProjectDir, "bnd.bnd",
 			"Liferay-Theme-Contributor-Type: my-contributor-default");
 
-		_testContains(gradleProjectDir, "bnd.bnd",
+		_testContains(
+			gradleProjectDir, "bnd.bnd",
 			"Web-ContextPath: /my-contributor-default-theme-contributor");
 	}
 

@@ -11,8 +11,17 @@
 	<version>${version}</version>
 	<packaging>jar</packaging>
 	<properties>
+		<com.liferay.frontend.css.common.version>2.0.1</com.liferay.frontend.css.common.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>com.liferay.frontend.css.common</artifactId>
+			<version>${com.liferay.frontend.css.common.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -25,6 +34,20 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/deps</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.6</version>
@@ -32,6 +55,9 @@
 					<archive>
 						<manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
 					</archive>
+					<excludes>
+						<exclude>**/META-INF/resources/**/.sass-cache/</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -58,6 +84,25 @@
 						<version>2.0.28</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.css.builder</artifactId>
+				<version>1.0.20</version>
+				<executions>
+					<execution>
+						<id>default-build-css</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>build-css</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<docrootDirName>src/main/resources</docrootDirName>
+					<outputDirName>/</outputDirName>
+					<portalCommonPath>target/deps/com.liferay.frontend.css.common-${com.liferay.frontend.css.common.version}.jar</portalCommonPath>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

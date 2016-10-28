@@ -158,7 +158,7 @@ public class PortalInstanceLocalServiceImpl
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;
 
-	@ServiceReference(type = CompanyLocalService.class)
+	@ServiceReference(type = CompanyService.class)
 	private CompanyService _companyService;
 
 	@ServiceReference(type = Portal.class)

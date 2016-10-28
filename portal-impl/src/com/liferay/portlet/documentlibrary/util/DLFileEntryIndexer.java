@@ -594,6 +594,7 @@ public class DLFileEntryIndexer
 			});
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setGroupId(groupId);
+		indexableActionableDynamicQuery.setInterval(_DEFAULT_REINDEX_INTERVAL);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<DLFileEntry>() {
 
@@ -674,6 +675,8 @@ public class DLFileEntryIndexer
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final int _DEFAULT_REINDEX_INTERVAL = 500;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryIndexer.class);

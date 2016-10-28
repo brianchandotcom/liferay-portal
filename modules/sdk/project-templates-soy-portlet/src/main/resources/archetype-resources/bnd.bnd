@@ -1,0 +1,4 @@
+Bundle-Name: ${artifactId}
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+Require-Capability: soy;filter:="(type=metal)"

@@ -1,0 +1,19 @@
+{namespace Navigation}
+
+/**
+ * Prints the portlet navigation example page.
+ *
+ * @param id
+ * @param navigationURL
+ */
+{template .render}
+	<div id="{$id}">
+		{call Header.render data="all"}{/call}
+
+		<p>{msg desc=""}this-is-another-view{/msg}</p>
+
+		<a href="{$navigationURL}">{msg desc=""}click-here-to-navigate-back{/msg}</a>
+
+		{call Footer.render data="all"}{/call}
+	</div>
+{/template}

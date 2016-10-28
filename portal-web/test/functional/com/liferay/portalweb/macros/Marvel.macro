@@ -2,19 +2,9 @@
 	<command name="viewAsGuestPG">
 		<execute function="AssertElementNotPresent" locator1="IFrame#MARVEL" />
 
-		<if>
-			<equals arg1="${shieldEnabled}" arg2="true" />
-			<then>
-				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="https://localhost:5601/o/portal-search-elasticsearch-marvel-web/marvel-proxy/app/kibana" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Navigator#openSpecificURL">
-					<var name="url" value="http://localhost:5601/o/portal-search-elasticsearch-marvel-web/marvel-proxy/app/kibana" />
-				</execute>
-			</else>
-		</if>
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:5601/o/portal-search-elasticsearch-marvel-web/marvel-proxy/app/kibana" />
+		</execute>
 
 		<execute function="AssertTextPresent" locator1="Marvel#DIRECT_URL" value1="{&quot;statusCode&quot;:404,&quot;error&quot;:&quot;Not Found&quot;}" />
 	</command>

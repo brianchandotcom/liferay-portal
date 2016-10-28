@@ -722,11 +722,9 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Liferay-Theme-Contributor-Type: foo-bar");
-
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Web-ContextPath: /foo-bar-theme-contributor");
-
 		_testNotContains(
 			gradleProjectDir, "bnd.bnd",
 			"-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin");
@@ -734,7 +732,6 @@ public class ProjectTemplatesTest {
 		_testExists(
 			gradleProjectDir,
 			"src/main/resources/META-INF/resources/css/foo-bar.scss");
-
 		_testExists(
 			gradleProjectDir,
 			"src/main/resources/META-INF/resources/js/foo-bar.js");
@@ -763,7 +760,6 @@ public class ProjectTemplatesTest {
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Liferay-Theme-Contributor-Type: my-contributor-default");
-
 		_testContains(
 			gradleProjectDir, "bnd.bnd",
 			"Web-ContextPath: /my-contributor-default-theme-contributor");

@@ -65,6 +65,7 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 						copySpec.include(getSrcIncludes());
 
 						copySpec.into(workingDir);
+						copySpec.setIncludeEmptyDirs(false);
 					}
 
 				});

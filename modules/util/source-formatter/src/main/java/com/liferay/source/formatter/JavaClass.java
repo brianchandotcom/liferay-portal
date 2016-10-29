@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.util.FileUtil;
 
+import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
 import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.DefaultDocletTagFactory;
 import com.thoughtworks.qdox.model.JavaMethod;
 
 import java.io.File;
@@ -327,7 +329,8 @@ public class JavaClass {
 			return;
 		}
 
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
+		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
+				new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
 		javaDocBuilder.addSource(_file);
 

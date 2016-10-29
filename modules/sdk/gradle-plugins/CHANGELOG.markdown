@@ -512,6 +512,10 @@ to version 1.0.40.
 ## 3.0.26 - 2016-10-26
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.41.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.306.
 - [LPS-68917]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.1.1.
 
@@ -526,8 +530,14 @@ version 1.0.134.
 ## 3.0.28 - 2016-10-28
 
 ### Changed
+- [LPS-66222]: Update the [Liferay Gradle Plugins Upgrade Table Builder]
+dependency to version 2.0.0.
 - [LPS-68979]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.2.0.
+- [LPS-68995]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.42.
+- [LPS-68995]: Update the [Liferay Source Formatter] dependency to version
+1.0.308.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -538,6 +548,7 @@ version 2.2.0.
 [Liferay Gradle Plugins Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-service-builder
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
+[Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
 [Liferay Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/javadoc-formatter
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
@@ -549,6 +560,7 @@ version 2.2.0.
 [LPS-52675]: https://issues.liferay.com/browse/LPS-52675
 [LPS-58672]: https://issues.liferay.com/browse/LPS-58672
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
+[LPS-66222]: https://issues.liferay.com/browse/LPS-66222
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
@@ -578,6 +590,7 @@ version 2.2.0.
 [LPS-68838]: https://issues.liferay.com/browse/LPS-68838
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
-[LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LPS-68979]: https://issues.liferay.com/browse/LPS-68979
+[LPS-68980]: https://issues.liferay.com/browse/LPS-68980
+[LPS-68995]: https://issues.liferay.com/browse/LPS-68995
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

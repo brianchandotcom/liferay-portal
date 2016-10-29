@@ -37,8 +37,10 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute macro="ReportsAdminNavigator#gotoAddDefinition" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="Reports Definition Name" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />

@@ -3,6 +3,6 @@
 		"actions": [
 			"setVisible('Field1', true)"
 		],
-		"condition": "getValue('Field1') > getValue('Field2') AND 2 >= 3 AND 1 < 4 AND 6 <= 2"
+		"condition": "getValue('Field1') > getValue('Field2') AND getValue('Field1') >= getValue('Field2') AND getValue('Field1') < getValue('Field2') AND getValue('Field1') <= getValue('Field2')"
 	}
 ]

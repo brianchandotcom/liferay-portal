@@ -170,6 +170,10 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>
 
+	<command name="viewNoForms">
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no forms. Click on the plus button to add the first one." />
+	</command>
+
 	<command name="viewParagraphEntry">
 		<execute macro="FormsAdmin#viewCannotEditFormEntries" />
 

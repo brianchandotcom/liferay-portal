@@ -315,6 +315,12 @@ Sincerely,<br />
 		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
 	</command>
 
+	<command name="viewDefinitionParameterFields">
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_KEY" />
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_VALUE" />
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_TYPE" />
+	</command>
+
 	<command name="viewNoReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
@@ -325,12 +331,6 @@ Sincerely,<br />
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
 		<execute function="AssertClick" locator1="ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
-	</command>
-
-	<command name="viewDefinitionParameterFields">
-		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_KEY" />
-		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_VALUE" />
-		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_TYPE" />
 	</command>
 
 	<command name="viewReportEntryFields">

@@ -73,6 +73,7 @@ public class Archetyper {
 
 		String artifactId = projectTemplatesArgs.getName();
 		String className = projectTemplatesArgs.getClassName();
+		String contributorType = projectTemplatesArgs.getContributorType();
 		String hostBundleSymbolicName =
 			projectTemplatesArgs.getHostBundleSymbolicName();
 		String hostBundleVersion = projectTemplatesArgs.getHostBundleVersion();
@@ -134,6 +135,7 @@ public class Archetyper {
 
 		_setProperty(properties, "buildType", "gradle");
 		_setProperty(properties, "className", className);
+		_setProperty(properties, "contributorType", contributorType);
 		_setProperty(
 			properties, "hostBundleSymbolicName", hostBundleSymbolicName);
 		_setProperty(properties, "hostBundleVersion", hostBundleVersion);

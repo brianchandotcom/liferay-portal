@@ -1,0 +1,8 @@
+Bundle-Name: ${artifactId}
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+Liferay-Theme-Contributor-Type: ${contributorType}
+Web-ContextPath: /${contributorType}-theme-contributor
+#if (${buildType} != "gradle")
+-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
+-sass: *#end

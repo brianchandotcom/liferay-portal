@@ -296,6 +296,12 @@ public class ProjectTemplates {
 
 			projectTemplatesArgs.setPackageName(_getPackageName(name));
 		}
+
+		String contributorType = projectTemplatesArgs.getContributorType();
+
+		if (Validator.isNull(contributorType)) {
+			projectTemplatesArgs.setContributorType(name);
+		}
 	}
 
 	private String _getCapitalizedName(String name) {

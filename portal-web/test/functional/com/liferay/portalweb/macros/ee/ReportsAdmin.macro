@@ -1,6 +1,6 @@
 <definition>
 	<command name="addReportDefinition">
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
+		<execute macro="ReportsAdminNavigator#gotoAddDefinition" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${reportsDefinitionName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportsDefinitionDescription}" />
@@ -152,6 +152,8 @@
 
 	<command name="downloadReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
+
+		<execute function="AssertElementPresent" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" />
 
 		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
@@ -311,6 +313,12 @@ Sincerely,<br />
 		<execute function="AssertTextEquals" locator1="ReportsAdminEditSource#TEST_DATABASE_CONNECTION_SUCCESS_MESSAGE" value1="You have successfully connected to the database." />
 
 		<execute function="AssertClick" locator1="Button#CLOSE" value1="Close" />
+	</command>
+
+	<command name="viewDefinitionParameterFields">
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_KEY" />
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_VALUE" />
+		<execute function="AssertElementPresent" locator1="ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_TYPE" />
 	</command>
 
 	<command name="viewNoReportEntryFile">

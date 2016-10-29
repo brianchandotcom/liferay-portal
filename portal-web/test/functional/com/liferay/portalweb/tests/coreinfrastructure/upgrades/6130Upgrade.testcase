@@ -36,12 +36,14 @@
 		<execute macro="Upgrade#viewAssetPublisher" />
 	</command>
 
-	<command name="View6130CalendarArchive" priority="3">
+	<!-- LRQA-28577 -->
+
+	<!--<command name="View6130CalendarArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-calendar" />
 		<property name="osgi.modules.includes" value="calevent-importer" />
 
 		<execute macro="Upgrade#viewCalendar" />
-	</command>
+	</command>-->
 
 	<command name="View6130NestedPortletsArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-nested-portlets" />

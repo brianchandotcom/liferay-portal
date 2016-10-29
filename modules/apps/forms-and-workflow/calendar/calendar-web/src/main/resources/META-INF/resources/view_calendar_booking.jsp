@@ -237,7 +237,10 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 	<aui:form action="<%= invokeTransitionURL %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="calendarBookingId" type="hidden" value="<%= calendarBooking.getCalendarBookingId() %>" />
+		<aui:input name="startTime" type="hidden" value="<%= calendarBooking.getStartTime() %>" />
 		<aui:input name="status" type="hidden" />
+		<aui:input name="updateInstance" type="hidden" value="false" />
+		<aui:input name="allFollowing" type="hidden" value="false" />
 
 		<aui:button-row>
 
@@ -266,7 +269,27 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		function <portlet:namespace />invokeTransition(status) {
 			document.<portlet:namespace />fm.<portlet:namespace />status.value = status;
 
-			submitForm(document.<portlet:namespace />fm);
+			if (<%= calendarBooking.isRecurring() %>) {
+				Liferay.RecurrenceUtil.openConfirmationPanel(
+					'invokeTransition',
+					function() {
+						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value = 'true';
+						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value = 'false';
+						submitForm(document.<portlet:namespace />fm);
+					},
+					function() {
+						document.<portlet:namespace />fm.<portlet:namespace />updateInstance.value = 'true';
+						document.<portlet:namespace />fm.<portlet:namespace />allFollowing.value = 'true';
+						submitForm(document.<portlet:namespace />fm);
+					},
+					function() {
+						submitForm(document.<portlet:namespace />fm);
+					}
+				);
+			}
+			else {
+				submitForm(document.<portlet:namespace />fm);
+			}
 		}
 	</aui:script>
 </div>

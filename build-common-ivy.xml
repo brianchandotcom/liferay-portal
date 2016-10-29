@@ -93,10 +93,37 @@
 				replace="\1"
 			/>
 
+			<local name="valid.zip" />
+
+			<var name="valid.zip" unset="true" />
+
 			<if>
 				<and>
-					<equals arg1="@{force}" arg2="true" />
+					<matches pattern=".*\.zip" string="${mirrors.cache.artifact.file.name}" />
 					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+				</and>
+				<then>
+					<validate-zip file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+
+					<if>
+						<equals arg1="${valid.zip}" arg2="false" />
+						<then>
+							<echo>This file will be redownloaded from mirrors.</echo>
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<if>
+				<and>
+					<available file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
+					<or>
+						<and>
+							<isset property="valid.zip" />
+							<equals arg1="${valid.zip}" arg2="false" />
+						</and>
+						<equals arg1="@{force}" arg2="true" />
+					</or>
 				</and>
 				<then>
 					<delete file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}" />
@@ -178,6 +205,50 @@
 			<var name="mirrors.cache.artifact.file.name" unset="true" />
 			<var name="mirrors.cache.artifact.subdir" unset="true" />
 			<var name="mirrors.src" unset="true" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="validate-zip">
+		<attribute name="file" />
+		<sequential>
+			<local name="file" />
+
+			<property name="file" value="@{file}" />
+
+			<beanshell>
+				<![CDATA[
+					import java.util.zip.ZipFile;
+
+					System.out.println("Validating zip file " + project.getProperty("file"));
+
+					try {
+						File file = new File(project.getProperty("file"));
+
+						ZipFile zipFile = new ZipFile(file, ZipFile.OPEN_READ);
+
+						Enumeration zipFileEntries = zipFile.entries();
+
+						int entryCount = 0;
+
+						while (zipFileEntries.hasMoreElements()) {
+							entryCount++;
+
+							zipFileEntries.nextElement();
+						}
+
+						System.out.println(project.getProperty("file") + " is a valid zip file with " + entryCount + " entries.");
+
+						project.setProperty("valid.zip", "true");
+
+					}
+					catch (Exception e) {
+						System.out.println(project.getProperty("file") + " is not a valid zip file.");
+
+						project.setProperty("valid.zip", "false");
+
+					}
+				]]>
+			</beanshell>
 		</sequential>
 	</macrodef>
 </project>

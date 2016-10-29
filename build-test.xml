@@ -7198,28 +7198,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${test.build.bundle.zip.url}"
 				/>
 
-				<trycatch property="error.message">
-					<try>
-						<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
-							<patternset includes="liferay-*/**" />
-							<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
-						</unzip>
-					</try>
-					<catch>
-						<echo>Unable to unzip ${tstamp.value.zip}: ${error.message}. Redownloading ${test.build.bundle.zip.url}.</echo>
-
-						<mirrors-get
-							dest="${tstamp.value}.zip"
-							force="true"
-							src="${test.build.bundle.zip.url}"
-						/>
-
-						<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
-							<patternset includes="liferay-*/**" />
-							<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
-						</unzip>
-					</catch>
-				</trycatch>
+				<unzip dest="${app.server.parent.dir}" src="${tstamp.value}.zip">
+					<patternset includes="liferay-*/**" />
+					<mapper from="[^/]+/(.*)" to="\1" type="regexp" />
+				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
 

@@ -97,7 +97,7 @@ public class KBSuggestionListDisplayContext {
 		else {
 			return KBCommentServiceUtil.getKBCommentsCount(
 				_groupId, KBArticleConstants.getClassName(),
-				_kbArticle.getClassPK(), status);
+				_kbArticle.getResourcePrimKey(), status);
 		}
 	}
 
@@ -209,13 +209,13 @@ public class KBSuggestionListDisplayContext {
 				searchContainer.setTotal(
 					KBCommentServiceUtil.getKBCommentsCount(
 						_groupId, KBArticleConstants.getClassName(),
-						_kbArticle.getClassPK()));
+						_kbArticle.getResourcePrimKey()));
 
 				searchContainer.setResults(
 					KBCommentServiceUtil.getKBComments(
 						_groupId, KBArticleConstants.getClassName(),
-						_kbArticle.getClassPK(), searchContainer.getStart(),
-						searchContainer.getEnd(),
+						_kbArticle.getResourcePrimKey(),
+						searchContainer.getStart(), searchContainer.getEnd(),
 						KBUtil.getKBCommentOrderByComparator(
 							searchContainer.getOrderByCol(),
 							searchContainer.getOrderByType())));
@@ -226,7 +226,7 @@ public class KBSuggestionListDisplayContext {
 				searchContainer.setResults(
 					KBCommentServiceUtil.getKBComments(
 						_groupId, KBArticleConstants.getClassName(),
-						_kbArticle.getClassPK(), status,
+						_kbArticle.getResourcePrimKey(), status,
 						searchContainer.getStart(), searchContainer.getEnd(),
 						KBUtil.getKBCommentOrderByComparator(
 							searchContainer.getOrderByCol(),

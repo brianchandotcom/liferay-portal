@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
@@ -30,7 +32,6 @@ import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.social.networking.constants.SocialNetworkingPortletKeys;
 import com.liferay.social.networking.members.social.MembersActivityKeys;
-import com.liferay.social.networking.web.internal.util.SocialNetworkingResourceBundleLoader;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,7 +78,7 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
 	protected ResourceBundleLoader getResourceBundleLoader() {
-		return SocialNetworkingResourceBundleLoader.INSTANCE;
+		return _resourceBundleLoader;
 	}
 
 	@Override
@@ -146,6 +147,18 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 		_organizationLocalService = organizationLocalService;
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.social.networking.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	}
+
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
@@ -154,6 +167,7 @@ public class MembersActivityInterpreter extends BaseSocialActivityInterpreter {
 	private static final String[] _CLASS_NAMES = {Organization.class.getName()};
 
 	private OrganizationLocalService _organizationLocalService;
+	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 
 }

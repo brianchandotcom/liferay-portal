@@ -43,9 +43,21 @@ instances.
 - [LPS-68917]: Fixed search pattern for the additional Soy dependencies in the
 `soyCompile` configuration.
 
+## 2.2.0 - 2016-10-28
+
+### Added
+- [LPS-68979]: Add property `skipWhenEmpty` to all tasks that extend
+`TranspileJSTask`. If `true`, the task is disabled if it has no source files
+at the end of the project evaluation.
+
+### Changed
+- [LPS-68979]: Exclude empty directories while `TranspileJSTask` instances copy
+source files to `workingDir`.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
+[LPS-68979]: https://issues.liferay.com/browse/LPS-68979

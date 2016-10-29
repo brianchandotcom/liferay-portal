@@ -119,6 +119,15 @@
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 		</execute>
 
+		<if>
+			<condition function="IsElementNotPresent" locator1="xpath=(//div[contains(@class,'document-info')])" />
+			<then>
+				<execute macro="DMNavigator#gotoDocumentCP">
+					<var name="dmDocumentTitle" value="Document_1.txt" />
+				</execute>
+			</then>
+		</if>
+
 		<execute macro="DMDocument#viewCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 		</execute>
@@ -251,6 +260,8 @@
 			<var name="dmDocumentFile" value="Document_4.txt" />
 			<var name="dmDocumentTitle" value="Document_4.txt" />
 		</execute>
+
+		<execute function="Refresh" />
 
 		<execute macro="DMDocument#checkoutCP">
 			<var name="dmDocumentTitle" value="Document_4.txt" />

@@ -719,30 +719,9 @@ public class LiferaySeleniumHelper {
 		return bufferedReader;
 	}
 
-	private static List<ScreenRegion> _getScreenRegions(
-			LiferaySelenium liferaySelenium, String image)
-		throws Exception {
-
-		ScreenRegion screenRegion = new DesktopScreenRegion();
-
-		ImageTarget imageTarget = getImageTarget(liferaySelenium, image);
-
-		return screenRegion.findAll(imageTarget);
-	}
-
-	private static final String _CURRENT_DIR_NAME =
-		PoshiRunnerGetterUtil.getCanonicalPath(".");
-
-	private static final String _TEST_DEPENDENCIES_DIR_NAME =
-		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
-
-	private static final Pattern _aceEditorPattern = Pattern.compile(
-		"\\(|\\$\\{line\\.separator\\}");
 	private static final List<String> _errorTimestamps = new ArrayList<>();
 	private static final List<Exception> _javaScriptExceptions =
 		new ArrayList<>();
 	private static final List<Exception> _liferayExceptions = new ArrayList<>();
-	private static int _screenshotCount;
-	private static int _screenshotErrorCount;
 
 }

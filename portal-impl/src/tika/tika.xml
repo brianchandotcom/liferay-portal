@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<properties>
+	<parsers>
+		<parser class="org.apache.tika.parser.DefaultParser">
+			<parser-exclude class="org.apache.tika.parser.crypto.Pkcs7Parser" />
+			<parser-exclude class="org.apache.tika.parser.geo.topic.GeoParser" />
+			<parser-exclude class="org.apache.tika.parser.geoinfo.GeographicInformationParser" />
+			<parser-exclude class="org.apache.tika.parser.microsoft.JackcessParser" />
+			<parser-exclude class="org.apache.tika.parser.microsoft.ooxml.OOXMLParser" />
+			<parser-exclude class="org.apache.tika.parser.pkg.RarParser" />
+		</parser>
+	</parsers>
+</properties>

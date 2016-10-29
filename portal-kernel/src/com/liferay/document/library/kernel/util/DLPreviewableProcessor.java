@@ -57,6 +57,12 @@ import java.util.concurrent.Future;
  */
 public abstract class DLPreviewableProcessor implements DLProcessor {
 
+	public static final String DECRYPT_PATH = "document_decrypt/";
+
+	public static final String DECRYPT_TMP_PATH =
+		SystemProperties.get(SystemProperties.TMP_DIR) + "/liferay/" +
+			DECRYPT_PATH;
+
 	public static final String PREVIEW_PATH = "document_preview/";
 
 	public static final String PREVIEW_TMP_PATH =
@@ -641,6 +647,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		sb.append(type);
 
 		return sb.toString();
+	}
+
+	protected File getDecryptedTempFile(String id) {
+		return new File(DECRYPT_TMP_PATH + id);
 	}
 
 	protected abstract List<Long> getFileVersionIds();

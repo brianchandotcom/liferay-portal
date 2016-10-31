@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/captcha/init.jsp" %>
+<%@ include file="/captcha/init.jsp" %>
 
 <c:if test="<%= captchaEnabled %>">
 	<script src="<%= PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT %>?hl=<%= locale.getLanguage() %>" type="text/javascript"></script>

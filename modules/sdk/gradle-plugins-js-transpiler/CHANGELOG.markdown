@@ -54,6 +54,12 @@ at the end of the project evaluation.
 - [LPS-68979]: Exclude empty directories while `TranspileJSTask` instances copy
 source files to `workingDir`.
 
+## 2.2.1 - 2016-11-01
+
+### Added
+- [LPS-69026]: Set the `--logLevel` argument of `metal-cli` based on the Gradle
+log level.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -61,3 +67,4 @@ source files to `workingDir`.
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
 [LPS-68979]: https://issues.liferay.com/browse/LPS-68979
+[LPS-69026]: https://issues.liferay.com/browse/LPS-69026

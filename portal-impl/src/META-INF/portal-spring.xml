@@ -35,13 +35,6 @@
 	<bean class="com.liferay.portlet.asset.service.impl.AssetVocabularyServiceImpl" id="com.liferay.asset.kernel.service.AssetVocabularyService" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyPersistenceImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyPersistence" parent="basePersistence" />
 	<bean class="com.liferay.portlet.asset.service.persistence.impl.AssetVocabularyFinderImpl" id="com.liferay.asset.kernel.service.persistence.AssetVocabularyFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryLocalService" />
-	<bean class="com.liferay.portlet.blogs.service.impl.BlogsEntryServiceImpl" id="com.liferay.blogs.kernel.service.BlogsEntryService" />
-	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsEntryFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsEntryFinder" parent="basePersistence" />
-	<bean class="com.liferay.portlet.blogs.service.impl.BlogsStatsUserLocalServiceImpl" id="com.liferay.blogs.kernel.service.BlogsStatsUserLocalService" />
-	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserPersistenceImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserPersistence" parent="basePersistence" />
-	<bean class="com.liferay.portlet.blogs.service.persistence.impl.BlogsStatsUserFinderImpl" id="com.liferay.blogs.kernel.service.persistence.BlogsStatsUserFinder" parent="basePersistence" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppLocalService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl" id="com.liferay.document.library.kernel.service.DLAppService" />
 	<bean class="com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl" id="com.liferay.document.library.kernel.service.DLAppHelperLocalService" />

@@ -3,3 +3,6 @@ Bundle-SymbolicName: com.liferay.captcha.api
 Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+-includeresource:\
+	@../../../../../lib/portal/jhlabs-filters.jar,\
+	@../../../../../lib/portal/simplecaptcha.jar

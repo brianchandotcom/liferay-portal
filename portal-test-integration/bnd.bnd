@@ -33,3 +33,4 @@ Include-Resource:\
 	@${project.dir}/../lib/portal/poi.jar,\
 	@${project.dir}/../lib/portal/tika-core.jar,\
 	@${project.dir}/../lib/portal/tika-parsers.jar
+-baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.test.integration-1.0.0.jar

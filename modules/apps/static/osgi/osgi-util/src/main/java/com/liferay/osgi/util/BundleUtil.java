@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.util;
 
+import java.io.IOException;
+
 import java.net.URL;
 
 import java.util.Enumeration;
@@ -51,6 +53,14 @@ public class BundleUtil {
 
 		Enumeration<URL> enumeration = bundle.findEntries(
 			dirName, fileName, false);
+
+		if (enumeration == null) {
+			try {
+				enumeration = bundle.getResources(name);
+			}
+			catch (IOException ioe) {
+			}
+		}
 
 		if ((enumeration == null) || !enumeration.hasMoreElements()) {
 			return null;

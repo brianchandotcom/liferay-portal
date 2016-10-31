@@ -149,6 +149,11 @@ public class JspC extends org.apache.jasper.JspC {
 
 		setArgsMethod.invoke(jspc, new Object[] {args});
 
+		Method setClassPathMethod = jspcClass.getMethod(
+			"setClassPath", String.class);
+
+		setClassPathMethod.invoke(jspc, classpath);
+
 		Method executeMethod = jspcClass.getMethod("execute");
 
 		Thread currentThread = Thread.currentThread();

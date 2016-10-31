@@ -364,7 +364,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 		LayoutImpl.validateFriendlyURLKeyword(friendlyURL);
 
 		if (friendlyURL.contains(Portal.FRIENDLY_URL_SEPARATOR) ||
-			friendlyURL.endsWith("/-")) {
+			friendlyURL.endsWith(_FRIENDLY_URL_SEPARATOR_HEAD)) {
 
 			LayoutFriendlyURLException lfurle = new LayoutFriendlyURLException(
 				LayoutFriendlyURLException.KEYWORD_CONFLICT);
@@ -587,6 +587,10 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 	@BeanReference(type = ResourcePermissionLocalService.class)
 	protected ResourcePermissionLocalService resourcePermissionLocalService;
+
+	private static final String _FRIENDLY_URL_SEPARATOR_HEAD =
+		Portal.FRIENDLY_URL_SEPARATOR.substring(
+			0, Portal.FRIENDLY_URL_SEPARATOR.length() - 1);
 
 	private static final int _PRIORITY_BUFFER = 1000000;
 

@@ -33,19 +33,19 @@ AUI.add(
 					},
 
 					onBlurMethod: {
-						validator: Lang.isFunction
+						validator: Lang.isString
 					},
 
 					onChangeMethod: {
-						validator: Lang.isFunction
+						validator: Lang.isString
 					},
 
 					onFocusMethod: {
-						validator: Lang.isFunction
+						validator: Lang.isString
 					},
 
 					onInitMethod: {
-						validator: Lang.isFunction
+						validator: Lang.isString
 					},
 
 					textMode: {
@@ -230,7 +230,7 @@ AUI.add(
 							instance.getNativeEditor().setData(contents);
 						}
 
-						var onInitFn = instance.get('onInitMethod');
+						var onInitFn = window[instance.get('onInitMethod')];
 
 						if (onInitFn) {
 							onInitFn();
@@ -246,17 +246,21 @@ AUI.add(
 					_onBlur: function(event) {
 						var instance = this;
 
-						var blurFn = instance.get('onBlurMethod');
+						var blurFn = window[instance.get('onBlurMethod')];
 
-						blurFn(event.editor);
+						if (blurFn) {
+							blurFn(event.editor);
+						}
 					},
 
 					_onChange: function() {
 						var instance = this;
 
-						var changeFn = instance.get('onChangeMethod');
+						var changeFn = window[instance.get('onChangeMethod')];
 
-						changeFn(instance.getText());
+						if (changeFn) {
+							changeFn(instance.getText());
+						}
 					},
 
 					_onCustomDataProcessorLoaded: function() {
@@ -272,9 +276,11 @@ AUI.add(
 					_onFocus: function(event) {
 						var instance = this;
 
-						var focusFn = instance.get('onFocusMethod');
+						var focusFn = window[instance.get('onFocusMethod')];
 
-						focusFn(event.editor);
+						if (focusFn) {
+							focusFn(event.editor);
+						}
 					},
 
 					_onInstanceReady: function() {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.captcha.simplecaptcha;
+package com.liferay.captcha.simplecaptcha;
 
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;

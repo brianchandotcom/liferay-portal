@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import aQute.lib.converter.Converter;
-
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
@@ -23,7 +21,6 @@ import java.io.PrintWriter;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.Servlet;
@@ -59,8 +56,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 	@Activate
 	@Modified
-	protected void activate(
-			ComponentContext componentContext, Details details)
+	protected void activate(ComponentContext componentContext, Details details)
 		throws Exception {
 
 		_logger = new Logger(componentContext.getBundleContext());

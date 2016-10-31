@@ -539,6 +539,12 @@ to version 1.0.42.
 - [LPS-68995]: Update the [Liferay Source Formatter] dependency to version
 1.0.308.
 
+## 3.0.29 - 2016-10-31
+
+### Changed
+
+- [LPS-69013]: Update the [Liferay Jasper JSPC] dependency to version 1.0.8.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -549,6 +555,7 @@ to version 1.0.42.
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
 [Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
+[Liferay Jasper JSPC]: https://github.com/liferay/liferay-portal/tree/master/modules/util/jasper-jspc
 [Liferay Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/javadoc-formatter
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
@@ -593,4 +600,5 @@ to version 1.0.42.
 [LPS-68979]: https://issues.liferay.com/browse/LPS-68979
 [LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LPS-68995]: https://issues.liferay.com/browse/LPS-68995
+[LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

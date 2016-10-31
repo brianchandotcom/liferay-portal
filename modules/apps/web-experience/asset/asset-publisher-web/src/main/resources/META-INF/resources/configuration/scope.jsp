@@ -111,7 +111,6 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 		data = new HashMap<String, Object>();
 
 		layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-		layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 		layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
 		layoutSiteBrowserURL.setParameter("type", "layoutScopes");
 		layoutSiteBrowserURL.setParameter("eventName", eventName);
@@ -159,7 +158,6 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 		data = new HashMap<String, Object>();
 
 		siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-		siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(assetPublisherDisplayContext.getGroupIds()));
 		siteBrowserURL.setParameter("types", StringUtil.merge(types));
 		siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
 		siteBrowserURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());

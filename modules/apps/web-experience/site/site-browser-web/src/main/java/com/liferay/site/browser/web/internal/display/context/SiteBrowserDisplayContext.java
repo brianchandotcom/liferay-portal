@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
@@ -280,8 +279,6 @@ public class SiteBrowserDisplayContext {
 				"p_u_i_d", String.valueOf(selUser.getUserId()));
 		}
 
-		long[] selectedGroupIds = StringUtil.split(
-			ParamUtil.getString(_request, "selectedGroupIds"), 0L);
 		boolean includeCompany = ParamUtil.getBoolean(
 			_request, "includeCompany");
 		boolean includeCurrentGroup = ParamUtil.getBoolean(
@@ -294,8 +291,6 @@ public class SiteBrowserDisplayContext {
 		String target = ParamUtil.getString(_request, "target");
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
-		portletURL.setParameter(
-			"selectedGroupIds", StringUtil.merge(selectedGroupIds));
 		portletURL.setParameter("type", getType());
 		portletURL.setParameter("types", getTypes());
 		portletURL.setParameter("displayStyle", getDisplayStyle());

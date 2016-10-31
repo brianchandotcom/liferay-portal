@@ -503,8 +503,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		return classLoader.loadClass(className);
 	}
 
-	private static final String _TAGLIB_PATH =
-		"/html/taglib/ui/captcha/simplecaptcha.jsp";
+	private static final String _TAGLIB_PATH = "/captcha/simplecaptcha.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SimpleCaptchaImpl.class);

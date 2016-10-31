@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/captcha/init.jsp" %>
+<%@ include file="/captcha/init.jsp" %>
 
 <%
 String url = (String)request.getAttribute("liferay-captcha:captcha:url");

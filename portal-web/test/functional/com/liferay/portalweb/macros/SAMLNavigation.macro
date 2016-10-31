@@ -1,17 +1,17 @@
 <definition>
 	<command name="gotoGeneral">
-		<execute function="AssertClick" locator1="CPSAMLAdmin#NAVIGATION_GENERAL" value1="General" />
+		<execute function="AssertClick" locator1="NavTab#GENERAL" value1="General" />
 	</command>
 
 	<command name="gotoIdentityProvider">
-		<execute function="AssertClick" locator1="CPSAMLAdmin#NAVIGATION_IDENTITY_PROVIDER" value1="Identity Provider" />
+		<execute function="AssertClick" locator1="NavTab#IDENTITY_PROVIDER" value1="Identity Provider" />
 	</command>
 
 	<command name="gotoIdentityProviderConnection">
-		<execute function="AssertClick" locator1="CPSAMLAdmin#NAVIGATION_IDENTITY_PROVIDER_CONNECTION" value1="Identity Provider Connection" />
+		<execute function="AssertClick" locator1="NavTab#IDENTITY_PROVIDER_CONNECTION" value1="Identity Provider Connection" />
 	</command>
 
 	<command name="gotoServiceProviderConnection">
-		<execute function="AssertClick" locator1="CPSAMLAdmin#NAVIGATION_SERVICE_PROVIDER_CONNECTIONS" value1="Service Provider Connections" />
+		<execute function="AssertClick" locator1="NavTab#SERVICE_PROVIDER_CONNECTIONS" value1="Service Provider Connections" />
 	</command>
 </definition>

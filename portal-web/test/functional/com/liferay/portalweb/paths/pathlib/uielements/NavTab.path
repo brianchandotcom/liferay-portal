@@ -119,6 +119,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IDENTITY_PROVIDER</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IDENTITY_PROVIDER_CONNECTION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Identity Provider Connection')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LDAP</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'LDAP')]</td>
 	<td></td>
@@ -196,6 +206,11 @@
 <tr>
 	<td>SENDER</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Sender')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVICE_PROVIDER_CONNECTIONS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Service Provider Connections')]</td>
 	<td></td>
 </tr>
 <tr>

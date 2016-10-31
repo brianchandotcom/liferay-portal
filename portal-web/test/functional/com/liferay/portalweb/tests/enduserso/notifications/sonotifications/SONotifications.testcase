@@ -1697,9 +1697,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute function="AssertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
-		<execute function="Click" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="Click" locator1="Notifications#NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_CONTACTS_CENTER_WEBSITE_CHECKBOX" />
 
 		<execute macro="SOContactsCenter#addConnection">
 			<var name="adminEmailAddress" value="${adminEmailAddress}" />
@@ -1730,9 +1730,9 @@
 
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
-		<execute function="AssertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
-		<execute function="Click" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="Click" locator1="Notifications#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Notifications#NOTIFICATION_DELIVERY_INVITE_MEMBERS_WEBSITE_CHECKBOX" />
 
 		<execute macro="SOUserBar#addSOSite">
 			<var name="siteDescription" value="${siteDescription}" />

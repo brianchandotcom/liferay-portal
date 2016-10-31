@@ -5,8 +5,8 @@
 			<then>
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-				<execute function="Check" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_CHECKBOX" />
-				<execute function="AssertClickNoError" locator1="CPSpamModerationWikis#WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
+				<execute function="Check" locator1="SpamModeration#WIKI_PAGE_TABLE_CHECKBOX" />
+				<execute function="AssertClickNoError" locator1="SpamModeration#WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
 				<execute function="Confirm" value1="Are you sure you want to mark the selected pages not spam?" />
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
@@ -19,8 +19,8 @@
 			<then>
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-				<execute function="Check" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_CHECKBOX" />
-				<execute function="AssertClickNoError" locator1="CPSpamModerationWikis#WIKIS_SPAM_BUTTON" value1="Spam" />
+				<execute function="Check" locator1="SpamModeration#WIKI_PAGE_TABLE_CHECKBOX" />
+				<execute function="AssertClickNoError" locator1="SpamModeration#WIKIS_SPAM_BUTTON" value1="Spam" />
 				<execute function="Confirm" value1="Are you sure you want to mark the selected pages as spam?" />
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
@@ -54,11 +54,11 @@
 			<then>
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-				<execute function="AssertElementPresent" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_CHECKBOX" />
-				<execute function="AssertTextEquals" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_TITLE" value1="${wikiPageTitle}" />
-				<execute function="AssertTextEquals" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_VERSION" value1="${wikiPageRevision}" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_POSTED_BY" value1="${wikiPageUsername}" />
-				<execute function="AssertElementPresent" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_ACTIONS" />
+				<execute function="AssertElementPresent" locator1="SpamModeration#WIKI_PAGE_TABLE_CHECKBOX" />
+				<execute function="AssertTextEquals" locator1="SpamModeration#WIKI_PAGE_TABLE_TITLE" value1="${wikiPageTitle}" />
+				<execute function="AssertTextEquals" locator1="SpamModeration#WIKI_PAGE_TABLE_VERSION" value1="${wikiPageRevision}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="SpamModeration#WIKI_PAGE_TABLE_POSTED_BY" value1="${wikiPageUsername}" />
+				<execute function="AssertElementPresent" locator1="SpamModeration#WIKI_PAGE_TABLE_ACTIONS" />
 			</then>
 		</if>
 	</command>

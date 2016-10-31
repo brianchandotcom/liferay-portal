@@ -2,9 +2,9 @@
 	<command name="downloadReportEntryFile">
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
-		<execute function="Click" locator1="PGReportsdisplayViewreportentry#ENTRY_FILE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="PGReportsdisplayViewreportentry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DOWNLOAD" value1="Download" />
 		<execute function="Pause" locator1="2000" />
 
 		<if>
@@ -13,10 +13,10 @@
 				<if>
 					<equals arg1="${reportsFileName}" arg2="reports_admin_template_source_sample_list_type.pdf" />
 					<then>
-						<execute function="SikuliAssertElementPresent" locator1="PGReportsdisplay#REPORT_PDF_LIST_TYPE_PNG" />
+						<execute function="SikuliAssertElementPresent" locator1="ReportsAdmin#REPORT_PDF_LIST_TYPE_PNG" />
 					</then>
 					<else>
-						<execute function="SikuliAssertElementPresent" locator1="PGReportsdisplay#REPORT_PDF_CLASS_NAME_PNG" />
+						<execute function="SikuliAssertElementPresent" locator1="ReportsAdmin#REPORT_PDF_CLASS_NAME_PNG" />
 					</else>
 				</if>
 			</then>
@@ -26,38 +26,38 @@
 	<command name="viewReportEntry">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertClick" locator1="PGReportsdisplay#REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
+		<execute function="AssertClick" locator1="ReportsAdmin#REPORTS_ENTRY_TABLE_DEFINITION_NAME" value1="${reportsDefinitionName}" />
 	</command>
 
 	<command name="viewReportEntryFields">
 		<var name="key_reportsDefinitionName" value="${reportsDefinitionName}" />
 
-		<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#DEFINITION_NAME_FIELD" value1="Definition Name ${reportsDefinitionName}" />
 
 		<var name="key_reportsDefinitionDescription" value="${reportsDefinitionDescription}" />
 
-		<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#DESCRIPTION_FIELD" value1="Description ${reportsDefinitionDescription}" />
 
 		<var name="key_dataSource" value="${dataSource}" />
 
-		<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#DATA_SOURCE_NAME_FIELD" value1="Data Source Name ${dataSource}" />
 
 		<if>
 			<isset var="reportParameters" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
+				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
+				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
 			</else>
 		</if>
 
 		<var name="key_userName" value="${userName}" />
 
-		<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REQUESTED_BY_FIELD" value1="Requested By ${userName}" />
 
 		<var name="key_reportsFileName" value="${reportsFileName}" />
 
-		<execute function="AssertTextEquals" locator1="PGReportsdisplayViewreportentry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
+		<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE" value1="${reportsFileName}" />
 	</command>
 </definition>

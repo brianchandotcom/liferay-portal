@@ -503,10 +503,10 @@
 		<if>
 			<and>
 				<condition function="IsElementNotPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
-				<condition function="IsElementPresent" locator1="Dockbar#STAGING_ICON" />
+				<condition function="IsElementPresent" locator1="Icon#STAGING" />
 			</and>
 			<then>
-				<execute function="Click" locator1="Dockbar#STAGING_ICON" />
+				<execute function="Click" locator1="Icon#STAGING" />
 				<execute function="AssertElementPresent" locator1="Staging#STAGING_PUBLISH_TO_LIVE_BUTTON" />
 			</then>
 		</if>

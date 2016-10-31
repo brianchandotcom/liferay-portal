@@ -2,8 +2,8 @@
 	<command name="configure">
 		<execute function="Select" locator1="CPSAMLAdmin#SAML_ROLE_SELECT" value1="${samlRoleType}" />
 		<execute function="Type" locator1="CPSAMLAdmin#SAML_ENTITY_ID_FIELD" value1="${samlEntityID}" />
-		<execute function="AssertClick" locator1="CPSAMLAdmin#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPSAMLAdmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="configureCertificateAndPrivateKey">
@@ -14,13 +14,13 @@
 		<execute function="Select" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_LENGTH_SELECT" value1="2048" />
 		<execute function="Type" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEY_PASSWORD_FIELD" value1="${samlKeyPassword}" />
 		<execute function="AssertClick" locator1="CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPSAMLAdmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="enable">
 		<execute function="AssertTextEquals" locator1="CPSAMLAdmin#SAML_ENTITY_ID_FIELD" value1="${samlEntityID}" />
 		<execute function="Check" locator1="CPSAMLAdmin#SAML_ENABLED_CHECKBOX" />
-		<execute function="AssertClick" locator1="CPSAMLAdmin#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPSAMLAdmin#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 </definition>

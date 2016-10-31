@@ -79,7 +79,7 @@
 			<then>
 				<var name="key_menuListOption" value="${workflowDefinitionTask}" />
 
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="${workflowDefinitionTask}" />
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="${workflowDefinitionTask}" />
 			</then>
 			<else>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="MenuItem#APPROVE" value1="Approve" />

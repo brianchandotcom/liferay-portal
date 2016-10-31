@@ -15,13 +15,16 @@
 package com.liferay.knowledge.base.web.internal.portlet;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.exception.NoSuchCommentException;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
 import com.liferay.portal.kernel.exception.NoSuchSubscriptionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -30,6 +33,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -182,8 +187,18 @@ public class ArticlePortlet extends BaseKBPortlet {
 			return 0;
 		}
 
-		long resourcePrimKey = ParamUtil.getLong(
-			renderRequest, "resourcePrimKey", defaultValue);
+		long resourcePrimKey = 0;
+		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
+
+		if (!StringPool.BLANK.equals(urlTitle)) {
+			resourcePrimKey = getResourcePrimKeyFromUrlTitle(
+				renderRequest, urlTitle);
+		}
+
+		if (resourcePrimKey == 0) {
+			resourcePrimKey = ParamUtil.getLong(
+				renderRequest, "resourcePrimKey", defaultValue);
+		}
 
 		if ((resourcePrimKey == 0) || (resourcePrimKey != defaultValue)) {
 			return resourcePrimKey;
@@ -201,11 +216,46 @@ public class ArticlePortlet extends BaseKBPortlet {
 		return defaultValue;
 	}
 
+	protected long getResourcePrimKeyFromUrlTitle(
+			RenderRequest renderRequest, String urlTitle)
+		throws PortalException {
+
+		String kbFolderUrlTitle = ParamUtil.getString(
+			renderRequest, "kbFolderUrlTitle");
+		KBArticle kbArticle;
+
+		if (StringPool.BLANK.equals(kbFolderUrlTitle)) {
+			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+				PortalUtil.getScopeGroupId(renderRequest),
+				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, urlTitle);
+		}
+		else {
+			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
+				PortalUtil.getScopeGroupId(renderRequest), kbFolderUrlTitle,
+				urlTitle);
+		}
+
+		if (kbArticle != null) {
+			return kbArticle.getResourcePrimKey();
+		}
+
+		return 0;
+	}
+
+	@Reference(unbind = "-")
+	protected void setKBArticleLocalService(
+		KBArticleLocalService kbArticleLocalService) {
+
+		_kbArticleLocalService = kbArticleLocalService;
+	}
+
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.knowledge.base.web)(release.schema.version=1.0.0))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {
 	}
+
+	private KBArticleLocalService _kbArticleLocalService;
 
 }

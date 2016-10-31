@@ -134,6 +134,21 @@ AUI.add(
 						toolbar.set('field', field);
 					},
 
+					_bindSettingsFormEvents: function() {
+						var instance = this;
+
+						var settingsForm = instance.settingsForm;
+
+						var labelField = settingsForm.getField('label');
+
+						labelField.after(
+							'valueChange',
+							function() {
+								instance.set('title', labelField.getValue());
+							}
+						);
+					},
+
 					_configureSideBar: function() {
 						var instance = this;
 
@@ -150,7 +165,7 @@ AUI.add(
 							}
 						);
 
-						instance._handleEvaluation();
+						instance._bindSettingsFormEvents();
 
 						settingsForm.render();
 
@@ -173,21 +188,6 @@ AUI.add(
 						);
 
 						return toolbar;
-					},
-
-					_handleEvaluation: function() {
-						var instance = this;
-
-						var settingsForm = instance.settingsForm;
-
-						var evaluator = settingsForm.get('evaluator');
-
-						evaluator.after(
-							'evaluationStarted',
-							function() {
-								instance.set('title', settingsForm.getField('label').getValue());
-							}
-						);
 					},
 
 					_loadFieldSettingsForm: function(field) {

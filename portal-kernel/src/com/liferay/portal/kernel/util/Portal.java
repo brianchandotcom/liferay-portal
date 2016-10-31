@@ -311,7 +311,7 @@ public interface Portal {
 			Layout layout)
 		throws PortalException;
 
-	public long[] getAncestorSiteGroupIds(long groupId) throws PortalException;
+	public long[] getAncestorSiteGroupIds(long groupId);
 
 	/**
 	 * Returns the base model instance for the resource permission.

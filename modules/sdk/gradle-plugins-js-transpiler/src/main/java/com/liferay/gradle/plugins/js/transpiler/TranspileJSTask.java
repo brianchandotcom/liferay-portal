@@ -30,6 +30,7 @@ import org.gradle.api.Project;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.OutputDirectory;
@@ -265,6 +266,17 @@ public class TranspileJSTask extends ExecuteNodeScriptTask {
 
 		completeArgs.add("--globalName");
 		completeArgs.add(getGlobalName());
+
+		String logLevel = "silent";
+
+		Logger logger = getLogger();
+
+		if (logger.isInfoEnabled()) {
+			logLevel = "warn";
+		}
+
+		completeArgs.add("--logLevel");
+		completeArgs.add(logLevel);
 
 		completeArgs.add("--moduleName");
 		completeArgs.add(getModuleName());

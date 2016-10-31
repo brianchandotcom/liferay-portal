@@ -22,13 +22,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
@@ -46,19 +48,21 @@ import nl.captcha.servlet.CaptchaServletUtil;
 import nl.captcha.text.producer.TextProducer;
 import nl.captcha.text.renderer.WordRenderer;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
  */
+@Component(
+	immediate = true,
+	property = {
+		"captcha.engine.impl=com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl"
+	},
+	service = Captcha.class
+)
 public class SimpleCaptchaImpl implements Captcha {
-
-	public SimpleCaptchaImpl() {
-		initBackgroundProducers();
-		initGimpyRenderers();
-		initNoiseProducers();
-		initTextProducers();
-		initWordRenderers();
-	}
 
 	@Override
 	public void check(HttpServletRequest request) throws CaptchaException {
@@ -163,6 +167,15 @@ public class SimpleCaptchaImpl implements Captcha {
 		CaptchaServletUtil.writeImage(
 			resourceResponse.getPortletOutputStream(),
 			simpleCaptcha.getImage());
+	}
+
+	@Activate
+	protected void activate() {
+		initBackgroundProducers();
+		initGimpyRenderers();
+		initNoiseProducers();
+		initTextProducers();
+		initWordRenderers();
 	}
 
 	protected BackgroundProducer getBackgroundProducer() {
@@ -286,7 +299,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			String backgroundProducerClassName =
 				backgroundProducerClassNames[i];
 
-			_backgroundProducers[i] = (BackgroundProducer)InstancePool.get(
+			_backgroundProducers[i] = (BackgroundProducer)_getInstance(
 				backgroundProducerClassName);
 		}
 	}
@@ -300,7 +313,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		for (int i = 0; i < gimpyRendererClassNames.length; i++) {
 			String gimpyRendererClassName = gimpyRendererClassNames[i];
 
-			_gimpyRenderers[i] = (GimpyRenderer)InstancePool.get(
+			_gimpyRenderers[i] = (GimpyRenderer)_getInstance(
 				gimpyRendererClassName);
 		}
 	}
@@ -314,7 +327,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		for (int i = 0; i < noiseProducerClassNames.length; i++) {
 			String noiseProducerClassName = noiseProducerClassNames[i];
 
-			_noiseProducers[i] = (NoiseProducer)InstancePool.get(
+			_noiseProducers[i] = (NoiseProducer)_getInstance(
 				noiseProducerClassName);
 		}
 	}
@@ -328,7 +341,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		for (int i = 0; i < textProducerClassNames.length; i++) {
 			String textProducerClassName = textProducerClassNames[i];
 
-			_textProducers[i] = (TextProducer)InstancePool.get(
+			_textProducers[i] = (TextProducer)_getInstance(
 				textProducerClassName);
 		}
 	}
@@ -342,7 +355,7 @@ public class SimpleCaptchaImpl implements Captcha {
 		for (int i = 0; i < wordRendererClassNames.length; i++) {
 			String wordRendererClassName = wordRendererClassNames[i];
 
-			_wordRenderers[i] = (WordRenderer)InstancePool.get(
+			_wordRenderers[i] = (WordRenderer)_getInstance(
 				wordRendererClassName);
 		}
 	}
@@ -459,6 +472,37 @@ public class SimpleCaptchaImpl implements Captcha {
 		return valid;
 	}
 
+	private Object _getInstance(String className) {
+		className = className.trim();
+
+		Object instance = _instances.get(className);
+
+		if (Validator.isNotNull(instance)) {
+			return instance;
+		}
+
+		try {
+			Class<?> clazz = _loadClass(className);
+
+			instance = clazz.newInstance();
+
+			_instances.put(className, instance);
+		}
+		catch (Exception e) {
+			_log.error("Unable to load " + className, e);
+		}
+
+		return instance;
+	}
+
+	private Class<?> _loadClass(String className) throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return classLoader.loadClass(className);
+	}
+
 	private static final String _TAGLIB_PATH =
 		"/html/taglib/ui/captcha/simplecaptcha.jsp";
 
@@ -467,6 +511,7 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	private BackgroundProducer[] _backgroundProducers;
 	private GimpyRenderer[] _gimpyRenderers;
+	private final Map<String, Object> _instances = new ConcurrentHashMap<>();
 	private NoiseProducer[] _noiseProducers;
 	private TextProducer[] _textProducers;
 	private WordRenderer[] _wordRenderers;

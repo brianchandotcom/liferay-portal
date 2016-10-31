@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/ui/captcha/init.jsp" %>
 
 <%
-String url = (String)request.getAttribute("liferay-ui:captcha:url");
+String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 %>
 
 <c:if test="<%= captchaEnabled %>">

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -191,7 +192,45 @@ public class DDMFormEvaluatorHelper {
 				ddmFormFieldEvaluationResultInstances);
 		}
 
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
+
+			String ddmFormFieldName = ddmFormFieldEvaluationResult.getName();
+			String instanceId = ddmFormFieldEvaluationResult.getInstanceId();
+
+			DDMFormField ddmFormField = _ddmFormFieldsMap.get(ddmFormFieldName);
+
+			DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+				ddmFormFieldName, instanceId);
+
+			if (Validator.isNull(ddmFormFieldValue)) {
+				continue;
+			}
+
+			setDDMFormFieldEvaluationResultValidation(
+				ddmFormFieldEvaluationResult, ddmFormField, ddmFormFieldValue);
+		}
+
 		return ddmFormFieldEvaluationResults;
+	}
+
+	protected DDMFormFieldValue getDDMFormFieldValue(
+		String ddmFormFieldName, String instanceId) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = _ddmFormFieldValuesMap.get(
+			ddmFormFieldName);
+
+		if (ListUtil.isEmpty(ddmFormFieldValues)) {
+			return null;
+		}
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (instanceId.equals(ddmFormFieldValue.getInstanceId())) {
+				return ddmFormFieldValue;
+			}
+		}
+
+		return null;
 	}
 
 	protected boolean getDefaultBooleanPropertyState(

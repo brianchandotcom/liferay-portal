@@ -491,8 +491,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public Group getParentGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public Group getParentGroup() {
 		return _group.getParentGroup();
 	}
 
@@ -898,8 +897,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public java.util.List<Group> getAncestors()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public java.util.List<Group> getAncestors() {
 		return _group.getAncestors();
 	}
 

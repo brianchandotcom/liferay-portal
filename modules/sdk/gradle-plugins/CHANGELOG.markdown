@@ -542,8 +542,12 @@ to version 1.0.42.
 ## 3.0.29 - 2016-10-31
 
 ### Changed
-
 - [LPS-69013]: Update the [Liferay Jasper JSPC] dependency to version 1.0.8.
+
+## 3.0.30 - 2016-10-31
+
+### Changed
+- [LPS-69013]: Update the [Liferay Jasper JSPC] dependency to version 1.0.9.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

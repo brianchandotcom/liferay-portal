@@ -599,6 +599,10 @@ publishing.
 
 ## 1.2.77 - 2016-10-28
 
+*No changes.*
+
+## 1.2.78 - 2016-10-31
+
 ### Changed
 - [LPS-68979]: Update the [Liferay Gradle Plugins] dependency to version 3.0.28.
 

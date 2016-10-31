@@ -48,12 +48,12 @@ import org.gradle.api.logging.Logger;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.AbstractArchiveTask;
 import org.gradle.api.tasks.bundling.Compression;
 import org.gradle.api.tasks.bundling.Tar;
 import org.gradle.api.tasks.bundling.Zip;
+import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 /**
  * @author Andrea Di Giorgi
@@ -65,7 +65,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String BUNDLE_GROUP = "bundle";
 
-	public static final String CLEAN_TASK_NAME = "clean";
+	public static final String CLEAN_TASK_NAME =
+		LifecycleBasePlugin.CLEAN_TASK_NAME;
 
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
@@ -82,7 +83,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		WorkspaceExtension workspaceExtension = GradleUtil.getExtension(
 			(ExtensionAware)project.getGradle(), WorkspaceExtension.class);
 
-		_addTaskClean(project);
+		GradleUtil.applyPlugin(project, LifecycleBasePlugin.class);
 
 		Download downloadBundleTask = _addTaskDownloadBundle(
 			project, workspaceExtension);
@@ -102,25 +103,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			workspaceExtension);
 
 		_addTaskInitBundle(project, downloadBundleTask, workspaceExtension);
-	}
-
-	private Delete _addTaskClean(final Project project) {
-		Delete delete = GradleUtil.addTask(
-			project, CLEAN_TASK_NAME, Delete.class);
-
-		delete.delete(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return project.getBuildDir();
-				}
-
-			});
-
-		delete.setDescription("Deletes the build directory.");
-
-		return delete;
 	}
 
 	private Copy _addTaskCopyBundle(

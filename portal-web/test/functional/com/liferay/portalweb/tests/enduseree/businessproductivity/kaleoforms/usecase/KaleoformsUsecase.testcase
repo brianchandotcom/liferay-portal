@@ -7554,7 +7554,9 @@
 		</execute>
 	</command>
 
-	<command name="ViewEmailNotificationSentToTaskAssignees" priority="4">
+	<!-- LPS-66727 -->
+
+	<!--<command name="ViewEmailNotificationSentToTaskAssignees" priority="4">
 		<description message="This is a use case for LPS-50688 and LPS-35263." />
 
 		<property name="test.assert.javascript.errors" value="false" />
@@ -7892,7 +7894,7 @@
 			<var name="asset" value="Update Notification Description" />
 			<var name="recipient" value="userfn1 Updater" />
 		</execute>
-	</command>
+	</command>-->
 
 	<command name="ViewKaleoProcessNameOpenedViaNotifications" priority="3">
 		<description message="This is a use case for LPS-51098." />

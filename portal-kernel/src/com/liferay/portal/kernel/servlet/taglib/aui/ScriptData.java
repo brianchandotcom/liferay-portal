@@ -118,7 +118,7 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		}
 
 		if (!es6ModulesSet.isEmpty()) {
-			writer.write("require(");
+			writer.write("Liferay.Loader.require(");
 
 			Iterator<String> iterator = es6ModulesSet.iterator();
 

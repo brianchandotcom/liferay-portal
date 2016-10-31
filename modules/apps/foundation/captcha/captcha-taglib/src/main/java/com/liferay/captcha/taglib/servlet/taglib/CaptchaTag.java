@@ -42,7 +42,7 @@ public class CaptchaTag extends IncludeTag {
 		request.setAttribute("liferay-captcha:captcha:url", _url);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/captcha/page.jsp";
+	private static final String _PAGE = "/captcha/page.jsp";
 
 	private String _url;
 

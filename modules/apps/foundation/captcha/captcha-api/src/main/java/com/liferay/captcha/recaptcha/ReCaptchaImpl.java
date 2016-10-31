@@ -196,8 +196,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 		return validateChallenge(request);
 	}
 
-	private static final String _TAGLIB_PATH =
-		"/html/taglib/ui/captcha/recaptcha.jsp";
+	private static final String _TAGLIB_PATH = "/captcha/recaptcha.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(ReCaptchaImpl.class);
 

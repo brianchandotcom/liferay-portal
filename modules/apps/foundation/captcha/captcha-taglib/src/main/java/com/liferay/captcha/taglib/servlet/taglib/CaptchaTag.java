@@ -14,14 +14,23 @@
 
 package com.liferay.captcha.taglib.servlet.taglib;
 
+import com.liferay.captcha.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class CaptchaTag extends IncludeTag {
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
 
 	public void setUrl(String url) {
 		_url = url;

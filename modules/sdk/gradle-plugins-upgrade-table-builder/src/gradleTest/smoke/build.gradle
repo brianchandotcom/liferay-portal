@@ -1,0 +1,26 @@
+apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
+
+task runGradleTest
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn buildUpgradeTable
+
+	doLast {
+		File expectedFile = file("FooTable.java.expected")
+		File generatedFile = file("src/main/java/com/example/sample/internal/upgrade/v1_0_0/util/FooTable.java")
+
+		assert expectedFile.text.normalize() == generatedFile.text.normalize()
+	}
+}
+
+buildUpgradeTable {
+	upgradeTableDir = "upgrade-table-dir"
+}

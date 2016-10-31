@@ -55,8 +55,8 @@ request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
 %>
 
-<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
-	<div class="h2">
+<div class="h2">
+	<c:if test="<%= assetPublisherDisplayContext.isShowAssetTitle() %>">
 		<c:if test="<%= showBackURL && Validator.isNotNull(redirect) %>">
 			<liferay-ui:icon
 				cssClass="header-back-to"
@@ -67,12 +67,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 
 		<span><%= HtmlUtil.escape(title) %></span>
+	</c:if>
 
-		<c:if test="<%= !print %>">
-			<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
-		</c:if>
-	</div>
-</c:if>
+	<c:if test="<%= !print %>">
+		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
+	</c:if>
+</div>
 
 <div class="asset-full-content clearfix <%= assetPublisherDisplayContext.isDefaultAssetPublisher() ? "default-asset-publisher" : StringPool.BLANK %> <%= assetPublisherDisplayContext.isShowAssetTitle() ? "show-asset-title" : "no-title" %>">
 	<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) || (assetPublisherDisplayContext.isEnablePrint() && assetRenderer.isPrintable()) || (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) %>">

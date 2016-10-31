@@ -4193,7 +4193,7 @@
 
 		<execute macro="FormFields#viewTextField">
 			<var name="fieldLabel" value="Jump, She exclaimed!" />
-			<var name="fieldName" value="JumpSheExclaimed" />
+			<var name="fieldName" value="JumpSheexclaimed" />
 		</execute>
 
 		<execute macro="FormFields#editText">

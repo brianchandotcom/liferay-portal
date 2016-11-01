@@ -1,4 +1,4 @@
-Loader.addModule(
+Liferay.Loader.addModule(
 	{
 		dependencies: [],
 		exports: '_babelPolyfill',

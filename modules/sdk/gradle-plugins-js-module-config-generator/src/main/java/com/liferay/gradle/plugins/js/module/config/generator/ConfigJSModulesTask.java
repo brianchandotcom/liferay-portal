@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.js.module.config.generator;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeScriptTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -106,6 +107,25 @@ public class ConfigJSModulesTask
 
 				@Override
 				public void execute(CopySpec copySpec) {
+					final String customDefine = getCustomDefine();
+
+					if (Validator.isNotNull(customDefine)) {
+						copySpec.filter(
+							new Closure<String>(getProject()) {
+
+								@SuppressWarnings("unused")
+								public String doCall(String line) {
+									if (Validator.isNotNull(line)) {
+										line = line.replace(
+											"define(", customDefine + "(");
+									}
+
+									return line;
+								}
+
+							});
+					}
+
 					copySpec.from(outputDir);
 					copySpec.into(getSourceDir());
 				}
@@ -117,6 +137,12 @@ public class ConfigJSModulesTask
 	@Optional
 	public String getConfigVariable() {
 		return GradleUtil.toString(_configVariable);
+	}
+
+	@Input
+	@Optional
+	public String getCustomDefine() {
+		return GradleUtil.toString(_customDefine);
 	}
 
 	@Override
@@ -220,6 +246,10 @@ public class ConfigJSModulesTask
 
 	public void setConfigVariable(Object configVariable) {
 		_configVariable = configVariable;
+	}
+
+	public void setCustomDefine(Object customDefine) {
+		_customDefine = customDefine;
 	}
 
 	@Override
@@ -331,6 +361,7 @@ public class ConfigJSModulesTask
 	}
 
 	private Object _configVariable;
+	private Object _customDefine = "Liferay.Loader.define";
 	private boolean _ignorePath;
 	private boolean _keepFileExtension;
 	private boolean _lowerCase;

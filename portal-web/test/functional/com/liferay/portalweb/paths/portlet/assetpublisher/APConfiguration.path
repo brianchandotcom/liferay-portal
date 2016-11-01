@@ -159,8 +159,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_TAGS_SELECT_BUTTON</td>
+	<td>//button[@title='Select Tags']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_CATEGORIES_CATEGORY_CHECKBOX</td>
 	<td>//div[contains(.,'${key_categoryName}')]/span[2]</td>
+	<td></td>
+</tr>
+ <tr>
+	<td>FILTER_TAGS_CHECKBOX</td>
+	<td>//label[contains(.,'${key_tagName}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

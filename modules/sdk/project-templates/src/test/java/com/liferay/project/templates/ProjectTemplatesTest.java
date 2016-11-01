@@ -887,13 +887,24 @@ public class ProjectTemplatesTest {
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
 			"public class FooPortlet extends SoyPortlet {");
 
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvc-portlet", "foo", "-DclassName=Foo",
-			"-Dpackage=com.liferay.test");
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
 
-		_buildProjects(
-			gradleProjectDir, mavenProjectDir,
-			"build/libs/com.liferay.test-1.0.0.jar", "target/foo-1.0.0.jar");
+		_testExists(gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateSoyPortletCustomClass() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"soy-portlet", "foo", "--class-name", "MySoyPortlet");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/portlet/MySoyPortletPortlet.java",
+			"public class MySoyPortletPortlet extends SoyPortlet {");
+
+		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+
+		_testExists(gradleProjectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test

@@ -49,6 +49,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-service-builder")
 	projectTemplates project(":sdk:project-templates-service-wrapper")
 	projectTemplates project(":sdk:project-templates-simulation-panel-entry")
+	projectTemplates project(":sdk:project-templates-soy-portlet")
 	projectTemplates project(":sdk:project-templates-template-context-contributor")
 	projectTemplates project(":sdk:project-templates-theme")
 	projectTemplates project(":sdk:project-templates-theme-contributor")

@@ -33,19 +33,23 @@ AUI.add(
 					},
 
 					onBlurMethod: {
-						validator: Lang.isFunction
+						getter: '_getEditorMethod',
+						validator: '_validateEditorMethod'
 					},
 
 					onChangeMethod: {
-						validator: Lang.isFunction
+						getter: '_getEditorMethod',
+						validator: '_validateEditorMethod'
 					},
 
 					onFocusMethod: {
-						validator: Lang.isFunction
+						getter: '_getEditorMethod',
+						validator: '_validateEditorMethod'
 					},
 
 					onInitMethod: {
-						validator: Lang.isFunction
+						getter: '_getEditorMethod',
+						validator: '_validateEditorMethod'
 					},
 
 					textMode: {
@@ -221,6 +225,10 @@ AUI.add(
 						}
 					},
 
+					_getEditorMethod: function(method) {
+						return Lang.isFunction(method) ? method : window[method];
+					},
+
 					_initializeData: function() {
 						var instance = this;
 
@@ -248,7 +256,9 @@ AUI.add(
 
 						var blurFn = instance.get('onBlurMethod');
 
-						blurFn(event.editor);
+						if (blurFn) {
+							blurFn(event.editor);
+						}
 					},
 
 					_onChange: function() {
@@ -256,7 +266,9 @@ AUI.add(
 
 						var changeFn = instance.get('onChangeMethod');
 
-						changeFn(instance.getText());
+						if (changeFn) {
+							changeFn(instance.getText());
+						}
 					},
 
 					_onCustomDataProcessorLoaded: function() {
@@ -274,7 +286,9 @@ AUI.add(
 
 						var focusFn = instance.get('onFocusMethod');
 
-						focusFn(event.editor);
+						if (focusFn) {
+							focusFn(event.editor);
+						}
 					},
 
 					_onInstanceReady: function() {
@@ -305,6 +319,10 @@ AUI.add(
 						fragment.writeHtml(writer);
 
 						event.data.dataValue = writer.getHtml();
+					},
+
+					_validateEditorMethod: function(method) {
+						return Lang.isString(method) || Lang.isFunction(method);
 					}
 				}
 			}

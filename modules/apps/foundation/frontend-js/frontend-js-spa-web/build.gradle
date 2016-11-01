@@ -20,17 +20,6 @@ buildSenna {
 configJSModules {
 	dependsOn buildSenna
 	include "**/*.js*"
-
-
-	doLast {
-		FileTree jsFileTree = fileTree(dir: "classes/META-INF/resources", include: "**/*.js")
-
-		jsFileTree.each {
-			File jsFile ->
-
-			jsFile.text = jsFile.text.replace("define(", "Liferay.Loader.define(")
-		}
-	}
 }
 
 dependencies {

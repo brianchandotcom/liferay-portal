@@ -4361,6 +4361,38 @@
 		</execute>
 	</command>
 
+	<command name="ViewSaveNotification" priority="3">
+		<description message="This is a use case for LPS-68390." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute function="Pause" locator1="60000" />
+
+		<execute macro="Form#viewSaveNotification" />
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="FormsAdminNavigator#gotoEdit" />
+	</command>
+
 	<command name="ViewTextFieldWithConditionalVisibility" priority="3">
 		<description message="This is a use case for LPS-59604." />
 

@@ -1,0 +1,6 @@
+com/liferay/portal/kernel/dao/orm/Session.createQuery(Ljava/lang/String;)Lcom/liferay/portal/kernel/dao/orm/Query;:0
+com/liferay/portal/kernel/dao/orm/Session.createQuery(Ljava/lang/String;Z)Lcom/liferay/portal/kernel/dao/orm/Query;:1
+com/liferay/portal/kernel/dao/orm/Session.createSQLQuery(Ljava/lang/String;)Lcom/liferay/portal/kernel/dao/orm/Query;:0
+com/liferay/portal/kernel/dao/orm/Session.createSQLQuery(Ljava/lang/String;Z)Lcom/liferay/portal/kernel/dao/orm/Query;:1
+com/liferay/portal/kernel/dao/orm/Session.createSynchronizedSQLQuery(Ljava/lang/String)Lcom/liferay/portal/kernel/dao/orm/Query;:0
+com/liferay/portal/kernel/dao/orm/Session.createSynchronizedSQLQuery(Ljava/lang/String;Z)Lcom/liferay/portal/kernel/dao/orm/Query;:1

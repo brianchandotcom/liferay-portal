@@ -1,0 +1,3 @@
+Bundle-SymbolicName: com.h3xstream.findsecbugs
+Bundle-Version: 1.5.0.LIFERAY-PATCHED-1
+-includeresource: @findsecbugs-plugin-[0-9]*.jar

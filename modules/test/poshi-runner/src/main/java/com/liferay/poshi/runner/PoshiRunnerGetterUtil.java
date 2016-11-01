@@ -14,10 +14,9 @@
 
 package com.liferay.poshi.runner;
 
-import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
+import com.liferay.poshi.runner.util.ExternalMethod;
 import com.liferay.poshi.runner.util.FileUtil;
-import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -29,8 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,8 +37,6 @@ import java.util.regex.Pattern;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-
-import org.openqa.selenium.StaleElementReferenceException;
 
 /**
  * @author Karen Dang
@@ -202,6 +197,51 @@ public class PoshiRunnerGetterUtil {
 		return className + "." + fileExtension;
 	}
 
+	public static Object getMethodReturnValue(
+			List<String> args, String className, String methodName,
+			Object object)
+		throws Exception {
+
+		Object[] parameters = new Object[args.size()];
+
+		for (int i = 0; i < args.size(); i++) {
+			String arg = args.get(i);
+
+			Matcher matcher = _variablePattern.matcher(arg);
+
+			Object parameter;
+
+			if (matcher.matches()) {
+				parameter = PoshiRunnerVariablesUtil.getValueFromCommandMap(
+					matcher.group(1));
+			}
+			else {
+				parameter = PoshiRunnerVariablesUtil.replaceCommandVars(arg);
+			}
+
+			if (className.endsWith("MathUtil") &&
+				(parameter instanceof String)) {
+
+				parameter = Integer.parseInt((String)parameter);
+			}
+
+			parameters[i] = parameter;
+		}
+
+		Object returnObject = null;
+
+		if (object != null) {
+			returnObject = ExternalMethod.execute(
+				methodName, object, parameters);
+		}
+		else {
+			returnObject = ExternalMethod.execute(
+				className, methodName, parameters);
+		}
+
+		return returnObject;
+	}
+
 	public static String getProjectDirName() {
 		return getCanonicalPath(PropsValues.PROJECT_DIR);
 	}
@@ -298,23 +338,26 @@ public class PoshiRunnerGetterUtil {
 		return rootElement;
 	}
 
-	public static String getVarMethodValue(String classCommandName)
+	public static Object getVarMethodValue(String classCommandName)
 		throws Exception {
 
 		int x = classCommandName.indexOf("(");
 		int y = classCommandName.lastIndexOf(")");
 
-		String[] parameters = null;
+		String className = getClassNameFromClassCommandName(classCommandName);
+		String commandName = getCommandNameFromClassCommandName(
+			classCommandName);
+
+		List<String> args = new ArrayList<>();
 
 		if ((x + 1) < y) {
 			String parameterString = classCommandName.substring(x + 1, y);
 
-			Matcher matcher = _parameterPattern.matcher(parameterString);
+			Matcher parameterMatcher = _parameterPattern.matcher(
+				parameterString);
 
-			List<String> params = new ArrayList<>();
-
-			while (matcher.find()) {
-				String parameterValue = matcher.group();
+			while (parameterMatcher.find()) {
+				String parameterValue = parameterMatcher.group();
 
 				if (parameterValue.startsWith("'") &&
 					parameterValue.endsWith("'")) {
@@ -331,122 +374,26 @@ public class PoshiRunnerGetterUtil {
 					parameterValue = parameterValue.replaceAll("\\\\'", "'");
 				}
 
-				params.add(parameterValue);
+				args.add(parameterValue);
 			}
-
-			parameters = params.toArray(new String[params.size()]);
 		}
 
-		String className = getClassNameFromClassCommandName(classCommandName);
-		String commandName = getCommandNameFromClassCommandName(
-			classCommandName);
+		Object returnObject = null;
 
-		if (className.equals("MathUtil")) {
-			Integer[] integers = new Integer[parameters.length];
+		if (className.equals("selenium")) {
+			Object object = SeleniumUtil.getSelenium();
 
-			for (int i = 0; i < parameters.length; i++) {
-				integers[i] = Integer.parseInt(parameters[i].trim());
-			}
-
-			Method[] methods = MathUtil.class.getDeclaredMethods();
-
-			for (Method method : methods) {
-				String methodName = method.getName();
-
-				if (methodName.equals(commandName)) {
-					Class<?>[] parameterTypes = method.getParameterTypes();
-
-					try {
-						if (parameterTypes.length > 1) {
-							return String.valueOf(
-								method.invoke(null, (Object[])integers));
-						}
-
-						return String.valueOf(
-							method.invoke(null, new Object[] {integers}));
-					}
-					catch (Exception e) {
-						Throwable throwable = e.getCause();
-
-						throw new Exception(throwable.getMessage(), e);
-					}
-				}
-			}
+			returnObject = getMethodReturnValue(
+				args, className, commandName, object);
 		}
 		else {
-			List<Class<?>> parameterClasses = new ArrayList<>();
+			className = "com.liferay.poshi.runner.util." + className;
 
-			if (parameters != null) {
-				for (int i = 0; i < parameters.length; i++) {
-					parameterClasses.add(String.class);
-				}
-			}
-
-			Class<?> clazz = null;
-			Object object = null;
-
-			if (className.equals("selenium")) {
-				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
-
-				clazz = liferaySelenium.getClass();
-				object = liferaySelenium;
-			}
-			else {
-				try {
-					clazz = Class.forName(
-						"com.liferay.poshi.runner.util." + className);
-				}
-				catch (Exception e) {
-					throw new Exception("No such class " + className, e);
-				}
-			}
-
-			Method method = clazz.getMethod(
-				commandName,
-				parameterClasses.toArray(new Class[parameterClasses.size()]));
-
-			Object returnObject = null;
-
-			try {
-				returnObject = method.invoke(object, (Object[])parameters);
-			}
-			catch (Exception e1) {
-				Throwable throwable = e1.getCause();
-
-				if (throwable instanceof StaleElementReferenceException) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("\nElement turned stale while running ");
-					sb.append(commandName);
-					sb.append(". Retrying in ");
-					sb.append(PropsValues.TEST_RETRY_COMMAND_WAIT_TIME);
-					sb.append("seconds.");
-
-					System.out.println(sb.toString());
-
-					try {
-						returnObject = method.invoke(
-							object, (Object[])parameters);
-					}
-					catch (Exception e2) {
-						throwable = e2.getCause();
-
-						throw new Exception(throwable.getMessage(), e2);
-					}
-				}
-				else {
-					throw new Exception(throwable.getMessage(), e1);
-				}
-			}
-
-			if (returnObject == null) {
-				returnObject = "";
-			}
-
-			return returnObject.toString();
+			returnObject = getMethodReturnValue(
+				args, className, commandName, null);
 		}
 
-		return null;
+		return returnObject;
 	}
 
 	private static final Pattern _parameterPattern = Pattern.compile(
@@ -461,5 +408,7 @@ public class PoshiRunnerGetterUtil {
 			"then", "title", "toggle", "tr", "var", "while"
 		});
 	private static final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
+	private static final Pattern _variablePattern = Pattern.compile(
+		"\\$\\{([^}]*)\\}");
 
 }

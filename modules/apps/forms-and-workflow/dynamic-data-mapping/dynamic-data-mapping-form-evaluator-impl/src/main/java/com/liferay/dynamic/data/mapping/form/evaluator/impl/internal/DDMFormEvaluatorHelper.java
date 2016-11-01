@@ -92,8 +92,14 @@ public class DDMFormEvaluatorHelper {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			new DDMFormEvaluationResult();
 
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			getDDMFormFieldEvaluationResults();
+
+		setDDMFormFieldEvaluationResultsRequiredValidation(
+			ddmFormFieldEvaluationResults);
+
 		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
-			getDDMFormFieldEvaluationResults());
+			ddmFormFieldEvaluationResults);
 
 		return ddmFormEvaluationResult;
 	}
@@ -190,25 +196,6 @@ public class DDMFormEvaluatorHelper {
 
 			ddmFormFieldEvaluationResults.addAll(
 				ddmFormFieldEvaluationResultInstances);
-		}
-
-		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
-				ddmFormFieldEvaluationResults) {
-
-			String ddmFormFieldName = ddmFormFieldEvaluationResult.getName();
-			String instanceId = ddmFormFieldEvaluationResult.getInstanceId();
-
-			DDMFormField ddmFormField = _ddmFormFieldsMap.get(ddmFormFieldName);
-
-			DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
-				ddmFormFieldName, instanceId);
-
-			if (Validator.isNull(ddmFormFieldValue)) {
-				continue;
-			}
-
-			setDDMFormFieldEvaluationResultValidation(
-				ddmFormFieldEvaluationResult, ddmFormField, ddmFormFieldValue);
 		}
 
 		return ddmFormFieldEvaluationResults;
@@ -425,9 +412,13 @@ public class DDMFormEvaluatorHelper {
 		ddmFormFieldEvaluationResult.setRequired(required);
 	}
 
-	protected void setDDMFormFieldEvaluationResultValidation(
+	protected void setDDMFormFieldEvaluationResultRequiredValidation(
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue) {
+
+		if (ddmFormFieldValue == null) {
+			return;
+		}
 
 		boolean required = ddmFormFieldEvaluationResult.isRequired();
 		boolean emptyValue = isDDMFormFieldValueEmpty(
@@ -444,9 +435,29 @@ public class DDMFormEvaluatorHelper {
 				LanguageUtil.get(_locale, "this-field-is-required"));
 
 			ddmFormFieldEvaluationResult.setValid(false);
-
-			return;
 		}
+	}
+
+	protected void setDDMFormFieldEvaluationResultsRequiredValidation(
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults) {
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
+
+			String ddmFormFieldName = ddmFormFieldEvaluationResult.getName();
+
+			DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+				ddmFormFieldName, ddmFormFieldEvaluationResult.getInstanceId());
+
+			setDDMFormFieldEvaluationResultRequiredValidation(
+				ddmFormFieldEvaluationResult,
+				_ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
+		}
+	}
+
+	protected void setDDMFormFieldEvaluationResultValidation(
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue) {
 
 		DDMFormFieldValidation ddmFormFieldValidation =
 			ddmFormField.getDDMFormFieldValidation();

@@ -45,6 +45,8 @@ import java.lang.reflect.Field;
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CodingErrorAction;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -1106,9 +1108,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		fileName = StringUtil.replace(
 			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-		File file = new File(fileName);
+		String absolutePath = getAbsolutePath(fileName);
 
-		String absolutePath = getAbsolutePath(file);
+		File file = new File(absolutePath);
 
 		String content = FileUtil.read(file);
 
@@ -1652,13 +1654,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB, false);
 	}
 
-	protected String getAbsolutePath(File file) throws Exception {
-		String absolutePath = file.getCanonicalPath();
+	protected String getAbsolutePath(String fileName) {
+		Path filePath = Paths.get(fileName);
 
-		absolutePath = StringUtil.replace(
-			absolutePath, CharPool.BACK_SLASH, CharPool.SLASH);
+		filePath = filePath.toAbsolutePath();
 
-		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 	protected Set<String> getAnnotationsExclusions() {
@@ -2377,9 +2381,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			pluginBuildFileName = StringUtil.replace(
 				pluginBuildFileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			File file = new File(pluginBuildFileName);
-
-			String absolutePath = getAbsolutePath(file);
+			String absolutePath = getAbsolutePath(pluginBuildFileName);
 
 			int x = absolutePath.indexOf("/modules/apps/");
 

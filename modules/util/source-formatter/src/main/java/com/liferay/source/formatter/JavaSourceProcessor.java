@@ -4458,12 +4458,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		File baseDirFile = new File(sourceFormatterArgs.getBaseDirName());
-
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
 				_ungeneratedFiles, getSuppressionsFiles(),
-				getAbsolutePath(baseDirFile));
+				getAbsolutePath(sourceFormatterArgs.getBaseDirName()));
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

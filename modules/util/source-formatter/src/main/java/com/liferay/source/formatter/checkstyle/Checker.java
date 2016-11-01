@@ -15,10 +15,12 @@
 package com.liferay.source.formatter.checkstyle;
 
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.LocalizedMessage;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.SortedSet;
 
@@ -45,10 +47,12 @@ public class Checker extends com.puppycrawl.tools.checkstyle.Checker {
 	}
 
 	private String _normalizeFileName(String fileName) {
-		fileName = StringUtil.replace(
-			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+		Path filePath = Paths.get(fileName);
 
-		return StringUtil.replace(fileName, "/./", StringPool.SLASH);
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 }

@@ -1843,7 +1843,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 				File file = new File(fileName);
 
-				String absolutePath = getAbsolutePath(file);
+				String absolutePath = getAbsolutePath(fileName);
 
 				String content = FileUtil.read(file);
 

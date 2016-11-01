@@ -468,6 +468,14 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="saveAsDraftAndWait">
+		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="scheduleBlogEntry">
 		<var locator="TextInput#DISPLAY_DATE_DAY" name="displayDateDay" />
 		<var locator="TextInput#DISPLAY_DATE_MONTH" name="displayDateMonth" />

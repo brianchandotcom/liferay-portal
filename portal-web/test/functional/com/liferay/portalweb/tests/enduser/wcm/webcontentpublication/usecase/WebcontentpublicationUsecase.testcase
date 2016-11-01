@@ -1317,6 +1317,96 @@
 		</execute>
 	</command>
 
+	<command name="DisplayAssetsFilterByTagsOrCategoryViaAssetPublisher" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithCategoryCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="Web Content Category Content" />
+			<var name="webContentTitle" value="Web Content Category Title" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="tag name" />
+			<var name="webContentContent" value="Web Content Tag Content" />
+			<var name="webContentTitle" value="Web Content Tag Title" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAnyCategoriesFilterPG">
+			<var name="categoryName" value="Category Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Tag Content" />
+			<var name="assetTitle" value="Web Content Tag Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Category Content" />
+			<var name="assetTitle" value="Web Content Category Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAnyTagsFilterPG">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetNotPresentPG">
+			<var name="assetContent" value="Web Content Category Content" />
+			<var name="assetTitle" value="Web Content Category Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="Web Content Tag Content" />
+			<var name="assetTitle" value="Web Content Tag Title" />
+		</execute>
+	</command>
+
 	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

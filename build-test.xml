@@ -8586,6 +8586,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<antcall target="deploy-extra-apps" />
 
+		<get-testcase-property property.name="osgi.config.file.names" />
+		<get-testcase-property property.name="osgi.config.properties" />
+
+		<if>
+			<and>
+				<isset property="osgi.config.file.names" />
+				<isset property="osgi.config.properties" />
+			</and>
+			<then>
+				<ant antfile="build-test-osgi-configs.xml" target="create-config-files" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="app.server.bundles.size" />
 
 		<if>

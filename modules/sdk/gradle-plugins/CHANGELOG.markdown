@@ -542,6 +542,10 @@ to version 1.0.42.
 ## 3.0.29 - 2016-10-31
 
 ### Changed
+- [LPS-68848]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.43.
+- [LPS-68848]: Update the [Liferay Source Formatter] dependency to version
+1.0.309.
 - [LPS-69013]: Update the [Liferay Jasper JSPC] dependency to version 1.0.8.
 
 ## 3.0.30 - 2016-10-31
@@ -600,6 +604,7 @@ to version 1.0.42.
 [LPS-68779]: https://issues.liferay.com/browse/LPS-68779
 [LPS-68838]: https://issues.liferay.com/browse/LPS-68838
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839
+[LPS-68848]: https://issues.liferay.com/browse/LPS-68848
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
 [LPS-68979]: https://issues.liferay.com/browse/LPS-68979
 [LPS-68980]: https://issues.liferay.com/browse/LPS-68980

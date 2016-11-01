@@ -101,7 +101,57 @@ public class DDMFormEvaluatorHelperTest {
 	}
 
 	@Test
-	public void testRequiredValidationWithCondition() throws Exception {
+	public void testRequiredValidationWithHiddenField() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addDDMFormField(
+			createDDMFormField("field0", "text", FieldConstants.INTEGER));
+
+		DDMFormField field1DDMFormField = createDDMFormField(
+			"field1", "text", FieldConstants.STRING);
+
+		field1DDMFormField.setRequired(true);
+
+		field1DDMFormField.setVisibilityExpression("field0 > 5");
+
+		ddmForm.addDDMFormField(field1DDMFormField);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("4")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_instanceId", "field1", new UnlocalizedValue("")));
+
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
+				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				_jsonFactory, LocaleUtil.US);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluatorHelper.evaluate();
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		Assert.assertEquals(2, ddmFormFieldEvaluationResultMap.size());
+
+		DDMFormFieldEvaluationResult field1DDMFormFieldEvaluationResult =
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"field1", "field1_instanceId");
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			field1DDMFormFieldEvaluationResult.getErrorMessage());
+		Assert.assertTrue(field1DDMFormFieldEvaluationResult.isValid());
+	}
+
+	@Test
+	public void testRequiredValidationWithinRuleAction() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
 		DDMFormField ddmFormField0 = createDDMFormField(
@@ -154,56 +204,6 @@ public class DDMFormEvaluatorHelperTest {
 			"This field is required.",
 			ddmFormFieldEvaluationResult.getErrorMessage());
 		Assert.assertFalse(ddmFormFieldEvaluationResult.isValid());
-	}
-
-	@Test
-	public void testRequiredValidationWithHiddenField() throws Exception {
-		DDMForm ddmForm = new DDMForm();
-
-		ddmForm.addDDMFormField(
-			createDDMFormField("field0", "text", FieldConstants.INTEGER));
-
-		DDMFormField field1DDMFormField = createDDMFormField(
-			"field1", "text", FieldConstants.STRING);
-
-		field1DDMFormField.setRequired(true);
-
-		field1DDMFormField.setVisibilityExpression("field0 > 5");
-
-		ddmForm.addDDMFormField(field1DDMFormField);
-
-		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"field0_instanceId", "field0", new UnlocalizedValue("4")));
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				"field1_instanceId", "field1", new UnlocalizedValue("")));
-
-		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
-			new DDMFormEvaluatorHelper(
-				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
-				_jsonFactory, LocaleUtil.US);
-
-		DDMFormEvaluationResult ddmFormEvaluationResult =
-			ddmFormEvaluatorHelper.evaluate();
-
-		Map<String, DDMFormFieldEvaluationResult>
-			ddmFormFieldEvaluationResultMap =
-				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
-
-		Assert.assertEquals(2, ddmFormFieldEvaluationResultMap.size());
-
-		DDMFormFieldEvaluationResult field1DDMFormFieldEvaluationResult =
-			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
-				"field1", "field1_instanceId");
-
-		Assert.assertEquals(
-			StringPool.BLANK,
-			field1DDMFormFieldEvaluationResult.getErrorMessage());
-		Assert.assertTrue(field1DDMFormFieldEvaluationResult.isValid());
 	}
 
 	@Test

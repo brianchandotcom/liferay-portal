@@ -327,12 +327,12 @@ public class PoshiRunnerExecutor {
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
 			className);
 
-		for (int i = 0; i < locatorCount; i++) {
-			String locator = executeElement.attributeValue("locator" + (i + 1));
+		for (int i = 1; i <= locatorCount; i++) {
+			String locator = executeElement.attributeValue("locator" + i);
 
 			if (locator == null) {
 				locator = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-					"locator" + (i + 1));
+					"locator" + i);
 			}
 
 			if (locator != null) {
@@ -349,7 +349,7 @@ public class PoshiRunnerExecutor {
 								getCommandNameFromClassCommandName(locator));
 
 					PoshiRunnerVariablesUtil.putIntoExecuteMap(
-						"locator-key" + (i + 1), locatorKey);
+						"locator-key" + i, locatorKey);
 
 					try {
 						locator = PoshiRunnerContext.getPathLocator(
@@ -364,19 +364,19 @@ public class PoshiRunnerExecutor {
 				}
 
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(
-					"locator" + (i + 1), locator);
+					"locator" + i, locator);
 			}
 
-			String value = executeElement.attributeValue("value" + (i + 1));
+			String value = executeElement.attributeValue("value" + i);
 
 			if (value == null) {
 				value = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-					"value" + (i + 1));
+					"value" + i);
 			}
 
 			if (value != null) {
 				PoshiRunnerVariablesUtil.putIntoExecuteMap(
-					"value" + (i + 1), value);
+					"value" + i, value);
 			}
 		}
 

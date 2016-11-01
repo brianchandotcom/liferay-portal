@@ -61,8 +61,8 @@ import com.liferay.wsrp.internal.proxy.Stub;
 import com.liferay.wsrp.internal.servlet.ServiceHolder;
 import com.liferay.wsrp.model.WSRPConsumer;
 import com.liferay.wsrp.model.WSRPConsumerPortlet;
-import com.liferay.wsrp.service.WSRPConsumerLocalServiceUtil;
-import com.liferay.wsrp.service.WSRPConsumerPortletLocalServiceUtil;
+import com.liferay.wsrp.service.WSRPConsumerLocalService;
+import com.liferay.wsrp.service.WSRPConsumerPortletLocalService;
 import com.liferay.wsrp.util.ConsumerRequestExtensionsHelper;
 import com.liferay.wsrp.util.ExtensionHelperUtil;
 import com.liferay.wsrp.util.MarkupCharacterSetsUtil;
@@ -337,7 +337,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
 		WSRPConsumer wsrpConsumer =
-			WSRPConsumerLocalServiceUtil.getWSRPConsumer(
+			_wsrpConsumerLocalService.getWSRPConsumer(
 				wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
@@ -387,7 +387,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
 		WSRPConsumer wsrpConsumer =
-			WSRPConsumerLocalServiceUtil.getWSRPConsumer(
+			_wsrpConsumerLocalService.getWSRPConsumer(
 				wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
@@ -555,7 +555,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
 		WSRPConsumer wsrpConsumer =
-			WSRPConsumerLocalServiceUtil.getWSRPConsumer(
+			_wsrpConsumerLocalService.getWSRPConsumer(
 				wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
@@ -770,7 +770,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
 		WSRPConsumer wsrpConsumer =
-			WSRPConsumerLocalServiceUtil.getWSRPConsumer(
+			_wsrpConsumerLocalService.getWSRPConsumer(
 				wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
@@ -1002,7 +1002,7 @@ public class ConsumerPortlet extends MVCPortlet {
 			wsrpConsumerPortletUuid);
 
 		WSRPConsumerPortlet wsrpConsumerPortlet =
-			WSRPConsumerPortletLocalServiceUtil.getWSRPConsumerPortlet(
+			_wsrpConsumerPortletLocalService.getWSRPConsumerPortlet(
 				wsrpConsumerPortletUuid);
 
 		return wsrpConsumerPortlet;
@@ -1820,7 +1820,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
 		WSRPConsumer wsrpConsumer =
-			WSRPConsumerLocalServiceUtil.getWSRPConsumer(
+			_wsrpConsumerLocalService.getWSRPConsumer(
 				wsrpConsumerPortlet.getWsrpConsumerId());
 
 		Http.Options options = new Http.Options();
@@ -2155,6 +2155,11 @@ public class ConsumerPortlet extends MVCPortlet {
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");
 	private static WebsiteLocalService _websiteLocalService;
+	@Reference
+	private static WSRPConsumerLocalService _wsrpConsumerLocalService;
+	@Reference
+	private static WSRPConsumerPortletLocalService
+		_wsrpConsumerPortletLocalService;
 
 	static {
 		StringBundler sb = new StringBundler(6);

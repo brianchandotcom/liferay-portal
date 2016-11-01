@@ -191,15 +191,19 @@ AUI.add(
 
 						event.preventDefault();
 
-						var currentPage = instance.getCurrentPage();
-						var pagesTotal = instance.getPagesTotal();
+						instance.removeFromEvaluatorCache();
 
-						if (pagesTotal > 1 && currentPage < pagesTotal) {
-							instance.nextPage();
-						}
-						else {
-							instance.submit();
-						}
+						instance.evaluate(function() {
+							var currentPage = instance.getCurrentPage();
+							var pagesTotal = instance.getPagesTotal();
+
+							if (pagesTotal > 1 && currentPage < pagesTotal) {
+								instance.nextPage();
+							}
+							else {
+								instance.submit();
+							}
+						});
 					},
 
 					_valueContainer: function() {

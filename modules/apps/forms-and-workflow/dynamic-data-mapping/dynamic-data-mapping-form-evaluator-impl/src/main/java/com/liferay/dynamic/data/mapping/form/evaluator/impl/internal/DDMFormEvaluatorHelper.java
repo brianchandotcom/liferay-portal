@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -91,8 +92,14 @@ public class DDMFormEvaluatorHelper {
 		DDMFormEvaluationResult ddmFormEvaluationResult =
 			new DDMFormEvaluationResult();
 
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults =
+			getDDMFormFieldEvaluationResults();
+
+		setDDMFormFieldEvaluationResultsRequiredValidation(
+			ddmFormFieldEvaluationResults);
+
 		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
-			getDDMFormFieldEvaluationResults());
+			ddmFormFieldEvaluationResults);
 
 		return ddmFormEvaluationResult;
 	}
@@ -192,6 +199,25 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		return ddmFormFieldEvaluationResults;
+	}
+
+	protected DDMFormFieldValue getDDMFormFieldValue(
+		String ddmFormFieldName, String instanceId) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = _ddmFormFieldValuesMap.get(
+			ddmFormFieldName);
+
+		if (ListUtil.isEmpty(ddmFormFieldValues)) {
+			return null;
+		}
+
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+			if (instanceId.equals(ddmFormFieldValue.getInstanceId())) {
+				return ddmFormFieldValue;
+			}
+		}
+
+		return null;
 	}
 
 	protected boolean getDefaultBooleanPropertyState(
@@ -386,9 +412,13 @@ public class DDMFormEvaluatorHelper {
 		ddmFormFieldEvaluationResult.setRequired(required);
 	}
 
-	protected void setDDMFormFieldEvaluationResultValidation(
+	protected void setDDMFormFieldEvaluationResultRequiredValidation(
 		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
 		DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue) {
+
+		if (ddmFormFieldValue == null) {
+			return;
+		}
 
 		boolean required = ddmFormFieldEvaluationResult.isRequired();
 		boolean emptyValue = isDDMFormFieldValueEmpty(
@@ -405,9 +435,29 @@ public class DDMFormEvaluatorHelper {
 				LanguageUtil.get(_locale, "this-field-is-required"));
 
 			ddmFormFieldEvaluationResult.setValid(false);
-
-			return;
 		}
+	}
+
+	protected void setDDMFormFieldEvaluationResultsRequiredValidation(
+		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults) {
+
+		for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult :
+				ddmFormFieldEvaluationResults) {
+
+			String ddmFormFieldName = ddmFormFieldEvaluationResult.getName();
+
+			DDMFormFieldValue ddmFormFieldValue = getDDMFormFieldValue(
+				ddmFormFieldName, ddmFormFieldEvaluationResult.getInstanceId());
+
+			setDDMFormFieldEvaluationResultRequiredValidation(
+				ddmFormFieldEvaluationResult,
+				_ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
+		}
+	}
+
+	protected void setDDMFormFieldEvaluationResultValidation(
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		DDMFormField ddmFormField, DDMFormFieldValue ddmFormFieldValue) {
 
 		DDMFormFieldValidation ddmFormFieldValidation =
 			ddmFormField.getDDMFormFieldValidation();

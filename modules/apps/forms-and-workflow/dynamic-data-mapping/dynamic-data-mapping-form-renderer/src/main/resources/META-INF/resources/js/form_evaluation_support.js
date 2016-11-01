@@ -52,6 +52,18 @@ AUI.add(
 				evaluator.evaluate(instance, callback);
 			},
 
+			removeFromEvaluatorCache: function() {
+				var instance = this;
+
+				var payload = instance.getEvaluationPayload();
+
+				var cacheKey = JSON.stringify(payload);
+
+				var evaluator = instance.get('evaluator');
+
+				evaluator._cache.remove(cacheKey);
+			},
+
 			processEvaluationResultEvent: function(event) {
 				var instance = this;
 

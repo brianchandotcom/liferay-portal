@@ -267,8 +267,8 @@ AUI.add(
 					_showLoading: function() {
 						var instance = this;
 
-						var contentBox = instance.get('contentBox');
 						var boundingBox = instance.get('boundingBox');
+						var contentBox = instance.get('contentBox');
 
 						if (!contentBox.one('.loading-icon')) {
 							contentBox.append(TPL_LOADING);

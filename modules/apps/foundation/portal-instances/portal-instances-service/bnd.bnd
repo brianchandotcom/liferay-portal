@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal Instances Service
+Bundle-SymbolicName: com.liferay.portal.instances.service
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Liferay-Service: true

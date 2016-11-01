@@ -4461,7 +4461,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Set<SourceFormatterMessage> sourceFormatterMessages =
 			CheckStyleUtil.process(
 				_ungeneratedFiles, getSuppressionsFiles(),
-				getAbsolutePath(sourceFormatterArgs.getBaseDirName()));
+				sourceFormatterArgs.getBaseDirName());
 
 		for (SourceFormatterMessage sourceFormatterMessage :
 				sourceFormatterMessages) {

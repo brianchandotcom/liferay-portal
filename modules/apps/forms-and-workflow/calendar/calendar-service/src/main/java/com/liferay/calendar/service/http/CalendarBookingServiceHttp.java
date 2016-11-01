@@ -304,13 +304,44 @@ public class CalendarBookingServiceHttp {
 	}
 
 	public static void deleteCalendarBookingInstance(
+		HttpPrincipal httpPrincipal, long calendarBookingId, int instanceIndex,
+		boolean allFollowing, boolean deleteRecurringCalendarBookings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
+					"deleteCalendarBookingInstance",
+					_deleteCalendarBookingInstanceParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					calendarBookingId, instanceIndex, allFollowing,
+					deleteRecurringCalendarBookings);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void deleteCalendarBookingInstance(
 		HttpPrincipal httpPrincipal, long calendarBookingId, long startTime,
 		boolean allFollowing)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"deleteCalendarBookingInstance",
-					_deleteCalendarBookingInstanceParameterTypes6);
+					_deleteCalendarBookingInstanceParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, startTime, allFollowing);
@@ -339,7 +370,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"exportCalendarBooking",
-					_exportCalendarBookingParameterTypes7);
+					_exportCalendarBookingParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, type);
@@ -371,7 +402,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"fetchCalendarBooking", _fetchCalendarBookingParameterTypes8);
+					"fetchCalendarBooking", _fetchCalendarBookingParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId);
@@ -403,7 +434,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"getCalendarBooking", _getCalendarBookingParameterTypes9);
+					"getCalendarBooking", _getCalendarBookingParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId);
@@ -436,7 +467,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"getCalendarBooking", _getCalendarBookingParameterTypes10);
+					"getCalendarBooking", _getCalendarBookingParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarId, parentCalendarBookingId);
@@ -469,7 +500,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"getCalendarBookingInstance",
-					_getCalendarBookingInstanceParameterTypes11);
+					_getCalendarBookingInstanceParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, instanceIndex);
@@ -501,7 +532,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"getCalendarBookings", _getCalendarBookingsParameterTypes12);
+					"getCalendarBookings", _getCalendarBookingsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarId, statuses);
@@ -534,7 +565,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"getCalendarBookings", _getCalendarBookingsParameterTypes13);
+					"getCalendarBookings", _getCalendarBookingsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarId, startTime, endTime);
@@ -567,7 +598,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"getCalendarBookings", _getCalendarBookingsParameterTypes14);
+					"getCalendarBookings", _getCalendarBookingsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarId, startTime, endTime, max);
@@ -603,7 +634,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"getCalendarBookingsRSS",
-					_getCalendarBookingsRSSParameterTypes15);
+					_getCalendarBookingsRSSParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarId, startTime, endTime, max, type, version,
@@ -637,7 +668,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"getChildCalendarBookings",
-					_getChildCalendarBookingsParameterTypes16);
+					_getChildCalendarBookingsParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					parentCalendarBookingId);
@@ -670,7 +701,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"getChildCalendarBookings",
-					_getChildCalendarBookingsParameterTypes17);
+					_getChildCalendarBookingsParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					parentCalendarBookingId, status);
@@ -704,7 +735,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"getNewStartTimeAndDurationCalendarBooking",
-					_getNewStartTimeAndDurationCalendarBookingParameterTypes18);
+					_getNewStartTimeAndDurationCalendarBookingParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, offset, duration);
@@ -736,7 +767,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"hasChildCalendarBookings",
-					_hasChildCalendarBookingsParameterTypes19);
+					_hasChildCalendarBookingsParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					parentCalendarBookingId);
@@ -766,7 +797,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"invokeTransition", _invokeTransitionParameterTypes20);
+					"invokeTransition", _invokeTransitionParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, instanceIndex, status, updateInstance,
@@ -800,7 +831,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"invokeTransition", _invokeTransitionParameterTypes21);
+					"invokeTransition", _invokeTransitionParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, status, serviceContext);
@@ -830,7 +861,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"invokeTransition", _invokeTransitionParameterTypes22);
+					"invokeTransition", _invokeTransitionParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, startTime, status, updateInstance,
@@ -864,7 +895,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"moveCalendarBookingToTrash",
-					_moveCalendarBookingToTrashParameterTypes23);
+					_moveCalendarBookingToTrashParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId);
@@ -897,7 +928,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"restoreCalendarBookingFromTrash",
-					_restoreCalendarBookingFromTrashParameterTypes24);
+					_restoreCalendarBookingFromTrashParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId);
@@ -934,7 +965,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"search", _searchParameterTypes25);
+					"search", _searchParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, calendarIds, calendarResourceIds,
@@ -974,7 +1005,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"search", _searchParameterTypes26);
+					"search", _searchParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, calendarIds, calendarResourceIds,
@@ -1011,7 +1042,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"searchCount", _searchCountParameterTypes27);
+					"searchCount", _searchCountParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, calendarIds, calendarResourceIds,
@@ -1049,7 +1080,7 @@ public class CalendarBookingServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
-					"searchCount", _searchCountParameterTypes28);
+					"searchCount", _searchCountParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					companyId, groupIds, calendarIds, calendarResourceIds,
@@ -1092,7 +1123,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateCalendarBooking",
-					_updateCalendarBookingParameterTypes29);
+					_updateCalendarBookingParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, calendarId, childCalendarIds, titleMap,
@@ -1135,7 +1166,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateCalendarBooking",
-					_updateCalendarBookingParameterTypes30);
+					_updateCalendarBookingParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, calendarId, titleMap, descriptionMap,
@@ -1179,7 +1210,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateCalendarBookingInstance",
-					_updateCalendarBookingInstanceParameterTypes31);
+					_updateCalendarBookingInstanceParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, instanceIndex, calendarId,
@@ -1227,7 +1258,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateCalendarBookingInstance",
-					_updateCalendarBookingInstanceParameterTypes32);
+					_updateCalendarBookingInstanceParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, instanceIndex, calendarId, titleMap,
@@ -1274,7 +1305,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateCalendarBookingInstance",
-					_updateCalendarBookingInstanceParameterTypes33);
+					_updateCalendarBookingInstanceParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, instanceIndex, calendarId, titleMap,
@@ -1318,7 +1349,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateOffsetAndDuration",
-					_updateOffsetAndDurationParameterTypes34);
+					_updateOffsetAndDurationParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, calendarId, childCalendarIds, titleMap,
@@ -1361,7 +1392,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateOffsetAndDuration",
-					_updateOffsetAndDurationParameterTypes35);
+					_updateOffsetAndDurationParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, calendarId, titleMap, descriptionMap,
@@ -1405,7 +1436,7 @@ public class CalendarBookingServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CalendarBookingServiceUtil.class,
 					"updateRecurringCalendarBooking",
-					_updateRecurringCalendarBookingParameterTypes36);
+					_updateRecurringCalendarBookingParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					calendarBookingId, calendarId, childCalendarIds, titleMap,
@@ -1475,103 +1506,105 @@ public class CalendarBookingServiceHttp {
 	private static final Class<?>[] _deleteCalendarBookingInstanceParameterTypes5 =
 		new Class[] { long.class, int.class, boolean.class };
 	private static final Class<?>[] _deleteCalendarBookingInstanceParameterTypes6 =
+		new Class[] { long.class, int.class, boolean.class, boolean.class };
+	private static final Class<?>[] _deleteCalendarBookingInstanceParameterTypes7 =
 		new Class[] { long.class, long.class, boolean.class };
-	private static final Class<?>[] _exportCalendarBookingParameterTypes7 = new Class[] {
+	private static final Class<?>[] _exportCalendarBookingParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _fetchCalendarBookingParameterTypes8 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getCalendarBookingParameterTypes9 = new Class[] {
+	private static final Class<?>[] _fetchCalendarBookingParameterTypes9 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getCalendarBookingParameterTypes10 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCalendarBookingParameterTypes11 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getCalendarBookingInstanceParameterTypes11 = new Class[] {
+	private static final Class<?>[] _getCalendarBookingInstanceParameterTypes12 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getCalendarBookingsParameterTypes12 = new Class[] {
+	private static final Class<?>[] _getCalendarBookingsParameterTypes13 = new Class[] {
 			long.class, int[].class
 		};
-	private static final Class<?>[] _getCalendarBookingsParameterTypes13 = new Class[] {
+	private static final Class<?>[] _getCalendarBookingsParameterTypes14 = new Class[] {
 			long.class, long.class, long.class
 		};
-	private static final Class<?>[] _getCalendarBookingsParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getCalendarBookingsParameterTypes15 = new Class[] {
 			long.class, long.class, long.class, int.class
 		};
-	private static final Class<?>[] _getCalendarBookingsRSSParameterTypes15 = new Class[] {
+	private static final Class<?>[] _getCalendarBookingsRSSParameterTypes16 = new Class[] {
 			long.class, long.class, long.class, int.class,
 			java.lang.String.class, double.class, java.lang.String.class,
 			com.liferay.portal.kernel.theme.ThemeDisplay.class
 		};
-	private static final Class<?>[] _getChildCalendarBookingsParameterTypes16 = new Class[] {
+	private static final Class<?>[] _getChildCalendarBookingsParameterTypes17 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getChildCalendarBookingsParameterTypes17 = new Class[] {
+	private static final Class<?>[] _getChildCalendarBookingsParameterTypes18 = new Class[] {
 			long.class, int.class
 		};
-	private static final Class<?>[] _getNewStartTimeAndDurationCalendarBookingParameterTypes18 =
+	private static final Class<?>[] _getNewStartTimeAndDurationCalendarBookingParameterTypes19 =
 		new Class[] { long.class, long.class, long.class };
-	private static final Class<?>[] _hasChildCalendarBookingsParameterTypes19 = new Class[] {
+	private static final Class<?>[] _hasChildCalendarBookingsParameterTypes20 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _invokeTransitionParameterTypes20 = new Class[] {
+	private static final Class<?>[] _invokeTransitionParameterTypes21 = new Class[] {
 			long.class, int.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _invokeTransitionParameterTypes21 = new Class[] {
+	private static final Class<?>[] _invokeTransitionParameterTypes22 = new Class[] {
 			long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _invokeTransitionParameterTypes22 = new Class[] {
+	private static final Class<?>[] _invokeTransitionParameterTypes23 = new Class[] {
 			long.class, long.class, int.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _moveCalendarBookingToTrashParameterTypes23 = new Class[] {
+	private static final Class<?>[] _moveCalendarBookingToTrashParameterTypes24 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _restoreCalendarBookingFromTrashParameterTypes24 =
+	private static final Class<?>[] _restoreCalendarBookingFromTrashParameterTypes25 =
 		new Class[] { long.class };
-	private static final Class<?>[] _searchParameterTypes25 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes26 = new Class[] {
 			long.class, long[].class, long[].class, long[].class, long.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			int[].class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchParameterTypes26 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes27 = new Class[] {
 			long.class, long[].class, long[].class, long[].class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			int[].class, boolean.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes27 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes28 = new Class[] {
 			long.class, long[].class, long[].class, long[].class, long.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			int[].class
 		};
-	private static final Class<?>[] _searchCountParameterTypes28 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes29 = new Class[] {
 			long.class, long[].class, long[].class, long[].class, long.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			int[].class, boolean.class
 		};
-	private static final Class<?>[] _updateCalendarBookingParameterTypes29 = new Class[] {
+	private static final Class<?>[] _updateCalendarBookingParameterTypes30 = new Class[] {
 			long.class, long.class, long[].class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, long.class, long.class,
 			boolean.class, java.lang.String.class, long.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCalendarBookingParameterTypes30 = new Class[] {
+	private static final Class<?>[] _updateCalendarBookingParameterTypes31 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCalendarBookingInstanceParameterTypes31 =
+	private static final Class<?>[] _updateCalendarBookingInstanceParameterTypes32 =
 		new Class[] {
 			long.class, int.class, long.class, long[].class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, long.class, long.class,
@@ -1579,7 +1612,7 @@ public class CalendarBookingServiceHttp {
 			java.lang.String.class, long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCalendarBookingInstanceParameterTypes32 =
+	private static final Class<?>[] _updateCalendarBookingInstanceParameterTypes33 =
 		new Class[] {
 			long.class, int.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, int.class, int.class,
@@ -1589,7 +1622,7 @@ public class CalendarBookingServiceHttp {
 			java.lang.String.class, long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCalendarBookingInstanceParameterTypes33 =
+	private static final Class<?>[] _updateCalendarBookingInstanceParameterTypes34 =
 		new Class[] {
 			long.class, int.class, long.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, long.class, long.class,
@@ -1597,21 +1630,21 @@ public class CalendarBookingServiceHttp {
 			java.lang.String.class, long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateOffsetAndDurationParameterTypes34 = new Class[] {
+	private static final Class<?>[] _updateOffsetAndDurationParameterTypes35 = new Class[] {
 			long.class, long.class, long[].class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, long.class, long.class,
 			boolean.class, java.lang.String.class, long.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateOffsetAndDurationParameterTypes35 = new Class[] {
+	private static final Class<?>[] _updateOffsetAndDurationParameterTypes36 = new Class[] {
 			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, long.class, long.class, boolean.class,
 			java.lang.String.class, long.class, java.lang.String.class,
 			long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateRecurringCalendarBookingParameterTypes36 =
+	private static final Class<?>[] _updateRecurringCalendarBookingParameterTypes37 =
 		new Class[] {
 			long.class, long.class, long[].class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, long.class, long.class,

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>OpenAM</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">OpenAM</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>LOG_IN</td>
+	<td>//input[@value='Log in']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD</td>
+	<td>//input[@type='password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//input[@type='text']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

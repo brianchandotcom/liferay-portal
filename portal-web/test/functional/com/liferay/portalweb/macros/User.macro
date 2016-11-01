@@ -1900,6 +1900,21 @@
 		<execute function="AssertElementPresent" locator1="UserBar#USER_AVATAR_IMAGE" />
 	</command>
 
+	<command name="loginUserWithOpenSSOEnabledPG">
+		<description message="Log into OpenSSO as ${userScreenName} using the password ${password}." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="Type" locator1="OpenAM#USER_NAME" value1="${userScreenName}" />
+		<execute function="Type" locator1="OpenAM#PASSWORD" value1="${password}" />
+
+		<execute function="Click" locator1="OpenAM#LOG_IN" />
+
+		<execute function="AssertElementPresent" locator1="Dockbar#USER_AVATAR_IMAGE" />
+	</command>
+
 	<command name="logoutAndLoginPG">
 		<execute macro="Navigator#openURL" />
 

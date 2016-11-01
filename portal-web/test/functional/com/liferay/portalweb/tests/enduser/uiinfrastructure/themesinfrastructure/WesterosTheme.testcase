@@ -21,7 +21,7 @@
 
 	<command name="AddThemeSite" priority="1">
 		<property name="test.name.skip.portal.instance" value="WesterosTheme#AddThemeSite" />
-		<property name="themes.delayed.deployment" value="true" />
+		<property name="themes.delayed.deployment" value="westeros-bank-theme.war" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

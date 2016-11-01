@@ -1225,7 +1225,7 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="PortletEntry#publish" />
+		<execute macro="PortletEntry#publishAndWait" />
 
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />

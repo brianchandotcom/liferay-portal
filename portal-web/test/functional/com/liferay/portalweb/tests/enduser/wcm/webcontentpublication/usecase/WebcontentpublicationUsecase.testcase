@@ -1322,7 +1322,7 @@
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="tag name" />
+			<var name="tagName" value="tagName" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1388,7 +1388,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
-			<var name="tagName" value="tag name" />
+			<var name="tagName" value="tagName" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

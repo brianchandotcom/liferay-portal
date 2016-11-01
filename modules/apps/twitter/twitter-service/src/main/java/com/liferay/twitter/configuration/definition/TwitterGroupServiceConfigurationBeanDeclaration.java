@@ -12,14 +12,23 @@
  * details.
  */
 
-package com.liferay.twitter.util;
+package com.liferay.twitter.configuration.definition;
+
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.twitter.configuration.TwitterGroupServiceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Peter Fellwock
  */
-public class PortletPropsKeys {
+@Component
+public class TwitterGroupServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	public static final String TWITTER_USERS_TIMELINE_PROCESSOR =
-		"twitter.users.timeline.processor";
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return TwitterGroupServiceConfiguration.class;
+	}
 
 }

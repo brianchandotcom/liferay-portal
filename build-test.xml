@@ -8597,12 +8597,12 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<get-testcase-property property.name="themes.delayed.deployment" />
 
 				<if>
-					<equals arg1="${themes.delayed.deployment}" arg2="true" />
+					<isset property="themes.delayed.deployment" />
 					<then>
 						<mkdir dir="${liferay.home}/tmp" />
 
 						<move todir="${liferay.home}/tmp">
-							<fileset dir="${liferay.home}/deploy" includes="*-theme.war" />
+							<fileset dir="${liferay.home}/deploy" includes="${themes.delayed.deployment}" />
 						</move>
 					</then>
 				</if>
@@ -8648,10 +8648,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</if>
 
 				<if>
-					<equals arg1="${themes.delayed.deployment}" arg2="true" />
+					<isset property="themes.delayed.deployment" />
 					<then>
 						<move todir="${liferay.home}/deploy">
-							<fileset dir="${liferay.home}/tmp" includes="*-theme.war" />
+							<fileset dir="${liferay.home}/tmp" includes="${themes.delayed.deployment}" />
 						</move>
 
 						<delete dir="${liferay.home}/tmp" failonerror="false" />

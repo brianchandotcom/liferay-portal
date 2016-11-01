@@ -157,9 +157,9 @@
 
 		<execute function="SelectFrameTop" />
 
-		<var name="key_categoryName" value="${categoryName}" />
-
-		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_CATEGORY_CHECKBOX" />
+		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_CATEGORY_CHECKBOX">
+			<var name="key_categoryName" value="${categoryName}" />
+		</execute>
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 
@@ -505,9 +505,9 @@
 
 		<execute function="SelectFrameTop" />
 
-		<var name="key_tagName" value="${tagName}" />
-
-		<execute function="Check" locator1="APConfiguration#FILTER_TAGS_CHECKBOX" />
+		<execute function="Check" locator1="APConfiguration#FILTER_TAGS_CHECKBOX">
+			<var name="key_tagName" value="${tagName}" />
+		</execute>
 
 		<execute function="Click" locator1="Icon#CLOSE" />
 

@@ -119,18 +119,9 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 					plid = 0;
 
 					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler(8);
-
-						sb.append("Copying portlet ");
-						sb.append(portletId);
-						sb.append(" settings from layout ");
-						sb.append(plid);
-						sb.append(" to service ");
-						sb.append(serviceName);
-						sb.append(" in group ");
-						sb.append(groupId);
-
-						_log.info(sb.toString());
+						_log.info(
+							_buildCopyLog(
+								portletId, plid, serviceName, ownerId));
 					}
 				}
 
@@ -356,18 +347,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 								plid = 0;
 
 								if (_log.isInfoEnabled()) {
-									sb = new StringBundler(8);
-
-									sb.append("Copying portlet ");
-									sb.append(portletId);
-									sb.append(" settings from layout ");
-									sb.append(plid);
-									sb.append(" to service ");
-									sb.append(serviceName);
-									sb.append(" in group ");
-									sb.append(ownerId);
-
-									_log.info(sb.toString());
+									_log.info(
+										_buildCopyLog(
+											portletId, plid, serviceName,
+											ownerId));
 								}
 							}
 
@@ -410,6 +393,23 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				}
 			}
 		}
+	}
+
+	private String _buildCopyLog(
+		String portletId, long plid, String serviceName, long ownerId) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("Copying portlet ");
+		sb.append(portletId);
+		sb.append(" settings from layout ");
+		sb.append(plid);
+		sb.append(" to service ");
+		sb.append(serviceName);
+		sb.append(" in group ");
+		sb.append(ownerId);
+
+		return sb.toString();
 	}
 
 	private String _resetPreferences(String preferences, Set<String> keys)

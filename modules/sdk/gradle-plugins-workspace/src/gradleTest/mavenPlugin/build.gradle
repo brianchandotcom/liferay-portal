@@ -1,0 +1,7 @@
+apply plugin: "maven"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn build
+}

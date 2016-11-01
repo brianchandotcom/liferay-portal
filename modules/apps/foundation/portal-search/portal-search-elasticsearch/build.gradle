@@ -8,7 +8,7 @@ dependencies {
 	provided group: "com.google.guava", name: "guava", version: "18.0"
 	provided group: "com.ibm.icu", name: "icu4j", version: "54.1.1"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
-	provided group: "com.liferay", name: "org.elasticsearch", version: "2.2.0.LIFERAY-PATCHED-1"
+	provided group: "com.liferay", name: "org.elasticsearch", version: "2.2.0.LIFERAY-PATCHED-2"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
 	provided group: "com.ning", name: "compress-lzf", version: "1.0.2"
 	provided group: "com.spatial4j", name: "spatial4j", version: "0.5"

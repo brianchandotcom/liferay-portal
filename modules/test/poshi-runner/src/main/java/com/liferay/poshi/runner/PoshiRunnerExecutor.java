@@ -696,30 +696,26 @@ public class PoshiRunnerExecutor {
 
 		XMLLoggerHandler.updateStatus(executeElement, "pending");
 
-		List<String> parameterList = new ArrayList<>();
 		List<Element> argElements = executeElement.elements("arg");
 
-		for (Element argElement : argElements) {
-			String parameter = argElement.attributeValue("value");
+		List<String> args = new ArrayList<>();
 
-			parameter = PoshiRunnerVariablesUtil.replaceCommandVars(parameter);
+		for (int i = 0; i < argElements.size(); i++) {
+			Element argElement = argElements.get(i);
 
-			parameterList.add(parameter);
+			args.add(argElement.attributeValue("value"));
 		}
-
-		Element returnElement = executeElement.element("return");
-
-		String returnVariable = returnElement.attributeValue("name");
 
 		String className = executeElement.attributeValue("class");
 		String methodName = executeElement.attributeValue("method");
 
-		String[] parameters = parameterList.toArray(
-			new String[parameterList.size()]);
-
 		try {
-			String returnValue = ExternalMethod.execute(
-				className, methodName, parameters);
+			Object returnValue = PoshiRunnerGetterUtil.getMethodReturnValue(
+				args, className, methodName, null);
+
+			Element returnElement = executeElement.element("return");
+
+			String returnVariable = returnElement.attributeValue("name");
 
 			if (returnVariable != null) {
 				PoshiRunnerVariablesUtil.putIntoCommandMap(
@@ -727,7 +723,7 @@ public class PoshiRunnerExecutor {
 			}
 
 			CommandLoggerHandler.logExternalMethodCommand(
-				executeElement, parameterList, returnValue);
+				executeElement, args, returnValue);
 		}
 		catch (Throwable t) {
 			XMLLoggerHandler.updateStatus(executeElement, "fail");
@@ -1062,9 +1058,7 @@ public class PoshiRunnerExecutor {
 				}
 			}
 			else if (element.attributeValue("method") != null) {
-				String classCommandName =
-					PoshiRunnerVariablesUtil.replaceCommandVars(
-						element.attributeValue("method"));
+				String classCommandName = element.attributeValue("method");
 
 				if (classCommandName.startsWith("TestPropsUtil")) {
 					classCommandName = classCommandName.replace(

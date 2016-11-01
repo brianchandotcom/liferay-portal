@@ -1032,7 +1032,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#configureAnyCategoriesFilterPG">
+		<execute macro="AssetPublisherPortlet#configureCategoriesFilterPG">
 			<var name="categoryName" value="Category Name" />
 		</execute>
 

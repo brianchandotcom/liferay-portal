@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -28,12 +28,18 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
+import com.liferay.social.kernel.model.SocialActivityInterpreter;
 import com.liferay.twitter.model.Feed;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Zsolt Berentey
+ * @author Peter Fellwock
  */
+@Component(immediate = true, service = SocialActivityInterpreter.class)
 public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
@@ -50,8 +56,7 @@ public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 
 		sb.append("http://twitter.com/");
 
-		User creatorUser = UserLocalServiceUtil.getUserById(
-			activity.getUserId());
+		User creatorUser = _userLocalService.getUserById(activity.getUserId());
 
 		Contact creatorContact = creatorUser.getContact();
 
@@ -104,6 +109,11 @@ public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final String[] _CLASS_NAMES = {Feed.class.getName()};
 
 	private final ResourceBundleLoader _resourceBundleLoader =
@@ -111,5 +121,6 @@ public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 			new ClassResourceBundleLoader(
 				"content.Language", TwitterActivityInterpreter.class),
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	private UserLocalService _userLocalService;
 
 }

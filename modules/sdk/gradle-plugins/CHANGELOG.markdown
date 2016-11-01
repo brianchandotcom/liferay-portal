@@ -567,6 +567,12 @@ to version 1.0.44.
 - [LPS-69026]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.2.1.
 
+## 3.0.33 - 2016-11-01
+
+### Changed
+- [LPS-68298]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -607,6 +613,7 @@ version 2.2.1.
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
 [LPS-68165]: https://issues.liferay.com/browse/LPS-68165
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
+[LPS-68298]: https://issues.liferay.com/browse/LPS-68298
 [LPS-68334]: https://issues.liferay.com/browse/LPS-68334
 [LPS-68415]: https://issues.liferay.com/browse/LPS-68415
 [LPS-68485]: https://issues.liferay.com/browse/LPS-68485

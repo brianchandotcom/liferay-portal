@@ -336,9 +336,8 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
-		WSRPConsumer wsrpConsumer =
-			_wsrpConsumerLocalService.getWSRPConsumer(
-				wsrpConsumerPortlet.getWsrpConsumerId());
+		WSRPConsumer wsrpConsumer = _wsrpConsumerLocalService.getWSRPConsumer(
+			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
 			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
@@ -386,9 +385,8 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
-		WSRPConsumer wsrpConsumer =
-			_wsrpConsumerLocalService.getWSRPConsumer(
-				wsrpConsumerPortlet.getWsrpConsumerId());
+		WSRPConsumer wsrpConsumer = _wsrpConsumerLocalService.getWSRPConsumer(
+			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
 			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
@@ -554,9 +552,8 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
-		WSRPConsumer wsrpConsumer =
-			_wsrpConsumerLocalService.getWSRPConsumer(
-				wsrpConsumerPortlet.getWsrpConsumerId());
+		WSRPConsumer wsrpConsumer = _wsrpConsumerLocalService.getWSRPConsumer(
+			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
 			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
@@ -769,9 +766,8 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
-		WSRPConsumer wsrpConsumer =
-			_wsrpConsumerLocalService.getWSRPConsumer(
-				wsrpConsumerPortlet.getWsrpConsumerId());
+		WSRPConsumer wsrpConsumer = _wsrpConsumerLocalService.getWSRPConsumer(
+			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		WSRPConsumerManager wsrpConsumerManager =
 			WSRPConsumerManagerFactory.getWSRPConsumerManager(wsrpConsumer);
@@ -1819,9 +1815,8 @@ public class ConsumerPortlet extends MVCPortlet {
 
 		WSRPConsumerPortlet wsrpConsumerPortlet = getWSRPConsumerPortlet();
 
-		WSRPConsumer wsrpConsumer =
-			_wsrpConsumerLocalService.getWSRPConsumer(
-				wsrpConsumerPortlet.getWsrpConsumerId());
+		WSRPConsumer wsrpConsumer = _wsrpConsumerLocalService.getWSRPConsumer(
+			wsrpConsumerPortlet.getWsrpConsumerId());
 
 		Http.Options options = new Http.Options();
 
@@ -2155,8 +2150,10 @@ public class ConsumerPortlet extends MVCPortlet {
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");
 	private static WebsiteLocalService _websiteLocalService;
+
 	@Reference
 	private static WSRPConsumerLocalService _wsrpConsumerLocalService;
+
 	@Reference
 	private static WSRPConsumerPortletLocalService
 		_wsrpConsumerPortletLocalService;

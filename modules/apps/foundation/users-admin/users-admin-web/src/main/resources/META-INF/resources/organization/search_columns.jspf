@@ -29,17 +29,17 @@
 			</h5>
 
 			<h6 class="text-default">
-				<span><%= HtmlUtil.escape(organization.getParentOrganizationName()) %></span>
+				<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>
 			</h6>
 
 			<h6 class="text-default">
-				<span><%= LanguageUtil.get(request, organization.getType()) %></span>
+				<%= LanguageUtil.get(request, organization.getType()) %>
 			</h6>
 
 			<h6 class="text-default">
-				<span><%= HtmlUtil.escape(organization.getAddress().getCity()) %></span>
-				<span><%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %></span>
-				<span><%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %></span>
+				<%= HtmlUtil.escape(organization.getAddress().getCity()) %>
+				<%= UsersAdmin.ORGANIZATION_REGION_NAME_ACCESSOR.get(organization) %>
+				<%= UsersAdmin.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>
 			</h6>
 		</liferay-ui:search-container-column-text>
 
@@ -70,13 +70,12 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text
-			cssClass="table-cell-content"
+			cssClass="important table-cell-content"
 			href="<%= rowURL %>"
 			name="name"
 			orderable="<%= true %>"
-		>
-			<aui:a href="<%= String.valueOf(rowURL) %>"><strong><%= organization.getName() %></strong></aui:a>
-		</liferay-ui:search-container-column-text>
+			value="<%= organization.getName() %>"
+		/>
 
 		<c:if test="<%= Validator.isNotNull(keywords) %>">
 			<liferay-ui:search-container-column-text

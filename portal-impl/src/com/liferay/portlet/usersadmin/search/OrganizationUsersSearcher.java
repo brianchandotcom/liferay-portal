@@ -35,7 +35,8 @@ public class OrganizationUsersSearcher extends BaseSearcher {
 
 	public OrganizationUsersSearcher() {
 		setDefaultSelectedFieldNames(
-			Field.COMPANY_ID, Field.ORGANIZATION_ID, Field.UID, Field.USER_ID);
+			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
+			Field.ORGANIZATION_ID, Field.UID, Field.USER_ID);
 		setPermissionAware(true);
 		setStagingAware(false);
 	}

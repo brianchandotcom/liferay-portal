@@ -10,7 +10,8 @@ Export-Package:\
 	com.liferay.users.admin.web.portlet.configuration.icon,\
 	com.liferay.users.admin.web.search,\
 	com.liferay.users.admin.web.servlet.taglib.ui,\
-	com.liferay.users.admin.web.theme.contributor
+	com.liferay.users.admin.web.theme.contributor,\
+	com.liferay.users.admin.web.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /users-admin-web

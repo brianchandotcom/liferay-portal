@@ -87,15 +87,16 @@ public class PoshiRunnerGetterUtilTest extends TestCase {
 
 	@Test
 	public void testGetVarMethodValue() throws Exception {
-		String value = PoshiRunnerGetterUtil.getVarMethodValue(
-			"MathUtil#sum('1', '2')");
+		Object value = PoshiRunnerGetterUtil.getVarMethodValue(
+			"MathUtil#quotient('3', '1')");
 
-		Assert.assertEquals("getVarMethodValue is failing", "3", value);
+		Assert.assertEquals(
+			"getVarMethodValue is failing", "3", value.toString());
 
 		value = PoshiRunnerGetterUtil.getVarMethodValue(
 			"StringUtil#endsWith('The fox jumped over the dog', 'dog')");
 
-		Assert.assertEquals("getVarMethodValue is failing", "true", value);
+		Assert.assertEquals("getVarMethodValue is failing", true, value);
 	}
 
 }

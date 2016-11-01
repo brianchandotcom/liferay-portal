@@ -908,44 +908,16 @@ public class PoshiRunnerValidationTest extends TestCase {
 
 		testClassNames.add(invalidClassName);
 		testClassNames.add(validClassName);
-		testClassNames.add(validClassName);
-		testClassNames.add(validClassName);
-		testClassNames.add(validClassName);
 
 		List<String> testMethodNames = new ArrayList<>();
 
 		testMethodNames.add(validMethodName);
 		testMethodNames.add(invalidMethodName);
-		testMethodNames.add(validMethodName);
-		testMethodNames.add(validMethodName);
-		testMethodNames.add(validMethodName);
 
 		List<List<String>> testArguments = new ArrayList<>();
 
 		testArguments.add(new ArrayList<String>());
 		testArguments.add(new ArrayList<String>());
-
-		List<String> testArgumentsSet = new ArrayList<>();
-
-		testArgumentsSet.add("too-few-argument");
-
-		testArguments.add(testArgumentsSet);
-
-		testArgumentsSet = new ArrayList<>();
-
-		testArgumentsSet.add("correct");
-		testArgumentsSet.add("arguments");
-
-		testArguments.add(testArgumentsSet);
-
-		testArgumentsSet = new ArrayList<>();
-
-		testArgumentsSet.add("way");
-		testArgumentsSet.add("too");
-		testArgumentsSet.add("many");
-		testArgumentsSet.add("arguments");
-
-		testArguments.add(testArgumentsSet);
 
 		List<String> expectedMessages = new ArrayList<>();
 
@@ -953,13 +925,6 @@ public class PoshiRunnerValidationTest extends TestCase {
 		expectedMessages.add(
 			"Unable to find method " + validClassName + "#" +
 				invalidMethodName);
-		expectedMessages.add(
-			"Mismatched argument in method " + validClassName + "#" +
-				validMethodName);
-		expectedMessages.add("");
-		expectedMessages.add(
-			"Mismatched argument in method " + validClassName + "#" +
-				validMethodName);
 
 		for (int i = 0; i < testClassNames.size(); i++) {
 			Document document = DocumentHelper.createDocument();

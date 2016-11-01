@@ -125,7 +125,8 @@ public class DDMFormFieldTemplateContextFactory {
 				ddmFormFieldValue, ddmFormFieldParameterName);
 
 		setDDMFormFieldTemplateContextEvaluable(
-			ddmFormFieldTemplateContext, ddmFormField.getProperty("evaluable"));
+			ddmFormFieldTemplateContext, ddmFormFieldEvaluationResult,
+			ddmFormField.getProperty("evaluable"));
 		setDDMFormFieldTemplateContextNestedTemplateContexts(
 			ddmFormFieldTemplateContext, nestedDDMFormFieldTemplateContext);
 
@@ -284,7 +285,15 @@ public class DDMFormFieldTemplateContextFactory {
 	}
 
 	protected void setDDMFormFieldTemplateContextEvaluable(
-		Map<String, Object> ddmFormFieldTemplateContext, Object evaluable) {
+		Map<String, Object> ddmFormFieldTemplateContext,
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult,
+		Object evaluable) {
+
+		if (ddmFormFieldEvaluationResult.isRequired()) {
+			ddmFormFieldTemplateContext.put("evaluable", true);
+
+			return;
+		}
 
 		if (evaluable == null) {
 			return;

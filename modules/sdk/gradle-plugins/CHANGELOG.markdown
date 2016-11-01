@@ -553,6 +553,20 @@ to version 1.0.43.
 ### Changed
 - [LPS-69013]: Update the [Liferay Jasper JSPC] dependency to version 1.0.9.
 
+## 3.0.31 - 2016-11-01
+
+### Changed
+- [LPS-68923]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.44.
+- [LPS-68923]: Update the [Liferay Source Formatter] dependency to version
+1.0.310.
+
+## 3.0.32 - 2016-11-01
+
+### Changed
+- [LPS-69026]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.2.1.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -606,8 +620,10 @@ to version 1.0.43.
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839
 [LPS-68848]: https://issues.liferay.com/browse/LPS-68848
 [LPS-68917]: https://issues.liferay.com/browse/LPS-68917
+[LPS-68923]: https://issues.liferay.com/browse/LPS-68923
 [LPS-68979]: https://issues.liferay.com/browse/LPS-68979
 [LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LPS-68995]: https://issues.liferay.com/browse/LPS-68995
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
+[LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

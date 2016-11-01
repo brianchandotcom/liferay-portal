@@ -58,6 +58,7 @@ AUI.add(
 							'/calendar.calendarbooking/delete-calendar-booking-instance': {
 								allFollowing: allFollowing,
 								calendarBookingId: schedulerEvent.get('calendarBookingId'),
+								deleteRecurringCalendarBookings: true,
 								instanceIndex: schedulerEvent.get('instanceIndex')
 							}
 						},

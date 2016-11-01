@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>SAVE_NOTIFICATION</td>
+	<td>//div[contains(@class,'autosave-bar')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save') and not (contains(@class,'disabled'))]</td>
 	<td></td>

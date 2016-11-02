@@ -248,7 +248,7 @@
 </tr>
 <tr>
 	<td>SELECT_OPTIONS_OPTION_VALUE_FIELD_VISIBLE</td>
-	<td>//div[@class='options']/div[${key_rowNumber}]//input</td>
+	<td>//div[@class='input-select-wrapper']//option[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -418,6 +418,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Portlet fetchPortletById(long companyId, String portletId) {
 		portletId = PortalUtil.getJsSafePortletId(portletId);
 
+		portletId = StringUtil.replace(
+			portletId, new char[] {'$'}, new char[] {'_'});
+
 		Map<String, Portlet> companyPortletsMap = getPortletsMap(companyId);
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -116,12 +117,13 @@ public class PortletTracker
 		if (Validator.isNull(portletName)) {
 			Class<?> clazz = portlet.getClass();
 
-			portletName = StringUtil.replace(
-				clazz.getName(), new char[] {'.', '$'}, new char[] {'_', '_'});
+			portletName = clazz.getName();
 		}
 
-		String portletId = StringUtil.replace(
-			portletName, new char[] {'.', '$'}, new char[] {'_', '_'});
+		String portletId = PortalUtil.getJsSafePortletId(portletName);
+
+		portletId = StringUtil.replace(
+			portletId, new char[] {'$'}, new char[] {'_'});
 
 		if (portletId.length() >
 				PortletInstance.PORTLET_INSTANCE_KEY_MAX_LENGTH) {

@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import java.util.Dictionary;
-
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -78,9 +76,6 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 
 		_reloadablePersistenceManager.reload(pid);
 
-		Dictionary<String, ?> properties = _reloadablePersistenceManager.load(
-			pid);
-
 		try {
 			ConfigurationThreadLocal.setLocalUpdate(true);
 
@@ -96,7 +91,7 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 					configuration.delete();
 				}
 				else {
-					configuration.update(properties);
+					configuration.update();
 				}
 			}
 		}

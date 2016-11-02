@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.twitter.configuration.TwitterGroupServiceConfiguration;
+import com.liferay.twitter.service.impl.FeedLocalServiceImpl;
 
 import java.util.Map;
 
@@ -25,6 +26,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
@@ -66,5 +68,8 @@ public class TimelineProcessorUtil {
 	private static TimelineProcessor _timelineProcessor;
 	private static volatile TwitterGroupServiceConfiguration
 		_twitterGroupServiceConfiguration;
+
+	@Reference
+	private FeedLocalServiceImpl _feedLocalServiceImpl;
 
 }

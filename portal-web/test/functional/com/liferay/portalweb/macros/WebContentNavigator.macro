@@ -131,6 +131,17 @@
 		</execute>
 	</command>
 
+	<command name="gotoManageTemplatesviaStructures">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="${structureTitle}" />
+			<var name="menuItem" value="Manage Templates" />
+		</execute>
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="${portletTitle}" />
+		</execute>
+	</command>
+
 	<command name="gotoMoreStructuresViaPlusButton">
 		<execute macro="LexiconEntry#gotoAdd" />
 

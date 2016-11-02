@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
@@ -188,9 +188,10 @@ public class ArticlePortlet extends BaseKBPortlet {
 		}
 
 		long resourcePrimKey = 0;
+
 		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
 
-		if (!StringPool.BLANK.equals(urlTitle)) {
+		if (Validator.isNotNull(urlTitle)) {
 			resourcePrimKey = getResourcePrimKeyFromUrlTitle(
 				renderRequest, urlTitle);
 		}
@@ -222,9 +223,10 @@ public class ArticlePortlet extends BaseKBPortlet {
 
 		String kbFolderUrlTitle = ParamUtil.getString(
 			renderRequest, "kbFolderUrlTitle");
-		KBArticle kbArticle;
 
-		if (StringPool.BLANK.equals(kbFolderUrlTitle)) {
+		KBArticle kbArticle = null;
+
+		if (Validator.isNull(kbFolderUrlTitle)) {
 			kbArticle = _kbArticleLocalService.fetchKBArticleByUrlTitle(
 				PortalUtil.getScopeGroupId(renderRequest),
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, urlTitle);

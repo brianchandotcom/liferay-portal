@@ -18,7 +18,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.FileConverter;
 
-import com.liferay.bundle.support.util.FileUtil;
+import com.liferay.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
 

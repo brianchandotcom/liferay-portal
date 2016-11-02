@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bundle.support.util;
+package com.liferay.bundle.support.internal.util;
 
 import com.liferay.bundle.support.BundleSupport;
 

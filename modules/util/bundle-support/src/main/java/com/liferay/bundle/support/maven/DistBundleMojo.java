@@ -17,8 +17,8 @@ package com.liferay.bundle.support.maven;
 import com.liferay.bundle.support.CommandDeploy;
 import com.liferay.bundle.support.CommandDistBundle;
 import com.liferay.bundle.support.CommandInitBundle;
-import com.liferay.bundle.support.util.FileUtil;
-import com.liferay.bundle.support.util.MavenUtil;
+import com.liferay.bundle.support.internal.util.FileUtil;
+import com.liferay.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
 

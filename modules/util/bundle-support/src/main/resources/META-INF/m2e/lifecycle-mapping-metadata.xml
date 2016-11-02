@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<lifecycleMappingMetadata>
+	<pluginExecutions>
+		<pluginExecution>
+			<pluginExecutionFilter>
+				<goals>
+					<goal>clean</goal>
+					<goal>deploy</goal>
+					<goal>init-bundle</goal>
+					<goal>dist-bundle</goal>
+				</goals>
+			</pluginExecutionFilter>
+			<action>
+				<ignore/>
+			</action>
+		</pluginExecution>
+	</pluginExecutions>
+</lifecycleMappingMetadata>

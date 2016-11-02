@@ -34,17 +34,17 @@ public class BundleSupport {
 	public static final String COMMAND_INIT_BUNDLE = "initBundle";
 
 	public static void execute(
-			JCommander jCommander, CommandBase commandBase, String command)
+			JCommander jCommander, BaseCommand baseCommand, String command)
 		throws Exception {
 
 		try {
-			if (commandBase.isHelp()) {
+			if (baseCommand.isHelp()) {
 				jCommander.usage(command);
 
 				return;
 			}
 
-			commandBase.execute();
+			baseCommand.execute();
 		}
 		catch (Exception e) {
 			jCommander.usage(command);

@@ -28,7 +28,7 @@ import java.nio.file.Files;
  * @author David Truong
  */
 @Parameters(commandDescription = "Delete file from deployed to Liferay home")
-public class CommandClean extends CommandBase {
+public class CommandClean extends BaseCommand {
 
 	public CommandClean() {
 	}

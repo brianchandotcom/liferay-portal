@@ -24,12 +24,12 @@ import java.nio.file.Path;
 /**
  * @author David Truong
  */
-public abstract class CommandBase {
+public abstract class BaseCommand {
 
-	public CommandBase() {
+	public BaseCommand() {
 	}
 
-	public CommandBase(File liferayHomeDir) {
+	public BaseCommand(File liferayHomeDir) {
 		_liferayHomeDir = liferayHomeDir;
 	}
 

@@ -187,14 +187,7 @@ public class ArticlePortlet extends BaseKBPortlet {
 			return 0;
 		}
 
-		long resourcePrimKey = 0;
-
-		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
-
-		if (Validator.isNotNull(urlTitle)) {
-			resourcePrimKey = getResourcePrimKeyFromUrlTitle(
-				renderRequest, urlTitle);
-		}
+		long resourcePrimKey = getResourcePrimKeyFromUrlTitle(renderRequest);
 
 		if (resourcePrimKey == 0) {
 			resourcePrimKey = ParamUtil.getLong(
@@ -217,9 +210,14 @@ public class ArticlePortlet extends BaseKBPortlet {
 		return defaultValue;
 	}
 
-	protected long getResourcePrimKeyFromUrlTitle(
-			RenderRequest renderRequest, String urlTitle)
+	protected long getResourcePrimKeyFromUrlTitle(RenderRequest renderRequest)
 		throws PortalException {
+
+		String urlTitle = ParamUtil.getString(renderRequest, "urlTitle");
+
+		if (Validator.isNull(urlTitle)) {
+			return 0;
+		}
 
 		String kbFolderUrlTitle = ParamUtil.getString(
 			renderRequest, "kbFolderUrlTitle");

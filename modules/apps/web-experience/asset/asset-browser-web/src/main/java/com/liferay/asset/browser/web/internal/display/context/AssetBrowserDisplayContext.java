@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -46,6 +48,7 @@ import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -156,18 +159,31 @@ public class AssetBrowserDisplayContext {
 					new long[] {assetRendererFactory.getClassNameId()},
 					getKeywords(), getKeywords(), getKeywords(), getKeywords(),
 					getListable(), false, false, assetBrowserSearch.getStart(),
-					assetBrowserSearch.getEnd(), "modifiedDate", "title",
-					"DESC", "ASC");
+					assetBrowserSearch.getEnd(), "modifiedDate",
+					StringPool.BLANK, getOrderByType(), StringPool.BLANK);
 
 			assetBrowserSearch.setResults(assetEntries);
 		}
 		else {
+			boolean orderByAsc = false;
+
+			if (Objects.equals(getOrderByType(), "asc")) {
+				orderByAsc = true;
+			}
+
+			Sort sort = null;
+
+			if (Objects.equals(getOrderByCol(), "modified-date")) {
+				sort = new Sort(
+					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
+			}
+
 			Hits hits = AssetEntryLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), getFilterGroupIds(),
 				themeDisplay.getUserId(), assetRendererFactory.getClassName(),
 				getSubtypeSelectionId(), getKeywords(), isShowNonindexable(),
 				getStatuses(), assetBrowserSearch.getStart(),
-				assetBrowserSearch.getEnd());
+				assetBrowserSearch.getEnd(), sort);
 
 			List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);
 
@@ -319,6 +335,27 @@ public class AssetBrowserDisplayContext {
 			group.getDescriptiveName(themeDisplay.getLocale()));
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = ParamUtil.getString(
+			_request, "orderByCol", "modified-date");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
+
+		return _orderByType;
+	}
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -464,6 +501,8 @@ public class AssetBrowserDisplayContext {
 	private String _eventName;
 	private Long _groupId;
 	private String _keywords;
+	private String _orderByCol;
+	private String _orderByType;
 	private Long _refererAssetEntryId;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

@@ -18,7 +18,6 @@
 
 <%
 String url = StringPool.BLANK;
-String description = StringPool.BLANK;
 
 if (selLayout != null) {
 	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
@@ -27,4 +26,4 @@ if (selLayout != null) {
 }
 %>
 
-<aui:input cssClass="lfr-input-text-container" id="url" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>" />
+<aui:input cssClass="lfr-input-text-container" id="url" label="url" name="TypeSettingsProperties--url--" required="<%= true %>" type="text" value="<%= url %>" />

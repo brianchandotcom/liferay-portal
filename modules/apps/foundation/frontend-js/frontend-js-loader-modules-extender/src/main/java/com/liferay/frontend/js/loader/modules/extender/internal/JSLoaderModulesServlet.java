@@ -51,7 +51,7 @@ import org.osgi.service.metatype.annotations.Designate;
 	},
 	service = {JSLoaderModulesServlet.class, Servlet.class}
 )
-@Designate(ocd = Details.class)
+@Designate(factory=true, ocd = Details.class)
 public class JSLoaderModulesServlet extends HttpServlet {
 
 	@Activate
@@ -188,6 +188,11 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		printWriter.println("}());");
 
 		printWriter.close();
+	}
+
+	// For Testing Purposes only
+	protected void setDetails(Details details) {
+		_details = details;
 	}
 
 	@Reference(unbind = "-")

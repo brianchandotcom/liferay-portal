@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
-import aQute.lib.converter.Converter;
-
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
@@ -23,7 +21,6 @@ import java.io.PrintWriter;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.Servlet;
@@ -39,11 +36,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 
 /**
  * @author Raymond Augé
  */
 @Component(
+	configurationPid = "com.liferay.frontend.js.loader.modules.extender.internal.Details",
 	immediate = true,
 	property = {
 		"osgi.http.whiteboard.servlet.name=com.liferay.frontend.js.loader.modules.extender.internal.JSLoaderModulesServlet",
@@ -52,17 +51,17 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {JSLoaderModulesServlet.class, Servlet.class}
 )
+@Designate(factory=true, ocd = Details.class)
 public class JSLoaderModulesServlet extends HttpServlet {
 
 	@Activate
 	@Modified
-	protected void activate(
-			ComponentContext componentContext, Map<String, Object> properties)
+	protected void activate(ComponentContext componentContext, Details details)
 		throws Exception {
 
 		_logger = new Logger(componentContext.getBundleContext());
 
-		setDetails(Converter.cnv(Details.class, properties));
+		_details = details;
 	}
 
 	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {
@@ -81,8 +80,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
 		printWriter.println("(function() {");
-		printWriter.print(_details.globalJSVariable());
-		printWriter.println(".PATHS = {");
+		printWriter.println("Liferay.PATHS = {");
 
 		String delimiter = "";
 		Set<String> processedNames = new HashSet<>();
@@ -117,8 +115,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		}
 
 		printWriter.println("\n};");
-		printWriter.print(_details.globalJSVariable());
-		printWriter.println(".MODULES = {");
+		printWriter.println("Liferay.MODULES = {");
 
 		delimiter = "";
 		processedNames.clear();
@@ -152,8 +149,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		}
 
 		printWriter.println("\n};");
-		printWriter.print(_details.globalJSVariable());
-		printWriter.println(".MAPS = {");
+		printWriter.println("Liferay.MAPS = {");
 
 		delimiter = "";
 		processedNames.clear();
@@ -186,11 +182,15 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		}
 
 		printWriter.println("\n};");
+
+		printWriter.println("Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
+
 		printWriter.println("}());");
 
 		printWriter.close();
 	}
 
+	// For Testing Purposes only
 	protected void setDetails(Details details) {
 		_details = details;
 	}

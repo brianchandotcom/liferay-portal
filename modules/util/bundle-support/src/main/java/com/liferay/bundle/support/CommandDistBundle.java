@@ -31,7 +31,7 @@ import java.nio.file.Path;
 @Parameters(
 	commandDescription = "Turn your liferay home into an distributable archive"
 )
-public class CommandDistBundle extends CommandBase {
+public class CommandDistBundle extends BaseCommand {
 
 	public CommandDistBundle() {
 	}

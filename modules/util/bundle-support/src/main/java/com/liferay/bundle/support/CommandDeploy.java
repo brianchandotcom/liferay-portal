@@ -39,7 +39,7 @@ import org.apache.commons.compress.utils.IOUtils;
  * @author David Truong
  */
 @Parameters(commandDescription = "Deploy file to Liferay home")
-public class CommandDeploy extends CommandBase {
+public class CommandDeploy extends BaseCommand {
 
 	public CommandDeploy() {
 	}

@@ -37,6 +37,13 @@
 				managementBarFilterItems="<%= assetBrowserDisplayContext.getManagementBarFilterItem() %>"
 				value="<%= assetBrowserDisplayContext.getManagementBarFilterLabel() %>"
 			/>
+
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= assetBrowserDisplayContext.getOrderByCol() %>"
+				orderByType="<%= assetBrowserDisplayContext.getOrderByType() %>"
+				orderColumns='<%= new String[] {"modified-date"} %>'
+				portletURL="<%= assetBrowserDisplayContext.getPortletURL() %>"
+			/>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">

@@ -37,6 +37,22 @@
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/chat/chat-service/src/main/java/com/liferay/chat/service/persistence/impl/StatusFinderImpl\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/collaboration/document-library/document-library-service/src/main/java/com/liferay/document/library/internal/exportimport/data/handler/FolderUtil\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/collaboration/message-boards/message-boards-comment/src/main/java/com/liferay/message/boards/comment/internal/MBDiscussionCommentImpl\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/collaboration/message-boards/message-boards-test/src/testIntegration/java/com/liferay/message/boards/lar/test/MBMessageStagedModelDataHandlerTest\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/collaboration/wiki/wiki-test/src/testIntegration/java/com/liferay/wiki/internal/exportimport/data/handler/test/WikiPageStagedModelDataHandlerTest\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-service/src/main/java/com/liferay/dynamic/data/mapping/service/impl/DDMTemplateLocalServiceImpl\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-test-util/src/main/java/com/liferay/dynamic/data/mapping/test/util/search/TestOrderHelper\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/foundation/contacts/contacts-service/src/main/java/com/liferay/contacts/service/persistence/impl/EntryFinderImpl\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/src/main/java/com/liferay/mobile/device/rules/service/impl/MDRRuleGroupLocalServiceImpl\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/foundation/portal-security/portal-security-ldap/src/main/java/com/liferay/portal/security/ldap/internal/exportimport/DefaultLDAPToPortalConverter\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/screens/screens-service/src/main/java/com/liferay/screens/service/impl/ScreensAssetEntryServiceImpl\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-tags-test/src/testIntegration/java/com/liferay/asset/tags/service/test/AssetTagFinderTest\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/export-import/export-import-service/src/main/java/com/liferay/exportimport/controller/PortletImportController\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/export-import/export-import-test/src/testIntegration/java/com/liferay/exportimport/test/BasePrototypePropagationTestCase\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/layout/layout-impl/src/main/java/com/liferay/layout/set/internal/exportimport/data/handler/StagedLayoutSetStagedModelDataHandler\.java" />
 	<suppress checks="PlusStatement" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 	<suppress checks="PlusStatement" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />

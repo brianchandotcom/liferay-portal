@@ -1,1 +1,0 @@
-# Liferay Bundle Support

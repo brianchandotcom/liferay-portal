@@ -9,30 +9,18 @@
 	<taskdef classpathref="bundle.support.classpath" resource="com/liferay/bundle/support/ant/taskdefs.properties" />
 
 	<target name="clean">
-		<clean
-			fileName = "${plugin.file}"
-			liferayHomeDir = "${app.server.parent.dir}"
-		/>
+		<clean fileName="${plugin.file}" liferayHomeDir="${app.server.parent.dir}" />
 	</target>
-	<target name="deploy">
-		<deploy
-			file = "${plugin.file}"
-			liferayHomeDir = "${app.server.parent.dir}"
-			outputFileName = "${plugin.file}"
 
-		/>
+	<target name="deploy">
+		<deploy file="${plugin.file}" liferayHomeDir="${app.server.parent.dir}" outputFileName="${plugin.file}" />
 	</target>
+
 	<target name="dist-bundle">
-		<dist-bundle
-			format = "zip"
-			includeFolder = "true"
-			liferayHomeDir = "${app.server.parent.dir}"
-			outputFile = "${plugins.sdk.name}"
-		/>
+		<dist-bundle format="zip" includeFolder="true" liferayHomeDir="${app.server.parent.dir}" outputFile="${plugins.sdk.name}" />
 	</target>
+
 	<target name="init-bundle">
-		<init-bundle
-			liferayHomeDir = "${app.server.parent.dir}"
-		/>
+		<init-bundle liferayHomeDir="${app.server.parent.dir}" />
 	</target>
 </project>

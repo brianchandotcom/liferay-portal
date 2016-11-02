@@ -195,9 +195,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			ResultSet rs = ps1.executeQuery();
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-					connection,
-					"update PortletPreferences set preferences = ? where " +
-						"portletPreferencesId = ?")) {
+					connection, _UPDATE)) {
 
 			while (rs.next()) {
 				ps2.setString(
@@ -267,9 +265,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				try (ResultSet rs = ps1.executeQuery();
 						PreparedStatement ps2 =
 							AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-								connection,
-								"update PortletPreferences set preferences = " +
-									"? where portletPreferencesId = ?")) {
+								connection, _UPDATE)) {
 
 					while (rs.next()) {
 						ps2.setString(
@@ -327,9 +323,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							connection, insertSQL);
 					PreparedStatement ps3 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection,
-							"update PortletPreferences set preferences = ? " +
-								"where portletPreferencesId = ?")) {
+							connection, _UPDATE)) {
 
 					while (rs.next()) {
 						if (portletId.equals(rs.getString("portletId")) &&
@@ -434,6 +428,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 		return PortletPreferencesFactoryUtil.toXML(jxPortletPreferences);
 	}
+
+	private static final String _UPDATE =
+		"update PortletPreferences set preferences = ? where " +
+			"portletPreferencesId = ?";
 
 	private static final String _WHERE_CLAUSE =
 		"where (ownerType = ? or ownerType = ?) and portletId = ? and " +

@@ -16,4 +16,4 @@
 
 <%@ include file="/captcha/init.jsp" %>
 
-<liferay-util:include page="<%= CaptchaUtil.getTaglibPath() %>" />
+<liferay-util:include page="<%= CaptchaUtil.getTaglibPath() %>" servletContext="<%= application %>" />

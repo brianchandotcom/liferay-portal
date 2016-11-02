@@ -14,7 +14,7 @@
 
 package com.liferay.bundle.support.maven;
 
-import com.liferay.bundle.support.util.MavenUtil;
+import com.liferay.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
 

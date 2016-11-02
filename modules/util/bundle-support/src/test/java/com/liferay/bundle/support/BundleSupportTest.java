@@ -14,7 +14,7 @@
 
 package com.liferay.bundle.support;
 
-import com.liferay.bundle.support.util.FileUtil;
+import com.liferay.bundle.support.internal.util.FileUtil;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;

@@ -1991,6 +1991,58 @@
 		</execute>
 	</command>
 
+	<command name="ValidateDDMNavigation" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentNavigator#gotoManageTemplatesviaStructures">
+			<var name="structureTitle" value="Basic Web Content" />
+			<var name="portletTitle" value="Templates for Structure: Basic Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="Test WC Template Description" />
+			<var name="templateName" value="Test WC Template" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Test WC Template" />
+			<var name="menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Templates for Structure: Basic Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewTableEntryCP">
+			<var name="templateDescription" value="Test WC Template Description" />
+			<var name="templateName" value="Test WC Template" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewTableEntryCP">
+			<var name="templateDescription" value="" />
+			<var name="templateName" value="Basic Web Content" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Structures" />
+		</execute>
+
+		<execute macro="WebContentStructures#viewTableEntryCP">
+			<var name="structureDescription" value="Basic Web Content" />
+			<var name="structureName" value="Basic Web Content" />
+		</execute>
+	</command>
+
 	<command name="ViewContentNotLostWithBlankTitle" priority="4">
 		<execute macro="Navigator#openURL" />
 

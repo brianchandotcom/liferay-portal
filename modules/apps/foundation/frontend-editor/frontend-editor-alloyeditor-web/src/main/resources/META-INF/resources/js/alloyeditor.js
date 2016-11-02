@@ -226,7 +226,7 @@ AUI.add(
 					},
 
 					_getEditorMethod: function(method) {
-						return Lang.isFunction(method) ? method : window[method];
+						return Lang.isFunction(method) ? method : (window[method] || method);
 					},
 
 					_initializeData: function() {
@@ -240,7 +240,7 @@ AUI.add(
 
 						var onInitFn = instance.get('onInitMethod');
 
-						if (onInitFn) {
+						if (Lang.isFunction(onInitFn)) {
 							onInitFn();
 						}
 
@@ -256,7 +256,7 @@ AUI.add(
 
 						var blurFn = instance.get('onBlurMethod');
 
-						if (blurFn) {
+						if (Lang.isFunction(blurFn)) {
 							blurFn(event.editor);
 						}
 					},
@@ -266,7 +266,7 @@ AUI.add(
 
 						var changeFn = instance.get('onChangeMethod');
 
-						if (changeFn) {
+						if (Lang.isFunction(changeFn)) {
 							changeFn(instance.getText());
 						}
 					},
@@ -286,7 +286,7 @@ AUI.add(
 
 						var focusFn = instance.get('onFocusMethod');
 
-						if (focusFn) {
+						if (Lang.isFunction(focusFn)) {
 							focusFn(event.editor);
 						}
 					},

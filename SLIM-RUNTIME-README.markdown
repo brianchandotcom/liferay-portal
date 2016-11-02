@@ -1,55 +1,55 @@
 # Liferay Slim Runtime
 
-The Liferay Slim Runtime provides the bare minimum environment necessary to run
-Service Builder modules. The slim runtime is useful for those who want to test
-their applications quickly in a Liferay runtime without the unnecessary
-add-ons Liferay Portal provides.
+The Liferay Slim Runtime provides the bare necessities for running Service
+Builder modules. It's useful for testing applications quickly in a Liferay
+runtime environment free of Liferay add-ons.
 
-In summary, the Liferay Slim Runtime provides
+The Liferay Slim Runtime provides
 
 - Caching infrastructure
 - Database infrastructure
 - HTTP support
 - JAX-RS support
-- Limited Liferay utility classes
+- Limited set of Liferay utility classes
 - OSGi framework for running modules
 - Service Builder runtime for Service Builder modules
 - Spring infrastructure
 - Transaction infrastructure
 
-The slim runtime does **not** provide
+It does **not** provide
 
 - Authentication/Authorization layers
 - Layout templates
 - Permissions
-- Portlets (no portlet container)
+- Portlet support (no portlet container)
 - Sites
 - Themes
 - etc.
 
 ## Build
 
-To build the slim runtime, execute the following top-level Ant operation:
+To build the Slim Runtime, execute the following top-level Ant command:
 
     ant all -Dbuild.profile=slim
 
-The slim runtime is built in the server directory folder you've set in property
-`app.server.parent.dir` in the `app.server.properties` file. Note that the slim
-runtime only supports Tomcat 8+. This limitation simplifies packaging and
+It's built in the server directory specified by the `app.server.properties`
+file's `app.server.parent.dir` property. Note that the Slim Runtime only
+supports Apache Tomcat 8+. This limitation simplifies packaging and
 configuration.
 
 ## Launch
 
-To launch the slim runtime, run the Tomcat start scripts found in the
-`[tomcat]/bin` directory:
+To launch the Slim Runtime, run the Tomcat start scripts found in the
+`<tomcat>/bin` directory:
 
-    ./startup.[bat|sh]
+    ./startup.[sh|bat]
 
 ## Deploying Modules
 
-You can deploy any of the default defined module directories, or configure a
-custom deploy directory by overriding the properties found in
-`portal.properties`:
+You can deploy modules from any of the default directories the
+`portal.properties` file defines (see properties below) or from a custom
+auto-deploy directory you add to the `module.framework.auto.deploy.dirs`
+property.
 
     module.framework.base.dir=${liferay.home}/osgi
 
@@ -66,17 +66,16 @@ custom deploy directory by overriding the properties found in
 
 ## Running Pristine Slim Runtime
 
-When running a slim runtime without deploying additional functionality, any
-request results in a 404 error since there is no UI and there are no apps
-deployed by default.
+By default, a pristine Slim Runtime has no UI or apps. Requests to it result in
+404 errors.
 
-All functionality is provided by the developer's modules.
+The modules you add provide all the functionality.
 
 ## Adding Functionality
 
-The simplest type of function you can deploy is a web endpoint.
+A web endpoint is the simplest type of function.
 
-The following snippet demonstrates a simple servlet which responds to all
+The following snippet demonstrates a simple servlet that responds to all
 requests to `http://localhost:8080[/*]`:
 
 ```java
@@ -122,10 +121,10 @@ public class SampleServlet extends HttpServlet {
 
 ## The Database
 
-When the slim runtime is started for the first time, the database schema is auto
-created. For example, if you executed `show tables;` for MariaDB, the following
-output is displayed:
+The Slim Runtime creates the database schema automatically the first time it
+runs.
 
+    MariaDB [lportal]> show tables;
     +------------------+
     | Tables_in_lportal|
     +------------------+
@@ -137,28 +136,26 @@ output is displayed:
     +------------------+
     5 rows in set (0.00 sec)
 
-This means only the following core services are available:
+Only the following core services are available:
 
 - `ClassNameLocalService`
 - `CounterLocalService`
 - `ReleaseLocalService`
 - `ServiceComponentLocalService`
 
-No other services are provided! Therefore, if an existing Service Builder
-service *foo* is deployed, which has dependencies upon *other* Liferay Portal
-services, since those services are not provided by the slim runtime, the service
-*foo* does not function.
+No other services are provided! Therefore, any service deployed to this Slim
+Runtime that depends on services other than these won't work.
 
 ## Service Builder
 
-The Service Builder runtime bootstraps any deployed Service Builder services
+The Service Builder runtime bootstraps all deployed Service Builder services
 (API and service modules).
 
-For example, consider deploying the `com.liferay.contacts.api` and
-`com.liferay.contacts.service` modules. Similar to the database schema creation
-listed previously, the Service Builder runtime would generate the required
-tables:
+For example, deploying the `com.liferay.contacts.api` and
+`com.liferay.contacts.service` modules adds the `Contacts_Entry` table to the
+database:
 
+    MariaDB [lportal]> show tables;
     +------------------+
     | Tables_in_lportal|
     +------------------+
@@ -171,11 +168,9 @@ tables:
     +------------------+
     6 rows in set (0.00 sec)
 
-Notice that the additional `Contacts_Entry` table is added.
-
 ### A Basic Service Builder Web App
 
-The following snippet shows a servlet implementing a simple web app using the
+The servlet in the following snippet implements a simple web app that uses the
 contacts service.
 
 ```java
@@ -294,6 +289,5 @@ public class SampleServlet extends HttpServlet {
 }
 ```
 
-Note how it uses OSGi Declarative Services to define its dependencies on the
-`counterLocalService` provided by the Liferay core, and to the
-`entryLocalService` provided by the contacts API.
+Note how it uses OSGi Declarative Services to reference an instance of Liferay
+Core's `CounterLocalService` and Contacts API's `EntryLocalService`.

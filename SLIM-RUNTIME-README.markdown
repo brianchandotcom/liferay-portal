@@ -1,27 +1,56 @@
+# Liferay Slim Runtime
+
+The Liferay Slim Runtime provides the bare necessities for running Service
+Builder modules. It's useful for testing applications quickly in a Liferay
+runtime environment free of Liferay add-ons.
+
+The Liferay Slim Runtime provides
+
+- Caching infrastructure
+- Database infrastructure
+- HTTP support
+- JAX-RS support
+- Limited set of Liferay utility classes
+- OSGi framework for running modules
+- Service Builder runtime for Service Builder modules
+- Spring infrastructure
+- Transaction infrastructure
+
+It does **not** provide
+
+- Authentication/Authorization layers
+- Layout templates
+- Permissions
+- Portlet support (no portlet container)
+- Sites
+- Themes
+- etc.
+
 ## Build
 
-Execute the following top level ant operation:
+To build the Slim Runtime, execute the following top-level Ant command:
 
-```
-ant all -Dbuild.profile=slim
-```
+    ant all -Dbuild.profile=slim
 
-*Note* that the slim runtime only supports tomcat 8+. This is a limitation to simplify packaging and configuration.
+It's built in the server directory specified by the `app.server.properties`
+file's `app.server.parent.dir` property. Note that the Slim Runtime only
+supports Apache Tomcat 8+. This limitation simplifies packaging and
+configuration.
 
 ## Launch
 
-Run the tomcat start scripts as usual:
+To launch the Slim Runtime, run the Tomcat start scripts found in the
+`<tomcat>/bin` directory:
 
-```
-cd <tomcat>/bin
-./startup.sh
-```
+    ./startup.[sh|bat]
 
-## Deploy modules
+## Deploying Modules
 
-Use any of the default defined module directories. Or configure a custom deploy directory (by overriding these properties):
+You can deploy modules from any of the default directories the
+`portal.properties` file defines (see properties below) or from a custom
+auto-deploy directory you add to the `module.framework.auto.deploy.dirs`
+property.
 
-```
     module.framework.base.dir=${liferay.home}/osgi
 
     module.framework.configs.dir=${module.framework.base.dir}/configs
@@ -34,21 +63,22 @@ Use any of the default defined module directories. Or configure a custom deploy 
         ${module.framework.marketplace.dir},\
         ${module.framework.modules.dir},\
         ${module.framework.war.dir}
-```
 
 ## Running Pristine Slim Runtime
 
-When running a slim runtime without deploying additional functionality any request will result in a 404 since there are no apps and no UI is deployed by default.
+By default, a pristine Slim Runtime has no UI or apps. Requests to it result in
+404 errors.
 
-All functionality is provided by developer's modules.
+The modules you add provide all the functionality.
 
-## Adding functionality
+## Adding Functionality
 
-The simplest type of function you can deploy is a web endpoint.
+A web endpoint is the simplest type of function.
 
-The following snippet demonstrates a simple servlet which response to all request to `http://localhost:8080[/*]`
+The following snippet demonstrates a simple servlet that responds to all
+requests to `http://localhost:8080[/*]`:
 
-```
+```java
 package web.sample;
 
 import java.io.IOException;
@@ -89,63 +119,61 @@ public class SampleServlet extends HttpServlet {
 }
 ```
 
-## The DB
+## The Database
 
-When the slim runtime is started for the first time, the database schema will be auto created.
+The Slim Runtime creates the database schema automatically the first time it
+runs.
 
-The DB should look something like this:
+    MariaDB [lportal]> show tables;
+    +------------------+
+    | Tables_in_lportal|
+    +------------------+
+    | ClassName_       |
+    | Configuration_   |
+    | Counter          |
+    | Release_         |
+    | ServiceComponent |
+    +------------------+
+    5 rows in set (0.00 sec)
 
-```
-MariaDB [lportal]> show tables;
-+------------------+
-| Tables_in_lportal|
-+------------------+
-| ClassName_       |
-| Configuration_   |
-| Counter          |
-| Release_         |
-| ServiceComponent |
-+------------------+
-5 rows in set (0.00 sec)
-```
+Only the following core services are available:
 
-Note that this means only the following core services are available:
+- `ClassNameLocalService`
+- `CounterLocalService`
+- `ReleaseLocalService`
+- `ServiceComponentLocalService`
 
-ClassNameLocalService
-CounterLocalService
-ReleaseLocalService
-ServiceComponentLocalService
-
-No other services are provided! Therefore if an existing Service Builder service *foo* is deployed, which has dependencies upon _other_ *Liferay Portal* services, since those services are not provided by the slim runtime, the service *foo* will not function.
+No other services are provided! Therefore, any service deployed to this Slim
+Runtime that depends on services other than these won't work.
 
 ## Service Builder
 
-The Service Builder (runtime) will bootstrap any deployed Service Builder services (api and service modules).
+The Service Builder runtime bootstraps all deployed Service Builder services
+(API and service modules).
 
-An example is `com.liferay.contacts.api` & `com.liferay.contacts.service`. Similarly to the DB schema creation the Service Builder runtime will generate the required tables:
+For example, deploying the `com.liferay.contacts.api` and
+`com.liferay.contacts.service` modules adds the `Contacts_Entry` table to the
+database:
 
-```
-MariaDB [lportal]> show tables;
-+------------------+
-| Tables_in_lportal|
-+------------------+
-| ClassName_       |
-| Configuration_   |
-| Contacts_Entry   |
-| Counter          |
-| Release_         |
-| ServiceComponent |
-+------------------+
-6 rows in set (0.00 sec)
-```
+    MariaDB [lportal]> show tables;
+    +------------------+
+    | Tables_in_lportal|
+    +------------------+
+    | ClassName_       |
+    | Configuration_   |
+    | Contacts_Entry   |
+    | Counter          |
+    | Release_         |
+    | ServiceComponent |
+    +------------------+
+    6 rows in set (0.00 sec)
 
-## A Basic SB Web App
+### A Basic Service Builder Web App
 
-The following snippet shows a servlet implementing a simple web app using the contacts service.
+The servlet in the following snippet implements a simple web app that uses the
+contacts service.
 
-Note how it uses OSGi Declarative Services to define it's dependencies on the `counterLocalService` provided by the Liferay core, as well as to the `entryLocalService` provided by the contacts api.
-
-```
+```java
 package web.sample;
 
 import java.io.IOException;
@@ -261,3 +289,5 @@ public class SampleServlet extends HttpServlet {
 }
 ```
 
+Note how it uses OSGi Declarative Services to reference an instance of Liferay
+Core's `CounterLocalService` and Contacts API's `EntryLocalService`.

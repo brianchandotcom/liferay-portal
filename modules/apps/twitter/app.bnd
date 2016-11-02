@@ -1,7 +1,7 @@
-Liferay-Releng-App-Description:
+Liferay-Releng-App-Description:This app integrates your Twitter timeline into Liferay's Activities framework so that your Tweets show up in your Liferay Activity Stream. Once installed, the app can be added to your private page and configured with your Twitter username. The app will periodically access your tweets through the Twitter API, and import them as Activities. You can view your tweets by adding the Activities portlet onto your personal public or private pages.<br /><br />This app will appear in your Application menu once installed.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Twitter
 Liferay-Releng-Bundle: false
-Liferay-Releng-Category:
+Liferay-Releng-Category:Communication
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: true
 Liferay-Releng-Labs: true

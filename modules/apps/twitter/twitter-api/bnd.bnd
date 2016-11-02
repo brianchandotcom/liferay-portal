@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Twitter API
+Bundle-SymbolicName: com.liferay.twitter.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.twitter.constants,\
+	com.liferay.twitter.exception,\
+	com.liferay.twitter.model,\
+	com.liferay.twitter.service,\
+	com.liferay.twitter.service.persistence

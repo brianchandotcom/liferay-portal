@@ -1,6 +1,6 @@
 # Liferay Slim Runtime
 
-The Liferay Slim Runtime provides the bare minimum environment necesary to run
+The Liferay Slim Runtime provides the bare minimum environment necessary to run
 Service Builder modules. The slim runtime is useful for those who want to test
 their applications quickly in a Liferay runtime without the unnecessary
 add-ons Liferay Portal provides.
@@ -33,9 +33,10 @@ To build the slim runtime, execute the following top-level Ant operation:
 
     ant all -Dbuild.profile=slim
 
-The slim runtime is built in the server directory folder you've set (e.g.,
-`${project.dir}/../bundles`). Note that the slim runtime only supports Tomcat
-8+. This limitation simplifies packaging and configuration.
+The slim runtime is built in the server directory folder you've set in property
+`app.server.parent.dir` in the `app.server.properties` file. Note that the slim
+runtime only supports Tomcat 8+. This limitation simplifies packaging and
+configuration.
 
 ## Launch
 
@@ -154,7 +155,7 @@ The Service Builder runtime bootstraps any deployed Service Builder services
 (API and service modules).
 
 For example, consider deploying the `com.liferay.contacts.api` and
-`com.liferay.contacts.service` modules. Similar to the database scheme creation
+`com.liferay.contacts.service` modules. Similar to the database schema creation
 listed previously, the Service Builder runtime would generate the required
 tables:
 

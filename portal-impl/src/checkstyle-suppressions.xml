@@ -48,7 +48,8 @@
 	<suppress checks="PersistenceCall" files="modules/apps/foundation/mobile-device-rules/mobile-device-rules-service/src/main/java/com/liferay/mobile/device/rules/service/impl/MDRRuleGroupLocalServiceImpl\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/foundation/portal-security/portal-security-ldap/src/main/java/com/liferay/portal/security/ldap/internal/exportimport/DefaultLDAPToPortalConverter\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/screens/screens-service/src/main/java/com/liferay/screens/service/impl/ScreensAssetEntryServiceImpl\.java" />
-	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-tags-test/src/testIntegration/java/com/liferay/asset/tags/service/test/AssetTagFinderTest\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />
+	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-tags-test/src/testIntegration/java/com/liferay/asset/tags/service/test/AssetTagFinderTest\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/web-experience/export-import/export-import-service/src/main/java/com/liferay/exportimport/controller/PortletImportController\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/web-experience/export-import/export-import-test/src/testIntegration/java/com/liferay/exportimport/test/BasePrototypePropagationTestCase\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/web-experience/layout/layout-impl/src/main/java/com/liferay/layout/set/internal/exportimport/data/handler/StagedLayoutSetStagedModelDataHandler\.java" />

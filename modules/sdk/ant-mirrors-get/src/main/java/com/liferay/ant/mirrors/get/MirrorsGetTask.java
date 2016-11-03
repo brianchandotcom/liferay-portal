@@ -420,10 +420,7 @@ public class MirrorsGetTask extends Task {
 	private static final Pattern _SRC_PATTERN = Pattern.compile(
 		"https?://(?<path>.+/)(?<fileName>.+)");
 
-	/**/
-
 	private File _destinationDir;
-
 	private String _fileName;
 	private boolean _force;
 	private boolean _ignoreErrors;

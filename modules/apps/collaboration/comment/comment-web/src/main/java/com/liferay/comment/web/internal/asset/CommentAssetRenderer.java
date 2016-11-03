@@ -156,7 +156,8 @@ public class CommentAssetRenderer
 			liferayPortletRequest, group, CommentPortletKeys.COMMENT, 0, 0,
 			PortletRequest.RENDER_PHASE);
 
-		editPortletURL.setParameter("mvcPath", "/edit_discussion.jsp");
+		editPortletURL.setParameter(
+			"mvcRenderCommandName", "/discussion/edit_discussion");
 		editPortletURL.setParameter(
 			"commentId", String.valueOf(_workflowableComment.getCommentId()));
 

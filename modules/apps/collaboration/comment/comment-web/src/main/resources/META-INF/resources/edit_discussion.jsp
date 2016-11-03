@@ -19,6 +19,10 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	redirect = currentURL;
+}
+
 Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
 long commentId = BeanParamUtil.getLong(comment, request, "commentId");
@@ -54,6 +58,7 @@ if (comment instanceof WorkflowableComment) {
 <aui:form action="<%= editCommentURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="ajax" type="hidden" value="<%= false %>" />
 	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
 	<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />

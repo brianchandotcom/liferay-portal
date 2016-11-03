@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>EventsListPortlet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">EventsListPortlet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[contains(@class,'portlet-title-text') and contains(.,'Events List')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_NO_EVENTS</td>
+	<td>//div[@class='portlet-body' and contains(.,'There are no more events today.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TODAYS_EVENTS_HEADER</td>
+	<td>//th[contains(@id,'todays-events')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TODAYS_EVENTS_EVENT</td>
+	<td>//div[@class='today-events']//div[@class='event']//a[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TODAYS_EVENTS_EVENT_TIME</td>
+	<td>//div[@class='today-events']//div[@class='event' and contains(.,'${key_eventTitle}')]//span[@class='event-time']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPCOMING_EVENTS_HEADER</td>
+	<td>//th[contains(@id,'upcoming-events')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPCOMING_EVENTS_EVENT</td>
+	<td>//div[@class='upcoming-events']//div[@class='event']//a[contains(.,'${key_eventTitle}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

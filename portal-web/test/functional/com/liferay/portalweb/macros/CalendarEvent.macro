@@ -1261,6 +1261,12 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarAgendaView#SCHEDULER_EVENT_SPECIFIC" value1="${eventTitleEdit}" />
 	</command>
 
+	<command name="getEventStartDateViaDetails" returns="startDate">
+		<var locator="CalendarViewEventDetails#START_DATE_FIELD" name="startDate" />
+
+		<return name="startDate" value="${startDate}" />
+	</command>
+
 	<command name="gotoConfigureInvitations">
 		<execute macro="CalendarEvent#_expandPanel">
 			<var name="panelName" value="Invitations" />

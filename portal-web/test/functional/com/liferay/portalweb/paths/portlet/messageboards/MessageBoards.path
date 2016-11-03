@@ -219,7 +219,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_LIST_CHECKBOX</td>
-	<td>//li[contains(.,'${key_categoryName}')]/div/label/input[contains(@type,'checkbox')]</td>
+	<td>//li[contains(.,'${key_categoryName}')]//div[contains(@class,'checkbox')]/label/input[contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -30,12 +30,14 @@ import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
 import com.liferay.knowledge.base.service.KBFolderLocalServiceUtil;
 import com.liferay.knowledge.base.util.comparator.KBArticlePriorityComparator;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -51,6 +53,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.ratings.kernel.service.RatingsEntryLocalServiceUtil;
 import com.liferay.ratings.kernel.service.RatingsStatsLocalServiceUtil;
+
+import java.io.InputStream;
 
 import java.util.List;
 
@@ -199,6 +203,20 @@ public class KBArticleLocalServiceTest {
 			parentKBArticle.getResourcePrimKey(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), null, null, null, _serviceContext);
+	}
+
+	@Test
+	public void testAddKBArticlesMarkdownWithNoWorkflow() throws Exception {
+		updateWorkflowDefinitionForKBArticle("");
+		importMarkdownArticles();
+	}
+
+	@Test
+	public void testAddKBArticlesMarkdownWithSingleApproverWorkflow()
+		throws Exception {
+
+		updateWorkflowDefinitionForKBArticle("Single Approver@1");
+		importMarkdownArticles();
 	}
 
 	@Test(expected = KBArticleContentException.class)
@@ -905,6 +923,27 @@ public class KBArticleLocalServiceTest {
 		Assert.assertEquals(
 			childKBArticle2, topLevelPreviousAndNextKBArticles[0]);
 		Assert.assertNull(topLevelPreviousAndNextKBArticles[2]);
+	}
+
+	protected void importMarkdownArticles() throws PortalException {
+		String fileName = "markdown-articles.zip";
+
+		InputStream zipFileStream =
+			getClass().getClassLoader().getResourceAsStream(fileName);
+
+		KBArticleLocalServiceUtil.addKBArticlesMarkdown(
+			_user.getUserId(), _group.getGroupId(),
+			KBFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, true,
+			zipFileStream, _serviceContext);
+	}
+
+	protected void updateWorkflowDefinitionForKBArticle(
+			String workflowDefinition)
+		throws PortalException {
+
+		WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
+			_user.getUserId(), _user.getCompanyId(), _group.getGroupId(),
+			KBArticle.class.getName(), 0, 0, workflowDefinition);
 	}
 
 	@DeleteAfterTestRun

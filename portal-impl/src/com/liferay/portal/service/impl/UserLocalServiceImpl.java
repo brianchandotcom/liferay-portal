@@ -416,6 +416,55 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Adds the user to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param userId the primary key of the user
+	 */
+	@Override
+	public void addGroupUser(long groupId, long userId)
+		throws PortalException {
+
+		groupPersistence.addUser(groupId, userId);
+
+		reindex(userId);
+
+		addDefaultRolesAndTeams(groupId, new long[] {userId});
+	}
+
+	/**
+	 * Adds the user to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param user the user
+	 */
+	@Override
+	public void addGroupUser(long groupId, User user)
+		throws PortalException {
+
+		addGroupUser(groupId, user.getUserId());
+	}
+
+	/**
+	 * Adds the users to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param users the users
+	 */
+	@Override
+	public void addGroupUsers(long groupId, List<User> users)
+		throws PortalException {
+
+		List<Long> userIds = new ArrayList<>();
+
+		for (User user : users) {
+			userIds.add(user.getUserId());
+		}
+
+		addGroupUsers(groupId, ArrayUtil.toLongArray(userIds));
+	}
+
+	/**
 	 * Adds the users to the group.
 	 *
 	 * @param groupId the primary key of the group

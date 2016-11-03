@@ -229,8 +229,6 @@ mysql.executable=${mysql.executable}]]></echo>
 				</then>
 			</if>
 
-			<print-file file.name="test.${env.HOSTNAME}.properties" />
-
 			<if>
 				<equals arg1="@{database.type}" arg2="mariadb" />
 				<then>

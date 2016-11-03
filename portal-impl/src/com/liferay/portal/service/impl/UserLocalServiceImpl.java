@@ -615,6 +615,51 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Adds the user to the team.
+	 *
+	 * @param teamId the primary key of the team
+	 * @param userId the primary key of the user
+	 */
+	@Override
+	public void addTeamUser(long teamId, long userId)
+		throws PortalException {
+
+		teamPersistence.addUser(teamId, userId);
+
+		reindex(userId);
+	}
+
+	/**
+	 * Adds the user to the team.
+	 *
+	 * @param teamId the primary key of the team
+	 * @param user the user
+	 */
+	@Override
+	public void addTeamUser(long teamId, User user)
+		throws PortalException {
+
+		teamPersistence.addUser(teamId, user);
+
+		reindex(user);
+	}
+
+	/**
+	 * Adds the users to the team.
+	 *
+	 * @param teamId the primary key of the team
+	 * @param users the users
+	 */
+	@Override
+	public void addTeamUsers(long teamId, List<User> users)
+		throws PortalException {
+
+		teamPersistence.addUsers(teamId, users);
+
+		reindex(users);
+	}
+
+	/**
 	 * Adds the users to the team.
 	 *
 	 * @param teamId the primary key of the team

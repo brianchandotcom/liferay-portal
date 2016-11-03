@@ -33,6 +33,8 @@ public class KBActionKeys
 
 	public static final String DELETE_KB_TEMPLATES = "DELETE_KB_TEMPLATES";
 
+	public static final String IMPORT_KB_ARTICLES = "IMPORT_KB_ARTICLES";
+
 	public static final String MOVE_KB_ARTICLE = "MOVE_KB_ARTICLE";
 
 	public static final String MOVE_KB_FOLDER = "MOVE_KB_FOLDER";

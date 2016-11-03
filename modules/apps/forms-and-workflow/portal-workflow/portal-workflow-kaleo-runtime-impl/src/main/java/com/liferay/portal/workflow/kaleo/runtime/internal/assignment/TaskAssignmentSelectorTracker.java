@@ -15,11 +15,11 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;

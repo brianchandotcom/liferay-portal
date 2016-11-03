@@ -27,4 +27,6 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-service")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":core:portal-impl-compat")
+	provided project(":core:portal-kernel-compat")
 }

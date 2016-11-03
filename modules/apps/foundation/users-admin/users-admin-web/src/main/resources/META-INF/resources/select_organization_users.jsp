@@ -21,7 +21,16 @@ long organizationId = ParamUtil.getLong(request, "organizationId");
 
 Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+
+if (Validator.isNull(displayStyle)) {
+	displayStyle = portalPreferences.getValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", "list");
+}
+else {
+	portalPreferences.setValue(UsersAdminPortletKeys.USERS_ADMIN, "display-style", displayStyle);
+
+	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
+}
 
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectUsers");
 
@@ -29,6 +38,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/select_organization_users.jsp");
 portletURL.setParameter("organizationId", String.valueOf(organization.getOrganizationId()));
+portletURL.setParameter("displayStyle", displayStyle);
 portletURL.setParameter("eventName", eventName);
 
 SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
@@ -54,7 +64,7 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
@@ -101,22 +111,62 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 			modelVar="user2"
 			rowIdProperty="screenName"
 		>
-			<liferay-ui:search-container-column-text
-				cssClass="content-column name-column title-column"
-				name="name"
-				property="fullName"
-				truncate="<%= true %>"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<liferay-ui:user-portrait
+							cssClass="user-icon-lg"
+							userId="<%= user2.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				cssClass="content-column screen-name-column"
-				name="screen-name"
-				property="screenName"
-				truncate="<%= true %>"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5><%= user2.getFullName() %></h5>
+
+						<h6 class="text-default">
+							<%= user2.getScreenName() %>
+						</h6>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:user-vertical-card
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							resultRow="<%= row %>"
+							rowChecker="<%= userSearchContainer.getRowChecker() %>"
+							subtitle="<%= user2.getScreenName() %>"
+							title="<%= user2.getFullName() %>"
+							userId="<%= user2.getUserId() %>"
+						/>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="content-column name-column title-column"
+						name="name"
+						property="fullName"
+						truncate="<%= true %>"
+					/>
+
+					<liferay-ui:search-container-column-text
+						cssClass="content-column screen-name-column"
+						name="screen-name"
+						property="screenName"
+						truncate="<%= true %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

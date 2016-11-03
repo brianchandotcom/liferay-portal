@@ -280,7 +280,7 @@
 		height: 16px;
 		left: 0;
 		position: absolute;
-		top: 1px;
+		top: 0;
 
 		@include transition(all 0.6s $ease-out-quart);
 		@include transition-delay(0.2s);
@@ -293,6 +293,7 @@
 		height: 18px;
 		position: absolute;
 		right: 0;
+		top: -1px;
 
 		@include transition(all 0.3s $ease-out-quart);
 		@include transition-delay(0.2s);
@@ -306,11 +307,11 @@ body.open .toast-animation {
 		border-left-width: 6px;
 		height: 18px;
 		left: 4px;
-		top: 0;
+		top: -1px;
 	}
 
 	.cn {
-		border-left-width: 5px;
+		border-left-width: 9px;
 		width: 19px;
 	}
 }

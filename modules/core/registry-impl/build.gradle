@@ -27,6 +27,10 @@ deployDependencies {
 		liferay.deployDir
 	}
 
+	outputs.upToDateWhen {
+		false
+	}
+
 	if (!keepDependencyVersions) {
 		rename new RenameDependencyClosure(project, configurations.provided.name)
 	}

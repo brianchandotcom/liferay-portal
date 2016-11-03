@@ -62,4 +62,8 @@ deployDependencies {
 	into {
 		liferay.deployDir
 	}
+
+	outputs.upToDateWhen {
+		false
+	}
 }

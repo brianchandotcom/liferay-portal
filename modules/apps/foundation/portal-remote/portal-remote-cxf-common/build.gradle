@@ -44,6 +44,10 @@ deployDependencies {
 		liferay.deployDir
 	}
 
+	outputs.upToDateWhen {
+		false
+	}
+
 	String renameSuffix = ".jar"
 
 	if (keepDependencyVersions) {

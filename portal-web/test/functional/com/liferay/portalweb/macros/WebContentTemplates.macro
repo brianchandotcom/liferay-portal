@@ -1,7 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="WebContentNavigator#gotoManageTemplates" />
-
 		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${templateName}" />

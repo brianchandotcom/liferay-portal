@@ -36,9 +36,7 @@
 
 		<execute function="Click" locator1="Form#SIDEBAR_MENUITEM_REMOVE_FIELD" />
 
-		<execute function="Pause" locator1="2000" />
-
-		<execute function="IsNotVisible" locator1="Form#SIDEBAR_CLOSE" />
+		<execute function="AssertElementNotPresent#assertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
 	</command>
 
 	<command name="gotoEdit">

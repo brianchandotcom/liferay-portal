@@ -19,6 +19,7 @@ import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelect
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -28,9 +29,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = TaskAssignmentSelectorTracker.class)
-public class TaskAssignmentSelectorTracker {
+@Component(immediate = true, service = TaskAssignmentSelectorRegistry.class)
+public class TaskAssignmentSelectorTracker
+	implements TaskAssignmentSelectorRegistry {
 
+	@Override
 	public TaskAssignmentSelector getTaskAssignmentSelector(
 		String assigneeClassName) {
 

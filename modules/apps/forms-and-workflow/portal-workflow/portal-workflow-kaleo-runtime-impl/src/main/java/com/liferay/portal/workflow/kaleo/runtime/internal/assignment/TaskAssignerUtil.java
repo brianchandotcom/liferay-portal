@@ -19,6 +19,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelector;
+import com.liferay.portal.workflow.kaleo.runtime.assignment.TaskAssignmentSelectorRegistry;
 import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentInstanceLocalService;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class TaskAssignerUtil {
 				kaleoTaskAssignment.getAssigneeClassName();
 
 			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorTracker.getTaskAssignmentSelector(
+				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
 					assigneeClassName);
 
 			Collection<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
@@ -75,6 +76,6 @@ public class TaskAssignerUtil {
 		_kaleoTaskAssignmentInstanceLocalService;
 
 	@Reference
-	private TaskAssignmentSelectorTracker _taskAssignmentSelectorTracker;
+	private TaskAssignmentSelectorRegistry _taskAssignmentSelectorRegistry;
 
 }

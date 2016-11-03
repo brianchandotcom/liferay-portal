@@ -401,6 +401,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		if (trimmedLine.matches("\\)\\..*\\([^)].*")) {
+			int pos = trimmedLine.indexOf(StringPool.OPEN_PARENTHESIS);
+
+			processMessage(
+				fileName,
+				"There should be a line break after '" +
+					trimmedLine.substring(0, pos + 1) + "'",
+				lineCount);
+		}
+
 		if (trimmedLine.matches("^[^(].*\\+$") && (getLevel(trimmedLine) > 0)) {
 			processMessage(
 				fileName, "There should be a line break after '('", lineCount);

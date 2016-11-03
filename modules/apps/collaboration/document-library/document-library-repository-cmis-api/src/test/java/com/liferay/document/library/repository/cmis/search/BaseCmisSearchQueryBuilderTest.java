@@ -403,7 +403,9 @@ public class BaseCmisSearchQueryBuilderTest {
 			createRepositoryEntry()
 		).when(
 			repositoryEntryLocalService
-		).fetchRepositoryEntry(Mockito.anyLong());
+		).fetchRepositoryEntry(
+			Mockito.anyLong()
+		);
 
 		return repositoryEntryLocalService;
 	}
@@ -459,7 +461,9 @@ public class BaseCmisSearchQueryBuilderTest {
 			pattern
 		).when(
 			_props
-		).get(PropsKeys.INDEX_DATE_FORMAT_PATTERN);
+		).get(
+			PropsKeys.INDEX_DATE_FORMAT_PATTERN
+		);
 
 		DateFormatFactoryUtil dateFormatFactoryUtil =
 			new DateFormatFactoryUtil();
@@ -475,7 +479,9 @@ public class BaseCmisSearchQueryBuilderTest {
 			new SimpleDateFormat(pattern)
 		).when(
 			dateFormatFactory
-		).getSimpleDateFormat(pattern);
+		).getSimpleDateFormat(
+			pattern
+		);
 	}
 
 	protected void setUpPropsUtil() {

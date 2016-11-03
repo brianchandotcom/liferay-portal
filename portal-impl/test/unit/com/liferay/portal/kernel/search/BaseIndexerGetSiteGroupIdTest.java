@@ -206,7 +206,9 @@ public class BaseIndexerGetSiteGroupIdTest extends PowerMockito {
 			new NoSuchGroupException()
 		).when(
 			_groupLocalService
-		).getGroup(groupId);
+		).getGroup(
+			groupId
+		);
 	}
 
 	protected void setUpPropsUtil() {

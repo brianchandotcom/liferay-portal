@@ -132,7 +132,9 @@ public class SearchDisplayContextTest {
 			RandomTestUtil.randomString()
 		).when(
 			jsonArray
-		).getString(0);
+		).getString(
+			0
+		);
 
 		return jsonArray;
 	}
@@ -156,13 +158,17 @@ public class SearchDisplayContextTest {
 			true
 		).when(
 			jsonObject
-		).has("values");
+		).has(
+			"values"
+		);
 
 		Mockito.doReturn(
 			createJSONArray()
 		).when(
 			jsonObject
-		).getJSONArray("values");
+		).getJSONArray(
+			"values"
+		);
 
 		return jsonObject;
 	}
@@ -177,7 +183,9 @@ public class SearchDisplayContextTest {
 			httpServletRequest
 		).when(
 			portal
-		).getHttpServletRequest(renderRequest);
+		).getHttpServletRequest(
+			renderRequest
+		);
 
 		return portal;
 	}
@@ -214,7 +222,9 @@ public class SearchDisplayContextTest {
 			Mockito.mock(Hits.class)
 		).when(
 			facetedSearcher
-		).search(Mockito.<SearchContext>any());
+		).search(
+			Mockito.<SearchContext>any()
+		);
 
 		Mockito.doReturn(
 			facetedSearcher
@@ -228,7 +238,9 @@ public class SearchDisplayContextTest {
 			themeDisplay
 		).when(
 			httpServletRequest
-		).getAttribute(WebKeys.THEME_DISPLAY);
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
 	}
 
 	protected void setUpPortletURLFactory() throws Exception {
@@ -245,7 +257,9 @@ public class SearchDisplayContextTest {
 			themeDisplay
 		).when(
 			renderRequest
-		).getAttribute(WebKeys.THEME_DISPLAY);
+		).getAttribute(
+			WebKeys.THEME_DISPLAY
+		);
 	}
 
 	protected void setUpRequestKeywords(String keywords) {
@@ -253,13 +267,17 @@ public class SearchDisplayContextTest {
 			keywords
 		).when(
 			httpServletRequest
-		).getParameter(SearchPortletParameterNames.KEYWORDS);
+		).getParameter(
+			SearchPortletParameterNames.KEYWORDS
+		);
 
 		Mockito.doReturn(
 			keywords
 		).when(
 			renderRequest
-		).getParameter(SearchPortletParameterNames.KEYWORDS);
+		).getParameter(
+			SearchPortletParameterNames.KEYWORDS
+		);
 	}
 
 	@Mock

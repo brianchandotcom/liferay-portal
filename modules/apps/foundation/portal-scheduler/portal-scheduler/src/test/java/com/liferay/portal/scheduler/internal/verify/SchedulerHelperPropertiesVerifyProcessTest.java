@@ -60,7 +60,9 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 			props.get(
 				SchedulerHelperPropertiesVerifyProcess.
 					LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB)
-		).thenReturn(null);
+		).thenReturn(
+			null
+		);
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
@@ -103,7 +105,9 @@ public class SchedulerHelperPropertiesVerifyProcessTest {
 			props.get(
 				SchedulerHelperPropertiesVerifyProcess.
 					LEGACY_AUDIT_MESSAGE_SCHEDULER_JOB)
-		).thenReturn("true");
+		).thenReturn(
+			"true"
+		);
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);

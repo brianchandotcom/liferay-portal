@@ -55,10 +55,6 @@ public class MirrorsGetTask extends Task {
 
 			File localCacheDir = new File(sb.toString());
 
-			if (!localCacheDir.exists()) {
-				localCacheDir.mkdirs();
-			}
-
 			File localCacheFile = new File(localCacheDir, _fileName);
 
 			if (localCacheFile.exists() && !_force &&
@@ -72,32 +68,38 @@ public class MirrorsGetTask extends Task {
 				localCacheFile.delete();
 			}
 
-			File destinationFile = new File(_destinationDir, _fileName);
+			if (!localCacheFile.exists()) {
+				URL sourceURL = null;
 
-			if (localCacheFile.exists()) {
-				copyFile(localCacheFile, destinationFile);
+				if (_tryLocalNetwork) {
+					sb = new StringBuilder();
 
-				return;
-			}
+					sb.append("http://");
+					sb.append(_LOCAL_NETWORK_HOSTNAME);
+					sb.append("/");
+					sb.append(_path);
+					sb.append("/");
+					sb.append(_fileName);
 
-			URL sourceURL = null;
+					sourceURL = new URL(sb.toString());
 
-			if (_tryLocalNetwork) {
-				sb = new StringBuilder();
+					try {
+						downloadFile(sourceURL, localCacheFile);
+					}
+					catch (IOException ioe) {
+						sb = new StringBuilder();
 
-				sb.append("http://");
-				sb.append(_LOCAL_NETWORK_HOSTNAME);
-				sb.append("/");
-				sb.append(_path);
-				sb.append("/");
-				sb.append(_fileName);
+						sb.append("http://");
+						sb.append(_path);
+						sb.append("/");
+						sb.append(_fileName);
 
-				sourceURL = new URL(sb.toString());
+						sourceURL = new URL(sb.toString());
 
-				try {
-					downloadFile(sourceURL, localCacheFile);
+						downloadFile(sourceURL, localCacheFile);
+					}
 				}
-				catch (IOException ioe) {
+				else {
 					sb = new StringBuilder();
 
 					sb.append("http://");
@@ -110,20 +112,8 @@ public class MirrorsGetTask extends Task {
 					downloadFile(sourceURL, localCacheFile);
 				}
 			}
-			else {
-				sb = new StringBuilder();
 
-				sb.append("http://");
-				sb.append(_path);
-				sb.append("/");
-				sb.append(_fileName);
-
-				sourceURL = new URL(sb.toString());
-
-				downloadFile(sourceURL, localCacheFile);
-			}
-
-			copyFile(localCacheFile, destinationFile);
+			copyFile(localCacheFile, new File(_destinationDir, _fileName));
 		}
 		catch (IOException ioe) {
 			throw new BuildException(ioe);

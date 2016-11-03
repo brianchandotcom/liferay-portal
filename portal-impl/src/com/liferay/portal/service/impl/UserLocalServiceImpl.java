@@ -763,6 +763,59 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Adds the user to the user group.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @param userIds the primary key of the user
+	 */
+	@Override
+	@SuppressWarnings("deprecation")
+	public void addUserGroupUser(long userGroupId, long userId)
+		throws PortalException {
+
+		if (PropsValues.USER_GROUPS_COPY_LAYOUTS_TO_USER_PERSONAL_SITE) {
+			userGroupLocalService.copyUserGroupLayouts(userGroupId, userId);
+		}
+
+		userGroupPersistence.addUser(userGroupId, userId);
+
+		reindex(userId);
+	}
+
+	/**
+	 * Adds the user to the user group.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @param user the user
+	 */
+	@Override
+	@SuppressWarnings("deprecation")
+	public void addUserGroupUser(long userGroupId, User user)
+		throws PortalException {
+
+		addUserGroupUser(userGroupId, user.getUserId());
+	}
+
+	/**
+	 * Adds the users to the user group.
+	 *
+	 * @param userGroupId the primary key of the user group
+	 * @param users the users
+	 */
+	@Override
+	public void addUserGroupUsers(long userGroupId, List<User> users)
+		throws PortalException {
+		
+		List<Long> userIds = new ArrayList<>();
+
+		for (User user : users) {
+			userIds.add(user.getUserId());
+		}
+
+		addUserGroupUsers(userGroupId, ArrayUtil.toLongArray(userIds));
+	}
+
+	/**
 	 * Adds the users to the user group.
 	 *
 	 * @param userGroupId the primary key of the user group

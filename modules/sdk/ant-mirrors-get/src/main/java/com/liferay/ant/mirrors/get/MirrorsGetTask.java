@@ -134,7 +134,9 @@ public class MirrorsGetTask extends Task {
 	public void setSrc(String src) {
 		Matcher srcMatcher = _SRC_PATTERN.matcher(src);
 
-		srcMatcher.find();
+		if (!srcMatcher.find()) {
+			throw new RuntimeException("Invalid src attribute. " + src);
+		}
 
 		_fileName = srcMatcher.group("fileName");
 		_path = srcMatcher.group("path");

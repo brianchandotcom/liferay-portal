@@ -2167,9 +2167,16 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addDefaultUserGroups(long userId) throws PortalException;
 
-	public void addGroupUser(long groupId, User user);
+	/**
+	* @throws PortalException
+	*/
+	public void addGroupUser(long groupId, User user) throws PortalException;
 
-	public void addGroupUser(long groupId, long userId);
+	/**
+	* @throws PortalException
+	*/
+	public void addGroupUser(long groupId, long userId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -2216,9 +2223,15 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	public void addPasswordPolicyUsers(long passwordPolicyId, long[] userIds);
 
-	public void addRoleUser(long roleId, User user);
+	/**
+	* @throws PortalException
+	*/
+	public void addRoleUser(long roleId, User user) throws PortalException;
 
-	public void addRoleUser(long roleId, long userId);
+	/**
+	* @throws PortalException
+	*/
+	public void addRoleUser(long roleId, long userId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -2232,9 +2245,15 @@ public interface UserLocalService extends BaseLocalService,
 	public void addRoleUsers(long roleId, long[] userIds)
 		throws PortalException;
 
-	public void addTeamUser(long teamId, User user);
+	/**
+	* @throws PortalException
+	*/
+	public void addTeamUser(long teamId, User user) throws PortalException;
 
-	public void addTeamUser(long teamId, long userId);
+	/**
+	* @throws PortalException
+	*/
+	public void addTeamUser(long teamId, long userId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -2248,9 +2267,17 @@ public interface UserLocalService extends BaseLocalService,
 	public void addTeamUsers(long teamId, long[] userIds)
 		throws PortalException;
 
-	public void addUserGroupUser(long userGroupId, User user);
+	/**
+	* @throws PortalException
+	*/
+	public void addUserGroupUser(long userGroupId, User user)
+		throws PortalException;
 
-	public void addUserGroupUser(long userGroupId, long userId);
+	/**
+	* @throws PortalException
+	*/
+	public void addUserGroupUser(long userGroupId, long userId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException

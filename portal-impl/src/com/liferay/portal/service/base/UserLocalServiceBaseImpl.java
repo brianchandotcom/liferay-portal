@@ -446,16 +446,19 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addGroupUser(long groupId, long userId) {
+	public void addGroupUser(long groupId, long userId)
+		throws PortalException {
 		groupPersistence.addUser(groupId, userId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addGroupUser(long groupId, User user) {
+	public void addGroupUser(long groupId, User user) throws PortalException {
 		groupPersistence.addUser(groupId, user);
 	}
 
@@ -708,16 +711,18 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addRoleUser(long roleId, long userId) {
+	public void addRoleUser(long roleId, long userId) throws PortalException {
 		rolePersistence.addUser(roleId, userId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addRoleUser(long roleId, User user) {
+	public void addRoleUser(long roleId, User user) throws PortalException {
 		rolePersistence.addUser(roleId, user);
 	}
 
@@ -842,16 +847,18 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addTeamUser(long teamId, long userId) {
+	public void addTeamUser(long teamId, long userId) throws PortalException {
 		teamPersistence.addUser(teamId, userId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addTeamUser(long teamId, User user) {
+	public void addTeamUser(long teamId, User user) throws PortalException {
 		teamPersistence.addUser(teamId, user);
 	}
 
@@ -970,16 +977,20 @@ public abstract class UserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addUserGroupUser(long userGroupId, long userId) {
+	public void addUserGroupUser(long userGroupId, long userId)
+		throws PortalException {
 		userGroupPersistence.addUser(userGroupId, userId);
 	}
 
 	/**
+	 * @throws PortalException
 	 */
 	@Override
-	public void addUserGroupUser(long userGroupId, User user) {
+	public void addUserGroupUser(long userGroupId, User user)
+		throws PortalException {
 		userGroupPersistence.addUser(userGroupId, user);
 	}
 

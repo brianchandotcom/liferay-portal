@@ -82,6 +82,7 @@
 
 					<copy
 						file="portal-impl/src/portal-ext.properties"
+						overwrite="true"
 						tofile="${tstamp.value}/WEB-INF/classes/portal-ext.properties"
 					/>
 
@@ -102,6 +103,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<else>
 					<copy
 						file="portal-impl/src/portal-ext.properties"
+						overwrite="true"
 						tofile="${app.server.classes.portal.dir}/portal-ext.properties"
 					/>
 

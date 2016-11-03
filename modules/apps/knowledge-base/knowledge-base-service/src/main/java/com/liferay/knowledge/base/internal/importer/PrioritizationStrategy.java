@@ -16,7 +16,6 @@ package com.liferay.knowledge.base.internal.importer;
 
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.KBArticleServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
@@ -44,7 +43,7 @@ public class PrioritizationStrategy {
 		Map<String, List<KBArticle>> existingKBArticlesMap = new HashMap<>();
 
 		List<KBArticle> existingParentKBArticles =
-			KBArticleServiceUtil.getKBArticles(
+			KBArticleLocalServiceUtil.getKBArticles(
 				groupId, parentKBFolderId, WorkflowConstants.STATUS_ANY,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -54,7 +53,7 @@ public class PrioritizationStrategy {
 			long resourcePrimKey = existingParentKBArticle.getResourcePrimKey();
 
 			List<KBArticle> existingChildKBArticles =
-				KBArticleServiceUtil.getKBArticles(
+				KBArticleLocalServiceUtil.getKBArticles(
 					groupId, resourcePrimKey, WorkflowConstants.STATUS_ANY,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -256,7 +255,7 @@ public class PrioritizationStrategy {
 					KBArticleLocalServiceUtil.fetchKBArticleByUrlTitle(
 						_groupId, _parentKBFolderId, entry.getKey());
 
-				siblingKBArticles = KBArticleServiceUtil.getKBArticles(
+				siblingKBArticles = KBArticleLocalServiceUtil.getKBArticles(
 					_groupId, parentKBArticle.getResourcePrimKey(),
 					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS, null);

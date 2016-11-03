@@ -433,10 +433,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a user to the organization.
+	 * Adds the user to the organization.
 	 *
 	 * @param organizationId the primary key of the organization
-	 * @param userId the primary key of the user to be added
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void addOrganizationUser(long organizationId, long userId)
@@ -448,10 +448,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a user to the organization.
+	 * Adds the user to the organization.
 	 *
 	 * @param organizationId the primary key of the organization
-	 * @param user the user to be added
+	 * @param user the user
 	 */
 	@Override
 	public void addOrganizationUser(long organizationId, User user)
@@ -466,7 +466,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * Adds the users to the organization.
 	 *
 	 * @param organizationId the primary key of the organization
-	 * @param users the users to be added
+	 * @param users the users
 	 */
 	@Override
 	public void addOrganizationUsers(long organizationId, List<User> users)

@@ -51,7 +51,7 @@ public class MirrorsGetTask extends Task {
 			sb.append(File.separator);
 			sb.append("mirrors");
 			sb.append(File.separator);
-			sb.append(_path);
+			sb.append(getPlatformIndependentPath(_path));
 
 			File localCacheDir = new File(sb.toString());
 
@@ -242,6 +242,18 @@ public class MirrorsGetTask extends Task {
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is not a valid zip file.");
 		}
+	}
+
+	protected String getPlatformIndependentPath(String path) {
+		String[] separators = {"/", "\\"};
+
+		for (String separator : separators) {
+			if (!separator.equals(File.separator)) {
+				path = path.replace(separator, File.separator);
+			}
+		}
+
+		return path;
 	}
 
 	protected boolean isValidMD5(File file, URL md5URL) throws IOException {

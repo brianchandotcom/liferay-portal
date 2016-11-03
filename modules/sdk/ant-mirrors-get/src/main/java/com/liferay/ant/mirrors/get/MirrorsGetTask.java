@@ -58,8 +58,7 @@ public class MirrorsGetTask extends Task {
 			File localCacheFile = new File(localCacheDir, _fileName);
 
 			if (localCacheFile.exists() && !_force &&
-				(_fileName.endsWith(".zip") || _fileName.endsWith(".jar") ||
-				 _fileName.endsWith(".war") || _fileName.endsWith(".ear"))) {
+				isZipFileName(_fileName)) {
 
 				_force = !isValidZip(localCacheFile);
 			}
@@ -234,6 +233,13 @@ public class MirrorsGetTask extends Task {
 			throw new IOException(
 				targetFile.getAbsolutePath() + " failed checksum.");
 		}
+
+		if (isZipFileName(targetFile.getName()) && !isValidZip(targetFile)) {
+			targetFile.delete();
+
+			throw new IOException(
+				targetFile.getAbsolutePath() + " is not a valid zip file.");
+		}
 	}
 
 	protected boolean isValidMD5(File file, URL md5URL) throws IOException {
@@ -311,6 +317,16 @@ public class MirrorsGetTask extends Task {
 				zipFile.close();
 			}
 		}
+	}
+
+	protected boolean isZipFileName(String fileName) {
+		if (fileName.endsWith(".zip") || fileName.endsWith(".jar") ||
+			fileName.endsWith(".war") || fileName.endsWith(".ear")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected int toFile(URL url, File file) throws IOException {

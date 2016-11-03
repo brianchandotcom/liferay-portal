@@ -43,7 +43,28 @@ public class MirrorsGetTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		try {
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb;
+
+			if (_tryLocalNetwork && _path.startsWith(_LOCAL_NETWORK_HOSTNAME)) {
+				sb = new StringBuilder();
+
+				sb.append("WARNING Setting trylocalnetwork=true ");
+				sb.append("implies that the hostname in src is not ");
+				sb.append(_LOCAL_NETWORK_HOSTNAME);
+				sb.append(". Modify your src parameter to exclude ");
+				sb.append(_LOCAL_NETWORK_HOSTNAME);
+				sb.append(" or set trylocalnetwork=false.");
+
+				System.out.println(sb.toString());
+
+				_path = _path.substring(_LOCAL_NETWORK_HOSTNAME.length());
+
+				while (_path.startsWith("/")) {
+					_path = _path.substring(1);
+				}
+			}
+
+			sb = new StringBuilder();
 
 			sb.append(System.getProperty("user.home"));
 			sb.append(File.separator);
@@ -140,6 +161,10 @@ public class MirrorsGetTask extends Task {
 
 		_fileName = srcMatcher.group("fileName");
 		_path = srcMatcher.group("path");
+
+		if (_path.startsWith("mirrors/")) {
+			_path = _path.replace("mirrors/", _LOCAL_NETWORK_HOSTNAME);
+		}
 	}
 
 	public void setTryLocalNetwork(boolean tryLocalNetwork) {

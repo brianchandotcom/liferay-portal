@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Phone;
@@ -65,12 +66,14 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -547,6 +550,13 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setLayoutSetLocalService(
+		LayoutSetLocalService layoutSetLocalService) {
+
+		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setListTypeLocalService(
 		ListTypeLocalService listTypeLocalService) {
 
@@ -757,6 +767,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getPermissionChecker(), group.getGroupId(),
 				ActionKeys.UPDATE);
 
+			boolean hasUnlinkLayoutSetPrototypePermission =
+				PortalPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(),
+					ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
+
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
@@ -766,9 +781,22 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
+			LayoutSet publicLayoutSet = _layoutSetLocalService.getLayoutSet(
+				group.getGroupId(), false);
+			LayoutSet privateLayoutSet = _layoutSetLocalService.getLayoutSet(
+				group.getGroupId(), true);
+
+			String publicLayoutSetPrototypeUuid =
+				publicLayoutSet.getLayoutSetPrototypeUuid();
+			String privateLayoutSetPrototypeUuid =
+				privateLayoutSet.getLayoutSetPrototypeUuid();
+
 			if (hasGroupUpdatePermission &&
+				hasUnlinkLayoutSetPrototypePermission &&
 				((publicLayoutSetPrototypeId > 0) ||
-				 (privateLayoutSetPrototypeId > 0))) {
+				 (privateLayoutSetPrototypeId > 0) ||
+				 Validator.isNotNull(publicLayoutSetPrototypeUuid) ||
+				 Validator.isNotNull(privateLayoutSetPrototypeUuid))) {
 
 				SitesUtil.updateLayoutSetPrototypesLinks(
 					group, publicLayoutSetPrototypeId,
@@ -794,6 +822,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 	private DLAppLocalService _dlAppLocalService;
+	private LayoutSetLocalService _layoutSetLocalService;
 	private ListTypeLocalService _listTypeLocalService;
 	private UserService _userService;
 

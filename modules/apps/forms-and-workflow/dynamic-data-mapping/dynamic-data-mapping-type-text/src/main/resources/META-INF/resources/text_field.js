@@ -47,19 +47,18 @@ AUI.add(
 
 						instance._eventHandlers.push(
 							instance.after('optionsChange', instance._afterOptionsChange),
-							instance.on('valueChanged', instance._onContentChange)
+							instance.after('valueChange', instance._onTextFieldValueChange)
 						);
 					},
 
-					bindInputEvent: function(eventName, callback, volatile) {
-						var instance = this;
+					evaluate: A.debounce(
+						function() {
+							var instance = this;
 
-						if (eventName === instance.getChangeEventName()) {
-							callback = A.debounce(callback, 300, instance);
-						}
-
-						return TextField.superclass.bindInputEvent.apply(instance, [eventName, callback, volatile]);
-					},
+							TextField.superclass.evaluate.apply(instance, arguments);
+						},
+						300
+					),
 
 					getAutoComplete: function() {
 						var instance = this;
@@ -83,6 +82,14 @@ AUI.add(
 						return 'input';
 					},
 
+					getTextHeight: function() {
+						var instance = this;
+
+						var text = instance.getValue();
+
+						return text.split('\n').length;
+					},
+
 					render: function() {
 						var instance = this;
 
@@ -92,6 +99,10 @@ AUI.add(
 
 						if (options.length && instance.get('visible')) {
 							instance._createAutocomplete();
+						}
+
+						if (instance.get('displayStyle') === 'multiline') {
+							instance.syncInputHeight();
 						}
 
 						return instance;
@@ -107,6 +118,21 @@ AUI.add(
 						var inputGroup = container.one('.input-group-container');
 
 						inputGroup.insert(container.one('.help-block'), 'after');
+					},
+
+					syncInputHeight: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						var height = instance.getTextHeight();
+
+						if (height < 2) {
+							inputNode.set('rows', 2);
+						}
+						else {
+							inputNode.set('rows', height);
+						}
 					},
 
 					_afterOptionsChange: function(event) {
@@ -153,14 +179,12 @@ AUI.add(
 						);
 					},
 
-					_onContentChange: function() {
+					_onTextFieldValueChange: function() {
 						var instance = this;
 
-						var inputNode = instance.getInputNode();
-
-						var rows = inputNode.val().split('\n');
-
-						inputNode.set('rows', rows.length + 1);
+						if (instance.get('displayStyle') === 'multiline') {
+							instance.syncInputHeight();
+						}
 					}
 				}
 			}

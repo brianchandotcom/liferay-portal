@@ -28,14 +28,11 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var evaluator = instance.get('evaluator');
-
 						instance._eventHandlers.push(
-							evaluator.after('evaluationStarted', A.bind('_saveSettings', instance)),
+							instance.after('*:valueChange', instance._afterFieldValueChange),
 							instance.after('render', instance._afterSettingsFormRender),
 							instance.on('*:addOption', instance._afterAddOption),
-							instance.on('*:removeOption', instance.alignModal),
-							instance.on('*:valueChange', instance._onFieldValueChange)
+							instance.on('*:removeOption', instance.alignModal)
 						);
 
 						instance._fieldEventHandlers = [];
@@ -92,6 +89,12 @@ AUI.add(
 						}
 					},
 
+					_afterFieldValueChange: function() {
+						var instance = this;
+
+						instance._saveSettings();
+					},
+
 					_afterLabelFieldNormalizeKey: function(key) {
 						var instance = this;
 
@@ -110,7 +113,6 @@ AUI.add(
 						(new A.EventHandle(instance._fieldEventHandlers)).detach();
 
 						instance._fieldEventHandlers.push(
-							labelField.bindContainerEvent('keyup', A.bind('_onKeyUpKeyValueInput', instance, labelField), '.key-value-input'),
 							labelField.on('keyChange', A.bind('_onLabelFieldKeyChange', instance)),
 							labelField.after(A.bind('_afterLabelFieldNormalizeKey', instance), labelField, 'normalizeKey')
 						);
@@ -273,24 +275,14 @@ AUI.add(
 						instance._syncModeToggler();
 					},
 
-					_onFieldValueChange: function() {
-						var instance = this;
-
-						instance._saveSettings();
-					},
-
-					_onKeyUpKeyValueInput: function() {
-						var instance = this;
-
-						instance._saveSettings();
-					},
-
 					_onLabelFieldKeyChange: function(event) {
 						var instance = this;
 
 						var nameField = instance.getField('name');
 
 						nameField.setValue(event.newVal);
+
+						instance._saveSettings();
 					},
 
 					_onNameChange: function(event) {

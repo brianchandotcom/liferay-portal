@@ -422,9 +422,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param userId the primary key of the user
 	 */
 	@Override
-	public void addGroupUser(long groupId, long userId)
-		throws PortalException {
-
+	public void addGroupUser(long groupId, long userId) throws PortalException {
 		groupPersistence.addUser(groupId, userId);
 
 		reindex(userId);
@@ -439,9 +437,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param user the user
 	 */
 	@Override
-	public void addGroupUser(long groupId, User user)
-		throws PortalException {
-
+	public void addGroupUser(long groupId, User user) throws PortalException {
 		addGroupUser(groupId, user.getUserId());
 	}
 
@@ -561,9 +557,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param userId the primary key of the user
 	 */
 	@Override
-	public void addRoleUser(long roleId, long userId)
-		throws PortalException {
-
+	public void addRoleUser(long roleId, long userId) throws PortalException {
 		rolePersistence.addUser(roleId, userId);
 
 		reindex(userId);
@@ -576,9 +570,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param user the user
 	 */
 	@Override
-	public void addRoleUser(long roleId, User user)
-		throws PortalException {
-
+	public void addRoleUser(long roleId, User user) throws PortalException {
 		rolePersistence.addUser(roleId, user);
 
 		reindex(user);
@@ -621,9 +613,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param userId the primary key of the user
 	 */
 	@Override
-	public void addTeamUser(long teamId, long userId)
-		throws PortalException {
-
+	public void addTeamUser(long teamId, long userId) throws PortalException {
 		teamPersistence.addUser(teamId, userId);
 
 		reindex(userId);
@@ -636,9 +626,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param user the user
 	 */
 	@Override
-	public void addTeamUser(long teamId, User user)
-		throws PortalException {
-
+	public void addTeamUser(long teamId, User user) throws PortalException {
 		teamPersistence.addUser(teamId, user);
 
 		reindex(user);
@@ -805,7 +793,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	@Override
 	public void addUserGroupUsers(long userGroupId, List<User> users)
 		throws PortalException {
-		
+
 		List<Long> userIds = new ArrayList<>();
 
 		for (User user : users) {

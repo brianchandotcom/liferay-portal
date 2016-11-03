@@ -23,7 +23,6 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._cache = new A.Map();
 						instance._queue = new A.Queue();
 
 						instance.publish(
@@ -38,12 +37,6 @@ AUI.add(
 						);
 
 						instance.after('evaluationEnded', instance._afterEvaluationEnded);
-					},
-
-					destructor: function() {
-						var instance = this;
-
-						instance._cache.destroy();
 					},
 
 					evaluate: function(trigger, callback) {
@@ -131,45 +124,28 @@ AUI.add(
 
 						var form = instance.get('form');
 
-						var payload = form.getEvaluationPayload();
-
-						var cacheKey = JSON.stringify(payload);
-
-						var cached = instance._cache.getValue(cacheKey);
-
-						if (cached) {
-							callback.call(instance, JSON.parse(cached));
-						}
-						else {
-							instance._request = A.io.request(
-								instance.get('evaluatorURL'),
-								{
-									data: payload,
-									method: 'POST',
-									on: {
-										failure: function(event) {
-											if (event.details[1].statusText !== 'abort') {
-												callback.call(instance, null);
-											}
-											else {
-												callback.call(instance, {});
-											}
-										},
-										success: function(event, id, xhr) {
-											var result = xhr.responseText;
-
-											if (instance._cache.size() > 10) {
-												instance._cache.remove(instance._cache.keys()[0]);
-											}
-
-											instance._cache.put(cacheKey, result);
-
-											callback.call(instance, JSON.parse(result));
+						instance._request = A.io.request(
+							instance.get('evaluatorURL'),
+							{
+								data: form.getEvaluationPayload(),
+								method: 'POST',
+								on: {
+									failure: function(event) {
+										if (event.details[1].statusText !== 'abort') {
+											callback.call(instance, null);
 										}
+										else {
+											callback.call(instance, {});
+										}
+									},
+									success: function(event, id, xhr) {
+										var result = xhr.responseText;
+
+										callback.call(instance, JSON.parse(result));
 									}
 								}
-							);
-						}
+							}
+						);
 					},
 
 					_getEnabled: function(enabled) {
@@ -212,6 +188,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-io-request', 'aui-map']
+		requires: ['aui-component', 'aui-io-request']
 	}
 );

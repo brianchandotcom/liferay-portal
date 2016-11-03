@@ -555,6 +555,51 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Adds the user to the role.
+	 *
+	 * @param roleId the primary key of the role
+	 * @param userId the primary key of the user
+	 */
+	@Override
+	public void addRoleUser(long roleId, long userId)
+		throws PortalException {
+
+		rolePersistence.addUser(roleId, userId);
+
+		reindex(userId);
+	}
+
+	/**
+	 * Adds the user to the role.
+	 *
+	 * @param roleId the primary key of the role
+	 * @param user the user
+	 */
+	@Override
+	public void addRoleUser(long roleId, User user)
+		throws PortalException {
+
+		rolePersistence.addUser(roleId, user);
+
+		reindex(user);
+	}
+
+	/**
+	 * Adds the users to the role.
+	 *
+	 * @param roleId the primary key of the role
+	 * @param users the users
+	 */
+	@Override
+	public void addRoleUsers(long roleId, List<User> users)
+		throws PortalException {
+
+		rolePersistence.addUsers(roleId, users);
+
+		reindex(users);
+	}
+
+	/**
 	 * Adds the users to the role.
 	 *
 	 * @param roleId the primary key of the role

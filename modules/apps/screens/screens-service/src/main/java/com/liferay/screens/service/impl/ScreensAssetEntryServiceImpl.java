@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -117,9 +116,11 @@ public class ScreensAssetEntryServiceImpl
 				max = 500;
 			}
 
-			Layout layout = LayoutUtil.fetchByCompanyId_First(companyId, null);
+			List<Layout> layouts = layoutLocalService.getLayouts(companyId);
 
-			if (layout != null) {
+			if (!layouts.isEmpty()) {
+				Layout layout = layouts.get(0);
+
 				List<AssetEntry> assetEntries =
 					AssetPublisherUtil.getAssetEntries(
 						portletPreferences, layout, groupId, max, false);

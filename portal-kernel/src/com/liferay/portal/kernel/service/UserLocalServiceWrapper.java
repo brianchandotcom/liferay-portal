@@ -1871,6 +1871,11 @@ public class UserLocalServiceWrapper implements UserLocalService,
 		return _userLocalService.getUsersCount();
 	}
 
+	@Override
+	public int getUsersCount(long companyId, boolean defaultUser, int status) {
+		return _userLocalService.getUsersCount(companyId, defaultUser, status);
+	}
+
 	/**
 	* Returns the number of users with the status, and whose first name, middle
 	* name, last name, screen name, and email address match the keywords
@@ -2319,6 +2324,14 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	public java.util.List<com.liferay.portal.kernel.model.User> getUsers(
 		int start, int end) {
 		return _userLocalService.getUsers(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.User> getUsers(
+		long companyId, boolean defaultUser, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.User> obc) {
+		return _userLocalService.getUsers(companyId, defaultUser, status,
+			start, end, obc);
 	}
 
 	/**

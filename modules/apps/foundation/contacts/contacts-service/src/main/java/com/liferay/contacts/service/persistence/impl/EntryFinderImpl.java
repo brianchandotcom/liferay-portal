@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.service.persistence.UserFinderUtil;
-import com.liferay.portal.kernel.service.persistence.UserUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.UserLastNameComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -51,19 +51,19 @@ public class EntryFinderImpl
 	@Override
 	public int countByKeywords(long companyId, long userId, String keywords) {
 		if (Validator.isNotNull(keywords)) {
+			int count = _userLocalService.searchCount(
+				companyId, keywords, keywords, keywords, keywords, keywords, 0,
+				null, false);
+
 			String[] fullNames = CustomSQLUtil.keywords(keywords);
 			String[] emailAddresses = CustomSQLUtil.keywords(keywords);
-
-			int count = UserFinderUtil.countByC_FN_MN_LN_SN_EA_S(
-				companyId, fullNames, fullNames, fullNames, fullNames,
-				emailAddresses, 0, null, false);
 
 			count += countByU_FN_EA(userId, fullNames, emailAddresses);
 
 			return count;
 		}
 
-		int count = UserUtil.countByC_DU_S(companyId, false, 0);
+		int count = _userLocalService.getUsersCount(companyId, false, 0);
 
 		count += EntryUtil.countByUserId(userId);
 
@@ -89,22 +89,22 @@ public class EntryFinderImpl
 		List<BaseModel<?>> models = new ArrayList<>();
 
 		if (Validator.isNotNull(keywords)) {
-			String[] fullNames = CustomSQLUtil.keywords(keywords);
-			String[] emailAddresses = CustomSQLUtil.keywords(keywords);
-
 			models.addAll(
-				UserFinderUtil.findByC_FN_MN_LN_SN_EA_S(
-					companyId, fullNames, fullNames, fullNames, fullNames,
-					emailAddresses, 0, null, false, start, end,
+				_userLocalService.search(
+					companyId, keywords, keywords, keywords, keywords, keywords,
+					0, null, false, start, end,
 					new UserLastNameComparator(true)));
 
 			if (models.size() < (end - start)) {
-				int count = UserFinderUtil.countByC_FN_MN_LN_SN_EA_S(
-					companyId, fullNames, fullNames, fullNames, fullNames,
-					emailAddresses, 0, null, false);
+				int count = _userLocalService.searchCount(
+					companyId, keywords, keywords, keywords, keywords, keywords,
+					0, null, false);
 
 				start -= count;
 				end -= count;
+
+				String[] fullNames = CustomSQLUtil.keywords(keywords);
+				String[] emailAddresses = CustomSQLUtil.keywords(keywords);
 
 				models.addAll(
 					findByU_FN_EA(
@@ -113,12 +113,13 @@ public class EntryFinderImpl
 		}
 		else {
 			models.addAll(
-				UserUtil.findByC_DU_S(
+				_userLocalService.getUsers(
 					companyId, false, 0, start, end,
 					new UserLastNameComparator(true)));
 
 			if (models.size() < (end - start)) {
-				int count = UserUtil.countByC_DU_S(companyId, false, 0);
+				int count = _userLocalService.getUsersCount(
+					companyId, false, 0);
 
 				start -= count;
 				end -= count;
@@ -234,5 +235,8 @@ public class EntryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = UserLocalService.class)
+	private UserLocalService _userLocalService;
 
 }

@@ -2691,6 +2691,20 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		return user.getUserId();
 	}
 
+	@Override
+	public List<User> getUsers(
+		long companyId, boolean defaultUser, int status, int start, int end,
+		OrderByComparator<User> obc) {
+
+		return userPersistence.findByC_DU_S(
+			companyId, defaultUser, status, start, end, obc);
+	}
+
+	@Override
+	public int getUsersCount(long companyId, boolean defaultUser, int status) {
+		return userPersistence.countByC_DU_S(companyId, defaultUser, status);
+	}
+
 	/**
 	 * Returns <code>true</code> if the password policy has been assigned to the
 	 * user.

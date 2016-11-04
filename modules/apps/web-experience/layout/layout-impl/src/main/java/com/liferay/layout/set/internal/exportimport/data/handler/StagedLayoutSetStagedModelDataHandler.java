@@ -47,7 +47,6 @@ import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.LayoutUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
@@ -126,7 +125,7 @@ public class StagedLayoutSetStagedModelDataHandler
 				continue;
 			}
 
-			Layout sourcePrototypeLayout = LayoutUtil.fetchByUUID_G_P(
+			Layout sourcePrototypeLayout = _layoutLocalService.fetchLayout(
 				layout.getSourcePrototypeLayoutUuid(),
 				layoutSetPrototype.getGroupId(), true);
 
@@ -550,7 +549,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			typeSettingsProperties.setProperty(
 				Sites.LAST_MERGE_TIME, String.valueOf(lastMergeTime));
 
-			LayoutUtil.update(layout);
+			_layoutLocalService.updateLayout(layout);
 		}
 
 		// The layout set may be stale because LayoutUtil#update(layout)

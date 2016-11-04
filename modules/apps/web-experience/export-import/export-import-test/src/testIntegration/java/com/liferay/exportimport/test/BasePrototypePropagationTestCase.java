@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -66,7 +66,8 @@ public abstract class BasePrototypePropagationTestCase {
 
 		// Global scope article
 
-		Company company = CompanyUtil.fetchByPrimaryKey(group.getCompanyId());
+		Company company = CompanyLocalServiceUtil.fetchCompany(
+			group.getCompanyId());
 
 		globalGroupId = company.getGroupId();
 

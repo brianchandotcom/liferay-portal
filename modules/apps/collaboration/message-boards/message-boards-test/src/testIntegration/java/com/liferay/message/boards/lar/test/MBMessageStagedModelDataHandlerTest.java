@@ -35,8 +35,8 @@ import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.persistence.RepositoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
@@ -148,7 +148,7 @@ public class MBMessageStagedModelDataHandlerTest
 			dependentStagedModelsMap, DLFileEntry.class,
 			attachmentsFileEntries.get(0));
 
-		Repository repository = RepositoryUtil.fetchByPrimaryKey(
+		Repository repository = RepositoryLocalServiceUtil.getRepository(
 			fileEntry.getRepositoryId());
 
 		addDependentStagedModel(

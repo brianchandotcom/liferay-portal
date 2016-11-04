@@ -88,7 +88,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.persistence.PortletPreferencesUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -258,14 +257,14 @@ public class PortletImportController implements ImportController {
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesUtil.fetchByO_O_P_P(
-				ownerId, ownerType, portletDataContext.getPlid(),
+		javax.portlet.PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPreferences(
+				portletDataContext.getCompanyId(), ownerId, ownerType,
+				portletDataContext.getPlid(),
 				portletDataContext.getPortletId());
 
 		if (portletPreferences == null) {
-			portletPreferences =
-				new com.liferay.portal.model.impl.PortletPreferencesImpl();
+			portletPreferences = new PortletPreferencesImpl();
 		}
 
 		String xml = importPortletData(
@@ -280,7 +279,8 @@ public class PortletImportController implements ImportController {
 
 	public String importPortletData(
 			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences, Element portletDataElement)
+			javax.portlet.PortletPreferences portletPreferences,
+			Element portletDataElement)
 		throws Exception {
 
 		PortletDataHandler portletDataHandler =
@@ -310,6 +310,36 @@ public class PortletImportController implements ImportController {
 				"Importing data for " + portletDataContext.getPortletId());
 		}
 
+		String portletData = portletDataContext.getZipEntryAsString(
+			portletDataElement.attributeValue("path"));
+
+		if (Validator.isNull(portletData)) {
+			return null;
+		}
+
+		portletPreferences = portletDataHandler.importData(
+			portletDataContext, portletDataContext.getPortletId(),
+			portletPreferences, portletData);
+
+		if (portletPreferences == null) {
+			return null;
+		}
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	/**
+	 * @deprecated As of 4.0.0, replaced by {@link #importPortletData(
+	 *             PortletDataContext portletDataContext,
+	 *             javax.portlet.PortletPreferences portletPreferences, Element
+	 *             portletDataElement)}
+	 */
+	@Deprecated
+	public String importPortletData(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, Element portletDataElement)
+		throws Exception {
+
 		PortletPreferencesImpl portletPreferencesImpl = null;
 
 		if (portletPreferences != null) {
@@ -319,23 +349,8 @@ public class PortletImportController implements ImportController {
 						portletPreferences.getPreferences());
 		}
 
-		String portletData = portletDataContext.getZipEntryAsString(
-			portletDataElement.attributeValue("path"));
-
-		if (Validator.isNull(portletData)) {
-			return null;
-		}
-
-		portletPreferencesImpl =
-			(PortletPreferencesImpl)portletDataHandler.importData(
-				portletDataContext, portletDataContext.getPortletId(),
-				portletPreferencesImpl, portletData);
-
-		if (portletPreferencesImpl == null) {
-			return null;
-		}
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
+		return importPortletData(
+			portletDataContext, portletPreferencesImpl, portletDataElement);
 	}
 
 	public void importPortletPreferences(
@@ -639,14 +654,14 @@ public class PortletImportController implements ImportController {
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesUtil.fetchByO_O_P_P(
-				ownerId, ownerType, portletDataContext.getPlid(),
+		javax.portlet.PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPreferences(
+				portletDataContext.getCompanyId(), ownerId, ownerType,
+				portletDataContext.getPlid(),
 				portletDataContext.getPortletId());
 
 		if (portletPreferences == null) {
-			portletPreferences =
-				new com.liferay.portal.model.impl.PortletPreferencesImpl();
+			portletPreferences = new PortletPreferencesImpl();
 		}
 
 		String xml = deletePortletData(portletDataContext, portletPreferences);
@@ -660,7 +675,7 @@ public class PortletImportController implements ImportController {
 
 	protected String deletePortletData(
 			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
+			javax.portlet.PortletPreferences portletPreferences)
 		throws Exception {
 
 		Group group = _groupLocalService.getGroup(
@@ -702,26 +717,38 @@ public class PortletImportController implements ImportController {
 				"Deleting data for " + portletDataContext.getPortletId());
 		}
 
-		PortletPreferencesImpl portletPreferencesImpl =
-			(PortletPreferencesImpl)
-				PortletPreferencesFactoryUtil.fromDefaultXML(
-					portletPreferences.getPreferences());
-
 		try {
-			portletPreferencesImpl =
-				(PortletPreferencesImpl)portletDataHandler.deleteData(
-					portletDataContext, portletDataContext.getPortletId(),
-					portletPreferencesImpl);
+			portletPreferences = portletDataHandler.deleteData(
+				portletDataContext, portletDataContext.getPortletId(),
+				portletPreferences);
 		}
 		finally {
 			portletDataContext.setGroupId(portletDataContext.getScopeGroupId());
 		}
 
-		if (portletPreferencesImpl == null) {
+		if (portletPreferences == null) {
 			return null;
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(portletPreferencesImpl);
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	/**
+	 * @deprecated As of 4.0.0, replaced by {@link deletePortletData(
+	 *             PortletDataContext portletDataContext,
+	 *             javax.portlet.PortletPreferences portletPreferences)}
+	 */
+	@Deprecated
+	protected String deletePortletData(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		javax.portlet.PortletPreferences portletPreferencesImpl =
+			PortletPreferencesFactoryUtil.fromDefaultXML(
+				portletPreferences.getPreferences());
+
+		return deletePortletData(portletDataContext, portletPreferencesImpl);
 	}
 
 	protected void doImportPortletInfo(

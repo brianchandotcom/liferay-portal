@@ -507,6 +507,11 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.model.Layout fetchLayout(
+		java.lang.String uuid, long groupId, boolean privateLayout) {
+		return getService().fetchLayout(uuid, groupId, privateLayout);
+	}
+
+	public static com.liferay.portal.kernel.model.Layout fetchLayout(
 		long groupId, boolean privateLayout, long layoutId) {
 		return getService().fetchLayout(groupId, privateLayout, layoutId);
 	}
@@ -1182,6 +1187,11 @@ public class LayoutLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
 		int start, int end) {
 		return getService().getLayouts(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Layout> getLayouts(
+		long companyId) {
+		return getService().getLayouts(companyId);
 	}
 
 	/**

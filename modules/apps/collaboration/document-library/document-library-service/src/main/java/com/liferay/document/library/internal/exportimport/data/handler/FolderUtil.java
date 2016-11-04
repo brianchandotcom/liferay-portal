@@ -17,7 +17,7 @@ package com.liferay.document.library.internal.exportimport.data.handler;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
-import com.liferay.document.library.kernel.service.persistence.DLFolderUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.util.RepositoryModelUtil;
@@ -68,8 +68,8 @@ public class FolderUtil {
 	public static List<Folder> findByR_P(
 		long repositoryId, long parentFolderId) {
 
-		List<DLFolder> dlFolders = DLFolderUtil.findByG_P(
-			repositoryId, parentFolderId);
+		List<DLFolder> dlFolders = DLFolderLocalServiceUtil.getFolders(
+			repositoryId, parentFolderId, true);
 
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}
@@ -79,7 +79,9 @@ public class FolderUtil {
 	 */
 	@Deprecated
 	public static List<Folder> findByRepositoryId(long repositoryId) {
-		List<DLFolder> dlFolders = DLFolderUtil.findByGroupId(repositoryId);
+		List<DLFolder> dlFolders =
+			DLFolderLocalServiceUtil.getRepositoryFolders(
+				repositoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return RepositoryModelUtil.toFolders(dlFolders);
 	}

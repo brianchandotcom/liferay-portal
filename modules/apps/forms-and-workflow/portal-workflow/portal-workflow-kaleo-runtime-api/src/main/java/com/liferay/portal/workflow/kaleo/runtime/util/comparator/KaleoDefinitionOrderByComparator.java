@@ -12,50 +12,40 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime.internal.util.comparator;
+package com.liferay.portal.workflow.kaleo.runtime.util.comparator;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorAdapter;
-import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
-import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
-import com.liferay.portal.workflow.kaleo.runtime.util.WorkflowContextUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
 /**
  * @author William Newbury
  */
-public class KaleoTaskInstanceTokenOrderByComparator
-	extends OrderByComparatorAdapter<KaleoTaskInstanceToken, WorkflowTask> {
+public class KaleoDefinitionOrderByComparator
+	extends OrderByComparatorAdapter<KaleoDefinition, WorkflowDefinition> {
 
-	public static OrderByComparator<KaleoTaskInstanceToken>
-		getOrderByComparator(
-			OrderByComparator<WorkflowTask> orderByComparator,
-			KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
+	public static OrderByComparator<KaleoDefinition> getOrderByComparator(
+		OrderByComparator<WorkflowDefinition> orderByComparator,
+		KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
 
 		if (orderByComparator == null) {
 			return null;
 		}
 
-		return new KaleoTaskInstanceTokenOrderByComparator(
+		return new KaleoDefinitionOrderByComparator(
 			orderByComparator, kaleoWorkflowModelConverter);
 	}
 
 	@Override
-	public WorkflowTask adapt(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		try {
-			return _kaleoWorkflowModelConverter.toWorkflowTask(
-				kaleoTaskInstanceToken,
-				WorkflowContextUtil.convert(
-					kaleoTaskInstanceToken.getWorkflowContext()));
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
+	public WorkflowDefinition adapt(KaleoDefinition kaleoDefinition) {
+		return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+			kaleoDefinition);
 	}
 
-	private KaleoTaskInstanceTokenOrderByComparator(
-		OrderByComparator<WorkflowTask> orderByComparator,
+	private KaleoDefinitionOrderByComparator(
+		OrderByComparator<WorkflowDefinition> orderByComparator,
 		KaleoWorkflowModelConverter kaleoWorkflowModelConverter) {
 
 		super(orderByComparator);

@@ -45,8 +45,8 @@ import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
 import com.liferay.portal.workflow.kaleo.runtime.KaleoSignaler;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.internal.node.NodeExecutorFactory;
-import com.liferay.portal.workflow.kaleo.runtime.internal.util.comparator.KaleoInstanceOrderByComparator;
 import com.liferay.portal.workflow.kaleo.runtime.node.NodeExecutor;
+import com.liferay.portal.workflow.kaleo.runtime.util.comparator.KaleoInstanceOrderByComparator;
 
 import java.io.InputStream;
 import java.io.Serializable;

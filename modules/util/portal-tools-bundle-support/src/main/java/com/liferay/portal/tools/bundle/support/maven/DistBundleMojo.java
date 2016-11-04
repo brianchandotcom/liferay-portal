@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.CommandDeploy;
-import com.liferay.portal.tools.bundle.support.CommandDistBundle;
-import com.liferay.portal.tools.bundle.support.CommandInitBundle;
+import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
+import com.liferay.portal.tools.bundle.support.commands.CommandDistBundle;
+import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 

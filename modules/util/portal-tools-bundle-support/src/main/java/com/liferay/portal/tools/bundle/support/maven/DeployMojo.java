@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.CommandDeploy;
+import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
 
 import java.io.File;
 

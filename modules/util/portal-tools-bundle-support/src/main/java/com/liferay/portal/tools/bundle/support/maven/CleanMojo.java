@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.CommandClean;
+import com.liferay.portal.tools.bundle.support.commands.CommandClean;
 
 import java.io.IOException;
 

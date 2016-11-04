@@ -34,11 +34,21 @@ public class InitBundleMojo extends AbstractBundleMojo {
 		}
 
 		try {
-			InitBundleCommand initBundleCommand = new InitBundleCommand(
-				new File(project.getBasedir(), configs), environment,
-				getLiferayHomeDir(), password, proxyHost, proxyPassword,
-				proxyPort, proxyProtocol, proxyUsername, stripComponents,
-				url.toString(), username);
+			InitBundleCommand initBundleCommand = new InitBundleCommand();
+
+			initBundleCommand.setConfigsDir(
+				new File(project.getBasedir(), configs));
+			initBundleCommand.setEnvironment(environment);
+			initBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
+			initBundleCommand.setPassword(password);
+			initBundleCommand.setProxyHost(proxyHost);
+			initBundleCommand.setProxyPassword(proxyPassword);
+			initBundleCommand.setProxyPort(proxyPort);
+			initBundleCommand.setProxyProtocol(proxyProtocol);
+			initBundleCommand.setProxyUsername(proxyUsername);
+			initBundleCommand.setStripComponents(stripComponents);
+			initBundleCommand.setUrl(url.toString());
+			initBundleCommand.setUsername(username);
 
 			initBundleCommand.execute();
 		}

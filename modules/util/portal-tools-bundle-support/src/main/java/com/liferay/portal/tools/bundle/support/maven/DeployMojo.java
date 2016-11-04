@@ -38,8 +38,12 @@ public class DeployMojo extends AbstractLiferayMojo {
 		}
 
 		try {
-			DeployCommand deployCommand = new DeployCommand(
-				deployFile, false, getLiferayHomeDir(), outputFileName);
+			DeployCommand deployCommand = new DeployCommand();
+
+			deployCommand.setFile(deployFile);
+			deployCommand.setIncludeFolder(false);
+			deployCommand.setLiferayHomeDir(getLiferayHomeDir());
+			deployCommand.setOutputFileName(outputFileName);
 
 			deployCommand.execute();
 		}

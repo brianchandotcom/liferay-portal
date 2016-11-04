@@ -37,8 +37,10 @@ public class CleanMojo extends AbstractLiferayMojo {
 		}
 
 		try {
-			CleanCommand cleanCommand = new CleanCommand(
-				fileName, getLiferayHomeDir());
+			CleanCommand cleanCommand = new CleanCommand();
+
+			cleanCommand.setFileName(fileName);
+			cleanCommand.setLiferayHomeDir(getLiferayHomeDir());
 
 			cleanCommand.execute();
 		}

@@ -61,30 +61,6 @@ import org.apache.http.util.EntityUtils;
 )
 public class InitBundleCommand extends BaseCommand {
 
-	public InitBundleCommand() {
-	}
-
-	public InitBundleCommand(
-		File configsDir, String environment, File liferayHomeDir,
-		String password, String proxyHost, String proxyPassword, int proxyPort,
-		String proxyProtocol, String proxyUsername, int stripComponents,
-		String url, String username) {
-
-		super(liferayHomeDir);
-
-		_configsDir = configsDir;
-		_environment = environment;
-		_password = password;
-		_proxyHost = proxyHost;
-		_proxyPassword = proxyPassword;
-		_proxyPort = proxyPort;
-		_proxyProtocol = proxyProtocol;
-		_proxyUsername = proxyUsername;
-		_stripComponents = stripComponents;
-		_url = url;
-		_username = username;
-	}
-
 	@Override
 	public void execute() throws Exception {
 		deleteBundle();

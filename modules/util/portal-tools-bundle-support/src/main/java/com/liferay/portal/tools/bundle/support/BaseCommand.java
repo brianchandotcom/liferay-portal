@@ -35,7 +35,15 @@ public abstract class BaseCommand {
 
 	public abstract void execute() throws Exception;
 
-	public String getDeployFolder(String type) {
+	public File getLiferayHomeDir() {
+		return _liferayHomeDir;
+	}
+
+	public void setLiferayHomeDir(File liferayHomeDir) {
+		_liferayHomeDir = liferayHomeDir;
+	}
+
+	protected String getDeployFolder(String type) {
 		if (type.equals("jar")) {
 			return "osgi/modules/";
 		}
@@ -47,20 +55,8 @@ public abstract class BaseCommand {
 		return "deploy/";
 	}
 
-	public File getLiferayHomeDir() {
-		return _liferayHomeDir;
-	}
-
-	public Path getLiferayHomePath() {
+	protected Path getLiferayHomePath() {
 		return _liferayHomeDir.toPath();
-	}
-
-	public void setHelp(boolean help) {
-		_help = help;
-	}
-
-	public void setLiferayHomeDir(File liferayHomeDir) {
-		_liferayHomeDir = liferayHomeDir;
 	}
 
 	protected boolean isHelp() {

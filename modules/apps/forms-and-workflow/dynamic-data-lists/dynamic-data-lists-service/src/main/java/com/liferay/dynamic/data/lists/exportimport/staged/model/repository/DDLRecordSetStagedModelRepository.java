@@ -134,47 +134,6 @@ public class DDLRecordSetStagedModelRepository
 		deleteDDMStructures(recordSetDDMStructureIds);
 	}
 
-	public List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext, DDLRecordSet ddlRecordSet) {
-
-		List<DDLRecord> ddlRecords = ddlRecordSet.getRecords();
-
-		Stream<DDLRecord> ddlRecordsStream = ddlRecords.stream();
-
-		Stream<StagedModel> stagedModelsStream = ddlRecordsStream.map(
-			(ddlRecord) -> (StagedModel)ddlRecord);
-
-		return stagedModelsStream.collect(Collectors.toList());
-	}
-
-	public List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext, DDLRecordSet ddlRecordSet) {
-
-		List<StagedModel> dependencyStagedModels = new ArrayList<>();
-
-		try {
-			DDMStructure ddmStructure = ddlRecordSet.getDDMStructure();
-
-			dependencyStagedModels.add(ddmStructure);
-
-			List<DDMTemplate> ddmTemplates = ddmStructure.getTemplates();
-
-			for (DDMTemplate ddmTemplate : ddmTemplates) {
-				dependencyStagedModels.add(ddmTemplate);
-			}
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return dependencyStagedModels;
-	}
-
 	@Override
 	public DDLRecordSet fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {

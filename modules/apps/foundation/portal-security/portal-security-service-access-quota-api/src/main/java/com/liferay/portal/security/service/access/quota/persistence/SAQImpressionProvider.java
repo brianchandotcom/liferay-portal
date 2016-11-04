@@ -24,7 +24,7 @@ import java.util.Map;
  * @author Stian Sigvartsen
  */
 @ProviderType
-public interface SAQImpressionPersistence {
+public interface SAQImpressionProvider {
 
 	public void createSAQImpression(
 		long companyId, Map<String, String> metrics, long expiryIntervalMillis);

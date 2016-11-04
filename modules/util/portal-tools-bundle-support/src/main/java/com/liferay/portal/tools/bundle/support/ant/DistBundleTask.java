@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.ant;
 
-import com.liferay.portal.tools.bundle.support.CommandDistBundle;
+import com.liferay.portal.tools.bundle.support.commands.CommandDistBundle;
 
 import org.apache.tools.ant.BuildException;
 

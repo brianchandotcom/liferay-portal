@@ -14,6 +14,10 @@
 
 package com.liferay.portal.tools.bundle.support;
 
+import com.liferay.portal.tools.bundle.support.commands.CommandClean;
+import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
+import com.liferay.portal.tools.bundle.support.commands.CommandDistBundle;
+import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import com.sun.net.httpserver.BasicAuthenticator;

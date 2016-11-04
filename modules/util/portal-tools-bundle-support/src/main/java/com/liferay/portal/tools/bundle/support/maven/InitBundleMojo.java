@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.CommandInitBundle;
+import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
 
 import java.io.File;
 

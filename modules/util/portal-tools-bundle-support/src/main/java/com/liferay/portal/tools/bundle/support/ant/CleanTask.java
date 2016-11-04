@@ -23,6 +23,7 @@ import org.apache.tools.ant.BuildException;
  */
 public class CleanTask extends CleanCommand {
 
+	@Override
 	public void execute() {
 		try {
 			super.execute();

@@ -133,8 +133,8 @@
 
 	<command name="gotoManageTemplatesviaStructures">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="rowEntry" value="${structureTitle}" />
 			<var name="menuItem" value="Manage Templates" />
+			<var name="rowEntry" value="${structureTitle}" />
 		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">

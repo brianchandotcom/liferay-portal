@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,6 +41,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -46,10 +49,13 @@ import org.junit.Test;
  */
 public class ReleaseVersionsTest {
 
+	@BeforeClass
+	public static void setUpClass() {
+		_portalPath = Paths.get(System.getProperty("user.dir"));
+	}
+
 	@Test
 	public void testReleaseVersions() throws IOException {
-		final Path portalPath = Paths.get(System.getProperty("user.dir"));
-
 		String otherDirName = System.getProperty(
 			"release.versions.test.other.dir");
 
@@ -67,19 +73,19 @@ public class ReleaseVersionsTest {
 
 		boolean differentTypes = false;
 
-		if (otherRelease != _isRelease(portalPath)) {
+		if (otherRelease != _isRelease(_portalPath)) {
 			differentTypes = true;
 		}
 
 		Assert.assertTrue(
-			portalPath + " and " + otherPath + " must be different types",
+			_portalPath + " and " + otherPath + " must be different types",
 			differentTypes);
 
 		final Set<Path> ignorePaths = new HashSet<>(
-			Arrays.asList(portalPath.resolve("modules/third-party")));
+			Arrays.asList(_portalPath.resolve("modules/third-party")));
 
 		Files.walkFileTree(
-			portalPath,
+			_portalPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -97,7 +103,8 @@ public class ReleaseVersionsTest {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Path bndBndRelativePath = portalPath.relativize(bndBndPath);
+					Path bndBndRelativePath = _portalPath.relativize(
+						bndBndPath);
 
 					Path otherBndBndPath = otherPath.resolve(
 						bndBndRelativePath);
@@ -113,8 +120,7 @@ public class ReleaseVersionsTest {
 					}
 
 					_checkReleaseVersion(
-						bndBndPath, otherBndBndPath, otherRelease,
-						portalPath.relativize(dirPath));
+						bndBndPath, otherBndBndPath, otherRelease, dirPath);
 
 					return FileVisitResult.SKIP_SUBTREE;
 				}
@@ -124,7 +130,7 @@ public class ReleaseVersionsTest {
 
 	private void _checkReleaseVersion(
 			Path bndBndPath, Path otherBndBndPath, boolean otherRelease,
-			Path relativePath)
+			Path dirPath)
 		throws IOException {
 
 		Properties bndProperties = _loadProperties(bndBndPath);
@@ -168,12 +174,12 @@ public class ReleaseVersionsTest {
 		}
 
 		if ((delta != 0) && (delta != 1)) {
-			StringBundler sb = new StringBundler(13);
+			StringBundler sb = new StringBundler(21);
 
 			sb.append("Difference in ");
 			sb.append(Constants.BUNDLE_VERSION);
 			sb.append(" for ");
-			sb.append(relativePath);
+			sb.append(_portalPath.relativize(dirPath));
 			sb.append(" between master (");
 			sb.append(masterVersion);
 			sb.append(", defined in ");
@@ -190,9 +196,68 @@ public class ReleaseVersionsTest {
 
 			sb.append(releaseVersionPath.getFileName());
 
-			sb.append(") branches is not allowed");
+			sb.append(") branches is not allowed. Please ");
+
+			Path updateVersionPath;
+			String updateVersionSeparator;
+
+			Path gitRepoPath = _getParentFile(dirPath, ".gitrepo");
+
+			if (gitRepoPath != null) {
+				String gitRepo = _read(gitRepoPath);
+
+				if (!gitRepo.contains("mode = pull")) {
+					gitRepoPath = null;
+				}
+			}
+
+			if (gitRepoPath != null) {
+				Path gitRepoDirPath = gitRepoPath.getParent();
+
+				updateVersionPath = gitRepoDirPath.resolve(
+					"../" + _getVersionOverrideFileName(dirPath));
+
+				updateVersionSeparator = StringPool.EQUAL;
+			}
+			else {
+				updateVersionPath = dirPath.resolve("bnd.bnd");
+				updateVersionSeparator = ": ";
+			}
+
+			updateVersionPath = updateVersionPath.toRealPath();
+
+			if (Files.exists(updateVersionPath)) {
+				sb.append("update");
+			}
+			else {
+				sb.append("add");
+			}
+
+			sb.append(" \"");
+			sb.append(Constants.BUNDLE_VERSION);
+			sb.append(updateVersionSeparator);
+			sb.append(releaseVersion);
+			sb.append("\" in ");
+			sb.append(_portalPath.relativize(updateVersionPath));
+			sb.append(" for the master branch.");
 
 			Assert.fail(sb.toString());
+		}
+	}
+
+	private Path _getParentFile(Path dirPath, String fileName) {
+		while (true) {
+			Path path = dirPath.resolve(fileName);
+
+			if (Files.exists(path)) {
+				return path;
+			}
+
+			dirPath = dirPath.getParent();
+
+			if (dirPath == null) {
+				return null;
+			}
 		}
 	}
 
@@ -200,8 +265,10 @@ public class ReleaseVersionsTest {
 			Path bndBndPath, Properties bndProperties)
 		throws IOException {
 
-		Path versionOverridePath = _getVersionOverrideFile(
-			bndBndPath.getParent());
+		Path dirPath = bndBndPath.getParent();
+
+		Path versionOverridePath = _getParentFile(
+			dirPath, _getVersionOverrideFileName(dirPath));
 
 		if (versionOverridePath != null) {
 			Properties versionOverrides = _loadProperties(versionOverridePath);
@@ -220,25 +287,9 @@ public class ReleaseVersionsTest {
 		return new ObjectValuePair<>(Version.parseVersion(version), bndBndPath);
 	}
 
-	private Path _getVersionOverrideFile(Path dirPath) {
-		Path dirNamePath = dirPath.getFileName();
-
-		String fileName =
-			".version-override-" + dirNamePath.toString() + ".properties";
-
-		while (true) {
-			Path path = dirPath.resolve(fileName);
-
-			if (Files.exists(path)) {
-				return path;
-			}
-
-			dirPath = dirPath.getParent();
-
-			if (dirPath == null) {
-				return null;
-			}
-		}
+	private String _getVersionOverrideFileName(Path dirPath) {
+		return ".version-override-" + String.valueOf(dirPath.getFileName()) +
+			".properties";
 	}
 
 	private boolean _isRelease(Path path) {
@@ -259,7 +310,13 @@ public class ReleaseVersionsTest {
 		return properties;
 	}
 
+	private String _read(Path path) throws IOException {
+		return new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		ReleaseVersionsTest.class);
+
+	private static Path _portalPath;
 
 }

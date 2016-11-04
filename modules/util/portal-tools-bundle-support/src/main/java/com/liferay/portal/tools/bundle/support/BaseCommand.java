@@ -39,12 +39,12 @@ public abstract class BaseCommand {
 		if (type.equals("jar")) {
 			return "osgi/modules/";
 		}
-		else if (type.equals("war")) {
+
+		if (type.equals("war")) {
 			return "osgi/war/";
 		}
-		else {
-			return "deploy/";
-		}
+
+		return "deploy/";
 	}
 
 	public File getLiferayHomeDir() {

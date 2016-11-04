@@ -36,7 +36,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 	@Override
 	public void execute() throws MojoExecutionException {
-		MavenProject rootProject = MavenUtil.getRootParent(project);
+		MavenProject rootProject = MavenUtil.getRootProject(project);
 
 		Build build = rootProject.getBuild();
 

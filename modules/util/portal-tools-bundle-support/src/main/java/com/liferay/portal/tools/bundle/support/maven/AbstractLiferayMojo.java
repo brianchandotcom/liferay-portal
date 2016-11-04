@@ -41,7 +41,7 @@ public abstract class AbstractLiferayMojo extends AbstractMojo {
 		}
 		else {
 			_liferayHomeDir = new File(
-				MavenUtil.getRootParentBaseDir(project), _liferayHome);
+				MavenUtil.getRootProjectBaseDir(project), _liferayHome);
 		}
 
 		return _liferayHomeDir;

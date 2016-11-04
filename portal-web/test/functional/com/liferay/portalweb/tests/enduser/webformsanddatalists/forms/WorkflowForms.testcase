@@ -350,6 +350,44 @@
 
 		<execute macro="Form#closeSidebar" />
 
+		<execute macro="FormsAdminNavigator#gotoAddRule" />
+
+		<execute macro="FormRules#configureConditionOptions">
+			<var name="conditionField" value="Select" />=
+			<var name="conditionOperator" value="Is equal to" />
+			<var name="conditionRowNumber" value="1" />
+			<var name="conditionValueField" value="Select 1" />
+			<var name="conditionValueType" value="Value" />
+		</execute>
+
+		<execute macro="FormRules#configureActionOptions">
+			<var name="action" value="Show" />
+			<var name="actionRowNumber" value="1" />
+			<var name="actionTarget" value="Text One" />
+		</execute>
+
+		<execute macro="FormRules#save" />
+
+		<execute macro="FormRules#addRule" />
+
+		<execute macro="FormRules#configureConditionOptions">
+			<var name="conditionField" value="Radio" />
+			<var name="conditionOperator" value="Is equal to" />
+			<var name="conditionRowNumber" value="1" />
+			<var name="conditionValueField" value="Option 1" />
+			<var name="conditionValueType" value="Value" />
+		</execute>
+
+		<execute macro="FormRules#configureActionOptions">
+			<var name="action" value="Show" />
+			<var name="actionRowNumber" value="1" />
+			<var name="actionTarget" value="Text Two" />
+		</execute>
+
+		<execute macro="FormRules#save" />
+
+		<execute macro="FormsAdminNavigator#gotoFormBuilder" />
+
 		<execute macro="FormsAdminNavigator#gotoSettings" />
 
 		<execute macro="Form#configureWorkflow">

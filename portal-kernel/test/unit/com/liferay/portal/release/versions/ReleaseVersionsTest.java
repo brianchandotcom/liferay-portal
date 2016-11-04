@@ -19,6 +19,7 @@ import aQute.bnd.version.Version;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -136,22 +137,22 @@ public class ReleaseVersionsTest {
 
 		Assert.assertEquals(bundleSymbolicName, otherBundleSymbolicName);
 
-		String bundleVersion = _getVersion(
-			bndBndPath.getParent(), bndProperties);
-		String otherBundleVersion = _getVersion(
-			otherBndBndPath.getParent(), otherBndProperties);
+		ObjectValuePair<Version, Path> versionPathPair = _getVersion(
+			bndBndPath, bndProperties);
+		ObjectValuePair<Version, Path> otherVersionPathPair = _getVersion(
+			otherBndBndPath, otherBndProperties);
 
-		Version masterVersion;
-		Version releaseVersion;
+		ObjectValuePair<Version, Path> masterVersionPair = otherVersionPathPair;
+
+		ObjectValuePair<Version, Path> releaseVersionPair = versionPathPair;
 
 		if (otherRelease) {
-			masterVersion = Version.parseVersion(bundleVersion);
-			releaseVersion = Version.parseVersion(otherBundleVersion);
+			masterVersionPair = versionPathPair;
+			releaseVersionPair = otherVersionPathPair;
 		}
-		else {
-			masterVersion = Version.parseVersion(otherBundleVersion);
-			releaseVersion = Version.parseVersion(bundleVersion);
-		}
+
+		Version masterVersion = masterVersionPair.getKey();
+		Version releaseVersion = releaseVersionPair.getKey();
 
 		int delta = 0;
 
@@ -167,7 +168,7 @@ public class ReleaseVersionsTest {
 		}
 
 		if ((delta != 0) && (delta != 1)) {
-			StringBundler sb = new StringBundler(9);
+			StringBundler sb = new StringBundler(13);
 
 			sb.append("Difference in ");
 			sb.append(Constants.BUNDLE_VERSION);
@@ -175,18 +176,32 @@ public class ReleaseVersionsTest {
 			sb.append(relativePath);
 			sb.append(" between master (");
 			sb.append(masterVersion);
+			sb.append(", defined in ");
+
+			Path masterVersionPath = masterVersionPair.getValue();
+
+			sb.append(masterVersionPath.getFileName());
+
 			sb.append(") and release (");
 			sb.append(releaseVersion);
+			sb.append(", defined in ");
+
+			Path releaseVersionPath = releaseVersionPair.getValue();
+
+			sb.append(releaseVersionPath.getFileName());
+
 			sb.append(") branches is not allowed");
 
 			Assert.fail(sb.toString());
 		}
 	}
 
-	private String _getVersion(Path dirPath, Properties bndProperties)
+	private ObjectValuePair<Version, Path> _getVersion(
+			Path bndBndPath, Properties bndProperties)
 		throws IOException {
 
-		Path versionOverridePath = _getVersionOverrideFile(dirPath);
+		Path versionOverridePath = _getVersionOverrideFile(
+			bndBndPath.getParent());
 
 		if (versionOverridePath != null) {
 			Properties versionOverrides = _loadProperties(versionOverridePath);
@@ -195,11 +210,14 @@ public class ReleaseVersionsTest {
 				Constants.BUNDLE_VERSION);
 
 			if (Validator.isNotNull(version)) {
-				return version;
+				return new ObjectValuePair<>(
+					Version.parseVersion(version), versionOverridePath);
 			}
 		}
 
-		return bndProperties.getProperty(Constants.BUNDLE_VERSION);
+		String version = bndProperties.getProperty(Constants.BUNDLE_VERSION);
+
+		return new ObjectValuePair<>(Version.parseVersion(version), bndBndPath);
 	}
 
 	private Path _getVersionOverrideFile(Path dirPath) {

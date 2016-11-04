@@ -49,16 +49,14 @@ AUI.add(
 							instance.after('optionsChange', instance._afterOptionsChange),
 							instance.after('valueChange', instance._onTextFieldValueChange)
 						);
+
+						instance.evaluate = A.debounce(
+							function() {
+								TextField.superclass.evaluate.apply(instance, arguments);
+							},
+							300
+						);
 					},
-
-					evaluate: A.debounce(
-						function() {
-							var instance = this;
-
-							TextField.superclass.evaluate.apply(instance, arguments);
-						},
-						300
-					),
 
 					getAutoComplete: function() {
 						var instance = this;

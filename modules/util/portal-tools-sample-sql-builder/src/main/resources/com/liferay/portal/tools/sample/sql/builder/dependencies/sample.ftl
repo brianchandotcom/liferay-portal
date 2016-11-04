@@ -16,4 +16,6 @@
 
 <#include "counters.ftl">
 
+<#include "release.ftl">
+
 COMMIT_TRANSACTION

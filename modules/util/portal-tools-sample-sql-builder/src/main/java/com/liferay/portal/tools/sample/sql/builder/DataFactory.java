@@ -128,6 +128,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferencesModel;
+import com.liferay.portal.kernel.model.ReleaseModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionModel;
@@ -169,6 +170,7 @@ import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 import com.liferay.portal.model.impl.LayoutSetModelImpl;
 import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
+import com.liferay.portal.model.impl.ReleaseModelImpl;
 import com.liferay.portal.model.impl.ResourcePermissionModelImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.model.impl.SubscriptionModelImpl;
@@ -2225,6 +2227,32 @@ public class DataFactory {
 		return layoutModels;
 	}
 
+	public List<ReleaseModel> newReleaseModels() throws IOException {
+		List<ReleaseModel> releases = new ArrayList<>();
+
+		try (InputStream is = DataFactory.class.getResourceAsStream(
+				"dependencies/releases.txt");
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new InputStreamReader(is))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				String[] parts = StringUtil.split(line, CharPool.COLON);
+
+				if (parts.length > 0) {
+					String servletContextName = parts[0];
+					String schemaVersion = parts[1];
+
+					releases.add(
+						newReleaseModel(servletContextName, schemaVersion));
+				}
+			}
+		}
+
+		return releases;
+	}
+
 	public List<ResourcePermissionModel> newResourcePermissionModels(
 		AssetCategoryModel assetCategoryModel) {
 
@@ -3118,6 +3146,23 @@ public class DataFactory {
 		portletPreferencesModel.setPreferences(preferences);
 
 		return portletPreferencesModel;
+	}
+
+	protected ReleaseModelImpl newReleaseModel(
+			String servletContextName, String schemaVersion)
+		throws IOException {
+
+		ReleaseModelImpl releaseModel = new ReleaseModelImpl();
+
+		releaseModel.setReleaseId(_counter.get());
+		releaseModel.setCreateDate(new Date());
+		releaseModel.setModifiedDate(new Date());
+		releaseModel.setServletContextName(servletContextName);
+		releaseModel.setSchemaVersion(schemaVersion);
+		releaseModel.setBuildDate(new Date());
+		releaseModel.setVerified(true);
+
+		return releaseModel;
 	}
 
 	protected ResourcePermissionModel newResourcePermissionModel(

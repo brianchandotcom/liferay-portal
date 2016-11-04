@@ -1,3 +1,8 @@
+import java.util.jar.Attributes
+import java.util.jar.JarFile
+
+task writeReleases
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.blogs.web", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.document.library.api", version: "3.0.0"
@@ -25,4 +30,34 @@ dependencies {
 	provided group: "com.liferay", name: "org.freemarker", version: "2.3.23.LIFERAY-PATCHED-2"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+}
+
+classes {
+	dependsOn writeReleases
+}
+
+writeReleases {
+	doLast {
+		File releasesTxtFile = new File(processResources.destinationDir, "com/liferay/portal/tools/sample/sql/builder/dependencies/releases.txt")
+
+		releasesTxtFile.withWriter("UTF-8") {
+			Writer writer ->
+
+			configurations.compile.each {
+				JarFile jarFile = new JarFile(it)
+
+				Attributes mainAttributes = jarFile.manifest.mainAttributes
+
+				String schemaVersion = mainAttributes.getValue("Liferay-Require-SchemaVersion")
+
+				if (!schemaVersion) {
+					return
+				}
+
+				String symbolicName = mainAttributes.getValue("Bundle-SymbolicName")
+
+				writer.writeLine "${symbolicName}:${schemaVersion}"
+			}
+		}
+	}
 }

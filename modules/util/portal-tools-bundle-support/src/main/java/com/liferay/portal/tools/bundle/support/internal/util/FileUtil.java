@@ -337,6 +337,4 @@ public class FileUtil {
 		}
 	}
 
-	private static final int _BUFFER = 2048;
-
 }

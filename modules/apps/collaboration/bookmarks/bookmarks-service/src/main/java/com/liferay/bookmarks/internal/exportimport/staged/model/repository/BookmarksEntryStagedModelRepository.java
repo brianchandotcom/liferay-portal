@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -100,40 +99,6 @@ public class BookmarksEntryStagedModelRepository
 		_bookmarksEntryLocalService.deleteEntries(
 			portletDataContext.getScopeGroupId(),
 			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
-
-	@Override
-	public List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext, BookmarksEntry bookmarksEntry) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext, BookmarksEntry bookmarksEntry) {
-
-		Optional<BookmarksFolder> bookmarksFolderOptional = null;
-
-		try {
-			bookmarksFolderOptional = Optional.ofNullable(
-				bookmarksEntry.getFolder());
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		List<StagedModel> dependencyStagedModels = new ArrayList<>();
-
-		bookmarksFolderOptional.ifPresent(
-			(bookmarksFolder) -> dependencyStagedModels.add(bookmarksFolder));
-
-		return dependencyStagedModels;
 	}
 
 	@Override

@@ -56,14 +56,6 @@ public abstract class BaseStagedModelRepository<T extends StagedModel>
 		throws PortalException;
 
 	@Override
-	public abstract List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext, T stagedModel);
-
-	@Override
-	public abstract List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext, T stagedModel);
-
-	@Override
 	public T fetchMissingReference(String uuid, long groupId) {
 
 		// Try to fetch the existing staged model from the importing group

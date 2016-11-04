@@ -245,6 +245,7 @@ else {
 		'<portlet:namespace />openSelectUsersDialog',
 		function(organizationId) {
 			var A = AUI();
+
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

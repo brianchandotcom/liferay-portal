@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.bundle.support.ant;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
+import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
 
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author David Truong
  */
-public class InitBundleTask extends CommandInitBundle {
+public class InitBundleTask extends InitBundleCommand {
 
 	public void execute() {
 		try {

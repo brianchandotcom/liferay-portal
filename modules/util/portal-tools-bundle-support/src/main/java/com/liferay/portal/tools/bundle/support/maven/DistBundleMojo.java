@@ -14,9 +14,9 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
-import com.liferay.portal.tools.bundle.support.commands.CommandDistBundle;
-import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
+import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
+import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
+import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
@@ -58,18 +58,18 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 				File liferayHomeDir = getLiferayHomeDir();
 
-				CommandInitBundle commandInitBundle = new CommandInitBundle(
+				InitBundleCommand initBundleCommand = new InitBundleCommand(
 					new File(project.getBasedir(), configs), environment,
 					liferayHomeDir, password, proxyHost, proxyPassword,
 					proxyPort, proxyProtocol, proxyUsername, stripComponents,
 					url.toString(), username);
 
-				commandInitBundle.execute();
+				initBundleCommand.execute();
 
-				CommandDistBundle commandDistBundle = new CommandDistBundle(
+				DistBundleCommand distBundleCommand = new DistBundleCommand(
 					format, includeFolder, getLiferayHomeDir(), archive);
 
-				commandDistBundle.execute();
+				distBundleCommand.execute();
 
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
 			}
@@ -80,10 +80,10 @@ public class DistBundleMojo extends AbstractBundleMojo {
 		}
 		else if (packaging.equals("war") || packaging.equals("jar")) {
 			try {
-				CommandDeploy commandDeploy = new CommandDeploy(
+				DeployCommand deployCommand = new DeployCommand(
 					deployFile, includeFolder, archive, outputFileName);
 
-				commandDeploy.execute();
+				deployCommand.execute();
 			}
 			catch (Exception e) {
 				throw new MojoExecutionException(

@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.bundle.support.ant;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandDistBundle;
+import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
 
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author David Truong
  */
-public class DistBundleTask extends CommandDistBundle {
+public class DistBundleTask extends DistBundleCommand {
 
 	public void execute() {
 		try {

@@ -59,12 +59,12 @@ import org.apache.http.util.EntityUtils;
 @Parameters(
 	commandDescription = "Download a new bundle and unpack to Liferay home"
 )
-public class CommandInitBundle extends BaseCommand {
+public class InitBundleCommand extends BaseCommand {
 
-	public CommandInitBundle() {
+	public InitBundleCommand() {
 	}
 
-	public CommandInitBundle(
+	public InitBundleCommand(
 		File configsDir, String environment, File liferayHomeDir,
 		String password, String proxyHost, String proxyPassword, int proxyPort,
 		String proxyProtocol, String proxyUsername, int stripComponents,

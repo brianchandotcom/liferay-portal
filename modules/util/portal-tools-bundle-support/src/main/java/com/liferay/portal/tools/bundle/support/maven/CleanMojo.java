@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandClean;
+import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
 
 import java.io.IOException;
 
@@ -37,10 +37,10 @@ public class CleanMojo extends AbstractLiferayMojo {
 		}
 
 		try {
-			CommandClean commandClean = new CommandClean(
+			CleanCommand cleanCommand = new CleanCommand(
 				fileName, getLiferayHomeDir());
 
-			commandClean.execute();
+			cleanCommand.execute();
 		}
 		catch (IOException ioe) {
 			throw new MojoExecutionException(ioe.getMessage(), ioe);

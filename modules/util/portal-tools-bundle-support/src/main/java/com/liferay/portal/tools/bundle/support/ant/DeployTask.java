@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.bundle.support.ant;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
+import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
 
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author David Truong
  */
-public class DeployTask extends CommandDeploy {
+public class DeployTask extends DeployCommand {
 
 	public void execute() {
 		try {

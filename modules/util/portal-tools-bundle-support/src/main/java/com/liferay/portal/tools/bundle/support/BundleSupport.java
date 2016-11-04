@@ -16,10 +16,10 @@ package com.liferay.portal.tools.bundle.support;
 
 import com.beust.jcommander.JCommander;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandClean;
-import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
-import com.liferay.portal.tools.bundle.support.commands.CommandDistBundle;
-import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
+import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
+import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
+import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
+import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
@@ -58,20 +58,20 @@ public class BundleSupport {
 	}
 
 	public static void main(String[] args) throws Exception {
-		CommandClean commandClean = new CommandClean();
+		CleanCommand cleanCommand = new CleanCommand();
 
-		CommandDeploy commandDeploy = new CommandDeploy();
+		DeployCommand deployCommand = new DeployCommand();
 
-		CommandDistBundle commandDistBundle = new CommandDistBundle();
+		DistBundleCommand distBundleCommand = new DistBundleCommand();
 
-		CommandInitBundle commandInitBundle = new CommandInitBundle();
+		InitBundleCommand initBundleCommand = new InitBundleCommand();
 
 		JCommander jCommander = new JCommander();
 
-		jCommander.addCommand(COMMAND_CLEAN, commandClean);
-		jCommander.addCommand(COMMAND_DEPLOY, commandDeploy);
-		jCommander.addCommand(COMMAND_DIST_BUNDLE, commandDistBundle);
-		jCommander.addCommand(COMMAND_INIT_BUNDLE, commandInitBundle);
+		jCommander.addCommand(COMMAND_CLEAN, cleanCommand);
+		jCommander.addCommand(COMMAND_DEPLOY, deployCommand);
+		jCommander.addCommand(COMMAND_DIST_BUNDLE, distBundleCommand);
+		jCommander.addCommand(COMMAND_INIT_BUNDLE, initBundleCommand);
 
 		File jarFile = FileUtil.getJarFile();
 
@@ -87,16 +87,16 @@ public class BundleSupport {
 		String command = jCommander.getParsedCommand();
 
 		if (COMMAND_CLEAN.equals(command)) {
-			execute(jCommander, commandClean, command);
+			execute(jCommander, cleanCommand, command);
 		}
 		else if (COMMAND_DEPLOY.equals(command)) {
-			execute(jCommander, commandDeploy, command);
+			execute(jCommander, deployCommand, command);
 		}
 		else if (COMMAND_DIST_BUNDLE.equals(command)) {
-			execute(jCommander, commandDistBundle, command);
+			execute(jCommander, distBundleCommand, command);
 		}
 		else if (COMMAND_INIT_BUNDLE.equals(command)) {
-			execute(jCommander, commandInitBundle, command);
+			execute(jCommander, initBundleCommand, command);
 		}
 		else {
 			jCommander.usage();

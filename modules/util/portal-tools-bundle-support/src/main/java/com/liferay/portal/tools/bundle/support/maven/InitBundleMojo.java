@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandInitBundle;
+import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
 
 import java.io.File;
 
@@ -34,13 +34,13 @@ public class InitBundleMojo extends AbstractBundleMojo {
 		}
 
 		try {
-			CommandInitBundle commandInitBundle = new CommandInitBundle(
+			InitBundleCommand initBundleCommand = new InitBundleCommand(
 				new File(project.getBasedir(), configs), environment,
 				getLiferayHomeDir(), password, proxyHost, proxyPassword,
 				proxyPort, proxyProtocol, proxyUsername, stripComponents,
 				url.toString(), username);
 
-			commandInitBundle.execute();
+			initBundleCommand.execute();
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException("Could not initialize bundle", e);

@@ -45,23 +45,26 @@
 			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 			<var name="conditionValueField" value="${conditionValueField}" />
 			<var name="conditionValueType" value="${conditionValueType}" />
+			<var name="optionsSet" value="${optionsSet}" />
 		</execute>
 	</command>
 
 	<command name="defineConditionValue">
 		<if>
-			<equals arg1="${conditionValueType}" arg2="Other Field" />
-			<then>
-				<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD" value1="${conditionValueField}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${conditionValueType}" arg2="Value" />
+			<isset var="conditionFieldValue" />
 			<then>
 				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
 
 				<execute function="Type" locator1="Form#RULE_BUILDER_CONDITION_VALUE_TEXT_FIELD" value1="${conditionFieldValue}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="conditionValueField" />
+			<then>
+				<var name="key_conditionRowNumber" value="${conditionRowNumber}" />
+
+				<execute function="Select" locator1="Form#RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD" value1="${conditionValueField}" />
 			</then>
 		</if>
 	</command>

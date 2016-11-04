@@ -42,20 +42,6 @@ import org.apache.commons.compress.utils.IOUtils;
 @Parameters(commandDescription = "Deploy file to Liferay home")
 public class DeployCommand extends BaseCommand {
 
-	public DeployCommand() {
-	}
-
-	public DeployCommand(
-		File file, boolean includeFolder, File liferayHomeDir,
-		String outputFileName) {
-
-		super(liferayHomeDir);
-
-		_file = file;
-		_includeFolder = includeFolder;
-		_outputFileName = outputFileName;
-	}
-
 	@Override
 	public void execute() throws Exception {
 		if (!_file.exists()) {
@@ -107,8 +93,16 @@ public class DeployCommand extends BaseCommand {
 		return _outputFileName;
 	}
 
+	public boolean isIncludeFolder() {
+		return _includeFolder;
+	}
+
 	public void setFile(File file) {
 		_file = file;
+	}
+
+	public void setIncludeFolder(boolean includeFolder) {
+		_includeFolder = includeFolder;
 	}
 
 	public void setOutputFileName(String outputFileName) {

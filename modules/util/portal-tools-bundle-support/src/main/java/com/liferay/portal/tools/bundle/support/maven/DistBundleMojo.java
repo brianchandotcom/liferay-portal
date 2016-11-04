@@ -58,16 +58,30 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 				File liferayHomeDir = getLiferayHomeDir();
 
-				InitBundleCommand initBundleCommand = new InitBundleCommand(
-					new File(project.getBasedir(), configs), environment,
-					liferayHomeDir, password, proxyHost, proxyPassword,
-					proxyPort, proxyProtocol, proxyUsername, stripComponents,
-					url.toString(), username);
+				InitBundleCommand initBundleCommand = new InitBundleCommand();
+
+				initBundleCommand.setConfigsDir(
+					new File(project.getBasedir(), configs));
+				initBundleCommand.setEnvironment(environment);
+				initBundleCommand.setLiferayHomeDir(liferayHomeDir);
+				initBundleCommand.setPassword(password);
+				initBundleCommand.setProxyHost(proxyHost);
+				initBundleCommand.setProxyPassword(proxyPassword);
+				initBundleCommand.setProxyPort(proxyPort);
+				initBundleCommand.setProxyProtocol(proxyProtocol);
+				initBundleCommand.setProxyUsername(proxyUsername);
+				initBundleCommand.setStripComponents(stripComponents);
+				initBundleCommand.setUrl(url.toString());
+				initBundleCommand.setUsername(username);
 
 				initBundleCommand.execute();
 
-				DistBundleCommand distBundleCommand = new DistBundleCommand(
-					format, includeFolder, getLiferayHomeDir(), archive);
+				DistBundleCommand distBundleCommand = new DistBundleCommand();
+
+				distBundleCommand.setFormat(format);
+				distBundleCommand.setIncludeFolder(includeFolder);
+				distBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
+				distBundleCommand.setOutputFile(archive);
 
 				distBundleCommand.execute();
 
@@ -80,8 +94,12 @@ public class DistBundleMojo extends AbstractBundleMojo {
 		}
 		else if (packaging.equals("war") || packaging.equals("jar")) {
 			try {
-				DeployCommand deployCommand = new DeployCommand(
-					deployFile, includeFolder, archive, outputFileName);
+				DeployCommand deployCommand = new DeployCommand();
+
+				deployCommand.setFile(deployFile);
+				deployCommand.setIncludeFolder(includeFolder);
+				deployCommand.setLiferayHomeDir(archive);
+				deployCommand.setOutputFileName(outputFileName);
 
 				deployCommand.execute();
 			}

@@ -173,8 +173,11 @@ public class BundleSupportTest {
 
 		testJar.createNewFile();
 
-		CleanCommand cleanCommand = new CleanCommand(
-			"test.war", new File(temporaryFolder.getRoot(), "bundles"));
+		CleanCommand cleanCommand = new CleanCommand();
+
+		cleanCommand.setFileName("test.war");
+		cleanCommand.setLiferayHomeDir(
+			new File(temporaryFolder.getRoot(), "bundles"));
 
 		cleanCommand.execute();
 
@@ -187,9 +190,12 @@ public class BundleSupportTest {
 	public void testCommandDeployJar() throws Exception {
 		File liferayHomeDir = temporaryFolder.newFolder("bundles");
 
-		DeployCommand deployCommand = new DeployCommand(
-			temporaryFolder.newFile("test-1.0.0.jar"), false, liferayHomeDir,
-			"test.jar");
+		DeployCommand deployCommand = new DeployCommand();
+
+		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.jar"));
+		deployCommand.setIncludeFolder(false);
+		deployCommand.setLiferayHomeDir(liferayHomeDir);
+		deployCommand.setOutputFileName("test.jar");
 
 		deployCommand.execute();
 
@@ -209,9 +215,12 @@ public class BundleSupportTest {
 
 		FileUtil.copyFile(new File(url.getFile()), liferayHomeDirTar);
 
-		DeployCommand deployCommand = new DeployCommand(
-			temporaryFolder.newFile("test-1.0.0.jar"), false, liferayHomeDirTar,
-			"test.jar");
+		DeployCommand deployCommand = new DeployCommand();
+
+		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.jar"));
+		deployCommand.setIncludeFolder(false);
+		deployCommand.setLiferayHomeDir(liferayHomeDirTar);
+		deployCommand.setOutputFileName("test.jar");
 
 		deployCommand.execute();
 
@@ -234,9 +243,12 @@ public class BundleSupportTest {
 
 		FileUtil.copyFile(new File(url.getFile()), liferayHomeDirZip);
 
-		DeployCommand deployCommand = new DeployCommand(
-			temporaryFolder.newFile("test-1.0.0.war"), false, liferayHomeDirZip,
-			"test.war");
+		DeployCommand deployCommand = new DeployCommand();
+
+		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.war"));
+		deployCommand.setIncludeFolder(false);
+		deployCommand.setLiferayHomeDir(liferayHomeDirZip);
+		deployCommand.setOutputFileName("test.war");
 
 		deployCommand.execute();
 
@@ -253,9 +265,12 @@ public class BundleSupportTest {
 	public void testCommandDeployWar() throws Exception {
 		File liferayHomeDir = temporaryFolder.newFolder("bundles");
 
-		DeployCommand deployCommand = new DeployCommand(
-			temporaryFolder.newFile("test-1.0.0.war"), false, liferayHomeDir,
-			"test.war");
+		DeployCommand deployCommand = new DeployCommand();
+
+		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.war"));
+		deployCommand.setIncludeFolder(false);
+		deployCommand.setLiferayHomeDir(liferayHomeDir);
+		deployCommand.setOutputFileName("test.war");
 
 		deployCommand.execute();
 
@@ -276,9 +291,13 @@ public class BundleSupportTest {
 
 		Assert.assertFalse(outputFile.exists());
 
-		DistBundleCommand distBundleCommand = new DistBundleCommand(
-			"tar.gz", true, new File(temporaryFolder.getRoot(), "bundles"),
-			outputFile);
+		DistBundleCommand distBundleCommand = new DistBundleCommand();
+
+		distBundleCommand.setFormat("tar.gz");
+		distBundleCommand.setIncludeFolder(true);
+		distBundleCommand.setLiferayHomeDir(
+			new File(temporaryFolder.getRoot(), "bundles"));
+		distBundleCommand.setOutputFile(outputFile);
 
 		distBundleCommand.execute();
 
@@ -297,9 +316,13 @@ public class BundleSupportTest {
 
 		Assert.assertFalse(outputFile.exists());
 
-		DistBundleCommand distBundleCommand = new DistBundleCommand(
-			"zip", true, new File(temporaryFolder.getRoot(), "bundles"),
-			outputFile);
+		DistBundleCommand distBundleCommand = new DistBundleCommand();
+
+		distBundleCommand.setFormat("zip");
+		distBundleCommand.setIncludeFolder(true);
+		distBundleCommand.setLiferayHomeDir(
+			new File(temporaryFolder.getRoot(), "bundles"));
+		distBundleCommand.setOutputFile(outputFile);
 
 		distBundleCommand.execute();
 
@@ -310,9 +333,20 @@ public class BundleSupportTest {
 	public void testCommandInitBundleTar() throws Exception {
 		File liferayHomeDir = temporaryFolder.newFolder("bundles");
 
-		InitBundleCommand initBundleCommand = new InitBundleCommand(
-			null, "local", liferayHomeDir, "test", null, null, 0, null, null, 0,
-			"http://localhost:8888/test.tar.gz", "test");
+		InitBundleCommand initBundleCommand = new InitBundleCommand();
+
+		initBundleCommand.setConfigsDir(null);
+		initBundleCommand.setEnvironment("local");
+		initBundleCommand.setLiferayHomeDir(liferayHomeDir);
+		initBundleCommand.setPassword("test");
+		initBundleCommand.setProxyHost(null);
+		initBundleCommand.setProxyPassword(null);
+		initBundleCommand.setProxyPort(0);
+		initBundleCommand.setProxyProtocol(null);
+		initBundleCommand.setProxyUsername(null);
+		initBundleCommand.setStripComponents(0);
+		initBundleCommand.setUrl("http://localhost:8888/test.tar.gz");
+		initBundleCommand.setUsername("test");
 
 		initBundleCommand.execute();
 
@@ -339,10 +373,21 @@ public class BundleSupportTest {
 
 		File liferayHomeDir = temporaryFolder.newFolder("bundles");
 
-		InitBundleCommand initBundleCommand = new InitBundleCommand(
-			new File(temporaryFolder.getRoot(), "configs"), "local",
-			liferayHomeDir, null, null, null, 0, null, null, 0,
-			"http://localhost:8888/test.tar.gz", null);
+		InitBundleCommand initBundleCommand = new InitBundleCommand();
+
+		initBundleCommand.setConfigsDir(
+			new File(temporaryFolder.getRoot(), "configs"));
+		initBundleCommand.setEnvironment("local");
+		initBundleCommand.setLiferayHomeDir(liferayHomeDir);
+		initBundleCommand.setPassword("test");
+		initBundleCommand.setProxyHost(null);
+		initBundleCommand.setProxyPassword(null);
+		initBundleCommand.setProxyPort(0);
+		initBundleCommand.setProxyProtocol(null);
+		initBundleCommand.setProxyUsername(null);
+		initBundleCommand.setStripComponents(0);
+		initBundleCommand.setUrl("http://localhost:8888/test.tar.gz");
+		initBundleCommand.setUsername(null);
 
 		initBundleCommand.execute();
 

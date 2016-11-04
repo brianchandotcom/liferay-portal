@@ -34,20 +34,6 @@ import java.nio.file.Path;
 )
 public class DistBundleCommand extends BaseCommand {
 
-	public DistBundleCommand() {
-	}
-
-	public DistBundleCommand(
-		String format, boolean includeFolder, File liferayHomeDir,
-		File outputFile) {
-
-		super(liferayHomeDir);
-
-		_format = format;
-		_includeFolder = includeFolder;
-		_outputFile = outputFile;
-	}
-
 	@Override
 	public void execute() throws Exception {
 		if (_outputFile.exists()) {
@@ -96,8 +82,6 @@ public class DistBundleCommand extends BaseCommand {
 		_outputFile = outputFile;
 	}
 
-	protected static final String DEFAULT_FORMAT = "zip";
-
 	private void _distBundleTar() throws Exception {
 		FileUtil.tar(
 			getLiferayHomePath(), _outputFile.toPath(), _includeFolder);
@@ -107,8 +91,10 @@ public class DistBundleCommand extends BaseCommand {
 		FileUtil.zip(getLiferayHomePath(), _outputFile, _includeFolder);
 	}
 
+	private static final String _DEFAULT_FORMAT = "zip";
+
 	@Parameter(description = "The archive format.", names = {"--format"})
-	private String _format = DEFAULT_FORMAT;
+	private String _format = _DEFAULT_FORMAT;
 
 	@Parameter(
 		description = "Add a parent folder to the archive",

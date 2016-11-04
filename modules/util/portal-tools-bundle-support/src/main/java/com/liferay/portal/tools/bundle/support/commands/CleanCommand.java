@@ -31,15 +31,6 @@ import java.nio.file.Files;
 @Parameters(commandDescription = "Delete file from deployed to Liferay home")
 public class CleanCommand extends BaseCommand {
 
-	public CleanCommand() {
-	}
-
-	public CleanCommand(String fileName, File liferayHomeDir) {
-		super(liferayHomeDir);
-
-		_fileName = fileName;
-	}
-
 	@Override
 	public void execute() throws IOException {
 		String fileName = FileUtil.getFileName(_fileName);

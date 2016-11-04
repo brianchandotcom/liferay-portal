@@ -87,18 +87,11 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setWSRPConsumerPortletLocalService(
-		WSRPConsumerPortletLocalService wSRPConsumerPortletLocalService) {
-
-		_wSRPConsumerPortletLocalService = wSRPConsumerPortletLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPMessageListener.class);
 
-	private static WSRPConsumerPortletLocalService
-		_wSRPConsumerPortletLocalService;
+	@Reference
+	private WSRPConsumerPortletLocalService _wSRPConsumerPortletLocalService;
 
 	private BundleContext _bundleContext;
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;

@@ -16,8 +16,9 @@ package com.liferay.portal.search.elasticsearch.internal.index;
 
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.Index;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreationHelper;
+import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreator;
 
 import org.elasticsearch.client.Client;
 
@@ -54,10 +55,10 @@ public class LiferayIndexFixture {
 	}
 
 	protected Index createIndex() {
-		return _elasticsearchFixture.createIndex(
-			_indexName,
-			new LiferayIndexCreationHelper(
-				_elasticsearchFixture.getIndicesAdminClient()));
+		IndexCreator indexCreator = new LiferayIndexCreator(
+			_elasticsearchFixture);
+
+		return indexCreator.createIndex(_indexName);
 	}
 
 	private final ElasticsearchFixture _elasticsearchFixture;

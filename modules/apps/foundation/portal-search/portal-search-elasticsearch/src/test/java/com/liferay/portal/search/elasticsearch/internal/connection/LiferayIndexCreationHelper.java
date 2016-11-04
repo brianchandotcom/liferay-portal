@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch.internal.connection;
 import com.liferay.portal.search.elasticsearch.internal.index.LiferayDocumentTypeFactory;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
-import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.Settings;
 
 /**
@@ -25,30 +24,44 @@ import org.elasticsearch.common.settings.Settings;
  */
 public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
-	public LiferayIndexCreationHelper(IndicesAdminClient indicesAdminClient) {
-		_liferayDocumentTypeFactory = new LiferayDocumentTypeFactory(
-			indicesAdminClient);
+	public LiferayIndexCreationHelper(
+		IndicesAdminClientSupplier indicesAdminClientSupplier) {
+
+		_indicesAdminClientSupplier = indicesAdminClientSupplier;
 	}
 
 	@Override
 	public void contribute(
 		CreateIndexRequestBuilder createIndexRequestBuilder) {
 
-		_liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+			getLiferayDocumentTypeFactory();
+
+		liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
 			createIndexRequestBuilder);
 	}
 
 	@Override
 	public void contributeIndexSettings(Settings.Builder builder) {
-		_liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(builder);
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+			getLiferayDocumentTypeFactory();
+
+		liferayDocumentTypeFactory.createRequiredDefaultAnalyzers(builder);
 	}
 
 	@Override
 	public void whenIndexCreated(String indexName) {
-		_liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(
-			indexName);
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+			getLiferayDocumentTypeFactory();
+
+		liferayDocumentTypeFactory.createOptionalDefaultTypeMappings(indexName);
 	}
 
-	private final LiferayDocumentTypeFactory _liferayDocumentTypeFactory;
+	protected LiferayDocumentTypeFactory getLiferayDocumentTypeFactory() {
+		return new LiferayDocumentTypeFactory(
+			_indicesAdminClientSupplier.getIndicesAdminClient());
+	}
+
+	private final IndicesAdminClientSupplier _indicesAdminClientSupplier;
 
 }

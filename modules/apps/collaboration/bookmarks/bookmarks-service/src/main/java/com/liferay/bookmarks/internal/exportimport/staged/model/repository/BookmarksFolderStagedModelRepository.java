@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -97,33 +96,6 @@ public class BookmarksFolderStagedModelRepository
 
 		_bookmarksFolderLocalService.deleteFolders(
 			portletDataContext.getScopeGroupId());
-	}
-
-	@Override
-	public List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext,
-		BookmarksFolder bookmarksFolder) {
-
-		List<BookmarksEntry> bookmarksEntries =
-			_bookmarksEntryLocalService.getEntries(
-				bookmarksFolder.getGroupId(), bookmarksFolder.getFolderId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Stream<BookmarksEntry> bookmarksEntriesStream =
-			bookmarksEntries.stream();
-
-		Stream<StagedModel> stagedModelsStream = bookmarksEntriesStream.map(
-			(bookmarksEntry) -> (StagedModel)bookmarksEntry);
-
-		return stagedModelsStream.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext,
-		BookmarksFolder bookmarksFolder) {
-
-		return Collections.emptyList();
 	}
 
 	@Override

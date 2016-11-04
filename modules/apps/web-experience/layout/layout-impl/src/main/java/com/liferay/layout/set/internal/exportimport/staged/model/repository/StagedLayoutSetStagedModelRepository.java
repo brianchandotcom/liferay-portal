@@ -107,30 +107,6 @@ public class StagedLayoutSetStagedModelRepository
 			Collectors.toList());
 	}
 
-	public List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext,
-		StagedLayoutSet stagedLayoutSet) {
-
-		List<StagedModel> dependencyStagedModels = new ArrayList<>();
-
-		try {
-			Group group = stagedLayoutSet.getGroup();
-
-			dependencyStagedModels.add(
-				ModelAdapterUtil.adapt(group, Group.class, StagedGroup.class));
-		}
-		catch (PortalException pe) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
-		}
-
-		return dependencyStagedModels;
-	}
-
 	public Optional<StagedLayoutSet> fetchExistingLayoutSet(
 		long groupId, boolean privateLayout) {
 

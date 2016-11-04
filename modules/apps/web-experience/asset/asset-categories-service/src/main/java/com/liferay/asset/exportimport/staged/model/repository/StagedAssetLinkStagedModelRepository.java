@@ -114,36 +114,6 @@ public class StagedAssetLinkStagedModelRepository
 			portletDataContext.getScopeGroupId());
 	}
 
-	@Override
-	public List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext,
-		StagedAssetLink stagedAssetLink) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext,
-		StagedAssetLink stagedAssetLink) {
-
-		AssetEntry assetEntry1 = _assetEntryLocalService.fetchAssetEntry(
-			stagedAssetLink.getEntryId1());
-		AssetEntry assetEntry2 = _assetEntryLocalService.fetchAssetEntry(
-			stagedAssetLink.getEntryId2());
-
-		if ((assetEntry1 == null) || (assetEntry2 == null)) {
-			return Collections.emptyList();
-		}
-
-		ArrayList<StagedModel> dependencyStagedModels = new ArrayList<>();
-
-		dependencyStagedModels.add((StagedModel)assetEntry1);
-		dependencyStagedModels.add((StagedModel)assetEntry2);
-
-		return dependencyStagedModels;
-	}
-
 	public StagedAssetLink fetchExistingAssetLink(
 		long groupId, String assetEntry1Uuid, String assetEntry2Uuid) {
 

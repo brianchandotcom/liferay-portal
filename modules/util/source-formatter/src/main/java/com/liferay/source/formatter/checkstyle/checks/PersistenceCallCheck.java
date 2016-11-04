@@ -160,6 +160,16 @@ public class PersistenceCallCheck extends AbstractCheck {
 			return;
 		}
 
+		DetailAST siblingAST = childAST.getNextSibling();
+
+		if (siblingAST.getType() == TokenTypes.IDENT) {
+			String methodName = siblingAST.getText();
+
+			if (methodName.startsWith("create")) {
+				return;
+			}
+		}
+
 		String fieldName = childAST.getText();
 
 		if (fieldName.matches("[A-Z].*")) {

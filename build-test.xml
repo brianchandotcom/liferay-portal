@@ -2713,6 +2713,8 @@ go</echo>
 		<sequential>
 			<setup-testable-tomcat-logging />
 
+			<setup-testable-tomcat-aspectj-agent />
+
 			<setup-testable-tomcat-jmx />
 
 			<setup-testable-tomcat-jpda-address />
@@ -2720,6 +2722,23 @@ go</echo>
 			<setup-testable-tomcat-manager />
 
 			<setup-testable-tomcat-osgi-modules />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-aspectj-agent">
+		<sequential>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${aspectj.agent}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${aspectj.agent} -Dorg.aspectj.weaver.loadtime.configuration=${aspectj.configuration}"
+						]]>
+					</echo>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

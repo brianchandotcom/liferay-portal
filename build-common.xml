@@ -250,6 +250,8 @@ Error-Prone was automatically installed. Please rerun your task.
 		</and>
 	</condition>
 
+	<property name="aspectj.agent" value="-javaagent:${project.dir}/lib/portal/aspectj-weaver.jar" />
+	<property name="aspectj.configuration" value="com/liferay/aspectj/aop.xml" />
 	<property name="whip.agent" value="-javaagent:${project.dir}/${junit.whip.jar}=${junit.whip.includes};${junit.whip.excludes}" />
 
 	<macrodef name="app-server-properties-reset">
@@ -742,6 +744,7 @@ Error-Prone was automatically installed. Please rerun your task.
 
 		<sequential>
 			<local name="junit.java.gc" />
+			<local name="aspectj.weaver.enabled" />
 
 			<if>
 				<equals arg1="@{test.type}" arg2="unit" />
@@ -762,6 +765,8 @@ Error-Prone was automatically installed. Please rerun your task.
 					<basename file="${project.dir}" property="project.dir.name" />
 
 					<property name="junit.java.gc" value="${junit.java.integration.gc} -verbose:gc -Xloggc:/tmp/${project.dir.name}-@{test.type}-gc.log -XX:+PrintGCCause -XX:+PrintGCDetails" />
+
+					<property name="aspectj.weaver.enabled" value="true" />
 				</else>
 			</if>
 
@@ -771,11 +776,14 @@ Error-Prone was automatically installed. Please rerun your task.
 				<sysproperty key="junit.code.coverage" value="${junit.code.coverage}" />
 				<sysproperty if:true="${jvm.debug}" key="jvm.debug" value="true" />
 				<sysproperty key="liferay.lib.portal.dir" value="${app.server.tomcat.lib.portal.dir}" />
+				<sysproperty if:true="${aspectj.weaver.enabled}" key="aspectj.agent" value="${aspectj.agent}" />
+				<sysproperty if:true="${aspectj.weaver.enabled}" key="org.aspectj.weaver.loadtime.configuration" value="${aspectj.configuration}" />
 				<sysproperty key="whip.agent" value="${whip.agent}" />
 				<sysproperty file="test-coverage/@{test.type}/whip.dat" key="whip.datafile" />
 				<sysproperty key="whip.instrument.dump" value="${whip.instrument.dump}" />
 				<jvmarg if:true="${jvm.debug}" line="${jpda.settings}" />
 				<jvmarg line="${junit.java.gc}" />
+				<jvmarg if:true="${aspectj.weaver.enabled}" line="${aspectj.agent}" />
 				<jvmarg line="${whip.agent}" />
 				<jvmarg value="-Xss2m" />
 				<jvmarg value="-Dexternal-properties=${test.properties}" />
@@ -1103,6 +1111,17 @@ Error-Prone was automatically installed. Please rerun your task.
 				</and>
 				<then>
 					<var name="junit.classpath" value="${classpath.portal-impl-integration}" />
+
+					<for param="lfrbuild-ci">
+						<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-ci" />
+						<sequential>
+							<local name="module.dir" />
+
+							<dirname file="@{lfrbuild-ci}" property="module.dir" />
+
+							<var name="junit.classpath" value="${junit.classpath};${module.dir}/classes" />
+						</sequential>
+					</for>
 				</then>
 			</if>
 

@@ -338,6 +338,16 @@
 			</else>
 		</if>
 
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<gradle-execute dir="${project.dir}/modules" task="deploy">
+					<arg value="--parallel" />
+					<arg value="-Dbuild.profile=ci" />
+				</gradle-execute>
+			</then>
+		</if>
+
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 
 		<if>

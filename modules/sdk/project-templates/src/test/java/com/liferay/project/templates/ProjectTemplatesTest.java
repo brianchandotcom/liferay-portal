@@ -888,7 +888,8 @@ public class ProjectTemplatesTest {
 			"public class FooPortlet extends SoyPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"soy-portlet", "foo", "-DclassName=Foo", "-Dpackage=com.liferay.test");
+			"soy-portlet", "foo", "-DclassName=Foo",
+			"-Dpackage=com.liferay.test");
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir,
@@ -1854,8 +1855,9 @@ public class ProjectTemplatesTest {
 	}
 
 	private static final String _BUNDLES_DIFF_IGNORES = StringTestUtil.merge(
-		"*pom.properties", "*pom.xml", "Archiver-Version", "Build-Jdk",
-		"Built-By", "Javac-Debug", "Javac-Deprecation", "Javac-Encoding");
+		"*.js.map", "*pom.properties", "*pom.xml", "Archiver-Version",
+		"Build-Jdk", "Built-By", "Javac-Debug", "Javac-Deprecation",
+		"Javac-Encoding");
 
 	private static final String _GRADLE_TASK_PATH_BUILD = ":build";
 

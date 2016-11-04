@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project xmlns:if="ant:if" xmlns:unless="ant:unless">
+	<taskdef classpath="${theme.builder.classpath}" resource="com/liferay/portal/tools/bundle/support/ant/taskdefs.properties" />
+
+	<target name="clean">
+		<clean
+			fileName = "${bundle.support.file.name}"
+			liferayHomeDir = "${bundle.support.liferay.home.dir}"
+		/>
+	</target>
+	<target name="deploy">
+		<deploy
+			file = "${bundle.support.file}"
+			liferayHomeDir = "${bundle.support.liferay.home.dir}"
+			outputFileName = "${bundle.support.output.file.name}"
+
+		/>
+	</target>
+	<target name="dist-bundle">
+		<dist-bundle
+			format = "${bundle.support.format}"
+			includeFolder = "${bundle.support.include.folder}"
+			liferayHomeDir = "${bundle.support.liferay.home.dir}"
+			outputFile = "${bundle.support.output.file}"
+		/>
+	</target>
+	<target name="init-bundle">
+		<init-bundle
+			configsDir = "${bundle.support.configs.dir}"
+			environment = "${bundle.support.environment}"
+			liferayHomeDir = "${bundle.support.liferay.home.dir}"
+			password = "${bundle.support.password}"
+			proxyHost = "${bundle.support.proxy.host}"
+			proxyPassword = "${bundle.support.proxy.password}"
+			proxyPort = "${bundle.support.proxy.port}"
+			proxyProtocol = "${bundle.support.proxy.protocol}"
+			proxyUsername = "${bundle.support.proxy.username}"
+			stripComponents = "${bundle.support.strip.components}"
+			url = "${bundle.support.url}"
+			username = "${bundle.support.username}"
+		/>
+	</target>
+</project>

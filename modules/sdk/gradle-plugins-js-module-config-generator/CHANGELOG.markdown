@@ -36,7 +36,7 @@
 - [LPS-66906]: Update the [Liferay Gradle Plugins Node] dependency to version
 1.3.0.
 
-## 2.1.0 - 2016-11-01
+## 2.1.0 - 2016-11-03
 
 ### Added
 - [LPS-68298]: Add property `customDefine` to all tasks that extend

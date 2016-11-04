@@ -91,7 +91,7 @@ public class CustomServletContextHelper
 
 		URL url = BundleUtil.getResourceInBundleOrFragments(_bundle, name);
 
-		if ((url == null) && !_wabShapedBundle) {
+		if (url == null) {
 			return BundleUtil.getResourceInBundleOrFragments(
 				_bundle, "/META-INF/resources" + name);
 		}

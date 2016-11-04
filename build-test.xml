@@ -4626,6 +4626,52 @@ go]]></replacevalue>
 		</if>
 	</target>
 
+	<target name="deploy-osgi-module-configurations">
+		<var name="osgi.module.configurations.index" value="1" />
+
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<for list="${osgi.module.configurations}" param="configuration">
+			<sequential>
+				<echo file="${liferay.home}/osgi/configs/${osgi.module.configurations.index}">@{configuration}</echo>
+
+				<math
+					datatype="int"
+					operand1="${osgi.module.configurations.index}"
+					operand2="1"
+					operation="+"
+					result="osgi.module.configurations.index"
+				/>
+			</sequential>
+		</for>
+
+		<var name="osgi.module.configuration.file.names.index" value="1" />
+
+		<get-testcase-property property.name="osgi.module.configuration.file.names" />
+
+		<for list="${osgi.module.configuration.file.names}" param="file.names">
+			<sequential>
+				<if>
+					<available file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}" />
+					<then>
+							<move
+								file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+								tofile="${liferay.home}/osgi/configs/@{file.names}"
+							/>
+
+							<math
+								datatype="int"
+								operand1="${osgi.module.configuration.file.names.index}"
+								operand2="1"
+								operation="+"
+								result="osgi.module.configuration.file.names.index"
+							/>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="deploy-osgi-modules">
 		<get-testcase-property property.name="osgi.modules.includes" />
 
@@ -8586,16 +8632,16 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<antcall target="deploy-extra-apps" />
 
-		<get-testcase-property property.name="osgi.config.file.names" />
-		<get-testcase-property property.name="osgi.config.properties" />
+		<get-testcase-property property.name="osgi.module.configuration.file.names" />
+		<get-testcase-property property.name="osgi.module.configurations" />
 
 		<if>
 			<and>
-				<isset property="osgi.config.file.names" />
-				<isset property="osgi.config.properties" />
+				<isset property="osgi.module.configuration.file.names" />
+				<isset property="osgi.module.configurations" />
 			</and>
 			<then>
-				<ant antfile="build-test-osgi-configs.xml" target="create-config-files" />
+				<antcall target="deploy-osgi-module-configurations" />
 			</then>
 		</if>
 

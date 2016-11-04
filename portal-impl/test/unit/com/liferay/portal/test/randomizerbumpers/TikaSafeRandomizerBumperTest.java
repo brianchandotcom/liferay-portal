@@ -46,9 +46,8 @@ public class TikaSafeRandomizerBumperTest {
 
 	@Before
 	public void setUp() {
-		Class<?> clazz = getClass();
-
-		PortalClassLoaderUtil.setClassLoader(clazz.getClassLoader());
+		PortalClassLoaderUtil.setClassLoader(
+			TikaSafeRandomizerBumperTest.class.getClassLoader());
 	}
 
 	@Test
@@ -98,7 +97,9 @@ public class TikaSafeRandomizerBumperTest {
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
-	public void testExceptionInInitializerError() {
+	public void testExceptionInInitializerError()
+		throws ClassNotFoundException {
+
 		String propertyKey = "tika.config";
 
 		String propertyValue = System.getProperty(propertyKey);
@@ -106,7 +107,7 @@ public class TikaSafeRandomizerBumperTest {
 		try {
 			System.setProperty(propertyKey, "bad.tika.config");
 
-			new TikaSafeRandomizerBumper(null);
+			Class.forName(TikaSafeRandomizerBumper.class.getName());
 
 			Assert.fail();
 		}

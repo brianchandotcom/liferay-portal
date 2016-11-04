@@ -23,15 +23,16 @@ import org.apache.maven.project.MavenProject;
  */
 public class MavenUtil {
 
-	public static MavenProject getRootParent(MavenProject project) {
-		if (project.hasParent()) {
-			return getRootParent(project.getParent());
+	public static MavenProject getRootProject(MavenProject mavenProject) {
+		if (mavenProject.hasParent()) {
+			return getRootProject(mavenProject.getParent());
 		}
-		else return project;
+
+		return mavenProject;
 	}
 
-	public static File getRootParentBaseDir(MavenProject project) {
-		MavenProject rootProject = getRootParent(project);
+	public static File getRootProjectBaseDir(MavenProject mavenProject) {
+		MavenProject rootProject = getRootProject(mavenProject);
 
 		return rootProject.getBasedir();
 	}

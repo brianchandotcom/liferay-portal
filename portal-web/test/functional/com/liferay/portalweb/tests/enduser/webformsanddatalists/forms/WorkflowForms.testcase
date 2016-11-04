@@ -323,13 +323,6 @@
 			<var name="fieldValue" value="Text One" />
 		</execute>
 
-		<execute macro="Form#gotoAdvancedTab" />
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="visibility" />
-			<var name="fieldValue" value="equals(Select, &quot;Select1&quot;)" />
-		</execute>
-
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#gotoAddField">
@@ -353,13 +346,6 @@
 
 		<execute macro="Form#editFieldLabel">
 			<var name="fieldValue" value="Text Two" />
-		</execute>
-
-		<execute macro="Form#gotoAdvancedTab" />
-
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="visibility" />
-			<var name="fieldValue" value="equals(Radio, &quot;Option1&quot;)" />
 		</execute>
 
 		<execute macro="Form#closeSidebar" />

@@ -37,6 +37,8 @@ else {
 		<div id="<portlet:namespace />themeContainer">
 			<liferay-util:include page="/look_and_feel_theme_details.jsp" servletContext="<%= application %>" />
 		</div>
+
+		<aui:input label="insert-custom-css-that-is-loaded-after-the-theme" name="regularCss" placeholder="css" type="textarea" value="<%= (selLayout != null) ? selLayout.getCssText() : selLayoutSet.getCss() %>" />
 	</div>
 </div>
 

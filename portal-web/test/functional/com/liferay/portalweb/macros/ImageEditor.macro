@@ -101,9 +101,9 @@
 	</command>
 
 	<command name="viewBaseControls">
-		<execute function="AssertElementPresent" locator1="Button#TRANSFORM" />
-		<execute function="AssertElementPresent" locator1="Button#FILTER_EFFECT" />
-		<execute function="AssertElementPresent" locator1="Button#COLOR_EFFECT" />
+		<execute function="AssertVisible" locator1="Button#TRANSFORM" />
+		<execute function="AssertVisible" locator1="Button#FILTER_EFFECT" />
+		<execute function="AssertVisible" locator1="Button#COLOR_EFFECT" />
 	</command>
 
 	<command name="viewImageEditorPortletHeader">

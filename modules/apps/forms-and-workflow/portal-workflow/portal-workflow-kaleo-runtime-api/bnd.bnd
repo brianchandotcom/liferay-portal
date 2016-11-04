@@ -16,6 +16,7 @@ Export-Package:\
 	com.liferay.portal.workflow.kaleo.runtime.notification,\
 	com.liferay.portal.workflow.kaleo.runtime.notification.recipient,\
 	com.liferay.portal.workflow.kaleo.runtime.notification.recipient.script,\
-	com.liferay.portal.workflow.kaleo.runtime.util
+	com.liferay.portal.workflow.kaleo.runtime.util,\
+	com.liferay.portal.workflow.kaleo.runtime.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Workflow Engine

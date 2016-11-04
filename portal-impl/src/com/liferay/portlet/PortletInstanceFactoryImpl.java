@@ -247,12 +247,11 @@ public class PortletInstanceFactoryImpl implements PortletInstanceFactory {
 
 		// LPS-10473
 
+		_serviceTracker.close();
 	}
 
 	@Override
 	public void destroy(Portlet portlet) {
-		_serviceTracker.close();
-
 		clear(portlet);
 
 		destroyRelated(portlet);

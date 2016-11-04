@@ -20,6 +20,7 @@
 				<include>.gitignore</include>
 				<include>bnd.bnd</include>
 				<include>build.gradle</include>
+				<include>package.json</include>
 			</includes>
 		</fileSet>
 	</fileSets>

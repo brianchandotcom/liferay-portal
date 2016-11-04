@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"alloyeditor": {
+			"from": "alloyeditor@>=1.2.5 <2.0.0",
+			"resolved": "https://registry.npmjs.org/alloyeditor/-/alloyeditor-1.2.5.tgz",
+			"version": "1.2.5"
+		}
+	},
+	"name": "frontend-editor-alloyeditor-web",
+	"version": "1.0.10"
+}

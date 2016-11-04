@@ -1,18 +1,14 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-configurations {
-	alloyEditor
-}
-
 task buildAlloyEditor(type: Copy)
-
-String alloyEditorVersion = "1.2.0"
 
 File editorDestinationDir = file("tmp/META-INF/resources")
 File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildAlloyEditor {
+	dependsOn npmInstall
+
 	File alloyEditorDestinationDir = new File(editorDestinationDir, "alloyeditor")
 	File alloyEditorSrcDir = new File(editorSrcDir, "_diffs")
 
@@ -36,10 +32,10 @@ buildAlloyEditor {
 	duplicatesStrategy = "exclude"
 
 	from {
-		zipTree(configurations.alloyEditor.singleFile)
+		fileTree(dir: "node_modules")
 	} {
-		eachFile new StripPathSegmentsAction(7)
-		include "META-INF/resources/webjars/alloyeditor/${alloyEditorVersion}/dist/alloy-editor/"
+		eachFile new StripPathSegmentsAction(3)
+		include "alloyeditor/dist/alloy-editor/"
 	}
 
 	from alloyEditorSrcDir
@@ -51,9 +47,11 @@ classes {
 	dependsOn buildAlloyEditor
 }
 
-dependencies {
-	alloyEditor group: "com.liferay.webjars", name: "com.liferay.webjars.alloyeditor", transitive: false, version: alloyEditorVersion
+configJSModules {
+	enabled = false
+}
 
+dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.encryptor", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
@@ -64,4 +62,8 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+}
+
+transpileJS {
+	enabled = false
 }

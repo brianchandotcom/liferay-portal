@@ -43,6 +43,12 @@
 `ConfigJSModulesTask` in order to use custom `define(...)` calls in the JS
 files.
 
+## 2.1.1 - 2016-11-04
+
+### Fixed
+- [LPS-68298]: Replace `define(...)` calls only at the beginning of a line, or
+with if preceded by spaces or tabs.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

@@ -23,6 +23,7 @@ import org.apache.tools.ant.BuildException;
  */
 public class DistBundleTask extends DistBundleCommand {
 
+	@Override
 	public void execute() {
 		try {
 			super.execute();

@@ -66,14 +66,14 @@ public class JournalWYSIWYGUpgrade implements UpgradeStepRegistrator {
 			"com.liferay.journal.wysiwyg.upgrade", "0.0.0", "1.0.0",
 			new DummyUpgradeStep());
 
-		JournalWYSIWYGUpgradeHelper wysiwygUpgradeHelper =
+		JournalWYSIWYGUpgradeHelper journalWYSIWYGUpgradeHelper =
 			new JournalWYSIWYGUpgradeHelper(
 				_assetEntryLocalService, _defaultDDMStructureHelper,
 				_groupLocalService, _journalArticleLocalService,
 				_journalFolderLocalService, _layoutLocalService,
 				_portletPreferencesLocalService, _userLocalService);
 
-		wysiwygUpgradeHelper.upgrade();
+		journalWYSIWYGUpgradeHelper.upgrade();
 	}
 
 	@Reference(unbind = "-")

@@ -8,6 +8,10 @@
 		<execute function="AssertTextEquals" locator1="Form#RULE_BUILDER_TIMELINE_RULE_CONDITION" value1="${condition}" />
 	</command>
 
+	<command name="addRule">
+		<execute function="Click" locator1="Form#RULE_BUILDER_ADD_RULE_BUTTON" />
+	</command>
+
 	<command name="configureActionOptions">
 		<execute macro="FormRules#selectAction">
 			<var name="action" value="${action}" />

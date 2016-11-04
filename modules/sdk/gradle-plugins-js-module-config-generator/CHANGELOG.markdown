@@ -36,12 +36,18 @@
 - [LPS-66906]: Update the [Liferay Gradle Plugins Node] dependency to version
 1.3.0.
 
-## 2.1.0 - 2016-11-01
+## 2.1.0 - 2016-11-03
 
 ### Added
 - [LPS-68298]: Add property `customDefine` to all tasks that extend
 `ConfigJSModulesTask` in order to use custom `define(...)` calls in the JS
 files.
+
+## 2.1.1 - 2016-11-04
+
+### Fixed
+- [LPS-68298]: Replace `define(...)` calls only at the beginning of a line, or
+with if preceded by spaces or tabs.
 
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906

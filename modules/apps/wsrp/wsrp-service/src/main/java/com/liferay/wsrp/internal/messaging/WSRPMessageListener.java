@@ -90,11 +90,11 @@ public class WSRPMessageListener extends HotDeployMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WSRPMessageListener.class);
 
-	@Reference
-	private WSRPConsumerPortletLocalService _wSRPConsumerPortletLocalService;
-
 	private BundleContext _bundleContext;
 	private ServiceTracker<MBeanServer, MBeanServer> _serviceTracker;
+
+	@Reference
+	private WSRPConsumerPortletLocalService _wSRPConsumerPortletLocalService;
 
 	private class MBeanServerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<MBeanServer, MBeanServer> {

@@ -304,7 +304,7 @@
 			<var name="key_rowEntry" value="${structureName}" />
 		</execute>
 	</command>
-	
+
 	<command name="viewTableEntryCP">
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 

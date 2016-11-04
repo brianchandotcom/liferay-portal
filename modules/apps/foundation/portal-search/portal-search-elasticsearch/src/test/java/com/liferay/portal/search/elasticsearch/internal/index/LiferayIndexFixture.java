@@ -15,8 +15,8 @@
 package com.liferay.portal.search.elasticsearch.internal.index;
 
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.connection.Index;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreationHelper;
 
 import org.elasticsearch.client.Client;

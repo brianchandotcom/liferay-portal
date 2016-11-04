@@ -15,7 +15,7 @@
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
+import com.liferay.portal.search.elasticsearch.internal.connection.Index;
 
 import org.junit.After;
 import org.junit.Before;

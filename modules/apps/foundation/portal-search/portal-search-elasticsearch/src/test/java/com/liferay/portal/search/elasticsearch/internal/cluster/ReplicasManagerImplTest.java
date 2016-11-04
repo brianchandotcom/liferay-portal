@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 
 import java.util.Collections;
 

@@ -16,7 +16,6 @@ package com.liferay.portal.search.elasticsearch.internal.connection;
 
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
@@ -196,34 +195,6 @@ public class ElasticsearchFixture {
 
 	public void tearDown() throws Exception {
 		destroyNode();
-	}
-
-	public static class Index {
-
-		public Index(IndexName indexName) {
-			_indexName = indexName;
-		}
-
-		public String getName() {
-			return _indexName.getName();
-		}
-
-		private final IndexName _indexName;
-
-	}
-
-	public static class IndexName {
-
-		public IndexName(String name) {
-			_name = StringUtil.toLowerCase(name);
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		private final String _name;
-
 	}
 
 	protected void addClusterLoggingThresholdContributor(

@@ -21,8 +21,8 @@ import com.liferay.portal.search.elasticsearch.connection.TestElasticsearchConne
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreationHelper;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.filter.BooleanFilterTranslatorImpl;

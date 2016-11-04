@@ -22,8 +22,8 @@ import java.util.Iterator;
 /**
  * @author Stian Sigvartsen
  */
-public abstract class BaseIndexedSAQImpressionPersistence
-	implements SAQImpressionPersistence {
+public abstract class BaseIndexedSAQImpressionProvider
+	implements SAQImpressionProvider {
 
 	public abstract Iterator<String> findMetricValues(
 		long companyId, String metricName);

@@ -17,10 +17,13 @@ package com.liferay.portal.search.elasticsearch.internal;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.Collection;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
@@ -35,11 +38,42 @@ public class SearchHitToDocumentTranslator {
 
 		Map<String, SearchHitField> searchHitFields = searchHit.getFields();
 
-		for (SearchHitField searchHitField : searchHitFields.values()) {
-			document.add(translate(searchHitField));
+		for (String fieldName : searchHitFields.keySet()) {
+			addField(document, fieldName, searchHitFields);
 		}
 
 		return document;
+	}
+
+	protected void addField(
+		Document document, String fieldName,
+		Map<String, SearchHitField> searchHitFields) {
+
+		String baseFieldName = removeSuffixes(fieldName, ".lat", ".lon");
+
+		if (document.hasField(baseFieldName)) {
+			return;
+		}
+
+		SearchHitField searchHitField = searchHitFields.get(baseFieldName);
+
+		Field field = translateGeoPoint(
+			searchHitField, searchHitFields.get(baseFieldName + ".lat"),
+			searchHitFields.get(baseFieldName + ".lon"));
+
+		if (field == null) {
+			field = translate(searchHitField);
+		}
+
+		document.add(field);
+	}
+
+	protected String removeSuffixes(String fieldName, String...suffixes) {
+		for (String suffix : suffixes) {
+			fieldName = StringUtils.removeEnd(fieldName, suffix);
+		}
+
+		return fieldName;
 	}
 
 	protected Field translate(SearchHitField searchHitField) {
@@ -49,6 +83,24 @@ public class SearchHitToDocumentTranslator {
 		Field field = new Field(
 			name,
 			ArrayUtil.toStringArray(values.toArray(new Object[values.size()])));
+
+		return field;
+	}
+
+	protected Field translateGeoPoint(
+		SearchHitField searchHitField, SearchHitField latSearchHitField,
+		SearchHitField lonSearchHitField) {
+
+		if ((latSearchHitField == null) || (lonSearchHitField == null)) {
+			return null;
+		}
+
+		Field field = new Field(searchHitField.getName());
+
+		field.setGeoLocationPoint(
+			new GeoLocationPoint(
+				(Double)latSearchHitField.getValue(),
+				(Double)lonSearchHitField.getValue()));
 
 		return field;
 	}

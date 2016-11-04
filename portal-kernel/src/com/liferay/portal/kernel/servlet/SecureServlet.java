@@ -61,6 +61,10 @@ public class SecureServlet
 
 	@Override
 	public String getServletInfo() {
+		if (servlet == null) {
+			return "";
+		}
+
 		return servlet.getServletInfo();
 	}
 

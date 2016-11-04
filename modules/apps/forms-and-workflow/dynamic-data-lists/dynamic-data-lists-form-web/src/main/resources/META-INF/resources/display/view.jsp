@@ -52,8 +52,6 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 
 						<aui:input name="groupId" type="hidden" value="<%= recordSet.getGroupId() %>" />
 						<aui:input name="recordSetId" type="hidden" value="<%= recordSet.getRecordSetId() %>" />
-						<aui:input name="availableLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
-						<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 						<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 						<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />

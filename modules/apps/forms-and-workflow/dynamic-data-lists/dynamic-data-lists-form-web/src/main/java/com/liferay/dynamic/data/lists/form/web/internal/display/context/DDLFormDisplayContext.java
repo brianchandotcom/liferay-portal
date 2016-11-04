@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -218,8 +217,6 @@ public class DDLFormDisplayContext {
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		DDMForm ddmForm) {
 
-		String languageId = ParamUtil.getString(_renderRequest, "languageId");
-
 		DDMFormRenderingContext ddmFormRenderingContext =
 			new DDMFormRenderingContext();
 
@@ -229,8 +226,7 @@ public class DDLFormDisplayContext {
 			PortalUtil.getHttpServletRequest(_renderRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
 			PortalUtil.getHttpServletResponse(_renderResponse));
-		ddmFormRenderingContext.setLocale(
-			LocaleUtil.fromLanguageId(languageId));
+		ddmFormRenderingContext.setLocale(ddmForm.getDefaultLocale());
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
 

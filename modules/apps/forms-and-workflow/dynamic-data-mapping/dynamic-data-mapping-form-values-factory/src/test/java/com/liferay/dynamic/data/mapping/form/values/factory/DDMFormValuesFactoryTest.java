@@ -71,13 +71,13 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		setUpDDMFormValuesFactoryServiceTrackerMap();
 		setUpDDMFormValuesJSONSerializer();
 		setUpJSONFactoryUtil();
-		setUpLocaleThreadLocale();
+		setUpLocaleThreadLocal();
 		setUpLocaleUtil();
 	}
 
 	@After
 	public void tearDown() {
-		LocaleThreadLocal.setThemeDisplayLocale(_originalThemeDisplayLocale);
+		LocaleThreadLocal.setSiteDefaultLocale(_originalSiteDefaultLocale);
 	}
 
 	@Test
@@ -871,10 +871,10 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
-	protected void setUpLocaleThreadLocale() {
-		_originalThemeDisplayLocale = LocaleThreadLocal.getThemeDisplayLocale();
+	protected void setUpLocaleThreadLocal() {
+		_originalSiteDefaultLocale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.US);
+		LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.US);
 	}
 
 	protected void setUpLocaleUtil() {
@@ -915,7 +915,7 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		new DDMFormValuesFactoryImpl();
 	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
 		new DDMFormValuesJSONSerializerImpl();
-	private Locale _originalThemeDisplayLocale;
+	private Locale _originalSiteDefaultLocale;
 
 	@Mock
 	private ServiceTrackerMap

@@ -13,19 +13,9 @@
 		<var name="appName" value="Japanese Localization" />
 		<var name="portletName" value="localization-ja-hook" />
 
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
-		<!-- LPS-63777 -->
-
-		<!-- <execute macro="OSGiSmoke#Smoke">
+		<execute macro="OSGiSmoke#Smoke">
 			<var name="appName" value="${portletName}" />
 			<var name="portletName" value="${portletName}" />
-		</execute> -->
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
 		</execute>
 	</command>
 </definition>

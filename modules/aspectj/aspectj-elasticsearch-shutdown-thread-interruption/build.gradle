@@ -1,0 +1,32 @@
+compileJava {
+	deleteAllActions()
+
+	doLast {
+		ant.taskdef classpath: configurations.ajc.asPath, resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties"
+
+		ant.iajc(classpath: compileJava.classpath.asPath, destDir: compileJava.destinationDir, source: compileJava.sourceCompatibility, target: compileJava.targetCompatibility, XlintFile: "src/main/resources/com/liferay/aspectj/Xlint.properties") {
+			sourceRoots {
+				sourceSets.main.java.srcDirs.each {
+					File dir ->
+
+					pathelement location: dir
+				}
+			}
+		}
+	}
+}
+
+configurations {
+	ajc
+}
+
+dependencies {
+	ajc group: "org.aspectj", name: "aspectjtools", version: "1.8.9"
+
+	compile group: "org.aspectj", name: "aspectjrt", version: "1.8.9"
+	compile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
+}
+
+liferay {
+	deployDir = appServerLibGlobalDir
+}

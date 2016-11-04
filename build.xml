@@ -338,6 +338,23 @@
 			</else>
 		</if>
 
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<if>
+					<resourcecount count="0" when="gt">
+						<fileset dir="${project.dir}/modules" includes="**/.lfrbuild-ci" />
+					</resourcecount>
+					<then>
+						<gradle-execute dir="${project.dir}/modules" task="deploy">
+							<arg value="--parallel" />
+							<arg value="-Dbuild.profile=ci" />
+						</gradle-execute>
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 
 		<if>

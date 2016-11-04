@@ -105,7 +105,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
 	immediate = true,
 	property = {
-		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
+		"before-filter=Auto Login Filter", "dispatcher=FORWARD",
+		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=SSO Ntlm Filter", "url-pattern=/c/portal/login"
 	},
 	service = Filter.class

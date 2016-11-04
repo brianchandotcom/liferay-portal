@@ -158,6 +158,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -2165,11 +2168,20 @@ public class ConsumerPortlet extends MVCPortlet {
 	@Reference
 	private WebsiteLocalService _websiteLocalService;
 
-	@Reference
-	private WSRPConsumerLocalService _wsrpConsumerLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile WSRPConsumerLocalService _wsrpConsumerLocalService;
 
-	@Reference
-	private WSRPConsumerPortletLocalService _wsrpConsumerPortletLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile WSRPConsumerPortletLocalService
+		_wsrpConsumerPortletLocalService;
 
 	private volatile WSRPGroupServiceConfiguration
 		_wsrpGroupServiceConfiguration;

@@ -57,6 +57,8 @@ public class BaseAlloyEditorConfigContributor
 			"ae_autolink,ae_dragresize,ae_addimages,ae_placeholder," +
 				"ae_selectionregion,ae_tableresize,ae_tabletools,ae_uicore");
 
+		jsonObject.put("imageScaleResize", "scale");
+
 		String languageId = getLanguageId(themeDisplay);
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));

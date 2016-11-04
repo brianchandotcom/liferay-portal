@@ -719,7 +719,9 @@
 		</execute>
 	</command>
 
-	<command name="DeleteEditedDataDefinition" priority="3">
+	<!-- LPS-68606 -->
+
+	<!-- <command name="DeleteEditedDataDefinition" priority="3">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="field" value="Text" />
@@ -836,7 +838,7 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#tearDownCP" />
-	</command>
+	</command> -->
 
 	<command name="DeleteEditFormViaKaleoFormsAdmin" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />

@@ -5858,7 +5858,9 @@
 		</execute>
 	</command>
 
-	<command name="ProcessUsesCreateFormWhenEditFormIsMissing" priority="3">
+	<!-- LPS-68606 -->
+
+	<!-- <command name="ProcessUsesCreateFormWhenEditFormIsMissing" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -6143,7 +6145,7 @@
 			<var name="fieldLabel" value="Quantity" />
 			<var name="fieldValue" value="4.0" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="3">
 		<execute macro="Navigator#openURL" />

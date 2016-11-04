@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandDeploy;
+import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
 
 import java.io.File;
 
@@ -38,10 +38,10 @@ public class DeployMojo extends AbstractLiferayMojo {
 		}
 
 		try {
-			CommandDeploy commandDeploy = new CommandDeploy(
+			DeployCommand deployCommand = new DeployCommand(
 				deployFile, false, getLiferayHomeDir(), outputFileName);
 
-			commandDeploy.execute();
+			deployCommand.execute();
 		}
 		catch (Exception e) {
 			Log log = getLog();

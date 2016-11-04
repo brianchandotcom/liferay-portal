@@ -29,12 +29,12 @@ import java.nio.file.Files;
  * @author David Truong
  */
 @Parameters(commandDescription = "Delete file from deployed to Liferay home")
-public class CommandClean extends BaseCommand {
+public class CleanCommand extends BaseCommand {
 
-	public CommandClean() {
+	public CleanCommand() {
 	}
 
-	public CommandClean(String fileName, File liferayHomeDir) {
+	public CleanCommand(String fileName, File liferayHomeDir) {
 		super(liferayHomeDir);
 
 		_fileName = fileName;

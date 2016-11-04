@@ -40,12 +40,12 @@ import org.apache.commons.compress.utils.IOUtils;
  * @author David Truong
  */
 @Parameters(commandDescription = "Deploy file to Liferay home")
-public class CommandDeploy extends BaseCommand {
+public class DeployCommand extends BaseCommand {
 
-	public CommandDeploy() {
+	public DeployCommand() {
 	}
 
-	public CommandDeploy(
+	public DeployCommand(
 		File file, boolean includeFolder, File liferayHomeDir,
 		String outputFileName) {
 

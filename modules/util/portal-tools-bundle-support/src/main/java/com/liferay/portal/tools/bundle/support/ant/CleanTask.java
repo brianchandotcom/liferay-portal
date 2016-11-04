@@ -14,14 +14,14 @@
 
 package com.liferay.portal.tools.bundle.support.ant;
 
-import com.liferay.portal.tools.bundle.support.commands.CommandClean;
+import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
 
 import org.apache.tools.ant.BuildException;
 
 /**
  * @author David Truong
  */
-public class CleanTask extends CommandClean {
+public class CleanTask extends CleanCommand {
 
 	public void execute() {
 		try {

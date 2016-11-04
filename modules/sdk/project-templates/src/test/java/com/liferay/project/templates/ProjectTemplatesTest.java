@@ -887,9 +887,12 @@ public class ProjectTemplatesTest {
 			"src/main/java/com/liferay/test/portlet/FooPortlet.java",
 			"public class FooPortlet extends SoyPortlet {");
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"soy-portlet", "foo", "-DclassName=Foo", "-Dpackage=com.liferay.test");
 
-		_testExists(gradleProjectDir, "build/libs/com.liferay.test-1.0.0.jar");
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir,
+			"build/libs/com.liferay.test-1.0.0.jar", "target/foo-1.0.0.jar");
 	}
 
 	@Test

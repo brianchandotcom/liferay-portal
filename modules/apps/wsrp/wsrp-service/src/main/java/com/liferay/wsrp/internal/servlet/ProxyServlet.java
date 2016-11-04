@@ -47,6 +47,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 
 /**
@@ -86,7 +87,7 @@ public class ProxyServlet extends HttpServlet {
 
 	protected boolean isAllowedURL(String url) throws Exception {
 		WSRPGroupServiceConfiguration wsrpGroupServiceConfiguration =
-			WSRPConfigurationUtil.getWSRPConfiguration();
+			_wsrpConfigurationUtil.getWSRPConfiguration();
 
 		String[] allowedIps =
 			wsrpGroupServiceConfiguration.proxyUrlIpsAllowed();
@@ -199,5 +200,8 @@ public class ProxyServlet extends HttpServlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ProxyServlet.class);
+
+	@Reference
+	private WSRPConfigurationUtil _wsrpConfigurationUtil;
 
 }

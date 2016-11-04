@@ -1,0 +1,20 @@
+Bundle-Name: Liferay Portal Tools Bundle Support
+Bundle-SymbolicName: com.liferay.portal.tools.bundle.support
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.bundle.support,\
+	com.liferay.portal.tools.bundle.support.ant,\
+	com.liferay.portal.tools.bundle.support.maven
+Import-Package:\
+	!org.apache.maven.plugin.*,\
+	!org.apache.tools.ant.*,\
+	*
+JPM-Command: liferay-bundle-support
+Main-Class: com.liferay.portal.tools.bundle.support.BundleSupport
+-includeresource:\
+	@commons-codec-[0-9]*.jar,\
+	@commons-compress-[0-9]*.jar,\
+	@commons-logging-[0-9]*.jar,\
+	@httpclient-[0-9]*.jar,\
+	@httpcore-[0-9]*.jar,\
+	@jcommander-[0-9]*.jar

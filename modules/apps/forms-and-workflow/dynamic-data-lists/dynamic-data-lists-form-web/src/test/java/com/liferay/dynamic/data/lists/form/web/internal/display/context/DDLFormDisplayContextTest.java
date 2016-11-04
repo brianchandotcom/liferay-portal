@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
-import static org.junit.Assert.assertEquals;
-
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
@@ -33,6 +31,7 @@ import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,22 +47,22 @@ public class DDLFormDisplayContextTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws PortalException {
-		setUpRenderRequest();
+		setUpDDLFormDisplayContext();
 		setUpPortalUtil();
-		setUpFormDisplayContext();
 	}
 
 	@Test
-	public void testRenderingContextLocaleIsSiteLocale() {
-		DDMForm ddmForm = createForm(LocaleUtil.BRAZIL);
+	public void testDDMFormRenderingContextLocaleIsSiteLocale() {
+		DDMForm ddmForm = createDDMForm(LocaleUtil.BRAZIL);
 
-		DDMFormRenderingContext renderingContext =
+		DDMFormRenderingContext ddmFormRenderingContext =
 			_ddlFormDisplayContext.createDDMFormRenderingContext(ddmForm);
 
-		assertEquals(LocaleUtil.BRAZIL, renderingContext.getLocale());
+		Assert.assertEquals(
+			LocaleUtil.BRAZIL, ddmFormRenderingContext.getLocale());
 	}
 
-	protected DDMForm createForm(Locale locale) {
+	protected DDMForm createDDMForm(Locale locale) {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setDefaultLocale(locale);
@@ -71,25 +70,28 @@ public class DDLFormDisplayContextTest extends PowerMockito {
 		return ddmForm;
 	}
 
-	protected void setUpFormDisplayContext() throws PortalException {
+	protected RenderRequest mockRenderRequest() {
+		RenderRequest renderRequest = new MockRenderRequest();
+
+		renderRequest.setAttribute(WebKeys.THEME_DISPLAY, new ThemeDisplay());
+
+		return renderRequest;
+	}
+
+	protected void setUpDDLFormDisplayContext() throws PortalException {
 		_ddlFormDisplayContext = new DDLFormDisplayContext(
-			_renderRequest, new MockRenderResponse(),
+			mockRenderRequest(), new MockRenderResponse(),
 			mock(DDLRecordSetService.class), mock(DDMFormRenderer.class),
 			mock(DDMFormValuesFactory.class),
 			mock(WorkflowDefinitionLinkLocalService.class));
 	}
 
 	protected void setUpPortalUtil() {
-		new PortalUtil().setPortal(mock(Portal.class));
-	}
+		PortalUtil portalUtil = new PortalUtil();
 
-	protected void setUpRenderRequest() {
-		_renderRequest = new MockRenderRequest();
-
-		_renderRequest.setAttribute(WebKeys.THEME_DISPLAY, new ThemeDisplay());
+		portalUtil.setPortal(mock(Portal.class));
 	}
 
 	private DDLFormDisplayContext _ddlFormDisplayContext;
-	private RenderRequest _renderRequest;
 
 }

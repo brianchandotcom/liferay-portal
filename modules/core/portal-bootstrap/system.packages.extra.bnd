@@ -328,6 +328,8 @@ Import-Package: !*
 	@../../../lib/portal/struts-extras.jar,\
 	@../../../lib/portal/struts-taglib.jar,\
 	@../../../lib/portal/struts-tiles.jar,\
+	@../../../lib/portal/tika-core.jar,\
+	@../../../lib/portal/tika-parsers.jar,\
 	@../../../lib/portal/xalan.jar,\
 	@../../../lib/portal/xercesImpl.jar,\
 	@../../../lib/portal/xml-apis.jar,\

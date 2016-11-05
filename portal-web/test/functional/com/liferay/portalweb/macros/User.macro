@@ -868,7 +868,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_SITE_ROLE" />
 
-		<var name="key_roleTitle" value="${siteRoleName}" />
+		<var name="key_roleName" value="${siteRoleName}" />
 		<var name="key_siteRoleName" value="${siteRoleName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_TABLE_TITLE" value1="${siteRoleName}" />

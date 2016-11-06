@@ -14,13 +14,16 @@
 
 package com.liferay.portal.tools.bundle.support.maven;
 
-import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
 import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
 import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
+import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.apache.maven.model.Build;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -52,7 +55,38 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 		String packaging = project.getPackaging();
 
-		if (!project.hasParent()) {
+		if (packaging.equals("war") || packaging.equals("jar")) {
+			try {
+				String extension = FileUtil.getExtension(deployFile.getName());
+
+				String deployFolder = BundleSupportUtil.getDeployFolder(
+					extension);
+
+				if (includeFolder) {
+					deployFolder = archiveFileName + "/" + deployFolder;
+				}
+
+				Path entryPath = Paths.get(deployFolder, outputFileName);
+
+				if (format.equals("zip")) {
+					FileUtil.appendZip(deployFile, entryPath, archive);
+				}
+				else if (format.equals("gz") || format.equals("tar") ||
+						 format.equals("tar.gz") || format.equals("tgz")) {
+
+					FileUtil.appendTar(deployFile, entryPath, archive);
+				}
+				else {
+					throw new Exception(
+						"Please specify either zip or tar.gz or tgz");
+				}
+			}
+			catch (Exception e) {
+				throw new MojoExecutionException(
+					"Could not create distributable bundle", e);
+			}
+		}
+		else if (!project.hasParent()) {
 			try {
 				archive.delete();
 
@@ -86,22 +120,6 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				distBundleCommand.execute();
 
 				FileUtil.deleteDirectory(liferayHomeDir.toPath());
-			}
-			catch (Exception e) {
-				throw new MojoExecutionException(
-					"Could not create distributable bundle", e);
-			}
-		}
-		else if (packaging.equals("war") || packaging.equals("jar")) {
-			try {
-				DeployCommand deployCommand = new DeployCommand();
-
-				deployCommand.setFile(deployFile);
-				deployCommand.setIncludeFolder(includeFolder);
-				deployCommand.setLiferayHomeDir(archive);
-				deployCommand.setOutputFileName(outputFileName);
-
-				deployCommand.execute();
 			}
 			catch (Exception e) {
 				throw new MojoExecutionException(

@@ -41,7 +41,6 @@ public class DeployMojo extends AbstractLiferayMojo {
 			DeployCommand deployCommand = new DeployCommand();
 
 			deployCommand.setFile(deployFile);
-			deployCommand.setIncludeFolder(false);
 			deployCommand.setLiferayHomeDir(getLiferayHomeDir());
 			deployCommand.setOutputFileName(outputFileName);
 

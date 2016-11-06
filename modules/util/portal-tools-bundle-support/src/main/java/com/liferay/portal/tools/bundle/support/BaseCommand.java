@@ -43,18 +43,6 @@ public abstract class BaseCommand {
 		_liferayHomeDir = liferayHomeDir;
 	}
 
-	protected String getDeployFolder(String type) {
-		if (type.equals("jar")) {
-			return "osgi/modules/";
-		}
-
-		if (type.equals("war")) {
-			return "osgi/war/";
-		}
-
-		return "deploy/";
-	}
-
 	protected Path getLiferayHomePath() {
 		return _liferayHomeDir.toPath();
 	}
@@ -71,7 +59,7 @@ public abstract class BaseCommand {
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The directory or archive of your Liferay home.",
+		description = "The directory of your Liferay home.",
 		names = {"-l", "--liferay"}, required = true
 	)
 	private File _liferayHomeDir;

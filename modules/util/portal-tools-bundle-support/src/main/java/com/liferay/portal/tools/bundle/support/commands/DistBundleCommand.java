@@ -83,8 +83,7 @@ public class DistBundleCommand extends BaseCommand {
 	}
 
 	private void _distBundleTar() throws Exception {
-		FileUtil.tar(
-			getLiferayHomePath(), _outputFile.toPath(), _includeFolder);
+		FileUtil.tar(getLiferayHomePath(), _outputFile, _includeFolder);
 	}
 
 	private void _distBundleZip() throws Exception {

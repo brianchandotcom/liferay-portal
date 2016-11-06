@@ -18,6 +18,7 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.portal.tools.bundle.support.BaseCommand;
+import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class CleanCommand extends BaseCommand {
 
 		String extension = FileUtil.getExtension(fileName);
 
-		String deployFolder = getDeployFolder(extension);
+		String deployFolder = BundleSupportUtil.getDeployFolder(extension);
 
 		File file = new File(getLiferayHomeDir(), deployFolder + fileName);
 

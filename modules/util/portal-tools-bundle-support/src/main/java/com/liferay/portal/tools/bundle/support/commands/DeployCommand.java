@@ -19,22 +19,12 @@ import com.beust.jcommander.Parameters;
 import com.beust.jcommander.converters.FileConverter;
 
 import com.liferay.portal.tools.bundle.support.BaseCommand;
+import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
-import java.nio.file.FileSystem;
 import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
-import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
-import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
-import org.apache.commons.compress.utils.IOUtils;
 
 /**
  * @author David Truong
@@ -49,40 +39,20 @@ public class DeployCommand extends BaseCommand {
 				"Could not find " + _file.getAbsolutePath());
 		}
 
-		File liferayHomeDir = getLiferayHomeDir();
+		String fileName = _file.getName();
 
-		if (liferayHomeDir.isDirectory()) {
-			String fileName = _file.getName();
+		String extension = FileUtil.getExtension(fileName);
 
-			String extension = FileUtil.getExtension(fileName);
+		String deployFolder = BundleSupportUtil.getDeployFolder(extension);
 
-			String deployFolder = getDeployFolder(extension);
-
-			if (_outputFileName == null) {
-				_outputFileName = _file.getName();
-			}
-
-			File outputFile = new File(
-				getLiferayHomeDir(), deployFolder + _outputFileName);
-
-			FileUtil.copyFile(_file, outputFile);
-
-			return;
+		if (_outputFileName == null) {
+			_outputFileName = _file.getName();
 		}
 
-		String extension = FileUtil.getExtension(liferayHomeDir.getName());
+		File outputFile = new File(
+			getLiferayHomeDir(), deployFolder + _outputFileName);
 
-		if (extension.equals("zip")) {
-			_deployToZip();
-		}
-		else if (extension.equals("gz") || extension.equals("tar") ||
-				 extension.equals("tar.gz") || extension.equals("tgz")) {
-
-			_deployToTar();
-		}
-		else {
-			throw new Exception("Please specify either zip or tar.gz or tgz");
-		}
+		FileUtil.copyFile(_file, outputFile);
 	}
 
 	public File getFile() {
@@ -93,73 +63,12 @@ public class DeployCommand extends BaseCommand {
 		return _outputFileName;
 	}
 
-	public boolean isIncludeFolder() {
-		return _includeFolder;
-	}
-
 	public void setFile(File file) {
 		_file = file;
 	}
 
-	public void setIncludeFolder(boolean includeFolder) {
-		_includeFolder = includeFolder;
-	}
-
 	public void setOutputFileName(String outputFileName) {
 		_outputFileName = outputFileName;
-	}
-
-	private void _deployToTar() throws Exception {
-		File liferayHomeDir = getLiferayHomeDir();
-
-		try (TarArchiveOutputStream tarArchiveOutputStream =
-				new TarArchiveOutputStream(
-					new GzipCompressorOutputStream(
-						new BufferedOutputStream(
-							new FileOutputStream(liferayHomeDir))))) {
-
-			String extension = FileUtil.getExtension(_file.getName());
-
-			String deployFolder = getDeployFolder(extension);
-
-			if (_includeFolder) {
-				deployFolder = FileUtil.getFileNameWithExtension(
-					liferayHomeDir.getPath()) + "/" + deployFolder;
-			}
-
-			Path tarPath = Paths.get(deployFolder, _outputFileName);
-
-			TarArchiveEntry tarFile = new TarArchiveEntry(tarPath.toFile());
-
-			tarFile.setSize(_file.length());
-
-			tarArchiveOutputStream.putArchiveEntry(tarFile);
-
-			IOUtils.copy(new FileInputStream(_file), tarArchiveOutputStream);
-
-			tarArchiveOutputStream.closeArchiveEntry();
-		}
-	}
-
-	private void _deployToZip() throws Exception {
-		File liferayHomeDir = getLiferayHomeDir();
-
-		try (FileSystem fileSystem =
-				FileUtil.createFileSystem(liferayHomeDir, false)) {
-
-			String extension = FileUtil.getExtension(_file.getName());
-
-			String deployFolder = getDeployFolder(extension);
-
-			if (_includeFolder) {
-				deployFolder = FileUtil.getFileNameWithExtension(
-					liferayHomeDir.getPath()) + "/" + deployFolder;
-			}
-
-			Path zipPath = fileSystem.getPath(deployFolder + _outputFileName);
-
-			FileUtil.copyFile(_file.toPath(), zipPath);
-		}
 	}
 
 	@Parameter(
@@ -168,12 +77,6 @@ public class DeployCommand extends BaseCommand {
 		names = {"-f", "--file"}, required = true
 	)
 	private File _file;
-
-	@Parameter(
-		description = "Add a parent folder to the archive",
-		names = {"--include-folder"}
-	)
-	private boolean _includeFolder;
 
 	@Parameter(
 		description = "The name of the output file.", names = {"-o", "--output"}

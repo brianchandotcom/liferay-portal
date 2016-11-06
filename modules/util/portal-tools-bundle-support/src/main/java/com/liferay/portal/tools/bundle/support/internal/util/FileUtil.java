@@ -56,6 +56,55 @@ import org.apache.commons.compress.utils.IOUtils;
  */
 public class FileUtil {
 
+	public static void appendTar(File entryFile, Path entryPath, File tarFile)
+		throws IOException {
+
+		try (TarArchiveOutputStream tarArchiveOutputStream =
+				new TarArchiveOutputStream(
+					new GzipCompressorOutputStream(
+						new BufferedOutputStream(
+							new FileOutputStream(tarFile))))) {
+
+			appendTar(entryFile, entryPath, tarArchiveOutputStream);
+		}
+	}
+
+	public static void appendTar(
+			File entryFile, Path entryPath,
+			TarArchiveOutputStream tarArchiveOutputStream)
+		throws IOException {
+
+		TarArchiveEntry tarArchiveEntry = new TarArchiveEntry(
+			entryPath.toFile());
+
+		tarArchiveEntry.setSize(entryFile.length());
+
+		tarArchiveOutputStream.putArchiveEntry(tarArchiveEntry);
+
+		IOUtils.copy(new FileInputStream(entryFile), tarArchiveOutputStream);
+
+		tarArchiveOutputStream.closeArchiveEntry();
+	}
+
+	public static void appendZip(File entryFile, Path entryPath, File zipFile)
+		throws Exception {
+
+		try (FileSystem fileSystem =
+				FileUtil.createFileSystem(zipFile, false)) {
+
+			appendZip(entryFile, entryPath, fileSystem);
+		}
+	}
+
+	public static void appendZip(
+			File entryFile, Path entryPath, FileSystem fileSystem)
+		throws IOException {
+
+		Path zipPath = fileSystem.getPath(entryPath.toString());
+
+		FileUtil.copyFile(entryFile.toPath(), zipPath);
+	}
+
 	public static void copyDirectory(File sourceFile, File destinationFile)
 		throws IOException {
 
@@ -183,8 +232,7 @@ public class FileUtil {
 		return new File(url.toURI());
 	}
 
-	public static void tar(
-			Path sourcePath, Path destinationPath, boolean includeFolder)
+	public static void tar(Path sourcePath, File tarFile, boolean includeFolder)
 		throws Exception {
 
 		final Path parentPath;
@@ -199,8 +247,7 @@ public class FileUtil {
 		try (TarArchiveOutputStream tarArchiveOutputStream =
 			new TarArchiveOutputStream(
 				new GzipCompressorOutputStream(
-					new BufferedOutputStream(
-						new FileOutputStream(destinationPath.toFile()))))) {
+					new BufferedOutputStream(new FileOutputStream(tarFile))))) {
 
 			Files.walkFileTree(
 				sourcePath,
@@ -211,20 +258,10 @@ public class FileUtil {
 							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						Path childPath = parentPath.relativize(path);
+						Path entryPath = parentPath.relativize(path);
 
-						TarArchiveEntry tarFile = new TarArchiveEntry(
-							childPath.toFile());
-
-						tarFile.setSize(basicFileAttributes.size());
-
-						tarArchiveOutputStream.putArchiveEntry(tarFile);
-
-						IOUtils.copy(
-							new FileInputStream(path.toFile()),
-							tarArchiveOutputStream);
-
-						tarArchiveOutputStream.closeArchiveEntry();
+						appendTar(
+							path.toFile(), entryPath, tarArchiveOutputStream);
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -285,13 +322,13 @@ public class FileUtil {
 							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						Path subpath = path.subpath(
+						Path entryPath = path.subpath(
 							stripComponents, path.getNameCount());
 
 						copyFile(
 							path, Paths.get(
 								destinationPath.toString(),
-								subpath.toString()));
+								entryPath.toString()));
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -301,7 +338,7 @@ public class FileUtil {
 	}
 
 	public static void zip(
-			Path sourcePath, final File destinationFile, boolean includeFolder)
+			Path sourcePath, final File zipFile, boolean includeFolder)
 		throws Exception {
 
 		final Path parentPath;
@@ -313,9 +350,7 @@ public class FileUtil {
 			parentPath = sourcePath;
 		}
 
-		try (FileSystem fileSystem =
-				FileUtil.createFileSystem(destinationFile, true)) {
-
+		try (FileSystem fileSystem = FileUtil.createFileSystem(zipFile, true)) {
 			Files.walkFileTree(
 				sourcePath,
 				new SimpleFileVisitor<Path>() {
@@ -325,10 +360,10 @@ public class FileUtil {
 							Path path, BasicFileAttributes basicFileAttributes)
 						throws IOException {
 
-						Path childPath = parentPath.relativize(path);
+						Path entryPath = parentPath.relativize(path);
 
 						copyFile(
-							path, fileSystem.getPath(childPath.toString()));
+							path, fileSystem.getPath(entryPath.toString()));
 
 						return FileVisitResult.CONTINUE;
 					}

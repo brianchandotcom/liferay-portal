@@ -18,7 +18,6 @@ import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
 import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
 import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
 import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
-import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;
@@ -193,7 +192,6 @@ public class BundleSupportTest {
 		DeployCommand deployCommand = new DeployCommand();
 
 		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.jar"));
-		deployCommand.setIncludeFolder(false);
 		deployCommand.setLiferayHomeDir(liferayHomeDir);
 		deployCommand.setOutputFileName("test.jar");
 
@@ -206,69 +204,12 @@ public class BundleSupportTest {
 	}
 
 	@Test
-	public void testCommandDeployToTar() throws Exception {
-		File liferayHomeDirTar = new File(
-			temporaryFolder.getRoot(), "test.tar.gz");
-
-		URL url = BundleSupportTest.class.getResource(
-			"dependencies/test.tar.gz");
-
-		FileUtil.copyFile(new File(url.getFile()), liferayHomeDirTar);
-
-		DeployCommand deployCommand = new DeployCommand();
-
-		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.jar"));
-		deployCommand.setIncludeFolder(false);
-		deployCommand.setLiferayHomeDir(liferayHomeDirTar);
-		deployCommand.setOutputFileName("test.jar");
-
-		deployCommand.execute();
-
-		File liferayHomeDir = temporaryFolder.newFolder("bundles");
-
-		FileUtil.untar(liferayHomeDirTar, liferayHomeDir.toPath(), 0);
-
-		File deployedJarFile = new File(
-			liferayHomeDir, "osgi/modules/test.jar");
-
-		Assert.assertTrue(deployedJarFile.exists());
-	}
-
-	@Test
-	public void testCommandDeployToZip() throws Exception {
-		File liferayHomeDirZip = new File(
-			temporaryFolder.getRoot(), "test.zip");
-
-		URL url = BundleSupportTest.class.getResource("dependencies/test.zip");
-
-		FileUtil.copyFile(new File(url.getFile()), liferayHomeDirZip);
-
-		DeployCommand deployCommand = new DeployCommand();
-
-		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.war"));
-		deployCommand.setIncludeFolder(false);
-		deployCommand.setLiferayHomeDir(liferayHomeDirZip);
-		deployCommand.setOutputFileName("test.war");
-
-		deployCommand.execute();
-
-		File liferayHomeDir = temporaryFolder.newFolder("bundles");
-
-		FileUtil.unzip(liferayHomeDirZip, liferayHomeDir.toPath(), 0);
-
-		File deployedWarFile = new File(liferayHomeDir, "osgi/war/test.war");
-
-		Assert.assertTrue(deployedWarFile.exists());
-	}
-
-	@Test
 	public void testCommandDeployWar() throws Exception {
 		File liferayHomeDir = temporaryFolder.newFolder("bundles");
 
 		DeployCommand deployCommand = new DeployCommand();
 
 		deployCommand.setFile(temporaryFolder.newFile("test-1.0.0.war"));
-		deployCommand.setIncludeFolder(false);
 		deployCommand.setLiferayHomeDir(liferayHomeDir);
 		deployCommand.setOutputFileName("test.war");
 

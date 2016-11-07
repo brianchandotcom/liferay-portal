@@ -15,12 +15,11 @@
 package com.liferay.blogs.internal.exportimport.data.handler;
 
 import com.liferay.asset.kernel.model.AssetCategory;
-import com.liferay.blogs.internal.exportimport.content.processor.BlogsEntryDocumentLibraryExportImportContentProcessor;
+import com.liferay.blogs.internal.exportimport.content.processor.BlogsEntryExportImportContentProcessor;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -185,7 +184,7 @@ public class BlogsEntryStagedModelDataHandler
 		_exportFriendlyURLs(portletDataContext, entry);
 
 		String content =
-			_exportImportContentProcessorController.
+			_blogsEntryExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, entry, entry.getContent(),
 					portletDataContext.getBooleanParameter(
@@ -228,7 +227,7 @@ public class BlogsEntryStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(entry);
 
 		String content =
-			_exportImportContentProcessorController.
+			_blogsEntryExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, entry, entry.getContent());
 
@@ -475,13 +474,13 @@ public class BlogsEntryStagedModelDataHandler
 		}
 	}
 
-	/**
-	 * @deprecated As of 1.1.0
-	 */
-	@Deprecated
+	@Reference(unbind = "-")
 	protected void setBlogsEntryExportImportContentProcessor(
-		BlogsEntryDocumentLibraryExportImportContentProcessor
+		BlogsEntryExportImportContentProcessor
 			blogsEntryExportImportContentProcessor) {
+
+		_blogsEntryExportImportContentProcessor =
+			blogsEntryExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -606,12 +605,9 @@ public class BlogsEntryStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
 
+	private BlogsEntryExportImportContentProcessor
+		_blogsEntryExportImportContentProcessor;
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Reference
-	private ExportImportContentProcessorController
-		_exportImportContentProcessorController;
-
 	private FriendlyURLLocalService _friendlyURLLocalService;
 	private ImageLocalService _imageLocalService;
 

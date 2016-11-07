@@ -104,7 +104,7 @@ subjectKeyIdentifier = hash</echo>
 			<exec dir="${elastic.shield.ca.dir}" executable="keytool" failonerror="true">
 				<arg value="-importcert" />
 				<arg value="-alias" />
-				<arg value="es-ssl" />
+				<arg value="ca_cert" />
 				<arg value="-file" />
 				<arg value="certs/cacert.pem" />
 				<arg value="-keystore" />

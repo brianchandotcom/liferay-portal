@@ -21,8 +21,16 @@ import java.util.Dictionary;
  */
 public interface ConfigurationModelListener {
 
+	public default void onAfterDelete(String pid)
+		throws ConfigurationModelListenerException {
+	}
+
 	public default void onAfterSave(
 			String pid, Dictionary<String, Object> properties)
+		throws ConfigurationModelListenerException {
+	}
+
+	public default void onBeforeDelete(String pid)
 		throws ConfigurationModelListenerException {
 	}
 

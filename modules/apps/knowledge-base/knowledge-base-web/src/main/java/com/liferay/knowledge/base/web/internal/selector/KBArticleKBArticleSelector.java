@@ -44,7 +44,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
-			return new KBArticleSelection(null, false);
+			return new KBArticleSelection(null, true);
 		}
 
 		if (resourcePrimKey ==
@@ -72,7 +72,7 @@ public class KBArticleKBArticleSelector implements KBArticleSelector {
 				ancestorResourcePrimKey, WorkflowConstants.STATUS_APPROVED);
 
 		if (ancestorKBArticle == null) {
-			return new KBArticleSelection(null, false);
+			return new KBArticleSelection(null, true);
 		}
 
 		KBArticle kbArticle =

@@ -497,6 +497,14 @@ public class JenkinsResultsParserUtil {
 		return masters;
 	}
 
+	public static int getRandomValue(int start, int end) {
+		int size = Math.abs(end - start);
+
+		double randomDouble = Math.random();
+
+		return start + (int)Math.round(size * randomDouble);
+	}
+
 	public static List<String> getSlaves(
 		Properties buildProperties, String masterPatternString) {
 

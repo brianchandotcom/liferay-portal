@@ -138,7 +138,7 @@
 		</execute>
 
 		<execute macro="SiteAdmin#viewPortletTitle">
-			<var name="portletTitle" value="${portletTitle}" />
+			<var name="portletTitle" value="Templates for Structure: ${structureName}" />
 		</execute>
 	</command>
 

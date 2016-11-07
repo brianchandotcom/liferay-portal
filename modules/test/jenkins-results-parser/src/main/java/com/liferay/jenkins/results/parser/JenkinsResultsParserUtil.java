@@ -497,6 +497,39 @@ public class JenkinsResultsParserUtil {
 		return masters;
 	}
 
+	public static List<String> getRandomListItems(
+		int count, List<String> list) {
+
+		if (count > list.size()) {
+			throw new IllegalStateException(
+				"count may not exceed the size of the list");
+		}
+
+		if (count == list.size()) {
+			return list;
+		}
+
+		List<String> randomItems = new ArrayList<>(count);
+
+		for (int i = 0; i < count; i++) {
+			String item = null;
+
+			while (true) {
+				item = list.get(getRandomValue(0, list.size() - 1));
+
+				if (randomItems.contains(item)) {
+					continue;
+				}
+
+				randomItems.add(item);
+
+				break;
+			}
+		}
+
+		return randomItems;
+	}
+
 	public static int getRandomValue(int start, int end) {
 		int size = Math.abs(end - start);
 

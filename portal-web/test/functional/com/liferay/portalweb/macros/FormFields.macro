@@ -403,7 +403,7 @@
 	</command>
 
 	<command name="viewRequiredAsteriskNotPresent">
-		<execute function="AssertElementNotPresent#assertNotVisible" locator1="Icon#ASTERISK" />
+		<execute function="AssertElementNotPresent" locator1="Icon#ASTERISK" />
 	</command>
 
 	<command name="viewSelectLabel">

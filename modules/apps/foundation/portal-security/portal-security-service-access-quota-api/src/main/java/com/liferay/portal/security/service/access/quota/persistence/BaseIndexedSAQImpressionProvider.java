@@ -29,12 +29,12 @@ public abstract class BaseIndexedSAQImpressionProvider
 		long companyId, String metricName);
 
 	@Override
-	public void findSAQImpressions(
+	public void feedSAQImpressions(
 		long companyId, final SAQContextMatcher saqContextMatcher,
 		SAQImpressionConsumer saqImpressionConsumer) {
 
 		for (final String metricName : saqContextMatcher.getMetricNames()) {
-			findSAQImpressionsMatchingMetric(
+			feedSAQImpressionsMatchingMetric(
 				companyId, metricName,
 				new SAQMetricMatcher() {
 
@@ -49,10 +49,10 @@ public abstract class BaseIndexedSAQImpressionProvider
 		}
 	}
 
-	public abstract void findSAQImpressions(
+	public abstract void feedSAQImpressions(
 		long companyId, SAQImpressionConsumer saqImpressionConsumer);
 
-	public abstract void findSAQImpressionsMatchingMetric(
+	public abstract void feedSAQImpressionsMatchingMetric(
 		long companyId, String metric, SAQMetricMatcher saqMetricMatcher,
 		SAQImpressionConsumer saqImpressionConsumer);
 

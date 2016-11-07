@@ -37,9 +37,6 @@
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
-	<suppress checks="PersistenceCall" files="modules/apps/collaboration/message-boards/message-boards-comment/src/main/java/com/liferay/message/boards/comment/internal/MBDiscussionCommentImpl\.java" />
-	<suppress checks="PersistenceCall" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-test-util/src/main/java/com/liferay/dynamic/data/mapping/test/util/search/TestOrderHelper\.java" />
-	<suppress checks="PersistenceCall" files="modules/apps/foundation/portal-security/portal-security-ldap/src/main/java/com/liferay/portal/security/ldap/internal/exportimport/DefaultLDAPToPortalConverter\.java" />
 	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />
 	<suppress checks="PlusStatement" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 	<suppress checks="PlusStatement" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />

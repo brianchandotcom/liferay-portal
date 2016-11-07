@@ -393,7 +393,9 @@ public class VerifyGroup extends VerifyProcess {
 			stagingGroup.getGroupId());
 	}
 
-	protected void verifyStagingGroupUserMembership(Group stagingGroup) {
+	protected void verifyStagingGroupUserMembership(Group stagingGroup)
+		throws Exception {
+
 		List<User> stagingGroupUsers = UserLocalServiceUtil.getGroupUsers(
 			stagingGroup.getGroupId());
 

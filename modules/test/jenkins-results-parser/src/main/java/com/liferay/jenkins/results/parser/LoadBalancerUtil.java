@@ -133,11 +133,13 @@ public class LoadBalancerUtil {
 
 				if (!maxIndices.isEmpty()) {
 					x = maxIndices.get(
-						getRandomValue(0, maxIndices.size() - 1));
+						JenkinsResultsParserUtil.getRandomValue(
+							0, maxIndices.size() - 1));
 				}
 				else {
 					while (true) {
-						x = getRandomValue(0, masters.size() - 1);
+						x = JenkinsResultsParserUtil.getRandomValue(
+							0, masters.size() - 1);
 
 						if (badIndices.contains(x)) {
 							continue;
@@ -265,14 +267,6 @@ public class LoadBalancerUtil {
 		}
 
 		return matcher.group("masterPrefix");
-	}
-
-	protected static int getRandomValue(int start, int end) {
-		int size = Math.abs(end - start);
-
-		double randomDouble = Math.random();
-
-		return start + (int)Math.round(size * randomDouble);
 	}
 
 	protected static int getRecentBatchSizesTotal(String master)

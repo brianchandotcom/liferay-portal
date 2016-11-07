@@ -218,6 +218,16 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
+		<execute macro="UserBar#gotoDashboard" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Available Sites" />
+		</execute>
+
+		<execute macro="MySites#viewMembershipRequested">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">

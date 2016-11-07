@@ -19,14 +19,16 @@ package com.liferay.journal.wysiwyg.upgrade.constants;
  */
 public class JournalWYSIWYGConstants {
 
+	public static final String DDM_STRUCTURE_KEY_WYSIWYG =
+		"WYSIWYG-WEB-CONTENT";
+
+	public static final String DDM_TEMPLATE_KEY_WYSWIWYG =
+		"WYSIWYG-WEB-CONTENT";
+
 	public static final String FOLDER_DESCRIPTION = "WYSIWYG";
 
 	public static final String FOLDER_NAME = "WYSIWYG";
 
-	public static final String WYSIWYG_PORTLET_KEY = "1_WAR_wysiwygportlet";
-
-	public static final String WYSIWYG_STRUCTURE_KEY = "WYSIWYG-WEB-CONTENT";
-
-	public static final String WYSIWYG_TEMPLATE_KEY = "WYSIWYG-WEB-CONTENT";
+	public static final String PORTLET_ID_WYSIWYG = "1_WAR_wysiwygportlet";
 
 }

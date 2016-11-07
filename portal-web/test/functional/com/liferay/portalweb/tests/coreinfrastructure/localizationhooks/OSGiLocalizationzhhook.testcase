@@ -13,9 +13,15 @@
 		<var name="appName" value="Chinese Localization" />
 		<var name="portletName" value="localization-zh-hook" />
 
-		<execute macro="OSGiSmoke#Smoke">
+		<!-- LPS-63777 -->
+
+		<!-- <execute macro="OSGiSmoke#Smoke">
 			<var name="appName" value="${portletName}" />
 			<var name="portletName" value="${portletName}" />
+		</execute> -->
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
 		</execute>
 	</command>
 </definition>

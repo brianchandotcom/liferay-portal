@@ -140,6 +140,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected long getGroupId(long plid) throws Exception {
 		long groupId = 0;
 
@@ -297,9 +301,16 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				_settingsFactory.getSettingsDescriptor(serviceName);
 
 			String selectSQL =
-				"select portletPreferencesId, ownerId, ownerType, plid, " +
-					"portletId, preferences from PortletPreferences " +
-						_WHERE_CLAUSE;
+				"select portletPreferencesId, ownerId, ownerType, " +
+					"PortletPreferences.plid, portletId, preferences from " +
+						"PortletPreferences " + _WHERE_CLAUSE;
+
+			if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+				StringUtil.replace(
+					selectSQL, " from PortletPreferences",
+					", groupId from PortletPreferences inner join Layout on " +
+						"PortletPreferences.plid = Layout.plid");
+			}
 
 			String insertSQL =
 				"insert into PortletPreferences (mvccVersion, " +
@@ -332,7 +343,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							if (ownerType ==
 									PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
 
-								ownerId = getGroupId(plid);
+								ownerId = rs.getLong("groupId");
 
 								plid = 0;
 

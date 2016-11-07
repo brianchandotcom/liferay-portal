@@ -17,16 +17,11 @@ package com.liferay.portal.security.service.access.quota.persistence;
 import com.liferay.portal.security.service.access.quota.metric.SAQContextMatcher;
 import com.liferay.portal.security.service.access.quota.metric.SAQMetricMatcher;
 
-import java.util.Iterator;
-
 /**
  * @author Stian Sigvartsen
  */
 public abstract class BaseIndexedSAQImpressionProvider
 	implements SAQImpressionProvider {
-
-	public abstract Iterator<String> findMetricValues(
-		long companyId, String metricName);
 
 	@Override
 	public void feedSAQImpressions(

@@ -161,10 +161,11 @@ public abstract class UpgradeProcess
 			_oldColumnName = oldColumnName;
 			_newColumn = newColumn;
 
-			int whitespacePosition = _newColumn.indexOf(StringPool.SPACE);
+			String newColumnName = StringUtil.extractFirst(
+				newColumn, StringPool.SPACE);
 
-			if (whitespacePosition != -1) {
-				_newColumnName = _newColumn.substring(0, whitespacePosition);
+			if (newColumnName != null) {
+				_newColumnName = newColumnName;
 			}
 			else {
 				_newColumnName = _newColumn;

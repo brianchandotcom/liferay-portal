@@ -473,6 +473,12 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		CalendarBooking calendarBooking =
 			calendarBookingPersistence.findByPrimaryKey(calendarBookingId);
 
+		CalendarPermission.check(
+			getPermissionChecker(), calendarBooking.getCalendarId(),
+			CalendarActionKeys.MANAGE_BOOKINGS);
+
+		long userId = getUserId();
+
 		if (updateInstance) {
 			long calendarId = calendarBooking.getCalendarId();
 
@@ -488,6 +494,18 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			String recurrence = null;
 
 			if (allFollowing) {
+				List<CalendarBooking> recurringCalendarBookings =
+					calendarBookingLocalService.getRecurringCalendarBookings(
+						calendarBooking, startTime);
+
+				for (CalendarBooking recurringCalendarBooking :
+						recurringCalendarBookings) {
+
+					calendarBookingLocalService.updateStatus(
+						userId, recurringCalendarBooking, status,
+						serviceContext);
+				}
+
 				Recurrence recurrenceObj = calendarBooking.getRecurrenceObj();
 
 				int count = recurrenceObj.getCount();
@@ -517,14 +535,22 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 				calendarBooking.getFirstReminderType(),
 				calendarBooking.getSecondReminder(),
 				calendarBooking.getSecondReminderType(), serviceContext);
+
+			calendarBookingLocalService.updateStatus(
+				userId, calendarBooking, status, serviceContext);
 		}
+		else {
+			List<CalendarBooking> recurringCalendarBookings =
+				calendarBookingLocalService.getRecurringCalendarBookings(
+					calendarBooking);
 
-		CalendarPermission.check(
-			getPermissionChecker(), calendarBooking.getCalendarId(),
-			CalendarActionKeys.MANAGE_BOOKINGS);
+			for (CalendarBooking recurringCalendarBooking :
+					recurringCalendarBookings) {
 
-		calendarBookingLocalService.updateStatus(
-			getUserId(), calendarBooking, status, serviceContext);
+				calendarBookingLocalService.updateStatus(
+					userId, recurringCalendarBooking, status, serviceContext);
+			}
+		}
 
 		return calendarBooking;
 	}

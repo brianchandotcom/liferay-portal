@@ -30,10 +30,8 @@ import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepo
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -109,22 +107,6 @@ public class DDMDataProviderInstanceStagedModelRepository
 		_ddmDataProviderInstanceLocalService.deleteDataProviderInstances(
 			portletDataContext.getCompanyId(),
 			portletDataContext.getScopeGroupId());
-	}
-
-	@Override
-	public List<StagedModel> fetchChildrenStagedModels(
-		PortletDataContext portletDataContext,
-		DDMDataProviderInstance ddmDataProviderInstance) {
-
-		return Collections.emptyList();
-	}
-
-	@Override
-	public List<StagedModel> fetchDependencyStagedModels(
-		PortletDataContext portletDataContext,
-		DDMDataProviderInstance ddmDataProviderInstance) {
-
-		return Collections.emptyList();
 	}
 
 	@Override

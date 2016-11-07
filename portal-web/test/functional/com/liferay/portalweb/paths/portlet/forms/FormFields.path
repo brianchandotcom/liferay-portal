@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>FIELD_NAME</td>
-	<td>//div[contains(@class, 'key-value-editor')]</td>
+	<td>//div[contains(@class,'key-value-editor')]</td>
 	<td></td>
 </tr>
 <tr>

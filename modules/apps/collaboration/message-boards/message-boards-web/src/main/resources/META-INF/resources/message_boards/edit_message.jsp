@@ -351,17 +351,20 @@ if (portletTitleBasedNavigation) {
 					<%
 					boolean disabled = false;
 					boolean question = threadAsQuestionByDefault;
+					MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 
 					if (message != null) {
 						thread = MBThreadLocalServiceUtil.getThread(threadId);
 
 						if (thread.isQuestion() || message.isAnswer()) {
 							question = true;
+
+							if ((category != null) && category.getDisplayStyle().equals("question")) {
+								disabled = true;
+							}
 						}
 					}
 					else {
-						MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
-
 						if ((category != null) && category.getDisplayStyle().equals("question")) {
 							disabled = true;
 							question = true;

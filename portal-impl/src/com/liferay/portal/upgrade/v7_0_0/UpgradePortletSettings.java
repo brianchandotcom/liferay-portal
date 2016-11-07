@@ -84,6 +84,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void copyPortletSettingsAsServiceSettings(
 			String portletId, int ownerType, String serviceName)
 		throws Exception {
@@ -162,6 +166,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		return groupId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected PreparedStatement getPortletPreferencesPreparedStatement(
 			String portletId, int ownerType)
 		throws Exception {
@@ -181,6 +189,10 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		return ps;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void resetPortletPreferencesValues(
 			String portletId, int ownerType,
 			SettingsDescriptor settingsDescriptor)

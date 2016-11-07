@@ -18,22 +18,21 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
-import com.liferay.portal.search.elasticsearch.internal.cluster.TestCluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.elasticsearch.internal.util.ResourceUtil;
 import com.liferay.portal.search.elasticsearch.settings.BaseIndexSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.IndexSettingsHelper;
 import com.liferay.portal.search.elasticsearch.settings.TypeMappingsHelper;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.elasticsearch.action.admin.indices.get.GetIndexResponse;
-import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.AdminClient;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.cluster.metadata.MappingMetaData;
 import org.elasticsearch.common.collect.ImmutableOpenMap;
 import org.elasticsearch.common.settings.Settings;
@@ -54,14 +53,20 @@ public class CompanyIndexFactoryTest {
 	public void setUp() throws Exception {
 		_companyIndexFactory = createCompanyIndexFactory();
 
-		_testCluster.setUp();
+		_elasticsearchFixture = new ElasticsearchFixture(
+			CompanyIndexFactoryTest.class.getSimpleName());
 
-		_elasticsearchFixture = _testCluster.getNode(0);
+		_elasticsearchFixture.setUp();
+
+		_singleFieldFixture = new SingleFieldFixture(
+			_elasticsearchFixture.getClient(),
+			new IndexName(getTestIndexName()),
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_testCluster.tearDown();
+		_elasticsearchFixture.tearDown();
 	}
 
 	@Test
@@ -86,7 +91,9 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		String field = indexOneDocument();
+		String field = RandomTestUtil.randomString() + "_ja";
+
+		indexOneDocument(field);
 
 		assertAnalyzer(field, "kuromoji_liferay_custom");
 	}
@@ -122,35 +129,23 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testDefaultIndices() throws Exception {
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"typeMappings.KeywordQueryDocumentType",
-			"/META-INF/mappings/keyword-query-type-mappings.json");
-		properties.put(
-			"typeMappings.SpellCheckDocumentType",
-			"/META-INF/mappings/spellcheck-type-mappings.json");
-
-		_companyIndexFactory.activate(properties);
+		_companyIndexFactory.activate(
+			new HashMap<String, Object>() {
+				{
+					put(
+						"typeMappings.KeywordQueryDocumentType",
+						"/META-INF/mappings/keyword-query-type-mappings.json");
+					put(
+						"typeMappings.SpellCheckDocumentType",
+						"/META-INF/mappings/spellcheck-type-mappings.json");
+				}
+			});
 
 		createIndices();
 
-		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
-			getTestIndexName());
-
-		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
-			mappings = getIndexResponse.mappings();
-
-		Iterator<ImmutableOpenMap<String, MappingMetaData>> iterator =
-			mappings.valuesIt();
-
-		ImmutableOpenMap<String, MappingMetaData> map = iterator.next();
-
-		Assert.assertTrue(
-			map.containsKey(
-				LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE));
-		Assert.assertTrue(map.containsKey("KeywordQueryDocumentType"));
-		Assert.assertTrue(map.containsKey("SpellCheckDocumentType"));
+		assertIndicesExist(
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			"KeywordQueryDocumentType", "SpellCheckDocumentType");
 	}
 
 	@Test
@@ -197,9 +192,85 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		String field = indexOneDocument();
+		String field = RandomTestUtil.randomString() + "_ja";
+
+		indexOneDocument(field);
 
 		assertAnalyzer(field, "brazilian");
+	}
+
+	@Test
+	public void testOverrideTypeMappings() throws Exception {
+		_companyIndexFactory.setAdditionalIndexConfigurations(
+			loadAdditionalAnalyzers());
+		_companyIndexFactory.setOverrideTypeMappings(
+			loadOverrideTypeMappings());
+
+		createIndices();
+
+		String field = "title";
+
+		indexOneDocument(field);
+
+		assertAnalyzer(field, "kuromoji_liferay_custom");
+
+		String field2 = "description";
+
+		indexOneDocument(field2);
+
+		assertNoAnalyzer(field2);
+	}
+
+	@Test
+	public void testOverrideTypeMappingsHonorDefaultIndices() throws Exception {
+		_companyIndexFactory.activate(
+			Collections.<String, Object>singletonMap(
+				"typeMappings.SpellCheckDocumentType",
+				"/META-INF/mappings/spellcheck-type-mappings.json"));
+
+		_companyIndexFactory.setAdditionalIndexConfigurations(
+			loadAdditionalAnalyzers());
+		_companyIndexFactory.setOverrideTypeMappings(
+			loadOverrideTypeMappings());
+
+		createIndices();
+
+		assertIndicesExist(
+			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
+			"SpellCheckDocumentType");
+	}
+
+	@Test
+	public void testOverrideTypeMappingsIgnoreOtherContributions()
+		throws Exception {
+
+		final String mappings = replaceAnalyzer(
+			loadAdditionalTypeMappings(), RandomTestUtil.randomString());
+
+		_companyIndexFactory.addIndexSettingsContributor(
+			new BaseIndexSettingsContributor(1) {
+
+				@Override
+				public void contribute(TypeMappingsHelper typeMappingsHelper) {
+					typeMappingsHelper.addTypeMappings(
+						getTestIndexName(), mappings);
+				}
+
+			});
+
+		_companyIndexFactory.setAdditionalIndexConfigurations(
+			loadAdditionalAnalyzers());
+		_companyIndexFactory.setAdditionalTypeMappings(mappings);
+		_companyIndexFactory.setOverrideTypeMappings(
+			loadOverrideTypeMappings());
+
+		createIndices();
+
+		String field = RandomTestUtil.randomString() + "_ja";
+
+		indexOneDocument(field);
+
+		assertNoAnalyzer(field);
 	}
 
 	@Rule
@@ -211,6 +282,27 @@ public class CompanyIndexFactoryTest {
 		FieldMappingAssert.assertAnalyzer(
 			analyzer, field, LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
 			getTestIndexName(), _elasticsearchFixture.getIndicesAdminClient());
+	}
+
+	protected void assertIndicesExist(String... indexNames) {
+		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
+			getTestIndexName());
+
+		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetaData>>
+			mappings = getIndexResponse.mappings();
+
+		Iterator<ImmutableOpenMap<String, MappingMetaData>> iterator =
+			mappings.valuesIt();
+
+		ImmutableOpenMap<String, MappingMetaData> map = iterator.next();
+
+		for (String indexName : indexNames) {
+			Assert.assertTrue(indexName, map.containsKey(indexName));
+		}
+	}
+
+	protected void assertNoAnalyzer(String field) throws Exception {
+		assertAnalyzer(field, null);
 	}
 
 	protected CompanyIndexFactory createCompanyIndexFactory() {
@@ -246,20 +338,10 @@ public class CompanyIndexFactoryTest {
 		return indexName.getName();
 	}
 
-	protected String indexOneDocument() {
-		Client client = _elasticsearchFixture.getClient();
+	protected void indexOneDocument(String field) {
+		_singleFieldFixture.setField(field);
 
-		IndexRequestBuilder indexRequestBuilder = client.prepareIndex(
-			getTestIndexName(),
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
-
-		String field = RandomTestUtil.randomString() + "_ja";
-
-		indexRequestBuilder.setSource(field, RandomTestUtil.randomString());
-
-		indexRequestBuilder.get();
-
-		return field;
+		_singleFieldFixture.indexDocument(RandomTestUtil.randomString());
 	}
 
 	protected String loadAdditionalAnalyzers() throws Exception {
@@ -270,6 +352,11 @@ public class CompanyIndexFactoryTest {
 	protected String loadAdditionalTypeMappings() throws Exception {
 		return ResourceUtil.getResourceAsString(
 			getClass(), "CompanyIndexFactoryTest-additionalTypeMappings.json");
+	}
+
+	protected String loadOverrideTypeMappings() throws Exception {
+		return ResourceUtil.getResourceAsString(
+			getClass(), "CompanyIndexFactoryTest-overrideTypeMappings.json");
 	}
 
 	protected String replaceAnalyzer(String mappings, String analyzer) {
@@ -288,6 +375,6 @@ public class CompanyIndexFactoryTest {
 
 	private CompanyIndexFactory _companyIndexFactory;
 	private ElasticsearchFixture _elasticsearchFixture;
-	private final TestCluster _testCluster = new TestCluster(1, this);
+	private SingleFieldFixture _singleFieldFixture;
 
 }

@@ -131,7 +131,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoManageTemplatesviaStructures">
+	<command name="gotoManageTemplatesViaStructures">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Manage Templates" />
 			<var name="rowEntry" value="${structureTitle}" />

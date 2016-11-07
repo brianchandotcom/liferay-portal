@@ -287,6 +287,10 @@ public class ProjectTemplates {
 				 className.endsWith("Portlet")) {
 
 			className = className.substring(0, className.length() - 7);
+
+			if (Validator.isNull(className)) {
+				className = "Portlet";
+			}
 		}
 
 		projectTemplatesArgs.setClassName(className);

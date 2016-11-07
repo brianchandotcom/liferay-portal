@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Journal WYSIWYG Upgrade
-Bundle-SymbolicName: com.liferay.journal.wysiwyg.upgrade
+Bundle-Name: Liferay Journal WYSIWYG
+Bundle-SymbolicName: com.liferay.journal.wysiwyg
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.journal.wysiwyg.upgrade,\

@@ -37,7 +37,6 @@
 	<suppress checks="MissingModifier" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/annotation/AnnotationLocatorTest\.java" />
 	<suppress checks="MissingModifier" files="portal-kernel/test/unit/com/liferay/portal/kernel/resiliency/spi/agent/annotation/DistributedRegistryTest\.java" />
-	<suppress checks="PersistenceCall" files="modules/apps/web-experience/asset/asset-publisher-web/src/main/java/com/liferay/asset/publisher/web/display/context/AssetPublisherDisplayContext\.java" />
 	<suppress checks="PlusStatement" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 	<suppress checks="PlusStatement" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 	<suppress checks="Subname" files="portal-kernel/src/com/liferay/portal/kernel/util/ListUtil\.java" />

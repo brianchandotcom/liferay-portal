@@ -75,7 +75,7 @@ public class JournalWYSIWYGUpgradeHelperTest {
 		int initialWysiwygArticleCount =
 			JournalArticleLocalServiceUtil.getStructureArticlesCount(
 				_group.getGroupId(),
-				JournalWYSIWYGConstants.WYSIWYG_STRUCTURE_KEY);
+				JournalWYSIWYGConstants.DDM_STRUCTURE_KEY_WYSIWYG);
 
 		Assert.assertEquals(0, initialWysiwygArticleCount);
 
@@ -84,7 +84,7 @@ public class JournalWYSIWYGUpgradeHelperTest {
 		int wysiwygArticleCount =
 			JournalArticleLocalServiceUtil.getStructureArticlesCount(
 				_group.getGroupId(),
-				JournalWYSIWYGConstants.WYSIWYG_STRUCTURE_KEY);
+				JournalWYSIWYGConstants.DDM_STRUCTURE_KEY_WYSIWYG);
 
 		Assert.assertEquals(
 			initialWysiwygArticleCount + 1, wysiwygArticleCount);
@@ -96,7 +96,7 @@ public class JournalWYSIWYGUpgradeHelperTest {
 		portletPreferencesMap.put("message", _WYSIWYG_MESSAGE);
 
 		LayoutTestUtil.updateLayoutPortletPreferences(
-			_layout, JournalWYSIWYGConstants.WYSIWYG_PORTLET_KEY,
+			_layout, JournalWYSIWYGConstants.PORTLET_ID_WYSIWYG,
 			portletPreferencesMap);
 	}
 

@@ -91,7 +91,7 @@ public class JournalWYSIWYGUpgradeHelper {
 		sb.append("PortletPreferences inner join Layout on Layout.plid = ");
 		sb.append("PortletPreferences.plid where ");
 		sb.append("PortletPreferences.portletId like '");
-		sb.append(JournalWYSIWYGConstants.WYSIWYG_PORTLET_KEY);
+		sb.append(JournalWYSIWYGConstants.PORTLET_ID_WYSIWYG);
 		sb.append("%'");
 
 		try (Connection con = DataAccess.getUpgradeOptimizedConnection();
@@ -152,8 +152,8 @@ public class JournalWYSIWYGUpgradeHelper {
 
 		JournalArticle journalArticle = _journalArticleLocalService.addArticle(
 			userId, groupId, journalFolderId, titleMap, titleMap, xmlContent,
-			JournalWYSIWYGConstants.WYSIWYG_STRUCTURE_KEY,
-			JournalWYSIWYGConstants.WYSIWYG_TEMPLATE_KEY, serviceContext);
+			JournalWYSIWYGConstants.DDM_STRUCTURE_KEY_WYSIWYG,
+			JournalWYSIWYGConstants.DDM_TEMPLATE_KEY_WYSWIWYG, serviceContext);
 
 		return journalArticle;
 	}
@@ -332,7 +332,7 @@ public class JournalWYSIWYGUpgradeHelper {
 		throws PortalException {
 
 		String journalPortletId = StringUtil.replace(
-			portletId, JournalWYSIWYGConstants.WYSIWYG_PORTLET_KEY,
+			portletId, JournalWYSIWYGConstants.PORTLET_ID_WYSIWYG,
 			JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		String journalPreference = _getJournalPortletPreferences(
@@ -357,7 +357,7 @@ public class JournalWYSIWYGUpgradeHelper {
 		String typedSettings = layout.getTypeSettings();
 
 		String updatedTypedSettings = StringUtil.replace(
-			typedSettings, JournalWYSIWYGConstants.WYSIWYG_PORTLET_KEY,
+			typedSettings, JournalWYSIWYGConstants.PORTLET_ID_WYSIWYG,
 			JournalContentPortletKeys.JOURNAL_CONTENT);
 
 		layout.setTypeSettings(updatedTypedSettings);

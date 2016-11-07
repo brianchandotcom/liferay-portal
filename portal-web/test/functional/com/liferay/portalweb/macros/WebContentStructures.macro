@@ -260,7 +260,7 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
-		
+
 	<command name="viewTableEntryCP">
 		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 

@@ -82,7 +82,7 @@ public class UpgradeProcessTest {
 	@Test
 	public void testShouldDropIndexIsCaseInsensitive() {
 		AlterColumnName alterColName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, StringUtil.toUpperCase(_NEW_COLUMN_NAME));
+			StringUtil.toUpperCase(_OLD_COLUMN_NAME), _NEW_COLUMN_NAME);
 
 		Assert.assertTrue(
 			alterColName.shouldDropIndex(_oldIndexColumnsLowercase));

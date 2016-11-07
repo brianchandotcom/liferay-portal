@@ -245,41 +245,39 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			String portletId, String serviceName, int ownerType)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(portletId)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Upgrading display portlet " + portletId + " settings");
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug("Upgrading display portlet " + portletId + " settings");
+		}
 
-			SettingsDescriptor settingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(serviceName);
+		SettingsDescriptor settingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(serviceName);
 
-			try (PreparedStatement ps1 = connection.prepareStatement(
-					"select portletPreferencesId, preferences from " +
-						"PortletPreferences " + _WHERE_CLAUSE)) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(portletId);
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select portletPreferencesId, preferences from " +
+					"PortletPreferences " + _WHERE_CLAUSE)) {
 
-				ps1.setInt(1, ownerType);
-				ps1.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
-				ps1.setString(3, portletId);
+			ps1.setInt(1, ownerType);
+			ps1.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
+			ps1.setString(3, portletId);
 
-				try (ResultSet rs = ps1.executeQuery();
-						PreparedStatement ps2 =
-							AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-								connection, _UPDATE)) {
+			try (ResultSet rs = ps1.executeQuery();
+					PreparedStatement ps2 =
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection, _UPDATE)) {
 
-					while (rs.next()) {
-						ps2.setString(
-							1,
-							_resetPreferences(
-								rs.getString("preferences"),
-								settingsDescriptor.getAllKeys()));
-						ps2.setLong(2, rs.getLong("portletPreferencesId"));
+				while (rs.next()) {
+					ps2.setString(
+						1,
+						_resetPreferences(
+							rs.getString("preferences"),
+							settingsDescriptor.getAllKeys()));
+					ps2.setLong(2, rs.getLong("portletPreferencesId"));
 
-						ps2.addBatch();
-					}
-
-					ps2.executeBatch();
+					ps2.addBatch();
 				}
+
+				ps2.executeBatch();
 			}
 		}
 	}
@@ -289,109 +287,105 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 			boolean resetPortletInstancePreferences)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(portletId)) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Upgrading main portlet " + portletId + " settings");
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug("Upgrading main portlet " + portletId + " settings");
+		}
 
-			SettingsDescriptor portletSettingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(portletId);
+		SettingsDescriptor portletSettingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(portletId);
 
-			SettingsDescriptor serviceSettingsDescriptor =
-				_settingsFactory.getSettingsDescriptor(serviceName);
+		SettingsDescriptor serviceSettingsDescriptor =
+			_settingsFactory.getSettingsDescriptor(serviceName);
 
-			String selectSQL =
-				"select portletPreferencesId, ownerId, ownerType, " +
-					"PortletPreferences.plid, portletId, preferences from " +
-						"PortletPreferences " + _WHERE_CLAUSE;
+		String selectSQL =
+			"select portletPreferencesId, ownerId, ownerType, " +
+				"PortletPreferences.plid, portletId, preferences from " +
+					"PortletPreferences " + _WHERE_CLAUSE;
 
-			if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
-				StringUtil.replace(
-					selectSQL, " from PortletPreferences",
-					", groupId from PortletPreferences inner join Layout on " +
-						"PortletPreferences.plid = Layout.plid");
-			}
+		if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+			selectSQL = StringUtil.replace(
+				selectSQL, " from PortletPreferences",
+				", Layout.groupId from PortletPreferences inner join Layout " +
+					"on PortletPreferences.plid = Layout.plid");
+		}
 
-			String insertSQL =
-				"insert into PortletPreferences (mvccVersion, " +
-					"portletPreferencesId, ownerId, ownerType, plid, " +
-						"portletId, preferences) values (?, ?, ?, ?, ?, ?, ?)";
+		String insertSQL =
+			"insert into PortletPreferences (mvccVersion, " +
+				"portletPreferencesId, ownerId, ownerType, plid, portletId, " +
+					"preferences) values (?, ?, ?, ?, ?, ?, ?)";
 
-			try (PreparedStatement ps1 = connection.prepareStatement(
-					selectSQL)) {
+		try (LoggingTimer loggingTimer = new LoggingTimer(portletId);
+			PreparedStatement ps1 = connection.prepareStatement(
+				selectSQL)) {
 
-				ps1.setInt(1, ownerType);
-				ps1.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
-				ps1.setString(3, portletId);
+			ps1.setInt(1, ownerType);
+			ps1.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);
+			ps1.setString(3, portletId);
 
-				try (ResultSet rs = ps1.executeQuery();
-					PreparedStatement ps2 =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection, insertSQL);
-					PreparedStatement ps3 =
-						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-							connection, _UPDATE)) {
+			try (ResultSet rs = ps1.executeQuery();
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection, insertSQL);
+				PreparedStatement ps3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection, _UPDATE)) {
 
-					while (rs.next()) {
-						if (portletId.equals(rs.getString("portletId")) &&
-							(ownerType == rs.getInt("ownerType"))) {
+				while (rs.next()) {
+					if (portletId.equals(rs.getString("portletId")) &&
+						(ownerType == rs.getInt("ownerType"))) {
 
-							long ownerId = rs.getLong("ownerId");
-							long plid = rs.getLong("plid");
-							String preferences = rs.getString("preferences");
+						long ownerId = rs.getLong("ownerId");
+						long plid = rs.getLong("plid");
+						String preferences = rs.getString("preferences");
 
-							if (ownerType ==
-									PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+						if (ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) {
+							ownerId = rs.getLong("groupId");
 
-								ownerId = rs.getLong("groupId");
+							plid = 0;
 
-								plid = 0;
-
-								if (_log.isInfoEnabled()) {
-									_log.info(
-										_buildCopyLog(
-											portletId, plid, serviceName,
-											ownerId));
-								}
+							if (_log.isInfoEnabled()) {
+								_log.info(
+									_buildCopyLog(
+										portletId, plid, serviceName, ownerId));
 							}
-
-							if (resetPortletInstancePreferences) {
-								if (_log.isDebugEnabled()) {
-									_log.debug(
-										"Delete portlet instance keys from " +
-											"service settings");
-								}
-
-								preferences = _resetPreferences(
-									preferences,
-									portletSettingsDescriptor.getAllKeys());
-							}
-
-							ps2.setLong(1, 0);
-							ps2.setLong(2, increment());
-							ps2.setLong(3, ownerId);
-							ps2.setInt(4, PortletKeys.PREFS_OWNER_TYPE_GROUP);
-							ps2.setLong(5, plid);
-							ps2.setString(6, serviceName);
-							ps2.setString(7, preferences);
-
-							ps2.addBatch();
 						}
 
-						ps3.setString(
-							1,
-							_resetPreferences(
-								rs.getString("preferences"),
-								serviceSettingsDescriptor.getAllKeys()));
-						ps3.setLong(2, rs.getLong("portletPreferencesId"));
+						if (resetPortletInstancePreferences) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Delete portlet instance keys from " +
+										"service settings");
+							}
 
-						ps3.addBatch();
+							preferences = _resetPreferences(
+								preferences,
+								portletSettingsDescriptor.getAllKeys());
+						}
+
+						ps2.setLong(1, 0);
+						ps2.setLong(2, increment());
+						ps2.setLong(3, ownerId);
+						ps2.setInt(4, PortletKeys.PREFS_OWNER_TYPE_GROUP);
+						ps2.setLong(5, plid);
+						ps2.setString(6, serviceName);
+						ps2.setString(7, preferences);
+
+						ps2.addBatch();
 					}
 
-					ps2.executeBatch();
+					ps3.setString(
+						1,
+						_resetPreferences(
+							rs.getString("preferences"),
+							serviceSettingsDescriptor.getAllKeys()));
+					ps3.setLong(2, rs.getLong("portletPreferencesId"));
 
-					ps3.executeBatch();
+					ps3.addBatch();
 				}
+
+				ps2.executeBatch();
+
+				ps3.executeBatch();
 			}
 		}
 	}

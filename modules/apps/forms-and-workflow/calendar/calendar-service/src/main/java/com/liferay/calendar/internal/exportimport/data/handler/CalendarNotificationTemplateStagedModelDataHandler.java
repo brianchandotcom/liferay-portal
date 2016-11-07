@@ -22,7 +22,6 @@ import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -113,7 +112,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		String body =
-			_exportImportContentProcessorController.
+			_calendarNotificationTemplateExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, calendarNotificationTemplate,
 					calendarNotificationTemplate.getBody(),
@@ -163,7 +162,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 			null;
 
 		String body =
-			_exportImportContentProcessorController.
+			_calendarNotificationTemplateExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, calendarNotificationTemplate,
 					calendarNotificationTemplate.getBody());
@@ -222,13 +221,13 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 		_calendarLocalService = calendarLocalService;
 	}
 
-	/**
-	 * @deprecated As of 2.2.0
-	 */
-	@Deprecated
+	@Reference(unbind = "-")
 	protected void setCalendarNotificationTemplateExportImportContentProcessor(
 		CalendarNotificationTemplateExportImportContentProcessor
 			calendarNotificationTemplateExportImportContentProcessor) {
+
+		_calendarNotificationTemplateExportImportContentProcessor =
+			calendarNotificationTemplateExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -241,11 +240,9 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 	}
 
 	private CalendarLocalService _calendarLocalService;
+	private CalendarNotificationTemplateExportImportContentProcessor
+		_calendarNotificationTemplateExportImportContentProcessor;
 	private CalendarNotificationTemplateLocalService
 		_calendarNotificationTemplateLocalService;
-
-	@Reference
-	private ExportImportContentProcessorController
-		_exportImportContentProcessorController;
 
 }

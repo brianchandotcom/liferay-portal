@@ -20,6 +20,8 @@ import java.net.URL;
 
 import java.util.Enumeration;
 
+import org.apache.log4j.Logger;
+
 import org.osgi.framework.Bundle;
 
 /**
@@ -59,6 +61,10 @@ public class BundleUtil {
 				enumeration = bundle.getResources(name);
 			}
 			catch (IOException ioe) {
+				_logger.error(
+					"Error while getting resource name " + name +
+						" from bundle " + bundle,
+					ioe);
 			}
 		}
 
@@ -68,5 +74,7 @@ public class BundleUtil {
 
 		return enumeration.nextElement();
 	}
+
+	private static final Logger _logger = Logger.getLogger(BundleUtil.class);
 
 }

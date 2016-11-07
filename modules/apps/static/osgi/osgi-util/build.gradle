@@ -13,6 +13,7 @@ copyTestLibs {
 }
 
 dependencies {
+	provided group: "log4j", name: "log4j", version: "1.2.17"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 
 	testIntegrationCompile group: "com.liferay.arquillian", name: "com.liferay.arquillian.arquillian-deployment-generator-bnd", version: "1.0.4"

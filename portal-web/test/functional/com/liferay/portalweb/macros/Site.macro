@@ -699,9 +699,9 @@
 
 					<execute macro="Alert#viewSuccessMessage" />
 
-					<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS_2" />
-
-					<execute function="AssertTextEquals" locator1="MenuItem#MEMBERSHIP_REQUESTED" value1="Membership Requested" />
+					<execute macro="MySites#viewMembershipRequested">
+						<var name="siteName" value="${siteName}" />
+					</execute>
 				</then>
 			</elseif>
 			<else>

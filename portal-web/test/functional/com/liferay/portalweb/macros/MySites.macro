@@ -10,6 +10,20 @@
 		</execute>
 	</command>
 
+	<command name="viewMembershipRequested">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${siteName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Membership Requested" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="MenuItem#ANY_MENU_ITEM">
+			<var name="key_menuItem" value="Membership Requested" />
+		</execute>
+	</command>
+
 	<command name="viewNoOptions">
 		<if>
 			<isset var="navItem" />

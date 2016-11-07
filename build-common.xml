@@ -793,6 +793,7 @@ Error-Prone was automatically installed. Please rerun your task.
 				<jvmarg value="-Dliferay.mode=test" />
 				<jvmarg value="-Dosgi.state.dir=${liferay.home}/osgi/state" />
 				<jvmarg value="-Drelease.versions.test.other.dir=${release.versions.test.other.dir}" />
+				<jvmarg value="-Dsun.zip.disableMemoryMapping=true" />
 				<misc />
 				<jvmarg value="-Duser.timezone=GMT" />
 				<classpath location="test-coverage" />

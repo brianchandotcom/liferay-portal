@@ -2770,7 +2770,7 @@ go</echo>
 						<![CDATA[
 							JMX_OPTS="${testable.tomcat.jmx.opts}"
 
-							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS}"
+							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS} -Dsun.zip.disableMemoryMapping=true"
 						]]>
 					</echo>
 				</then>

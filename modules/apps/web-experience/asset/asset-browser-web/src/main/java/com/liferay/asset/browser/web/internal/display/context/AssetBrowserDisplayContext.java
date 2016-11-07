@@ -177,6 +177,9 @@ public class AssetBrowserDisplayContext {
 				sort = new Sort(
 					Field.MODIFIED_DATE, Sort.LONG_TYPE, orderByAsc);
 			}
+			else if (Objects.equals(getOrderByCol(), "title")) {
+				sort = new Sort(Field.TITLE, Sort.STRING_TYPE, orderByAsc);
+			}
 
 			Hits hits = AssetEntryLocalServiceUtil.search(
 				themeDisplay.getCompanyId(), getFilterGroupIds(),
@@ -354,6 +357,14 @@ public class AssetBrowserDisplayContext {
 		_orderByType = ParamUtil.getString(_request, "orderByType", "asc");
 
 		return _orderByType;
+	}
+
+	public String[] getOrderColumns() {
+		if (AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE) {
+			return new String[] {"modified-date"};
+		}
+
+		return new String[] {"modified-date", "title"};
 	}
 
 	public PortletURL getPortletURL() {

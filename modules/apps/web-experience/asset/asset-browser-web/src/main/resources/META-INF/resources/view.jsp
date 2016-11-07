@@ -41,7 +41,7 @@
 			<liferay-frontend:management-bar-sort
 				orderByCol="<%= assetBrowserDisplayContext.getOrderByCol() %>"
 				orderByType="<%= assetBrowserDisplayContext.getOrderByType() %>"
-				orderColumns='<%= new String[] {"modified-date"} %>'
+				orderColumns="<%= assetBrowserDisplayContext.getOrderColumns() %>"
 				portletURL="<%= assetBrowserDisplayContext.getPortletURL() %>"
 			/>
 		</liferay-frontend:management-bar-filters>

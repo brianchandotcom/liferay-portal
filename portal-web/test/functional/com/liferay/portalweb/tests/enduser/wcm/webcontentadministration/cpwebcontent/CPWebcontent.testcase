@@ -1998,7 +1998,7 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<execute macro="WebContentNavigator#gotoManageTemplatesviaStructures">
+		<execute macro="WebContentNavigator#gotoManageTemplatesViaStructures">
 			<var name="portletTitle" value="Templates for Structure: Basic Web Content" />
 			<var name="structureTitle" value="Basic Web Content" />
 		</execute>

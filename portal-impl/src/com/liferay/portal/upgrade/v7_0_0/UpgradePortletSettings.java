@@ -247,10 +247,6 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 					"Upgrading display portlet " + portletId + " settings");
 			}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Delete service keys from portlet settings");
-			}
-
 			SettingsDescriptor settingsDescriptor =
 				_settingsFactory.getSettingsDescriptor(serviceName);
 

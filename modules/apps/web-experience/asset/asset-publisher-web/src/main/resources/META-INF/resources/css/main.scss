@@ -1,12 +1,16 @@
+@import "mixins";
+
 .portlet-asset-publisher {
 	.asset-abstract {
 		overflow: auto;
 	}
 
 	.asset-actions {
-		position: absolute;
-		right: 10px;
-		top: 12px;
+		@include sm {
+			position: absolute;
+			right: 10px;
+			z-index: 1;
+		}
 	}
 
 	.asset-full-content {

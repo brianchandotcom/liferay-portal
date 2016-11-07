@@ -181,6 +181,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		}
 	}
 
+	@Override
 	public boolean prepareLayoutStagingHandler(
 		PortletDataContext portletDataContext, Layout layout) {
 

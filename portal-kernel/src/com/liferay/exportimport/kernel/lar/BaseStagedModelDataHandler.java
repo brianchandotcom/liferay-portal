@@ -634,7 +634,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		List<Long> assetCategoryIds = new ArrayList<>(referenceElements.size());
 
 		for (Element referenceElement : referenceElements) {
-			long classPK = GetterUtil.getLong(
+			Long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
@@ -673,7 +673,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		List<Long> assetTagIds = new ArrayList<>(referenceElements.size());
 
 		for (Element referenceElement : referenceElements) {
-			long classPK = GetterUtil.getLong(
+			Long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
@@ -797,7 +797,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				continue;
 			}
 
-			long classPK = GetterUtil.getLong(
+			Long classPK = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(

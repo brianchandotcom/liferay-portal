@@ -54,8 +54,8 @@ public abstract class BasePublisherMessageListener
 	extends BaseMessageStatusMessageListener {
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link
-	 *  #initialize(ComponentContext, SingleDestinationMessageSenderFactory))}
+	 * @deprecated As of 4.0.0, replaced by {@link #initialize(ComponentContext,
+	 *             SingleDestinationMessageSenderFactory))}
 	 */
 	@Deprecated
 	protected void initialize(ComponentContext componentContext) {

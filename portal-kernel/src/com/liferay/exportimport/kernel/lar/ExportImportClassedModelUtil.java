@@ -19,6 +19,9 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.io.Serializable;
 
 /**
  * @author Mate Thurzo
@@ -41,13 +44,7 @@ public class ExportImportClassedModelUtil {
 	}
 
 	public static long getClassPK(ClassedModel classedModel) {
-		if (classedModel instanceof ResourcedModel) {
-			ResourcedModel resourcedModel = (ResourcedModel)classedModel;
-
-			return resourcedModel.getResourcePrimKey();
-		}
-
-		return (Long)classedModel.getPrimaryKeyObj();
+		return GetterUtil.getLong(getPrimaryKeyObj(classedModel));
 	}
 
 	public static String getClassSimpleName(ClassedModel classedModel) {
@@ -64,6 +61,16 @@ public class ExportImportClassedModelUtil {
 		}
 
 		return modelClassSimpleName;
+	}
+
+	public static Serializable getPrimaryKeyObj(ClassedModel classedModel) {
+		if (classedModel instanceof ResourcedModel) {
+			ResourcedModel resourcedModel = (ResourcedModel)classedModel;
+
+			return resourcedModel.getResourcePrimKey();
+		}
+
+		return classedModel.getPrimaryKeyObj();
 	}
 
 }

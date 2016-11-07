@@ -53,6 +53,8 @@ import org.apache.felix.cm.NotCachablePersistenceManager;
 import org.apache.felix.cm.PersistenceManager;
 import org.apache.felix.cm.file.ConfigurationHandler;
 
+import org.osgi.service.cm.ConfigurationAdmin;
+
 /**
  * @author Raymond Augé
  * @author Sampsa Sohlman
@@ -320,10 +322,19 @@ public class ConfigurationPersistenceManager
 
 		ConfigurationModelListener configurationModelListener = null;
 
-		if (hasPid(pid)) {
+		if (!pid.endsWith("factory") &&
+			(dictionary.get("_felix_.cm.newConfiguration") == null)) {
+
+			String pidKey = (String)dictionary.get(
+				ConfigurationAdmin.SERVICE_FACTORYPID);
+
+			if (pidKey == null) {
+				pidKey = pid;
+			}
+
 			configurationModelListener =
 				ConfigurationModelListenerProvider.
-					getConfigurationModelListener(pid);
+					getConfigurationModelListener(pidKey);
 		}
 
 		if (configurationModelListener != null) {

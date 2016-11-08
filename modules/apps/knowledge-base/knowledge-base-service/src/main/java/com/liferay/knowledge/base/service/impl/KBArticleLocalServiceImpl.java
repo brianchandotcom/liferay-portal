@@ -283,11 +283,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		WorkflowThreadLocal.setEnabled(false);
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
-		return kbArticleImporter.processZipFile(
-			userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
-			inputStream, serviceContext);
+		try {
+			WorkflowThreadLocal.setEnabled(false);
+
+			return kbArticleImporter.processZipFile(
+				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
+				inputStream, serviceContext);
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	@Override

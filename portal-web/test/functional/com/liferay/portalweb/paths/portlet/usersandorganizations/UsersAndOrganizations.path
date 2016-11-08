@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_COUNTRY_NAME</td>
+	<td>//select[contains(@id,'countryId') and contains(.,'${key_countryName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

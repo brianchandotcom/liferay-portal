@@ -220,6 +220,8 @@
 	<command name="DeliverReportToEmail" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
+		<property name="test.smtp.server.enabled" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -255,8 +257,16 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#deliverReportEntryFile">
-			<var name="emailRecipientAddress" value="${emailAddress3}" />
+			<var name="emailRecipientAddress" value="user1@liferay.com" />
 			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.pdf" />
+		</execute>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="content" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="recipient" value="user1@liferay.com" />
+			<var name="sender" value="Joe Bloggs" />
+			<var name="subject" value="New Report: reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

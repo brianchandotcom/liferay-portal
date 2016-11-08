@@ -165,7 +165,7 @@ public class AssetPublisherUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = _layoutLocalService.getLayout(themeDisplay.getPlid());
+		Layout layout = _layoutLocalService.fetchLayout(themeDisplay.getPlid());
 
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
@@ -217,7 +217,8 @@ public class AssetPublisherUtil {
 			String assetEntryType)
 		throws Exception {
 
-		AssetEntry assetEntry = _assetEntryLocalService.getEntry(assetEntryId);
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			assetEntryId);
 
 		String[] assetEntryXmls = portletPreferences.getValues(
 			"assetEntryXml", new String[0]);
@@ -246,15 +247,14 @@ public class AssetPublisherUtil {
 	}
 
 	public static void addUserAttributes(
-			User user, String[] customUserAttributeNames,
-			AssetEntryQuery assetEntryQuery)
-		throws Exception {
+		User user, String[] customUserAttributeNames,
+		AssetEntryQuery assetEntryQuery) {
 
 		if ((user == null) || (customUserAttributeNames.length == 0)) {
 			return;
 		}
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.fetchCompanyGroup(
 			user.getCompanyId());
 
 		long[] allCategoryIds = assetEntryQuery.getAllCategoryIds();
@@ -317,8 +317,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static long[] getAssetCategoryIds(
-			PortletPreferences portletPreferences)
-		throws Exception {
+		PortletPreferences portletPreferences) {
 
 		long[] assetCategoryIds = new long[0];
 
@@ -784,8 +783,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static String[] getAssetTagNames(
-			PortletPreferences portletPreferences)
-		throws Exception {
+		PortletPreferences portletPreferences) {
 
 		String[] allAssetTagNames = new String[0];
 
@@ -1136,13 +1134,11 @@ public class AssetPublisherUtil {
 		return ArrayUtil.toLongArray(groupIds);
 	}
 
-	public static String getScopeId(Group group, long scopeGroupId)
-		throws PortalException {
-
+	public static String getScopeId(Group group, long scopeGroupId) {
 		String key = null;
 
 		if (group.isLayout()) {
-			Layout layout = _layoutLocalService.getLayout(group.getClassPK());
+			Layout layout = _layoutLocalService.fetchLayout(group.getClassPK());
 
 			key = SCOPE_ID_LAYOUT_UUID_PREFIX + layout.getUuid();
 		}
@@ -1152,7 +1148,7 @@ public class AssetPublisherUtil {
 			key = SCOPE_ID_GROUP_PREFIX + GroupConstants.DEFAULT;
 		}
 		else {
-			Group scopeGroup = _groupLocalService.getGroup(scopeGroupId);
+			Group scopeGroup = _groupLocalService.fetchGroup(scopeGroupId);
 
 			if (scopeGroup.hasAncestor(group.getGroupId()) &&
 				SitesUtil.isContentSharingWithChildrenEnabled(group)) {
@@ -1259,9 +1255,8 @@ public class AssetPublisherUtil {
 	}
 
 	public static void notifySubscriber(
-			long userId, PortletPreferences portletPreferences,
-			List<AssetEntry> assetEntries)
-		throws PortalException {
+		long userId, PortletPreferences portletPreferences,
+		List<AssetEntry> assetEntries) {
 
 		assetEntries = _filterAssetEntries(userId, assetEntries);
 
@@ -1640,8 +1635,7 @@ public class AssetPublisherUtil {
 	}
 
 	protected static boolean isSearchWithIndex(
-			String portletName, AssetEntryQuery assetEntryQuery)
-		throws Exception {
+		String portletName, AssetEntryQuery assetEntryQuery) {
 
 		if (AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX &&
 			(assetEntryQuery.getLinkedAssetEntryId() == 0) &&
@@ -1656,8 +1650,7 @@ public class AssetPublisherUtil {
 	}
 
 	protected static boolean isShowAssetEntryResults(
-			String portletName, AssetEntryQuery assetEntryQuery)
-		throws Exception {
+		String portletName, AssetEntryQuery assetEntryQuery) {
 
 		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) ||
 			(assetEntryQuery.getLinkedAssetEntryId() > 0)) {
@@ -1753,8 +1746,7 @@ public class AssetPublisherUtil {
 	}
 
 	private static List<AssetEntry> _filterAssetCategoriesAssetEntries(
-			List<AssetEntry> assetEntries, long[] assetCategoryIds)
-		throws Exception {
+		List<AssetEntry> assetEntries, long[] assetCategoryIds) {
 
 		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
 
@@ -1825,8 +1817,7 @@ public class AssetPublisherUtil {
 	}
 
 	private static List<AssetEntry> _filterAssetTagNamesAssetEntries(
-			List<AssetEntry> assetEntries, String[] assetTagNames)
-		throws Exception {
+		List<AssetEntry> assetEntries, String[] assetTagNames) {
 
 		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
 

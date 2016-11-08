@@ -243,9 +243,6 @@ public class AssetPublisherUtil {
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-		catch (PortletException pe) {
-			throw new SystemException(pe);
-		}
 	}
 
 	public static void addUserAttributes(
@@ -270,14 +267,8 @@ public class AssetPublisherUtil {
 		for (String customUserAttributeName : customUserAttributeNames) {
 			ExpandoBridge userCustomAttributes = user.getExpandoBridge();
 
-			Serializable userCustomFieldValue = null;
-
-			try {
-				userCustomFieldValue = userCustomAttributes.getAttribute(
-					customUserAttributeName);
-			}
-			catch (Exception e) {
-			}
+			Serializable userCustomFieldValue =
+				userCustomAttributes.getAttribute(customUserAttributeName);
 
 			if (userCustomFieldValue == null) {
 				continue;

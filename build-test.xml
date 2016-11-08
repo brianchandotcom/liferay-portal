@@ -6187,6 +6187,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
+		<antcall target="prepare-selenium-facebook-properties" />
 		<antcall target="prepare-selenium-google-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
@@ -6954,6 +6955,44 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-facebook-properties">
+		<if>
+			<isset property="facebook.application.id" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					facebook.application.id=${facebook.application.id}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="facebook.application.secret" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					facebook.application.secret=${facebook.application.secret}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="facebook.email" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					facebook.email=${facebook.email}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="facebook.password" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					facebook.password=${facebook.password}
 				</echo>
 			</then>
 		</if>

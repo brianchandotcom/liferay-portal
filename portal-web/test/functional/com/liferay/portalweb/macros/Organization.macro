@@ -285,15 +285,11 @@
 	</command>
 
 	<command name="addWithLocalizedCountryCP">
-		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}">
-			<var name="key_navItem" value="${navItem}" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${navItem}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="${navItem}" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="MenuItem#ORGANIZATION" />
@@ -312,7 +308,7 @@
 			<var name="key_saveButton" value="${saveButton}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="advancedSearchCP">

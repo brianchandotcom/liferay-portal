@@ -62,7 +62,6 @@
 
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portlet}" />
-			<var name="portletLocalization" value="${portletLocalization}" />
 		</execute>
 	</command>
 
@@ -89,7 +88,6 @@
 
 		<execute macro="ProductMenuHelper#gotoPortlet">
 			<var name="portlet" value="${portlet}" />
-			<var name="portletLocalization" value="${portletLocalization}" />
 		</execute>
 	</command>
 

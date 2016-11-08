@@ -1325,7 +1325,7 @@
 		</execute>
 
 		<execute macro="Tag#addCP">
-			<var name="tagName" value="tagName" />
+			<var name="tagName" value="tagname" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1363,7 +1363,7 @@
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithTagCP">
-			<var name="tagNameList" value="tag name" />
+			<var name="tagNameList" value="tagname" />
 			<var name="webContentContent" value="Web Content Tag Content" />
 			<var name="webContentTitle" value="Web Content Tag Title" />
 		</execute>
@@ -1391,7 +1391,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureTagsFilterPG">
-			<var name="tagName" value="tagName" />
+			<var name="tagName" value="tagname" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

@@ -32,7 +32,8 @@
 	}
 
 	.lfr-discussion-body {
-		overflow: hidden;
+		overflow: visible;
+		margin-left:6%;
 
 		.lfr-discussion-message {
 			.lfr-discussion-message-author {

@@ -93,7 +93,7 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 	}
 
 	@Test
-	public void testCopyAndDontResetServiceSettings() throws Exception {
+	public void testCopyAndNotResetServiceSettings() throws Exception {
 		Map<String, String> servicePreferences = new HashMap<>();
 
 		servicePreferences.put(_KEY, _VALUE);
@@ -493,12 +493,7 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 				settingsClass, configurationBean, fallbackKeys);
 		}
 
-		public void setKeys(String settingsId, Set<String> keys) {
-			_settingsMap.put(settingsId, keys);
-		}
-
 		private final SettingsFactory _settingsFactory;
-		private final Map<String, Set<String>> _settingsMap = new HashMap<>();
 
 	}
 

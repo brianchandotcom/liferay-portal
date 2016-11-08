@@ -35,8 +35,6 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Set;
 
-import javax.portlet.ReadOnlyException;
-
 /**
  * @author Sergio González
  * @author Iván Zaera
@@ -118,11 +116,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 					plid = 0;
 
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							_buildCopyLog(
-								portletId, plid, serviceName, ownerId));
-					}
+					_logCopyPortletSettings(
+						portletId, plid, serviceName, ownerId);
 				}
 
 				ps2.setLong(1, 0);
@@ -331,11 +326,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 							plid = 0;
 
-							if (_log.isInfoEnabled()) {
-								_log.info(
-									_buildCopyLog(
-										portletId, plid, serviceName, ownerId));
-							}
+							_logCopyPortletSettings(
+								portletId, plid, serviceName, ownerId);
 						}
 
 						if (resetPortletInstancePreferences) {
@@ -372,8 +364,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		}
 	}
 
-	private String _buildCopyLog(
+	private void _logCopyPortletSettings(
 		String portletId, long plid, String serviceName, long ownerId) {
+
+		if (!_log.isInfoEnabled()) {
+			return;
+		}
 
 		StringBundler sb = new StringBundler(8);
 
@@ -386,7 +382,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		sb.append(" in group ");
 		sb.append(ownerId);
 
-		return sb.toString();
+		_log.info(sb.toString());
 	}
 
 	private void _resetAndOptionallyAddBatch(
@@ -406,7 +402,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 	}
 
 	private String _resetPreferences(String preferences, Set<String> keys)
-		throws ReadOnlyException {
+		throws Exception {
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.fromDefaultXML(preferences);

@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -1765,6 +1766,56 @@ public class CalendarBookingLocalServiceImpl
 				_log.warn(e, e);
 			}
 		}
+	}
+
+	protected CalendarBooking splitCalendarBooking(
+			CalendarBooking calendarBooking, java.util.Calendar splitJCalendar)
+		throws PortalException {
+
+		long laterStartTime = JCalendarUtil.convertTimeToNewDay(
+			calendarBooking.getStartTime(),
+			splitJCalendar.getTimeInMillis() + Time.DAY);
+
+		long duration =
+			calendarBooking.getEndTime() - calendarBooking.getStartTime();
+
+		long laterEndTime = laterStartTime + duration;
+
+		CalendarBooking laterCalendarBooking = addCalendarBooking(
+			calendarBooking.getUserId(), calendarBooking.getCalendarId(),
+			getChildCalendarIds(
+				calendarBooking.getCalendarBookingId(),
+				calendarBooking.getCalendarId()),
+			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+			calendarBooking.getRecurringCalendarBookingId(),
+			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
+			calendarBooking.getLocation(), laterStartTime, laterEndTime,
+			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
+			calendarBooking.getFirstReminder(),
+			calendarBooking.getFirstReminderType(),
+			calendarBooking.getSecondReminder(),
+			calendarBooking.getSecondReminderType(),
+			ServiceContextThreadLocal.getServiceContext());
+
+		deleteCalendarBookingInstance(
+			calendarBooking, splitJCalendar.getTimeInMillis(), true, false);
+
+		Recurrence laterRecurrenceObj = laterCalendarBooking.getRecurrenceObj();
+
+		for (java.util.Calendar exceptionJCalendar :
+				new ArrayList<>(laterRecurrenceObj.getExceptionJCalendars())) {
+
+			if (!JCalendarUtil.isLaterDay(exceptionJCalendar, splitJCalendar)) {
+				laterRecurrenceObj.removeExceptionJCalendar(exceptionJCalendar);
+			}
+		}
+
+		laterCalendarBooking.setRecurrence(
+			RecurrenceSerializer.serialize(laterRecurrenceObj));
+
+		calendarBookingPersistence.update(laterCalendarBooking);
+
+		return laterCalendarBooking;
 	}
 
 	protected void updateCalendarBookingsByChanges(

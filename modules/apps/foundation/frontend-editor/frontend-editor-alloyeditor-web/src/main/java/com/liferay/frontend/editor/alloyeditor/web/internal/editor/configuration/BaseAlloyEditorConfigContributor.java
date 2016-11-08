@@ -50,6 +50,8 @@ public class BaseAlloyEditorConfigContributor
 		jsonObject.put(
 			"contentsLanguage", contentsLanguageId.replace("iw_", "he_"));
 
+		jsonObject.put("disableNativeSpellChecker", Boolean.FALSE);
+
 		jsonObject.put(
 			"extraPlugins",
 			"ae_autolink,ae_dragresize,ae_addimages,ae_placeholder," +

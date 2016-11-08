@@ -439,6 +439,14 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 	}
 
 	@Override
+	public KBArticle fetchKBArticle(
+		long resourcePrimKey, long groupId, int version) {
+
+		return kbArticlePersistence.fetchByR_G_V(
+			resourcePrimKey, groupId, version);
+	}
+
+	@Override
 	public KBArticle fetchKBArticleByUrlTitle(
 		long groupId, long kbFolderId, String urlTitle) {
 
@@ -484,6 +492,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		return kbArticlePersistence.fetchByR_S_First(
 			resourcePrimKey, status, new KBArticleVersionComparator());
+	}
+
+	@Override
+	public KBArticle fetchLatestKBArticle(long resourcePrimKey, long groupId) {
+		return kbArticlePersistence.fetchByR_G_L_First(
+			resourcePrimKey, groupId, true, null);
 	}
 
 	@Override

@@ -135,7 +135,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Raymond Augé
  * @author Julio Camarero
  */
-@Component
+@Component(service = AssetPublisherUtil.class)
 @ProviderType
 public class AssetPublisherUtil {
 

@@ -153,17 +153,10 @@
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Categories" />
 
-		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_SELECT_BUTTON" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute function="Click" locator1="APConfiguration#FILTER_CATEGORIES_CATEGORY_CHECKBOX">
-			<var name="key_categoryName" value="${categoryName}" />
+		<execute macro="AssetCategorization#addCategory">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
-
-		<execute function="Click" locator1="Icon#CLOSE" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PortletEntry#save" />
 
@@ -501,17 +494,9 @@
 
 		<execute function="Select" locator1="APConfiguration#FILTER_CATEGORIZATION_SELECT" value1="Tags" />
 
-		<execute function="Click" locator1="APConfiguration#FILTER_TAGS_SELECT_BUTTON" />
-
-		<execute function="SelectFrameTop" />
-
-		<execute function="Check" locator1="APConfiguration#FILTER_TAGS_CHECKBOX">
-			<var name="key_tagName" value="${tagName}" />
+		<execute macro="AssetCategorization#selectTag">
+			<var name="tagName" value="${tagName}" />
 		</execute>
-
-		<execute function="Click" locator1="Icon#CLOSE" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="PortletEntry#save" />
 

@@ -202,14 +202,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 					connection, _UPDATE)) {
 
 			while (rs.next()) {
-				ps2.setString(
-					1,
-					_resetPreferences(
-						rs.getString("preferences"),
-						settingsDescriptor.getAllKeys()));
-				ps2.setLong(2, rs.getLong("portletPreferencesId"));
-
-				ps2.addBatch();
+				_resetAndOptionallyAddBatch(
+					ps2, rs, settingsDescriptor.getAllKeys());
 			}
 
 			ps2.executeBatch();
@@ -267,14 +261,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							connection, _UPDATE)) {
 
 				while (rs.next()) {
-					ps2.setString(
-						1,
-						_resetPreferences(
-							rs.getString("preferences"),
-							settingsDescriptor.getAllKeys()));
-					ps2.setLong(2, rs.getLong("portletPreferencesId"));
-
-					ps2.addBatch();
+					_resetAndOptionallyAddBatch(
+						ps2, rs, settingsDescriptor.getAllKeys());
 				}
 
 				ps2.executeBatch();
@@ -373,14 +361,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 						ps2.addBatch();
 					}
 
-					ps3.setString(
-						1,
-						_resetPreferences(
-							rs.getString("preferences"),
-							serviceSettingsDescriptor.getAllKeys()));
-					ps3.setLong(2, rs.getLong("portletPreferencesId"));
-
-					ps3.addBatch();
+					_resetAndOptionallyAddBatch(
+						ps3, rs, serviceSettingsDescriptor.getAllKeys());
 				}
 
 				ps2.executeBatch();
@@ -405,6 +387,22 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		sb.append(ownerId);
 
 		return sb.toString();
+	}
+
+	private void _resetAndOptionallyAddBatch(
+			PreparedStatement ps, ResultSet rs, Set<String> allKeys)
+		throws Exception {
+
+		String oldPreferences = rs.getString("preferences");
+
+		String newPreferences = _resetPreferences(oldPreferences, allKeys);
+
+		if (oldPreferences != newPreferences) {
+			ps.setString(1, newPreferences);
+			ps.setLong(2, rs.getLong("portletPreferencesId"));
+
+			ps.addBatch();
+		}
 	}
 
 	private String _resetPreferences(String preferences, Set<String> keys)

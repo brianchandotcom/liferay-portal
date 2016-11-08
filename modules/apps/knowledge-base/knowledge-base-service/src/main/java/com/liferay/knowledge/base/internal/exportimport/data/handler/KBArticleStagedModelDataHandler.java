@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.internal.exportimport.data.handler;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -27,6 +26,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
+import com.liferay.knowledge.base.internal.exportimport.content.processor.KBArticleExportImportContentProcessor;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
@@ -157,7 +157,7 @@ public class KBArticleStagedModelDataHandler
 			portletDataContext, kbArticleElement, kbArticle);
 
 		String content =
-			_exportImportContentProcessorController.
+			_kbArticleExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, kbArticle, kbArticle.getContent(), true,
 					true);
@@ -253,7 +253,7 @@ public class KBArticleStagedModelDataHandler
 		String[] sections = AdminUtil.unescapeSections(kbArticle.getSections());
 
 		String content =
-			_exportImportContentProcessorController.
+			_kbArticleExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, kbArticle, kbArticle.getContent());
 
@@ -450,15 +450,6 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setExportImportContentProcessorController(
-		ExportImportContentProcessorController
-			exportImportContentProcessorController) {
-
-		_exportImportContentProcessorController =
-			exportImportContentProcessorController;
-	}
-
-	@Reference(unbind = "-")
 	protected void setKBArticleLocalService(
 		KBArticleLocalService kbArticleLocalService) {
 
@@ -487,8 +478,9 @@ public class KBArticleStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleStagedModelDataHandler.class);
 
-	private ExportImportContentProcessorController
-		_exportImportContentProcessorController;
+	@Reference
+	private KBArticleExportImportContentProcessor
+		_kbArticleExportImportContentProcessor;
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBFolderLocalService _kbFolderLocalService;
 	private Portal _portal;

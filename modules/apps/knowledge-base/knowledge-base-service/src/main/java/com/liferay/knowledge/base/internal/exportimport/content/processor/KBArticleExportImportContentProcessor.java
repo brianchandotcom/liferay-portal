@@ -15,8 +15,8 @@
 package com.liferay.knowledge.base.internal.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.content.processor.base.BaseDocumentLibraryExportImportContentProcessor;
 
+import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -24,11 +24,16 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"content.processor.order=1",
 		"model.class.name=com.liferay.knowledge.base.model.KBArticle"
 	},
-	service = {ExportImportContentProcessor.class}
+	service = {
+		ExportImportContentProcessor.class,
+		KBArticleExportImportContentProcessor.class
+	}
 )
-public class KBArticleDocumentLibraryExportImportContentProcessor
-	extends BaseDocumentLibraryExportImportContentProcessor {
+public class KBArticleExportImportContentProcessor
+	extends BaseTextExportImportContentProcessor {
+
+
+
 }

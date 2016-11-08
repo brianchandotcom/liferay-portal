@@ -151,6 +151,62 @@ public class DDMFormEvaluatorHelperTest {
 	}
 
 	@Test
+	public void testRequiredValidationWithinRuleAction() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		DDMFormField ddmFormField0 = createDDMFormField(
+			"field0", "text", FieldConstants.NUMBER);
+
+		DDMFormField ddmFormField1 = createDDMFormField(
+			"field1", "text", FieldConstants.STRING);
+
+		ddmForm.addDDMFormField(ddmFormField0);
+		ddmForm.addDDMFormField(ddmFormField1);
+
+		String condition = "getValue(\"field0\") > 10";
+
+		List<String> actions = ListUtil.fromArray(
+			new String[] {"setRequired(\"field1\", true)"});
+
+		DDMFormRule ddmFormRule = new DDMFormRule(condition, actions);
+
+		ddmForm.addDDMFormRule(ddmFormRule);
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field0_instanceId", "field0", new UnlocalizedValue("11")));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"field1_instanceId", "field1", new UnlocalizedValue("")));
+
+		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
+			new DDMFormEvaluatorHelper(
+				null, null, _ddmExpressionFactory, ddmForm, ddmFormValues, null,
+				_jsonFactory, LocaleUtil.US);
+
+		DDMFormEvaluationResult ddmFormEvaluationResult =
+			ddmFormEvaluatorHelper.evaluate();
+
+		Map<String, DDMFormFieldEvaluationResult>
+			ddmFormFieldEvaluationResultMap =
+				ddmFormEvaluationResult.getDDMFormFieldEvaluationResultsMap();
+
+		Assert.assertEquals(2, ddmFormFieldEvaluationResultMap.size());
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			ddmFormEvaluationResult.geDDMFormFieldEvaluationResult(
+				"field1", "field1_instanceId");
+
+		Assert.assertEquals(
+			"This field is required.",
+			ddmFormFieldEvaluationResult.getErrorMessage());
+		Assert.assertFalse(ddmFormFieldEvaluationResult.isValid());
+	}
+
+	@Test
 	public void testRequiredValidationWithTextField() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 

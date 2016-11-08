@@ -402,6 +402,10 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="Icon#ASTERISK" />
 	</command>
 
+	<command name="viewRequiredAsteriskNotPresent">
+		<execute function="AssertElementNotPresent" locator1="Icon#ASTERISK" />
+	</command>
+
 	<command name="viewSelectLabel">
 		<var name="key_fieldName" value="${fieldName}" />
 

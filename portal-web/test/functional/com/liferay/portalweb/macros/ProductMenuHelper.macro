@@ -116,10 +116,9 @@
 	</command>
 
 	<command name="gotoPortlet">
-		<var name="key_portlet" value="${portlet}" />
-		<var name="key_portletLocalization" value="${portletLocalization}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PORTLET" value1="${portlet}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="ProductMenu#PORTLET" value1="${portlet}">
+			<var name="key_portlet" value="${portlet}" />
+		</execute>
 
 		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>

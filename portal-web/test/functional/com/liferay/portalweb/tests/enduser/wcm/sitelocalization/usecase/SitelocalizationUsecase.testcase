@@ -506,7 +506,6 @@
 		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Configuración de la instancia" />
-			<var name="portletLocalization" value="Instance Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">
@@ -520,7 +519,6 @@
 		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Ajustes del sitio" />
-			<var name="portletLocalization" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
@@ -562,7 +560,6 @@
 		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Ajustes del sitio" />
-			<var name="portletLocalization" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">

@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CATEGORY_SELECT</td>
-	<td>//button[contains(@title,'Select') and contains(@title,'${key_vocabularyName}')]</td>
+	<td>//button[contains(@title,'Select') and contains(@title,'${key_vocabularyName}')] | //button[contains(@title,'Select Categories')]</td>
 	<td></td>
 </tr>
 <tr>

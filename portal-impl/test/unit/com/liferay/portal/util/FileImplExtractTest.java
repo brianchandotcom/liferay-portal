@@ -14,15 +14,11 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.util.File;
 
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -30,11 +26,6 @@ import org.junit.Test;
  * @see    MimeTypesImplTest
  */
 public class FileImplExtractTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testDoc() {
@@ -141,9 +132,11 @@ public class FileImplExtractTest {
 		InputStream inputStream = clazz.getResourceAsStream(
 			"dependencies/" + fileName);
 
-		String text = FileUtil.extractText(inputStream, fileName);
+		String text = _file.extractText(inputStream, fileName);
 
 		return text.trim();
 	}
+
+	private final File _file = FileImpl.getInstance();
 
 }

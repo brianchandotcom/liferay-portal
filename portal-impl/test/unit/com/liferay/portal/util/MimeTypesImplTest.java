@@ -14,15 +14,12 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.kernel.util.MimeTypes;
 
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -31,10 +28,14 @@ import org.junit.Test;
  */
 public class MimeTypesImplTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+	@Before
+	public void setUp() {
+		MimeTypesImpl mimeTypesImpl = new MimeTypesImpl();
+
+		mimeTypesImpl.afterPropertiesSet();
+
+		_mimeTypes = mimeTypesImpl;
+	}
 
 	@Test
 	public void testDoc() throws Exception {
@@ -202,10 +203,10 @@ public class MimeTypesImplTest {
 		if (checkStream) {
 			InputStream inputStream = getInputStream(fileName);
 
-			return MimeTypesUtil.getContentType(inputStream, fileName);
+			return _mimeTypes.getContentType(inputStream, fileName);
 		}
 		else {
-			return MimeTypesUtil.getContentType(fileName);
+			return _mimeTypes.getContentType(fileName);
 		}
 	}
 
@@ -214,5 +215,7 @@ public class MimeTypesImplTest {
 
 		return clazz.getResourceAsStream("dependencies/" + fileName);
 	}
+
+	private MimeTypes _mimeTypes;
 
 }

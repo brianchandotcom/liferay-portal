@@ -132,6 +132,8 @@
 	<command name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 
+		<property name="test.smtp.server.enabled" value="true" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -141,7 +143,7 @@
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute macro="ReportsAdmin#configureEmailFrom">
-			<var name="emailFromAddress" value="${emailAddress1}" />
+			<var name="emailFromAddress" value="user1@liferay.com" />
 			<var name="emailFromName" value="Liferay QA" />
 		</execute>
 
@@ -185,10 +187,30 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress4}" />
-			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="emailNotificationsAddress" value="user2@liferay.com" />
+			<var name="emailRecipientAddress" value="user3@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
+		</execute>
+
+		<description>View Notfications Email</description>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="content" value="You have a new" />
+			<var name="recipient" value="user2@liferay.com" />
+			<var name="sender" value="Liferay QA" />
+			<var name="subject" value="reports_admin_template_source_sample_class_name.pdf" />
+		</execute>
+
+		<description>View Recipient Email</description>
+
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="content" value="Please review the attached report from your friends in QA!" />
+			<var name="recipient" value="user3@liferay.com" />
+			<var name="sender" value="Liferay QA" />
+			<var name="subject" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

@@ -16,13 +16,14 @@ package com.liferay.knowledge.base.internal.commands;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.service.permission.AdminPermission;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -84,22 +85,11 @@ public class KnowledgeBaseOSGiCommands {
 	private List<ResourcePermission> _getAllPermissionsWithName(
 		String resourceName) {
 
-		int numberOfPermissions =
-			_resourcePermissionLocalService.getResourcePermissionsCount();
+		DynamicQuery query = _resourcePermissionLocalService.dynamicQuery();
 
-		List<ResourcePermission> permissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				0, numberOfPermissions);
+		query.add(PropertyFactoryUtil.forName("name").eq(resourceName));
 
-		List<ResourcePermission> filteredPermissions = new ArrayList<>();
-
-		for (ResourcePermission permission : permissions) {
-			if (resourceName.equals(permission.getName())) {
-				filteredPermissions.add(permission);
-			}
-		}
-
-		return filteredPermissions;
+		return _resourcePermissionLocalService.dynamicQuery(query);
 	}
 
 	private ResourceAction _getImportKbArticlesAction() throws PortalException {

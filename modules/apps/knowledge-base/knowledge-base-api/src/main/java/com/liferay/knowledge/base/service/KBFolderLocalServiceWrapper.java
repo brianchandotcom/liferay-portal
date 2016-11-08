@@ -104,6 +104,12 @@ public class KBFolderLocalServiceWrapper implements KBFolderLocalService,
 
 	@Override
 	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
+		java.lang.String uuid, long groupId) {
+		return _kbFolderLocalService.fetchKBFolder(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.knowledge.base.model.KBFolder fetchKBFolder(
 		long kbFolderId) {
 		return _kbFolderLocalService.fetchKBFolder(kbFolderId);
 	}

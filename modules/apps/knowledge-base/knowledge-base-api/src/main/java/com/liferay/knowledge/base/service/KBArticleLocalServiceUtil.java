@@ -115,6 +115,11 @@ public class KBArticleLocalServiceUtil {
 		return getService().fetchKBArticle(kbArticleId);
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticle(
+		long resourcePrimKey, long groupId, int version) {
+		return getService().fetchKBArticle(resourcePrimKey, groupId, version);
+	}
+
 	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUrlTitle(
 		long groupId, java.lang.String kbFolderUrlTitle,
 		java.lang.String urlTitle)
@@ -144,6 +149,11 @@ public class KBArticleLocalServiceUtil {
 	public static com.liferay.knowledge.base.model.KBArticle fetchLatestKBArticle(
 		long resourcePrimKey, int status) {
 		return getService().fetchLatestKBArticle(resourcePrimKey, status);
+	}
+
+	public static com.liferay.knowledge.base.model.KBArticle fetchLatestKBArticle(
+		long resourcePrimKey, long groupId) {
+		return getService().fetchLatestKBArticle(resourcePrimKey, groupId);
 	}
 
 	public static com.liferay.knowledge.base.model.KBArticle fetchLatestKBArticleByUrlTitle(

@@ -2030,7 +2030,7 @@ public class AssetPublisherUtil {
 					portletPreferencesModel.getPlid(),
 					portletPreferencesModel.getPortletId()));
 
-		_notifySubscribers(subscriptions, portletPreferences, assetEntries);
+		_notifySubscribers(subscriptions, portletPreferences, newAssetEntries);
 
 		try {
 			portletPreferences.setValues(

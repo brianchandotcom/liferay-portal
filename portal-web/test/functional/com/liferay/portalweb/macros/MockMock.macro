@@ -13,11 +13,11 @@
 		<var name="key_columnEntry" value="${asset}" />
 
 		<if>
-			<isset var="${recipient}" />
+			<isset var="recipient" />
 			<then>
 				<var name="key_recipient" value="${recipient}" />
 
-				<execute function="AssertClick#assertPartialTextClickAt" locator1="MockMock#MOCKMOCK_TO_FIELD" value1="${asset}" />
+				<execute function="AssertClick#assertPartialTextClickAt" locator1="MockMock#MOCKMOCK_SPECIFIC_RECIPIENT_SUBJECT_FIELD_LINK" value1="${asset}" />
 			</then>
 			<else>
 				<execute function="AssertClick#assertPartialTextClickAt" locator1="MockMock#MOCKMOCK_SUBJECT_FIELD_LINK" value1="${asset}" />
@@ -28,6 +28,7 @@
 	<command name="_viewMailFromInbox">
 		<var name="key_columnEntry" value="${asset}" />
 		<var name="key_recipient" value="${recipient}" />
+		<var name="key_sender" value="${sender}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MockMock#MOCKMOCK_HAVE_EMAILS_MESSAGE" value1="You have" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MockMock#MOCKMOCK_FROM_FIELD" value1="${sender}" />

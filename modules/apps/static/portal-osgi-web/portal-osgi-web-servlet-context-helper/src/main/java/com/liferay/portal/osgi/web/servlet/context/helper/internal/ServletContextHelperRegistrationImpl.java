@@ -110,60 +110,18 @@ public class ServletContextHelperRegistrationImpl
 
 	@Override
 	public void close() {
-		try {
-			_servletContextRegistration.unregister();
-		}
-		catch (IllegalStateException ise) {
+		_servletContextRegistration.unregister();
 
-			// Ignore this because the service is already ungotten.
+		_servletContextHelperServiceRegistration.unregister();
 
-		}
+		_servletContextListenerServiceRegistration.unregister();
 
-		try {
-			_servletContextHelperServiceRegistration.unregister();
-		}
-		catch (IllegalStateException ise) {
+		_defaultServletServiceRegistration.unregister();
 
-			// Ignore this because the service is already ungotten.
-
-		}
-
-		try {
-			_servletContextListenerServiceRegistration.unregister();
-		}
-		catch (IllegalStateException ise) {
-
-			// Ignore this because the service is already ungotten.
-
-		}
-
-		try {
-			_defaultServletServiceRegistration.unregister();
-		}
-		catch (IllegalStateException ise) {
-
-			// Ignore this because the service is already ungotten.
-
-		}
-
-		try {
-			_jspServletServiceRegistration.unregister();
-		}
-		catch (IllegalStateException ise) {
-
-			// Ignore this because the service is already ungotten.
-
-		}
+		_jspServletServiceRegistration.unregister();
 
 		if (_portletServletServiceRegistration != null) {
-			try {
-				_portletServletServiceRegistration.unregister();
-			}
-			catch (IllegalStateException ise) {
-
-				// Ignore this because the service is already ungotten.
-
-			}
+			_portletServletServiceRegistration.unregister();
 		}
 	}
 

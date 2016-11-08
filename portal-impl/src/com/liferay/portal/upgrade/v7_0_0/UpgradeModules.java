@@ -179,11 +179,12 @@ public class UpgradeModules extends UpgradeProcess {
 		{"calendar-portlet", "com.liferay.calendar.service", "Calendar"},
 		{
 			"kaleo-designer-portlet",
-			"com.liferay.portal.workflow.kaleo.designer.web", "KaleoDesigner"
+			"com.liferay.portal.workflow.kaleo.designer.service",
+			"KaleoDesigner"
 		},
 		{
 			"kaleo-forms-portlet",
-			"com.liferay.portal.workflow.kaleo.forms.web", "KaleoForms"
+			"com.liferay.portal.workflow.kaleo.forms.service", "KaleoForms"
 		},
 		{"kaleo-web", "com.liferay.portal.workflow.kaleo.service", "Kaleo"},
 		{

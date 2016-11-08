@@ -31,7 +31,6 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
-import com.liferay.knowledge.base.service.persistence.KBArticlePersistence;
 import com.liferay.knowledge.base.service.util.AdminUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -266,7 +265,7 @@ public class KBArticleStagedModelDataHandler
 		KBArticle importedKBArticle = null;
 
 		if (portletDataContext.isDataStrategyMirror()) {
-			KBArticle existingKBArticle = _kbArticlePersistence.fetchByR_G_V(
+			KBArticle existingKBArticle = _kbArticleLocalService.fetchKBArticle(
 				resourcePrimaryKey, portletDataContext.getScopeGroupId(),
 				kbArticle.getVersion());
 
@@ -278,9 +277,8 @@ public class KBArticleStagedModelDataHandler
 			if (existingKBArticle == null) {
 				serviceContext.setUuid(kbArticle.getUuid());
 
-				existingKBArticle = _kbArticlePersistence.fetchByR_G_L_First(
-					resourcePrimaryKey, portletDataContext.getScopeGroupId(),
-					true, null);
+				existingKBArticle = _kbArticleLocalService.fetchLatestKBArticle(
+					resourcePrimaryKey, portletDataContext.getScopeGroupId());
 
 				if (existingKBArticle == null) {
 					importedKBArticle = _kbArticleLocalService.addKBArticle(
@@ -468,13 +466,6 @@ public class KBArticleStagedModelDataHandler
 	}
 
 	@Reference(unbind = "-")
-	protected void setKBArticlePersistence(
-		KBArticlePersistence kbArticlePersistence) {
-
-		_kbArticlePersistence = kbArticlePersistence;
-	}
-
-	@Reference(unbind = "-")
 	protected void setKBFolderLocalService(
 		KBFolderLocalService kbFolderLocalService) {
 
@@ -499,7 +490,6 @@ public class KBArticleStagedModelDataHandler
 	private ExportImportContentProcessorController
 		_exportImportContentProcessorController;
 	private KBArticleLocalService _kbArticleLocalService;
-	private KBArticlePersistence _kbArticlePersistence;
 	private KBFolderLocalService _kbFolderLocalService;
 	private Portal _portal;
 	private PortletFileRepository _portletFileRepository;

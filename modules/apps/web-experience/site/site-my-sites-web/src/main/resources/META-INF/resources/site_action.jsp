@@ -86,6 +86,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 						<c:when test="<%= MembershipRequestLocalServiceUtil.hasMembershipRequest(user.getUserId(), group.getGroupId(), MembershipRequestConstants.STATUS_PENDING) %>">
 							<liferay-ui:icon
 								message="membership-requested"
+								url="javascript:;"
 							/>
 						</c:when>
 					</c:choose>

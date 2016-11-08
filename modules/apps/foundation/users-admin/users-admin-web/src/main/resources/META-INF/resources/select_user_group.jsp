@@ -122,8 +122,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("usergroupid", userGroup.getUserGroupId());
-					data.put("usergroupname", userGroup.getName());
+					data.put("entityid", userGroup.getUserGroupId());
+					data.put("entityname", userGroup.getName());
 
 					boolean disabled = false;
 

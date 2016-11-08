@@ -108,8 +108,8 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 			<%
 			Map<String, Object> data = new HashMap<String, Object>();
 
-			data.put("groupdescriptivename", group.getDescriptiveName(locale));
-			data.put("groupid", group.getGroupId());
+			data.put("entityid", group.getGroupId());
+			data.put("entityname", group.getDescriptiveName(locale));
 			data.put("grouptarget", target);
 			data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
 			data.put("url", group.getDisplayURL(themeDisplay));

@@ -1563,17 +1563,18 @@
 				if (selectedData && selectedData.length) {
 					var currentWindow = event.currentTarget.node.get('contentWindow.document');
 
-					var selectorButtons = currentWindow.all('.lfr-search-container .selector-button');
+					var selectorButtons = currentWindow.all('.lfr-search-container-wrapper .selector-button');
 
 					A.some(
 						selectorButtons,
 						function(item, index) {
-							var assetEntryId = item.attr('data-assetentryid');
+							var assetEntryId = item.attr('data-entityid') || item.attr('data-entityname');
 
 							var assetEntryIndex = selectedData.indexOf(assetEntryId);
 
 							if (assetEntryIndex > -1) {
 								item.attr('disabled', true);
+								item.attr('data-prevent-selection', true);
 
 								selectedData.splice(assetEntryIndex, 1);
 							}

@@ -158,6 +158,15 @@ for (long defaultTeamId : defaultTeamIds) {
 		A.one(config.linkId).on(
 			'click',
 			function(event) {
+				var searchContainerData = searchContainer.getData();
+
+				if (!searchContainerData.length) {
+					searchContainerData = [];
+				}
+				else {
+					searchContainerData = searchContainerData.split(',');
+				}
+
 				var ids = A.one(config.inputId).val();
 
 				var uri = Liferay.Util.addParams(config.urlParam + '=' + ids, config.uri);
@@ -170,16 +179,19 @@ for (long defaultTeamId : defaultTeamIds) {
 							modal: true
 						},
 						id: config.id,
+						selectedData: searchContainerData,
 						title: config.title,
 						uri: uri
 					},
 					function(event) {
+						var entityId = event.entityid;
+
 						var rowColumns = [
-							A.Escape.html(event[config.titleAttr]),
-							'<a class="modify-link" data-rowId="' + event[config.idAttr] + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
+							A.Escape.html(event.entityname),
+							'<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>'
 						];
 
-						searchContainer.addRow(rowColumns, event[config.idAttr]);
+						searchContainer.addRow(rowColumns, entityId);
 
 						searchContainer.updateDataStore();
 					}

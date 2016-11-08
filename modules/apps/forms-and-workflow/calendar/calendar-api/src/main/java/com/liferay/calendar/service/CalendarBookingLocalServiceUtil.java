@@ -600,7 +600,8 @@ public class CalendarBookingLocalServiceUtil {
 
 	public static java.util.List<com.liferay.calendar.model.CalendarBooking> getRecurringCalendarBookings(
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
-		long startTime) {
+		long startTime)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getRecurringCalendarBookings(calendarBooking, startTime);
 	}

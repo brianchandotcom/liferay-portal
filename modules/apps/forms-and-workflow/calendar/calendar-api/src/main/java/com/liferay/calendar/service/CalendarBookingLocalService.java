@@ -450,7 +450,8 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarBooking> getRecurringCalendarBookings(
-		CalendarBooking calendarBooking, long startTime);
+		CalendarBooking calendarBooking, long startTime)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CalendarBooking> search(long companyId, long[] groupIds,

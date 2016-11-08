@@ -50,14 +50,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true, service = DDMFormValuesExportImportContentProcessor.class
+	property = {"model.class.name=com.liferay.dynamic.data.mapping.storage.DDMFormValues"},
+	service = {
+		DDMFormValuesExportImportContentProcessor.class,
+		ExportImportContentProcessor.class
+	}
 )
-public class DDMFormValuesExportImportContentProcessor<S extends StagedModel>
-	implements ExportImportContentProcessor<S, DDMFormValues> {
+public class DDMFormValuesExportImportContentProcessor
+	implements ExportImportContentProcessor<DDMFormValues> {
 
 	@Override
 	public DDMFormValues replaceExportContentReferences(
-			PortletDataContext portletDataContext, S stagedModel,
+			PortletDataContext portletDataContext, StagedModel stagedModel,
 			DDMFormValues ddmFormValues, boolean exportReferencedContent,
 			boolean escapeContent)
 		throws Exception {
@@ -79,7 +83,7 @@ public class DDMFormValuesExportImportContentProcessor<S extends StagedModel>
 
 	@Override
 	public DDMFormValues replaceImportContentReferences(
-			PortletDataContext portletDataContext, S stagedModel,
+			PortletDataContext portletDataContext, StagedModel stagedModel,
 			DDMFormValues ddmFormValues)
 		throws Exception {
 
@@ -98,10 +102,8 @@ public class DDMFormValuesExportImportContentProcessor<S extends StagedModel>
 	}
 
 	@Override
-	public boolean validateContentReferences(
+	public void validateContentReferences(
 		long groupId, DDMFormValues ddmFormValues) {
-
-		return true;
 	}
 
 	@Reference(unbind = "-")

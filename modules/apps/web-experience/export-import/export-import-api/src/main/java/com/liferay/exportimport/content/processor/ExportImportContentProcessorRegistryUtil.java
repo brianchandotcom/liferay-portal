@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.StringPlus;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,16 +39,16 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @ProviderType
 public class ExportImportContentProcessorRegistryUtil {
 
-	public static List<ExportImportContentProcessor<?, ?>>
+	public static ExportImportContentProcessor
+		getExportImportContentProcessor(String className) {
+
+		return _instance._getExportImportContentProcessor(className);
+	}
+
+	public static List<ExportImportContentProcessor>
 		getExportImportContentProcessors() {
 
 		return _instance._getExportImportContentProcessors();
-	}
-
-	public static List<ExportImportContentProcessor<?, ?>>
-		getExportImportContentProcessors(String className) {
-
-		return _instance._getExportImportContentProcessors(className);
 	}
 
 	private ExportImportContentProcessorRegistryUtil() {
@@ -62,34 +62,26 @@ public class ExportImportContentProcessorRegistryUtil {
 			new ExportImportContentProcessorServiceTrackerCustomizer());
 	}
 
-	private List<ExportImportContentProcessor<?, ?>>
-		_getExportImportContentProcessors() {
-
-		List<ExportImportContentProcessor<?, ?>>
-			allExportImportContentProcessors = new ArrayList<>();
-
-		for (List<ExportImportContentProcessor<?, ?>>
-				exportImportContentProcessors :
-					_exportImportContentProcessors.values()) {
-
-			allExportImportContentProcessors.addAll(
-				exportImportContentProcessors);
-		}
-
-		return allExportImportContentProcessors;
-	}
-
-	private List<ExportImportContentProcessor<?, ?>>
-		_getExportImportContentProcessors(String className) {
+	private ExportImportContentProcessor _getExportImportContentProcessor(
+		String className) {
 
 		return _exportImportContentProcessors.get(className);
+	}
+
+	private List<ExportImportContentProcessor>
+		_getExportImportContentProcessors() {
+
+		Collection<ExportImportContentProcessor> values =
+			_exportImportContentProcessors.values();
+
+		return ListUtil.fromCollection(values);
 	}
 
 	private static final ExportImportContentProcessorRegistryUtil _instance =
 		new ExportImportContentProcessorRegistryUtil();
 
 	private final BundleContext _bundleContext;
-	private final Map<String, ArrayList<ExportImportContentProcessor<?, ?>>>
+	private final Map<String, ExportImportContentProcessor>
 		_exportImportContentProcessors = new ConcurrentHashMap<>();
 	private final ServiceTracker
 		<ExportImportContentProcessor, ExportImportContentProcessor>
@@ -110,30 +102,8 @@ public class ExportImportContentProcessorRegistryUtil {
 				serviceReference.getProperty("model.class.name"));
 
 			for (String modelClassName : modelClassNames) {
-				int order = GetterUtil.getInteger(
-					serviceReference.getProperty("content.processor.order"), 1);
-
-				ArrayList<ExportImportContentProcessor<?, ?>>
-					exportImportContentProcessors =
-						_exportImportContentProcessors.get(modelClassName);
-
-				if (exportImportContentProcessors == null) {
-					exportImportContentProcessors = new ArrayList<>();
-				}
-
-				int capacity = exportImportContentProcessors.size() + 1;
-
-				exportImportContentProcessors.ensureCapacity(capacity);
-
-				order = Math.max(0, order);
-
-				order = Math.min(capacity, order) - 1;
-
-				exportImportContentProcessors.add(
-					order, exportImportContentProcessor);
-
 				_exportImportContentProcessors.put(
-					modelClassName, exportImportContentProcessors);
+					modelClassName, exportImportContentProcessor);
 			}
 
 			return exportImportContentProcessor;
@@ -160,16 +130,7 @@ public class ExportImportContentProcessorRegistryUtil {
 				serviceReference.getProperty("model.class.name"));
 
 			for (String modelClassName : modelClassNames) {
-				List<ExportImportContentProcessor<?, ?>>
-					exportImportContentProcessors =
-						_exportImportContentProcessors.get(modelClassName);
-
-				exportImportContentProcessors.remove(
-					exportImportContentProcessor);
-
-				if (exportImportContentProcessors.isEmpty()) {
-					_exportImportContentProcessors.remove(modelClassName);
-				}
+				_exportImportContentProcessors.remove(modelClassName);
 			}
 		}
 

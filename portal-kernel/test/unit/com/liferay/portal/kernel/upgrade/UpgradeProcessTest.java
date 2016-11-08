@@ -24,8 +24,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.mockito.Mockito;
-
 /**
  * @author Mariano Alvaro Saiz
  */
@@ -33,7 +31,13 @@ public class UpgradeProcessTest {
 
 	@Before
 	public void setUp() {
-		_upgradeProcess = Mockito.mock(UpgradeProcess.class);
+		_upgradeProcess = new UpgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+
+			}
+		};
 	}
 
 	@Test

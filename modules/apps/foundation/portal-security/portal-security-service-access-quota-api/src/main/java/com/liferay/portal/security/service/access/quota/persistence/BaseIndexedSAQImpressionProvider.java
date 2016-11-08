@@ -17,24 +17,19 @@ package com.liferay.portal.security.service.access.quota.persistence;
 import com.liferay.portal.security.service.access.quota.metric.SAQContextMatcher;
 import com.liferay.portal.security.service.access.quota.metric.SAQMetricMatcher;
 
-import java.util.Iterator;
-
 /**
  * @author Stian Sigvartsen
  */
 public abstract class BaseIndexedSAQImpressionProvider
 	implements SAQImpressionProvider {
 
-	public abstract Iterator<String> findMetricValues(
-		long companyId, String metricName);
-
 	@Override
-	public void findSAQImpressions(
+	public void feedSAQImpressions(
 		long companyId, final SAQContextMatcher saqContextMatcher,
 		SAQImpressionConsumer saqImpressionConsumer) {
 
 		for (final String metricName : saqContextMatcher.getMetricNames()) {
-			findSAQImpressionsMatchingMetric(
+			feedSAQImpressionsMatchingMetric(
 				companyId, metricName,
 				new SAQMetricMatcher() {
 
@@ -49,10 +44,10 @@ public abstract class BaseIndexedSAQImpressionProvider
 		}
 	}
 
-	public abstract void findSAQImpressions(
+	public abstract void feedSAQImpressions(
 		long companyId, SAQImpressionConsumer saqImpressionConsumer);
 
-	public abstract void findSAQImpressionsMatchingMetric(
+	public abstract void feedSAQImpressionsMatchingMetric(
 		long companyId, String metric, SAQMetricMatcher saqMetricMatcher,
 		SAQImpressionConsumer saqImpressionConsumer);
 

@@ -29,11 +29,11 @@ public interface SAQImpressionProvider {
 	public void createSAQImpression(
 		long companyId, Map<String, String> metrics, long expiryIntervalMillis);
 
-	public void findSAQImpressions(
+	public void feedSAQImpressions(
 		long companyId, SAQContextMatcher saqContextMatcher,
 		SAQImpressionConsumer saqImpressionConsumer);
 
-	public void findSAQImpressions(
+	public void feedSAQImpressions(
 		long companyId, SAQImpressionConsumer saqImpressionConsumer);
 
 	public int getSAQImpressionsCount(

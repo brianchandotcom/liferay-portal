@@ -1789,8 +1789,7 @@ public class AssetPublisherUtil {
 	}
 
 	private static List<AssetEntry> _filterAssetEntries(
-			long userId, List<AssetEntry> assetEntries)
-		throws PortalException {
+		long userId, List<AssetEntry> assetEntries) {
 
 		User user = _userLocalService.fetchUser(userId);
 
@@ -1798,22 +1797,28 @@ public class AssetPublisherUtil {
 			return Collections.emptyList();
 		}
 
-		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+		PermissionChecker permissionChecker = null;
 
 		try {
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
+			permissionChecker = PermissionCheckerFactoryUtil.create(user);
+		}
+		catch (Exception e) {
+			return Collections.emptyList();
+		}
 
-			for (AssetEntry assetEntry : assetEntries) {
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+
+		for (AssetEntry assetEntry : assetEntries) {
+			try {
 				if (AssetEntryPermission.contains(
 						permissionChecker, assetEntry, ActionKeys.VIEW)) {
 
 					filteredAssetEntries.add(assetEntry);
 				}
 			}
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
+			catch (Exception e) {
+				continue;
+			}
 		}
 
 		return filteredAssetEntries;
@@ -1916,10 +1921,8 @@ public class AssetPublisherUtil {
 	}
 
 	private static void _notifySubscribers(
-			List<Subscription> subscriptions,
-			PortletPreferences portletPreferences,
-			List<AssetEntry> assetEntries)
-		throws PortalException {
+		List<Subscription> subscriptions, PortletPreferences portletPreferences,
+		List<AssetEntry> assetEntries) {
 
 		if (!getEmailAssetEntryAddedEnabled(portletPreferences)) {
 			return;

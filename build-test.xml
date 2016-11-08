@@ -5753,6 +5753,21 @@ javascript.fast.load=false</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="blacklist.portal.profile.names" />
+
+		<if>
+			<not>
+				<isset property="blacklist.portal.profile.names" />
+			</not>
+			<then>
+				<property name="blacklist.portal.profile.names" value="com.liferay.chat.service,com.liferay.chat.web" />
+			</then>
+		</if>
+
+		<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>
+
 		<get-testcase-property property.name="portal.version" />
 
 		<propertyregex

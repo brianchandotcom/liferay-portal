@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value')]//select[contains(@id,'select')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@class,'condition-type-value-options')]//select[contains(@id,'select')]</td>
 	<td></td>
 </tr>
 <tr>

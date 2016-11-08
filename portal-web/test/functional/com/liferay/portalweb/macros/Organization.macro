@@ -116,37 +116,6 @@
 		</if>
 	</command>
 
-	<command name="addLocalizedCountryCP">
-		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}">
-			<var name="key_navItem" value="${navItem}" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
-			<var name="key_navItem" value="${navItem}" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PLUS" />
-
-		<if>
-			<condition function="IsElementPresent" locator1="MenuItem#ORGANIZATION" />
-			<then>
-				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION" value1="${localizedOption}" />
-			</then>
-		</if>
-
-		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgName}" />
-
-		<execute function="Select" locator1="UsersAndOrganizations#ORGANIZATION_COUNTRY_NAME" value1="${countryName}">
-			<var name="key_countryName" value="${countryName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}">
-			<var name="key_saveButton" value="${saveButton}" />
-		</execute>
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-	</command>
-
 	<command name="addMemberCP">
 		<execute macro="Organization#gotoActionsCmd">
 			<var name="orgName" value="${orgName}" />
@@ -313,6 +282,37 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditOrganization#WEBSITES_URL_FIELD" value1="${orgWebsite}" />
+	</command>
+
+	<command name="addWithLocalizedCountryCP">
+		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}">
+			<var name="key_navItem" value="${navItem}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="NavBar#ACTIVE_NAV_ITEM_LINK">
+			<var name="key_navItem" value="${navItem}" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="MenuItem#ORGANIZATION" />
+			<then>
+				<execute function="AssertClick" locator1="MenuItem#ORGANIZATION" value1="${localizedOption}" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="UsersAndOrganizationsEditOrganization#DETAILS_NAME_FIELD" value1="${orgName}" />
+
+		<execute function="Select" locator1="UsersAndOrganizations#ORGANIZATION_COUNTRY_NAME" value1="${countryName}">
+			<var name="key_countryName" value="${countryName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#SAVE_LOCALIZED" value1="${saveButton}">
+			<var name="key_saveButton" value="${saveButton}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 
 	<command name="advancedSearchCP">

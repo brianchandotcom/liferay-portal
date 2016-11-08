@@ -249,7 +249,7 @@
 			<var name="portlet" value="Usuarios y Organizaciones" />
 		</execute>
 
-		<execute macro="Organization#addLocalizedCountryCP">
+		<execute macro="Organization#addWithLocalizedCountryCP">
 			<var name="countryName" value="Estados Unidos" />
 			<var name="localizedOption" value="Organización" />
 			<var name="navItem" value="Organizaciones" />

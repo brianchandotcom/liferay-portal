@@ -364,10 +364,15 @@ public class SyncDLObjectLocalServiceImpl
 					syncDLObject.setModifiedTime(
 						parentSyncDLObject.getModifiedTime());
 					syncDLObject.setEvent(SyncDLObjectConstants.EVENT_RESTORE);
-					syncDLObject.setLanTokenKey(
-						SyncUtil.getLanTokenKey(
-							parentSyncDLObject.getModifiedTime(),
-							syncDLObject.getTypePK(), false));
+
+					String type = syncDLObject.getType();
+
+					if (!type.equals(SyncDLObjectConstants.TYPE_FOLDER)) {
+						syncDLObject.setLanTokenKey(
+							SyncUtil.getLanTokenKey(
+								parentSyncDLObject.getModifiedTime(),
+								syncDLObject.getTypePK(), false));
+					}
 
 					syncDLObjectPersistence.update(syncDLObject);
 				}

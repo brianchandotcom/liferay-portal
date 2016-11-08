@@ -2161,19 +2161,19 @@ public class ConsumerPortlet extends MVCPortlet {
 		_RESOURCE_TEMPLATE = sb.toString();
 	}
 
-	@ServiceReference
+	@ServiceReference(type = AddressLocalService.class)
 	private AddressLocalService _addressLocalService;
 
-	@ServiceReference
+	@ServiceReference(type = EmailAddressLocalService.class)
 	private EmailAddressLocalService _emailAddressLocalService;
 
-	@ServiceReference
+	@ServiceReference(type = ListTypeService.class)
 	private ListTypeService _listTypeService;
 
-	@ServiceReference
+	@ServiceReference(type = PhoneLocalService.class)
 	private PhoneLocalService _phoneLocalService;
 
-	@ServiceReference
+	@ServiceReference(type = WebsiteLocalService.class)
 	private WebsiteLocalService _websiteLocalService;
 
 	private WSRPConsumerLocalService _wsrpConsumerLocalService;

@@ -736,7 +736,8 @@ public class CalendarBookingLocalServiceImpl
 
 	@Override
 	public List<CalendarBooking> getRecurringCalendarBookings(
-		CalendarBooking calendarBooking, long startTime) {
+			CalendarBooking calendarBooking, long startTime)
+		throws PortalException {
 
 		List<CalendarBooking> recurringCalendarBookings =
 			getRecurringCalendarBookings(calendarBooking);
@@ -744,12 +745,49 @@ public class CalendarBookingLocalServiceImpl
 		List<CalendarBooking> followingRecurringCalendarBookings =
 			new ArrayList<>();
 
+		boolean singleInstance = false;
+
+		if (Validator.isNull(calendarBooking.getRecurrence())) {
+			singleInstance = true;
+		}
+
 		for (CalendarBooking recurringCalendarBooking :
 				recurringCalendarBookings) {
 
 			if (recurringCalendarBooking.getStartTime() > startTime) {
 				followingRecurringCalendarBookings.add(
 					recurringCalendarBooking);
+			}
+			else if (singleInstance) {
+				Recurrence recurrenceObj =
+					recurringCalendarBooking.getRecurrenceObj();
+
+				if (Validator.isNotNull(recurrenceObj)) {
+					if (recurrenceObj.getCount() > 0) {
+						modifyCalendarBookingRecurrenceFromCountToUntilDate(
+							recurringCalendarBooking);
+					}
+
+					java.util.Calendar untilJCalendar =
+						recurrenceObj.getUntilJCalendar();
+
+					java.util.Calendar singleInstanceJCalendar =
+						JCalendarUtil.getJCalendar(
+							calendarBooking.getEndTime());
+
+					if ((untilJCalendar == null) ||
+						JCalendarUtil.isLaterDay(
+							untilJCalendar, singleInstanceJCalendar)) {
+
+						CalendarBooking newCalendarBooking =
+							splitCalendarBooking(
+								recurringCalendarBooking,
+								singleInstanceJCalendar);
+
+						followingRecurringCalendarBookings.add(
+							newCalendarBooking);
+					}
+				}
 			}
 		}
 

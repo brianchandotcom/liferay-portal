@@ -1792,9 +1792,13 @@ public class AssetPublisherUtil {
 			long userId, List<AssetEntry> assetEntries)
 		throws PortalException {
 
-		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
+		User user = _userLocalService.fetchUser(userId);
 
-		User user = _userLocalService.getUser(userId);
+		if (user == null) {
+			return Collections.emptyList();
+		}
+
+		List<AssetEntry> filteredAssetEntries = new ArrayList<>();
 
 		try {
 			PermissionChecker permissionChecker =

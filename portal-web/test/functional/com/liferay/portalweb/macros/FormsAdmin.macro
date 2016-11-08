@@ -25,15 +25,13 @@
 			<var name="fieldValue" value="${url}" />
 		</execute>
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="$key" />
-			<var name="fieldValue" value="${displayedAttribute}" />
-		</execute>
+		<var name="key_fieldName" value="$key" />
 
-		<execute macro="FormFields#editText">
-			<var name="fieldName" value="$value" />
-			<var name="fieldValue" value="${storedAttribute}" />
-		</execute>
+		<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
+
+		<var name="key_fieldName" value="$value" />
+
+		<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
 
 		<execute macro="FormFields#editText">
 			<var name="fieldName" value="$username" />

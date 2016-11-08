@@ -90,6 +90,8 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateLanguage" value="ftl" />

@@ -1513,6 +1513,9 @@ public interface UserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUsersCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUsersCount(long companyId, boolean defaultUser, int status);
+
 	/**
 	* Returns the number of users with the status, and whose first name, middle
 	* name, last name, screen name, and email address match the keywords
@@ -1849,6 +1852,10 @@ public interface UserLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<User> getUsers(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<User> getUsers(long companyId, boolean defaultUser, int status,
+		int start, int end, OrderByComparator<User> obc);
 
 	/**
 	* Returns an ordered range of all the users with the status, and whose

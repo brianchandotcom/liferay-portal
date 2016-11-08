@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal OSGi Web WAB Extender
 Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.extender
-Bundle-Version: 2.0.13
+Bundle-Version: 2.0.14
 Export-Package: org.eclipse.core.runtime;x-liferay-compatibility:=spring
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: WAB

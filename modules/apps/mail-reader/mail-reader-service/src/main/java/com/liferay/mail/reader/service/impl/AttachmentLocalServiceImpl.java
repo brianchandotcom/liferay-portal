@@ -48,7 +48,7 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 
 		// Attachment
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Message message = messagePersistence.findByPrimaryKey(messageId);
 
 		long attachmentId = counterLocalService.increment();

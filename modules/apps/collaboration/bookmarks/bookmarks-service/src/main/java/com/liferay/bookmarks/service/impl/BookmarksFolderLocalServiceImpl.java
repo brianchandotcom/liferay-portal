@@ -68,7 +68,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Folder
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		long groupId = serviceContext.getScopeGroupId();
 
@@ -694,7 +694,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Folder
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		folder.setStatus(status);
 		folder.setStatusByUserId(userId);

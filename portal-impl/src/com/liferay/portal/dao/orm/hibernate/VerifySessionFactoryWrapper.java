@@ -18,10 +18,16 @@ import com.liferay.portal.kernel.dao.orm.Dialect;
 import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.hibernate.PortletTransactionManager;
 import com.liferay.portal.spring.transaction.CurrentPlatformTransactionManagerUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.sql.Connection;
 
@@ -51,6 +57,19 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 
 	@Override
 	public void closeSession(Session session) throws ORMException {
+		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED &&
+			ProxyUtil.isProxyClass(session.getClass())) {
+
+			InvocationHandler invocationHandler =
+				ProxyUtil.getInvocationHandler(session);
+
+			if (invocationHandler.getClass() ==
+					SessionInvocationHandler.class) {
+
+				session.flush();
+			}
+		}
+
 		_sessionFactoryImpl.closeSession(session);
 	}
 
@@ -71,29 +90,35 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 
 	@Override
 	public Session openSession() throws ORMException {
-		if (PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED) {
-			_verify();
+		if (!PropsValues.SPRING_HIBERNATE_SESSION_DELEGATED || _verify()) {
+			return _sessionFactoryImpl.openSession();
 		}
 
-		return _sessionFactoryImpl.openSession();
+		Session session = _sessionFactoryImpl.openSession();
+
+		return (Session)ProxyUtil.newProxyInstance(
+			Session.class.getClassLoader(), new Class<?>[] {Session.class},
+			new SessionInvocationHandler(session));
 	}
 
-	private void _assertFailure(
+	private void _logFailure(
 		SessionFactoryImplementor currentSessionFactoryImplementor,
 		SessionFactoryImplementor targetSessionFactoryImplementor) {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("Wrong current transaction manager. ");
-		sb.append("Current session factory classes metadata: ");
+		sb.append("Wrong current transaction manager, current session ");
+		sb.append("factory classes metadata: ");
 		sb.append(currentSessionFactoryImplementor.getAllClassMetadata());
 		sb.append(", target session factory classes metadata: ");
 		sb.append(targetSessionFactoryImplementor.getAllClassMetadata());
 
-		throw new IllegalStateException(sb.toString());
+		_log.error(
+			"Failed session factory verification",
+			new IllegalStateException(sb.toString()));
 	}
 
-	private void _verify() {
+	private boolean _verify() {
 		PlatformTransactionManager platformTransactionManager =
 			CurrentPlatformTransactionManagerUtil.
 				getCurrentPlatformTransactionManager();
@@ -116,12 +141,14 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 			if (targetSessionFactoryImplementor ==
 					currentSessionFactoryImplementor) {
 
-				return;
+				return true;
 			}
 			else {
-				_assertFailure(
+				_logFailure(
 					currentSessionFactoryImplementor,
 					targetSessionFactoryImplementor);
+
+				return false;
 			}
 		}
 
@@ -136,12 +163,14 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 			if (targetSessionFactoryImplementor ==
 					currentSessionFactoryImplementor) {
 
-				return;
+				return true;
 			}
 			else {
-				_assertFailure(
+				_logFailure(
 					currentSessionFactoryImplementor,
 					targetSessionFactoryImplementor);
+
+				return false;
 			}
 		}
 
@@ -149,6 +178,26 @@ public class VerifySessionFactoryWrapper implements SessionFactory {
 			"Unknown transaction manager type: " + platformTransactionManager);
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		VerifySessionFactoryWrapper.class);
+
 	private final SessionFactoryImpl _sessionFactoryImpl;
+
+	private static class SessionInvocationHandler implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws ReflectiveOperationException {
+
+			return method.invoke(_session, args);
+		}
+
+		private SessionInvocationHandler(Session session) {
+			_session = session;
+		}
+
+		private final Session _session;
+
+	}
 
 }

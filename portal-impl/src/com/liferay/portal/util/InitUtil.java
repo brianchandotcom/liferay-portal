@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -52,9 +54,12 @@ import com.liferay.util.log4j.Log4JUtil;
 
 import com.sun.syndication.io.XmlReader;
 
+import java.lang.reflect.Field;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipFile;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -69,6 +74,20 @@ public class InitUtil {
 	public static synchronized void init() {
 		if (_initialized) {
 			return;
+		}
+
+		try {
+			if (!OSDetector.isWindows()) {
+				Field field = ReflectionUtil.getDeclaredField(
+					ZipFile.class, "usemmap");
+
+				if ((boolean)field.get(null)) {
+					field.setBoolean(null, false);
+				}
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 
 		StopWatch stopWatch = new StopWatch();

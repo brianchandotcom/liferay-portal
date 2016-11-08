@@ -14,6 +14,8 @@
 					<then>
 						<execute function="Click" locator1="UserBar#USER_AVATAR_IMAGE" />
 
+						<execute function="Pause" locator1="5000" />
+
 						<execute function="AssertClick" locator1="UserBar#USER_DASHBOARD" value1="My Dashboard" />
 					</then>
 				</if>

@@ -131,6 +131,17 @@
 		</execute>
 	</command>
 
+	<command name="gotoManageTemplatesViaStructures">
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Manage Templates" />
+			<var name="rowEntry" value="${structureName}" />
+		</execute>
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Templates for Structure: ${structureName}" />
+		</execute>
+	</command>
+
 	<command name="gotoPreviewEntryCP">
 		<execute macro="WebContentNavigator#_openDescriptiveMenulistCP">
 			<var name="webContentTitle" value="${webContentTitle}" />

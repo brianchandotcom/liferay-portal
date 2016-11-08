@@ -27,6 +27,16 @@ if (enableKBArticleViewCountIncrement && kbArticle.isApproved()) {
 	AssetEntryServiceUtil.incrementViewCounter(KBArticle.class.getName(), latestKBArticle.getClassPK());
 }
 
+boolean enableKBArticleSuggestions = enableKBArticleRatings && kbArticle.isApproved();
+
+if (enableKBArticleRatings && kbArticle.isDraft()) {
+	KBArticle latestKBArticle = KBArticleServiceUtil.fetchLatestKBArticle(kbArticle.getResourcePrimKey(), WorkflowConstants.STATUS_APPROVED);
+
+	if (latestKBArticle != null) {
+		enableKBArticleSuggestions = true;
+	}
+}
+
 boolean portletTitleBasedNavigation = GetterUtil.getBoolean(portletConfig.getInitParameter("portlet-title-based-navigation"));
 
 if (portletTitleBasedNavigation) {
@@ -120,7 +130,7 @@ if (portletTitleBasedNavigation) {
 				</c:if>
 			</div>
 
-			<c:if test="<%= enableKBArticleRatings %>">
+			<c:if test="<%= enableKBArticleSuggestions %>">
 				<c:choose>
 					<c:when test="<%= portletTitleBasedNavigation %>">
 						<liferay-ui:panel-container extended="<%= false %>" markupView="lexicon" persistState="<%= true %>">

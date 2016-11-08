@@ -39,6 +39,34 @@ if (Validator.isNotNull(keywords)) {
 	portletURL.setParameter("keywords", keywords);
 }
 
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-col", orderByCol);
+	portalPreferences.setValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", orderByType);
+}
+else {
+	orderByCol = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-col", "modified-date");
+	orderByType = portalPreferences.getValue(MBPortletKeys.MESSAGE_BOARDS_ADMIN, "order-by-type", "desc");
+}
+
+boolean orderByAsc = false;
+
+if (orderByType.equals("asc")) {
+	orderByAsc = true;
+}
+
+OrderByComparator orderByComparator = null;
+
+if (orderByCol.equals("modified-date")) {
+	orderByComparator = new ThreadModifiedDateComparator(orderByAsc);
+
+}
+else if (orderByCol.equals("title")) {
+	orderByComparator = new CategoryTitleComparator(orderByAsc);
+}
+
 request.setAttribute("view.jsp-categoryId", categoryId);
 request.setAttribute("view.jsp-categorySubscriptionClassPKs", MBUtil.getCategorySubscriptionClassPKs(user.getUserId()));
 request.setAttribute("view.jsp-portletURL", portletURL);
@@ -85,6 +113,9 @@ MBListDisplayContext mbListDisplayContext = mbDisplayContextProvider.getMbListDi
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "cur1", 0, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-threads-nor-categories");
 
 searchContainer.setId("mbEntries");
+searchContainer.setOrderByCol(orderByCol);
+searchContainer.setOrderByComparator(orderByComparator);
+searchContainer.setOrderByType(orderByType);
 
 EntriesChecker entriesChecker = new EntriesChecker(liferayPortletRequest, liferayPortletResponse);
 
@@ -129,6 +160,13 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 			navigationKeys='<%= new String[] {"all", "recent"} %>'
 			navigationParam="entriesNavigation"
 			portletURL="<%= navigationPortletURL %>"
+		/>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"modified-date", "title"} %>'
+			portletURL="<%= portletURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>
 

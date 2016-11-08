@@ -109,6 +109,17 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 			"jenkins.local.url[test-3-2]", "http://test-3-2");
 		properties.setProperty(
 			"jenkins.local.url[test-3-3]", "http://test-3-3");
+
+		for (int i = 1; i <= 20; i++) {
+			properties.setProperty("master.slaves(test-1-" + i + ")", "");
+		}
+
+		properties.setProperty("master.slaves(test-2-1)", "");
+
+		for (int i = 1; i <= 3; i++) {
+			properties.setProperty("master.slaves(test-3-" + i + ")", "");
+		}
+
 		properties.setProperty("invoked.batch.size", "2");
 
 		return properties;
@@ -118,23 +129,24 @@ public class LoadBalancerUtilTest extends BaseJenkinsResultsParserTestCase {
 	protected void downloadSample(File sampleDir, URL url) throws Exception {
 		Properties properties = getDownloadProperties(sampleDir.getName());
 
-		List<String> masters = LoadBalancerUtil.getMasters(
-			sampleDir.getName(), properties);
+		List<String> masters = JenkinsResultsParserUtil.getMasters(
+			properties, sampleDir.getName());
 
-		for (int i = 1; i <= masters.size(); i++) {
+		for (String master : masters) {
 			downloadSampleURL(
-				new File(sampleDir, sampleDir.getName() + "-" + i),
+				new File(sampleDir, master),
 				JenkinsResultsParserUtil.createURL(
 					properties.getProperty(
-						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
+						"jenkins.local.url[" + master +
 							"]")),
 				"/computer/api/json?pretty&tree=computer" +
 					"[displayName,idle,offline]");
+
 			downloadSampleURL(
-				new File(sampleDir, sampleDir.getName() + "-" + i),
+				new File(sampleDir, master),
 				JenkinsResultsParserUtil.createURL(
 					properties.getProperty(
-						"jenkins.local.url[" + sampleDir.getName() + "-" + i +
+						"jenkins.local.url[" + master +
 							"]")),
 				"/queue/api/json");
 		}

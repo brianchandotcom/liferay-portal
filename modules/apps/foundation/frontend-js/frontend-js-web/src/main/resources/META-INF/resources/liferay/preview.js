@@ -9,6 +9,8 @@ AUI.add(
 
 		var CSS_IMAGE_SELECTED = 'lfr-preview-file-image-selected';
 
+		var MAP_IMAGE_DATA = {};
+
 		var STR_CLICK = 'click';
 
 		var STR_CURRENT_INDEX = 'currentIndex';
@@ -18,12 +20,6 @@ AUI.add(
 		var STR_SCROLLER = 'scroller';
 
 		var STR_SRC = 'src';
-
-		var MAP_EVENT_SCROLLER = {
-			src: STR_SCROLLER
-		};
-
-		var MAP_IMAGE_DATA = {};
 
 		var TPL_IMAGES = '<a class="lfr-preview-file-image {selectedCssClass}" data-imageIndex="{index}" href="{url}" title="{displayedIndex}">' +
 				'<img src="{url}" />' +
@@ -38,6 +34,10 @@ AUI.add(
 		var TPL_MAX_ARROW_RIGHT = '<a href="javascript:;" class="image-viewer-control carousel-control right lfr-preview-file-arrow">&rsaquo;</a>';
 
 		var TPL_MAX_CONTROLS = '<span class="lfr-preview-file-image-overlay-controls"></span>';
+
+		var MAP_EVENT_SCROLLER = {
+			src: STR_SCROLLER
+		};
 
 		var Preview = A.Component.create(
 			{
@@ -173,9 +173,9 @@ AUI.add(
 									},
 									centered: true,
 									cssClass: 'lfr-preview-file-image-overlay',
-									height: '90%',
+									height: '90vh',
 									plugins: [Liferay.WidgetZIndex],
-									width: '85%'
+									width: '85vw'
 								}
 							).render();
 

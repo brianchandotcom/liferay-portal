@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Layout Admin Web
 Bundle-SymbolicName: com.liferay.layout.admin.web
-Bundle-Version: 1.0.18
+Bundle-Version: 1.0.19
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management

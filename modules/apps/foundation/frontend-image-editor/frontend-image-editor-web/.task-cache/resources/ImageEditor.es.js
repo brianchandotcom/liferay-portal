@@ -1,4 +1,4 @@
-define("frontend-image-editor-web@1.0.6/ImageEditor.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal/src/async/async', 'metal/src/core', 'metal-dom/src/dom', 'metal-promise/src/promise/Promise', 'metal-dropdown/src/Dropdown', './ImageEditorHistoryEntry.es', './ImageEditorLoading.es', './ImageEditor.soy'], function (exports, _Component2, _Soy, _async, _core, _dom, _Promise, _Dropdown, _ImageEditorHistoryEntry, _ImageEditorLoading, _ImageEditor) {
+define("frontend-image-editor-web@1.0.7/ImageEditor.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', 'metal/src/async/async', 'metal/src/core', 'metal-dom/src/dom', 'metal-promise/src/promise/Promise', 'metal-dropdown/src/Dropdown', './ImageEditorHistoryEntry.es', './ImageEditorLoading.es', './ImageEditor.soy'], function (exports, _Component2, _Soy, _async, _core, _dom, _Promise, _Dropdown, _ImageEditorHistoryEntry, _ImageEditorLoading, _ImageEditor) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

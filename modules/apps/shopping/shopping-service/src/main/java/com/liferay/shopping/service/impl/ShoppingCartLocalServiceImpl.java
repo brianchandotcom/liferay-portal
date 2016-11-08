@@ -183,7 +183,7 @@ public class ShoppingCartLocalServiceImpl
 			break;
 		}
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		ShoppingCart cart = null;
 

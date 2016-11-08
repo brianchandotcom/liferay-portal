@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Journal Terms Of Use
 Bundle-SymbolicName: com.liferay.journal.terms.of.use
-Bundle-Version: 2.0.15
+Bundle-Version: 2.0.16
 Import-Package: com.liferay.portal.kernel.util;version="${range;[=,=+)}",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Web Content

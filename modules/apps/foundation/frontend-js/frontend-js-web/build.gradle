@@ -20,7 +20,7 @@ task buildLodash(type: Copy)
 task buildSvg4everybody(type: Copy)
 task testJS
 
-String alloyUIVersion = "3.0.3-deprecated.41"
+String alloyUIVersion = "3.0.3-deprecated.42"
 String jqueryPluginsFormVersion = "3.51"
 String jQueryVersion = "2.1.4"
 String lexiconVersion = "1.0.11"

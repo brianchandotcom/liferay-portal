@@ -1,20 +1,20 @@
 {
-    "frontend-image-editor-web@1.0.6/ImageEditor.es": {
+    "frontend-image-editor-web@1.0.7/ImageEditor.es": {
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "metal/src/async/async", "metal/src/core", "metal-dom/src/dom", "metal-promise/src/promise/Promise", "metal-dropdown/src/Dropdown", "./ImageEditorHistoryEntry.es", "./ImageEditorLoading.es", "./ImageEditor.soy"]
     },
-    "frontend-image-editor-web@1.0.6/ImageEditor.soy": {
+    "frontend-image-editor-web@1.0.7/ImageEditor.soy": {
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
     },
-    "frontend-image-editor-web@1.0.6/ImageEditorHistoryEntry.es": {
+    "frontend-image-editor-web@1.0.7/ImageEditorHistoryEntry.es": {
         "dependencies": ["exports", "metal-promise/src/promise/Promise"]
     },
-    "frontend-image-editor-web@1.0.6/ImageEditorLoading.es": {
+    "frontend-image-editor-web@1.0.7/ImageEditorLoading.es": {
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy", "./ImageEditorLoading.soy"]
     },
-    "frontend-image-editor-web@1.0.6/ImageEditorLoading.soy": {
+    "frontend-image-editor-web@1.0.7/ImageEditorLoading.soy": {
         "dependencies": ["exports", "metal-component/src/Component", "metal-soy/src/Soy"]
     },
-    "frontend-image-editor-web@1.0.6/metal-dropdown/src/Dropdown.soy": {
+    "frontend-image-editor-web@1.0.7/metal-dropdown/src/Dropdown.soy": {
         "dependencies": ["exports", "metal-component/src/all/component", "metal-soy/src/Soy"]
     }
 }

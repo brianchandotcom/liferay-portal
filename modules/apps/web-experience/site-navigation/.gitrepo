@@ -3,7 +3,7 @@
 ;
 [subrepo]
 	cmdver = liferay
-	commit = c1a6ed21a3d7ea15d41a0d1877246a52a40b87b4
+	commit = c92017dac59278c3fd37b831cf39b2678458f099
 	mode = push
-	parent = a53fd6e2d5fc12303e23e02e4b30caf884ddc77c
+	parent = 5fa38f573e05d0bff2995b75f7458582c524b1a5
 	remote = git@github.com:liferay/com-liferay-site-navigation.git

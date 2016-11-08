@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -137,6 +138,10 @@ public class MVCCommandCache {
 
 			return _emptyMVCCommand;
 		}
+	}
+
+	public Set<String> getMVCCommandNames() {
+		return _serviceTrackerMap.keySet();
 	}
 
 	public List<? extends MVCCommand> getMVCCommands(String key) {

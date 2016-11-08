@@ -893,6 +893,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/websocket-api.jar</file-name>
+				<version>1.12</version>
+				<project-name>WebSocket</project-name>
+				<project-url>http://www.oracle.com/technetwork/articles/java/jsr356-1937161.html</project-url>
+				<licenses>
+					<license>
+						<license-name>CDDL 1.1</license-name>
+						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/xmltask.jar</file-name>
 				<version>1.16</version>
 				<project-name>XMLTask</project-name>

@@ -48,7 +48,7 @@ public class WSRPProducerLocalServiceImpl
 			String portletIds, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		portletIds = transformPortletIds(portletIds);
 		Date now = new Date();
 
@@ -176,7 +176,7 @@ public class WSRPProducerLocalServiceImpl
 	}
 
 	protected Group addGroup(long userId, String name) throws PortalException {
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		name = getGroupName(name);
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();

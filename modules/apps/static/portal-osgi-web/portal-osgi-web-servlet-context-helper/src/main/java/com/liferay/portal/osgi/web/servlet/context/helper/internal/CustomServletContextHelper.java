@@ -46,14 +46,13 @@ public class CustomServletContextHelper
 	extends ServletContextHelper implements ServletContextListener {
 
 	public CustomServletContextHelper(
-		Bundle bundle, Boolean wabShapedBundle,
+		Bundle bundle,
 		List<WebResourceCollectionDefinition>
 			webResourceCollectionDefinitions) {
 
 		super(bundle);
 
 		_bundle = bundle;
-		_wabShapedBundle = wabShapedBundle;
 		_webResourceCollectionDefinitions = webResourceCollectionDefinitions;
 
 		Class<?> clazz = getClass();
@@ -258,7 +257,6 @@ public class CustomServletContextHelper
 	private final Bundle _bundle;
 	private ServletContext _servletContext;
 	private final String _string;
-	private final boolean _wabShapedBundle;
 	private final List<WebResourceCollectionDefinition>
 		_webResourceCollectionDefinitions;
 

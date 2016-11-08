@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Screens Service
 Bundle-SymbolicName: com.liferay.screens.service
-Bundle-Version: 1.0.13
+Bundle-Version: 1.0.14
 Import-Package: com.liferay.journal.*;version="[1.0,4.0)",*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

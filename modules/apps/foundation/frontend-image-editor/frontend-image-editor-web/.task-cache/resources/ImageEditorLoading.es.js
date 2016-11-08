@@ -1,4 +1,4 @@
-define("frontend-image-editor-web@1.0.6/ImageEditorLoading.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', './ImageEditorLoading.soy'], function (exports, _Component2, _Soy, _ImageEditorLoading) {
+define("frontend-image-editor-web@1.0.7/ImageEditorLoading.es", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy', './ImageEditorLoading.soy'], function (exports, _Component2, _Soy, _ImageEditorLoading) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

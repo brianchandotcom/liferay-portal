@@ -107,7 +107,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
@@ -521,6 +521,15 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			recordSetId, status, start, end, orderByComparator);
 	}
 
+	@Override
+	public List<DDLRecord> getRecords(
+		long recordSetId, int start, int end,
+		OrderByComparator<DDLRecord> obc) {
+
+		return ddlRecordPersistence.findByRecordSetId(
+			recordSetId, start, end, obc);
+	}
+
 	/**
 	 * Returns all the records matching the record set ID and user ID.
 	 *
@@ -531,6 +540,20 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public List<DDLRecord> getRecords(long recordSetId, long userId) {
 		return ddlRecordPersistence.findByR_U(recordSetId, userId);
+	}
+
+	@Override
+	public List<DDLRecord> getRecords(
+		long recordSetId, long userId, int start, int end,
+		OrderByComparator<DDLRecord> obc) {
+
+		return ddlRecordPersistence.findByR_U(
+			recordSetId, userId, start, end, obc);
+	}
+
+	@Override
+	public int getRecordsCount(long recordSetId) {
+		return ddlRecordPersistence.countByRecordSetId(recordSetId);
 	}
 
 	/**
@@ -546,6 +569,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 	@Override
 	public int getRecordsCount(long recordSetId, int status) {
 		return ddlRecordFinder.countByR_S(recordSetId, status);
+	}
+
+	@Override
+	public int getRecordsCount(long recordSetId, long userId) {
+		return ddlRecordPersistence.countByR_U(recordSetId, userId);
 	}
 
 	/**
@@ -818,7 +846,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
@@ -994,7 +1022,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		// Record version
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		DDLRecordVersion recordVersion =
 			ddlRecordVersionPersistence.findByPrimaryKey(recordVersionId);

@@ -1,4 +1,4 @@
-define("frontend-image-editor-web@1.0.6/metal-dropdown/src/Dropdown.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/Soy'], function (exports, _component, _Soy) {
+define("frontend-image-editor-web@1.0.7/metal-dropdown/src/Dropdown.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/Soy'], function (exports, _component, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

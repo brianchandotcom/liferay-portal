@@ -37,7 +37,7 @@ public class DDMContentLocalServiceImpl extends DDMContentLocalServiceBaseImpl {
 			String data, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		validate(name, data);
 

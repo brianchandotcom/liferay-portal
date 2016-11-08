@@ -261,6 +261,13 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewTableEntryCP">
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
+
+		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
+		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_DESCRIPTION" value1="${structureDescription}" />
+	</command>
+
 	<command name="viewTemplateValidation">
 		<execute function="Confirm" value1="Please add a template to render this structure." />
 	</command>

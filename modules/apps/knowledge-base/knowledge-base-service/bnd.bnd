@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Knowledge Base Service
 Bundle-SymbolicName: com.liferay.knowledge.base.service
-Bundle-Version: 1.1.10
+Bundle-Version: 1.1.11
 Export-Package:\
 	com.liferay.knowledge.base.configuration,\
 	com.liferay.knowledge.base.model.impl,\

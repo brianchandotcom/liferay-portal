@@ -922,9 +922,7 @@
 				<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
 			</then>
 			<else>
-				<execute function="Click" locator1="Icon#INFO" />
-
-				<execute function="Click" locator1="Icon#HISTORY_VERTICAL_ELLIPSIS" />
+				<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 			</else>
 		</if>
 

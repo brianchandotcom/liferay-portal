@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS SPA Web
 Bundle-SymbolicName: com.liferay.frontend.js.spa.web
-Bundle-Version: 1.0.15
+Bundle-Version: 1.0.16
 Liferay-Export-JS-Submodules: senna
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend SPA Infrastructure

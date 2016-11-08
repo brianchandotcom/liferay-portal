@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Editor CKEditor Web
 Bundle-SymbolicName: com.liferay.frontend.editor.ckeditor.web
-Bundle-Version: 1.0.14
+Bundle-Version: 1.0.15
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-ckeditor-web

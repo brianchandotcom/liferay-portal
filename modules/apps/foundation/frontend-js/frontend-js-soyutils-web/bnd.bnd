@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend JS Soyutils Web
 Bundle-SymbolicName: com.liferay.frontend.js.soyutils.web
-Bundle-Version: 1.0.4
+Bundle-Version: 1.0.5
 Liferay-JS-Config: /META-INF/resources/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure

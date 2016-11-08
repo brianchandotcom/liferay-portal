@@ -1,0 +1,27 @@
+<definition>
+	<command name="gotoEventToday">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute function="AssertClick" locator1="EventsListPortlet#TODAYS_EVENTS_EVENT" value1="${eventTitle}" />
+	</command>
+
+	<command name="gotoEventUpcoming">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute function="AssertClick" locator1="EventsListPortlet#UPCOMING_EVENTS_EVENT" value1="${eventTitle}" />
+	</command>
+
+	<command name="viewDefaultMessage">
+		<execute function="AssertTextEquals" locator1="EventsListPortlet#PORTLET_NO_EVENTS" value1="There are no more events today." />
+	</command>
+
+	<command name="viewEventTime">
+		<var name="key_eventTitle" value="${eventTitle}" />
+
+		<execute function="AssertElementPresent" locator1="EventsListPortlet#TODAYS_EVENTS_EVENT_TIME" />
+	</command>
+
+	<command name="viewHeader">
+		<execute function="AssertTextEquals" locator1="EventsListPortlet#PORTLET_TITLE" value1="Events List" />
+	</command>
+</definition>

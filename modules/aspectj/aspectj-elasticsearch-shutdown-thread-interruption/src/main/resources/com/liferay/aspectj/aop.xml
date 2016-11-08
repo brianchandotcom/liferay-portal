@@ -1,0 +1,11 @@
+<!DOCTYPE aspectj PUBLIC "-//AspectJ//DTD 1.5.0//EN" "http://git.eclipse.org/c/aspectj/org.aspectj.git/plain/weaver/src/aspectj_1_5_0.dtd">
+
+<aspectj>
+	<weaver options="-Xset:weaveJavaPackages=true,weaveJavaxPackages=true -Xlintfile:com/liferay/aspectj/Xlint.properties">
+		<exclude within="com.googlecode.mp4parser.*" />
+		<exclude within="com.googlecode.mp4parser.boxes.apple.*" />
+	</weaver>
+	<aspects>
+		<aspect name="com.liferay.aspectj.elasticsearch.shutdown.thread.interruption.ElasticSearchShutdownThreadInterruptionAspect" />
+	</aspects>
+</aspectj>

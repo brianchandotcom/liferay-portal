@@ -176,7 +176,7 @@ public class FilePropagator {
 	private int _executeBashCommands(List<String> commands, String targetSlave)
 		throws InterruptedException, IOException {
 
-		StringBuffer sb = new StringBuffer("ssh ");
+		StringBuffer sb = new StringBuffer("ssh -o PasswordAuthentication=no ");
 
 		sb.append(targetSlave);
 		sb.append(" '");

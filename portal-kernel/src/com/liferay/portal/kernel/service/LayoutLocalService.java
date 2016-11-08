@@ -432,6 +432,10 @@ public interface LayoutLocalService extends BaseLocalService,
 		long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout fetchLayout(java.lang.String uuid, long groupId,
+		boolean privateLayout);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayout(long groupId, boolean privateLayout, long layoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -958,6 +962,9 @@ public interface LayoutLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Layout> getLayouts(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Layout> getLayouts(long companyId);
 
 	/**
 	* Returns all the layouts belonging to the group.

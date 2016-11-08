@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Polls Web
 Bundle-SymbolicName: com.liferay.polls.web
-Bundle-Version: 2.0.8
+Bundle-Version: 2.0.9
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Polls
 Web-ContextPath: /polls-web

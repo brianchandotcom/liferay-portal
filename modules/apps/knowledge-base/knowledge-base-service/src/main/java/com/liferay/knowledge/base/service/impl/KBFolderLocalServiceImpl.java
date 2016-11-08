@@ -50,7 +50,7 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 
 		// KB folder
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 
 		validateName(groupId, parentResourcePrimKey, name);
@@ -121,6 +121,11 @@ public class KBFolderLocalServiceImpl extends KBFolderLocalServiceBaseImpl {
 	@Override
 	public KBFolder fetchKBFolder(long kbFolderId) {
 		return kbFolderPersistence.fetchByPrimaryKey(kbFolderId);
+	}
+
+	@Override
+	public KBFolder fetchKBFolder(String uuid, long groupId) {
+		return kbFolderPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
 	@Override

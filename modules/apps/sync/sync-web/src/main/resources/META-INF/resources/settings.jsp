@@ -71,13 +71,13 @@ if (deployed && oAuthEnabled) {
 		<aui:input label="allow-users-to-sync-their-personal-sites" name="allowUserPersonalSites" type="toggle-switch" value="<%= allowUserPersonalSites %>" />
 	</aui:fieldset>
 
-	<h4><liferay-ui:message key="desktop" /></h4>
-
 	<c:if test="<%= deployed %>">
 		<aui:fieldset>
 			<aui:input helpMessage="oauth-enabled-help" label="oauth-enabled" name="oAuthEnabled" type="toggle-switch" value="<%= oAuthEnabled %>" />
 		</aui:fieldset>
 	</c:if>
+
+	<h4><liferay-ui:message key="desktop" /></h4>
 
 	<aui:input helpMessage="allow-lan-syncing-help" label="allow-lan-syncing" name="lanEnabled" type="toggle-switch" value="<%= lanEnabled %>" />
 

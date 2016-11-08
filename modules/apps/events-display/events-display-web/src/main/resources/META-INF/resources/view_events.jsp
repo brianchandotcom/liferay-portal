@@ -69,6 +69,7 @@ List<CalendarBooking> calendarBookings = (List<CalendarBooking>)request.getAttri
 				eventURL.setParameter("mvcPath", "/view_calendar_booking.jsp");
 				eventURL.setParameter("redirect", PortalUtil.getCurrentURL(request));
 				eventURL.setParameter("calendarBookingId", String.valueOf(calendarBooking.getCalendarBookingId()));
+				eventURL.setParameter("instanceIndex", String.valueOf(calendarBooking.getInstanceIndex()));
 
 				eventHREF = eventURL.toString();
 			}

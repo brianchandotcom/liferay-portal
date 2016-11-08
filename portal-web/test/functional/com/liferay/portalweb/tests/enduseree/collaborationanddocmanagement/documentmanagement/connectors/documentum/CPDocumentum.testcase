@@ -595,7 +595,9 @@
 		</execute>
 	</command>
 
-	<command name="MoveCheckedoutDocumentToFolder" priority="5">
+	<!-- LPS-68658 -->
+
+	<!-- <command name="MoveCheckedoutDocumentToFolder" priority="5">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -688,7 +690,7 @@
 		<execute macro="DMDocument#viewCheckedoutCP" >
 			<var name="dmRepositoryName" value="true" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="MoveDocumentToHome" priority="5">
 		<execute macro="DMRepository#gotoCP">

@@ -770,6 +770,11 @@
 	</command>
 
 	<command name="UpdateDocumentTypeWithPermissions" priority="3">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -801,9 +806,15 @@
 			<var name="roleType" value="Regular Role" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
 		<execute macro="Role#definePermissionsCP">
 			<var name="permissionDefinitionKeys" value="SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_VIEW_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_DELETE_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_UPDATE_CHECKBOX,SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_DOCUMENT_TYPE_VIEW_CHECKBOX" />
 			<var name="roleName" value="Technical Writer" />
+			<var name="roleTitle" value="Technical Writer" />
+			<var name="roleType" value="Regular Role" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -881,7 +892,7 @@
 		</execute>
 
 		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -922,7 +933,7 @@
 		</execute>
 
 		<execute macro="Site#assignUserSitesCP">
-			<var name="siteName" value="Liferay" />
+			<var name="siteName" value="${siteName}" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
 

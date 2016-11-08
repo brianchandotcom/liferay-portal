@@ -1,4 +1,4 @@
-define("frontend-image-editor-web@1.0.6/ImageEditorHistoryEntry.es", ['exports', 'metal-promise/src/promise/Promise'], function (exports, _Promise) {
+define("frontend-image-editor-web@1.0.7/ImageEditorHistoryEntry.es", ['exports', 'metal-promise/src/promise/Promise'], function (exports, _Promise) {
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {

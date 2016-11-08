@@ -38,7 +38,7 @@ public class PollsChoiceLocalServiceImpl
 
 		validate(name, description);
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		long choiceId = counterLocalService.increment();
 

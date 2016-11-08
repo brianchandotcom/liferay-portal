@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Wiki Web
 Bundle-SymbolicName: com.liferay.wiki.web
-Bundle-Version: 2.1.9
+Bundle-Version: 2.1.10
 Export-Package:\
 	com.liferay.wiki.web.exportimport.data.handler,\
 	com.liferay.wiki.web.util

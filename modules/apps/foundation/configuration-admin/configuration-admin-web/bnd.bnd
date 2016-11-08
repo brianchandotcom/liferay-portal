@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Configuration Admin Web
 Bundle-SymbolicName: com.liferay.configuration.admin.web
-Bundle-Version: 1.0.12
+Bundle-Version: 1.0.13
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
 -includeresource: @org.apache.felix.fileinstall-[0-9]*.jar!/org/apache/felix/cm/file/ConfigurationHandler.class

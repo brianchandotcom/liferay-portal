@@ -156,7 +156,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 
 		if (lock == null) {
-			User user = userPersistence.findByPrimaryKey(userId);
+			User user = userLocalService.getUser(userId);
 
 			long lockId = counterLocalService.increment();
 

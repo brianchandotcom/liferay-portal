@@ -1,0 +1,5 @@
+Bundle-Activator:com.liferay.websocket.whiteboard.test.activator.WebSocketWhiteboardTestBundleActivator
+Bundle-Name: Liferay WebSocket Whiteboard Test
+Bundle-SymbolicName: com.liferay.websocket.whiteboard.test
+Bundle-Version: 1.0.0
+-includeresource: test-classes/integration

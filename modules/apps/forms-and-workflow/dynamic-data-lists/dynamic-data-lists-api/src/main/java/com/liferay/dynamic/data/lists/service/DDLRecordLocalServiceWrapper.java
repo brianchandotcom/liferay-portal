@@ -564,6 +564,11 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getRecordVersionsCount(recordId);
 	}
 
+	@Override
+	public int getRecordsCount(long recordSetId) {
+		return _ddlRecordLocalService.getRecordsCount(recordSetId);
+	}
+
 	/**
 	* Returns the number of records matching the record set ID and workflow
 	* status.
@@ -577,6 +582,11 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	@Override
 	public int getRecordsCount(long recordSetId, int status) {
 		return _ddlRecordLocalService.getRecordsCount(recordSetId, status);
+	}
+
+	@Override
+	public int getRecordsCount(long recordSetId, long userId) {
+		return _ddlRecordLocalService.getRecordsCount(recordSetId, userId);
 	}
 
 	@Override
@@ -766,6 +776,13 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 		return _ddlRecordLocalService.getRecords(recordSetId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return _ddlRecordLocalService.getRecords(recordSetId, start, end, obc);
+	}
+
 	/**
 	* Returns an ordered range of all the records matching the record set ID
 	* and workflow status.
@@ -808,6 +825,14 @@ public class DDLRecordLocalServiceWrapper implements DDLRecordLocalService,
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
 		long recordSetId, long userId) {
 		return _ddlRecordLocalService.getRecords(recordSetId, userId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords(
+		long recordSetId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> obc) {
+		return _ddlRecordLocalService.getRecords(recordSetId, userId, start,
+			end, obc);
 	}
 
 	/**

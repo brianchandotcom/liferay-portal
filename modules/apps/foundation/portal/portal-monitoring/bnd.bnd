@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Monitoring
 Bundle-SymbolicName: com.liferay.portal.monitoring
-Bundle-Version: 4.0.8
+Bundle-Version: 4.0.9
 Export-Package:\
 	com.liferay.portal.monitoring,\
 	com.liferay.portal.monitoring.configuration,\

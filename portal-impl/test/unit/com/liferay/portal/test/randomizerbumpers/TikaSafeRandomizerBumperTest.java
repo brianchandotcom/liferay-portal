@@ -16,15 +16,21 @@ package com.liferay.portal.test.randomizerbumpers;
 
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -33,8 +39,16 @@ import org.junit.Test;
 public class TikaSafeRandomizerBumperTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, NewEnvTestRule.INSTANCE);
+
+	@Before
+	public void setUp() {
+		PortalClassLoaderUtil.setClassLoader(
+			TikaSafeRandomizerBumperTest.class.getClassLoader());
+	}
 
 	@Test
 	public void testAcceptAny() {
@@ -79,6 +93,32 @@ public class TikaSafeRandomizerBumperTest {
 		doAccept(tikaSafeRandomizerBumper, _EXE_BYTE_ARRAY, false, Level.INFO);
 		doAccept(
 			tikaSafeRandomizerBumper, _BROKEN_EXE_BYTES, false, Level.INFO);
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testExceptionInInitializerError()
+		throws ClassNotFoundException {
+
+		String propertyKey = "tika.config";
+
+		String propertyValue = System.getProperty(propertyKey);
+
+		try {
+			System.setProperty(propertyKey, "bad.tika.config");
+
+			Class.forName(TikaSafeRandomizerBumper.class.getName());
+
+			Assert.fail();
+		}
+		catch (ExceptionInInitializerError eiie) {
+			Throwable cause = eiie.getCause();
+
+			Assert.assertTrue(cause instanceof NullPointerException);
+		}
+		finally {
+			System.setProperty(propertyKey, propertyValue);
+		}
 	}
 
 	protected void doAccept(

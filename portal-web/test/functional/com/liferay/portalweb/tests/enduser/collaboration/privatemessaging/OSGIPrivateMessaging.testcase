@@ -1,0 +1,21 @@
+<definition component-name="portal-plugins-osgi">
+	<property name="portal.release" value="true" />
+	<property name="plugins.deployment.type" value="osgi" />
+	<property name="testray.main.component.name" value="Private Messaging" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="PrivateMessagingSmoke" priority="4">
+		<execute macro="UserBar#gotoDashboard" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Private Messaging" />
+		</execute>
+	</command>
+</definition>

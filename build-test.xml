@@ -2363,6 +2363,7 @@ ${tomcat-gc-log}
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGOverrideVerifyTest.java",
 								"modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test/src/testIntegration/java/com/liferay/portal/lpkg/override/test/LPKGRevertOverrideVerifyTest.java",
 								"modules/apps/web-experience/export-import/export-import-resources-importer-test/src/testIntegration/java/com/liferay/exportimport/resources/importer/test/ResourcesImporterTest.java",
+								"modules/private/apps/osb-lcs/**",
 								"portal-impl/test/integration/com/liferay/portlet/asset/service/AssetTagStatsServiceTest.java",
 								"portal-impl/test/integration/com/liferay/portlet/documentlibrary/service/persistence/DLFileEntryFinderTest.java",
 								"portal-kernel/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
@@ -2713,6 +2714,8 @@ go</echo>
 		<sequential>
 			<setup-testable-tomcat-logging />
 
+			<setup-testable-tomcat-aspectj-agent />
+
 			<setup-testable-tomcat-jmx />
 
 			<setup-testable-tomcat-jpda-address />
@@ -2720,6 +2723,23 @@ go</echo>
 			<setup-testable-tomcat-manager />
 
 			<setup-testable-tomcat-osgi-modules />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="setup-testable-tomcat-aspectj-agent">
+		<sequential>
+			<if>
+				<not>
+					<resourcecontains resource="${app.server.tomcat.dir}/bin/setenv.sh" substring="${aspectj.agent}" />
+				</not>
+				<then>
+					<echo append="true" file="${app.server.tomcat.dir}/bin/setenv.sh">
+						<![CDATA[
+							CATALINA_OPTS="${CATALINA_OPTS} ${aspectj.agent} -Dorg.aspectj.weaver.loadtime.configuration=${aspectj.configuration}"
+						]]>
+					</echo>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -2751,7 +2771,7 @@ go</echo>
 						<![CDATA[
 							JMX_OPTS="${testable.tomcat.jmx.opts}"
 
-							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS}"
+							CATALINA_OPTS="${CATALINA_OPTS} ${JMX_OPTS} -Dsun.zip.disableMemoryMapping=true"
 						]]>
 					</echo>
 				</then>
@@ -4605,6 +4625,52 @@ go]]></replacevalue>
 				/>
 			</then>
 		</if>
+	</target>
+
+	<target name="deploy-osgi-module-configurations">
+		<var name="osgi.module.configurations.index" value="1" />
+
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<for list="${osgi.module.configurations}" param="configuration">
+			<sequential>
+				<echo file="${liferay.home}/osgi/configs/${osgi.module.configurations.index}">@{configuration}</echo>
+
+				<math
+					datatype="int"
+					operand1="${osgi.module.configurations.index}"
+					operand2="1"
+					operation="+"
+					result="osgi.module.configurations.index"
+				/>
+			</sequential>
+		</for>
+
+		<var name="osgi.module.configuration.file.names.index" value="1" />
+
+		<get-testcase-property property.name="osgi.module.configuration.file.names" />
+
+		<for list="${osgi.module.configuration.file.names}" param="file.names">
+			<sequential>
+				<if>
+					<available file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}" />
+					<then>
+							<move
+								file="${liferay.home}/osgi/configs/${osgi.module.configuration.file.names.index}"
+								tofile="${liferay.home}/osgi/configs/@{file.names}"
+							/>
+
+							<math
+								datatype="int"
+								operand1="${osgi.module.configuration.file.names.index}"
+								operand2="1"
+								operation="+"
+								result="osgi.module.configuration.file.names.index"
+							/>
+					</then>
+				</if>
+			</sequential>
+		</for>
 	</target>
 
 	<target name="deploy-osgi-modules">
@@ -8464,13 +8530,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<then>
 						<exec executable="/bin/bash" os="${os.unix}" outputproperty="cmis.repository.vm.host.name">
 							<arg value="-c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=600000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=900000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</then>
 					<else>
 						<exec executable="cmd" outputproperty="cmis.repository.vm.host.name">
 							<arg value="/c" />
-							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=600000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
+							<arg value="curl &quot;http://it.liferay.com/osb-ici-controller-web/vm/allocation/borrow?leaseTime=900000&amp;resourceType=qa%2E${cmis.repository.type}&quot;" />
 						</exec>
 					</else>
 				</if>
@@ -8586,6 +8652,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</antcall>
 
 		<antcall target="deploy-extra-apps" />
+
+		<get-testcase-property property.name="osgi.module.configuration.file.names" />
+		<get-testcase-property property.name="osgi.module.configurations" />
+
+		<if>
+			<and>
+				<isset property="osgi.module.configuration.file.names" />
+				<isset property="osgi.module.configurations" />
+			</and>
+			<then>
+				<antcall target="deploy-osgi-module-configurations" />
+			</then>
+		</if>
 
 		<get-testcase-property property.name="app.server.bundles.size" />
 
@@ -8792,6 +8871,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 			<equals arg1="${remote.elasticsearch.enabled}" arg2="true" />
 			<then>
 				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchCluster.log" />
+
+				<get
+					dest="${elasticsearch.dir}/logs/LiferayElasticsearchClusterMappings.log"
+					src="http://localhost:9200/_all/_mapping?pretty"
+				/>
+
+				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchClusterMappings.log" />
 
 				<ant antfile="build-test-elasticsearch.xml" target="stop-elasticsearch" />
 			</then>

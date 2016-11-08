@@ -1,0 +1,3 @@
+Bundle-Name: Liferay AspectJ Elasticsearch Shutdown Thread Interruption
+Bundle-SymbolicName: com.liferay.aspectj.elasticsearch.shutdown.thread.interruption
+Bundle-Version: 1.0.0

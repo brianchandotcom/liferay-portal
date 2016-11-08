@@ -289,6 +289,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	* @return the record
 	* @throws PortalException if a portal exception occurred
 	*/
+	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord updateRecord(long userId, long recordId,
 		boolean majorVersion, int displayIndex, DDMFormValues ddmFormValues,
 		ServiceContext serviceContext) throws PortalException;
@@ -482,6 +483,9 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordVersionsCount(long recordId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordsCount(long recordSetId);
+
 	/**
 	* Returns the number of records matching the record set ID and workflow
 	* status.
@@ -494,6 +498,9 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getRecordsCount(long recordSetId, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getRecordsCount(long recordSetId, long userId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.Long[] getMinAndMaxCompanyRecordIds(long companyId,
@@ -639,6 +646,10 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecord> getRecords(long recordSetId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId, int start, int end,
+		OrderByComparator<DDLRecord> obc);
+
 	/**
 	* Returns an ordered range of all the records matching the record set ID
 	* and workflow status.
@@ -675,6 +686,10 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecord> getRecords(long recordSetId, long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDLRecord> getRecords(long recordSetId, long userId, int start,
+		int end, OrderByComparator<DDLRecord> obc);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

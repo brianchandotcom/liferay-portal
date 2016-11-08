@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Scheduler
 Bundle-SymbolicName: com.liferay.portal.scheduler
-Bundle-Version: 3.0.3
+Bundle-Version: 3.0.4
 Export-Package:\
 	com.liferay.portal.scheduler,\
 	com.liferay.portal.scheduler.configuration

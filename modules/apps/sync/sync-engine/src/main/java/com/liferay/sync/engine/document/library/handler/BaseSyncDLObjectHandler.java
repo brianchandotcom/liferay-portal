@@ -31,7 +31,7 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 		super(event);
 	}
 
-	protected boolean processFilePathChange(
+	protected void processFilePathChange(
 			SyncFile sourceSyncFile, SyncFile targetSyncFile)
 		throws Exception {
 
@@ -60,8 +60,6 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 			if (FileUtil.exists(sourceFilePath)) {
 				FileUtil.moveFile(sourceFilePath, targetFilePath);
 			}
-
-			return true;
 		}
 
 		String sourceSyncFileName = FileUtil.getSanitizedFileName(
@@ -81,11 +79,7 @@ public class BaseSyncDLObjectHandler extends BaseJSONHandler {
 			if (FileUtil.exists(sourceFilePath)) {
 				FileUtil.moveFile(sourceFilePath, targetFilePath);
 			}
-
-			return true;
 		}
-
-		return false;
 	}
 
 }

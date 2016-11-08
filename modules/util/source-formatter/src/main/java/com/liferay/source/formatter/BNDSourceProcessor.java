@@ -123,9 +123,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 					StringUtil.replace(
 						moduleName, CharPool.DASH, CharPool.PERIOD);
 
-			if (!StringUtil.equalsIgnoreCase(
-					bundleSymbolicName, expectedBundleSymbolicName)) {
-
+			if (!bundleSymbolicName.equals(expectedBundleSymbolicName)) {
 				processMessage(
 					fileName,
 					"Incorrect Bundle-SymbolicName '" + bundleSymbolicName +

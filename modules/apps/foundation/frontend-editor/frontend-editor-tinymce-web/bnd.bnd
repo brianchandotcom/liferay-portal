@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Editor TinyMCE Web
 Bundle-SymbolicName: com.liferay.frontend.editor.tinymce.web
-Bundle-Version: 1.0.6
+Bundle-Version: 1.0.7
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Rich Text Editors
 Web-ContextPath: /frontend-editor-tinymce-web

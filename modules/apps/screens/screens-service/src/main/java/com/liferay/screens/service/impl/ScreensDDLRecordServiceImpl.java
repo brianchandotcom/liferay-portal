@@ -71,7 +71,7 @@ public class ScreensDDLRecordServiceImpl
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
-		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByRecordSetId(
+		List<DDLRecord> ddlRecords = ddlRecordLocalService.getRecords(
 			ddlRecordSetId, start, end, obc);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
@@ -86,7 +86,7 @@ public class ScreensDDLRecordServiceImpl
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
-		List<DDLRecord> ddlRecords = ddlRecordPersistence.findByR_U(
+		List<DDLRecord> ddlRecords = ddlRecordLocalService.getRecords(
 			ddlRecordSetId, userId, start, end, obc);
 
 		return getDDLRecordsJSONArray(ddlRecords, locale);
@@ -97,7 +97,7 @@ public class ScreensDDLRecordServiceImpl
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
-		return ddlRecordPersistence.countByRecordSetId(ddlRecordSetId);
+		return ddlRecordLocalService.getRecordsCount(ddlRecordSetId);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class ScreensDDLRecordServiceImpl
 		DDLRecordSetPermission.check(
 			getPermissionChecker(), ddlRecordSetId, ActionKeys.VIEW);
 
-		return ddlRecordPersistence.countByR_U(ddlRecordSetId, userId);
+		return ddlRecordLocalService.getRecordsCount(ddlRecordSetId, userId);
 	}
 
 	protected JSONObject getDDLRecordJSONObject(

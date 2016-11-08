@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Site Map Web
 Bundle-SymbolicName: com.liferay.site.navigation.site.map.web
-Bundle-Version: 2.0.4
+Bundle-Version: 2.0.5
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Navigation
 Web-ContextPath: /site-navigation-site-map-web

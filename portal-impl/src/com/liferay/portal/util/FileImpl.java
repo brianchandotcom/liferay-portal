@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileComparator;
@@ -69,6 +68,7 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.pdfbox.exceptions.CryptographyException;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.tika.Tika;
+import org.apache.tika.config.TikaConfig;
 import org.apache.tika.exception.TikaException;
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -387,17 +387,8 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		String text = null;
 
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		ClassLoader contextClassLoader =
-			ClassLoaderUtil.getContextClassLoader();
-
 		try {
-			if (contextClassLoader != portalClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
-			}
-
-			Tika tika = new Tika();
+			Tika tika = new Tika(_tikaConfig);
 
 			tika.setMaxStringLength(maxStringLength);
 
@@ -450,11 +441,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 			}
 			else {
 				_log.error(t, t);
-			}
-		}
-		finally {
-			if (contextClassLoader != portalClassLoader) {
-				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 			}
 		}
 
@@ -1131,6 +1117,17 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	private static final FileImpl _instance = new FileImpl();
 
+	private static final TikaConfig _tikaConfig;
+
+	static {
+		try {
+			_tikaConfig = new TikaConfig();
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
 	private static class ExtractTextProcessCallable
 		implements ProcessCallable<String> {
 
@@ -1140,7 +1137,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		@Override
 		public String call() throws ProcessException {
-			Tika tika = new Tika();
+			Tika tika = new Tika(_tikaConfig);
 
 			try {
 				return tika.parseToString(

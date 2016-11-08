@@ -90,7 +90,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ServiceScope;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
 import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 import org.osgi.util.tracker.ServiceTracker;
@@ -99,10 +98,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true, scope = ServiceScope.SINGLETON,
-	service = PortletTracker.class
-)
+@Component(immediate = true, service = PortletTracker.class)
 public class PortletTracker
 	implements
 		ServiceTrackerCustomizer

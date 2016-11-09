@@ -367,7 +367,7 @@ public class ProjectTemplatesTest {
 	@Test
 	public void testBuildTemplateMVCPortletWithPortletName() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
-				"mvc-portlet", "portlet");
+			"mvc-portlet", "portlet");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 		_testExists(
@@ -384,8 +384,8 @@ public class ProjectTemplatesTest {
 			"public class PortletPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvc-portlet", "portlet",
-			"-DclassName=portlet", "-Dpackage=portlet");
+			"mvc-portlet", "portlet", "-DclassName=portlet",
+			"-Dpackage=portlet");
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/portlet-1.0.0.jar",
@@ -505,30 +505,6 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplatePortletWithPortletName() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle("portlet", "portlet");
-
-		_testExists(gradleProjectDir, "bnd.bnd");
-
-		_testContains(
-			gradleProjectDir, "build.gradle",
-			"apply plugin: \"com.liferay.plugin\"");
-		_testContains(
-			gradleProjectDir,
-			"src/main/java/portlet/portlet/PortletPortlet.java",
-			"package portlet.portlet;", "javax.portlet.display-name=portlet",
-			"public class PortletPortlet extends GenericPortlet {",
-			"printWriter.print(\"portlet Portlet");
-
-		File mavenProjectDir = _buildTemplateWithMaven(
-			"portlet", "portlet", "-DclassName=Portlet", "-Dpackage=portlet");
-
-		_buildProjects(
-			gradleProjectDir, mavenProjectDir, "build/libs/portlet-1.0.0.jar",
-			"target/portlet-1.0.0.jar");
-	}
-
-	@Test
 	public void testBuildTemplatePortletProvider() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"portlet-provider", "provider.test");
@@ -615,6 +591,30 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/my.rest-1.0.0.jar",
 			"target/my-rest-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplatePortletWithPortletName() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle("portlet", "portlet");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/portlet/portlet/PortletPortlet.java",
+			"package portlet.portlet;", "javax.portlet.display-name=portlet",
+			"public class PortletPortlet extends GenericPortlet {",
+			"printWriter.print(\"portlet Portlet");
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"portlet", "portlet", "-DclassName=Portlet", "-Dpackage=portlet");
+
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, "build/libs/portlet-1.0.0.jar",
+			"target/portlet-1.0.0.jar");
 	}
 
 	@Test

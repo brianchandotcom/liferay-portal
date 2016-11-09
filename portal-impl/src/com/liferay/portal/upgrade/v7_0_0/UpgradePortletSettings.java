@@ -396,7 +396,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 		String newPreferences = _resetPreferences(oldPreferences, allKeys);
 
-		if (oldPreferences != newPreferences) {
+		if (!oldPreferences.equals(newPreferences)) {
 			ps.setString(1, newPreferences);
 			ps.setLong(2, rs.getLong("portletPreferencesId"));
 

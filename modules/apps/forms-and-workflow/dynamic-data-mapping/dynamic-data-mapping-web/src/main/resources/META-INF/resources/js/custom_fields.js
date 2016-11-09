@@ -1032,7 +1032,14 @@ AUI.add(
 								calendar: {
 									locale: Liferay.ThemeDisplay.getLanguageId()
 								},
-								trigger: instance.get('templateNode')
+								on: {
+									selectionChange: function(event) {
+										var date = event.newSelection;
+
+										instance.setValue(A.Date.format(date));
+									}
+								},
+								trigger: instance.get('templateNode').one('input')
 							}
 						).render();
 

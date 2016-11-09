@@ -511,11 +511,9 @@ public class DDMTemplateStagedModelDataHandler
 		DDMTemplateStagedModelDataHandler.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
-	private DDMTemplateLocalService _ddmTemplateLocalService;
-
 	private DDMTemplateExportImportContentProcessor
 		_ddmTemplateExportImportContentProcessor;
-
+	private DDMTemplateLocalService _ddmTemplateLocalService;
 	private ImageLocalService _imageLocalService;
 	private UserLocalService _userLocalService;
 

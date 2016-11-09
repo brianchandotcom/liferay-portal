@@ -1,0 +1,18 @@
+buildService {
+	apiDir = "../portal-instances-api/src/main/java"
+	testDir = "../portal-instances-test/src/testIntegration/java"
+}
+buildService {
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.portal.dao.orm.custom.sql", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
+	provided group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided project(":apps:foundation:portal-instances:portal-instances-api")
+}

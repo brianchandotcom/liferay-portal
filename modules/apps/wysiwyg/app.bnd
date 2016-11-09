@@ -11,9 +11,3 @@ Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: true
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}
-
-
-
-
-
-

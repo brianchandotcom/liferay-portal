@@ -45,7 +45,6 @@
 			<var name="conditionRowNumber" value="${conditionRowNumber}" />
 			<var name="conditionValueField" value="${conditionValueField}" />
 			<var name="conditionValueType" value="${conditionValueType}" />
-			<var name="optionsSet" value="${optionsSet}" />
 		</execute>
 	</command>
 

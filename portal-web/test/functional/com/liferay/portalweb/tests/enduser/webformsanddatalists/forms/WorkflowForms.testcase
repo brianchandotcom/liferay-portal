@@ -360,7 +360,6 @@
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueField" value="Select 1" />
 			<var name="conditionValueType" value="Value" />
-			<var name="optionsSet" value="true" />
 		</execute>
 
 		<execute macro="FormRules#configureActionOptions">
@@ -379,7 +378,6 @@
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueField" value="Option 1" />
 			<var name="conditionValueType" value="Value" />
-			<var name="optionsSet" value="true" />
 		</execute>
 
 		<execute macro="FormRules#configureActionOptions">

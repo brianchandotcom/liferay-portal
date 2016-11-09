@@ -1004,15 +1004,9 @@ public class WebDriverHelper {
 	}
 
 	public static void typeEditor(
-			WebDriver webDriver, String locator, String value)
-		throws Exception {
+		WebDriver webDriver, String locator, String value) {
 
 		WebElement webElement = getWebElement(webDriver, locator);
-
-		if (webElement == null) {
-			throw new Exception(
-				"Element is not present at \"" + locator + "\"");
-		}
 
 		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
 

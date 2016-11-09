@@ -410,6 +410,7 @@
 
 	<command name="ConfigureAutosave" priority="3">
 		<description message="This is a use case for LPS-68418." />
+		<property name="test.name.skip.portal.instance" value="Forms#ConfigureAutosave" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1148,6 +1149,7 @@
 
 	<command name="EditAllFormFieldsTypesUsedBySystemSettings" priority="4">
 		<description message="This is a use case for LPS-50757." />
+		<property name="test.name.skip.portal.instance" value="Forms#EditAllFormFieldsTypesUsedBySystemSettings" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1356,6 +1358,7 @@
 
 	<command name="EditFormsConfigurationViaSystemSettings" priority="3">
 		<description message="This is a use case for LPS-59749" />
+		<property name="test.name.skip.portal.instance" value="Forms#EditFormsConfigurationViaSystemSettings" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Forms" />

@@ -47,7 +47,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortalException;
 
 	/**
-	 * Deletes the given staged model
+	 * Deletes the given staged model. Typicall being called when the deletions
+	 * are imported.
 	 *
 	 * @param  stagedModel staged model to be deleted
 	 * @throws PortalException
@@ -112,7 +113,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	 * Returns the display name of a given staged model. This is used on the UI
 	 * so the users can follow what the export/import process is doing.
 	 *
-	 * @param  stagedModel
+	 * @param  stagedModel the staged model we want the display name for
 	 * @return the display name of a given staged model
 	 */
 	public String getDisplayName(T stagedModel);
@@ -133,8 +134,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	 * Element)} or {@link #validateReference(PortletDataContext, Element)}.
 	 *
 	 * @param portletDataContext the portlet data context of the current process
-	 * @param stagedModel
-	 * @return
+	 * @param stagedModel the staged model we want the attributes for
+	 * @return a map with the extra attributes for the given staged model
 	 */
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, T stagedModel);

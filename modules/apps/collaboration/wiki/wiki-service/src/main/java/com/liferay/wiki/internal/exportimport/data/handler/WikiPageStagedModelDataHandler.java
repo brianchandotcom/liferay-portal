@@ -16,7 +16,6 @@ package com.liferay.wiki.internal.exportimport.data.handler;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -121,7 +120,7 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		String content =
-			_exportImportContentProcessorController.
+			_wikiPageExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, page, page.getContent(),
 					portletDataContext.getBooleanParameter(
@@ -178,7 +177,7 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(page);
 
 		String content =
-			_exportImportContentProcessorController.
+			_wikiPageExportImportContentProcessor.
 				replaceImportContentReferences(
 					portletDataContext, page, page.getContent());
 
@@ -336,13 +335,13 @@ public class WikiPageStagedModelDataHandler
 		}
 	}
 
-	/**
-	 * @deprecated As of 1.2.0
-	 */
-	@Deprecated
+	@Reference(unbind = "-")
 	protected void setWikiPageExportImportContentProcessor(
 		WikiPageExportImportContentProcessor
 			wikiPageExportImportContentProcessor) {
+
+		_wikiPageExportImportContentProcessor =
+			wikiPageExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -362,10 +361,8 @@ public class WikiPageStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
 
-	@Reference
-	private ExportImportContentProcessorController
-		_exportImportContentProcessorController;
-
+	private WikiPageExportImportContentProcessor
+		_wikiPageExportImportContentProcessor;
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 

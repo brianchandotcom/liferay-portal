@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessorController;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -156,7 +155,7 @@ public class DDLRecordStagedModelDataHandler
 		Element recordElement = portletDataContext.getImportDataElement(record);
 
 		DDMFormValues ddmFormValues = getImportDDMFormValues(
-			portletDataContext, recordElement, recordSetId, record);
+			portletDataContext, recordElement, recordSetId);
 
 		DDLRecord importedRecord = (DDLRecord)record.clone();
 
@@ -197,7 +196,7 @@ public class DDLRecordStagedModelDataHandler
 			record.getDDMStorageId());
 
 		ddmFormValues =
-			_exportImportContentProcessorController.
+			_ddmFormValuesExportImportContentProcessor.
 				replaceExportContentReferences(
 					portletDataContext, record, ddmFormValues, true, false);
 
@@ -206,21 +205,9 @@ public class DDLRecordStagedModelDataHandler
 			_ddmFormValuesJSONSerializer.serialize(ddmFormValues));
 	}
 
-	/**
-	 * @deprecated As of 1.1.0
-	 */
-	@Deprecated
 	protected DDMFormValues getImportDDMFormValues(
 			PortletDataContext portletDataContext, Element recordElement,
 			long recordSetId)
-		throws Exception {
-
-		return null;
-	}
-
-	protected DDMFormValues getImportDDMFormValues(
-			PortletDataContext portletDataContext, Element recordElement,
-			long recordSetId, DDLRecord record)
 		throws Exception {
 
 		DDLRecordSet recordSet = _ddlRecordSetLocalService.getRecordSet(
@@ -238,9 +225,9 @@ public class DDLRecordStagedModelDataHandler
 			_ddmFormValuesJSONDeserializer.deserialize(
 				ddmStructure.getDDMForm(), serializedDDMFormValues);
 
-		return _exportImportContentProcessorController.
+		return _ddmFormValuesExportImportContentProcessor.
 			replaceImportContentReferences(
-				portletDataContext, record, ddmFormValues);
+				portletDataContext, ddmStructure, ddmFormValues);
 	}
 
 	@Override
@@ -273,13 +260,13 @@ public class DDLRecordStagedModelDataHandler
 		_ddlRecordStagedModelRepository = ddlRecordStagedModelRepository;
 	}
 
-	/**
-	 * @deprecated As of 1.1.0
-	 */
-	@Deprecated
+	@Reference(unbind = "-")
 	protected void setDDMFormValuesExportImportContentProcessor(
 		DDMFormValuesExportImportContentProcessor
 			ddmFormValuesExportImportContentProcessor) {
+
+		_ddmFormValuesExportImportContentProcessor =
+			ddmFormValuesExportImportContentProcessor;
 	}
 
 	@Reference(unbind = "-")
@@ -329,13 +316,10 @@ public class DDLRecordStagedModelDataHandler
 
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private DDLRecordStagedModelRepository _ddlRecordStagedModelRepository;
+	private DDMFormValuesExportImportContentProcessor
+		_ddmFormValuesExportImportContentProcessor;
 	private DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer;
-
-	@Reference
-	private ExportImportContentProcessorController
-		_exportImportContentProcessorController;
-
 	private StorageEngine _storageEngine;
 
 }

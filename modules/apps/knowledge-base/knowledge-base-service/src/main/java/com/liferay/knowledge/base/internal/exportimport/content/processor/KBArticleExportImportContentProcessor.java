@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.web.internal.exportimport.content.processor;
+package com.liferay.knowledge.base.internal.exportimport.content.processor;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseTextExportImportContentProcessor;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Mate Thurzo
+ * @author Adolfo Pérez
  */
 @Component(
-	property = {
-		"content.processor.order=3",
-		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
-	},
-	service = {ExportImportContentProcessor.class}
+	property = {"model.class.name=com.liferay.knowledge.base.model.KBArticle"},
+	service = {
+		ExportImportContentProcessor.class,
+		KBArticleExportImportContentProcessor.class
+	}
 )
-public class DDMTemplateTextExportImportContentProcessor
-	extends BaseTextExportImportContentProcessor<DDMTemplate> {
+public class KBArticleExportImportContentProcessor
+	extends BaseTextExportImportContentProcessor {
 }

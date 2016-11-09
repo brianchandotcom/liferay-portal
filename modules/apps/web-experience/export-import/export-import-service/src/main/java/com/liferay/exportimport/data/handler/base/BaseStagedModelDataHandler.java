@@ -17,6 +17,7 @@ package com.liferay.exportimport.data.handler.base;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -151,14 +152,14 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			portletDataContext, stagedModel);
 	}
 
-	/**
-	 * @deprecated As of 4.0.0
-	 */
-	@Deprecated
 	protected ExportImportContentProcessor getExportImportContentProcessor(
 		Class<T> clazz) {
 
-		return null;
+		ExportImportContentProcessor exportImportContentProcessor =
+			ExportImportContentProcessorRegistryUtil.
+				getExportImportContentProcessor(clazz.getName());
+
+		return exportImportContentProcessor;
 	}
 
 	protected StagedModelRepository<T> getStagedModelRepository() {

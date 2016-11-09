@@ -152,6 +152,8 @@
 
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${roleTitle}" />
 
+		<execute function="AssertClick" locator1="NavBar#ASSIGNEES" value1="Assignees" />
+
 		<execute function="AssertClick" locator1="NavBar#USER_GROUPS" value1="User Groups" />
 
 		<execute function="Click" locator1="Button#PLUS" />

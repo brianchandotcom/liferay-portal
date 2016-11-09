@@ -2,6 +2,7 @@
 
 <module name="com.liferay.portal" xmlns="urn:jboss:module:1.0">
 	<resources>
+		<resource-root path="com.liferay.portal.kernel.compat.jar" />
 		<resource-root path="com.liferay.registry.api.jar" />
 		<resource-root path="hsql.jar" />
 		<resource-root path="mysql.jar" />

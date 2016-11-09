@@ -4,6 +4,6 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" package-path="com.liferay.portal.instances">
 	<author>Michael C. Han</author>
-	<namespace>PortalInstance</namespace>
-	<entity local-service="true" name="PortalInstance" remote-service="false" />
+	<namespace>PortalInstances</namespace>
+	<entity local-service="true" name="PortalInstances" remote-service="false" />
 </service-builder>

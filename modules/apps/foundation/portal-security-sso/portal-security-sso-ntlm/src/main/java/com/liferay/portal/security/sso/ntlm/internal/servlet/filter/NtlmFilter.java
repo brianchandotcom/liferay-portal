@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.ntlm.internal.servlet.filter;
 
-import com.liferay.portal.instances.service.PortalInstanceLocalService;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.BigEndianCodec;
@@ -121,7 +121,7 @@ public class NtlmFilter extends BaseFilter {
 			return false;
 		}
 
-		long companyId = _portalInstanceLocalService.getCompanyId(request);
+		long companyId = _portalInstancesLocalService.getCompanyId(request);
 
 		try {
 			NtlmConfiguration ntlmConfiguration =
@@ -238,7 +238,7 @@ public class NtlmFilter extends BaseFilter {
 
 		HttpSession session = request.getSession(false);
 
-		long companyId = _portalInstanceLocalService.getCompanyId(request);
+		long companyId = _portalInstancesLocalService.getCompanyId(request);
 
 		String authorization = GetterUtil.getString(
 			request.getHeader(HttpHeaders.AUTHORIZATION));
@@ -370,6 +370,6 @@ public class NtlmFilter extends BaseFilter {
 	private PortalCache<String, byte[]> _portalCache;
 
 	@Reference
-	private PortalInstanceLocalService _portalInstanceLocalService;
+	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

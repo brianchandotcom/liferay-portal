@@ -16,7 +16,7 @@ package com.liferay.portal.instances.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.instances.service.base.PortalInstanceLocalServiceBaseImpl;
+import com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,12 +39,12 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Michael C. Han
- * @see PortalInstanceLocalServiceBaseImpl
- * @see com.liferay.portal.instances.service.PortalInstanceLocalServiceUtil
+ * @see PortalInstancesLocalServiceBaseImpl
+ * @see com.liferay.portal.instances.service.PortalInstancesLocalServiceUtil
  */
 @ProviderType
-public class PortalInstanceLocalServiceImpl
-	extends PortalInstanceLocalServiceBaseImpl {
+public class PortalInstancesLocalServiceImpl
+	extends PortalInstancesLocalServiceBaseImpl {
 
 	@Override
 	public void addCompanyId(long companyId) {
@@ -153,7 +153,7 @@ public class PortalInstanceLocalServiceImpl
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalInstanceLocalServiceImpl.class);
+		PortalInstancesLocalServiceImpl.class);
 
 	@ServiceReference(type = CompanyLocalService.class)
 	private CompanyLocalService _companyLocalService;

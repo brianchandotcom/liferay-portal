@@ -550,6 +550,10 @@
 	</command>
 
 	<command name="TestDatabaseConnection" priority="3">
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -561,7 +565,7 @@
 		<execute macro="ReportsAdmin#addSource">
 			<var name="reportsDataSourceClass" value="com.mysql.jdbc.Driver" />
 			<var name="reportsDataSourceName" value="Reports Data Source Name" />
-			<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://localhost/${databaseName}?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true]]></var>
+			<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://${portalURL}/${databaseName}?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true]]></var>
 			<var name="reportsDataSourceUser" value="localhost" />
 		</execute>
 

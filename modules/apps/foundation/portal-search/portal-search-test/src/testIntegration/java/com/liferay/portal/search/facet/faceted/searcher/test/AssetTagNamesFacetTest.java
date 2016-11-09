@@ -25,16 +25,15 @@ import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
-import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,10 +84,10 @@ public class AssetTagNamesFacetTest extends BaseFacetedSearcherTestCase {
 
 					FacetCollector facetCollector = facet.getFacetCollector();
 
-					AssertUtils.assertEquals(
-						searchContext.getKeywords(),
-						Collections.singletonMap(tag, 1),
-						toMap(facetCollector.getTermCollectors()));
+					Map<String, Integer> results = toMap(
+						facetCollector.getTermCollectors());
+
+					Assert.assertEquals((Integer)1, results.get(tag));
 
 					return null;
 				}

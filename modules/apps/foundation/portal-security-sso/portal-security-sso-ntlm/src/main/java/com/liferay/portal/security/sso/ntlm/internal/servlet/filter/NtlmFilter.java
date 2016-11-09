@@ -109,7 +109,7 @@ import org.osgi.service.component.annotations.Reference;
 		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=SSO Ntlm Filter", "url-pattern=/c/portal/login"
 	},
-	service = Filter.class
+	service = {Filter.class, NtlmFilter.class}
 )
 public class NtlmFilter extends BaseFilter {
 

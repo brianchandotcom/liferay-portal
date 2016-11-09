@@ -42,7 +42,6 @@ import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -471,17 +470,15 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 		@Override
 		public SettingsDescriptor getSettingsDescriptor(String settingsId) {
 			if (settingsId.equals(_PORTLET_ID)) {
-				return new MockSettingsDescriptor(
-					new HashSet<>(Collections.singleton(_KEY)));
+				return new MockSettingsDescriptor(Collections.singleton(_KEY));
 			}
-			else if (settingsId.equals(_SERVICE_NAME)) {
+
+			if (settingsId.equals(_SERVICE_NAME)) {
 				return new MockSettingsDescriptor(
-					new HashSet<>(Collections.singleton(_SERVICE_KEY)));
+					Collections.singleton(_SERVICE_KEY));
 			}
-			else {
-				return new MockSettingsDescriptor(
-					Collections.<String>emptySet());
-			}
+
+			return new MockSettingsDescriptor(Collections.<String>emptySet());
 		}
 
 		@Override

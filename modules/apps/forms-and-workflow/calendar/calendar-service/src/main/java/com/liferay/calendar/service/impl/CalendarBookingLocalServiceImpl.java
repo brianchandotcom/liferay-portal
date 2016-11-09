@@ -1728,6 +1728,35 @@ public class CalendarBookingLocalServiceImpl
 		return unmodifiedAttributesNames;
 	}
 
+	protected void modifyCalendarBookingRecurrenceFromCountToUntilDate(
+			CalendarBooking calendarBooking)
+		throws PortalException {
+
+		Recurrence recurrenceObj = calendarBooking.getRecurrenceObj();
+
+		int finalInstanceIndex = recurrenceObj.getCount() - 1;
+
+		List<java.util.Calendar> exceptionJCalendars =
+			recurrenceObj.getExceptionJCalendars();
+
+		finalInstanceIndex -= exceptionJCalendars.size();
+
+		CalendarBooking calendarBookingInstance = getCalendarBookingInstance(
+			calendarBooking.getCalendarBookingId(), finalInstanceIndex);
+
+		java.util.Calendar untilJCalendar = JCalendarUtil.getJCalendar(
+			calendarBookingInstance.getEndTime());
+
+		recurrenceObj.setCount(0);
+
+		recurrenceObj.setUntilJCalendar(untilJCalendar);
+
+		calendarBooking.setRecurrence(
+			RecurrenceSerializer.serialize(recurrenceObj));
+
+		calendarBookingPersistence.update(calendarBooking);
+	}
+
 	protected void sendNotification(
 		CalendarBooking calendarBooking,
 		NotificationTemplateType notificationTemplateType,

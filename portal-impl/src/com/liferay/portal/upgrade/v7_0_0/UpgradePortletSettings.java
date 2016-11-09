@@ -414,6 +414,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 		Enumeration<String> names = jxPortletPreferences.getNames();
 
+		boolean modified = false;
+
 		while (names.hasMoreElements()) {
 			String name = names.nextElement();
 
@@ -421,9 +423,15 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				if (name.startsWith(key)) {
 					jxPortletPreferences.reset(key);
 
+					modified = true;
+
 					break;
 				}
 			}
+		}
+
+		if (!modified) {
+			return preferences;
 		}
 
 		return PortletPreferencesFactoryUtil.toXML(jxPortletPreferences);

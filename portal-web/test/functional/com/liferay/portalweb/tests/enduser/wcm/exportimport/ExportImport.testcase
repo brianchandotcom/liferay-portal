@@ -129,7 +129,7 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<execute macro="LAR#configureExportTemplateCP">
+		<execute macro="LAR#configureExportOptions">
 			<var name="checkContentNameList" value="Web Content" />
 			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
@@ -195,7 +195,7 @@
 			<var name="exportTemplateNameEdit" value="Export Template Name Edit" />
 		</execute>
 
-		<execute macro="LAR#configureExportTemplateCP">
+		<execute macro="LAR#configureExportOptions">
 			<var name="checkContentNameList" value="Blogs" />
 		</execute>
 
@@ -1070,7 +1070,7 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<execute macro="LAR#configureExportTemplateCP">
+		<execute macro="LAR#configureExportOptions">
 			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 

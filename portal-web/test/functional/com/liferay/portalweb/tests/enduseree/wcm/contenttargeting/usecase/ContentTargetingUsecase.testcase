@@ -1430,13 +1430,13 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="LAR#configureExportSiteOptions">
+		<execute macro="LAR#configureExportOptions">
 			<var name="contentName" value="Audience Targeting" />
 			<var name="subContent" value="User Segments" />
 			<var name="uncheckSubSubContent" value="Referenced Content" />
 		</execute>
 
-		<execute macro="LAR#configureExportSiteOptions">
+		<execute macro="LAR#configureExportOptions">
 			<var name="uncheckContentNameList" value="Web Content" />
 		</execute>
 
@@ -1688,7 +1688,7 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="LAR#configureExportSiteOptions">
+		<execute macro="LAR#configureExportOptions">
 			<var name="checkContentNameList" value="Audience Targeting" />
 			<var name="contentDeletion" value="true" />
 		</execute>
@@ -1957,11 +1957,11 @@
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
-		<execute macro="LAR#configureExportSiteOptions">
+		<execute macro="LAR#configureExportOptions">
 			<var name="checkContentNameList" value="Audience Targeting" />
 		</execute>
 
-		<execute macro="LAR#configureExportSiteOptions">
+		<execute macro="LAR#configureExportOptions">
 			<var name="uncheckContentNameList" value="Web Content" />
 		</execute>
 

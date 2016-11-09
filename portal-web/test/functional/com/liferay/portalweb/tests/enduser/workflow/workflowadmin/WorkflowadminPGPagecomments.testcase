@@ -189,16 +189,6 @@
 			<var name="commentBody" value="Page Comment Comment" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Page Comments Page" />
-		</execute>
-
-		<execute macro="PageComment#viewWithWorkflowPG">
-			<var name="commentAuthor" value="Test Test (You)" />
-			<var name="commentBody" value="Page Comment Comment" />
-			<var name="commentStatus" value="Pending (Review)" />
-		</execute>
-
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>

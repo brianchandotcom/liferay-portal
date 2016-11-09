@@ -241,6 +241,8 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		SettingsDescriptor settingsDescriptor =
 			_settingsFactory.getSettingsDescriptor(serviceName);
 
+		Set<String> serviceKeys = settingsDescriptor.getAllKeys();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer(portletId);
 			PreparedStatement ps1 = connection.prepareStatement(
 				"select portletPreferencesId, preferences from " +
@@ -256,8 +258,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							connection, _UPDATE)) {
 
 				while (rs.next()) {
-					_resetAndOptionallyAddBatch(
-						ps2, rs, settingsDescriptor.getAllKeys());
+					_resetAndOptionallyAddBatch(ps2, rs, serviceKeys);
 				}
 
 				ps2.executeBatch();
@@ -277,8 +278,12 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 		SettingsDescriptor portletSettingsDescriptor =
 			_settingsFactory.getSettingsDescriptor(portletId);
 
+		Set<String> portletKeys = portletSettingsDescriptor.getAllKeys();
+
 		SettingsDescriptor serviceSettingsDescriptor =
 			_settingsFactory.getSettingsDescriptor(serviceName);
+
+		Set<String> serviceKeys = serviceSettingsDescriptor.getAllKeys();
 
 		String selectSQL =
 			"select portletPreferencesId, ownerId, ownerType, " +
@@ -338,8 +343,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 							}
 
 							preferences = _resetPreferences(
-								preferences,
-								portletSettingsDescriptor.getAllKeys());
+								preferences, portletKeys);
 						}
 
 						ps2.setLong(1, 0);
@@ -353,8 +357,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 						ps2.addBatch();
 					}
 
-					_resetAndOptionallyAddBatch(
-						ps3, rs, serviceSettingsDescriptor.getAllKeys());
+					_resetAndOptionallyAddBatch(ps3, rs, serviceKeys);
 				}
 
 				ps2.executeBatch();

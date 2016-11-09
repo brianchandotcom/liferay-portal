@@ -350,7 +350,9 @@
 
 		<execute macro="Form#closeSidebar" />
 
-		<execute macro="FormsAdminNavigator#gotoAddRule" />
+		<execute macro="FormsAdminNavigator#gotoRules" />
+
+		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
 			<var name="conditionField" value="Select" />

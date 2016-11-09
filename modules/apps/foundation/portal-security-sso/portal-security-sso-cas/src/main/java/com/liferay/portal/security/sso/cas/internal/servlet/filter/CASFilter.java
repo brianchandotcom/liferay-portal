@@ -83,7 +83,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
 	immediate = true,
 	property = {
-		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
+		"before-filter=Auto Login Filter", "dispatcher=FORWARD",
+		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=SSO CAS Filter", "url-pattern=/c/portal/login",
 		"url-pattern=/c/portal/logout"
 	},

@@ -422,7 +422,7 @@
 		</execute>
 	</command>
 
-	<command name="configureExportSiteOptions">
+	<command name="configureExportOptions">
 		<execute macro="LAR#_configureExportSiteOptions">
 			<var name="checkContentNameList" value="${checkContentNameList}" />
 			<var name="checkPageName" value="${checkPageName}" />
@@ -437,13 +437,6 @@
 			<var name="uncheckLogo" value="${uncheckLogo}" />
 			<var name="uncheckSubContent" value="${uncheckSubContent}" />
 			<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
-		</execute>
-	</command>
-
-	<command name="configureExportTemplateCP">
-		<execute macro="LAR#_configureExportSiteOptions">
-			<var name="checkContentNameList" value="${checkContentNameList}" />
-			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
 		</execute>
 	</command>
 

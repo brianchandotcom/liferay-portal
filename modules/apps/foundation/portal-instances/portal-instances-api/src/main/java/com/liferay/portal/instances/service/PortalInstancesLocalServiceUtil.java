@@ -21,25 +21,25 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the local service utility for PortalInstance. This utility wraps
- * {@link com.liferay.portal.instances.service.impl.PortalInstanceLocalServiceImpl} and is the
+ * Provides the local service utility for PortalInstances. This utility wraps
+ * {@link com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
  * accessed from within the same VM.
  *
  * @author Michael C. Han
- * @see PortalInstanceLocalService
- * @see com.liferay.portal.instances.service.base.PortalInstanceLocalServiceBaseImpl
- * @see com.liferay.portal.instances.service.impl.PortalInstanceLocalServiceImpl
+ * @see PortalInstancesLocalService
+ * @see com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl
+ * @see com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl
  * @generated
  */
 @ProviderType
-public class PortalInstanceLocalServiceUtil {
+public class PortalInstancesLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.instances.service.impl.PortalInstanceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static boolean isAutoLoginIgnoreHost(java.lang.String host) {
 		return getService().isAutoLoginIgnoreHost(host);
@@ -112,10 +112,10 @@ public class PortalInstanceLocalServiceUtil {
 		getService().synchronizePortalInstances();
 	}
 
-	public static PortalInstanceLocalService getService() {
+	public static PortalInstancesLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<PortalInstanceLocalService, PortalInstanceLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(PortalInstanceLocalService.class);
+	private static ServiceTracker<PortalInstancesLocalService, PortalInstancesLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(PortalInstancesLocalService.class);
 }

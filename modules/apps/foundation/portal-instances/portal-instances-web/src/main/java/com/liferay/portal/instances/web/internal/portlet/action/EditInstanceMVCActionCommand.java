@@ -14,7 +14,7 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
-import com.liferay.portal.instances.service.PortalInstanceLocalService;
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -107,7 +107,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void synchronizePortalInstances() {
-		_portalInstanceLocalService.synchronizePortalInstances();
+		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	protected void updateInstance(ActionRequest actionRequest)
@@ -133,7 +133,7 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
 
-			_portalInstanceLocalService.initializePortalInstance(
+			_portalInstancesLocalService.initializePortalInstance(
 				servletContext, company.getWebId());
 		}
 		else {
@@ -151,6 +151,6 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 	private CompanyService _companyService;
 
 	@Reference
-	private PortalInstanceLocalService _portalInstanceLocalService;
+	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

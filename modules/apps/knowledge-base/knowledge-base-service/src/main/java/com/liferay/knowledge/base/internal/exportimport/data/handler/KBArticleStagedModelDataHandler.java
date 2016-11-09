@@ -481,6 +481,7 @@ public class KBArticleStagedModelDataHandler
 	@Reference
 	private KBArticleExportImportContentProcessor
 		_kbArticleExportImportContentProcessor;
+
 	private KBArticleLocalService _kbArticleLocalService;
 	private KBFolderLocalService _kbFolderLocalService;
 	private Portal _portal;

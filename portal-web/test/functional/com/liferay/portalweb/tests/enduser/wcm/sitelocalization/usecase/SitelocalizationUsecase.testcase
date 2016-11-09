@@ -200,6 +200,81 @@
 		</execute>
 	</command>
 
+	<command name="LocalizeCountryName" priority="3">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editDisplaySettingsCP">
+			<var name="languageName" value="español (España)" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleTitle" value="Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+			<var name="category" value="Usuarios" />
+			<var name="portlet" value="Usuarios y Organizaciones" />
+		</execute>
+
+		<execute macro="Organization#addWithLocalizedCountryCP">
+			<var name="countryName" value="Estados Unidos" />
+			<var name="localizedOption" value="Organización" />
+			<var name="navItem" value="Organizaciones" />
+			<var name="orgName" value="Organization Name" />
+			<var name="saveButton" value="Guardar" />
+		</execute>
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+			<var name="category" value="Usuarios" />
+			<var name="portlet" value="Usuarios y Organizaciones" />
+		</execute>
+
+		<execute macro="Organization#viewLocalizedCountryCP">
+			<var name="countryName" value="Estados Unidos" />
+			<var name="editLocalized" value="Editar" />
+			<var name="navItem" value="Organizaciones" />
+			<var name="orgName" value="Organization Name" />
+		</execute>
+	</command>
+
 	<command name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -431,7 +506,6 @@
 		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Configuración de la instancia" />
-			<var name="portletLocalization" value="Instance Settings" />
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">
@@ -445,7 +519,6 @@
 		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Ajustes del sitio" />
-			<var name="portletLocalization" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">
@@ -487,7 +560,6 @@
 		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Ajustes del sitio" />
-			<var name="portletLocalization" value="Site Settings" />
 		</execute>
 
 		<execute macro="Site#configureCurrentLanguagesCP">

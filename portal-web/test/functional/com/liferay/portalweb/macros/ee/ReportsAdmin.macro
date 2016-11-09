@@ -103,25 +103,44 @@
 
 	<command name="configureDeliveryEmail">
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
-		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
-		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="${deliverySubject}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
+
+		<execute function="Type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${deliveryBody}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureEmailFrom">
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
+
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="configureNotificationsEmail">
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
+
 		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_SUBJECT_FIELD" value1="${notificationSubject}" />
-		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON_2" />
+
+		<execute function="Type" locator1="CKEditor#BODY_FIELD_SOURCE_ON_2" value1="${notificationBody}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON_2" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -179,10 +198,11 @@
 	</command>
 
 	<command name="gotoConfiguration">
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="ReportsAdmin#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 	</command>
 
 	<command name="gotoDefinitions">
@@ -201,15 +221,19 @@
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
+
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 
 		<var name="deliverySubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
 
-		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_SUBJECT_FIELD" value1="${deliverySubject}" />
+		<execute function="Type" locator1="TextInput#SUBJECT" value1="${deliverySubject}" />
 
 		<var name="deliveryBody"><![CDATA[
 Dear [$TO_NAME$],<br /><br />
@@ -220,9 +244,16 @@ Sincerely,<br />
 [$FROM_NAME$]<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
-		<execute function="Type" locator1="ReportsAdminConfiguration#DELIVERY_EMAIL_BODY_FIELD" value1="${deliveryBody}" />
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
+
+		<execute function="Type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${deliveryBody}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 
 		<var name="notificationSubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
@@ -238,8 +269,14 @@ Sincerely,<br />
 [$FROM_NAME$]<br />
 [$FROM_ADDRESS$]		<br />]]>		</var>
 
-		<execute function="Type" locator1="ReportsAdminConfiguration#NOTIFICATIONS_EMAIL_BODY_FIELD" value1="${notificationBody}" />
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON_2" />
+
+		<execute function="Type" locator1="CKEditor#BODY_FIELD_SOURCE_ON_2" value1="${notificationBody}" />
+
+		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON_2" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 

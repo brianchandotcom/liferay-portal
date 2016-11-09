@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_FIELD_2</td>
+	<td>//div[contains(@class,'cke_2')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_FIELD_LOCALIZED</td>
 	<td>//div[contains(@id,'cke__')]</td>
 	<td></td>
@@ -21,6 +26,11 @@
 <tr>
 	<td>BODY_FIELD_SOURCE_ON</td>
 	<td>//div[@id='cke_1_contents']/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_FIELD_SOURCE_ON_2</td>
+	<td>//div[@id='cke_2_contents']/textarea</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +149,11 @@
 <tr>
 	<td>TOOLBAR_SOURCE_BUTTON</td>
 	<td>//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_SOURCE_BUTTON_2</td>
+	<td>//div[contains(@class,'cke_2')]//a[contains(@class,'cke_button') and contains(@class,'source')]</td>
 	<td></td>
 </tr>
 <tr>

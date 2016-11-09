@@ -396,7 +396,7 @@ AUI.add(
 											instance.load();
 										}
 									},
-									destroyOnHide: false,
+									destroyOnHide: true,
 									modal: true
 								},
 								title: Liferay.Language.get('new-calendar-booking'),

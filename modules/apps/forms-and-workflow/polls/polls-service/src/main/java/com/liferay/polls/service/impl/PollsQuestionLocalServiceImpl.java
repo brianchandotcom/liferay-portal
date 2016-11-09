@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -353,12 +354,20 @@ public class PollsQuestionLocalServiceImpl
 		}
 
 		if (choices != null) {
+			List<String> choiceDescriptions = new ArrayList<>(choices.size());
+
 			for (PollsChoice choice : choices) {
 				String choiceDescription = choice.getDescription(locale);
 
 				if (Validator.isNull(choiceDescription)) {
 					throw new QuestionChoiceException();
 				}
+
+				if (choiceDescriptions.contains(choiceDescription)) {
+					throw new QuestionChoiceException();
+				}
+
+				choiceDescriptions.add(choiceDescription);
 			}
 		}
 

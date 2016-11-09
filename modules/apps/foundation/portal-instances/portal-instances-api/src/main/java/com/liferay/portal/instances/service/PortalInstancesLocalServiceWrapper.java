@@ -19,44 +19,44 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link PortalInstanceLocalService}.
+ * Provides a wrapper for {@link PortalInstancesLocalService}.
  *
  * @author Michael C. Han
- * @see PortalInstanceLocalService
+ * @see PortalInstancesLocalService
  * @generated
  */
 @ProviderType
-public class PortalInstanceLocalServiceWrapper
-	implements PortalInstanceLocalService,
-		ServiceWrapper<PortalInstanceLocalService> {
-	public PortalInstanceLocalServiceWrapper(
-		PortalInstanceLocalService portalInstanceLocalService) {
-		_portalInstanceLocalService = portalInstanceLocalService;
+public class PortalInstancesLocalServiceWrapper
+	implements PortalInstancesLocalService,
+		ServiceWrapper<PortalInstancesLocalService> {
+	public PortalInstancesLocalServiceWrapper(
+		PortalInstancesLocalService portalInstancesLocalService) {
+		_portalInstancesLocalService = portalInstancesLocalService;
 	}
 
 	@Override
 	public boolean isAutoLoginIgnoreHost(java.lang.String host) {
-		return _portalInstanceLocalService.isAutoLoginIgnoreHost(host);
+		return _portalInstancesLocalService.isAutoLoginIgnoreHost(host);
 	}
 
 	@Override
 	public boolean isAutoLoginIgnorePath(java.lang.String path) {
-		return _portalInstanceLocalService.isAutoLoginIgnorePath(path);
+		return _portalInstancesLocalService.isAutoLoginIgnorePath(path);
 	}
 
 	@Override
 	public boolean isCompanyActive(long companyId) {
-		return _portalInstanceLocalService.isCompanyActive(companyId);
+		return _portalInstancesLocalService.isCompanyActive(companyId);
 	}
 
 	@Override
 	public boolean isVirtualHostsIgnoreHost(java.lang.String host) {
-		return _portalInstanceLocalService.isVirtualHostsIgnoreHost(host);
+		return _portalInstancesLocalService.isVirtualHostsIgnoreHost(host);
 	}
 
 	@Override
 	public boolean isVirtualHostsIgnorePath(java.lang.String path) {
-		return _portalInstanceLocalService.isVirtualHostsIgnorePath(path);
+		return _portalInstancesLocalService.isVirtualHostsIgnorePath(path);
 	}
 
 	/**
@@ -66,71 +66,71 @@ public class PortalInstanceLocalServiceWrapper
 	*/
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
-		return _portalInstanceLocalService.getOSGiServiceIdentifier();
+		return _portalInstancesLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
 	public java.lang.String[] getWebIds() {
-		return _portalInstanceLocalService.getWebIds();
+		return _portalInstancesLocalService.getWebIds();
 	}
 
 	@Override
 	public long getCompanyId(javax.servlet.http.HttpServletRequest request) {
-		return _portalInstanceLocalService.getCompanyId(request);
+		return _portalInstancesLocalService.getCompanyId(request);
 	}
 
 	@Override
 	public long getDefaultCompanyId() {
-		return _portalInstanceLocalService.getDefaultCompanyId();
+		return _portalInstancesLocalService.getDefaultCompanyId();
 	}
 
 	@Override
 	public long[] getCompanyIds() {
-		return _portalInstanceLocalService.getCompanyIds();
+		return _portalInstancesLocalService.getCompanyIds();
 	}
 
 	@Override
 	public long[] getCompanyIdsBySQL() throws java.sql.SQLException {
-		return _portalInstanceLocalService.getCompanyIdsBySQL();
+		return _portalInstancesLocalService.getCompanyIdsBySQL();
 	}
 
 	@Override
 	public void addCompanyId(long companyId) {
-		_portalInstanceLocalService.addCompanyId(companyId);
+		_portalInstancesLocalService.addCompanyId(companyId);
 	}
 
 	@Override
 	public void initializePortalInstance(
 		javax.servlet.ServletContext servletContext, java.lang.String webId) {
-		_portalInstanceLocalService.initializePortalInstance(servletContext,
+		_portalInstancesLocalService.initializePortalInstance(servletContext,
 			webId);
 	}
 
 	@Override
 	public void reload(javax.servlet.ServletContext servletContext) {
-		_portalInstanceLocalService.reload(servletContext);
+		_portalInstancesLocalService.reload(servletContext);
 	}
 
 	@Override
 	public void removeCompany(long companyId) {
-		_portalInstanceLocalService.removeCompany(companyId);
+		_portalInstancesLocalService.removeCompany(companyId);
 	}
 
 	@Override
 	public void synchronizePortalInstances() {
-		_portalInstanceLocalService.synchronizePortalInstances();
+		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	@Override
-	public PortalInstanceLocalService getWrappedService() {
-		return _portalInstanceLocalService;
+	public PortalInstancesLocalService getWrappedService() {
+		return _portalInstancesLocalService;
 	}
 
 	@Override
 	public void setWrappedService(
-		PortalInstanceLocalService portalInstanceLocalService) {
-		_portalInstanceLocalService = portalInstanceLocalService;
+		PortalInstancesLocalService portalInstancesLocalService) {
+		_portalInstancesLocalService = portalInstancesLocalService;
 	}
 
-	private PortalInstanceLocalService _portalInstanceLocalService;
+	private PortalInstancesLocalService _portalInstancesLocalService;
 }

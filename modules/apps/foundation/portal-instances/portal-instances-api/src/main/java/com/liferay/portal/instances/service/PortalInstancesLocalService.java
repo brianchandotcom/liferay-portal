@@ -30,25 +30,25 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Provides the local service interface for PortalInstance. Methods of this
+ * Provides the local service interface for PortalInstances. Methods of this
  * service will not have security checks based on the propagated JAAS
  * credentials because this service can only be accessed from within the same
  * VM.
  *
  * @author Michael C. Han
- * @see PortalInstanceLocalServiceUtil
- * @see com.liferay.portal.instances.service.base.PortalInstanceLocalServiceBaseImpl
- * @see com.liferay.portal.instances.service.impl.PortalInstanceLocalServiceImpl
+ * @see PortalInstancesLocalServiceUtil
+ * @see com.liferay.portal.instances.service.base.PortalInstancesLocalServiceBaseImpl
+ * @see com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl
  * @generated
  */
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface PortalInstanceLocalService extends BaseLocalService {
+public interface PortalInstancesLocalService extends BaseLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link PortalInstanceLocalServiceUtil} to access the portal instance local service. Add custom service methods to {@link com.liferay.portal.instances.service.impl.PortalInstanceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link PortalInstancesLocalServiceUtil} to access the portal instances local service. Add custom service methods to {@link com.liferay.portal.instances.service.impl.PortalInstancesLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isAutoLoginIgnoreHost(java.lang.String host);

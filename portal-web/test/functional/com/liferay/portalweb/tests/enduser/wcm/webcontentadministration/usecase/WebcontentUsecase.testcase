@@ -772,11 +772,9 @@
 			<var name="pageName" value="WCD Page" />
 		</execute>
 
-		<var name="key_portletTitleName" value="Web Content Display" />
+		<execute function="AssertTextNotPresent" value1="Web Content Display" />
 
-		<execute function="AssertTextNotPresent" locator1="Portlet#SPECIFIC_TITLE" value1="Web Content Display" />
-
-		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="WC WebContent Content" />
+		<execute function="AssertTextNotPresent" value1="WC WebContent Content" />
 	</command>
 
 	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">

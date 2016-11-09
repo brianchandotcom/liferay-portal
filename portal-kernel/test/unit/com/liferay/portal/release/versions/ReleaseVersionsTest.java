@@ -212,10 +212,12 @@ public class ReleaseVersionsTest {
 			}
 
 			if (gitRepoPath != null) {
-				Path gitRepoDirPath = gitRepoPath.getParent();
+				updateVersionPath = gitRepoPath.getParent();
 
-				updateVersionPath = gitRepoDirPath.resolve(
-					"../" + _getVersionOverrideFileName(dirPath));
+				updateVersionPath = updateVersionPath.getParent();
+
+				updateVersionPath = updateVersionPath.resolve(
+					_getVersionOverrideFileName(dirPath));
 
 				updateVersionSeparator = StringPool.EQUAL;
 			}
@@ -223,8 +225,6 @@ public class ReleaseVersionsTest {
 				updateVersionPath = dirPath.resolve("bnd.bnd");
 				updateVersionSeparator = ": ";
 			}
-
-			updateVersionPath = updateVersionPath.toRealPath();
 
 			if (Files.exists(updateVersionPath)) {
 				sb.append("update");

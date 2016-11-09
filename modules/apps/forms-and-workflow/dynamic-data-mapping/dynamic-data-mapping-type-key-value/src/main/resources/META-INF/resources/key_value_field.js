@@ -50,7 +50,8 @@ AUI.add(
 							instance.after('keyInputEnabledChange', instance._afterKeyInputEnabledChange),
 							instance.after('valueChange', instance._afterValueChangeInput),
 							instance.bindContainerEvent('keyup', instance._onKeyUpKeyInput, '.key-value-input'),
-							instance.bindContainerEvent('valuechange', instance._onValueChangeKeyInput, '.key-value-input')
+							instance.bindContainerEvent('valuechange', instance._onValueChangeKeyInput, '.key-value-input'),
+							instance.bindContainerEvent('blur', instance._onBlurKeyInput, '.key-value-input')
 						);
 					},
 
@@ -174,6 +175,18 @@ AUI.add(
 						}
 
 						return size + 1;
+					},
+
+					_onBlurKeyInput: function(event) {
+						var instance = this;
+
+						var inputNode = event.target;
+
+						var value = inputNode.val();
+
+						if (value === '') {
+							instance._updateInputValue(inputNode, instance.normalizeKey(value));
+						}
 					},
 
 					_onKeyUpKeyInput: function(event) {

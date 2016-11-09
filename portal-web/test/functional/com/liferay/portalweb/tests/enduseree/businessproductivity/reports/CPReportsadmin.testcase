@@ -1,6 +1,8 @@
 <definition component-name="portal-business-productivity-ee">
 	<property name="testray.main.component.name" value="Reports" />
 
+	<var name="databaseName" value="lportal" />
+
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
@@ -559,7 +561,7 @@
 		<execute macro="ReportsAdmin#addSource">
 			<var name="reportsDataSourceClass" value="com.mysql.jdbc.Driver" />
 			<var name="reportsDataSourceName" value="Reports Data Source Name" />
-			<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://localhost/lportal?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true]]></var>
+			<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://localhost/${databaseName}?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true]]></var>
 			<var name="reportsDataSourceUser" value="localhost" />
 		</execute>
 

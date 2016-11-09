@@ -30,6 +30,8 @@
 		<while>
 			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
 			<then>
+				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="" />
+
 				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
 			</then>
 		</while>
@@ -44,6 +46,8 @@
 		<while>
 			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
 			<then>
+				<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="" />
+
 				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
 			</then>
 		</while>

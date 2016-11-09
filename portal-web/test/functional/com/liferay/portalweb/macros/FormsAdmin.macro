@@ -27,16 +27,26 @@
 
 		<var name="key_fieldName" value="$key" />
 
-		<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
-
-		<var name="key_fieldName" value="$value" />
-
-		<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
+		<while>
+			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
+			<then>
+				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${displayedAttribute}" />
+			</then>
+		</while>
 
 		<execute macro="FormFields#viewTextValue">
 			<var name="fieldName" value="$key" />
 			<var name="fieldValue" value="${displayedAttribute}" />
 		</execute>
+
+		<var name="key_fieldName" value="$value" />
+
+		<while>
+			<condition function="IsTextNotEqual" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
+			<then>
+				<execute function="Type#sendKeysAceEditorNoMouseOver" locator1="FormFields#TEXT_FIELD" value1="${storedAttribute}" />
+			</then>
+		</while>
 
 		<execute macro="FormFields#viewTextValue">
 			<var name="fieldName" value="$value" />

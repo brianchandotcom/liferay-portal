@@ -7,6 +7,14 @@ classes {
 	dependsOn transformImportedPackages
 }
 
+configurations {
+	bytecodeTransformer
+}
+
+dependencies {
+	bytecodeTransformer group: "com.liferay", name: "com.liferay.portal.tools.portal.compat.bytecode.transformer", version: "1.0.0"
+}
+
 importPackages {
 	into {
 		compileJava.destinationDir
@@ -14,8 +22,10 @@ importPackages {
 }
 
 transformImportedPackages {
+	classpath = configurations.bytecodeTransformer
 	dependsOn importPackages
-	enabled = false
+	main = "com.liferay.portal.tools.portal.compat.bytecode.transformer.BytecodeTransformer"
+	systemProperty "classes.dir", importPackages.destinationDir
 }
 
 Properties importedPackagesProperties = new Properties()

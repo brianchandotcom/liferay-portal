@@ -550,6 +550,8 @@
 	</command>
 
 	<command name="TestDatabaseConnection" priority="3">
+		<description message="This is a use case for LPS-43525." />
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
 
 		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />

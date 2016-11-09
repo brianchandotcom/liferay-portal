@@ -508,14 +508,16 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 				Recurrence recurrenceObj = calendarBooking.getRecurrenceObj();
 
-				int count = recurrenceObj.getCount();
+				if (recurrenceObj != null) {
+					int count = recurrenceObj.getCount();
 
-				if (count > 0) {
-					int instanceIndex = RecurrenceUtil.getIndexOfInstance(
-						calendarBooking.getRecurrence(),
-						calendarBooking.getStartTime(), startTime);
+					if (count > 0) {
+						int instanceIndex = RecurrenceUtil.getIndexOfInstance(
+							calendarBooking.getRecurrence(),
+							calendarBooking.getStartTime(), startTime);
 
-					recurrenceObj.setCount(count - instanceIndex);
+						recurrenceObj.setCount(count - instanceIndex);
+					}
 				}
 
 				recurrence = RecurrenceSerializer.serialize(recurrenceObj);

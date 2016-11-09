@@ -384,7 +384,7 @@ public class ProjectTemplatesTest {
 			"public class PortletPortlet extends MVCPortlet {");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"mvc-portlet", "portlet", "-DclassName=portlet",
+			"mvc-portlet", "portlet", "-DclassName=Portlet",
 			"-Dpackage=portlet");
 
 		_buildProjects(

@@ -683,9 +683,6 @@
 	</command>
 
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
-		<var name="portletOption" value="Configuration" />
-		<var name="roleTitle" value="Guest" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>
@@ -726,7 +723,6 @@
 		</execute>
 
 		<execute macro="Role#removePermissionPG" >
-			<var name="key_roleTitle" value="${key_roleTitle}" />
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleTitle" value="Guest" />
 		</execute>
@@ -755,10 +751,9 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" />
 
-		<var method="StringUtil#replace('${roleTitle}', ' ', '-')" name="key_roleTitle" />
-		<var method="StringUtil#lowerCase('${key_roleTitle}')" name="key_roleTitle" />
-
-		<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX">
+			<var name="key_roleTitle" value="guest" />
+		</execute>
 
 		<execute function="SelectFrame" value1="relative=top" />
 

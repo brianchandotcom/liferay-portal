@@ -1474,7 +1474,7 @@ public class PoshiRunnerValidation {
 
 			if (childElementName.equals("command")) {
 				List<String> possibleAttributeNames = Arrays.asList(
-					"description", "disabled", "known-issues", "line-number",
+					"description", "ignore", "known-issues", "line-number",
 					"name", "priority");
 
 				validateHasChildElements(childElement, filePath);

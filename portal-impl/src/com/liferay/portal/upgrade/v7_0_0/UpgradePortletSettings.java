@@ -35,6 +35,8 @@ import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Set;
 
+import javax.portlet.ReadOnlyException;
+
 /**
  * @author Sergio González
  * @author Iván Zaera
@@ -405,7 +407,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 	}
 
 	private String _resetPreferences(String preferences, Set<String> keys)
-		throws Exception {
+		throws ReadOnlyException {
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			PortletPreferencesFactoryUtil.fromDefaultXML(preferences);

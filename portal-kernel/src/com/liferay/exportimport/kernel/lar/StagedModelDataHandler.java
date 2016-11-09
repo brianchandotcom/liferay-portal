@@ -29,113 +29,112 @@ import java.util.Map;
 public interface StagedModelDataHandler<T extends StagedModel> {
 
 	/**
-	 * Deletes a staged model based on the parameters. It is called when
+	 * Deletes the staged model matching the parameters. This method is called when
 	 * deletions are imported.
 	 *
-	 * @param  uuid the uuid of the staged model
-	 * @param  groupId the group ID of the entity's group
-	 * @param  className the name of the staged model class
-	 * @param  extraData can be any useful information about the staged model.
-	 *         This information makes the staged model easier to identify /
+	 * @param  uuid the staged model's UUID
+	 * @param  groupId the primary key of the entity's group
+	 * @param  className the staged model's class name
+	 * @param  extraData the extra data containing useful information about the staged model.
+	 *         This information makes the staged model easier to identify and
 	 *         fetch for deletion. It is populated when a deletion system event
-	 *         is added usually in the <code>*LocalServiceImpl</code> class of
+	 *         is added, usually in the <code>*LocalServiceImpl</code> class of
 	 *         the model.
-	 * @throws PortalException
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException;
 
 	/**
-	 * Deletes the given staged model. Typicall being called when the deletions
-	 * are imported.
+	 * Deletes the staged model. This method is called when
+	 * deletions are imported.
 	 *
-	 * @param  stagedModel staged model to be deleted
-	 * @throws PortalException
+	 * @param  stagedModel the staged model to delete
+	 * @throws PortalException if a portal exception occurred
 	 */
 	public void deleteStagedModel(T stagedModel) throws PortalException;
 
 	/**
-	 * Exports a given staged model and its references. See {@link
-	 * BaseStagedModelDataHandler#exportStagedModel(PortletDataContext, T)} for
-	 * reference implementation. Normally this method should not be overridden,
-	 * but {@link
-	 * BaseStagedModelDataHandler#doExportStagedModel(PortletDataContext, T)}.
-	 *
+	 * Exports the staged model and its references. See the {@link
+	 * BaseStagedModelDataHandler#exportStagedModel(PortletDataContext, T)} method for
+	 * a reference implementation. Refrain from overriding this method, and instead,
+	 * override the {@link BaseStagedModelDataHandler#doExportStagedModel(PortletDataContext, T)}
+	 * method.
+
 	 * @param  portletDataContext the portlet data context of the current
 	 *         process
-	 * @param  stagedModel staged model to be exported
-	 * @throws PortletDataException
+	 * @param  stagedModel the staged model to export
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public void exportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
 	/**
-	 * Returns a reference of this staged model. Usually used in validation and
+	 * Returns a reference of the staged model. This method is typically used in validation and
 	 * import methods.
 	 *
-	 * @param  uuid uuid of the reference
+	 * @param  uuid the reference's UUID
 	 * @param  groupId the primary key of the group
-	 * @return a reference of this staged model
+	 * @return a reference of the staged model
 	 */
 	public T fetchMissingReference(String uuid, long groupId);
 
 	/**
-	 * Returns a staged model based on the parameters. Needs to be implemented
-	 * in case of grouped models.
+	 * Returns the staged model with the UUID and group. This method is used
+	 * in cases with grouped models.
 	 *
-	 * @param  uuid uuid of the staged model
+	 * @param  uuid the staged model's UUID
 	 * @param  groupId the primary key of the group
-	 * @return a staged model based on the parameters
+	 * @return the staged model with the UUID and group
 	 */
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId);
 
 	/**
-	 * Returns a staged model based on the parameters. Always needs to be
-	 * implemented.
+	 * Returns the staged models with the UUID and company.
 	 *
-	 * @param  uuid uuid of the staged model
+	 * @param  uuid the staged model's UUID
 	 * @param  companyId the primary key of the company
-	 * @return a staged model based on the parameters
+	 * @return the staged models with the UUID and company
 	 */
 	public List<T> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId);
 
 	/**
-	 * Returns the name of the classes of the models this data handler handles.
+	 * Returns the class names of the models the data handler handles.
 	 *
-	 * @return the name of the classes of the models this data handler handles
+	 * @return the class names of the models the data handler handles
 	 */
 	public String[] getClassNames();
 
 	/**
-	 * Returns the display name of a given staged model. This is used on the UI
-	 * so the users can follow what the export/import process is doing.
+	 * Returns the staged model's display name. The display name is presented in the UI
+	 * so users can follow the export/import process.
 	 *
-	 * @param  stagedModel the staged model we want the display name for
-	 * @return the display name of a given staged model
+	 * @param  stagedModel the staged model from which to extract the display name
+	 * @return the staged model's display name
 	 */
 	public String getDisplayName(T stagedModel);
 
 	/**
-	 * Returns an array of statuses that are automatically used as a filter
-	 * during the export process
+	 * Returns the statuses that are used as filters
+	 * during the export process.
 	 *
-	 * @return an array of statuses that are automatically used as a filter
+	 * @return the statuses that are used as filters
 	 *         during the export process
 	 */
 	public int[] getExportableStatuses();
 
 	/**
-	 * Returns a Map of attributes that are automatically merged to the XML
-	 * element of the reference. These attributes will be available during the
-	 * import process in e.g. {@link #importMissingReference(PortletDataContext,
-	 * Element)} or {@link #validateReference(PortletDataContext, Element)}.
+	 * Returns the attributes that are automatically merged into the XML
+	 * element of the staged model reference. These attributes are available during the
+	 * import process in, for example, the {@link #importMissingReference(PortletDataContext,
+	 * Element)} and {@link #validateReference(PortletDataContext, Element)} methods.
 	 *
-	 * @param portletDataContext the portlet data context of the current process
-	 * @param stagedModel the staged model we want the attributes for
-	 * @return a map with the extra attributes for the given staged model
+	 * @param portletDataContext the current process's portlet data context
+	 * @param stagedModel the staged model for which to get attributes
+	 * @return  the attributes for the staged model
 	 */
 	public Map<String, String> getReferenceAttributes(
 		PortletDataContext portletDataContext, T stagedModel);
@@ -160,38 +159,39 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	/**
-	 * "Imports" missing reference. When a reference is exported as missing, the
+	 * Imports the missing staged model reference. When a reference is exported as missing, the
 	 * framework calls this method during the import process. This method
-	 * updates the new primary key map in <code>portletDataContext</code>. In
-	 * other words it maps the ID of the existing staged model to the old ID
-	 * which is in the <code>referenceElement</code>.
+	 * updates the new primary key map in the portlet data context.
+	 * Therefore, it maps the ID of the existing staged model to the old ID
+	 * in the reference element.
 	 *
 	 * @param  portletDataContext the portlet data context of the current
 	 *         process
-	 * @param  referenceElement XML element that contains information about the
-	 *         reference
-	 * @throws PortletDataException
+	 * @param  referenceElement the XML element that contains information about the
+	 *         staged model reference
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public void importMissingReference(
 			PortletDataContext portletDataContext, Element referenceElement)
 		throws PortletDataException;
 
 	/**
-	 * When this <code>StagedModelDataHandler</code> extends {@link
-	 * BaseStagedModelDataHandler}, {@link
+	 * Imports the missing staged model reference. When the staged model data handler instance extends {@link
+	 * BaseStagedModelDataHandler}, this method is called to override the {@link
 	 * BaseStagedModelDataHandler#importMissingReference(PortletDataContext,
 	 * Element)} and {@link
 	 * BaseStagedModelDataHandler#doImportMissingReference(PortletDataContext,
-	 * Element)} are not overridden, this method is called.
+	 * Element)} methods.
 	 *
-	 * @param  portletDataContext
-	 * @param  uuid the uuid of the staged model coming from the reference
+	 * @param  portletDataContext the portlet data context of the current
+	 *         process
+	 * @param  uuid the staged model's UUID from the reference
 	 *         element
-	 * @param  groupId the group ID of the entity's group coming from the
+	 * @param  groupId the primary key of the entity's group from the
 	 *         reference element
-	 * @param  classPK the class primary key of the staged model coming from the
+	 * @param  classPK the class primary key of the staged model from the
 	 *         reference element
-	 * @throws PortletDataException
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public void importMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,
@@ -199,50 +199,51 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	/**
-	 * Imports a given staged model. All its references must be imported
-	 * beforehand. See {@link
+	 * Imports the staged model. All the staged model's references must be imported
+	 * before this method is called. See the {@link
 	 * BaseStagedModelDataHandler#importStagedModel(PortletDataContext,
-	 * StagedModel)} for reference implementation. Normally this method should
-	 * not be overridden, but {@link
-	 * BaseStagedModelDataHandler#doImportStagedModel(PortletDataContext, T)}.
+	 * StagedModel)} method for a reference implementation. Refrain from overriding
+	 * this method, and instead, override the {@link
+	 * BaseStagedModelDataHandler#doImportStagedModel(PortletDataContext, T)}
+	 * method.
 	 *
 	 * @param  portletDataContext the portlet data context of the current
 	 *         process
-	 * @param  stagedModel staged model to be imported
-	 * @throws PortletDataException
+	 * @param  stagedModel the staged model to import
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
 	/**
-	 * Restores a given staged model from Trash. This method is called during
-	 * the import process to make sure that the imported staged model is not in
-	 * the Trash. See {@link
+	 * Restores the staged model from the trash. This method is called during
+	 * the import process to ensure the imported staged model is not in
+	 * the trash. See the {@link
 	 * BaseStagedModelDataHandler#restoreStagedModel(PortletDataContext,
-	 * StagedModel)} for reference implementation. Normally this method should
-	 * not be overridden, but {@link
-	 * BaseStagedModelDataHandler#doRestoreStagedModel(PortletDataContext,
-	 * StagedModel)}.
+	 * StagedModel)} method for a reference implementation. Refrain from overriding
+	 * this method, and instead, override the {@link
+	 * BaseStagedModelDataHandler#doRestoreStagedModel(PortletDataContext, StagedModel)}
+	 * method.
 	 *
 	 * @param  portletDataContext the portlet data context of the current
 	 *         process
-	 * @param  stagedModel staged model to be restored from Trash
-	 * @throws PortletDataException
+	 * @param  stagedModel the staged model to restore from the trash
+	 * @throws PortletDataException if a portlet data exception occurred
 	 */
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
 	/**
-	 * Validates a given reference. Returns <code>true</code> if the validation
+	 * Returns <code>true</code> if the staged model reference validation is
 	 * successful.
 	 *
 	 * @param  portletDataContext the portlet data context of the current
 	 *         process
-	 * @param  referenceElement XML element that contains information about the
+	 * @param  referenceElement the XML element that contains information about the
 	 *         reference
-	 * @return <code>true</code> if the validation successful
+	 * @return <code>true</code> if the reference validation is successful; <code>false</code> otherwise
 	 */
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element referenceElement);

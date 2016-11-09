@@ -128,6 +128,7 @@ public class ThemeBuilder {
 		_parentName = parentName;
 		_templateExtension = templateExtension;
 		_unstyledDir = unstyledDir;
+		System.setProperty("java.awt.headless", "true");
 	}
 
 	public ThemeBuilder(ThemeBuilderArgs themeBuilderArgs) {

@@ -40,7 +40,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 %>
 
 <liferay-portlet:actionURL name='<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>' var="editWorkflowDefinitionURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
 
 <div class="container-fluid-1280 workflow-definition-container">

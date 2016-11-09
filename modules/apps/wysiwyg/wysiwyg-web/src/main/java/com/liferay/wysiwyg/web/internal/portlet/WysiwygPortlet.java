@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=wysiwyg-portlet",
 		"com.liferay.portlet.display-category=category.cms",
+		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=WYSIWYG",
 		"javax.portlet.expiration-cache=0",

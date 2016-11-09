@@ -305,8 +305,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 					"preferences) values (?, ?, ?, ?, ?, ?, ?)";
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(portletId);
-			PreparedStatement ps1 = connection.prepareStatement(
-				selectSQL)) {
+			PreparedStatement ps1 = connection.prepareStatement(selectSQL)) {
 
 			ps1.setInt(1, ownerType);
 			ps1.setInt(2, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED);

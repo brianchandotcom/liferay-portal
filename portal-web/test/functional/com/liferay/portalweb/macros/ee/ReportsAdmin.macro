@@ -229,6 +229,10 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
+		<execute function="Refresh" />
+
+		<execute macro="ReportsAdmin#gotoConfiguration" />
+
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL" value1="Delivery Email" />
 
 		<var name="deliverySubject"><![CDATA[New Report: [$REPORT_NAME$]]]></var>
@@ -253,6 +257,10 @@ Sincerely,<br />
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="Refresh" />
+
+		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute function="AssertClick" locator1="ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL" value1="Notifications Email" />
 

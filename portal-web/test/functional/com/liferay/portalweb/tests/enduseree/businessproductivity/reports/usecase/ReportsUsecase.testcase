@@ -147,6 +147,10 @@
 			<var name="emailFromName" value="Liferay QA" />
 		</execute>
 
+		<execute function="Refresh" />
+
+		<execute macro="ReportsAdmin#gotoConfiguration" />
+
 		<execute macro="ReportsAdmin#configureDeliveryEmail">
 			<var name="deliverySubject"><![CDATA[New Report From QA: [$REPORT_NAME$]]]></var>
 			<var name="deliveryBody"><![CDATA[
@@ -158,6 +162,10 @@ Thank You,<br/>
 [$FROM_NAME$]<br/>
 [$FROM_ADDRESS$]			<br/>]]>			</var>
 		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute macro="ReportsAdmin#configureNotificationsEmail">
 			<var name="notificationSubject"><![CDATA[New Report From QA: [$REPORT_NAME$]]]></var>

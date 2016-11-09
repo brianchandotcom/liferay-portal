@@ -23,6 +23,11 @@
 	<td>//ul[@role='menubar']//a[@role='menuitem' and contains(.,'${key_category}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WEB_CONTENT_ARTICLE_VIEW_PERMISSIONS_CHECK_ENABLED</td>
+	<td>//label[contains(@for,'articleViewPermissionsCheckEnabled')]/input</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

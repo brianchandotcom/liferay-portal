@@ -688,7 +688,23 @@
 		<var name="portletOption" value="Configuration" />
 		<var name="roleTitle" value="Guest" />
 
-		<execute macro="Navigator#openURL" />
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute>
+
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Web Content" />
+		</execute>
+
+		<execute macro="SystemSettings#editConfiguration">
+			<var name="configurationName" value="Web Content" />
+		</execute>
+
+		<execute macro="SystemSettings#enableSetting">
+			<var name="checkboxSetting" value="WEB_CONTENT_ARTICLE_VIEW_PERMISSIONS_CHECK_ENABLED" />
+		</execute>
+
+		<execute macro="SystemSettings#saveConfiguration" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />

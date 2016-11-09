@@ -81,7 +81,6 @@
 
 	<command name="searchPG">
 		<execute function="AssertElementPresent" locator1="Search#SEARCH_FIELD" />
-		<execute function="AssertElementPresent" locator1="Search#SEARCH_PORTLET_SEARCH_BUTTON" />
 
 		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${searchTerm}" />
 

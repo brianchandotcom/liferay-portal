@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.SettingsLocator;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -50,7 +50,6 @@ import javax.portlet.PortletPreferences;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,21 +64,12 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		_originalSettingsFactory = ReflectionTestUtil.getFieldValue(
-			this, "_settingsFactory");
-
-		ReflectionTestUtil.setFieldValue(
-			this, "_settingsFactory", new MockSettingsFactory(
-				_originalSettingsFactory));
+	public UpgradePortletSettingsTest() {
+		super(new MockSettingsFactory());
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			this, "_settingsFactory", _originalSettingsFactory);
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("delete from PortletPreferences where portletId = '");
@@ -399,8 +389,6 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 
 	private static final String _VALUE = "value";
 
-	private static SettingsFactory _originalSettingsFactory;
-
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -412,11 +400,7 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 	private String _upgradePortletId;
 	private boolean _upgradeReset;
 
-	private class MockSettingsDescriptor implements SettingsDescriptor {
-
-		public MockSettingsDescriptor(Set<String> keys) {
-			_keys = keys;
-		}
+	private static class MockSettingsDescriptor implements SettingsDescriptor {
 
 		@Override
 		public Set<String> getAllKeys() {
@@ -428,15 +412,15 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 			return null;
 		}
 
+		private MockSettingsDescriptor(Set<String> keys) {
+			_keys = keys;
+		}
+
 		private final Set<String> _keys;
 
 	}
 
-	private class MockSettingsFactory implements SettingsFactory {
-
-		public MockSettingsFactory(SettingsFactory settingsFactory) {
-			_settingsFactory = settingsFactory;
-		}
+	private static class MockSettingsFactory implements SettingsFactory {
 
 		@Override
 		public ArchivedSettings getPortletInstanceArchivedSettings(
@@ -490,7 +474,8 @@ public class UpgradePortletSettingsTest extends UpgradePortletSettings {
 				settingsClass, configurationBean, fallbackKeys);
 		}
 
-		private final SettingsFactory _settingsFactory;
+		private final SettingsFactory _settingsFactory =
+			SettingsFactoryUtil.getSettingsFactory();
 
 	}
 

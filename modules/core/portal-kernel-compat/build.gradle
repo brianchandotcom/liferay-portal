@@ -1,0 +1,71 @@
+import com.liferay.gradle.util.StringUtil
+
+task importPackages(type: Copy)
+task transformImportedPackages(type: JavaExec)
+
+classes {
+	dependsOn transformImportedPackages
+}
+
+configurations {
+	bytecodeTransformer
+}
+
+dependencies {
+	bytecodeTransformer group: "com.liferay", name: "com.liferay.portal.tools.portal.compat.bytecode.transformer", version: "1.0.0"
+}
+
+importPackages {
+	into {
+		compileJava.destinationDir
+	}
+}
+
+transformImportedPackages {
+	classpath = configurations.bytecodeTransformer
+	dependsOn importPackages
+	main = "com.liferay.portal.tools.portal.compat.bytecode.transformer.BytecodeTransformer"
+	systemProperty "classes.dir", importPackages.destinationDir
+}
+
+Properties importedPackagesProperties = new Properties()
+
+File importedPackagesPropertiesFile = file("imported-packages.properties")
+
+importedPackagesPropertiesFile.withInputStream {
+	importedPackagesProperties.load it
+}
+
+importedPackagesProperties.each {
+	String dependencyNotation, String packageNames ->
+
+	String dependencySuffix = dependencyNotation.replaceAll(/[\.|:](\w)/) {
+		String s = it[1]
+
+		s.toUpperCase()
+	}
+
+	Configuration dependencyConfiguration = configurations.create("importedPackages" + StringUtil.capitalize(dependencySuffix))
+
+	dependencyConfiguration.transitive = false
+
+	dependencies.add dependencyConfiguration.name, dependencyNotation
+
+	String[] dependencyIncludes = packageNames.tokenize(",")
+
+	dependencyIncludes = dependencyIncludes.collect {
+		it.replace('.' as char, '/' as char) + "/"
+	}
+
+	importPackages {
+		from {
+			zipTree(dependencyConfiguration.singleFile)
+		} {
+			include dependencyIncludes
+		}
+	}
+}
+
+liferay {
+	deployDir = appServerLibGlobalDir
+}

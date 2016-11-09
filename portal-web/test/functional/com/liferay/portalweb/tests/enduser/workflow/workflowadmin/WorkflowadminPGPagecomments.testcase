@@ -177,6 +177,54 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
+	<command name="EditCommentAssignedToMe" priority="4">
+		<description message="This is a use case for LPS-68780." />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Page Comments Page" />
+		</execute>
+
+		<execute macro="PageComment#addWithWorkflowPG">
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
+			<var name="workflowAssetType" value="Comment" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="Page Comment Comment" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#gotoPreviewEdit" />
+
+		<execute macro="FormFields#editTextMultiline">
+			<var name="fieldName" value="CommentPortlet" />
+			<var name="fieldValue" value="EDIT Comment" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewTaskAssignedToMeDetails">
+			<var name="workflowAssetContent" value="EDIT Comment" />
+			<var name="workflowAssetTitle" value="EDIT Comment" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+	</command>
+
 	<command name="RejectPageCommentPG" priority="4">
 		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />

@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	enabled = false, immediate = true,
 	property = {
+		"after-filter=Session Max Allowed Filter",
 		"servlet-context-name=", "servlet-filter-name=Audit Filter",
 		"url-pattern=/*",
 		"url-regex-ignore-pattern=^/html/.+\\.(css|gif|html|ico|jpg|js|png)(\\?.*)?$"

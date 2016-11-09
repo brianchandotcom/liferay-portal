@@ -1494,6 +1494,101 @@
 		</execute>
 	</command>
 
+	<command name="ExpireMultipleWebContentArticles" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="WC WebContent Content" />
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+
+			<execute macro="PortletEntry#publish" />
+		</for>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#expireCP">
+			<var name="webContentTitle" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3," />
+		</execute>
+
+		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoEditCP">
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+
+			<execute macro="WebContent#viewStatus">
+				<var name="webContentContent" value="WC WebContent Content" />
+				<var name="webContentStatus" value="Expired" />
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="MoveMultipleWebContentToFolder" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Description" />
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+
+		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="WC WebContent Content" />
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+
+			<execute macro="PortletEntry#publish" />
+		</for>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveMultipleToFolderCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="rowEntryCheckList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#gotoCP">
+			<var name="folderName" value="WC Folder Name" />
+			<var name="webContentTitle" value="WC Folder Name" />
+		</execute>
+
+		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
+			<execute macro="WebContent#viewTitle">
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

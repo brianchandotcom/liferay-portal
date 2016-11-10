@@ -32,11 +32,12 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -354,16 +355,14 @@ public class PollsQuestionLocalServiceImpl
 		}
 
 		if (choices != null) {
-			List<String> choiceDescriptions = new ArrayList<>(choices.size());
+			Set<String> choiceDescriptions = new HashSet<>(choices.size());
 
 			for (PollsChoice choice : choices) {
 				String choiceDescription = choice.getDescription(locale);
 
-				if (Validator.isNull(choiceDescription)) {
-					throw new QuestionChoiceException();
-				}
+				if (Validator.isNull(choiceDescription) ||
+					choiceDescriptions.contains(choiceDescription)) {
 
-				if (choiceDescriptions.contains(choiceDescription)) {
 					throw new QuestionChoiceException();
 				}
 

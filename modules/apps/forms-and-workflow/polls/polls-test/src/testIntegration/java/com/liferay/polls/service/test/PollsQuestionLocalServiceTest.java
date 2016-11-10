@@ -64,8 +64,8 @@ public class PollsQuestionLocalServiceTest {
 
 		List<PollsChoice> choices = new ArrayList<>();
 
-		choices.add(createPollsChoice("choice a"));
-		choices.add(createPollsChoice("choice a"));
+		choices.add(createPollsChoice("Option A"));
+		choices.add(createPollsChoice("Option A"));
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -92,8 +92,8 @@ public class PollsQuestionLocalServiceTest {
 
 		List<PollsChoice> choices = new ArrayList<>();
 
-		choices.add(createPollsChoice("choice a"));
-		choices.add(createPollsChoice("choice b"));
+		choices.add(createPollsChoice("Option A"));
+		choices.add(createPollsChoice("Option B"));
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -103,12 +103,12 @@ public class PollsQuestionLocalServiceTest {
 			expirationDateHour, expirationDateMinute, neverExpire, choices,
 			serviceContext);
 
-		Assert.assertTrue(pollsQuestion != null);
+		Assert.assertNotNull(pollsQuestion);
 
 		choices = new ArrayList<>();
 
-		choices.add(createPollsChoice("choice b"));
-		choices.add(createPollsChoice("choice b"));
+		choices.add(createPollsChoice("Option B"));
+		choices.add(createPollsChoice("Option B"));
 
 		PollsQuestionLocalServiceUtil.updateQuestion(
 			TestPropsValues.getUserId(), pollsQuestion.getQuestionId(),

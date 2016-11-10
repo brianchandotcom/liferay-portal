@@ -111,6 +111,10 @@ public interface KBArticleService extends BaseService {
 		OrderByComparator<KBArticle> orderByComparator)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBArticle[] getPreviousAndNextKBArticles(long kbArticleId)
+		throws PortalException;
+
 	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
 		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
 		InputStream inputStream, ServiceContext serviceContext)

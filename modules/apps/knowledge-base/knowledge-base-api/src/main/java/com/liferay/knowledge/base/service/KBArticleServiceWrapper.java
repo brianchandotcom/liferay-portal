@@ -125,6 +125,13 @@ public class KBArticleServiceWrapper implements KBArticleService,
 	}
 
 	@Override
+	public com.liferay.knowledge.base.model.KBArticle[] getPreviousAndNextKBArticles(
+		long kbArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbArticleService.getPreviousAndNextKBArticles(kbArticleId);
+	}
+
+	@Override
 	public int addKBArticlesMarkdown(long groupId, long parentKBFolderId,
 		java.lang.String fileName, boolean prioritizeByNumericalPrefix,
 		java.io.InputStream inputStream,

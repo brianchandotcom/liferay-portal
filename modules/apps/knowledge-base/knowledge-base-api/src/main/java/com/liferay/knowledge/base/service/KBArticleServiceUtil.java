@@ -125,6 +125,12 @@ public class KBArticleServiceUtil {
 			orderByComparator);
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticle[] getPreviousAndNextKBArticles(
+		long kbArticleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPreviousAndNextKBArticles(kbArticleId);
+	}
+
 	public static int addKBArticlesMarkdown(long groupId,
 		long parentKBFolderId, java.lang.String fileName,
 		boolean prioritizeByNumericalPrefix, java.io.InputStream inputStream,

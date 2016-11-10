@@ -458,6 +458,20 @@ public class KBArticleServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBArticleSoap[] getPreviousAndNextKBArticles(
+		long kbArticleId) throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBArticle[] returnValue = KBArticleServiceUtil.getPreviousAndNextKBArticles(kbArticleId);
+
+			return com.liferay.knowledge.base.model.KBArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.knowledge.base.model.KBArticleSoap[] getSectionsKBArticles(
 		long groupId, java.lang.String[] sections, int status, int start,
 		int end,

@@ -417,7 +417,8 @@ if (portletTitleBasedNavigation) {
 					'ADD': '<%= Constants.ADD %>',
 					'CMD': '<%= Constants.CMD %>',
 					'STATUS_DRAFT': '<%= WorkflowConstants.STATUS_DRAFT %>',
-					'UPDATE': '<%= Constants.UPDATE %>'
+					'UPDATE': '<%= Constants.UPDATE %>',
+					'X_MINUTES_READ': '<%= ResourceBundleUtil.getString(resourceBundle, "x-minutes-read") %>'
 				},
 				descriptionLength: '<%= pageAbstractLength %>',
 				editEntryURL: '<%= editEntryURL %>',

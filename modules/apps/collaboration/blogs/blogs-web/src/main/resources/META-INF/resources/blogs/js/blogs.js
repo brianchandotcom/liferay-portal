@@ -441,13 +441,12 @@ AUI.add(
 											readingTimeElement.hide();
 										},
 										start: function() {
-											readingTimeElement.set('innerHTML', '...');
 										},
 										success: function(event, id, obj) {
 											var message = this.get('responseData');
 
 											if (message && message.readingTime && (message.readingTime > 1)) {
-												readingTimeElement.set('innerHTML', message.readingTime);
+												readingTimeElement.set('innerHTML', Lang.sub(constants.X_MINUTES_READ, [message.readingTime]));
 												readingTimeElement.show();
 											}
 											else {

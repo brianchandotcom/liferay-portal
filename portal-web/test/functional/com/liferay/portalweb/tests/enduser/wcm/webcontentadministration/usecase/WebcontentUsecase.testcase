@@ -1499,7 +1499,7 @@
 			<var name="portlet" value="Web Content" />
 		</execute>
 
-		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
+		<for list="1,2,3" param="i">
 			<execute macro="ProductMenu#gotoSitesContent">
 				<var name="portlet" value="Web Content" />
 			</execute>
@@ -1508,7 +1508,7 @@
 
 			<execute macro="WebContent#addCP">
 				<var name="webContentContent" value="WC WebContent Content" />
-				<var name="webContentTitle" value="${webContentTitle}" />
+				<var name="webContentTitle" value="WC WebContent Title ${i}" />
 			</execute>
 
 			<execute macro="PortletEntry#publish" />
@@ -1522,7 +1522,7 @@
 			<var name="webContentTitleList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3," />
 		</execute>
 
-		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">
+		<for list="1,2,3" param="i">
 			<execute macro="ProductMenu#gotoSitesContent">
 				<var name="portlet" value="Web Content" />
 			</execute>
@@ -1534,7 +1534,7 @@
 			<execute macro="WebContent#viewStatus">
 				<var name="webContentContent" value="WC WebContent Content" />
 				<var name="webContentStatus" value="Expired" />
-				<var name="webContentTitle" value="${webContentTitle}" />
+				<var name="webContentTitle" value="WC WebContent Title ${i}" />
 			</execute>
 		</for>
 	</command>

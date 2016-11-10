@@ -2,7 +2,7 @@
 <?xml-stylesheet href="versions.xsl" type="text/xsl"?>
 
 <versions>
-	<version name="Liferay Portal">
+	<version>
 		<libraries>
 			<library>
 				<file-name>lib/development/activation.jar</file-name>

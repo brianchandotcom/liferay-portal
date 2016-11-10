@@ -61,7 +61,8 @@ public class BytecodeTransformer {
 	private static void _transform(Path path) throws IOException {
 		ClassReader classReader = new ClassReader(Files.readAllBytes(path));
 
-		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+		ClassWriter classWriter = new ClassWriter(
+			classReader, ClassWriter.COMPUTE_MAXS);
 
 		BytecodeTransformerClassVisitor bytecodeTransformerClassVisitor =
 			new BytecodeTransformerClassVisitor(classWriter);

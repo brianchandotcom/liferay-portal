@@ -38,8 +38,8 @@ public class SearchHitToDocumentTranslator {
 
 		Map<String, SearchHitField> searchHitFields = searchHit.getFields();
 
-		for (String fieldName : searchHitFields.keySet()) {
-			addField(document, fieldName, searchHitFields);
+		for (String searchHitFieldName : searchHitFields.keySet()) {
+			addField(document, searchHitFieldName, searchHitFields);
 		}
 
 		return document;
@@ -68,7 +68,7 @@ public class SearchHitToDocumentTranslator {
 		document.add(field);
 	}
 
-	protected String removeSuffixes(String fieldName, String...suffixes) {
+	protected String removeSuffixes(String fieldName, String... suffixes) {
 		for (String suffix : suffixes) {
 			fieldName = StringUtils.removeEnd(fieldName, suffix);
 		}
@@ -78,11 +78,12 @@ public class SearchHitToDocumentTranslator {
 
 	protected Field translate(SearchHitField searchHitField) {
 		String name = searchHitField.getName();
+
 		Collection<Object> values = searchHitField.getValues();
 
 		Field field = new Field(
-			name,
-			ArrayUtil.toStringArray(values.toArray(new Object[values.size()])));
+			name, ArrayUtil.toStringArray(
+				values.toArray(new Object[values.size()])));
 
 		return field;
 	}

@@ -46,14 +46,7 @@ public class EmptyMethodVisitor extends MethodVisitor {
 		}
 
 		_methodMethodVisitor.visitInsn(Opcodes.RETURN);
-
-		if (_superName != null) {
-			_methodMethodVisitor.visitMaxs(1, 1);
-		}
-		else {
-			_methodMethodVisitor.visitMaxs(0, 2);
-		}
-
+		_methodMethodVisitor.visitMaxs(0, 0);
 		_methodMethodVisitor.visitEnd();
 	}
 

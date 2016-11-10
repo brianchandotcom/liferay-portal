@@ -48,7 +48,7 @@ public class UnsupportedExceptionMethodVisitor extends MethodVisitor {
 			Type.getInternalName(UnsupportedOperationException.class), "<init>",
 			"()V", false);
 		_methodMethodVisitor.visitInsn(Opcodes.ATHROW);
-		_methodMethodVisitor.visitMaxs(2, 0);
+		_methodMethodVisitor.visitMaxs(0, 0);
 		_methodMethodVisitor.visitEnd();
 	}
 

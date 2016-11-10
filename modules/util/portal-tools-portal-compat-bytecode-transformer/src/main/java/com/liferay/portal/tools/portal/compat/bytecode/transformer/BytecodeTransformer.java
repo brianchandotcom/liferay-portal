@@ -61,7 +61,7 @@ public class BytecodeTransformer {
 		ClassReader classReader = new ClassReader(Files.readAllBytes(path));
 
 		ClassWriter classWriter = new ClassWriter(
-			classReader, ClassWriter.COMPUTE_MAXS);
+			classReader, ClassWriter.COMPUTE_FRAMES);
 
 		classReader.accept(new BytecodeTransformerClassVisitor(classWriter), 0);
 

@@ -120,9 +120,11 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	public String getDisplayName(T stagedModel);
 
 	/**
-	 * Returns the statuses that are used as filters during the export process.
+	 * Returns the workflow statuses that are used as filters during the export
+	 * process.
 	 *
-	 * @return the statuses that are used as filters during the export process
+	 * @return the workflow statuses that are used as filters during the export
+	 *         process
 	 */
 	public int[] getExportableStatuses();
 
@@ -160,11 +162,10 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	/**
-	 * Imports the missing staged model reference. When a reference is exported
-	 * as missing, the framework calls this method during the import process.
-	 * This method updates the new primary key map in the portlet data context.
-	 * Therefore, it maps the ID of the existing staged model to the old ID in
-	 * the reference element.
+	 * Maps the ID of the existing staged model to the old ID in the reference
+	 * element. When a reference is exported as missing, the Data Handler
+	 * framework calls this method during the import process and updates the new
+	 * primary key map in the portlet data context.
 	 *
 	 * @param  portletDataContext the portlet data context of the current
 	 *         process
@@ -177,9 +178,9 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 		throws PortletDataException;
 
 	/**
-	 * Imports the missing staged model reference. When the staged model data
-	 * handler instance extends {@link BaseStagedModelDataHandler}, this method
-	 * is called to override the {@link
+	 * Maps the ID of the existing staged model to the old ID in the reference
+	 * element. When the staged model data handler instance extends {@link
+	 * BaseStagedModelDataHandler}, this method is called to override the {@link
 	 * BaseStagedModelDataHandler#importMissingReference(PortletDataContext,
 	 * Element)} and {@link
 	 * BaseStagedModelDataHandler#doImportMissingReference(PortletDataContext,
@@ -193,6 +194,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	 * @param  classPK the class primary key of the staged model from the
 	 *         reference element
 	 * @throws PortletDataException if a portlet data exception occurred
+	 * @see    #importMissingReference(PortletDataContext, Element)
 	 */
 	public void importMissingReference(
 			PortletDataContext portletDataContext, String uuid, long groupId,

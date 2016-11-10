@@ -15,7 +15,7 @@
 package com.liferay.wysiwyg.web.internal.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
-import com.liferay.wysiwyg.web.internal.constants.WysiwygPortletKeys;
+import com.liferay.wysiwyg.web.internal.constants.WYSIWYGPortletKeys;
 
 /**
  * @author Peter Fellwock
@@ -25,7 +25,7 @@ public class UpgradePortletId extends BaseUpgradePortletId {
 	@Override
 	protected String[][] getRenamePortletIdsArray() {
 		return new String[][] {
-			new String[] {"1_WAR_wysiwygportlet", WysiwygPortletKeys.WYSIWYG}
+			new String[] {"1_WAR_wysiwygportlet", WYSIWYGPortletKeys.WYSIWYG}
 		};
 	}
 

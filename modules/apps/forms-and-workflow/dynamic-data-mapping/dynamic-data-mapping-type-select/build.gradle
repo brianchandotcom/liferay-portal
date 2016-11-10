@@ -1,3 +1,7 @@
+configJSModules {
+	enabled = false
+}
+
 apply plugin: "com.liferay.lang.merger"
 
 dependencies {

@@ -1,0 +1,11 @@
+{
+	"devDependencies": {
+		"gulp": "^3.9.0",
+		"liferay-forms-gulp-tasks": "^0.0.8",
+		"liferay-karma-alloy-config": "^0.0.12",
+		"liferay-karma-config": "0.0.3",
+		"soyutils-nogoog": "^1.0.0"
+	},
+	"name": "dynamic-data-mapping-type-select",
+	"version": "2.0.10"
+}

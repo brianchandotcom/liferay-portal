@@ -90,6 +90,7 @@ public class KnowledgeBaseOSGiCommands {
 		throws PortalException {
 
 		permission.addResourceAction(action.getActionId());
+
 		_resourcePermissionLocalService.updateResourcePermission(permission);
 	}
 

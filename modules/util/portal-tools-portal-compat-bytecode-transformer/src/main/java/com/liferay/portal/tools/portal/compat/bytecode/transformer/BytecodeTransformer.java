@@ -45,14 +45,12 @@ public class BytecodeTransformer {
 
 					String fileName = String.valueOf(filePath.getFileName());
 
-					if (fileName.endsWith("ServiceWrapper.class") ||
-						fileName.endsWith("ServiceUtil.class") ||
-						!fileName.endsWith(".class")) {
+					if (fileName.endsWith(".class") &&
+						!fileName.endsWith("ServiceWrapper.class") &&
+						!fileName.endsWith("ServiceUtil.class")) {
 
-						return FileVisitResult.CONTINUE;
+						_transform(filePath);
 					}
-
-					_transform(filePath);
 
 					return FileVisitResult.CONTINUE;
 				}

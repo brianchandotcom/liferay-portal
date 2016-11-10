@@ -676,7 +676,7 @@ public class ProjectTemplatesTest {
 
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/blade/test/theme/contributor" +
+			"src/main/java/blade/test/context/contributor" +
 				"/BladeTestTemplateContextContributor.java",
 			"public class BladeTestTemplateContextContributor",
 			"implements TemplateContextContributor");

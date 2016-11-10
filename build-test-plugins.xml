@@ -75,21 +75,41 @@
 	<target name="deploy-extra-apps">
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
-				<pathconvert pathsep="," property="extraapps.zip" setonempty="false">
-					<path>
-						<fileset
-							dir="extraapps"
-							includes="@{plugin}*"
+				<if>
+					<available file="extraapps" />
+					<then>
+						<pathconvert pathsep="," property="extraapps.zip" setonempty="false">
+							<path>
+								<fileset
+									dir="extraapps"
+									includes="@{plugin}*"
+								/>
+							</path>
+						</pathconvert>
+
+						<get-auto-deploy-dir />
+
+						<unzip
+							dest="${auto.deploy.dir}"
+							src="${extraapps.zip}"
 						/>
-					</path>
-				</pathconvert>
+					</then>
+					<elseif>
+						<and>
+							<available file="plugins" />
+							<isset property="marketplace.app[@{plugin}]" />
+						</and>
+						<then>
+							<local name="marketplace.app" />
 
-				<get-auto-deploy-dir />
+							<propertycopy from="marketplace.app[@{plugin}]" name="marketplace.app" />
 
-				<unzip
-					dest="${auto.deploy.dir}"
-					src="${extraapps.zip}"
-				/>
+							<get-auto-deploy-dir />
+
+							<copy file="plugins/${marketplace.app}" todir="${auto.deploy.dir}" />
+						</then>
+					</elseif>
+				</if>
 			</sequential>
 		</for>
 	</target>

@@ -1039,11 +1039,17 @@
 
 		<execute function="AssertClick" locator1="Button#SELECT_VOCABULARY" value1="Select" />
 
+		<execute function="SelectFrame" locator1="IFrame#SELECT_CATEGORY" />
+
 		<execute function="AssertClick" locator1="AssetCategorization#CATEGORY_UNSELECTED" value1="${categoryName}" />
 
 		<execute function="AssertElementPresent" locator1="AssetCategorization#CATEGORY_SELECTED" value1="${categoryName}" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<execute function="SelectFrameTop" />
+
+		<execute function="Click" locator1="KnowledgeBaseArticle#SELECT_CATEGORIES_IFRAME" />
+
+		<execute function="Click" locator1="Button#DONE" value1="Done" />
 	</command>
 
 	<command name="selectParentArticleCP">
@@ -1245,19 +1251,15 @@
 	<command name="viewArticleHistoryPG">
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#HISTORY" value1="History" />
 
-		<if>
-			<isset var="kbArticleTitleRemovedDiff" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE_REMOVED_DIFF" value1="${kbArticleTitleRemovedDiff}" />
-			</then>
-		</if>
+		<var name="key_versionNumber" value="${kbArticleVersionNew}" />
 
-		<if>
-			<isset var="kbArticleTitleAddedDiff" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_TITLE_ADDED_DIFF" value1="${kbArticleTitleAddedDiff}" />
-			</then>
-		</if>
+		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${key_versionNumber}" />
+
+		<var name="key_versionNumber" value="${kbArticleVersionOld}" />
+
+		<execute function="Check" locator1="KnowledgeBaseArticle#HISTORY_SELECT_VERSION_CHECKBOX" value1="${key_versionNumber}" />
+
+		<execute function="AssertClick" locator1="Button#COMPARE_VERSIONS" value1="Compare Versions" />
 
 		<if>
 			<isset var="kbArticleContentRemovedDiff" />
@@ -1281,9 +1283,6 @@
 				<execute function="AssertTextNotPresent" locator1="KnowledgeBaseArticle#TITLE" value1="xml" />
 			</then>
 		</if>
-
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_VERSION_TABLE_TARGET" value1="${kbArticleHistoryTarget}" />
-		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#HISTORY_VERSION_TABLE_SOURCE" value1="${kbArticleHistorySource}" />
 	</command>
 
 	<command name="viewAttachmentCP">

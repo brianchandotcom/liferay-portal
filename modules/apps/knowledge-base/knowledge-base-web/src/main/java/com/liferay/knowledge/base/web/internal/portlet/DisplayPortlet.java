@@ -101,69 +101,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DisplayPortlet extends BaseKBPortlet {
 
-	@Override
-	public void render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		try {
-			renderRequest.setAttribute(
-				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
-				dlMimeTypeDisplayContext);
-
-			KBArticleSelection kbArticleSelection = getKBArticle(renderRequest);
-
-			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
-				kbArticleSelection.isExactMatch());
-
-			KBArticle kbArticle = kbArticleSelection.getKBArticle();
-
-			if ((kbArticle != null) &&
-				(kbArticle.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
-
-				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
-					kbArticle.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED);
-			}
-
-			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
-
-			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS,
-				kbArticleSelection.getKeywords());
-
-			renderRequest.setAttribute(
-				KBWebKeys.KNOWLEDGE_BASE_STATUS,
-				WorkflowConstants.STATUS_APPROVED);
-
-			if (!kbArticleSelection.isExactMatch()) {
-				HttpServletResponse response =
-					PortalUtil.getHttpServletResponse(renderResponse);
-
-				response.setStatus(404);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchArticleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				SessionMessages.add(
-					renderRequest,
-					PortalUtil.getPortletId(renderRequest) +
-						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
-		super.render(renderRequest, renderResponse);
-	}
-
 	public void updateRootKBFolderId(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortalException {
@@ -295,6 +232,71 @@ public class DisplayPortlet extends BaseKBPortlet {
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected void doRender(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			renderRequest.setAttribute(
+				KBWebKeys.DL_MIME_TYPE_DISPLAY_CONTEXT,
+				dlMimeTypeDisplayContext);
+
+			KBArticleSelection kbArticleSelection = getKBArticle(renderRequest);
+
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_EXACT_MATCH,
+				kbArticleSelection.isExactMatch());
+
+			KBArticle kbArticle = kbArticleSelection.getKBArticle();
+
+			if ((kbArticle != null) &&
+				(kbArticle.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+
+				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
+					kbArticle.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED);
+			}
+
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_KB_ARTICLE, kbArticle);
+
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_SEARCH_KEYWORDS,
+				kbArticleSelection.getKeywords());
+
+			renderRequest.setAttribute(
+				KBWebKeys.KNOWLEDGE_BASE_STATUS,
+				WorkflowConstants.STATUS_APPROVED);
+
+			String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+
+			if ((mvcPath.equals("") ||
+				 mvcPath.equals("/display/view_article.jsp")) &&
+				!kbArticleSelection.isExactMatch()) {
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(renderResponse);
+
+				response.setStatus(404);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchArticleException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				SessionMessages.add(
+					renderRequest,
+					PortalUtil.getPortletId(renderRequest) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+			}
+			else {
+				throw new PortletException(e);
+			}
 		}
 	}
 

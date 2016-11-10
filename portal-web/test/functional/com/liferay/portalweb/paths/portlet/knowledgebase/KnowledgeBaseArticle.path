@@ -178,16 +178,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HISTORY_TITLE_ADDED_DIFF</td>
-	<td>//div[@class='panel-body']//span[contains(@id,'added-diff')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>HISTORY_TITLE_REMOVED_DIFF</td>
-	<td>//div[@class='panel-body']//p//span</td>
-	<td></td>
-</tr>
-<tr>
 	<td>HISTORY_VERSION_TABLE_SOURCE</td>
 	<td>//table[contains(@data-searchcontainerid,'knowledge_base_web')]//thead[contains(.,'Version')]/..//a[contains(.,'(Source)')]</td>
 	<td></td>
@@ -195,6 +185,11 @@
 <tr>
 	<td>HISTORY_VERSION_TABLE_TARGET</td>
 	<td>//table[contains(@data-searchcontainerid,'knowledge_base_web')]//thead[contains(.,'Version')]/..//a[contains(.,'(Target)')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_SELECT_VERSION_CHECKBOX</td>
+	<td>//input[(@type='checkbox' and @value='${key_versionNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -221,6 +216,12 @@
 <tr>
 	<td>CATEGORY_LINKS</td>
 	<td>//div[@class='kb-article-assets']/span/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<!--SELECT_CATEGORIES-->
+<tr>
+	<td>SELECT_CATEGORIES_IFRAME</td>
+	<td>//div[contains(@id,'selectCategory')]</td>
 	<td></td>
 </tr>
 </tbody>

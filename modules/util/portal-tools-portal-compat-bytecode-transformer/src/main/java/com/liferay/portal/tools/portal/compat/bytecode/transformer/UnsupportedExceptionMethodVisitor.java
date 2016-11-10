@@ -18,6 +18,7 @@ import org.objectweb.asm.AnnotationVisitor;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * @author Tom Wang
@@ -39,11 +40,13 @@ public class UnsupportedExceptionMethodVisitor extends MethodVisitor {
 	public void visitCode() {
 		_methodMethodVisitor.visitCode();
 		_methodMethodVisitor.visitTypeInsn(
-			Opcodes.NEW, "java/lang/UnsupportedOperationException");
+			Opcodes.NEW,
+			Type.getInternalName(UnsupportedOperationException.class));
 		_methodMethodVisitor.visitInsn(Opcodes.DUP);
 		_methodMethodVisitor.visitMethodInsn(
-			Opcodes.INVOKESPECIAL, "java/lang/UnsupportedOperationException",
-			"<init>", "()V", false);
+			Opcodes.INVOKESPECIAL,
+			Type.getInternalName(UnsupportedOperationException.class), "<init>",
+			"()V", false);
 		_methodMethodVisitor.visitInsn(Opcodes.ATHROW);
 		_methodMethodVisitor.visitMaxs(2, 0);
 		_methodMethodVisitor.visitEnd();

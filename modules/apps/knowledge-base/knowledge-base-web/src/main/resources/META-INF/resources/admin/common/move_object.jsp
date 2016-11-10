@@ -119,7 +119,7 @@ if (portletTitleBasedNavigation) {
 						constrain: true,
 						destroyOnHide: true,
 						modal: true,
-						width: 600
+						width: 680
 					},
 					id: '<portlet:namespace />selectKBObject',
 					title: '<liferay-ui:message key="select-parent" />',

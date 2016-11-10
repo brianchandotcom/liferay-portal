@@ -30,6 +30,7 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -136,11 +137,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testAddCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -170,17 +167,9 @@ public class CalendarBookingLocalServiceTest {
 
 		_invitingUser = UserTestUtil.addUser();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_invitingUser.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_invitingUser, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		CalendarResource invitedCalendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar invitedCalendar = invitedCalendarResource.getDefaultCalendar();
+		Calendar invitedCalendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis() + Time.MINUTE;
 
@@ -225,11 +214,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testDeleteCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -277,11 +262,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -342,11 +323,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -394,11 +371,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -447,11 +420,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -496,11 +465,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testGetRecurringCalendarBookings() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -568,11 +533,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -635,19 +596,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -678,19 +630,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -720,19 +663,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -767,11 +701,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testPublishCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -799,11 +729,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testPublishDraftCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -844,19 +770,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -904,19 +821,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -959,11 +867,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testSaveAsDraftCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -991,11 +895,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testSaveAsDraftDraftCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1034,11 +934,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testSaveAsDraftPublishedCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1077,11 +973,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1113,11 +1005,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testUpdateCalendarBookingInstance() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1178,19 +1066,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1264,19 +1143,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1351,11 +1221,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		Map<Locale, String> oldDescriptionMap = new HashMap<>();
 
@@ -1415,11 +1281,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		Map<Locale, String> oldTitleMap = new HashMap<>();
 
@@ -1476,19 +1338,10 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
+		Calendar calendar = createCalendar(_user, serviceContext);
 
-		Calendar calendar = calendarResource.getDefaultCalendar();
-
-		Calendar invitedCalendar = CalendarLocalServiceUtil.addCalendar(
-			_user.getUserId(), _user.getGroupId(),
-			calendarResource.getCalendarResourceId(),
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
-			false, false, serviceContext);
+		Calendar invitedCalendar = createCalendar(
+			calendar.getCalendarResource(), serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1540,11 +1393,7 @@ public class CalendarBookingLocalServiceTest {
 	public void testUpdateRecurringCalendarBooking() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = createCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -1596,6 +1445,29 @@ public class CalendarBookingLocalServiceTest {
 				calendarBookingInstance.getCalendarBookingId());
 
 		Assert.assertEquals(newTitleMap, calendarBookingInstance.getTitleMap());
+	}
+
+	protected Calendar createCalendar(
+			CalendarResource calendarResource, ServiceContext serviceContext)
+		throws PortalException {
+
+		return CalendarLocalServiceUtil.addCalendar(
+			_user.getUserId(), _user.getGroupId(),
+			calendarResource.getCalendarResourceId(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			calendarResource.getTimeZoneId(), RandomTestUtil.randomInt(), false,
+			false, false, serviceContext);
+	}
+
+	protected Calendar createCalendar(User user, ServiceContext serviceContext)
+		throws PortalException {
+
+		CalendarResource calendarResource =
+			CalendarResourceUtil.getUserCalendarResource(
+				user.getUserId(), serviceContext);
+
+		return calendarResource.getDefaultCalendar();
 	}
 
 	protected ServiceContext createServiceContext() {

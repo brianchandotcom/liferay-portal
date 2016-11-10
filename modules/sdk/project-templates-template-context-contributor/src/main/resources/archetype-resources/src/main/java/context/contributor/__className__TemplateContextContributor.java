@@ -1,4 +1,4 @@
-package ${package}.theme.contributor;
+package ${package}.context.contributor;
 
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 

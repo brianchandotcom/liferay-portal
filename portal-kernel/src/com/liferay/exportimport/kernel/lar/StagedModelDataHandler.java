@@ -59,7 +59,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	 * Exports the staged model and its references. See the {@link
 	 * BaseStagedModelDataHandler#exportStagedModel(PortletDataContext, T)}
 	 * method for a reference implementation. Refrain from overriding this
-	 * method, and instead, override the {@link
+	 * method; instead, override the {@link
 	 * BaseStagedModelDataHandler#doExportStagedModel(PortletDataContext, T)}
 	 * method.
 	 *
@@ -206,7 +206,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	 * imported before this method is called. See the {@link
 	 * BaseStagedModelDataHandler#importStagedModel(PortletDataContext,
 	 * StagedModel)} method for a reference implementation. Refrain from
-	 * overriding this method, and instead, override the {@link
+	 * overriding this method; instead, override the {@link
 	 * BaseStagedModelDataHandler#doImportStagedModel(PortletDataContext, T)}
 	 * method.
 	 *
@@ -225,7 +225,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 	 * trash. See the {@link
 	 * BaseStagedModelDataHandler#restoreStagedModel(PortletDataContext,
 	 * StagedModel)} method for a reference implementation. Refrain from
-	 * overriding this method, and instead, override the {@link
+	 * overriding this method; instead, override the {@link
 	 * BaseStagedModelDataHandler#doRestoreStagedModel(PortletDataContext,
 	 * StagedModel)} method.
 	 *

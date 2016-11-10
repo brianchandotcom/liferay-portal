@@ -40,12 +40,17 @@
 </tr>
 <tr>
 	<td>MOCKMOCK_FROM_FIELD</td>
-	<td>//tr[contains(.,'${key_columnEntry}')]/td</td>
+	<td>//tr[contains(.,'${key_columnEntry}')]/td[contains(.,'${key_sender}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOCKMOCK_TO_FIELD</td>
 	<td>//tr[contains(.,'${key_columnEntry}')]/td[2][contains(.,'${key_recipient}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOCKMOCK_SPECIFIC_RECIPIENT_SUBJECT_FIELD_LINK</td>
+	<td>//tr[contains(.,'${key_recipient}')]/td[3]//a</td>
 	<td></td>
 </tr>
 <tr>

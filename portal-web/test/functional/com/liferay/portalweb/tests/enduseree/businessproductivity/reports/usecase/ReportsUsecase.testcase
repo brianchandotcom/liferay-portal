@@ -132,21 +132,7 @@
 	<command name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 
-		<var method="TestPropsUtil#get('email.address.1')" name="emailAddress1" />
-		<var method="TestPropsUtil#get('email.address.2')" name="emailAddress2" />
-		<var method="TestPropsUtil#get('email.address.4')" name="emailAddress4" />
-		<var method="TestPropsUtil#get('email.password.1')" name="emailPassword1" />
-		<var method="TestPropsUtil#get('email.password.2')" name="emailPassword2" />
-		<var method="TestPropsUtil#get('email.password.4')" name="emailPassword4" />
-
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="Server Administration" />
-		</execute>
-
-		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" value="${emailAddress1}" />
-			<var name="userPassword" value="${emailPassword1}" />
-		</execute>
+		<property name="test.smtp.server.enabled" value="true" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -157,9 +143,13 @@
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute macro="ReportsAdmin#configureEmailFrom">
-			<var name="emailFromAddress" value="${emailAddress1}" />
+			<var name="emailFromAddress" value="user1@liferay.com" />
 			<var name="emailFromName" value="Liferay QA" />
 		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute macro="ReportsAdmin#configureDeliveryEmail">
 			<var name="deliverySubject"><![CDATA[New Report From QA: [$REPORT_NAME$]]]></var>
@@ -172,6 +162,10 @@ Thank You,<br/>
 [$FROM_NAME$]<br/>
 [$FROM_ADDRESS$]			<br/>]]>			</var>
 		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="ReportsAdmin#gotoConfiguration" />
 
 		<execute macro="ReportsAdmin#configureNotificationsEmail">
 			<var name="notificationSubject"><![CDATA[New Report From QA: [$REPORT_NAME$]]]></var>
@@ -201,51 +195,26 @@ Thanks,<br/>
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var name="emailNotificationsAddress" value="${emailAddress4}" />
-			<var name="emailRecipientAddress" value="${emailAddress2}" />
+			<var name="emailNotificationsAddress" value="user2@liferay.com" />
+			<var name="emailRecipientAddress" value="user3@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
 		</execute>
 
-		<execute function="Pause" locator1="30000" />
-
-		<execute macro="Gmail#login">
-			<var name="userEmailAddress" value="${emailAddress4}" />
-			<var name="userPassword" value="${emailPassword4}" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="content" value="You have a new" />
+			<var name="recipient" value="user2@liferay.com" />
+			<var name="sender" value="Liferay QA" />
+			<var name="subject" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay QA" />
-			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
-			<var name="gmailMessageBody" value="You have a new report from your friends in QA." />
-			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${emailAddress4}" />
-			<var name="userPassword" value="${emailPassword4}" />
-		</execute>
-
-		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" value="${emailAddress2}" />
-			<var name="userPassword" value="${emailPassword2}" />
-		</execute>
-
-		<execute macro="Gmail#gotoHtmlMode" />
-
-		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Liferay QA" />
-			<var name="gmailAssetType" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
-			<var name="gmailMessageAttachment" value="reports_admin_template_source_sample_class_name.pdf" />
-			<var name="gmailMessageBody" value="Please review the attached report from your friends in QA!" />
-			<var name="gmailMessageTitle" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
-		</execute>
-
-		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" value="${emailAddress2}" />
-			<var name="userPassword" value="${emailPassword2}" />
+		<execute macro="MockMock#viewMail">
+			<var name="asset" value="New Report From QA: reports_admin_template_source_sample_class_name.pdf" />
+			<var name="content" value="Please review the attached report from your friends in QA!" />
+			<var name="recipient" value="user3@liferay.com" />
+			<var name="sender" value="Liferay QA" />
+			<var name="subject" value="reports_admin_template_source_sample_class_name.pdf" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

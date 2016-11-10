@@ -1,8 +1,6 @@
 <definition component-name="portal-business-productivity-ee">
 	<property name="testray.main.component.name" value="Reports" />
 
-	<var name="databaseName" value="lportal" />
-
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
@@ -552,9 +550,9 @@
 	<command name="TestDatabaseConnection" priority="3">
 		<description message="This is a use case for LPS-43525." />
 
-		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<var method="StringUtil#replace('${portalURL}', ':8080', '')" name="portalURL" />
+		<var method="TestPropsUtil#get('database.mysql.password')" name="databasePassword" />
+		<var method="TestPropsUtil#get('database.mysql.url')" name="databaseURL" />
+		<var method="TestPropsUtil#get('database.mysql.username')" name="databaseUsername" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -567,8 +565,9 @@
 		<execute macro="ReportsAdmin#addSource">
 			<var name="reportsDataSourceClass" value="com.mysql.jdbc.Driver" />
 			<var name="reportsDataSourceName" value="Reports Data Source Name" />
-			<var name="reportsDataSourceURL"><![CDATA[jdbc:mysql://${portalURL}/${databaseName}?characterEncoding=UTF-8&dontTrackOpenResources=true&holdResultsOpenOverStatementClose=true&useFastDateParsing=false&useUnicode=true]]></var>
-			<var name="reportsDataSourceUser" value="root" />
+			<var name="reportsDataSourcePassword" value="${databasePassword}" />
+			<var name="reportsDataSourceURL" value="${databaseURL}" />
+			<var name="reportsDataSourceUser" value="${databaseUsername}" />
 		</execute>
 
 		<execute macro="ReportsAdmin#testDatabaseConnection" />

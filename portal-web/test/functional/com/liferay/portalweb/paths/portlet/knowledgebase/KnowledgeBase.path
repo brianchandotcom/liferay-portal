@@ -258,7 +258,7 @@
 <!--FOLDER-->
 <tr>
 	<td>FOLDER_BREADCRUMBS</td>
-	<td>//ul[contains(@class,'breadcrumb')]//a[contains(.,'${key_kbFolderName}')]</td>
+	<td>//ul[contains(@class,'breadcrumb')]//li[contains(.,'${key_kbFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

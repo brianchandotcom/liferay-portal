@@ -1087,13 +1087,10 @@ public class CalendarBookingLocalServiceTest {
 		long startTime = System.currentTimeMillis();
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+			createRegularCalendarBookingWithTitleAndDescription(
+				_user.getUserId(), calendar.getCalendarId(),
 				RandomTestUtil.randomLocaleStringMap(), oldDescriptionMap,
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				false, null, 0, null, 0, null, serviceContext);
+				startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		Map<Locale, String> newDescriptionMap = new HashMap<>();
 
@@ -1146,13 +1143,10 @@ public class CalendarBookingLocalServiceTest {
 		long startTime = System.currentTimeMillis();
 
 		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
-				oldTitleMap, RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				false, null, 0, null, 0, null, serviceContext);
+			createRegularCalendarBookingWithTitleAndDescription(
+				_user.getUserId(), calendar.getCalendarId(), oldTitleMap,
+				RandomTestUtil.randomLocaleStringMap(), startTime,
+				startTime + (Time.HOUR * 10), serviceContext);
 
 		Map<Locale, String> newTitleMap = new HashMap<>();
 
@@ -1380,6 +1374,18 @@ public class CalendarBookingLocalServiceTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, null, 0,
 			null, 0, null, serviceContext);
+	}
+
+	protected CalendarBooking
+		createRegularCalendarBookingWithTitleAndDescription(
+			long userId, long calendarId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, long startTime, long endTime,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return createCalendarBooking(
+			userId, calendarId, new long[0], titleMap, descriptionMap,
+			startTime, endTime, null, 0, null, 0, null, serviceContext);
 	}
 
 	protected ServiceContext createServiceContext() {

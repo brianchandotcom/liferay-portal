@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.InputStream;
@@ -282,9 +283,18 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return kbArticleImporter.processZipFile(
-			userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
-			inputStream, serviceContext);
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(false);
+
+			return kbArticleImporter.processZipFile(
+				userId, groupId, parentKbFolderId, prioritizeByNumericalPrefix,
+				inputStream, serviceContext);
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
 	}
 
 	@Override

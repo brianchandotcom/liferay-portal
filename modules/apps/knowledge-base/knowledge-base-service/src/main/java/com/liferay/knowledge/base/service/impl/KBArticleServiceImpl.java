@@ -113,7 +113,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		throws PortalException {
 
 		AdminPermission.check(
-			getPermissionChecker(), groupId, KBActionKeys.ADD_KB_ARTICLE);
+			getPermissionChecker(), groupId, KBActionKeys.IMPORT_KB_ARTICLES);
 
 		return kbArticleLocalService.addKBArticlesMarkdown(
 			getUserId(), groupId, parentKBFolderId, fileName,

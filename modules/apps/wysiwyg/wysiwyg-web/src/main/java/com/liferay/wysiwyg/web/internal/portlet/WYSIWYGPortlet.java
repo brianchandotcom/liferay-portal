@@ -16,7 +16,7 @@ package com.liferay.wysiwyg.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.wysiwyg.web.internal.constants.WysiwygPortletKeys;
+import com.liferay.wysiwyg.web.internal.constants.WYSIWYGPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + WysiwygPortletKeys.WYSIWYG,
+		"javax.portlet.name=" + WYSIWYGPortletKeys.WYSIWYG,
 		"javax.portlet.portlet-info.keywords=WYSIWYG",
 		"javax.portlet.portlet-info.short-title=WYSIWYG",
 		"javax.portlet.portlet-info.title=WYSIWYG",
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Portlet.class
 )
-public class WysiwygPortlet extends MVCPortlet {
+public class WYSIWYGPortlet extends MVCPortlet {
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.wysiwyg.web)(release.schema.version=1.0.0))",

@@ -23,6 +23,10 @@
 		<execute function="Click" locator1="Form#PUBLISH_FORM_SWITCHER" />
 	</command>
 
+	<command name="clickSaveButton">
+		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
+	</command>
+
 	<command name="closeSidebar">
 		<execute function="Pause" locator1="1000" />
 

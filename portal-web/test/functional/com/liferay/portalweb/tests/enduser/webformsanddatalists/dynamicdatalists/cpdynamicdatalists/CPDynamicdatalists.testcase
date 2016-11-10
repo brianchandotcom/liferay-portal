@@ -76,8 +76,6 @@
 	</command>
 
 	<command name="AddDisplayTemplateVelocity" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlDisplayTemplateLanguage" value="Velocity (.vm)" />
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />

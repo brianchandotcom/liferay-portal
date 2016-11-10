@@ -49,9 +49,9 @@ AUI.add(
 							instance.after('keyChange', instance._afterKeyChange),
 							instance.after('keyInputEnabledChange', instance._afterKeyInputEnabledChange),
 							instance.after('valueChange', instance._afterValueChangeInput),
+							instance.bindContainerEvent('blur', instance._onBlurKeyInput, '.key-value-input')
 							instance.bindContainerEvent('keyup', instance._onKeyUpKeyInput, '.key-value-input'),
 							instance.bindContainerEvent('valuechange', instance._onValueChangeKeyInput, '.key-value-input'),
-							instance.bindContainerEvent('blur', instance._onBlurKeyInput, '.key-value-input')
 						);
 					},
 

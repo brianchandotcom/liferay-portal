@@ -30,7 +30,7 @@ import org.objectweb.asm.ClassWriter;
 /**
  * @author Tom Wang
  */
-public class BytecodeTransformer {
+public class PortalCompactBytecodeTransformer {
 
 	public static void main(String[] args) throws IOException {
 		Files.walkFileTree(
@@ -63,7 +63,7 @@ public class BytecodeTransformer {
 		ClassWriter classWriter = new ClassWriter(
 			classReader, ClassWriter.COMPUTE_FRAMES);
 
-		classReader.accept(new BytecodeTransformerClassVisitor(classWriter), 0);
+		classReader.accept(new PortalCompactClassVisitor(classWriter), 0);
 
 		try (OutputStream outputStream = Files.newOutputStream(path)) {
 			outputStream.write(classWriter.toByteArray());

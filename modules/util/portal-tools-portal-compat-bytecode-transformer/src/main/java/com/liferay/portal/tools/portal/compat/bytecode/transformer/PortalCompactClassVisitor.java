@@ -25,9 +25,9 @@ import org.objectweb.asm.Type;
 /**
  * @author Tom Wang
  */
-public class BytecodeTransformerClassVisitor extends ClassVisitor {
+public class PortalCompactClassVisitor extends ClassVisitor {
 
-	public BytecodeTransformerClassVisitor(ClassVisitor classVisitor) {
+	public PortalCompactClassVisitor(ClassVisitor classVisitor) {
 		super(Opcodes.ASM5, classVisitor);
 	}
 

@@ -24,7 +24,7 @@ importPackages {
 transformImportedPackages {
 	classpath = configurations.bytecodeTransformer
 	dependsOn importPackages
-	main = "com.liferay.portal.tools.portal.compat.bytecode.transformer.BytecodeTransformer"
+	main = "com.liferay.portal.tools.portal.compat.bytecode.transformer.PortalCompactBytecodeTransformer"
 	systemProperty "classes.dir", importPackages.destinationDir
 }
 

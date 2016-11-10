@@ -400,11 +400,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescription}" />
 	</command>
 
-	<command name="configureExportSiteCP">
-		<execute macro="LAR#_gotoExportSite" />
-
-		<execute function="Click" locator1="Button#PLUS" />
-
+	<command name="configureExportOptions">
 		<execute macro="LAR#_configureExportSiteOptions">
 			<var name="checkContentNameList" value="${checkContentNameList}" />
 			<var name="checkPageName" value="${checkPageName}" />
@@ -422,7 +418,11 @@
 		</execute>
 	</command>
 
-	<command name="configureExportOptions">
+	<command name="configureExportSiteCP">
+		<execute macro="LAR#_gotoExportSite" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute macro="LAR#_configureExportSiteOptions">
 			<var name="checkContentNameList" value="${checkContentNameList}" />
 			<var name="checkPageName" value="${checkPageName}" />

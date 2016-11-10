@@ -2431,7 +2431,7 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
-	
+
 	<command name="ViewPrivatePageSiteMemberRole" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

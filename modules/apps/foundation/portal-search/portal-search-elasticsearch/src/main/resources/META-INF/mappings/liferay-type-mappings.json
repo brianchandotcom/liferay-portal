@@ -654,6 +654,7 @@
 			},
 			"geoLocation": {
 				"index": "not_analyzed",
+				"lat_lon": true,
 				"store": "yes",
 				"type": "geo_point"
 			},

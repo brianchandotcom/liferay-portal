@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.document.SingleFieldFixture;
 import com.liferay.portal.search.elasticsearch.internal.query.QueryBuilderFactories;
 

@@ -97,11 +97,9 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 		SolrInputDocument solrInputDocument, Field field, String value,
 		String localizedName) {
 
-		String name = field.getName();
+		GeoLocationPoint geoLocationPoint = field.getGeoLocationPoint();
 
-		if (name.equals(Field.GEO_LOCATION)) {
-			GeoLocationPoint geoLocationPoint = field.getGeoLocationPoint();
-
+		if (geoLocationPoint != null) {
 			value =
 				geoLocationPoint.getLatitude() + StringPool.COMMA +
 					geoLocationPoint.getLongitude();

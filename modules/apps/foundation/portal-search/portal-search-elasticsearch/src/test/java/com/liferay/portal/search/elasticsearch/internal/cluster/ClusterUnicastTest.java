@@ -15,7 +15,9 @@
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
+import com.liferay.portal.search.elasticsearch.internal.connection.Index;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreator;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 
 import org.junit.After;
 import org.junit.Before;
@@ -81,7 +83,10 @@ public class ClusterUnicastTest {
 	public TestName testName = new TestName();
 
 	protected Index createIndex(ElasticsearchFixture elasticsearchFixture) {
-		return elasticsearchFixture.createIndex(testName.getMethodName());
+		IndexCreator indexCreator = new IndexCreator(elasticsearchFixture);
+
+		return indexCreator.createIndex(
+			new IndexName(testName.getMethodName()));
 	}
 
 	protected void updateNumberOfReplicas(

@@ -21,8 +21,8 @@ import com.liferay.portal.search.elasticsearch.connection.TestElasticsearchConne
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.IndexName;
-import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreationHelper;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreator;
+import com.liferay.portal.search.elasticsearch.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch.internal.document.DefaultElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch.internal.facet.DefaultFacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.filter.BooleanFilterTranslatorImpl;
@@ -56,20 +56,28 @@ import com.liferay.portal.search.elasticsearch.internal.query.WildcardQueryTrans
 import com.liferay.portal.search.elasticsearch.internal.stats.DefaultStatsTranslator;
 import com.liferay.portal.search.unit.test.IndexingFixture;
 
-import java.util.HashMap;
-
-import org.mockito.Mockito;
+import java.util.Collections;
 
 /**
  * @author André de Oliveira
  */
 public class ElasticsearchIndexingFixture implements IndexingFixture {
 
-	public ElasticsearchIndexingFixture(String subdirName, long companyId) {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			subdirName, _properties);
+	public ElasticsearchIndexingFixture(
+		ElasticsearchFixture elasticsearchFixture, long companyId) {
 
+		this(
+			elasticsearchFixture, companyId,
+			new IndexCreator(elasticsearchFixture));
+	}
+
+	public ElasticsearchIndexingFixture(
+		ElasticsearchFixture elasticsearchFixture, long companyId,
+		IndexCreator indexCreator) {
+
+		_elasticsearchFixture = elasticsearchFixture;
 		_companyId = companyId;
+		_indexCreator = indexCreator;
 	}
 
 	public ElasticsearchFixture getElasticsearchFixture() {
@@ -161,13 +169,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected void createIndex() {
-		IndexName indexName = new IndexName(
-			_indexNameBuilder.getIndexName(_companyId));
-
-		IndexCreationHelper indexCreationHelper = Mockito.mock(
-			IndexCreationHelper.class);
-
-		_elasticsearchFixture.createIndex(indexName, indexCreationHelper);
+		_indexCreator.createIndex(
+			new IndexName(_indexNameBuilder.getIndexName(_companyId)));
 	}
 
 	protected IndexSearcher createIndexSearcher(
@@ -184,8 +187,10 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				indexNameBuilder = indexNameBuilder1;
 				queryTranslator = createElasticsearchQueryTranslator();
 				statsTranslator = new DefaultStatsTranslator();
+				searchHitDocumentTranslator =
+					new SearchHitDocumentTranslatorImpl();
 
-				activate(_properties);
+				activate(Collections.<String, Object>emptyMap());
 			}
 		};
 	}
@@ -203,7 +208,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 						new DefaultElasticsearchDocumentFactory();
 					indexNameBuilder = indexNameBuilder1;
 
-					activate(_properties);
+					activate(Collections.<String, Object>emptyMap());
 				}
 			};
 
@@ -228,10 +233,10 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	private final long _companyId;
 	private final ElasticsearchFixture _elasticsearchFixture;
+	private final IndexCreator _indexCreator;
 	private final IndexNameBuilder _indexNameBuilder =
 		new TestIndexNameBuilder();
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
-	private final HashMap<String, Object> _properties = new HashMap<>();
 
 }

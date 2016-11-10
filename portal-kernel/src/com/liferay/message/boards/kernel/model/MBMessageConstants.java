@@ -31,4 +31,6 @@ public class MBMessageConstants {
 	public static final String[] FORMATS = PropsUtil.getArray(
 		PropsKeys.MESSAGE_BOARDS_MESSAGE_FORMATS);
 
+	public static final String MESSAGE_SUBJECT_PREFIX_RE = "RE: ";
+
 }

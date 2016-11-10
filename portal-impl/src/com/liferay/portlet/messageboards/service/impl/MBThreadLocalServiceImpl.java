@@ -23,6 +23,7 @@ import com.liferay.message.boards.kernel.exception.SplitThreadException;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBThreadConstants;
@@ -1036,7 +1037,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				String oldSubject = message.getSubject();
 				String curSubject = curMessage.getSubject();
 
-				if (oldSubject.startsWith("RE: ")) {
+				if (oldSubject.startsWith(
+						MBMessageConstants.MESSAGE_SUBJECT_PREFIX_RE)) {
+
 					curSubject = StringUtil.replace(
 						curSubject, rootMessage.getSubject(), subject);
 				}

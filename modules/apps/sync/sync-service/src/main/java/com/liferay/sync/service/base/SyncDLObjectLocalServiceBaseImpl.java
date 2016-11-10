@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.document.library.kernel.service.persistence.DLFileEntryPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLFileVersionPersistence;
+import com.liferay.document.library.kernel.service.persistence.DLFolderPersistence;
 import com.liferay.document.library.kernel.service.persistence.DLSyncEventPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -817,6 +818,43 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the document library folder local service.
+	 *
+	 * @return the document library folder local service
+	 */
+	public com.liferay.document.library.kernel.service.DLFolderLocalService getDLFolderLocalService() {
+		return dlFolderLocalService;
+	}
+
+	/**
+	 * Sets the document library folder local service.
+	 *
+	 * @param dlFolderLocalService the document library folder local service
+	 */
+	public void setDLFolderLocalService(
+		com.liferay.document.library.kernel.service.DLFolderLocalService dlFolderLocalService) {
+		this.dlFolderLocalService = dlFolderLocalService;
+	}
+
+	/**
+	 * Returns the document library folder persistence.
+	 *
+	 * @return the document library folder persistence
+	 */
+	public DLFolderPersistence getDLFolderPersistence() {
+		return dlFolderPersistence;
+	}
+
+	/**
+	 * Sets the document library folder persistence.
+	 *
+	 * @param dlFolderPersistence the document library folder persistence
+	 */
+	public void setDLFolderPersistence(DLFolderPersistence dlFolderPersistence) {
+		this.dlFolderPersistence = dlFolderPersistence;
+	}
+
+	/**
 	 * Returns the d l sync event local service.
 	 *
 	 * @return the d l sync event local service
@@ -977,6 +1015,10 @@ public abstract class SyncDLObjectLocalServiceBaseImpl
 	protected com.liferay.document.library.kernel.service.DLFileVersionLocalService dlFileVersionLocalService;
 	@ServiceReference(type = DLFileVersionPersistence.class)
 	protected DLFileVersionPersistence dlFileVersionPersistence;
+	@ServiceReference(type = com.liferay.document.library.kernel.service.DLFolderLocalService.class)
+	protected com.liferay.document.library.kernel.service.DLFolderLocalService dlFolderLocalService;
+	@ServiceReference(type = DLFolderPersistence.class)
+	protected DLFolderPersistence dlFolderPersistence;
 	@ServiceReference(type = com.liferay.document.library.kernel.service.DLSyncEventLocalService.class)
 	protected com.liferay.document.library.kernel.service.DLSyncEventLocalService dlSyncEventLocalService;
 	@ServiceReference(type = DLSyncEventPersistence.class)

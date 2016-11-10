@@ -179,16 +179,13 @@ public class CalendarBookingLocalServiceTest {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_invitingUser.getUserId(), calendar.getCalendarId(),
-				new long[] {invitedCalendar.getCalendarId()},
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, endTime, false, null,
-				firstReminder, NotificationType.EMAIL.getValue(), 0,
-				NotificationType.EMAIL.getValue(), serviceContext);
+		CalendarBooking calendarBooking = createCalendarBooking(
+			_invitingUser.getUserId(), calendar.getCalendarId(),
+			new long[] {invitedCalendar.getCalendarId()},
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, null,
+			(int)firstReminder, NotificationType.EMAIL, 0,
+			NotificationType.EMAIL, serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -1075,18 +1072,14 @@ public class CalendarBookingLocalServiceTest {
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(),
-				new long[] {invitedCalendar.getCalendarId()},
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				false, null, RandomTestUtil.randomInt(),
-				NotificationType.EMAIL.getValue(), RandomTestUtil.randomInt(),
-				NotificationType.EMAIL.getValue(), serviceContext);
+		CalendarBooking calendarBooking = createCalendarBooking(
+			_user.getUserId(), calendar.getCalendarId(),
+			new long[] {invitedCalendar.getCalendarId()},
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), startTime,
+			startTime + (Time.HOUR * 10), null, RandomTestUtil.randomInt(),
+			NotificationType.EMAIL, RandomTestUtil.randomInt(),
+			NotificationType.EMAIL, serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -1468,6 +1461,41 @@ public class CalendarBookingLocalServiceTest {
 				user.getUserId(), serviceContext);
 
 		return calendarResource.getDefaultCalendar();
+	}
+
+	protected CalendarBooking createCalendarBooking(
+			long userId, long calendarId, long[] childCalendarBookingIds,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			long startTime, long endTime, Recurrence recurrence,
+			int firstReminder, NotificationType firstReminderType,
+			int secondReminder, NotificationType secondReminderType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		String firstReminderTypeString = null;
+
+		if (firstReminderType != null) {
+			firstReminderTypeString = firstReminderType.getValue();
+		}
+
+		String secondReminderTypeString = null;
+
+		if (secondReminderType != null) {
+			secondReminderTypeString = secondReminderType.getValue();
+		}
+
+		CalendarBooking calendarBooking =
+			CalendarBookingLocalServiceUtil.addCalendarBooking(
+				userId, calendarId, childCalendarBookingIds,
+				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
+				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
+				titleMap, descriptionMap, RandomTestUtil.randomString(),
+				startTime, endTime, false,
+				RecurrenceSerializer.serialize(recurrence), firstReminder,
+				firstReminderTypeString, secondReminder,
+				secondReminderTypeString, serviceContext);
+
+		return calendarBooking;
 	}
 
 	protected ServiceContext createServiceContext() {

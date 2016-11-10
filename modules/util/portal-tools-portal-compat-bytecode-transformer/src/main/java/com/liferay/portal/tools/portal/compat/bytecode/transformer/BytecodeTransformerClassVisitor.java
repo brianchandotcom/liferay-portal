@@ -38,13 +38,7 @@ public class BytecodeTransformerClassVisitor extends ClassVisitor {
 		cv.visit(version, access, name, signature, superName, interfaces);
 
 		_superName = superName;
-
-		if (Modifier.isInterface(access)) {
-			_isInterface = true;
-		}
-		else {
-			_isInterface = false;
-		}
+		_isInterface = Modifier.isInterface(access);
 	}
 
 	@Override
@@ -75,25 +69,16 @@ public class BytecodeTransformerClassVisitor extends ClassVisitor {
 		}
 
 		if (name.equals("<init>")) {
-			ConstructorMethodVisitor constructorMethodVisitor =
-				new ConstructorMethodVisitor(methodVisitor, _superName);
-
-			return constructorMethodVisitor;
+			return new ConstructorMethodVisitor(methodVisitor, _superName);
 		}
 
 		if (name.startsWith("set") || name.equals("<clinit>") ||
 			name.equals("afterPropertiesSet") || name.equals("destroy")) {
 
-			EmptyBodyMethodVisitor emptyBodyMethodVisitor =
-				new EmptyBodyMethodVisitor(methodVisitor);
-
-			return emptyBodyMethodVisitor;
+			return new EmptyBodyMethodVisitor(methodVisitor);
 		}
 
-		UnsupportedExceptionMethodVisitor unsupportedExceptionMethodVisitor =
-			new UnsupportedExceptionMethodVisitor(methodVisitor);
-
-		return unsupportedExceptionMethodVisitor;
+		return new UnsupportedExceptionMethodVisitor(methodVisitor);
 	}
 
 	private boolean _isInterface;

@@ -111,6 +111,10 @@ public interface KBFolderLocalService extends BaseLocalService,
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public KBFolder fetchFirstChildKBFolder(long groupId, long kbFolderId,
+		OrderByComparator<KBFolder> obc) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBFolder fetchKBFolder(java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

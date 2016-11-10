@@ -114,6 +114,23 @@ public class KBFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolderSoap fetchFirstChildKBFolder(
+		long groupId, long kbFolderId,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledge.base.model.KBFolder> obc)
+		throws RemoteException {
+		try {
+			com.liferay.knowledge.base.model.KBFolder returnValue = KBFolderServiceUtil.fetchFirstChildKBFolder(groupId,
+					kbFolderId, obc);
+
+			return com.liferay.knowledge.base.model.KBFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.knowledge.base.model.KBFolderSoap fetchKBFolder(
 		long kbFolderId) throws RemoteException {
 		try {

@@ -20,6 +20,7 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.model.impl.KBFolderImpl;
 import com.liferay.knowledge.base.service.KBArticleService;
 import com.liferay.knowledge.base.service.KBFolderService;
+import com.liferay.knowledge.base.util.comparator.KBFolderNameComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -167,7 +168,8 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 
 		if ((kbFolder == null) && (kbArticlesCount == 0)) {
 			kbFolder = _kbFolderService.fetchFirstChildKBFolder(
-				groupId, ancestorKBFolder.getKbFolderId());
+				groupId, ancestorKBFolder.getKbFolderId(),
+				new KBFolderNameComparator(false));
 		}
 
 		if (kbFolder == null) {
@@ -206,7 +208,8 @@ public class KBFolderKBArticleSelector implements KBArticleSelector {
 
 		if ((kbFolder == null) && (kbArticlesCount == 0)) {
 			kbFolder = _kbFolderService.fetchFirstChildKBFolder(
-				groupId, ancestorKBFolder.getKbFolderId());
+				groupId, ancestorKBFolder.getKbFolderId(),
+				new KBFolderNameComparator(false));
 		}
 
 		if (kbFolder == null) {

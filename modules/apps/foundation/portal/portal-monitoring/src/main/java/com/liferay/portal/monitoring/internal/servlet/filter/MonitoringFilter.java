@@ -59,7 +59,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	enabled = false, immediate = true,
 	property = {
-		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
+		"after-filter=Session Max Allowed Filter", "dispatcher=FORWARD",
+		"dispatcher=REQUEST", "servlet-context-name=",
 		"servlet-filter-name=Monitoring Filter", "url-pattern=/c/*",
 		"url-pattern=/group/*", "url-pattern=/user/*", "url-pattern=/web/*"
 	},

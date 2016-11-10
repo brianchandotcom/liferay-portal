@@ -51,8 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
 	immediate = true,
 	property = {
-		"servlet-context-name=", "servlet-filter-name=SSO Ntlm Post Filter",
-		"url-pattern=/*"
+		"after-filter=SSO Ntlm Filter", "servlet-context-name=",
+		"servlet-filter-name=SSO Ntlm Post Filter", "url-pattern=/*"
 	},
 	service = Filter.class
 )
@@ -138,5 +138,8 @@ public class NtlmPostFilter extends BaseFilter {
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private NtlmFilter _ntlmFilter;
 
 }

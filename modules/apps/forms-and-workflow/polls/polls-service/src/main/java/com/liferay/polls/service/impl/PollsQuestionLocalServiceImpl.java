@@ -33,9 +33,11 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -353,12 +355,18 @@ public class PollsQuestionLocalServiceImpl
 		}
 
 		if (choices != null) {
+			Set<String> choiceDescriptions = new HashSet<>(choices.size());
+
 			for (PollsChoice choice : choices) {
 				String choiceDescription = choice.getDescription(locale);
 
-				if (Validator.isNull(choiceDescription)) {
+				if (Validator.isNull(choiceDescription) ||
+					choiceDescriptions.contains(choiceDescription)) {
+
 					throw new QuestionChoiceException();
 				}
+
+				choiceDescriptions.add(choiceDescription);
 			}
 		}
 

@@ -17,16 +17,12 @@ package com.liferay.knowledge.base.internal.commands;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,7 +56,7 @@ public class KnowledgeBaseOSGiCommands {
 		actionableDynamicQuery.setPerformActionMethod(
 			(ResourcePermission resourcePermission) -> {
 				if (_hasResourceAction(
-					resourcePermission, addKbArticleAction)) {
+						resourcePermission, addKbArticleAction)) {
 
 					_addResourceAction(
 						resourcePermission, importKbArticlesAction);

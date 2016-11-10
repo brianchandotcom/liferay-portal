@@ -69,13 +69,13 @@ public class BytecodeTransformerClassVisitor extends ClassVisitor {
 		}
 
 		if (name.equals("<init>")) {
-			return new ConstructorMethodVisitor(methodVisitor, _superName);
+			return new EmptyMethodVisitor(methodVisitor, _superName);
 		}
 
 		if (name.startsWith("set") || name.equals("<clinit>") ||
 			name.equals("afterPropertiesSet") || name.equals("destroy")) {
 
-			return new EmptyBodyMethodVisitor(methodVisitor);
+			return new EmptyMethodVisitor(methodVisitor, null);
 		}
 
 		return new UnsupportedExceptionMethodVisitor(methodVisitor);

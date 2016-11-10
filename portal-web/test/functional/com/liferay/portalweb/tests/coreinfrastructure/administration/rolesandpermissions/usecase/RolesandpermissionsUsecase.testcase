@@ -2434,6 +2434,77 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
+	
+	<command name="ViewPrivatePageSiteMemberRole" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#assignMemberCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesMembers">
+			<var name="portlet" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#assignUserGroupAsMemberCP">
+			<var name="userGroupName" value="UG UserGroup Name" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Private Page" />
+			<var name="sitePagePrivacy" value="Private" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Navigator#openPrivateURL">
+			<var name="pageName" value="Private Page" />
+		</execute>
+
+		<execute macro="Navigator#openPrivateURL">
+			<var name="pageName" value="Private Page" />
+		</execute>
+
+		<execute macro="Page#viewSpecificPG">
+			<var name="pageNameList" value="Private Page" />
+		</execute>
+	</command>
 
 	<command name="ViewRegRolePermissionsDefaultView" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelUsers">

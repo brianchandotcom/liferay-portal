@@ -23,10 +23,9 @@ import org.objectweb.asm.Opcodes;
  */
 public class ConstructorMethodVisitor extends MethodVisitor {
 
-	public ConstructorMethodVisitor(
-		int api, MethodVisitor mv, String superName) {
+	public ConstructorMethodVisitor(MethodVisitor mv, String superName) {
+		super(Opcodes.ASM5, null);
 
-		super(api, null);
 		_methodMethodVisitor = mv;
 		_superName = superName;
 	}

@@ -23,8 +23,9 @@ import org.objectweb.asm.Opcodes;
  */
 public class EmptyBodyMethodVisitor extends MethodVisitor {
 
-	public EmptyBodyMethodVisitor(int api, MethodVisitor mv) {
-		super(api, null);
+	public EmptyBodyMethodVisitor(MethodVisitor mv) {
+		super(Opcodes.ASM5, null);
+
 		_methodMethodVisitor = mv;
 	}
 

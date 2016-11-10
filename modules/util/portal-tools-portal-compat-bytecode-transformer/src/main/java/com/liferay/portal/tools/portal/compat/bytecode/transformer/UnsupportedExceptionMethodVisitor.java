@@ -24,8 +24,9 @@ import org.objectweb.asm.Opcodes;
  */
 public class UnsupportedExceptionMethodVisitor extends MethodVisitor {
 
-	public UnsupportedExceptionMethodVisitor(int api, MethodVisitor mv) {
-		super(api, null);
+	public UnsupportedExceptionMethodVisitor(MethodVisitor mv) {
+		super(Opcodes.ASM5, null);
+
 		_methodMethodVisitor = mv;
 	}
 

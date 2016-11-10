@@ -27,7 +27,7 @@ import org.objectweb.asm.Opcodes;
 public class BytecodeTransformerClassVisitor extends ClassVisitor {
 
 	public BytecodeTransformerClassVisitor(ClassVisitor classVisitor) {
-		super(Opcodes.ASM4, classVisitor);
+		super(Opcodes.ASM5, classVisitor);
 	}
 
 	@Override
@@ -76,8 +76,7 @@ public class BytecodeTransformerClassVisitor extends ClassVisitor {
 
 		if (name.equals("<init>")) {
 			ConstructorMethodVisitor constructorMethodVisitor =
-				new ConstructorMethodVisitor(
-					Opcodes.ASM5, methodVisitor, _superName);
+				new ConstructorMethodVisitor(methodVisitor, _superName);
 
 			return constructorMethodVisitor;
 		}
@@ -86,13 +85,13 @@ public class BytecodeTransformerClassVisitor extends ClassVisitor {
 			name.equals("afterPropertiesSet") || name.equals("destroy")) {
 
 			EmptyBodyMethodVisitor emptyBodyMethodVisitor =
-				new EmptyBodyMethodVisitor(Opcodes.ASM5, methodVisitor);
+				new EmptyBodyMethodVisitor(methodVisitor);
 
 			return emptyBodyMethodVisitor;
 		}
 
 		UnsupportedExceptionMethodVisitor unsupportedExceptionMethodVisitor =
-			new UnsupportedExceptionMethodVisitor(Opcodes.ASM5, methodVisitor);
+			new UnsupportedExceptionMethodVisitor(methodVisitor);
 
 		return unsupportedExceptionMethodVisitor;
 	}

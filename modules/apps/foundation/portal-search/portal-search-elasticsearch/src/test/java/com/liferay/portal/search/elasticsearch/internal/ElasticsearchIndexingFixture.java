@@ -187,6 +187,8 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 				indexNameBuilder = indexNameBuilder1;
 				queryTranslator = createElasticsearchQueryTranslator();
 				statsTranslator = new DefaultStatsTranslator();
+				searchHitDocumentTranslator =
+					new SearchHitDocumentTranslatorImpl();
 
 				activate(Collections.<String, Object>emptyMap());
 			}

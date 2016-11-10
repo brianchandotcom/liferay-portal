@@ -20,6 +20,7 @@ import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 /**
  * @author Tom Wang
@@ -78,7 +79,14 @@ public class BytecodeTransformerClassVisitor extends ClassVisitor {
 			return new EmptyMethodVisitor(methodVisitor, null);
 		}
 
-		return new UnsupportedExceptionMethodVisitor(methodVisitor);
+		int argumentsSize = Type.getArgumentsAndReturnSizes(desc) >> 2;
+
+		if (Modifier.isStatic(access)) {
+			argumentsSize--;
+		}
+
+		return new UnsupportedExceptionMethodVisitor(
+			methodVisitor, argumentsSize);
 	}
 
 	private boolean _isInterface;

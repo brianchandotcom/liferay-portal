@@ -25,10 +25,13 @@ import org.objectweb.asm.Type;
  */
 public class UnsupportedExceptionMethodVisitor extends MethodVisitor {
 
-	public UnsupportedExceptionMethodVisitor(MethodVisitor mv) {
+	public UnsupportedExceptionMethodVisitor(
+		MethodVisitor mv, int argumentsSize) {
+
 		super(Opcodes.ASM5, null);
 
 		_methodMethodVisitor = mv;
+		_argumentsSize = argumentsSize;
 	}
 
 	@Override
@@ -57,12 +60,13 @@ public class UnsupportedExceptionMethodVisitor extends MethodVisitor {
 		String name, String desc, String signature, Label start, Label end,
 		int index) {
 
-		if (!name.equals("args")) {
+		if (index < _argumentsSize) {
 			_methodMethodVisitor.visitLocalVariable(
 				name, desc, signature, start, end, index);
 		}
 	}
 
+	private final int _argumentsSize;
 	private final MethodVisitor _methodMethodVisitor;
 
 }

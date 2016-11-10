@@ -35,8 +35,8 @@ public class UpgradeProcessTest {
 
 			@Override
 			protected void doUpgrade() throws Exception {
-
 			}
+
 		};
 	}
 

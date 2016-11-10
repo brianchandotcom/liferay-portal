@@ -28,10 +28,14 @@ import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author André de Oliveira
  */
-public class SearchHitToDocumentTranslatorImpl {
+@Component(immediate = true, service = SearchHitDocumentTranslator.class)
+public class SearchHitDocumentTranslatorImpl
+	implements SearchHitDocumentTranslator {
 
 	public Document translate(SearchHit searchHit) {
 		Document document = new DocumentImpl();

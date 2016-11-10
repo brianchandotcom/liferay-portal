@@ -79,7 +79,7 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void logExternalMethodCommand(
-			Element element, List<String> arguments, String returnValue)
+			Element element, List<String> arguments, Object returnValue)
 		throws Exception {
 
 		LoggerElement loggerElement = new LoggerElement();
@@ -298,7 +298,7 @@ public final class CommandLoggerHandler {
 	}
 
 	private static LoggerElement _getExternalMethodLineLoggerElement(
-			Element element, List<String> arguments, String returnValue)
+			Element element, List<String> arguments, Object returnValue)
 		throws Exception {
 
 		LoggerElement loggerElement = new LoggerElement();
@@ -311,7 +311,7 @@ public final class CommandLoggerHandler {
 	}
 
 	private static String _getExternalMethodLineText(
-			Element element, List<String> arguments, String returnValue)
+			Element element, List<String> arguments, Object returnValue)
 		throws Exception {
 
 		StringBuilder sb = new StringBuilder();
@@ -324,18 +324,18 @@ public final class CommandLoggerHandler {
 			sb.append(_getLineItemText("misc", " with parameters"));
 
 			for (String argument : arguments) {
-				argument = "Arg: " + argument;
-
 				sb.append(
-					_getLineItemText("param-value", HtmlUtil.escape(argument)));
+					_getLineItemText(
+						"param-value", HtmlUtil.escape("Arg: " + argument)));
 			}
 		}
 
 		if (returnValue != null) {
-			returnValue = "Return: " + returnValue;
+			returnValue = "Return: " + returnValue.toString();
 
 			sb.append(
-				_getLineItemText("param-value", HtmlUtil.escape(returnValue)));
+				_getLineItemText(
+					"param-value", HtmlUtil.escape(returnValue.toString())));
 		}
 
 		return sb.toString();
@@ -378,7 +378,8 @@ public final class CommandLoggerHandler {
 				sb.append(_getLineItemText("param-type", locatorKey));
 
 				String paramValue =
-					PoshiRunnerVariablesUtil.getValueFromExecuteMap(locatorKey);
+					PoshiRunnerVariablesUtil.getStringFromExecuteMap(
+						locatorKey);
 
 				sb.append(
 					_getLineItemText(
@@ -392,7 +393,7 @@ public final class CommandLoggerHandler {
 				sb.append(_getLineItemText("param-type", valueKey));
 
 				String paramValue =
-					PoshiRunnerVariablesUtil.getValueFromExecuteMap(valueKey);
+					PoshiRunnerVariablesUtil.getStringFromExecuteMap(valueKey);
 
 				sb.append(
 					_getLineItemText(

@@ -1062,25 +1062,6 @@ public class PoshiRunnerValidation {
 
 			return;
 		}
-
-		List<Element> argElements = new ArrayList<>(element.elements("arg"));
-
-		Class<?>[] parameterTypes = new Class<?>[argElements.size()];
-
-		for (int i = 0; i < argElements.size(); i++) {
-			parameterTypes[i] = String.class;
-		}
-
-		try {
-			clazz.getMethod(methodName, parameterTypes);
-		}
-		catch (Exception e) {
-			_exceptions.add(
-				new Exception(
-					"Mismatched argument in method " + className + "#" +
-						methodName + "\n" + filePath + ":" +
-							element.attributeValue("line-number")));
-		}
 	}
 
 	protected static void validateNumberOfAttributes(

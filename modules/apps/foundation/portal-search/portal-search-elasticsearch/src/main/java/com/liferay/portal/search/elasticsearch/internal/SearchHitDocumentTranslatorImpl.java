@@ -31,7 +31,7 @@ import org.elasticsearch.search.SearchHitField;
 /**
  * @author André de Oliveira
  */
-public class SearchHitToDocumentTranslator {
+public class SearchHitToDocumentTranslatorImpl {
 
 	public Document translate(SearchHit searchHit) {
 		Document document = new DocumentImpl();

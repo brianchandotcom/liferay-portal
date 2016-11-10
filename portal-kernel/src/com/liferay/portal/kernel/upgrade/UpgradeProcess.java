@@ -157,18 +157,18 @@ public abstract class UpgradeProcess
 
 	public class AlterColumnName implements Alterable {
 
-		public AlterColumnName(String oldColumnName, String newColumn) {
+		public AlterColumnName(String oldColumnName, String newColumnWithType) {
 			_oldColumnName = oldColumnName;
-			_newColumn = newColumn;
+			_newColumnWithType = newColumnWithType;
 
 			String newColumnName = StringUtil.extractFirst(
-				newColumn, StringPool.SPACE);
+				newColumnWithType, StringPool.SPACE);
 
 			if (newColumnName != null) {
 				_newColumnName = newColumnName;
 			}
 			else {
-				_newColumnName = _newColumn;
+				_newColumnName = _newColumnWithType;
 			}
 		}
 
@@ -190,7 +190,7 @@ public abstract class UpgradeProcess
 			sb.append(StringPool.SPACE);
 			sb.append(_oldColumnName);
 			sb.append(StringPool.SPACE);
-			sb.append(_newColumn);
+			sb.append(_newColumnWithType);
 
 			return sb.toString();
 		}
@@ -205,7 +205,7 @@ public abstract class UpgradeProcess
 			return Alterable.containsIgnoreCase(columnNames, _oldColumnName);
 		}
 
-		private final String _newColumn;
+		private final String _newColumnWithType;
 		private final String _newColumnName;
 		private final String _oldColumnName;
 

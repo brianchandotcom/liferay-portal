@@ -2,6 +2,10 @@
 	<property name="testray.main.component.name" value="Plugin Installer" />
 
 	<set-up>
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 

@@ -20,6 +20,12 @@
 		<execute function="Pause" locator1="2000" />
 	</command>
 
+	<command name="viewEmptyFieldMessage">
+		<var name="key_fieldLabel" value="${fieldLabel}" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_EMPTY_FIELD" value1="At least one option should be set for field ${fieldLabel}." />
+	</command>
+
 	<command name="viewErrorMessage">
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${errorMessage}" />
 

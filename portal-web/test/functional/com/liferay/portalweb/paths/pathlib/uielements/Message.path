@@ -84,6 +84,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_EMPTY_FIELD</td>
+	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]//div[contains(.,'At least one option should be set for field ${key_fieldLabel}.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_VALID_CONTENT</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter valid content')]</td>
 	<td></td>

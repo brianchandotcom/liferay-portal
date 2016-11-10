@@ -14,6 +14,7 @@
 
 package com.liferay.portal.instances.web.internal.portlet.action;
 
+import com.liferay.portal.instances.service.PortalInstancesLocalService;
 import com.liferay.portal.instances.web.internal.constants.PortalInstancesPortletKeys;
 import com.liferay.portal.kernel.exception.CompanyMxException;
 import com.liferay.portal.kernel.exception.CompanyVirtualHostException;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.util.PortalInstances;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,6 +58,8 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		long companyId = ParamUtil.getLong(actionRequest, "companyId");
 
 		_companyService.deleteCompany(companyId);
+
+		synchronizePortalInstances();
 	}
 
 	@Override
@@ -104,9 +106,8 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyService(CompanyService companyService) {
-		_companyService = companyService;
+	protected void synchronizePortalInstances() {
+		_portalInstancesLocalService.synchronizePortalInstances();
 	}
 
 	protected void updateInstance(ActionRequest actionRequest)
@@ -132,7 +133,8 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			ServletContext servletContext =
 				(ServletContext)actionRequest.getAttribute(WebKeys.CTX);
 
-			PortalInstances.initCompany(servletContext, company.getWebId());
+			_portalInstancesLocalService.initializePortalInstance(
+				servletContext, company.getWebId());
 		}
 		else {
 
@@ -141,8 +143,14 @@ public class EditInstanceMVCActionCommand extends BaseMVCActionCommand {
 			_companyService.updateCompany(
 				companyId, virtualHostname, mx, maxUsers, active);
 		}
+
+		synchronizePortalInstances();
 	}
 
+	@Reference
 	private CompanyService _companyService;
+
+	@Reference
+	private PortalInstancesLocalService _portalInstancesLocalService;
 
 }

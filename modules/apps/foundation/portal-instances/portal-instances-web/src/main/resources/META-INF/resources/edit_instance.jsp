@@ -71,7 +71,7 @@ renderResponse.setTitle((selCompany == null) ? LanguageUtil.get(request, "new-in
 
 			<aui:input name="maxUsers" />
 
-			<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstances.getDefaultCompanyId()) %>" name="active" type="toggle-switch" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
+			<aui:input disabled="<%= (selCompany != null) && (selCompany.getCompanyId() == PortalInstancesLocalServiceUtil.getDefaultCompanyId()) %>" name="active" type="toggle-switch" value="<%= (selCompany != null) ? selCompany.isActive() : true %>" />
 		</aui:fieldset>
 	</aui:fieldset-group>
 

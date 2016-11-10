@@ -324,11 +324,9 @@ public final class CommandLoggerHandler {
 			sb.append(_getLineItemText("misc", " with parameters"));
 
 			for (String argument : arguments) {
-				String argumentString = "Arg: " + argument;
-
 				sb.append(
 					_getLineItemText(
-						"param-value", HtmlUtil.escape(argumentString)));
+						"param-value", HtmlUtil.escape("Arg: " + argument)));
 			}
 		}
 

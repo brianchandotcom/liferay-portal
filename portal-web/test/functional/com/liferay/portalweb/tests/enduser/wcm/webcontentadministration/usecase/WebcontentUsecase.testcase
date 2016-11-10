@@ -1494,7 +1494,7 @@
 		</execute>
 	</command>
 
-	<command name="ExpireMultipleWebContentArticles" priority="4">
+	<command name="ExpireMultipleWebContent" priority="4">
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>

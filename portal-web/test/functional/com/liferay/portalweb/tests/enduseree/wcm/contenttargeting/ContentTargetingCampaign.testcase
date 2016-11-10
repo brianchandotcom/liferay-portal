@@ -8,6 +8,10 @@
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
 
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer" />
+
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">

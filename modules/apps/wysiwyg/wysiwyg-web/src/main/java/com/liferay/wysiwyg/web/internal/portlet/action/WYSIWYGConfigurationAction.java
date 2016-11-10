@@ -12,14 +12,21 @@
  * details.
  */
 
-package com.liferay.wysiwyg.web.internal.constants;
+package com.liferay.wysiwyg.web.internal.portlet.action;
+
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.wysiwyg.web.internal.constants.WYSIWYGPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock
  */
-public class WysiwygPortletKeys {
-
-	public static final String WYSIWYG =
-		"com_liferay_wysiwyg_web_portlet_WysiwygPortlet";
-
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + WYSIWYGPortletKeys.WYSIWYG},
+	service = ConfigurationAction.class
+)
+public class WYSIWYGConfigurationAction extends DefaultConfigurationAction {
 }

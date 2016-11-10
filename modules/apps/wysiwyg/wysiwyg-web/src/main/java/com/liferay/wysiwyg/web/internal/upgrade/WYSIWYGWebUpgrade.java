@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class WysiwygWebUpgrade implements UpgradeStepRegistrator {
+public class WYSIWYGWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {

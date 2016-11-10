@@ -227,8 +227,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), titleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
 
 		CalendarBookingLocalServiceUtil.deleteCalendarBooking(calendarBooking);
 
@@ -268,8 +268,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), titleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
 
 		CalendarBookingLocalServiceUtil.deleteCalendarBookingInstance(
 			calendarBooking, 1, true, true);
@@ -321,8 +321,8 @@ public class CalendarBookingLocalServiceTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
 
 		CalendarBookingLocalServiceUtil.deleteCalendarBooking(
 			calendarBooking, true);
@@ -363,8 +363,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), titleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
 
 		CalendarBookingLocalServiceUtil.deleteCalendarBooking(
 			calendarBooking, false);
@@ -443,8 +443,8 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			instanceIndex, calendar.getCalendarId(), instanceTitleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			instanceStartTime, instanceStartTime + 36000000, false, null, false,
-			0, null, 0, null, serviceContext);
+			instanceStartTime, instanceStartTime + (Time.HOUR * 10), false,
+			null, false, 0, null, 0, null, serviceContext);
 
 		instanceIndex = 4;
 
@@ -454,8 +454,8 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			instanceIndex, calendar.getCalendarId(), instanceTitleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			instanceStartTime, instanceStartTime + 36000000, false, null, false,
-			0, null, 0, null, serviceContext);
+			instanceStartTime, instanceStartTime + (Time.HOUR * 10), false,
+			null, false, 0, null, 0, null, serviceContext);
 
 		List<CalendarBooking> instances =
 			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
@@ -504,8 +504,8 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			instanceIndex, calendar.getCalendarId(), instanceTitleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			firstInstancStartTime, firstInstancStartTime + 36000000, false,
-			null, false, 0, null, 0, null, serviceContext);
+			firstInstancStartTime, firstInstancStartTime + (Time.HOUR * 10),
+			false, null, false, 0, null, 0, null, serviceContext);
 
 		instanceIndex = 4;
 
@@ -516,8 +516,8 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			instanceIndex, calendar.getCalendarId(), instanceTitleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			secondInstancStartTime, secondInstancStartTime + 36000000, false,
-			null, false, 0, null, 0, null, serviceContext);
+			secondInstancStartTime, secondInstancStartTime + (Time.HOUR * 10),
+			false, null, false, 0, null, 0, null, serviceContext);
 
 		List<CalendarBooking> instances =
 			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
@@ -707,8 +707,9 @@ public class CalendarBookingLocalServiceTest {
 			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, startTime + 36000000,
-			false, null, 0, null, 0, null, serviceContext);
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
 
 		childCalendarBooking = getChildCalendarBooking(calendarBooking);
 
@@ -833,8 +834,9 @@ public class CalendarBookingLocalServiceTest {
 			calendar.getCalendarId(), new long[0],
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, startTime + 36000000,
-			false, null, 0, null, 0, null, serviceContext);
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
 
 		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 			calendarBooking.getCalendarBookingId());
@@ -898,8 +900,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), instanceTitleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
 
 		Assert.assertEquals(
 			instanceTitleMap, calendarBookingInstance.getTitleMap());
@@ -911,7 +913,7 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(), 1,
 			calendar.getCalendarId(), newTitleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			startTime, startTime + 36000000, false,
+			startTime, startTime + (Time.HOUR * 10), false,
 			calendarBooking.getRecurrence(), true, 0, null, 0, null,
 			serviceContext);
 
@@ -964,7 +966,7 @@ public class CalendarBookingLocalServiceTest {
 				childCalendarBooking.getTitleMap(),
 				childCalendarBooking.getDescriptionMap(),
 				childCalendarBooking.getLocation(), startTime,
-				startTime + 36000000, childCalendarBooking.getAllDay(),
+				startTime + (Time.HOUR * 10), childCalendarBooking.getAllDay(),
 				childCalendarBooking.getRecurrence(), firstReminder,
 				NotificationType.EMAIL.getValue(), secondReminder,
 				NotificationType.EMAIL.getValue(), serviceContext);
@@ -974,11 +976,11 @@ public class CalendarBookingLocalServiceTest {
 			calendarBooking.getCalendarId(),
 			new long[] {invitedCalendar.getCalendarId()},
 			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
-			calendarBooking.getLocation(), startTime, startTime + 37000000,
-			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
-			RandomTestUtil.randomInt(), calendarBooking.getFirstReminderType(),
-			RandomTestUtil.randomInt(), calendarBooking.getSecondReminderType(),
-			serviceContext);
+			calendarBooking.getLocation(), startTime,
+			startTime + (Time.HOUR * 11), calendarBooking.getAllDay(),
+			calendarBooking.getRecurrence(), RandomTestUtil.randomInt(),
+			calendarBooking.getFirstReminderType(), RandomTestUtil.randomInt(),
+			calendarBooking.getSecondReminderType(), serviceContext);
 
 		childCalendarBooking = getChildCalendarBooking(calendarBooking);
 
@@ -1103,8 +1105,9 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendar.getCalendarId(), new long[0],
 			RandomTestUtil.randomLocaleStringMap(), newDescriptionMap,
-			RandomTestUtil.randomString(), startTime, startTime + 36000000,
-			false, null, 0, null, 0, null, serviceContext);
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
 
 		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 			calendarBooking.getCalendarBookingId());
@@ -1158,8 +1161,9 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendar.getCalendarId(), new long[0], newTitleMap,
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomString(), startTime, startTime + 36000000,
-			false, null, 0, null, 0, null, serviceContext);
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), false, null, 0, null, 0, null,
+			serviceContext);
 
 		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 			calendarBooking.getCalendarBookingId());
@@ -1216,8 +1220,8 @@ public class CalendarBookingLocalServiceTest {
 				new long[] {invitedCalendar.getCalendarId()},
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				childCalendarBooking.getAllDay(),
+				RandomTestUtil.randomString(), startTime,
+				startTime + (Time.HOUR * 10), childCalendarBooking.getAllDay(),
 				childCalendarBooking.getRecurrence(),
 				childCalendarBooking.getFirstReminder(),
 				childCalendarBooking.getFirstReminderType(),
@@ -1259,8 +1263,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), instanceTitleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
 
 		Assert.assertEquals(
 			instanceTitleMap, calendarBookingInstance.getTitleMap());
@@ -1272,7 +1276,7 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBooking.getCalendarBookingId(),
 			calendar.getCalendarId(), new long[0], newTitleMap,
 			calendarBooking.getDescriptionMap(), calendarBooking.getLocation(),
-			startTime, startTime + 36000000, false, 0, null, 0, null,
+			startTime, startTime + (Time.HOUR * 10), false, 0, null, 0, null,
 			serviceContext);
 
 		calendarBookingInstance =

@@ -53,6 +53,8 @@ class EventScreen extends HtmlScreen {
 	deactivate() {
 		super.deactivate();
 
+		Utils.resetAllPortlets();
+
 		Liferay.fire(
 			'screenDeactivate',
 			{
@@ -82,8 +84,7 @@ class EventScreen extends HtmlScreen {
 	flip(surfaces) {
 		this.copyBodyAttributes();
 
-		return CancellablePromise.resolve(Utils.resetAllPortlets())
-			.then(CancellablePromise.resolve(this.beforeScreenFlip()))
+		return CancellablePromise.resolve(this.beforeScreenFlip())
 			.then(super.flip(surfaces))
 			.then(
 				() => {

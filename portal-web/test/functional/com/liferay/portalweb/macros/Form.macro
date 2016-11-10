@@ -195,7 +195,7 @@
 	</command>
 
 	<command name="save">
-		<execute function="AssertClick" locator1="Form#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

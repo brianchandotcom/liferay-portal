@@ -26,6 +26,7 @@ long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId
 long ddmStructureId = BeanParamUtil.getLong(recordSet, request, "DDMStructureId");
 String name = BeanParamUtil.getString(recordSet, request, "name");
 String description = BeanParamUtil.getString(recordSet, request, "description");
+boolean showPublishModal = ParamUtil.getBoolean(request, "showPublishModal");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -56,6 +57,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 		<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+		<aui:input name="saveAndPublish" type="hidden" value="<%= true %>" />
 		<aui:input name="serializedSettingsDDMFormValues" type="hidden" value="" />
 
 		<liferay-ui:error exception="<%= DDMFormLayoutValidationException.class %>" message="please-enter-a-valid-form-layout" />
@@ -157,7 +159,9 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddl-form-builder-buttons">
-				<aui:button cssClass="btn-lg ddl-button" id="submit" type="submit" value="save" />
+				<aui:button cssClass="btn-lg ddl-button" id="publish" type="submit" value="publish-form" />
+
+				<aui:button cssClass="btn-lg ddl-button" id="save" value="save-form" />
 
 				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
@@ -167,8 +171,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<div class="form-group">
 				<label class="control-label ddl-publish-checkbox" for="<portlet:namespace />publishCheckbox">
 					<span class="pull-left">
-						<liferay-ui:message key="publish-form" />
-
 						<small><liferay-ui:message key="make-this-form-public" /></small>
 					</span>
 
@@ -247,6 +249,17 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 										}
 									)
 								);
+
+								<%
+								if (showPublishModal) {
+								%>
+
+									Liferay.component('formPortlet').openPublishModal();
+
+								<%
+								}
+								%>
+
 							},
 							['liferay-ddl-portlet'].concat(systemFieldModules)
 						);

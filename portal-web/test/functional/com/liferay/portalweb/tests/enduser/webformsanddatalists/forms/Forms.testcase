@@ -1531,10 +1531,6 @@
 
 		<execute macro="Form#save" />
 
-		<execute macro="FormsAdminNavigator#gotoEditFormByName">
-			<var name="formName" value="Text" />
-		</execute>
-
 		<execute macro="Form#viewFormName">
 			<var name="formName" value="Text" />
 		</execute>
@@ -1564,10 +1560,6 @@
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#save" />
-
-		<execute macro="FormsAdminNavigator#gotoEditFormByName">
-			<var name="formName" value="Checkbox" />
-		</execute>
 
 		<execute macro="Form#viewFormName">
 			<var name="formName" value="Checkbox" />
@@ -2159,8 +2151,6 @@
 		<execute macro="Form#configureRequireCaptcha" />
 
 		<execute macro="Form#save" />
-
-		<execute macro="FormsAdminNavigator#gotoEdit" />
 
 		<execute macro="FormsAdminNavigator#gotoPublish" />
 

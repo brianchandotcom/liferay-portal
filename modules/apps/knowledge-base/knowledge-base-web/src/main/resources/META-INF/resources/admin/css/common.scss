@@ -151,6 +151,10 @@
 		margin-bottom: 15px;
 		text-align: right;
 
+		& > a {
+			display: inline-block;
+		}
+
 		& > span {
 			margin-left: 5px;
 		}

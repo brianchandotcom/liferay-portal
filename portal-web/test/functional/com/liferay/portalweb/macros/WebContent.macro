@@ -983,7 +983,7 @@
 	</command>
 
 	<command name="expireCP">
-		<for list="${webContentTitle}" param="webContentTitle">
+		<for list="${webContentTitleList}" param="webContentTitle">
 			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">
 				<var name="key_webContentTitle" value="${webContentTitle}" />
 			</execute>

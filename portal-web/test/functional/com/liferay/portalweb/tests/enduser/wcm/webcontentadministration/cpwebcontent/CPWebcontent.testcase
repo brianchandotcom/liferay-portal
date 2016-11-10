@@ -1334,7 +1334,7 @@
 		</execute>
 
 		<execute macro="WebContent#expireCP">
-			<var name="webContentTitle" value="WC WebContent Title Edit" />
+			<var name="webContentTitleList" value="WC WebContent Title Edit" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1380,7 +1380,7 @@
 		</execute>
 
 		<execute macro="WebContent#expireCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitleList" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">
@@ -1773,7 +1773,7 @@
 		</execute>
 
 		<execute macro="WebContent#expireCP">
-			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitleList" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditCP">

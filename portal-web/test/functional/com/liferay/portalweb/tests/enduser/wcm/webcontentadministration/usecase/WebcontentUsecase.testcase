@@ -1519,7 +1519,7 @@
 		</execute>
 
 		<execute macro="WebContent#expireCP">
-			<var name="webContentTitle" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3," />
+			<var name="webContentTitleList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3," />
 		</execute>
 
 		<for list="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3" param="webContentTitle">

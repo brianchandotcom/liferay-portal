@@ -14,9 +14,8 @@
 
 package com.liferay.portal.tools.portal.compat.bytecode.transformer;
 
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -69,10 +68,9 @@ public class BytecodeTransformer {
 
 		classReader.accept(bytecodeTransformerClassVisitor, 0);
 
-		DataOutputStream dataOutputStream = new DataOutputStream(
-			new FileOutputStream(path.toFile()));
-
-		dataOutputStream.write(classWriter.toByteArray());
+		try (OutputStream outputStream = Files.newOutputStream(path)) {
+			outputStream.write(classWriter.toByteArray());
+		}
 	}
 
 }

@@ -1683,7 +1683,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${webContentContent}" />
 
 		<if>
-			<isset var="${author}" />
+			<isset var="author" />
 			<then>
 				<var name="key_author" value="${author}" />
 

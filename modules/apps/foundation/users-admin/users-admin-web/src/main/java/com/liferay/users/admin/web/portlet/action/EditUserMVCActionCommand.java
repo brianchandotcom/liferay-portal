@@ -751,13 +751,13 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if (!portletId.equals(myAccountPortletId)) {
-			Group group = user.getGroup();
+		Group group = user.getGroup();
 
-			boolean hasGroupUpdatePermission = GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), group.getGroupId(),
-				ActionKeys.UPDATE);
+		boolean hasGroupUpdatePermission = GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), group.getGroupId(),
+			ActionKeys.UPDATE);
 
+		if (!portletId.equals(myAccountPortletId) && hasGroupUpdatePermission) {
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
@@ -775,8 +775,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			String privateLayoutSetPrototypeUuid =
 				privateLayoutSet.getLayoutSetPrototypeUuid();
 
-			if (hasGroupUpdatePermission &&
-				((publicLayoutSetPrototypeId > 0) ||
+			if (((publicLayoutSetPrototypeId > 0) ||
 				 (privateLayoutSetPrototypeId > 0) ||
 				 Validator.isNotNull(publicLayoutSetPrototypeUuid) ||
 				 Validator.isNotNull(privateLayoutSetPrototypeUuid))) {

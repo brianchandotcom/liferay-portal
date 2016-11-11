@@ -89,7 +89,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<zip basedir="${tstamp.value}" destfile="${test.build.liferay.portal.zip.file.name}" update="true">
 						<patternset>
-							<include name="WEB-INF/classes/portal-ext.properties"/>
+							<include name="WEB-INF/classes/portal-ext.properties" />
 						</patternset>
 					</zip>
 
@@ -105,7 +105,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<unzip src="${test.build.liferay.portal.zip.file.name}" dest="${tstamp.value}">
 						<patternset>
-							<include name="WEB-INF/classes/portal-ext.properties"/>
+							<include name="WEB-INF/classes/portal-ext.properties" />
 						</patternset>
 					</unzip>
 

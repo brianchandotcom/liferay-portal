@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.upgrade.util.UpgradeUUIDUtil;
 import com.liferay.portal.upgrade.v7_0_0.util.AssetEntryTable;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
@@ -48,6 +49,8 @@ public class UpgradeAsset extends UpgradeProcess {
 
 		updateAssetEntries();
 		updateAssetVocabularies();
+
+		UpgradeUUIDUtil.upgradeUUID(connection, "AssetTag", "tagId");
 	}
 
 	protected long getDDMStructureId(String structureKey) throws Exception {

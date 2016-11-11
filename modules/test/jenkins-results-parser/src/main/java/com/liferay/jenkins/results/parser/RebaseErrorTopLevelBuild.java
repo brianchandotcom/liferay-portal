@@ -154,8 +154,6 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 			}
 		}
 
-		result = null;
-
 		return result;
 	}
 

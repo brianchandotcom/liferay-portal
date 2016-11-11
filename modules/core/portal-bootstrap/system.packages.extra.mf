@@ -3416,7 +3416,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  nel.dao.jdbc,com.liferay.portal.kernel.upgrade";version="1.0.0",com.l
  iferay.portal.upgrade.dao.orm;uses:="com.liferay.portal.kernel.dao.db
  ,com.liferay.portal.kernel.upgrade.dao.orm";version="1.0.0",com.lifer
- ay.portal.upgrade.util;version="1.2.0";uses:="com.liferay.portal.kern
+ ay.portal.upgrade.util;version="1.3.0";uses:="com.liferay.portal.kern
  el.security.pacl,com.liferay.portal.kernel.upgrade,com.liferay.portal
  .kernel.upgrade.util,com.liferay.portal.kernel.xml",com.liferay.porta
  l.upgrade.v6_0_12_to_6_1_0;uses:="com.liferay.portal.kernel.upgrade,c
@@ -3431,7 +3431,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ortal.kernel.model,com.liferay.portal.kernel.upgrade,com.liferay.port
  al.kernel.upgrade.v6_2_0,com.liferay.portal.kernel.xml,com.liferay.po
  rtlet,javax.portlet";version="1.0.0",com.liferay.portal.upgrade.v6_2_
- 0.util;version="1.0.0",com.liferay.portal.upgrade.v7_0_0;version="1.4
+ 0.util;version="1.0.0",com.liferay.portal.upgrade.v7_0_0;version="1.5
  .0";uses:="com.liferay.portal.kernel.dao.orm,com.liferay.portal.kerne
  l.settings,com.liferay.portal.kernel.upgrade,com.liferay.portal.upgra
  de.util,com.liferay.portal.upgrade.v7_0_0.util,javax.portlet",com.lif

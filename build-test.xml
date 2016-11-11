@@ -235,6 +235,15 @@ jdbc.counter.minIdle=0
 
 counter.jdbc.prefix=jdbc.counter.]]></echo>
 
+			<if>
+				<equals arg1="${database.type}" arg2="oracle" />
+				<then>
+					<echo append="true" file="@{properties.file}"><![CDATA[
+jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0
+jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
+				</then>
+			</if>
+
 			<post-action />
 		</sequential>
 	</macrodef>
@@ -5629,6 +5638,14 @@ sprite.root.dir=/tmp/sprite
 axis.servlet.hosts.allowed=
 
 tunnel.servlet.hosts.allowed=</echo>
+
+		<if>
+			<equals arg1="${database.type}" arg2="oracle" />
+			<then>
+				<echo append="true" file="portal-impl/src/portal-ext.properties"><![CDATA[
+jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_TIMEOUT=0]]></echo>
+			</then>
+		</if>
 
 		<get-testcase-property property.name="captcha.max.challenges" />
 

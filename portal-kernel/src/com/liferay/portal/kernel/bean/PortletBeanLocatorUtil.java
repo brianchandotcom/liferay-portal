@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.bean;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,17 +40,21 @@ public class PortletBeanLocatorUtil {
 		BeanLocator beanLocator = getBeanLocator(servletContextName);
 
 		if (beanLocator == null) {
-			_log.error(
-				"BeanLocator is null for servlet context " +
-					servletContextName);
+			beanLocator = getBeanLocator(
+				StringUtil.strip(servletContextName, '.'));
 
-			throw new BeanLocatorException(
-				"BeanLocator is not set for servlet context " +
-					servletContextName);
+			if (beanLocator == null) {
+				_log.error(
+					"BeanLocator is null for servlet context " +
+						servletContextName);
+
+				throw new BeanLocatorException(
+					"BeanLocator is not set for servlet context " +
+						servletContextName);
+			}
 		}
-		else {
-			return beanLocator.locate(name);
-		}
+
+		return beanLocator.locate(name);
 	}
 
 	public static void setBeanLocator(

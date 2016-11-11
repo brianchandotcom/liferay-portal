@@ -66,7 +66,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -550,13 +549,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setLayoutSetLocalService(
-		LayoutSetLocalService layoutSetLocalService) {
-
-		_layoutSetLocalService = layoutSetLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setListTypeLocalService(
 		ListTypeLocalService listTypeLocalService) {
 
@@ -781,10 +773,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
-			LayoutSet publicLayoutSet = _layoutSetLocalService.getLayoutSet(
-				group.getGroupId(), false);
-			LayoutSet privateLayoutSet = _layoutSetLocalService.getLayoutSet(
-				group.getGroupId(), true);
+			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
+			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 
 			String publicLayoutSetPrototypeUuid =
 				publicLayoutSet.getLayoutSetPrototypeUuid();
@@ -822,7 +812,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
 	private DLAppLocalService _dlAppLocalService;
-	private LayoutSetLocalService _layoutSetLocalService;
 	private ListTypeLocalService _listTypeLocalService;
 	private UserService _userService;
 

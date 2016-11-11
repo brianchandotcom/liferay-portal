@@ -12,6 +12,12 @@
 		</if>
 	</command>
 
+	<command name="closeMessageSpecific">
+		<var name="key_messageSpecific" value="${messageSpecific}" />
+
+		<execute function="Click" locator1="Icon#CLOSE_SPECIFIC" />
+	</command>
+
 	<command name="closePortalLocalizationWarning">
 		<execute macro="Alert#_closeMessage">
 			<var name="messageType" value="PORTAL_LOCALIZATION" />

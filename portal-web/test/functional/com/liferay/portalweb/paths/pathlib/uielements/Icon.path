@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_SPECIFIC</td>
+	<td>//div[contains(@class,'alert-danger-content')]//div[contains(.,'${key_messageSpecific}')]/preceding-sibling::button[@class='close']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COG</td>
 	<td>//div[@id='main-content']//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
 	<td></td>

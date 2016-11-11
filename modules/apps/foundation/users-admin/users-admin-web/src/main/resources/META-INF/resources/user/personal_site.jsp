@@ -141,7 +141,7 @@ if (selUser != null) {
 									<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", publicLayoutSetPrototypeName, false) %>' name="publicLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= publicLayoutSetPrototypeLinkEnabled %>" />
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:message arguments="<%= new Object[] {publicLayoutSetPrototypeName} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= publicLayoutSetPrototypeName %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
 									<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
 								</c:otherwise>
@@ -216,7 +216,7 @@ if (selUser != null) {
 									<aui:input label='<%= LanguageUtil.format(request, "enable-propagation-of-changes-from-the-site-template-x", privateLayoutSetPrototypeName, false) %>' name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:message arguments="<%= new Object[] {privateLayoutSetPrototypeName} %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= privateLayoutSetPrototypeName %>" key="these-pages-are-linked-to-site-template-x" translateArguments="<%= false %>" />
 
 									<aui:input name="layoutSetPrototypeLinkEnabled" type="hidden" value="<%= true %>" />
 								</c:otherwise>

@@ -51,26 +51,33 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 	@Override
 	public String getResult() {
+		if (_validResult) {
+			return result;
+		}
+
 		super.getResult();
 
-		if ((result == null) || _validResult) {
+		if (result == null) {
 			return result;
 		}
 
-		if (result.equals("SUCCESS")) {
-			result = "FAILURE";
-			_validResult = true;
+		try {
+			if (result.equals("SUCCESS")) {
+				result = "FAILURE";
 
-			return result;
-		}
+				return result;
+			}
 
-		if (!result.equals("FAILURE")) {
-			return result;
-		}
+			if (!result.equals("FAILURE")) {
+				return result;
+			}
 
-		Map<String, String> stopPropertiesMap = getStopPropertiesMap();
+			Map<String, String> stopPropertiesMap = getStopPropertiesMap();
 
-		if (stopPropertiesMap.containsKey("TOP_LEVEL_GITHUB_COMMENT_ID")) {
+			if (!stopPropertiesMap.containsKey("TOP_LEVEL_GITHUB_COMMENT_ID")) {
+				return result;
+			}
+
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("http://mirrors-no-cache.lax.liferay.com/");
@@ -86,75 +93,67 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 			sb.append("/report.html");
 
-			try {
-				Element rootElement = getElement(
-					JenkinsResultsParserUtil.toString(sb.toString()));
+			Element rootElement = getElement(
+				JenkinsResultsParserUtil.toString(sb.toString()));
 
-				List<String> expectedCommentTokens = getCommentTokens(
-					rootElement);
+			List<String> expectedCommentTokens = getCommentTokens(rootElement);
 
-				sb = new StringBuilder();
+			sb = new StringBuilder();
 
-				sb.append("https://api.github.com/repos/");
-				sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
-				sb.append("/");
-				sb.append("liferay-portal-ee");
-				sb.append("/issues/comments/");
+			sb.append("https://api.github.com/repos/");
+			sb.append(getParameterValue("GITHUB_RECEIVER_USERNAME"));
+			sb.append("/");
+			sb.append("liferay-portal-ee");
+			sb.append("/issues/comments/");
 
-				sb.append(stopPropertiesMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
+			sb.append(stopPropertiesMap.get("TOP_LEVEL_GITHUB_COMMENT_ID"));
 
-				JSONObject jsonObject = getJSONObjectFromURL(sb.toString());
+			JSONObject jsonObject = getJSONObjectFromURL(sb.toString());
 
-				String commentBody = jsonObject.getString("body");
+			String commentBody = jsonObject.getString("body");
 
-				rootElement = getElement(commentBody);
+			rootElement = getElement(commentBody);
 
-				List<String> actualCommentTokens = getCommentTokens(
-					rootElement);
+			List<String> actualCommentTokens = getCommentTokens(rootElement);
 
-				boolean matchesTemplate = true;
+			boolean matchesTemplate = true;
 
-				for (int i = 0; i < expectedCommentTokens.size(); i++) {
-					System.out.println();
-					System.out.println("Test " + i);
+			for (int i = 0; i < expectedCommentTokens.size(); i++) {
+				System.out.println();
+				System.out.println("Test " + i);
 
-					Pattern pattern = Pattern.compile(
-						expectedCommentTokens.get(i));
+				Pattern pattern = Pattern.compile(expectedCommentTokens.get(i));
 
-					Matcher matcher = pattern.matcher(
-						actualCommentTokens.get(i));
+				Matcher matcher = pattern.matcher(actualCommentTokens.get(i));
 
-					System.out.println(expectedCommentTokens.get(i));
-					System.out.println(actualCommentTokens.get(i));
+				System.out.println(expectedCommentTokens.get(i));
+				System.out.println(actualCommentTokens.get(i));
 
-					if (matcher.find()) {
-						System.out.println("Tokens matched.");
-					}
-					else {
-						System.out.println("Tokens mismatched.");
-
-						_validResult = true;
-
-						return result;
-					}
+				if (matcher.find()) {
+					System.out.println("Tokens matched.");
 				}
-
-				if (matchesTemplate) {
-					result = "SUCCESS";
-					_validResult = true;
+				else {
+					System.out.println("Tokens mismatched.");
 
 					return result;
 				}
 			}
-			catch (Exception e) {
-				throw new RuntimeException(
-					"An exception occurred while trying to match the actual " +
-						"output with the expected output",
-					e);
-			}
-		}
 
-		return result;
+			if (matchesTemplate) {
+				result = "SUCCESS";
+			}
+
+			return result;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(
+				"An exception occurred while trying to match the actual " +
+					"output with the expected output",
+				e);
+		}
+		finally {
+			_validResult = true;
+		}
 	}
 
 	protected List<String> getCommentTokens(Element element) {

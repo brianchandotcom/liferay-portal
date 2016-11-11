@@ -62,8 +62,18 @@ public class FileUtil {
 		return read(file);
 	}
 
+	public static void write(File file, byte[] s) throws IOException {
+		FileUtils.writeByteArrayToFile(file, s);
+	}
+
 	public static void write(File file, String s) throws IOException {
 		FileUtils.writeStringToFile(file, s);
+	}
+
+	public static void write(String fileName, byte[] s) throws IOException {
+		File file = new File(fileName);
+
+		write(file, s);
 	}
 
 	public static void write(String fileName, String s) throws IOException {

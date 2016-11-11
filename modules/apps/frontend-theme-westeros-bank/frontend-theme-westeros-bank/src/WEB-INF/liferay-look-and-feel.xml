@@ -12,6 +12,14 @@
 			<setting configurable="true" key="show-main-search" options="all-screens,big-screens,small-screen,no-screen" type="select" value="all-screens" />
 			<setting configurable="true" key="show-recursive-menu-on" options="all-screens,big-screens,small-screen,no-screen" type="select" value="big-screens" />
 		</settings>
+		<layout-templates>
+			<custom>
+				<layout-template id="westeros_2_width_limited" name="Westeros 2 columns (90/10) width limited">
+					<template-path>/layoutttpl/custom/westeros_2_width_limited.tpl</template-path>
+					<thumbnail-path>/layoutttpl/custom/westeros_2_width_limited.png</thumbnail-path>
+				</layout-template>
+			</custom>
+		</layout-templates>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>
@@ -22,13 +30,5 @@
 		<portlet-decorator id="solid" name="Solid">
 			<portlet-decorator-css-class>portlet-solid</portlet-decorator-css-class>
 		</portlet-decorator>
-		<layout-templates>
-			<custom>
-				<layout-template id="westeros_2_width_limited" name="Westeros 2 columns (90/10) width limited">
-					<template-path>/layoutttpl/custom/westeros_2_width_limited.tpl</template-path>
-					<thumbnail-path>/layoutttpl/custom/westeros_2_width_limited.png</thumbnail-path>
-				</layout-template>
-			</custom>
-		</layout-templates>
 	</theme>
 </look-and-feel>

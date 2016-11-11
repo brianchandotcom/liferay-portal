@@ -269,6 +269,8 @@ public class DownloadFileHandler extends BaseHandler {
 		}
 		catch (FileSystemException fse) {
 			if (fse instanceof AccessDeniedException) {
+				_logger.error(fse.getMessage(), fse);
+
 				syncFile.setState(SyncFile.STATE_ERROR);
 				syncFile.setUiEvent(SyncFile.UI_EVENT_ACCESS_DENIED_LOCAL);
 

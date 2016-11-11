@@ -345,6 +345,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				StandardCopyOption.REPLACE_EXISTING);
 		}
 		catch (AccessDeniedException ade) {
+			_logger.error(ade.getMessage(), ade);
+
 			targetSyncFile.setState(SyncFile.STATE_ERROR);
 			targetSyncFile.setUiEvent(SyncFile.UI_EVENT_ACCESS_DENIED_LOCAL);
 

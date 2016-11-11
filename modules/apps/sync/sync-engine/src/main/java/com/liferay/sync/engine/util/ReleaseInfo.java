@@ -31,12 +31,12 @@ public class ReleaseInfo {
 		return _VERSION;
 	}
 
-	private static final String _BUILD = "3301";
+	private static final String _BUILD = "3401";
 
 	private static final int _BUILD_NUMBER = Integer.parseInt(_BUILD);
 
 	private static final int _FEATURE_SET = 1;
 
-	private static final String _VERSION = "3.3.1";
+	private static final String _VERSION = "3.4.1";
 
 }

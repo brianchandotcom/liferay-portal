@@ -248,6 +248,13 @@ public class IODeltaUtil {
 		}
 
 		try {
+
+			// Workaround for JDK-8150700
+
+			if (OSDetector.isWindows()) {
+				Files.delete(targetFilePath);
+			}
+
 			Files.move(
 				patchedFilePath, targetFilePath,
 				StandardCopyOption.REPLACE_EXISTING);

@@ -71,7 +71,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
 	 */
 	public void setDocrootDirName(String docrootDirName) {
 		_cssBuilderArgs.setDocrootDirName(docrootDirName);
@@ -85,7 +85,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="/"
 	 */
 	public void setOutputDirName(String outputDirName) {
 		_cssBuilderArgs.setOutputDirName(outputDirName);
@@ -121,7 +121,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}
+	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
 	protected File baseDir;

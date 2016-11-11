@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Phone;
@@ -750,13 +751,13 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
 			PortletProvider.Action.VIEW);
 
-		if (!portletId.equals(myAccountPortletId)) {
-			Group group = user.getGroup();
+		Group group = user.getGroup();
 
-			boolean hasGroupUpdatePermission = GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), group.getGroupId(),
-				ActionKeys.UPDATE);
+		boolean hasGroupUpdatePermission = GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), group.getGroupId(),
+			ActionKeys.UPDATE);
 
+		if (!portletId.equals(myAccountPortletId) && hasGroupUpdatePermission) {
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
@@ -766,9 +767,15 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
 				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
 
-			if (hasGroupUpdatePermission &&
-				((publicLayoutSetPrototypeId > 0) ||
-				 (privateLayoutSetPrototypeId > 0))) {
+			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
+			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
+
+			if ((publicLayoutSetPrototypeId > 0) ||
+				(privateLayoutSetPrototypeId > 0) ||
+				(publicLayoutSetPrototypeLinkEnabled !=
+					publicLayoutSet.isLayoutSetPrototypeLinkEnabled()) ||
+				(privateLayoutSetPrototypeLinkEnabled !=
+					privateLayoutSet.isLayoutSetPrototypeLinkEnabled())) {
 
 				SitesUtil.updateLayoutSetPrototypesLinks(
 					group, publicLayoutSetPrototypeId,

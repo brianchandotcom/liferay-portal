@@ -10,7 +10,10 @@
 	<artifactId>${artifactId}</artifactId>
 	<packaging>pom</packaging>
 	<version>1.0.0</version>
-	<name>${name}</name>
+	<name>${artifactId}</name>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -55,7 +58,4 @@
 		<module>themes</module>
 		<module>wars</module>
 	</modules>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 </project>

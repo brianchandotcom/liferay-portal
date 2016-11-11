@@ -179,6 +179,8 @@ AUI.add(
 								}
 							).render();
 
+
+
 							maxOverlay.getStdModNode(A.WidgetStdMod.BODY).append(instance._getMaxPreviewImage());
 
 							maxOverlay.get('boundingBox').append(instance._getMaxPreviewControls());
@@ -236,6 +238,7 @@ AUI.add(
 
 						if (!maxPreviewImage) {
 							maxPreviewImage = instance._currentPreviewImage.clone().removeClass('lfr-preview-file-image-current');
+							maxPreviewImage._node.id = maxPreviewImage._node.id + "Clone";
 
 							instance._maxPreviewImage = maxPreviewImage;
 						}

@@ -76,12 +76,7 @@ public class CompanyIndexFactory implements IndexFactory {
 			return;
 		}
 
-		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
-			new LiferayDocumentTypeFactory(indicesAdminClient);
-
-		createIndex(indexName, indicesAdminClient, liferayDocumentTypeFactory);
-
-		updateLiferayDocumentType(indexName, liferayDocumentTypeFactory);
+		createIndex(indexName, indicesAdminClient);
 	}
 
 	@Override
@@ -120,6 +115,8 @@ public class CompanyIndexFactory implements IndexFactory {
 			elasticsearchConfiguration.additionalIndexConfigurations());
 		setAdditionalTypeMappings(
 			elasticsearchConfiguration.additionalTypeMappings());
+		setOverrideTypeMappings(
+			elasticsearchConfiguration.overrideTypeMappings());
 
 		Map<String, String> typeMappings = getTypeMappings(properties);
 
@@ -138,7 +135,21 @@ public class CompanyIndexFactory implements IndexFactory {
 		_indexSettingsContributors.add(indexSettingsContributor);
 	}
 
-	protected void addMappings(
+	protected void addLiferayDocumentTypeMappings(
+		CreateIndexRequestBuilder createIndexRequestBuilder,
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
+
+		if (Validator.isNotNull(_overrideTypeMappings)) {
+			liferayDocumentTypeFactory.createLiferayDocumentTypeMappings(
+				createIndexRequestBuilder, _overrideTypeMappings);
+		}
+		else {
+			liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
+				createIndexRequestBuilder);
+		}
+	}
+
+	protected void addTypeMappings(
 			CreateIndexRequestBuilder createIndexRequestBuilder)
 		throws Exception {
 
@@ -152,23 +163,27 @@ public class CompanyIndexFactory implements IndexFactory {
 	}
 
 	protected void createIndex(
-			String indexName, IndicesAdminClient indicesAdminClient,
-			LiferayDocumentTypeFactory liferayDocumentTypeFactory)
+			String indexName, IndicesAdminClient indicesAdminClient)
 		throws Exception {
 
 		CreateIndexRequestBuilder createIndexRequestBuilder =
 			indicesAdminClient.prepareCreate(indexName);
 
-		addMappings(createIndexRequestBuilder);
+		LiferayDocumentTypeFactory liferayDocumentTypeFactory =
+			new LiferayDocumentTypeFactory(indicesAdminClient);
+
+		addTypeMappings(createIndexRequestBuilder);
 		setSettings(createIndexRequestBuilder, liferayDocumentTypeFactory);
 
-		liferayDocumentTypeFactory.createRequiredDefaultTypeMappings(
-			createIndexRequestBuilder);
+		addLiferayDocumentTypeMappings(
+			createIndexRequestBuilder, liferayDocumentTypeFactory);
 
 		CreateIndexResponse createIndexResponse =
 			createIndexRequestBuilder.get();
 
 		LogUtil.logActionResponse(_log, createIndexResponse);
+
+		updateLiferayDocumentType(indexName, liferayDocumentTypeFactory);
 	}
 
 	protected String getIndexName(long companyId) {
@@ -270,6 +285,10 @@ public class CompanyIndexFactory implements IndexFactory {
 		_additionalTypeMappings = additionalTypeMappings;
 	}
 
+	protected void setOverrideTypeMappings(String overrideTypeMappings) {
+		_overrideTypeMappings = overrideTypeMappings;
+	}
+
 	protected void setSettings(
 		CreateIndexRequestBuilder createIndexRequestBuilder,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
@@ -288,6 +307,10 @@ public class CompanyIndexFactory implements IndexFactory {
 	protected void updateLiferayDocumentType(
 		String indexName,
 		LiferayDocumentTypeFactory liferayDocumentTypeFactory) {
+
+		if (Validator.isNotNull(_overrideTypeMappings)) {
+			return;
+		}
 
 		loadAdditionalTypeMappings(indexName, liferayDocumentTypeFactory);
 
@@ -308,6 +331,7 @@ public class CompanyIndexFactory implements IndexFactory {
 	private String _additionalTypeMappings;
 	private final Set<IndexSettingsContributor> _indexSettingsContributors =
 		new ConcurrentSkipListSet<>();
+	private String _overrideTypeMappings;
 	private Map<String, String> _typeMappings = new HashMap<>();
 
 }

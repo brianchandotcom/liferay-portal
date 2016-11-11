@@ -75,11 +75,6 @@
 
 					<mkdir dir="${tstamp.value}" />
 
-					<unzip
-						dest="${tstamp.value}"
-						src="${test.build.liferay.portal.zip.file.name}"
-					/>
-
 					<copy
 						file="portal-impl/src/portal-ext.properties"
 						overwrite="true"
@@ -92,13 +87,33 @@ module.framework.properties.osgi.console=11312</echo>
 
 					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
 
-					<zip
-						basedir="${tstamp.value}"
-						destfile="${test.build.liferay.portal.zip.file.name}"
-						update="yes"
-					/>
+					<zip basedir="${tstamp.value}" destfile="${test.build.liferay.portal.zip.file.name}" update="true">
+						<patternset>
+							<include name="WEB-INF/classes/portal-ext.properties"/>
+						</patternset>
+					</zip>
 
 					<delete dir="${tstamp.value}" />
+
+					<var name="tstamp.value" unset="true" />
+
+					<tstamp>
+						<format pattern="yyyyMMddkkmmssSSS" property="tstamp.value" />
+					</tstamp>
+
+					<mkdir dir="${tstamp.value}" />
+
+					<unzip src="${test.build.liferay.portal.zip.file.name}" dest="${tstamp.value}">
+						<patternset>
+							<include name="WEB-INF/classes/portal-ext.properties"/>
+						</patternset>
+					</unzip>
+
+					<print-file file.name="${tstamp.value}/WEB-INF/classes/portal-ext.properties" />
+
+					<delete dir="${tstamp.value}" />
+
+					<var name="tstamp.value" unset="true" />
 				</then>
 				<else>
 					<copy

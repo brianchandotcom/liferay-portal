@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -759,11 +758,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.getPermissionChecker(), group.getGroupId(),
 				ActionKeys.UPDATE);
 
-			boolean hasUnlinkLayoutSetPrototypePermission =
-				PortalPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE);
-
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");
 			long privateLayoutSetPrototypeId = ParamUtil.getLong(
@@ -782,7 +776,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				privateLayoutSet.getLayoutSetPrototypeUuid();
 
 			if (hasGroupUpdatePermission &&
-				hasUnlinkLayoutSetPrototypePermission &&
 				((publicLayoutSetPrototypeId > 0) ||
 				 (privateLayoutSetPrototypeId > 0) ||
 				 Validator.isNotNull(publicLayoutSetPrototypeUuid) ||

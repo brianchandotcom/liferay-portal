@@ -86,7 +86,12 @@
 								/>
 							</path>
 						</pathconvert>
+					</then>
+				</if>
 
+				<if>
+					<isset property="extraapps.zip" />
+					<then>
 						<get-auto-deploy-dir />
 
 						<unzip

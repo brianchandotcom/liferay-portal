@@ -101,13 +101,9 @@
 							<goal>build-theme</goal>
 						</goals>
 						<configuration>
-							<diffsDir>src/main/webapp/</diffsDir>
-							<name>${project.artifactId}</name>
-							<outputDir>${com.liferay.portal.tools.theme.builder.outputDir}</outputDir>
 							<parentDir>${project.build.directory}/deps/com.liferay.frontend.theme.styled.jar</parentDir>
-							<parentName>_styled</parentName>
-							<templateExtension>ftl</templateExtension>
-							<unstyledDir>${project.build.directory}/deps/com.liferay.frontend.theme.unstyled.jar</unstyledDir>
+                            <parentName>_styled</parentName>
+                            <unstyledDir>${project.build.directory}/deps/com.liferay.frontend.theme.unstyled.jar</unstyledDir>
 						</configuration>
 					</execution>
 				</executions>

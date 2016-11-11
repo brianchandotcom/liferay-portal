@@ -43,7 +43,6 @@ public class WorkflowTaskPermissionChecker {
 		PermissionChecker permissionChecker) {
 
 		if (workflowTask.isCompleted()) {
-
 			return true;
 		}
 

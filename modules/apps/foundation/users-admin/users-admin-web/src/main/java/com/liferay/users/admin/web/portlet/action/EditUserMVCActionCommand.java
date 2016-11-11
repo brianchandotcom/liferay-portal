@@ -770,15 +770,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
 			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
 
-			String publicLayoutSetPrototypeUuid =
-				publicLayoutSet.getLayoutSetPrototypeUuid();
-			String privateLayoutSetPrototypeUuid =
-				privateLayoutSet.getLayoutSetPrototypeUuid();
-
-			if (((publicLayoutSetPrototypeId > 0) ||
-				 (privateLayoutSetPrototypeId > 0) ||
-				 Validator.isNotNull(publicLayoutSetPrototypeUuid) ||
-				 Validator.isNotNull(privateLayoutSetPrototypeUuid))) {
+			if ((publicLayoutSetPrototypeId > 0) ||
+				(privateLayoutSetPrototypeId > 0) ||
+				(publicLayoutSetPrototypeLinkEnabled !=
+					publicLayoutSet.isLayoutSetPrototypeLinkEnabled()) ||
+				(privateLayoutSetPrototypeLinkEnabled !=
+					privateLayoutSet.isLayoutSetPrototypeLinkEnabled())) {
 
 				SitesUtil.updateLayoutSetPrototypesLinks(
 					group, publicLayoutSetPrototypeId,

@@ -275,7 +275,7 @@ public class DDLFormAdminDisplayContext {
 		String publishedFormURL = getPublishedFormURL();
 
 		if (Validator.isNull(publishedFormURL)) {
-			return publishedFormURL;
+			return StringPool.BLANK;
 		}
 
 		return publishedFormURL.concat("/preview");
@@ -286,9 +286,9 @@ public class DDLFormAdminDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String formUrl = getFormURL();
+		String formURL = getFormURL();
 
-		return formUrl.concat(String.valueOf(_recordSet.getRecordSetId()));
+		return formURL.concat(String.valueOf(_recordSet.getRecordSetId()));
 	}
 
 	public DDLRecordSet getRecordSet() throws PortalException {

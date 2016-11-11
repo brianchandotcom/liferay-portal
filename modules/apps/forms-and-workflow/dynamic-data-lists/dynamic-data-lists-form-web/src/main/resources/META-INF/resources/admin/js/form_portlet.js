@@ -154,7 +154,7 @@ AUI.add(
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
-							instance.one('#previewButton').on('click', A.bind('_onPreviewButtonClick', instance)),
+							instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
 							instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
 							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),

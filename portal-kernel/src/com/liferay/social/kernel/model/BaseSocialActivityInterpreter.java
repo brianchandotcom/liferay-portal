@@ -376,8 +376,7 @@ public abstract class BaseSocialActivityInterpreter
 			return path;
 		}
 
-		return serviceContext.getPortalURL() + serviceContext.getPathMain() +
-			path;
+		return serviceContext.getPortalURL() + path;
 	}
 
 	protected String getPath(

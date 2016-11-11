@@ -50,8 +50,8 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
-	public void setDest(File destDir) {
-		_destDir = destDir;
+	public void setDest(File dest) {
+		_dest = dest;
 	}
 
 	public void setForce(boolean force) {
@@ -197,7 +197,12 @@ public class MirrorsGetTask extends Task {
 			}
 		}
 
-		copyFile(localCacheFile, new File(_destDir, _fileName));
+		if (_dest.exists() && _dest.isDirectory()) {
+			copyFile(localCacheFile, new File(_dest, _fileName));
+		}
+		else {
+			copyFile(localCacheFile, _dest);
+		}
 	}
 
 	protected void downloadFile(URL sourceURL, File targetFile)
@@ -446,7 +451,7 @@ public class MirrorsGetTask extends Task {
 	private static final Pattern _pattern = Pattern.compile(
 		"https?://(?<path>.+/)(?<fileName>.+)");
 
-	private File _destDir;
+	private File _dest;
 	private String _fileName;
 	private boolean _force;
 	private boolean _ignoreErrors;

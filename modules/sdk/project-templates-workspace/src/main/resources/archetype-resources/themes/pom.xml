@@ -13,6 +13,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>${artifactId}-themes</artifactId>
-    <name>${name} Themes</name>
+    <name>${artifactId} Themes</name>
     <packaging>pom</packaging>
 </project>

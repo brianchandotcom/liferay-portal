@@ -16,6 +16,7 @@ package com.liferay.project.templates;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
+
 import com.liferay.project.templates.internal.Archetyper;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.StringUtil;
@@ -24,6 +25,7 @@ import com.liferay.project.templates.internal.util.WorkspaceUtil;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -31,6 +33,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.PosixFilePermissions;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -45,20 +48,6 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  * @author Andrea Di Giorgi
  */
 public class ProjectTemplates {
-
-	public static class DeletePomFilesVisitor extends SimpleFileVisitor<Path> {
-
-		@Override
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-			if (file.endsWith("pom.xml")) {
-				file.toFile().delete();
-
-				return FileVisitResult.SKIP_SIBLINGS;
-			}
-
-			return FileVisitResult.CONTINUE;
-		}
-	}
 
 	public static final String TEMPLATE_BUNDLE_PREFIX =
 		"com.liferay.project.templates.";
@@ -207,6 +196,23 @@ public class ProjectTemplates {
 		Files.delete(templateDirPath.resolve("pom.xml"));
 
 		Files.walkFileTree(templateDirPath, new DeletePomFilesVisitor());
+	}
+
+	public static class DeletePomFilesVisitor extends SimpleFileVisitor<Path> {
+
+		@Override
+		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
+			throws IOException {
+
+			if (file.endsWith("pom.xml")) {
+				file.toFile().delete();
+
+				return FileVisitResult.SKIP_SIBLINGS;
+			}
+
+			return FileVisitResult.CONTINUE;
+		}
+
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {

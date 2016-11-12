@@ -971,15 +971,17 @@ public class ProjectTemplatesTest {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet");
 
-		_buildTemplateWithGradle(
-			new File(gradleWorkspaceProjectDir, "modules"), "mvc-portlet",
-			"foo-portlet");
+		File gradleModules = new File(gradleWorkspaceProjectDir, "modules");
+
+		_buildTemplateWithGradle(gradleModules, "mvc-portlet", "foo-portlet");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			"workspace", "withportlet");
 
+		File mavenModules = new File(mavenWorkspaceProjectDir, "modules");
+
 		_buildTemplateWithMaven(
-			"mvc-portlet", "foo-portlet", "-DclassName=Foo",
+			mavenModules, "mvc-portlet", "foo-portlet", "-DclassName=Foo",
 			"-Dpackage=foo.portlet");
 
 		_buildProjects(
@@ -1149,10 +1151,8 @@ public class ProjectTemplatesTest {
 	}
 
 	private File _buildTemplateWithMaven(
-			String template, String name, String... args)
+			File destinationDir, String template, String name, String... args)
 		throws Exception {
-
-		File destinationDir = temporaryFolder.newFolder("maven");
 
 		List<String> completeArgs = new ArrayList<>();
 
@@ -1194,6 +1194,15 @@ public class ProjectTemplatesTest {
 		_testNotExists(projectDir, "gradle/wrapper/gradle-wrapper.properties");
 
 		return projectDir;
+	}
+
+	private File _buildTemplateWithMaven(
+			String template, String name, String... args)
+		throws Exception {
+
+		File destinationDir = temporaryFolder.newFolder("maven");
+
+		return _buildTemplateWithMaven(destinationDir, template, name, args);
 	}
 
 	private void _executeGradle(File projectDir, String... taskPaths)

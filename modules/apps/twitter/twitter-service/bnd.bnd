@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Twitter Service
+Bundle-SymbolicName: com.liferay.twitter.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.twitter.configuration,\
+	com.liferay.twitter.util
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

@@ -78,7 +78,7 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		id="users"
-		rowChecker="<%= new UserOrganizationChecker(renderResponse, organization) %>"
+		rowChecker="<%= new AddUserOrganizationChecker(renderResponse, organization) %>"
 		searchContainer="<%= userSearchContainer %>"
 	>
 

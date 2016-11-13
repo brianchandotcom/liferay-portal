@@ -92,7 +92,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="/"
 	 * @required
 	 */
 	public void setPortalCommonPath(String portalCommonPath) {

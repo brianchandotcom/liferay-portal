@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -33,11 +34,14 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectUserInfoProce
 import com.liferay.portal.security.sso.openid.connect.constants.OpenIdConnectWebKeys;
 
 import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWEAlgorithm;
+import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.proc.BadJOSEException;
 import com.nimbusds.jwt.JWT;
 import com.nimbusds.oauth2.sdk.AuthorizationCode;
 import com.nimbusds.oauth2.sdk.AuthorizationCodeGrant;
 import com.nimbusds.oauth2.sdk.ErrorObject;
+import com.nimbusds.oauth2.sdk.GeneralException;
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.ResponseType;
 import com.nimbusds.oauth2.sdk.Scope;
@@ -78,6 +82,7 @@ import com.nimbusds.openid.connect.sdk.validators.IDTokenValidator;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -154,19 +159,16 @@ public class OpenIdConnectServiceHandlerImpl
 				_openIdConnectProviderRegistry.getOpenIdConnectProvider(
 					providerName);
 
-			OIDCProviderMetadata providerMetadata = initOIDCProviderMetadata(
-				openIdConnectProvider);
+			OIDCProviderMetadata oidcProviderMetadata =
+				initOIDCProviderMetadata(openIdConnectProvider);
 
 			OIDCTokenResponse tokenResponse = requestToken(
-				providerName, providerMetadata, authCode, httpServletRequest);
+				providerName, oidcProviderMetadata, authCode,
+				httpServletRequest);
 
-			// Validate token
-			// TODO: this method is not working, check later
-
-			// validateToken(
-
-			//	providerName, tokenResponse, actionRequest,
-			//	openIdConnectProvider);
+			validateToken(
+				providerName, tokenResponse, actionRequest,
+				oidcProviderMetadata);
 
 			Tokens tokens = tokenResponse.getTokens();
 
@@ -174,7 +176,8 @@ public class OpenIdConnectServiceHandlerImpl
 
 			// Request User Information
 
-			UserInfo userInfo = requestUserInfo(providerMetadata, accessToken);
+			UserInfo userInfo = requestUserInfo(
+				oidcProviderMetadata, accessToken);
 
 			long userId = _openIdConnectUserInfoProcessor.processUserInfo(
 				userInfo, themeDisplay);
@@ -184,9 +187,11 @@ public class OpenIdConnectServiceHandlerImpl
 
 			return null;
 		}
-		catch (IOException | ParseException | URISyntaxException e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
+		catch (BadJOSEException | GeneralException | IOException |
+			   JOSEException | URISyntaxException e) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
 			}
 
 			throw new SystemException(e);
@@ -224,9 +229,6 @@ public class OpenIdConnectServiceHandlerImpl
 
 		Scope scope = Scope.parse(_OPENID_CONNECT_SCOPE);
 
-		OIDCClientInformation oidcClientInformation = getOIDCClientInformation(
-			providerName);
-
 		// Compose the request
 
 		// Store state to httpSession to verify later
@@ -243,6 +245,9 @@ public class OpenIdConnectServiceHandlerImpl
 		try {
 			OIDCProviderMetadata oidcProviderMetadata =
 				initOIDCProviderMetadata(openIdConnectProvider);
+
+			OIDCClientInformation oidcClientInformation =
+				getOIDCClientInformation(providerName, oidcProviderMetadata);
 
 			URI redirectURI = createRedirectURI(httpServletRequest);
 
@@ -290,7 +295,7 @@ public class OpenIdConnectServiceHandlerImpl
 	}
 
 	protected OIDCClientInformation getOIDCClientInformation(
-			String providerName)
+			String providerName, OIDCProviderMetadata oidcProviderMetadata)
 		throws OpenIdConnectServiceException {
 
 		OpenIdConnectProvider openIdConnectProvider =
@@ -308,8 +313,26 @@ public class OpenIdConnectServiceHandlerImpl
 		Secret clientSecret = new Secret(
 			openIdConnectProvider.getClientSecret());
 
+		OIDCClientMetadata oidcClientMetadata = new OIDCClientMetadata();
+
+		oidcClientMetadata.setJWKSetURI(oidcProviderMetadata.getJWKSetURI());
+
+		List<JWSAlgorithm> jwsAlgorithms =
+			oidcProviderMetadata.getIDTokenJWSAlgs();
+
+		if (ListUtil.isNotEmpty(jwsAlgorithms)) {
+			oidcClientMetadata.setIDTokenJWSAlg(jwsAlgorithms.get(0));
+		}
+
+		List<JWEAlgorithm> jweAlgorithms =
+			oidcProviderMetadata.getIDTokenJWEAlgs();
+
+		if (ListUtil.isNotEmpty(jweAlgorithms)) {
+			oidcClientMetadata.setIDTokenJWEAlg(jweAlgorithms.get(0));
+		}
+
 		return new OIDCClientInformation(
-			clientId, new Date(), new OIDCClientMetadata(), clientSecret);
+			clientId, new Date(), oidcClientMetadata, clientSecret);
 	}
 
 	protected HttpServletRequest getOriginalServletRequest(
@@ -412,7 +435,7 @@ public class OpenIdConnectServiceHandlerImpl
 			PortalException, URISyntaxException {
 
 		OIDCClientInformation oidcClientInformation = getOIDCClientInformation(
-			providerName);
+			providerName, oidcProviderMetadata);
 
 		URI redirectURI = createRedirectURI(httpServletRequest);
 
@@ -473,11 +496,12 @@ public class OpenIdConnectServiceHandlerImpl
 	protected IDTokenClaimsSet validateToken(
 			String providerName, OIDCTokenResponse tokenResponse,
 			ActionRequest actionRequest,
-			OpenIdConnectProvider openIdConnectProvider)
-		throws BadJOSEException, JOSEException, OpenIdConnectServiceException {
+			OIDCProviderMetadata oidcProviderMetadata)
+		throws BadJOSEException, GeneralException, JOSEException,
+			MalformedURLException, OpenIdConnectServiceException {
 
 		OIDCClientInformation oidcClientInformation = getOIDCClientInformation(
-			providerName);
+			providerName, oidcProviderMetadata);
 
 		HttpServletRequest httpServletRequest = getOriginalServletRequest(
 			actionRequest);
@@ -485,10 +509,8 @@ public class OpenIdConnectServiceHandlerImpl
 		Nonce nonce = (Nonce)httpServletRequest.getAttribute(
 			OpenIdConnectWebKeys.OPEN_ID_CONNECT_NONCE);
 
-		Issuer issuer = new Issuer(openIdConnectProvider.getIssuerUrl());
-
-		IDTokenValidator idTokenValidator = new IDTokenValidator(
-			issuer, oidcClientInformation.getID());
+		IDTokenValidator idTokenValidator = IDTokenValidator.create(
+			oidcProviderMetadata, oidcClientInformation, null);
 
 		OIDCTokens oidcTokens = tokenResponse.getOIDCTokens();
 

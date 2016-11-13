@@ -1,0 +1,53 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/com.liferay.login.web/init.jsp" %>
+
+<portlet:actionURL var="openIdConnectURL">
+	<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="<%= OpenIdConnectWebKeys.OPEN_ID_CONNECT_REQUEST_ACTION_NAME %>" />
+</portlet:actionURL>
+
+<aui:form action="<%= openIdConnectURL %>" method="post" name="fm">
+	<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
+	<aui:select label="openid-connect-provider-name" name="<%= OpenIdConnectWebKeys.OPEN_ID_CONNECT_PROVIDER_NAME %>">
+
+		<%
+		Collection<String> openIdConnectProviderNames =
+			(Collection<String>)request.getAttribute(OpenIdConnectWebKeys.OPEN_ID_CONNECT_PROVIDER_NAMES);
+
+		for (String openIdConnectProviderName : openIdConnectProviderNames) {
+		%>
+
+			<aui:option label="<%= HtmlUtil.escape(openIdConnectProviderName) %>" value="<%= openIdConnectProviderName %>" />
+
+		<%
+		}
+		%>
+
+	</aui:select>
+
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.AuthenticationErrorException.class %>" message="an-error-occurred-while-attempting-to-authenticate-with-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.MissingClientInformationException.class %>" message="an-error-occurred-while-attempting-to-communicate-with-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.TokenErrorException.class %>" message="an-error-occurred-while-parsing-the-token-from-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.UserInfoErrorException.class %>" message="an-error-occurred-while-retrieving-user-info-from-the-openid-connect-provider" />
+	<liferay-ui:error exception="<%= OpenIdConnectServiceException.UserInfoMissingException.class %>" message="unable-to-obtain-user-info-from-the-openid-connect-provider" />
+
+	<aui:fieldset>
+		<aui:button-row>
+			<aui:button cssClass="btn-lg" type="submit" value="sign-in" />
+		</aui:button-row>
+	</aui:fieldset>
+</aui:form>

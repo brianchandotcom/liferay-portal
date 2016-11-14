@@ -24,7 +24,7 @@ import java.nio.file.Path;
 /**
  * @author David Truong
  */
-public abstract class BaseCommand {
+public abstract class BaseCommand implements Command {
 
 	public BaseCommand() {
 	}
@@ -32,8 +32,6 @@ public abstract class BaseCommand {
 	public BaseCommand(File liferayHomeDir) {
 		_liferayHomeDir = liferayHomeDir;
 	}
-
-	public abstract void execute() throws Exception;
 
 	public File getLiferayHomeDir() {
 		return _liferayHomeDir;
@@ -46,16 +44,6 @@ public abstract class BaseCommand {
 	protected Path getLiferayHomePath() {
 		return _liferayHomeDir.toPath();
 	}
-
-	protected boolean isHelp() {
-		return _help;
-	}
-
-	@Parameter(
-		description = "Print this message.", help = true,
-		names = {"-h", "--help"}
-	)
-	private boolean _help;
 
 	@Parameter(
 		converter = FileConverter.class,

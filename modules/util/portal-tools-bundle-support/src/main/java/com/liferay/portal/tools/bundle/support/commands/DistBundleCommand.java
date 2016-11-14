@@ -30,7 +30,8 @@ import java.nio.file.Path;
  * @author David Truong
  */
 @Parameters(
-	commandDescription = "Turn your liferay home into an distributable archive"
+	commandDescription = "Turn your liferay home into an distributable archive",
+	commandNames = "distBundle"
 )
 public class DistBundleCommand extends BaseCommand {
 

@@ -15,63 +15,31 @@
 package com.liferay.portal.tools.bundle.support;
 
 import com.beust.jcommander.JCommander;
+import com.beust.jcommander.ParameterException;
 
-import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
-import com.liferay.portal.tools.bundle.support.commands.DeployCommand;
-import com.liferay.portal.tools.bundle.support.commands.DistBundleCommand;
-import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
+import com.liferay.portal.tools.bundle.support.internal.BundleSupportArgs;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
 
+import java.util.List;
+import java.util.Map;
+import java.util.ServiceLoader;
+
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class BundleSupport {
 
-	public static final String COMMAND_CLEAN = "clean";
-
-	public static final String COMMAND_DEPLOY = "deploy";
-
-	public static final String COMMAND_DIST_BUNDLE = "distBundle";
-
-	public static final String COMMAND_INIT_BUNDLE = "initBundle";
-
-	public static void execute(
-			JCommander jCommander, BaseCommand baseCommand, String command)
-		throws Exception {
-
-		try {
-			if (baseCommand.isHelp()) {
-				jCommander.usage(command);
-
-				return;
-			}
-
-			baseCommand.execute();
-		}
-		catch (Exception e) {
-			jCommander.usage(command);
-
-			e.printStackTrace();
-		}
-	}
-
 	public static void main(String[] args) throws Exception {
-		CleanCommand cleanCommand = new CleanCommand();
+		BundleSupportArgs bundleSupportArgs = new BundleSupportArgs();
 
-		DeployCommand deployCommand = new DeployCommand();
+		JCommander jCommander = new JCommander(bundleSupportArgs);
 
-		DistBundleCommand distBundleCommand = new DistBundleCommand();
-
-		InitBundleCommand initBundleCommand = new InitBundleCommand();
-
-		JCommander jCommander = new JCommander();
-
-		jCommander.addCommand(COMMAND_CLEAN, cleanCommand);
-		jCommander.addCommand(COMMAND_DEPLOY, deployCommand);
-		jCommander.addCommand(COMMAND_DIST_BUNDLE, distBundleCommand);
-		jCommander.addCommand(COMMAND_INIT_BUNDLE, initBundleCommand);
+		for (Command command : ServiceLoader.load(Command.class)) {
+			jCommander.addCommand(command);
+		}
 
 		File jarFile = FileUtil.getJarFile();
 
@@ -82,24 +50,45 @@ public class BundleSupport {
 			jCommander.setProgramName(BundleSupport.class.getName());
 		}
 
-		jCommander.parse(args);
+		try {
+			jCommander.parse(args);
 
-		String command = jCommander.getParsedCommand();
+			String commandName = jCommander.getParsedCommand();
 
-		if (COMMAND_CLEAN.equals(command)) {
-			execute(jCommander, cleanCommand, command);
+			if (bundleSupportArgs.isHelp() || (commandName == null)) {
+				_printHelp(jCommander);
+			}
+			else {
+				Map<String, JCommander> commandJCommanders =
+					jCommander.getCommands();
+
+				JCommander commandJCommander = commandJCommanders.get(
+					commandName);
+
+				List<Object> commandObjects = commandJCommander.getObjects();
+
+				Command command = (Command)commandObjects.get(0);
+
+				command.execute();
+			}
 		}
-		else if (COMMAND_DEPLOY.equals(command)) {
-			execute(jCommander, deployCommand, command);
+		catch (ParameterException pe) {
+			if (!bundleSupportArgs.isHelp()) {
+				System.err.println(pe.getMessage());
+			}
+
+			_printHelp(jCommander);
 		}
-		else if (COMMAND_DIST_BUNDLE.equals(command)) {
-			execute(jCommander, distBundleCommand, command);
-		}
-		else if (COMMAND_INIT_BUNDLE.equals(command)) {
-			execute(jCommander, initBundleCommand, command);
+	}
+
+	private static void _printHelp(JCommander jCommander) {
+		String commandName = jCommander.getParsedCommand();
+
+		if (commandName == null) {
+			jCommander.usage();
 		}
 		else {
-			jCommander.usage();
+			jCommander.usage(commandName);
 		}
 	}
 

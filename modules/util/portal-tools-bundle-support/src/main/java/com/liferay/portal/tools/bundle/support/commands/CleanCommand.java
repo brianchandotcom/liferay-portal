@@ -29,7 +29,10 @@ import java.nio.file.Files;
 /**
  * @author David Truong
  */
-@Parameters(commandDescription = "Delete file from deployed to Liferay home")
+@Parameters(
+	commandDescription = "Delete file from deployed to Liferay home",
+	commandNames = "clean"
+)
 public class CleanCommand extends BaseCommand {
 
 	@Override

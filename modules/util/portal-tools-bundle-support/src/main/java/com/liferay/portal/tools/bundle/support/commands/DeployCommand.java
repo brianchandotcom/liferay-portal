@@ -29,7 +29,9 @@ import java.nio.file.NoSuchFileException;
 /**
  * @author David Truong
  */
-@Parameters(commandDescription = "Deploy file to Liferay home")
+@Parameters(
+	commandDescription = "Deploy file to Liferay home", commandNames = "deploy"
+)
 public class DeployCommand extends BaseCommand {
 
 	@Override

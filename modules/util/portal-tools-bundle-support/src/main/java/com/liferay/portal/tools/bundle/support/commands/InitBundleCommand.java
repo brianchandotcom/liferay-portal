@@ -57,7 +57,8 @@ import org.apache.http.util.EntityUtils;
  * @author David Truong
  */
 @Parameters(
-	commandDescription = "Download a new bundle and unpack to Liferay home"
+	commandDescription = "Download a new bundle and unpack to Liferay home",
+	commandNames = "initBundle"
 )
 public class InitBundleCommand extends BaseCommand {
 

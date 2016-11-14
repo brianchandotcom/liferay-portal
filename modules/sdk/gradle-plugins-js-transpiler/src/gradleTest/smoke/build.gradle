@@ -3,8 +3,26 @@ apply plugin: "java"
 
 task runGradleTest
 
+dependencies {
+	jsCompile group: "com.liferay", name: "com.liferay.frontend.js.web", version: "1.0.20"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
 runGradleTest {
 	dependsOn classes
+
+	doLast {
+		File expectedFile = file("node_modules/com.liferay.frontend.js.web/package.json")
+
+		assert expectedFile.exists()
+	}
 
 	doLast {
 		File dir = new File(sourceSets.main.output.resourcesDir, "META-INF/resources/math")

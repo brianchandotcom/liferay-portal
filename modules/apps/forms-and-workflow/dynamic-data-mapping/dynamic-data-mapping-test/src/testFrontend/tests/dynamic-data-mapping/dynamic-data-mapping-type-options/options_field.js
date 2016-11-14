@@ -68,7 +68,7 @@ describe(
 				var lastOption = optionsField.getLastOption();
 
 				lastOption.focus();
-				lastOption.setValue('First Option');
+				lastOption.set('value', 'First Option');
 
 				waitValueChange(
 					function() {

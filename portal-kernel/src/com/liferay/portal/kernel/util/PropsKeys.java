@@ -703,6 +703,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";
 
+	public static final String DL_FILE_REINDEXING_INTERVAL = "dl.file.reindexing.interval";
+
 	public static final String DL_FOLDER_COLUMNS = "dl.folder.columns";
 
 	public static final String DL_FOLDER_ICON_CHECK_COUNT = "dl.folder.icon.check.count";

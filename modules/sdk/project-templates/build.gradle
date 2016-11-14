@@ -31,6 +31,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-content-targeting-tracking-action")
 	projectTemplates project(":sdk:project-templates-control-menu-entry")
 	projectTemplates project(":sdk:project-templates-fragment")
+	projectTemplates project(":sdk:project-templates-jax-rs")
 	projectTemplates project(":sdk:project-templates-mvc-portlet")
 	projectTemplates project(":sdk:project-templates-panel-app")
 	projectTemplates project(":sdk:project-templates-portlet")

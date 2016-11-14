@@ -539,7 +539,6 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/java/my/rest/application/MyRestApplication.java",
 			"public class MyRestApplication extends Application");
-
 		_testContains(
 			gradleProjectDir,
 			"src/main/resources/configuration" +
@@ -554,7 +553,6 @@ public class ProjectTemplatesTest {
 			mavenProjectDir,
 			"src/main/java/my/rest/application/MyRestApplication.java",
 			"public class MyRestApplication extends Application");
-
 		_testContains(
 			mavenProjectDir,
 			"src/main/resources/configuration" +

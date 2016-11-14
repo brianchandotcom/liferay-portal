@@ -90,9 +90,9 @@
 		<execute function="SelectFrameTop" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="IFrame#DIALOG" />
+			<condition function="IsElementPresent" locator1="IFrame#SELECT_TAG" />
 			<then>
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+				<execute function="SelectFrame" locator1="IFrame#SELECT_TAG" />
 			</then>
 		</if>
 

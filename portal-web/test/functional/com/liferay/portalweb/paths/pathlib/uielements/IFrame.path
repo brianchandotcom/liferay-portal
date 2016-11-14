@@ -119,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_TAG</td>
+	<td>//iframe[contains(@id,'AssetTagsSelectorPortlet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE_SITE_PAGES</td>
 	<td>//iframe[contains(@id,'iframe') and contains(@class,'dialog-iframe-node')]</td>
 	<td></td>

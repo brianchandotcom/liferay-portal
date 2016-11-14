@@ -641,6 +641,11 @@ publishing.
 ### Changed
 - [LPS-68298]: Update the [Liferay Gradle Plugins] dependency to version 3.0.36.
 
+## 1.2.86 - 2016-11-14
+
+### Changed
+- [LPS-69223]: Update the [Liferay Gradle Plugins] dependency to version 3.0.37.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -695,6 +700,7 @@ publishing.
 [LPS-68980]: https://issues.liferay.com/browse/LPS-68980
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
+[LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

@@ -287,13 +287,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -468,7 +468,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms 2 Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -752,7 +752,7 @@
 
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -767,13 +767,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -785,7 +785,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -947,7 +947,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -966,7 +966,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -976,7 +976,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1147,7 +1147,7 @@
 
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1162,13 +1162,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1180,7 +1180,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1402,7 +1402,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1584,7 +1584,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1634,7 +1634,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByDetails">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1877,7 +1877,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1887,7 +1887,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1915,7 +1915,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -1925,7 +1925,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2249,13 +2249,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2267,7 +2267,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2292,13 +2292,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
 		<execute macro="Workflow#resubmitTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -2323,13 +2323,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2339,7 +2339,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2464,7 +2464,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2482,7 +2482,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2492,7 +2492,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2630,13 +2630,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2646,7 +2646,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2815,13 +2815,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2831,7 +2831,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -2984,13 +2984,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3000,7 +3000,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3164,13 +3164,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3180,7 +3180,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3349,13 +3349,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3365,7 +3365,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3539,13 +3539,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3555,7 +3555,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3711,13 +3711,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3859,7 +3859,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3870,7 +3870,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -3880,7 +3880,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4039,13 +4039,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4055,7 +4055,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Predefined" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4211,7 +4211,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4262,7 +4262,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4272,7 +4272,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4405,7 +4405,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4416,7 +4416,7 @@
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Test Data" />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4464,7 +4464,7 @@
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Test Data" />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4474,13 +4474,13 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4591,13 +4591,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4836,13 +4836,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4852,7 +4852,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -4988,13 +4988,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5036,7 +5036,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Edited" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5147,7 +5147,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5189,7 +5189,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Edited" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5199,7 +5199,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process Edited" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5335,7 +5335,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5586,13 +5586,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5602,7 +5602,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5764,7 +5764,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5774,7 +5774,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -5814,7 +5814,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5824,7 +5824,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -5988,13 +5988,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6004,7 +6004,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6058,7 +6058,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6098,7 +6098,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6108,7 +6108,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6256,7 +6256,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6266,7 +6266,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6437,7 +6437,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6447,7 +6447,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -6487,7 +6487,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6497,7 +6497,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6638,13 +6638,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6654,13 +6654,13 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
 		<execute macro="Workflow#resubmitTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -6670,7 +6670,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -6786,7 +6786,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6804,7 +6804,7 @@
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -6823,7 +6823,7 @@
 		<execute macro="Workflow#viewTaskAssignedToMeDetails">
 			<var name="workflowAssetContent" value="Test" />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -6833,7 +6833,7 @@
 
 		<execute macro="Workflow#resubmitTaskByActions" >
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -6851,7 +6851,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -6959,7 +6959,7 @@
 
 		<execute macro="Workflow#updateDueDateTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDueDate" value="04/01/2017" />
 			<var name="workflowDueDateTime" value="05:30 PM" />
 			<var name="workflowTask" value="Review" />
@@ -6971,13 +6971,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#updateDueDateAssignedToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDueDate" value="09/30/2017" />
 			<var name="workflowDueDateTime" value="04:30 PM" />
 			<var name="workflowTask" value="Review" />
@@ -7111,14 +7111,14 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowActivityComment" value="Process is approved" />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -7236,13 +7236,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -7407,13 +7407,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -7539,7 +7539,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -7863,7 +7863,7 @@
 
 		<execute macro="Workflow#viewPendingTasks">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -7878,13 +7878,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8025,7 +8025,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8053,7 +8053,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8063,7 +8063,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>
@@ -8173,13 +8173,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8325,7 +8325,7 @@
 		<execute macro="Workflow#updateDueDateTaskByActions">
 			<var name="workflowActivityComment" value="Updating the due date on a process assigned to my roles." />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDueDate" value="04/01/2017" />
 			<var name="workflowDueDateTime" value="05:30 PM" />
 			<var name="workflowTask" value="Review" />
@@ -8335,7 +8335,7 @@
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowActivityComment" value="Assign process to Test Test." />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8346,7 +8346,7 @@
 		<execute macro="Workflow#updateDueDateAssignedToMeTaskByActions">
 			<var name="workflowActivityComment" value="Updating the due date on a process assigned to me." />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDueDate" value="09/30/2017" />
 			<var name="workflowDueDateTime" value="04:30 PM" />
 			<var name="workflowTask" value="Review" />
@@ -8355,13 +8355,13 @@
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowActivityComment" value="Please make changes and resubmit." />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#resubmitTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -8372,7 +8372,7 @@
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowActivityComment" value="Assign process to Test Test again." />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8383,7 +8383,7 @@
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowActivityComment" value="Process is approved." />
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8393,7 +8393,7 @@
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8521,13 +8521,13 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8757,7 +8757,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8783,7 +8783,7 @@
 
 		<execute macro="Workflow#approveTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8808,7 +8808,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -8932,7 +8932,7 @@
 
 		<execute macro="Workflow#withdrawTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
-			<var name="workflowAssetType" value="Kaleo Forms Process" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Login Authentication OpenID Connect Web
 Bundle-SymbolicName: com.liferay.login.authentication.openid.connect.web
-Bundle-Version: 2.0.3
+Bundle-Version: 1.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Login
 Provide-Capability:\

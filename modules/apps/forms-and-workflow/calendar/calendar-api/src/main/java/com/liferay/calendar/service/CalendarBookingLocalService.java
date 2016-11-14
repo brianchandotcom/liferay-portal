@@ -203,6 +203,11 @@ public interface CalendarBookingLocalService extends BaseLocalService,
 	public CalendarBooking getCalendarBookingInstance(long calendarBookingId,
 		int instanceIndex) throws PortalException;
 
+	public CalendarBooking invokeTransition(long userId,
+		CalendarBooking calendarBooking, long startTime, int status,
+		boolean updateInstance, boolean allFollowing,
+		ServiceContext serviceContext) throws PortalException;
+
 	public CalendarBooking moveCalendarBookingToTrash(long userId,
 		CalendarBooking calendarBooking) throws PortalException;
 

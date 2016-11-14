@@ -242,6 +242,19 @@ public class CalendarBookingLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.calendar.model.CalendarBooking invokeTransition(
+		long userId,
+		com.liferay.calendar.model.CalendarBooking calendarBooking,
+		long startTime, int status, boolean updateInstance,
+		boolean allFollowing,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _calendarBookingLocalService.invokeTransition(userId,
+			calendarBooking, startTime, status, updateInstance, allFollowing,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.calendar.model.CalendarBooking moveCalendarBookingToTrash(
 		long userId, com.liferay.calendar.model.CalendarBooking calendarBooking)
 		throws com.liferay.portal.kernel.exception.PortalException {

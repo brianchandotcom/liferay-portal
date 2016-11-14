@@ -17,8 +17,10 @@ package com.liferay.gradle.plugins.js.transpiler;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask;
+import com.liferay.gradle.plugins.node.tasks.NpmInstallTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.copy.RenameDependencyClosure;
 
 import java.io.File;
 
@@ -50,6 +52,8 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public static final String DOWNLOAD_METAL_CLI_TASK_NAME =
 		"downloadMetalCli";
 
+	public static final String JS_COMPILE_CONFIGURATION_NAME = "jsCompile";
+
 	public static final String SOY_COMPILE_CONFIGURATION_NAME = "soyCompile";
 
 	public static final String TRANSPILE_JS_TASK_NAME = "transpileJS";
@@ -58,13 +62,15 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		final ExecuteNpmTask npmInstallTask =
-			(ExecuteNpmTask)GradleUtil.getTask(
+		final NpmInstallTask npmInstallTask =
+			(NpmInstallTask)GradleUtil.getTask(
 				project, NodePlugin.NPM_INSTALL_TASK_NAME);
 
 		final DownloadNodeModuleTask downloadMetalCliTask =
 			_addTaskDownloadMetalCli(project);
 
+		final Configuration jsCompileConfiguration = _addConfigurationJSCompile(
+			project);
 		final Configuration soyCompileConfiguration =
 			_addConfigurationSoyCompile(project);
 
@@ -75,6 +81,9 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					_addTasksExpandJSCompileDependencies(
+						transpileJSTask, npmInstallTask,
+						jsCompileConfiguration);
 					_addTasksExpandSoyCompileDependencies(
 						transpileJSTask, soyCompileConfiguration);
 
@@ -83,6 +92,17 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	private Configuration _addConfigurationJSCompile(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, JS_COMPILE_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures additional JavaScript dependencies.");
+		configuration.setVisible(false);
+
+		return configuration;
 	}
 
 	private Configuration _addConfigurationSoyCompile(Project project) {
@@ -106,11 +126,11 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		return downloadNodeModuleTask;
 	}
 
-	private Copy _addTaskExpandSoyCompileDependency(
-		Project project, File file) {
+	private Copy _addTaskExpandCompileDependency(
+		Project project, File file, File destinationDir, String taskNamePrefix,
+		RenameDependencyClosure renameDependencyClosure) {
 
-		String taskName = GradleUtil.getTaskName(
-			"expandSoyCompileDependency", file);
+		String taskName = GradleUtil.getTaskName(taskNamePrefix, file);
 
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
@@ -130,29 +150,50 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 
 		copy.from(project.zipTree(file));
 
+		String name = renameDependencyClosure.call(file.getName());
+
+		name = name.substring(0, name.length() - 4);
+
+		destinationDir = new File(destinationDir, name);
+
 		copy.setDescription(
-			"Expands " + file.getName() + " into a temporary directory.");
-
-		String name = file.getName();
-
-		int pos = name.lastIndexOf('.');
-
-		if (pos != -1) {
-			name = name.substring(0, pos);
-		}
-
-		copy.setDestinationDir(new File(project.getBuildDir(), name));
+			"Expands " + file.getName() + " into " +
+				project.relativePath(destinationDir) + ".");
+		copy.setDestinationDir(destinationDir);
 
 		return copy;
 	}
 
-	private void _addTasksExpandSoyCompileDependencies(
-		TranspileJSTask transpileJSTask,
-		Iterable<File> soyCompileDependencyFiles) {
+	private void _addTasksExpandJSCompileDependencies(
+		TranspileJSTask transpileJSTask, NpmInstallTask npmInstallTask,
+		Configuration configuration) {
 
-		for (File file : soyCompileDependencyFiles) {
-			Copy copy = _addTaskExpandSoyCompileDependency(
-				transpileJSTask.getProject(), file);
+		Project project = transpileJSTask.getProject();
+
+		RenameDependencyClosure renameDependencyClosure =
+			new RenameDependencyClosure(project, configuration.getName());
+
+		for (File file : configuration) {
+			Copy copy = _addTaskExpandCompileDependency(
+				project, file, npmInstallTask.getNodeModulesDir(),
+				"expandJSCompileDependency", renameDependencyClosure);
+
+			transpileJSTask.dependsOn(copy);
+		}
+	}
+
+	private void _addTasksExpandSoyCompileDependencies(
+		TranspileJSTask transpileJSTask, Configuration configuration) {
+
+		Project project = transpileJSTask.getProject();
+
+		RenameDependencyClosure renameDependencyClosure =
+			new RenameDependencyClosure(project, configuration.getName());
+
+		for (File file : configuration) {
+			Copy copy = _addTaskExpandCompileDependency(
+				project, file, project.getBuildDir(),
+				"expandSoyCompileDependency", renameDependencyClosure);
 
 			transpileJSTask.dependsOn(copy);
 

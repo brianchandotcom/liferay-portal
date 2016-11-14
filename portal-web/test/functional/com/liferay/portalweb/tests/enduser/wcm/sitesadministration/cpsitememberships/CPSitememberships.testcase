@@ -1041,7 +1041,7 @@
 	</command>
 
 	<command name="ViewMembershipRequestWithSiteMembershipScope" priority="3">
-		<for list="1,2" param="i" >
+		<for list="1,2" param="i">
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
 			</execute>

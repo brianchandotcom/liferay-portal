@@ -42,11 +42,7 @@ public class WorkflowTaskPermissionChecker {
 		long groupId, WorkflowTask workflowTask,
 		PermissionChecker permissionChecker) {
 
-		if (workflowTask.isCompleted()) {
-			return true;
-		}
-
-		if (permissionChecker.isOmniadmin() ||
+		if (workflowTask.isCompleted() || permissionChecker.isOmniadmin() ||
 			permissionChecker.isCompanyAdmin()) {
 
 			return true;

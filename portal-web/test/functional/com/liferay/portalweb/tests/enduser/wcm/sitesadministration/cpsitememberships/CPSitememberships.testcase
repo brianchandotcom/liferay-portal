@@ -1072,11 +1072,9 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG" >
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea@liferay.com" />
+			<var name="userLoginFullName" value="Userfn Userln" />
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
@@ -1087,12 +1085,8 @@
 			<var name="siteName" value="Site Name 1" />
 		</execute>
 
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#loginPG">
-			<var name="password" value="test" />
-			<var name="userEmailAddress" value="test@liferay.com" />
-			<var name="userScreenName" value="usersn" />
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginFullName" value="Test Test" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

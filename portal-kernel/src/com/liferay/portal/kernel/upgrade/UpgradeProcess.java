@@ -160,6 +160,16 @@ public abstract class UpgradeProcess
 		public AlterColumnName(String oldColumnName, String newColumn) {
 			_oldColumnName = oldColumnName;
 			_newColumn = newColumn;
+
+			String newColumnName = StringUtil.extractFirst(
+				newColumn, StringPool.SPACE);
+
+			if (newColumnName != null) {
+				_newColumnName = newColumnName;
+			}
+			else {
+				_newColumnName = _newColumn;
+			}
 		}
 
 		/**
@@ -187,7 +197,7 @@ public abstract class UpgradeProcess
 
 		@Override
 		public boolean shouldAddIndex(Collection<String> columnNames) {
-			return Alterable.containsIgnoreCase(columnNames, _newColumn);
+			return Alterable.containsIgnoreCase(columnNames, _newColumnName);
 		}
 
 		@Override
@@ -196,6 +206,7 @@ public abstract class UpgradeProcess
 		}
 
 		private final String _newColumn;
+		private final String _newColumnName;
 		private final String _oldColumnName;
 
 	}

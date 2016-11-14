@@ -969,9 +969,11 @@
 	</command>
 
 	<command name="expireCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
-
-		<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX" />
+		<for list="${webContentTitleList}" param="webContentTitle">
+			<execute function="Check" locator1="WC#ENTRY_DESCRIPTIVE_CHECKBOX">
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+			</execute>
+		</for>
 
 		<execute function="Click" locator1="Icon#EXPIRE" />
 	</command>

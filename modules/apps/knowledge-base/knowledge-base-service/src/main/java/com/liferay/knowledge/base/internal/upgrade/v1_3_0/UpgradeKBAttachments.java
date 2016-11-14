@@ -16,21 +16,27 @@ package com.liferay.knowledge.base.internal.upgrade.v1_3_0;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.upgrade.v6_2_0.BaseUpgradeAttachments;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Timestamp;
 
 /**
  * @author Sergio González
  */
-public class UpgradeKBAttachments extends BaseUpgradeAttachments {
+public class UpgradeKBAttachments extends UpgradeProcess {
 
 	protected void deleteEmptyDirectories() throws Exception {
 		for (long companyId : PortalUtil.getCompanyIds()) {
@@ -45,60 +51,42 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 		deleteEmptyDirectories();
 	}
 
-	@Override
-	protected String getClassName() {
-		return "com.liferay.knowledgebase.model.KBArticle";
-	}
-
-	@Override
-	protected long getContainerModelFolderId(
-			long groupId, long companyId, long resourcePrimKey,
-			long containerId, long userId, String userName,
-			Timestamp createDate)
+	protected String[] getAttachments(long companyId, long resourcePrimKey)
 		throws Exception {
 
-		long repositoryId = getRepositoryId(
-			groupId, companyId, userId, userName, createDate, getClassNameId(),
-			getPortletId());
+		String dirName = "knowledgebase/kbarticles/" + resourcePrimKey;
 
-		long repositoryFolderId = getFolderId(
-			groupId, companyId, userId, userName, createDate, repositoryId,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, getPortletId(), false);
-
-		long kbArticleFolderId = getFolderId(
-			groupId, companyId, userId, userName, createDate, repositoryId,
-			repositoryFolderId, String.valueOf(resourcePrimKey), false);
-
-		return kbArticleFolderId;
+		return DLStoreUtil.getFileNames(
+			companyId, CompanyConstants.SYSTEM, dirName);
 	}
 
-	@Override
-	protected String getDirName(long containerModelId, long resourcePrimKey) {
-		return "knowledgebase/kbarticles/" + resourcePrimKey;
+	/**
+	 * @see KBArticleAttachmentsUtil#getFolderId(long, long, long)
+	 */
+	protected long getFolderId(long groupId, long userId, long resourcePrimKey)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			groupId, _PORTLET_ID, serviceContext);
+
+		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
+			userId, repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			String.valueOf(resourcePrimKey), serviceContext);
+
+		return folder.getFolderId();
 	}
 
-	@Override
-	protected String getPortletId() {
-		return "3_WAR_knowledgebaseportlet";
-	}
-
-	@Override
 	protected void updateAttachments() throws Exception {
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("select MIN(kbArticleId) as kbArticleId, ");
-			sb.append("resourcePrimKey, groupId, companyId, ");
-			sb.append("MIN(userId) as userId, MIN(userName) as userName, ");
-			sb.append("MIN(status) as status from KBArticle ");
-			sb.append("group by resourcePrimKey, groupId, companyId");
-
-			ps = connection.prepareStatement(sb.toString());
-
-			rs = ps.executeQuery();
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select kbArticleId, resourcePrimKey, groupId, companyId, " +
+					"userId, status from KBArticle");
+			ResultSet rs = ps.executeQuery()) {
 
 			while (rs.next()) {
 				long kbArticleId = rs.getLong("kbArticleId");
@@ -106,7 +94,6 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 				long groupId = rs.getLong("groupId");
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
-				String userName = rs.getString("userName");
 				int status = rs.getInt("status");
 
 				long classPK = resourcePrimKey;
@@ -115,13 +102,56 @@ public class UpgradeKBAttachments extends BaseUpgradeAttachments {
 					classPK = kbArticleId;
 				}
 
-				updateEntryAttachments(
-					companyId, groupId, classPK, 0, userId, userName);
+				updateEntryAttachments(companyId, groupId, classPK, userId);
 			}
 		}
-		finally {
-			DataAccess.cleanUp(ps, rs);
+	}
+
+	protected void updateEntryAttachments(
+			long companyId, long groupId, long resourcePrimKey, long userId)
+		throws Exception {
+
+		for (String attachment : getAttachments(companyId, resourcePrimKey)) {
+			try {
+				if (!DLStoreUtil.hasFile(
+						companyId, CompanyConstants.SYSTEM, attachment)) {
+
+					continue;
+				}
+
+				long folderId = getFolderId(groupId, userId, resourcePrimKey);
+
+				byte[] bytes = DLStoreUtil.getFileAsBytes(
+					companyId, CompanyConstants.SYSTEM, attachment);
+
+				String title = FileUtil.getShortFileName(attachment);
+
+				String extension = FileUtil.getExtension(title);
+
+				String mimeType = MimeTypesUtil.getExtensionContentType(
+					extension);
+
+				PortletFileRepositoryUtil.addPortletFileEntry(
+					groupId, userId, _KB_ARTICLE_CLASS_NAME, resourcePrimKey,
+					_PORTLET_ID, folderId, bytes, title, mimeType, false);
+
+				DLStoreUtil.deleteFile(
+					companyId, CompanyConstants.SYSTEM, attachment);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to upgrade attachment " + attachment, pe);
+				}
+			}
 		}
 	}
+
+	private static final String _KB_ARTICLE_CLASS_NAME =
+		"com.liferay.knowledgebase.model.KBArticle";
+
+	private static final String _PORTLET_ID = "3_WAR_knowledgebaseportlet";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UpgradeKBAttachments.class);
 
 }

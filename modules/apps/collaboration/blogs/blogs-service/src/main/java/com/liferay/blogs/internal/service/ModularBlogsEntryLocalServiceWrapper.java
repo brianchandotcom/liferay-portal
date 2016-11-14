@@ -70,7 +70,11 @@ public class ModularBlogsEntryLocalServiceWrapper
 
 	@Override
 	public BlogsEntry addBlogsEntry(BlogsEntry blogsEntry) {
-		return super.addBlogsEntry(blogsEntry);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.addBlogsEntry(
+				ModelAdapterUtil.adapt(
+					com.liferay.blogs.model.BlogsEntry.class, blogsEntry)));
 	}
 
 	@Override
@@ -237,17 +241,25 @@ public class ModularBlogsEntryLocalServiceWrapper
 
 	@Override
 	public BlogsEntry createBlogsEntry(long entryId) {
-		return super.createBlogsEntry(entryId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.createBlogsEntry(entryId));
 	}
 
 	@Override
 	public BlogsEntry deleteBlogsEntry(BlogsEntry blogsEntry) {
-		return super.deleteBlogsEntry(blogsEntry);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.deleteBlogsEntry(
+				ModelAdapterUtil.adapt(
+					com.liferay.blogs.model.BlogsEntry.class, blogsEntry)));
 	}
 
 	@Override
 	public BlogsEntry deleteBlogsEntry(long entryId) throws PortalException {
-		return super.deleteBlogsEntry(entryId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.deleteBlogsEntry(entryId));
 	}
 
 	@Override
@@ -273,24 +285,28 @@ public class ModularBlogsEntryLocalServiceWrapper
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
 
-		return super.deletePersistedModel(persistedModel);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.deletePersistedModel(
+				ModelAdapterUtil.adapt(
+					com.liferay.blogs.model.BlogsEntry.class, persistedModel)));
 	}
 
 	@Override
 	public DynamicQuery dynamicQuery() {
-		return super.dynamicQuery();
+		return _blogsEntryLocalService.dynamicQuery();
 	}
 
 	@Override
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
-		return super.dynamicQuery(dynamicQuery);
+		return _blogsEntryLocalService.dynamicQuery(dynamicQuery);
 	}
 
 	@Override
 	public <T> List<T> dynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end) {
 
-		return super.dynamicQuery(dynamicQuery, start, end);
+		return _blogsEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	@Override
@@ -298,19 +314,21 @@ public class ModularBlogsEntryLocalServiceWrapper
 		DynamicQuery dynamicQuery, int start, int end,
 		OrderByComparator<T> orderByComparator) {
 
-		return super.dynamicQuery(dynamicQuery, start, end, orderByComparator);
+		return _blogsEntryLocalService.dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
-		return super.dynamicQueryCount(dynamicQuery);
+		return _blogsEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	@Override
 	public long dynamicQueryCount(
 		DynamicQuery dynamicQuery, Projection projection) {
 
-		return super.dynamicQueryCount(dynamicQuery, projection);
+		return _blogsEntryLocalService.dynamicQueryCount(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -320,31 +338,40 @@ public class ModularBlogsEntryLocalServiceWrapper
 
 	@Override
 	public BlogsEntry fetchBlogsEntry(long entryId) {
-		return super.fetchBlogsEntry(entryId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class, _blogsEntryLocalService.fetchBlogsEntry(entryId));
 	}
 
 	@Override
 	public BlogsEntry fetchBlogsEntryByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return super.fetchBlogsEntryByUuidAndGroupId(uuid, groupId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.fetchBlogsEntryByUuidAndGroupId(
+				uuid, groupId));
 	}
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		return super.getActionableDynamicQuery();
+		return _blogsEntryLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public List<BlogsEntry> getBlogsEntries(int start, int end) {
-		return super.getBlogsEntries(start, end);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.getBlogsEntries(start, end));
 	}
 
 	@Override
 	public List<BlogsEntry> getBlogsEntriesByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return super.getBlogsEntriesByUuidAndCompanyId(uuid, companyId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(
+				uuid, companyId));
 	}
 
 	@Override
@@ -352,25 +379,32 @@ public class ModularBlogsEntryLocalServiceWrapper
 		String uuid, long companyId, int start, int end,
 		OrderByComparator<BlogsEntry> orderByComparator) {
 
-		return super.getBlogsEntriesByUuidAndCompanyId(
-			uuid, companyId, start, end, orderByComparator);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.getBlogsEntriesByUuidAndCompanyId(
+				uuid, companyId, start, end,
+				ModelAdapterUtil.adapt(BlogsEntry.class, orderByComparator)));
 	}
 
 	@Override
 	public int getBlogsEntriesCount() {
-		return super.getBlogsEntriesCount();
+		return _blogsEntryLocalService.getBlogsEntriesCount();
 	}
 
 	@Override
 	public BlogsEntry getBlogsEntry(long entryId) throws PortalException {
-		return super.getBlogsEntry(entryId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class, _blogsEntryLocalService.getBlogsEntry(entryId));
 	}
 
 	@Override
 	public BlogsEntry getBlogsEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
 
-		return super.getBlogsEntryByUuidAndGroupId(uuid, groupId);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.getBlogsEntryByUuidAndGroupId(
+				uuid, groupId));
 	}
 
 	@Override
@@ -423,7 +457,8 @@ public class ModularBlogsEntryLocalServiceWrapper
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 
-		return super.getExportActionableDynamicQuery(portletDataContext);
+		return _blogsEntryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
@@ -505,7 +540,7 @@ public class ModularBlogsEntryLocalServiceWrapper
 	public IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
-		return super.getIndexableActionableDynamicQuery();
+		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -545,7 +580,9 @@ public class ModularBlogsEntryLocalServiceWrapper
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 
-		return super.getPersistedModel(primaryKeyObj);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.getPersistedModel(primaryKeyObj));
 	}
 
 	@Override
@@ -621,7 +658,11 @@ public class ModularBlogsEntryLocalServiceWrapper
 
 	@Override
 	public BlogsEntry updateBlogsEntry(BlogsEntry blogsEntry) {
-		return super.updateBlogsEntry(blogsEntry);
+		return ModelAdapterUtil.adapt(
+			BlogsEntry.class,
+			_blogsEntryLocalService.updateBlogsEntry(
+				ModelAdapterUtil.adapt(
+					com.liferay.blogs.model.BlogsEntry.class, blogsEntry)));
 	}
 
 	@Override

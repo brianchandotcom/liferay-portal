@@ -339,5 +339,7 @@ Import-Package: !*
 	@../../../portal-kernel/portal-kernel.jar,\
 	@lib/com.liferay.osgi.service.tracker.collections.jar,\
 	@lib/com.liferay.portal.app.license.api.jar,\
+	@lib/com.liferay.portal.impl.compat.jar,\
+	@lib/com.liferay.portal.kernel.compat.jar,\
 	@lib/com.liferay.registry.api.jar
 -removeheaders: Private-Package, Service-Component

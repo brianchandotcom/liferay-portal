@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
+
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
 
 		var EMPTY_FN = A.Lang.emptyFn;
@@ -260,6 +261,18 @@ AUI.add(
 						};
 					},
 
+					isEmpty: function() {
+						var instance = this;
+
+						var state = instance.getState();
+
+						var definition = state.definition;
+
+						var fields = definition.fields;
+
+						return fields.length === 0;
+					},
+
 					openConfirmationModal: function(confirm, cancel) {
 						var instance = this;
 
@@ -435,7 +448,7 @@ AUI.add(
 
 						var definition = state.definition;
 
-						if (definition.fields.length > 0) {
+						if (!instance.isEmpty()) {
 							if (!instance._isSameState(instance.savedState, state)) {
 								var editForm = instance.get('editForm');
 
@@ -481,7 +494,7 @@ AUI.add(
 
 						var recordSetId = instance.byId('recordSetId').val();
 
-						return formURL + recordSetId + "/preview";
+						return formURL + recordSetId + '/preview';
 					},
 
 					_defineIds: function(response) {
@@ -599,11 +612,13 @@ AUI.add(
 					_onPreviewButtonClick: function() {
 						var instance = this;
 
-						instance._autosave(function () {
-							var previewURL = instance._createPreviewURL();
+						instance._autosave(
+							function() {
+								var previewURL = instance._createPreviewURL();
 
-							window.open(previewURL, '_blank');
-						});
+								window.open(previewURL, '_blank');
+							}
+						);
 					},
 
 					_onPublishButtonClick: function(event) {

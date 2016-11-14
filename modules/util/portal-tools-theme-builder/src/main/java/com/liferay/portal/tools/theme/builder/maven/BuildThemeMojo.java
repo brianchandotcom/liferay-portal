@@ -44,21 +44,21 @@ public class BuildThemeMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="${maven.war.src}"
 	 */
 	public void setDiffsDir(File diffsDir) {
 		_themeBuilderArgs.setDiffsDir(diffsDir);
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="${project.artifactId}"
 	 */
 	public void setName(String name) {
 		_themeBuilderArgs.setName(name);
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
 	 */
 	public void setOutputDir(File outputDir) {
 		_themeBuilderArgs.setOutputDir(outputDir);
@@ -79,7 +79,7 @@ public class BuildThemeMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="ftl"
 	 */
 	public void setTemplateExtension(String templateExtension) {
 		_themeBuilderArgs.setTemplateExtension(templateExtension);

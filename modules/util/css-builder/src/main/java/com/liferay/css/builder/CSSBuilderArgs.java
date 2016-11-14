@@ -25,7 +25,7 @@ public class CSSBuilderArgs {
 
 	public static final String OUTPUT_DIR_NAME = ".sass-cache/";
 
-	public static final int PRECISION = 5;
+	public static final int PRECISION = 9;
 
 	public String[] getDirNames() {
 		return _dirNames;

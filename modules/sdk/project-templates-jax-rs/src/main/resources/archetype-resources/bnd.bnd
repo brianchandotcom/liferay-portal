@@ -3,5 +3,3 @@ Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
 ConfigurationPath: /configuration
 Include-Resource: configuration=src/main/resources/configuration
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: ${artifactId}

@@ -839,19 +839,33 @@
 
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
+		<execute macro="SystemSettings#gotoCategory">
+			<var name="category" value="Foundation" />
+		</execute>
+
 		<execute macro="SystemSettings#editConfiguration">
 			<var name="configurationName" value="JavaScript Loader" />
 		</execute>
 
-		<execute macro="FormFields#viewTextMultilineField">
-			<var name="fieldLabel" value="Global JSVariable" />
-			<var name="fieldName" value="globalJSVariable" />
+		<execute macro="FormFields#viewCheckboxLabel">
+			<var name="fieldLabel" value="Apply versioning" />
+			<var name="fieldName" value="applyVersioning" />
 		</execute>
 
-		<execute macro="FormFields#editTextMultiline">
-			<var name="fieldName" value="globalJSVariable" />
-			<var name="fieldValue" value="LIFERAY" />
+		<execute macro="FormFields#viewCheckboxLabel">
+			<var name="fieldLabel" value="Expose global" />
+			<var name="fieldName" value="exposeGlobal" />
 		</execute>
+
+		<for list="applyVersioning,exposeGlobal" param="fieldName">
+			<execute macro="FormFields#viewCheckboxChecked">
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
+
+			<execute macro="FormFields#disableCheckbox">
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
+		</for>
 
 		<execute macro="SystemSettings#saveConfiguration" />
 
@@ -859,15 +873,16 @@
 			<var name="configurationName" value="JavaScript Loader" />
 		</execute>
 
-		<execute macro="FormFields#viewTextMultilineValue">
-			<var name="fieldName" value="globalJSVariable" />
-			<var name="fieldValue" value="LIFERAY" />
-		</execute>
+		<for list="applyVersioning,exposeGlobal" param="fieldName">
+			<execute macro="FormFields#viewCheckboxNotChecked">
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
+		</for>
 
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="category" value="Other" />
+			<var name="category" value="Foundation" />
 			<var name="configurationName" value="JavaScript Loader" />
 		</execute>
 	</command>

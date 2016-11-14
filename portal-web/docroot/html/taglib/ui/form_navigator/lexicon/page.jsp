@@ -35,6 +35,7 @@ for (String categoryKey : categoryKeys) {
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
 			names="<%= StringUtil.merge(filterCategoryKeys) %>"
+			param="tabs1"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
@@ -79,3 +80,47 @@ for (String categoryKey : categoryKeys) {
 		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </c:if>
+
+<aui:script require="metal-dom/src/dom,metal-uri/src/Uri">
+	var dom = metalDomSrcDom.default;
+	var uri = metalUriSrcUri.default;
+
+	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+
+	if (redirectField) {
+		var currentURL = new uri(document.location.href);
+
+		var parameterName = '<portlet:namespace/>tabs1';
+
+		var tabs1 = currentURL.getParameterValue(parameterName);
+
+		var redirectFieldValue = redirectField.value;
+
+		if (redirectFieldValue) {
+			var redirectURL = new uri(redirectFieldValue);
+
+			if (redirectURL) {
+				if (tabs1) {
+					redirectURL.setParameterValue(parameterName, tabs1);
+
+					redirectField.value = redirectURL.toString();
+				}
+
+				var resetRedirectField = function(event) {
+					console.log(event.id);
+
+					redirectURL.setParameterValue(parameterName, event.id);
+
+					redirectField.value = redirectURL.toString();
+				};
+
+				Liferay.on('showTab', resetRedirectField);
+
+				dom.on(redirectField.closest('form'), 'submit', function(event) {
+					Liferay.detach('showTab', resetRedirectField);
+				});
+			}
+		}
+
+	}
+</aui:script>

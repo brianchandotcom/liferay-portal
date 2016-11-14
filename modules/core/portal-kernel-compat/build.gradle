@@ -32,6 +32,29 @@ transformImportedPackages {
 	systemProperty "classes.dir", importPackages.destinationDir
 }
 
+updateFileVersions {
+	String buildPropertiesRegex = /com\.liferay\.portal\.kernel\.compat-(\d.+?)\.jar/
+
+	match(buildPropertiesRegex, "../../../build.properties")
+
+	replaceOnlyIf = [{
+		String group, String replacement, String content ->
+
+		if (content =~ buildPropertiesRegex) {
+			return true
+		}
+
+		VersionNumber groupVersionNumber = VersionNumber.parse(group)
+		VersionNumber replacementVersionNumber = VersionNumber.parse(replacement)
+
+		if (groupVersionNumber.major != replacementVersionNumber.major) {
+			return true
+		}
+
+		return false
+	}]
+}
+
 Properties importedPackagesProperties = new Properties()
 
 File importedPackagesPropertiesFile = file("imported-packages.properties")

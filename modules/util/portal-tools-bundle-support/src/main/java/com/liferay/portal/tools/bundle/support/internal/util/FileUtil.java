@@ -65,106 +65,30 @@ public class FileUtil {
 						new BufferedOutputStream(
 							new FileOutputStream(tarFile))))) {
 
-			appendTar(entryFile, entryPath, tarArchiveOutputStream);
+			_appendTar(entryFile, entryPath, tarArchiveOutputStream);
 		}
-	}
-
-	public static void appendTar(
-			File entryFile, Path entryPath,
-			TarArchiveOutputStream tarArchiveOutputStream)
-		throws IOException {
-
-		TarArchiveEntry tarArchiveEntry = new TarArchiveEntry(
-			entryPath.toFile());
-
-		tarArchiveEntry.setSize(entryFile.length());
-
-		tarArchiveOutputStream.putArchiveEntry(tarArchiveEntry);
-
-		IOUtils.copy(new FileInputStream(entryFile), tarArchiveOutputStream);
-
-		tarArchiveOutputStream.closeArchiveEntry();
 	}
 
 	public static void appendZip(File entryFile, Path entryPath, File zipFile)
 		throws Exception {
 
-		try (FileSystem fileSystem =
-				FileUtil.createFileSystem(zipFile, false)) {
+		try (FileSystem fileSystem = _createFileSystem(
+				zipFile, false)) {
 
-			appendZip(entryFile, entryPath, fileSystem);
+			_appendZip(entryFile, entryPath, fileSystem);
 		}
-	}
-
-	public static void appendZip(
-			File entryFile, Path entryPath, FileSystem fileSystem)
-		throws IOException {
-
-		Path zipPath = fileSystem.getPath(entryPath.toString());
-
-		FileUtil.copyFile(entryFile.toPath(), zipPath);
 	}
 
 	public static void copyDirectory(File sourceFile, File destinationFile)
 		throws IOException {
 
-		copyDirectory(sourceFile.toPath(), destinationFile.toPath());
-	}
-
-	public static void copyDirectory(
-			final Path sourcePath, final Path destinationPath)
-		throws IOException {
-
-		Files.walkFileTree(
-			sourcePath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					copyFile(
-						path,
-						destinationPath.resolve(sourcePath.relativize(path)));
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
+		_copyDirectory(sourceFile.toPath(), destinationFile.toPath());
 	}
 
 	public static void copyFile(File sourceFile, File destinationFile)
 		throws IOException {
 
-		copyFile(sourceFile.toPath(), destinationFile.toPath());
-	}
-
-	public static void copyFile(Path sourcePath, Path destinationPath)
-		throws IOException {
-
-		Files.createDirectories(destinationPath);
-
-		Files.copy(
-			sourcePath.toAbsolutePath(), destinationPath,
-			StandardCopyOption.REPLACE_EXISTING);
-
-		Files.setLastModifiedTime(
-			destinationPath, Files.getLastModifiedTime(sourcePath));
-	}
-
-	public static FileSystem createFileSystem(File file, boolean create)
-		throws Exception {
-
-		Map<String, String> properties = new HashMap<>();
-
-		properties.put("create", Boolean.toString(create));
-		properties.put("encoding", "UTF-8");
-
-		URI uri = file.toURI();
-
-		return FileSystems.newFileSystem(
-			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
+		_copyFile(sourceFile.toPath(), destinationFile.toPath());
 	}
 
 	public static void deleteDirectory(Path sourcePath) throws IOException {
@@ -213,14 +137,6 @@ public class FileUtil {
 		return fileName;
 	}
 
-	public static String getFileNameWithExtension(String path) {
-		String fileName = getFileName(path);
-
-		fileName = fileName.replace("." + getExtension(fileName), "");
-
-		return fileName;
-	}
-
 	public static File getJarFile() throws Exception {
 		ProtectionDomain protectionDomain =
 			BundleSupport.class.getProtectionDomain();
@@ -260,7 +176,7 @@ public class FileUtil {
 
 						Path entryPath = parentPath.relativize(path);
 
-						appendTar(
+						_appendTar(
 							path.toFile(), entryPath, tarArchiveOutputStream);
 
 						return FileVisitResult.CONTINUE;
@@ -310,9 +226,7 @@ public class FileUtil {
 			File zipFile, final Path destinationPath, final int stripComponents)
 		throws Exception {
 
-		try (FileSystem fileSystem =
-				FileUtil.createFileSystem(zipFile, false)) {
-
+		try (FileSystem fileSystem = _createFileSystem(zipFile, false)) {
 			Files.walkFileTree(
 				fileSystem.getPath("/"),
 				new SimpleFileVisitor<Path>() {
@@ -325,7 +239,7 @@ public class FileUtil {
 						Path entryPath = path.subpath(
 							stripComponents, path.getNameCount());
 
-						copyFile(
+						_copyFile(
 							path, Paths.get(
 								destinationPath.toString(),
 								entryPath.toString()));
@@ -350,7 +264,7 @@ public class FileUtil {
 			parentPath = sourcePath;
 		}
 
-		try (FileSystem fileSystem = FileUtil.createFileSystem(zipFile, true)) {
+		try (FileSystem fileSystem = _createFileSystem(zipFile, true)) {
 			Files.walkFileTree(
 				sourcePath,
 				new SimpleFileVisitor<Path>() {
@@ -362,7 +276,7 @@ public class FileUtil {
 
 						Path entryPath = parentPath.relativize(path);
 
-						copyFile(
+						_copyFile(
 							path, fileSystem.getPath(entryPath.toString()));
 
 						return FileVisitResult.CONTINUE;
@@ -370,6 +284,82 @@ public class FileUtil {
 
 				});
 		}
+	}
+
+	private static void _appendTar(
+			File entryFile, Path entryPath,
+			TarArchiveOutputStream tarArchiveOutputStream)
+		throws IOException {
+
+		TarArchiveEntry tarArchiveEntry = new TarArchiveEntry(
+			entryPath.toFile());
+
+		tarArchiveEntry.setSize(entryFile.length());
+
+		tarArchiveOutputStream.putArchiveEntry(tarArchiveEntry);
+
+		IOUtils.copy(new FileInputStream(entryFile), tarArchiveOutputStream);
+
+		tarArchiveOutputStream.closeArchiveEntry();
+	}
+
+	private static void _appendZip(
+			File entryFile, Path entryPath, FileSystem fileSystem)
+		throws IOException {
+
+		Path zipPath = fileSystem.getPath(entryPath.toString());
+
+		_copyFile(entryFile.toPath(), zipPath);
+	}
+
+	private static void _copyDirectory(
+			final Path sourcePath, final Path destinationPath)
+		throws IOException {
+
+		Files.walkFileTree(
+			sourcePath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					_copyFile(
+						path,
+						destinationPath.resolve(sourcePath.relativize(path)));
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
+	private static void _copyFile(Path sourcePath, Path destinationPath)
+		throws IOException {
+
+		Files.createDirectories(destinationPath);
+
+		Files.copy(
+			sourcePath.toAbsolutePath(), destinationPath,
+			StandardCopyOption.REPLACE_EXISTING);
+
+		Files.setLastModifiedTime(
+			destinationPath, Files.getLastModifiedTime(sourcePath));
+	}
+
+	private static FileSystem _createFileSystem(File file, boolean create)
+		throws Exception {
+
+		Map<String, String> properties = new HashMap<>();
+
+		properties.put("create", Boolean.toString(create));
+		properties.put("encoding", "UTF-8");
+
+		URI uri = file.toURI();
+
+		return FileSystems.newFileSystem(
+			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
 	}
 
 }

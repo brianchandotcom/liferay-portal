@@ -30,7 +30,8 @@ import java.nio.file.NoSuchFileException;
  * @author David Truong
  */
 @Parameters(
-	commandDescription = "Deploy file to Liferay home", commandNames = "deploy"
+	commandDescription = "Deploy a file to a Liferay bundle.",
+	commandNames = "deploy"
 )
 public class DeployCommand extends BaseCommand {
 
@@ -38,7 +39,7 @@ public class DeployCommand extends BaseCommand {
 	public void execute() throws Exception {
 		if (!_file.exists()) {
 			throw new NoSuchFileException(
-				"Could not find " + _file.getAbsolutePath());
+				"Unable to find " + _file.getAbsolutePath());
 		}
 
 		String fileName = _file.getName();
@@ -75,7 +76,7 @@ public class DeployCommand extends BaseCommand {
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The absolute path of the file you want to deploy to your Liferay bundle.",
+		description = "The file to deploy to your Liferay bundle.",
 		names = {"-f", "--file"}, required = true
 	)
 	private File _file;

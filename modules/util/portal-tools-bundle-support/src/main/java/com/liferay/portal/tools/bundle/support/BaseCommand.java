@@ -40,7 +40,7 @@ public abstract class BaseCommand implements Command {
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The directory of your Liferay home.",
+		description = "The home directory of your Liferay bundle.",
 		names = {"-l", "--liferay"}, required = true
 	)
 	private File _liferayHomeDir;

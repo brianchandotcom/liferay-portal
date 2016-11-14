@@ -83,7 +83,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 			}
 			catch (Exception e) {
 				throw new MojoExecutionException(
-					"Could not create distributable bundle", e);
+					"Unable to create distributable bundle", e);
 			}
 		}
 		else if (!project.hasParent()) {
@@ -123,7 +123,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 			}
 			catch (Exception e) {
 				throw new MojoExecutionException(
-					"Could not create distributable bundle", e);
+					"Unable to create distributable bundle", e);
 			}
 		}
 	}

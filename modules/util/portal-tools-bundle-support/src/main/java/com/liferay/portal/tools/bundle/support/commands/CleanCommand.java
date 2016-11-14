@@ -30,7 +30,7 @@ import java.nio.file.Files;
  * @author David Truong
  */
 @Parameters(
-	commandDescription = "Delete file from deployed to Liferay home",
+	commandDescription = "Delete a file from the deploy directory of a Liferay bundle.",
 	commandNames = "clean"
 )
 public class CleanCommand extends BaseCommand {
@@ -61,7 +61,7 @@ public class CleanCommand extends BaseCommand {
 	}
 
 	@Parameter(
-		description = "The files you want to delete from your bundle.",
+		description = "The name of the file to delete from your bundle.",
 		names = {"-f", "--file"}, required = true
 	)
 	private String _fileName;

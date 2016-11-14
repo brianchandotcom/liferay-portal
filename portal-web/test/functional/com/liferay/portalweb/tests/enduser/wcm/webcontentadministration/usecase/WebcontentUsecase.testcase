@@ -1487,6 +1487,51 @@
 		</execute>
 	</command>
 
+	<command name="ExpireMultipleWebContent" priority="4">
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<for list="1,2,3" param="i">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="WC WebContent Content" />
+				<var name="webContentTitle" value="WC WebContent Title ${i}" />
+			</execute>
+
+			<execute macro="PortletEntry#publish" />
+		</for>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#expireCP">
+			<var name="webContentTitleList" value="WC WebContent Title 1,WC WebContent Title 2,WC WebContent Title 3," />
+		</execute>
+
+		<for list="1,2,3" param="i">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoEditCP">
+				<var name="webContentTitle" value="WC WebContent Title ${i}" />
+			</execute>
+
+			<execute macro="WebContent#viewStatus">
+				<var name="webContentContent" value="WC WebContent Content" />
+				<var name="webContentStatus" value="Expired" />
+				<var name="webContentTitle" value="WC WebContent Title ${i}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="StagingPublishExpiredWebContentViaWCD" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

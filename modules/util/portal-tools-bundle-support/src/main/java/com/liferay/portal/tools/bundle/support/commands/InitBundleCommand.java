@@ -284,7 +284,7 @@ public class InitBundleCommand extends BaseCommand {
 				}
 			}
 
-			_downloadFile = new File(BUNDLES_CACHE, _downloadFileName);
+			_downloadFile = new File(_BUNDLES_CACHE, _downloadFileName);
 
 			if (_downloadFile.exists() &&
 				(_downloadFile.lastModified() == lastModified.getTime())) {
@@ -295,8 +295,8 @@ public class InitBundleCommand extends BaseCommand {
 				_downloadFile.delete();
 			}
 
-			if (!BUNDLES_CACHE.exists()) {
-				BUNDLES_CACHE.mkdirs();
+			if (!_BUNDLES_CACHE.exists()) {
+				_BUNDLES_CACHE.mkdirs();
 			}
 
 			_downloadFile.createNewFile();
@@ -342,12 +342,12 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	protected static final File BUNDLES_CACHE = new File(
+	private static final File _BUNDLES_CACHE = new File(
 		System.getProperty("user.home"), ".liferay/bundles");
 
-	protected static final int DEFAULT_STRIP_COMPONENTS = 1;
+	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
 
-	protected static final String DEFAULT_URL =
+	private static final String _DEFAULT_URL =
 		"https://sourceforge.net/projects/lportal/files/Liferay%20Portal/7.0." +
 			"2%20GA3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip";
 
@@ -405,13 +405,13 @@ public class InitBundleCommand extends BaseCommand {
 		description = "The number of directories to strip when unpacking your bundle.",
 		names = {"--strip-components"}
 	)
-	private int _stripComponents = DEFAULT_STRIP_COMPONENTS;
+	private int _stripComponents = _DEFAULT_STRIP_COMPONENTS;
 
 	@Parameter (
 		description = "The url to download your Liferay Bundle.",
 		names = {"--url"}
 	)
-	private String _url = DEFAULT_URL;
+	private String _url = _DEFAULT_URL;
 
 	@Parameter (
 		description = "The username if your url requires authentication.",

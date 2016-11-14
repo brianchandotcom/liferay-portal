@@ -1229,6 +1229,101 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				SynchronousDestinationTestRule.INSTANCE);
 
 		@Test
+		public void assetEntryShouldBeAddedWhenDraft() throws Exception {
+			String fileName = RandomTestUtil.randomString();
+			byte[] bytes = CONTENT.getBytes();
+
+			String[] assetTagNames = new String[] {"hello"};
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				fileName, assetTagNames);
+
+			assetTagNames = new String[] {"hello", "world"};
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			serviceContext.setAssetTagNames(assetTagNames);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+				fileName, StringPool.BLANK, StringPool.BLANK, false, bytes,
+				serviceContext);
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			AssetEntry latestAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+
+			Assert.assertNotNull(latestAssetEntry);
+
+			AssertUtils.assertEqualsSorted(
+				assetTagNames, latestAssetEntry.getTagNames());
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			Assert.assertNotNull(assetEntry);
+
+			assetTagNames = assetEntry.getTagNames();
+
+			Assert.assertEquals(1, assetTagNames.length);
+		}
+
+		@Test
+		public void assetEntryShouldBeAddedWithNullBytesWhenDraft()
+			throws Exception {
+
+			String fileName = RandomTestUtil.randomString();
+
+			String[] assetTagNames = new String[] {"hello"};
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				fileName, assetTagNames);
+
+			assetTagNames = new String[] {"hello", "world"};
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			serviceContext.setAssetTagNames(assetTagNames);
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntry.getFileEntryId(), fileName, ContentTypes.TEXT_PLAIN,
+				fileName, StringPool.BLANK, StringPool.BLANK, false, null, 0,
+				serviceContext);
+
+			FileVersion fileVersion = fileEntry.getLatestFileVersion();
+
+			AssetEntry latestAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileVersion.getFileVersionId());
+
+			Assert.assertNotNull(latestAssetEntry);
+
+			AssertUtils.assertEqualsSorted(
+				assetTagNames, latestAssetEntry.getTagNames());
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			Assert.assertNotNull(assetEntry);
+
+			assetTagNames = assetEntry.getTagNames();
+
+			Assert.assertEquals(1, assetTagNames.length);
+		}
+
+		@Test
 		public void assetTagsShouldBeOrdered() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 			byte[] bytes = CONTENT.getBytes();

@@ -2508,7 +2508,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			description, changeLog, majorVersion, file, serviceContext);
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
+			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
 			serviceContext);
 
 		return fileEntry;
@@ -2593,7 +2593,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			description, changeLog, majorVersion, is, size, serviceContext);
 
 		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
+			getUserId(), fileEntry, null, fileEntry.getLatestFileVersion(),
 			serviceContext);
 
 		return fileEntry;

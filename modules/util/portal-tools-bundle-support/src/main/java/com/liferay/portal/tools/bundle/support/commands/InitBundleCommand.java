@@ -57,7 +57,7 @@ import org.apache.http.util.EntityUtils;
  * @author David Truong
  */
 @Parameters(
-	commandDescription = "Download a new bundle and unpack to Liferay home",
+	commandDescription = "Download and expand a new bundle.",
 	commandNames = "initBundle"
 )
 public class InitBundleCommand extends BaseCommand {
@@ -353,7 +353,7 @@ public class InitBundleCommand extends BaseCommand {
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The absolute path of your configs folder.",
+		description = "The directory that contains the configuration files.",
 		names = {"--configs"}
 	)
 	private File _configsDir;
@@ -368,13 +368,13 @@ public class InitBundleCommand extends BaseCommand {
 	private String _environment;
 
 	@Parameter (
-		description = "The password if your url requires authentication.",
+		description = "The password if your URL requires authentication.",
 		names = {"-p", "--password"}, password = true
 	)
 	private String _password;
 
 	@Parameter (
-		description = "The host of your proxy.", names = {"--proxy-host"}
+		description = "The host name of your proxy.", names = {"--proxy-host"}
 	)
 	private String _proxyHost;
 
@@ -396,25 +396,25 @@ public class InitBundleCommand extends BaseCommand {
 	private String _proxyProtocol;
 
 	@Parameter (
-		description = "The username if your proxy requires authentication.",
+		description = "The user name if your proxy requires authentication.",
 		names = {"--proxy-username"}
 	)
 	private String _proxyUsername;
 
 	@Parameter (
-		description = "The number of directories to strip when unpacking your bundle.",
+		description = "The number of directories to strip when expanding your bundle.",
 		names = {"--strip-components"}
 	)
 	private int _stripComponents = _DEFAULT_STRIP_COMPONENTS;
 
 	@Parameter (
-		description = "The url to download your Liferay Bundle.",
+		description = "The URL of the Liferay Bundle to expand.",
 		names = {"--url"}
 	)
 	private String _url = _DEFAULT_URL;
 
 	@Parameter (
-		description = "The username if your url requires authentication.",
+		description = "The user name if your URL requires authentication.",
 		names = {"-u", "--username"}
 	)
 	private String _username;

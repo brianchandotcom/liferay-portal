@@ -49,7 +49,7 @@ public class DeployMojo extends AbstractLiferayMojo {
 		catch (Exception e) {
 			Log log = getLog();
 
-			log.warn("Could not deploy " + outputFileName);
+			log.warn("Unable to deploy " + outputFileName);
 		}
 	}
 

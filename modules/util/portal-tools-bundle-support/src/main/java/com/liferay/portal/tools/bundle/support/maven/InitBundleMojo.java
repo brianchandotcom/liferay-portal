@@ -53,7 +53,7 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			initBundleCommand.execute();
 		}
 		catch (Exception e) {
-			throw new MojoExecutionException("Could not initialize bundle", e);
+			throw new MojoExecutionException("Unable to initialize bundle", e);
 		}
 	}
 

@@ -30,7 +30,7 @@ import java.nio.file.Path;
  * @author David Truong
  */
 @Parameters(
-	commandDescription = "Turn your liferay home into an distributable archive",
+	commandDescription = "Turn a Liferay home into an distributable archive.",
 	commandNames = "distBundle"
 )
 public class DistBundleCommand extends BaseCommand {
@@ -97,15 +97,15 @@ public class DistBundleCommand extends BaseCommand {
 	private String _format = _DEFAULT_FORMAT;
 
 	@Parameter(
-		description = "Add a parent folder to the archive",
+		description = "Add a parent folder to the archive.",
 		names = {"--include-folder"}
 	)
 	private boolean _includeFolder;
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The absolute path of your archive.",
-		names = {"-o", "--output"}, required = true
+		description = "The path of the archive.", names = {"-o", "--output"},
+		required = true
 	)
 	private File _outputFile;
 

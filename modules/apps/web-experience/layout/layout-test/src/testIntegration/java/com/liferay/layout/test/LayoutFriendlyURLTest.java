@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -122,8 +123,11 @@ public class LayoutFriendlyURLTest {
 
 		addLayout(_group.getGroupId(), false, friendlyURLMap);
 
+		String friendlyURL = FriendlyURLNormalizerUtil.normalizeWithEncoding(
+			"/Football⚽");
+
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-			_group.getGroupId(), false, "/Football⚽");
+			_group.getGroupId(), false, friendlyURL);
 
 		Assert.assertNotNull(layout);
 	}

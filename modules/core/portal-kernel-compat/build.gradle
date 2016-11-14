@@ -21,6 +21,10 @@ importPackages {
 	}
 }
 
+liferay {
+	deployDir = appServerLibGlobalDir
+}
+
 transformImportedPackages {
 	classpath = configurations.bytecodeTransformer
 	dependsOn importPackages
@@ -64,8 +68,4 @@ importedPackagesProperties.each {
 			include dependencyIncludes
 		}
 	}
-}
-
-liferay {
-	deployDir = appServerLibGlobalDir
 }

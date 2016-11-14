@@ -37,6 +37,7 @@ dependencies {
 	projectTemplates project(":sdk:project-templates-portlet-configuration-icon")
 	projectTemplates project(":sdk:project-templates-portlet-provider")
 	projectTemplates project(":sdk:project-templates-portlet-toolbar-contributor")
+	projectTemplates project(":sdk:project-templates-rest")
 	projectTemplates project(":sdk:project-templates-service")
 	projectTemplates project(":sdk:project-templates-service-builder")
 	projectTemplates project(":sdk:project-templates-service-wrapper")

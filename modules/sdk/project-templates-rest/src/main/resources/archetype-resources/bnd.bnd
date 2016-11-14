@@ -1,0 +1,5 @@
+Bundle-Name: ${artifactId}
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+ConfigurationPath: /configuration
+Include-Resource: configuration=src/main/resources/configuration

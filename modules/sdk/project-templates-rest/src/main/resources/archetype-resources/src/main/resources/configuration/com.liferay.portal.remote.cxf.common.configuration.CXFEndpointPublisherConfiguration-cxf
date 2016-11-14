@@ -1,0 +1,2 @@
+contextPath=/${artifactId}
+authVerifierProperties=auth.verifier.PortalSessionAuthVerifier.urls.includes=*

@@ -2668,7 +2668,7 @@ and put it in ${app.server.parent.dir}. Then rerun this task.
 
 						<mirrors-get
 							dest="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"
-							src="http://mirrors/files.liferay.com/private/apps/ibm/websphere/8.5.5/${app.server.websphere.custom.zip.name}"
+							src="http://files.liferay.com/private/apps/ibm/websphere/8.5.5/${app.server.websphere.custom.zip.name}"
 							verbose="true"
 						/>
 					</try>

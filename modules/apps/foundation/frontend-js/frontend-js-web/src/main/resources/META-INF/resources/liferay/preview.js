@@ -179,8 +179,6 @@ AUI.add(
 								}
 							).render();
 
-
-
 							maxOverlay.getStdModNode(A.WidgetStdMod.BODY).append(instance._getMaxPreviewImage());
 
 							maxOverlay.get('boundingBox').append(instance._getMaxPreviewControls());

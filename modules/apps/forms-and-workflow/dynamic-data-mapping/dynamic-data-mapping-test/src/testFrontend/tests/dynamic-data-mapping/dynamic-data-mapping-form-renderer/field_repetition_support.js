@@ -17,7 +17,7 @@ var createField = function(config) {
 	).render(document.body);
 };
 
-var compareField = function (field1, field2) {
+var compareField = function(field1, field2) {
 	var contextField1 = field1.get('context');
 
 	var contextField2 = field2.get('context');

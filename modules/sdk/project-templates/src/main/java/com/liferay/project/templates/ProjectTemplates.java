@@ -284,7 +284,7 @@ public class ProjectTemplates {
 		}
 		else if ((template.equals("mvc-portlet") ||
 				  template.equals("portlet")) &&
-				 className.endsWith("Portlet")) {
+				 (className.length() > 7) && className.endsWith("Portlet")) {
 
 			className = className.substring(0, className.length() - 7);
 		}

@@ -636,8 +636,7 @@ AUI.add(
 								]
 							)
 						);
-
-						DOC.title = banner.get('contentBox').text();
+						DOC.title = (DOC.title === instance.get('pageTitle')) ? banner.get('title') + ' ' + instance._formatTime(remainingTime) : instance.get('pageTitle');
 					}
 				}
 			}

@@ -148,7 +148,7 @@ public class CalendarBookingLocalServiceTest {
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
 
-		childCalendarBooking = CalendarBookingLocalServiceUtil.updateStatus(
+		CalendarBookingLocalServiceUtil.updateStatus(
 			_user.getUserId(), childCalendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -990,7 +990,7 @@ public class CalendarBookingLocalServiceTest {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_PENDING, childCalendarBooking.getStatus());
 
-		childCalendarBooking = CalendarBookingLocalServiceUtil.updateStatus(
+		CalendarBookingLocalServiceUtil.updateStatus(
 			_user.getUserId(), childCalendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
 
@@ -1178,20 +1178,19 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), childCalendarBooking,
 			CalendarBookingWorkflowConstants.STATUS_MAYBE, serviceContext);
 
-		childCalendarBooking =
-			CalendarBookingLocalServiceUtil.updateCalendarBooking(
-				_user.getUserId(), childCalendarBooking.getCalendarBookingId(),
-				childCalendarBooking.getCalendarId(),
-				new long[] {invitedCalendar.getCalendarId()},
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime,
-				startTime + (Time.HOUR * 10), childCalendarBooking.getAllDay(),
-				childCalendarBooking.getRecurrence(),
-				childCalendarBooking.getFirstReminder(),
-				childCalendarBooking.getFirstReminderType(),
-				childCalendarBooking.getSecondReminder(),
-				childCalendarBooking.getSecondReminderType(), serviceContext);
+		CalendarBookingLocalServiceUtil.updateCalendarBooking(
+			_user.getUserId(), childCalendarBooking.getCalendarBookingId(),
+			childCalendarBooking.getCalendarId(),
+			new long[] {invitedCalendar.getCalendarId()},
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomString(), startTime,
+			startTime + (Time.HOUR * 10), childCalendarBooking.getAllDay(),
+			childCalendarBooking.getRecurrence(),
+			childCalendarBooking.getFirstReminder(),
+			childCalendarBooking.getFirstReminderType(),
+			childCalendarBooking.getSecondReminder(),
+			childCalendarBooking.getSecondReminderType(), serviceContext);
 
 		childCalendarBooking = getChildCalendarBooking(calendarBooking);
 

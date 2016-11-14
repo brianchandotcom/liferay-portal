@@ -5,7 +5,7 @@ AUI.add(
 
 		var CONTENT_TEMPLATE = '<div class="lfr-fullscreen-source-editor-header row">' +
 				'<div class="col-xs-6">' +
-					'<button class="btn btn-default btn-xs pull-right" id="switchTheme" type="button">' +
+					'<button class="btn btn-default btn-xs lfr-portal-tooltip pull-right" data-title="{iconMoonTooltip}" id="switchTheme" type="button">' +
 						'<span class="icon-monospaced">' +
 							'<svg class="lexicon-icon lexicon-icon-moon" role="img">' +
 								'<use xlink:href="{pathThemeImages}/lexicon/icons.svg#moon" />' +
@@ -89,6 +89,7 @@ AUI.add(
 					CONTENT_TEMPLATE: Lang.sub(
 						CONTENT_TEMPLATE,
 						{
+							iconMoonTooltip: Liferay.Language.get('dark-theme'),
 							pathThemeImages: themeDisplay.getPathThemeImages()
 						}
 					),
@@ -110,7 +111,13 @@ AUI.add(
 								mode: 'html',
 								on: {
 									themeSwitched: function(event) {
-										instance._editorSwitchTheme.one('.lexicon-icon').replace(event.themes[event.nextThemeIndex].icon);
+										var editorSwitchTheme = instance._editorSwitchTheme;
+
+										var nextTheme = event.themes[event.nextThemeIndex];
+
+										editorSwitchTheme.one('.lexicon-icon').replace(nextTheme.icon);
+
+										editorSwitchTheme.setAttribute('data-title', nextTheme.tooltip);
 									}
 								},
 								value: instance.get(STR_VALUE)

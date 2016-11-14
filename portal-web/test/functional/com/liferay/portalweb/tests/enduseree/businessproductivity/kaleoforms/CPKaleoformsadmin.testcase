@@ -2,7 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Kaleo Forms Admin" />
 
-	<var name="workflowAssetType" value="Kaleo Forms Process" />
+	<var name="workflowAssetType" value="Process" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />

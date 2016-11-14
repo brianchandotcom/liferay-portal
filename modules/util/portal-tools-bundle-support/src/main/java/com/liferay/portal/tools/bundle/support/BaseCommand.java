@@ -26,13 +26,6 @@ import java.nio.file.Path;
  */
 public abstract class BaseCommand implements Command {
 
-	public BaseCommand() {
-	}
-
-	public BaseCommand(File liferayHomeDir) {
-		_liferayHomeDir = liferayHomeDir;
-	}
-
 	public File getLiferayHomeDir() {
 		return _liferayHomeDir;
 	}

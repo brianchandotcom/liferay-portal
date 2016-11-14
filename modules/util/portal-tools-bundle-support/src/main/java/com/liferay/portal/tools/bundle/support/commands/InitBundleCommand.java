@@ -387,14 +387,12 @@ public class InitBundleCommand extends BaseCommand {
 	@Parameter (
 		description = "The port of your proxy.", names = {"--proxy-port"}
 	)
-
 	private int _proxyPort;
 
 	@Parameter (
 		description = "The protocol of your proxy.",
 		names = {"--proxy-protocol"}
 	)
-
 	private String _proxyProtocol;
 
 	@Parameter (

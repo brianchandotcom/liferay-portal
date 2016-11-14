@@ -57,8 +57,8 @@ public class OpenIdConnectProviderRegistryImpl
 	public void configurationEvent(ConfigurationEvent configurationEvent) {
 		String factoryPid = configurationEvent.getFactoryPid();
 
-		if (!factoryPid.equals(
-				OpenIdConnectProviderConfiguration.class.getName())) {
+		if (!OpenIdConnectProviderConfiguration.class.getName().equals(
+				factoryPid)) {
 
 			return;
 		}

@@ -61,11 +61,6 @@
 			<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.kernel.captcha.CaptchaUtil" id="com.liferay.portal.kernel.captcha.CaptchaUtil">
-		<property name="captcha">
-			<bean class="com.liferay.portal.captcha.CaptchaImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil">
 		<property name="currentConnection">
 			<bean class="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" />

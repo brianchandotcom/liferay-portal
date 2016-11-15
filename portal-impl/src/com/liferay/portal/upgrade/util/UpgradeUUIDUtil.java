@@ -41,10 +41,10 @@ public class UpgradeUUIDUtil {
 				con.prepareStatement(updateSQL))) {
 
 			while (rs.next()) {
-				long voteId = rs.getLong(1);
+				long primaryKey = rs.getLong(1);
 
 				ps2.setString(1, PortalUUIDUtil.generate());
-				ps2.setLong(2, voteId);
+				ps2.setLong(2, primaryKey);
 
 				ps2.addBatch();
 			}

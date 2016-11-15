@@ -35,39 +35,43 @@ buildFixPackChangeLog {
 	ticketIdPrefixes "LRQA"
 }
 
-cleanReleng << {
-	File relengRootDir = file(".releng")
+cleanReleng {
+	doLast {
+		File relengRootDir = file(".releng")
 
-	FileTree relengFileTree = fileTree(dir: relengRootDir, include: "**/artifact.properties")
+		FileTree relengFileTree = fileTree(dir: relengRootDir, include: "**/artifact.properties")
 
-	relengFileTree.each {
-		File relengFile ->
+		relengFileTree.each {
+			File relengFile ->
 
-		File relengDir = relengFile.parentFile
+			File relengDir = relengFile.parentFile
 
-		File moduleDir = file(FileUtil.relativize(relengDir, relengRootDir))
+			File moduleDir = file(FileUtil.relativize(relengDir, relengRootDir))
 
-		if (!moduleDir.exists()) {
-			delete relengDir
+			if (!moduleDir.exists()) {
+				delete relengDir
 
-			println "Removed " + relativePath(relengDir)
+				println "Removed " + relativePath(relengDir)
+			}
 		}
 	}
 }
 
-cleanVersionOverride << {
-	String gitRepoPath = project.properties["gitRepoPath"]
+cleanVersionOverride {
+	doLast {
+		String gitRepoPath = project.properties["gitRepoPath"]
 
-	if (!gitRepoPath) {
-		throw new GradleException("Please set the property \"-PgitRepoPath\".")
-	}
+		if (!gitRepoPath) {
+			throw new GradleException("Please set the property \"-PgitRepoPath\".")
+		}
 
-	File gitRepoDir = file(gitRepoPath)
+		File gitRepoDir = file(gitRepoPath)
 
-	FileTree bndBndFileTree = fileTree(dir: gitRepoDir, include : "**/bnd.bnd")
+		FileTree bndBndFileTree = fileTree(dir: gitRepoDir, include : "**/bnd.bnd")
 
-	delete bndBndFileTree.collect {
-		new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
+		delete bndBndFileTree.collect {
+			new File(gitRepoDir.parentFile, ".version-override-${it.parentFile.name}.properties")
+		}
 	}
 }
 

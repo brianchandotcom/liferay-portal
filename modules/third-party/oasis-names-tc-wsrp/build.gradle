@@ -36,23 +36,25 @@ dependencies {
 	compile group: "org.apache.axis", name: "axis-jaxrpc", version: "1.4"
 }
 
-fixGeneratedJavaFiles << {
-	File dir = new File(buildDir, "build-wsdl")
+fixGeneratedJavaFiles {
+	doLast {
+		File dir = new File(buildDir, "build-wsdl")
 
-	File v2TypesDir = new File(dir, "wsrp-2.0-service/src/oasis/names/tc/wsrp/v2/types")
+		File v2TypesDir = new File(dir, "wsrp-2.0-service/src/oasis/names/tc/wsrp/v2/types")
 
-	ant.replaceregexp(match: /super\(\s*errorCode,\s*reason,\s*resourceList,\s*extensions\)/, replace: 'super(reason, resourceList, extensions, errorCode)') {
-		fileset dir: v2TypesDir, includes: "FailedPortlets.java,HandleEventsFailed.java,ImportPortletsFailed.java"
-	}
+		ant.replaceregexp(match: /super\(\s*errorCode,\s*reason,\s*resourceList,\s*extensions\)/, replace: 'super(reason, resourceList, extensions, errorCode)') {
+			fileset dir: v2TypesDir, includes: "FailedPortlets.java,HandleEventsFailed.java,ImportPortletsFailed.java"
+		}
 
-	ant.replaceregexp(match: /super\(\s*ccppProfileWarning,\s*useCachedItem,\s*mimeType,\s*itemString,\s*itemBinary,\s*locale,\s*requiresRewriting,\s*cacheControl,\s*clientAttributes,\s*extensions\);/, replace: 'super(useCachedItem,mimeType,itemString,itemBinary,locale,requiresRewriting,cacheControl,clientAttributes,extensions,ccppProfileWarning);') {
-		fileset dir: v2TypesDir, includes: "MarkupContext.java,ResourceContext.java"
-	}
+		ant.replaceregexp(match: /super\(\s*ccppProfileWarning,\s*useCachedItem,\s*mimeType,\s*itemString,\s*itemBinary,\s*locale,\s*requiresRewriting,\s*cacheControl,\s*clientAttributes,\s*extensions\);/, replace: 'super(useCachedItem,mimeType,itemString,itemBinary,locale,requiresRewriting,cacheControl,clientAttributes,extensions,ccppProfileWarning);') {
+			fileset dir: v2TypesDir, includes: "MarkupContext.java,ResourceContext.java"
+		}
 
-	String v1TypesDirName = "src/oasis/names/tc/wsrp/v1/types"
-	String v2TypesDirName = "src/oasis/names/tc/wsrp/v2/types"
+		String v1TypesDirName = "src/oasis/names/tc/wsrp/v1/types"
+		String v2TypesDirName = "src/oasis/names/tc/wsrp/v2/types"
 
-	ant.replace(dir: dir, includes: "${v1TypesDirName}/LocalizedString.java,${v1TypesDirName}/ResourceValue.java,${v1TypesDirName}/Property.java,${v2TypesDirName}/LocalizedString.java,${v2TypesDirName}/ResourceValue.java,${v2TypesDirName}/Property.java", summary: true) {
-		replacefilter token: 'attrField.setXmlName(new javax.xml.namespace.QName(&quot;&quot;, &quot;lang&quot;))', value: 'attrField.setXmlName(new javax.xml.namespace.QName(&quot;http://www.w3.org/XML/1998/namespace&quot;, &quot;lang&quot;));'
+		ant.replace(dir: dir, includes: "${v1TypesDirName}/LocalizedString.java,${v1TypesDirName}/ResourceValue.java,${v1TypesDirName}/Property.java,${v2TypesDirName}/LocalizedString.java,${v2TypesDirName}/ResourceValue.java,${v2TypesDirName}/Property.java", summary: true) {
+			replacefilter token: 'attrField.setXmlName(new javax.xml.namespace.QName(&quot;&quot;, &quot;lang&quot;))', value: 'attrField.setXmlName(new javax.xml.namespace.QName(&quot;http://www.w3.org/XML/1998/namespace&quot;, &quot;lang&quot;));'
+		}
 	}
 }

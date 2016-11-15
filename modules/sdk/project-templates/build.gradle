@@ -92,34 +92,38 @@ test {
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 }
 
-writeMavenEmbedderDependencies << {
-	File mavenEmbedderDependenciesFile = new File(buildDir, "maven-embedder-dependencies.txt")
+writeMavenEmbedderDependencies {
+	doLast {
+		File mavenEmbedderDependenciesFile = new File(buildDir, "maven-embedder-dependencies.txt")
 
-	mavenEmbedderDependenciesFile.parentFile.mkdirs()
+		mavenEmbedderDependenciesFile.parentFile.mkdirs()
 
-	mavenEmbedderDependenciesFile.text = configurations.mavenEmbedder.join(System.lineSeparator())
+		mavenEmbedderDependenciesFile.text = configurations.mavenEmbedder.join(System.lineSeparator())
+	}
 }
 
-writeProjectTemplateVersions << {
-	Properties properties = new Properties()
+writeProjectTemplateVersions {
+	doLast {
+		Properties properties = new Properties()
 
-	for (Project projectTemplateProject in projectTemplateProjects) {
-		File bndFile = projectTemplateProject.file("bnd.bnd")
+		for (Project projectTemplateProject in projectTemplateProjects) {
+			File bndFile = projectTemplateProject.file("bnd.bnd")
 
-		Properties bndProperties = new Properties()
+			Properties bndProperties = new Properties()
 
-		bndFile.withInputStream {
-			bndProperties.load it
+			bndFile.withInputStream {
+				bndProperties.load it
+			}
+
+			properties.setProperty projectTemplateProject.name.substring(18), bndProperties["Bundle-Version"]
 		}
 
-		properties.setProperty projectTemplateProject.name.substring(18), bndProperties["Bundle-Version"]
-	}
+		File projectTemplateVersionsFile = new File(buildDir, "project-template-versions.properties")
 
-	File projectTemplateVersionsFile = new File(buildDir, "project-template-versions.properties")
+		projectTemplateVersionsFile.parentFile.mkdirs()
 
-	projectTemplateVersionsFile.parentFile.mkdirs()
-
-	projectTemplateVersionsFile.withOutputStream {
-		properties.store it, null
+		projectTemplateVersionsFile.withOutputStream {
+			properties.store it, null
+		}
 	}
 }

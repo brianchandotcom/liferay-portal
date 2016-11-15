@@ -54,7 +54,7 @@ public class DistBundleCommand extends BaseCommand {
 			_distBundleTar();
 		}
 		else {
-			throw new Exception(
+			throw new IllegalArgumentException(
 				"Please specify either zip or tar.gz for format");
 		}
 	}

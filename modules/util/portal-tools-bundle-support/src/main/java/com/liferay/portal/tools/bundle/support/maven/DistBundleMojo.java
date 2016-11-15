@@ -77,7 +77,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 					FileUtil.appendTar(deployFile, entryPath, archive);
 				}
 				else {
-					throw new Exception(
+					throw new IllegalArgumentException(
 						"Please specify either zip or tar.gz or tgz");
 				}
 			}

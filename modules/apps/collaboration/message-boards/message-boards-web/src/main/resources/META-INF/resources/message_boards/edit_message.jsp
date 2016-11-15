@@ -31,8 +31,6 @@ long parentMessageId = BeanParamUtil.getLong(message, request, "parentMessageId"
 
 String subject = BeanParamUtil.getString(message, request, "subject");
 
-MBThread thread = null;
-
 MBMessage curParentMessage = null;
 
 if (threadId > 0) {
@@ -355,7 +353,7 @@ if (portletTitleBasedNavigation) {
 					boolean question = threadAsQuestionByDefault;
 
 					if (message != null) {
-						thread = MBThreadLocalServiceUtil.getThread(threadId);
+						MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
 
 						if (thread.isQuestion() || message.isAnswer()) {
 							question = true;

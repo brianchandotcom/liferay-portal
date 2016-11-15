@@ -279,11 +279,19 @@
 	<#assign logo_css_class = logo_css_class + " custom-logo" />
 </#if>
 
+<#if theme_settings["show-site-name-supported"]??>
+	<#assign show_site_name_supported = getterUtil.getBoolean(theme_settings["show-site-name-supported"]!"", true) />
+<#else>
+	<#assign show_site_name_supported = true />
+</#if>
+
+<#if theme_settings["show-site-name-default"]??>
+	<#assign show_site_name_default = getterUtil.getBoolean(theme_settings["show-site-name-default"]!"", show_site_name_supported) />
+<#else>
+	<#assign show_site_name_default = show_site_name_supported />
+</#if>
+
 <#assign
-	show_site_name_supported = getterUtil.getBoolean(theme_settings["show-site-name-supported"]!"", true)
-
-	show_site_name_default = getterUtil.getBoolean(theme_settings["show-site-name-default"]!"", show_site_name_supported)
-
 	show_site_name = getterUtil.getBoolean(layout.layoutSet.getSettingsProperty("showSiteName"), show_site_name_default)
 
 	site_logo = company_logo

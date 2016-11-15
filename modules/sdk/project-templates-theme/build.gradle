@@ -1,6 +1,7 @@
 ext {
 	gradlePluginVersions = [
 		"com.liferay.gradle.plugins.theme.builder": "2.0.0",
+		"com.liferay.portal.tools.theme.builder": "1.0.2",
 	]
 }
 

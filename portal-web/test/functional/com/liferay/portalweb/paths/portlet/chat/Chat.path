@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Chat</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Chat</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CHAT_BAR</td>
+	<td>//div[@class='chat-bar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_BAR_FRIEND</td>
+	<td>//li[contains(@class,'user')]/div/span[contains(.,'${key_userFullName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_BAR_BUDDY_LIST</td>
+	<td>//li[@class='buddy-list']/div/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_PANEL_WINDOW_INPUT</td>
+	<td>//div[contains(@class,'chat-panel-input')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHAT_PANEL_WINDOW_OUTPUT_MESSAGE</td>
+	<td>//div[contains(@class,'chat-panel-output')]/p/span[contains(.,'${key_message}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

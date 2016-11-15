@@ -2497,10 +2497,6 @@
 			<var name="pageName" value="Private Page" />
 		</execute>
 
-		<execute macro="Navigator#openPrivateURL">
-			<var name="pageName" value="Private Page" />
-		</execute>
-
 		<execute macro="Page#viewSpecificPG">
 			<var name="pageNameList" value="Private Page" />
 		</execute>

@@ -942,17 +942,18 @@ public class ProjectTemplatesTest {
 		File gradleWorkspaceProjectDir = _buildTemplateWithGradle(
 			WorkspaceUtil.WORKSPACE, "withportlet");
 
-		File gradleModules = new File(gradleWorkspaceProjectDir, "modules");
+		File gradleModulesDir = new File(gradleWorkspaceProjectDir, "modules");
 
-		_buildTemplateWithGradle(gradleModules, "mvc-portlet", "foo-portlet");
+		_buildTemplateWithGradle(
+			gradleModulesDir, "mvc-portlet", "foo-portlet");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
 			"workspace", "withportlet");
 
-		File mavenModules = new File(mavenWorkspaceProjectDir, "modules");
+		File mavenModulesDir = new File(mavenWorkspaceProjectDir, "modules");
 
 		_buildTemplateWithMaven(
-			mavenModules, "mvc-portlet", "foo-portlet", "-DclassName=Foo",
+			mavenModulesDir, "mvc-portlet", "foo-portlet", "-DclassName=Foo",
 			"-Dpackage=foo.portlet");
 
 		_buildProjects(

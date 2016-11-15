@@ -189,12 +189,12 @@
 			<var name="dataSource" value="portal" />
 			<var name="reportsDefinitionDescription" value="Reports Definition Description" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 			<var name="userName" value="Test Test" />
 		</execute>
 
 		<execute macro="ReportsAdmin#deleteReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -208,7 +208,7 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#viewNoReportEntryFile">
-			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name" />
+			<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 		</execute>
 	</command>
 

@@ -1018,6 +1018,34 @@
 		</execute>
 	</command>
 
+	<command name="ExportImportWithRelaunchedProcess" priority="3">
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Export" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteCP" />
+
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute macro="LAR#relaunchExport">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+	</command>
+
 	<!-- LRQA-26034 -->
 
 	<!--command name="ExportImportWSRPUnitConverter" priority="3">

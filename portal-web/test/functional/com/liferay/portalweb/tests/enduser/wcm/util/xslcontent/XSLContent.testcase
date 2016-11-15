@@ -59,7 +59,9 @@
 		</if>
 	</tear-down>
 
-	<command name="AddXSL" priority="4">
+	<!-- LPS-69203 -->
+
+	<!-- <command name="AddXSL" priority="4">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -184,9 +186,11 @@
 			<var name="tableTitleEntry" value="Say Something" />
 			<var name="tableYearEntry" value="2015" />
 		</execute>
-	</command>
+	</command> -->
 
-	<command name="ConfigurePortletWithCorruptXML" priority="4">
+	<!-- LPS-69203 -->
+
+	<!-- <command name="ConfigurePortletWithCorruptXML" priority="4">
 		<property name="ignore.errors" value="must be terminated by the matching end-tag" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -301,9 +305,11 @@
 		</execute>
 
 		<execute macro="XSLContent#viewErrorMessage" />
-	</command>
+	</command> -->
 
-	<command name="ConfigurePortletWithCorruptXSL" priority="4">
+	<!-- LPS-69203 -->
+
+	<!-- <command name="ConfigurePortletWithCorruptXSL" priority="4">
 		<property name="ignore.errors" value="must be terminated by the matching end-tag" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -418,9 +424,11 @@
 		</execute>
 
 		<execute macro="XSLContent#viewErrorMessage" />
-	</command>
+	</command> -->
 
-	<command name="ConfigurePortletWithIncorrectVersionXmlAndXsl" priority="4">
+	<!-- LPS-69203 -->
+
+	<!-- <command name="ConfigurePortletWithIncorrectVersionXmlAndXsl" priority="4">
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -537,7 +545,7 @@
 		<execute macro="XSLContent#viewConsoleError">
 			<var name="consoleTextError" value="only XML 1.0 is supported" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="ViewXSLDefaultContent" priority="4">
 		<execute macro="Navigator#gotoSitePage">

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
@@ -354,7 +355,7 @@ public class FileUtil {
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("create", Boolean.toString(create));
-		properties.put("encoding", "UTF-8");
+		properties.put("encoding", StandardCharsets.UTF_8.name());
 
 		URI uri = file.toURI();
 

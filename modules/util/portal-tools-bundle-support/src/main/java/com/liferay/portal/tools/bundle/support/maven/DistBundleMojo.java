@@ -55,7 +55,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 		String packaging = project.getPackaging();
 
-		if (packaging.equals("war") || packaging.equals("jar")) {
+		if (packaging.equals("jar") || packaging.equals("war")) {
 			try {
 				String extension = FileUtil.getExtension(deployFile.getName());
 

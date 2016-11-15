@@ -1321,7 +1321,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 				_log.fatal(sb.toString());
 
-				System.exit(0);
+				System.exit(-1);
 			}
 		}
 

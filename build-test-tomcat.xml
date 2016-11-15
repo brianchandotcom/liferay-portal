@@ -22,6 +22,23 @@
 		<antcall target="record-test-generated-properties" />
 
 		<if>
+			<matches pattern="https?://" string="${test.build.plugins.war.zip.url}" />
+			<then>
+				<mirrors-get
+					dest="plugins.war.zip"
+					src="${test.build.plugins.war.zip.url}"
+				/>
+
+				<unzip
+					dest="."
+					src="plugins.war.zip"
+				/>
+
+				<delete file="plugins.war.zip" />
+			</then>
+		</if>
+
+		<if>
 			<isset property="vm.host" />
 			<then>
 				<replace

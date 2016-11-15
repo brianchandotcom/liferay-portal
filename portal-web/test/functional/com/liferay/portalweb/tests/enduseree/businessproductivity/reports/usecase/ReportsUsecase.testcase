@@ -147,7 +147,7 @@
 			<var name="emailFromName" value="Liferay QA" />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
@@ -163,7 +163,7 @@ Thank You,<br/>
 [$FROM_ADDRESS$]			<br/>]]>			</var>
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 

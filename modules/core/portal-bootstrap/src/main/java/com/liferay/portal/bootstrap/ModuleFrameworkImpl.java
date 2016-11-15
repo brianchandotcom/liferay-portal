@@ -1316,7 +1316,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 				sb.append(bundle);
 				sb.append(" could not be initialized.");
-				sb.append("Try to delete ${app.server.dir}/osgi/state folder ");
+				sb.append("Try to delete ${liferay.home}/osgi/state folder ");
 				sb.append("and restart.");
 
 				_log.fatal(sb.toString());

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
@@ -218,7 +218,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 			Document document = getDocument(calendarBooking);
 
-			IndexWriterHelperUtil.updateDocument(
+			_indexWriterHelper.updateDocument(
 				getSearchEngineId(), calendarBooking.getCompanyId(), document,
 				isCommitImmediately());
 		}
@@ -326,5 +326,8 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
 
 }

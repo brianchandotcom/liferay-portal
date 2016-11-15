@@ -70,9 +70,9 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -373,7 +373,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<KBArticle> indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<KBArticle> indexer = indexerRegistry.getIndexer(
 			KBArticle.class);
 
 		indexer.delete(kbArticle);
@@ -1347,7 +1347,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer<KBArticle> indexer = IndexerRegistryUtil.getIndexer(
+		Indexer<KBArticle> indexer = indexerRegistry.getIndexer(
 			KBArticle.class);
 
 		indexer.reindex(kbArticle);
@@ -1900,7 +1900,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		// Sync indexed permission fields
 
-		IndexWriterHelperUtil.updatePermissionFields(
+		indexWriterHelper.updatePermissionFields(
 			KBArticle.class.getName(), String.valueOf(resourcePrimKey));
 	}
 
@@ -2038,6 +2038,12 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	@ServiceReference(type = ConfigurationProvider.class)
 	protected ConfigurationProvider configurationProvider;
+
+	@ServiceReference(type = IndexerRegistry.class)
+	protected IndexerRegistry indexerRegistry;
+
+	@ServiceReference(type = IndexWriterHelper.class)
+	protected IndexWriterHelper indexWriterHelper;
 
 	@ServiceReference(type = KBArticleImporter.class)
 	protected KBArticleImporter kbArticleImporter;

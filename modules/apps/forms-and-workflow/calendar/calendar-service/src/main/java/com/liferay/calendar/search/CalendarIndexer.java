@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -142,7 +142,7 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	protected void doReindex(Calendar calendar) throws Exception {
 		Document document = getDocument(calendar);
 
-		IndexWriterHelperUtil.updateDocument(
+		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), calendar.getCompanyId(), document,
 			isCommitImmediately());
 
@@ -233,5 +233,8 @@ public class CalendarIndexer extends BaseIndexer<Calendar> {
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarLocalService _calendarLocalService;
 	private IndexerRegistry _indexerRegistry;
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
 
 }

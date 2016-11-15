@@ -45,11 +45,7 @@ public class CleanCommand extends BaseCommand {
 
 		File file = new File(getLiferayHomeDir(), deployFolder + fileName);
 
-		if (!file.exists()) {
-			return;
-		}
-
-		Files.delete(file.toPath());
+		Files.deleteIfExists(file.toPath());
 	}
 
 	public String getFileName() {

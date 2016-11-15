@@ -890,6 +890,13 @@ public class ProjectTemplatesTest {
 
 		_testExists(workspaceProjectDir, "configs/dev/portal-ext.properties");
 		_testExists(workspaceProjectDir, "gradle.properties");
+		_testExists(workspaceProjectDir, "modules");
+		_testExists(workspaceProjectDir, "themes");
+		_testExists(workspaceProjectDir, "wars");
+
+		_testNotExists(workspaceProjectDir, "modules/pom.xml");
+		_testNotExists(workspaceProjectDir, "themes/pom.xml");
+		_testNotExists(workspaceProjectDir, "wars/pom.xml");
 
 		_testContains(
 			workspaceProjectDir, "settings.gradle", "version: \"1.2.0\"");
@@ -928,42 +935,6 @@ public class ProjectTemplatesTest {
 
 		_buildTemplateWithGradle(
 			destinationDir, "workspace", "forced", "--force");
-	}
-
-	@Test
-	public void testBuildTemplateWorkspaceNoPomsInGradle() throws Exception {
-		File workspaceProjectDir = _buildTemplateWithGradle(
-			WorkspaceUtil.WORKSPACE, "nopoms");
-
-		File moduleProjectDir = _buildTemplateWithGradle(
-			new File(workspaceProjectDir, "modules"), "", "foo-portlet");
-
-		_testNotContains(
-			moduleProjectDir, "build.gradle", "buildscript", "repositories");
-
-		_testNotExists(workspaceProjectDir, "pom.xml");
-
-		_testExists(workspaceProjectDir, "modules");
-
-		_testNotExists(workspaceProjectDir, "modules/pom.xml");
-
-		_testExists(workspaceProjectDir, "modules/foo-portlet");
-
-		_testNotExists(workspaceProjectDir, "modules/foo-portlet/pom.xml");
-
-		_testExists(workspaceProjectDir, "themes");
-
-		_testNotExists(workspaceProjectDir, "themes/pom.xml");
-
-		_testExists(workspaceProjectDir, "wars");
-
-		_testNotExists(workspaceProjectDir, "wars/pom.xml");
-
-		_executeGradle(
-			workspaceProjectDir,
-			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(moduleProjectDir, "build/libs/foo.portlet-1.0.0.jar");
 	}
 
 	@Test

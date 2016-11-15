@@ -75,6 +75,10 @@ public class MirrorsGetTask extends Task {
 		if (_path.startsWith("mirrors/")) {
 			_path = _path.replace("mirrors/", _HOSTNAME);
 		}
+
+		while (_path.endsWith("/")) {
+			_path = _path.substring(0, _path.length() - 1);
+		}
 	}
 
 	public void setTryLocalNetwork(boolean tryLocalNetwork) {

@@ -102,8 +102,8 @@
 						</goals>
 						<configuration>
 							<parentDir>${project.build.directory}/deps/com.liferay.frontend.theme.styled.jar</parentDir>
-                            <parentName>_styled</parentName>
-                            <unstyledDir>${project.build.directory}/deps/com.liferay.frontend.theme.unstyled.jar</unstyledDir>
+							<parentName>_styled</parentName>
+							<unstyledDir>${project.build.directory}/deps/com.liferay.frontend.theme.unstyled.jar</unstyledDir>
 						</configuration>
 					</execution>
 				</executions>

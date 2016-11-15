@@ -653,6 +653,11 @@ publishing.
 [Liferay Gradle Plugins Baseline] instead.
 - [LPS-67573]: Remove all deprecated methods.
 
+## 2.0.1 - 2016-11-18
+
+### Changed
+- [LPS-69248]: Update the [Liferay Gradle Plugins] dependency to version 3.0.38.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -711,6 +716,7 @@ publishing.
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
+[LPS-69248]: https://issues.liferay.com/browse/LPS-69248
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

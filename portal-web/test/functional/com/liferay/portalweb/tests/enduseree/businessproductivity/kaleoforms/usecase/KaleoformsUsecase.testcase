@@ -261,34 +261,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
-			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#SEPARATOR_FIELD" />
@@ -2931,54 +2906,8 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="assignedTo" />
-			<var name="kfProcessFieldData" value="Test Test" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDocumentsAndMedia">
-			<var name="document" value="Document_1.txt" />
-			<var name="fieldName" value="attachment" />
-			<var name="kfProcessFieldData" value="Document 1 Title" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="comments" />
-			<var name="kfProcessFieldData" value="Comment" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="endDate" />
-			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="percentComplete" />
-			<var name="kfProcessFieldData" value="7" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldSelect">
-			<var name="fieldName" value="severity" />
-			<var name="kfProcessFieldData" value="Major" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="startDate" />
-			<var name="kfProcessFieldData" value="11/05/2015" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldSelect">
-			<var name="fieldName" value="status" />
-			<var name="kfProcessFieldData" value="Pending" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="title" />
-			<var name="kfProcessFieldData" value="Test" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -3014,53 +2943,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Assigned To" />
-			<var name="fieldValue" value="Test Test" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Attachment" />
-			<var name="fieldValue" value="Document_1.txt" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Comments" />
-			<var name="fieldValue" value="Comment" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="End Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="% Complete" />
-			<var name="fieldValue" value="7" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Severity" />
-			<var name="fieldValue" value="Major" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Start Date" />
-			<var name="fieldValue" value="11/5/15" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Status" />
-			<var name="fieldValue" value="Pending" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Title" />
-			<var name="fieldValue" value="Test" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 	</command>
 
@@ -3774,34 +3658,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
-			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -3837,33 +3696,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 	</command>
 
@@ -4286,34 +4120,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
-			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -4576,34 +4385,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
+			<var name="fieldName" value="Date" />
 			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -4639,33 +4423,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldLabel" value="Date" />
 			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
 		</execute>
 	</command>
 
@@ -4772,29 +4531,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
-			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -4825,28 +4564,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -4874,28 +4593,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 	</command>
 
@@ -5004,34 +4703,14 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
+			<var name="fieldName" value="Date" />
 			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -5067,31 +4746,11 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<var name="key_fieldName" value="quantity" />
+		<var name="key_fieldName" value="Date" />
 
 		<execute function="AssertElementNotPresent" locator1="DDLEditRecord#TEXT_FIELD" />
 
@@ -5117,33 +4776,13 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldLabel" value="Date" />
 			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -5171,35 +4810,15 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldLabel" value="Date" />
 			<var name="fieldValue" value="4/1/17" />
 		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
-		</execute>
-	</command> -->
+	</command>
 
 	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="3">
 		<execute macro="Navigator#openURL" />
@@ -5285,34 +4904,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
-			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -5342,33 +4936,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Quantity" />
-			<var name="fieldValue" value="4.0" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 	</command>
 
@@ -5479,34 +5048,14 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldTextBox">
-			<var name="fieldName" value="description" />
-			<var name="kfProcessFieldData" value="Test Description" />
-		</execute>
-
 		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="item" />
-			<var name="kfProcessFieldData" value="Test Item" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="location" />
-			<var name="kfProcessFieldData" value="Diamond Bar" />
+			<var name="fieldName" value="Text" />
+			<var name="kfProcessFieldData" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#populateFieldDate">
-			<var name="fieldName" value="purchaseDate" />
+			<var name="fieldName" value="Date" />
 			<var name="kfProcessFieldData" value="04/01/2017" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="purchasePrice" />
-			<var name="kfProcessFieldData" value="3.99" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="quantity" />
-			<var name="kfProcessFieldData" value="4" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -5537,28 +5086,13 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
+			<var name="fieldLabel" value="Date" />
 			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -5586,28 +5120,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Description" />
-			<var name="fieldValue" value="Test Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Item" />
-			<var name="fieldValue" value="Test Item" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Location" />
-			<var name="fieldValue" value="Diamond Bar" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Date" />
-			<var name="fieldValue" value="4/1/17" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Purchase Price" />
-			<var name="fieldValue" value="3.99" />
+			<var name="fieldLabel" value="Text" />
+			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContentFieldNotPresent">

@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -756,7 +757,10 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		if (!portletId.equals(myAccountPortletId) &&
 			GroupPermissionUtil.contains(
 				themeDisplay.getPermissionChecker(), group.getGroupId(),
-				ActionKeys.UPDATE)) {
+				ActionKeys.UPDATE) &&
+			PortalPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
 
 			long publicLayoutSetPrototypeId = ParamUtil.getLong(
 				actionRequest, "publicLayoutSetPrototypeId");

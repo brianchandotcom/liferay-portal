@@ -1752,7 +1752,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -1765,7 +1765,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -1806,7 +1806,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 	</command>
@@ -1892,7 +1892,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -1905,7 +1905,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 
@@ -1999,7 +1999,7 @@
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfProcessName" value="${kfProcessName}" />
 		</execute>
 

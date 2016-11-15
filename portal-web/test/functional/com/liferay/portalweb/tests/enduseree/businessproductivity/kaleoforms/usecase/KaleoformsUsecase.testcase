@@ -2,6 +2,7 @@
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Kaleo Forms Admin" />
 
+	<var name="kfFieldSetName" value="New Kaleo Field Set" />
 	<var name="workflowAssetType" value="Process" />
 
 	<set-up>
@@ -69,7 +70,7 @@
 		<execute macro="KaleoFormsAdmin#next" />
 
 		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
@@ -82,7 +83,7 @@
 		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="Field Set Data Definition" />
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 

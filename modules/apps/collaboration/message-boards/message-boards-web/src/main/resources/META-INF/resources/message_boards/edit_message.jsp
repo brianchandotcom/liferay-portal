@@ -31,8 +31,6 @@ long parentMessageId = BeanParamUtil.getLong(message, request, "parentMessageId"
 
 String subject = BeanParamUtil.getString(message, request, "subject");
 
-MBThread thread = null;
-
 MBMessage curParentMessage = null;
 
 if (threadId > 0) {
@@ -349,23 +347,26 @@ if (portletTitleBasedNavigation) {
 				<c:if test="<%= curParentMessage == null %>">
 
 					<%
-					boolean disabled = false;
+					MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
+
+					boolean questionCategory = false;
+
+					if ((category != null) && category.getDisplayStyle().equals("question")) {
+						questionCategory = true;
+					}
+
 					boolean question = threadAsQuestionByDefault;
 
-					if (message != null) {
-						thread = MBThreadLocalServiceUtil.getThread(threadId);
+					MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
 
-						if (thread.isQuestion() || message.isAnswer()) {
-							question = true;
-						}
+					if (thread.isQuestion() || ((message != null) && message.isAnswer()) || questionCategory) {
+						question = true;
 					}
-					else {
-						MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 
-						if ((category != null) && category.getDisplayStyle().equals("question")) {
-							disabled = true;
-							question = true;
-						}
+					boolean disabled = false;
+
+					if (questionCategory) {
+						disabled = true;
 					}
 					%>
 

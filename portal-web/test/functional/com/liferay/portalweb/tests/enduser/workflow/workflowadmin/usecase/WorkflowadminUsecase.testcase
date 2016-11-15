@@ -1609,6 +1609,22 @@
 		</execute>
 	</command>
 
+	<command name="ViewInvalidDefinitionAlert" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Definition" />
+		</execute>
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="UploadCommonFile#uploadCommonFileHidden" locator1="WorkflowUpload#FILE_UPLOAD" value1="Document_1.txt" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
+		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid file." />
+	</command>
+
 	<command name="ViewTaskCount" priority="3">
 		<execute macro="Navigator#openURL" />
 

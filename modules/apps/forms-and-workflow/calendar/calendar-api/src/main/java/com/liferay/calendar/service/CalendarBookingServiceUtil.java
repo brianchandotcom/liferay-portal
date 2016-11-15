@@ -476,6 +476,15 @@ public class CalendarBookingServiceUtil {
 	}
 
 	public static void deleteCalendarBookingInstance(long calendarBookingId,
+		int instanceIndex, boolean allFollowing,
+		boolean deleteRecurringCalendarBookings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteCalendarBookingInstance(calendarBookingId, instanceIndex,
+			allFollowing, deleteRecurringCalendarBookings);
+	}
+
+	public static void deleteCalendarBookingInstance(long calendarBookingId,
 		long startTime, boolean allFollowing)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()

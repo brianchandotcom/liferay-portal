@@ -34,7 +34,7 @@
 					<var name="ddlDataDefinitionName" value="Inventory" />
 				</execute>
 
-				<execute macro="DDLDataDefinition#tearDownCP" />
+				<execute macro="KaleoFormsAdmin#deleteFieldSet" />
 
 				<execute macro="DMDocument#tearDownCP" />
 

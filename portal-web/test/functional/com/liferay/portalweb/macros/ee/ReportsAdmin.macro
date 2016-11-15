@@ -249,7 +249,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="Refresh" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 
@@ -278,7 +278,7 @@ Sincerely,<br />
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="Refresh" />
+		<execute macro="IFrame#closeFrame" />
 
 		<execute macro="ReportsAdmin#gotoConfiguration" />
 

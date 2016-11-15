@@ -349,23 +349,24 @@ if (portletTitleBasedNavigation) {
 					<%
 					MBCategory category = MBCategoryLocalServiceUtil.getCategory(categoryId);
 
-					boolean disabled = false;
+					boolean questionCategory = false;
+
+					if ((category != null) && category.getDisplayStyle().equals("question")) {
+						questionCategory = true;
+					}
+
 					boolean question = threadAsQuestionByDefault;
 
-					if (message != null) {
-						MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
+					MBThread thread = MBThreadLocalServiceUtil.getThread(threadId);
 
-						if (thread.isQuestion() || message.isAnswer()) {
-							question = true;
-
-							if ((category != null) && category.getDisplayStyle().equals("question")) {
-								disabled = true;
-							}
-						}
-					}
-					else if ((category != null) && category.getDisplayStyle().equals("question")) {
-						disabled = true;
+					if (thread.isQuestion() || ((message != null) && message.isAnswer()) || questionCategory) {
 						question = true;
+					}
+
+					boolean disabled = false;
+
+					if (questionCategory) {
+						disabled = true;
 					}
 					%>
 

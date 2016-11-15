@@ -193,26 +193,21 @@ public class ProjectTemplates {
 			Files.deleteIfExists(templateDirPath.resolve("settings.gradle"));
 		}
 
-		Files.delete(templateDirPath.resolve("pom.xml"));
+		Files.walkFileTree(
+			templateDirPath,
+			new SimpleFileVisitor<Path>() {
 
-		Files.walkFileTree(templateDirPath, new DeletePomFilesVisitor());
-	}
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-	public static class DeletePomFilesVisitor extends SimpleFileVisitor<Path> {
+					Files.deleteIfExists(dirPath.resolve("pom.xml"));
 
-		@Override
-		public FileVisitResult visitFile(Path file, BasicFileAttributes attrs)
-			throws IOException {
+					return FileVisitResult.CONTINUE;
+				}
 
-			if (file.endsWith("pom.xml")) {
-				file.toFile().delete();
-
-				return FileVisitResult.SKIP_SIBLINGS;
-			}
-
-			return FileVisitResult.CONTINUE;
-		}
-
+			});
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {

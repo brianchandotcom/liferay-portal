@@ -57,10 +57,15 @@ Name | Depends On
 ---- | ----------
 `classes` | `transpileJS`
 
-The plugin adds a new configuration to the project called `soyCompile`. If one
-or more dependencies are added to this configuration, they will be expanded into
-temporary directories and passed to the `transpileJS` task as additional
-[`soyDependencies`](#soydependencies) values.
+The plugin adds a new configuration to the project called `jsCompile`. If one or
+more dependencies are added to this configuration, they will be expanded into
+sub-directories of the `node_modules` directory, with names equal to the names
+of the dependencies.
+
+The plugin also adds another configuration to the project called `soyCompile`.
+If one or more dependencies are added to this configuration, they will be
+expanded into temporary directories and passed to the `transpileJS` task as
+additional [`soyDependencies`](#soydependencies) values.
 
 ### TranspileJSTask
 

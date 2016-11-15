@@ -68,24 +68,24 @@ public class BundleSupportTest {
 
 					File file = new File(zipURL.getFile());
 
-					long fileSize = file.length();
+					try (BufferedInputStream bufferedInputStream =
+							new BufferedInputStream(
+								new FileInputStream(file))) {
 
-					byte[] byteArray = new byte[(int)fileSize];
+						int length = (int)file.length();
 
-					BufferedInputStream bufferedInputStream =
-						new BufferedInputStream(new FileInputStream(file));
+						byte[] byteArray = new byte[(int)length];
 
-					int length = byteArray.length;
+						bufferedInputStream.read(byteArray, 0, length);
 
-					bufferedInputStream.read(byteArray, 0, length);
+						httpExchange.sendResponseHeaders(200, length);
 
-					httpExchange.sendResponseHeaders(200, fileSize);
+						OutputStream os = httpExchange.getResponseBody();
 
-					OutputStream os = httpExchange.getResponseBody();
+						os.write(byteArray, 0, length);
 
-					os.write(byteArray, 0, length);
-
-					os.close();
+						os.close();
+					}
 				}
 
 		});

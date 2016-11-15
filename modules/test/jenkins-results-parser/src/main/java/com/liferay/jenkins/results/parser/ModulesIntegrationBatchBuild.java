@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Peter Yoo
@@ -47,7 +48,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 			return;
 		}
 
-		Build arquillianErrorAxisBuild = null;
+		Build reinvokeErrorAxisBuild = null;
 
 		for (Build axisBuild : getDownstreamBuilds("completed")) {
 			if (verifiedAxisBuilds.contains(axisBuild)) {
@@ -64,21 +65,25 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 			String axisBuildConsoleText = axisBuild.getConsoleText();
 
-			if (axisBuildConsoleText.contains(_ARQUILLIAN_ERROR_MARKER)) {
-				arquillianErrorAxisBuild = axisBuild;
+			for (int i = 1; hasReinvokeErrorMarker(i); i++) {
+				if (axisBuildConsoleText.contains(getReinvokeErrorMarker(i))) {
+					reinvokeErrorAxisBuild = axisBuild;
 
-				break;
+					break;
+				}
 			}
 
-			verifiedAxisBuilds.add(axisBuild);
+			if (reinvokeErrorAxisBuild == null) {
+				verifiedAxisBuilds.add(axisBuild);
+			}
 		}
 
-		if (arquillianErrorAxisBuild != null) {
+		if (reinvokeErrorAxisBuild != null) {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Arquillian broken connection failure ");
 			sb.append("detected at ");
-			sb.append(arquillianErrorAxisBuild.getBuildURL());
+			sb.append(reinvokeErrorAxisBuild.getBuildURL());
 			sb.append(". This batch will be reinvoked.");
 
 			System.out.println(sb);
@@ -87,10 +92,26 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 		}
 	}
 
+	protected String getReinvokedErrorMarkerPropertyName(int index) {
+		return _REINVOKE_ERROR_MARKER_TEMPLATE.replace(
+			"?", Integer.toString(index));
+	}
+
+	protected String getReinvokeErrorMarker(int index) {
+		return buildProperties.getProperty(
+			getReinvokedErrorMarkerPropertyName(index));
+	}
+
+	protected boolean hasReinvokeErrorMarker(int index) {
+		return buildProperties.containsKey(
+			getReinvokedErrorMarkerPropertyName(index));
+	}
+
+	protected Properties buildProperties =
+		JenkinsResultsParserUtil.getBuildProperties();
 	protected List<Build> verifiedAxisBuilds = new ArrayList<>();
 
-	private static final String _ARQUILLIAN_ERROR_MARKER =
-		"org.jboss.arquillian.protocol.jmx.JMXMethodExecutor.invoke(" +
-			"JMXMethodExecutor.java";
+	private static final String _REINVOKE_ERROR_MARKER_TEMPLATE =
+		"reinvoke.error.marker[modules-integration-?]";
 
 }

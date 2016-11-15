@@ -28,7 +28,7 @@
 					<var name="ddlDataDefinitionName" value="To Do" />
 				</execute>
 
-				<execute macro="DDLDataDefinition#tearDownCP" />
+				<execute macro="KaleoFormsAdmin#deleteFieldSet" />
 
 				<execute macro="Workflow#tearDownSpecificWorkflowDefinition">
 					<var name="workflowDefinitionTitle" value="Edited Workflow Definition" />
@@ -734,13 +734,7 @@
 			<var name="portlet" value="Kaleo Forms Admin" />
 		</execute>
 
-		<execute macro="KaleoFormsNavigator#gotoManageFieldSets" />
-
-		<execute macro="DDLDataDefinition#viewName">
-			<var name="ddlDataDefinitionName" value="${kfFieldSetName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#tearDownCP" />
+		<execute macro="KaleoFormsAdmin#deleteFieldSet" />
 	</command>
 
 	<command name="DeleteForm" priority="4">

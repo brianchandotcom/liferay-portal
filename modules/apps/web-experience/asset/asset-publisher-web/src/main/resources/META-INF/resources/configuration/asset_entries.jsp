@@ -250,7 +250,7 @@ for (long groupId : groupIds) {
 					uri: currentTarget.data('href')
 				},
 				function(event) {
-					selectAsset(event.assetentryid, event.assetclassname, event.assettype, event.assettitle, event.groupdescriptivename);
+					selectAsset(event.entityid, event.assetclassname, event.assettype, event.assettitle, event.groupdescriptivename);
 				}
 			);
 		}

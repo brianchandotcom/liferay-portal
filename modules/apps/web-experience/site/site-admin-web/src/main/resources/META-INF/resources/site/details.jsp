@@ -259,15 +259,15 @@ else if (group != null) {
 
 						var rowColumns = [];
 
-						var href = '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_site.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=' + event.groupid;
+						var href = '<portlet:renderURL><portlet:param name="mvcPath" value="/edit_site.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />groupId=' + event.entityid;
 
-						rowColumns.push(event.groupdescriptivename);
+						rowColumns.push(event.entityname);
 						rowColumns.push(event.grouptype);
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.groupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
+						rowColumns.push('<a class="modify-link" data-rowId="' + event.entityid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeGroupIcon) %></a>');
 
 						searchContainer.deleteRow(1, searchContainer.getData());
-						searchContainer.addRow(rowColumns, event.groupid);
-						searchContainer.updateDataStore(event.groupid);
+						searchContainer.addRow(rowColumns, event.entityid);
+						searchContainer.updateDataStore(event.entityid);
 
 						A.one('#<portlet:namespace />membershipRestrictionContainer').show();
 					}

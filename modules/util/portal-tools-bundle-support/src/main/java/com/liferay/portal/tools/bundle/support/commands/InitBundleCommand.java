@@ -304,7 +304,8 @@ public class InitBundleCommand extends BaseCommand {
 			HttpGet httpGet = new HttpGet(uri);
 
 			try (FileOutputStream fileOutputStream = new FileOutputStream(
-				_downloadFile);
+					_downloadFile);
+
 				CloseableHttpResponse closeableHttpResponse =
 					closeableHttpClient.execute(httpGet)) {
 

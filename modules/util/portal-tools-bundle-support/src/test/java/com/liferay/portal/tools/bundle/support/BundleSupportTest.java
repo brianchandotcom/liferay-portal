@@ -63,10 +63,10 @@ public class BundleSupportTest {
 
 					headers.add("Content-Type", "application/zip");
 
-					URL zipURL = BundleSupportTest.class.getResource(
+					URL url = BundleSupportTest.class.getResource(
 						"dependencies/test.zip");
 
-					File file = new File(zipURL.getFile());
+					File file = new File(url.getFile());
 
 					try (BufferedInputStream bufferedInputStream =
 							new BufferedInputStream(
@@ -80,11 +80,12 @@ public class BundleSupportTest {
 
 						httpExchange.sendResponseHeaders(200, length);
 
-						OutputStream os = httpExchange.getResponseBody();
+						OutputStream outputStream =
+							httpExchange.getResponseBody();
 
-						os.write(byteArray, 0, length);
+						outputStream.write(byteArray, 0, length);
 
-						os.close();
+						outputStream.close();
 					}
 				}
 

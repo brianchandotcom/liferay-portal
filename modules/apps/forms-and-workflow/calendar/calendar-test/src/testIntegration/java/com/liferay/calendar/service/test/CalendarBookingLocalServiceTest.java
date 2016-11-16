@@ -926,6 +926,82 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
+	public void testUpdateAllFollowingFromSingleInstance() throws Exception {
+		ServiceContext serviceContext = createServiceContext();
+
+		Calendar calendar = addCalendar(_user, serviceContext);
+
+		long startTime = System.currentTimeMillis();
+
+		Recurrence recurrence = new Recurrence();
+
+		recurrence.setFrequency(Frequency.DAILY);
+		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
+
+		CalendarBooking calendarBooking = addRecurringCalendarBooking(
+			_user.getUserId(), calendar.getCalendarId(), startTime,
+			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+
+		Map<Locale, String> earlierDescriptionMap = new HashMap<>(
+			calendarBooking.getDescriptionMap());
+
+		long instanceStartTime = startTime + Time.DAY * 2;
+
+		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
+
+		CalendarBooking calendarBookingInstance =
+			CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+				_user.getUserId(), calendarBooking.getCalendarBookingId(), 2,
+				calendar.getCalendarId(), titleMap,
+				calendarBooking.getDescriptionMap(),
+				calendarBooking.getLocation(), instanceStartTime,
+				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
+				null, 0, null, serviceContext);
+
+		Map<Locale, String> laterDescriptionMap =
+			RandomTestUtil.randomLocaleStringMap();
+
+		CalendarBookingLocalServiceUtil.updateCalendarBookingInstance(
+			_user.getUserId(), calendarBookingInstance.getCalendarBookingId(),
+			0, calendar.getCalendarId(), titleMap, laterDescriptionMap,
+			calendarBooking.getLocation(), instanceStartTime,
+			instanceStartTime + (Time.HOUR * 10), false, null, true, 0, null, 0,
+			null, serviceContext);
+
+		List<CalendarBooking> earlierCalendarBookings = new ArrayList<>();
+		List<CalendarBooking> laterCalendarBookings = new ArrayList<>();
+
+		List<CalendarBooking> recurringCalendarBookings =
+			CalendarBookingLocalServiceUtil.getRecurringCalendarBookings(
+				calendarBooking);
+
+		for (CalendarBooking recurringCalendarBooking :
+				recurringCalendarBookings) {
+
+			if (recurringCalendarBooking.getStartTime() >= instanceStartTime) {
+				laterCalendarBookings.add(recurringCalendarBooking);
+			}
+			else {
+				earlierCalendarBookings.add(recurringCalendarBooking);
+			}
+		}
+
+		Assert.assertEquals(1, earlierCalendarBookings.size());
+		Assert.assertEquals(2, laterCalendarBookings.size());
+
+		for (CalendarBooking earlierCalendarBooking : earlierCalendarBookings) {
+			Assert.assertEquals(
+				earlierDescriptionMap,
+				earlierCalendarBooking.getDescriptionMap());
+		}
+
+		for (CalendarBooking laterCalendarBooking : laterCalendarBookings) {
+			Assert.assertEquals(
+				laterDescriptionMap, laterCalendarBooking.getDescriptionMap());
+		}
+	}
+
+	@Test
 	public void testUpdateCalendarBookingInstance() throws Exception {
 		ServiceContext serviceContext = createServiceContext();
 

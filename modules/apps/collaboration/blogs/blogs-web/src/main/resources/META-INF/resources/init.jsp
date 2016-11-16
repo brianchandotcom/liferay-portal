@@ -109,7 +109,6 @@ page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFunction" %><%@
-page import="com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
@@ -140,6 +139,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
+page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %>
 

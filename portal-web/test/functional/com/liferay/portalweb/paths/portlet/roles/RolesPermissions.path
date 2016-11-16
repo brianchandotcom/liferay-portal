@@ -684,6 +684,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_FIELD_SETS_ACTION_CHECKBOX</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[4]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_COMPLETE_FORM</td>
 	<td>//input[contains(@value,'KaleoProcessCOMPLETE_FORM')]</td>
 	<td></td>

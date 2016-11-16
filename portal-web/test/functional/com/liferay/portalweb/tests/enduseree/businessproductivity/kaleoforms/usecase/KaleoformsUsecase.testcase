@@ -3658,9 +3658,9 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#populateFieldText">
-			<var name="fieldName" value="Text" />
-			<var name="kfProcessFieldData" value="Kaleo Text Field" />
+		<execute macro="KaleoFormsAdmin#populateFieldDate">
+			<var name="fieldName" value="Date" />
+			<var name="kfProcessFieldData" value="04/17/2017" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
@@ -3696,8 +3696,8 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldValue" value="Kaleo Text Field" />
+			<var name="fieldLabel" value="Date" />
+			<var name="fieldValue" value="4/17/17" />
 		</execute>
 	</command>
 

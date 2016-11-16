@@ -37,8 +37,9 @@ public class UpgradeUUIDUtil {
 
 		try (PreparedStatement ps1 = con.prepareStatement(selectSQL);
 			ResultSet rs = ps1.executeQuery();
-			PreparedStatement ps2 = AutoBatchPreparedStatementUtil.autoBatch(
-				con.prepareStatement(updateSQL))) {
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					con, updateSQL)) {
 
 			while (rs.next()) {
 				long primaryKey = rs.getLong(1);

@@ -71,12 +71,22 @@ AUI.add(
 
 					content: {
 						getter: function(val) {
+							var content = val;
+
 							if (val) {
-								val = LString.unescapeHTML(val);
-								val = LString.escapeHTML(val);
+								content = LString.escapeHTML(val);
 							}
 
-							return val;
+							return content;
+						},
+						setter: function(val) {
+							var content = val;
+
+							if (val) {
+								content = LString.unescapeHTML(val);
+							}
+
+							return content;
 						}
 					},
 

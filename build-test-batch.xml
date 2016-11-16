@@ -590,6 +590,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<attribute default="" name="test.plugins.war.zip.url" />
 		<attribute default="" name="test.portal.bundle.version" />
 		<attribute default="" name="test.portal.bundle.zip.url" />
+		<attribute default="" name="test.portal.lpkg.name" />
 		<attribute default="" name="test.sql.zip.url" />
 		<attribute default="false" name="tomcat.gc.log" />
 		<attribute default="false" name="tsant.gc.log" />
@@ -744,6 +745,13 @@ app.server.type=@{app.server.type}]]></echo>
 								dest="${liferay.home}/deploy"
 								src="@{test.plugin.zip.url}"
 							/>
+						</then>
+					</if>
+
+					<if>
+						<available file="${project.dir}/plugins/@{test.portal.lpkg.name}" />
+						<then>
+							<copy file="${project.dir}/plugins/@{test.portal.lpkg.name}" todir="${liferay.home}/osgi/marketplace" />
 						</then>
 					</if>
 
@@ -1382,6 +1390,7 @@ app.server.type=@{app.server.type}]]></echo>
 			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -1411,6 +1420,7 @@ app.server.type=@{app.server.type}]]></echo>
 			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -1428,6 +1438,7 @@ app.server.type=@{app.server.type}]]></echo>
 			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>
@@ -1443,6 +1454,7 @@ app.server.type=@{app.server.type}]]></echo>
 			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
 			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
 	</target>

@@ -97,6 +97,16 @@ public class ExpandoValueLocalServiceUtil {
 
 	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
 		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK,
+		com.liferay.portal.kernel.json.JSONObject data)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addValue(companyId, className, tableName, columnName,
+			classPK, data);
+	}
+
+	public static com.liferay.expando.kernel.model.ExpandoValue addValue(
+		long companyId, java.lang.String className, java.lang.String tableName,
 		java.lang.String columnName, long classPK, double data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -366,6 +376,16 @@ public class ExpandoValueLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.json.JSONObject getData(
+		long companyId, java.lang.String className, java.lang.String tableName,
+		java.lang.String columnName, long classPK,
+		com.liferay.portal.kernel.json.JSONObject defaultData)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getData(companyId, className, tableName, columnName,
+			classPK, defaultData);
 	}
 
 	/**

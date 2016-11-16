@@ -112,7 +112,9 @@
 
 		<execute macro="UserBar#gotoProfile" />
 
-		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln" />
+		<!--LPS-68962-->
+
+		<!--<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln" />-->
 	</command>
 
 	<command name="CannotViewSiteSettingsInUserPersonalSite" priority="4">

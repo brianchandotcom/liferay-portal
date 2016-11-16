@@ -2478,7 +2478,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-58529
 
-				checkResourceUtil(line, fileName, lineCount);
+				checkResourceUtil(line, fileName, absolutePath, lineCount);
 
 				if (_addMissingDeprecationReleaseVersion) {
 					line = formatDeprecatedJavadoc(

@@ -648,9 +648,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void checkResourceUtil(
-		String line, String fileName, int lineCount) {
+		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (!portalSource || fileName.endsWith("ResourceBundleUtil.java")) {
+		if (!portalSource || fileName.endsWith("ResourceBundleUtil.java") ||
+			isExcludedPath(getRunOutsidePortalExcludes(), absolutePath)) {
+
 			return;
 		}
 

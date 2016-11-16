@@ -507,6 +507,30 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
+			<var name="roleName" value="KaleoRegRole Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
+		<execute macro="Role#definePermissionCmdCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_RESOURCE_PERMISSIONS_KALEO_FORMS_FIELD_SETS_ACTION_CHECKBOX" />
+			<var name="permissionDefinitionValue" value="Action" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN" />
+			<var name="permissionNavigationValue" value="Kaleo Forms Admin" />
+			<var name="roleName" value="KaleoRegRole Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
 

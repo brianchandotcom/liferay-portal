@@ -17,6 +17,7 @@ package com.liferay.portal.osgi.web.portlet.tracker.internal;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.portal.kernel.application.type.ApplicationType;
+import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -170,7 +171,10 @@ public class PortletTracker
 
 		removedService(serviceReference, portletModel);
 
-		addingService(serviceReference);
+		com.liferay.portal.kernel.model.Portlet newPortletModel =
+			addingService(serviceReference);
+
+		BeanPropertiesUtil.copyProperties(newPortletModel, portletModel);
 	}
 
 	@Override

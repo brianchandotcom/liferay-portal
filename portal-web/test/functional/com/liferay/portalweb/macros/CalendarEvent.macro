@@ -952,7 +952,7 @@
 
 		<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
-		<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
+		<execute function="Confirm#waitForConfirmation" value1="Would you like to delete this event?" />
 
 		<execute macro="CalendarScheduler#viewSpecificEventNotPresent">
 			<var name="eventTitle" value="${eventTitle}" />

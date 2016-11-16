@@ -58,56 +58,60 @@ for (long userId : userIds) {
 to = sb.toString() + to;
 %>
 
-<div class="message-container" id="<portlet:namespace />messageContainer"></div>
+<div class="portlet-configuration-body-content">
+	<div class="container-fluid-1280">
+		<div class="message-container" id="<portlet:namespace />messageContainer"></div>
 
-<div class="message-body-container">
-	<aui:form enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
-		<aui:input name="mbThreadId" type="hidden" value="<%= mbThreadId %>" />
+		<div class="message-body-container">
+			<aui:form enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
+				<aui:input name="mbThreadId" type="hidden" value="<%= mbThreadId %>" />
 
-		<div id="<portlet:namespace />autoCompleteContainer">
-			<aui:input cssClass="message-to" name="to" value="<%= to %>" />
-		</div>
-
-		<aui:input cssClass="message-subject" name="subject" value="<%= subject %>" />
-
-		<label class="field-label">
-			<liferay-ui:message key="message" />
-		</label>
-
-		<textarea class="message-body" id="<portlet:namespace />body" name="<portlet:namespace />body"></textarea>
-
-		<label class="field-label">
-			<liferay-ui:message key="attachments" />
-		</label>
-
-		<%
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-		if (fileMaxSize == 0) {
-			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-		}
-
-		fileMaxSize /= 1024;
-		%>
-
-		<aui:field-wrapper>
-			<c:if test="<%= fileMaxSize != 0 %>">
-				<div class="portlet-msg-info">
-					<%= LanguageUtil.format(request, "upload-documents-no-larger-than-x-k", String.valueOf(fileMaxSize), false) %>
+				<div id="<portlet:namespace />autoCompleteContainer">
+					<aui:input cssClass="message-to" name="to" value="<%= to %>" />
 				</div>
-			</c:if>
-		</aui:field-wrapper>
 
-		<aui:input label="" name="msgFile1" type="file" />
+				<aui:input cssClass="message-subject" name="subject" value="<%= subject %>" />
 
-		<aui:input label="" name="msgFile2" type="file" />
+				<label class="field-label">
+					<liferay-ui:message key="message" />
+				</label>
 
-		<aui:input label="" name="msgFile3" type="file" />
+				<textarea class="message-body" id="<portlet:namespace />body" name="<portlet:namespace />body"></textarea>
 
-		<aui:button-row>
-			<aui:button type="submit" value="send" />
-		</aui:button-row>
-	</aui:form>
+				<label class="field-label">
+					<liferay-ui:message key="attachments" />
+				</label>
+
+				<%
+				long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+				if (fileMaxSize == 0) {
+					fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+				}
+
+				fileMaxSize /= 1024;
+				%>
+
+				<aui:field-wrapper>
+					<c:if test="<%= fileMaxSize != 0 %>">
+						<div class="portlet-msg-info">
+							<%= LanguageUtil.format(request, "upload-documents-no-larger-than-x-k", String.valueOf(fileMaxSize), false) %>
+						</div>
+					</c:if>
+				</aui:field-wrapper>
+
+				<aui:input label="" name="msgFile1" type="file" />
+
+				<aui:input label="" name="msgFile2" type="file" />
+
+				<aui:input label="" name="msgFile3" type="file" />
+
+				<aui:button-row>
+					<aui:button type="submit" value="send" />
+				</aui:button-row>
+			</aui:form>
+		</div>
+	</div>
 </div>
 
 <aui:script use="aui-io-request-deprecated,aui-loading-mask-deprecated,autocomplete,io-upload-iframe,json-parse">

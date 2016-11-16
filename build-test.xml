@@ -5768,14 +5768,34 @@ javascript.fast.load=false</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="blacklist.portal.profile.names" />
+		<get-testcase-property property.name="blacklist.portal.profile.names.remove" />
 
 		<if>
-			<not>
-				<isset property="blacklist.portal.profile.names" />
-			</not>
+			<isset property="blacklist.portal.profile.names.remove" />
 			<then>
-				<property name="blacklist.portal.profile.names" value="com.liferay.chat.service,com.liferay.chat.web" />
+				<beanshell>
+					<![CDATA[
+						String blacklistPortalProfileNamesRemoveString = project.getProperty("blacklist.portal.profile.names.remove");
+						String blacklistPortalProfileNamesString = project.getProperty("blacklist.portal.profile.names");
+
+						List blacklistPortalProfileNames = new ArrayList(Arrays.asList(blacklistPortalProfileNamesString.split(",")));
+						List blacklistPortalProfileNamesRemove = new ArrayList(Arrays.asList(blacklistPortalProfileNamesRemoveString.split(",")));
+
+						blacklistPortalProfileNames.removeAll(blacklistPortalProfileNamesRemove);
+
+						StringBuilder sb = new StringBuilder();
+
+						for (int i = 0; i < blacklistPortalProfileNames.size(); i++) {
+							sb.append(blacklistPortalProfileNames.get(i));
+
+							if (i != (blacklistPortalProfileNames.size() - 1)) {
+								sb.append(",");
+							}
+						}
+
+						project.setProperty("blacklist.portal.profile.names", sb.toString());
+					]]>
+				</beanshell>
 			</then>
 		</if>
 

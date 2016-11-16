@@ -32,6 +32,7 @@ import java.util.List;
  */
 public class UserThreadServiceImpl extends UserThreadServiceBaseImpl {
 
+	@Override
 	public MBMessage getLastThreadMessage(long mbThreadId)
 		throws PortalException {
 
@@ -43,6 +44,7 @@ public class UserThreadServiceImpl extends UserThreadServiceBaseImpl {
 		return lastMBMessage;
 	}
 
+	@Override
 	public List<MBMessage> getThreadMessages(
 			long mbThreadId, int start, int end, boolean ascending)
 		throws PortalException {
@@ -81,6 +83,7 @@ public class UserThreadServiceImpl extends UserThreadServiceBaseImpl {
 		return filteredMBMessages.subList(start, end);
 	}
 
+	@Override
 	public int getThreadMessagesCount(long mbThreadId) throws PortalException {
 		List<MBMessage> mbMessages = getThreadMessages(
 			mbThreadId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, true);
@@ -88,6 +91,7 @@ public class UserThreadServiceImpl extends UserThreadServiceBaseImpl {
 		return mbMessages.size();
 	}
 
+	@Override
 	public List<UserThread> getUserUserThreads(boolean deleted)
 		throws PrincipalException {
 

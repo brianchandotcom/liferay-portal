@@ -156,12 +156,14 @@ public class ScreensAssetEntryServiceImpl
 		}
 	}
 
+	@Override
 	public JSONObject getAssetEntry(long entryId, Locale locale)
 		throws PortalException {
 
 		return toJSONObject(assetEntryLocalService.getEntry(entryId), locale);
 	}
 
+	@Override
 	public JSONObject getAssetEntry(
 			String className, long classPK, Locale locale)
 		throws PortalException {

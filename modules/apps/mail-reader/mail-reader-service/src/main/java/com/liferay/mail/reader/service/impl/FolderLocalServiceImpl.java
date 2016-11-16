@@ -29,6 +29,7 @@ import java.util.List;
  */
 public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 
+	@Override
 	public Folder addFolder(
 			long userId, long accountId, String fullName, String displayName,
 			int remoteMessageCount)
@@ -83,6 +84,7 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 		return deleteFolder(folder);
 	}
 
+	@Override
 	public void deleteFolders(long accountId) throws PortalException {
 		List<Folder> folders = folderPersistence.findByAccountId(accountId);
 
@@ -91,22 +93,26 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Folder getFolder(long accountId, String fullName)
 		throws PortalException {
 
 		return folderPersistence.findByA_F(accountId, fullName);
 	}
 
+	@Override
 	public List<Folder> getFolders(long accountId) {
 		return folderPersistence.findByAccountId(accountId);
 	}
 
+	@Override
 	public int getLocalPageCount(long folderId, int messagesPerPage) {
 		int localMessageCount = messagePersistence.countByFolderId(folderId);
 
 		return (int)Math.ceil(localMessageCount / (double)messagesPerPage);
 	}
 
+	@Override
 	public int getPercentDownloaded(long folderId) throws PortalException {
 		Folder folder = folderPersistence.findByPrimaryKey(folderId);
 
@@ -121,6 +127,7 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 		return (int)((localMessageCount / (double)remoteMessageCount) * 100);
 	}
 
+	@Override
 	public int getRemotePageCount(long folderId, int messagesPerPage)
 		throws PortalException {
 
@@ -131,6 +138,7 @@ public class FolderLocalServiceImpl extends FolderLocalServiceBaseImpl {
 		return (int)Math.ceil(remoteMessageCount / (double)messagesPerPage);
 	}
 
+	@Override
 	public Folder updateFolder(
 			long folderId, String fullName, String displayName,
 			int remoteMessageCount)

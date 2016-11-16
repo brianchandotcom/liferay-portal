@@ -73,6 +73,7 @@ import javax.mail.internet.InternetAddress;
  */
 public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 
+	@Override
 	public MBMessage addPrivateMessage(
 			long userId, long mbThreadId, String to, String subject,
 			String body,
@@ -125,6 +126,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			inputStreamOVPs, themeDisplay);
 	}
 
+	@Override
 	public MBMessage addPrivateMessageBranch(
 			long userId, long parentMBMessageId, String body,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
@@ -145,6 +147,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 			parentMessage.getSubject(), body, inputStreamOVPs, themeDisplay);
 	}
 
+	@Override
 	public void addUserThread(
 			long userId, long mbThreadId, long topMBMessageId, boolean read,
 			boolean deleted)
@@ -169,6 +172,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		userThreadPersistence.update(userThread);
 	}
 
+	@Override
 	public void deleteUser(long userId) throws PortalException {
 		List<UserThread> userThreads = userThreadPersistence.findByUserId(
 			userId);
@@ -178,6 +182,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void deleteUserThread(long userId, long mbThreadId)
 		throws PortalException {
 
@@ -189,48 +194,57 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		userThreadPersistence.update(userThread);
 	}
 
+	@Override
 	public UserThread fetchUserThread(long userId, long mbThreadId)
 		throws PortalException {
 
 		return userThreadPersistence.fetchByU_M(userId, mbThreadId);
 	}
 
+	@Override
 	public List<UserThread> getMBThreadUserThreads(long mbThreadId) {
 		return userThreadPersistence.findByMBThreadId(mbThreadId);
 	}
 
+	@Override
 	public UserThread getUserThread(long userId, long mbThreadId)
 		throws PortalException {
 
 		return userThreadPersistence.findByU_M(userId, mbThreadId);
 	}
 
+	@Override
 	public int getUserUserThreadCount(long userId, boolean deleted) {
 		return userThreadPersistence.countByU_D(userId, deleted);
 	}
 
+	@Override
 	public int getUserUserThreadCount(
 		long userId, boolean read, boolean deleted) {
 
 		return userThreadPersistence.countByU_R_D(userId, read, deleted);
 	}
 
+	@Override
 	public List<UserThread> getUserUserThreads(long userId, boolean deleted) {
 		return userThreadPersistence.findByU_D(userId, deleted);
 	}
 
+	@Override
 	public List<UserThread> getUserUserThreads(
 		long userId, boolean read, boolean deleted) {
 
 		return userThreadPersistence.findByU_R_D(userId, read, deleted);
 	}
 
+	@Override
 	public List<UserThread> getUserUserThreads(
 		long userId, boolean deleted, int start, int end) {
 
 		return userThreadPersistence.findByU_D(userId, deleted, start, end);
 	}
 
+	@Override
 	public void markUserThreadAsRead(long userId, long mbThreadId)
 		throws PortalException {
 
@@ -242,6 +256,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		userThreadPersistence.update(userThread);
 	}
 
+	@Override
 	public void markUserThreadAsUnread(long userId, long mbThreadId)
 		throws PortalException {
 
@@ -253,6 +268,7 @@ public class UserThreadLocalServiceImpl extends UserThreadLocalServiceBaseImpl {
 		userThreadPersistence.update(userThread);
 	}
 
+	@Override
 	public void updateUserName(User user) {
 		String userName = user.getFullName();
 

@@ -21,10 +21,12 @@ import com.liferay.mail.reader.internal.util.PasswordUtil;
  */
 public class AccountImpl extends AccountBaseImpl {
 
+	@Override
 	public String getPasswordDecrypted() {
 		return PasswordUtil.decrypt(getPassword());
 	}
 
+	@Override
 	public void setPasswordDecrypted(String unencryptedPassword) {
 		String encryptedPassword = PasswordUtil.encrypt(unencryptedPassword);
 

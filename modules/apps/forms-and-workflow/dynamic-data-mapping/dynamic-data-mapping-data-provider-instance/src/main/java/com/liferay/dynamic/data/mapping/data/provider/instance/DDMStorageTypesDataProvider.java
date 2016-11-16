@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DDMStorageTypesDataProvider implements DDMDataProvider {
 
+	@Override
 	public List<KeyValuePair> getData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException {
@@ -76,6 +77,7 @@ public class DDMStorageTypesDataProvider implements DDMDataProvider {
 		return new DDMDataProviderResponse(data);
 	}
 
+	@Override
 	public Class<?> getSettings() {
 		throw new UnsupportedOperationException();
 	}

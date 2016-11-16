@@ -46,6 +46,7 @@ public class LiferayOAuthStoreProvider implements Provider<OAuthStore> {
 		_oAuthStore = new LiferayOAuthStore(oAuthConsumer);
 	}
 
+	@Override
 	public OAuthStore get() {
 		return _oAuthStore;
 	}

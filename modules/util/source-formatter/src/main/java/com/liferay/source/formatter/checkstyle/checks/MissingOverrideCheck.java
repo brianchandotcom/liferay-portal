@@ -39,6 +39,13 @@ import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.model.annotation.AnnotationValue;
 import com.thoughtworks.qdox.parser.ParseException;
 
+import java.io.File;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -57,21 +64,19 @@ public class MissingOverrideCheck extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		String content = _getContent();
-
-		JavaDocBuilder javaDocBuilder = _getJavaDocBuilder();
-
-		try {
-			javaDocBuilder.addSource(new UnsyncStringReader(content));
-		}
-		catch (ParseException pe) {
-			return;
-		}
-
 		FileContents fileContents = getFileContents();
 
 		String fileName = StringUtil.replace(
 			fileContents.getFileName(), '\\', '/');
+
+		JavaDocBuilder javaDocBuilder = _getJavaDocBuilder(fileName);
+
+		try {
+			javaDocBuilder.addSource(new UnsyncStringReader(_getContent()));
+		}
+		catch (ParseException pe) {
+			return;
+		}
 
 		String className = _getClassName(fileName);
 
@@ -141,7 +146,13 @@ public class MissingOverrideCheck extends AbstractCheck {
 		return (String)fileText.getFullText();
 	}
 
-	private JavaDocBuilder _getJavaDocBuilder() {
+	private JavaDocBuilder _getJavaDocBuilder(String fileName) {
+		int pos = fileName.lastIndexOf("/modules/");
+
+		if (pos != -1) {
+			return _getModulesJavaDocBuilder(fileName.substring(0, pos));
+		}
+
 		if (_javaDocBuilder != null) {
 			return _javaDocBuilder;
 		}
@@ -150,6 +161,42 @@ public class MissingOverrideCheck extends AbstractCheck {
 			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
 
 		return _javaDocBuilder;
+	}
+
+	private JavaDocBuilder _getModulesJavaDocBuilder(String rootDir) {
+		if (_modulesJavaDocBuilder != null) {
+			return _modulesJavaDocBuilder;
+		}
+
+		ThreadSafeClassLibrary threadSafeClassLibrary =
+			new ThreadSafeClassLibrary();
+
+		File sdkDistDir = new File(rootDir + "/tools/sdk/dist");
+
+		if (sdkDistDir.exists()) {
+			File[] jarFiles = sdkDistDir.listFiles();
+
+			URL[] urls = new URL[jarFiles.length];
+
+			for (int i = 0; i < jarFiles.length; i++) {
+				try {
+					File jarFile = jarFiles[i];
+
+					URI uri = jarFile.toURI();
+
+					urls[i] = uri.toURL();
+				}
+				catch (MalformedURLException murle) {
+				}
+			}
+
+			threadSafeClassLibrary.addClassLoader(new URLClassLoader(urls));
+		}
+
+		_modulesJavaDocBuilder = new JavaDocBuilder(
+			new DefaultDocletTagFactory(), threadSafeClassLibrary);
+
+		return _modulesJavaDocBuilder;
 	}
 
 	private String _getPackagePath(DetailAST packageDefAST) {
@@ -326,5 +373,6 @@ public class MissingOverrideCheck extends AbstractCheck {
 	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
 
 	private JavaDocBuilder _javaDocBuilder;
+	private JavaDocBuilder _modulesJavaDocBuilder;
 
 }

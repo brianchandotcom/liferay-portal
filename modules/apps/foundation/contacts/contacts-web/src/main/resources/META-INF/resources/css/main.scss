@@ -693,16 +693,6 @@ $section-header-bg: #CCE6F7;
 	}
 }
 
-.private-messaging-portlet {
-	.message-to input, .message-subject input {
-		width: 300px;
-	}
-
-	.message-body {
-		width: 90%;
-	}
-}
-
 /* ---------- Responsive ---------- */
 
 @include respond-to(phone) {

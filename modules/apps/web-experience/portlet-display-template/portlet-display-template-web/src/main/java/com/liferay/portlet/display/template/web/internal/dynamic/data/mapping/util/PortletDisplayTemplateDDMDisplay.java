@@ -157,6 +157,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		return LanguageUtil.get(locale, "application-display-templates");
 	}
 
+	@Override
 	protected String getViewTemplatesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,

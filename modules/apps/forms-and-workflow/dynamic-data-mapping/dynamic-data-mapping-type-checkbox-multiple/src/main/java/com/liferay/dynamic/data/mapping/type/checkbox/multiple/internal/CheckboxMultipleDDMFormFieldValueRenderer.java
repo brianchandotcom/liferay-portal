@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CheckboxMultipleDDMFormFieldValueRenderer
 	implements DDMFormFieldValueRenderer {
 
+	@Override
 	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		JSONArray optionsValuesJSONArray =
 			checkboxMultipleDDMFormFieldValueAccessor.getValue(

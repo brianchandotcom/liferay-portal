@@ -57,6 +57,7 @@ public class MenuItem
 		return _id;
 	}
 
+	@Override
 	public String getLabel() {
 		return _label;
 	}
@@ -73,6 +74,7 @@ public class MenuItem
 		_id = id;
 	}
 
+	@Override
 	public void setLabel(String label) {
 		_label = label;
 	}

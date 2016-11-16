@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class UpgradeKBArticle extends UpgradeProcess {
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		String template = StringUtil.read(
 			UpgradeKBArticle.class.getResourceAsStream(

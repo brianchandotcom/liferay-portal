@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class CheckboxDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {
 
+	@Override
 	public Map<String, Object> getParameters(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {

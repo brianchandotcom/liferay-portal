@@ -54,6 +54,7 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		return _ddmFormFieldRendererServiceTrackerMap.getService(name);
 	}
 
+	@Override
 	public DDMFormFieldTemplateContextContributor
 		getDDMFormFieldTemplateContextContributor(String name) {
 

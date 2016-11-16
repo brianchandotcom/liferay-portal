@@ -29,6 +29,7 @@ public class UpgradePortletSettings
 		super(settingsFactory);
 	}
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		upgradeMainPortlet(
 			KBPortletKeys.KNOWLEDGE_BASE_ADMIN,

@@ -35,16 +35,19 @@ public class InsertPartitionedExportProcessCommand
 		super(companyId, dbExporter, tableNames, exportContext);
 	}
 
+	@Override
 	protected String getOutputFileName() {
 		return exportContext.getSchemaName() + "-" + companyId +
 			"-partitioned" + dbExporter.getOutputFileExtension();
 	}
 
+	@Override
 	protected String getOutputFileName(String tableName) {
 		return exportContext.getSchemaName() + "-" + companyId + "-table-" +
 			tableName + dbExporter.getOutputFileExtension();
 	}
 
+	@Override
 	protected void write(String tableName, OutputStream outputStream) {
 		dbExporter.write(companyId, tableName, outputStream);
 	}

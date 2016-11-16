@@ -28,10 +28,12 @@ import org.osgi.service.component.annotations.Component;
 )
 public class KBPortletRatingsDefinition implements PortletRatingsDefinition {
 
+	@Override
 	public RatingsType getDefaultRatingsType() {
 		return RatingsType.THUMBS;
 	}
 
+	@Override
 	public String getPortletId() {
 		return KBPortletKeys.KNOWLEDGE_BASE_ADMIN;
 	}

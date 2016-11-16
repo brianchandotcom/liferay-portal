@@ -4676,6 +4676,34 @@
 		</execute>
 	</command>
 
+	<command name="ViewCreatedEventVisibleOnScheduler" priority="2">
+		<description message="This is a use case for LPS-67400." />
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<var locator="CalendarEditEvent#END_DATE" name="endDate" />
+		<var locator="CalendarEditEvent#END_DATE_TIME" name="endDateTime" />
+		<var locator="CalendarEditEvent#START_DATE" name="startDate" />
+		<var locator="CalendarEditEvent#START_DATE_TIME" name="startDateTime" />
+
+		<execute macro="CalendarEvent#viewTimes">
+			<var name="endDateTime" value="${endDateTime}" />
+			<var name="startDateTime" value="${startDateTime}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#publish" />
+
+		<execute macro="IFrame#closeFrame" />
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Calendar Event" />
+		</execute>
+	</command>
+
 	<command name="ViewDefaultDurationsViaScheduler" priority="3">
 		<for list="15,30,60,120" param="minutes">
 			<execute macro="Navigator#gotoPage">

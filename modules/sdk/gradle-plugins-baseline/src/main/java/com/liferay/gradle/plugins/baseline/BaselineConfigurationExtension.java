@@ -21,9 +21,9 @@ import org.gradle.api.Project;
 /**
  * @author Andrea Di Giorgi
  */
-public class BaselineExtension {
+public class BaselineConfigurationExtension {
 
-	public BaselineExtension(Project project) {
+	public BaselineConfigurationExtension(Project project) {
 	}
 
 	public String getLowestBaselineVersion() {

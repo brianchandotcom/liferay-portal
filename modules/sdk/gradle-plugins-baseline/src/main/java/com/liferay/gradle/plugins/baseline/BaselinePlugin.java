@@ -53,15 +53,16 @@ public class BaselinePlugin implements Plugin<Project> {
 
 	public static final String BASELINE_TASK_NAME = "baseline";
 
-	public static final String PLUGIN_NAME = "baseline";
+	public static final String EXTENSION_NAME = "baselineConfiguration";
 
 	@Override
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 		GradleUtil.applyPlugin(project, ReportingBasePlugin.class);
 
-		final BaselineExtension baselineExtension = GradleUtil.addExtension(
-			project, PLUGIN_NAME, BaselineExtension.class);
+		final BaselineConfigurationExtension baselineConfigurationExtension =
+			GradleUtil.addExtension(
+				project, EXTENSION_NAME, BaselineConfigurationExtension.class);
 
 		final Jar jar = (Jar)GradleUtil.getTask(
 			project, JavaPlugin.JAR_TASK_NAME);
@@ -80,7 +81,7 @@ public class BaselinePlugin implements Plugin<Project> {
 				public void execute(Project project) {
 					_configureTaskBaseline(
 						baselineTask, jar, baselineConfiguration,
-						baselineExtension);
+						baselineConfigurationExtension);
 				}
 
 			});
@@ -189,10 +190,10 @@ public class BaselinePlugin implements Plugin<Project> {
 	private void _configureTaskBaseline(
 		BaselineTask baselineTask, final AbstractArchiveTask newJarTask,
 		final FileCollection oldJarFileCollection,
-		BaselineExtension baselineExtension) {
+		BaselineConfigurationExtension baselineConfigurationExtension) {
 
 		VersionNumber lowestBaselineVersionNumber = VersionNumber.parse(
-			baselineExtension.getLowestBaselineVersion());
+			baselineConfigurationExtension.getLowestBaselineVersion());
 		VersionNumber versionNumber = VersionNumber.parse(
 			newJarTask.getVersion());
 

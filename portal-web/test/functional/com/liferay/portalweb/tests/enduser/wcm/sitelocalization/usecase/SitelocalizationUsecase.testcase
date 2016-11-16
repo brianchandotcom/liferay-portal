@@ -417,7 +417,9 @@
 		</execute>
 	</command>
 
-	<command name="PortletInteractionLocalization" priority="4">
+	<!-- LPS-66355 -->
+
+	<!-- <command name="PortletInteractionLocalization" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
@@ -576,7 +578,7 @@
 		<execute macro="LanguagePortlet#selectLanguagePG">
 			<var name="language" value="English (United States)" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="SiteTemplateLocalization" priority="5">
 		<property name="portal.acceptance" value="true" />

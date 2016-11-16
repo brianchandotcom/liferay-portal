@@ -94,7 +94,7 @@ to = sb.toString() + to;
 
 				<aui:field-wrapper>
 					<c:if test="<%= fileMaxSize != 0 %>">
-						<div class="portlet-msg-info">
+						<div class="alert alert-info">
 							<%= LanguageUtil.format(request, "upload-documents-no-larger-than-x-k", String.valueOf(fileMaxSize), false) %>
 						</div>
 					</c:if>
@@ -168,7 +168,7 @@ to = sb.toString() + to;
 									var messageContainer = A.one('#<portlet:namespace />messageContainer');
 
 									if (messageContainer) {
-										messageContainer.html('<span class="portlet-msg-error">' + responseData.message + '</span>');
+										messageContainer.html('<div class="alert alert-danger">' + responseData.message + '</div>');
 									}
 
 									loadingMask.hide();

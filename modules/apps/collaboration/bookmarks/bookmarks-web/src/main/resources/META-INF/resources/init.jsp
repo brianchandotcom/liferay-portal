@@ -75,7 +75,6 @@ page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
-page import="com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.Menu" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem" %><%@
@@ -97,6 +96,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.subscription.service.SubscriptionLocalServiceUtil" %><%@
 page import="com.liferay.trash.kernel.util.TrashUtil" %>
 
 <%@ page import="java.text.Format" %>

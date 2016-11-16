@@ -514,7 +514,9 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCreateFormViaDDL" priority="3">
+	<!-- LPS-68693 -->
+
+	<!-- <command name="DeleteCreateFormViaDDL" priority="3">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
@@ -637,9 +639,11 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
 		</execute>
-	</command>
+	</command> -->
 
-	<command name="DeleteCreateFormViaKaleoFormsAdmin" priority="4">
+	<!-- LPS-68693 -->
+
+	<!-- <command name="DeleteCreateFormViaKaleoFormsAdmin" priority="4">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -717,7 +721,7 @@
 			<var name="kfFieldSetName" value="Inventory" />
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
-	</command>
+	</command> -->
 
 	<!-- LPS-68606 -->
 
@@ -840,7 +844,9 @@
 		<execute macro="DDLDataDefinition#tearDownCP" />
 	</command> -->
 
-	<command name="DeleteEditFormViaKaleoFormsAdmin" priority="3">
+	<!-- LPS-68693 -->
+
+	<!-- <command name="DeleteEditFormViaKaleoFormsAdmin" priority="3">
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
 		<execute macro="Navigator#openURL" />
@@ -918,7 +924,7 @@
 			<var name="kfFieldSetName" value="Inventory" />
 			<var name="kfFormName" value="Created Task Form" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="DeleteFieldSet" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
@@ -957,7 +963,9 @@
 		<execute macro="DDLDataDefinition#tearDownCP" />
 	</command>
 
-	<command name="DeleteForm" priority="4">
+	<!-- LPS-68693 -->
+
+	<!-- <command name="DeleteForm" priority="4">
 		<var name="kfFieldSetName" value="Field Set Data Definition" />
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
@@ -1077,7 +1085,7 @@
 			<var name="kfProcessName" value="${kfProcessName}" />
 			<var name="workflowTask" value="create" />
 		</execute>
-	</command>
+	</command> -->
 
 	<command name="DeleteProcess" priority="5">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />

@@ -383,10 +383,9 @@ AUI.add(
 									constrain: true,
 									cssClass: 'private-messaging-portlet',
 									destroyOnHide: true,
-									height: 600,
 									modal: true,
 									plugins: [Liferay.WidgetZIndex],
-									width: 600
+									width: 680
 								},
 								id: instance._namespace + 'Dialog',
 								title: Liferay.Language.get('new-message'),

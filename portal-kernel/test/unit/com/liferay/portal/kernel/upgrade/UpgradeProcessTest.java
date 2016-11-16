@@ -51,6 +51,24 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
+	public void testShouldAddIndexIsCaseInsensitive() {
+		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
+			_OLD_COLUMN_NAME, StringUtil.toUpperCase(_NEW_COLUMN_NAME));
+
+		Assert.assertTrue(
+			alterColumnName.shouldAddIndex(_newIndexColumnsNamesLowerCase));
+	}
+
+	@Test
+	public void testShouldAddIndexIsFalseIfNewColumnNameIsNotInNewIndex() {
+		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
+			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME_NOT_IN_INDEX);
+
+		Assert.assertFalse(
+			alterColumnName.shouldAddIndex(_newIndexColumnNames));
+	}
+
+	@Test
 	public void testShouldAddIndexIsTrueIfNewColumNameIsInNewIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
@@ -67,24 +85,6 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldAddIndexIsCaseInsensitive() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, StringUtil.toUpperCase(_NEW_COLUMN_NAME));
-
-		Assert.assertTrue(
-			alterColumnName.shouldAddIndex(_newIndexColumnsNamesLowerCase));
-	}
-
-	@Test
-	public void testShouldDropIndexIsTrueIfOldColumnIsInOldIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
-
-		Assert.assertTrue(
-			alterColumnName.shouldDropIndex(_oldIndexColumnNames));
-	}
-
-	@Test
 	public void testShouldDropIndexIsCaseInsensitive() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			StringUtil.toUpperCase(_OLD_COLUMN_NAME), _NEW_COLUMN_NAME);
@@ -94,20 +94,20 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldAddIndexIsFalseIfNewColumnNameIsNotInNewIndex() {
-		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
-			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME_NOT_IN_INDEX);
-
-		Assert.assertFalse(
-			alterColumnName.shouldAddIndex(_newIndexColumnNames));
-	}
-
-	@Test
 	public void testShouldDropIndexIsFalseIfOldColumnIsNotInOldIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME_NOT_IN_INDEX, _NEW_COLUMN_NAME);
 
 		Assert.assertFalse(
+			alterColumnName.shouldDropIndex(_oldIndexColumnNames));
+	}
+
+	@Test
+	public void testShouldDropIndexIsTrueIfOldColumnIsInOldIndex() {
+		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
+			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
+
+		Assert.assertTrue(
 			alterColumnName.shouldDropIndex(_oldIndexColumnNames));
 	}
 

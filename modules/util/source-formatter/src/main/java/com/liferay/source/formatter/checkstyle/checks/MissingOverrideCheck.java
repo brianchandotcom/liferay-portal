@@ -59,8 +59,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 	public void visitToken(DetailAST detailAST) {
 		String content = _getContent();
 
-		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(
-			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
+		JavaDocBuilder javaDocBuilder = _getJavaDocBuilder();
 
 		try {
 			javaDocBuilder.addSource(new UnsyncStringReader(content));
@@ -140,6 +139,17 @@ public class MissingOverrideCheck extends AbstractCheck {
 		FileText fileText = fileContents.getText();
 
 		return (String)fileText.getFullText();
+	}
+
+	private JavaDocBuilder _getJavaDocBuilder() {
+		if (_javaDocBuilder != null) {
+			return _javaDocBuilder;
+		}
+
+		_javaDocBuilder = new JavaDocBuilder(
+			new DefaultDocletTagFactory(), new ThreadSafeClassLibrary());
+
+		return _javaDocBuilder;
 	}
 
 	private String _getPackagePath(DetailAST packageDefAST) {
@@ -314,5 +324,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 	}
 
 	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
+
+	private JavaDocBuilder _javaDocBuilder;
 
 }

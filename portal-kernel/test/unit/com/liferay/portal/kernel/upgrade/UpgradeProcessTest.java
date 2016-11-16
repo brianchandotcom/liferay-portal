@@ -41,7 +41,7 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testGetSQLTakesIntoAccountWholeColumnDescription() {
+	public void testGetSQLUsesNewColumn() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME, _NEW_COLUMN);
 
@@ -51,7 +51,7 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldAddIndexIfColumnFromIndexRenamed() {
+	public void testShouldAddIndexIsTrueIfNewColumNameIsInNewIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
 
@@ -59,7 +59,7 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldAddIndexIfColumnFromIndexRenamedWithAttributes() {
+	public void testShouldAddIndexIsTrueIfNewColumnIsInNewIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME, _NEW_COLUMN);
 
@@ -76,7 +76,7 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldDropIndexIfColumnFromIndexRenamed() {
+	public void testShouldDropIndexIsTrueIfOldColumnIsInOldIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME);
 
@@ -94,7 +94,7 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldNotAddIndexIfColumnNotInIndexRenamed() {
+	public void testShouldAddIndexIsFalseIfNewColumnNameIsNotInNewIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME, _NEW_COLUMN_NAME_NOT_IN_INDEX);
 
@@ -103,7 +103,7 @@ public class UpgradeProcessTest {
 	}
 
 	@Test
-	public void testShouldNotDropIndexIfColumnNotInIndexRenamed() {
+	public void testShouldDropIndexIsFalseIfOldColumnIsNotInOldIndex() {
 		AlterColumnName alterColumnName = _upgradeProcess.new AlterColumnName(
 			_OLD_COLUMN_NAME_NOT_IN_INDEX, _NEW_COLUMN_NAME);
 

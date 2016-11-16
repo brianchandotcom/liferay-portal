@@ -33,11 +33,14 @@
 			<var name="portletName" value="XSL Content" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelConfiguration">
-			<var name="portlet" value="System Settings" />
-		</execute>
+		<!-- LPS-69203 -->
 
-		<execute macro="XSLContent#configureConfigurationAdminXSL" />
+		<!-- <execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="System Settings" />
+		</execute> -->
+
+		<!-- <execute macro="XSLContent#configureConfigurationAdminXSL" /> -->
+
 	</set-up>
 
 	<tear-down>
@@ -558,15 +561,18 @@
 			<var name="portletName" value="XSL Content" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
+		<!-- LPS-69203 -->
+
+		<!-- <execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Test Page Name" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />
-		</execute>
+		</execute> -->
 
-		<execute macro="XSLContent#viewConfigurationXSLContent" />
+		<!-- <execute macro="XSLContent#viewConfigurationXSLContent" /> -->
+
 	</command>
 </definition>

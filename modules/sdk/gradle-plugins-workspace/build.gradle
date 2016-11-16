@@ -22,5 +22,5 @@ gradleTest {
 	gradleArguments "--project-prop", "liferay.workspace.bundle.url=http://mirrors.liferay.com/releases.liferay.com/portal/7.0.2-ga3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip"
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(jar.destinationDir)}"
 
-	versions "2.14.1", "3.0", "3.1"
+	versions "2.14.1", "3.0", "3.1", "3.2"
 }

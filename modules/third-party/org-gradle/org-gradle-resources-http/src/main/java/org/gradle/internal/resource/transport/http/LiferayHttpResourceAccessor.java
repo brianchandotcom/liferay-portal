@@ -64,21 +64,21 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 	}
 
 	@Override
-	public ExternalResourceMetaData getMetaData(URI uri) {
+	public ExternalResourceMetaData getMetaData(URI uri, boolean revalidate) {
 		if (!_isForcedCacheEnabled()) {
-			return super.getMetaData(uri);
+			return super.getMetaData(uri, revalidate);
 		}
 
 		String location = _getLocation(uri);
 
 		if (StringUtils.isBlank(location)) {
-			return super.getMetaData(uri);
+			return super.getMetaData(uri, revalidate);
 		}
 
 		File cachedArtifactFile = _getCachedArtifactFile(location);
 
 		if (cachedArtifactFile == null) {
-			return super.getMetaData(uri);
+			return super.getMetaData(uri, revalidate);
 		}
 
 		HashValue hashValue = HashUtil.sha1(cachedArtifactFile);
@@ -89,15 +89,15 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 	}
 
 	@Override
-	public HttpResponseResource openResource(URI uri) {
+	public HttpResponseResource openResource(URI uri, boolean revalidate) {
 		if (!_isForcedCacheEnabled()) {
-			return super.openResource(uri);
+			return super.openResource(uri, revalidate);
 		}
 
 		String location = _getLocation(uri);
 
 		if (StringUtils.isBlank(location)) {
-			return super.openResource(uri);
+			return super.openResource(uri, revalidate);
 		}
 
 		HttpResponseResource httpResponseResource = null;
@@ -118,7 +118,7 @@ public class LiferayHttpResourceAccessor extends HttpResourceAccessor {
 		}
 
 		if (httpResponseResource == null) {
-			httpResponseResource = super.openResource(uri);
+			httpResponseResource = super.openResource(uri, revalidate);
 		}
 
 		return httpResponseResource;

@@ -52,9 +52,11 @@ repositories {
 	}
 }
 
-updateGradleCache << {
-	configurations.poshiRunner.resolve()
-	configurations.sikuliComplete.resolve()
+updateGradleCache {
+	doLast {
+		configurations.poshiRunner.resolve()
+		configurations.sikuliComplete.resolve()
+	}
 }
 
 if (GradleUtil.getProperty(project, "local", false)) {

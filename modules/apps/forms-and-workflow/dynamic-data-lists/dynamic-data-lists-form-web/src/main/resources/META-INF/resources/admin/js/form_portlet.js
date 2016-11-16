@@ -2,7 +2,10 @@ AUI.add(
 	'liferay-ddl-portlet',
 	function(A) {
 		var DefinitionSerializer = Liferay.DDL.DefinitionSerializer;
+
 		var LayoutSerializer = Liferay.DDL.LayoutSerializer;
+
+		var EMPTY_FN = A.Lang.emptyFn;
 
 		var MINUTE = 60000;
 
@@ -47,6 +50,9 @@ AUI.add(
 
 					formBuilder: {
 						valueFn: '_valueFormBuilder'
+					},
+
+					formURL: {
 					},
 
 					getFieldTypeSettingFormContextURL: {
@@ -149,6 +155,7 @@ AUI.add(
 							formBuilder._layoutBuilder.after('layout-builder:moveEnd', A.bind(instance._afterFormBuilderLayoutBuilderMoveEnd, instance)),
 							formBuilder._layoutBuilder.after('layout-builder:moveStart', A.bind(instance._afterFormBuilderLayoutBuilderMoveStart, instance)),
 							instance.one('.btn-cancel').on('click', A.bind('_onCancel', instance)),
+							instance.one('#preview').on('click', A.bind('_onPreviewButtonClick', instance)),
 							instance.one('#publish').on('click', A.bind('_onPublishButtonClick', instance)),
 							instance.one('#save').on('click', A.bind('_onSaveButtonClick', instance)),
 							instance.one('#showRules').on('click', A.bind('_onRulesButtonClick', instance)),
@@ -252,6 +259,18 @@ AUI.add(
 							name: instance.get('name'),
 							rules: rules
 						};
+					},
+
+					isEmpty: function() {
+						var instance = this;
+
+						var state = instance.getState();
+
+						var definition = state.definition;
+
+						var fields = definition.fields;
+
+						return fields.length === 0;
 					},
 
 					openConfirmationModal: function(confirm, cancel) {
@@ -418,8 +437,10 @@ AUI.add(
 						instance.disableNameEditor();
 					},
 
-					_autosave: function() {
+					_autosave: function(callback) {
 						var instance = this;
+
+						callback = callback || EMPTY_FN;
 
 						instance.serializeFormBuilder();
 
@@ -427,36 +448,53 @@ AUI.add(
 
 						var definition = state.definition;
 
-						if ((definition.fields.length > 0) && !instance._isSameState(instance.savedState, state)) {
-							var editForm = instance.get('editForm');
+						if (!instance.isEmpty()) {
+							if (!instance._isSameState(instance.savedState, state)) {
+								var editForm = instance.get('editForm');
 
-							var formData = instance._getFormData(A.IO.stringify(editForm.form));
+								var formData = instance._getFormData(A.IO.stringify(editForm.form));
 
-							A.io.request(
-								instance.get('autosaveURL'),
-								{
-									after: {
-										success: function() {
-											var responseData = this.get('responseData');
+								A.io.request(
+									instance.get('autosaveURL'),
+									{
+										after: {
+											success: function() {
+												var responseData = this.get('responseData');
 
-											instance._defineIds(responseData);
+												instance._defineIds(responseData);
 
-											instance.savedState = state;
+												instance.savedState = state;
 
-											instance.fire(
-												'autosave',
-												{
-													modifiedDate: responseData.modifiedDate
-												}
-											);
-										}
-									},
-									data: formData,
-									dataType: 'JSON',
-									method: 'POST'
-								}
-							);
+												instance.fire(
+													'autosave',
+													{
+														modifiedDate: responseData.modifiedDate
+													}
+												);
+
+												callback.call();
+											}
+										},
+										data: formData,
+										dataType: 'JSON',
+										method: 'POST'
+									}
+								);
+							}
+							else {
+								callback.call();
+							}
 						}
+					},
+
+					_createPreviewURL: function() {
+						var instance = this;
+
+						var formURL = instance.get('formURL');
+
+						var recordSetId = instance.byId('recordSetId').val();
+
+						return formURL + recordSetId + '/preview';
 					},
 
 					_defineIds: function(response) {
@@ -569,6 +607,18 @@ AUI.add(
 
 						instance.one('#showRules').removeClass('active');
 						instance.one('#showForm').addClass('active');
+					},
+
+					_onPreviewButtonClick: function() {
+						var instance = this;
+
+						instance._autosave(
+							function() {
+								var previewURL = instance._createPreviewURL();
+
+								window.open(previewURL, '_blank');
+							}
+						);
 					},
 
 					_onPublishButtonClick: function(event) {

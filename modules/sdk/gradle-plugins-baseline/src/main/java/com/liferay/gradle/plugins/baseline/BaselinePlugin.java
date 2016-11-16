@@ -27,9 +27,12 @@ import java.util.concurrent.TimeUnit;
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.ComponentSelection;
+import org.gradle.api.artifacts.ComponentSelectionRules;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaBasePlugin;
@@ -106,6 +109,26 @@ public class BaselinePlugin implements Plugin<Project> {
 
 		ResolutionStrategy resolutionStrategy =
 			configuration.getResolutionStrategy();
+
+		ComponentSelectionRules componentSelectionRules =
+			resolutionStrategy.getComponentSelection();
+
+		componentSelectionRules.all(
+			new Action<ComponentSelection>() {
+
+				@Override
+				public void execute(ComponentSelection componentSelection) {
+					ModuleComponentIdentifier moduleComponentIdentifier =
+						componentSelection.getCandidate();
+
+					String version = moduleComponentIdentifier.getVersion();
+
+					if (version.endsWith("-SNAPSHOT")) {
+						componentSelection.reject("no snapshots are allowed");
+					}
+				}
+
+			});
 
 		resolutionStrategy.cacheChangingModulesFor(0, TimeUnit.SECONDS);
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);

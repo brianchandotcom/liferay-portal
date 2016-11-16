@@ -162,6 +162,7 @@
 		<!-- LPS-68962 -->
 
 		<!-- <execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" /> -->
+
 	</command>
 
 	<command name="viewDisabledViaPortalSettings">
@@ -195,6 +196,7 @@
 		<!-- LPS-68962 -->
 
 		<!-- <execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${mentionsUserFullName}" /> -->
+
 	</command>
 
 	<command name="viewNoMentionTagLink">

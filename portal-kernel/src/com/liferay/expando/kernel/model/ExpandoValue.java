@@ -87,6 +87,9 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 	public float[] getFloatArray()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.json.JSONObject getGeolocationJSONObject()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public int getInteger()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -156,6 +159,10 @@ public interface ExpandoValue extends ExpandoValueModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setFloatArray(float[] data)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void setGeolocationJSONObject(
+		com.liferay.portal.kernel.json.JSONObject data)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setInteger(int data)

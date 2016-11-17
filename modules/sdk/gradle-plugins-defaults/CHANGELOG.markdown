@@ -655,6 +655,14 @@ publishing.
 
 ## 2.0.1 - 2016-11-18
 
+### Added
+- [LPS-69288]: Set the `app.description` project property to override the
+project description if the `com.liferay.app.defaults.plugin` is applied.
+- [LPS-69288]: Set the `app.title` project property to override the title used
+in the `appJavadoc` task.
+- [LPS-69288]: Set the `app.version` project property to override the project
+version if the `com.liferay.app.defaults.plugin` is applied.
+
 ### Changed
 - [LPS-69248]: Update the [Liferay Gradle Plugins] dependency to version 3.0.38.
 
@@ -717,6 +725,7 @@ publishing.
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-69248]: https://issues.liferay.com/browse/LPS-69248
+[LPS-69288]: https://issues.liferay.com/browse/LPS-69288
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

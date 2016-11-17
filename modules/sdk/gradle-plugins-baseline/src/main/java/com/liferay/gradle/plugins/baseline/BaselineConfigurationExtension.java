@@ -30,10 +30,19 @@ public class BaselineConfigurationExtension {
 		return GradleUtil.toString(_lowestBaselineVersion);
 	}
 
+	public boolean isAllowMavenLocal() {
+		return _allowMavenLocal;
+	}
+
+	public void setAllowMavenLocal(boolean allowMavenLocal) {
+		_allowMavenLocal = allowMavenLocal;
+	}
+
 	public void setLowestBaselineVersion(Object lowestBaselineVersion) {
 		_lowestBaselineVersion = lowestBaselineVersion;
 	}
 
+	private boolean _allowMavenLocal;
 	private Object _lowestBaselineVersion = "1.0.0";
 
 }

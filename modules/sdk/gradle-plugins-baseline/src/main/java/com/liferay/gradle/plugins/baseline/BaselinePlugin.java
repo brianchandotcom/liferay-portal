@@ -19,14 +19,14 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.artifacts.ComponentSelection;
 import org.gradle.api.artifacts.ComponentSelectionRules;
 import org.gradle.api.artifacts.Configuration;
@@ -34,7 +34,6 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.ReportingBasePlugin;
@@ -70,7 +69,8 @@ public class BaselinePlugin implements Plugin<Project> {
 		final Configuration baselineConfiguration = _addConfigurationBaseline(
 			jar);
 
-		final BaselineTask baselineTask = _addTaskBaseline(project);
+		final BaselineTask baselineTask = _addTaskBaseline(
+			project, baselineConfigurationExtension);
 
 		_configureTasksBaseline(project);
 
@@ -146,9 +146,36 @@ public class BaselinePlugin implements Plugin<Project> {
 			"(," + newJarTask.getVersion() + ")", false);
 	}
 
-	private BaselineTask _addTaskBaseline(final Project project) {
+	private BaselineTask _addTaskBaseline(
+		final Project project,
+		final BaselineConfigurationExtension baselineConfigurationExtension) {
+
 		BaselineTask baselineTask = GradleUtil.addTask(
 			project, BASELINE_TASK_NAME, BaselineTask.class);
+
+		baselineTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					if (baselineConfigurationExtension.isAllowMavenLocal()) {
+						return;
+					}
+
+					BaselineTask baselineTask = (BaselineTask)task;
+
+					File oldJarFile = baselineTask.getOldJarFile();
+
+					if ((oldJarFile != null) &&
+						GradleUtil.isFromMavenLocal(project, oldJarFile)) {
+
+						throw new GradleException(
+							"Please delete " + oldJarFile.getParent() +
+								" and try again");
+					}
+				}
+
+			});
 
 		File bndFile = project.file("bnd.bnd");
 

@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
@@ -164,14 +164,14 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 
 	@Override
 	protected void doReindex(KBArticle kbArticle) throws Exception {
-		IndexWriterHelperUtil.updateDocument(
+		indexWriterHelper.updateDocument(
 			getSearchEngineId(), kbArticle.getCompanyId(),
 			getDocument(kbArticle), isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
+		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
 			classPK, WorkflowConstants.STATUS_ANY);
 
 		reindexKBArticles(kbArticle);
@@ -192,7 +192,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		Collection<String> kbFolderNames = new ArrayList<>();
 
 		while (kbFolderId != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			KBFolder kbFolder = _kbFolderLocalService.getKBFolder(kbFolderId);
+			KBFolder kbFolder = kbFolderLocalService.getKBFolder(kbFolderId);
 
 			kbFolderNames.add(kbFolder.getName());
 
@@ -207,7 +207,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		// See KBArticlePermission#contains
 
 		List<KBArticle> kbArticles =
-			_kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
+			kbArticleLocalService.getKBArticleAndAllDescendantKBArticles(
 				kbArticle.getResourcePrimKey(),
 				WorkflowConstants.STATUS_APPROVED, null);
 
@@ -217,14 +217,14 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 			documents.add(getDocument(curKBArticle));
 		}
 
-		IndexWriterHelperUtil.updateDocuments(
+		indexWriterHelper.updateDocuments(
 			getSearchEngineId(), kbArticle.getCompanyId(), documents,
 			isCommitImmediately());
 	}
 
 	protected void reindexKBArticles(long companyId) throws Exception {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_kbArticleLocalService.getIndexableActionableDynamicQuery();
+			kbArticleLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -265,24 +265,16 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setKBArticleLocalService(
-		KBArticleLocalService kbArticleLocalService) {
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
 
-		_kbArticleLocalService = kbArticleLocalService;
-	}
+	@Reference
+	protected KBArticleLocalService kbArticleLocalService;
 
-	@Reference(unbind = "-")
-	protected void setKBFolderLocalService(
-		KBFolderLocalService kbFolderLocalService) {
-
-		_kbFolderLocalService = kbFolderLocalService;
-	}
+	@Reference
+	protected KBFolderLocalService kbFolderLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KBArticleIndexer.class);
-
-	private KBArticleLocalService _kbArticleLocalService;
-	private KBFolderLocalService _kbFolderLocalService;
 
 }

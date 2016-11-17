@@ -3,6 +3,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.output.stream.container", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.search", version: "3.4.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"

@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexSearcherHelper;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -78,7 +78,7 @@ public class AccountIndexer extends BaseIndexer<Account> {
 
 		booleanQuery.addRequiredTerm("accountId", account.getAccountId());
 
-		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
+		Hits hits = indexSearcherHelper.search(searchContext, booleanQuery);
 
 		List<String> uids = new ArrayList<>(hits.getLength());
 
@@ -88,7 +88,7 @@ public class AccountIndexer extends BaseIndexer<Account> {
 			uids.add(document.get(Field.UID));
 		}
 
-		IndexWriterHelperUtil.deleteDocuments(
+		indexWriterHelper.deleteDocuments(
 			getSearchEngineId(), account.getCompanyId(), uids,
 			isCommitImmediately());
 	}
@@ -119,14 +119,14 @@ public class AccountIndexer extends BaseIndexer<Account> {
 	protected void doReindex(Account account) throws Exception {
 		Document document = getDocument(account);
 
-		IndexWriterHelperUtil.updateDocument(
+		indexWriterHelper.updateDocument(
 			getSearchEngineId(), account.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Account account = _accountLocalService.getAccount(classPK);
+		Account account = accountLocalService.getAccount(classPK);
 
 		doReindex(account);
 	}
@@ -140,7 +140,7 @@ public class AccountIndexer extends BaseIndexer<Account> {
 
 	protected void reindexMessages(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_accountLocalService.getIndexableActionableDynamicQuery();
+			accountLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -171,15 +171,15 @@ public class AccountIndexer extends BaseIndexer<Account> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setAccountLocalService(
-		AccountLocalService accountLocalService) {
+	@Reference
+	protected AccountLocalService accountLocalService;
 
-		_accountLocalService = accountLocalService;
-	}
+	@Reference
+	protected IndexSearcherHelper indexSearcherHelper;
+
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(AccountIndexer.class);
-
-	private static AccountLocalService _accountLocalService;
 
 }

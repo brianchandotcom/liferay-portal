@@ -40,10 +40,9 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -97,9 +96,6 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			Field.ENTRY_CLASS_NAME, DDLRecord.class.getName());
 
 		if (searchContext.getUserId() > 0) {
-			SearchPermissionChecker searchPermissionChecker =
-				SearchEngineHelperUtil.getSearchPermissionChecker();
-
 			facetBooleanFilter =
 				searchPermissionChecker.getPermissionBooleanFilter(
 					searchContext.getCompanyId(), searchContext.getGroupIds(),
@@ -146,7 +142,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			QueryFilter queryFilter = _ddmIndexer.createFieldValueQueryFilter(
+			QueryFilter queryFilter = ddmIndexer.createFieldValueQueryFilter(
 				ddmStructureFieldName, ddmStructureFieldValue,
 				searchContext.getLocale());
 
@@ -180,7 +176,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 		document.addKeyword(
 			Field.CLASS_NAME_ID,
-			_classNameLocalService.getClassNameId(DDLRecordSet.class));
+			classNameLocalService.getClassNameId(DDLRecordSet.class));
 		document.addKeyword(Field.CLASS_PK, recordSet.getRecordSetId());
 		document.addKeyword(
 			Field.CLASS_TYPE_ID, recordVersion.getRecordSetId());
@@ -196,10 +192,10 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
+		DDMFormValues ddmFormValues = storageEngine.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
-		_ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
+		ddmIndexer.addAttributes(document, ddmStructure, ddmFormValues);
 
 		return document;
 	}
@@ -226,14 +222,14 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 	protected void doReindex(DDLRecord ddlRecord) throws Exception {
 		Document document = getDocument(ddlRecord);
 
-		IndexWriterHelperUtil.updateDocument(
+		indexWriterHelper.updateDocument(
 			getSearchEngineId(), ddlRecord.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		DDLRecord record = _ddlRecordLocalService.getRecord(classPK);
+		DDLRecord record = ddlRecordLocalService.getRecord(classPK);
 
 		doReindex(record);
 	}
@@ -249,7 +245,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 			DDLRecordVersion recordVersion, Locale locale)
 		throws Exception {
 
-		DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
+		DDMFormValues ddmFormValues = storageEngine.getDDMFormValues(
 			recordVersion.getDDMStorageId());
 
 		if (ddmFormValues == null) {
@@ -258,13 +254,13 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 		DDLRecordSet recordSet = recordVersion.getRecordSet();
 
-		return _ddmIndexer.extractIndexableAttributes(
+		return ddmIndexer.extractIndexableAttributes(
 			recordSet.getDDMStructure(), ddmFormValues, locale);
 	}
 
 	protected String getTitle(long recordSetId, Locale locale) {
 		try {
-			DDLRecordSet recordSet = _ddlRecordSetLocalService.getRecordSet(
+			DDLRecordSet recordSet = ddlRecordSetLocalService.getRecordSet(
 				recordSetId);
 
 			DDMStructure ddmStructure = recordSet.getDDMStructure();
@@ -286,7 +282,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	protected void reindexRecords(long companyId) throws Exception {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_ddlRecordLocalService.getIndexableActionableDynamicQuery();
+			ddlRecordLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -297,7 +293,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						"recordId");
 
 					DynamicQuery recordVersionDynamicQuery =
-						_ddlRecordVersionLocalService.dynamicQuery();
+						ddlRecordVersionLocalService.dynamicQuery();
 
 					recordVersionDynamicQuery.setProjection(
 						ProjectionFactoryUtil.property("recordId"));
@@ -309,7 +305,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 						"recordSetId");
 
 					DynamicQuery recordSetDynamicQuery =
-						_ddlRecordSetLocalService.dynamicQuery();
+						ddlRecordSetLocalService.dynamicQuery();
 
 					recordSetDynamicQuery.setProjection(
 						ProjectionFactoryUtil.property("recordSetId"));
@@ -357,43 +353,29 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setClassNameLocalService(
-		ClassNameLocalService classNameLocalService) {
+	@Reference
+	protected ClassNameLocalService classNameLocalService;
 
-		_classNameLocalService = classNameLocalService;
-	}
+	@Reference
+	protected DDLRecordLocalService ddlRecordLocalService;
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
+	@Reference
+	protected DDLRecordSetLocalService ddlRecordSetLocalService;
 
-		_ddlRecordLocalService = ddlRecordLocalService;
-	}
+	@Reference
+	protected DDLRecordVersionLocalService ddlRecordVersionLocalService;
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
+	@Reference
+	protected DDMIndexer ddmIndexer;
 
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordVersionLocalService(
-		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
+	@Reference
+	protected SearchPermissionChecker searchPermissionChecker;
 
-		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDMIndexer(DDMIndexer ddmIndexer) {
-		_ddmIndexer = ddmIndexer;
-	}
-
-	@Reference(unbind = "-")
-	protected void setStorageEngine(StorageEngine storageEngine) {
-		_storageEngine = storageEngine;
-	}
+	@Reference
+	protected StorageEngine storageEngine;
 
 	private static final int[] _REINDEX_SCOPES = new int[] {
 		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
@@ -403,12 +385,5 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLRecordIndexer.class);
-
-	private ClassNameLocalService _classNameLocalService;
-	private DDLRecordLocalService _ddlRecordLocalService;
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private DDMIndexer _ddmIndexer;
-	private StorageEngine _storageEngine;
 
 }

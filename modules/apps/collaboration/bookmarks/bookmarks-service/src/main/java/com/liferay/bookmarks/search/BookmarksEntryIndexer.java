@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
@@ -132,7 +132,7 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 	protected void doReindex(BookmarksEntry bookmarksEntry) throws Exception {
 		Document document = getDocument(bookmarksEntry);
 
-		IndexWriterHelperUtil.updateDocument(
+		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), bookmarksEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}
@@ -279,5 +279,8 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
 
 }

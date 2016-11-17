@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
@@ -85,7 +85,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	@Override
 	public boolean isVisible(long classPK, int status) throws Exception {
-		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
+		BlogsEntry entry = blogsEntryLocalService.getEntry(classPK);
 
 		return isVisible(entry.getStatus(), status);
 	}
@@ -134,14 +134,14 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 	protected void doReindex(BlogsEntry blogsEntry) throws Exception {
 		Document document = getDocument(blogsEntry);
 
-		IndexWriterHelperUtil.updateDocument(
+		indexWriterHelper.updateDocument(
 			getSearchEngineId(), blogsEntry.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		BlogsEntry entry = _blogsEntryLocalService.getEntry(classPK);
+		BlogsEntry entry = blogsEntryLocalService.getEntry(classPK);
 
 		doReindex(entry);
 	}
@@ -155,7 +155,7 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 
 	protected void reindexEntries(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_blogsEntryLocalService.getIndexableActionableDynamicQuery();
+			blogsEntryLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -206,16 +206,13 @@ public class BlogsEntryIndexer extends BaseIndexer<BlogsEntry> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setBlogsEntryLocalService(
-		BlogsEntryLocalService blogsEntryLocalService) {
+	@Reference
+	protected BlogsEntryLocalService blogsEntryLocalService;
 
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryIndexer.class);
-
-	private BlogsEntryLocalService _blogsEntryLocalService;
 
 }

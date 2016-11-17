@@ -29,8 +29,8 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexSearcherHelper;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -78,7 +78,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 		booleanQuery.addRequiredTerm("folderId", folder.getFolderId());
 
-		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
+		Hits hits = indexSearcherHelper.search(searchContext, booleanQuery);
 
 		List<String> uids = new ArrayList<>(hits.getLength());
 
@@ -88,7 +88,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 			uids.add(document.get(Field.UID));
 		}
 
-		IndexWriterHelperUtil.deleteDocuments(
+		indexWriterHelper.deleteDocuments(
 			getSearchEngineId(), folder.getCompanyId(), uids,
 			isCommitImmediately());
 	}
@@ -121,14 +121,14 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 	protected void doReindex(Folder folder) throws Exception {
 		Document document = getDocument(folder);
 
-		IndexWriterHelperUtil.updateDocument(
+		indexWriterHelper.updateDocument(
 			getSearchEngineId(), folder.getCompanyId(), document,
 			isCommitImmediately());
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Folder folder = _folderLocalService.getFolder(classPK);
+		Folder folder = folderLocalService.getFolder(classPK);
 
 		doReindex(folder);
 	}
@@ -142,7 +142,7 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 
 	protected void reindexMessages(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			_folderLocalService.getIndexableActionableDynamicQuery();
+			folderLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
@@ -173,15 +173,15 @@ public class FolderIndexer extends BaseIndexer<Folder> {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind = "-")
-	protected void setFolderLocalService(
-		FolderLocalService folderLocalService) {
+	@Reference
+	protected FolderLocalService folderLocalService;
 
-		_folderLocalService = folderLocalService;
-	}
+	@Reference
+	protected IndexSearcherHelper indexSearcherHelper;
+
+	@Reference
+	protected IndexWriterHelper indexWriterHelper;
 
 	private static final Log _log = LogFactoryUtil.getLog(FolderIndexer.class);
-
-	private static FolderLocalService _folderLocalService;
 
 }

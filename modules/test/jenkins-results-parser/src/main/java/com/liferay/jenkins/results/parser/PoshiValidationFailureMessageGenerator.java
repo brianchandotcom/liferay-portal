@@ -30,7 +30,7 @@ public class PoshiValidationFailureMessageGenerator
 			String buildURL, String consoleOutput, Project project)
 		throws Exception {
 
-		Matcher poshiFailureMatcher = poshiFailurePattern.matcher(
+		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
 			consoleOutput);
 
 		if (poshiFailureMatcher.find()) {
@@ -43,7 +43,7 @@ public class PoshiValidationFailureMessageGenerator
 		return null;
 	}
 
-	private static final Pattern poshiFailurePattern = Pattern.compile(
+	private static final Pattern _poshiFailurePattern = Pattern.compile(
 		"\\n(.*errors in POSHI[\\s\\S]+?FAILED)");
 
 }

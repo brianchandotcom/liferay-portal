@@ -105,23 +105,7 @@ public class SessionTreeJSClickAction extends Action {
 				long plid = ParamUtil.getLong(request, "plid");
 
 				if (plid == LayoutConstants.DEFAULT_PLID) {
-					long groupId = ParamUtil.getLong(request, "groupId");
-					boolean privateLayout = ParamUtil.getBoolean(
-						request, "privateLayout");
-
-					SessionTreeJSClicks.closeLayoutNodes(
-						request, treeId, false, LayoutConstants.DEFAULT_PLID,
-						false);
-
-					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-						groupId, privateLayout,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-					for (Layout layout : layouts) {
-						SessionTreeJSClicks.closeLayoutNodes(
-							request, treeId, layout.isPrivateLayout(),
-							layout.getLayoutId(), true);
-					}
+					SessionTreeJSClicks.closeNodes(request, treeId);
 				}
 				else {
 					boolean recursive = ParamUtil.getBoolean(

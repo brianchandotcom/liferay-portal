@@ -20,6 +20,8 @@
 String portletBackURL = (String)request.getAttribute(ProductNavigationControlMenuWebKeys.PORTLET_BACK_URL);
 %>
 
-<div class="toolbar-group-content">
-	<a class="control-menu-icon" href="<%= HtmlUtil.escapeHREF(portletBackURL) %>"><span class="icon-angle-left icon-monospaced"></span></a>
-</div>
+<li class="control-menu-nav-item">
+	<a class="control-menu-icon" href="<%= HtmlUtil.escapeHREF(portletBackURL) %>">
+		<aui:icon cssClass="icon-monospaced" image="angle-left" markupView="lexicon" />
+	</a>
+</li>

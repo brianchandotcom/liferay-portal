@@ -42,7 +42,7 @@ public class EdgeWebDriverImpl extends BaseWebDriverImpl {
 			catch (Exception e) {
 				scrollWebElementIntoView(webElement);
 
-				webElement.click();
+				javaScriptClick(locator);
 			}
 		}
 	}

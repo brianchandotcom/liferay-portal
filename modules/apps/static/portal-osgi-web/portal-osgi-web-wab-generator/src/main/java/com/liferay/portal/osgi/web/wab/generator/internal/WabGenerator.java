@@ -43,8 +43,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import javax.servlet.ServletContext;
 
 import org.apache.felix.fileinstall.ArtifactUrlTransformer;
 
@@ -56,6 +59,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.url.URLConstants;
 import org.osgi.service.url.URLStreamHandlerService;
 import org.osgi.util.tracker.BundleTracker;
@@ -184,8 +190,8 @@ public class WabGenerator
 
 	protected void registerArtifactUrlTransformer(BundleContext bundleContext) {
 		_serviceRegistration = bundleContext.registerService(
-			ArtifactUrlTransformer.class, new WarArtifactUrlTransformer(),
-			null);
+			ArtifactUrlTransformer.class,
+			new WarArtifactUrlTransformer(_portalIsReady), null);
 	}
 
 	protected void registerURLStreamHandlerService(
@@ -216,12 +222,27 @@ public class WabGenerator
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(original.bean=true)(bean.id=javax.servlet.ServletContext))"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_portalIsReady.set(true);
+	}
+
 	protected void unsetModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
+	protected void unsetServletContext(ServletContext servletContext) {
+		_portalIsReady.set(false);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(WabGenerator.class);
 
+	private final AtomicBoolean _portalIsReady = new AtomicBoolean();
 	private ServiceRegistration<ArtifactUrlTransformer> _serviceRegistration;
 
 }

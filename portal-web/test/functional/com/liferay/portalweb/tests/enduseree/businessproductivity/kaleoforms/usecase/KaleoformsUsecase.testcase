@@ -4784,7 +4784,7 @@
 
 		<execute macro="KaleoFormsAdmin#deleteForm">
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-			<var name="kfFormName" value="Created Task Form" />
+			<var name="kfFormName" value="Review Task Form" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

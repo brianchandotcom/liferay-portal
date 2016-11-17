@@ -562,6 +562,8 @@ public class CalendarBookingLocalServiceTest {
 
 		long startTime = System.currentTimeMillis();
 
+		long endTime = startTime + (Time.HOUR * 10);
+
 		Recurrence recurrence = new Recurrence();
 
 		recurrence.setFrequency(Frequency.DAILY);
@@ -574,11 +576,13 @@ public class CalendarBookingLocalServiceTest {
 				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, startTime + 36000000,
-				false, RecurrenceSerializer.serialize(recurrence), 0, null, 0,
-				null, serviceContext);
+				RandomTestUtil.randomString(), startTime, endTime, false,
+				RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
+				serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
+
+		long instanceEndTime = instanceStartTime + (Time.HOUR * 10);
 
 		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
 
@@ -588,8 +592,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), titleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + 36000000, false, null, false, 0, null, 0,
-				null, serviceContext);
+				instanceEndTime, false, null, false, 0, null, 0, null,
+				serviceContext);
 
 		CalendarBookingLocalServiceUtil.invokeTransition(
 			_user.getUserId(), calendarBooking, startTime + Time.DAY,

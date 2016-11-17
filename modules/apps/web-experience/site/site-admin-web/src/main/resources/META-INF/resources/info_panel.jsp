@@ -120,6 +120,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 					PortletURL assignMembersURL = PortalUtil.getControlPanelPortletURL(request, portletId, PortletRequest.RENDER_PHASE);
 
+					assignMembersURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 					assignMembersURL.setParameter("redirect", currentURL);
 					%>
 

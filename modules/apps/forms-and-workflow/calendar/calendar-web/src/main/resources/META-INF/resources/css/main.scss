@@ -159,7 +159,7 @@
 				cursor: pointer;
 			}
 
-			.icon-caret-right, .icon-caret-left {
+			.icon-caret-left, .icon-caret-right {
 				left: 50%;
 				margin: -14px 0 0 -1px;
 				position: absolute;
@@ -205,10 +205,12 @@
 .calendar-event-answer {
 	font-weight: bold;
 
-	&.calendar-event-answer-false, &.calendar-event-answer-false:hover {
-		color: #555;
-		cursor: default;
-		text-decoration: none;
+	&.calendar-event-answer-false {
+		&, &:hover {
+			color: #555;
+			cursor: default;
+			text-decoration: none;
+		}
 	}
 }
 
@@ -426,11 +428,11 @@
 	outline-width: 0;
 	padding: 7px;
 	width: 90%;
-}
 
-.scheduler-event-recorder-header .scheduler-event-recorder-content:hover {
-	background: #FFC;
-	border-color: #FC0;
+	&:hover {
+		background: #FFC;
+		border-color: #FC0;
+	}
 }
 
 .scheduler-event-recorder-popover .popover-content .close {
@@ -466,18 +468,18 @@
 
 .simple-menu {
 	position: absolute;
+
+	.simple-menu-content {
+		background: none repeat scroll 0 0 #FFF;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		margin: 0;
+		outline: medium none;
+		padding: 6px 0;
+	}
 }
 
 .simple-menu-hidden {
 	display: none;
-}
-
-.simple-menu .simple-menu-content {
-	background: none repeat scroll 0 0 #FFF;
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	margin: 0;
-	outline: medium none;
-	padding: 6px 0;
 }
 
 .simple-menu-item {
@@ -564,25 +566,25 @@
 	.yui3-calendar-day {
 		padding: 5px 0 10px;
 		width: 14.286%;
-	}
 
-	.yui3-calendar-day:hover, .yui3-calendar-day.yui3-calendar-day-selected:hover, .yui3-calendar-day.yui3-calendar-day-selected.lfr-busy-day:hover {
-		background: #BBB;
-		color: #FFF;
-	}
+		&:hover, &.yui3-calendar-day-selected:hover, &.yui3-calendar-day-selected.lfr-busy-day:hover {
+			background: #BBB;
+			color: #FFF;
+		}
 
-	.yui3-calendar-day.yui3-calendar-day-selected, .yui3-calendar-day.yui3-calendar-day-selected.lfr-busy-day {
-		background-color: #F2F2F2;
-	}
+		&.yui3-calendar-day-selected, &.yui3-calendar-day-selected.lfr-busy-day {
+			background-color: #F2F2F2;
+		}
 
-	.yui3-calendar-day.lfr-busy-day, .yui3-calendar-day.yui3-calendar-day-selected.lfr-busy-day {
-		font-weight: bold;
-		padding-bottom: 0;
-	}
+		&.lfr-busy-day, &.yui3-calendar-day-selected.lfr-busy-day {
+			font-weight: bold;
+			padding-bottom: 0;
+		}
 
-	.yui3-calendar-day.lfr-current-day {
-		background-color: #009BE6 !important;
-		color: #FFF !important;
+		&.lfr-current-day {
+			background-color: #009BE6 !important;
+			color: #FFF !important;
+		}
 	}
 
 	.lfr-busy-day:after {
@@ -607,7 +609,7 @@
 	@include transition(background 0.3s ease-in, border-color 0.3s ease-out);
 }
 
-.scheduler-event-recorder-content, .calendar-portlet .yui3-calendar-day {
+.calendar-portlet .yui3-calendar-day, .scheduler-event-recorder-content {
 	border-radius: 2px;
 }
 
@@ -621,6 +623,8 @@
 
 .simple-color-picker-item {
 	border-radius: 1px;
+
+	@include transition(border-color 0.13s);
 }
 
 .simple-menu-content {
@@ -635,10 +639,6 @@
 	}
 }
 
-.simple-color-picker-item {
-	@include transition(border-color 0.13s);
-}
-
 .simple-color-picker-item:hover, .simple-color-picker-item-selected {
 	@include transition(border-color 0s);
 }
@@ -650,16 +650,15 @@
 }
 
 @include respond-to(phone) {
-	.scheduler-base-content .scheduler-base-view-date,
-	.scheduler-base-content .scheduler-base-controls,
-	.scheduler-base-content .scheduler-base-controls .btn-group,
-	.scheduler-base-content .scheduler-base-hd .scheduler-base-views {
-		text-align: center;
-		width: 100%;
-	}
+	.scheduler-base-content {
+		.scheduler-base-controls, .scheduler-base-controls .btn-group, .scheduler-base-hd .scheduler-base-views, .scheduler-base-view-date {
+			text-align: center;
+			width: 100%;
+		}
 
-	.scheduler-base-content .scheduler-base-hd .scheduler-base-views {
-		margin-top: 5px;
+		.scheduler-base-hd .scheduler-base-views {
+			margin-top: 5px;
+		}
 	}
 
 	.scheduler-base-controls .btn-group .scheduler-base-today {

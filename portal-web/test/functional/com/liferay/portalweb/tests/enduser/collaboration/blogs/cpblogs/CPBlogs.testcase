@@ -242,7 +242,7 @@
 			<var name="imageSourceURL" value="https://cdn.lfrs.sl/www.liferay.com/osb-community-theme/images/custom/heading.png" />
 		</execute>
 
-		<execute macro="PortletEntry#publishAndWait" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#openURL" />
 

@@ -78,7 +78,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="Web Content Title" />
+		<execute function="Type" locator1="TextInput#TITLE" value1="Web Content Title" />
 
 		<execute function="Click#pauseClickAt" locator1="AlloyEditor#CONTENT_FIELD" />
 

@@ -83,7 +83,7 @@
 			</then>
 		</if>
 
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${siteName}" />
+		<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
 
 		<if>
 			<or>
@@ -537,7 +537,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
+		<execute function="Type" locator1="TextInput#FRIENDLY_URL" value1="${siteFriendlyURLEdit}" />
 
 		<execute macro="Button#clickSave" />
 

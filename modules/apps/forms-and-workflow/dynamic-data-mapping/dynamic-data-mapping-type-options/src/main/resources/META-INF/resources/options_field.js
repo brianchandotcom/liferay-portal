@@ -18,6 +18,11 @@ AUI.add(
 		var OptionsField = A.Component.create(
 			{
 				ATTRS: {
+
+					allowEmptyOptions: {
+						value: false
+					},
+
 					sortableList: {
 						valueFn: '_valueSortableList'
 					},
@@ -33,6 +38,8 @@ AUI.add(
 					},
 
 					value: {
+						setter: '_setValue',
+						validator: Array.isArray,
 						value: []
 					}
 				},
@@ -51,6 +58,7 @@ AUI.add(
 							instance.on('liferay-ddm-form-field-key-value:destroy', instance._onDestroyOption),
 							instance.after('liferay-ddm-form-field-key-value:render', instance._afterRenderOption),
 							instance.after('liferay-ddm-form-field-key-value:valueChange', instance._afterOptionValueChange),
+							instance.after('liferay-ddm-form-field-key-value:blur', instance._afterBlur),
 							sortableList.after('drag:end', A.bind('_afterSortableListDragEnd', instance)),
 							sortableList.after('drag:start', A.bind('_afterSortableListDragStart', instance))
 						);
@@ -218,7 +226,7 @@ AUI.add(
 
 						if (!Util.compare(value, instance.get('value'))) {
 							instance.set('value', value);
-							instance._renderOptions(value);
+							instance._renderOptions(instance.get('value'));
 						}
 					},
 
@@ -240,6 +248,16 @@ AUI.add(
 								option.updateContainer();
 							}
 						);
+					},
+
+					_afterBlur: function(event) {
+						var instance = this;
+
+						var value = instance.getValue();
+
+						if (value.length === 0 || value.length === 1 && value[0].label === '') {
+							instance.setValue([]);
+						}
 					},
 
 					_afterErrorMessageChange: function(event) {
@@ -422,6 +440,8 @@ AUI.add(
 						option.remove();
 
 						instance.set('value', instance.getValue());
+
+						instance.render();
 					},
 
 					_renderOptions: function(optionsValues) {
@@ -470,6 +490,25 @@ AUI.add(
 					_restoreOption: function(option, contextValue) {
 						option.setValue(contextValue.label);
 						option.set('key', contextValue.value);
+					},
+
+					_setValue: function(val) {
+						var instance = this;
+
+						if (!instance.get('allowEmptyOptions')) {
+
+							if (val.length === 0) {
+
+								return [
+									{
+										label: 'Option',
+										value: 'Option'
+									}
+								];
+							}
+						}
+
+						return val;
 					},
 
 					_syncOptionUI: function(option) {

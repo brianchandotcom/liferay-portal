@@ -1,6 +1,6 @@
 # Liferay Gradle Plugins CSS Builder Change Log
 
-## 2.0.0 - 2016-11-14
+## 2.0.0 - 2016-11-17
 
 ### Changed
 - [LPS-67573]: Make most methods private in order to reduce API surface.

@@ -595,9 +595,10 @@ dependency to version 2.1.0.
 - [LPS-68298]: Update the [Liferay Gradle Plugins JS Module Config Generator]
 dependency to version 2.1.1.
 
-## 3.0.37 - 2016-11-14
+## 3.0.37 - 2016-11-17
 
 ### Changed
+- [LPS-69223]: Update the [Liferay CSS Builder] dependency to version 1.0.21.
 - [LPS-69223]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.0.0.
 

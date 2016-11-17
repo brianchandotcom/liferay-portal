@@ -588,6 +588,10 @@ to version 1.0.46.
 ### Changed
 - [LPS-68298]: Update the [Liferay Gradle Plugins JS Module Config Generator]
 dependency to version 2.1.0.
+- [LPS-68923]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.47.
+- [LPS-68923]: Update the [Liferay Source Formatter] dependency to version
+1.0.313.
 
 ## 3.0.36 - 2016-11-04
 

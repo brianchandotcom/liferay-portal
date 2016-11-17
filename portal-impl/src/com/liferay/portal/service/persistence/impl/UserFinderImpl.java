@@ -438,12 +438,85 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 		String[] lastNames, String[] screenNames, String[] emailAddresses,
 		int status, LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		List<Long> userIds = doFindByC_FN_MN_LN_SN_EA_S(
-			companyId, firstNames, middleNames, lastNames, screenNames,
-			emailAddresses, status, params, andOperator, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		firstNames = CustomSQLUtil.keywords(firstNames);
+		middleNames = CustomSQLUtil.keywords(middleNames);
+		lastNames = CustomSQLUtil.keywords(lastNames);
+		screenNames = CustomSQLUtil.keywords(screenNames);
+		emailAddresses = CustomSQLUtil.keywords(emailAddresses);
 
-		return userIds.size();
+		List<LinkedHashMap<String, Object>> paramsList = getParamsList(params);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
+
+			sql = replaceKeywords(
+				sql, firstNames, middleNames, lastNames, screenNames,
+				emailAddresses);
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+			}
+
+			StringBundler sb = new StringBundler(20);
+
+			for (int i = 0; i < paramsList.size(); i++) {
+				if (i == 0) {
+					sb.append(StringPool.OPEN_PARENTHESIS);
+				}
+				else {
+					sb.append(" UNION (");
+				}
+
+				sb.append(replaceJoinAndWhere(sql, paramsList.get(i)));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			if (obc != null) {
+				sb.append(" ORDER BY ");
+				sb.append(obc.toString());
+			}
+
+			sql = sb.toString();
+
+			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("userId", Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (LinkedHashMap<String, Object> paramsMap : paramsList) {
+				setJoin(qPos, paramsMap);
+
+				qPos.add(companyId);
+				qPos.add(false);
+				qPos.add(firstNames, 2);
+				qPos.add(middleNames, 2);
+				qPos.add(lastNames, 2);
+				qPos.add(screenNames, 2);
+				qPos.add(emailAddresses, 2);
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					qPos.add(status);
+				}
+			}
+
+			List<Long> userIds = (List<Long>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			return userIds.size();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

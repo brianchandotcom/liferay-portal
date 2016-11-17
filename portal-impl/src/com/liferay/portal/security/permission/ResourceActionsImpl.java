@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -107,6 +108,23 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	@Override
+	public void check(String portletName) {
+		List<String> portletActions = getPortletResourceActions(portletName);
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			portletName, portletActions);
+
+		List<String> modelNames = getPortletModelResources(portletName);
+
+		for (String modelName : modelNames) {
+			List<String> modelActions = getModelResourceActions(modelName);
+
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, modelActions);
 		}
 	}
 

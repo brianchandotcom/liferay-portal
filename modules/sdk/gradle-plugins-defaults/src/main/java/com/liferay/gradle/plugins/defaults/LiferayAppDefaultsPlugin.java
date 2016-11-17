@@ -51,17 +51,20 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		String appDescription = null;
+		String appDescription = GradleUtil.getProperty(
+			project, "app.description", (String)null);
 		String appTitle = null;
 		String appVersion = null;
 
-		File appBndFile = project.file("app.bnd");
+		if (Validator.isNull(appDescription)) {
+			File appBndFile = project.file("app.bnd");
 
-		if (appBndFile.exists()) {
-			Properties properties = GUtil.loadProperties(appBndFile);
+			if (appBndFile.exists()) {
+				Properties properties = GUtil.loadProperties(appBndFile);
 
-			appDescription = properties.getProperty(
-				"Liferay-Releng-App-Description");
+				appDescription = properties.getProperty(
+					"Liferay-Releng-App-Description");
+			}
 		}
 
 		Properties appProperties = null;

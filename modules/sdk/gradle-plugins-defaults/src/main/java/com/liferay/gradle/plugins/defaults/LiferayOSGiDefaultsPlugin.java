@@ -500,22 +500,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	/**
-	 * @deprecated As of 1.2.0
-	 */
-	@Deprecated
-	protected String getGitResult(Project project, final Object... args) {
-		return GitUtil.getGitResult(project, args);
-	}
-
-	/**
-	 * @deprecated As of 1.2.0
-	 */
-	@Deprecated
-	protected File getModuleConfigFile(Project project) {
-		return project.file("package.json");
-	}
-
 	private Configuration _addConfigurationPortalTest(Project project) {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, PORTAL_TEST_CONFIGURATION_NAME);

@@ -112,14 +112,6 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	/**
-	 * @deprecated As of 1.2.0
-	 */
-	@Deprecated
-	protected void configureAppJavadocBuilder(Project project) {
-		_configureAppJavadocBuilder(project, null);
-	}
-
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);

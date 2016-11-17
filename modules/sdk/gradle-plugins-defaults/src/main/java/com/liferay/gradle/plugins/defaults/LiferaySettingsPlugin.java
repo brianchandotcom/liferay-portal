@@ -76,28 +76,6 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 	}
 
-	/**
-	 * @deprecated As of 1.1.0
-	 */
-	@Deprecated
-	protected void includeProject(
-		Settings settings, Path projectDirPath, Path projectPathRootDirPath) {
-
-		_includeProject(settings, projectDirPath, projectPathRootDirPath, "");
-	}
-
-	/**
-	 * @deprecated As of 1.1.0
-	 */
-	@Deprecated
-	protected void includeProjects(
-			final Settings settings, final Path rootDirPath,
-			final Path projectPathRootDirPath)
-		throws IOException {
-
-		_includeProjects(settings, rootDirPath, projectPathRootDirPath, "");
-	}
-
 	private Set<Path> _getDirPaths(String key, Path rootDirPath) {
 		String dirNamesString = System.getProperty(key);
 

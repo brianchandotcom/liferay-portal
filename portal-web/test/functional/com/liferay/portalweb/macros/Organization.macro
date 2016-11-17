@@ -125,10 +125,15 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="Check" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
+
+		<execute function="SelectFrameTop" />
 
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#DONE" value1="Done" />
 

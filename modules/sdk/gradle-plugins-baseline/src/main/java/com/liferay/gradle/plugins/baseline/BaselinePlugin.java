@@ -70,7 +70,7 @@ public class BaselinePlugin implements Plugin<Project> {
 			jar);
 
 		final BaselineTask baselineTask = _addTaskBaseline(
-			project, baselineConfigurationExtension);
+			jar, baselineConfigurationExtension);
 
 		_configureTasksBaseline(project);
 
@@ -147,8 +147,10 @@ public class BaselinePlugin implements Plugin<Project> {
 	}
 
 	private BaselineTask _addTaskBaseline(
-		final Project project,
+		final AbstractArchiveTask newJarTask,
 		final BaselineConfigurationExtension baselineConfigurationExtension) {
+
+		final Project project = newJarTask.getProject();
 
 		BaselineTask baselineTask = GradleUtil.addTask(
 			project, BASELINE_TASK_NAME, BaselineTask.class);
@@ -187,6 +189,16 @@ public class BaselinePlugin implements Plugin<Project> {
 			"Compares the public API of this project with the public API of " +
 				"the previous released version, if found.");
 		baselineTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
+		baselineTask.setNewJarFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return newJarTask.getArchivePath();
+				}
+
+			});
 
 		baselineTask.setSourceDir(
 			new Callable<File>() {
@@ -231,16 +243,6 @@ public class BaselinePlugin implements Plugin<Project> {
 		}
 
 		baselineTask.dependsOn(newJarTask);
-
-		baselineTask.setNewJarFile(
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return newJarTask.getArchivePath();
-				}
-
-			});
 
 		baselineTask.setOldJarFile(
 			new Callable<File>() {

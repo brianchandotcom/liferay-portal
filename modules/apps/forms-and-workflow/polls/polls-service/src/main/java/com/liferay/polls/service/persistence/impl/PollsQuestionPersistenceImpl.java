@@ -2419,7 +2419,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((PollsQuestionModelImpl)pollsQuestion);
+		clearUniqueFindersCache((PollsQuestionModelImpl)pollsQuestion, true);
 	}
 
 	@Override
@@ -2431,52 +2431,38 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			entityCache.removeResult(PollsQuestionModelImpl.ENTITY_CACHE_ENABLED,
 				PollsQuestionImpl.class, pollsQuestion.getPrimaryKey());
 
-			clearUniqueFindersCache((PollsQuestionModelImpl)pollsQuestion);
+			clearUniqueFindersCache((PollsQuestionModelImpl)pollsQuestion, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		PollsQuestionModelImpl pollsQuestionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					pollsQuestionModelImpl.getUuid(),
-					pollsQuestionModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				pollsQuestionModelImpl);
-		}
-		else {
-			if ((pollsQuestionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						pollsQuestionModelImpl.getUuid(),
-						pollsQuestionModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					pollsQuestionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		PollsQuestionModelImpl pollsQuestionModelImpl) {
 		Object[] args = new Object[] {
 				pollsQuestionModelImpl.getUuid(),
 				pollsQuestionModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			pollsQuestionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		PollsQuestionModelImpl pollsQuestionModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					pollsQuestionModelImpl.getUuid(),
+					pollsQuestionModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((pollsQuestionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					pollsQuestionModelImpl.getOriginalUuid(),
 					pollsQuestionModelImpl.getOriginalGroupId()
 				};
@@ -2717,8 +2703,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			PollsQuestionImpl.class, pollsQuestion.getPrimaryKey(),
 			pollsQuestion, false);
 
-		clearUniqueFindersCache(pollsQuestionModelImpl);
-		cacheUniqueFindersCache(pollsQuestionModelImpl, isNew);
+		clearUniqueFindersCache(pollsQuestionModelImpl, false);
+		cacheUniqueFindersCache(pollsQuestionModelImpl);
 
 		pollsQuestion.resetOriginalValues();
 

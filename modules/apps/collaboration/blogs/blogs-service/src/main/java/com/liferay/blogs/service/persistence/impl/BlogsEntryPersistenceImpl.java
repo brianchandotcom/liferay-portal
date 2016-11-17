@@ -20900,7 +20900,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((BlogsEntryModelImpl)blogsEntry);
+		clearUniqueFindersCache((BlogsEntryModelImpl)blogsEntry, true);
 	}
 
 	@Override
@@ -20912,74 +20912,47 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			entityCache.removeResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				BlogsEntryImpl.class, blogsEntry.getPrimaryKey());
 
-			clearUniqueFindersCache((BlogsEntryModelImpl)blogsEntry);
+			clearUniqueFindersCache((BlogsEntryModelImpl)blogsEntry, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		BlogsEntryModelImpl blogsEntryModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					blogsEntryModelImpl.getUuid(),
-					blogsEntryModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				blogsEntryModelImpl);
-
-			args = new Object[] {
-					blogsEntryModelImpl.getGroupId(),
-					blogsEntryModelImpl.getUrlTitle()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_G_UT, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_G_UT, args,
-				blogsEntryModelImpl);
-		}
-		else {
-			if ((blogsEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						blogsEntryModelImpl.getUuid(),
-						blogsEntryModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					blogsEntryModelImpl);
-			}
-
-			if ((blogsEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_UT.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						blogsEntryModelImpl.getGroupId(),
-						blogsEntryModelImpl.getUrlTitle()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_G_UT, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_G_UT, args,
-					blogsEntryModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		BlogsEntryModelImpl blogsEntryModelImpl) {
 		Object[] args = new Object[] {
 				blogsEntryModelImpl.getUuid(), blogsEntryModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			blogsEntryModelImpl, false);
+
+		args = new Object[] {
+				blogsEntryModelImpl.getGroupId(),
+				blogsEntryModelImpl.getUrlTitle()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_UT, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_UT, args,
+			blogsEntryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		BlogsEntryModelImpl blogsEntryModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					blogsEntryModelImpl.getUuid(),
+					blogsEntryModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((blogsEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					blogsEntryModelImpl.getOriginalUuid(),
 					blogsEntryModelImpl.getOriginalGroupId()
 				};
@@ -20988,17 +20961,19 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] {
-				blogsEntryModelImpl.getGroupId(),
-				blogsEntryModelImpl.getUrlTitle()
-			};
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					blogsEntryModelImpl.getGroupId(),
+					blogsEntryModelImpl.getUrlTitle()
+				};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_UT, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_UT, args);
+		}
 
 		if ((blogsEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_UT.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					blogsEntryModelImpl.getOriginalGroupId(),
 					blogsEntryModelImpl.getOriginalUrlTitle()
 				};
@@ -21415,8 +21390,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		entityCache.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry, false);
 
-		clearUniqueFindersCache(blogsEntryModelImpl);
-		cacheUniqueFindersCache(blogsEntryModelImpl, isNew);
+		clearUniqueFindersCache(blogsEntryModelImpl, false);
+		cacheUniqueFindersCache(blogsEntryModelImpl);
 
 		blogsEntry.resetOriginalValues();
 

@@ -2555,7 +2555,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DLFileRankModelImpl)dlFileRank);
+		clearUniqueFindersCache((DLFileRankModelImpl)dlFileRank, true);
 	}
 
 	@Override
@@ -2567,42 +2567,11 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			entityCache.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileRankImpl.class, dlFileRank.getPrimaryKey());
 
-			clearUniqueFindersCache((DLFileRankModelImpl)dlFileRank);
+			clearUniqueFindersCache((DLFileRankModelImpl)dlFileRank, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DLFileRankModelImpl dlFileRankModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					dlFileRankModelImpl.getCompanyId(),
-					dlFileRankModelImpl.getUserId(),
-					dlFileRankModelImpl.getFileEntryId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F, args,
-				dlFileRankModelImpl);
-		}
-		else {
-			if ((dlFileRankModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_U_F.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						dlFileRankModelImpl.getCompanyId(),
-						dlFileRankModelImpl.getUserId(),
-						dlFileRankModelImpl.getFileEntryId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F, args,
-					dlFileRankModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DLFileRankModelImpl dlFileRankModelImpl) {
 		Object[] args = new Object[] {
 				dlFileRankModelImpl.getCompanyId(),
@@ -2610,12 +2579,28 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 				dlFileRankModelImpl.getFileEntryId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_U_F, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U_F, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_U_F, args,
+			dlFileRankModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DLFileRankModelImpl dlFileRankModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					dlFileRankModelImpl.getCompanyId(),
+					dlFileRankModelImpl.getUserId(),
+					dlFileRankModelImpl.getFileEntryId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_U_F, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_U_F, args);
+		}
 
 		if ((dlFileRankModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_U_F.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					dlFileRankModelImpl.getOriginalCompanyId(),
 					dlFileRankModelImpl.getOriginalUserId(),
 					dlFileRankModelImpl.getOriginalFileEntryId()
@@ -2846,8 +2831,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		entityCache.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankImpl.class, dlFileRank.getPrimaryKey(), dlFileRank, false);
 
-		clearUniqueFindersCache(dlFileRankModelImpl);
-		cacheUniqueFindersCache(dlFileRankModelImpl, isNew);
+		clearUniqueFindersCache(dlFileRankModelImpl, false);
+		cacheUniqueFindersCache(dlFileRankModelImpl);
 
 		dlFileRank.resetOriginalValues();
 

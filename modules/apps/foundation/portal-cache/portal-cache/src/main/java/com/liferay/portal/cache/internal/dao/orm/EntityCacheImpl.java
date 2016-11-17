@@ -245,10 +245,10 @@ public class EntityCacheImpl
 					}
 					else {
 						result = ((BaseModel<?>)loadResult).toCacheModel();
-					}
 
-					PortalCacheHelperUtil.putWithoutReplicator(
-						portalCache, primaryKey, result);
+						PortalCacheHelperUtil.putWithoutReplicator(
+							portalCache, primaryKey, result);
+					}
 
 					sessionFactory.closeSession(session);
 				}

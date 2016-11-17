@@ -1982,7 +1982,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink);
+		clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink,
+			true);
 	}
 
 	@Override
@@ -1994,42 +1995,12 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			entityCache.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
 
-			clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink);
+			clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DDMStructureLinkModelImpl ddmStructureLinkModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					ddmStructureLinkModelImpl.getClassNameId(),
-					ddmStructureLinkModelImpl.getClassPK(),
-					ddmStructureLinkModelImpl.getStructureId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
-				ddmStructureLinkModelImpl);
-		}
-		else {
-			if ((ddmStructureLinkModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_C_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ddmStructureLinkModelImpl.getClassNameId(),
-						ddmStructureLinkModelImpl.getClassPK(),
-						ddmStructureLinkModelImpl.getStructureId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
-					ddmStructureLinkModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DDMStructureLinkModelImpl ddmStructureLinkModelImpl) {
 		Object[] args = new Object[] {
 				ddmStructureLinkModelImpl.getClassNameId(),
@@ -2037,12 +2008,29 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 				ddmStructureLinkModelImpl.getStructureId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_S, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
+			ddmStructureLinkModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DDMStructureLinkModelImpl ddmStructureLinkModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					ddmStructureLinkModelImpl.getClassNameId(),
+					ddmStructureLinkModelImpl.getClassPK(),
+					ddmStructureLinkModelImpl.getStructureId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_S, args);
+		}
 
 		if ((ddmStructureLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_S.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					ddmStructureLinkModelImpl.getOriginalClassNameId(),
 					ddmStructureLinkModelImpl.getOriginalClassPK(),
 					ddmStructureLinkModelImpl.getOriginalStructureId()
@@ -2252,8 +2240,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
 			ddmStructureLink, false);
 
-		clearUniqueFindersCache(ddmStructureLinkModelImpl);
-		cacheUniqueFindersCache(ddmStructureLinkModelImpl, isNew);
+		clearUniqueFindersCache(ddmStructureLinkModelImpl, false);
+		cacheUniqueFindersCache(ddmStructureLinkModelImpl);
 
 		ddmStructureLink.resetOriginalValues();
 

@@ -1480,7 +1480,8 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SyncDLFileVersionDiffModelImpl)syncDLFileVersionDiff);
+		clearUniqueFindersCache((SyncDLFileVersionDiffModelImpl)syncDLFileVersionDiff,
+			true);
 	}
 
 	@Override
@@ -1493,43 +1494,12 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 				SyncDLFileVersionDiffImpl.class,
 				syncDLFileVersionDiff.getPrimaryKey());
 
-			clearUniqueFindersCache((SyncDLFileVersionDiffModelImpl)syncDLFileVersionDiff);
+			clearUniqueFindersCache((SyncDLFileVersionDiffModelImpl)syncDLFileVersionDiff,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					syncDLFileVersionDiffModelImpl.getFileEntryId(),
-					syncDLFileVersionDiffModelImpl.getSourceFileVersionId(),
-					syncDLFileVersionDiffModelImpl.getTargetFileVersionId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_F_S_T, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_F_S_T, args,
-				syncDLFileVersionDiffModelImpl);
-		}
-		else {
-			if ((syncDLFileVersionDiffModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_F_S_T.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						syncDLFileVersionDiffModelImpl.getFileEntryId(),
-						syncDLFileVersionDiffModelImpl.getSourceFileVersionId(),
-						syncDLFileVersionDiffModelImpl.getTargetFileVersionId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_F_S_T, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_F_S_T, args,
-					syncDLFileVersionDiffModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl) {
 		Object[] args = new Object[] {
 				syncDLFileVersionDiffModelImpl.getFileEntryId(),
@@ -1537,12 +1507,29 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 				syncDLFileVersionDiffModelImpl.getTargetFileVersionId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_F_S_T, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_F_S_T, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_F_S_T, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_F_S_T, args,
+			syncDLFileVersionDiffModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SyncDLFileVersionDiffModelImpl syncDLFileVersionDiffModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					syncDLFileVersionDiffModelImpl.getFileEntryId(),
+					syncDLFileVersionDiffModelImpl.getSourceFileVersionId(),
+					syncDLFileVersionDiffModelImpl.getTargetFileVersionId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_F_S_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_F_S_T, args);
+		}
 
 		if ((syncDLFileVersionDiffModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_F_S_T.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					syncDLFileVersionDiffModelImpl.getOriginalFileEntryId(),
 					syncDLFileVersionDiffModelImpl.getOriginalSourceFileVersionId(),
 					syncDLFileVersionDiffModelImpl.getOriginalTargetFileVersionId()
@@ -1716,8 +1703,8 @@ public class SyncDLFileVersionDiffPersistenceImpl extends BasePersistenceImpl<Sy
 			SyncDLFileVersionDiffImpl.class,
 			syncDLFileVersionDiff.getPrimaryKey(), syncDLFileVersionDiff, false);
 
-		clearUniqueFindersCache(syncDLFileVersionDiffModelImpl);
-		cacheUniqueFindersCache(syncDLFileVersionDiffModelImpl, isNew);
+		clearUniqueFindersCache(syncDLFileVersionDiffModelImpl, false);
+		cacheUniqueFindersCache(syncDLFileVersionDiffModelImpl);
 
 		syncDLFileVersionDiff.resetOriginalValues();
 

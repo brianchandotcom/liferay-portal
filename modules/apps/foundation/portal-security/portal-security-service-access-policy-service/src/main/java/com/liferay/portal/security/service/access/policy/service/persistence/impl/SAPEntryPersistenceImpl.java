@@ -4143,7 +4143,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SAPEntryModelImpl)sapEntry);
+		clearUniqueFindersCache((SAPEntryModelImpl)sapEntry, true);
 	}
 
 	@Override
@@ -4155,50 +4155,36 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			entityCache.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SAPEntryImpl.class, sapEntry.getPrimaryKey());
 
-			clearUniqueFindersCache((SAPEntryModelImpl)sapEntry);
+			clearUniqueFindersCache((SAPEntryModelImpl)sapEntry, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(
-		SAPEntryModelImpl sapEntryModelImpl, boolean isNew) {
-		if (isNew) {
+	protected void cacheUniqueFindersCache(SAPEntryModelImpl sapEntryModelImpl) {
+		Object[] args = new Object[] {
+				sapEntryModelImpl.getCompanyId(), sapEntryModelImpl.getName()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+			sapEntryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SAPEntryModelImpl sapEntryModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
 			Object[] args = new Object[] {
 					sapEntryModelImpl.getCompanyId(),
 					sapEntryModelImpl.getName()
 				};
 
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-				sapEntryModelImpl);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 		}
-		else {
-			if ((sapEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						sapEntryModelImpl.getCompanyId(),
-						sapEntryModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-					sapEntryModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(SAPEntryModelImpl sapEntryModelImpl) {
-		Object[] args = new Object[] {
-				sapEntryModelImpl.getCompanyId(), sapEntryModelImpl.getName()
-			};
-
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 
 		if ((sapEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					sapEntryModelImpl.getOriginalCompanyId(),
 					sapEntryModelImpl.getOriginalName()
 				};
@@ -4455,8 +4441,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SAPEntryImpl.class, sapEntry.getPrimaryKey(), sapEntry, false);
 
-		clearUniqueFindersCache(sapEntryModelImpl);
-		cacheUniqueFindersCache(sapEntryModelImpl, isNew);
+		clearUniqueFindersCache(sapEntryModelImpl, false);
+		cacheUniqueFindersCache(sapEntryModelImpl);
 
 		sapEntry.resetOriginalValues();
 

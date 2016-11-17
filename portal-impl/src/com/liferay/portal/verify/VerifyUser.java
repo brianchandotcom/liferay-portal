@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.impl.UserImpl;
+import com.liferay.portal.model.impl.GroupImpl;
 
 import java.util.List;
 import java.util.Locale;
@@ -87,8 +87,8 @@ public class VerifyUser extends VerifyProcess {
 
 			runSQL(sb.toString());
 
-			EntityCacheUtil.clearCache(UserImpl.class);
-			FinderCacheUtil.clearCache(UserImpl.class.getName());
+			EntityCacheUtil.clearCache(GroupImpl.class);
+			FinderCacheUtil.clearCache(GroupImpl.class.getName());
 		}
 	}
 

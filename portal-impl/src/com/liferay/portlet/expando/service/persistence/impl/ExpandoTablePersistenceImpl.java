@@ -983,7 +983,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable);
+		clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable, true);
 	}
 
 	@Override
@@ -995,42 +995,11 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			entityCache.removeResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoTableImpl.class, expandoTable.getPrimaryKey());
 
-			clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable);
+			clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ExpandoTableModelImpl expandoTableModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					expandoTableModelImpl.getCompanyId(),
-					expandoTableModelImpl.getClassNameId(),
-					expandoTableModelImpl.getName()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_N, args,
-				expandoTableModelImpl);
-		}
-		else {
-			if ((expandoTableModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_C_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						expandoTableModelImpl.getCompanyId(),
-						expandoTableModelImpl.getClassNameId(),
-						expandoTableModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_N, args,
-					expandoTableModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		ExpandoTableModelImpl expandoTableModelImpl) {
 		Object[] args = new Object[] {
 				expandoTableModelImpl.getCompanyId(),
@@ -1038,12 +1007,28 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 				expandoTableModelImpl.getName()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_N, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_N, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C_N, args,
+			expandoTableModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ExpandoTableModelImpl expandoTableModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					expandoTableModelImpl.getCompanyId(),
+					expandoTableModelImpl.getClassNameId(),
+					expandoTableModelImpl.getName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C_N, args);
+		}
 
 		if ((expandoTableModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C_N.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					expandoTableModelImpl.getOriginalCompanyId(),
 					expandoTableModelImpl.getOriginalClassNameId(),
 					expandoTableModelImpl.getOriginalName()
@@ -1218,8 +1203,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable,
 			false);
 
-		clearUniqueFindersCache(expandoTableModelImpl);
-		cacheUniqueFindersCache(expandoTableModelImpl, isNew);
+		clearUniqueFindersCache(expandoTableModelImpl, false);
+		cacheUniqueFindersCache(expandoTableModelImpl);
 
 		expandoTable.resetOriginalValues();
 

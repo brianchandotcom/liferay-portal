@@ -6502,7 +6502,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((ResourcePermissionModelImpl)resourcePermission);
+		clearUniqueFindersCache((ResourcePermissionModelImpl)resourcePermission,
+			true);
 	}
 
 	@Override
@@ -6514,46 +6515,12 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			entityCache.removeResult(ResourcePermissionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourcePermissionImpl.class, resourcePermission.getPrimaryKey());
 
-			clearUniqueFindersCache((ResourcePermissionModelImpl)resourcePermission);
+			clearUniqueFindersCache((ResourcePermissionModelImpl)resourcePermission,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourcePermissionModelImpl resourcePermissionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					resourcePermissionModelImpl.getCompanyId(),
-					resourcePermissionModelImpl.getName(),
-					resourcePermissionModelImpl.getScope(),
-					resourcePermissionModelImpl.getPrimKey(),
-					resourcePermissionModelImpl.getRoleId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N_S_P_R, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R, args,
-				resourcePermissionModelImpl);
-		}
-		else {
-			if ((resourcePermissionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_N_S_P_R.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						resourcePermissionModelImpl.getCompanyId(),
-						resourcePermissionModelImpl.getName(),
-						resourcePermissionModelImpl.getScope(),
-						resourcePermissionModelImpl.getPrimKey(),
-						resourcePermissionModelImpl.getRoleId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N_S_P_R, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R, args,
-					resourcePermissionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		ResourcePermissionModelImpl resourcePermissionModelImpl) {
 		Object[] args = new Object[] {
 				resourcePermissionModelImpl.getCompanyId(),
@@ -6563,12 +6530,31 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 				resourcePermissionModelImpl.getRoleId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_N_S_P_R, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N_S_P_R, args,
+			resourcePermissionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ResourcePermissionModelImpl resourcePermissionModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					resourcePermissionModelImpl.getCompanyId(),
+					resourcePermissionModelImpl.getName(),
+					resourcePermissionModelImpl.getScope(),
+					resourcePermissionModelImpl.getPrimKey(),
+					resourcePermissionModelImpl.getRoleId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N_S_P_R, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N_S_P_R, args);
+		}
 
 		if ((resourcePermissionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N_S_P_R.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					resourcePermissionModelImpl.getOriginalCompanyId(),
 					resourcePermissionModelImpl.getOriginalName(),
 					resourcePermissionModelImpl.getOriginalScope(),
@@ -6904,8 +6890,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey(),
 			resourcePermission, false);
 
-		clearUniqueFindersCache(resourcePermissionModelImpl);
-		cacheUniqueFindersCache(resourcePermissionModelImpl, isNew);
+		clearUniqueFindersCache(resourcePermissionModelImpl, false);
+		cacheUniqueFindersCache(resourcePermissionModelImpl);
 
 		resourcePermission.resetOriginalValues();
 

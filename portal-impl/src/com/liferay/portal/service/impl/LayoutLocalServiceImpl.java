@@ -333,10 +333,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layoutSetLocalService.updatePageCount(groupId, privateLayout);
 
-		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
-			groupId, privateLayout);
-
-		layout.setLayoutSet(layoutSet);
+		layout.setLayoutSet(null);
 
 		// Asset
 

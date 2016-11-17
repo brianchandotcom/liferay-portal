@@ -9880,7 +9880,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((MBCategoryModelImpl)mbCategory);
+		clearUniqueFindersCache((MBCategoryModelImpl)mbCategory, true);
 	}
 
 	@Override
@@ -9892,51 +9892,37 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 			entityCache.removeResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				MBCategoryImpl.class, mbCategory.getPrimaryKey());
 
-			clearUniqueFindersCache((MBCategoryModelImpl)mbCategory);
+			clearUniqueFindersCache((MBCategoryModelImpl)mbCategory, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		MBCategoryModelImpl mbCategoryModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					mbCategoryModelImpl.getUuid(),
-					mbCategoryModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				mbCategoryModelImpl);
-		}
-		else {
-			if ((mbCategoryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						mbCategoryModelImpl.getUuid(),
-						mbCategoryModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					mbCategoryModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		MBCategoryModelImpl mbCategoryModelImpl) {
 		Object[] args = new Object[] {
 				mbCategoryModelImpl.getUuid(), mbCategoryModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			mbCategoryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		MBCategoryModelImpl mbCategoryModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					mbCategoryModelImpl.getUuid(),
+					mbCategoryModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((mbCategoryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					mbCategoryModelImpl.getOriginalUuid(),
 					mbCategoryModelImpl.getOriginalGroupId()
 				};
@@ -10278,8 +10264,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		entityCache.putResult(MBCategoryModelImpl.ENTITY_CACHE_ENABLED,
 			MBCategoryImpl.class, mbCategory.getPrimaryKey(), mbCategory, false);
 
-		clearUniqueFindersCache(mbCategoryModelImpl);
-		cacheUniqueFindersCache(mbCategoryModelImpl, isNew);
+		clearUniqueFindersCache(mbCategoryModelImpl, false);
+		cacheUniqueFindersCache(mbCategoryModelImpl);
 
 		mbCategory.resetOriginalValues();
 

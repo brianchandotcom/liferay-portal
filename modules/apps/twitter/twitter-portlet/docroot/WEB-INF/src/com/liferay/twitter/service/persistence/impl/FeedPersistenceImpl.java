@@ -427,7 +427,7 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((FeedModelImpl)feed);
+		clearUniqueFindersCache((FeedModelImpl)feed, true);
 	}
 
 	@Override
@@ -439,50 +439,36 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 			entityCache.removeResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
 				FeedImpl.class, feed.getPrimaryKey());
 
-			clearUniqueFindersCache((FeedModelImpl)feed);
+			clearUniqueFindersCache((FeedModelImpl)feed, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(FeedModelImpl feedModelImpl,
-		boolean isNew) {
-		if (isNew) {
+	protected void cacheUniqueFindersCache(FeedModelImpl feedModelImpl) {
+		Object[] args = new Object[] {
+				feedModelImpl.getUserId(), feedModelImpl.getTwitterScreenName()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_U_TSN, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_TSN, args, feedModelImpl,
+			false);
+	}
+
+	protected void clearUniqueFindersCache(FeedModelImpl feedModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
 			Object[] args = new Object[] {
 					feedModelImpl.getUserId(),
 					feedModelImpl.getTwitterScreenName()
 				};
 
-			finderCache.putResult(FINDER_PATH_COUNT_BY_U_TSN, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_U_TSN, args,
-				feedModelImpl);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_TSN, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_TSN, args);
 		}
-		else {
-			if ((feedModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_TSN.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						feedModelImpl.getUserId(),
-						feedModelImpl.getTwitterScreenName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_U_TSN, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_U_TSN, args,
-					feedModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(FeedModelImpl feedModelImpl) {
-		Object[] args = new Object[] {
-				feedModelImpl.getUserId(), feedModelImpl.getTwitterScreenName()
-			};
-
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_TSN, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_TSN, args);
 
 		if ((feedModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_TSN.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					feedModelImpl.getOriginalUserId(),
 					feedModelImpl.getOriginalTwitterScreenName()
 				};
@@ -651,8 +637,8 @@ public class FeedPersistenceImpl extends BasePersistenceImpl<Feed>
 		entityCache.putResult(FeedModelImpl.ENTITY_CACHE_ENABLED,
 			FeedImpl.class, feed.getPrimaryKey(), feed, false);
 
-		clearUniqueFindersCache(feedModelImpl);
-		cacheUniqueFindersCache(feedModelImpl, isNew);
+		clearUniqueFindersCache(feedModelImpl, false);
+		cacheUniqueFindersCache(feedModelImpl);
 
 		feed.resetOriginalValues();
 

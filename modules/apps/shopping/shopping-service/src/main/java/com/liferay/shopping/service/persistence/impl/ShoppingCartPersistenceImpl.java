@@ -1384,7 +1384,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((ShoppingCartModelImpl)shoppingCart);
+		clearUniqueFindersCache((ShoppingCartModelImpl)shoppingCart, true);
 	}
 
 	@Override
@@ -1396,52 +1396,38 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			entityCache.removeResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCartImpl.class, shoppingCart.getPrimaryKey());
 
-			clearUniqueFindersCache((ShoppingCartModelImpl)shoppingCart);
+			clearUniqueFindersCache((ShoppingCartModelImpl)shoppingCart, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ShoppingCartModelImpl shoppingCartModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					shoppingCartModelImpl.getGroupId(),
-					shoppingCartModelImpl.getUserId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_G_U, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_G_U, args,
-				shoppingCartModelImpl);
-		}
-		else {
-			if ((shoppingCartModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						shoppingCartModelImpl.getGroupId(),
-						shoppingCartModelImpl.getUserId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_G_U, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_G_U, args,
-					shoppingCartModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		ShoppingCartModelImpl shoppingCartModelImpl) {
 		Object[] args = new Object[] {
 				shoppingCartModelImpl.getGroupId(),
 				shoppingCartModelImpl.getUserId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_U, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_U, args,
+			shoppingCartModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ShoppingCartModelImpl shoppingCartModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					shoppingCartModelImpl.getGroupId(),
+					shoppingCartModelImpl.getUserId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_U, args);
+		}
 
 		if ((shoppingCartModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					shoppingCartModelImpl.getOriginalGroupId(),
 					shoppingCartModelImpl.getOriginalUserId()
 				};
@@ -1650,8 +1636,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			ShoppingCartImpl.class, shoppingCart.getPrimaryKey(), shoppingCart,
 			false);
 
-		clearUniqueFindersCache(shoppingCartModelImpl);
-		cacheUniqueFindersCache(shoppingCartModelImpl, isNew);
+		clearUniqueFindersCache(shoppingCartModelImpl, false);
+		cacheUniqueFindersCache(shoppingCartModelImpl);
 
 		shoppingCart.resetOriginalValues();
 

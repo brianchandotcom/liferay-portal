@@ -1724,7 +1724,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((ResourceBlockModelImpl)resourceBlock);
+		clearUniqueFindersCache((ResourceBlockModelImpl)resourceBlock, true);
 	}
 
 	@Override
@@ -1736,44 +1736,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			entityCache.removeResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceBlockImpl.class, resourceBlock.getPrimaryKey());
 
-			clearUniqueFindersCache((ResourceBlockModelImpl)resourceBlock);
+			clearUniqueFindersCache((ResourceBlockModelImpl)resourceBlock, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourceBlockModelImpl resourceBlockModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					resourceBlockModelImpl.getCompanyId(),
-					resourceBlockModelImpl.getGroupId(),
-					resourceBlockModelImpl.getName(),
-					resourceBlockModelImpl.getPermissionsHash()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_N_P, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_P, args,
-				resourceBlockModelImpl);
-		}
-		else {
-			if ((resourceBlockModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_G_N_P.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						resourceBlockModelImpl.getCompanyId(),
-						resourceBlockModelImpl.getGroupId(),
-						resourceBlockModelImpl.getName(),
-						resourceBlockModelImpl.getPermissionsHash()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_N_P, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_P, args,
-					resourceBlockModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		ResourceBlockModelImpl resourceBlockModelImpl) {
 		Object[] args = new Object[] {
 				resourceBlockModelImpl.getCompanyId(),
@@ -1782,12 +1749,29 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 				resourceBlockModelImpl.getPermissionsHash()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_N_P, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_N_P, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_P, args,
+			resourceBlockModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ResourceBlockModelImpl resourceBlockModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					resourceBlockModelImpl.getCompanyId(),
+					resourceBlockModelImpl.getGroupId(),
+					resourceBlockModelImpl.getName(),
+					resourceBlockModelImpl.getPermissionsHash()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_N_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_N_P, args);
+		}
 
 		if ((resourceBlockModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_G_N_P.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					resourceBlockModelImpl.getOriginalCompanyId(),
 					resourceBlockModelImpl.getOriginalGroupId(),
 					resourceBlockModelImpl.getOriginalName(),
@@ -1987,8 +1971,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			ResourceBlockImpl.class, resourceBlock.getPrimaryKey(),
 			resourceBlock, false);
 
-		clearUniqueFindersCache(resourceBlockModelImpl);
-		cacheUniqueFindersCache(resourceBlockModelImpl, isNew);
+		clearUniqueFindersCache(resourceBlockModelImpl, false);
+		cacheUniqueFindersCache(resourceBlockModelImpl);
 
 		resourceBlock.resetOriginalValues();
 

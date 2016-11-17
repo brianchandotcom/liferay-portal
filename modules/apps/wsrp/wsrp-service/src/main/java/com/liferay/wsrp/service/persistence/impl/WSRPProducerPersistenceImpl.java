@@ -2053,7 +2053,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((WSRPProducerModelImpl)wsrpProducer);
+		clearUniqueFindersCache((WSRPProducerModelImpl)wsrpProducer, true);
 	}
 
 	@Override
@@ -2065,52 +2065,38 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 			entityCache.removeResult(WSRPProducerModelImpl.ENTITY_CACHE_ENABLED,
 				WSRPProducerImpl.class, wsrpProducer.getPrimaryKey());
 
-			clearUniqueFindersCache((WSRPProducerModelImpl)wsrpProducer);
+			clearUniqueFindersCache((WSRPProducerModelImpl)wsrpProducer, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		WSRPProducerModelImpl wsrpProducerModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					wsrpProducerModelImpl.getUuid(),
-					wsrpProducerModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				wsrpProducerModelImpl);
-		}
-		else {
-			if ((wsrpProducerModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						wsrpProducerModelImpl.getUuid(),
-						wsrpProducerModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					wsrpProducerModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		WSRPProducerModelImpl wsrpProducerModelImpl) {
 		Object[] args = new Object[] {
 				wsrpProducerModelImpl.getUuid(),
 				wsrpProducerModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			wsrpProducerModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		WSRPProducerModelImpl wsrpProducerModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					wsrpProducerModelImpl.getUuid(),
+					wsrpProducerModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((wsrpProducerModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					wsrpProducerModelImpl.getOriginalUuid(),
 					wsrpProducerModelImpl.getOriginalGroupId()
 				};
@@ -2351,8 +2337,8 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 			WSRPProducerImpl.class, wsrpProducer.getPrimaryKey(), wsrpProducer,
 			false);
 
-		clearUniqueFindersCache(wsrpProducerModelImpl);
-		cacheUniqueFindersCache(wsrpProducerModelImpl, isNew);
+		clearUniqueFindersCache(wsrpProducerModelImpl, false);
+		cacheUniqueFindersCache(wsrpProducerModelImpl);
 
 		wsrpProducer.resetOriginalValues();
 

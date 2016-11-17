@@ -1618,7 +1618,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((ResourceTypePermissionModelImpl)resourceTypePermission);
+		clearUniqueFindersCache((ResourceTypePermissionModelImpl)resourceTypePermission,
+			true);
 	}
 
 	@Override
@@ -1631,45 +1632,12 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				ResourceTypePermissionImpl.class,
 				resourceTypePermission.getPrimaryKey());
 
-			clearUniqueFindersCache((ResourceTypePermissionModelImpl)resourceTypePermission);
+			clearUniqueFindersCache((ResourceTypePermissionModelImpl)resourceTypePermission,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					resourceTypePermissionModelImpl.getCompanyId(),
-					resourceTypePermissionModelImpl.getGroupId(),
-					resourceTypePermissionModelImpl.getName(),
-					resourceTypePermissionModelImpl.getRoleId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_N_R, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_R, args,
-				resourceTypePermissionModelImpl);
-		}
-		else {
-			if ((resourceTypePermissionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_G_N_R.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						resourceTypePermissionModelImpl.getCompanyId(),
-						resourceTypePermissionModelImpl.getGroupId(),
-						resourceTypePermissionModelImpl.getName(),
-						resourceTypePermissionModelImpl.getRoleId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_N_R, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_R, args,
-					resourceTypePermissionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl) {
 		Object[] args = new Object[] {
 				resourceTypePermissionModelImpl.getCompanyId(),
@@ -1678,12 +1646,30 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				resourceTypePermissionModelImpl.getRoleId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_N_R, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_G_N_R, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_G_N_R, args,
+			resourceTypePermissionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					resourceTypePermissionModelImpl.getCompanyId(),
+					resourceTypePermissionModelImpl.getGroupId(),
+					resourceTypePermissionModelImpl.getName(),
+					resourceTypePermissionModelImpl.getRoleId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_G_N_R, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_G_N_R, args);
+		}
 
 		if ((resourceTypePermissionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_G_N_R.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					resourceTypePermissionModelImpl.getOriginalCompanyId(),
 					resourceTypePermissionModelImpl.getOriginalGroupId(),
 					resourceTypePermissionModelImpl.getOriginalName(),
@@ -1882,8 +1868,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			resourceTypePermission.getPrimaryKey(), resourceTypePermission,
 			false);
 
-		clearUniqueFindersCache(resourceTypePermissionModelImpl);
-		cacheUniqueFindersCache(resourceTypePermissionModelImpl, isNew);
+		clearUniqueFindersCache(resourceTypePermissionModelImpl, false);
+		cacheUniqueFindersCache(resourceTypePermissionModelImpl);
 
 		resourceTypePermission.resetOriginalValues();
 

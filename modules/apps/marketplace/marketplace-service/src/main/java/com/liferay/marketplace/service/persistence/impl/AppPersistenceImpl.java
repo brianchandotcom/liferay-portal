@@ -2521,7 +2521,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((AppModelImpl)app);
+		clearUniqueFindersCache((AppModelImpl)app, true);
 	}
 
 	@Override
@@ -2533,42 +2533,31 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			entityCache.removeResult(AppModelImpl.ENTITY_CACHE_ENABLED,
 				AppImpl.class, app.getPrimaryKey());
 
-			clearUniqueFindersCache((AppModelImpl)app);
+			clearUniqueFindersCache((AppModelImpl)app, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AppModelImpl appModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args,
-				appModelImpl);
-		}
-		else {
-			if ((appModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_REMOTEAPPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args,
-					appModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(AppModelImpl appModelImpl) {
+	protected void cacheUniqueFindersCache(AppModelImpl appModelImpl) {
 		Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args,
+			appModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(AppModelImpl appModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args);
+		}
 
 		if ((appModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_REMOTEAPPID.getColumnBitmask()) != 0) {
-			args = new Object[] { appModelImpl.getOriginalRemoteAppId() };
+			Object[] args = new Object[] { appModelImpl.getOriginalRemoteAppId() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args);
@@ -2811,8 +2800,8 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		entityCache.putResult(AppModelImpl.ENTITY_CACHE_ENABLED, AppImpl.class,
 			app.getPrimaryKey(), app, false);
 
-		clearUniqueFindersCache(appModelImpl);
-		cacheUniqueFindersCache(appModelImpl, isNew);
+		clearUniqueFindersCache(appModelImpl, false);
+		cacheUniqueFindersCache(appModelImpl);
 
 		app.resetOriginalValues();
 

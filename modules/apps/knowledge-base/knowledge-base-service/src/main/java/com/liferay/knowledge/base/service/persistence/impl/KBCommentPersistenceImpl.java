@@ -5147,7 +5147,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((KBCommentModelImpl)kbComment);
+		clearUniqueFindersCache((KBCommentModelImpl)kbComment, true);
 	}
 
 	@Override
@@ -5159,51 +5159,37 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 			entityCache.removeResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
 				KBCommentImpl.class, kbComment.getPrimaryKey());
 
-			clearUniqueFindersCache((KBCommentModelImpl)kbComment);
+			clearUniqueFindersCache((KBCommentModelImpl)kbComment, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		KBCommentModelImpl kbCommentModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					kbCommentModelImpl.getUuid(),
-					kbCommentModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				kbCommentModelImpl);
-		}
-		else {
-			if ((kbCommentModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						kbCommentModelImpl.getUuid(),
-						kbCommentModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					kbCommentModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		KBCommentModelImpl kbCommentModelImpl) {
 		Object[] args = new Object[] {
 				kbCommentModelImpl.getUuid(), kbCommentModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			kbCommentModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		KBCommentModelImpl kbCommentModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					kbCommentModelImpl.getUuid(),
+					kbCommentModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((kbCommentModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					kbCommentModelImpl.getOriginalUuid(),
 					kbCommentModelImpl.getOriginalGroupId()
 				};
@@ -5551,8 +5537,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		entityCache.putResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
 			KBCommentImpl.class, kbComment.getPrimaryKey(), kbComment, false);
 
-		clearUniqueFindersCache(kbCommentModelImpl);
-		cacheUniqueFindersCache(kbCommentModelImpl, isNew);
+		clearUniqueFindersCache(kbCommentModelImpl, false);
+		cacheUniqueFindersCache(kbCommentModelImpl);
 
 		kbComment.resetOriginalValues();
 

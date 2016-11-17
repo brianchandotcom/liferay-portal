@@ -6064,7 +6064,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DLFileShortcutModelImpl)dlFileShortcut);
+		clearUniqueFindersCache((DLFileShortcutModelImpl)dlFileShortcut, true);
 	}
 
 	@Override
@@ -6076,52 +6076,39 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			entityCache.removeResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey());
 
-			clearUniqueFindersCache((DLFileShortcutModelImpl)dlFileShortcut);
+			clearUniqueFindersCache((DLFileShortcutModelImpl)dlFileShortcut,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DLFileShortcutModelImpl dlFileShortcutModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					dlFileShortcutModelImpl.getUuid(),
-					dlFileShortcutModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				dlFileShortcutModelImpl);
-		}
-		else {
-			if ((dlFileShortcutModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						dlFileShortcutModelImpl.getUuid(),
-						dlFileShortcutModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					dlFileShortcutModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DLFileShortcutModelImpl dlFileShortcutModelImpl) {
 		Object[] args = new Object[] {
 				dlFileShortcutModelImpl.getUuid(),
 				dlFileShortcutModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			dlFileShortcutModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DLFileShortcutModelImpl dlFileShortcutModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					dlFileShortcutModelImpl.getUuid(),
+					dlFileShortcutModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((dlFileShortcutModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					dlFileShortcutModelImpl.getOriginalUuid(),
 					dlFileShortcutModelImpl.getOriginalGroupId()
 				};
@@ -6451,8 +6438,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey(),
 			dlFileShortcut, false);
 
-		clearUniqueFindersCache(dlFileShortcutModelImpl);
-		cacheUniqueFindersCache(dlFileShortcutModelImpl, isNew);
+		clearUniqueFindersCache(dlFileShortcutModelImpl, false);
+		cacheUniqueFindersCache(dlFileShortcutModelImpl);
 
 		dlFileShortcut.resetOriginalValues();
 

@@ -2527,7 +2527,7 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((UserThreadModelImpl)userThread);
+		clearUniqueFindersCache((UserThreadModelImpl)userThread, true);
 	}
 
 	@Override
@@ -2539,52 +2539,38 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 			entityCache.removeResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
 				UserThreadImpl.class, userThread.getPrimaryKey());
 
-			clearUniqueFindersCache((UserThreadModelImpl)userThread);
+			clearUniqueFindersCache((UserThreadModelImpl)userThread, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		UserThreadModelImpl userThreadModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					userThreadModelImpl.getUserId(),
-					userThreadModelImpl.getMbThreadId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_U_M, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_U_M, args,
-				userThreadModelImpl);
-		}
-		else {
-			if ((userThreadModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_M.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						userThreadModelImpl.getUserId(),
-						userThreadModelImpl.getMbThreadId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_U_M, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_U_M, args,
-					userThreadModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		UserThreadModelImpl userThreadModelImpl) {
 		Object[] args = new Object[] {
 				userThreadModelImpl.getUserId(),
 				userThreadModelImpl.getMbThreadId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_M, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_M, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_U_M, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_M, args,
+			userThreadModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		UserThreadModelImpl userThreadModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					userThreadModelImpl.getUserId(),
+					userThreadModelImpl.getMbThreadId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_M, args);
+		}
 
 		if ((userThreadModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_M.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					userThreadModelImpl.getOriginalUserId(),
 					userThreadModelImpl.getOriginalMbThreadId()
 				};
@@ -2837,8 +2823,8 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		entityCache.putResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
 			UserThreadImpl.class, userThread.getPrimaryKey(), userThread, false);
 
-		clearUniqueFindersCache(userThreadModelImpl);
-		cacheUniqueFindersCache(userThreadModelImpl, isNew);
+		clearUniqueFindersCache(userThreadModelImpl, false);
+		cacheUniqueFindersCache(userThreadModelImpl);
 
 		userThread.resetOriginalValues();
 

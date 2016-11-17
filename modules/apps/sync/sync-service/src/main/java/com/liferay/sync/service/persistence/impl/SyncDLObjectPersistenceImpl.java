@@ -6359,7 +6359,7 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SyncDLObjectModelImpl)syncDLObject);
+		clearUniqueFindersCache((SyncDLObjectModelImpl)syncDLObject, true);
 	}
 
 	@Override
@@ -6371,52 +6371,38 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 			entityCache.removeResult(SyncDLObjectModelImpl.ENTITY_CACHE_ENABLED,
 				SyncDLObjectImpl.class, syncDLObject.getPrimaryKey());
 
-			clearUniqueFindersCache((SyncDLObjectModelImpl)syncDLObject);
+			clearUniqueFindersCache((SyncDLObjectModelImpl)syncDLObject, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SyncDLObjectModelImpl syncDLObjectModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					syncDLObjectModelImpl.getType(),
-					syncDLObjectModelImpl.getTypePK()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_T_T, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_T_T, args,
-				syncDLObjectModelImpl);
-		}
-		else {
-			if ((syncDLObjectModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_T_T.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						syncDLObjectModelImpl.getType(),
-						syncDLObjectModelImpl.getTypePK()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_T_T, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_T_T, args,
-					syncDLObjectModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SyncDLObjectModelImpl syncDLObjectModelImpl) {
 		Object[] args = new Object[] {
 				syncDLObjectModelImpl.getType(),
 				syncDLObjectModelImpl.getTypePK()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_T_T, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_T_T, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_T_T, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_T_T, args,
+			syncDLObjectModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SyncDLObjectModelImpl syncDLObjectModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					syncDLObjectModelImpl.getType(),
+					syncDLObjectModelImpl.getTypePK()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_T_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_T_T, args);
+		}
 
 		if ((syncDLObjectModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_T_T.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					syncDLObjectModelImpl.getOriginalType(),
 					syncDLObjectModelImpl.getOriginalTypePK()
 				};
@@ -6656,8 +6642,8 @@ public class SyncDLObjectPersistenceImpl extends BasePersistenceImpl<SyncDLObjec
 			SyncDLObjectImpl.class, syncDLObject.getPrimaryKey(), syncDLObject,
 			false);
 
-		clearUniqueFindersCache(syncDLObjectModelImpl);
-		cacheUniqueFindersCache(syncDLObjectModelImpl, isNew);
+		clearUniqueFindersCache(syncDLObjectModelImpl, false);
+		cacheUniqueFindersCache(syncDLObjectModelImpl);
 
 		syncDLObject.resetOriginalValues();
 

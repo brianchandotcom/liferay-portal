@@ -2695,7 +2695,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((SocialActivitySettingModelImpl)socialActivitySetting);
+		clearUniqueFindersCache((SocialActivitySettingModelImpl)socialActivitySetting,
+			true);
 	}
 
 	@Override
@@ -2708,45 +2709,12 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 				SocialActivitySettingImpl.class,
 				socialActivitySetting.getPrimaryKey());
 
-			clearUniqueFindersCache((SocialActivitySettingModelImpl)socialActivitySetting);
+			clearUniqueFindersCache((SocialActivitySettingModelImpl)socialActivitySetting,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SocialActivitySettingModelImpl socialActivitySettingModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					socialActivitySettingModelImpl.getGroupId(),
-					socialActivitySettingModelImpl.getClassNameId(),
-					socialActivitySettingModelImpl.getActivityType(),
-					socialActivitySettingModelImpl.getName()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_A_N, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_A_N, args,
-				socialActivitySettingModelImpl);
-		}
-		else {
-			if ((socialActivitySettingModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_C_A_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						socialActivitySettingModelImpl.getGroupId(),
-						socialActivitySettingModelImpl.getClassNameId(),
-						socialActivitySettingModelImpl.getActivityType(),
-						socialActivitySettingModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_A_N, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_A_N, args,
-					socialActivitySettingModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		SocialActivitySettingModelImpl socialActivitySettingModelImpl) {
 		Object[] args = new Object[] {
 				socialActivitySettingModelImpl.getGroupId(),
@@ -2755,12 +2723,30 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 				socialActivitySettingModelImpl.getName()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_A_N, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_A_N, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_A_N, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_A_N, args,
+			socialActivitySettingModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		SocialActivitySettingModelImpl socialActivitySettingModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					socialActivitySettingModelImpl.getGroupId(),
+					socialActivitySettingModelImpl.getClassNameId(),
+					socialActivitySettingModelImpl.getActivityType(),
+					socialActivitySettingModelImpl.getName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_A_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_A_N, args);
+		}
 
 		if ((socialActivitySettingModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_C_A_N.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					socialActivitySettingModelImpl.getOriginalGroupId(),
 					socialActivitySettingModelImpl.getOriginalClassNameId(),
 					socialActivitySettingModelImpl.getOriginalActivityType(),
@@ -3000,8 +2986,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 			SocialActivitySettingImpl.class,
 			socialActivitySetting.getPrimaryKey(), socialActivitySetting, false);
 
-		clearUniqueFindersCache(socialActivitySettingModelImpl);
-		cacheUniqueFindersCache(socialActivitySettingModelImpl, isNew);
+		clearUniqueFindersCache(socialActivitySettingModelImpl, false);
+		cacheUniqueFindersCache(socialActivitySettingModelImpl);
 
 		socialActivitySetting.resetOriginalValues();
 

@@ -3438,7 +3438,8 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DDMDataProviderInstanceModelImpl)ddmDataProviderInstance);
+		clearUniqueFindersCache((DDMDataProviderInstanceModelImpl)ddmDataProviderInstance,
+			true);
 	}
 
 	@Override
@@ -3452,53 +3453,40 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 				DDMDataProviderInstanceImpl.class,
 				ddmDataProviderInstance.getPrimaryKey());
 
-			clearUniqueFindersCache((DDMDataProviderInstanceModelImpl)ddmDataProviderInstance);
+			clearUniqueFindersCache((DDMDataProviderInstanceModelImpl)ddmDataProviderInstance,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					ddmDataProviderInstanceModelImpl.getUuid(),
-					ddmDataProviderInstanceModelImpl.getGroupId()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				ddmDataProviderInstanceModelImpl);
-		}
-		else {
-			if ((ddmDataProviderInstanceModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ddmDataProviderInstanceModelImpl.getUuid(),
-						ddmDataProviderInstanceModelImpl.getGroupId()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					ddmDataProviderInstanceModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl) {
 		Object[] args = new Object[] {
 				ddmDataProviderInstanceModelImpl.getUuid(),
 				ddmDataProviderInstanceModelImpl.getGroupId()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			ddmDataProviderInstanceModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DDMDataProviderInstanceModelImpl ddmDataProviderInstanceModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					ddmDataProviderInstanceModelImpl.getUuid(),
+					ddmDataProviderInstanceModelImpl.getGroupId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 
 		if ((ddmDataProviderInstanceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					ddmDataProviderInstanceModelImpl.getOriginalUuid(),
 					ddmDataProviderInstanceModelImpl.getOriginalGroupId()
 				};
@@ -3765,8 +3753,8 @@ public class DDMDataProviderInstancePersistenceImpl extends BasePersistenceImpl<
 			ddmDataProviderInstance.getPrimaryKey(), ddmDataProviderInstance,
 			false);
 
-		clearUniqueFindersCache(ddmDataProviderInstanceModelImpl);
-		cacheUniqueFindersCache(ddmDataProviderInstanceModelImpl, isNew);
+		clearUniqueFindersCache(ddmDataProviderInstanceModelImpl, false);
+		cacheUniqueFindersCache(ddmDataProviderInstanceModelImpl);
 
 		ddmDataProviderInstance.resetOriginalValues();
 

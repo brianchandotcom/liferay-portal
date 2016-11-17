@@ -1014,7 +1014,7 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((OAuthConsumerModelImpl)oAuthConsumer);
+		clearUniqueFindersCache((OAuthConsumerModelImpl)oAuthConsumer, true);
 	}
 
 	@Override
@@ -1026,52 +1026,38 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 			entityCache.removeResult(OAuthConsumerModelImpl.ENTITY_CACHE_ENABLED,
 				OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey());
 
-			clearUniqueFindersCache((OAuthConsumerModelImpl)oAuthConsumer);
+			clearUniqueFindersCache((OAuthConsumerModelImpl)oAuthConsumer, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		OAuthConsumerModelImpl oAuthConsumerModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					oAuthConsumerModelImpl.getGadgetKey(),
-					oAuthConsumerModelImpl.getServiceName()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_G_S, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_G_S, args,
-				oAuthConsumerModelImpl);
-		}
-		else {
-			if ((oAuthConsumerModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_S.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						oAuthConsumerModelImpl.getGadgetKey(),
-						oAuthConsumerModelImpl.getServiceName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_G_S, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_G_S, args,
-					oAuthConsumerModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		OAuthConsumerModelImpl oAuthConsumerModelImpl) {
 		Object[] args = new Object[] {
 				oAuthConsumerModelImpl.getGadgetKey(),
 				oAuthConsumerModelImpl.getServiceName()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_S, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_S, args,
+			oAuthConsumerModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		OAuthConsumerModelImpl oAuthConsumerModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					oAuthConsumerModelImpl.getGadgetKey(),
+					oAuthConsumerModelImpl.getServiceName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_S, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_S, args);
+		}
 
 		if ((oAuthConsumerModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_S.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					oAuthConsumerModelImpl.getOriginalGadgetKey(),
 					oAuthConsumerModelImpl.getOriginalServiceName()
 				};
@@ -1265,8 +1251,8 @@ public class OAuthConsumerPersistenceImpl extends BasePersistenceImpl<OAuthConsu
 			OAuthConsumerImpl.class, oAuthConsumer.getPrimaryKey(),
 			oAuthConsumer, false);
 
-		clearUniqueFindersCache(oAuthConsumerModelImpl);
-		cacheUniqueFindersCache(oAuthConsumerModelImpl, isNew);
+		clearUniqueFindersCache(oAuthConsumerModelImpl, false);
+		cacheUniqueFindersCache(oAuthConsumerModelImpl);
 
 		oAuthConsumer.resetOriginalValues();
 

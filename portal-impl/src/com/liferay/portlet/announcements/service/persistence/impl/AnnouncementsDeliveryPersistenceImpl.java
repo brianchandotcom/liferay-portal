@@ -929,7 +929,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery);
+		clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery,
+			true);
 	}
 
 	@Override
@@ -942,53 +943,40 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				AnnouncementsDeliveryImpl.class,
 				announcementsDelivery.getPrimaryKey());
 
-			clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery);
+			clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					announcementsDeliveryModelImpl.getUserId(),
-					announcementsDeliveryModelImpl.getType()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_U_T, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-				announcementsDeliveryModelImpl);
-		}
-		else {
-			if ((announcementsDeliveryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						announcementsDeliveryModelImpl.getUserId(),
-						announcementsDeliveryModelImpl.getType()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_U_T, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-					announcementsDeliveryModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl) {
 		Object[] args = new Object[] {
 				announcementsDeliveryModelImpl.getUserId(),
 				announcementsDeliveryModelImpl.getType()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_U_T, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_U_T, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_U_T, args,
+			announcementsDeliveryModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					announcementsDeliveryModelImpl.getUserId(),
+					announcementsDeliveryModelImpl.getType()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_U_T, args);
+		}
 
 		if ((announcementsDeliveryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					announcementsDeliveryModelImpl.getOriginalUserId(),
 					announcementsDeliveryModelImpl.getOriginalType()
 				};
@@ -1161,8 +1149,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			AnnouncementsDeliveryImpl.class,
 			announcementsDelivery.getPrimaryKey(), announcementsDelivery, false);
 
-		clearUniqueFindersCache(announcementsDeliveryModelImpl);
-		cacheUniqueFindersCache(announcementsDeliveryModelImpl, isNew);
+		clearUniqueFindersCache(announcementsDeliveryModelImpl, false);
+		cacheUniqueFindersCache(announcementsDeliveryModelImpl);
 
 		announcementsDelivery.resetOriginalValues();
 

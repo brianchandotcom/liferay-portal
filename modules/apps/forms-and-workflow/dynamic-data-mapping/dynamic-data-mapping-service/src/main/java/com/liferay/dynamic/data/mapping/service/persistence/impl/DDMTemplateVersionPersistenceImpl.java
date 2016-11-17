@@ -1475,7 +1475,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((DDMTemplateVersionModelImpl)ddmTemplateVersion);
+		clearUniqueFindersCache((DDMTemplateVersionModelImpl)ddmTemplateVersion,
+			true);
 	}
 
 	@Override
@@ -1487,52 +1488,40 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			entityCache.removeResult(DDMTemplateVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DDMTemplateVersionImpl.class, ddmTemplateVersion.getPrimaryKey());
 
-			clearUniqueFindersCache((DDMTemplateVersionModelImpl)ddmTemplateVersion);
+			clearUniqueFindersCache((DDMTemplateVersionModelImpl)ddmTemplateVersion,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					ddmTemplateVersionModelImpl.getTemplateId(),
-					ddmTemplateVersionModelImpl.getVersion()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_T_V, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_T_V, args,
-				ddmTemplateVersionModelImpl);
-		}
-		else {
-			if ((ddmTemplateVersionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_T_V.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ddmTemplateVersionModelImpl.getTemplateId(),
-						ddmTemplateVersionModelImpl.getVersion()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_T_V, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_T_V, args,
-					ddmTemplateVersionModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl) {
 		Object[] args = new Object[] {
 				ddmTemplateVersionModelImpl.getTemplateId(),
 				ddmTemplateVersionModelImpl.getVersion()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_T_V, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_T_V, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_T_V, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_T_V, args,
+			ddmTemplateVersionModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		DDMTemplateVersionModelImpl ddmTemplateVersionModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					ddmTemplateVersionModelImpl.getTemplateId(),
+					ddmTemplateVersionModelImpl.getVersion()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_T_V, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_T_V, args);
+		}
 
 		if ((ddmTemplateVersionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_T_V.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					ddmTemplateVersionModelImpl.getOriginalTemplateId(),
 					ddmTemplateVersionModelImpl.getOriginalVersion()
 				};
@@ -1725,8 +1714,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			DDMTemplateVersionImpl.class, ddmTemplateVersion.getPrimaryKey(),
 			ddmTemplateVersion, false);
 
-		clearUniqueFindersCache(ddmTemplateVersionModelImpl);
-		cacheUniqueFindersCache(ddmTemplateVersionModelImpl, isNew);
+		clearUniqueFindersCache(ddmTemplateVersionModelImpl, false);
+		cacheUniqueFindersCache(ddmTemplateVersionModelImpl);
 
 		ddmTemplateVersion.resetOriginalValues();
 

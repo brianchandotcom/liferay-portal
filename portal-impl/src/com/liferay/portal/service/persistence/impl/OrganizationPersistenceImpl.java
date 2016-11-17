@@ -6656,7 +6656,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((OrganizationModelImpl)organization);
+		clearUniqueFindersCache((OrganizationModelImpl)organization, true);
 	}
 
 	@Override
@@ -6668,52 +6668,38 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			entityCache.removeResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 				OrganizationImpl.class, organization.getPrimaryKey());
 
-			clearUniqueFindersCache((OrganizationModelImpl)organization);
+			clearUniqueFindersCache((OrganizationModelImpl)organization, true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		OrganizationModelImpl organizationModelImpl, boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					organizationModelImpl.getCompanyId(),
-					organizationModelImpl.getName()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-				organizationModelImpl);
-		}
-		else {
-			if ((organizationModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						organizationModelImpl.getCompanyId(),
-						organizationModelImpl.getName()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-					organizationModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		OrganizationModelImpl organizationModelImpl) {
 		Object[] args = new Object[] {
 				organizationModelImpl.getCompanyId(),
 				organizationModelImpl.getName()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+			organizationModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		OrganizationModelImpl organizationModelImpl, boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					organizationModelImpl.getCompanyId(),
+					organizationModelImpl.getName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		}
 
 		if ((organizationModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					organizationModelImpl.getOriginalCompanyId(),
 					organizationModelImpl.getOriginalName()
 				};
@@ -6996,8 +6982,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			OrganizationImpl.class, organization.getPrimaryKey(), organization,
 			false);
 
-		clearUniqueFindersCache(organizationModelImpl);
-		cacheUniqueFindersCache(organizationModelImpl, isNew);
+		clearUniqueFindersCache(organizationModelImpl, false);
+		cacheUniqueFindersCache(organizationModelImpl);
 
 		organization.resetOriginalValues();
 

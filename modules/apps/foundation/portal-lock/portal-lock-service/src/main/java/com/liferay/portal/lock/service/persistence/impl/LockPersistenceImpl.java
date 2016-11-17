@@ -2090,7 +2090,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((LockModelImpl)lock);
+		clearUniqueFindersCache((LockModelImpl)lock, true);
 	}
 
 	@Override
@@ -2102,47 +2102,35 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			entityCache.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 				LockImpl.class, lock.getPrimaryKey());
 
-			clearUniqueFindersCache((LockModelImpl)lock);
+			clearUniqueFindersCache((LockModelImpl)lock, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LockModelImpl lockModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					lockModelImpl.getClassName(), lockModelImpl.getKey()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args, lockModelImpl);
-		}
-		else {
-			if ((lockModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						lockModelImpl.getClassName(), lockModelImpl.getKey()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args,
-					lockModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(LockModelImpl lockModelImpl) {
+	protected void cacheUniqueFindersCache(LockModelImpl lockModelImpl) {
 		Object[] args = new Object[] {
 				lockModelImpl.getClassName(), lockModelImpl.getKey()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args, lockModelImpl,
+			false);
+	}
+
+	protected void clearUniqueFindersCache(LockModelImpl lockModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					lockModelImpl.getClassName(), lockModelImpl.getKey()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+		}
 
 		if ((lockModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					lockModelImpl.getOriginalClassName(),
 					lockModelImpl.getOriginalKey()
 				};
@@ -2336,8 +2324,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockImpl.class, lock.getPrimaryKey(), lock, false);
 
-		clearUniqueFindersCache(lockModelImpl);
-		cacheUniqueFindersCache(lockModelImpl, isNew);
+		clearUniqueFindersCache(lockModelImpl, false);
+		cacheUniqueFindersCache(lockModelImpl);
 
 		lock.resetOriginalValues();
 

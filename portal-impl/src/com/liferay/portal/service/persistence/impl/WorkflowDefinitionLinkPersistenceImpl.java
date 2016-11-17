@@ -2250,7 +2250,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((WorkflowDefinitionLinkModelImpl)workflowDefinitionLink);
+		clearUniqueFindersCache((WorkflowDefinitionLinkModelImpl)workflowDefinitionLink,
+			true);
 	}
 
 	@Override
@@ -2263,47 +2264,12 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				WorkflowDefinitionLinkImpl.class,
 				workflowDefinitionLink.getPrimaryKey());
 
-			clearUniqueFindersCache((WorkflowDefinitionLinkModelImpl)workflowDefinitionLink);
+			clearUniqueFindersCache((WorkflowDefinitionLinkModelImpl)workflowDefinitionLink,
+				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl,
-		boolean isNew) {
-		if (isNew) {
-			Object[] args = new Object[] {
-					workflowDefinitionLinkModelImpl.getGroupId(),
-					workflowDefinitionLinkModelImpl.getCompanyId(),
-					workflowDefinitionLinkModelImpl.getClassNameId(),
-					workflowDefinitionLinkModelImpl.getClassPK(),
-					workflowDefinitionLinkModelImpl.getTypePK()
-				};
-
-			finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
-				Long.valueOf(1));
-			finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args,
-				workflowDefinitionLinkModelImpl);
-		}
-		else {
-			if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						workflowDefinitionLinkModelImpl.getGroupId(),
-						workflowDefinitionLinkModelImpl.getCompanyId(),
-						workflowDefinitionLinkModelImpl.getClassNameId(),
-						workflowDefinitionLinkModelImpl.getClassPK(),
-						workflowDefinitionLinkModelImpl.getTypePK()
-					};
-
-				finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
-					Long.valueOf(1));
-				finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args,
-					workflowDefinitionLinkModelImpl);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl) {
 		Object[] args = new Object[] {
 				workflowDefinitionLinkModelImpl.getGroupId(),
@@ -2313,12 +2279,31 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 				workflowDefinitionLinkModelImpl.getTypePK()
 			};
 
-		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args);
-		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args);
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args,
+			workflowDefinitionLinkModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl,
+		boolean clearCurrent) {
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					workflowDefinitionLinkModelImpl.getGroupId(),
+					workflowDefinitionLinkModelImpl.getCompanyId(),
+					workflowDefinitionLinkModelImpl.getClassNameId(),
+					workflowDefinitionLinkModelImpl.getClassPK(),
+					workflowDefinitionLinkModelImpl.getTypePK()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_T, args);
+		}
 
 		if ((workflowDefinitionLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_C_C_C_T.getColumnBitmask()) != 0) {
-			args = new Object[] {
+			Object[] args = new Object[] {
 					workflowDefinitionLinkModelImpl.getOriginalGroupId(),
 					workflowDefinitionLinkModelImpl.getOriginalCompanyId(),
 					workflowDefinitionLinkModelImpl.getOriginalClassNameId(),
@@ -2567,8 +2552,8 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink,
 			false);
 
-		clearUniqueFindersCache(workflowDefinitionLinkModelImpl);
-		cacheUniqueFindersCache(workflowDefinitionLinkModelImpl, isNew);
+		clearUniqueFindersCache(workflowDefinitionLinkModelImpl, false);
+		cacheUniqueFindersCache(workflowDefinitionLinkModelImpl);
 
 		workflowDefinitionLink.resetOriginalValues();
 

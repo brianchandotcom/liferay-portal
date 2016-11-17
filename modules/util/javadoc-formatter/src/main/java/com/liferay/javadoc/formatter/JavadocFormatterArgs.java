@@ -21,8 +21,6 @@ public class JavadocFormatterArgs {
 
 	public static final String AUTHOR = "Brian Wing Shun Chan";
 
-	public static final double LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
-
 	public static final String OUTPUT_FILE_PREFIX = "javadocs";
 
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
@@ -38,10 +36,6 @@ public class JavadocFormatterArgs {
 
 	public String[] getLimits() {
 		return _limits;
-	}
-
-	public double getLowestSupportedJavaVersion() {
-		return _lowestSupportedJavaVersion;
 	}
 
 	public String getOutputFilePrefix() {
@@ -86,12 +80,6 @@ public class JavadocFormatterArgs {
 		_limits = limits;
 	}
 
-	public void setLowestSupportedJavaVersion(
-		double lowestSupportedJavaVersion) {
-
-		_lowestSupportedJavaVersion = lowestSupportedJavaVersion;
-	}
-
 	public void setOutputFilePrefix(String outputFilePrefix) {
 		_outputFilePrefix = outputFilePrefix;
 	}
@@ -109,7 +97,6 @@ public class JavadocFormatterArgs {
 	private boolean _initializeMissingJavadocs;
 	private String _inputDirName = "./";
 	private String[] _limits = new String[0];
-	private double _lowestSupportedJavaVersion = LOWEST_SUPPORTED_JAVA_VERSION;
 	private String _outputFilePrefix = OUTPUT_FILE_PREFIX;
 	private boolean _updateJavadocs;
 

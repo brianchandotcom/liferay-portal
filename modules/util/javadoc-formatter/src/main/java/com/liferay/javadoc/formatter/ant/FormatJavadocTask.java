@@ -72,13 +72,6 @@ public class FormatJavadocTask extends Task {
 		_javadocFormatterArgs.setLimits(limits);
 	}
 
-	public void setLowestSupportedJavaVersion(
-		double lowestSupportedJavaVersion) {
-
-		_javadocFormatterArgs.setLowestSupportedJavaVersion(
-			lowestSupportedJavaVersion);
-	}
-
 	public void setOutputFilePrefix(String outputFilePrefix) {
 		_javadocFormatterArgs.setOutputFilePrefix(outputFilePrefix);
 	}

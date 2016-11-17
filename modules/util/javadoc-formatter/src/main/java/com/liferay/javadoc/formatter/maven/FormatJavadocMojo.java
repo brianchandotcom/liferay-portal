@@ -96,16 +96,6 @@ public class FormatJavadocMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setLowestSupportedJavaVersion(
-		double lowestSupportedJavaVersion) {
-
-		_javadocFormatterArgs.setLowestSupportedJavaVersion(
-			lowestSupportedJavaVersion);
-	}
-
-	/**
-	 * @parameter
-	 */
 	public void setOutputFilePrefix(String outputFilePrefix) {
 		_javadocFormatterArgs.setOutputFilePrefix(outputFilePrefix);
 	}

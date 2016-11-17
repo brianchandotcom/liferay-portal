@@ -177,3 +177,11 @@
 
 	<#return journalArticleLocalService.fetchLatestArticle(resourcePrimKey)!"">
 </#function>
+
+<#-- Token -->
+
+<#assign ddmAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet") />
+
+<#assign data = data + {
+	"ddmAuthToken": ddmAuthToken
+}>

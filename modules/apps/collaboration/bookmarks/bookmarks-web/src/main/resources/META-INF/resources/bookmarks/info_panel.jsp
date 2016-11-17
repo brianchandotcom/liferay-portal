@@ -121,7 +121,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav" collapsible="<%= false %>">
+			<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
 		</aui:nav-bar>
@@ -202,7 +202,7 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav" collapsible="<%= false %>">
+			<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
 		</aui:nav-bar>

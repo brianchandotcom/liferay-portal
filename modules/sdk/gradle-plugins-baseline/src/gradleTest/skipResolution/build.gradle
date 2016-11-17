@@ -1,0 +1,23 @@
+buildscript {
+	dependencies {
+		classpath "com.liferay:com.liferay.gradle.plugins.baseline:1.0.0"
+	}
+
+	repositories {
+		mavenLocal()
+
+		mavenCentral()
+	}
+}
+
+apply plugin: "com.liferay.baseline"
+
+archivesBaseName = "com.example.foo"
+group = "com.example"
+version = "123.456.789"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn jar
+}

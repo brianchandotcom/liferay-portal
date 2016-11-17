@@ -12,19 +12,21 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.defaults.tasks;
+package com.liferay.gradle.plugins.baseline;
 
 import aQute.service.reporter.Reporter;
 
 import com.liferay.ant.bnd.Baseline;
-import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
+import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.reporting.ReportingExtension;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
@@ -114,10 +116,18 @@ public class BaselineTask extends DefaultTask implements VerificationTask {
 			return null;
 		}
 
-		ReportingExtension reportingExtension = GradleUtil.getExtension(
-			getProject(), ReportingExtension.class);
+		Project project = getProject();
 
-		return reportingExtension.file(_logFileName);
+		ExtensionContainer extensionContainer = project.getExtensions();
+
+		ReportingExtension reportingExtension = extensionContainer.findByType(
+			ReportingExtension.class);
+
+		if (reportingExtension != null) {
+			return reportingExtension.file(_logFileName);
+		}
+
+		return GradleUtil.toFile(project, _logFileName);
 	}
 
 	@InputFile

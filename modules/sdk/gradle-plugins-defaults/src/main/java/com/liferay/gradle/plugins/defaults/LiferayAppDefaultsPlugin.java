@@ -88,8 +88,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 		_configureAppJavadocBuilder(project, privateProject);
 		_configureAppTLDDocBuilder(project, privateProject);
-		configureProject(project, appDescription, appVersion);
-		configureTaskAppJavadoc(project, appTitle, appVersion);
+		_configureProject(project, appDescription, appVersion);
+		_configureTaskAppJavadoc(project, appTitle, appVersion);
 
 		if (privateProject != null) {
 			Gradle gradle = project.getGradle();
@@ -112,15 +112,72 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	/**
-	 * @deprecated As of 1.2.0
-	 */
-	@Deprecated
-	protected void configureAppJavadocBuilder(Project project) {
-		_configureAppJavadocBuilder(project, null);
+	private void _applyPlugins(Project project) {
+		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
 	}
 
-	protected void configureProject(
+	private void _configureAppJavadocBuilder(
+		Project project, Project privateProject) {
+
+		AppJavadocBuilderExtension appJavadocBuilderExtension =
+			GradleUtil.getExtension(project, AppJavadocBuilderExtension.class);
+
+		appJavadocBuilderExtension.onlyIf(
+			new Spec<Project>() {
+
+				@Override
+				public boolean isSatisfiedBy(Project project) {
+					TaskContainer taskContainer = project.getTasks();
+
+					WritePropertiesTask recordArtifactTask =
+						(WritePropertiesTask)taskContainer.findByName(
+							LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
+
+					if (recordArtifactTask != null) {
+						File artifactPropertiesFile =
+							recordArtifactTask.getOutputFile();
+
+						if (artifactPropertiesFile.exists()) {
+							return true;
+						}
+					}
+
+					return false;
+				}
+
+			});
+
+		appJavadocBuilderExtension.setGroupNameClosure(
+			new Closure<String>(project) {
+
+				@SuppressWarnings("unused")
+				public String doCall(Project subproject) {
+					return _getAppJavadocGroupName(subproject);
+				}
+
+			});
+
+		if (privateProject != null) {
+			appJavadocBuilderExtension.subprojects(
+				privateProject.getSubprojects());
+		}
+	}
+
+	private void _configureAppTLDDocBuilder(
+		Project project, Project privateProject) {
+
+		if (privateProject == null) {
+			return;
+		}
+
+		AppTLDDocBuilderExtension appTLDDocBuilderExtension =
+			GradleUtil.getExtension(project, AppTLDDocBuilderExtension.class);
+
+		appTLDDocBuilderExtension.subprojects(privateProject.getSubprojects());
+	}
+
+	private void _configureProject(
 		Project project, String description, String version) {
 
 		if (Validator.isNotNull(description)) {
@@ -132,7 +189,7 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskAppJavadoc(
+	private void _configureTaskAppJavadoc(
 		Project project, String appTitle, String appVersion) {
 
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
@@ -160,7 +217,18 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected String getAppJavadocGroupName(Project project) {
+	private void _forceProjectHierarchyEvaluation(Project project) {
+		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
+
+		ServiceRegistry serviceRegistry = gradleInternal.getServices();
+
+		ProjectConfigurer projectConfigurer = serviceRegistry.get(
+			ProjectConfigurer.class);
+
+		projectConfigurer.configureHierarchy((ProjectInternal)project);
+	}
+
+	private String _getAppJavadocGroupName(Project project) {
 		String groupName = project.getDescription();
 
 		if (Validator.isNull(groupName)) {
@@ -208,82 +276,6 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		return groupName;
-	}
-
-	private void _applyPlugins(Project project) {
-		GradleUtil.applyPlugin(project, AppJavadocBuilderPlugin.class);
-		GradleUtil.applyPlugin(project, AppTLDDocBuilderPlugin.class);
-	}
-
-	private void _configureAppJavadocBuilder(
-		Project project, Project privateProject) {
-
-		AppJavadocBuilderExtension appJavadocBuilderExtension =
-			GradleUtil.getExtension(project, AppJavadocBuilderExtension.class);
-
-		appJavadocBuilderExtension.onlyIf(
-			new Spec<Project>() {
-
-				@Override
-				public boolean isSatisfiedBy(Project project) {
-					TaskContainer taskContainer = project.getTasks();
-
-					WritePropertiesTask recordArtifactTask =
-						(WritePropertiesTask)taskContainer.findByName(
-							LiferayRelengPlugin.RECORD_ARTIFACT_TASK_NAME);
-
-					if (recordArtifactTask != null) {
-						File artifactPropertiesFile =
-							recordArtifactTask.getOutputFile();
-
-						if (artifactPropertiesFile.exists()) {
-							return true;
-						}
-					}
-
-					return false;
-				}
-
-			});
-
-		appJavadocBuilderExtension.setGroupNameClosure(
-			new Closure<String>(project) {
-
-				@SuppressWarnings("unused")
-				public String doCall(Project subproject) {
-					return getAppJavadocGroupName(subproject);
-				}
-
-			});
-
-		if (privateProject != null) {
-			appJavadocBuilderExtension.subprojects(
-				privateProject.getSubprojects());
-		}
-	}
-
-	private void _configureAppTLDDocBuilder(
-		Project project, Project privateProject) {
-
-		if (privateProject == null) {
-			return;
-		}
-
-		AppTLDDocBuilderExtension appTLDDocBuilderExtension =
-			GradleUtil.getExtension(project, AppTLDDocBuilderExtension.class);
-
-		appTLDDocBuilderExtension.subprojects(privateProject.getSubprojects());
-	}
-
-	private void _forceProjectHierarchyEvaluation(Project project) {
-		GradleInternal gradleInternal = (GradleInternal)project.getGradle();
-
-		ServiceRegistry serviceRegistry = gradleInternal.getServices();
-
-		ProjectConfigurer projectConfigurer = serviceRegistry.get(
-			ProjectConfigurer.class);
-
-		projectConfigurer.configureHierarchy((ProjectInternal)project);
 	}
 
 	private Properties _getAppProperties(Project project) {

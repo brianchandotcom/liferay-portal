@@ -551,7 +551,9 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	@Test
-	public void testInvokeTransitionWithAllFollowing() throws Exception {
+	public void testUpdateCalendarBookingAndAllRecurringInstancesStatus()
+		throws Exception {
+
 		ServiceContext serviceContext = createServiceContext();
 
 		CalendarResource calendarResource =

@@ -57,6 +57,7 @@ public class FailureMessageUtil {
 		new SemanticVersioningFailureMessageGenerator(),
 		new SourceFormatFailureMessageGenerator()
 	};
+
 	private static final GenericFailureMessageGenerator
 		_genericFailureMessageGenerator = new GenericFailureMessageGenerator();
 

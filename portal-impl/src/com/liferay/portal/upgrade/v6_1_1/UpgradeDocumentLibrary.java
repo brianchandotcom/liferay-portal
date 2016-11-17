@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.upgrade.util.UpgradeUUIDUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,6 +33,9 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateFileEntries();
+
+		UpgradeUUIDUtil.upgradeUUID(
+			connection, "DLFileVersion", "fileVersionId");
 	}
 
 	protected boolean hasFileEntry(long groupId, long folderId, String title)

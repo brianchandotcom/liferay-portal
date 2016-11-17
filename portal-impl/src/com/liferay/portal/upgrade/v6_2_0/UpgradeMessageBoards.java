@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.upgrade.util.UpgradeUUIDUtil;
+
+import java.sql.SQLException;
 
 import javax.portlet.PortletPreferences;
 
@@ -32,11 +35,20 @@ public class UpgradeMessageBoards extends BaseUpgradePortletPreferences {
 	@Override
 	protected void doUpgrade() throws Exception {
 		super.doUpgrade();
+
+		updateUUID();
 	}
 
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {"19"};
+	}
+
+	protected void updateUUID() throws SQLException {
+		UpgradeUUIDUtil.upgradeUUID(connection, "MBBan", "banId");
+		UpgradeUUIDUtil.upgradeUUID(connection, "MBDiscussion", "discussionId");
+		UpgradeUUIDUtil.upgradeUUID(connection, "MBThread", "threadId");
+		UpgradeUUIDUtil.upgradeUUID(connection, "MBThreadFlag", "threadFlagId");
 	}
 
 	@Override

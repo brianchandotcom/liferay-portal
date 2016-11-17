@@ -74,10 +74,8 @@ describe(
 
 				var value = 'Some value';
 
-				keyValueField.focus();
-				keyValueField.setValue(value);
-
-				waitValueChange(
+				keyValueField.after(
+					'valueChange',
 					function() {
 						var normalizedValue = keyValueField.normalizeKey(value);
 
@@ -86,6 +84,8 @@ describe(
 						done();
 					}
 				);
+
+				keyValueField.set('value', value);
 			}
 		);
 

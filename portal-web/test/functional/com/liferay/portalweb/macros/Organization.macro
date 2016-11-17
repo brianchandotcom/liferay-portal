@@ -693,17 +693,17 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<var name="key_userName" value="${userName}" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userName}" />
-
 		<if>
 			<isset var="userMiddleName" />
 			<then>
+				<var name="key_userName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
+
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+				<var name="key_userName" value="${userName}" />
+
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userName}" />
 			</else>
 		</if>
 	</command>

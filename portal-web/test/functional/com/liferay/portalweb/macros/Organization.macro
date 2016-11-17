@@ -125,10 +125,6 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Available" />
-		</execute>
-
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

@@ -183,7 +183,6 @@
 
 		<execute macro="Organization#viewAssignMemberCP">
 			<var name="userName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 

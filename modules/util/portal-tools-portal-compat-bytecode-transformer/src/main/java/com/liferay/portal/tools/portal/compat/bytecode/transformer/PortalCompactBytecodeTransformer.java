@@ -33,8 +33,14 @@ import org.objectweb.asm.ClassWriter;
 public class PortalCompactBytecodeTransformer {
 
 	public static void main(String[] args) throws IOException {
+		Path classesDir = Paths.get(System.getProperty("classes.dir"));
+
+		if (!Files.exists(classesDir)) {
+			return;
+		}
+
 		Files.walkFileTree(
-			Paths.get(System.getProperty("classes.dir")),
+			classesDir,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

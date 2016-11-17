@@ -24,12 +24,14 @@ import com.liferay.portal.lpkg.deployer.LPKGDeployer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -206,6 +209,41 @@ public class LPKGDeployerTest {
 
 					if (index >= 0) {
 						contextName = contextName.substring(0, index);
+					}
+
+					Path tempFilePath = Files.createTempFile(null, null);
+
+					try (InputStream inputStream1 = zipFile.getInputStream(
+							zipEntry)) {
+
+						Files.copy(
+							inputStream1, tempFilePath,
+							StandardCopyOption.REPLACE_EXISTING);
+
+						try (ZipFile zipFile2 = new ZipFile(
+							tempFilePath.toFile());
+							InputStream inputStream2 = zipFile2.getInputStream(
+								new ZipEntry(
+									"WEB-INF/liferay-plugin-package." +
+										"properties"))) {
+
+							if (inputStream2 != null) {
+								Properties properties = new Properties();
+
+								properties.load(inputStream2);
+
+								String configuredServletContextName =
+									properties.getProperty(
+										"servlet-context-name");
+
+								if (configuredServletContextName != null) {
+									contextName = configuredServletContextName;
+								}
+							}
+						}
+					}
+					finally {
+						Files.delete(tempFilePath);
 					}
 
 					StringBundler sb = new StringBundler(10);

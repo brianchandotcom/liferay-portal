@@ -909,9 +909,8 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<antcall inheritall="false" target="stop-app-server" />
 
-							<delete dir="${liferay.home}/osgi/marketplace/override" />
-
-							<delete>
+							<delete includeemptydirs="false">
+								<fileset dir="${liferay.home}/osgi/marketplace/override" />
 								<fileset dir="${liferay.home}/osgi/static" />
 							</delete>
 

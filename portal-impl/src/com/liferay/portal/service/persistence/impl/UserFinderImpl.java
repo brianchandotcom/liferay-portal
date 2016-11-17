@@ -463,6 +463,8 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			StringBundler sb = new StringBundler(20);
 
+			sb.append("SELECT COUNT(userId) AS COUNT_VALUE FROM (");
+
 			for (int i = 0; i < paramsList.size(); i++) {
 				if (i == 0) {
 					sb.append(StringPool.OPEN_PARENTHESIS);
@@ -475,10 +477,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 
-			if (obc != null) {
-				sb.append(" ORDER BY ");
-				sb.append(obc.toString());
-			}
+			sb.append(") userId");
 
 			sql = sb.toString();
 
@@ -486,7 +485,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("userId", Type.LONG);
+			q.addScalar("COUNT_VALUE", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -506,10 +505,14 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				}
 			}
 
-			List<Long> userIds = (List<Long>)QueryUtil.list(
+			List<Long> userCounts = (List<Long>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			return userIds.size();
+			if ((userCounts == null) || userCounts.isEmpty()) {
+				return 0;
+			}
+
+			return userCounts.get(0).intValue();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

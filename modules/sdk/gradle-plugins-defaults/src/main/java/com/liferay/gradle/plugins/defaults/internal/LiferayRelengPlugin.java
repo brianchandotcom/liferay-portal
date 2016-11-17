@@ -507,7 +507,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		Project project = printArtifactPublishCommandsTask.getProject();
 
-		if (LiferayOSGiDefaultsPlugin.isTestProject(project)) {
+		if (GradleUtil.isTestProject(project)) {
 			printArtifactPublishCommandsTask.setEnabled(false);
 		}
 
@@ -516,7 +516,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskPrintStaleArtifactForOSGi(Task task) {
-		if (LiferayOSGiDefaultsPlugin.isTestProject(task.getProject())) {
+		if (GradleUtil.isTestProject(task.getProject())) {
 			task.setEnabled(false);
 		}
 	}

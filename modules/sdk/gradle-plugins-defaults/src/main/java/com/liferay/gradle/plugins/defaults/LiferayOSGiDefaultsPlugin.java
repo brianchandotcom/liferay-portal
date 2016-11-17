@@ -217,16 +217,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	public static final String UPDATE_FILE_VERSIONS_TASK_NAME =
 		"updateFileVersions";
 
-	public static boolean isTestProject(Project project) {
-		String projectName = project.getName();
-
-		if (projectName.endsWith("-test")) {
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	public void apply(final Project project) {
 		final File portalRootDir = GradleUtil.getRootDir(
@@ -250,7 +240,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		List<String> taskNames = startParameter.getTaskNames();
 
 		final boolean publishing = _isPublishing(project);
-		boolean testProject = isTestProject(project);
+		boolean testProject = GradleUtil.isTestProject(project);
 
 		boolean deployToAppServerLibs = false;
 		boolean deployToTools = false;

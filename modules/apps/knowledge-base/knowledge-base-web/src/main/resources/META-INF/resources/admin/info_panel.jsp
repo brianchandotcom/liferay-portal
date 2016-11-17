@@ -69,8 +69,8 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 			</div>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
+		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
+			<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
 		</aui:nav-bar>
@@ -126,7 +126,7 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 			</div>
 		</div>
 
-		<liferay-ui:tabs names="details,versions" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,versions" refresh="<%= false %>" type="dropdown">
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<dl>
@@ -188,8 +188,8 @@ boolean showSidebarHeader = ParamUtil.getBoolean(request, "showSidebarHeader", G
 			<h4><liferay-ui:message arguments="<%= kbFolders.size() + kbArticles.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
+		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
+			<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 				<aui:nav-item label="details" selected="<%= true %>" />
 			</aui:nav>
 		</aui:nav-bar>

@@ -44,11 +44,8 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	public void update() {
 		super.update();
 
-		if (badBuildNumbers.size() > 0) {
-			return;
-		}
-
 		Build reinvokeErrorAxisBuild = null;
+		String reinvokeErrorMarker = null;
 
 		for (Build axisBuild : getDownstreamBuilds("completed")) {
 			if (verifiedAxisBuilds.contains(axisBuild)) {
@@ -68,6 +65,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 			for (int i = 1; hasReinvokeErrorMarker(i); i++) {
 				if (axisBuildConsoleText.contains(getReinvokeErrorMarker(i))) {
 					reinvokeErrorAxisBuild = axisBuild;
+					reinvokeErrorMarker = getReinvokeErrorMarker(i);
 
 					break;
 				}
@@ -80,15 +78,46 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 		if (reinvokeErrorAxisBuild != null) {
 			StringBuilder sb = new StringBuilder();
+			String subject = "Arquillian broken connection failure";
 
-			sb.append("Arquillian broken connection failure ");
-			sb.append("detected at ");
-			sb.append(reinvokeErrorAxisBuild.getBuildURL());
-			sb.append(". This batch will be reinvoked.");
+			if (badBuildNumbers.size() == 0) {
+				sb.append("Arquillian broken connection failure ");
+				sb.append("detected at ");
+				sb.append(reinvokeErrorAxisBuild.getBuildURL());
+				sb.append(". This batch will be reinvoked.");
+				sb.append("\n\nError Marker:\n");
+				sb.append(reinvokeErrorMarker);
 
-			System.out.println(sb);
+				System.out.println(sb);
 
-			reinvoke();
+				reinvoke();
+			}
+			else {
+				subject = "Second " + subject;
+
+				List<String> badBuildURLs = getBadBuildURLs();
+
+				sb.append("Second Arquillian broken connection failure ");
+				sb.append("detected at ");
+				sb.append(reinvokeErrorAxisBuild.getBuildURL());
+				sb.append(". Previous failure was at ");
+				sb.append(badBuildURLs.get(0));
+				sb.append("\n\nError Marker:\n");
+				sb.append(reinvokeErrorMarker);
+
+				System.out.println(sb);
+			}
+
+			try {
+				JenkinsResultsParserUtil.sendEmail(
+					sb.toString(),
+					"root@" + JenkinsResultsParserUtil.getHostName("UNKNOWN"),
+					subject, "shuyang.zhou@liferay.com, peter.yoo@liferay.com");
+			}
+			catch (Exception e) {
+				System.out.println(
+					"Unable to send email notification. " + e.getMessage());
+			}
 		}
 	}
 

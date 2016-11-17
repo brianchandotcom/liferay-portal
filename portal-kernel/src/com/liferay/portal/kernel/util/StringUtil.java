@@ -1764,7 +1764,20 @@ public class StringUtil {
 			return null;
 		}
 
-		return merge(col.toArray(new Object[col.size()]), delimiter);
+		if (col.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * col.size());
+
+		for (Object object : col) {
+			sb.append(String.valueOf(object).trim());
+			sb.append(delimiter);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
 	}
 
 	/**

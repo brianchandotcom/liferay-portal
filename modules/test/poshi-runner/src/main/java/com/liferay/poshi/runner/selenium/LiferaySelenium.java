@@ -395,6 +395,8 @@ public interface LiferaySelenium {
 
 	public boolean isVisible(String locator);
 
+	public void javaScriptClick(String locator);
+
 	public void javaScriptMouseDown(String locator);
 
 	public void javaScriptMouseUp(String locator);

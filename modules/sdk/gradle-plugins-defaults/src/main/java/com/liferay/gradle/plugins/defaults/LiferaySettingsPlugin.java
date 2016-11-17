@@ -76,22 +76,6 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		}
 	}
 
-	protected Set<Path> getDirPaths(String key, Path rootDirPath) {
-		String dirNamesString = System.getProperty(key);
-
-		if (Validator.isNull(dirNamesString)) {
-			return Collections.emptySet();
-		}
-
-		Set<Path> dirPaths = new HashSet<>();
-
-		for (String dirName : dirNamesString.split(",")) {
-			dirPaths.add(rootDirPath.resolve(dirName));
-		}
-
-		return dirPaths;
-	}
-
 	/**
 	 * @deprecated As of 1.1.0
 	 */
@@ -112,6 +96,22 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		throws IOException {
 
 		_includeProjects(settings, rootDirPath, projectPathRootDirPath, "");
+	}
+
+	private Set<Path> _getDirPaths(String key, Path rootDirPath) {
+		String dirNamesString = System.getProperty(key);
+
+		if (Validator.isNull(dirNamesString)) {
+			return Collections.emptySet();
+		}
+
+		Set<Path> dirPaths = new HashSet<>();
+
+		for (String dirName : dirNamesString.split(",")) {
+			dirPaths.add(rootDirPath.resolve(dirName));
+		}
+
+		return dirPaths;
 	}
 
 	private <T extends Enum<T>> Set<T> _getFlags(
@@ -178,7 +178,7 @@ public class LiferaySettingsPlugin implements Plugin<Settings> {
 		throws IOException {
 
 		final String buildProfile = System.getProperty("build.profile");
-		final Set<Path> excludedDirPaths = getDirPaths(
+		final Set<Path> excludedDirPaths = _getDirPaths(
 			"build.exclude.dirs", rootDirPath);
 		final Set<ProjectDirType> excludedProjectDirTypes = _getFlags(
 			"build.exclude.", ProjectDirType.class);

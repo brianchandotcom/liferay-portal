@@ -53,7 +53,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		String appDescription = GradleUtil.getProperty(
 			project, "app.description", (String)null);
-		String appTitle = null;
+		String appTitle = GradleUtil.getProperty(
+			project, "app.title", (String)null);
 		String appVersion = null;
 
 		if (Validator.isNull(appDescription)) {
@@ -81,7 +82,10 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (appProperties != null) {
-			appTitle = appProperties.getProperty("app.marketplace.title");
+			if (Validator.isNull(appTitle)) {
+				appTitle = appProperties.getProperty("app.marketplace.title");
+			}
+
 			appVersion = appProperties.getProperty("app.marketplace.version");
 		}
 

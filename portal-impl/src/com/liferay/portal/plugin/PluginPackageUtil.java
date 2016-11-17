@@ -847,11 +847,11 @@ public class PluginPackageUtil {
 
 		String pluginType = Plugin.TYPE_PORTLET;
 
-		/*if (pos == -1) {
+		if (pos == -1) {
 			pos = displayName.indexOf("-ext");
 
 			pluginType = Plugin.TYPE_EXT;
-		}*/
+		}
 
 		if (pos == -1) {
 			pos = displayName.indexOf("-hook");

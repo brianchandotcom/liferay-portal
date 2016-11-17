@@ -20,10 +20,9 @@ import com.liferay.portal.kernel.deploy.auto.BaseAutoDeployListener;
 import java.io.File;
 
 /**
- * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, with no direct replacement
+ * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
-@Deprecated
 public class ExtAutoDeployListener extends BaseAutoDeployListener {
 
 	@Override

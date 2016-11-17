@@ -21,10 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0, with no direct replacement
+ * @author Brian Wing Shun Chan
  */
-@Deprecated
 public class ExtDeployer extends BaseDeployer {
 
 	public static void main(String[] args) {

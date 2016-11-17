@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements SiteAdminUserDemoDataCreator {
 
+	@Override
 	public User create(long groupId, String emailAddress)
 		throws PortalException {
 

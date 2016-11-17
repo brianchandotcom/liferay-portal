@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = RulesContextBuilder.class)
 public class RulesContextBuilderImpl implements RulesContextBuilder {
 
+	@Override
 	public List<Fact<?>> buildRulesContext(ExecutionContext executionContext)
 		throws PortalException {
 

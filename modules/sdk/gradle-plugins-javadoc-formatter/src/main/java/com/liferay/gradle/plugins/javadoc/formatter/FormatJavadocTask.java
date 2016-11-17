@@ -55,11 +55,6 @@ public class FormatJavadocTask extends JavaExec {
 	}
 
 	@Input
-	public double getLowestSupportedJavaVersion() {
-		return _lowestSupportedJavaVersion;
-	}
-
-	@Input
 	public String getOutputFilePrefix() {
 		return GradleUtil.toString(_outputFilePrefix);
 	}
@@ -113,12 +108,6 @@ public class FormatJavadocTask extends JavaExec {
 		setLimits(Arrays.asList(limits));
 	}
 
-	public void setLowestSupportedJavaVersion(
-		double lowestSupportedJavaVersion) {
-
-		_lowestSupportedJavaVersion = lowestSupportedJavaVersion;
-	}
-
 	public void setOutputFilePrefix(Object outputFilePrefix) {
 		_outputFilePrefix = outputFilePrefix;
 	}
@@ -135,9 +124,6 @@ public class FormatJavadocTask extends JavaExec {
 		args.add("javadoc.init=" + isInitializeMissingJavadocs());
 		args.add("javadoc.input.dir=./");
 		args.add("javadoc.limit=" + CollectionUtils.join(",", getLimits()));
-		args.add(
-			"javadoc.lowest.supported.java.version=" +
-				getLowestSupportedJavaVersion());
 		args.add("javadoc.output.file.prefix=" + getOutputFilePrefix());
 		args.add("javadoc.update=" + isUpdateJavadocs());
 
@@ -148,8 +134,6 @@ public class FormatJavadocTask extends JavaExec {
 	private boolean _generateXml;
 	private boolean _initializeMissingJavadocs;
 	private final Set<Object> _limits = new LinkedHashSet<>();
-	private double _lowestSupportedJavaVersion =
-		JavadocFormatterArgs.LOWEST_SUPPORTED_JAVA_VERSION;
 	private Object _outputFilePrefix = JavadocFormatterArgs.OUTPUT_FILE_PREFIX;
 	private boolean _updateJavadocs;
 

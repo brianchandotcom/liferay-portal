@@ -26,6 +26,7 @@ import java.sql.SQLException;
  */
 public abstract class BaseUpgradeServiceModuleRelease extends UpgradeProcess {
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement ps = connection.prepareStatement(
 				"select buildNumber from Release_ where servletContextName = " +

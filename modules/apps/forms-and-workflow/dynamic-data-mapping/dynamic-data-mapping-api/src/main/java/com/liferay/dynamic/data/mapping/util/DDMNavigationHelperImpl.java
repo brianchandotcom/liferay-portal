@@ -22,36 +22,42 @@ import com.liferay.portal.kernel.util.ParamUtil;
  */
 public class DDMNavigationHelperImpl implements DDMNavigationHelper {
 
+	@Override
 	public boolean isNavigationStartsOnEditStructure(
 		LiferayPortletRequest liferayPortletRequest) {
 
 		return isNavigationStartsOn(liferayPortletRequest, EDIT_STRUCTURE);
 	}
 
+	@Override
 	public boolean isNavigationStartsOnEditTemplate(
 		LiferayPortletRequest liferayPortletRequest) {
 
 		return isNavigationStartsOn(liferayPortletRequest, EDIT_TEMPLATE);
 	}
 
+	@Override
 	public boolean isNavigationStartsOnSelectStructure(
 		LiferayPortletRequest liferayPortletRequest) {
 
 		return isNavigationStartsOn(liferayPortletRequest, SELECT_STRUCTURE);
 	}
 
+	@Override
 	public boolean isNavigationStartsOnSelectTemplate(
 		LiferayPortletRequest liferayPortletRequest) {
 
 		return isNavigationStartsOn(liferayPortletRequest, SELECT_TEMPLATE);
 	}
 
+	@Override
 	public boolean isNavigationStartsOnViewStructures(
 		LiferayPortletRequest liferayPortletRequest) {
 
 		return isNavigationStartsOn(liferayPortletRequest, VIEW_STRUCTURES);
 	}
 
+	@Override
 	public boolean isNavigationStartsOnViewTemplates(
 		LiferayPortletRequest liferayPortletRequest) {
 

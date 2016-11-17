@@ -39,6 +39,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 	public KBFolderImpl() {
 	}
 
+	@Override
 	public List<Long> getAncestorKBFolderIds() throws PortalException {
 		List<Long> ancestorFolderIds = new ArrayList<>();
 
@@ -69,6 +70,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		return _classNameId;
 	}
 
+	@Override
 	public KBFolder getParentKBFolder() throws PortalException {
 		long parentKBFolderId = getParentKBFolderId();
 
@@ -109,6 +111,7 @@ public class KBFolderImpl extends KBFolderBaseImpl {
 		return true;
 	}
 
+	@Override
 	public boolean isRoot() {
 		if (getParentKBFolderId() ==
 				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {

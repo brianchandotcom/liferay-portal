@@ -28,6 +28,7 @@ public class DefaultAttachmentHandler implements AttachmentHandler {
 		_folder = folder;
 	}
 
+	@Override
 	public void cleanUp() {
 	}
 
@@ -35,6 +36,7 @@ public class DefaultAttachmentHandler implements AttachmentHandler {
 		return _folder;
 	}
 
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}

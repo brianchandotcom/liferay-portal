@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true, service = ConfigurationProvider.class)
 public class ConfigurationProviderImpl implements ConfigurationProvider {
 
+	@Override
 	public <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
 		throws ConfigurationException {
 
@@ -94,6 +95,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 	}
 
+	@Override
 	public <T> T getGroupConfiguration(Class<T> clazz, long groupId)
 		throws ConfigurationException {
 
@@ -106,6 +108,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 				groupId, settingsId, configurationPid));
 	}
 
+	@Override
 	public <T> T getPortletInstanceConfiguration(
 			Class<T> clazz, Layout layout, PortletInstance portletInstance)
 		throws ConfigurationException {

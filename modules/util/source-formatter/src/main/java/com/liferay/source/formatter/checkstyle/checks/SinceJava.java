@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.javadoc.formatter;
+package com.liferay.source.formatter.checkstyle.checks;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

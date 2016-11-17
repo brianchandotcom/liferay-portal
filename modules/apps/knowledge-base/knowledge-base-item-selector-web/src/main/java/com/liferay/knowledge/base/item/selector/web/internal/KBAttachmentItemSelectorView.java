@@ -89,6 +89,7 @@ public class KBAttachmentItemSelectorView
 		return true;
 	}
 
+	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}

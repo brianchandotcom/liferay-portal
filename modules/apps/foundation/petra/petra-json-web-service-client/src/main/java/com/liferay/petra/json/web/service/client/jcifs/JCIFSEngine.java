@@ -36,6 +36,7 @@ public class JCIFSEngine implements NTLMEngine {
 		_workstation = workstation;
 	}
 
+	@Override
 	public String generateType1Msg(String domain, String workstation)
 		throws NTLMEngineException {
 
@@ -45,6 +46,7 @@ public class JCIFSEngine implements NTLMEngine {
 		return Base64.encode(type1Message.toByteArray());
 	}
 
+	@Override
 	public String generateType3Msg(
 			String username, String password, String domain, String workstation,
 			String challenge)

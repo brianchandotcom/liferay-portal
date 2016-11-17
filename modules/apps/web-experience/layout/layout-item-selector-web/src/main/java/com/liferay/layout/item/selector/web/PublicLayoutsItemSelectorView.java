@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -47,6 +48,7 @@ public class PublicLayoutsItemSelectorView extends BaseLayoutsItemSelectorView {
 		return ResourceBundleUtil.getString(resourceBundle, "public-pages");
 	}
 
+	@Override
 	public boolean isPrivateLayout() {
 		return false;
 	}

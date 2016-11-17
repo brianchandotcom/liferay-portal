@@ -45,6 +45,7 @@ public class MessageImpl extends MessageBaseImpl {
 		return normalizeAddress(super.getCc());
 	}
 
+	@Override
 	public long getGroupId() throws PortalException {
 		User user = UserLocalServiceUtil.getUser(getUserId());
 
@@ -58,6 +59,7 @@ public class MessageImpl extends MessageBaseImpl {
 		return normalizeAddress(super.getTo());
 	}
 
+	@Override
 	public boolean hasAttachments() {
 		String contentType = getContentType();
 
@@ -71,6 +73,7 @@ public class MessageImpl extends MessageBaseImpl {
 		return !attachments.isEmpty();
 	}
 
+	@Override
 	public boolean hasFlag(int flag) {
 		int[] flags = StringUtil.split(getFlags(), 0);
 

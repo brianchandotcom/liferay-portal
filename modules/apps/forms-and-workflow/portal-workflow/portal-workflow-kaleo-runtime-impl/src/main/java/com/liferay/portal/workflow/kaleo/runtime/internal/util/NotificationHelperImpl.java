@@ -41,6 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = NotificationHelper.class)
 public class NotificationHelperImpl implements NotificationHelper {
 
+	@Override
 	public void sendKaleoNotifications(
 			String kaleoClassName, long kaleoClassPK,
 			ExecutionType executionType, ExecutionContext executionContext)

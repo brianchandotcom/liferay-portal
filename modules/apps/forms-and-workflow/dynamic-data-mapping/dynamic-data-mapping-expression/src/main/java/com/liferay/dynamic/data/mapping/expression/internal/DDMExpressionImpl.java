@@ -87,6 +87,7 @@ public class DDMExpressionImpl<T> implements DDMExpression<T> {
 		}
 	}
 
+	@Override
 	public Expression getModel() {
 		return _expressionModel;
 	}

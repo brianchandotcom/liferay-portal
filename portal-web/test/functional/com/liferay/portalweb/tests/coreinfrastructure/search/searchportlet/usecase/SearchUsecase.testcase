@@ -948,9 +948,11 @@
 			<var name="searchAssetTitle" value="Test Test" />
 		</execute>
 
-		<execute macro="Search#viewUserSearchResultPG">
+		<!--LPS-68962-->
+
+		<!--<execute macro="Search#viewUserSearchResultPG">
 			<var name="pageName" value="Welcome" />
 			<var name="userName" value="Test Test" />
-		</execute>
+		</execute>-->
 	</command>
 </definition>

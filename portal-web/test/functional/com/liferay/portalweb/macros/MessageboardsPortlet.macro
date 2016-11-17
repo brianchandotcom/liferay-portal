@@ -261,7 +261,9 @@
 
 		<var name="key_siteName" value="${userScreenName}" />
 
-		<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${userScreenName}" />
+		<!--LPS-68962-->
+
+		<!--<execute function="AssertTextEquals" locator1="SitePages#SITE_NAME" value1="${userScreenName}" />-->
 	</command>
 
 	<command name="viewBanPG">

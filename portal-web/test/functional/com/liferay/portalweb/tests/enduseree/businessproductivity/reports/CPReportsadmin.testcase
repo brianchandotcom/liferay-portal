@@ -212,7 +212,9 @@
 		</execute>
 	</command>
 
-	<command name="DeliverReportToEmail" priority="4">
+	<!-- LPS-69070 -->
+
+	<!-- <command name="DeliverReportToEmail" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 		<property name="test.smtp.server.enabled" value="true" />
 
@@ -264,7 +266,7 @@
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />
-	</command>
+	</command> -->
 
 	<command name="DownloadReportCSV" priority="4">
 		<execute macro="Navigator#openURL" />

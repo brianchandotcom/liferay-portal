@@ -55,7 +55,8 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 			project, "app.description", (String)null);
 		String appTitle = GradleUtil.getProperty(
 			project, "app.title", (String)null);
-		String appVersion = null;
+		String appVersion = GradleUtil.getProperty(
+			project, "app.version", (String)null);
 
 		if (Validator.isNull(appDescription)) {
 			File appBndFile = project.file("app.bnd");
@@ -86,7 +87,10 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 				appTitle = appProperties.getProperty("app.marketplace.title");
 			}
 
-			appVersion = appProperties.getProperty("app.marketplace.version");
+			if (Validator.isNull(appVersion)) {
+				appVersion = appProperties.getProperty(
+					"app.marketplace.version");
+			}
 		}
 
 		_applyPlugins(project);

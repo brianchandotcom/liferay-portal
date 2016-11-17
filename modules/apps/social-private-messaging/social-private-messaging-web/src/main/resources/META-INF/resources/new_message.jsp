@@ -72,11 +72,7 @@ to = sb.toString() + to;
 
 				<aui:input cssClass="message-subject" name="subject" value="<%= subject %>" />
 
-				<label class="field-label">
-					<liferay-ui:message key="message" />
-				</label>
-
-				<textarea class="message-body" id="<portlet:namespace />body" name="<portlet:namespace />body"></textarea>
+				<aui:input cssClass="message-body" label="message" name="body" type="textarea" />
 
 				<label class="field-label">
 					<liferay-ui:message key="attachments" />

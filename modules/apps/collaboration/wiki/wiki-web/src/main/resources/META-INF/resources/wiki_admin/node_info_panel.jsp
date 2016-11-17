@@ -58,7 +58,7 @@ WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext = wikiDisplayCon
 	</c:choose>
 </div>
 
-<liferay-ui:tabs names="details" refresh="<%= false %>" type="dropdown">
+<liferay-ui:tabs cssClass="navbar-no-collapse" names="details" refresh="<%= false %>" type="dropdown">
 	<liferay-ui:section>
 		<div class="sidebar-body">
 			<dl>

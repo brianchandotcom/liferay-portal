@@ -242,11 +242,14 @@ AUI.add(
 
 				var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
 
+				var container = instance.get('container');
+
 				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 				portletURL.setLifecycle(Liferay.PortletURL.RESOURCE_PHASE);
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));
 				portletURL.setParameter('namespace', instance.get('fieldsNamespace'));
+				portletURL.setParameter('p_p_auth', container.getData('ddmAuthToken'));
 				portletURL.setParameter('p_p_isolated', true);
 				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
 				portletURL.setParameter('readOnly', instance.get('readOnly'));

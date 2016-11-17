@@ -133,24 +133,6 @@
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#DONE" value1="Done" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="Navigator#gotoNavTab">
-			<var name="navTab" value="Current" />
-		</execute>
-
-		<execute function="AssertChecked" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
-
-		<if>
-			<isset var="userMiddleName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="addPhoneNumbersCP">
@@ -709,6 +691,16 @@
 		<var name="key_userName" value="${userName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userName}" />
+
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewCP">

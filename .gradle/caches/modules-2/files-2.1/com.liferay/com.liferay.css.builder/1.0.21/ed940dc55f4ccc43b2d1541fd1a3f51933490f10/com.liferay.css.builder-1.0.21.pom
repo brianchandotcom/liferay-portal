@@ -4,7 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.css.builder</artifactId>
-  <version>1.0.20</version>
+  <version>1.0.21</version>
+  <description>Liferay CSS Builder</description>
   <licenses>
     <license>
       <name>LGPL 2.1</name>

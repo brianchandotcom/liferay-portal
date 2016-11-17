@@ -10,7 +10,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "1.0.15"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "2.0.0"
 	}
 
 	repositories {
@@ -86,7 +86,7 @@ Property Name | Type | Default Value | Description
 <a name="portalcommondir"></a>`portalCommonDir` | `File` | `null` | The `META-INF/resources` directory of the [Liferay Frontend Common CSS](https://github.com/liferay/liferay-portal/tree/master/modules/apps/foundation/frontend-css/frontend-css-common) artifact. This is required in order to make [Bourbon](http://bourbon.io) and other CSS libraries available to the compilation.
 `portalCommonFile` | `File` | [`configurations.portalCommonCSS.singleFile`](#liferay-frontend-common-css-dependency) | The Liferay Frontend Common CSS JAR file. If [`portalCommonDir`](#portalcommondir) is set, this property has no effect.
 `portalCommonPath` | `File` | \- | The value of the `portalCommonDir` property if set; otherwise `portalCommonFile`. It sets the `sass.portal.common.path` argument. *(Read-only)*
-`precision` | `int` | `5` | The numeric precision of numbers in Sass. It sets the `sass.precision` argument.
+`precision` | `int` | `9` | The numeric precision of numbers in Sass. It sets the `sass.precision` argument.
 `rtlExcludedPathRegexps` | `List<String>` | `[]` | The SCSS file patterns to exclude when converting for right-to-left (RTL) support. It sets the `sass.rtl.excluded.path.regexps` argument.
 `sassCompilerClassName` | `String` | `null` | The type of Sass compiler to use. Supported values are `"jni"` and `"ruby"`. If not set, defaults to `"jni"`. It sets the `sass.compiler.class.name` argument.
 
@@ -116,7 +116,7 @@ manually adding a dependency to the `cssBuilder` configuration:
 
 ```gradle
 dependencies {
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.20"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "1.0.21"
 }
 ```
 

@@ -74,7 +74,11 @@ public class CSSBuilderInvoker {
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {
-		File file = new File(baseDir, fileName);
+		File file = new File(fileName);
+
+		if (!file.isAbsolute()) {
+			file = new File(baseDir, fileName);
+		}
 
 		return StringUtil.replace(
 			file.getAbsolutePath(), CharPool.BACK_SLASH, CharPool.SLASH);

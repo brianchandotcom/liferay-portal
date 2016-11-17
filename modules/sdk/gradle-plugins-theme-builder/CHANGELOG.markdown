@@ -20,4 +20,12 @@ the WAR file.
 ### Removed
 - [LPS-66396]: Remove the `outputThemeDirs` property of the `BuildThemeTask`.
 
+## 2.0.1 - *(Unreleased)*
+
+### Changed
+- [LPS-69223]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
+version 2.0.0.
+
+[Liferay Gradle Plugins CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-css-builder
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
+[LPS-69223]: https://issues.liferay.com/browse/LPS-69223

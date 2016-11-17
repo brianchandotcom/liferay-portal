@@ -702,30 +702,31 @@
 			top: 6px;
 		}
 
-		.scheduler-base-content .scheduler-base-hd .scheduler-base-views {
-			margin-top: 4px;
+		.scheduler-base-content {
+			.scheduler-base-hd .scheduler-base-views {
+				margin-top: 4px;
 
-			button {
-				padding-left: 2px;
-				padding-right: 2px;
+				button {
+					padding-left: 2px;
+					padding-right: 2px;
+				}
+			}
+
+			.scheduler-base-controls, .scheduler-base-controls .btn-group, .scheduler-base-hd .scheduler-base-views, .scheduler-base-view-date {
+				text-align: center;
+				width: 100%;
 			}
 		}
 
-		.scheduler-base-content .scheduler-base-view-date,
-		.scheduler-base-content .scheduler-base-controls,
-		.scheduler-base-content .scheduler-base-controls .btn-group,
-		.scheduler-base-content .scheduler-base-hd .scheduler-base-views {
-			text-align: center;
-			width: 100%;
-		}
+		.scheduler-base-controls .btn-group {
+			.calendar-add-event-btn {
+				margin-bottom: 5px;
+				width: 100%;
+			}
 
-		.scheduler-base-controls .btn-group .calendar-add-event-btn {
-			margin-bottom: 5px;
-			width: 100%;
-		}
-
-		.scheduler-base-controls .btn-group .scheduler-base-today {
-			width: 50%;
+			.scheduler-base-today {
+				width: 50%;
+			}
 		}
 
 		.scheduler-base-hd .btn-group button {
@@ -756,44 +757,50 @@
 		.calendar-portlet-column-grid {
 			width: 60%;
 
-			.scheduler-base-content .scheduler-base-hd .scheduler-base-controls {
-				width: 100%;
+			.scheduler-base-content .scheduler-base-hd {
+				.scheduler-base-controls {
+					width: 100%;
 
-				.btn-group:nth-child(1) {
-					margin-right: 3px;
-					width: 49%;
+					.btn-group {
+						&:nth-child(1) {
+							margin-right: 3px;
+							width: 49%;
 
-					.calendar-add-event-btn {
-						width: 100%;
+							.calendar-add-event-btn {
+								width: 100%;
+							}
+						}
+
+						&:nth-child(2) {
+							float: right;
+							width: 49%;
+
+							button {
+								&:nth-child(1), &:nth-child(3) {
+									padding-left: 10px;
+									padding-right: 10px;
+									width: 25%;
+								}
+
+								&:nth-child(2) {
+									width: 50%;
+								}
+							}
+						}
 					}
 				}
 
-				.btn-group:nth-child(2) {
-					float: right;
-					width: 49%;
+				.scheduler-base-views {
+					width: 100%;
 
-					button:nth-child(1), button:nth-child(3) {
-						padding-left: 10px;
-						padding-right: 10px;
+					button {
 						width: 25%;
+
+						&.scheduler-base-view-agenda {
+							padding-left: 2px;
+							padding-right: 2px;
+						}
 					}
-
-					button:nth-child(2) {
-						width: 50%;
-					}
-				}
-			}
-
-			.scheduler-base-content .scheduler-base-hd .scheduler-base-views {
-				width: 100%;
-
-				button {
-					width: 25%;
-				}
-
-				button.scheduler-base-view-agenda {
-					padding-left: 2px;
-					padding-right: 2px;
 				}
 			}
 		}
@@ -812,36 +819,40 @@
 			.scheduler-base-content .scheduler-base-hd .scheduler-base-controls {
 				width: 100%;
 
-				.btn-group:nth-child(1) {
-					margin-right: 3px;
-					width: 46%;
+				.btn-group {
+					&:nth-child(1) {
+						margin-right: 3px;
+						width: 46%;
 
-					.calendar-add-event-btn {
-						width: 100%;
+						.calendar-add-event-btn {
+							width: 100%;
+						}
+					}
+
+					&:nth-child(2) {
+						float: right;
+						width: 46%;
+
+						button {
+							&:nth-child(1), &:nth-child(3) {
+								width: 30%;
+							}
+
+							&:nth-child(2) {
+								padding-left: 2px;
+								padding-right: 2px;
+								width: 40%;
+							}
+						}
 					}
 				}
 
-				.btn-group:nth-child(2) {
-					float: right;
-					width: 46%;
+				.scheduler-base-views {
+					width: 100%;
 
-					button:nth-child(1), button:nth-child(3) {
-						width: 30%;
+					button {
+						width: 25%;
 					}
-
-					button:nth-child(2) {
-						padding-left: 2px;
-						padding-right: 2px;
-						width: 40%;
-					}
-				}
-			}
-
-			.scheduler-base-content .scheduler-base-hd .scheduler-base-views {
-				width: 100%;
-
-				button {
-					width: 25%;
 				}
 			}
 		}

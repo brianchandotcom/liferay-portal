@@ -163,7 +163,7 @@ if (portletTitleBasedNavigation) {
 			<h4><%= fileVersion.getTitle() %></h4>
 		</div>
 
-		<liferay-ui:tabs names="<%= tabsNames %>" refresh="<%= false %>" type="dropdown">
+		<liferay-ui:tabs cssClass="navbar-no-collapse" names="<%= tabsNames %>" refresh="<%= false %>" type="dropdown">
 			<liferay-ui:section>
 				<div class="sidebar-body">
 					<dl>

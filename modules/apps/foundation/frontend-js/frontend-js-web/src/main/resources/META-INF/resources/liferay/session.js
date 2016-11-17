@@ -639,7 +639,7 @@ AUI.add(
 							)
 						);
 
-						DOC.title = Lang.sub(Liferay.Language.get('session-expires-in-x'), [remainingTime]) + " | " + instance.get('pageTitle');
+						DOC.title = Lang.sub(Liferay.Language.get('session-expires-in-x'), [remainingTime]) + ' | ' + instance.get('pageTitle');
 					}
 				}
 			}

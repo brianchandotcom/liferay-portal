@@ -36,6 +36,7 @@ import oasis.names.tc.wsrp.v2.intf.WSRP_v2_Markup_PortType;
 public class V1MarkupServiceImpl
 	extends BaseServiceImpl implements WSRP_v1_Markup_PortType {
 
+	@Override
 	public MarkupResponse getMarkup(GetMarkup v1GetMarkup)
 		throws RemoteException {
 
@@ -54,6 +55,7 @@ public class V1MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public Extension[] initCookie(InitCookie v1InitCookie)
 		throws RemoteException {
 
@@ -72,6 +74,7 @@ public class V1MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public BlockingInteractionResponse performBlockingInteraction(
 			PerformBlockingInteraction v1PerformBlockingInteraction)
 		throws RemoteException {
@@ -91,6 +94,7 @@ public class V1MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public Extension[] releaseSessions(ReleaseSessions v1ReleaseSessions)
 		throws RemoteException {
 

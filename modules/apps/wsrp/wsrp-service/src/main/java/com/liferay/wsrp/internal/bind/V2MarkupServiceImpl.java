@@ -92,6 +92,7 @@ import org.apache.axis.message.MessageElement;
 public class V2MarkupServiceImpl
 	extends BaseServiceImpl implements WSRP_v2_Markup_PortType {
 
+	@Override
 	public MarkupResponse getMarkup(GetMarkup getMarkup)
 		throws RemoteException {
 
@@ -110,6 +111,7 @@ public class V2MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public ResourceResponse getResource(GetResource getResource)
 		throws RemoteException {
 
@@ -128,6 +130,7 @@ public class V2MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public HandleEventsResponse handleEvents(HandleEvents handleEvents)
 		throws RemoteException {
 
@@ -146,6 +149,7 @@ public class V2MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public Extension[] initCookie(InitCookie initCookie)
 		throws RemoteException {
 
@@ -164,6 +168,7 @@ public class V2MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public BlockingInteractionResponse performBlockingInteraction(
 			PerformBlockingInteraction performBlockingInteraction)
 		throws RemoteException {
@@ -183,6 +188,7 @@ public class V2MarkupServiceImpl
 		}
 	}
 
+	@Override
 	public Extension[] releaseSessions(ReleaseSessions releaseSessions)
 		throws RemoteException {
 

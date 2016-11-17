@@ -26,6 +26,7 @@ import org.apache.axis.message.MessageElement;
  */
 public abstract class BaseExtensionHelper implements ExtensionHelper {
 
+	@Override
 	public Extension[] getExtensions(List<MessageElement> messageElements) {
 		Extension[] extensions = new Extension[messageElements.size()];
 
@@ -42,6 +43,7 @@ public abstract class BaseExtensionHelper implements ExtensionHelper {
 		return extensions;
 	}
 
+	@Override
 	public Extension[] getExtensions(String localPart, String value) {
 		List<MessageElement> messageElements = new ArrayList<>();
 
@@ -50,6 +52,7 @@ public abstract class BaseExtensionHelper implements ExtensionHelper {
 		return getExtensions(messageElements);
 	}
 
+	@Override
 	public MessageElement[] getMessageElements(Extension[] extensions) {
 		if ((extensions == null) || (extensions.length <= 0)) {
 			return null;

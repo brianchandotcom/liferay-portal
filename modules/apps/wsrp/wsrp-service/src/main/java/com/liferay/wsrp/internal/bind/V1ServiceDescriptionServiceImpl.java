@@ -31,6 +31,7 @@ import oasis.names.tc.wsrp.v2.intf.WSRP_v2_ServiceDescription_PortType;
 public class V1ServiceDescriptionServiceImpl
 	extends BaseServiceImpl implements WSRP_v1_ServiceDescription_PortType {
 
+	@Override
 	public ServiceDescription getServiceDescription(
 			GetServiceDescription v1GetServiceDescription)
 		throws RemoteException {

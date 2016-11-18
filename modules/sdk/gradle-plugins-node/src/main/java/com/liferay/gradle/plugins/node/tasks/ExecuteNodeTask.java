@@ -109,6 +109,10 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _nodeExecutor.isInheritProxy();
 	}
 
+	public boolean isUseGradleExec() {
+		return _nodeExecutor.isUseGradleExec();
+	}
+
 	public void setArgs(Iterable<?> args) {
 		_nodeExecutor.setArgs(args);
 	}
@@ -131,6 +135,10 @@ public class ExecuteNodeTask extends DefaultTask {
 
 	public void setNpmInstallRetries(int npmInstallRetries) {
 		_npmInstallRetries = npmInstallRetries;
+	}
+
+	public void setUseGradleExec(boolean useGradleExec) {
+		_nodeExecutor.setUseGradleExec(useGradleExec);
 	}
 
 	public void setWorkingDir(Object workingDir) {

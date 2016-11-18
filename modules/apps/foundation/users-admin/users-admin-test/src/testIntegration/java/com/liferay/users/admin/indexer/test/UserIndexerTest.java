@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.usersadmin.util;
+package com.liferay.users.admin.indexer.test;
 
+import com.liferay.users.admin.internal.search.UserIndexer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Hits;

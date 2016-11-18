@@ -44,6 +44,10 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	public void update() {
 		super.update();
 
+		if (_notificationSent) {
+			return;
+		}
+
 		Build reinvokeErrorAxisBuild = null;
 		String reinvokeErrorMarker = null;
 
@@ -113,6 +117,8 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 					sb.toString(),
 					"root@" + JenkinsResultsParserUtil.getHostName("UNKNOWN"),
 					subject, "peter.yoo@liferay.com, shuyang.zhou@liferay.com");
+
+				_notificationSent = true;
 			}
 			catch (Exception e) {
 				System.out.println(
@@ -142,5 +148,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 	private static final String _REINVOKE_ERROR_MARKER_TEMPLATE =
 		"reinvoke.error.marker[modules-integration-?]";
+
+	private boolean _notificationSent;
 
 }

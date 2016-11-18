@@ -14,29 +14,33 @@
 
 package com.liferay.users.admin.indexer.test;
 
-import com.liferay.users.admin.internal.search.UserIndexer;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,10 +49,12 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author André de Oliveira
  */
+@RunWith(Arquillian.class)
 @Sync
 public class UserIndexerTest {
 
@@ -61,7 +67,14 @@ public class UserIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_indexer = new UserIndexer();
+		Registry registry = RegistryUtil.getRegistry();
+
+		_userLocalService = registry.getService(UserLocalService.class);
+
+		IndexerRegistry indexerRegistry = registry.getService(
+			IndexerRegistry.class);
+
+		_indexer = indexerRegistry.getIndexer(User.class);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext();
 	}
@@ -104,9 +117,11 @@ public class UserIndexerTest {
 
 	@Test
 	public void testEmptyQuery() throws Exception {
-		addUser();
+		User user1 = addUser();
 
-		assertHits("", 1);
+		User user2 = getTestUser();
+
+		assertSearch("", user1, user2);
 	}
 
 	@Test
@@ -130,8 +145,8 @@ public class UserIndexerTest {
 
 		addUserNameFields(firstName, lastName, middleName);
 
-		assertHits("firstName", "\"Mary Watson\"", 0);
-		assertHits("firstName", "\"Mary Jane\" Missingword", 0);
+		assertNoHits("firstName", "\"Mary Watson\"");
+		assertNoHits("firstName", "\"Mary Jane\" Missingword");
 
 		User user = assertSearchOneUser("firstName", "Mary \"Jane Watson\"");
 
@@ -140,22 +155,26 @@ public class UserIndexerTest {
 
 	@Test
 	public void testLikeCharacter() throws Exception {
-		addUser();
+		User user1 = addUser();
 
-		assertHits("%", 1);
-		assertHits("%" + RandomTestUtil.randomString(), 0);
+		User user2 = getTestUser();
+
+		assertSearch("%", user1, user2);
+
+		assertNoHits("%" + RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testLuceneQueryParserUnfriendlyCharacters() throws Exception {
 		User user1 = addUser();
-		User user2 = assertSearchOneUser("@");
 
-		Assert.assertEquals(user1.getEmailAddress(), user2.getEmailAddress());
+		User user2 = getTestUser();
 
-		assertHits("@" + RandomTestUtil.randomString(), 0);
-		assertHits("!", 0);
-		assertHits("!" + RandomTestUtil.randomString(), 0);
+		assertSearch("@", user1, user2);
+
+		assertNoHits("@" + RandomTestUtil.randomString());
+		assertNoHits("!");
+		assertNoHits("!" + RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -254,18 +273,22 @@ public class UserIndexerTest {
 	}
 
 	protected User addUser() throws Exception {
-		User user = UserTestUtil.addUser();
+		String emailAddress = RandomTestUtil.randomString() + "@liferay.com";
+		String firstName = RandomTestUtil.randomString();
+		String lastName = RandomTestUtil.randomString();
+		String middleName = RandomTestUtil.randomString();
+		String screenName = RandomTestUtil.randomString();
 
-		_users.add(user);
-
-		return user;
+		return addUser(
+			firstName, lastName, middleName, screenName, emailAddress);
 	}
 
-	protected void addUser(
+	protected User addUser(
 			String firstName, String lastName, String middleName,
 			String screenName, String emailAddress)
 		throws Exception {
 
+		long creatorUserId = TestPropsValues.getUserId();
 		long companyId = TestPropsValues.getCompanyId();
 		boolean autoPassword = true;
 		String password1 = null;
@@ -287,14 +310,16 @@ public class UserIndexerTest {
 		long[] userGroupIds = null;
 		boolean sendMail = false;
 
-		User user = UserServiceUtil.addUser(
-			companyId, autoPassword, password1, password2, autoScreenName,
-			screenName, emailAddress, facebookId, openId, locale, firstName,
-			middleName, lastName, prefixId, suffixId, male, birthdayMonth,
-			birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupIds, sendMail, _serviceContext);
+		User user = _userLocalService.addUser(
+			creatorUserId, companyId, autoPassword, password1, password2,
+			autoScreenName, screenName, emailAddress, facebookId, openId,
+			locale, firstName, middleName, lastName, prefixId, suffixId, male,
+			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
+			organizationIds, roleIds, userGroupIds, sendMail, _serviceContext);
 
 		_users.add(user);
+
+		return user;
 	}
 
 	protected void addUserEmailAddress(String emailAddress) throws Exception {
@@ -325,37 +350,41 @@ public class UserIndexerTest {
 		addUser(firstName, lastName, middleName, screenName, emailAddress);
 	}
 
-	protected Hits assertHits(
-			final SearchContext searchContext, final int length)
-		throws Exception {
-
-		Hits hits = _indexer.search(searchContext);
-
+	protected void assertLength(Hits hits, int length) {
 		Assert.assertEquals(hits.toString(), length, hits.getLength());
-
-		return hits;
 	}
 
-	protected Hits assertHits(String keywords, int length) throws Exception {
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+	protected void assertNoHits(String keywords) throws Exception {
+		Hits hits = search(keywords);
 
-		searchContext.setKeywords(keywords);
-
-		return assertHits(searchContext, length);
+		assertLength(hits, 0);
 	}
 
-	protected Hits assertHits(String field, String value, int length)
+	protected void assertNoHits(String field, String value) throws Exception {
+		Hits hits = search(field, value);
+
+		assertLength(hits, 0);
+	}
+
+	protected void assertSearch(String keywords, User...users)
 		throws Exception {
 
-		SearchContext searchContext = SearchContextTestUtil.getSearchContext();
+		Hits hits = search(keywords);
 
-		searchContext.setAttribute(field, value);
+		Document[] documents = hits.getDocs();
 
-		return assertHits(searchContext, length);
+		List<User> actualUsers = new ArrayList<>(documents.length);
+
+		for (Document document : documents) {
+			actualUsers.add(getUser(document));
+		}
+
+		Assert.assertEquals(
+			getScreenNames(Arrays.asList(users)), getScreenNames(actualUsers));
 	}
 
 	protected User assertSearchOneUser(String keywords) throws Exception {
-		Hits hits = assertHits(keywords, 1);
+		Hits hits = search(keywords);
 
 		return getUser(hits);
 	}
@@ -363,15 +392,68 @@ public class UserIndexerTest {
 	protected User assertSearchOneUser(String field, String value)
 		throws Exception {
 
-		Hits hits = assertHits(field, value, 1);
+		Hits hits = search(field, value);
 
 		return getUser(hits);
 	}
 
-	protected User getUser(Hits hits) throws PortalException {
-		long userId = UserIndexer.getUserId(hits.doc(0));
+	protected String getScreenNames(List<User> users) {
+		List<String> screenNames = new ArrayList<>(users.size());
 
-		return UserLocalServiceUtil.getUser(userId);
+		for (User user : users) {
+			screenNames.add(user.getScreenName());
+		}
+
+		Collections.sort(screenNames);
+
+		return screenNames.toString();
+	}
+
+	protected SearchContext getSearchContext() throws Exception {
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+		searchContext.setGroupIds(new long[] {TestPropsValues.getGroupId()});
+
+		return searchContext;
+	}
+
+	protected User getTestUser() throws Exception {
+		return TestPropsValues.getUser();
+	}
+
+	protected User getUser(Document document) throws Exception {
+		long userId = GetterUtil.getLong(document.get(Field.USER_ID));
+
+		return _userLocalService.getUser(userId);
+	}
+
+	protected User getUser(Hits hits) throws Exception {
+		assertLength(hits, 1);
+
+		Document document = hits.doc(0);
+
+		return getUser(document);
+	}
+
+	protected Hits search(SearchContext searchContext) throws Exception {
+		return _indexer.search(searchContext);
+	}
+
+	protected Hits search(String keywords) throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setKeywords(keywords);
+
+		return search(searchContext);
+	}
+
+	protected Hits search(String field, String value) throws Exception {
+		SearchContext searchContext = getSearchContext();
+
+		searchContext.setAttribute(field, value);
+
+		return search(searchContext);
 	}
 
 	protected void testNameFields(
@@ -395,6 +477,7 @@ public class UserIndexerTest {
 
 	private Indexer<User> _indexer;
 	private ServiceContext _serviceContext;
+	private UserLocalService _userLocalService;
 
 	@DeleteAfterTestRun
 	private final List<User> _users = new ArrayList<>();

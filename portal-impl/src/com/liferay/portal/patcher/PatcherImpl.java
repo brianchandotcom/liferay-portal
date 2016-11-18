@@ -53,8 +53,6 @@ public class PatcherImpl implements Patcher {
 		_installedPatchNames = StringUtil.split(
 			_properties.getProperty(PROPERTY_INSTALLED_PATCHES));
 
-		_patchDirectory = getPatchDirectory();
-
 		_patchLevels = StringUtil.split(
 			_properties.getProperty(PROPERTY_PATCH_LEVELS));
 
@@ -101,10 +99,6 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public File getPatchDirectory() {
-		if (_patchDirectory != null) {
-			return _patchDirectory;
-		}
-
 		String patchDirectoryName = _properties.getProperty(
 			PROPERTY_PATCH_DIRECTORY);
 
@@ -141,7 +135,7 @@ public class PatcherImpl implements Patcher {
 			"1.0." + getPatchingToolVersion();
 
 		if (_properties.containsKey(
-			PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
+				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
 
 			patchingToolVersionDisplayName = _properties.getProperty(
 				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME);
@@ -271,7 +265,6 @@ public class PatcherImpl implements Patcher {
 	private final String[] _fixedIssueKeys;
 	private boolean _inconsistentPatchLevels;
 	private final String[] _installedPatchNames;
-	private final File _patchDirectory;
 	private final int _patchingToolVersion;
 	private final String _patchingToolVersionDisplayName;
 	private final String[] _patchLevels;

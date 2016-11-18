@@ -18,10 +18,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceServiceUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -45,6 +52,7 @@ import org.junit.runner.RunWith;
  * @author Adam Brandizzi
  */
 @RunWith(Arquillian.class)
+@Sync
 public class CalendarResourceServiceTest {
 
 	@ClassRule
@@ -60,16 +68,42 @@ public class CalendarResourceServiceTest {
 	}
 
 	@Test
+	public void testAddResourceWithModelPermission() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		User user = UserTestUtil.addGroupUser(group, RoleConstants.SITE_MEMBER);
+
+		long classNameId = PortalUtil.getClassNameId(CalendarResource.class);
+
+		Map<Locale, String> nameMap = createNameMap();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
+			_CALENDAR_RESOURCE_GROUP_PERMISSIONS, null);
+
+		serviceContext.setModelPermissions(modelPermissions);
+
+		CalendarResourceLocalServiceUtil.addCalendarResource(
+			user.getUserId(), user.getGroupId(), classNameId, 0,
+			PortalUUIDUtil.generate(), RandomTestUtil.randomString(8), nameMap,
+			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
+
+		int count = CalendarResourceServiceUtil.searchCount(
+			user.getCompanyId(), new long[] {user.getGroupId()},
+			new long[] {classNameId}, nameMap.get(LocaleUtil.getDefault()),
+			true);
+
+		Assert.assertEquals(1, count);
+	}
+
+	@Test
 	public void testSearchCount() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(CalendarResource.class);
 
-		Map<Locale, String> nameMap = new HashMap<>();
-
-		String name =
-			RandomTestUtil.randomString() + StringPool.SPACE +
-				RandomTestUtil.randomString();
-
-		nameMap.put(LocaleUtil.getDefault(), name);
+		Map<Locale, String> nameMap = createNameMap();
 
 		CalendarResourceLocalServiceUtil.addCalendarResource(
 			_user.getUserId(), _user.getGroupId(), classNameId, 0,
@@ -78,10 +112,27 @@ public class CalendarResourceServiceTest {
 
 		int count = CalendarResourceServiceUtil.searchCount(
 			_user.getCompanyId(), new long[] {_user.getGroupId()},
-			new long[] {classNameId}, name, true);
+			new long[] {classNameId}, nameMap.get(LocaleUtil.getDefault()),
+			true);
 
 		Assert.assertEquals(1, count);
 	}
+
+	protected Map<Locale, String> createNameMap() {
+		Map<Locale, String> nameMap = new HashMap<>();
+
+		String name =
+			RandomTestUtil.randomString() + StringPool.SPACE +
+				RandomTestUtil.randomString();
+
+		nameMap.put(LocaleUtil.getDefault(), name);
+
+		return nameMap;
+	}
+
+	private static final String[] _CALENDAR_RESOURCE_GROUP_PERMISSIONS = {
+		"ADD_CALENDAR", "DELETE", "PERMISSIONS", "UPDATE", "VIEW"
+	};
 
 	@DeleteAfterTestRun
 	private User _user;

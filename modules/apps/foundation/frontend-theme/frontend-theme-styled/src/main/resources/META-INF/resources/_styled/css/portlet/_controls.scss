@@ -61,7 +61,8 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: url(../images/portlet/draggable_borderless.png) no-repeat 2px center transparent;
+		background: lx-icon(move, $portlet-topper-color) no-repeat 2px center transparent;
+		background-size: 12px;
 		cursor: move;
 		padding-left: 25px;
 	}

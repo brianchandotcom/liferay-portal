@@ -135,6 +135,7 @@ renderResponse.setTitle(headerTitle);
 
 										<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
 										<portlet:param name="showEditURL" value="<%= String.valueOf(workflowTaskDisplayContext.isShowEditURL(workflowTask)) %>" />
+										<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 									</portlet:renderURL>
 
 									<liferay-frontend:management-bar-button

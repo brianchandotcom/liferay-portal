@@ -393,6 +393,7 @@ public class UserIndexer extends BaseIndexer<User> {
 			userLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setIndexWriterHelper(indexWriterHelper);
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<User>() {
 

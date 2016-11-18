@@ -32,7 +32,7 @@
 					<a class="collapsed management-bar-toggle management-bar-toggle-link" data-toggle="collapse" href="#<%= namespace %>managementBarCollapse">
 						<span class="management-bar-item-title"><liferay-ui:message key="filter-order" /></span>
 
-						<span class="icon-sort"></span>
+						<aui:icon image="caret-double-l" markupView="lexicon" />
 					</a>
 				</c:if>
 			</div>

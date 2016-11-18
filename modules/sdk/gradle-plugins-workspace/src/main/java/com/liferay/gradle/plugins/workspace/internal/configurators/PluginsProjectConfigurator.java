@@ -66,9 +66,11 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 		_addTaskBuild(project, updatePropertiesTask);
 
+		Task warTask = GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
+
 		_configureTaskWar(project, workspaceExtension, initBundleTask);
 
-		_configureRootTaskDistBundle(project);
+		_configureRootTaskDistBundle(warTask);
 	}
 
 	@Override
@@ -144,10 +146,14 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 		antBuilder.importBuild("build.xml");
 	}
 
-	private void _configureRootTaskDistBundle(final Project project) {
+	private void _configureRootTaskDistBundle(final Task warTask) {
+		Project project = warTask.getProject();
+
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
 			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
+
+		copy.dependsOn(warTask);
 
 		copy.into(
 			"osgi/modules",
@@ -155,10 +161,12 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
+					Project project = warTask.getProject();
+
 					ConfigurableFileTree configurableFileTree =
 						project.fileTree("dist");
 
-					configurableFileTree.builtBy(WarPlugin.WAR_TASK_NAME);
+					configurableFileTree.builtBy(warTask);
 					configurableFileTree.include("*.war");
 
 					copySpec.from(configurableFileTree);

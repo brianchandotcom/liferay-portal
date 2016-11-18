@@ -247,7 +247,9 @@ public class UserGroupFinderImpl
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, UserGroup.class.getName(), "UserGroup.userGroupId",
 					null, null, new long[] {0}, null);
@@ -333,7 +335,9 @@ public class UserGroupFinderImpl
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, UserGroup.class.getName(), "UserGroup.userGroupId",
 					null, null, new long[] {0}, null);

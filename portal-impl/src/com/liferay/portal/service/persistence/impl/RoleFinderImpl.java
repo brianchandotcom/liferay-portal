@@ -752,7 +752,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sql = StringUtil.replace(sql, "[$WHERE$]", getWhere(params));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, Role.class.getName(), "Role_.roleId", null, null,
 					new long[] {0}, null);
@@ -821,7 +823,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
 
-			if (inlineSQLHelper) {
+			if (inlineSQLHelper &&
+				InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, Role.class.getName(), "Role_.roleId", null, null,
 					new long[] {0}, null);

@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -264,7 +264,7 @@ public class WikiPageIndexer
 
 		Document document = getDocument(wikiPage);
 
-		IndexWriterHelperUtil.updateDocument(
+		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), wikiPage.getCompanyId(), document,
 			isCommitImmediately());
 	}
@@ -367,6 +367,9 @@ public class WikiPageIndexer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageIndexer.class);
+
+	@Reference
+	private IndexWriterHelper _indexWriterHelper;
 
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();

@@ -80,8 +80,6 @@ public class MissingOverrideCheck extends AbstractCheck {
 			return;
 		}
 
-		String className = _getClassName(fileName);
-
 		JavaClass javaClass = javaDocBuilder.getClassByName(
 			_getPackagePath(detailAST) + "." + _getClassName(fileName));
 

@@ -565,7 +565,6 @@
 	<bean class="com.liferay.portlet.trash.util.TrashIndexer" id="com.liferay.portlet.trash.util.TrashIndexer" />
 	<bean class="com.liferay.portlet.usersadmin.util.ContactIndexer" id="com.liferay.portlet.usersadmin.util.ContactIndexer" />
 	<bean class="com.liferay.portlet.usersadmin.util.OrganizationIndexer" id="com.liferay.portlet.usersadmin.util.OrganizationIndexer" />
-	<bean class="com.liferay.portlet.usersadmin.util.UserIndexer" id="com.liferay.portlet.usersadmin.util.UserIndexer" />
 	<bean class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" id="com.liferay.roles.admin.kernel.util.RolesAdmin" />
 	<bean class="com.liferay.roles.admin.kernel.util.RolesAdminUtil" id="com.liferay.roles.admin.kernel.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.roles.admin.kernel.util.RolesAdmin" />

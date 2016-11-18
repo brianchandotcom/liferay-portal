@@ -106,7 +106,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 				sb.append(reinvokeErrorAxisBuild.getBuildURL());
 				sb.append(". Previous failure was at ");
 				sb.append(badBuildURLs.get(0));
-				sb.append("\n\nError Marker:\n");
+				sb.append("\n\nError marker:\n");
 				sb.append(reinvokeErrorMarker);
 
 				System.out.println(sb);

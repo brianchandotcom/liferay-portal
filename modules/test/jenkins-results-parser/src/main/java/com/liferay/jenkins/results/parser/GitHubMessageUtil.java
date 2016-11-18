@@ -17,7 +17,10 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -193,7 +196,11 @@ public class GitHubMessageUtil {
 			sb.append("</ol>");
 		}
 
-		project.setProperty("github.post.comment.body", sb.toString());
+		project.setProperty("github.post.comment.body", redact(sb.toString()));
+	}
+
+	protected static String getRedactTokenKey(int index) {
+		return "github.message.redact.token[" + index + "]";
 	}
 
 	protected static boolean isHighPriorityJobFailure(String content) {
@@ -208,6 +215,39 @@ public class GitHubMessageUtil {
 		}
 
 		return false;
+	}
+
+	protected static String redact(String string) throws Exception {
+		Properties properties = JenkinsResultsParserUtil.getBuildProperties();
+
+		Set<String> redactTokens = new HashSet<>();
+
+		for (int i = 1; properties.containsKey(getRedactTokenKey(i)); i++) {
+			String redactTokenProperty = properties.getProperty(
+				getRedactTokenKey(i));
+
+			String redactToken = redactTokenProperty;
+
+			if (redactTokenProperty.startsWith("${") &&
+				redactTokenProperty.endsWith("}")) {
+
+				redactToken = properties.getProperty(
+					redactTokenProperty.substring(
+						2, redactTokenProperty.length() - 1));
+			}
+
+			if ((redactToken != null) && !redactToken.isEmpty()) {
+				redactTokens.add(redactToken);
+			}
+		}
+
+		redactTokens.remove("test");
+
+		for (String redactToken : redactTokens) {
+			string = string.replace(redactToken, "[REDACTED]");
+		}
+
+		return string;
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

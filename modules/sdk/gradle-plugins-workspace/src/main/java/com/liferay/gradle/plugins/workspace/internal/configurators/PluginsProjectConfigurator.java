@@ -68,7 +68,7 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 
 		Task warTask = GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
-		_configureTaskWar(project, workspaceExtension, initBundleTask);
+		_configureTaskWar(warTask, workspaceExtension, initBundleTask);
 
 		_configureRootTaskDistBundle(warTask);
 	}
@@ -176,12 +176,10 @@ public class PluginsProjectConfigurator extends BaseProjectConfigurator {
 	}
 
 	private void _configureTaskWar(
-		Project project, final WorkspaceExtension workspaceExtension,
+		Task warTask, final WorkspaceExtension workspaceExtension,
 		final Task initBundleTask) {
 
-		Task task = GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
-
-		task.dependsOn(
+		warTask.dependsOn(
 			new Callable<Task>() {
 
 				@Override

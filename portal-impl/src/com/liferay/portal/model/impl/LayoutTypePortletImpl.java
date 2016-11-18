@@ -1016,6 +1016,13 @@ public class LayoutTypePortletImpl
 
 			columnValue = StringUtil.removeFromList(columnValue, portletId);
 
+			if ((columnValue != null) &&
+				columnValue.endsWith(StringPool.COMMA)) {
+
+				columnValue = columnValue.substring(
+					0, columnValue.length() - 1);
+			}
+
 			if (hasUserPreferences()) {
 				setUserPreference(columnId, columnValue);
 			}

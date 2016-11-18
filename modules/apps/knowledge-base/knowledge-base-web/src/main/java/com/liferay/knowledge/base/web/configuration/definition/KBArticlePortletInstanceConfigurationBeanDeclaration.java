@@ -26,6 +26,7 @@ import org.osgi.service.component.annotations.Component;
 public class KBArticlePortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
+	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return KBArticlePortletInstanceConfiguration.class;
 	}

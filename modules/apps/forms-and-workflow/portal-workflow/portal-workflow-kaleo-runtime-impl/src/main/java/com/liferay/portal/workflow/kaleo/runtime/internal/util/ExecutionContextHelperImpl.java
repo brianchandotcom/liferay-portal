@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = ExecutionContextHelper.class)
 public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 
+	@Override
 	public void checkKaleoInstanceComplete(ExecutionContext executionContext)
 		throws PortalException {
 
@@ -64,6 +65,7 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 			kaleoInstanceToken, executionContext.getServiceContext());
 	}
 
+	@Override
 	public void completeKaleoTimerInstances(ExecutionContext executionContext)
 		throws PortalException {
 
@@ -79,6 +81,7 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 			kaleoTimerInstanceTokens, executionContext.getServiceContext());
 	}
 
+	@Override
 	public String convert(ExecutionContext executionContext) {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -116,6 +119,7 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 		return jsonObject.toString();
 	}
 
+	@Override
 	public ExecutionContext convert(String json) throws Exception {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
@@ -152,6 +156,7 @@ public class ExecutionContextHelperImpl implements ExecutionContextHelper {
 			serviceContext);
 	}
 
+	@Override
 	public boolean isKaleoInstanceBlocked(ExecutionContext executionContext) {
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();

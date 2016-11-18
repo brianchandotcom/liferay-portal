@@ -89,6 +89,7 @@ public class DocumentTypesPortletConfigurationIcon
 		return true;
 	}
 
+	@Override
 	public boolean isToolTip() {
 		return false;
 	}

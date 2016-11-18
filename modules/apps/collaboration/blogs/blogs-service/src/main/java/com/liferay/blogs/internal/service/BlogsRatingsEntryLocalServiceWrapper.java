@@ -45,6 +45,7 @@ public class BlogsRatingsEntryLocalServiceWrapper
 		super(ratingsEntryLocalService);
 	}
 
+	@Override
 	public RatingsEntry updateEntry(
 			long userId, String className, long classPK, double score,
 			ServiceContext serviceContext)

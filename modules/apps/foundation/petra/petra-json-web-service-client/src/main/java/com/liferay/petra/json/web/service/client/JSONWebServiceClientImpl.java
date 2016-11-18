@@ -394,14 +394,17 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		return _headers;
 	}
 
+	@Override
 	public String getHostName() {
 		return _hostName;
 	}
 
+	@Override
 	public int getHostPort() {
 		return _hostPort;
 	}
 
+	@Override
 	public String getProtocol() {
 		return _protocol;
 	}
@@ -421,10 +424,12 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		_headers = headers;
 	}
 
+	@Override
 	public void setHostName(String hostName) {
 		_hostName = hostName;
 	}
 
+	@Override
 	public void setHostPort(int hostPort) {
 		_hostPort = hostPort;
 	}
@@ -444,6 +449,7 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 		_password = password;
 	}
 
+	@Override
 	public void setProtocol(String protocol) {
 		_protocol = protocol;
 	}

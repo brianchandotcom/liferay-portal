@@ -38,6 +38,7 @@ public class DefaultIndexerRequestBufferExecutor
 	extends BaseIndexerRequestBufferExecutor
 	implements IndexerRequestBufferExecutor {
 
+	@Override
 	public void execute(
 		IndexerRequestBuffer indexerRequestBuffer, int numRequests) {
 

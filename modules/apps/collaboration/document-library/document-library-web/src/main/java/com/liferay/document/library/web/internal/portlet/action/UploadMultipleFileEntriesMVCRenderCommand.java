@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class UploadMultipleFileEntriesMVCRenderCommand
 	implements MVCRenderCommand {
 
+	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {

@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 public class BasicUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements BasicUserDemoDataCreator {
 
+	@Override
 	public User create(long companyId, String emailAddress)
 		throws PortalException {
 

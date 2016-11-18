@@ -215,6 +215,7 @@ public class DDMImpl implements DDM {
 		return _ddmFormJSONSerializer.serialize(ddmForm);
 	}
 
+	@Override
 	public DDMFormValues getDDMFormValues(
 			DDMForm ddmForm, String serializedJSONDDMFormValues)
 		throws PortalException {

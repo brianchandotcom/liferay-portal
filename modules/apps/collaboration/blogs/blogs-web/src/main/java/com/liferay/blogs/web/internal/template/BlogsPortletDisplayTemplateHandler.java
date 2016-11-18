@@ -55,6 +55,7 @@ public class BlogsPortletDisplayTemplateHandler
 		return BlogsEntry.class.getName();
 	}
 
+	@Override
 	public Map<String, Object> getCustomContextObjects() {
 		Map<String, Object> customContextObjects = new HashMap<>(1);
 

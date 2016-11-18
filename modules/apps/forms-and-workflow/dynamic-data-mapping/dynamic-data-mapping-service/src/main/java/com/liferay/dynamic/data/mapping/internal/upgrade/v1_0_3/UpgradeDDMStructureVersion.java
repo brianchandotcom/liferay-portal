@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
  */
 public class UpgradeDDMStructureVersion extends UpgradeProcess {
 
+	@Override
 	protected void doUpgrade() throws Exception {
 		alter(
 			DDMStructureVersionTable.class,

@@ -32,6 +32,7 @@ public class BatchBuild extends BaseBuild {
 		super(url, topLevelBuild);
 	}
 
+	@Override
 	protected List<String> findDownstreamBuildsInConsoleText() {
 		return Collections.emptyList();
 	}

@@ -114,6 +114,7 @@ public class CalendarResourceLocalServiceImpl
 		// Calendar
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
+			serviceContext.setModelPermissions(null);
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 

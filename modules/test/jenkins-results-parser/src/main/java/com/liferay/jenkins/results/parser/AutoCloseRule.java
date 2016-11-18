@@ -87,6 +87,7 @@ public class AutoCloseRule {
 		return Collections.emptyList();
 	}
 
+	@Override
 	public String toString() {
 		return ruleData;
 	}

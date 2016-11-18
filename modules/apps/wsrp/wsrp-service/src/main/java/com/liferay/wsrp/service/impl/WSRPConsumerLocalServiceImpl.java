@@ -58,6 +58,7 @@ import oasis.names.tc.wsrp.v2.types.RegistrationState;
 public class WSRPConsumerLocalServiceImpl
 	extends WSRPConsumerLocalServiceBaseImpl {
 
+	@Override
 	public WSRPConsumer addWSRPConsumer(
 			long companyId, String adminPortletId, String name, String url,
 			String forwardCookies, String forwardHeaders,
@@ -122,6 +123,7 @@ public class WSRPConsumerLocalServiceImpl
 		}
 	}
 
+	@Override
 	public WSRPConsumer getWSRPConsumer(String wsrpConsumerUuid)
 		throws PortalException {
 
@@ -137,16 +139,19 @@ public class WSRPConsumerLocalServiceImpl
 		}
 	}
 
+	@Override
 	public List<WSRPConsumer> getWSRPConsumers(
 		long companyId, int start, int end) {
 
 		return wsrpConsumerPersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Override
 	public int getWSRPConsumersCount(long companyId) {
 		return wsrpConsumerPersistence.countByCompanyId(companyId);
 	}
 
+	@Override
 	public WSRPConsumer registerWSRPConsumer(
 			long wsrpConsumerId, String adminPortletId,
 			UnicodeProperties registrationProperties, String registrationHandle)
@@ -187,6 +192,7 @@ public class WSRPConsumerLocalServiceImpl
 		return wsrpConsumer;
 	}
 
+	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void restartConsumer(long wsrpConsumerId) throws PortalException {
 		WSRPConsumer wsrpConsumer = wsrpConsumerPersistence.findByPrimaryKey(
@@ -234,6 +240,7 @@ public class WSRPConsumerLocalServiceImpl
 		}
 	}
 
+	@Override
 	public void updateServiceDescription(long wsrpConsumerId)
 		throws PortalException {
 
@@ -263,6 +270,7 @@ public class WSRPConsumerLocalServiceImpl
 		}
 	}
 
+	@Override
 	public WSRPConsumer updateWSRPConsumer(
 			long wsrpConsumerId, String adminPortletId, String name, String url,
 			String forwardCookies, String forwardHeaders,

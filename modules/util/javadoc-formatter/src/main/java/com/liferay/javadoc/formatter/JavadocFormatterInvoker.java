@@ -48,10 +48,6 @@ public class JavadocFormatterInvoker {
 			"javadoc.limit",
 			StringUtil.merge(javadocFormatterArgs.getLimits()));
 		arguments.put(
-			"javadoc.lowest.supported.java.version",
-			String.valueOf(
-				javadocFormatterArgs.getLowestSupportedJavaVersion()));
-		arguments.put(
 			"javadoc.output.file.prefix",
 			javadocFormatterArgs.getOutputFilePrefix());
 		arguments.put(

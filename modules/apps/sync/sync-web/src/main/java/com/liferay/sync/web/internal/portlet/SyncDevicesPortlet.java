@@ -54,6 +54,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SyncDevicesPortlet extends BaseSyncPortlet {
 
+	@Override
 	public void deleteDevice(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -68,6 +69,7 @@ public class SyncDevicesPortlet extends BaseSyncPortlet {
 		super.deleteDevice(actionRequest, actionResponse);
 	}
 
+	@Override
 	public void updateDevice(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 
+	@Override
 	public List<KeyValuePair> getData(
 			DDMDataProviderContext ddmDataProviderContext)
 		throws DDMDataProviderException {
@@ -108,6 +109,7 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 		return new DDMDataProviderResponse(data);
 	}
 
+	@Override
 	public Class<?> getSettings() {
 		throw new UnsupportedOperationException();
 	}

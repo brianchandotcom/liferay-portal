@@ -23,6 +23,7 @@ import org.apache.axis.message.MessageElement;
  */
 public class ElementExtensionHelper extends BaseExtensionHelper {
 
+	@Override
 	public void addMessageElement(
 		List<MessageElement> messageElements, String localPart, String value) {
 
@@ -34,6 +35,7 @@ public class ElementExtensionHelper extends BaseExtensionHelper {
 		messageElements.add(messageElement);
 	}
 
+	@Override
 	public String getNameAttribute(MessageElement messageElement) {
 		return messageElement.getName();
 	}

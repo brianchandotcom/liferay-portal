@@ -63,6 +63,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = TemplateHandlerRegistry.class)
 public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
+	@Override
 	public long[] getClassNameIds() {
 		long[] classNameIds = new long[_templateHandlers.size()];
 		int i = 0;
@@ -79,16 +80,19 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 		return classNameIds;
 	}
 
+	@Override
 	public TemplateHandler getTemplateHandler(long classNameId) {
 		String className = _portal.getClassName(classNameId);
 
 		return _templateHandlers.get(className);
 	}
 
+	@Override
 	public TemplateHandler getTemplateHandler(String className) {
 		return _templateHandlers.get(className);
 	}
 
+	@Override
 	public List<TemplateHandler> getTemplateHandlers() {
 		List<TemplateHandler> templateHandlers = new ArrayList<>(
 			_templateHandlers.values());

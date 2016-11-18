@@ -41,6 +41,7 @@ import java.util.List;
  */
 public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 
+	@Override
 	public Attachment addAttachment(
 			long userId, long messageId, String contentPath, String fileName,
 			long size, File file)
@@ -126,6 +127,7 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 		return attachment;
 	}
 
+	@Override
 	public void deleteAttachments(long companyId, long messageId)
 		throws PortalException {
 
@@ -145,10 +147,12 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 		DLStoreUtil.deleteDirectory(companyId, _REPOSITORY_ID, directoryPath);
 	}
 
+	@Override
 	public List<Attachment> getAttachments(long messageId) {
 		return attachmentPersistence.findByMessageId(messageId);
 	}
 
+	@Override
 	public File getFile(long attachmentId) throws PortalException {
 		try {
 			File file = FileUtil.createTempFile();
@@ -162,6 +166,7 @@ public class AttachmentLocalServiceImpl extends AttachmentLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public InputStream getInputStream(long attachmentId)
 		throws PortalException {
 

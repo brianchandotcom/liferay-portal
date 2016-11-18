@@ -453,6 +453,7 @@ public class KaleoTaskInstanceTokenLocalServiceImpl
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
+	@Override
 	public boolean hasPendingKaleoTaskForms(long kaleoTaskInstanceTokenId)
 		throws PortalException {
 

@@ -38,6 +38,7 @@ public class BlogsUserLocalServiceWrapper extends UserLocalServiceWrapper {
 		super(userLocalService);
 	}
 
+	@Override
 	public User deleteUser(User user) throws PortalException {
 		_blogsStatsUserLocalService.deleteStatsUserByUserId(user.getUserId());
 

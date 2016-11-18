@@ -138,7 +138,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 				var selectOrganization = Util.getWindow('<portlet:namespace />selectOrganization');
 
 				if (selectOrganization) {
-					var selectButton = selectOrganization.iframe.node.get('contentWindow.document').one('.selector-button[data-organizationid="' + rowId + '"]');
+					var selectButton = selectOrganization.iframe.node.get('contentWindow.document').one('.selector-button[data-entityid="' + rowId + '"]');
 
 					Util.toggleDisabled(selectButton, false);
 				}
@@ -160,7 +160,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			function(event) {
 				event.selectors.each(
 					function(item, index, collection) {
-						var organizationId = item.attr('data-organizationid');
+						var organizationId = item.attr('data-entityid');
 
 						if (deleteOrganizationIds.indexOf(organizationId) != -1) {
 							Util.toggleDisabled(item, false);
@@ -176,6 +176,15 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 			selectOrganizationLink.on(
 				'click',
 				function(event) {
+					var searchContainerData = searchContainer.getData();
+
+					if (!searchContainerData.length) {
+						searchContainerData = [];
+					}
+					else {
+						searchContainerData = searchContainerData.split(',');
+					}
+
 					Util.selectEntity(
 						{
 							dialog: {
@@ -183,24 +192,27 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 								modal: true
 							},
 							id: '<portlet:namespace />selectOrganization',
+							selectedData: searchContainerData,
 							title: '<liferay-ui:message arguments="organization" key="select-x" />',
 							uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= selUser == null ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 						},
 						function(event) {
+							var entityId = event.entityid;
+
 							var rowColumns = [];
 
-							rowColumns.push(event.name);
+							rowColumns.push(event.entityname);
 							rowColumns.push(event.type);
 							rowColumns.push('');
-							rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+							rowColumns.push('<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
 
-							searchContainer.addRow(rowColumns, event.organizationid);
+							searchContainer.addRow(rowColumns, entityId);
 
 							searchContainer.updateDataStore();
 
-							AArray.removeItem(deleteOrganizationIds, event.organizationid);
+							AArray.removeItem(deleteOrganizationIds, entityId);
 
-							addOrganizationIds.push(event.organizationid);
+							addOrganizationIds.push(entityId);
 
 							document.<portlet:namespace />fm.<portlet:namespace />addOrganizationIds.value = addOrganizationIds.join(',');
 							document.<portlet:namespace />fm.<portlet:namespace />deleteOrganizationIds.value = deleteOrganizationIds.join(',');

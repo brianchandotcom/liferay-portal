@@ -140,6 +140,15 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 		A.one('#<portlet:namespace />openUserGroupsLink').on(
 			'click',
 			function(event) {
+				var searchContainerData = searchContainer.getData();
+
+				if (!searchContainerData.length) {
+					searchContainerData = [];
+				}
+				else {
+					searchContainerData = searchContainerData.split(',');
+				}
+
 				Util.selectEntity(
 					{
 						dialog: {
@@ -147,6 +156,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 							modal: true
 						},
 						id: '<portlet:namespace />selectUserGroup',
+						selectedData: searchContainerData,
 						title: '<liferay-ui:message arguments="user-group" key="select-x" />',
 
 						<liferay-portlet:renderURL var="selectUserGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -159,18 +169,20 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGr
 					function(event) {
 						var A = AUI();
 
+						var entityId = event.entityid;
+
 						var rowColumns = [];
 
-						rowColumns.push(A.Escape.html(event.usergroupname));
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.usergroupid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeUserGroupIcon) %></a>');
+						rowColumns.push(A.Escape.html(event.entityname));
+						rowColumns.push('<a class="modify-link" data-rowId="' + entityId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeUserGroupIcon) %></a>');
 
-						searchContainer.addRow(rowColumns, event.usergroupid);
+						searchContainer.addRow(rowColumns, entityId);
 
 						searchContainer.updateDataStore();
 
-						A.Array.removeItem(deleteUserGroupIds, event.usergroupid);
+						A.Array.removeItem(deleteUserGroupIds, entityId);
 
-						addUserGroupIds.push(event.usergroupid);
+						addUserGroupIds.push(entityId);
 
 						document.<portlet:namespace />fm.<portlet:namespace />addUserGroupIds.value = addUserGroupIds.join(',');
 						document.<portlet:namespace />fm.<portlet:namespace />deleteUserGroupIds.value = deleteUserGroupIds.join(',');

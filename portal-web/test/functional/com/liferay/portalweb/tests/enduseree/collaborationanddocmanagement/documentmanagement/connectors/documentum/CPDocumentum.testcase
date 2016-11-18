@@ -137,7 +137,7 @@
 	</tear-down>
 
 	<command name="AddAllDocumentTypes" priority="5">
-		<for list="Document_1.doc,Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx,Document_1.mp3,Document_1.odt" param="dmDocumentTitle">
+		<for list="Document_1.doc,Document_1.docx,Document_1.jpeg,Document_1.jpg,Document_1.mp4,Document_1.pdf,Document_1.png,Document_1.ppt,Document_1.pptx,Document_1.txt,Document_1.xls,Document_1.xlsx" param="dmDocumentTitle">
 			<execute macro="DMRepository#gotoCP">
 				<var name="dmRepositoryName" value="Documentum Repository Name" />
 			</execute>

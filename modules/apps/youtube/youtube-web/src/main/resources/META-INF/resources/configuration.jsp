@@ -65,7 +65,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 					<aui:input inlineField="<%= true %>" name="preferences--closedCaptioning--" type="toggle-switch" value="<%= closedCaptioning %>" />
 
-					<aui:input name="preferences--startTime--" value="<%= startTime %>" />
+					<aui:input name="preferences--startTime--" value="<%= startTime %>">
+						<aui:validator name="digits" />
+					</aui:input>
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

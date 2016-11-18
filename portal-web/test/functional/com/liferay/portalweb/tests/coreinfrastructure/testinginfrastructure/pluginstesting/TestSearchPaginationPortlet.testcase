@@ -1,7 +1,7 @@
 <definition component-name="portal-test-plugins">
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Test Plugins" />
-	<property name="portlet.plugins.includes" value="test-search-pagination-portlet" />
+	<property name="portlet.plugins.includes" value="sample-service-builder-portlet" />
 
 	<set-up>
 		<execute macro="TestCase#setUpPortalInstance" />
@@ -17,11 +17,11 @@
 		<description message="This is a use case for LPS-65608." />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Test Search Pagination Page" />
+			<var name="pageName" value="Sample Service Builder Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Test Search Pagination" />
+			<var name="portletName" value="Sample Service Builder" />
 		</execute>
 
 		<execute macro="TestSearchPaginationPortlet#search50Results" />

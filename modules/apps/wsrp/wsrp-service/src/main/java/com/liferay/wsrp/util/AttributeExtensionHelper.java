@@ -27,6 +27,7 @@ import org.apache.axis.message.MessageElement;
  */
 public class AttributeExtensionHelper extends BaseExtensionHelper {
 
+	@Override
 	public void addMessageElement(
 		List<MessageElement> messageElements, String name, String value) {
 
@@ -46,6 +47,7 @@ public class AttributeExtensionHelper extends BaseExtensionHelper {
 		messageElements.add(messageElement);
 	}
 
+	@Override
 	public String getNameAttribute(MessageElement messageElement) {
 		Iterator<String> iterator = messageElement.getNamespacePrefixes();
 

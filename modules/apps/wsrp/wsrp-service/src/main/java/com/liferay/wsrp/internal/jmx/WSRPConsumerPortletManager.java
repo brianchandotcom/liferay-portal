@@ -31,6 +31,7 @@ public class WSRPConsumerPortletManager
 		super(WSRPConsumerPortletManagerMBean.class);
 	}
 
+	@Override
 	public void initFailedWSRPConsumerPortlets() {
 		WSRPConsumerPortletLocalServiceUtil.initFailedWSRPConsumerPortlets();
 	}

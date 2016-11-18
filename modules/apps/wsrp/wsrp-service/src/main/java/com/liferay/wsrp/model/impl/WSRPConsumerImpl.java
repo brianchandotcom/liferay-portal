@@ -32,6 +32,7 @@ public class WSRPConsumerImpl extends WSRPConsumerBaseImpl {
 	public WSRPConsumerImpl() {
 	}
 
+	@Override
 	public RegistrationContext getRegistrationContext() {
 		if (_registrationContext != null) {
 			return _registrationContext;
@@ -49,6 +50,7 @@ public class WSRPConsumerImpl extends WSRPConsumerBaseImpl {
 		return _registrationContext;
 	}
 
+	@Override
 	public UnicodeProperties getRegistrationProperties() {
 		if (_registrationProperties != null) {
 			return _registrationProperties;
@@ -68,6 +70,7 @@ public class WSRPConsumerImpl extends WSRPConsumerBaseImpl {
 		return _registrationProperties;
 	}
 
+	@Override
 	public void setRegistrationContext(
 		RegistrationContext registrationContext) {
 
@@ -77,6 +80,7 @@ public class WSRPConsumerImpl extends WSRPConsumerBaseImpl {
 		_registrationContext = registrationContext;
 	}
 
+	@Override
 	public void setRegistrationProperties(
 		UnicodeProperties registrationProperties) {
 

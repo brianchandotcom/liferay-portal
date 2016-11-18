@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ManagementBarSidenavTogglerButtonTag
 	extends ManagementBarButtonTag {
 
+	@Override
 	public void setHref(String href) {
 		_href = href;
 	}

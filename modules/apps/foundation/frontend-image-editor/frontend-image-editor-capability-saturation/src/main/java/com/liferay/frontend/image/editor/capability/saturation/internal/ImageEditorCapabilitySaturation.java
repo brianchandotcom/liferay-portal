@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ImageEditorCapabilitySaturation extends BaseImageEditorCapability {
 
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -49,10 +50,12 @@ public class ImageEditorCapabilitySaturation extends BaseImageEditorCapability {
 		return ResourceBundleUtil.getString(resourceBundle, "saturation");
 	}
 
+	@Override
 	public String getName() {
 		return "saturation";
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

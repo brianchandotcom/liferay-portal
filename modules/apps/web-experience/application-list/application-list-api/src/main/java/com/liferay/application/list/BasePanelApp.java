@@ -128,6 +128,7 @@ public abstract class BasePanelApp implements PanelApp {
 		}
 	}
 
+	@Override
 	public void setGroupProvider(GroupProvider groupProvider) {
 		this.groupProvider = groupProvider;
 	}

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.model.User;
  */
 public abstract class BaseMailbox implements Mailbox {
 
+	@Override
 	public Account addAccount(
 			String address, String personalName, String protocol,
 			String incomingHostName, int incomingPort, boolean incomingSecure,
@@ -60,26 +61,32 @@ public abstract class BaseMailbox implements Mailbox {
 		}
 	}
 
+	@Override
 	public void deleteAccount() throws PortalException {
 		AccountLocalServiceUtil.deleteAccount(account.getAccountId());
 	}
 
+	@Override
 	public Account getAccount() {
 		return account;
 	}
 
+	@Override
 	public User getUser() {
 		return user;
 	}
 
+	@Override
 	public void setAccount(Account account) {
 		this.account = account;
 	}
 
+	@Override
 	public void setUser(User user) {
 		this.user = user;
 	}
 
+	@Override
 	public Account updateAccount(
 			long accountId, String personalName, String password,
 			boolean savePassword, String signature, boolean useSignature,
@@ -99,6 +106,7 @@ public abstract class BaseMailbox implements Mailbox {
 			useSignature, folderPrefix, defaultSender);
 	}
 
+	@Override
 	public void updateFolders(
 			long inboxFolderId, long draftFolderId, long sentFolderId,
 			long trashFolderId)

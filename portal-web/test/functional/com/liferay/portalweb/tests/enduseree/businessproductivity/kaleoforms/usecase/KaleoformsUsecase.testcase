@@ -3443,14 +3443,19 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#editProcessDetails">
-			<var name="kfPendingForm" value="true" />
+		<execute macro="KaleoFormsAdmin#gotoProgressStep">
+			<var name="kfProgressName" value="Fields" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#next" />
+		<execute macro="KaleoFormsAdmin#editFieldSet">
+			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetNameEdit" value="${kfFieldSetName} Edit" />
+		</execute>
+
+		<execute macro="KaleoFormsAdmin#saveFieldSet" />
 
 		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
+			<var name="kfFieldSetName" value="${kfFieldSetName} Edit" />
 			<var name="kfPendingForm" value="true" />
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>

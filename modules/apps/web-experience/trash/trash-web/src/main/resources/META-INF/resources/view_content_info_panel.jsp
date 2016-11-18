@@ -35,8 +35,8 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 		<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 	</div>
 
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav">
+	<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
+		<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
 			<aui:nav-item label="details" selected="<%= true %>" />
 		</aui:nav>
 	</aui:nav-bar>

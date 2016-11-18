@@ -29,8 +29,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of 6.2.0
  */
+@Deprecated
 public class ExtAutoDeployer extends ExtDeployer implements AutoDeployer {
 
 	public ExtAutoDeployer() {

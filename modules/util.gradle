@@ -89,21 +89,41 @@ wrapper {
 	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
 
 	doLast {
-		ant.replace(file: new File(wrapperDir, "gradlew")) {
-			replacefilter token: '# Escape application args', value: '''\
+		File gradlewFile = new File(wrapperDir, "gradlew")
+
+		ant.replace(
+			failOnNoReplacements: true,
+			file: gradlewFile,
+			token: '# Escape application args',
+			value: '''\
 # Escape application args
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""'''
+		)
 
-			replacefilter token: 'org.gradle.wrapper.GradleWrapperMain "$@"', value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=$APP_HOME/modules/init.gradle" "$@"'
-		}
+		ant.replace(
+			failOnNoReplacements: true,
+			file: gradlewFile,
+			token: 'org.gradle.wrapper.GradleWrapperMain "$APP_ARGS"',
+			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=$APP_HOME/modules/init.gradle" "$APP_ARGS"'
+		)
 
-		ant.replace(file: new File(wrapperDir, "gradlew.bat")) {
-			replacefilter token: '@rem Setup the command line', value: '''\
+		File gradlewBatFile = new File(wrapperDir, "gradlew.bat")
+
+		ant.replace(
+			failOnNoReplacements: true,
+			file: gradlewBatFile,
+			token: '@rem Setup the command line',
+			value: '''\
 @rem Setup the command line
 set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% "-Dgradle.user.home=%APP_HOME%\\.gradle"'''
+		)
 
-			replacefilter token: 'org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%', value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=%APP_HOME%\\modules\\init.gradle" %CMD_LINE_ARGS%'
-		}
+		ant.replace(
+			failOnNoReplacements: true,
+			file: gradlewBatFile,
+			token: 'org.gradle.wrapper.GradleWrapperMain %CMD_LINE_ARGS%',
+			value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=%APP_HOME%\\modules\\init.gradle" %CMD_LINE_ARGS%'
+		)
 	}
 
 	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")

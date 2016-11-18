@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
@@ -40,6 +41,7 @@ import com.thoughtworks.qdox.model.annotation.AnnotationValue;
 import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
+import java.io.FilenameFilter;
 
 import java.net.MalformedURLException;
 import java.net.URI;

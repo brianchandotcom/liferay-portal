@@ -117,13 +117,16 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchToken" value="Organization" />
 		</execute>
 
-		<var name="key_orgName" value="${orgName}" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
+
+		<execute function="AssertElementPresent#assertVisible" locator1="Button#DONE" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -133,9 +136,11 @@
 
 		<execute function="Check" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="SelectFrameTop" />
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#DONE" value1="Done" />
+		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="Button#DONE" value1="Done" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

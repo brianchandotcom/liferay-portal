@@ -53,19 +53,19 @@ String redirect = ParamUtil.getString(request, "redirect");
 				</aui:fieldset>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="advanced-options">
-					<aui:input label="show-thumbnail" name="preferences--showThumbnail--" type="toggle-switch" value="<%= showThumbnail %>" />
+					<aui:input name="preferences--showThumbnail--" type="toggle-switch" value="<%= showThumbnail %>" />
 
 					<aui:input inlineField="<%= true %>" label="auto-play" name="preferences--autoplay--" type="toggle-switch" value="<%= autoplay %>" />
 
-					<aui:input inlineField="<%= true %>" label="loop" name="preferences--loop--" type="toggle-switch" value="<%= loop %>" />
+					<aui:input inlineField="<%= true %>" name="preferences--loop--" type="toggle-switch" value="<%= loop %>" />
 
-					<aui:input checked="<%= enableKeyboardControls %>" inlineField="<%= true %>" label="enable-keyboard-controls" name="preferences--enableKeyboardControls--" type="toggle-switch" value="<%= enableKeyboardControls %>" />
+					<aui:input inlineField="<%= true %>" name="preferences--enableKeyboardControls--" type="toggle-switch" value="<%= enableKeyboardControls %>" />
 
-					<aui:input inlineField="<%= true %>" label="annotations" name="preferences--annotations--" type="toggle-switch" value="<%= annotations %>" />
+					<aui:input inlineField="<%= true %>" name="preferences--annotations--" type="toggle-switch" value="<%= annotations %>" />
 
-					<aui:input inlineField="<%= true %>" label="closed-captioning" name="preferences--closedCaptioning--" type="toggle-switch" value="<%= closedCaptioning %>" />
+					<aui:input inlineField="<%= true %>" name="preferences--closedCaptioning--" type="toggle-switch" value="<%= closedCaptioning %>" />
 
-					<aui:input label="start-time" name="preferences--startTime--" value="<%= startTime %>" />
+					<aui:input name="preferences--startTime--" value="<%= startTime %>" />
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

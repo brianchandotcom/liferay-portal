@@ -132,6 +132,40 @@ public class MissingOverrideCheck extends AbstractCheck {
 		return ancestorJavaClassTuples;
 	}
 
+	private URL[] _addJarFiles(URL[] urls, String dirName) {
+		File dirFile = new File(dirName);
+
+		if (!dirFile.exists()) {
+			return urls;
+		}
+
+		File[] files = dirFile.listFiles(
+			new FilenameFilter() {
+
+				@Override
+				public boolean accept(File dir, String name) {
+					if (name.endsWith(".jar")) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		for (File file : files) {
+			try {
+				URI uri = file.toURI();
+
+				urls = ArrayUtil.append(urls, uri.toURL());
+			}
+			catch (MalformedURLException murle) {
+			}
+		}
+
+		return urls;
+	}
+
 	private String _getClassName(String fileName) {
 		int pos = fileName.lastIndexOf('/');
 
@@ -171,27 +205,9 @@ public class MissingOverrideCheck extends AbstractCheck {
 		ThreadSafeClassLibrary threadSafeClassLibrary =
 			new ThreadSafeClassLibrary();
 
-		File sdkDistDir = new File(rootDir + "/tools/sdk/dist");
+		URL[] urls = _addJarFiles(new URL[0], rootDir + "/tools/sdk/dist");
 
-		if (sdkDistDir.exists()) {
-			File[] jarFiles = sdkDistDir.listFiles();
-
-			URL[] urls = new URL[jarFiles.length];
-
-			for (int i = 0; i < jarFiles.length; i++) {
-				try {
-					File jarFile = jarFiles[i];
-
-					URI uri = jarFile.toURI();
-
-					urls[i] = uri.toURL();
-				}
-				catch (MalformedURLException murle) {
-				}
-			}
-
-			threadSafeClassLibrary.addClassLoader(new URLClassLoader(urls));
-		}
+		threadSafeClassLibrary.addClassLoader(new URLClassLoader(urls));
 
 		_modulesJavaDocBuilder = new JavaDocBuilder(
 			new DefaultDocletTagFactory(), threadSafeClassLibrary);

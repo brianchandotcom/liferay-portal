@@ -114,8 +114,6 @@
 
 <#-- Util -->
 
-<#assign authTokenUtil = serviceLocator.findService("com.liferay.portal.kernel.security.auth.AuthTokenUtil") />
-
 <#function escape value="">
 	<#if value?is_string>
 		<#return htmlUtil.escape(value)>
@@ -180,7 +178,11 @@
 
 <#-- Token -->
 
-<#assign ddmAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet") />
+<#assign
+	authTokenUtil = serviceLocator.findService("com.liferay.portal.kernel.security.auth.AuthTokenUtil")
+
+	ddmAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), ddmPortletId)
+/>
 
 <#assign data = data + {
 	"ddmAuthToken": ddmAuthToken

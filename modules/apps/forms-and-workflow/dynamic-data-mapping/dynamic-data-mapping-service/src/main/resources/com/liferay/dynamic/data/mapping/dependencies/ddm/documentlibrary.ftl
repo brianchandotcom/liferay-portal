@@ -22,7 +22,7 @@
 	</#if>
 </#if>
 
-<#assign itemSelectorAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), "com_liferay_item_selector_web_portlet_ItemSelectorPortlet") />
+<#assign itemSelectorAuthToken = authTokenUtil.getToken(request, themeDisplay.getPlid(), itemSelectorPortletId) />
 
 <#assign data = data + {
 	"itemSelectorAuthToken": itemSelectorAuthToken

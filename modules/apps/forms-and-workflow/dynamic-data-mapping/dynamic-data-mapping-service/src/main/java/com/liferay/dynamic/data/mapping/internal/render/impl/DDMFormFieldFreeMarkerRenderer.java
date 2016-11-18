@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.render.impl;
 
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -486,7 +488,11 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				parentDDMFormField, locale);
 		}
 
+		freeMarkerContext.put(
+			"ddmPortletId", DDMPortletKeys.DYNAMIC_DATA_MAPPING);
 		freeMarkerContext.put("fieldStructure", fieldContext);
+		freeMarkerContext.put(
+			"itemSelectorPortletId", PortletKeys.ITEM_SELECTOR);
 		freeMarkerContext.put("namespace", namespace);
 		freeMarkerContext.put("parentFieldStructure", parentFieldContext);
 		freeMarkerContext.put("portletNamespace", portletNamespace);

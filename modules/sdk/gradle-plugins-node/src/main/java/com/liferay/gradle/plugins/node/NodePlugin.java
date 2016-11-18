@@ -66,7 +66,9 @@ public class NodePlugin implements Plugin<Project> {
 
 		_configureTasksDownloadNodeModule(project, npmInstallTask);
 
-		_configureTasksExecuteNode(project, nodeExtension);
+		_configureTasksExecuteNode(
+			project, nodeExtension, GradleUtil.isRunningInsideDaemon());
+
 		_configureTasksPublishNodeModule(project);
 
 		project.afterEvaluate(
@@ -273,7 +275,8 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskExecuteNode(
-		ExecuteNodeTask executeNodeTask, final NodeExtension nodeExtension) {
+		ExecuteNodeTask executeNodeTask, final NodeExtension nodeExtension,
+		boolean useGradleExec) {
 
 		executeNodeTask.setNodeDir(
 			new Callable<File>() {
@@ -288,6 +291,8 @@ public class NodePlugin implements Plugin<Project> {
 				}
 
 			});
+
+		executeNodeTask.setUseGradleExec(useGradleExec);
 	}
 
 	private void _configureTaskExecuteNpm(
@@ -364,7 +369,8 @@ public class NodePlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksExecuteNode(
-		Project project, final NodeExtension nodeExtension) {
+		Project project, final NodeExtension nodeExtension,
+		final boolean useGradleExec) {
 
 		TaskContainer taskContainer = project.getTasks();
 
@@ -374,7 +380,8 @@ public class NodePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(ExecuteNodeTask executeNodeTask) {
-					_configureTaskExecuteNode(executeNodeTask, nodeExtension);
+					_configureTaskExecuteNode(
+						executeNodeTask, nodeExtension, useGradleExec);
 				}
 
 			});

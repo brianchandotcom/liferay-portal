@@ -48,6 +48,7 @@ import org.gradle.api.initialization.Settings;
 import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Copy;
+import org.gradle.jvm.tasks.Jar;
 
 /**
  * @author Andrea Di Giorgi
@@ -76,7 +77,9 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		_configureLiferay(project, workspaceExtension);
 		_configureTaskRunPoshi(project);
 
-		_configureRootTaskDistBundle(project);
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		_configureRootTaskDistBundle(jar);
 	}
 
 	@Override
@@ -157,7 +160,9 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 		liferayExtension.setAppServerParentDir(workspaceExtension.getHomeDir());
 	}
 
-	private void _configureRootTaskDistBundle(final Project project) {
+	private void _configureRootTaskDistBundle(final Jar jar) {
+		Project project = jar.getProject();
+
 		Copy copy = (Copy)GradleUtil.getTask(
 			project.getRootProject(),
 			RootProjectConfigurator.DIST_BUNDLE_TASK_NAME);
@@ -168,10 +173,7 @@ public class ModulesProjectConfigurator extends BaseProjectConfigurator {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySourceSpec copySourceSpec) {
-					Task jarTask = GradleUtil.getTask(
-						project, JavaPlugin.JAR_TASK_NAME);
-
-					copySourceSpec.from(jarTask);
+					copySourceSpec.from(jar);
 				}
 
 			});

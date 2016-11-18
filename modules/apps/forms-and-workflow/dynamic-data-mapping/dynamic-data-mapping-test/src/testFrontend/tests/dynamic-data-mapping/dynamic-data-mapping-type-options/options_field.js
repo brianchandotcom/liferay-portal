@@ -1,38 +1,15 @@
 'use strict';
 
-var A = AUI();
-
-var createField = function(config) {
-	return new Liferay.DDM.Field.Options(
-		A.merge(
-			{
-				context: {
-					name: 'optionsField'
-				}
-			},
-			config || {}
-		)
-	).render(document.body);
-};
-
 var waitValueChange = function(callback) {
-	setTimeout(callback, A.ValueChange.POLL_INTERVAL);
+	setTimeout(callback, AUI().ValueChange.POLL_INTERVAL);
 };
 
 describe(
-	'DDM Field Options',
+	'Liferay.DDM.Field.Options',
 	function() {
-		afterEach(
-			function(done) {
-				this.optionsField.destroy();
-
-				done();
-			}
-		);
-
 		before(
 			function(done) {
-				A.use(
+				AUI().use(
 					'liferay-ddm-form-field-options',
 					function(A) {
 						Liferay.DDM.Renderer.FieldTypes.register(
@@ -56,128 +33,175 @@ describe(
 			}
 		);
 
-		it(
-			'should create another empty option once a value is typed in the last empty option',
-			function(done) {
-				var optionsField = this.optionsField = createField();
+		describe(
+			'.getValue',
+			function() {
 
-				var initialValue = optionsField.getValue();
+				it(
+					'should create a default option',
+					function(done) {
+						var optionsField = new Liferay.DDM.Field.Options(
+							{
+								allowEmptyOptions: false,
+								context: {
+									name: 'optionsField'
+								}
+							}
+						).render(document.body);
 
-				assert.equal(0, initialValue.length);
-
-				var lastOption = optionsField.getLastOption();
-
-				lastOption.focus();
-				lastOption.set('value', 'First Option');
-
-				waitValueChange(
-					function() {
 						assert.equal(1, optionsField.getValue().length);
+
+						optionsField.eachOption(
+							function(option, index) {
+								if (option !== optionsField.getLastOption()) {
+									assert.equal('Option', option.getValue());
+								}
+							}
+						);
 
 						done();
 					}
 				);
-			}
-		);
 
-		it(
-			'should keep values after re-rendering without changes',
-			function(done) {
-				var value = [
-					{
-						label: 'First Option',
-						value: 'FirstOption'
-					},
-					{
-						label: 'Second Option',
-						value: 'Second,Option'
-					},
-					{
-						label: 'Third Option',
-						value: 'ThirdOption'
-					}
-				];
+				it(
+					'should create another empty option once a value is typed in the last empty option',
+					function(done) {
 
-				var optionsField = this.optionsField = createField(
-					{
-						value: value
-					}
-				);
+						var optionsField = new Liferay.DDM.Field.Options(
+							{
+								context: {
+									name: 'optionsField'
+								}
+							}
+						).render(document.body);
 
-				assert.equal(3, optionsField.getValue().length);
+						var initialValue = optionsField.getValue();
 
-				optionsField.render();
+						assert.equal(1, initialValue.length);
 
-				assert.equal(3, optionsField.getValue().length);
+						var lastOption = optionsField.getLastOption();
 
-				var count = 0;
+						lastOption.focus();
+						lastOption.setValue('First Option');
 
-				optionsField.eachOption(
-					function(option, index) {
-						if (option !== optionsField.getLastOption()) {
-							assert.equal(value[index].label, option.getValue());
-						}
+						waitValueChange(
+							function() {
+								assert.equal(1, optionsField.getValue().length);
 
-						count++;
+								done();
+							}
+						);
 					}
 				);
 
-				assert.equal(4, count);
+				it(
+					'should keep values after re-rendering without changes',
+					function(done) {
+						var value = [
+							{
+								label: 'First Option',
+								value: 'FirstOption'
+							},
+							{
+								label: 'Second Option',
+								value: 'Second,Option'
+							},
+							{
+								label: 'Third Option',
+								value: 'ThirdOption'
+							}
+						];
 
-				done();
-			}
-		);
+						var optionsField = new Liferay.DDM.Field.Options(
+							{
+								allowEmptyOptions: false,
+								context: {
+									name: 'optionsField'
+								},
+								value: value
+							}
+						).render(document.body);
 
-		it(
-			'should keep values after re-rendering with changes',
-			function(done) {
-				var value = [
-					{
-						label: 'First Option',
-						value: 'FirstOption'
-					},
-					{
-						label: 'Second Option',
-						value: 'Second,Option'
-					},
-					{
-						label: 'Third Option',
-						value: 'ThirdOption'
-					}
-				];
+						optionsField.setValue(value);
 
-				var optionsField = this.optionsField = createField(
-					{
-						value: value
+						optionsField.render();
+
+						assert.equal(3, optionsField.getValue().length);
+
+						var count = 0;
+
+						optionsField.eachOption(
+							function(option, index) {
+								if (option !== optionsField.getLastOption()) {
+									assert.equal(value[index].label, option.getValue());
+								}
+
+								count++;
+							}
+						);
+
+						assert.equal(4, count);
+
+						done();
 					}
 				);
 
-				var newValue = A.clone(value);
+				it(
+					'should keep values after re-rendering with changes',
+					function(done) {
+						var value = [
+							{
+								label: 'First Option',
+								value: 'FirstOption'
+							},
+							{
+								label: 'Second Option',
+								value: 'Second,Option'
+							},
+							{
+								label: 'Third Option',
+								value: 'ThirdOption'
+							}
+						];
 
-				newValue.push(
-					{
-						label: 'Fourth Option',
-						value: 'FourthOption'
+						var optionsField = new Liferay.DDM.Field.Options(
+							{
+								allowEmptyOptions: false,
+								context: {
+									name: 'optionsField'
+								},
+								value: value
+							}
+						).render(document.body);
+
+						var newValue = AUI().clone(value);
+
+						newValue.push(
+							{
+								label: 'Fourth Option',
+								value: 'FourthOption'
+							}
+						);
+						optionsField.setValue(newValue);
+
+						var count = 0;
+
+						optionsField.eachOption(
+							function(option, index) {
+								if (index < newValue.length) {
+									assert.equal(newValue[index].label, option.getValue());
+									assert.equal(newValue[index].value, option.get('key'));
+								}
+
+								count++;
+							}
+						);
+
+						assert.equal(5, count, 'there should be one empty field at the end');
+
+						done();
 					}
 				);
-				optionsField.setValue(newValue);
-
-				var count = 0;
-
-				optionsField.eachOption(
-					function(option, index) {
-						if (index < newValue.length) {
-							assert.equal(newValue[index].label, option.getValue());
-							assert.equal(newValue[index].value, option.get('key'));
-						}
-
-						count++;
-					}
-				);
-
-				assert.equal(5, count, 'there should be one empty field at the end');
-
-				done();
 			}
 		);
 	}

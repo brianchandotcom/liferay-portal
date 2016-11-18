@@ -81,20 +81,17 @@ public class MissingOverrideCheck extends AbstractCheck {
 		String className = _getClassName(fileName);
 
 		JavaClass javaClass = javaDocBuilder.getClassByName(
-			_getPackagePath(detailAST) + "." + className);
+			_getPackagePath(detailAST) + "." + _getClassName(fileName));
 
-		List<Tuple> ancestorJavaClassTuples = new ArrayList<>();
-
-		ancestorJavaClassTuples = _addAncestorJavaClassTuples(
-			javaClass, ancestorJavaClassTuples);
+		List<Tuple> ancestorJavaClassTuples = _addAncestorJavaClassTuples(
+			javaClass, new ArrayList<Tuple>());
 
 		for (JavaMethod javaMethod : javaClass.getMethods()) {
-			if (!_hasAnnotation(javaMethod, "Override")) {
-				if (_isOverrideMethod(
-						javaClass, javaMethod, ancestorJavaClassTuples)) {
+			if (!_hasAnnotation(javaMethod, "Override") &&
+				_isOverrideMethod(
+					javaClass, javaMethod, ancestorJavaClassTuples)) {
 
-					log(javaMethod.getLineNumber(), MSG_MISSING_OVERRIDE);
-				}
+				log(javaMethod.getLineNumber(), MSG_MISSING_OVERRIDE);
 			}
 		}
 	}

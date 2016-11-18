@@ -94,7 +94,7 @@ wrapper {
 # Escape application args
 DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS \\\"-Dgradle.user.home=$APP_HOME/.gradle\\\""'''
 
-			replacefilter token: 'org.gradle.wrapper.GradleWrapperMain "$@"', value: 'org.gradle.wrapper.GradleWrapperMain "--init-script=$APP_HOME/modules/init.gradle" "$@"'
+			replacefilter token: 'exec "$JAVACMD" "$@"', value: 'exec "$JAVACMD" "--init-script=$APP_HOME/modules/init.gradle" "$@"'
 		}
 
 		ant.replace(file: new File(wrapperDir, "gradlew.bat")) {

@@ -1317,8 +1317,6 @@ public class CalendarPortlet extends MVCPortlet {
 			}
 		}
 
-		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
-
 		String name = StringUtil.merge(
 			CustomSQLUtil.keywords(keywords), StringPool.BLANK);
 
@@ -1329,6 +1327,8 @@ public class CalendarPortlet extends MVCPortlet {
 		List<Group> groups = _groupLocalService.search(
 			themeDisplay.getCompanyId(), name, null, params, true, 0,
 			SearchContainer.DEFAULT_DELTA);
+
+		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
 
 		for (Group group : groups) {
 			addCalendar(

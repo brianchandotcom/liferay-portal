@@ -17,8 +17,8 @@ package com.liferay.calendar.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
+import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.service.CalendarServiceUtil;
-import com.liferay.calendar.util.CalendarResourceUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -30,7 +30,13 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -117,9 +123,27 @@ public class CalendarServiceTest {
 	protected Calendar getGroupCalendar(Group group) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
+		long groupId = group.getGroupId();
+
 		CalendarResource calendarResource =
-			CalendarResourceUtil.getGroupCalendarResource(
-				group.getGroupId(), serviceContext);
+			CalendarResourceLocalServiceUtil.fetchCalendarResource(
+				PortalUtil.getClassNameId(Group.class), groupId);
+
+		if (calendarResource == null) {
+			long userId = group.getCreatorUserId();
+
+			Map<Locale, String> nameMap = new HashMap<>();
+
+			nameMap.put(LocaleUtil.getDefault(), group.getDescriptiveName());
+
+			Map<Locale, String> descriptionMap = new HashMap<>();
+
+			calendarResource =
+				CalendarResourceLocalServiceUtil.addCalendarResource(
+					userId, groupId, PortalUtil.getClassNameId(Group.class),
+					groupId, null, null, nameMap, descriptionMap, true,
+					serviceContext);
+		}
 
 		return calendarResource.getDefaultCalendar();
 	}

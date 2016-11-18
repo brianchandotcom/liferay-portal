@@ -94,6 +94,9 @@ public class CalendarResourceUtil {
 		if (calendarResource != null) {
 			return calendarResource;
 		}
+		else if (group.hasStagingGroup()) {
+			return null;
+		}
 
 		long userId = group.getCreatorUserId();
 

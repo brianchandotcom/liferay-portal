@@ -44,6 +44,26 @@ import java.util.Properties;
 @DoPrivileged
 public class PatcherImpl implements Patcher {
 
+	public PatcherImpl() {
+		_properties = _getProperties(PATCHER_PROPERTIES);
+
+		_fixedIssueKeys = StringUtil.split(
+			_properties.getProperty(PROPERTY_FIXED_ISSUES));
+
+		_installedPatchNames = StringUtil.split(
+			_properties.getProperty(PROPERTY_INSTALLED_PATCHES));
+
+		_patchDirectory = getPatchDirectory();
+
+		_patchLevels = StringUtil.split(
+			_properties.getProperty(PROPERTY_PATCH_LEVELS));
+
+		_patchingToolVersion = GetterUtil.getInteger(
+			_properties.get(PROPERTY_PATCHING_TOOL_VERSION));
+
+		_patchingToolVersionDisplayName = getPatchingToolVersionDisplayName();
+	}
+
 	@Override
 	public boolean applyPatch(File patchFile) {
 		File patchDirectory = getPatchDirectory();
@@ -71,25 +91,12 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public String[] getFixedIssues() {
-		if (_fixedIssueKeys != null) {
-			return _fixedIssueKeys;
-		}
-
-		Properties properties = getProperties();
-
-		_fixedIssueKeys = StringUtil.split(
-			properties.getProperty(PROPERTY_FIXED_ISSUES));
-
 		return _fixedIssueKeys;
 	}
 
 	@Override
 	public String[] getInstalledPatches() {
-		if (_installedPatchNames != null) {
-			return _installedPatchNames;
-		}
-
-		return _getInstalledPatches(null);
+		return _installedPatchNames;
 	}
 
 	@Override
@@ -98,38 +105,29 @@ public class PatcherImpl implements Patcher {
 			return _patchDirectory;
 		}
 
-		Properties properties = getProperties();
-
-		String patchDirectoryName = properties.getProperty(
+		String patchDirectoryName = _properties.getProperty(
 			PROPERTY_PATCH_DIRECTORY);
 
-		if (Validator.isNotNull(patchDirectoryName)) {
-			_patchDirectory = new File(patchDirectoryName);
+		File patchDirectory = null;
 
-			if (!_patchDirectory.exists()) {
+		if (Validator.isNotNull(patchDirectoryName)) {
+			patchDirectory = new File(patchDirectoryName);
+
+			if (!patchDirectory.exists()) {
 				_log.error("The patch directory does not exist");
 			}
 		}
 		else {
-			_log.error("The patch directory is not specified");
+			if (_log.isDebugEnabled()) {
+				_log.debug("The patch directory is not specified");
+			}
 		}
 
-		return _patchDirectory;
+		return patchDirectory;
 	}
 
 	@Override
 	public int getPatchingToolVersion() {
-		if (_patchingToolVersion != 0) {
-			return _patchingToolVersion;
-		}
-
-		Properties properties = getProperties();
-
-		if (properties.containsKey(PROPERTY_PATCHING_TOOL_VERSION)) {
-			_patchingToolVersion = GetterUtil.getInteger(
-				properties.getProperty(PROPERTY_PATCHING_TOOL_VERSION));
-		}
-
 		return _patchingToolVersion;
 	}
 
@@ -139,47 +137,26 @@ public class PatcherImpl implements Patcher {
 			return _patchingToolVersionDisplayName;
 		}
 
-		Properties properties = getProperties();
+		String patchingToolVersionDisplayName =
+			"1.0." + getPatchingToolVersion();
 
-		if (properties.containsKey(
-				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
+		if (_properties.containsKey(
+			PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME)) {
 
-			_patchingToolVersionDisplayName = properties.getProperty(
+			patchingToolVersionDisplayName = _properties.getProperty(
 				PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME);
 		}
-		else {
-			_patchingToolVersionDisplayName = "1.0." + getPatchingToolVersion();
-		}
 
-		return _patchingToolVersionDisplayName;
+		return patchingToolVersionDisplayName;
 	}
 
 	@Override
 	public String[] getPatchLevels() {
-		if (_patchLevels != null) {
-			return _patchLevels;
-		}
-
-		Properties properties = getProperties();
-
-		_patchLevels = StringUtil.split(
-			properties.getProperty(PROPERTY_PATCH_LEVELS));
-
 		return _patchLevels;
 	}
 
 	@Override
 	public Properties getProperties() {
-		if (_properties != null) {
-			return _properties;
-		}
-
-		_properties = _getProperties(PATCHER_PROPERTIES);
-
-		if (!_properties.isEmpty()) {
-			_configured = true;
-		}
-
 		return _properties;
 	}
 
@@ -190,7 +167,7 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public boolean isConfigured() {
-		return _configured;
+		return !_properties.isEmpty();
 	}
 
 	@Override
@@ -246,10 +223,10 @@ public class PatcherImpl implements Patcher {
 			properties = getProperties();
 		}
 
-		_installedPatchNames = StringUtil.split(
+		String[] installedPatchNames = StringUtil.split(
 			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
 
-		return _installedPatchNames;
+		return installedPatchNames;
 	}
 
 	private Properties _getProperties(String fileName) {
@@ -291,14 +268,13 @@ public class PatcherImpl implements Patcher {
 
 	private static final Log _log = LogFactoryUtil.getLog(PatcherImpl.class);
 
-	private boolean _configured;
-	private String[] _fixedIssueKeys;
+	private final String[] _fixedIssueKeys;
 	private boolean _inconsistentPatchLevels;
-	private String[] _installedPatchNames;
-	private File _patchDirectory;
-	private int _patchingToolVersion;
-	private String _patchingToolVersionDisplayName;
-	private String[] _patchLevels;
-	private Properties _properties;
+	private final String[] _installedPatchNames;
+	private final File _patchDirectory;
+	private final int _patchingToolVersion;
+	private final String _patchingToolVersionDisplayName;
+	private final String[] _patchLevels;
+	private final Properties _properties;
 
 }

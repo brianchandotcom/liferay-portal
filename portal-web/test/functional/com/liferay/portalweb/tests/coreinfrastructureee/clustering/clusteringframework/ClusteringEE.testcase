@@ -4,6 +4,7 @@
 	<property name="custom.properties" value="dl.store.impl=com.liferay.portal.store.db.DBStore" />
 	<property name="portal.release" value="true" />
 	<property name="remote.elasticsearch.enabled" value="true" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Clustering" />
 
 	<set-up>

@@ -1,6 +1,7 @@
 <definition component-name="portal-legacy">
 	<property name="portal.release" value="true" />
 	<property name="portlet.plugins.includes" value="wsrp-portlet" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="WSRP" />
 
 	<set-up>

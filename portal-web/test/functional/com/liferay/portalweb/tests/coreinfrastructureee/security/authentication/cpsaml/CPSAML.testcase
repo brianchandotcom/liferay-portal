@@ -3,6 +3,7 @@
 	<property name="app.server.bundles.size" value="1" />
 	<property name="databases.size" value="1" />
 	<property name="portlet.plugins.includes" value="saml-portlet" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="SAML" />
 
 	<!-- All test cases are currently configured to run Liferay SAML as the IdP and Liferay SAML as the SP. This will change as more SAML implmentations are added to this test suite (ie Shibboleth) -->

@@ -429,6 +429,10 @@
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this page?" />
 	</command>
 
+	<command name="disableMDRSamesAsPublicPages">
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#MOBILE_DEVICE_RULES_CHECKBOX" />
+	</command>
+
 	<command name="disallowEditViaSiteAdminEditCP">
 		<var name="key_page" value="${pageName}" />
 
@@ -613,6 +617,51 @@
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="selectMDRDeviceFamily">
+		<var name="key_deviceFamilyName" value="${deviceFamilyName}" />
+		<var name="key_modalTitle" value="Actions" />
+
+		<execute function="AssertClick" locator1="Button#MOBILE_DEVICE_RULES_SELECT" value1="Select" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="AssertClick" locator1="MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK" value1="${deviceFamilyName}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<if>
+			<isset var='actionName' />
+			<then>
+				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+				<execute function="Click" locator1="MobileDevice#DEVICE_FAMILY_MENULIST_ACTIONS" />
+
+				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+				<execute function="Click" locator1="MobileDevice#ADD_ACTION_BUTTON" />
+
+				<execute function="Type" locator1="TextInput#NAME" value1="${actionName}" />
+
+				<if>
+					<equals arg1="${actionType}" arg2="Redirect to URL" />
+					<then>
+						<var name="key_actionType" value="${actionType}" />
+
+						<execute function="Click" locator1="MobileDevice#ADD_ACTION_TYPE_OPTION" />
+
+						<execute function="Type" locator1="TextInput#URL" value1="https://www.google.com/" />
+					</then>
+				</if>
+
+				<execute macro="Button#clickSave" />
+
+				<execute function="SelectFrame" value1="relative=top" />
+
+				<execute function="Click" locator1="Button#CLOSE_MODAL" />
+			</then>
+		</if>
 	</command>
 
 	<command name="selectSitePagesVariationName">

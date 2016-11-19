@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DEVICE_FAMILY_TABLE_NAME_LINK</td>
+	<td>//tr[contains(.,'${key_deviceFamilyName}')]/td[contains(@class,'name')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEVICE_FAMILY_MENULIST_ACTIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage Actions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -78,6 +88,17 @@
 <tr>
 	<td>ADD_CLASSIFICATION_RULE_TABLE_NAME</td>
 	<td>//tr/td[contains(.,'${key_classificationName}')]</td>
+	<td></td>
+</tr>
+<!--ADD_ACTION-->
+<tr>
+	<td>ADD_ACTION_BUTTON</td>
+	<td>//div[contains(@class,'button')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ACTION_TYPE_OPTION</td>
+	<td>//option[contains(.,'${key_actionType}')]</td>
 	<td></td>
 </tr>
 </tbody>

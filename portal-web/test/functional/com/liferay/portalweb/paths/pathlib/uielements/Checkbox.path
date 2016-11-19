@@ -264,6 +264,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOBILE_DEVICE_RULES_CHECKBOX</td>
+	<td>//label[contains(.,'mobile device rules')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEVER_EXPIRE</td>
 	<td>//input[contains(@name,'neverExpire') and @type='checkbox']</td>
 	<td></td>

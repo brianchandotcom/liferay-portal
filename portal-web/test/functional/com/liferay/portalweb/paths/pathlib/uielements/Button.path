@@ -439,6 +439,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MOBILE_DEVICE_RULES_SELECT</td>
+	<td>//div[@class='btn-toolbar']/button[contains(.,'Select')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MORE_MESSAGES</td>
 	<td>//a[contains(@class,'btn') and contains(.,'More Messages')]</td>
 	<td></td>

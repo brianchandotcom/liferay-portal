@@ -1,0 +1,62 @@
+<definition component-name="portal-mobile-device-rules">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Mobile Device Rules" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="PortalInstances#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AssertRulesFunctionality" priority="5">
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Mobile Device Families" />
+		</execute>
+
+		<execute macro="MobileDevice#addCP" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="MDF Test Page" />
+		</execute>
+
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="MDF Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoTab">
+			<var name="tab" value="Advanced" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Mobile Device Rules" />
+		</execute>
+
+		<execute macro="Page#disableMDRSamesAsPublicPages" />
+
+		<execute macro="Page#selectMDRDeviceFamily">
+			<var name="deviceFamilyName" value="Device Family Name" />
+			<var name="actionName" value="Test Action" />
+			<var name="actionType" value="Redirect to URL" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+</definition>

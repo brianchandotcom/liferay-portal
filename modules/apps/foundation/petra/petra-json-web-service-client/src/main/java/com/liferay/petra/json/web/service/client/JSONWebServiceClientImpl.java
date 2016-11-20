@@ -534,29 +534,34 @@ public class JSONWebServiceClientImpl implements JSONWebServiceClient {
 
 			StatusLine statusLine = httpResponse.getStatusLine();
 
-			if (statusLine.getStatusCode() ==
-					HttpServletResponse.SC_UNAUTHORIZED) {
+			int statusCode = statusLine.getStatusCode();
 
+			if (statusCode == HttpServletResponse.SC_UNAUTHORIZED) {
 				throw new JSONWebServiceTransportException.
 					AuthenticationFailure(
 						"Not authorized to access JSON web service");
 			}
-			else if (statusLine.getStatusCode() >= 400) {
-				String message = null;
+			else if (statusCode == HttpServletResponse.SC_OK) {
+				return EntityUtils.toString(
+					httpResponse.getEntity(), StandardCharsets.UTF_8);
+			}
+			else if ((statusCode == HttpServletResponse.SC_BAD_REQUEST) ||
+					 (statusCode == HttpServletResponse.SC_FORBIDDEN) ||
+					 (statusCode == HttpServletResponse.SC_NOT_ACCEPTABLE) ||
+					 (statusCode == HttpServletResponse.SC_NOT_FOUND)) {
 
 				if (httpResponse.getEntity() != null) {
-					HttpEntity httpEntity = httpResponse.getEntity();
+					if (_logger.isDebugEnabled()) {
+						_logger.debug("Server returned status " + statusCode);
+					}
 
-					message = EntityUtils.toString(
-						httpEntity, StandardCharsets.UTF_8);
+					return EntityUtils.toString(
+						httpResponse.getEntity(), StandardCharsets.UTF_8);
 				}
-
-				throw new JSONWebServiceTransportException.CommunicationFailure(
-					message, statusLine.getStatusCode());
 			}
 
-			return EntityUtils.toString(
-				httpResponse.getEntity(), StandardCharsets.UTF_8);
+			throw new JSONWebServiceTransportException.CommunicationFailure(
+				"Server returned status " + statusCode, statusCode);
 		}
 		catch (IOException ioe) {
 			throw new JSONWebServiceTransportException.CommunicationFailure(

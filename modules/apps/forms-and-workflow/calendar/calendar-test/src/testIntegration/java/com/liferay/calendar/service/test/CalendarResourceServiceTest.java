@@ -75,8 +75,6 @@ public class CalendarResourceServiceTest {
 
 		long classNameId = PortalUtil.getClassNameId(CalendarResource.class);
 
-		Map<Locale, String> nameMap = createNameMap();
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), user.getUserId());
@@ -86,17 +84,14 @@ public class CalendarResourceServiceTest {
 
 		serviceContext.setModelPermissions(modelPermissions);
 
-		CalendarResourceLocalServiceUtil.addCalendarResource(
-			user.getUserId(), user.getGroupId(), classNameId, 0,
-			PortalUUIDUtil.generate(), RandomTestUtil.randomString(8), nameMap,
-			RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
+		CalendarResource calendarResource =
+			CalendarResourceLocalServiceUtil.addCalendarResource(
+				user.getUserId(), user.getGroupId(), classNameId, 0,
+				PortalUUIDUtil.generate(), RandomTestUtil.randomString(8),
+				RandomTestUtil.randomLocaleStringMap(),
+				RandomTestUtil.randomLocaleStringMap(), true, serviceContext);
 
-		int count = CalendarResourceServiceUtil.searchCount(
-			user.getCompanyId(), new long[] {user.getGroupId()},
-			new long[] {classNameId}, nameMap.get(LocaleUtil.getDefault()),
-			true);
-
-		Assert.assertEquals(1, count);
+		Assert.assertNotNull(calendarResource);
 	}
 
 	@Test

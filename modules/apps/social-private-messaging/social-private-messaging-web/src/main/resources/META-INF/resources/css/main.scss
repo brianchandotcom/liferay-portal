@@ -41,21 +41,9 @@
 		word-break: break-word;
 	}
 
-	.thread .message-container {
-		margin: 0 10px;
-	}
-
 	.message-container .portlet-msg-error {
 		display: block;
 		margin-bottom: 10px;
-	}
-
-	.message-attachments {
-		clear: both;
-
-		li {
-			list-style: none;
-		}
 	}
 
 	.message-body, .message-subject, .message-to {
@@ -65,12 +53,6 @@
 
 	.message-body {
 		min-height: 100px;
-	}
-
-	.author-sender, .name {
-		float: left;
-		font-weight: bold;
-		padding-right: 0.3em;
 	}
 
 	.message-link {
@@ -90,10 +72,6 @@
 			color: #333;
 			word-break: break-word;
 		}
-	}
-
-	.private-messaging-container .results-header, .taglib-user-display.display-style-2 .user-details, .taglib-user-display.display-style-2 .user-name {
-		display: none;
 	}
 
 	.table {
@@ -116,7 +94,7 @@
 
 	/* ---------- Results ---------- */
 
-	.messages .list-group-item.unread{
+	.messages .list-group-item.unread {
 		background: #F0F5F7;
 	}
 
@@ -136,23 +114,8 @@
 	/* ---------- Thread ---------- */
 
 	.thread {
-		.taglib-header {
-			border-top: 1px solid #C8C9CA;
-			margin-top: 0;
-			padding: 0 10px;
-
-			.header-title {
-				display: inline;
-
-				span {
-					white-space: normal;
-					word-break: break-all;
-				}
-			}
-		}
-
 		.body {
-			margin-top: 5px;
+			margin-top: 20px;
 
 			.image-thumbnail {
 				float: left;
@@ -167,25 +130,12 @@
 			}
 		}
 
-		.thread-info {
-			padding: 0 10px 10px;
-		}
+		.message-attachments {
+			margin-top: 20px;
 
-		tr td {
-			background-color: transparent;
-			border-bottom: 1px solid #CFCFCF;
-
-			&.last, &.only {
-				border-bottom-width: 0;
+			li {
+				list-style: none;
 			}
-		}
-
-		.lfr-search-container, .message-body-container-content {
-			margin: 0 10px;
-		}
-
-		.name {
-			font-weight: bold;
 		}
 
 		.back-button {

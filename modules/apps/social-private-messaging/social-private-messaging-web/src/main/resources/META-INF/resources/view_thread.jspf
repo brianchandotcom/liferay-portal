@@ -66,15 +66,17 @@ UserThreadLocalServiceUtil.markUserThreadAsRead(user.getUserId(), mbThreadId);
 				Group curUserGroup = curUser.getGroup();
 				%>
 
-				<a class="profile-link" href="<%= curUserGroup.getDisplayURL(themeDisplay, false) %>"><%= HtmlUtil.escape(curUser.getFullName()) %></a>
+				<aui:a href="<%= curUserGroup.getDisplayURL(themeDisplay, false) %>">
+					<%= HtmlUtil.escape(curUser.getFullName()) %>
+				</aui:a>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
 					<c:when test="<%= curUser.isActive() %>">
-						<span class="profile-link"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
+						<span><%= HtmlUtil.escape(curUser.getFullName()) %></span>
 					</c:when>
 					<c:otherwise>
-						<span class="line-through profile-link"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
+						<span class="line-through"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
 
 						<liferay-ui:icon
 							image="../aui/question-sign"
@@ -86,7 +88,7 @@ UserThreadLocalServiceUtil.markUserThreadAsRead(user.getUserId(), mbThreadId);
 		</c:choose>
 
 		<c:if test="<%= i != (users.size() - 1) %>">
-			,
+			<%= StringPool.COMMA %>
 		</c:if>
 
 	<%
@@ -102,10 +104,12 @@ UserThreadLocalServiceUtil.markUserThreadAsRead(user.getUserId(), mbThreadId);
 			Group userGroup = user.getGroup();
 			%>
 
-			<a class="profile-link" href="<%= userGroup.getDisplayURL(themeDisplay, false) %>"><liferay-ui:message key="you" /></a>
+			<aui:a href="<%= userGroup.getDisplayURL(themeDisplay, false) %>">
+				<liferay-ui:message key="you" />
+			</aui:a>
 		</c:when>
 		<c:otherwise>
-			<span class="profile-link"><liferay-ui:message key="you" /></span>
+			<span><liferay-ui:message key="you" /></span>
 		</c:otherwise>
 	</c:choose>
 </div>
@@ -131,12 +135,14 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 		keyProperty="messageId"
 		modelVar="mbMessage"
 	>
-		<liferay-ui:search-container-column-text valign="top">
-			<liferay-ui:user-display
-				displayStyle="2"
+		<liferay-ui:search-container-column-text>
+			<liferay-ui:user-portrait
+				cssClass="user-icon-lg"
 				userId="<%= mbMessage.getUserId() %>"
-				userName="<%= mbMessage.getUserName() %>"
 			/>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 
 			<%
 			User curUser = UserLocalServiceUtil.fetchUser(mbMessage.getUserId());
@@ -149,123 +155,124 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 			}
 			%>
 
-			<div class="message">
+			<h4 title="<%= HtmlUtil.escapeAttribute(curUser.getFullName()) %>">
 				<c:choose>
 					<c:when test="<%= LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED && curUser.isActive() %>">
-						<span class="name">
-							<a class="profile-link" href="<%= curUser.getGroup().getDisplayURL(themeDisplay, false) %>"><%= HtmlUtil.escape(curUser.getFullName()) %></a>
-						</span>
+						<aui:a href="<%= curUser.getGroup().getDisplayURL(themeDisplay, false) %>">
+							<%= HtmlUtil.escape(curUser.getFullName()) %>
+						</aui:a>
 					</c:when>
 					<c:otherwise>
 						<c:choose>
 							<c:when test="<%= curUser.isActive() %>">
-								<span class="name">
-									<span class="profile-link"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
-								</span>
+								<span><%= HtmlUtil.escape(curUser.getFullName()) %></span>
 							</c:when>
 							<c:otherwise>
-								<span class="name">
-									<span class="line-through profile-link"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
+								<span class="line-through"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
 
-									<liferay-ui:icon
-										image="../aui/question-sign"
-										message="deleted-user"
-									/>
-								</span>
+								<liferay-ui:icon
+									image="../aui/question-sign"
+									message="deleted-user"
+								/>
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
 				</c:choose>
+			</h4>
 
-				<span class="date">
-					<%= dateFormatDateTime.format(mbMessage.getCreateDate()) %>
-				</span>
+			<span class="h5 text-default">
+				<%= dateFormatDateTime.format(mbMessage.getCreateDate()) %>
+			</span>
 
-				<div class="body">
+			<div class="body">
+
+				<%
+				String body = _convertToHyperlink(mbMessage.getBody());
+				%>
+
+				<%= StringUtil.replace(body, "\n", "<br />") %>
+
+				<c:if test="<%= mbMessage.getAttachmentsFileEntriesCount() > 0 %>">
+					<hr />
+
+					<div class="row">
 
 					<%
-					String body = _convertToHyperlink(mbMessage.getBody());
+					List<FileEntry> attachmentsFileEntries = mbMessage.getAttachmentsFileEntries();
+
+					for (FileEntry fileEntry : attachmentsFileEntries) {
+						if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 					%>
 
-					<%= StringUtil.replace(body, "\n", "<br />") %>
+							<liferay-portlet:resourceURL id="getMessageAttachment" var="imageURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+								<portlet:param name="messageId" value="<%= String.valueOf(mbMessage.getMessageId()) %>" />
+								<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
+							</liferay-portlet:resourceURL>
 
-					<c:if test="<%= mbMessage.getAttachmentsFileEntriesCount() > 0 %>">
-						<hr />
+							<div class="image-thumbnail">
+								<a href="<%= imageURL %>" title="<%= fileEntry.getTitle() %>">
+									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" class="img-thumbnail" src="<%= imageURL %>" />
+								</a>
+							</div>
+
+					<%
+						}
+					}
+					%>
+
+					</div>
+
+				</c:if>
+			</div>
+
+			<c:if test="<%= mbMessage.getAttachmentsFileEntriesCount() > 0 %>">
+				<div class="message-attachments">
+					<h5><liferay-ui:message key="attachments" />:</h5>
+
+					<ul class="list-group">
 
 						<%
 						List<FileEntry> attachmentsFileEntries = mbMessage.getAttachmentsFileEntries();
 
 						for (FileEntry fileEntry : attachmentsFileEntries) {
-							if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
 						%>
 
-								<liferay-portlet:resourceURL id="getMessageAttachment" var="imageURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+							<li>
+
+								<%
+								StringBundler sb = new StringBundler(5);
+
+								sb.append(fileEntry.getTitle());
+								sb.append(StringPool.SPACE);
+								sb.append(StringPool.OPEN_PARENTHESIS);
+								sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+								sb.append(StringPool.CLOSE_PARENTHESIS);
+								%>
+
+								<liferay-portlet:resourceURL id="getMessageAttachment" var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 									<portlet:param name="messageId" value="<%= String.valueOf(mbMessage.getMessageId()) %>" />
 									<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
 								</liferay-portlet:resourceURL>
 
-								<div class="image-thumbnail">
-									<a href="<%= imageURL %>" title="<%= fileEntry.getTitle() %>">
-										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" src="<%= imageURL %>" />
-									</a>
-								</div>
+								<liferay-ui:icon
+									iconCssClass="<%= DLUtil.getFileIconCssClass(fileEntry.getExtension()) %>"
+									label="<%= true %>"
+									message="<%= sb.toString() %>"
+									url="<%= attachmentURL %>"
+								/>
+							</li>
 
 						<%
-							}
 						}
 						%>
 
-					</c:if>
+					</ul>
 				</div>
-
-				<c:if test="<%= mbMessage.getAttachmentsFileEntriesCount() > 0 %>">
-					<div class="message-attachments">
-						<h3><liferay-ui:message key="attachments" />:</h3>
-
-						<ul>
-
-							<%
-							List<FileEntry> attachmentsFileEntries = mbMessage.getAttachmentsFileEntries();
-
-							for (FileEntry fileEntry : attachmentsFileEntries) {
-							%>
-
-								<li class="message-attachment">
-
-									<%
-									StringBundler sb = new StringBundler(4);
-
-									sb.append(fileEntry.getTitle());
-									sb.append(StringPool.OPEN_PARENTHESIS);
-									sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-									sb.append(StringPool.CLOSE_PARENTHESIS);
-									%>
-
-									<liferay-portlet:resourceURL id="getMessageAttachment" var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-										<portlet:param name="messageId" value="<%= String.valueOf(mbMessage.getMessageId()) %>" />
-										<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-									</liferay-portlet:resourceURL>
-
-									<liferay-ui:icon
-										iconCssClass="<%= DLUtil.getFileIconCssClass(fileEntry.getExtension()) %>"
-										label="<%= true %>"
-										message="<%= sb.toString() %>"
-										url="<%= attachmentURL %>"
-									/>
-								</li>
-
-							<%
-							}
-							%>
-
-						</ul>
-					</div>
-				</c:if>
-			</div>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 </liferay-ui:search-container>
 
 <div class="message-container" id="<portlet:namespace />messageContainer"></div>
@@ -327,9 +334,7 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 						},
 						on: {
 							complete: function(event, id, obj) {
-								var responseText = obj.responseText;
-
-								var responseData = JSON.parse(responseText);
+								var responseData = JSON.parse(obj.responseText);
 
 								if (responseData.success) {
 									document.location.href = '<liferay-portlet:renderURL windowState="<%= WindowState.NORMAL.toString() %>"><portlet:param name="mbThreadId" value="<%= String.valueOf(mbThreadId) %>" /></liferay-portlet:renderURL>';

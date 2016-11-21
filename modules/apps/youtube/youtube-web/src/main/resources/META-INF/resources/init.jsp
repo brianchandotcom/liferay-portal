@@ -28,10 +28,10 @@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.youtube.web.internal.display.context.YoutubeDisplayContext" %>
+page import="com.liferay.youtube.web.internal.display.context.YouTubeDisplayContext" %>
 
 <portlet:defineObjects />
 
 <%
-YoutubeDisplayContext youtubeDisplayContext = new YoutubeDisplayContext(request, portletPreferences);
+YouTubeDisplayContext youTubeDisplayContext = new YouTubeDisplayContext(request, portletPreferences);
 %>

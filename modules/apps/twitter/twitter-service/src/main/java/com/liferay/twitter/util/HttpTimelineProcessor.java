@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
  */
 public class HttpTimelineProcessor implements TimelineProcessor {
 
+	@Override
 	public JSONArray getUserTimelineJSONArray(
 		String twitterScreenName, long sinceId) {
 

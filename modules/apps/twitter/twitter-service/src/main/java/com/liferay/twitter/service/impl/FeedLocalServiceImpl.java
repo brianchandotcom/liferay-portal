@@ -48,18 +48,21 @@ import java.util.List;
  */
 public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 
+	@Override
 	public void updateFeed(long userId) throws PortalException {
 		User user = userLocalService.getUserById(userId);
 
 		updateFeed(user);
 	}
 
+	@Override
 	public void updateFeeds() {
 		for (long companyId : PortalUtil.getCompanyIds()) {
 			updateFeeds(companyId);
 		}
 	}
 
+	@Override
 	public void updateFeeds(long companyId) {
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<>();
 

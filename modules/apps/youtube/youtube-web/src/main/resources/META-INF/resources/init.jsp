@@ -25,33 +25,13 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringBundler" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.youtube.web.internal.display.context.YouTubeDisplayContext" %>
 
 <portlet:defineObjects />
 
 <%
-boolean annotations = GetterUtil.getBoolean(portletPreferences.getValue("annotations", "true"));
-boolean autoplay = GetterUtil.getBoolean(portletPreferences.getValue("autoplay", "false"));
-boolean closedCaptioning = GetterUtil.getBoolean(portletPreferences.getValue("closedCaptioning", "false"));
-boolean enableKeyboardControls = GetterUtil.getBoolean(portletPreferences.getValue("enableKeyboardControls", "true"));
-String height = portletPreferences.getValue("height", "360");
-boolean loop = GetterUtil.getBoolean(portletPreferences.getValue("loop", "false"));
-boolean showThumbnail = GetterUtil.getBoolean(portletPreferences.getValue("showThumbnail", "false"));
-String startTime = portletPreferences.getValue("startTime", StringPool.BLANK);
-String url = portletPreferences.getValue("url", StringPool.BLANK);
-String width = portletPreferences.getValue("width", "480");
-
-String id = url.replaceAll("^.*?v=([a-zA-Z0-9_-]+).*$", "$1");
-
-String presetSize = width + "x" + height;
-
-String embedURL = HttpUtil.getProtocol(request) + "://www.youtube.com/embed/";
-String imageURL = HttpUtil.getProtocol(request) + "://img.youtube.com/vi/" + id + "/0.jpg";
-String watchURL = HttpUtil.getProtocol(request) + "://www.youtube.com/watch?v=";
+YouTubeDisplayContext youTubeDisplayContext = new YouTubeDisplayContext(request, portletPreferences);
 %>

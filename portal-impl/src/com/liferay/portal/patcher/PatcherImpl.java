@@ -109,11 +109,18 @@ public class PatcherImpl implements Patcher {
 
 			if (!patchDirectory.exists()) {
 				_log.error("The patch directory does not exist");
+
+				_configured = false;
+			}
+			else {
+				_configured = true;
 			}
 		}
 		else {
 			if (_log.isDebugEnabled()) {
 				_log.debug("The patch directory is not specified");
+
+				_configured = false;
 			}
 		}
 
@@ -161,7 +168,9 @@ public class PatcherImpl implements Patcher {
 
 	@Override
 	public boolean isConfigured() {
-		return !_properties.isEmpty();
+		getPatchDirectory();
+
+		return _configured;
 	}
 
 	@Override
@@ -262,6 +271,7 @@ public class PatcherImpl implements Patcher {
 
 	private static final Log _log = LogFactoryUtil.getLog(PatcherImpl.class);
 
+	private boolean _configured;
 	private final String[] _fixedIssueKeys;
 	private boolean _inconsistentPatchLevels;
 	private final String[] _installedPatchNames;

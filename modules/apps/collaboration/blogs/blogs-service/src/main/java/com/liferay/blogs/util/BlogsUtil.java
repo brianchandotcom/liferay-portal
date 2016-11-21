@@ -100,27 +100,27 @@ public class BlogsUtil {
 				themeDisplay.getLocale(),
 				"the-comment-of-the-user-who-updated-the-blog-entry"));
 		definitionTerms.put(
+			"[$BLOGS_ENTRY_URL$]",
+			LanguageUtil.get(themeDisplay.getLocale(), "the-blog-entry-url"));
+		definitionTerms.put(
 			"[$BLOGS_ENTRY_USER_ADDRESS$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
 				"the-email-address-of-the-user-who-added-the-blog-entry"));
+		definitionTerms.put(
+			"[$BLOGS_ENTRY_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-user-who-added-the-blog-entry"));
 		definitionTerms.put(
 			"[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
 				"the-portrait-url-of-the-user-who-added-the-blog-entry"));
 		definitionTerms.put(
-			"[$BLOGS_ENTRY_USER_NAME$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(), "the-user-who-added-the-blog-entry"));
-		definitionTerms.put(
 			"[$BLOGS_ENTRY_USER_URL$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
 				"the-public-site-url-of-the-user-who-added-the-blog-entry"));
-		definitionTerms.put(
-			"[$BLOGS_ENTRY_URL$]",
-			LanguageUtil.get(themeDisplay.getLocale(), "the-blog-entry-url"));
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
 			LanguageUtil.get(

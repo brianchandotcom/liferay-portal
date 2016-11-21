@@ -161,14 +161,14 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
-		_actionFunctionNameMap.put("show", "setVisible");
 		_actionFunctionNameMap.put("enable", "setEnabled");
-		_actionFunctionNameMap.put("require", "setRequired");
 		_actionFunctionNameMap.put("invalidate", "setInvalid");
+		_actionFunctionNameMap.put("require", "setRequired");
+		_actionFunctionNameMap.put("show", "setVisible");
 
 		_operatorFunctionNameMap.put("contains", "contains");
-		_operatorFunctionNameMap.put("not-contains", "contains");
 		_operatorFunctionNameMap.put("equals-to", "equals");
+		_operatorFunctionNameMap.put("not-contains", "contains");
 		_operatorFunctionNameMap.put("not-equals-to", "equals");
 
 		_operatorMap.put("greater-than", ">");

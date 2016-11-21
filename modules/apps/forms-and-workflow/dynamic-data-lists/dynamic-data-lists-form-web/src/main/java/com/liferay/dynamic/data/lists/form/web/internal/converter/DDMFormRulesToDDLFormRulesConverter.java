@@ -157,10 +157,10 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			new HashMap<>();
 
 		static {
-			_functionToActionMap.put("setVisible", "show");
 			_functionToActionMap.put("setEnabled", "enable");
-			_functionToActionMap.put("setRequired", "require");
 			_functionToActionMap.put("setInvalid", "invalidate");
+			_functionToActionMap.put("setRequired", "require");
+			_functionToActionMap.put("setVisible", "show");
 		}
 
 	}
@@ -287,10 +287,10 @@ public class DDMFormRulesToDDLFormRulesConverter {
 		private static final Map<String, String> _operatorMap = new HashMap<>();
 
 		static {
-			_operatorMap.put(">", "greater-than");
-			_operatorMap.put(">=", "greater-than-equals");
 			_operatorMap.put("<", "less-than");
 			_operatorMap.put("<=", "less-than-equals");
+			_operatorMap.put(">", "greater-than");
+			_operatorMap.put(">=", "greater-than-equals");
 
 			_functionNameOperatorMap.put("contains", "contains");
 			_functionNameOperatorMap.put("equals", "equals-to");

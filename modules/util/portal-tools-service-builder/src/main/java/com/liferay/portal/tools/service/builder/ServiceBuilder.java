@@ -2566,8 +2566,8 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = _getContext();
 
-		context.put("entity", entity);
 		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
+		context.put("entity", entity);
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -2704,8 +2704,8 @@ public class ServiceBuilder {
 
 		Map<String, Object> context = _getContext();
 
-		context.put("entity", entity);
 		context.put("cacheFields", _getCacheFields(modelImplJavaClass));
+		context.put("entity", entity);
 
 		context = _putDeprecatedKeys(context, modelImplJavaClass);
 
@@ -3042,8 +3042,8 @@ public class ServiceBuilder {
 
 		context.put("entity", entity);
 		context.put("methods", methods);
-		context.put("sessionTypeName", _getSessionTypeName(sessionType));
 		context.put("referenceList", _mergeReferenceList(entity));
+		context.put("sessionTypeName", _getSessionTypeName(sessionType));
 
 		context = _putDeprecatedKeys(context, javaClass);
 
@@ -3222,8 +3222,8 @@ public class ServiceBuilder {
 		Map<String, Object> context = _getContext();
 
 		context.put("entity", entity);
-		context.put("methods", _getMethods(javaClass));
 		context.put("hasHttpMethods", _hasHttpMethods(javaClass));
+		context.put("methods", _getMethods(javaClass));
 
 		context = _putDeprecatedKeys(context, javaClass);
 

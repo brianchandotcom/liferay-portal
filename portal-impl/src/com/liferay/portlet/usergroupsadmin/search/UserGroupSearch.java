@@ -51,8 +51,8 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 		headerNames.add("name");
 		headerNames.add("description");
 
-		orderableHeaders.put("name", "name");
 		orderableHeaders.put("description", "description");
+		orderableHeaders.put("name", "name");
 	}
 
 	public UserGroupSearch(

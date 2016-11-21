@@ -130,70 +130,70 @@ public class UpgradePortletPreferences
 	static {
 		_adminDefaultPreferencesMap = new HashMap<>();
 
-		_adminDefaultPreferencesMap.put("kbArticlesOrderByCol", "priority");
-		_adminDefaultPreferencesMap.put("kbArticlesOrderByType", "desc");
-		_adminDefaultPreferencesMap.put("enableKBArticleDescription", "false");
 		_adminDefaultPreferencesMap.put(
 			"enableKBArticleAssetCategories", "false");
 		_adminDefaultPreferencesMap.put("enableKBArticleAssetTags", "true");
-		_adminDefaultPreferencesMap.put("enableKBArticleRatings", "false");
-		_adminDefaultPreferencesMap.put("showKBArticleAssetEntries", "true");
+		_adminDefaultPreferencesMap.put("enableKBArticleDescription", "false");
 		_adminDefaultPreferencesMap.put("enableKBArticleKBComments", "true");
-		_adminDefaultPreferencesMap.put("showKBArticleKBComments", "true");
+		_adminDefaultPreferencesMap.put("enableKBArticleRatings", "false");
 		_adminDefaultPreferencesMap.put(
 			"enableKBArticleViewCountIncrement", "true");
 		_adminDefaultPreferencesMap.put("enableKBStructureKBComments", "true");
-		_adminDefaultPreferencesMap.put("showKBStructureKBComments", "true");
 		_adminDefaultPreferencesMap.put("enableKBTemplateKBComments", "true");
+		_adminDefaultPreferencesMap.put("kbArticlesOrderByCol", "priority");
+		_adminDefaultPreferencesMap.put("kbArticlesOrderByType", "desc");
+		_adminDefaultPreferencesMap.put("showKBArticleAssetEntries", "true");
+		_adminDefaultPreferencesMap.put("showKBArticleKBComments", "true");
+		_adminDefaultPreferencesMap.put("showKBStructureKBComments", "true");
 		_adminDefaultPreferencesMap.put("showKBTemplateKBComments", "true");
 
 		_articleDefaultPreferencesMap = new HashMap<>();
 
-		_articleDefaultPreferencesMap.put("resourcePrimKey", "0");
-		_articleDefaultPreferencesMap.put(
-			"enableKBArticleDescription", "false");
 		_articleDefaultPreferencesMap.put(
 			"enableKBArticleAssetCategories", "false");
 		_articleDefaultPreferencesMap.put("enableKBArticleAssetTags", "true");
-		_articleDefaultPreferencesMap.put("enableKBArticleRatings", "false");
-		_articleDefaultPreferencesMap.put("showKBArticleAssetEntries", "true");
+		_articleDefaultPreferencesMap.put(
+			"enableKBArticleDescription", "false");
 		_articleDefaultPreferencesMap.put("enableKBArticleKBComments", "true");
-		_articleDefaultPreferencesMap.put("showKBArticleKBComments", "true");
+		_articleDefaultPreferencesMap.put("enableKBArticleRatings", "false");
 		_articleDefaultPreferencesMap.put(
 			"enableKBArticleViewCountIncrement", "true");
+		_articleDefaultPreferencesMap.put("resourcePrimKey", "0");
 		_articleDefaultPreferencesMap.put("rssDelta", "20");
 		_articleDefaultPreferencesMap.put("rssDisplayStyle", "full-content");
 		_articleDefaultPreferencesMap.put("rssFormat", "atom10");
+		_articleDefaultPreferencesMap.put("showKBArticleAssetEntries", "true");
+		_articleDefaultPreferencesMap.put("showKBArticleKBComments", "true");
 
 		_displayDefaultPreferencesMap = new HashMap<>();
 
-		_displayDefaultPreferencesMap.put("kbArticlesOrderByCol", "priority");
-		_displayDefaultPreferencesMap.put("kbArticlesOrderByType", "desc");
-		_displayDefaultPreferencesMap.put(
-			"showKBArticlePriorityColumn", "true");
-		_displayDefaultPreferencesMap.put("showKBArticleAuthorColumn", "true");
-		_displayDefaultPreferencesMap.put(
-			"showKBArticleCreateDateColumn", "true");
-		_displayDefaultPreferencesMap.put(
-			"showKBArticleModifiedDateColumn", "true");
-		_displayDefaultPreferencesMap.put("showKBArticleStatusColumn", "true");
-		_displayDefaultPreferencesMap.put("showKBArticleViewsColumn", "true");
-		_displayDefaultPreferencesMap.put(
-			"enableKBArticleDescription", "false");
 		_displayDefaultPreferencesMap.put(
 			"enableKBArticleAssetCategories", "false");
 		_displayDefaultPreferencesMap.put("enableKBArticleAssetTags", "true");
-		_displayDefaultPreferencesMap.put("enableKBArticleRatings", "false");
-		_displayDefaultPreferencesMap.put("showKBArticleAssetEntries", "true");
+		_displayDefaultPreferencesMap.put(
+			"enableKBArticleDescription", "false");
 		_displayDefaultPreferencesMap.put("enableKBArticleKBComments", "true");
-		_displayDefaultPreferencesMap.put("showKBArticleKBComments", "true");
+		_displayDefaultPreferencesMap.put("enableKBArticleRatings", "false");
 		_displayDefaultPreferencesMap.put(
 			"enableKBArticleViewCountIncrement", "true");
 		_displayDefaultPreferencesMap.put("enableKBTemplateKBComments", "true");
-		_displayDefaultPreferencesMap.put("showKBTemplateKBComments", "true");
+		_displayDefaultPreferencesMap.put("kbArticlesOrderByCol", "priority");
+		_displayDefaultPreferencesMap.put("kbArticlesOrderByType", "desc");
 		_displayDefaultPreferencesMap.put("rssDelta", "20");
 		_displayDefaultPreferencesMap.put("rssDisplayStyle", "full-content");
 		_displayDefaultPreferencesMap.put("rssFormat", "atom10");
+		_displayDefaultPreferencesMap.put("showKBArticleAssetEntries", "true");
+		_displayDefaultPreferencesMap.put("showKBArticleAuthorColumn", "true");
+		_displayDefaultPreferencesMap.put(
+			"showKBArticleCreateDateColumn", "true");
+		_displayDefaultPreferencesMap.put("showKBArticleKBComments", "true");
+		_displayDefaultPreferencesMap.put(
+			"showKBArticleModifiedDateColumn", "true");
+		_displayDefaultPreferencesMap.put(
+			"showKBArticlePriorityColumn", "true");
+		_displayDefaultPreferencesMap.put("showKBArticleStatusColumn", "true");
+		_displayDefaultPreferencesMap.put("showKBArticleViewsColumn", "true");
+		_displayDefaultPreferencesMap.put("showKBTemplateKBComments", "true");
 
 		_oldAdminPreferenceNamesMap = new HashMap<>();
 
@@ -202,42 +202,42 @@ public class UpgradePortletPreferences
 		_oldAdminPreferenceNamesMap.put(
 			"articlesOrderByType", "kbArticlesOrderByType");
 		_oldAdminPreferenceNamesMap.put(
-			"enableArticleDescription", "enableKBArticleDescription");
-		_oldAdminPreferenceNamesMap.put(
 			"enableArticleAssetCategories", "enableKBArticleAssetCategories");
 		_oldAdminPreferenceNamesMap.put(
 			"enableArticleAssetTags", "enableKBArticleAssetTags");
 		_oldAdminPreferenceNamesMap.put(
-			"enableArticleRatings", "enableKBArticleRatings");
-		_oldAdminPreferenceNamesMap.put(
 			"enableArticleComments", "enableKBArticleKBComments");
 		_oldAdminPreferenceNamesMap.put(
-			"showArticleComments", "showKBArticleKBComments");
+			"enableArticleDescription", "enableKBArticleDescription");
+		_oldAdminPreferenceNamesMap.put(
+			"enableArticleRatings", "enableKBArticleRatings");
 		_oldAdminPreferenceNamesMap.put(
 			"enableArticleViewCountIncrement",
 			"enableKBArticleViewCountIncrement");
 		_oldAdminPreferenceNamesMap.put(
 			"enableTemplateComments", "enableKBTemplateKBComments");
 		_oldAdminPreferenceNamesMap.put(
+			"showArticleComments", "showKBArticleKBComments");
+		_oldAdminPreferenceNamesMap.put(
 			"showTemplateComments", "showKBTemplateKBComments");
 
 		_oldArticlePreferenceNamesMap = new HashMap<>();
 
 		_oldArticlePreferenceNamesMap.put(
-			"enableArticleDescription", "enableKBArticleDescription");
-		_oldArticlePreferenceNamesMap.put(
 			"enableArticleAssetCategories", "enableKBArticleAssetCategories");
 		_oldArticlePreferenceNamesMap.put(
 			"enableArticleAssetTags", "enableKBArticleAssetTags");
 		_oldArticlePreferenceNamesMap.put(
-			"enableArticleRatings", "enableKBArticleRatings");
-		_oldArticlePreferenceNamesMap.put(
 			"enableArticleComments", "enableKBArticleKBComments");
 		_oldArticlePreferenceNamesMap.put(
-			"showArticleComments", "showKBArticleKBComments");
+			"enableArticleDescription", "enableKBArticleDescription");
+		_oldArticlePreferenceNamesMap.put(
+			"enableArticleRatings", "enableKBArticleRatings");
 		_oldArticlePreferenceNamesMap.put(
 			"enableArticleViewCountIncrement",
 			"enableKBArticleViewCountIncrement");
+		_oldArticlePreferenceNamesMap.put(
+			"showArticleComments", "showKBArticleKBComments");
 
 		_oldDisplayPreferenceNamesMap = new HashMap<>();
 
@@ -246,22 +246,22 @@ public class UpgradePortletPreferences
 		_oldDisplayPreferenceNamesMap.put(
 			"articlesOrderByType", "kbArticlesOrderByType");
 		_oldDisplayPreferenceNamesMap.put(
-			"enableArticleDescription", "enableKBArticleDescription");
-		_oldDisplayPreferenceNamesMap.put(
 			"enableArticleAssetCategories", "enableKBArticleAssetCategories");
 		_oldDisplayPreferenceNamesMap.put(
 			"enableArticleAssetTags", "enableKBArticleAssetTags");
 		_oldDisplayPreferenceNamesMap.put(
-			"enableArticleRatings", "enableKBArticleRatings");
-		_oldDisplayPreferenceNamesMap.put(
 			"enableArticleComments", "enableKBArticleKBComments");
 		_oldDisplayPreferenceNamesMap.put(
-			"showArticleComments", "showKBArticleKBComments");
+			"enableArticleDescription", "enableKBArticleDescription");
+		_oldDisplayPreferenceNamesMap.put(
+			"enableArticleRatings", "enableKBArticleRatings");
 		_oldDisplayPreferenceNamesMap.put(
 			"enableArticleViewCountIncrement",
 			"enableKBArticleViewCountIncrement");
 		_oldDisplayPreferenceNamesMap.put(
 			"enableTemplateComments", "enableKBTemplateKBComments");
+		_oldDisplayPreferenceNamesMap.put(
+			"showArticleComments", "showKBArticleKBComments");
 		_oldDisplayPreferenceNamesMap.put(
 			"showTemplateComments", "showKBTemplateKBComments");
 	}

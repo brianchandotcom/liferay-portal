@@ -50,8 +50,8 @@ public class PasswordPolicySearch extends SearchContainer<PasswordPolicy> {
 		headerNames.add("name");
 		headerNames.add("description");
 
-		orderableHeaders.put("name", "name");
 		orderableHeaders.put("description", "description");
+		orderableHeaders.put("name", "name");
 	}
 
 	public PasswordPolicySearch(

@@ -54,9 +54,9 @@ public class EntrySearch extends SearchContainer<TrashEntry> {
 		headerNames.add("removed-by");
 
 		orderableHeaders.put("name", "name");
-		orderableHeaders.put("type", "type");
-		orderableHeaders.put("removed-date", "removed-date");
 		orderableHeaders.put("removed-by", "removed-by");
+		orderableHeaders.put("removed-date", "removed-date");
+		orderableHeaders.put("type", "type");
 	}
 
 	public EntrySearch(PortletRequest portletRequest, PortletURL iteratorURL) {

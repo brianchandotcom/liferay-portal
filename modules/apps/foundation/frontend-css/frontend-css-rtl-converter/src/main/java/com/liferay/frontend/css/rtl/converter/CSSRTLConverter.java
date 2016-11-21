@@ -484,16 +484,16 @@ public class CSSRTLConverter {
 		Pattern.compile("\\.yui3-resize-handle-inner-(tr|tl|br|bl)");
 
 	static {
-		_replacementIcons.put("\"\\f053\"", "\"\\f054\"");
-		_replacementIcons.put("\"\\f054\"", "\"\\f053\"");
-		_replacementIcons.put("\"\\f060\"", "\"\\f061\"");
-		_replacementIcons.put("\"\\f061\"", "\"\\f060\"");
 		_replacementIcons.put("\"\\f0a4\"", "\"\\f0a5\"");
 		_replacementIcons.put("\"\\f0a5\"", "\"\\f0a4\"");
 		_replacementIcons.put("\"\\f0a8\"", "\"\\f0a9\"");
 		_replacementIcons.put("\"\\f0a9\"", "\"\\f0a8\"");
 		_replacementIcons.put("\"\\f0d9\"", "\"\\f0da\"");
 		_replacementIcons.put("\"\\f0da\"", "\"\\f0d9\"");
+		_replacementIcons.put("\"\\f053\"", "\"\\f054\"");
+		_replacementIcons.put("\"\\f054\"", "\"\\f053\"");
+		_replacementIcons.put("\"\\f060\"", "\"\\f061\"");
+		_replacementIcons.put("\"\\f061\"", "\"\\f060\"");
 		_replacementIcons.put("\"\\f100\"", "\"\\f101\"");
 		_replacementIcons.put("\"\\f101\"", "\"\\f100\"");
 		_replacementIcons.put("\"\\f104\"", "\"\\f105\"");
@@ -504,11 +504,11 @@ public class CSSRTLConverter {
 		_replacementIcons.put("\"\\f178\"", "\"\\f177\"");
 
 		_yui3ReplacementCursors.put("e-resize", "w-resize");
-		_yui3ReplacementCursors.put("w-resize", "e-resize");
 		_yui3ReplacementCursors.put("ne-resize", "nw-resize");
 		_yui3ReplacementCursors.put("nw-resize", "ne-resize");
 		_yui3ReplacementCursors.put("se-resize", "sw-resize");
 		_yui3ReplacementCursors.put("sw-resize", "se-resize");
+		_yui3ReplacementCursors.put("w-resize", "e-resize");
 	}
 
 	private final CSSWriter _cssWriter;

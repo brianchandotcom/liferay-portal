@@ -41,8 +41,11 @@
 
 	<command name="deleteCP">
 		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
 		<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -112,8 +115,11 @@
 			<condition function="IsElementPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
 			<then>
 				<execute function="Click" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_ACTIONS" />
+
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>

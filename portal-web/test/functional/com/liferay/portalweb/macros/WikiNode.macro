@@ -60,7 +60,9 @@
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
+
 		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${wikiNodeNameEdit}" />
@@ -84,7 +86,9 @@
 			<condition function="IsElementPresent" locator1="Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2" />
 			<then>
 				<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_GENERIC_DROPDOWN_2" />
+
 				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
@@ -100,6 +104,7 @@
 
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_NUMBER_OF_PAGES" value1="${numberOfWikiPages}" />
+
 		<execute function="AssertClick" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
 
 		<execute macro="SiteAdmin#viewPortletTitle">

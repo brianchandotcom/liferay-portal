@@ -74,6 +74,7 @@
 
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_NAME_FIELD" value1="${formAlias}" />
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_FORM_ID_FIELD" value1="${formId}" />
+
 		<execute function="Select" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_CUSTOM_FORM_TRACKING_ACTION_SELECT" value1="${formTrackingActionSelect}" />
 	</command>
 
@@ -137,6 +138,7 @@
 
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_ALIAS_FIELD" value1="${youtubeAlias}" />
 		<execute function="Type" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_VIDEO_ID_FIELD" value1="${youtubeVideoId}" />
+
 		<execute function="Select" locator1="EditCampaign#CAMPAIGN_TRACKING_ACTIONS_YOUTUBE_VIDEOS_TRACKING_ACTION_SELECT" value1="${youtubeTrackingActionSelect}" />
 	</command>
 

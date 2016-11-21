@@ -6,8 +6,11 @@
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 				<execute function="Check" locator1="SpamModeration#WIKI_PAGE_TABLE_CHECKBOX" />
+
 				<execute function="AssertClickNoError" locator1="SpamModeration#WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
+
 				<execute function="Confirm" value1="Are you sure you want to mark the selected pages not spam?" />
+
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</if>
@@ -20,8 +23,11 @@
 				<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 				<execute function="Check" locator1="SpamModeration#WIKI_PAGE_TABLE_CHECKBOX" />
+
 				<execute function="AssertClickNoError" locator1="SpamModeration#WIKIS_SPAM_BUTTON" value1="Spam" />
+
 				<execute function="Confirm" value1="Are you sure you want to mark the selected pages as spam?" />
+
 				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 			</then>
 		</if>

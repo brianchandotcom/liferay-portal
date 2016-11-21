@@ -7,6 +7,7 @@
 		</for>
 
 		<execute function="Click" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -60,9 +61,13 @@
 		<var name="key_wikiNodeName" value="Main" />
 
 		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
+
 		<execute function="AssertClick" locator1="MenuItem#UNSUBSCRIBE" value1="Unsubscribe" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="Click" locator1="Wiki#NODE_TABLE_ACTIONS_DROPDOWN" />
+
 		<execute function="AssertTextEquals" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
 	</command>
 

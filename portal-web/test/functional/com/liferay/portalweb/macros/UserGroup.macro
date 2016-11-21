@@ -106,6 +106,7 @@
 		<execute function="Click" locator1="Button#SUBMIT" />
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
@@ -227,6 +228,7 @@
 
 	<command name="expandRootCP">
 		<execute function="Click" locator1="SitePages#PAGE_TREE_ROOT_ARROW" />
+
 		<execute function="AssertElementPresent#assertElementPresent" locator1="SitePages#PAGE_TREE_PAGE_EDIT_COG" />
 
 		<if>
@@ -255,6 +257,7 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_PAGES" value1="Manage Pages" />
 	</command>
 
@@ -268,6 +271,7 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
@@ -285,11 +289,15 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
+
 		<execute function="Click" locator1="Button#SUBMIT" />
+
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="UG1 UserGroup1 Name1" />
+
 		<execute function="Click" locator1="Button#SUBMIT" />
+
 		<execute function="AssertTextNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
@@ -308,8 +316,11 @@
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
 			<then>
 				<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
+
 				<execute function="ClickNoError" locator1="Icon#DELETE" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 				<execute macro="Alert#viewSuccessMessage" />
 				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No user groups were found." />
 			</then>
@@ -364,8 +375,11 @@
 		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="UserGroupsEditUserGroup#PUBLIC_PAGES_OPEN_PAGES" value1="Open Pages" />
+
 		<execute function="SelectWindow" locator1="home - ${userGroupName} - ${siteName}" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${userGroupName}" />

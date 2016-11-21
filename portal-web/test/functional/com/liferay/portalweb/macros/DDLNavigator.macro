@@ -75,6 +75,7 @@
 		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 	</command>
 

@@ -20,6 +20,7 @@
 		</if>
 
 		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="a0a822b80b2b" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -34,6 +35,7 @@
 		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="" />
 		<execute function="Type" locator1="Akismet#REPORTABLE_TIME_FIELD" value1="30" />
 		<execute function="Type" locator1="Akismet#CHECK_THRESHOLD_FIELD" value1="50" />
+
 		<execute macro="Button#clickSave" />
 	</command>
 </definition>

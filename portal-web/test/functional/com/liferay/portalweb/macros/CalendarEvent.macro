@@ -337,7 +337,9 @@
 						<condition function="IsElementPresent" locator1="Comments#ADD_COMMENT_LINK" />
 						<then>
 							<execute function="AssertClick" locator1="Comments#ADD_COMMENT_LINK" value1="Add Comment" />
+
 							<execute function="MakeVisible" locator1="Comments#COMMENT_FIELD" />
+
 							<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${eventComment}" />
 						</then>
 						<else>
@@ -812,6 +814,7 @@
 							<condition function="IsElementNotPresent" locator1="xpath=(//input[contains(@value,'Repeating')])" />
 							<then>
 								<execute function="Pause" value1="1000" />
+
 								<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
@@ -819,9 +822,11 @@
 							</then>
 							<else>
 								<execute function="Pause" value1="1000" />
+
 								<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
+
 								<execute function="Pause" value1="10000" />
 							</else>
 						</if>

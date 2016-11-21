@@ -3,6 +3,7 @@
 		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+
 		<execute function="Click" locator1="Button#ADD_ENTRY" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
@@ -39,6 +40,7 @@
 		<var name="displayDate" value="${displayDateHour}:${displayDateMinuteFuture} ${displayDateAMPM}" />
 
 		<execute function="Type" locator1="TextInput#DISPLAY_DATE_TIME" value1="${displayDate}" />
+
 		<execute macro="Button#clickSave" />
 	</command>
 
@@ -46,6 +48,7 @@
 		<execute function="Click" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" />
 
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+
 		<execute function="AssertClick" locator1="Button#ADD_ENTRY" value1="Add Entry" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />

@@ -1,10 +1,15 @@
 <definition>
 	<command name="addPG">
 		<execute function="AssertTextEquals" locator1="QuickNote#NOTE_CONTENT" value1="Click to edit me..." />
+
 		<execute function="MouseOver" locator1="QuickNote#NOTE_CONTENT" />
+
 		<execute function="Click" locator1="QuickNote#NOTE_CONTENT_EDITABLE" />
+
 		<execute function="Type" locator1="QuickNote#NOTE_CONTENT_TEXTAREA" value1="${noteContent}" />
+
 		<execute function="Click" locator1="QuickNote#OK_BUTTON" />
+
 		<execute function="AssertTextEquals" locator1="QuickNote#NOTE_CONTENT" value1="${noteContent}" />
 	</command>
 </definition>

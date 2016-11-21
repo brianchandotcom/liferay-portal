@@ -70,7 +70,9 @@
 			<isset var="source" />
 			<then>
 				<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
+
 				<execute function="Type" locator1="CKEditor#BODY_FIELD_SOURCE_ON" value1="${threadBody}" />
+
 				<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
 
 				<if>
@@ -79,6 +81,7 @@
 						<var name="key_fontSize" value="${fontSize}" />
 
 						<execute function="AssertClick" locator1="CKEditor#TOOLBAR_SIZE_BUTTON" value1="Size" />
+
 						<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_DROPDOWN" value1="${key_fontSize}" />
 					</then>
 				</if>
@@ -95,7 +98,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute macro="Panel#expandPanel">
@@ -113,7 +115,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute macro="Panel#expandPanel">
@@ -135,7 +136,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute macro="Panel#expandPanel">
@@ -157,7 +157,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute macro="Panel#expandPanel">
@@ -173,7 +172,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute macro="Panel#expandPanel">
@@ -189,7 +187,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
@@ -239,7 +236,6 @@
 		<execute function="AssertClick" locator1="Button#POST_NEW_THREAD" value1="Post New Thread" />
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
-
 		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${threadBody}" />
 
 		<execute function="Click" locator1="Button#SUBMIT_FOR_PUBLICATION" />
@@ -255,6 +251,7 @@
 		<var name="key_userName" value="${userName}" />
 
 		<execute function="AssertClick" locator1="MessageBoardsThread#MESSAGE_BAN_THIS_USER" value1="Ban This User" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -503,7 +500,6 @@
 
 				<execute function="AssertElementPresent" locator1="MessageBoardsMoveThread#CATEGORY_FIELD" />
 				<execute function="Check" locator1="Checkbox#ADD_EXPLANATION_POST" />
-
 				<execute function="Type" locator1="TextInput#SUBJECT" value1="${explanationSubject}" />
 				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${explanationBody}" />
 			</then>

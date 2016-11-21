@@ -25,6 +25,7 @@
 		</execute>
 
 		<execute function="Select" locator1="RelatedassetsConfiguration#FILTER_SELECT" value1="Categories" />
+
 		<execute function="Click" locator1="Button#SELECT_CATEGORIES" />
 
 		<execute function="SelectFrameTop" />
@@ -32,13 +33,17 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="Click" locator1="RelatedassetsConfiguration#CATEGORIES_WINDOW_CATEGORY_CHECKBOX" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 
 		<execute function="SelectFrameTop" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute function="AssertTextEquals" locator1="RelatedassetsConfiguration#CATEGORY" value1="${categoryName}" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrameTop" />

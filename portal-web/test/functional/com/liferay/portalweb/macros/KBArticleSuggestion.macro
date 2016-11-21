@@ -1,8 +1,11 @@
 <definition>
 	<command name="addPG">
 		<execute function="Click" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" />
+
 		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" value1="${kbSuggestionBody}" />
+
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 

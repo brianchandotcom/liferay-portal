@@ -31,27 +31,40 @@
 
 	<command name="downloadApp">
 		<execute function="SelectFrame" locator1="Store#MARKETPLACE_IFRAME" />
+
 		<execute function="Type" locator1="Store#SEARCH_FIELD" value1="${appName}" />
+
 		<execute function="Click" locator1="Store#SEARCH_BUTTON" />
 
 		<var name="key_appName" value="${appName}" />
 
 		<execute function="Click" locator1="Store#APP_TITLE" />
+
 		<execute function="Click" locator1="Store#DETAILS_PURCHASE_BUTTON" />
+
 		<execute function="Click" locator1="Store#PURCHASE_SELECT_BUTTON" />
+
 		<execute function="Check" locator1="Store#PURCHASE_AGREE_CHECKBOX" />
+
 		<execute function="Click" locator1="Store#PURCHASE_BUTTON" />
+
 		<execute function="AssertTextEquals" locator1="Store#RECEIPT_TITLE" value1="Receipt" />
 		<execute function="AssertTextEquals" locator1="Store#RECEIPT_COMPLETED_THANK_YOU_MESSAGE" value1="Thank You!" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="installApp">
 		<execute function="SelectFrame" locator1="Store#MARKETPLACE_IFRAME" />
+
 		<execute function="Type" locator1="Store#PURCHASED_SEARCH_TITLE_FIELD" value1="${appName}" />
+
 		<execute function="Click" locator1="Store#PURCHASED_SEARCH_BUTTON" />
+
 		<execute function="Click" locator1="Store#PURCHASED_INSTALL_BUTTON" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="Pause" locator1="5000" />
 	</command>
 
@@ -60,6 +73,7 @@
 
 		<execute function="Type" locator1="Store#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="Type" locator1="Store#PASSWORD_FIELD" value1="${userEmailPassword}" />
+
 		<execute function="Click" locator1="Store#SIGN_IN_BUTTON" />
 
 		<if>

@@ -1,13 +1,16 @@
 <definition>
 	<command name="addURL">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+
 		<execute function="AssertTextEquals" locator1="Vimeo#URL_LABEL" value1="URL" />
 
 		<if>
 			<equals arg1="${enabledCheckbox}" arg2="true" />
 			<then>
 				<execute function="AssertClick" locator1="Vimeo#ADVANCED_OPTIONS" value1="Advanced Options" />
+
 				<execute function="Check" locator1="Checkbox#ENABLE_FULLSCREEN" />
+
 				<execute function="AssertChecked" locator1="Checkbox#ENABLE_FULLSCREEN" />
 			</then>
 			<else>
@@ -17,6 +20,7 @@
 
 		<execute macro="Button#clickSave" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

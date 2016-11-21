@@ -17,6 +17,7 @@
 		<var name="key_componentOrPortletName" value="${componentName}" />
 
 		<execute function="Click" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX" />
+
 		<execute function="AssertChecked#waitForElementPresentAssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_PANEL_CHECKBOX_INPUT" />
 	</command>
 

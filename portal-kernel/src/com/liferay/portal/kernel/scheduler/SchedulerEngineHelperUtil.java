@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -331,8 +331,8 @@ public class SchedulerEngineHelperUtil {
 	}
 
 	private static volatile SchedulerEngineHelper _instance =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			SchedulerEngineHelper.class, SchedulerEngineHelperUtil.class,
-			"_instance");
+			"_instance", false);
 
 }

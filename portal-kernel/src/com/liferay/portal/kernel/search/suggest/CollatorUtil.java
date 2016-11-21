@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.search.suggest;
 
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class CollatorUtil {
 	}
 
 	private static volatile Collator _collator =
-		ProxyFactory.newServiceTrackedInstance(
-			Collator.class, CollatorUtil.class, "_collator");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Collator.class, CollatorUtil.class, "_collator", false);
 
 }

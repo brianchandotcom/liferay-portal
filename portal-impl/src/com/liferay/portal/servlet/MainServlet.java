@@ -66,8 +66,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1383,9 +1383,9 @@ public class MainServlet extends ActionServlet {
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
 	private static volatile InactiveRequestHandler _inactiveRequesthandler =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			InactiveRequestHandler.class, MainServlet.class,
-			"_inactiveRequesthandler");
+			"_inactiveRequesthandler", false);
 
 	private ServiceRegistration<ModuleServiceLifecycle>
 		_moduleServiceLifecycleServiceRegistration;

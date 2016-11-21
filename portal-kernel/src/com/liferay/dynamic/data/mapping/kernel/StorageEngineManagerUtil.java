@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Rafael Praxedes
@@ -63,8 +63,8 @@ public class StorageEngineManagerUtil {
 	}
 
 	private static volatile StorageEngineManager _storageEngineManager =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			StorageEngineManager.class, StorageEngineManagerUtil.class,
-			"_storageEngineManager");
+			"_storageEngineManager", false);
 
 }

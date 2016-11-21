@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -74,7 +74,7 @@ public class FinderCacheUtil {
 	}
 
 	private static volatile FinderCache _finderCache =
-		ProxyFactory.newServiceTrackedInstance(
-			FinderCache.class, FinderCacheUtil.class, "_finderCache");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			FinderCache.class, FinderCacheUtil.class, "_finderCache", false);
 
 }

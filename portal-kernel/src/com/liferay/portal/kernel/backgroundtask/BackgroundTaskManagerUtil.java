@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.backgroundtask;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;
 import java.io.Serializable;
@@ -360,8 +360,8 @@ public class BackgroundTaskManagerUtil {
 	}
 
 	private static volatile BackgroundTaskManager _backgroundTaskManager =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			BackgroundTaskManager.class, BackgroundTaskManagerUtil.class,
-			"_backgroundTaskManager");
+			"_backgroundTaskManager", false);
 
 }

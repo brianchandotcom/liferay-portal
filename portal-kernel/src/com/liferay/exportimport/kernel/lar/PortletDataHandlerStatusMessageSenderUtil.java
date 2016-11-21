@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Michael C. Han
@@ -81,9 +81,9 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 
 	private static volatile PortletDataHandlerStatusMessageSender
 		_dataHandlerStatusMessageSender =
-			ProxyFactory.newServiceTrackedInstance(
+			ServiceProxyFactory.newServiceTrackedInstance(
 				PortletDataHandlerStatusMessageSender.class,
 				PortletDataHandlerStatusMessageSenderUtil.class,
-				"_dataHandlerStatusMessageSender");
+				"_dataHandlerStatusMessageSender", false);
 
 }

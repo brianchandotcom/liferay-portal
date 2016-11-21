@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Date;
 
@@ -70,7 +70,8 @@ public class TriggerFactoryUtil {
 	}
 
 	private static volatile TriggerFactory _triggerFactory =
-		ProxyFactory.newServiceTrackedInstance(
-			TriggerFactory.class, TriggerFactoryUtil.class, "_triggerFactory");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			TriggerFactory.class, TriggerFactoryUtil.class, "_triggerFactory",
+			false);
 
 }

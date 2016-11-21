@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.xml.Element;
@@ -733,7 +733,7 @@ public class StagingUtil {
 	}
 
 	private static volatile Staging _staging =
-		ProxyFactory.newServiceTrackedInstance(
-			Staging.class, StagingUtil.class, "_staging");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Staging.class, StagingUtil.class, "_staging", false);
 
 }

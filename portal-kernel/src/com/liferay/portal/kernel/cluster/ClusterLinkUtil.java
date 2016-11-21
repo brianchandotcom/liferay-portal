@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Shuyang Zhou
@@ -71,7 +71,7 @@ public class ClusterLinkUtil {
 	private static final String _ADDRESS = "CLUSTER_ADDRESS";
 
 	private static volatile ClusterLink _clusterLink =
-		ProxyFactory.newServiceTrackedInstance(
-			ClusterLink.class, ClusterLinkUtil.class, "_clusterLink");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			ClusterLink.class, ClusterLinkUtil.class, "_clusterLink", false);
 
 }

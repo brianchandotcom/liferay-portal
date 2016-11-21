@@ -21,13 +21,10 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerFieldUpdaterCustomizer;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,7 +33,7 @@ public class ProxyFactory {
 
 	public static <T> T newDummyInstance(Class<T> interfaceClass) {
 		return (T)ProxyUtil.newProxyInstance(
-			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
+			interfaceClass.getClassLoader(), new Class<?>[] {interfaceClass},
 			new DummyInvocationHandler<T>());
 	}
 
@@ -46,7 +43,7 @@ public class ProxyFactory {
 		throws Exception {
 
 		return newInstance(
-			classLoader, new Class[] {interfaceClass}, implClassName);
+			classLoader, new Class<?>[] {interfaceClass}, implClassName);
 	}
 
 	public static Object newInstance(
@@ -69,26 +66,35 @@ public class ProxyFactory {
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(Class<T> interfaceClass) {
 		return (T)ProxyUtil.newProxyInstance(
-			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
+			interfaceClass.getClassLoader(), new Class<?>[] {interfaceClass},
 			new ServiceTrackedInvocationHandler<>(interfaceClass));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ServiceProxyFactory#newServiceTrackedInstance(
+	 *					Class, Class, String, boolean)}
+	 */
+	@Deprecated
 	public static <T> T newServiceTrackedInstance(
 		Class<T> serviceClass, Class<?> declaringClass, String fieldName) {
 
-		return newServiceTrackedInstance(
-			serviceClass, declaringClass, fieldName, null);
+		return ServiceProxyFactory.newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, false);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ServiceProxyFactory#newServiceTrackedInstance(
+	 *					Class, Class, String, String, boolean)}
+	 */
+	@Deprecated
 	public static <T> T newServiceTrackedInstance(
 		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
 		String filterString) {
 
-		T dummyService = newDummyInstance(serviceClass);
-
-		return _newServiceTrackedInstance(
-			serviceClass, declaringClass, fieldName, filterString,
-			dummyService);
+		return ServiceProxyFactory.newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, filterString, false);
 	}
 
 	/**
@@ -100,87 +106,36 @@ public class ProxyFactory {
 		Class<T> interfaceClass, String filterString) {
 
 		return (T)ProxyUtil.newProxyInstance(
-			interfaceClass.getClassLoader(), new Class[] {interfaceClass},
+			interfaceClass.getClassLoader(), new Class<?>[] {interfaceClass},
 			new ServiceTrackedInvocationHandler<>(
 				interfaceClass, filterString));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ServiceProxyFactory#newServiceTrackedInstance(
+	 *					Class, Class, String, boolean)}
+	 */
+	@Deprecated
 	public static <T> T newServiceTrackedInstanceWithoutDummyService(
 		Class<T> serviceClass, Class<?> declaringClass, String fieldName) {
 
-		return newServiceTrackedInstanceWithoutDummyService(
-			serviceClass, declaringClass, fieldName, null);
+		return ServiceProxyFactory.newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             ServiceProxyFactory#newServiceTrackedInstance(
+	 *					Class, Class, String, String, boolean)}
+	 */
+	@Deprecated
 	public static <T> T newServiceTrackedInstanceWithoutDummyService(
 		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
 		String filterString) {
 
-		return _newServiceTrackedInstance(
-			serviceClass, declaringClass, fieldName, filterString, null);
-	}
-
-	private static <T> T _newServiceTrackedInstance(
-		Class<T> serviceClass, Class<?> declaringClass, String fieldName,
-		String filterString, T dummyService) {
-
-		try {
-			Field field = declaringClass.getDeclaredField(fieldName);
-
-			if (!Modifier.isStatic(field.getModifiers())) {
-				throw new IllegalArgumentException(field + " is not static");
-			}
-
-			field.setAccessible(true);
-
-			field.set(null, dummyService);
-
-			ServiceTracker<?, ?> serviceTracker = null;
-
-			String serviceName = serviceClass.getName();
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			if (Validator.isNull(filterString)) {
-				serviceTracker = registry.trackServices(
-					serviceName,
-					new ServiceTrackerFieldUpdaterCustomizer<>(
-						field, null, dummyService));
-			}
-			else {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("(&(objectClass=");
-				sb.append(serviceName);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				if (!filterString.startsWith(StringPool.OPEN_PARENTHESIS)) {
-					sb.append(StringPool.OPEN_PARENTHESIS);
-				}
-
-				sb.append(filterString);
-
-				if (!filterString.endsWith(StringPool.CLOSE_PARENTHESIS)) {
-					sb.append(StringPool.CLOSE_PARENTHESIS);
-				}
-
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				Filter filter = registry.getFilter(sb.toString());
-
-				serviceTracker = registry.trackServices(
-					filter,
-					new ServiceTrackerFieldUpdaterCustomizer<>(
-						field, null, dummyService));
-			}
-
-			serviceTracker.open();
-
-			return (T)field.get(null);
-		}
-		catch (ReflectiveOperationException roe) {
-			return ReflectionUtil.throwException(roe);
-		}
+		return ServiceProxyFactory.newServiceTrackedInstance(
+			serviceClass, declaringClass, fieldName, filterString, true);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ProxyFactory.class);

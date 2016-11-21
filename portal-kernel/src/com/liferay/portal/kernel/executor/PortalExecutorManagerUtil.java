@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Shuyang Zhou
@@ -47,23 +45,6 @@ public class PortalExecutorManagerUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			PortalExecutorManagerUtil.class);
 
-		try {
-			while (_portalExecutorManager == null) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				_portalExecutorManager = registry.getService(
-					PortalExecutorManager.class);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Waiting for a portal executor manager");
-				}
-
-				Thread.sleep(500);
-			}
-		}
-		catch (InterruptedException ie) {
-		}
-
 		return _portalExecutorManager;
 	}
 
@@ -80,20 +61,12 @@ public class PortalExecutorManagerUtil {
 		PortalRuntimePermission.checkThreadPoolExecutor(
 			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS);
 
-		if (_portalExecutorManager == null) {
-			return;
-		}
-
 		_portalExecutorManager.shutdown();
 	}
 
 	public static void shutdown(boolean interrupt) {
 		PortalRuntimePermission.checkThreadPoolExecutor(
 			PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_ALL_EXECUTORS);
-
-		if (_portalExecutorManager == null) {
-			return;
-		}
 
 		_portalExecutorManager.shutdown(interrupt);
 	}
@@ -105,8 +78,8 @@ public class PortalExecutorManagerUtil {
 		PortalExecutorManagerUtil.class);
 
 	private static volatile PortalExecutorManager _portalExecutorManager =
-		ProxyFactory.newServiceTrackedInstanceWithoutDummyService(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, PortalExecutorManagerUtil.class,
-			"_portalExecutorManager");
+			"_portalExecutorManager", true);
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Set;
 
@@ -72,8 +72,8 @@ public class IndexerRegistryUtil {
 	}
 
 	private static volatile IndexerRegistry _indexerRegistry =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			IndexerRegistry.class, IndexerRegistryUtil.class,
-			"_indexerRegistry");
+			"_indexerRegistry", false);
 
 }

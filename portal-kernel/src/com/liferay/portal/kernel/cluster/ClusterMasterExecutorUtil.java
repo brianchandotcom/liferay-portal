@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.cluster;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.concurrent.Future;
 
@@ -64,8 +64,8 @@ public class ClusterMasterExecutorUtil {
 	}
 
 	private static volatile ClusterMasterExecutor _clusterMasterExecutor =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			ClusterMasterExecutor.class, ClusterMasterExecutorUtil.class,
-			"_clusterMasterExecutor");
+			"_clusterMasterExecutor", false);
 
 }

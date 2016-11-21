@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search.facet.faceted.searcher;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author André de Oliveira
@@ -34,8 +34,8 @@ public class FacetedSearcherManagerUtil {
 	}
 
 	private static volatile FacetedSearcherManager _facetedSearcherManager =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			FacetedSearcherManager.class, FacetedSearcherManagerUtil.class,
-			"_facetedSearcherManager");
+			"_facetedSearcherManager", false);
 
 }

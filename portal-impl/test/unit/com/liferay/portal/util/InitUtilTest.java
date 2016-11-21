@@ -14,6 +14,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.cache.MultiVMPool;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -21,6 +23,10 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LogAssertionTestRule;
+import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.nio.file.Paths;
 
@@ -58,6 +64,31 @@ public class InitUtilTest {
 		_fileImpl.deltree(PropsValues.MODULE_FRAMEWORK_STATE_DIR);
 
 		_fileImpl.mkdirs(PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static");
+
+		ToolDependencies.wireCaches();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		final MultiVMPool testMulitVMPool = registry.getService(
+			MultiVMPool.class);
+		final SingleVMPool testSingleVMPool = registry.getService(
+			SingleVMPool.class);
+
+		RegistryUtil.setRegistry(
+			new BasicRegistryImpl() {
+
+				@Override
+				public Registry setRegistry(Registry registry) {
+					registry.registerService(
+						MultiVMPool.class, testMulitVMPool);
+
+					registry.registerService(
+						SingleVMPool.class, testSingleVMPool);
+
+					return registry;
+				}
+
+			});
 
 		InitUtil.init();
 

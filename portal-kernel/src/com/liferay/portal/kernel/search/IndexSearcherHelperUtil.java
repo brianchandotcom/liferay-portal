@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -63,8 +63,8 @@ public class IndexSearcherHelperUtil {
 	}
 
 	private static volatile IndexSearcherHelper _indexSearcherHelper =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			IndexSearcherHelper.class, IndexSearcherHelperUtil.class,
-			"_indexSearcherHelper");
+			"_indexSearcherHelper", false);
 
 }

@@ -15,8 +15,7 @@
 package com.liferay.portal.upload;
 
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.tools.ToolDependencies;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class UploadServletRequestImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
+		ToolDependencies.wireCaches();
 
 		_fileItems.add(_getFileItem("A", 12));
 		_fileItems.add(_getFileItem("B", 92));

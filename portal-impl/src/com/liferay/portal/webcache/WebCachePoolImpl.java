@@ -15,7 +15,7 @@
 package com.liferay.portal.webcache;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPool;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -23,10 +23,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePool;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 
 /**
  * @author Brian Wing Shun Chan
@@ -35,31 +31,7 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 public class WebCachePoolImpl implements WebCachePool {
 
 	public void afterPropertiesSet() {
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
-
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
-
-				@Override
-				public void dependenciesFulfilled() {
-					Registry registry = RegistryUtil.getRegistry();
-
-					SingleVMPool singleVMPool = registry.getService(
-						SingleVMPool.class);
-
-					_portalCache =
-						(PortalCache<String, Object>)
-							singleVMPool.getPortalCache(_CACHE_NAME);
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
-		serviceDependencyManager.registerDependencies(SingleVMPool.class);
+		_portalCache = SingleVMPoolUtil.getPortalCache(_CACHE_NAME);
 	}
 
 	@Override

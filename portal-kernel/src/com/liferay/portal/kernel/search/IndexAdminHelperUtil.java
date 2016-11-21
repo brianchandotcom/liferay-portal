@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Michael C. Han
@@ -59,8 +59,8 @@ public class IndexAdminHelperUtil {
 	}
 
 	private static volatile IndexAdminHelper _indexAdminHelper =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			IndexAdminHelper.class, IndexAdminHelperUtil.class,
-			"_indexAdminHelper");
+			"_indexAdminHelper", false);
 
 }

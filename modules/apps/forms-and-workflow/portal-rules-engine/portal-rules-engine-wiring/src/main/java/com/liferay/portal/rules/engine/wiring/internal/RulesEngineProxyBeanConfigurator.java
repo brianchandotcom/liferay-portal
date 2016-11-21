@@ -16,7 +16,6 @@ package com.liferay.portal.rules.engine.wiring.internal;
 
 import com.liferay.portal.kernel.messaging.proxy.MessagingProxyInvocationHandler;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.spring.aop.InvocationHandlerFactory;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -51,8 +50,6 @@ public class RulesEngineProxyBeanConfigurator {
 			RulesEngineConstants.DESTINATION_NAME);
 		rulesEngineProxyBean.setSynchronousMessageSenderMode(
 			SynchronousMessageSender.Mode.DIRECT);
-
-		rulesEngineProxyBean.afterPropertiesSet();
 
 		InvocationHandlerFactory invocationHandlerFactory =
 			MessagingProxyInvocationHandler.getInvocationHandlerFactory();
@@ -89,12 +86,6 @@ public class RulesEngineProxyBeanConfigurator {
 	)
 	protected void setProxyMessageListener(
 		ProxyMessageListener proxyMessageListener) {
-	}
-
-	@Reference(unbind = "-")
-	protected void setSingleDestinationMessageSenderFactory(
-		SingleDestinationMessageSenderFactory
-			singleDestinationMessageSenderFactory) {
 	}
 
 	private ServiceRegistration<RulesEngine> _serviceRegistration;

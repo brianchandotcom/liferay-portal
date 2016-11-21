@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Michael C. Han
@@ -31,7 +29,7 @@ import com.liferay.registry.RegistryUtil;
 public class MessageBusUtil {
 
 	public static void addDestination(Destination destination) {
-		getMessageBus().addDestination(destination);
+		_messageBus.addDestination(destination);
 	}
 
 	public static Message createResponseMessage(Message requestMessage) {
@@ -55,7 +53,7 @@ public class MessageBusUtil {
 	}
 
 	public static Destination getDestination(String destinationName) {
-		return getMessageBus().getDestination(destinationName);
+		return _messageBus.getDestination(destinationName);
 	}
 
 	/**
@@ -69,29 +67,11 @@ public class MessageBusUtil {
 	}
 
 	public static MessageBus getMessageBus() {
-		try {
-			while (_messageBus == null) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				_messageBus = registry.getService(MessageBus.class);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Waiting for a message bus");
-				}
-
-				Thread.sleep(500);
-			}
-		}
-		catch (InterruptedException ie) {
-			throw new IllegalStateException(
-				"Unable to initialize MessageBusUtil", ie);
-		}
-
 		return _messageBus;
 	}
 
 	public static boolean hasMessageListener(String destination) {
-		return getMessageBus().hasMessageListener(destination);
+		return _messageBus.hasMessageListener(destination);
 	}
 
 	public static void registerMessageListener(
@@ -99,18 +79,17 @@ public class MessageBusUtil {
 
 		PortalMessageBusPermission.checkListen(destinationName);
 
-		getMessageBus().registerMessageListener(
-			destinationName, messageListener);
+		_messageBus.registerMessageListener(destinationName, messageListener);
 	}
 
 	public static void removeDestination(String destinationName) {
-		getMessageBus().removeDestination(destinationName);
+		_messageBus.removeDestination(destinationName);
 	}
 
 	public static void sendMessage(String destinationName, Message message) {
 		PortalMessageBusPermission.checkSend(destinationName);
 
-		getMessageBus().sendMessage(destinationName, message);
+		_messageBus.sendMessage(destinationName, message);
 	}
 
 	public static void sendMessage(String destinationName, Object payload) {
@@ -120,7 +99,7 @@ public class MessageBusUtil {
 
 		message.setPayload(payload);
 
-		getMessageBus().sendMessage(destinationName, message);
+		_messageBus.sendMessage(destinationName, message);
 	}
 
 	public static Object sendSynchronousMessage(
@@ -196,13 +175,13 @@ public class MessageBusUtil {
 	public static void shutdown() {
 		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
 
-		getMessageBus().shutdown();
+		_messageBus.shutdown();
 	}
 
 	public static void shutdown(boolean force) {
 		PortalRuntimePermission.checkGetBeanProperty(MessageBusUtil.class);
 
-		getMessageBus().shutdown(force);
+		_messageBus.shutdown(force);
 	}
 
 	public static boolean unregisterMessageListener(
@@ -210,7 +189,7 @@ public class MessageBusUtil {
 
 		PortalMessageBusPermission.checkListen(destinationName);
 
-		return getMessageBus().unregisterMessageListener(
+		return _messageBus.unregisterMessageListener(
 			destinationName, messageListener);
 	}
 
@@ -223,8 +202,8 @@ public class MessageBusUtil {
 	private static final Log _log = LogFactoryUtil.getLog(MessageBusUtil.class);
 
 	private static volatile MessageBus _messageBus =
-		ProxyFactory.newServiceTrackedInstanceWithoutDummyService(
-			MessageBus.class, MessageBusUtil.class, "_messageBus");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MessageBus.class, MessageBusUtil.class, "_messageBus", true);
 	private static SynchronousMessageSender.Mode _synchronousMessageSenderMode;
 
 }

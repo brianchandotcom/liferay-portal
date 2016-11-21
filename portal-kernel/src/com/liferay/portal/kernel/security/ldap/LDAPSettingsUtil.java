@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.security.ldap;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Properties;
 
@@ -100,7 +100,7 @@ public class LDAPSettingsUtil {
 	}
 
 	private static volatile LDAPSettings _ldapSettings =
-		ProxyFactory.newServiceTrackedInstance(
-			LDAPSettings.class, LDAPSettingsUtil.class, "_ldapSettings");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			LDAPSettings.class, LDAPSettingsUtil.class, "_ldapSettings", false);
 
 }

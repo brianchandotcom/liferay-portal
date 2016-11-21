@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.Serializable;
 
@@ -182,8 +182,8 @@ public class DDMStructureManagerUtil {
 	}
 
 	private static volatile DDMStructureManager _ddmStructureManager =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			DDMStructureManager.class, DDMStructureManagerUtil.class,
-			"_ddmStructureManager");
+			"_ddmStructureManager", false);
 
 }

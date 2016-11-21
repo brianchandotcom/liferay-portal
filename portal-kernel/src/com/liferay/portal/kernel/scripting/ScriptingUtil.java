@@ -15,7 +15,7 @@
 package com.liferay.portal.kernel.scripting;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -105,7 +105,7 @@ public class ScriptingUtil {
 	}
 
 	private static volatile Scripting _scripting =
-		ProxyFactory.newServiceTrackedInstance(
-			Scripting.class, ScriptingUtil.class, "_scripting");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			Scripting.class, ScriptingUtil.class, "_scripting", false);
 
 }

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Raymond Augé
@@ -68,7 +68,8 @@ public class LayoutStagingUtil {
 	}
 
 	private static volatile LayoutStaging _layoutStaging =
-		ProxyFactory.newServiceTrackedInstance(
-			LayoutStaging.class, LayoutStagingUtil.class, "_layoutStaging");
+		ServiceProxyFactory.newServiceTrackedInstance(
+			LayoutStaging.class, LayoutStagingUtil.class, "_layoutStaging",
+			false);
 
 }

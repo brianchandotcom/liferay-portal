@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.single.internal;
 
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.scheduler.BaseSchedulerEngineConfigurator;
 
@@ -23,7 +22,6 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -48,12 +46,6 @@ public class SingleSchedulerEngineConfigurator
 		if (_schedulerEngineServiceRegistration != null) {
 			_schedulerEngineServiceRegistration.unregister();
 		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setSingleDestinationMessageSenderFactory(
-		SingleDestinationMessageSenderFactory
-			singleDestinationMessageSenderFactory) {
 	}
 
 	private volatile ServiceRegistration<SchedulerEngine>

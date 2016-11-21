@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.template;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 
@@ -43,8 +43,8 @@ public class TemplateHandlerRegistryUtil {
 	}
 
 	private static volatile TemplateHandlerRegistry _templateHandlerRegistry =
-		ProxyFactory.newServiceTrackedInstance(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			TemplateHandlerRegistry.class, TemplateHandlerRegistryUtil.class,
-			"_templateHandlerRegistry");
+			"_templateHandlerRegistry", false);
 
 }

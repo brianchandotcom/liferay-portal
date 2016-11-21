@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Michael C. Han
@@ -45,9 +45,9 @@ public class BackgroundTaskExecutorRegistryUtil {
 
 	private static volatile BackgroundTaskExecutorRegistry
 		_backgroundTaskExecutorRegistry =
-			ProxyFactory.newServiceTrackedInstance(
+			ServiceProxyFactory.newServiceTrackedInstance(
 				BackgroundTaskExecutorRegistry.class,
 				BackgroundTaskExecutorRegistryUtil.class,
-				"_backgroundTaskExecutorRegistry");
+				"_backgroundTaskExecutorRegistry", false);
 
 }

@@ -16,9 +16,7 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.Collection;
 
@@ -30,34 +28,18 @@ public class DestinationFactoryUtil {
 	public static Destination createDestination(
 		DestinationConfiguration destinationConfiguration) {
 
-		return _instance.getDestinationFactory().createDestination(
-			destinationConfiguration);
+		return _destinationFactory.createDestination(destinationConfiguration);
 	}
 
 	public static Collection<String> getDestinationTypes() {
-		return _instance.getDestinationFactory().getDestinationTypes();
+		return _destinationFactory.getDestinationTypes();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected DestinationFactory getDestinationFactory() {
-		try {
-			while (_destinationFactory == null) {
-				Registry registry = RegistryUtil.getRegistry();
-
-				_destinationFactory = registry.getService(
-					DestinationFactory.class);
-
-				if (_log.isDebugEnabled()) {
-					_log.debug("Waiting for a destination factory");
-				}
-
-				Thread.sleep(500);
-			}
-		}
-		catch (InterruptedException ie) {
-			throw new IllegalStateException(
-				"Unable to obtain reference for destination factory", ie);
-		}
-
 		return _destinationFactory;
 	}
 
@@ -67,12 +49,9 @@ public class DestinationFactoryUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DestinationFactoryUtil.class);
 
-	private static final DestinationFactoryUtil _instance =
-		new DestinationFactoryUtil();
-
 	private static volatile DestinationFactory _destinationFactory =
-		ProxyFactory.newServiceTrackedInstanceWithoutDummyService(
+		ServiceProxyFactory.newServiceTrackedInstance(
 			DestinationFactory.class, DestinationFactoryUtil.class,
-			"_destinationFactory");
+			"_destinationFactory", true);
 
 }

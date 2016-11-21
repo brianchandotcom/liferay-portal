@@ -430,7 +430,7 @@
 	</command>
 
 	<command name="disableMDRSamesAsPublicPages">
-		<execute function="Uncheck#uncheckToggleSwitch" locator1="Checkbox#MOBILE_DEVICE_RULES_CHECKBOX" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#SET_SAME_MOBILE_DEVICE_RULES_AS_PUBLIC_PAGES" />
 	</command>
 
 	<command name="disallowEditViaSiteAdminEditCP">

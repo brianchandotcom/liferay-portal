@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ACTION</td>
+	<td>//span[contains(.,'Add Action')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ATTACHMENTS</td>
 	<td>//button[contains(.,'Add Attachments')]</td>
 	<td></td>
@@ -439,11 +444,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOBILE_DEVICE_RULES_SELECT</td>
-	<td>//div[@class='btn-toolbar']/button[contains(.,'Select')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MORE_MESSAGES</td>
 	<td>//a[contains(@class,'btn') and contains(.,'More Messages')]</td>
 	<td></td>
@@ -666,6 +666,11 @@
 <tr>
 	<td>SELECT_FILES</td>
 	<td>//button[contains(.,'Select Files')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MOBILE_DEVICE_RULES</td>
+	<td>//div[@class='btn-toolbar']/button[contains(.,'Select')]</td>
 	<td></td>
 </tr>
 <tr>

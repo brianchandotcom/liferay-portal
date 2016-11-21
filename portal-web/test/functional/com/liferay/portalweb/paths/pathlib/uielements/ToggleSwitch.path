@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SET_SAME_MOBILE_DEVICE_RULES_AS_PUBLIC_PAGES</td>
+	<td>//label[contains(.,'mobile device rules')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SHOW_SPECIFIC_TOGGLE_SWITCH</td>
 	<td>//label[contains(.,'${key_checkSetupName}')]/input[contains(@class,'field') and contains(@class,'toggle-switch')]</td>
 	<td></td>

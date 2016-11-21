@@ -509,6 +509,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANAGE_ACTIONS</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Actions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE_PAGES</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
 	<td></td>

@@ -60,6 +60,11 @@ public class PatcherImpl implements Patcher {
 			_properties.get(PROPERTY_PATCHING_TOOL_VERSION));
 
 		_patchingToolVersionDisplayName = getPatchingToolVersionDisplayName();
+
+		_separated = GetterUtil.getBoolean(
+			_properties.getProperty(PROPERTY_SEPARATED));
+
+		_separationId = _properties.getProperty(PROPERTY_SEPARATION_ID);
 	}
 
 	@Override
@@ -162,6 +167,11 @@ public class PatcherImpl implements Patcher {
 	}
 
 	@Override
+	public String getSeparationId() {
+		return _separationId;
+	}
+
+	@Override
 	public boolean hasInconsistentPatchLevels() {
 		return _inconsistentPatchLevels;
 	}
@@ -171,6 +181,11 @@ public class PatcherImpl implements Patcher {
 		getPatchDirectory();
 
 		return _configured;
+	}
+
+	@Override
+	public boolean isSeparated() {
+		return _separated;
 	}
 
 	@Override
@@ -279,5 +294,7 @@ public class PatcherImpl implements Patcher {
 	private final String _patchingToolVersionDisplayName;
 	private final String[] _patchLevels;
 	private final Properties _properties;
+	private final boolean _separated;
+	private final String _separationId;
 
 }

@@ -64,12 +64,20 @@ public class PatcherUtil {
 		return getPatcher().getProperties();
 	}
 
+	public static String getSeparationId() {
+		return getPatcher().getSeparationId();
+	}
+
 	public static boolean hasInconsistentPatchLevels() {
 		return getPatcher().hasInconsistentPatchLevels();
 	}
 
 	public static boolean isConfigured() {
 		return getPatcher().isConfigured();
+	}
+
+	public static boolean isSeparated() {
+		return getPatcher().isSeparated();
 	}
 
 	public static void verifyPatchLevels() throws PatchInconsistencyException {

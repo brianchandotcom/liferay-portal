@@ -205,7 +205,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Page Comment Comment" />
-			<var name="workflowAssetType" value="Comment" />
+			<var name="workflowAssetType" value="Comments" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

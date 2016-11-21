@@ -7188,6 +7188,31 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
+		<get-testcase-property property.name="theme.file.name" />
+
+		<if>
+			<and>
+				<available file="${liferay.home}/deploy/${theme.file.name}" />
+				<isset property="theme.file.name" />
+			</and>
+			<then>
+				<if>
+					<resourcecount when="greater" count="0">
+						<zipfileset src="${liferay.home}/deploy/${theme.file.name}">
+							<patternset>
+								<include name="**/private.lar" />
+							</patternset>
+						</zipfileset>
+					</resourcecount>
+					<then>
+						<echo append="true" file="${test.ext.properties.file}">
+							theme.contains.resources=true
+						</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="timeout.explicit.wait" />
 
 		<if>

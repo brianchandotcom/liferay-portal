@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
@@ -83,7 +84,7 @@ public class SiteNavigationSiteMapDisplayContext {
 			_siteNavigationSiteMapPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		if (_displayStyleGroupId <= 0) {
+		if (GroupLocalServiceUtil.fetchGroup(_displayStyleGroupId) == null) {
 			_displayStyleGroupId = _themeDisplay.getSiteGroupId();
 		}
 

@@ -40,8 +40,8 @@ LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 groupParams.put("site", Boolean.TRUE);
 
 if (tabs1.equals("my-sites")) {
-	groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 	groupParams.put("active", Boolean.TRUE);
+	groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 }
 else {
 	List types = new ArrayList();
@@ -49,8 +49,8 @@ else {
 	types.add(Integer.valueOf(GroupConstants.TYPE_SITE_OPEN));
 	types.add(Integer.valueOf(GroupConstants.TYPE_SITE_RESTRICTED));
 
-	groupParams.put("types", types);
 	groupParams.put("active", Boolean.TRUE);
+	groupParams.put("types", types);
 }
 
 int groupsCount = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);

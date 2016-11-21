@@ -90,8 +90,8 @@ public class TextDDMFormFieldTemplateContextContributor
 		List<Object> options = getOptions(
 			ddmFormField, ddmFormFieldRenderingContext);
 
-		parameters.put("options", options);
 		parameters.put("autocomplete", !options.isEmpty());
+		parameters.put("options", options);
 
 		return parameters;
 	}

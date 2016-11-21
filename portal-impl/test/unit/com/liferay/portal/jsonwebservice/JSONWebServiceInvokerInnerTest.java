@@ -204,10 +204,10 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		data.put("array", list);
 
-		data.put("id", 2);
 		data.put("height", 8);
-		data.put("XXX2", "Welcome 3 to star");
+		data.put("id", 2);
 		data.put("name", "life");
+		data.put("XXX2", "Welcome 3 to star");
 
 		expectedMap.put("data", data);
 
@@ -216,8 +216,8 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		LinkedHashMap<String, Object> resultListElement = new LinkedHashMap<>();
 
 		if (xxx3) {
-			resultListElement.put("id", 1);
 			resultListElement.put("height", 177);
+			resultListElement.put("id", 1);
 			resultListElement.put("XXX3", "Welcome 3 to pulsar");
 		}
 		else {

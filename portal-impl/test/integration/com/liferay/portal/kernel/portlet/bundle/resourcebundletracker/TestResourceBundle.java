@@ -36,14 +36,14 @@ import org.osgi.service.component.annotations.Component;
 public class TestResourceBundle extends ResourceBundle {
 
 	public TestResourceBundle() {
-		_map.put("this", "esto");
-		_map.put("is", "es");
 		_map.put("a", "un");
-		_map.put("test", "prueba");
+		_map.put("is", "es");
 		_map.put("resourcebundle", "paquete de recursos");
 		_map.put(
 			"resourcebundle-extension-key",
 			"clave de extensión del paquete de recursos");
+		_map.put("test", "prueba");
+		_map.put("this", "esto");
 	}
 
 	@Override

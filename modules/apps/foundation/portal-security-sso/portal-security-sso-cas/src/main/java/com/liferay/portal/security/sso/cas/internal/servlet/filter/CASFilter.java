@@ -149,10 +149,10 @@ public class CASFilter extends BaseFilter {
 
 		Map<String, String> parameters = new HashMap<>();
 
-		parameters.put("serverName", serverName);
-		parameters.put("casServerUrlPrefix", serverUrl);
 		parameters.put("casServerLoginUrl", loginUrl);
+		parameters.put("casServerUrlPrefix", serverUrl);
 		parameters.put("redirectAfterValidation", "false");
+		parameters.put("serverName", serverName);
 
 		cas20ProxyTicketValidator.setCustomParameters(parameters);
 

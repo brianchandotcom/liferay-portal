@@ -85,11 +85,11 @@ public class ClassResolverUtil {
 		_primitiveClasses.put("boolean", boolean.class);
 		_primitiveClasses.put("byte", byte.class);
 		_primitiveClasses.put("char", char.class);
-		_primitiveClasses.put("short", short.class);
+		_primitiveClasses.put("double", double.class);
+		_primitiveClasses.put("float", float.class);
 		_primitiveClasses.put("int", int.class);
 		_primitiveClasses.put("long", long.class);
-		_primitiveClasses.put("float", float.class);
-		_primitiveClasses.put("double", double.class);
+		_primitiveClasses.put("short", short.class);
 		_primitiveClasses.put("void", void.class);
 	}
 

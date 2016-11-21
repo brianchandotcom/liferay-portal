@@ -61,8 +61,8 @@ int index = 0;
 
 						Map<String, Object> data = new HashMap<>();
 
-						data.put("value", StringPool.BLANK);
 						data.put("selection", 0);
+						data.put("value", StringPool.BLANK);
 						%>
 
 						<aui:a cssClass="<%= defaultRangeCssClass %>" href="javascript:;">

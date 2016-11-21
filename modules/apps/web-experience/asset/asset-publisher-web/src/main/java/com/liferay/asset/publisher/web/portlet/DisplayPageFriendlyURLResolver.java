@@ -117,9 +117,9 @@ public class DisplayPageFriendlyURLResolver implements FriendlyURLResolver {
 				"p_p_state", new String[] {WindowState.MAXIMIZED.toString()});
 		}
 
-		actualParams.put("p_p_mode", new String[] {"view"});
 		actualParams.put(
 			"p_j_a_id", new String[] {String.valueOf(journalArticle.getId())});
+		actualParams.put("p_p_mode", new String[] {"view"});
 
 		String namespace = PortalUtil.getPortletNamespace(
 			defaultAssetPublisherPortletId);

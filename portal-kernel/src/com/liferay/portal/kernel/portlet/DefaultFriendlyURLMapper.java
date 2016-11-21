@@ -61,9 +61,9 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		defaultReservedParameters = new LinkedHashMap<>();
 
 		defaultReservedParameters.put("p_p_lifecycle", "0");
+		defaultReservedParameters.put("p_p_mode", PortletMode.VIEW.toString());
 		defaultReservedParameters.put(
 			"p_p_state", WindowState.NORMAL.toString());
-		defaultReservedParameters.put("p_p_mode", PortletMode.VIEW.toString());
 	}
 
 	/**

@@ -68,8 +68,8 @@ public class OrganizationFinderTest {
 	public void testCountByKeywordsWithDifferentParameterOrder() {
 		LinkedHashMap<String, Object> params1 = new LinkedHashMap<>();
 
-		params1.put("usersOrgs", _user.getUserId());
 		params1.put("groupOrganization", _group.getGroupId());
+		params1.put("usersOrgs", _user.getUserId());
 
 		int count1 = OrganizationFinderUtil.countO_ByKeywords(
 			_user.getCompanyId(),

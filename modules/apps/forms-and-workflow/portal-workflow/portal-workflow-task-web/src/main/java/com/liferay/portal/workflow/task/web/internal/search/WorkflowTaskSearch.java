@@ -48,8 +48,8 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 		headerNames.add("last-activity-date");
 		headerNames.add("due-date");
 
-		orderableHeaders.put("last-activity-date", "last-activity-date");
 		orderableHeaders.put("due-date", "due-date");
+		orderableHeaders.put("last-activity-date", "last-activity-date");
 	}
 
 	public WorkflowTaskSearch(

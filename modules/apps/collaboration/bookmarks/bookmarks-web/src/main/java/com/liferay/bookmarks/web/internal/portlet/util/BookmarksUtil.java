@@ -157,11 +157,6 @@ public class BookmarksUtil {
 		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
-			"[$BOOKMARKS_ENTRY_USER_NAME$]",
-			LanguageUtil.get(
-				themeDisplay.getLocale(),
-				"the-user-who-added-the-bookmark-entry"));
-		definitionTerms.put(
 			"[$BOOKMARKS_ENTRY_STATUS_BY_USER_NAME$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(),
@@ -170,6 +165,11 @@ public class BookmarksUtil {
 			"[$BOOKMARKS_ENTRY_URL$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-bookmark-entry-url"));
+		definitionTerms.put(
+			"[$BOOKMARKS_ENTRY_USER_NAME$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(),
+				"the-user-who-added-the-bookmark-entry"));
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
 		definitionTerms.put("[$FROM_NAME$]", HtmlUtil.escape(emailFromName));

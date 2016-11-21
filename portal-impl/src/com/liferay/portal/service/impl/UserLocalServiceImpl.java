@@ -5903,8 +5903,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		attributes.put("params", params);
 		attributes.put("region", region);
 		attributes.put("screenName", screenName);
-		attributes.put("street", street);
 		attributes.put("status", status);
+		attributes.put("street", street);
 		attributes.put("zip", zip);
 
 		searchContext.setAttributes(attributes);

@@ -87,9 +87,9 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	public Object invoke() throws Exception {
 		Map<String, Object> resultsMap = new LinkedHashMap<>();
 
-		resultsMap.put("contextName", _contextName);
 		resultsMap.put("basePath", _basePath);
 		resultsMap.put("baseURL", _baseURL);
+		resultsMap.put("contextName", _contextName);
 		resultsMap.put("services", _buildJsonWebServiceActionMappingMaps());
 		resultsMap.put("types", _buildTypes());
 		resultsMap.put("version", ReleaseInfo.getVersion());

@@ -22,7 +22,7 @@
 	<command name="AddThemeSite" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="FjordTheme#AddThemeSite" />
-		<property name="themes.delayed.deployment" value="fjord-theme.war" />
+		<property name="theme.file.name" value="fjord-theme.war" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />

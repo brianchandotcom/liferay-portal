@@ -18,9 +18,14 @@
 	}
 
 	.controls {
-		background: #EEE9E9;
+		background: #F5F8FA;
 		border-bottom-width: 0;
 		padding: 5px 10px;
+
+		>.input-checkbox-wrapper {
+			float: left;
+			margin-bottom: 0;
+		}
 
 		.check-all {
 			margin: 9px 6px 9px 0;
@@ -109,27 +114,10 @@
 		background: none;
 	}
 
-	/* ---------- Messages ---------- */
-
-	.unread {
-		font-weight: bold;
-
-		.body {
-			font-weight: normal;
-		}
-	}
-
 	/* ---------- Results ---------- */
 
-	.messages .table-data tr {
-		&:hover td, &:nth-child(odd) td, td {
-			background: #FFF;
-			padding: 10px;
-		}
-
-		&.unread td {
-			background: #F0F5F7;
-		}
+	.messages .list-group-item.unread{
+		background: #F0F5F7;
 	}
 
 	.taglib-page-iterator {

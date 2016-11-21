@@ -42,6 +42,10 @@
 	>
 
 		<%
+		long userId = PrivateMessagingUtil.getThreadRepresentativeUserId(user.getUserId(), userThread.getMbThreadId());
+
+		MBMessage mbMessage = UserThreadServiceUtil.getLastThreadMessage(userThread.getMbThreadId());
+
 		if (!userThread.isRead()) {
 			row.setClassName("unread");
 		}
@@ -51,75 +55,74 @@
 			<aui:input data-mbThreadId="<%= userThread.getMbThreadId() %>" id='<%= "mbThread" + index++ %>' label="" name="mbThread" type="checkbox" />
 		</liferay-ui:search-container-column-text>
 
-		<liferay-ui:search-container-column-text valign="top">
+		<liferay-ui:search-container-column-user
+			cssClass="user-icon-lg"
+			showDetails="<%= false %>"
+			userId="<%= userId %>"
+		/>
 
-			<%
-			long userId = PrivateMessagingUtil.getThreadRepresentativeUserId(user.getUserId(), userThread.getMbThreadId());
+		<portlet:renderURL var="viewThreadURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="mbThreadId" value="<%= String.valueOf(userThread.getMbThreadId()) %>" />
+		</portlet:renderURL>
 
-			MBMessage mbMessage = UserThreadServiceUtil.getLastThreadMessage(userThread.getMbThreadId());
-			%>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+			<h5 class="text-default">
 
-			<liferay-ui:user-display
-				displayStyle="2"
-				userId="<%= userId %>"
-			/>
+				<%
+				List<User> users = PrivateMessagingUtil.getThreadUsers(user.getUserId(), userThread.getMbThreadId());
 
-			<div class="last-thread">
-				<portlet:renderURL var="viewThreadURL">
-					<portlet:param name="mvcPath" value="/view.jsp" />
-					<portlet:param name="backURL" value="<%= currentURL %>" />
-					<portlet:param name="mbThreadId" value="<%= String.valueOf(userThread.getMbThreadId()) %>" />
-				</portlet:renderURL>
+				if (users.isEmpty()) {
+					users.add(user);
+				}
 
-				<a class="message-link" href="<%= viewThreadURL.toString() %>">
+				for (int i = 0; i < users.size(); i++) {
+					User curUser = users.get(i);
+					String userName = HtmlUtil.escape(curUser.getFullName());
+				%>
 
-					<%
-					List<User> users = PrivateMessagingUtil.getThreadUsers(user.getUserId(), userThread.getMbThreadId());
+					<c:choose>
+						<c:when test="<%= curUser.isActive() %>">
+							<span><%= userName %></span>
+						</c:when>
+						<c:otherwise>
+							<span class="line-through"><%= userName %></span>
 
-					if (users.isEmpty()) {
-						users.add(user);
-					}
+							<liferay-ui:icon
+								image="../aui/question-sign"
+								message="deleted-user"
+							/>
+						</c:otherwise>
+					</c:choose>
 
-					for (int i = 0; i < users.size(); i++) {
-						User curUser = users.get(i);
-					%>
+					<c:if test="<%= i != (users.size() - 1) %>">
+						<%= StringPool.COMMA %>
+					</c:if>
 
-						<span class="author-sender">
-							<span class="<%= !curUser.isActive() ? "line-through" : StringPool.BLANK %>"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
+				<%
+				}
 
-							<c:if test="<%= !curUser.isActive() %>">
-								<liferay-ui:icon
-									image="../aui/question-sign"
-									message="deleted-user"
-								/>
-							</c:if>
+				Date createdDate = mbMessage.getCreateDate();
 
-							<%= ((i + 1) < users.size()) ? StringPool.COMMA : StringPool.BLANK %>
-						</span>
+				String createdDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createdDate.getTime(), true);
+				%>
 
-					<%
-					}
-					%>
+				<%= StringPool.COMMA %>
+				<liferay-ui:message arguments="<%= new String[] {createdDateDescription} %>" key="x-ago" />
+			</h5>
 
-					<span class="date">
-						<%= dateFormatDateTime.format(mbMessage.getCreateDate()) %>
-					</span>
+			<h4>
+				<aui:a href="<%= viewThreadURL.toString() %>">
+					<%= HtmlUtil.escape(StringUtil.shorten(mbMessage.getSubject(), 50)) %>
+				</aui:a>
+			</h4>
 
-					<div class="subject">
-						<%= HtmlUtil.escape(StringUtil.shorten(mbMessage.getSubject(), 50)) %>
-					</div>
-
-					<div class="body">
-						<c:if test="<%= user.getUserId() == mbMessage.getUserId() %>">
-							<i class="icon-reply"></i>
-						</c:if>
-
-						<%= HtmlUtil.escape(StringUtil.shorten(mbMessage.getBody(), 100)) %>
-					</div>
-				</a>
-			</div>
+			<h5 class="text-default">
+				<%= HtmlUtil.escape(StringUtil.shorten(mbMessage.getBody(), 100)) %>
+			</h5>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator displayStyle="descriptive" markupView="lexicon" />
 </liferay-ui:search-container>

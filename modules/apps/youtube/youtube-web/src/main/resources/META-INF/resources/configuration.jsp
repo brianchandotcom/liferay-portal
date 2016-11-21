@@ -16,71 +16,71 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+%>
+
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<aui:fieldset id='<%= renderResponse.getNamespace() + "controls" %>' label="video-properties">
-		<aui:input label="video-id" name="preferences--url--" value="<%= url %>" />
-
-		<aui:select inlineField="<%= true %>" label="preset-frame-size" name="preferences--presetSize--" onChange='<%= renderResponse.getNamespace() + "updateFrameSize(this.value);" %>' value="<%= presetSize %>">
-			<aui:option label="custom" value="custom" />
-			<aui:option label="standard-360-4-3" value="480x360" />
-			<aui:option label="standard-360-16-9" value="640x360" />
-			<aui:option label="enhanced-480-4-3" value="640x480" />
-			<aui:option label="enhanced-480-16-9" value="854x480" />
-			<aui:option label="hd-720-4-3" value="960x720" />
-			<aui:option label="hd-720-16-9" value="1280x720" />
-			<aui:option label="full-hd-1080-4-3" value="1440x1080" />
-			<aui:option label="full-hd-1080-16-9" value="1920x1080" />
-		</aui:select>
-
-		<aui:input disabled="<%= true %>" inlineField="<%= true %>" label="frame-width" name="preferences--width--" value="<%= width %>">
-			<aui:validator name="digits" />
-		</aui:input>
-
-		<aui:input disabled="<%= true %>" inlineField="<%= true %>" label="frame-height" name="preferences--height--" value="<%= height %>">
-			<aui:validator name="digits" />
-		</aui:input>
-
-		<liferay-ui:panel-container extended="<%= false %>" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" persistState="<%= true %>" title="advanced-options">
-				<aui:input label="show-thumbnail" name="preferences--showThumbnail--" type="checkbox" value="<%= showThumbnail %>" />
-
+	<div class="portlet-configuration-body-content">
+		<div class="container-fluid-1280">
+			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
-					<aui:input inlineField="<%= true %>" label="auto-play" name="preferences--autoplay--" type="checkbox" value="<%= autoplay %>" />
+					<aui:input label="video-id" name="preferences--url--" value="<%= youtubeDisplayContext.getURL() %>" />
 
-					<aui:input inlineField="<%= true %>" label="loop" name="preferences--loop--" type="checkbox" value="<%= loop %>" />
+					<aui:select inlineField="<%= true %>" label="preset-frame-size" name="preferences--presetSize--" onChange='<%= renderResponse.getNamespace() + "updateFrameSize(this.value);" %>' value="<%= youtubeDisplayContext.getPresetSize() %>">
+						<aui:option label="custom" value="custom" />
+						<aui:option label="standard-360-4-3" value="480x360" />
+						<aui:option label="standard-360-16-9" value="640x360" />
+						<aui:option label="enhanced-480-4-3" value="640x480" />
+						<aui:option label="enhanced-480-16-9" value="854x480" />
+						<aui:option label="hd-720-4-3" value="960x720" />
+						<aui:option label="hd-720-16-9" value="1280x720" />
+						<aui:option label="full-hd-1080-4-3" value="1440x1080" />
+						<aui:option label="full-hd-1080-16-9" value="1920x1080" />
+					</aui:select>
+
+					<aui:input disabled="<%= true %>" inlineField="<%= true %>" label="frame-width" name="preferences--width--" value="<%= youtubeDisplayContext.getWidth() %>">
+						<aui:validator name="digits" />
+					</aui:input>
+
+					<aui:input disabled="<%= true %>" inlineField="<%= true %>" label="frame-height" name="preferences--height--" value="<%= youtubeDisplayContext.getHeight() %>">
+						<aui:validator name="digits" />
+					</aui:input>
 				</aui:fieldset>
 
-				<aui:fieldset>
-					<aui:input checked="<%= enableKeyboardControls %>" inlineField="<%= true %>" label="enable-keyboard-controls" name="preferences--enableKeyboardControls--" type="checkbox" value="<%= enableKeyboardControls %>" />
+				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="advanced-options">
+					<aui:input name="preferences--showThumbnail--" type="toggle-switch" value="<%= youtubeDisplayContext.isShowThumbnail() %>" />
+
+					<aui:input inlineField="<%= true %>" label="auto-play" name="preferences--autoplay--" type="toggle-switch" value="<%= youtubeDisplayContext.isAutoPlay() %>" />
+
+					<aui:input inlineField="<%= true %>" name="preferences--loop--" type="toggle-switch" value="<%= youtubeDisplayContext.isLoop() %>" />
+
+					<aui:input inlineField="<%= true %>" name="preferences--enableKeyboardControls--" type="toggle-switch" value="<%= youtubeDisplayContext.isEnableKeyboardControls() %>" />
+
+					<aui:input inlineField="<%= true %>" name="preferences--annotations--" type="toggle-switch" value="<%= youtubeDisplayContext.isAnnotations() %>" />
+
+					<aui:input inlineField="<%= true %>" name="preferences--closedCaptioning--" type="toggle-switch" value="<%= youtubeDisplayContext.isClosedCaptioning() %>" />
+
+					<aui:input name="preferences--startTime--" value="<%= youtubeDisplayContext.getStartTime() %>">
+						<aui:validator name="digits" />
+					</aui:input>
 				</aui:fieldset>
+			</aui:fieldset-group>
+		</div>
+	</div>
 
-				<aui:fieldset>
-					<aui:input inlineField="<%= true %>" label="annotations" name="preferences--annotations--" type="checkbox" value="<%= annotations %>" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
 
-					<aui:input inlineField="<%= true %>" label="closed-captioning" name="preferences--closedCaptioning--" type="checkbox" value="<%= closedCaptioning %>" />
-				</aui:fieldset>
-
-				<aui:input label="start-time" name="preferences--startTime--" value="<%= startTime %>" />
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
-
-		<aui:button-row>
-			<aui:button type="submit" />
-		</aui:button-row>
-	</aui:fieldset>
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />saveConfiguration() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		submitForm(form);
-	}
-
 	var <portlet:namespace />customHeight;
 	var <portlet:namespace />customWidth;
 

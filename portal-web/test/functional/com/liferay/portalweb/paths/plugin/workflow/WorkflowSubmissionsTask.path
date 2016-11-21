@@ -81,6 +81,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIEW_USER</td>
+	<td>//div[@class='user-information']//div[@class='details']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW_MORE_DETAILS_HEADER_COLLAPSED</td>
 	<td>//div[contains(@class,'asset-metadata-panel')]/div[contains(@class,'toggler-header-collapsed')]//span</td>
 	<td></td>

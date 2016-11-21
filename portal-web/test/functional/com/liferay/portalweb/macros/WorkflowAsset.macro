@@ -13,7 +13,15 @@
 	<command name="gotoViaNotification">
 		<execute macro="Notifications#gotoNotifications" />
 
-		<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${user} sent you a ${assetType} for review in the workflow." />
+		<if>
+			<isset var="user" />
+			<then>
+				<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${user} sent you a ${assetType} for review in the workflow." />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="sent you a ${assetType} for review in the workflow." />
+			</else>
+		</if>
 	</command>
 
 	<command name="previewViewContent">
@@ -56,5 +64,9 @@
 
 	<command name="viewNotification">
 		<execute function="AssertTextEquals" locator1="Notifications#NOTIFICATIONS_WORKFLOW_TITLE" value1="${contentBody}" />
+	</command>
+
+	<command name="viewUserDetails">
+		<execute function="AssertTextEquals#assertPartialText" locator1="WorkflowSubmissionsTask#PREVIEW_USER" value1="${userEmailAddress}" />
 	</command>
 </definition>

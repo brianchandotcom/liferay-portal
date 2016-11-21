@@ -67,6 +67,7 @@ class WikiPortlet extends PortletBase {
 		);
 
 		if (confirm(confirmMessage)) {
+			this.one('form').setAttribute('action', this.renderUrl);
 			this.save_();
 		} else {
 			formatSelect.selectedIndex = this.currentFormatIndex;
@@ -181,6 +182,16 @@ WikiPortlet.STATE = {
 	 * @type {String}
 	 */
 	currentAction: {
+		validator: core.isString
+	},
+
+	/**
+	 * The render url of the portlet
+	 * @instance
+	 * @memberof WikiPortlet
+	 * @type {String}
+	 */
+	renderUrl: {
 		validator: core.isString
 	},
 

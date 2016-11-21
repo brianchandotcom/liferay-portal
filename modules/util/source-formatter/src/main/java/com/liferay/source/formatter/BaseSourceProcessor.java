@@ -2530,6 +2530,28 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return false;
 	}
 
+	protected boolean isAllowedVariableType(
+		String content, String variableName,
+		String[] variableTypeRegexStrings) {
+
+		if (variableTypeRegexStrings.length == 0) {
+			return true;
+		}
+
+		for (String variableTypeRegex : variableTypeRegexStrings) {
+			Pattern pattern = Pattern.compile(
+				variableTypeRegex + " " + variableName + "\\W");
+
+			Matcher matcher = pattern.matcher(content);
+
+			if (matcher.find()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isAttributName(String attributeName) {
 		if (Validator.isNull(attributeName)) {
 			return false;
@@ -2744,7 +2766,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String sortMethodCalls(
 		String content, Pattern codeBlockPattern,
-		Pattern singleLineMethodCallPattern) {
+		Pattern singleLineMethodCallPattern,
+		String... variableTypeRegexStrings) {
 
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
 
@@ -2752,6 +2775,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			new PutOrSetParameterNameComparator();
 
 		while (codeBlockMatcher.find()) {
+			if (!isAllowedVariableType(
+					content, codeBlockMatcher.group(2),
+					variableTypeRegexStrings)) {
+
+				continue;
+			}
+
 			String codeBlock = codeBlockMatcher.group();
 
 			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
@@ -2944,7 +2974,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
 	protected static Pattern putMethodCallBlockPattern = Pattern.compile(
-		"(\t*\\w*\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
+		"(\t*(\\w*)\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
 	protected static Pattern putMethodCallPattern = Pattern.compile(
 		"\t*\\w*\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern sbAppendPattern = Pattern.compile(
@@ -2958,7 +2988,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 	protected static Pattern setAttributeMethodCallBlockPattern =
 		Pattern.compile(
-			"(\t*\\w*\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
+			"(\t*(\\w*)\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
 	protected static Pattern setAttributeMethodCallPattern = Pattern.compile(
 		"\t*\\w*\\.setAttribute\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern singleLengthStringPattern = Pattern.compile(

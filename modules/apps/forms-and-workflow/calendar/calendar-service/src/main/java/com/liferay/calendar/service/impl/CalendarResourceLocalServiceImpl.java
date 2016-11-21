@@ -114,14 +114,16 @@ public class CalendarResourceLocalServiceImpl
 		// Calendar
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
-			serviceContext.setAddGroupPermissions(true);
-			serviceContext.setAddGuestPermissions(true);
+			ServiceContext calendarServiceContext = new ServiceContext();
+
+			calendarServiceContext.setAddGroupPermissions(true);
+			calendarServiceContext.setAddGuestPermissions(true);
 
 			calendarLocalService.addCalendar(
 				userId, calendarResource.getGroupId(), calendarResourceId,
 				nameMap, descriptionMap, calendarResource.getTimeZoneId(),
 				CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT, true,
-				false, false, serviceContext);
+				false, false, calendarServiceContext);
 		}
 
 		// Asset

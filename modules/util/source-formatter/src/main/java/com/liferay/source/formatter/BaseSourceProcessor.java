@@ -2934,9 +2934,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
 	protected static Pattern jsonObjectPutBlockPattern = Pattern.compile(
-		"(\t*\\w*(json|JSON)Object\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
+		"(\t*\\w*\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
 	protected static Pattern jsonObjectPutPattern = Pattern.compile(
-		"\t*\\w*(?:json|JSON)Object\\.put\\((.*?)\\);\n", Pattern.DOTALL);
+		"\t*\\w*\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static Pattern mergeLangPattern = Pattern.compile(

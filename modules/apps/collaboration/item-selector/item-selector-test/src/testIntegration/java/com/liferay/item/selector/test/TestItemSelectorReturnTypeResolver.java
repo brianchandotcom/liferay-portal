@@ -33,6 +33,7 @@ public class TestItemSelectorReturnTypeResolver implements
 		return String.class;
 	}
 
+	@Override
 	public String getValue(String s, ThemeDisplay themeDisplay)
 		throws Exception {
 

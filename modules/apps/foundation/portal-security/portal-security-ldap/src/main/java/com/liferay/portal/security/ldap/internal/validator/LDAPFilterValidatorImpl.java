@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = LDAPFilterValidator.class)
 public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 
+	@Override
 	public boolean isValid(String filter) {
 		if (Validator.isNull(filter)) {
 			return true;
@@ -62,12 +63,14 @@ public class LDAPFilterValidatorImpl implements LDAPFilterValidator {
 		return true;
 	}
 
+	@Override
 	public void validate(String filter) throws LDAPFilterException {
 		if (!isValid(filter)) {
 			throw new LDAPFilterException("Invalid filter " + filter);
 		}
 	}
 
+	@Override
 	public void validate(String filter, String filterPropertyName)
 		throws LDAPFilterException {
 

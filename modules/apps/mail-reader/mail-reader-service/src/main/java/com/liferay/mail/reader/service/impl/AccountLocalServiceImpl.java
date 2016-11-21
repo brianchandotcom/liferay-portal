@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 
+	@Override
 	public Account addAccount(
 			long userId, String address, String personalName, String protocol,
 			String incomingHostName, int incomingPort, boolean incomingSecure,
@@ -114,6 +115,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		return deleteAccount(account);
 	}
 
+	@Override
 	public void deleteAccounts(long userId) throws PortalException {
 		List<Account> accounts = accountPersistence.findByUserId(userId);
 
@@ -122,16 +124,19 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public Account getAccount(long userId, String address)
 		throws PortalException {
 
 		return accountPersistence.findByU_A(userId, address);
 	}
 
+	@Override
 	public List<Account> getAccounts(long userId) {
 		return accountPersistence.findByUserId(userId);
 	}
 
+	@Override
 	public Account updateAccount(
 			long accountId, String personalName, String password,
 			boolean savePassword, String signature, boolean useSignature,
@@ -161,6 +166,7 @@ public class AccountLocalServiceImpl extends AccountLocalServiceBaseImpl {
 		return account;
 	}
 
+	@Override
 	public Account updateFolders(
 			long accountId, long inboxFolderId, long draftFolderId,
 			long sentFolderId, long trashFolderId)

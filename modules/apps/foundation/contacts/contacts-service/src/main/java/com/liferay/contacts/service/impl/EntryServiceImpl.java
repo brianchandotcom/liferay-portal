@@ -31,6 +31,7 @@ import java.util.List;
  */
 public class EntryServiceImpl extends EntryServiceBaseImpl {
 
+	@Override
 	public JSONArray searchUsersAndContacts(
 			long companyId, String keywords, int start, int end)
 		throws PortalException {

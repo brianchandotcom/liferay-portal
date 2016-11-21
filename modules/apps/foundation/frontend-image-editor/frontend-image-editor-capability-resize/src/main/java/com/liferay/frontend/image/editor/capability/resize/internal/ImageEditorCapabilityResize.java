@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class ImageEditorCapabilityResize extends BaseImageEditorCapability {
 
+	@Override
 	public String getLabel(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -49,10 +50,12 @@ public class ImageEditorCapabilityResize extends BaseImageEditorCapability {
 		return ResourceBundleUtil.getString(resourceBundle, "resize");
 	}
 
+	@Override
 	public String getName() {
 		return "resize";
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}

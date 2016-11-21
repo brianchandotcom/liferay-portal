@@ -57,6 +57,7 @@ import org.apache.axis.message.MessageElement;
 public class V2ServiceDescriptionServiceImpl
 	extends BaseServiceImpl implements WSRP_v2_ServiceDescription_PortType {
 
+	@Override
 	public ServiceDescription getServiceDescription(
 			GetServiceDescription getServiceDescription)
 		throws RemoteException {

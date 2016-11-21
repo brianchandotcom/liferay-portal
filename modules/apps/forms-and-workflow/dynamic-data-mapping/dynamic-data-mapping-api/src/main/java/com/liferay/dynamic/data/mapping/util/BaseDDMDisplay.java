@@ -67,14 +67,17 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.DDM_STRUCTURE";
 	}
 
+	@Override
 	public String getConfirmSelectStructureMessage(Locale locale) {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public String getConfirmSelectTemplateMessage(Locale locale) {
 		return StringPool.BLANK;
 	}
 
+	@Override
 	public DDMNavigationHelper getDDMNavigationHelper() {
 		return new DDMNavigationHelperImpl();
 	}

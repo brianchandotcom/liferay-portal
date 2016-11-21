@@ -30,10 +30,12 @@ import org.osgi.service.component.annotations.Component;
 )
 public class IMAPMailboxFactory implements MailboxFactory {
 
+	@Override
 	public Mailbox getMailbox(User user, Account account, String password) {
 		return new IMAPMailbox(user, account, password);
 	}
 
+	@Override
 	public Mailbox getMailbox(User user, String protocol) {
 		return new IMAPMailbox(user, null, StringPool.BLANK);
 	}
@@ -43,6 +45,7 @@ public class IMAPMailboxFactory implements MailboxFactory {
 		return "imap";
 	}
 
+	@Override
 	public void initialize() {
 	}
 

@@ -44,6 +44,7 @@ import java.util.List;
  */
 public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 
+	@Override
 	public Message addMessage(
 			long userId, long folderId, String sender, String to, String cc,
 			String bcc, Date sentDate, String subject, String body,
@@ -123,6 +124,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return message;
 	}
 
+	@Override
 	public void deleteMessages(long folderId) throws PortalException {
 		List<Message> messages = messagePersistence.findByFolderId(folderId);
 
@@ -131,6 +133,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public int getAccountUnreadMessagesCount(long accountId) {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			Message.class, getClassLoader());
@@ -144,24 +147,29 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
+	@Override
 	public List<Message> getCompanyMessages(
 		long companyId, int start, int end) {
 
 		return messagePersistence.findByCompanyId(companyId, start, end);
 	}
 
+	@Override
 	public int getCompanyMessagesCount(long companyId) {
 		return messagePersistence.countByCompanyId(companyId);
 	}
 
+	@Override
 	public List<Message> getFolderMessages(long folderId) {
 		return messagePersistence.findByFolderId(folderId);
 	}
 
+	@Override
 	public int getFolderMessagesCount(long folderId) {
 		return messagePersistence.countByFolderId(folderId);
 	}
 
+	@Override
 	public int getFolderUnreadMessagesCount(long folderId) {
 		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
 			Message.class, getClassLoader());
@@ -175,12 +183,14 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(dynamicQuery);
 	}
 
+	@Override
 	public Message getMessage(long folderId, long remoteMessageId)
 		throws PortalException {
 
 		return messagePersistence.findByF_R(folderId, remoteMessageId);
 	}
 
+	@Override
 	public Message getRemoteMessage(long folderId, boolean oldest)
 		throws PortalException {
 
@@ -208,6 +218,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return messages.get(0);
 	}
 
+	@Override
 	public int populateMessages(
 		List<Message> messages, long folderId, String keywords, int pageNumber,
 		int messagesPerPage, String orderByField, String orderByType) {
@@ -253,6 +264,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return (int)dynamicQueryCount(countDynamicQuery);
 	}
 
+	@Override
 	public Message updateContent(long messageId, String body, String flags)
 		throws PortalException {
 
@@ -269,6 +281,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return message;
 	}
 
+	@Override
 	public Message updateFlag(long messageId, int flag, boolean value)
 		throws PortalException {
 
@@ -288,6 +301,7 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		return messagePersistence.update(message);
 	}
 
+	@Override
 	public Message updateMessage(
 			long messageId, long folderId, String sender, String to, String cc,
 			String bcc, Date sentDate, String subject, String body,

@@ -74,6 +74,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public Folder addFolder(String displayName) throws PortalException {
 		String[] names = _imapAccessor.addFolder(displayName);
 
@@ -81,10 +82,12 @@ public class IMAPMailbox extends BaseMailbox {
 			user.getUserId(), account.getAccountId(), names[0], names[1], 0);
 	}
 
+	@Override
 	public void deleteAttachment(long attachmentId) throws PortalException {
 		AttachmentLocalServiceUtil.deleteAttachment(attachmentId);
 	}
 
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		if ((account.getDraftFolderId() == folderId) ||
 			(account.getInboxFolderId() == folderId) ||
@@ -99,6 +102,7 @@ public class IMAPMailbox extends BaseMailbox {
 		FolderLocalServiceUtil.deleteFolder(folderId);
 	}
 
+	@Override
 	public void deleteMessages(long folderId, long[] messageIds)
 		throws PortalException {
 
@@ -116,6 +120,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public AttachmentHandler getAttachment(long attachmentId)
 		throws IOException, PortalException {
 
@@ -136,6 +141,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public Message getMessage(
 			long folderId, String keywords, int messageNumber,
 			String orderByField, String orderByType)
@@ -149,6 +155,7 @@ public class IMAPMailbox extends BaseMailbox {
 		return messages.get(0);
 	}
 
+	@Override
 	public MessagesDisplay getMessagesDisplay(
 			long folderId, String keywords, int pageNumber, int messagesPerPage,
 			String orderByField, String orderByType)
@@ -186,10 +193,12 @@ public class IMAPMailbox extends BaseMailbox {
 			messages, pageNumber, messagesPerPage, messageCount);
 	}
 
+	@Override
 	public boolean hasNewMessages(long folderId) throws PortalException {
 		return _imapAccessor.hasNewMessages(folderId);
 	}
 
+	@Override
 	public void moveMessages(long folderId, long[] messageIds)
 		throws PortalException {
 
@@ -213,6 +222,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public InternetAddress[] parseAddresses(String addresses)
 		throws PortalException {
 
@@ -245,6 +255,7 @@ public class IMAPMailbox extends BaseMailbox {
 		return internetAddresses;
 	}
 
+	@Override
 	public void renameFolder(long folderId, String displayName)
 		throws PortalException {
 
@@ -256,6 +267,7 @@ public class IMAPMailbox extends BaseMailbox {
 			folderId, names[0], names[1], folder.getRemoteMessageCount());
 	}
 
+	@Override
 	public Message saveDraft(
 			long accountId, long messageId, String to, String cc, String bcc,
 			String subject, String body, List<MailFile> mailFiles)
@@ -312,6 +324,7 @@ public class IMAPMailbox extends BaseMailbox {
 		return message;
 	}
 
+	@Override
 	public void sendMessage(long accountId, long messageId)
 		throws PortalException {
 
@@ -352,6 +365,7 @@ public class IMAPMailbox extends BaseMailbox {
 		MessageLocalServiceUtil.deleteMessage(messageId);
 	}
 
+	@Override
 	public void synchronize() throws PortalException {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -379,6 +393,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public void synchronizeFolder(long folderId) throws PortalException {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Synchronizing folder " + folderId);
@@ -397,6 +412,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public void synchronizeMessage(long messageId) throws PortalException {
 		Message message = MessageLocalServiceUtil.getMessage(messageId);
 
@@ -416,6 +432,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public void synchronizePage(
 			long folderId, int pageNumber, int messagesPerPage)
 		throws PortalException {
@@ -445,6 +462,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public void updateFlags(
 			long folderId, long[] messageIds, int flag, boolean value)
 		throws PortalException {
@@ -466,6 +484,7 @@ public class IMAPMailbox extends BaseMailbox {
 		}
 	}
 
+	@Override
 	public void updateFolders() throws PortalException {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Updating folders");
@@ -514,6 +533,7 @@ public class IMAPMailbox extends BaseMailbox {
 			inboxFolderId, draftFolderId, sentFolderId, trashFolderId);
 	}
 
+	@Override
 	public void validateAccount(
 			String incomingHostName, int incomingPort, boolean incomingSecure,
 			String outgoingHostName, int outgoingPort, boolean outgoingSecure,

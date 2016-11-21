@@ -22,6 +22,7 @@ public class WSRPProducerImpl extends WSRPProducerBaseImpl {
 	public WSRPProducerImpl() {
 	}
 
+	@Override
 	public String getURL(String prefixURL) {
 		return prefixURL + "/wsdl/" + getUuid();
 	}

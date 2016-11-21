@@ -97,4 +97,47 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
+
+	<command name="ViewUserPreview" priority="4">
+		<description message="This is a use case for LPS-69190." />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Workflow Configuration" />
+		</execute>
+
+		<execute macro="Workflow#configureWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceValue" value="User" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="WorkflowAsset#createNewUserAccount">
+			<var name="userEmailAddress" value="user@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="WorkflowAsset#gotoViaNotification">
+			<var name="assetType" value="User" />
+		</execute>
+
+		<execute macro="WorkflowAsset#viewUserDetails">
+			<var name="userEmailAddress" value="user@liferay.com" />
+		</execute>
+
+		<execute macro="Workflow#gotoPreviewView" />
+
+		<execute macro="WorkflowAsset#viewUserDetails">
+			<var name="userEmailAddress" value="user@liferay.com" />
+		</execute>
+	</command>
 </definition>

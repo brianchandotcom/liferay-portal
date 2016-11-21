@@ -1077,7 +1077,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileName, absolutePath, newContent, languageKeyPattern);
 
 		newContent = sortMethodCalls(
-			newContent, putMethodCallBlockPattern, putMethodCallPattern);
+			newContent, putMethodCallBlockPattern, putMethodCallPattern,
+			"JSONObject", "Map<.*>");
 		newContent = sortMethodCalls(
 			newContent, setAttributeMethodCallBlockPattern,
 			setAttributeMethodCallPattern);

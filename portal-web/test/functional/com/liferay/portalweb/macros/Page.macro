@@ -607,6 +607,37 @@
 		</execute>
 	</command>
 
+	<command name="manageMDRDeviceFamilyActions">
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#MANAGE_ACTIONS" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Click" locator1="Button#ADD_ACTION" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${actionName}" />
+
+		<var name="key_actionType" value="${actionType}" />
+
+		<execute function="Click" locator1="MobileDevice#ADD_ACTION_TYPE_OPTION" />
+
+		<if>
+			<equals arg1="${actionType}" arg2="Redirect to URL" />
+			<then>
+				<execute function="Type" locator1="TextInput#URL" value1="${actionURL}" />
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<var name="key_modalTitle" value="Actions" />
+
+		<execute function="Click" locator1="Button#CLOSE_MODAL" />
+	</command>
+
 	<command name="openURLLocale">
 		<execute function="Open" locator1="${localizationPageURL}" />
 
@@ -620,48 +651,15 @@
 	</command>
 
 	<command name="selectMDRDeviceFamily">
-		<var name="key_deviceFamilyName" value="${deviceFamilyName}" />
-		<var name="key_modalTitle" value="Actions" />
-
-		<execute function="AssertClick" locator1="Button#MOBILE_DEVICE_RULES_SELECT" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT_MOBILE_DEVICE_RULES" value1="Select" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="key_deviceFamilyName" value="${deviceFamilyName}" />
 
 		<execute function="AssertClick" locator1="MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK" value1="${deviceFamilyName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-
-		<if>
-			<isset var='actionName' />
-			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
-
-				<execute function="Click" locator1="MobileDevice#DEVICE_FAMILY_MENULIST_ACTIONS" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<execute function="Click" locator1="MobileDevice#ADD_ACTION_BUTTON" />
-
-				<execute function="Type" locator1="TextInput#NAME" value1="${actionName}" />
-
-				<if>
-					<equals arg1="${actionType}" arg2="Redirect to URL" />
-					<then>
-						<var name="key_actionType" value="${actionType}" />
-
-						<execute function="Click" locator1="MobileDevice#ADD_ACTION_TYPE_OPTION" />
-
-						<execute function="Type" locator1="TextInput#URL" value1="https://www.google.com/" />
-					</then>
-				</if>
-
-				<execute macro="Button#clickSave" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="Click" locator1="Button#CLOSE_MODAL" />
-			</then>
-		</if>
 	</command>
 
 	<command name="selectSitePagesVariationName">

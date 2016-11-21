@@ -4516,7 +4516,6 @@ go]]></replacevalue>
 			<elseif>
 				<and>
 					<equals arg1="${database.type}" arg2="sybase" />
-					<equals arg1="${database.version}" arg2="16.0" />
 				</and>
 				<then>
 					<delete failonerror="false" includeemptydirs="true">
@@ -4528,7 +4527,7 @@ go]]></replacevalue>
 
 					<mirrors-get
 						dest="${todir}"
-						src="${test.jdbc.drivers.url}/sybase/16.0/${jdbc.sybase.driver}"
+						src="${test.jdbc.drivers.url}/sybase/${database.version}/${jdbc.sybase.driver}"
 					/>
 				</then>
 			</elseif>

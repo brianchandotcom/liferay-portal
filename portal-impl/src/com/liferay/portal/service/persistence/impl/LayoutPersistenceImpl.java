@@ -5137,6 +5137,240 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "layout.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PRIVATELAYOUT_2 = "layout.privateLayout = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_I_P = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByI_P",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			LayoutModelImpl.ICONIMAGEID_COLUMN_BITMASK |
+			LayoutModelImpl.PRIVATELAYOUT_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_I_P = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
+			LayoutModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByI_P",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns the layout where iconImageId = &#63; and privateLayout = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param privateLayout the private layout
+	 * @return the matching layout
+	 * @throws NoSuchLayoutException if a matching layout could not be found
+	 */
+	@Override
+	public Layout findByI_P(long iconImageId, boolean privateLayout)
+		throws NoSuchLayoutException {
+		Layout layout = fetchByI_P(iconImageId, privateLayout);
+
+		if (layout == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("iconImageId=");
+			msg.append(iconImageId);
+
+			msg.append(", privateLayout=");
+			msg.append(privateLayout);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchLayoutException(msg.toString());
+		}
+
+		return layout;
+	}
+
+	/**
+	 * Returns the layout where iconImageId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param privateLayout the private layout
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByI_P(long iconImageId, boolean privateLayout) {
+		return fetchByI_P(iconImageId, privateLayout, true);
+	}
+
+	/**
+	 * Returns the layout where iconImageId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param privateLayout the private layout
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching layout, or <code>null</code> if a matching layout could not be found
+	 */
+	@Override
+	public Layout fetchByI_P(long iconImageId, boolean privateLayout,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { iconImageId, privateLayout };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_I_P,
+					finderArgs, this);
+		}
+
+		if (result instanceof Layout) {
+			Layout layout = (Layout)result;
+
+			if ((iconImageId != layout.getIconImageId()) ||
+					(privateLayout != layout.getPrivateLayout())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_I_P_ICONIMAGEID_2);
+
+			query.append(_FINDER_COLUMN_I_P_PRIVATELAYOUT_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(iconImageId);
+
+				qPos.add(privateLayout);
+
+				List<Layout> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_I_P, finderArgs,
+						list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"LayoutPersistenceImpl.fetchByI_P(long, boolean, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					Layout layout = list.get(0);
+
+					result = layout;
+
+					cacheResult(layout);
+
+					if ((layout.getIconImageId() != iconImageId) ||
+							(layout.getPrivateLayout() != privateLayout)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_I_P,
+							finderArgs, layout);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_I_P, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Layout)result;
+		}
+	}
+
+	/**
+	 * Removes the layout where iconImageId = &#63; and privateLayout = &#63; from the database.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param privateLayout the private layout
+	 * @return the layout that was removed
+	 */
+	@Override
+	public Layout removeByI_P(long iconImageId, boolean privateLayout)
+		throws NoSuchLayoutException {
+		Layout layout = findByI_P(iconImageId, privateLayout);
+
+		return remove(layout);
+	}
+
+	/**
+	 * Returns the number of layouts where iconImageId = &#63; and privateLayout = &#63;.
+	 *
+	 * @param iconImageId the icon image ID
+	 * @param privateLayout the private layout
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByI_P(long iconImageId, boolean privateLayout) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_I_P;
+
+		Object[] finderArgs = new Object[] { iconImageId, privateLayout };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			query.append(_FINDER_COLUMN_I_P_ICONIMAGEID_2);
+
+			query.append(_FINDER_COLUMN_I_P_PRIVATELAYOUT_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(iconImageId);
+
+				qPos.add(privateLayout);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_I_P_ICONIMAGEID_2 = "layout.iconImageId = ? AND ";
+	private static final String _FINDER_COLUMN_I_P_PRIVATELAYOUT_2 = "layout.privateLayout = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_P_L = new FinderPath(LayoutModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutModelImpl.FINDER_CACHE_ENABLED, LayoutImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_P_L",
@@ -9088,6 +9322,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		finderCache.putResult(FINDER_PATH_FETCH_BY_ICONIMAGEID,
 			new Object[] { layout.getIconImageId() }, layout);
 
+		finderCache.putResult(FINDER_PATH_FETCH_BY_I_P,
+			new Object[] { layout.getIconImageId(), layout.getPrivateLayout() },
+			layout);
+
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_P_L,
 			new Object[] {
 				layout.getGroupId(), layout.getPrivateLayout(),
@@ -9193,6 +9431,16 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 			layoutModelImpl, false);
 
 		args = new Object[] {
+				layoutModelImpl.getIconImageId(),
+				layoutModelImpl.getPrivateLayout()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_I_P, args, Long.valueOf(1),
+			false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_I_P, args, layoutModelImpl,
+			false);
+
+		args = new Object[] {
 				layoutModelImpl.getGroupId(), layoutModelImpl.getPrivateLayout(),
 				layoutModelImpl.getLayoutId()
 			};
@@ -9262,6 +9510,27 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_ICONIMAGEID, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_ICONIMAGEID, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					layoutModelImpl.getIconImageId(),
+					layoutModelImpl.getPrivateLayout()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_I_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_I_P, args);
+		}
+
+		if ((layoutModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_I_P.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					layoutModelImpl.getOriginalIconImageId(),
+					layoutModelImpl.getOriginalPrivateLayout()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_I_P, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_I_P, args);
 		}
 
 		if (clearCurrent) {

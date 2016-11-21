@@ -629,8 +629,6 @@
 			<var name="tagName" value="tag name" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
-
 		<execute macro="ProductMenu#gotoSitesPublishing">
 			<var name="portlet" value="Staging" />
 		</execute>
@@ -1962,7 +1960,6 @@
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
-		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
@@ -3569,8 +3566,6 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute function="Pause" locator1="3000" />
-
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Site Name" />
 		</execute>
@@ -3688,8 +3683,6 @@
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
-
-		<execute function="Pause" locator1="5000" />
 
 		<var name="key_webContentTitle" value="Web Content Title" />
 
@@ -4395,8 +4388,6 @@
 		<execute macro="User#deactivateCP">
 			<var name="userFirstName" value="userfn" />
 		</execute>
-
-		<execute function="Pause" locator1="3000" />
 
 		<execute macro="User#deleteCP" />
 

@@ -109,8 +109,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setLanguageId("fr_FR");
 
 		CalendarBooking calendarBooking = addRegularCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			serviceContext);
 
 		Assert.assertEquals(
 			"fr_FR",
@@ -138,7 +138,7 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addCalendarBooking(
-			_invitingUser.getUserId(), calendar.getCalendarId(),
+			_invitingUser, calendar,
 			new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, null,
@@ -179,8 +179,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
 
@@ -220,8 +220,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
 
@@ -274,8 +274,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
 
@@ -315,8 +315,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
 
@@ -358,8 +358,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		long calendarBookingId = calendarBooking.getCalendarBookingId();
 
@@ -394,8 +394,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		Map<Locale, String> instanceTitleMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -455,8 +455,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		Map<Locale, String> instanceTitleMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -511,9 +511,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -539,9 +538,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -564,9 +562,8 @@ public class CalendarBookingLocalServiceTest {
 		long startTime = System.currentTimeMillis();
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -595,8 +592,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addRegularCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			serviceContext);
 
 		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 			calendarBooking.getCalendarBookingId());
@@ -616,8 +613,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		CalendarBooking calendarBooking = addRegularCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
@@ -653,9 +650,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -697,9 +693,8 @@ public class CalendarBookingLocalServiceTest {
 		long startTime = System.currentTimeMillis();
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -736,8 +731,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		CalendarBooking calendarBooking = addRegularCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			serviceContext);
 
 		calendarBooking = CalendarBookingLocalServiceUtil.fetchCalendarBooking(
 			calendarBooking.getCalendarBookingId());
@@ -757,8 +752,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		CalendarBooking calendarBooking = addRegularCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -789,8 +784,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addRegularCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			serviceContext);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -833,8 +828,8 @@ public class CalendarBookingLocalServiceTest {
 			Collections.<PositionalWeekday>emptyList());
 
 		addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 	}
 
 	@Test
@@ -855,8 +850,7 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime, endTime,
-			recurrence, serviceContext);
+			_user, calendar, startTime, endTime, recurrence, serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
 
@@ -901,8 +895,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		Map<Locale, String> instanceTitleMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -955,8 +949,7 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()},
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime,
 			startTime + (Time.HOUR * 10), null, RandomTestUtil.randomInt(),
@@ -1030,9 +1023,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime, endTime,
-			serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, endTime, serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -1105,9 +1097,9 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarBooking calendarBooking =
 			addRegularCalendarBookingWithTitleAndDescription(
-				_user.getUserId(), calendar.getCalendarId(),
-				RandomTestUtil.randomLocaleStringMap(), oldDescriptionMap,
-				startTime, startTime + (Time.HOUR * 10), serviceContext);
+				_user, calendar, RandomTestUtil.randomLocaleStringMap(),
+				oldDescriptionMap, startTime, startTime + (Time.HOUR * 10),
+				serviceContext);
 
 		Map<Locale, String> newDescriptionMap = new HashMap<>();
 
@@ -1162,7 +1154,7 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarBooking calendarBooking =
 			addRegularCalendarBookingWithTitleAndDescription(
-				_user.getUserId(), calendar.getCalendarId(), oldTitleMap,
+				_user, calendar, oldTitleMap,
 				RandomTestUtil.randomLocaleStringMap(), startTime,
 				startTime + (Time.HOUR * 10), serviceContext);
 
@@ -1214,9 +1206,8 @@ public class CalendarBookingLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		CalendarBooking calendarBooking = addMasterCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(),
-			new long[] {invitedCalendar.getCalendarId()}, startTime,
-			startTime + (Time.HOUR * 10), serviceContext);
+			_user, calendar, new long[] {invitedCalendar.getCalendarId()},
+			startTime, startTime + (Time.HOUR * 10), serviceContext);
 
 		CalendarBooking childCalendarBooking = getChildCalendarBooking(
 			calendarBooking);
@@ -1263,8 +1254,8 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user, calendar, startTime, startTime + (Time.HOUR * 10),
+			recurrence, serviceContext);
 
 		Map<Locale, String> instanceTitleMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -1324,7 +1315,7 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	protected CalendarBooking addCalendarBooking(
-			long userId, long calendarId, long[] childCalendarBookingIds,
+			User user, Calendar calendar, long[] childCalendarBookingIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			long startTime, long endTime, Recurrence recurrence,
 			int firstReminder, NotificationType firstReminderType,
@@ -1346,7 +1337,8 @@ public class CalendarBookingLocalServiceTest {
 
 		CalendarBooking calendarBooking =
 			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				userId, calendarId, childCalendarBookingIds,
+				user.getUserId(), calendar.getCalendarId(),
+				childCalendarBookingIds,
 				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
 				titleMap, descriptionMap, RandomTestUtil.randomString(),
@@ -1359,50 +1351,48 @@ public class CalendarBookingLocalServiceTest {
 	}
 
 	protected CalendarBooking addMasterCalendarBooking(
-			long userId, long calendarId, long[] childCalendarBookingIds,
+			User user, Calendar calendar, long[] childCalendarBookingIds,
 			long startTime, long endTime, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCalendarBooking(
-			userId, calendarId, childCalendarBookingIds,
+			user, calendar, childCalendarBookingIds,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, null, 0,
 			null, 0, null, serviceContext);
 	}
 
 	protected CalendarBooking addRecurringCalendarBooking(
-			long userId, long calendarId, long startTime, long endTime,
+			User user, Calendar calendar, long startTime, long endTime,
 			Recurrence recurrence, ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCalendarBooking(
-			userId, calendarId, new long[0],
-			RandomTestUtil.randomLocaleStringMap(),
+			user, calendar, new long[0], RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime,
 			recurrence, 0, null, 0, null, serviceContext);
 	}
 
 	protected CalendarBooking addRegularCalendarBooking(
-			long userId, long calendarId, long startTime, long endTime,
+			User user, Calendar calendar, long startTime, long endTime,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCalendarBooking(
-			userId, calendarId, new long[0],
-			RandomTestUtil.randomLocaleStringMap(),
+			user, calendar, new long[0], RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), startTime, endTime, null, 0,
 			null, 0, null, serviceContext);
 	}
 
 	protected CalendarBooking addRegularCalendarBookingWithTitleAndDescription(
-			long userId, long calendarId, Map<Locale, String> titleMap,
+			User user, Calendar calendar, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, long startTime, long endTime,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCalendarBooking(
-			userId, calendarId, new long[0], titleMap, descriptionMap,
-			startTime, endTime, null, 0, null, 0, null, serviceContext);
+			user, calendar, new long[0], titleMap, descriptionMap, startTime,
+			endTime, null, 0, null, 0, null, serviceContext);
 	}
 
 	protected ServiceContext createServiceContext() {

@@ -843,11 +843,7 @@ public class CalendarBookingLocalServiceTest {
 
 		ServiceContext serviceContext = createServiceContext();
 
-		CalendarResource calendarResource =
-			CalendarResourceUtil.getUserCalendarResource(
-				_user.getUserId(), serviceContext);
-
-		Calendar calendar = calendarResource.getDefaultCalendar();
+		Calendar calendar = addCalendar(_user, serviceContext);
 
 		long startTime = System.currentTimeMillis();
 
@@ -858,16 +854,9 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setFrequency(Frequency.DAILY);
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
-		CalendarBooking calendarBooking =
-			CalendarBookingLocalServiceUtil.addCalendarBooking(
-				_user.getUserId(), calendar.getCalendarId(), new long[0],
-				CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
-				CalendarBookingConstants.RECURRING_CALENDAR_BOOKING_ID_DEFAULT,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomString(), startTime, endTime, false,
-				RecurrenceSerializer.serialize(recurrence), 0, null, 0, null,
-				serviceContext);
+		CalendarBooking calendarBooking = addRecurringCalendarBooking(
+			_user.getUserId(), calendar.getCalendarId(), startTime, endTime,
+			recurrence, serviceContext);
 
 		long instanceStartTime = startTime + Time.DAY * 2;
 

@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageConstants;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -61,7 +63,11 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
+import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.InactiveRequestHandler;
@@ -434,7 +440,7 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	protected Image getImage(HttpServletRequest request, boolean getDefault)
-		throws PortalException {
+		throws Exception {
 
 		Image image = null;
 
@@ -450,6 +456,80 @@ public class WebServerServlet extends HttpServlet {
 				path.startsWith("/user_portrait")) {
 
 				image = getUserPortraitImageResized(image, imageId);
+			}
+			else if (path.startsWith("/layout_set_logo")) {
+				LayoutSet layoutSet =
+					LayoutSetLocalServiceUtil.fetchLayoutSetByLogoId(
+						imageId, true);
+
+				if (layoutSet != null) {
+					long classPK = layoutSet.getLayoutSetId();
+					String className = LayoutSet.class.getName();
+					long groupId = layoutSet.getGroupId();
+
+					User user = PortalUtil.getUser(request);
+
+					if (user == null) {
+						long companyId = PortalUtil.getCompanyId(request);
+
+						user = UserLocalServiceUtil.getDefaultUser(companyId);
+					}
+
+					PermissionChecker permissionChecker =
+						PermissionCheckerFactoryUtil.create(user);
+
+					if (!GroupPermissionUtil.contains(
+							permissionChecker, groupId, ActionKeys.VIEW)) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Error checking permissions for user " +
+									user.getUserId());
+						}
+
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker, className, classPK,
+							ActionKeys.VIEW);
+					}
+				}
+			}
+			else if (path.startsWith("/logo") ||
+					 path.startsWith("/layout_icon")) {
+
+				Layout layout = LayoutLocalServiceUtil.fetchLayoutByIconImageId(
+					imageId, true);
+
+				if (layout != null) {
+					long classPK = layout.getLayoutId();
+					String className = Layout.class.getName();
+					long groupId = layout.getGroupId();
+
+					User user = PortalUtil.getUser(request);
+
+					if (user == null) {
+						long companyId = PortalUtil.getCompanyId(request);
+
+						user = UserLocalServiceUtil.getDefaultUser(companyId);
+					}
+
+					PermissionChecker permissionChecker =
+						PermissionCheckerFactoryUtil.create(user);
+
+					if (!LayoutPermissionUtil.contains(
+							permissionChecker, groupId, true, classPK,
+							ActionKeys.VIEW)) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Error checking permissions for user " +
+									user.getUserId());
+						}
+
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker, className, classPK,
+							ActionKeys.VIEW);
+					}
+				}
 			}
 		}
 		else {

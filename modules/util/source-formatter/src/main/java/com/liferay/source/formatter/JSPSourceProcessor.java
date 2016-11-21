@@ -451,7 +451,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkSubnames(fileName, newContent);
 
 		newContent = sortMethodCalls(
-			newContent, putMethodCallBlockPattern, putMethodCallPattern);
+			newContent, putMethodCallBlockPattern, putMethodCallPattern,
+			"JSONObject", "Map<.*>");
 		newContent = sortMethodCalls(
 			newContent, setAttributeMethodCallBlockPattern,
 			setAttributeMethodCallPattern);

@@ -64,6 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 public class TextDDMFormFieldTemplateContextContributor
 	implements DDMFormFieldTemplateContextContributor {
 
+	@Override
 	public Map<String, Object> getParameters(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {

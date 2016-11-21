@@ -35,6 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ImageEditorIGDisplayContextFactory
 	implements IGDisplayContextFactory {
 
+	@Override
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,
@@ -43,6 +44,7 @@ public class ImageEditorIGDisplayContextFactory
 		return parentIGViewFileVersionDisplayContext;
 	}
 
+	@Override
 	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
 		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
 		HttpServletRequest request, HttpServletResponse response,

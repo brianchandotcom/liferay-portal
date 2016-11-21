@@ -46,6 +46,7 @@ public class VerifyResourceActionsTest extends BaseVerifyProcessTestCase {
 			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Before
+	@Override
 	@Transactional
 	public void setUp() throws Exception {
 		super.setUp();

@@ -36,6 +36,7 @@ public class EntriesChecker extends EmptyOnClickRowChecker {
 		_portletRequest = portletRequest;
 	}
 
+	@Override
 	public boolean isChecked(Object obj) {
 		AssetTag tag = (AssetTag)obj;
 

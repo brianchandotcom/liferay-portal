@@ -76,6 +76,7 @@ public class StagedLayoutSetStagedModelRepository
 
 	}
 
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -84,6 +85,7 @@ public class StagedLayoutSetStagedModelRepository
 
 	}
 
+	@Override
 	public void deleteStagedModels(PortletDataContext portletDataContext)
 		throws PortalException {
 
@@ -128,6 +130,7 @@ public class StagedLayoutSetStagedModelRepository
 		return Optional.ofNullable(stagedLayoutSet);
 	}
 
+	@Override
 	public StagedLayoutSet fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -152,6 +155,7 @@ public class StagedLayoutSetStagedModelRepository
 		}
 	}
 
+	@Override
 	public List<StagedLayoutSet> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -180,6 +184,7 @@ public class StagedLayoutSetStagedModelRepository
 		return stagedLayoutSetsStream.collect(Collectors.toList());
 	}
 
+	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) {
 

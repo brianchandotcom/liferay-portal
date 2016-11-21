@@ -37,6 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class SearchHitDocumentTranslatorImpl
 	implements SearchHitDocumentTranslator {
 
+	@Override
 	public Document translate(SearchHit searchHit) {
 		Document document = new DocumentImpl();
 

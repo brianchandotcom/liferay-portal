@@ -158,6 +158,7 @@ public class DeleteFileEntryPortletConfigurationIcon
 		}
 	}
 
+	@Override
 	public boolean isToolTip() {
 		return false;
 	}

@@ -150,6 +150,7 @@ public class GetFieldSettingsDDMFormContextMVCResourceCommand
 		return ddmFormValues;
 	}
 
+	@Override
 	protected void doServeResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {

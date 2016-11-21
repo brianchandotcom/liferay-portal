@@ -269,6 +269,7 @@ public class SummaryPortlet extends MVCPortlet {
 			group.getClassPK(), new long[] {themeDisplay.getUserId()});
 	}
 
+	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {

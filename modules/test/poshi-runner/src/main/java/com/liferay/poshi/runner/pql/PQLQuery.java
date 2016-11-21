@@ -53,6 +53,7 @@ public class PQLQuery extends PQLEntity {
 		_pqlEntity2 = PQLEntityFactory.newPQLEntity(queryTokens[2]);
 	}
 
+	@Override
 	public Object getPQLResult(Properties properties) throws Exception {
 		Object pqlResultObject = _pqlOperator.getPQLResult(
 			_pqlEntity1, _pqlEntity2, properties);

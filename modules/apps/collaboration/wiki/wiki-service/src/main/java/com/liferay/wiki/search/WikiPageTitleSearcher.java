@@ -108,6 +108,7 @@ public class WikiPageTitleSearcher extends BaseSearcher {
 		searchQuery.add(matchQuery, BooleanClauseOccur.MUST);
 	}
 
+	@Override
 	protected Map<String, Query> addSearchKeywords(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {

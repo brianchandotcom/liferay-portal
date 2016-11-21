@@ -66,6 +66,7 @@ public class EditWithImageEditorPortletConfigurationIcon
 			"edit-with-image-editor");
 	}
 
+	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

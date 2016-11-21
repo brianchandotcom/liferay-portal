@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
 public class StagedLayoutSetModelAdapterBuilder
 	implements ModelAdapterBuilder<LayoutSet, StagedLayoutSet> {
 
+	@Override
 	public StagedLayoutSet build(LayoutSet layoutSet) {
 		return new StagedLayoutSetImpl(layoutSet);
 	}

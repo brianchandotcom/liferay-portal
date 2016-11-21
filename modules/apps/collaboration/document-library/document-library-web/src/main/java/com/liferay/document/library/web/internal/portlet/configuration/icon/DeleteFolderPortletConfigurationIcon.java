@@ -77,6 +77,7 @@ public class DeleteFolderPortletConfigurationIcon
 			getResourceBundle(getLocale(portletRequest)), key);
 	}
 
+	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

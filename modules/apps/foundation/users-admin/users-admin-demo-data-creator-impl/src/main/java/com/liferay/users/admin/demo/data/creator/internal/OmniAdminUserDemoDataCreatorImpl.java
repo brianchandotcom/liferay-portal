@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 public class OmniAdminUserDemoDataCreatorImpl
 	extends BaseUserDemoDataCreator implements OmniAdminUserDemoDataCreator {
 
+	@Override
 	public User create(long companyId, String emailAddress)
 		throws PortalException {
 

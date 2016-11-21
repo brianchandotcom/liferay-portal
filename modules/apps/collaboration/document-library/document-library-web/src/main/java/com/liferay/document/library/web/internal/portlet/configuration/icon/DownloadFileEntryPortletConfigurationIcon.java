@@ -105,6 +105,7 @@ public class DownloadFileEntryPortletConfigurationIcon
 		return false;
 	}
 
+	@Override
 	public boolean isToolTip() {
 		return false;
 	}

@@ -3552,8 +3552,10 @@
 			<var name="marketingSelect" value="Company Philosophy" />
 		</execute>
 	</command>
+	
+	<!-- LPS-69322 -->
 
-	<command name="StagingRemoteLiveWebContent" priority="4">
+	<!--<command name="StagingRemoteLiveWebContent" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -3701,7 +3703,7 @@
 			<var name="structureDescription" value="Structure Description" />
 			<var name="structureName" value="Structure Name" />
 		</execute>
-	</command>
+	</command>-->
 
 	<command name="StagingSiteVariationIncompletePage" priority="4">
 		<execute macro="Navigator#openSiteURL">

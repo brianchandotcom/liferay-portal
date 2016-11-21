@@ -4241,12 +4241,6 @@
 
 		<execute macro="Form#clickSaveButton" />
 
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute macro="Alert#viewEmptyFieldMessage">
-			<var name="fieldLabel" value="Select" />
-		</execute>
-
 		<execute macro="Alert#closeMessageSpecific">
 			<var name="messageSpecific" value="Your request failed to complete." />
 		</execute>
@@ -4289,12 +4283,6 @@
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#clickSaveButton" />
-
-		<execute macro="Alert#viewRequestFailedToComplete" />
-
-		<execute macro="Alert#viewEmptyFieldMessage">
-			<var name="fieldLabel" value="Radio" />
-		</execute>
 
 		<execute macro="Alert#closeMessageSpecific">
 			<var name="messageSpecific" value="Your request failed to complete." />

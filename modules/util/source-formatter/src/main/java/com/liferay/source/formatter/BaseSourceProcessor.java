@@ -2742,8 +2742,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String sortPutOrSetCalls(
-		String content, Pattern codeBlockPattern, Pattern singleLinePattern) {
+	protected String sortMethodCalls(
+		String content, Pattern codeBlockPattern,
+		Pattern singleLineMethodCallPattern) {
 
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
 
@@ -2753,7 +2754,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		while (codeBlockMatcher.find()) {
 			String codeBlock = codeBlockMatcher.group();
 
-			Matcher singleLineMatcher = singleLinePattern.matcher(codeBlock);
+			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
+				codeBlock);
 
 			String previousParameters = null;
 			String previousPutOrSetParameterName = null;
@@ -2933,9 +2935,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.DOTALL);
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
-	protected static Pattern jsonObjectPutBlockPattern = Pattern.compile(
+	protected static Pattern putMethodCallBlockPattern = Pattern.compile(
 		"(\t*\\w*\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
-	protected static Pattern jsonObjectPutPattern = Pattern.compile(
+	protected static Pattern putMethodCallPattern = Pattern.compile(
 		"\t*\\w*\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
@@ -2954,9 +2956,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
 		Pattern.MULTILINE);
-	protected static Pattern setAttributeBlockPattern = Pattern.compile(
-		"(\t*\\w*\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
-	protected static Pattern setAttributePattern = Pattern.compile(
+	protected static Pattern setAttributeMethodCallBlockPattern =
+		Pattern.compile(
+			"(\t*\\w*\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
+	protected static Pattern setAttributeMethodCallPattern = Pattern.compile(
 		"\t*\\w*\\.setAttribute\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");

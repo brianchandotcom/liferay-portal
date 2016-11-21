@@ -1076,10 +1076,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
-		newContent = sortPutOrSetCalls(
-			newContent, jsonObjectPutBlockPattern, jsonObjectPutPattern);
-		newContent = sortPutOrSetCalls(
-			newContent, setAttributeBlockPattern, setAttributePattern);
+		newContent = sortMethodCalls(
+			newContent, putMethodCallBlockPattern, putMethodCallPattern);
+		newContent = sortMethodCalls(
+			newContent, setAttributeMethodCallBlockPattern,
+			setAttributeMethodCallPattern);
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
 

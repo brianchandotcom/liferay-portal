@@ -51,6 +51,7 @@ import java.text.DateFormat;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Peter Shin
@@ -487,14 +488,17 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 			"[$ARTICLE_CONTENT$]", kbArticleContent, false);
 		subscriptionSender.setContextAttribute(
 			"[$COMMENT_CONTENT$]", kbComment.getContent(), false);
-		subscriptionSender.setContextAttribute(
-			"[$COMMENT_CREATE_DATE$]",
-			_getFormattedKBCommentCreateDate(kbComment, serviceContext), false);
 		subscriptionSender.setContextCreatorUserPrefix("ARTICLE");
 		subscriptionSender.setCreatorUserId(kbArticle.getUserId());
 		subscriptionSender.setCurrentUserId(userId);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$COMMENT_CREATE_DATE$]",
+			locale -> _getFormattedKBCommentCreateDate(kbComment, locale),
+			false);
+
 		subscriptionSender.setMailId("kb_article", kbArticle.getKbArticleId());
 		subscriptionSender.setPortletId(serviceContext.getPortletId());
 		subscriptionSender.setReplyToAddress(fromAddress);
@@ -544,10 +548,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 	protected ConfigurationProvider configurationProvider;
 
 	private String _getFormattedKBCommentCreateDate(
-		KBComment kbComment, ServiceContext serviceContext) {
+		KBComment kbComment, Locale locale) {
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getDate(
-			serviceContext.getLocale());
+		DateFormat dateFormat = DateFormatFactoryUtil.getDate(locale);
 
 		return dateFormat.format(kbComment.getCreateDate());
 	}

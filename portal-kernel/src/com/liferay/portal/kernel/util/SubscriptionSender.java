@@ -361,6 +361,25 @@ public class SubscriptionSender implements Serializable {
 		this.localizedBodyMap = localizedBodyMap;
 	}
 
+	public void setLocalizedContextAttribute(
+		String key, EscapableLocalizableFunction value) {
+
+		_localizedContext.put(key, value);
+	}
+
+	public void setLocalizedContextAttribute(
+		String key, Function<Locale, String> function) {
+
+		setLocalizedContextAttribute(key, function, true);
+	}
+
+	public void setLocalizedContextAttribute(
+		String key, Function<Locale, String> function, boolean escape) {
+
+		setLocalizedContextAttribute(
+			key, new EscapableLocalizableFunction(function, escape));
+	}
+
 	public void setLocalizedPortletTitleMap(
 		Map<Locale, String> localizedPortletTitleMap) {
 
@@ -688,6 +707,24 @@ public class SubscriptionSender implements Serializable {
 			String content, Locale locale, boolean escape)
 		throws Exception {
 
+		for (Map.Entry<String, EscapableLocalizableFunction> entry :
+				_localizedContext.entrySet()) {
+
+			String key = entry.getKey();
+			EscapableLocalizableFunction value = entry.getValue();
+
+			String valueString = null;
+
+			if (escape) {
+				valueString = value.getEscapedValue(locale);
+			}
+			else {
+				valueString = value.getOriginalValue(locale);
+			}
+
+			content = StringUtil.replace(content, key, valueString);
+		}
+
 		for (Map.Entry<String, EscapableObject<String>> entry :
 				_context.entrySet()) {
 
@@ -960,6 +997,8 @@ public class SubscriptionSender implements Serializable {
 	private String _entryTitle;
 	private String _entryURL;
 	private boolean _initialized;
+	private final Map<String, EscapableLocalizableFunction> _localizedContext =
+		new HashMap<>();
 	private Object[] _mailIdIds;
 	private String _mailIdPopPortletPrefix;
 	private long _notificationClassNameId;

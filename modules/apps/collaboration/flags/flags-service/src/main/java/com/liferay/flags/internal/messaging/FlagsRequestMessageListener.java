@@ -90,8 +90,6 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		Group group = layout.getGroup();
 
-		String groupName = group.getDescriptiveName();
-
 		// Reporter user
 
 		String reporterUserName = null;
@@ -162,7 +160,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		for (User recipient : recipients) {
 			try {
 				notify(
-					reporterUser.getUserId(), company, groupName,
+					reporterUser.getUserId(), company, group,
 					reporterEmailAddress, reporterUserName,
 					reportedEmailAddress, reportedUserName, reportedURL,
 					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
@@ -223,7 +221,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	}
 
 	protected void notify(
-			long reporterUserId, Company company, String groupName,
+			long reporterUserId, Company company, Group group,
 			String reporterEmailAddress, String reporterUserName,
 			String reportedEmailAddress, String reportedUserName,
 			String reportedUserURL, long contentId, String contentTitle,
@@ -245,8 +243,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			"[$REPORTED_USER_ADDRESS$]", reportedEmailAddress,
 			"[$REPORTED_USER_NAME$]", reportedUserName, "[$REPORTED_USER_URL$]",
 			reportedUserURL, "[$REPORTER_USER_ADDRESS$]", reporterEmailAddress,
-			"[$REPORTER_USER_NAME$]", reporterUserName, "[$SITE_NAME$]",
-			groupName);
+			"[$REPORTER_USER_NAME$]", reporterUserName);
 		subscriptionSender.setContextAttribute(
 			"[$CONTENT_TITLE$]", contentTitle, false);
 		subscriptionSender.setContextAttribute(
@@ -254,6 +251,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		subscriptionSender.setCreatorUserId(reporterUserId);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$SITE_NAME$]", locale -> _getGroupDescriptiveName(group, locale));
 		subscriptionSender.setMailId("flags_request", contentId);
 		subscriptionSender.setPortletId(PortletKeys.FLAGS);
 		subscriptionSender.setServiceContext(serviceContext);
@@ -298,6 +297,20 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
+	}
+
+	private String _getGroupDescriptiveName(Group group, Locale locale) {
+		try {
+			return group.getDescriptiveName(locale);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Could not retrieve group name for {groupId=" +
+					group.getGroupId() + "}",
+				pe);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

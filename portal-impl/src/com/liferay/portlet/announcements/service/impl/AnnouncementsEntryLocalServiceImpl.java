@@ -582,13 +582,21 @@ public class AnnouncementsEntryLocalServiceImpl
 			"[$ENTRY_CONTENT$]", entry.getContent(), false);
 		subscriptionSender.setContextAttributes(
 			"[$ENTRY_ID$]", entry.getEntryId(), "[$ENTRY_TITLE$]",
-			entry.getTitle(), "[$ENTRY_TYPE$]",
-			LanguageUtil.get(locale, entry.getType()), "[$ENTRY_URL$]",
-			entry.getUrl(), "[$PORTLET_NAME$]",
-			LanguageUtil.get(
-				locale, entry.isAlert() ? "alert" : "announcement"));
+			entry.getTitle(), "[$ENTRY_URL$]", entry.getUrl());
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
+
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$ENTRY_TYPE$]",
+			notificationLocale ->
+				LanguageUtil.get(notificationLocale, entry.getType()));
+
+		subscriptionSender.setLocalizedContextAttribute(
+			"[$PORTLET_NAME$]",
+			notificationLocale -> LanguageUtil.get(
+				notificationLocale,
+				entry.isAlert() ? "alert" : "announcement"));
+
 		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());
 
 		String portletId = PortletProviderUtil.getPortletId(

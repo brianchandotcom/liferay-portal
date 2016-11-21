@@ -171,7 +171,8 @@ public class RemoteExecutor {
 		private int _executeBashCommands()
 			throws InterruptedException, IOException {
 
-			StringBuffer sb = new StringBuffer("ssh ");
+			StringBuffer sb = new StringBuffer(
+				"ssh -o PasswordAuthentication=no ");
 
 			sb.append(_targetSlave);
 			sb.append(" '");

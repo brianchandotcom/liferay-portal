@@ -67,12 +67,12 @@ to = sb.toString() + to;
 				<aui:input name="mbThreadId" type="hidden" value="<%= mbThreadId %>" />
 
 				<div id="<portlet:namespace />autoCompleteContainer">
-					<aui:input cssClass="message-to" name="to" value="<%= to %>" />
+					<aui:input cssClass="message-to" name="to" required="<%= true %>" value="<%= to %>" />
 				</div>
 
-				<aui:input cssClass="message-subject" name="subject" value="<%= subject %>" />
+				<aui:input cssClass="message-subject" name="subject" required="<%= true %>" value="<%= subject %>" />
 
-				<aui:input cssClass="message-body" label="message" name="body" type="textarea" />
+				<aui:input cssClass="message-body" label="message" name="body" required="<%= true %>" type="textarea" />
 
 				<label class="field-label">
 					<liferay-ui:message key="attachments" />
@@ -110,27 +110,17 @@ to = sb.toString() + to;
 	</div>
 </div>
 
-<aui:script use="aui-io-request-deprecated,aui-loading-mask-deprecated,autocomplete,io-upload-iframe,json-parse">
+<aui:script use="aui-io-deprecated,aui-loading-mask-deprecated,autocomplete">
 	var form = A.one('#<portlet:namespace />fm');
 
 	form.on(
 		'submit',
 		function(event) {
-			var fields = A.allNS('<portlet:namespace />', '#body, #subject, #to');
+			var messageBody = form.one('#<portlet:namespace />body').val();
+			var messageSubject = form.one('#<portlet:namespace />subject').val();
+			var messageTo = form.one('#<portlet:namespace />to').val();
 
-			var missingRequiredValue = fields.some(
-				function(item, index) {
-					var missingValue = !item.val();
-
-					if (missingValue) {
-						item.focus();
-					}
-
-					return missingValue;
-				}
-			);
-
-			if (missingRequiredValue) {
+			if (!messageTo || !messageSubject || !messageBody) {
 				event.preventDefault();
 			}
 			else {

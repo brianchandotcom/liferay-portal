@@ -339,7 +339,7 @@ public class PoshiRunnerGetterUtil {
 		}
 		catch (DocumentException de) {
 			throw new Exception(
-				de.getMessage() + "\nInvalid syntax in " + filePath);
+				de.getMessage() + "\nInvalid syntax in " + filePath, de);
 		}
 
 		Element rootElement = document.getRootElement();

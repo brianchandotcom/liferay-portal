@@ -76,7 +76,7 @@ private String _buildTagsNavigation(long scopeGroupId, String selectedTagName, P
 
 	StringBundler sb = new StringBundler();
 
-	sb.append("<ul class=\"clearfix tag-items ");
+	sb.append("<ul class=\"tag-items ");
 
 	if (displayStyle.equals("cloud")) {
 		sb.append("tag-cloud");

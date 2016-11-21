@@ -2935,10 +2935,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.DOTALL);
 	protected static Pattern javaSourceInsideJSPLinePattern = Pattern.compile(
 		"<%=(.+?)%>");
-	protected static Pattern putMethodCallBlockPattern = Pattern.compile(
-		"(\t*\\w*\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
-	protected static Pattern putMethodCallPattern = Pattern.compile(
-		"\t*\\w*\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern languageKeyPattern = Pattern.compile(
 		"LanguageUtil.(?:get|format)\\([^;%]+|Liferay.Language.get\\('([^']+)");
 	protected static Pattern mergeLangPattern = Pattern.compile(
@@ -2947,6 +2943,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
+	protected static Pattern putMethodCallBlockPattern = Pattern.compile(
+		"(\t*\\w*\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
+	protected static Pattern putMethodCallPattern = Pattern.compile(
+		"\t*\\w*\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern sbAppendPattern = Pattern.compile(
 		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(

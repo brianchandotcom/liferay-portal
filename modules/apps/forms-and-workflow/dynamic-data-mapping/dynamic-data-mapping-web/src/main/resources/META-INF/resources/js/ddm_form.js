@@ -160,7 +160,7 @@ AUI.add(
 				return instance.get('container').all('> .field-wrapper');
 			},
 
-			getRoot: function() {
+			getForm: function() {
 				var instance = this;
 
 				var root;
@@ -171,7 +171,7 @@ AUI.add(
 					}
 				);
 
-				return root;
+				return root || instance;
 			},
 
 			_getField: function(fieldNode) {
@@ -205,7 +205,9 @@ AUI.add(
 					)
 				);
 
-				field.addTarget(instance);
+				var form = instance.getForm();
+
+				field.addTarget(form);
 
 				var translationManager = instance.get('translationManager');
 
@@ -265,7 +267,7 @@ AUI.add(
 				var instance = this;
 
 				if (!A.instanceOf(instance, Liferay.DDM.Form)) {
-					var form = instance.getRoot();
+					var form = instance.getForm();
 
 					translationManager = form.get('translationManager');
 				}

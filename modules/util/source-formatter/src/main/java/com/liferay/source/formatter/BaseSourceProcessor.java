@@ -2539,12 +2539,27 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		for (String variableTypeRegex : variableTypeRegexStrings) {
-			Pattern pattern = Pattern.compile(
-				variableTypeRegex + " " + variableName + "\\W");
+			StringBundler sb = new StringBundler(5);
 
-			Matcher matcher = pattern.matcher(content);
+			sb.append("[\\s\\S]*\\W");
+			sb.append(variableTypeRegex);
+			sb.append("\\s+");
+			sb.append(variableName);
+			sb.append("\\W[\\s\\S]*");
 
-			if (matcher.find()) {
+			if (content.matches(sb.toString())) {
+				return true;
+			}
+
+			sb = new StringBundler(5);
+
+			sb.append("[\\s\\S]*\\W");
+			sb.append(variableName);
+			sb.append(" =\\s+new ");
+			sb.append(variableTypeRegex);
+			sb.append("[\\s\\S]*");
+
+			if (content.matches(sb.toString())) {
 				return true;
 			}
 		}

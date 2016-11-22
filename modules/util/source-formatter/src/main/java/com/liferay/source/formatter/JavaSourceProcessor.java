@@ -322,9 +322,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				expectedTabCount = previousLineLeadingTabCount + 1;
 			}
-
-			if (previousLine.matches(".*\t(if|for) .*[(:]")) {
+			else if (previousLine.matches(".*\t(for|if|try) .*[(:]")) {
 				expectedTabCount = previousLineLeadingTabCount + 2;
+			}
+			else if (previousLine.matches(".*\t(else if|while) .*[(:]")) {
+				expectedTabCount = previousLineLeadingTabCount + 3;
 			}
 
 			if ((expectedTabCount != -1) &&

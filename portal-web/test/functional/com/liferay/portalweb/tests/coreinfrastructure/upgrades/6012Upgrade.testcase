@@ -12,12 +12,6 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="View6012NestedPortletsArchive" priority="3">
-		<property name="data.archive.type" value="data-archive-nested-portlets" />
-
-		<execute macro="Upgrade#viewNestedPortlets" />
-	</command>
-
 	<command name="View6012PortalSmokeArchive" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
 		<property name="test.assert.warning.exceptions" value="true" />

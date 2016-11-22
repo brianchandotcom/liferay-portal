@@ -189,8 +189,8 @@ public class PoshiRunner {
 	}
 
 	@Rule
-	public Retry retry =
-		new Retry(3, TimeoutException.class, UnreachableBrowserException.class);
+	public Retry retry = new Retry(
+		3, TimeoutException.class, UnreachableBrowserException.class);
 
 	private void _runClassCommandName(String classCommandName)
 		throws Exception {

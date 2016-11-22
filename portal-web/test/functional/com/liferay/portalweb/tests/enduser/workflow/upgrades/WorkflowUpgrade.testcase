@@ -1,0 +1,55 @@
+<definition component-name="portal-upgrades">
+	<property name="portal.release" value="true" />
+	<property name="ignore.errors" value="Plugin security management is not enabled. Enable a security manager, then restart." />
+	<property name="testray.main.component.name" value="Upgrades FW" />
+
+	<set-up>
+		<execute macro="SignIn#signIn" />
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Upgrade#reindexSearches" />
+	</set-up>
+
+	<command name="ViewWorkflowArchive6012" priority="5">
+		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="portal.version" value="6.0.12" />
+
+		<execute macro="Upgrade#approveWorkflow" />
+	</command>
+
+	<command name="ViewWorkflowArchive612" priority="5">
+		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="portal.version" value="6.1.2" />
+
+		<execute macro="Upgrade#approveWorkflow" />
+	</command>
+
+	<command name="ViewWorkflowArchive6130" priority="5">
+		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="portal.version" value="6.1.30" />
+
+		<execute macro="Upgrade#approveWorkflow" />
+	</command>
+
+	<command name="ViewWorkflowArchive621015" priority="5">
+		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="portal.version" value="6.2.10.15" />
+
+		<execute macro="Upgrade#approveWorkflow" />
+	</command>
+
+	<command name="ViewWorkflowArchive623" priority="5">
+		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="portal.version" value="6.2.3" />
+
+		<execute macro="Upgrade#approveWorkflow" />
+	</command>
+
+	<command name="ViewWorkflowArchive625" priority="5">
+		<property name="data.archive.type" value="data-archive-workflow" />
+		<property name="portal.version" value="6.2.5" />
+
+		<execute macro="Upgrade#approveWorkflow" />
+	</command>
+</definition>

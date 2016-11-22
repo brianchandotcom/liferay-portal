@@ -35,6 +35,22 @@ public class WSRPServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		registry.register(
+			"com.liferay.wsrp.service", "1.0.2", "1.0.7",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.wsrp.service", "1.0.3", "1.0.7",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.wsrp.service", "1.0.5", "1.0.7",
+			new DummyUpgradeStep());
+
+		registry.register(
+			"com.liferay.wsrp.service", "1.0.6", "1.0.7",
+			new DummyUpgradeStep());
+
 		BaseUpgradeWebModuleRelease upgradeWebModuleRelease =
 			new BaseUpgradeWebModuleRelease() {
 

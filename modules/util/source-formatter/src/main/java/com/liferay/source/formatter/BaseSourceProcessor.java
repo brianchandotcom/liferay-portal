@@ -2780,9 +2780,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String sortMethodCalls(
-		String content, Pattern codeBlockPattern,
-		Pattern singleLineMethodCallPattern,
-		String... variableTypeRegexStrings) {
+		String content, String methodName, String... variableTypeRegexStrings) {
+
+		Pattern codeBlockPattern = Pattern.compile(
+			"(\t*(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
+			Pattern.DOTALL);
 
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);
 
@@ -2798,6 +2800,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			String codeBlock = codeBlockMatcher.group();
+
+			Pattern singleLineMethodCallPattern = Pattern.compile(
+				"\t*\\w*\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
 
 			Matcher singleLineMatcher = singleLineMethodCallPattern.matcher(
 				codeBlock);
@@ -2988,10 +2993,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern principalExceptionPattern = Pattern.compile(
 		"SessionErrors\\.contains\\(\n?\t*(renderR|r)equest, " +
 			"PrincipalException\\.class\\.getName\\(\\)");
-	protected static Pattern putMethodCallBlockPattern = Pattern.compile(
-		"(\t*(\\w*)\\.put\\(\\s*\".*?\\);\n)+", Pattern.DOTALL);
-	protected static Pattern putMethodCallPattern = Pattern.compile(
-		"\t*\\w*\\.put\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern sbAppendPattern = Pattern.compile(
 		"\\s*\\w*(sb|SB)[0-9]?\\.append\\(\\s*(\\S.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern sbAppendWithStartingSpacePattern = Pattern.compile(
@@ -3001,11 +3002,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"SessionErrors.(?:add|contains|get)\\([^;%&|!]+|".concat(
 			"SessionMessages.(?:add|contains|get)\\([^;%&|!]+"),
 		Pattern.MULTILINE);
-	protected static Pattern setAttributeMethodCallBlockPattern =
-		Pattern.compile(
-			"(\t*(\\w*)\\.setAttribute\\(\\s*.*?\\);\n)+", Pattern.DOTALL);
-	protected static Pattern setAttributeMethodCallPattern = Pattern.compile(
-		"\t*\\w*\\.setAttribute\\((.*?)\\);\n", Pattern.DOTALL);
 	protected static Pattern singleLengthStringPattern = Pattern.compile(
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	protected static Pattern stringUtilReplacePattern = Pattern.compile(

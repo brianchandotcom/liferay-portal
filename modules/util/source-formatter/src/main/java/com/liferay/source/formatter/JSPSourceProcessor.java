@@ -451,11 +451,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		checkSubnames(fileName, newContent);
 
 		newContent = sortMethodCalls(
-			newContent, putMethodCallBlockPattern, putMethodCallPattern,
-			"HashMap<.*>", "JSONObject");
-		newContent = sortMethodCalls(
-			newContent, setAttributeMethodCallBlockPattern,
-			setAttributeMethodCallPattern);
+			newContent, "put", "HashMap<.*>", "JSONObject");
+		newContent = sortMethodCalls(newContent, "setAttribute");
 
 		newContent = formatStringBundler(fileName, newContent, -1);
 

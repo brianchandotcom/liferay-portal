@@ -1077,11 +1077,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileName, absolutePath, newContent, languageKeyPattern);
 
 		newContent = sortMethodCalls(
-			newContent, putMethodCallBlockPattern, putMethodCallPattern,
-			"HashMap<.*>", "JSONObject");
-		newContent = sortMethodCalls(
-			newContent, setAttributeMethodCallBlockPattern,
-			setAttributeMethodCallPattern);
+			newContent, "put", "HashMap<.*>", "JSONObject");
+		newContent = sortMethodCalls(newContent, "setAttribute");
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
 

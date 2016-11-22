@@ -166,6 +166,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 			getPrimaryKeyString(className, classPK), assetCategoryIds);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
 	public void addAssetLinks(Class<?> clazz, long classPK) {
 		addAssetLinks(clazz, (Serializable)classPK);
@@ -2031,6 +2034,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
 	protected void addAssetPriority(
 		Element element, Class<?> clazz, long classPK) {
@@ -2412,15 +2418,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return (Element)node;
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
-	protected String getPrimaryKeyString(
-		Class<?> clazz, long primaryKey) {
-
-		return getPrimaryKeyString(clazz, (Serializable)primaryKey);
-	}
-
-	@Deprecated
-	protected String getPrimaryKeyString(Class<?> clazz, String primaryKey) {
+	protected String getPrimaryKeyString(Class<?> clazz, long primaryKey) {
 		return getPrimaryKeyString(clazz, (Serializable)primaryKey);
 	}
 
@@ -2430,15 +2432,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return getPrimaryKeyString(clazz.getName(), primaryKey);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
-	protected String getPrimaryKeyString(
-		String className, long primaryKey) {
-
-		return getPrimaryKeyString(className, (Serializable)primaryKey);
+	protected String getPrimaryKeyString(Class<?> clazz, String primaryKey) {
+		return getPrimaryKeyString(clazz, (Serializable)primaryKey);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
-	protected String getPrimaryKeyString(String className, String primaryKey) {
+	protected String getPrimaryKeyString(String className, long primaryKey) {
 		return getPrimaryKeyString(className, (Serializable)primaryKey);
 	}
 
@@ -2447,6 +2453,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return className.concat(
 			StringPool.POUND).concat(String.valueOf(primaryKey));
+	}
+
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
+	protected String getPrimaryKeyString(String className, String primaryKey) {
+		return getPrimaryKeyString(className, (Serializable)primaryKey);
 	}
 
 	protected List<Element> getReferenceDataElements(
@@ -2498,6 +2512,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return referenceDataElements;
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
 	protected List<Element> getReferenceElements(
 		Element parentElement, String className, long groupId, String uuid,
@@ -2558,6 +2575,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
 	@Deprecated
 	protected List<Element> getReferenceElements(
 		StagedModel parentStagedModel, String className, long classPK,

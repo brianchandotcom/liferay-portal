@@ -214,6 +214,21 @@ public class DDMFormValidatorTest {
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}
 
+	@Test(expected = MustSetOptionsForField.class)
+	public void testNoOptionsSetForMultipleCheckbox() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"MultipleCheckbox", DDMFormFieldType.CHECKBOX_MULTIPLE);
+
+		ddmFormField.setProperty("dataSourceType", "manual");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
 	@Test(expected = MustSetAvailableLocales.class)
 	public void testNullAvailableLocales() throws Exception {
 		DDMForm ddmForm = new DDMForm();
@@ -229,6 +244,27 @@ public class DDMFormValidatorTest {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setDefaultLocale(null);
+
+		_ddmFormValidatorImpl.validate(ddmForm);
+	}
+
+	@Test
+	public void testOptionsSetForMultipleCheckbox() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"MultipleCheckbox", DDMFormFieldType.CHECKBOX_MULTIPLE);
+
+		ddmFormField.setProperty("dataSourceType", "manual");
+
+		DDMFormFieldOptions ddmFormFieldOptions =
+			ddmFormField.getDDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("1", LocaleUtil.US, "Option 1");
+		ddmFormFieldOptions.addOptionLabel("2", LocaleUtil.US, "Option 2");
+
+		ddmForm.addDDMFormField(ddmFormField);
 
 		_ddmFormValidatorImpl.validate(ddmForm);
 	}

@@ -510,7 +510,7 @@ AUI.add(
 
 					var label = LiferayFormBuilderUtil.normalizeKey(instance.get('label'));
 
-					label = label.replace(/[^a-z0-9]/gi,'');
+					label = label.replace(/[^a-z0-9]/gi, '');
 
 					var name = label + instance._randomString(4);
 

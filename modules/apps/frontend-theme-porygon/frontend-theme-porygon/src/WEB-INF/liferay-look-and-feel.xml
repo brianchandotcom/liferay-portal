@@ -13,6 +13,18 @@
 			<setting configurable="false" key="show-site-name-default" value="false" />
 			<setting configurable="false" key="show-site-name-supported" value="true" />
 		</settings>
+		<layout-templates>
+			<custom>
+				<layout-template id="porygon_70_30_width_limited" name="Porygon 2 Columns (70/30) width limited">
+					<template-path>/layoutttpl/custom/porygon_70_30_width_limited.tpl</template-path>
+					<thumbnail-path>/layoutttpl/custom/porygon_70_30_width_limited.png</thumbnail-path>
+				</layout-template>
+				<layout-template id="porygon_50_50_width_limited" name="Porygon 2 Columns (50/50) width limited">
+					<template-path>/layoutttpl/custom/porygon_50_50_width_limited.tpl</template-path>
+					<thumbnail-path>/layoutttpl/custom/porygon_50_50_width_limited.png</thumbnail-path>
+				</layout-template>
+			</custom>
+		</layout-templates>
 		<portlet-decorator id="barebone" name="Barebone">
 			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>
@@ -26,17 +38,5 @@
 		<portlet-decorator id="trending" name="Trending">
 			<portlet-decorator-css-class>portlet-trending</portlet-decorator-css-class>
 		</portlet-decorator>
-		<layout-templates>
-			<custom>
-				<layout-template id="porygon_70_30_width_limited" name="Porygon 2 Columns (70/30) width limited">
-					<template-path>/layoutttpl/custom/porygon_70_30_width_limited.tpl</template-path>
-					<thumbnail-path>/layoutttpl/custom/porygon_70_30_width_limited.png</thumbnail-path>
-				</layout-template>
-				<layout-template id="porygon_50_50_width_limited" name="Porygon 2 Columns (50/50) width limited">
-					<template-path>/layoutttpl/custom/porygon_50_50_width_limited.tpl</template-path>
-					<thumbnail-path>/layoutttpl/custom/porygon_50_50_width_limited.png</thumbnail-path>
-				</layout-template>
-			</custom>
-		</layout-templates>
 	</theme>
 </look-and-feel>

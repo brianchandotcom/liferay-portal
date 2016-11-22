@@ -166,6 +166,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 			getPrimaryKeyString(className, classPK), assetCategoryIds);
 	}
 
+	@Deprecated
+	public void addAssetLinks(Class<?> clazz, long classPK) {
+		addAssetLinks(clazz, (Serializable)classPK);
+	}
+
 	/**
 	 * @deprecated As of 3.0.0, replaced by {@link
 	 *             BaseStagedModelDataHandler#exportAssetTags(
@@ -2026,6 +2031,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	@Deprecated
+	protected void addAssetPriority(
+		Element element, Class<?> clazz, long classPK) {
+
+		addAssetPriority(element, clazz, (Serializable)classPK);
+	}
+
 	protected void addAssetPriority(
 		Element element, Class<?> clazz, Serializable classPK) {
 
@@ -2400,10 +2412,34 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return (Element)node;
 	}
 
+	@Deprecated
+	protected String getPrimaryKeyString(
+		Class<?> clazz, long primaryKey) {
+
+		return getPrimaryKeyString(clazz, (Serializable)primaryKey);
+	}
+
+	@Deprecated
+	protected String getPrimaryKeyString(Class<?> clazz, String primaryKey) {
+		return getPrimaryKeyString(clazz, (Serializable)primaryKey);
+	}
+
 	protected String getPrimaryKeyString(
 		Class<?> clazz, Serializable primaryKey) {
 
 		return getPrimaryKeyString(clazz.getName(), primaryKey);
+	}
+
+	@Deprecated
+	protected String getPrimaryKeyString(
+		String className, long primaryKey) {
+
+		return getPrimaryKeyString(className, (Serializable)primaryKey);
+	}
+
+	@Deprecated
+	protected String getPrimaryKeyString(String className, String primaryKey) {
+		return getPrimaryKeyString(className, (Serializable)primaryKey);
 	}
 
 	protected String getPrimaryKeyString(
@@ -2462,6 +2498,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return referenceDataElements;
 	}
 
+	@Deprecated
+	protected List<Element> getReferenceElements(
+		Element parentElement, String className, long groupId, String uuid,
+		long classPK, String referenceType) {
+
+		return getReferenceElements(
+			parentElement, className, groupId, uuid, (Serializable)classPK,
+			referenceType);
+	}
+
 	protected List<Element> getReferenceElements(
 		Element parentElement, String className, long groupId, String uuid,
 		Serializable classPK, String referenceType) {
@@ -2510,6 +2556,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 		List<Node> nodes = xPath.selectNodes(referencesElement);
 
 		return ListUtil.fromArray(nodes.toArray(new Element[nodes.size()]));
+	}
+
+	@Deprecated
+	protected List<Element> getReferenceElements(
+		StagedModel parentStagedModel, String className, long classPK,
+		String referenceType) {
+
+		return getReferenceElements(
+			parentStagedModel, className, (Serializable)classPK, referenceType);
 	}
 
 	protected List<Element> getReferenceElements(

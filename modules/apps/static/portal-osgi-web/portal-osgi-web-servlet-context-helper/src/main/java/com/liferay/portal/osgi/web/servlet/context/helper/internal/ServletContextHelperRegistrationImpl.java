@@ -90,7 +90,8 @@ public class ServletContextHelperRegistrationImpl
 		_bundleContext = _bundle.getBundleContext();
 
 		_customServletContextHelper = new CustomServletContextHelper(
-			_bundle, _webXMLDefinition.getWebResourceCollectionDefinitions());
+			_bundle, _logger,
+			_webXMLDefinition.getWebResourceCollectionDefinitions());
 
 		_servletContextHelperServiceRegistration = createServletContextHelper(
 			contextPath);

@@ -50,11 +50,17 @@ if (resizable) {
 	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
 		<tr>
 			<td bgcolor="#FFFFFF" height="100%">
-				<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
+				<textarea class="lfr-editor-textarea" id="<%= HtmlUtil.escapeAttribute(name) %>" name="<%= HtmlUtil.escapeAttribute(name) %>" style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? HtmlUtil.escape(contents) : StringPool.BLANK %></textarea>
 			</td>
 		</tr>
 	</table>
 </liferay-util:buffer>
+
+<%
+String containerId = HtmlUtil.escapeAttribute(name) + "Container";
+
+name = HtmlUtil.escapeJS(name);
+%>
 
 <aui:script use="<%= modules %>">
 	var onInputHandle;
@@ -66,8 +72,8 @@ if (resizable) {
 	var getInitialContent = function() {
 		var data;
 
-		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
-			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
 		}
 		else {
 			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
@@ -142,7 +148,7 @@ if (resizable) {
 
 		initEditor: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
-				<%= name %>.setHTML(<%= namespace + initMethod %>());
+				<%= name %>.setHTML(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
 			</c:if>
 
 			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
@@ -203,7 +209,7 @@ if (resizable) {
 	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>
 
-<div class="<%= cssClass %>" id="<%= name %>Container">
+<div class="<%= HtmlUtil.escapeAttribute(cssClass) %>" id="<%= containerId %>">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>

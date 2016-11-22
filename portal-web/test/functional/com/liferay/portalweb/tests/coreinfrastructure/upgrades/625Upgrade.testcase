@@ -12,12 +12,6 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="AddOrganizationAfterUpgrade" priority="4">
-		<property name="data.archive.type" value="data-archive-portal" />
-
-		<execute macro="Upgrade#addOrganization" />
-	</command>
-
 	<command name="Publish625StagingArchiveAfterUpgrade" priority="4">
 		<property name="data.archive.type" value="data-archive-staging-unpublished" />
 

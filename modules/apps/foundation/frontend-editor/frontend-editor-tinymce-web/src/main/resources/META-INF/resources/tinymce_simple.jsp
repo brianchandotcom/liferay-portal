@@ -52,7 +52,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 %>
 
 <liferay-util:buffer var="editor">
-	<textarea id="<%= name %>" name="<%= name %>" style="height: 100%; visibility: hidden; width: 100%;"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
+	<textarea id="<%= HtmlUtil.escapeAttribute(name) %>" name="<%= HtmlUtil.escapeAttribute(name) %>" style="height: 100%; visibility: hidden; width: 100%;"><%= (contents != null) ? HtmlUtil.escape(contents) : StringPool.BLANK %></textarea>
 </liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
@@ -72,18 +72,22 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	</liferay-util:html-top>
 </c:if>
 
-<div class="<%= cssClass %>" id="<%= name %>Container">
+<div class="<%= cssClass %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>
 </div>
 
+<%
+name = HtmlUtil.escapeJS(name);
+%>
+
 <aui:script use="aui-node-base">
 	var getInitialContent = function() {
 		var data;
 
-		if (window['<%= HtmlUtil.escape(namespace + initMethod) %>']) {
-			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
+		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
+			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
 		}
 		else {
 			data = '<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
@@ -215,7 +219,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 		initInstanceCallback: function() {
 			<c:if test="<%= (contents == null) && Validator.isNotNull(initMethod) %>">
-				window['<%= name %>'].init(<%= HtmlUtil.escape(namespace + initMethod) %>());
+				window['<%= name %>'].init(<%= HtmlUtil.escapeJS(namespace + initMethod) %>());
 			</c:if>
 
 			var iframe = A.one('#<%= name %>_ifr');

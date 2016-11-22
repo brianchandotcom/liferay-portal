@@ -145,7 +145,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
 </liferay-util:buffer>
 
-<div class="<%= cssClass %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">
+<div class="<%= HtmlUtil.escapeAttribute(cssClass) %>" id="<%= HtmlUtil.escapeAttribute(name) %>Container">
 	<c:if test="<%= autoCreate %>">
 		<%= editor %>
 	</c:if>
@@ -409,7 +409,7 @@ name = HtmlUtil.escapeJS(name);
 				if (!ckEditorContent) {
 					<c:choose>
 						<c:when test="<%= contents != null %>">
-							ckEditorContent = '<%= UnicodeFormatter.toString(contents) %>';
+							ckEditorContent = '<%= HtmlUtil.escapeJS(contents) %>';
 						</c:when>
 						<c:otherwise>
 							ckEditorContent = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();

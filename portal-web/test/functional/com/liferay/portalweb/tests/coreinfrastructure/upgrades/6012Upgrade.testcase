@@ -20,12 +20,4 @@
 
 		<execute macro="Upgrade#searchForAssetsAfterUpgrade" />
 	</command>
-
-	<command name="View6012WebContentArchive" priority="3">
-		<property name="data.archive.type" value="data-archive-web-content-draft" />
-
-		<execute macro="Upgrade#addWCStructureAndTemplate" />
-
-		<execute macro="Upgrade#publishWCDraft" />
-	</command>
 </definition>

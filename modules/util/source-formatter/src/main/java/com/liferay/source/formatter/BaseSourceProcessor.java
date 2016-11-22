@@ -1075,6 +1075,24 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newContent;
 	}
 
+	protected String fixUnparameterizedClassType(String content) {
+		Matcher matcher = unparameterizedClassTypePattern1.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "Class", "Class<?>", matcher.start());
+		}
+
+		matcher = unparameterizedClassTypePattern2.matcher(content);
+
+		if (matcher.find()) {
+			return StringUtil.replaceFirst(
+				content, "Class", "Class<?>", matcher.start());
+		}
+
+		return content;
+	}
+
 	protected final String format(
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
@@ -2965,6 +2983,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
+	protected static Pattern unparameterizedClassTypePattern1 =
+		Pattern.compile("\\Wnew Class[^<\\w]");
+	protected static Pattern unparameterizedClassTypePattern2 =
+		Pattern.compile("\\WClass[\\[\\]]* \\w+ =");
 	protected static Pattern validatorEqualsPattern = Pattern.compile(
 		"\\WValidator\\.equals\\(");
 

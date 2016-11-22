@@ -358,6 +358,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		newContent = formatMultilineTagAttributes(fileName, newContent);
 
+		newContent = fixUnparameterizedClassType(newContent);
+
 		Matcher matcher = _missingEmptyLinePattern.matcher(newContent);
 
 		if (matcher.find()) {

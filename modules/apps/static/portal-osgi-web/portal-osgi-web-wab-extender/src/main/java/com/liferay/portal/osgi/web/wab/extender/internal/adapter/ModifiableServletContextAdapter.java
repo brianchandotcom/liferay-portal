@@ -28,6 +28,7 @@ import java.lang.reflect.Proxy;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.EventListener;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -281,6 +282,27 @@ public class ModifiableServletContextAdapter
 		return _filterRegistrations;
 	}
 
+	public String getInitParameter(String name) {
+		String parameter = _servletContext.getInitParameter(name);
+
+		if (parameter == null) {
+			return _initParameters.get(name);
+		}
+
+		return parameter;
+	}
+
+	public Enumeration<String> getInitParameterNames() {
+		List<String> parameterNames = new ArrayList<>();
+
+		parameterNames.addAll(
+			Collections.list(_servletContext.getInitParameterNames()));
+
+		parameterNames.addAll(_initParameters.keySet());
+
+		return Collections.enumeration(parameterNames);
+	}
+
 	@Override
 	public List<ListenerDefinition> getListenerDefinitions() {
 		List<ListenerDefinition> listenerDefinitions = new ArrayList<>();
@@ -483,6 +505,22 @@ public class ModifiableServletContextAdapter
 		}
 	}
 
+	public boolean setInitParameter(String name, String value)
+		throws IllegalStateException, UnsupportedOperationException {
+
+		boolean exists = _initParameters.containsKey(name);
+
+		if (!exists && (_servletContext.getInitParameter(name) != null)) {
+			exists = true;
+		}
+
+		if (!exists) {
+			_initParameters.put(name, value);
+		}
+
+		return !exists;
+	}
+
 	private static Map<Method, Method> _createContextAdapterMethods() {
 		Map<Method, Method> methods = new HashMap<>();
 
@@ -552,6 +590,7 @@ public class ModifiableServletContextAdapter
 		_eventListeners = new LinkedHashMap<>();
 	private final LinkedHashMap<String, FilterRegistrationImpl>
 		_filterRegistrations = new LinkedHashMap<>();
+	private final Map<String, String> _initParameters = new HashMap<>();
 	private final Logger _logger;
 	private final ServletContext _servletContext;
 	private final LinkedHashMap<String, ServletRegistrationImpl>

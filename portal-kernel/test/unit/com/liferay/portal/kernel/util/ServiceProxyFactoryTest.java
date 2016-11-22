@@ -257,7 +257,7 @@ public class ServiceProxyFactoryTest {
 		Object sync = ReflectionTestUtil.getFieldValue(lock, "sync");
 
 		Condition condition = ReflectionTestUtil.getFieldValue(
-			invocationHandler, "_isRealServiceSet");
+			invocationHandler, "_realServiceSet");
 
 		lock.lock();
 

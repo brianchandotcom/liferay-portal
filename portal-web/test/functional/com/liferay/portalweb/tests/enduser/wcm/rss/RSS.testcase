@@ -588,9 +588,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-69203 -->
-
-	<!-- <command name="UpdateRSSFeedViaAssetpublisher" priority="4">
+	<command name="UpdateRSSFeedViaAssetpublisher" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -718,5 +716,5 @@
 			<var name="pageName" value="Site Page Name" />
 			<var name="updateFeed" value="true" />
 		</execute>
-	</command> -->
+	</command>
 </definition>

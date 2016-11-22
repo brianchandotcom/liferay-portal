@@ -1875,6 +1875,73 @@ ${output.content}</echo>
 		</run-batch-test>
 	</target>
 
+	<target name="postgresql-service-start">
+		<local name="database.type" />
+
+		<property name="database.type" value="postgresql" />
+
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.username" />
+		<get-database-property property.name="database.version" />
+
+		<retry retrycount="3">
+			<sequential>
+				<exec executable="service" failonerror="true">
+					<arg line="postgresql-${database.version} stop" />
+				</exec>
+
+				<exec executable="service" failonerror="true">
+					<arg line="postgresql-${database.version} start" />
+				</exec>
+
+				<exec executable="dropdb" outputproperty="output.content" resultproperty="return.code">
+					<env key="PGPASSWORD" value="${database.password}" />
+					<arg value="dummy" />
+					<arg value="--username=${database.username}" />
+					<arg value="--if-exists" />
+				</exec>
+
+				<local name="output.content" />
+				<local name="return.code" />
+
+				<exec executable="createdb" outputproperty="output.content" resultproperty="return.code">
+					<env key="PGPASSWORD" value="${database.password}" />
+					<arg value="dummy" />
+					<arg value="--username=${database.username}" />
+				</exec>
+
+				<if>
+					<not>
+						<equals arg1="${return.code}" arg2="0" />
+					</not>
+					<then>
+						<echo>Return code: ${return.code}${line.separator}Output:${output.content}</echo>
+
+						<fail message="Return code: ${return.code}"  />
+					</then>
+				</if>
+
+				<exec executable="dropdb">
+					<env key="PGPASSWORD" value="${database.password}" />
+					<arg value="dummy" />
+					<arg value="--username=${database.username}" />
+				</exec>
+			</sequential>
+		</retry>
+	</target>
+
+	<target name="postgresql-service-stop">
+		<local name="database.type" />
+
+		<property name="database.type" value="postgresql" />
+
+		<get-database-property property.name="database.version" />
+
+		<exec executable="service" failonerror="true">
+			<arg line="postgresql-${database.version} stop" />
+		</exec>
+	</target>
+
 	<target name="release-functional-bundle-tomcat-mysql56-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>

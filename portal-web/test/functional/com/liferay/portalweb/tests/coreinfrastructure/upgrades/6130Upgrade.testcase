@@ -36,12 +36,6 @@
 		<execute macro="Upgrade#viewNestedPortlets" />
 	</command>
 
-	<command name="View6130PollsArchive" priority="3">
-		<property name="data.archive.type" value="data-archive-polls" />
-
-		<execute macro="Upgrade#viewPolls" />
-	</command>
-
 	<command name="View6130PortalSmokeArchive" priority="5">
 		<property name="data.archive.type" value="data-archive-portal" />
 		<property name="test.assert.warning.exceptions" value="true" />

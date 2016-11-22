@@ -20,7 +20,7 @@
 	</tear-down>
 
 	<command name="AddThemeSite" priority="5">
-		<property name="portal.acceptance" value="pending" />
+		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="WesterosTheme#AddThemeSite" />
 		<property name="themes.delayed.deployment" value="westeros-bank-theme.war" />
 

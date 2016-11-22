@@ -310,8 +310,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the current layout's group
 	*/
 	@Override
-	public Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public Group getGroup() {
 		return _layout.getGroup();
 	}
 
@@ -337,8 +336,7 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	* @return the current layout's layout set
 	*/
 	@Override
-	public LayoutSet getLayoutSet()
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public LayoutSet getLayoutSet() {
 		return _layout.getLayoutSet();
 	}
 

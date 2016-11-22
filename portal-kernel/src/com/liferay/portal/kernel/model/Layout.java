@@ -187,8 +187,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's group
 	*/
-	public Group getGroup()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public Group getGroup();
 
 	/**
 	* Returns the current layout's HTML title for the given locale, or the
@@ -226,8 +225,7 @@ public interface Layout extends LayoutModel, PersistedModel {
 	*
 	* @return the current layout's layout set
 	*/
-	public LayoutSet getLayoutSet()
-		throws com.liferay.portal.kernel.exception.PortalException;
+	public LayoutSet getLayoutSet();
 
 	/**
 	* Returns the current layout's {@link LayoutType}.

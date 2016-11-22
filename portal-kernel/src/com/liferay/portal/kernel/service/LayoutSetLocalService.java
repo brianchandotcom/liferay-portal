@@ -111,6 +111,9 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	public LayoutSet fetchLayoutSet(java.lang.String virtualHostname);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet fetchLayoutSet(long groupId, boolean privateLayout);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSet fetchLayoutSet(long layoutSetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

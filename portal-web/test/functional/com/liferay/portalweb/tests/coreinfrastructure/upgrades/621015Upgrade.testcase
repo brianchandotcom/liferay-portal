@@ -12,12 +12,6 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="Publish621015StagingArchiveAfterUpgrade" priority="4">
-		<property name="data.archive.type" value="data-archive-staging-unpublished" />
-
-		<execute macro="Upgrade#publishStagedSite" />
-	</command>
-
 	<command name="View621015AssetPublisherArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-asset-publisher" />
 

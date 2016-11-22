@@ -489,10 +489,10 @@ public class MapUtilTest {
 		public void shouldReturnMapFilteredByPrefix() {
 			Map<String, String> inputMap = new HashMap<>();
 
-			inputMap.put("x1", "one");
 			inputMap.put("2", "two");
-			inputMap.put("x3", "three");
 			inputMap.put("4", "four");
+			inputMap.put("x1", "one");
+			inputMap.put("x3", "three");
 			inputMap.put("x5", "five");
 
 			Map<String, String> outputMap = MapUtil.filterByKeys(

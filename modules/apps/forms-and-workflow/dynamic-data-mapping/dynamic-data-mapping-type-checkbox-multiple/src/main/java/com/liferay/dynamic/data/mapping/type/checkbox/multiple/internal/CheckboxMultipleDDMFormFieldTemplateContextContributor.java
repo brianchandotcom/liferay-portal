@@ -55,10 +55,10 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 			"inline",
 			GetterUtil.getBoolean(ddmFormField.getProperty("inline")));
 		parameters.put(
+			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
+		parameters.put(
 			"showAsSwitcher",
 			GetterUtil.getBoolean(ddmFormField.getProperty("showAsSwitcher")));
-		parameters.put(
-			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
 		parameters.put(
 			"value", getValue(ddmFormField, ddmFormFieldRenderingContext));
 

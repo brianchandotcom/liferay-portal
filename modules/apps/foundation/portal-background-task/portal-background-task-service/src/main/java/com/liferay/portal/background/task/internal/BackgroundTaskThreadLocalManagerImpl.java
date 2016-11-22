@@ -60,9 +60,9 @@ public class BackgroundTaskThreadLocalManagerImpl
 	public Map<String, Serializable> getThreadLocalValues() {
 		Map<String, Serializable> threadLocalValues = new HashMap<>();
 
-		threadLocalValues.put("companyId", CompanyThreadLocal.getCompanyId());
 		threadLocalValues.put(
 			"clusterInvoke", ClusterInvokeThreadLocal.isEnabled());
+		threadLocalValues.put("companyId", CompanyThreadLocal.getCompanyId());
 		threadLocalValues.put(
 			"defaultLocale", LocaleThreadLocal.getDefaultLocale());
 		threadLocalValues.put("groupId", GroupThreadLocal.getGroupId());

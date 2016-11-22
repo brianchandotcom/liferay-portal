@@ -2106,10 +2106,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs/" +
 				entry.getUrlTitle();
 
-		parts.put("title", entry.getTitle());
-		parts.put("excerpt", excerpt);
-		parts.put("url", url);
 		parts.put("blog_name", entry.getUserName());
+		parts.put("excerpt", excerpt);
+		parts.put("title", entry.getTitle());
+		parts.put("url", url);
 
 		Set<String> trackbacksSet = null;
 

@@ -142,8 +142,8 @@ public abstract class BaseBackgroundTaskTestCase {
 	protected HashMap<String, Serializable> initializeThreadLocalValues() {
 		HashMap<String, Serializable> threadLocalValues = new HashMap<>();
 
-		threadLocalValues.put("companyId", _companyId);
 		threadLocalValues.put("clusterInvoke", _clusterInvokeEnabled);
+		threadLocalValues.put("companyId", _companyId);
 		threadLocalValues.put("defaultLocale", _defaultLocale);
 		threadLocalValues.put("groupId", _groupId);
 		threadLocalValues.put("principalName", _principalName);

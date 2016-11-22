@@ -60,9 +60,9 @@ public class RoleSearch extends SearchContainer<Role> {
 
 		headerNames.add("description");
 
+		orderableHeaders.put("description", "description");
 		orderableHeaders.put("title", "title");
 		orderableHeaders.put("type", "type");
-		orderableHeaders.put("description", "description");
 	}
 
 	public RoleSearch(PortletRequest portletRequest, PortletURL iteratorURL) {

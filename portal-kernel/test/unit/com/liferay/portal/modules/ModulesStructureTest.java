@@ -213,14 +213,14 @@ public class ModulesStructureTest {
 	public void testScanLog4JConfigurationXML() throws IOException {
 		final Map<String, String> renameMap = new HashMap<>();
 
-		renameMap.put("src/META-INF/portal-log4j.xml", "module-log4j.xml");
-		renameMap.put(
-			"src/META-INF/portal-log4j-ext.xml", "module-log4j-ext.xml");
-		renameMap.put(
-			"src/main/resources/META-INF/portal-log4j.xml", "module-log4j.xml");
 		renameMap.put(
 			"src/main/resources/META-INF/portal-log4j-ext.xml",
 			"module-log4j-ext.xml");
+		renameMap.put(
+			"src/main/resources/META-INF/portal-log4j.xml", "module-log4j.xml");
+		renameMap.put(
+			"src/META-INF/portal-log4j-ext.xml", "module-log4j-ext.xml");
+		renameMap.put("src/META-INF/portal-log4j.xml", "module-log4j.xml");
 
 		Files.walkFileTree(
 			Paths.get("modules"),

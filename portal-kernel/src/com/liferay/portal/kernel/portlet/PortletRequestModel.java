@@ -336,21 +336,21 @@ public class PortletRequestModel implements Serializable {
 	public Map<String, Object> toMap() {
 		Map<String, Object> portletRequestModelMap = new HashMap<>();
 
-		portletRequestModelMap.put("container-type", "portlet");
-		portletRequestModelMap.put("container-namespace", _contextPath);
-		portletRequestModelMap.put("content-type", _contentType);
-		portletRequestModelMap.put("server-name", _serverName);
-		portletRequestModelMap.put("server-port", _serverPort);
-		portletRequestModelMap.put("secure", _secure);
 		portletRequestModelMap.put("auth-type", _authType);
-		portletRequestModelMap.put("remote-user", _remoteUser);
+		portletRequestModelMap.put("container-namespace", _contextPath);
+		portletRequestModelMap.put("container-type", "portlet");
+		portletRequestModelMap.put("content-type", _contentType);
 		portletRequestModelMap.put("context-path", _contextPath);
+		portletRequestModelMap.put("lifecycle", _lifecycle);
 		portletRequestModelMap.put("locale", _locale);
 		portletRequestModelMap.put("portlet-mode", _portletMode);
 		portletRequestModelMap.put("portlet-session-id", _portletSessionId);
+		portletRequestModelMap.put("remote-user", _remoteUser);
 		portletRequestModelMap.put("scheme", _scheme);
+		portletRequestModelMap.put("secure", _secure);
+		portletRequestModelMap.put("server-name", _serverName);
+		portletRequestModelMap.put("server-port", _serverPort);
 		portletRequestModelMap.put("window-state", _windowState);
-		portletRequestModelMap.put("lifecycle", _lifecycle);
 
 		if (_portletNamespace != null) {
 			portletRequestModelMap.put("portlet-namespace", _portletNamespace);

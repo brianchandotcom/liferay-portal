@@ -909,21 +909,21 @@ public class HtmlImpl implements Html {
 	private static final Map<String, String> _unescapeMap = new HashMap<>();
 
 	static {
-		_unescapeMap.put("lt", "<");
-		_unescapeMap.put("gt", ">");
-		_unescapeMap.put("amp", "&");
-		_unescapeMap.put("rsquo", "\u2019");
 		_unescapeMap.put("#34", "\"");
+		_unescapeMap.put("#35", "#");
+		_unescapeMap.put("#37", "%");
 		_unescapeMap.put("#39", "'");
 		_unescapeMap.put("#40", "(");
 		_unescapeMap.put("#41", ")");
+		_unescapeMap.put("#43", "+");
 		_unescapeMap.put("#44", ",");
-		_unescapeMap.put("#35", "#");
-		_unescapeMap.put("#37", "%");
+		_unescapeMap.put("#45", "-");
 		_unescapeMap.put("#59", ";");
 		_unescapeMap.put("#61", "=");
-		_unescapeMap.put("#43", "+");
-		_unescapeMap.put("#45", "-");
+		_unescapeMap.put("amp", "&");
+		_unescapeMap.put("gt", ">");
+		_unescapeMap.put("lt", "<");
+		_unescapeMap.put("rsquo", "\u2019");
 
 		for (int i = 0; i < _VALID_CHARS.length; i++) {
 			if (Character.isLetterOrDigit(i)) {

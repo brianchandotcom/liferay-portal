@@ -56,8 +56,8 @@ public class KeyValueDDMFormFieldTemplateContextContributor
 
 		Map<String, String> stringsMap = new HashMap<>();
 
-		stringsMap.put("done", LanguageUtil.get(locale, "done"));
 		stringsMap.put("cancel", LanguageUtil.get(locale, "cancel"));
+		stringsMap.put("done", LanguageUtil.get(locale, "done"));
 		stringsMap.put("keyLabel", LanguageUtil.get(locale, "field-name"));
 
 		parameters.put("strings", stringsMap);

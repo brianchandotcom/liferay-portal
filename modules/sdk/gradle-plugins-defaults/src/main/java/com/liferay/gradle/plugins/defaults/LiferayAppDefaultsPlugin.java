@@ -51,17 +51,22 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		String appDescription = null;
-		String appTitle = null;
-		String appVersion = null;
+		String appDescription = GradleUtil.getProperty(
+			project, "app.description", (String)null);
+		String appTitle = GradleUtil.getProperty(
+			project, "app.title", (String)null);
+		String appVersion = GradleUtil.getProperty(
+			project, "app.version", (String)null);
 
-		File appBndFile = project.file("app.bnd");
+		if (Validator.isNull(appDescription)) {
+			File appBndFile = project.file("app.bnd");
 
-		if (appBndFile.exists()) {
-			Properties properties = GUtil.loadProperties(appBndFile);
+			if (appBndFile.exists()) {
+				Properties properties = GUtil.loadProperties(appBndFile);
 
-			appDescription = properties.getProperty(
-				"Liferay-Releng-App-Description");
+				appDescription = properties.getProperty(
+					"Liferay-Releng-App-Description");
+			}
 		}
 
 		Properties appProperties = null;
@@ -78,8 +83,14 @@ public class LiferayAppDefaultsPlugin implements Plugin<Project> {
 		}
 
 		if (appProperties != null) {
-			appTitle = appProperties.getProperty("app.marketplace.title");
-			appVersion = appProperties.getProperty("app.marketplace.version");
+			if (Validator.isNull(appTitle)) {
+				appTitle = appProperties.getProperty("app.marketplace.title");
+			}
+
+			if (Validator.isNull(appVersion)) {
+				appVersion = appProperties.getProperty(
+					"app.marketplace.version");
+			}
 		}
 
 		_applyPlugins(project);

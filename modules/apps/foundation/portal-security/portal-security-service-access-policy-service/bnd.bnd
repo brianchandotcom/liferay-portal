@@ -4,4 +4,5 @@ Bundle-Version: 2.0.13
 Export-Package: com.liferay.portal.security.service.access.policy.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 2.0.10
 Liferay-Service: true

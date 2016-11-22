@@ -11,6 +11,7 @@ Import-Package:\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
+Liferay-Require-SchemaVersion: 1.0.7
 Liferay-Service: true
 Web-ContextPath: /wsrp-service
 -includeresource:\

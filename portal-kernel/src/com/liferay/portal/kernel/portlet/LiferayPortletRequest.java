@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.portlet;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.Portlet;
+
 import java.util.Map;
 
 import javax.portlet.PortletConfig;
@@ -37,7 +39,11 @@ public interface LiferayPortletRequest extends PortletRequest {
 
 	public HttpServletRequest getHttpServletRequest();
 
+	public HttpServletRequest getOriginalHttpServletRequest();
+
 	public long getPlid();
+
+	public Portlet getPortlet();
 
 	public String getPortletName();
 

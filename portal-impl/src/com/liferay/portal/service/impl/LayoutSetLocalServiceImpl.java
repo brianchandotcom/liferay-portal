@@ -146,6 +146,11 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
+	public LayoutSet fetchLayoutSet(long groupId, boolean privateLayout) {
+		return layoutSetPersistence.fetchByG_P(groupId, privateLayout);
+	}
+
+	@Override
 	public LayoutSet fetchLayoutSet(String virtualHostname) {
 		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 

@@ -420,6 +420,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		portletId = StringUtil.replace(
 			portletId, new char[] {'$'}, new char[] {'_'});
 
+		portletId = StringUtil.replace(
+			portletId, new char[] {'$'}, new char[] {'_'});
+
 		Map<String, Portlet> companyPortletsMap = getPortletsMap(companyId);
 
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);

@@ -256,7 +256,7 @@ public class UserPersonalSitePermissions {
 				}
 
 				if (portlet == null) {
-					Class panelAppClass = panelApp.getClass();
+					Class<?> panelAppClass = panelApp.getClass();
 
 					_log.error(
 						"Unable to get portlet " + panelApp.getPortletId() +

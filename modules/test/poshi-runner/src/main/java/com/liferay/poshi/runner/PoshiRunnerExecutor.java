@@ -832,7 +832,7 @@ public class PoshiRunnerExecutor {
 
 		Method method = clazz.getMethod(
 			selenium,
-			parameterClasses.toArray(new Class[parameterClasses.size()]));
+			parameterClasses.toArray(new Class<?>[parameterClasses.size()]));
 
 		try {
 			_returnObject = method.invoke(
@@ -1206,7 +1206,7 @@ public class PoshiRunnerExecutor {
 	}
 
 	private static String _getWarningFromThrowable(Throwable throwable) {
-		Class clazz = PoshiRunnerWarningException.class;
+		Class<?> clazz = PoshiRunnerWarningException.class;
 
 		String classCanonicalName = clazz.getCanonicalName();
 

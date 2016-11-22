@@ -520,8 +520,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		}
 
 		proxiedLayout = ProxyUtil.newProxyInstance(
-			ClassLoaderUtil.getPortalClassLoader(), new Class[] {Layout.class},
-			new LayoutStagingHandler(layout));
+			ClassLoaderUtil.getPortalClassLoader(),
+			new Class<?>[] {Layout.class}, new LayoutStagingHandler(layout));
 
 		proxiedLayouts.put(layout, proxiedLayout);
 

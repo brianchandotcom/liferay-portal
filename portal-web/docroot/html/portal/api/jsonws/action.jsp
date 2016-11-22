@@ -134,7 +134,7 @@ String signature = ParamUtil.getString(request, "signature");
 			for (int i = 0; i < methodParameters.length; i++) {
 				MethodParameter methodParameter = methodParameters[i];
 
-				Class methodParameterTypeClass = methodParameter.getType();
+				Class<?> methodParameterTypeClass = methodParameter.getType();
 
 				String methodParameterTypeClassName = null;
 

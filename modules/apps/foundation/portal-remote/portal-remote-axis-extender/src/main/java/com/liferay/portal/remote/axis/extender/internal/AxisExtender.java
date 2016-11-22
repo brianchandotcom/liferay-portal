@@ -202,7 +202,7 @@ public class AxisExtender {
 			aggregateClassLoader.addClassLoader(bundleWiring.getClassLoader());
 
 			Servlet servlet = (Servlet)ProxyUtil.newProxyInstance(
-				aggregateClassLoader, new Class[] {Servlet.class},
+				aggregateClassLoader, new Class<?>[] {Servlet.class},
 				new ClassLoaderBeanHandler(
 					new AxisServlet(), aggregateClassLoader));
 

@@ -120,7 +120,7 @@ public class ReflectionServiceTracker implements Closeable {
 		}
 
 		_unavailableServiceProxy = Proxy.newProxyInstance(
-			classLoader, interfaceClasses.toArray(new Class[0]),
+			classLoader, interfaceClasses.toArray(new Class<?>[0]),
 			_invocationHandler);
 
 		List<InjectionPoint> injectionPoints = new ArrayList<InjectionPoint>();

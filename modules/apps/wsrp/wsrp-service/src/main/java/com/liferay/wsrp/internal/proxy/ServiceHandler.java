@@ -163,7 +163,7 @@ public class ServiceHandler implements InvocationHandler {
 
 		return ProxyUtil.newProxyInstance(
 			ServiceHandler.class.getClassLoader(),
-			new Class[] {proxyInterface, Stub.class}, invocationHandler);
+			new Class<?>[] {proxyInterface, Stub.class}, invocationHandler);
 	}
 
 	@Override

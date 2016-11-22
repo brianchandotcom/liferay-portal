@@ -60,7 +60,7 @@ public class PortalClassLoaderFilter
 
 			FilterChain contextClassLoaderFilterChain =
 				(FilterChain)ProxyUtil.newProxyInstance(
-					contextClassLoader, new Class[] {FilterChain.class},
+					contextClassLoader, new Class<?>[] {FilterChain.class},
 					new ClassLoaderBeanHandler(
 						filterChain, contextClassLoader));
 

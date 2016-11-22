@@ -93,8 +93,8 @@ public class ServiceTrackerMapModelAdapterBuilderLocator
 					}
 
 					try {
-						Class adapteeModelClass = (Class)typeArguments[0];
-						Class adaptedModelClass = (Class)typeArguments[1];
+						Class<?> adapteeModelClass = (Class)typeArguments[0];
+						Class<?> adaptedModelClass = (Class)typeArguments[1];
 
 						emitter.emit(
 							_getKey(adapteeModelClass, adaptedModelClass));

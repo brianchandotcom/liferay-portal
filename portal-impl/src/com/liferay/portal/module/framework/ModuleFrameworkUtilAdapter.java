@@ -81,7 +81,7 @@ public class ModuleFrameworkUtilAdapter {
 		_moduleFramework = moduleFramework;
 
 		_moduleFrameworkAdapterHelper.exec(
-			"setModuleFramework", new Class[] {ModuleFramework.class},
+			"setModuleFramework", new Class<?>[] {ModuleFramework.class},
 			_moduleFramework);
 	}
 

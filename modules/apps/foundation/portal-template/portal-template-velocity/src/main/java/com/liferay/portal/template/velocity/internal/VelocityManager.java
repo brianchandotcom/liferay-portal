@@ -285,7 +285,7 @@ public class VelocityManager extends BaseSingleTemplateManager {
 	static {
 		try {
 			_layoutIconMethod = VelocityTaglib.class.getMethod(
-				"layoutIcon", new Class[] {Layout.class});
+				"layoutIcon", new Class<?>[] {Layout.class});
 		}
 		catch (NoSuchMethodException nsme) {
 			throw new ExceptionInInitializerError(nsme);

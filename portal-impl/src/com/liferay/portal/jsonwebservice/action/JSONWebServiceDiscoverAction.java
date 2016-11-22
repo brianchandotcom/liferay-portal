@@ -400,7 +400,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 
 		Type[] genericTypes = parameterizedType.getActualTypeArguments();
 
-		Class<?>[] genericReturnTypes = new Class[genericTypes.length];
+		Class<?>[] genericReturnTypes = new Class<?>[genericTypes.length];
 
 		for (int i = 0; i < genericTypes.length; i++) {
 			Type genericType = genericTypes[i];

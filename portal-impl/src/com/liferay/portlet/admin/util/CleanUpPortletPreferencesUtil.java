@@ -132,7 +132,7 @@ public class CleanUpPortletPreferencesUtil {
 
 					Layout proxiedLayout = (Layout)ProxyUtil.newProxyInstance(
 						PortalClassLoaderUtil.getClassLoader(),
-						new Class[] {Layout.class}, layoutStagingHandler);
+						new Class<?>[] {Layout.class}, layoutStagingHandler);
 
 					if (containsPortlet(
 							proxiedLayout, portletPreferences.getPortletId())) {

@@ -667,7 +667,7 @@ public class WabBundleProcessor {
 		Class<?>[] handledTypesArray = handledTypes.value();
 
 		if (handledTypesArray == null) {
-			handledTypesArray = new Class[0];
+			handledTypesArray = new Class<?>[0];
 		}
 
 		Collection<String> classResources = bundleWiring.listResources(
@@ -747,7 +747,7 @@ public class WabBundleProcessor {
 
 		@Override
 		public Class<?>[] value() {
-			return new Class[0];
+			return new Class<?>[0];
 		}
 
 	};

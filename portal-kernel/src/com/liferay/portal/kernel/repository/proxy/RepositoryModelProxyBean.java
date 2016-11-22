@@ -115,7 +115,7 @@ public abstract class RepositoryModelProxyBean {
 		}
 
 		return ProxyUtil.newProxyInstance(
-			_classLoader, new Class[] {clazz},
+			_classLoader, new Class<?>[] {clazz},
 			new ClassLoaderBeanHandler(bean, _classLoader));
 	}
 

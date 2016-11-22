@@ -154,7 +154,7 @@ public class ServiceDependencyManagerTest {
 			"(objectClass=" + TrackedOne.class.getName() + ")");
 
 		serviceDependencyManager.registerDependencies(
-			new Class[] {TrackedTwo.class}, new Filter[] {filter});
+			new Class<?>[] {TrackedTwo.class}, new Filter[] {filter});
 
 		registry.registerService(TrackedOne.class, new TrackedOne());
 		registry.registerService(

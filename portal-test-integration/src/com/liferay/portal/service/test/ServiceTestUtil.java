@@ -183,7 +183,8 @@ public class ServiceTestUtil {
 				"QuartzSchemaManager)");
 
 		schedulerServiceDependencyManager.registerDependencies(
-			new Class[] {SchedulerEngineHelper.class}, new Filter[] {filter});
+			new Class<?>[] {SchedulerEngineHelper.class},
+			new Filter[] {filter});
 
 		// Verify
 

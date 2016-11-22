@@ -274,7 +274,7 @@ public class EditorPortlet extends AdminPortlet {
 
 		jsonError.put("message", exception.getLocalizedMessage());
 
-		Class clazz = exception.getClass();
+		Class<?> clazz = exception.getClass();
 
 		jsonError.put("name", clazz.getSimpleName());
 

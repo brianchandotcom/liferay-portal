@@ -77,7 +77,7 @@ public class WSRPConsumerManager {
 
 			_service = (WSRP_v2_Service)ProxyUtil.newProxyInstance(
 				WSRP_v2_Service.class.getClassLoader(),
-				new Class[] {WSRP_v2_Service.class}, serviceHandler);
+				new Class<?>[] {WSRP_v2_Service.class}, serviceHandler);
 
 			_readServiceElements(serviceElements);
 

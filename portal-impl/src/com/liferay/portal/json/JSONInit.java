@@ -72,7 +72,7 @@ public class JSONInit {
 
 		JoddJson.jsonAnnotation = JSON.class;
 
-		JoddJson.excludedTypes = new Class[] {
+		JoddJson.excludedTypes = new Class<?>[] {
 			ExpandoBridge.class, InputStream.class, LiferayPortletRequest.class,
 			LiferayPortletResponse.class, OutputStream.class,
 			PortletDisplayModel.class, PortletURL.class
@@ -83,17 +83,17 @@ public class JSONInit {
 		TypeJsonSerializerMap typeSerializerMap = JoddJson.defaultSerializers;
 
 		Class<?>[][] classesArray = new Class<?>[][] {
-			new Class[] {Company.class, CompanyJSONTransformer.class},
-			new Class[] {File.class, FileJSONTransformer.class},
-			new Class[] {JSONArray.class, JSONArrayJSONTransformer.class},
-			new Class[] {JSONObject.class, JSONObjectJSONTransformer.class},
-			new Class[] {
+			new Class<?>[] {Company.class, CompanyJSONTransformer.class},
+			new Class<?>[] {File.class, FileJSONTransformer.class},
+			new Class<?>[] {JSONArray.class, JSONArrayJSONTransformer.class},
+			new Class<?>[] {JSONObject.class, JSONObjectJSONTransformer.class},
+			new Class<?>[] {
 				JSONSerializable.class, JSONSerializableJSONTransformer.class
 			},
-			new Class[] {
+			new Class<?>[] {
 				RepositoryModel.class, RepositoryModelJSONTransformer.class
 			},
-			new Class[] {User.class, UserJSONTransformer.class}
+			new Class<?>[] {User.class, UserJSONTransformer.class}
 		};
 
 		for (Class<?>[] classes : classesArray) {

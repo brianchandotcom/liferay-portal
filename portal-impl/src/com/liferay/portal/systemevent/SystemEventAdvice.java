@@ -244,7 +244,7 @@ public class SystemEventAdvice
 		try {
 			Class<?> modelClass = classedModel.getClass();
 
-			getUuidMethod = modelClass.getMethod("getUuid", new Class[0]);
+			getUuidMethod = modelClass.getMethod("getUuid", new Class<?>[0]);
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;

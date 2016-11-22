@@ -42,7 +42,7 @@ public class ConfigurationInvocationHandler<S> implements InvocationHandler {
 
 	public S createProxy() {
 		return (S)ProxyUtil.newProxyInstance(
-			_clazz.getClassLoader(), new Class[] {_clazz}, this);
+			_clazz.getClassLoader(), new Class<?>[] {_clazz}, this);
 	}
 
 	@Override

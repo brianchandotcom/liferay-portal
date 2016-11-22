@@ -106,7 +106,7 @@ public class JavadocUtil {
 		"boolean", "byte", "char", "double", "float", "int", "long", "short"
 	};
 
-	private static final Class<?>[] _PRIMITIVE_TYPES = new Class[] {
+	private static final Class<?>[] _PRIMITIVE_TYPES = new Class<?>[] {
 		boolean.class, byte.class, char.class, double.class, float.class,
 		int.class, long.class, short.class
 	};

@@ -1552,7 +1552,7 @@ public class PortletPreferencesLocalServiceTest {
 			try {
 				return ReflectionTestUtil.invoke(
 					classLoaderBeanHandler.getBean(), "getPreferences",
-					new Class[] {
+					new Class<?>[] {
 						long.class, long.class, int.class, long.class,
 						String.class, String.class, boolean.class
 					},

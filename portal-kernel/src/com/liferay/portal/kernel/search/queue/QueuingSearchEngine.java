@@ -32,7 +32,7 @@ public class QueuingSearchEngine extends BaseSearchEngine {
 		Class<?> clazz = getClass();
 
 		_indexWriter = (IndexWriter)ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class[] {IndexWriter.class},
+			clazz.getClassLoader(), new Class<?>[] {IndexWriter.class},
 			_queuingInvocationHandler);
 	}
 

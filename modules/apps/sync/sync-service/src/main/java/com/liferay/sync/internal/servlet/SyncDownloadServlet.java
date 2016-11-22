@@ -510,7 +510,7 @@ public class SyncDownloadServlet extends HttpServlet {
 				}
 			}
 			catch (Exception e) {
-				Class clazz = e.getClass();
+				Class<?> clazz = e.getClass();
 
 				processException(zipFileId, clazz.getName(), errorsJSONObject);
 			}

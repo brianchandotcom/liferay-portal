@@ -56,7 +56,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				classLoader);
 
 			Method setBeanLocatorMethod = beanLocatorUtilClass.getMethod(
-				"setBeanLocator", new Class[] {BeanLocator.class});
+				"setBeanLocator", new Class<?>[] {BeanLocator.class});
 
 			setBeanLocatorMethod.invoke(
 				beanLocatorUtilClass, new Object[] {null});
@@ -128,7 +128,7 @@ public class PortletContextLoaderListener extends ContextLoaderListener {
 				classLoader);
 
 			Method setBeanLocatorMethod = beanLocatorUtilClass.getMethod(
-				"setBeanLocator", new Class[] {BeanLocator.class});
+				"setBeanLocator", new Class<?>[] {BeanLocator.class});
 
 			setBeanLocatorMethod.invoke(
 				beanLocatorUtilClass, new Object[] {beanLocatorImpl});

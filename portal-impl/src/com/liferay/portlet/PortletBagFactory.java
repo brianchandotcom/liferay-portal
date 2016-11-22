@@ -483,7 +483,7 @@ public class PortletBagFactory {
 	protected Object newInstance(Class<?> interfaceClass, String implClassName)
 		throws Exception {
 
-		return newInstance(new Class[] {interfaceClass}, implClassName);
+		return newInstance(new Class<?>[] {interfaceClass}, implClassName);
 	}
 
 	protected Object newInstance(

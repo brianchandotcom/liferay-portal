@@ -231,7 +231,7 @@ public class SAPPortlet extends MVCPortlet {
 
 			Class<?> serviceClass = actionObject.getClass();
 
-			Class[] serviceInterfaces = serviceClass.getInterfaces();
+			Class<?>[] serviceInterfaces = serviceClass.getInterfaces();
 
 			for (Class<?> serviceInterface : serviceInterfaces) {
 				Annotation[] declaredAnnotations =

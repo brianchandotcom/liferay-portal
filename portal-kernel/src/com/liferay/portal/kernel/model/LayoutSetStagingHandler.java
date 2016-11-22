@@ -116,7 +116,7 @@ public class LayoutSetStagingHandler
 	private Object _clone() {
 		return ProxyUtil.newProxyInstance(
 			PortalClassLoaderUtil.getClassLoader(),
-			new Class[] {LayoutSet.class},
+			new Class<?>[] {LayoutSet.class},
 			new LayoutSetStagingHandler(_layoutSet));
 	}
 
@@ -151,7 +151,8 @@ public class LayoutSetStagingHandler
 
 	private Object _toEscapedModel() {
 		return ProxyUtil.newProxyInstance(
-			PortalClassLoaderUtil.getClassLoader(), new Class[] {Layout.class},
+			PortalClassLoaderUtil.getClassLoader(),
+			new Class<?>[] {Layout.class},
 			new LayoutSetStagingHandler(_layoutSet.toEscapedModel()));
 	}
 

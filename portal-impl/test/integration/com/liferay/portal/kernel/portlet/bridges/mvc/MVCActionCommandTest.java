@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestMVCActionCommand1;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestMVCActionCommand2;
@@ -192,8 +193,18 @@ public class MVCActionCommandTest {
 		}
 
 		@Override
+		public HttpServletRequest getOriginalHttpServletRequest() {
+			return _mockHttpServletRequest;
+		}
+
+		@Override
 		public long getPlid() {
 			return 0;
+		}
+
+		@Override
+		public Portlet getPortlet() {
+			return null;
 		}
 
 		@Override

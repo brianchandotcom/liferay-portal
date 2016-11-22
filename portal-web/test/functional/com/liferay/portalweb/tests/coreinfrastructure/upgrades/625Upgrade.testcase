@@ -52,10 +52,4 @@
 
 		<execute macro="Upgrade#publishWCDraft" />
 	</command>
-
-	<command name="View625WorkflowArchive" priority="4">
-		<property name="data.archive.type" value="data-archive-workflow" />
-
-		<execute macro="Upgrade#approveWorkflow" />
-	</command>
 </definition>

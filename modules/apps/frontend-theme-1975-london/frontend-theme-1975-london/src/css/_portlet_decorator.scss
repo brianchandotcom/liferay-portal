@@ -1,0 +1,26 @@
+.portlet-decorate {
+	color: $content-color-2;
+
+	.portlet {
+		margin-bottom: 0;
+	}
+
+	.portlet-content {
+		padding: 0;
+	}
+}
+
+.portlet-solid .portlet-content {
+	background: transparent;
+	border: 1px solid #FFF;
+}
+
+.portlet-barebone {
+	.portlet-content {
+		padding: 0;
+	}
+
+	.portlet-content-editable {
+		border-radius: 0;
+	}
+}

@@ -1,0 +1,10 @@
+@include font-face("Oswald_Light", "../fonts/Oswald-Light", normal);
+@include font-face("Oswald_Regular", "../fonts/Oswald-Regular", normal);
+
+#wrapper {
+	font-family: "Oswald_Light", Helvetica, Arial, sans-serif;
+}
+
+.portlet-topper {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

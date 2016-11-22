@@ -2126,6 +2126,13 @@ public class ConsumerPortlet extends MVCPortlet {
 			"(?:location\\.href\\s*=\\s*'(/widget/c/portal/layout(?:[^']+))')" +
 				"|(?:href\\s*=\\s*\"(/widget/c/portal/layout(?:[^\"]+))\")");
 
+	@Reference
+	private static WSRPConsumerLocalService _wsrpConsumerLocalService;
+
+	@Reference
+	private static WSRPConsumerPortletLocalService
+		_wsrpConsumerPortletLocalService;
+
 	static {
 		StringBundler sb = new StringBundler(6);
 

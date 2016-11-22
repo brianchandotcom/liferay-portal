@@ -12,12 +12,6 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="View6012AssetPublisherArchive" priority="3">
-		<property name="data.archive.type" value="data-archive-asset-publisher" />
-
-		<execute macro="Upgrade#viewAssetPublisher" />
-	</command>
-
 	<command name="View6012NestedPortletsArchive" priority="3">
 		<property name="data.archive.type" value="data-archive-nested-portlets" />
 

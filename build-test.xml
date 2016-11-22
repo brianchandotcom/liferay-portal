@@ -5566,6 +5566,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<priority value="${dialect.detector.log.level}" />
 	</category>
 
+	<category name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper">
 		<priority value="INFO" />
 	</category>

@@ -1,0 +1,127 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>8f66eca0-2619-1054-968f-f71317c04999</__uuid>
+  <__originalUuid>8f66eca0-2619-1054-968f-f71317c04999</__originalUuid>
+  <__id>34761</__id>
+  <__resourcePrimKey>34428</__resourcePrimKey>
+  <__originalResourcePrimKey>34428</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-10-03 15:04:19.001</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 14:35:56.058</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34426</__articleId>
+  <__originalArticleId>34426</__originalArticleId>
+  <__version>2.2</__version>
+  <__originalVersion>2.2</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;You will never worry about the signal&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>1975-london-big-slide-with-item-content</__urlTitle>
+  <__originalUrlTitle>1975-london-big-slide-with-item-content</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;ooyb&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[transparent]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;backgroundImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;jwox&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;slide01.jpg&quot; title=&quot;slide01.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34260.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;blockAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;zbrh&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[center]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;numberOfColumns&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;qmvf&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[6]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;bbkh&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[center]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;bigTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;toiy&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[You will never worry about the signal]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;htmlContent&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;pant&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Each selection, each moment, each reproduction.. is for you&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;Items&quot; type=&quot;selection_break&quot; index-type=&quot;keyword&quot; instance-id=&quot;ipyx&quot;/&gt;
+	&lt;dynamic-element name=&quot;ItemTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;aqra&quot;&gt;
+		&lt;dynamic-element name=&quot;ItemIcon&quot; instance-id=&quot;otke&quot; type=&quot;list&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[icon-play]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ItemText&quot; instance-id=&quot;wxre&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[A concert is an awesome moment, a great memory]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Concerts]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;ItemTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;yesc&quot;&gt;
+		&lt;dynamic-element name=&quot;ItemIcon&quot; instance-id=&quot;hxpy&quot; type=&quot;list&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[icon-music]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ItemText&quot; instance-id=&quot;ayyk&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[No worries about your mobile coverage]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Offline / Online]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;ItemTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;poav&quot;&gt;
+		&lt;dynamic-element name=&quot;ItemIcon&quot; instance-id=&quot;twmg&quot; type=&quot;list&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[icon-fast-forward]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ItemText&quot; instance-id=&quot;lrpf&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[No distractions for a clean music experience]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Without Ad]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;ItemTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;pvpg&quot;&gt;
+		&lt;dynamic-element name=&quot;ItemIcon&quot; instance-id=&quot;kqgq&quot; type=&quot;list&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[icon-user]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-element name=&quot;ItemText&quot; instance-id=&quot;fapk&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot;&gt;
+			&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Become one of our community friends]]&gt;&lt;/dynamic-content&gt;
+		&lt;/dynamic-element&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Friends]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37692</__DDMStructureKey>
+  <__originalDDMStructureKey>37692</__originalDDMStructureKey>
+  <__DDMTemplateKey>37706</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37706</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-10-03 15:02:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-11-08 14:35:56.058</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

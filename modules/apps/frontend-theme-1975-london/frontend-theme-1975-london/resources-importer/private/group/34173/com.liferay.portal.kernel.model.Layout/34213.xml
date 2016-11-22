@@ -1,0 +1,86 @@
+<Layout>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__mvccVersion>0</__mvccVersion>
+  <__uuid>b89182ff-97b9-05a8-23ae-7b7141a6b607</__uuid>
+  <__originalUuid>b89182ff-97b9-05a8-23ae-7b7141a6b607</__originalUuid>
+  <__plid>34213</__plid>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName></__userName>
+  <__createDate>2016-10-11 10:03:18.524 UTC</__createDate>
+  <__modifiedDate>2016-11-07 11:01:07.196 UTC</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__privateLayout>true</__privateLayout>
+  <__originalPrivateLayout>true</__originalPrivateLayout>
+  <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+  <__layoutId>6</__layoutId>
+  <__originalLayoutId>6</__originalLayoutId>
+  <__setOriginalLayoutId>false</__setOriginalLayoutId>
+  <__parentLayoutId>5</__parentLayoutId>
+  <__originalParentLayoutId>5</__originalParentLayoutId>
+  <__setOriginalParentLayoutId>false</__setOriginalParentLayoutId>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;Subscription&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__title></__title>
+  <__description></__description>
+  <__keywords></__keywords>
+  <__robots></__robots>
+  <__type>portlet</__type>
+  <__originalType>portlet</__originalType>
+  <__typeSettings>layout-template-id=1_column
+privateLayout=true
+</__typeSettings>
+  <__hidden>false</__hidden>
+  <__friendlyURL>/subscription</__friendlyURL>
+  <__originalFriendlyURL>/subscription</__originalFriendlyURL>
+  <__iconImageId>0</__iconImageId>
+  <__originalIconImageId>0</__originalIconImageId>
+  <__setOriginalIconImageId>false</__setOriginalIconImageId>
+  <__themeId></__themeId>
+  <__colorSchemeId></__colorSchemeId>
+  <__css></__css>
+  <__priority>0</__priority>
+  <__originalPriority>0</__originalPriority>
+  <__setOriginalPriority>false</__setOriginalPriority>
+  <__layoutPrototypeUuid></__layoutPrototypeUuid>
+  <__originalLayoutPrototypeUuid></__originalLayoutPrototypeUuid>
+  <__layoutPrototypeLinkEnabled>false</__layoutPrototypeLinkEnabled>
+  <__sourcePrototypeLayoutUuid></__sourcePrototypeLayoutUuid>
+  <__originalSourcePrototypeLayoutUuid></__originalSourcePrototypeLayoutUuid>
+  <__columnBitmask>0</__columnBitmask>
+  <__layoutSet class="com.liferay.portal.model.impl.LayoutSetImpl">
+    <__cachedModel>true</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>30</__mvccVersion>
+    <__layoutSetId>34174</__layoutSetId>
+    <__groupId>34173</__groupId>
+    <__originalGroupId>34173</__originalGroupId>
+    <__setOriginalGroupId>false</__setOriginalGroupId>
+    <__companyId>20116</__companyId>
+    <__createDate>2016-11-07 11:01:06.3 UTC</__createDate>
+    <__modifiedDate>2016-11-08 16:06:52.192 UTC</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__privateLayout>true</__privateLayout>
+    <__originalPrivateLayout>true</__originalPrivateLayout>
+    <__setOriginalPrivateLayout>false</__setOriginalPrivateLayout>
+    <__logoId>34184</__logoId>
+    <__themeId>1975london_WAR_1975londontheme</__themeId>
+    <__colorSchemeId>01</__colorSchemeId>
+    <__css></__css>
+    <__pageCount>6</__pageCount>
+    <__settings>lfr-theme:regular:floating-header=false
+showSiteName=false
+</__settings>
+    <__layoutSetPrototypeUuid></__layoutSetPrototypeUuid>
+    <__originalLayoutSetPrototypeUuid></__originalLayoutSetPrototypeUuid>
+    <__layoutSetPrototypeLinkEnabled>false</__layoutSetPrototypeLinkEnabled>
+    <__columnBitmask>0</__columnBitmask>
+    <__companyFallbackVirtualHostname></__companyFallbackVirtualHostname>
+    <__virtualHostname></__virtualHostname>
+  </__layoutSet>
+</Layout>

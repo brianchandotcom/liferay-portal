@@ -1,0 +1,95 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>49ea6bf0-63c7-5927-acc6-534dc79b34a3</__uuid>
+  <__originalUuid>49ea6bf0-63c7-5927-acc6-534dc79b34a3</__originalUuid>
+  <__id>34705</__id>
+  <__resourcePrimKey>34483</__resourcePrimKey>
+  <__originalResourcePrimKey>34483</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-10-10 17:56:07.187</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 13:26:12.356</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34481</__articleId>
+  <__originalArticleId>34481</__originalArticleId>
+  <__version>1.3</__version>
+  <__originalVersion>1.3</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Music and Creativity&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>testing-title</__urlTitle>
+  <__originalUrlTitle>testing-title</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;sjlz&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;slide00.jpg&quot; title=&quot;slide00.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34252.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;ctdp&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Music and Creativity]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;ssjr&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Creativity is intelligence having fun.]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;dxce&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Thousands of books and essays have been written in an attempt to answer the question, &amp;ldquo;What makes a person creative?&amp;rdquo; According to&amp;nbsp;Abraham Maslov, we may be asking the wrong question:&lt;br /&gt;
+&amp;ldquo;The key question isn&amp;rsquo;t &amp;lsquo;What fosters creativity?&amp;rsquo; But it is why in God&amp;rsquo;s name isn&amp;rsquo;t everyone creative? Where was the human potential lost? How was it crippled? I think therefore a good question might be not why do people create, but why do people not create?&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Every child is born with the innate ability to be creative. It is one of the key attributes that sets the human brain apart from the other living beings on the planet. But why do so many individuals feel creatively stifled? Is it because we lack the understanding of what creativity is, or knowledge of how to foster it in children? Or is it because we live in a social framework where, as we become adults, we lose our connection to our creative nature? As adults, we can probably learn a lot more about being creative from kids than we can actually teach them.&lt;/p&gt;
+
+&lt;p&gt;Education specialist&amp;nbsp;Sir Ken Robinson&amp;nbsp;says that our current systems of early education are killing creativity. We often punish kids for making mistakes and discourage them from acting or being different. Current education emphasizes imitation, memorization, fixed rules, and pre-established formulas and beliefs about the way the world should work. Children need to learn to follow directions, to know how to replicate what they see and hear, and to be able to participate in coordinated group activities, but those practices do little to encourage creativity. Unfortunately, children restricted to those frameworks alone will have a much more challenging time coming up with new ideas, mastering self-expression or finding innovative solutions to problems on their own. Creativity, which is rarely cultivated in a state of fear, judgment or intimidation, requires a willingness to make mistakes. Beethoven might go through over 50 variations of a musical idea before choosing the one he liked and, despite his numerous failures in trying to create the light bulb, Thomas Edison is commonly believed to have said, &amp;ldquo;I never failed once. It just happened to be &amp;nbsp;a 2,000-step process.&amp;rdquo;[5]&lt;/p&gt;
+
+&lt;p&gt;Of its three basic components: problem solving, self-expression, and imagination, imagination is the wellspring of creativity, for it is our audacity to imagine that pushes the boundaries of possibility.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;cardPreviewSettings&quot; type=&quot;selection_break&quot; index-type=&quot;keyword&quot; instance-id=&quot;kfaf&quot;/&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;cnha&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[main-background-image]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlignmentInCard&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;yake&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[bottom text-right]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37518</__DDMStructureKey>
+  <__originalDDMStructureKey>37518</__originalDDMStructureKey>
+  <__DDMTemplateKey>37530</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37530</__originalDDMTemplateKey>
+  <__layoutUuid>ed7b573d-0ecb-5ec6-6379-54c742840674</__layoutUuid>
+  <__originalLayoutUuid>ed7b573d-0ecb-5ec6-6379-54c742840674</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-10-10 17:55:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-11-08 13:26:12.356</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

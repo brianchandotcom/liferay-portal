@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.servlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.PortletFilterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -95,7 +97,9 @@ public class PortletServlet extends HttpServlet {
 		portletRequest.setAttribute(PORTLET_SERVLET_RESPONSE, response);
 		portletRequest.setAttribute(WebKeys.PORTLET_ID, portletId);
 
-		HttpSession session = request.getSession();
+		// LPS-66826
+
+		HttpSession session = _getSharedSession(request, portletRequest);
 
 		PortletSessionTracker.add(session);
 
@@ -110,6 +114,27 @@ public class PortletServlet extends HttpServlet {
 
 			throw new ServletException(pe);
 		}
+	}
+
+	private HttpSession _getSharedSession(
+		HttpServletRequest request, PortletRequest portletRequest) {
+
+		LiferayPortletRequest liferayPortletRequest =
+			(LiferayPortletRequest)portletRequest;
+
+		Portlet portlet = liferayPortletRequest.getPortlet();
+
+		HttpServletRequest originalRequest =
+			liferayPortletRequest.getOriginalHttpServletRequest();
+
+		HttpSession portalSession = originalRequest.getSession();
+
+		if (!portlet.isPrivateSessionAttributes()) {
+			return portalSession;
+		}
+
+		return SharedSessionUtil.getSharedSessionWrapper(
+			portalSession, request);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletServlet.class);

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.TimeoutTestRule;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -35,7 +36,9 @@ import java.util.concurrent.locks.Lock;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 /**
  * @author Tina Tian
@@ -112,6 +115,9 @@ public class ServiceProxyFactoryTest {
 	public void testNonblockingProxyWithFilter() throws Exception {
 		_testNonBlockingProxy(true);
 	}
+
+	@Rule
+	public final TestRule testRule = TimeoutTestRule.INSTANCE;
 
 	public static class TestServiceImpl implements TestService {
 
@@ -259,6 +265,8 @@ public class ServiceProxyFactoryTest {
 		Condition condition = ReflectionTestUtil.getFieldValue(
 			invocationHandler, "_realServiceSet");
 
+		long startTime = System.currentTimeMillis();
+
 		lock.lock();
 
 		try {
@@ -272,6 +280,15 @@ public class ServiceProxyFactoryTest {
 
 				if (waitingThreads.contains(targetThread)) {
 					return;
+				}
+				else if ((System.currentTimeMillis() - startTime) >
+							Time.MINUTE) {
+
+					String threadDump = ThreadUtil.threadDump();
+
+					System.out.println("Timeout thread dump :\n" + threadDump);
+
+					startTime = System.currentTimeMillis();
 				}
 			}
 		}

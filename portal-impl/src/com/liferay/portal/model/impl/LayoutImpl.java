@@ -558,8 +558,8 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * @return the current layout's group
 	 */
 	@Override
-	public Group getGroup() throws PortalException {
-		return GroupLocalServiceUtil.getGroup(getGroupId());
+	public Group getGroup() {
+		return GroupLocalServiceUtil.fetchGroup(getGroupId());
 	}
 
 	/**
@@ -620,9 +620,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * @return the current layout's layout set
 	 */
 	@Override
-	public LayoutSet getLayoutSet() throws PortalException {
+	public LayoutSet getLayoutSet() {
 		if (_layoutSet == null) {
-			_layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			_layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
 				getGroupId(), isPrivateLayout());
 		}
 

@@ -132,6 +132,10 @@
 		<priority value="ERROR" />
 	</category>
 
+	<category name="com.liferay.portal.dao.orm.hibernate.VerifySessionFactoryWrapper">
+		<priority value="FATAL" />
+	</category>
+
 	<category name="com.liferay.portal.deploy">
 		<priority value="INFO" />
 	</category>

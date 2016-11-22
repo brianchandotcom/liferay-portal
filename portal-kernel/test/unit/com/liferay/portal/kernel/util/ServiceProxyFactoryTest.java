@@ -265,35 +265,26 @@ public class ServiceProxyFactoryTest {
 		Condition condition = ReflectionTestUtil.getFieldValue(
 			invocationHandler, "_realServiceSet");
 
-		long startTime = System.currentTimeMillis();
+		while (true) {
+			Collection<Thread> waitingThreads = null;
 
-		lock.lock();
+			lock.lock();
 
-		try {
-			while (true) {
-				Collection<Thread> waitingThreads = ReflectionTestUtil.invoke(
+			try {
+				waitingThreads = ReflectionTestUtil.invoke(
 					sync, "getWaitingThreads",
 					new Class<?>[] {
 						AbstractQueuedSynchronizer.ConditionObject.class
 					},
 					condition);
-
-				if (waitingThreads.contains(targetThread)) {
-					return;
 				}
-				else if ((System.currentTimeMillis() - startTime) >
-							Time.MINUTE) {
-
-					String threadDump = ThreadUtil.threadDump();
-
-					System.out.println("Timeout thread dump :\n" + threadDump);
-
-					startTime = System.currentTimeMillis();
-				}
+			finally {
+				lock.unlock();
 			}
-		}
-		finally {
-			lock.unlock();
+
+			if (waitingThreads.contains(targetThread)) {
+				return;
+			}
 		}
 	}
 

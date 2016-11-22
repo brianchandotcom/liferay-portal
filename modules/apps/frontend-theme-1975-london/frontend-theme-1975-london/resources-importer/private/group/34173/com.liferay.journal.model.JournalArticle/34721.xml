@@ -1,0 +1,96 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>15cd057c-60d0-350a-9b91-2e984436c805</__uuid>
+  <__originalUuid>15cd057c-60d0-350a-9b91-2e984436c805</__originalUuid>
+  <__id>34721</__id>
+  <__resourcePrimKey>34472</__resourcePrimKey>
+  <__originalResourcePrimKey>34472</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-09-30 09:53:39.958</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 13:27:31.645</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34470</__articleId>
+  <__originalArticleId>34470</__originalArticleId>
+  <__version>2.4</__version>
+  <__originalVersion>2.4</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;The Wonder of Music in Our Life&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>the-earth-is-all-we-have-in-comm-1</__urlTitle>
+  <__originalUrlTitle>the-earth-is-all-we-have-in-comm-1</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;hpqn&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;slide04.jpg&quot; title=&quot;slide04.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34316.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;isyg&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[The Wonder of Music in Our Life]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;bohm&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Music can provide inspiration, relaxation and passion.]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;qems&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;Some people use music to set a mood. While others will have their favorite symphony playing while they study for exams. And let&amp;rsquo;s not forget dancing to your favorite song as a form of&amp;nbsp;exercise&amp;nbsp;or&amp;nbsp;meditation!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Yes music does inspire and provoke us to be who we are to the fullest of our abilities&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;I imagine that music plays many roles in your life as it does in mine. It allows others to have a sense of who we are and what we believe.&lt;/p&gt;
+
+&lt;p&gt;Consider the ways that music has influenced your life. Music has the power to shift our feelings from joy to sorrow in a split second. It can bring us back to memories we forgot we had or forward to the world we have yet to create. Music has many purposes and abilities. It can be used for healing as both Don Campbell and Tom Kenyon do. They both have schools that teach ways of using ones voice for healing.&lt;/p&gt;
+
+&lt;p&gt;There are degrees in Music Therapy offered at many Universities. The drumbeat has been used for centuries by Native Indians to elevate shamans to other dimensions. And let us not forget the sheer entertainment that sitting at an opera or a jazz club brings us! Yes music is a very powerful source.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;cardPreviewSettings&quot; type=&quot;selection_break&quot; index-type=&quot;keyword&quot; instance-id=&quot;iyys&quot;/&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;frux&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[secondary-background-color]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlignmentInCard&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;uilw&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[bottom]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37518</__DDMStructureKey>
+  <__originalDDMStructureKey>37518</__originalDDMStructureKey>
+  <__DDMTemplateKey>37530</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37530</__originalDDMTemplateKey>
+  <__layoutUuid>ed7b573d-0ecb-5ec6-6379-54c742840674</__layoutUuid>
+  <__originalLayoutUuid>ed7b573d-0ecb-5ec6-6379-54c742840674</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-30 09:52:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-11-08 13:27:31.645</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

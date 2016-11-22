@@ -1,0 +1,84 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>d43a944b-cfdb-c18a-22b2-576ce39a30f5</__uuid>
+  <__originalUuid>d43a944b-cfdb-c18a-22b2-576ce39a30f5</__originalUuid>
+  <__id>34359</__id>
+  <__resourcePrimKey>34360</__resourcePrimKey>
+  <__originalResourcePrimKey>34360</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-09-29 15:55:12.96</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-10-06 11:41:21.319</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34358</__articleId>
+  <__originalArticleId>34358</__originalArticleId>
+  <__version>1.2</__version>
+  <__originalVersion>1.2</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Album 01&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>album-01</__urlTitle>
+  <__originalUrlTitle>album-01</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;AlbumName&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;mtal&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Album 01]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;AlbumImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;nwdr&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;album_01.jpg&quot; title=&quot;album_01.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34268.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;AlbumAudioMP3&quot; type=&quot;document_library&quot; index-type=&quot;keyword&quot; instance-id=&quot;pyej&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34220.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;AlbumAudioOGG&quot; type=&quot;document_library&quot; index-type=&quot;keyword&quot; instance-id=&quot;nlew&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;AlbumAudioWAV&quot; type=&quot;document_library&quot; index-type=&quot;keyword&quot; instance-id=&quot;rhyg&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37522</__DDMStructureKey>
+  <__originalDDMStructureKey>37522</__originalDDMStructureKey>
+  <__DDMTemplateKey>37564</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37564</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-29 15:54:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>34361</__smallImageId>
+  <__originalSmallImageId>34361</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-10-06 11:41:21.319</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

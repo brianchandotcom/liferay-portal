@@ -1,0 +1,114 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>9e37117b-4ddc-3798-c280-ae7642cf41b2</__uuid>
+  <__originalUuid>9e37117b-4ddc-3798-c280-ae7642cf41b2</__originalUuid>
+  <__id>34734</__id>
+  <__resourcePrimKey>34404</__resourcePrimKey>
+  <__originalResourcePrimKey>34404</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-10-11 09:16:32.647</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 14:35:16.477</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34402</__articleId>
+  <__originalArticleId>34402</__originalArticleId>
+  <__version>1.3</__version>
+  <__originalVersion>1.3</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;Free? Premium? Select your plan&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>free-premium-</__urlTitle>
+  <__originalUrlTitle>free-premium-</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;ijyf&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[transparent]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;backgroundImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;farp&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;blockAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;rnig&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[left]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;numberOfColumns&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;drbu&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[12]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;idqx&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[left]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;bigTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;qybi&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[Free? Premium? Select your plan]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;htmlContent&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;quyp&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;div class=&quot;row&quot;&gt;
+&lt;div class=&quot;col-md-6&quot;&gt;
+&lt;h2&gt;1975 London Free&lt;/h2&gt;
+
+&lt;p&gt;Save your own playlist&lt;/p&gt;
+
+&lt;p&gt;Find out new music&lt;/p&gt;
+
+&lt;p&gt;In your mobile and desktop&lt;/p&gt;
+
+&lt;p&gt;&lt;button class=&quot;btn btn-xl btn-theme-primary&quot;&gt;Play Free&lt;/button&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;col-md-6 text-info&quot;&gt;
+&lt;h2&gt;1975 London Premium&lt;/h2&gt;
+
+&lt;p&gt;Unlimited playlist and radio&lt;/p&gt;
+
+&lt;p&gt;Save your music&lt;/p&gt;
+
+&lt;p&gt;Become part of our community&lt;/p&gt;
+
+&lt;p&gt;&lt;button class=&quot;btn btn-xl btn-theme-default&quot;&gt;Go PREMIUM&lt;/button&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37514</__DDMStructureKey>
+  <__originalDDMStructureKey>37514</__originalDDMStructureKey>
+  <__DDMTemplateKey>37526</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37526</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-10-11 09:10:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-11-08 14:35:16.477</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

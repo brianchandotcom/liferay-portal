@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<portlet-preferences owner-id="0" owner-type="3" default-user="false" plid="34185" portlet-id="com_liferay_journal_content_web_portlet_JournalContentPortlet_INSTANCE_b5Cjhe6uTs9L">
+	<preference>
+		<name>ddmTemplateKey</name>
+		<value/>
+	</preference>
+	<preference>
+		<name>groupId</name>
+		<value>34173</value>
+	</preference>
+	<preference>
+		<name>articleId</name>
+		<value>34448</value>
+	</preference>
+	<preference>
+		<name>portletSetupPortletDecoratorId</name>
+		<value>barebone</value>
+	</preference>
+</portlet-preferences>

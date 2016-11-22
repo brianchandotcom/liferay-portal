@@ -1,0 +1,90 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>ee532968-12dc-6a1e-ebd5-30aa8f4b8294</__uuid>
+  <__originalUuid>ee532968-12dc-6a1e-ebd5-30aa8f4b8294</__originalUuid>
+  <__id>34756</__id>
+  <__resourcePrimKey>34461</__resourcePrimKey>
+  <__originalResourcePrimKey>34461</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-10-06 11:46:25.453</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 14:35:31.827</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34459</__articleId>
+  <__originalArticleId>34459</__originalArticleId>
+  <__version>1.4</__version>
+  <__originalVersion>1.4</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;What your musical taste says about your personality&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>big-the-earth-is-all-we-have-in-common</__urlTitle>
+  <__originalUrlTitle>big-the-earth-is-all-we-have-in-common</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;shcs&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[main-background-image]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;backgroundImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;yrtn&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;slide01.jpg&quot; title=&quot;slide01.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34260.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;blockAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;lkoh&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[left]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;numberOfColumns&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;mdhw&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[6]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlign&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;pmka&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[left]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;bigTitle&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;cafg&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[What your musical taste says about your personality]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;htmlContent&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;brhn&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;p&gt;We&amp;rsquo;re exposed to music for nearly 20% of&amp;nbsp;our waking lives. But much of our musical experience seems to be a mystery. Why does some music bring us to tears while other pieces make us dance? Why is it that the music that we like can make others agitated? And why do some people seem to have a natural ability to play music while others have difficulty carrying a tune? Science is beginning to show that these individual differences are not just random but are, in part, due to people&amp;rsquo;s personalities.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37514</__DDMStructureKey>
+  <__originalDDMStructureKey>37514</__originalDDMStructureKey>
+  <__DDMTemplateKey>37526</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37526</__originalDDMTemplateKey>
+  <__layoutUuid></__layoutUuid>
+  <__originalLayoutUuid></__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-29 15:59:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-11-08 14:35:31.827</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

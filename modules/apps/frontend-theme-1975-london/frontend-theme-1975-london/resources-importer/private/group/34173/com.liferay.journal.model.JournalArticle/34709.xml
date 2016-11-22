@@ -1,0 +1,146 @@
+<JournalArticle>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>86565ae2-f372-6c6d-3114-11a242d02157</__uuid>
+  <__originalUuid>86565ae2-f372-6c6d-3114-11a242d02157</__originalUuid>
+  <__id>34709</__id>
+  <__resourcePrimKey>34505</__resourcePrimKey>
+  <__originalResourcePrimKey>34505</__originalResourcePrimKey>
+  <__setOriginalResourcePrimKey>false</__setOriginalResourcePrimKey>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__originalUserId>20164</__originalUserId>
+  <__setOriginalUserId>false</__setOriginalUserId>
+  <__userName>Test Test</__userName>
+  <__createDate class="sql-timestamp">2016-10-05 14:52:04.456</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 13:26:35.791</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__folderId>0</__folderId>
+  <__originalFolderId>0</__originalFolderId>
+  <__setOriginalFolderId>false</__setOriginalFolderId>
+  <__classNameId>0</__classNameId>
+  <__originalClassNameId>0</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>0</__classPK>
+  <__originalClassPK>0</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__treePath>/</__treePath>
+  <__articleId>34503</__articleId>
+  <__originalArticleId>34503</__originalArticleId>
+  <__version>2.2</__version>
+  <__originalVersion>2.2</__originalVersion>
+  <__setOriginalVersion>false</__setOriginalVersion>
+  <__title>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Title language-id=&quot;en_US&quot;&gt;How Music Affects Your Productivity&lt;/Title&gt;&lt;/root&gt;</__title>
+  <__urlTitle>02-the-earth-is-all-we-have-in-common</__urlTitle>
+  <__originalUrlTitle>02-the-earth-is-all-we-have-in-common</__originalUrlTitle>
+  <__description></__description>
+  <__content>&lt;?xml version=&quot;1.0&quot;?&gt;
+
+&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;
+	&lt;dynamic-element name=&quot;coverImage&quot; type=&quot;image&quot; index-type=&quot;keyword&quot; instance-id=&quot;hpqn&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot; alt=&quot;&quot; name=&quot;new_00.jpg&quot; title=&quot;new_00.jpg&quot; type=&quot;document&quot;&gt;&lt;![CDATA[[$dl-reference=/group/34173/com.liferay.document.library.kernel.model.DLFileEntry/34308.xml$]]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;title&quot; type=&quot;text&quot; index-type=&quot;keyword&quot; instance-id=&quot;isyg&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[We love Music]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;subTitle&quot; type=&quot;text_box&quot; index-type=&quot;keyword&quot; instance-id=&quot;bohm&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[But does music itself help one to create?]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;content&quot; type=&quot;text_area&quot; index-type=&quot;keyword&quot; instance-id=&quot;qems&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[&lt;h2&gt;Music Makes Repetitive Tasks More Enjoyable&lt;/h2&gt;
+
+&lt;p&gt;Music&amp;rsquo;s effectiveness is dependent on how &amp;ldquo;immersive&amp;rdquo; a task is, referring to the creative demand of the work.&lt;/p&gt;
+
+&lt;p&gt;When a task is clearly defined and repetitive in nature,&amp;nbsp;research&amp;nbsp;suggests that music is consistently helpful.&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A series of experiments has investigated the relationship between the playing of background music during the performance of repetitive work and efficiency in performing such a task. The results give strong support to the contention that economic benefits can accrue from the use of music in industry.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Assembly line workers showed signs of&amp;nbsp;increased happiness and efficiency while&amp;nbsp;listening to music, for example.&lt;/p&gt;
+
+&lt;p&gt;More&amp;nbsp;modern studies&amp;nbsp;would argue that it isn&amp;rsquo;t the music itself, but rather the improved&amp;nbsp;mood&amp;nbsp;your favorite music brings that is the source of this bump in productivity.&lt;/p&gt;
+
+&lt;p&gt;Music with a dissonant tone was found to have no impact to productivity, while music in&amp;nbsp;the major mode, or key, had better results: &amp;ldquo;Subjects hearing BGM (background music) achieved greater productivity when BGM was in the major mode.&amp;rdquo;&lt;/p&gt;
+
+&lt;h2&gt;In a Noisy Workplace, Music Is An Escape&lt;/h2&gt;
+
+&lt;p&gt;While the open-office debate rages on, one point has become clear:&amp;nbsp;a noisy workplace&amp;nbsp;can halt personal productivity in its tracks.&lt;/p&gt;
+
+&lt;p&gt;Perhaps&amp;nbsp;a pair of headphones may not be as distracting as&amp;nbsp;some companies think:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Dr. Lesiuk&amp;rsquo;s research focuses on how music affects workplace performance. In one study involving information technology specialists, she found that those who listened to music completed their tasks more quickly and came up with better ideas than those who didn&amp;rsquo;t, because the music improved their mood.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Again, we see improved mood as the main argument made.&lt;/p&gt;
+
+&lt;p&gt;While the open space encourages more collaboration, the noise can be&amp;nbsp;too much for some people to handle when engaging in deep work. If there is no physical escape&amp;mdash;such as a private room&amp;mdash;then a pair of headphones may be the best alternative.&lt;/p&gt;
+
+&lt;h2&gt;Ambient Noise Is The Creative Sweet Spot&lt;/h2&gt;
+
+&lt;p&gt;For those who do enjoy listening to music during creative sessions, an atmospheric presence seems to work best.&lt;/p&gt;
+
+&lt;p&gt;Researchers&amp;nbsp;have shown&amp;nbsp;that&amp;nbsp;a moderate noise level can get&amp;nbsp;creative juices flowing, but the line is easily crossed; loud noises made it incredibly difficult to concentrate. Bellowing basses and screeching synths will do you more harm than good when engaging in deep work.&lt;/p&gt;
+
+&lt;p&gt;A 2015 study&amp;nbsp;found that when it came to sound-masking with ambient noise, &amp;ldquo;natural&amp;rdquo; sounds, such as waves at a beach, also improved subjects&amp;rsquo; ability to concentrate.&lt;/p&gt;
+
+&lt;blockquote&gt;Whether deliberately created or naturally occurring, a soft background noise is what you should aim for.&lt;/blockquote&gt;
+
+&lt;h2&gt;Lyrics Are Often Too Distracting&lt;/h2&gt;
+
+&lt;p&gt;For low-immersion or&amp;nbsp;physical tasks, music with lyrics can offer huge benefits. But for intensive work, lyrics are especially destructive for focus.&lt;/p&gt;
+
+&lt;p&gt;Research&amp;nbsp;shows that &amp;ldquo;intelligible&amp;rdquo; chatter&amp;mdash;talking that can be clearly heard and understood&amp;mdash;is what makes for a distracting environment. Shifting focus to figure out what someone else is saying is the reason why speech is often considered the most troublesome element of a noisy office;&amp;nbsp;in one study, 48% of participants listed intelligible talking as the sound which distracted them the most.&lt;/p&gt;
+
+&lt;p&gt;Trying to engage in language-related tasks&amp;mdash;such as writing&amp;mdash;while listening to lyrics would be akin to holding a conversation while another person talks over you&amp;hellip; while also strumming a guitar. Lyrics are often a no-go.&lt;/p&gt;
+
+&lt;p&gt;Lyrics&amp;nbsp;might&amp;nbsp;not have the same effect on creative tasks that don&amp;rsquo;t directly deal with &amp;ldquo;verbal architecture.&amp;rdquo;&amp;nbsp;This study&amp;nbsp;that looked at software developers suggested that music with lyrics helped their output while working.&lt;/p&gt;
+
+&lt;h2&gt;Familiarity Is Best For Focus&lt;/h2&gt;
+
+&lt;p&gt;It may be beneficial to listen to music you are familiar with if you need to intensely focus for a project.&lt;/p&gt;
+
+&lt;p&gt;The reason being is that new music is surprising; since you don&amp;rsquo;t know what to expect, you are&amp;nbsp;inclined to listen closely to see what comes next.&lt;/p&gt;
+
+&lt;blockquote&gt;With familiar music, you know what lies ahead. Paying attention requires less focus.&lt;/blockquote&gt;
+
+&lt;p&gt;While the &amp;ldquo;journey&amp;rdquo; of new music can be beneficial in other ways, it&amp;rsquo;s best to tread a familiar path if you are using music to get things done.&lt;/p&gt;]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;cardPreviewSettings&quot; type=&quot;selection_break&quot; index-type=&quot;keyword&quot; instance-id=&quot;scrs&quot;/&gt;
+	&lt;dynamic-element name=&quot;backgroundType&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;frux&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[main-background-image]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+	&lt;dynamic-element name=&quot;textAlignmentInCard&quot; type=&quot;list&quot; index-type=&quot;keyword&quot; instance-id=&quot;goqn&quot;&gt;
+		&lt;dynamic-content language-id=&quot;en_US&quot;&gt;&lt;![CDATA[top text-right]]&gt;&lt;/dynamic-content&gt;
+	&lt;/dynamic-element&gt;
+&lt;/root&gt;</__content>
+  <__DDMStructureKey>37518</__DDMStructureKey>
+  <__originalDDMStructureKey>37518</__originalDDMStructureKey>
+  <__DDMTemplateKey>37530</__DDMTemplateKey>
+  <__originalDDMTemplateKey>37530</__originalDDMTemplateKey>
+  <__layoutUuid>ed7b573d-0ecb-5ec6-6379-54c742840674</__layoutUuid>
+  <__originalLayoutUuid>ed7b573d-0ecb-5ec6-6379-54c742840674</__originalLayoutUuid>
+  <__displayDate class="sql-timestamp">2016-09-30 09:52:00.0</__displayDate>
+  <__originalDisplayDate class="sql-timestamp" reference="../__displayDate"/>
+  <__indexable>true</__indexable>
+  <__originalIndexable>true</__originalIndexable>
+  <__setOriginalIndexable>false</__setOriginalIndexable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>0</__smallImageId>
+  <__originalSmallImageId>0</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__status>0</__status>
+  <__originalStatus>0</__originalStatus>
+  <__setOriginalStatus>false</__setOriginalStatus>
+  <__statusByUserId>20164</__statusByUserId>
+  <__statusByUserName>Test Test</__statusByUserName>
+  <__statusDate class="sql-timestamp">2016-11-08 13:26:35.791</__statusDate>
+  <__columnBitmask>0</__columnBitmask>
+</JournalArticle>

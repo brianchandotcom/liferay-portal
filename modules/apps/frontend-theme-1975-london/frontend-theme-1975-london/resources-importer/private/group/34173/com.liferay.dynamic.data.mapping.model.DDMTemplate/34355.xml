@@ -1,0 +1,106 @@
+<DDMTemplate>
+  <__cachedModel>false</__cachedModel>
+  <__new>false</__new>
+  <__uuid>5ff8dd96-e37e-99da-bb35-778d716993e6</__uuid>
+  <__originalUuid>5ff8dd96-e37e-99da-bb35-778d716993e6</__originalUuid>
+  <__templateId>34355</__templateId>
+  <__groupId>34173</__groupId>
+  <__originalGroupId>34173</__originalGroupId>
+  <__setOriginalGroupId>false</__setOriginalGroupId>
+  <__companyId>20116</__companyId>
+  <__originalCompanyId>20116</__originalCompanyId>
+  <__setOriginalCompanyId>false</__setOriginalCompanyId>
+  <__userId>20164</__userId>
+  <__userName>Test Test</__userName>
+  <__versionUserId>20164</__versionUserId>
+  <__versionUserName>Test Test</__versionUserName>
+  <__createDate class="sql-timestamp">2016-10-03 14:55:54.088</__createDate>
+  <__modifiedDate class="sql-timestamp">2016-11-08 14:26:55.732</__modifiedDate>
+  <__setModifiedDate>false</__setModifiedDate>
+  <__classNameId>28907</__classNameId>
+  <__originalClassNameId>28907</__originalClassNameId>
+  <__setOriginalClassNameId>false</__setOriginalClassNameId>
+  <__classPK>34343</__classPK>
+  <__originalClassPK>34343</__originalClassPK>
+  <__setOriginalClassPK>false</__setOriginalClassPK>
+  <__resourceClassNameId>29401</__resourceClassNameId>
+  <__templateKey>37706</__templateKey>
+  <__originalTemplateKey>37706</__originalTemplateKey>
+  <__version>1.1</__version>
+  <__name>&lt;?xml version=&apos;1.0&apos; encoding=&apos;UTF-8&apos;?&gt;&lt;root available-locales=&quot;en_US&quot; default-locale=&quot;en_US&quot;&gt;&lt;Name language-id=&quot;en_US&quot;&gt;1975-London Big Slide With Item Content Template&lt;/Name&gt;&lt;/root&gt;</__name>
+  <__description></__description>
+  <__type>display</__type>
+  <__originalType>display</__originalType>
+  <__mode></__mode>
+  <__originalMode></__originalMode>
+  <__language>ftl</__language>
+  <__originalLanguage>ftl</__originalLanguage>
+  <__script>&lt;#assign bgImage = &quot;&quot;&gt;
+
+&lt;#if backgroundImage.getData()?? &amp;&amp; backgroundImage.getData() != &quot;&quot; &amp;&amp; backgroundType.getData() == &quot;main-background-image&quot;&gt;
+	&lt;#assign bgImage = &quot;style=&apos;background-image: url(${backgroundImage.getData()});&apos;&quot;&gt;
+&lt;/#if&gt;
+
+&lt;#assign colOffset = &quot;&quot;&gt;
+&lt;#assign nColumns = (numberOfColumns.getData())!&quot;&quot;&gt;
+
+&lt;#if blockAlign.getData() == &quot;center&quot;&gt;
+    &lt;#assign colOffset&gt;
+        &lt;#if nColumns == &quot;2&quot;&gt;
+            col-md-offset-5
+        &lt;#elseif nColumns == &quot;4&quot;&gt;
+            col-md-offset-4
+        &lt;#elseif nColumns == &quot;6&quot;&gt;
+            col-md-offset-3
+        &lt;#elseif nColumns == &quot;8&quot;&gt;
+            col-md-offset-2
+        &lt;#elseif nColumns == &quot;10&quot;&gt;
+            col-md-offset-1
+        &lt;/#if&gt;
+    &lt;/#assign&gt;
+&lt;/#if&gt;
+
+&lt;div class=&quot;jumbotron ${backgroundType.getData()}&quot; ${bgImage}&gt;
+    &lt;section class=&quot;container-fluid-1280&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+            &lt;div class=&quot;col-md-${nColumns} pull-${blockAlign.getData()} text-${textAlign.getData()} ${colOffset}&quot;&gt;
+                &lt;h2 class=&quot;h1&quot;&gt;${bigTitle.getData()}&lt;/h2&gt;
+                ${htmlContent.getData()}
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;#if ItemTitle.getSiblings()?has_content&gt;
+            &lt;#assign itemColSize&gt;
+                &lt;#if ItemTitle.getSiblings()?size == 1&gt;
+                    col-md-12
+                &lt;#elseif ItemTitle.getSiblings()?size == 2&gt;
+                    col-md-6
+                &lt;#elseif ItemTitle.getSiblings()?size == 3&gt;
+                    col-md-4
+                &lt;#else&gt;
+                    col-md-3
+                &lt;/#if&gt;
+            &lt;/#assign&gt;
+
+            &lt;ul class=&quot;row list-unstyled&quot;&gt;
+                &lt;#list ItemTitle.getSiblings() as cur_ItemTitle&gt;
+                    &lt;li class=&quot;text-center ${itemColSize}&quot;&gt;
+                        &lt;span class=&quot;user-icon-xl&quot;&gt;
+                            &lt;span class=&quot;${cur_ItemTitle.ItemIcon.getData()}&quot;&gt;&lt;/span&gt;
+                        &lt;/span&gt;
+                        &lt;h2 class=&quot;h3&quot;&gt;${cur_ItemTitle.getData()}&lt;/h2&gt;
+                        &lt;span&gt;${cur_ItemTitle.ItemText.getData()}&lt;/span&gt;
+                    &lt;/li&gt;
+                &lt;/#list&gt;
+            &lt;/ul&gt;
+        &lt;/#if&gt;
+    &lt;/section&gt;
+&lt;/div&gt;</__script>
+  <__cacheable>false</__cacheable>
+  <__smallImage>false</__smallImage>
+  <__smallImageId>34356</__smallImageId>
+  <__originalSmallImageId>34356</__originalSmallImageId>
+  <__setOriginalSmallImageId>false</__setOriginalSmallImageId>
+  <__smallImageURL></__smallImageURL>
+  <__columnBitmask>0</__columnBitmask>
+</DDMTemplate>

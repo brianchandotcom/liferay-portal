@@ -436,6 +436,8 @@
 			<var name="key_actionsDescription" value="Reindex all search indexes." />
 		</execute>
 
+		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="Pause" locator1="10000" />
 	</command>
 

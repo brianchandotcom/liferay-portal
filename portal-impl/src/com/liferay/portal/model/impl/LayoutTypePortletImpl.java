@@ -1548,13 +1548,10 @@ public class LayoutTypePortletImpl
 
 		String selector1 = StringPool.BLANK;
 
-		Group group = null;
+		Group group = layout.getGroup();
 
-		try {
-			group = layout.getGroup();
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to get group " + layout.getGroupId(), pe);
+		if (group == null) {
+			_log.error("Unable to get group " + layout.getGroupId());
 
 			return new String[0];
 		}

@@ -306,6 +306,15 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		String includeResources = matcher.group();
 
+		matcher = _includeResourceJarPattern.matcher(includeResources);
+
+		if (matcher.find()) {
+			String replacement = StringUtil.replace(
+				includeResources, matcher.group(), "-[0-9]*.jar");
+
+			return StringUtil.replace(content, includeResources, replacement);
+		}
+
 		for (String includeResourceDir : _INCLUDE_RESOURCE_DIRS_BLACKLIST) {
 			Pattern includeResourceDirPattern = Pattern.compile(
 				"(\t|: )" + includeResourceDir + "(,\\\\\n|\n||\\Z)");
@@ -489,6 +498,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _importsPattern = Pattern.compile(
 		"\nImport-Package:(\\\\\n| )(.*?\n|\\Z)[^\t]",
 		Pattern.DOTALL | Pattern.MULTILINE);
+	private final Pattern _includeResourceJarPattern = Pattern.compile(
+		"-[0-9\\.]+\\.jar");
 	private final Pattern _includeResourcePattern = Pattern.compile(
 		"^(-includeresource|Include-Resource):[\\s\\S]*?([^\\\\]\n|\\Z)",
 		Pattern.MULTILINE);

@@ -61,9 +61,10 @@ source files to `workingDir`.
 log level.
 
 ## 2.3.0 - 2016-11-18
+
 ### Added
-- [LPS-69248]: Add configuration `jsCompile` to provide additional JavaScript
-dependencies for the `transpileJS` task.
+- [LPS-69248]: Add the `jsCompile` configuration to provide additional
+JavaScript dependencies for the `transpileJS` task.
 
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906

@@ -682,5 +682,6 @@ version 2.3.0.
 [LPS-68995]: https://issues.liferay.com/browse/LPS-68995
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
+[LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-69248]: https://issues.liferay.com/browse/LPS-69248
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

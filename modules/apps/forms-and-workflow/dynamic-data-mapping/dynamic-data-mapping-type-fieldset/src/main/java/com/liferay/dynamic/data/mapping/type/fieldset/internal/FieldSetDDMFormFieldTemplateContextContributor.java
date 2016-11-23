@@ -17,9 +17,9 @@ package com.liferay.dynamic.data.mapping.type.fieldset.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,18 +44,22 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		Map<String, Object> ddmFormFieldProperties =
-			ddmFormField.getProperties();
+		List<Object> nestedFields =
+			(List<Object>)ddmFormFieldRenderingContext.getProperty(
+				"nestedFields");
 
-		parameters.put("repeatable", ddmFormField.isRepeatable());
-
-		parameters.put("rows", ddmFormFieldProperties.get("rows"));
-
-		String title = MapUtil.getString(ddmFormFieldProperties, "title");
-
-		parameters.put("title", title);
+		parameters.put("columnSize", getColumnSize(nestedFields));
+		parameters.put("fields", nestedFields);
 
 		return parameters;
+	}
+
+	protected int getColumnSize(List<Object> nestedFields) {
+		if (nestedFields.isEmpty()) {
+			return 0;
+		}
+
+		return 12 / nestedFields.size();
 	}
 
 }

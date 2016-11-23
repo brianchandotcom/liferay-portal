@@ -13,13 +13,8 @@
 		margin: 0 20px 0 5px;
 	}
 
-	.lfr-search-container {
-		margin: 0 0 0 -1px;
-	}
-
 	.controls {
 		background: #F5F8FA;
-		border-bottom-width: 0;
 		padding: 5px 10px;
 
 		>.input-checkbox-wrapper {
@@ -46,72 +41,13 @@
 		margin-bottom: 10px;
 	}
 
-	.message-body, .message-subject, .message-to {
-		box-sizing: border-box;
-		width: 100%;
-	}
-
 	.message-body {
 		min-height: 100px;
 	}
 
-	.message-link {
-		display: block;
-		margin: -10px;
-		padding: 10px;
-		padding-left: 80px;
-		position: relative;
-		z-index: 1;
-
-		.body {
-			color: #666;
-		}
-
-		.subject {
-			clear: right;
-			color: #333;
-			word-break: break-word;
-		}
-	}
-
-	.table {
-		border-top-width: 0;
-		margin-bottom: 0;
-
-		thead {
-			display: none;
-		}
-
-		.first {
-			vertical-align: middle;
-			width: 12px;
-		}
-	}
-
-	.table-striped .table-data .first, .table-striped .table-data .last {
-		background: none;
-	}
-
-	/* ---------- Results ---------- */
-
 	.messages .list-group-item.unread {
 		background: #F0F5F7;
 	}
-
-	.taglib-page-iterator {
-		padding: 10px;
-
-		.lfr-pagination-buttons, .lfr-pagination-config, .search-results {
-			line-height: 30px;
-		}
-	}
-
-	.taglib-search-iterator-page-iterator-top {
-		border-top: 1px solid #DDD;
-		margin-bottom: 0;
-	}
-
-	/* ---------- Thread ---------- */
 
 	.thread {
 		.body {
@@ -142,21 +78,6 @@
 			float: right;
 		}
 	}
-
-	.date {
-		color: #777;
-		float: right;
-		font-size: 11px;
-	}
-
-	.messages .taglib-user-display, .thread .taglib-user-display {
-		float: left;
-		padding: 0;
-	}
-
-	.line-through {
-		text-decoration: line-through;
-	}
 }
 
 /* ---------- Extras ---------- */
@@ -178,7 +99,7 @@
 @include respond-to(phone) {
 	.private-messaging-portlet {
 		.messages {
-			.button-holder{
+			.button-holder {
 				padding-left: 51px;
 				position: relative;
 
@@ -190,12 +111,6 @@
 					top: 50%;
 					width: 24px;
 				}
-			}
-
-			.table .first input {
-				height: 24px;
-				margin-left: 6px;
-				width: 24px;
 			}
 		}
 
@@ -212,26 +127,8 @@
 			}
 		}
 
-		.message-link {
-			padding-left: 10px;
-		}
-
-		.user-profile-image {
-			height: 45px;
-		}
-
 		.avatar {
 			width: 45px;
-		}
-
-		.author-sender, .date, .name {
-			float: none;
-		}
-
-		.date {
-			display: block;
-			font-size: 1em;
-			margin-top: 3px;
 		}
 
 		.subject {

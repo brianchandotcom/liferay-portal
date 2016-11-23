@@ -67,10 +67,10 @@ to = sb.toString() + to;
 				<aui:input name="mbThreadId" type="hidden" value="<%= mbThreadId %>" />
 
 				<div id="<portlet:namespace />autoCompleteContainer">
-					<aui:input cssClass="message-to" name="to" required="<%= true %>" value="<%= to %>" />
+					<aui:input name="to" required="<%= true %>" value="<%= to %>" />
 				</div>
 
-				<aui:input cssClass="message-subject" name="subject" required="<%= true %>" value="<%= subject %>" />
+				<aui:input name="subject" required="<%= true %>" value="<%= subject %>" />
 
 				<aui:input cssClass="message-body" label="message" name="body" required="<%= true %>" type="textarea" />
 

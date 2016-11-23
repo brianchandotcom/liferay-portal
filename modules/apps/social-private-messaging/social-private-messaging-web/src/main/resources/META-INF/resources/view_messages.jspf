@@ -87,7 +87,7 @@
 							<span><%= userName %></span>
 						</c:when>
 						<c:otherwise>
-							<span class="line-through"><%= userName %></span>
+							<s><%= userName %></s>
 
 							<liferay-ui:icon
 								image="../aui/question-sign"

@@ -76,7 +76,7 @@ UserThreadLocalServiceUtil.markUserThreadAsRead(user.getUserId(), mbThreadId);
 						<span><%= HtmlUtil.escape(curUser.getFullName()) %></span>
 					</c:when>
 					<c:otherwise>
-						<span class="line-through"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
+						<s><%= HtmlUtil.escape(curUser.getFullName()) %></s>
 
 						<liferay-ui:icon
 							image="../aui/question-sign"
@@ -168,7 +168,7 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 								<span><%= HtmlUtil.escape(curUser.getFullName()) %></span>
 							</c:when>
 							<c:otherwise>
-								<span class="line-through"><%= HtmlUtil.escape(curUser.getFullName()) %></span>
+								<s><%= HtmlUtil.escape(curUser.getFullName()) %></s>
 
 								<liferay-ui:icon
 									image="../aui/question-sign"

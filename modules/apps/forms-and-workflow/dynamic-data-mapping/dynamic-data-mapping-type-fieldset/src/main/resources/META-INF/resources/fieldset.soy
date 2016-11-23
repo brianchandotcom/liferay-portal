@@ -1,5 +1,6 @@
 {namespace ddm}
 
+
 /**
  * Defines the delegated template for the fieldset field.
  */
@@ -8,42 +9,31 @@
 {/deltemplate}
 
 /**
- * Prints all rows.
- *
- * @param rows
- */
-{template .fieldset_rows autoescape="deprecated-contextual"}
-	{foreach $row in $rows}
-		<div class="row">
-			{call ddm.fieldset_row_columns data="all"}
-				{param columns: $row.columns /}
-			{/call}
-		</div>
-	{/foreach}
-{/template}
-
-/**
  * Prints a column.
  *
- * @param column
+ * @param columnSize
+ * @param field
  */
-{template .fieldset_row_column autoescape="deprecated-contextual"}
-	<div class="col-md-{$column.size}">
-		{call ddm.fields data="all"}
-			{param fields: $column.fields /}
-		{/call}
+{template .fieldset_column autoescape="deprecated-contextual"}
+	<div class="col-md-{$columnSize}">
+		{let $variant: $field.type /}
+
+		{delcall ddm.field variant="$variant" data="$field" /}
 	</div>
 {/template}
 
 /**
  * Prints all columns.
  *
- * @param columns
+ * @param columnSize
+ * @param fields
  */
-{template .fieldset_row_columns autoescape="deprecated-contextual"}
-	{foreach $column in $columns}
-		{call ddm.fieldset_row_column data="all"}
-			{param column: $column /}
+{template .fieldset_columns autoescape="deprecated-contextual"}
+	{foreach $field in $fields}
+
+		{call ddm.fieldset_column data="all"}
+			{param columnSize: $columnSize /}
+			{param field: $field /}
 		{/call}
 	{/foreach}
 {/template}
@@ -51,14 +41,27 @@
 /**
  * Prints the DDM form fieldset field.
  *
+ * @param columnSize
  * @param name
- * @param rows
+ * @param fields
+ * @param? label
+ * @param tip
  * @param visible
  */
 {template .fieldset autoescape="deprecated-contextual"}
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-fieldset" data-fieldname="{$name}">
-		{call ddm.fieldset_rows data="all"}
-			{param rows: $rows /}
-		{/call}
+
+		{if $tip}
+			<p class="liferay-ddm-form-field-tip">{$tip}</p>
+		{/if}
+
+		<fieldset>
+			<legend>{$label}</legend>
+
+			{call ddm.fieldset_columns data="all"}
+				{param columnSize: $columnSize /}
+				{param fields: $fields /}
+			{/call}
+		</fieldset>
 	</div>
 {/template}

@@ -47,6 +47,10 @@ public interface Patcher {
 	public static final String PROPERTY_PATCHING_TOOL_VERSION_DISPLAY_NAME =
 		"patching.tool.version.display.name";
 
+	public static final String PROPERTY_SEPARATED = "separated";
+
+	public static final String PROPERTY_SEPARATION_ID = "separation.id";
+
 	public boolean applyPatch(File patchFile);
 
 	public String[] getFixedIssues();
@@ -63,9 +67,13 @@ public interface Patcher {
 
 	public Properties getProperties();
 
+	public String getSeparationId();
+
 	public boolean hasInconsistentPatchLevels();
 
 	public boolean isConfigured();
+
+	public boolean isSeparated();
 
 	public void verifyPatchLevels() throws PatchInconsistencyException;
 

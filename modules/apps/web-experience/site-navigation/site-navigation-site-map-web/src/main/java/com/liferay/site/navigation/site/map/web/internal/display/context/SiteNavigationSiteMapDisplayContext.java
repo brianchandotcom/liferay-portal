@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.site.map.web.internal.display.context;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutType;
@@ -84,7 +85,10 @@ public class SiteNavigationSiteMapDisplayContext {
 			_siteNavigationSiteMapPortletInstanceConfiguration.
 				displayStyleGroupId();
 
-		if (GroupLocalServiceUtil.fetchGroup(_displayStyleGroupId) == null) {
+		Group displayStyleGroupId = GroupLocalServiceUtil.fetchGroup(
+			_displayStyleGroupId);
+
+		if (displayStyleGroupId == null) {
 			_displayStyleGroupId = _themeDisplay.getSiteGroupId();
 		}
 

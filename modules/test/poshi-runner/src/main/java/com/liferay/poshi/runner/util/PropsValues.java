@@ -254,11 +254,11 @@ public class PropsValues {
 	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
 		PropsUtil.get("testing.class.method"));
 
-	public static final String[] THEME_IDS = StringUtil.split(
-		PropsUtil.get("theme.ids"));
-
 	public static final boolean THEME_CONTAINS_RESOURCES =
 		GetterUtil.getBoolean(PropsUtil.get("theme.contains.resources"));
+
+	public static final String[] THEME_IDS = StringUtil.split(
+		PropsUtil.get("theme.ids"));
 
 	public static final int TIMEOUT_EXPLICIT_WAIT = GetterUtil.getInteger(
 		PropsUtil.get("timeout.explicit.wait"));

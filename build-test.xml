@@ -7197,7 +7197,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</and>
 			<then>
 				<if>
-					<resourcecount when="greater" count="0">
+					<resourcecount count="0" when="greater">
 						<zipfileset src="${liferay.home}/deploy/${theme.file.name}">
 							<patternset>
 								<include name="**/private.lar" />

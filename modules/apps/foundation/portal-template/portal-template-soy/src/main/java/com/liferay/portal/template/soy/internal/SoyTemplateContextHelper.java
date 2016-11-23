@@ -36,9 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
 import org.osgi.framework.wiring.BundleCapability;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -47,7 +45,6 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.util.tracker.BundleTracker;
-import org.osgi.util.tracker.BundleTrackerCustomizer;
 
 /**
  * @author Bruno Basto
@@ -126,7 +123,8 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, stateMask,
-			new CapabilityBundleTrackerCustomizer("soy"));
+			new SoyCapabilityBundleTrackerCustomizer(
+				"soy", _bundleProvidersMap));
 
 		_bundleTracker.open();
 	}
@@ -168,44 +166,5 @@ public class SoyTemplateContextHelper extends TemplateContextHelper {
 		unbind = "-"
 	)
 	private TemplateResourceParser _templateResourceParser;
-
-	private class CapabilityBundleTrackerCustomizer
-		implements BundleTrackerCustomizer<List<BundleCapability>> {
-
-		public CapabilityBundleTrackerCustomizer(String namespace) {
-			_namespace = namespace;
-		}
-
-		@Override
-		public List<BundleCapability> addingBundle(
-			Bundle bundle, BundleEvent bundleEvent) {
-
-			BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
-
-			List<BundleCapability> bundleCapabilities =
-				bundleWiring.getCapabilities(_namespace);
-
-			_bundleProvidersMap.put(bundle.getBundleId(), bundle);
-
-			return bundleCapabilities;
-		}
-
-		@Override
-		public void modifiedBundle(
-			Bundle bundle, BundleEvent bundleEvent,
-			List<BundleCapability> bundleCapabilities) {
-		}
-
-		@Override
-		public void removedBundle(
-			Bundle bundle, BundleEvent bundleEvent,
-			List<BundleCapability> bundleCapabilities) {
-
-			_bundleProvidersMap.remove(bundle.getBundleId());
-		}
-
-		private final String _namespace;
-
-	}
 
 }

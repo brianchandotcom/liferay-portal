@@ -1016,9 +1016,7 @@ public class LayoutTypePortletImpl
 
 			columnValue = StringUtil.removeFromList(columnValue, portletId);
 
-			if ((columnValue != null) &&
-				columnValue.endsWith(StringPool.COMMA)) {
-
+			if (StringUtil.endsWith(columnValue, StringPool.COMMA)) {
 				columnValue = columnValue.substring(
 					0, columnValue.length() - 1);
 			}

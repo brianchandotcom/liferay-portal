@@ -2798,10 +2798,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-57358
 
-		if (content.contains("ProxyFactory.newServiceTrackedInstance(")) {
+		if (content.contains(
+			"ServiceProxyFactory.newServiceTrackedInstance(")) {
+
 			processMessage(
 				fileName,
-				"Do not use ProxyFactory.newServiceTrackedInstance in " +
+				"Do not use ServiceProxyFactory.newServiceTrackedInstance in " +
 					"modules, see LPS-57358");
 		}
 

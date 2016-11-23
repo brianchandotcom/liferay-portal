@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.soy.internal.SoyTemplateResourcesTracker;
 
 import java.net.URL;
 
@@ -43,6 +44,18 @@ public class SoyTemplateResourcesCollector {
 		_templatePath = templatePath;
 	}
 
+	public List<TemplateResource> getAllTemplateResources()
+		throws TemplateException {
+
+		List<TemplateResource> templateResources = new ArrayList<>();
+
+		for (Bundle bundle : SoyTemplateResourcesTracker.getBundles()) {
+			collectBundleTemplateResources(bundle, templateResources);
+		}
+
+		return templateResources;
+	}
+
 	public List<TemplateResource> getTemplateResources()
 		throws TemplateException {
 
@@ -55,15 +68,21 @@ public class SoyTemplateResourcesCollector {
 	}
 
 	protected void collectBundleTemplateResources(
-		List<TemplateResource> templateResources) {
+		Bundle bundle, List<TemplateResource> templateResources) {
 
-		List<URL> urls = getSoyResourceURLs(_bundle, _templatePath);
+		List<URL> urls = getSoyResourceURLs(bundle, _templatePath);
 
 		for (URL url : urls) {
-			String templateId = getTemplateId(_bundle.getBundleId(), url);
+			String templateId = getTemplateId(bundle.getBundleId(), url);
 
 			templateResources.add(new URLTemplateResource(templateId, url));
 		}
+	}
+
+	protected void collectBundleTemplateResources(
+		List<TemplateResource> templateResources) {
+
+		collectBundleTemplateResources(_bundle, templateResources);
 	}
 
 	protected void collectProviderBundlesTemplateResources(

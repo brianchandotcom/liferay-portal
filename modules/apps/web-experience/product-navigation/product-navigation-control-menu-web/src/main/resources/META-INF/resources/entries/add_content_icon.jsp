@@ -28,6 +28,6 @@ addPanelURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 <li class="control-menu-nav-item">
 	<a class="control-menu-icon lfr-portal-tooltip product-menu-toggle sidenav-toggler" data-content="body" data-open-class="open-admin-panel" data-qa-id="add" data-target="#<%= portletNamespace %>addPanelId" data-title="<%= HtmlUtil.escape(LanguageUtil.get(request, "add")) %>" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" data-url="<%= addPanelURL.toString() %>" href="javascript:;" id="<%= portletNamespace %>addToggleId">
-		<aui:icon image="plus" markupView="lexicon" />
+		<aui:icon cssClass="icon-monospaced" image="plus" markupView="lexicon" />
 	</a>
 </li>

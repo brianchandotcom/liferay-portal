@@ -11,7 +11,7 @@
 <!--CUSTOM_FIELDS_TABLE-->
 <tr>
 	<td>CUSTOM_FIELDS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${customFieldName}')]/td[7]//div[contains(@class,'dropdown') and contains(@class,'dropdown-menu-no-arrow')]/a</td>
+	<td>//tr[contains(.,'${customFieldName}')]/td[7]//div[contains(@class,'dropdown')]/a</td>
 	<td></td>
 </tr>
 <tr>

@@ -51,7 +51,7 @@ editPageURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout(
 
 <li class="control-menu-nav-item">
 	<a class="control-menu-icon lfr-portal-tooltip" data-qa-id="editLayout" data-title="<%= HtmlUtil.escape(LanguageUtil.get(resourceBundle, "configure-page")) %>" href="<%= editPageURL.toString() %>">
-		<aui:icon image="cog" markupView="lexicon" />
+		<aui:icon cssClass="icon-monospaced" image="cog" markupView="lexicon" />
 	</a>
 </li>
 

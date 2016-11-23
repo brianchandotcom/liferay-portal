@@ -16,11 +16,7 @@
 
 <%@ include file="/management_bar_button/init.jsp" %>
 
-<%
-String taglibOnmouseover = "Liferay.Portal.ToolTip.show(this, '" + LanguageUtil.get(request, label) + "')";
-%>
-
-<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= href %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>" onmouseover="<%= taglibOnmouseover %>">
+<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= href %>" iconCssClass="<%= iconCssClass %>" id="<%= id %>">
 	<c:if test="<%= Validator.isNotNull(icon) %>">
 		<aui:icon cssClass="icon-monospaced" image="<%= icon %>" markupView="lexicon" />
 	</c:if>

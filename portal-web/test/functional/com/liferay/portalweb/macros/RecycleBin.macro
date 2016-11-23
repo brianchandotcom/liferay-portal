@@ -177,7 +177,7 @@
 			<condition function="IsElementPresent" locator1="RecycleBin#EMPTY_RECYCLE_BIN" />
 
 			<then>
-				<execute function="Click" locator1="Icon#TOOLTIP" />
+				<execute function="MouseOver" locator1="Icon#TOOLTIP" />
 				<if>
 					<isset var="customMaxAgeMsg" />
 					<then>

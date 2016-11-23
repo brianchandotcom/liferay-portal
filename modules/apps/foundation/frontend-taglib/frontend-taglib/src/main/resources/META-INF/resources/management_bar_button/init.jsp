@@ -27,7 +27,7 @@ String iconCssClass = (String)request.getAttribute("liferay-frontend:management-
 String id = (String)request.getAttribute("liferay-frontend:management-bar-button:id");
 String label = (String)request.getAttribute("liferay-frontend:management-bar-button:label");
 
-cssClass = "btn btn-default " + cssClass;
+cssClass = "btn btn-default lfr-portal-tooltip " + cssClass;
 
 if (active) {
 	cssClass = "active " + cssClass;
@@ -39,6 +39,10 @@ if (disabled) {
 
 if (Validator.isNotNull(icon)) {
 	iconCssClass = StringPool.BLANK;
+}
+
+if (Validator.isNull(data.get("title"))) {
+	data.put("title", LanguageUtil.get(request, label));
 }
 
 String labelCssClass = "sr-only";

@@ -125,26 +125,3 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		);
 	</aui:script>
 </c:if>
-
-<c:if test="<%= toolTip %>">
-	<liferay-util:html-bottom outputKey="taglib_ui_icon_help">
-		<aui:script use="aui-tooltip">
-			var tooltip = new A.TooltipDelegate(
-				{
-					constrain: true,
-					position: 'bottom',
-					trigger: '.lfr-portal-tooltip',
-					visible: false,
-					zIndex: Liferay.zIndex.TOOLTIP
-				}
-			);
-
-			Liferay.once(
-				'screenLoad',
-				function() {
-					tooltip.destroy();
-				}
-			);
-		</aui:script>
-	</liferay-util:html-bottom>
-</c:if>

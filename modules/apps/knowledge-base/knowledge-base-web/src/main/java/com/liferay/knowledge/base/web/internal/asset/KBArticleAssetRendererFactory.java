@@ -98,7 +98,7 @@ public class KBArticleAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-file";
+		return "page";
 	}
 
 	@Override

@@ -485,7 +485,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("COUNT_VALUE", Type.LONG);
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -505,14 +505,17 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				}
 			}
 
-			List<Long> userCounts = (List<Long>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			Iterator<Long> itr = q.iterate();
 
-			if ((userCounts == null) || userCounts.isEmpty()) {
-				return 0;
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
 			}
 
-			return userCounts.get(0).intValue();
+			return 0;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

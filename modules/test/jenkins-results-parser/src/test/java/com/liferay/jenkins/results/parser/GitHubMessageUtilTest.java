@@ -49,6 +49,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"jspc-1", "1672", "test-portal-acceptance-pullrequest(master)",
 			"test-1-5");
 		downloadSample(
+			"poshi-syntax-1", "138",
+			"test-portal-acceptance-pullrequest(master)", "test-1-15");
+		downloadSample(
 			"rebase-1", "58", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-19");
 		downloadSample(

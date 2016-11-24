@@ -144,6 +144,27 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkMissingSchemaVersion(
+		String fileName, String absolutePath, String content) {
+
+		if (content.contains("Liferay-Require-SchemaVersion:") ||
+			!content.contains("Liferay-Service: true")) {
+
+			return;
+		}
+
+		int pos = absolutePath.lastIndexOf(CharPool.SLASH);
+
+		File serviceXMLfile = new File(
+			absolutePath.substring(0, pos + 1) + "service.xml");
+
+		if (serviceXMLfile.exists()) {
+			processMessage(
+				fileName,
+				"Missing 'Liferay-Require-SchemaVersion', see LPS-69385");
+		}
+	}
+
 	protected void checkWildcardImports(
 		String fileName, String absolutePath, String content, Pattern pattern) {
 
@@ -217,6 +238,8 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 		}
 
 		checkWildcardImports(fileName, absolutePath, content, _exportsPattern);
+
+		checkMissingSchemaVersion(fileName, absolutePath, content);
 
 		ImportsFormatter importsFormatter = new BNDImportsFormatter();
 

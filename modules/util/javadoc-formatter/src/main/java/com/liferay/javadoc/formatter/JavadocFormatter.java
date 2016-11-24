@@ -216,9 +216,14 @@ public class JavadocFormatter {
 					_format(fileName);
 				}
 				catch (Exception e) {
-					if (!(e instanceof ParseException) ||
-						!fileName.contains("/tools/templates/")) {
-
+					if (e instanceof ParseException) {
+						if (!fileName.contains("/tools/templates/")) {
+							System.out.println(
+								"Qdox parsing error while formatting file " +
+									fileName);
+						}
+					}
+					else {
 						throw new RuntimeException(
 							"Unable to format file " + fileName, e);
 					}

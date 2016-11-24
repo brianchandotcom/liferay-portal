@@ -5,6 +5,7 @@
 		<exclusions>
 			<module name="org.apache.log4j" />
 			<module name="org.hibernate" />
+			<module name="org.slf4j" />
 		</exclusions>
 		<dependencies>
 			<module meta-inf="export" name="com.liferay.portal">

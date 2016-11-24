@@ -410,7 +410,8 @@ public class IncludeTag extends AttributesTagSupport {
 		sb.append(page);
 		sb.append(" in the context ");
 
-		String contextPath = servletContext.getContextPath();
+		String contextPath = PortalUtil.getPathContext(
+			servletContext.getContextPath());
 
 		if (contextPath.equals(StringPool.BLANK)) {
 			contextPath = StringPool.SLASH;

@@ -65,6 +65,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
+ * Tests upgrade behaviour for Asset Publisher portlet preferences.
+ *
  * @author Rafael Praxedes
  */
 @RunWith(Arquillian.class)

@@ -45,6 +45,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides implementation of the {@link PortalInstanceLifecycleListener} which
+ * adds default layout prototype for content display page in case when new
+ * portal instance was registered.
+ *
  * @author Juergen Kappler
  */
 @Component(immediate = true, service = PortalInstanceLifecycleListener.class)

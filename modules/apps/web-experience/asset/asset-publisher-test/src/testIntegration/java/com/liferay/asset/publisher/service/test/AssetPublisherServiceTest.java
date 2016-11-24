@@ -55,6 +55,11 @@ import org.springframework.mock.web.portlet.MockPortletPreferences;
 import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
+ * Tests basic capabilities of Asset Publisher and integration with Asset
+ * Categories and Asset Tags services including adding of vocabularies and
+ * categories, adding of asset entries and search for asset entries using
+ * filters by categories and tags.
+ *
  * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)

@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
+ * Provides Asset Publisher configuration wrapper to be able to use OSGi-based
+ * configuration in non-OSGi classes.
+ *
  * @author Eudaldo Alonso
  */
 public class AssetPublisherWebConfigurationUtil {

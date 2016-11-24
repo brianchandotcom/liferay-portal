@@ -17,6 +17,9 @@ package com.liferay.asset.publisher.test.util;
 import com.liferay.asset.kernel.model.AssetEntry;
 
 /**
+ * Provides utility method to convert asset entries to XML format to be able
+ * to save it in Asset Publisher portlet preferences.
+ *
  * @author Tamas Molnar
  */
 public class AssetPublisherTestUtil {

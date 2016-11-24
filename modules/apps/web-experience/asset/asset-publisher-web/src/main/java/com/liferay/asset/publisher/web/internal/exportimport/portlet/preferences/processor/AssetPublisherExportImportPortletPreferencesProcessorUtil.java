@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.Validator;
 import javax.portlet.PortletPreferences;
 
 /**
+ * Provides utility methods to be used in Asset Publisher export and import
+ * capabilities.
+ *
  * @author Mate Thurzo
  */
 public class AssetPublisherExportImportPortletPreferencesProcessorUtil {

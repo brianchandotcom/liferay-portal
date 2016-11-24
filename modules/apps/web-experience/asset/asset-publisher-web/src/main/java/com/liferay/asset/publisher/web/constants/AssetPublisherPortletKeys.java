@@ -15,6 +15,9 @@
 package com.liferay.asset.publisher.web.constants;
 
 /**
+ * Provides portlet IDs for different implementations of
+ * {@link AssetPublisherPortlet} portlet.
+ *
  * @author Eudaldo Alonso
  */
 public class AssetPublisherPortletKeys {

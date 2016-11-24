@@ -31,6 +31,12 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides scheduled task to be able to send email notifications in case when
+ * new asset entries were added in specific instance of Asset Publisher portlet
+ * and there are subscribers for that portlet instance.
+ * Scheduled task uses <code>check.interval</code> property to define execution
+ * interval in hours.
+ *
  * @author Roberto Diaz
  * @author Sergio González
  */

@@ -116,15 +116,7 @@ AUI.add(
 							instance._originalTitle = newTitle;
 						}
 						else if (instance._shouldMatchUrlAndTitle()) {
-							newTitle = newTitle.replace(/[^a-zA-Z0-9_-]/g, '-');
-
-							if (newTitle[0] === '-') {
-								newTitle = newTitle.replace(/^-+/, '');
-							}
-
-							newTitle = newTitle.replace(/--+/g, '-');
-
-							urlTitleInput.val(newTitle.toLowerCase());
+							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(newTitle));
 						}
 					},
 

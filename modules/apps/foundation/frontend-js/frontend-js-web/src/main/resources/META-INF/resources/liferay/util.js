@@ -689,6 +689,18 @@
 			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
+		normalizeFriendlyURL: function(text) {
+			var newText = text.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+			if (newText[0] === '-') {
+				newText = newText.replace(/^-+/, '');
+			}
+
+			newText = newText.replace(/--+/g, '-');
+
+			return newText.toLowerCase();
+		},
+
 		ns: function(namespace, obj) {
 			var instance = this;
 

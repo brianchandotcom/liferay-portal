@@ -1,8 +1,5 @@
 <script>
-	var require = Liferay.Loader.require.bind(Liferay.Loader);
-
-	require.apply(
-		window,
+	Liferay.Loader.require.apply(Liferay.Loader,
 		$MODULES.concat(
 			[
 				function(Component) {

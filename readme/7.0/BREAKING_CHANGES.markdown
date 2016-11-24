@@ -2145,12 +2145,12 @@ This change was made to extend the MVC framework to have better support for
 ---------------------------------------
 
 ### Removed the liferay-ui:journal-article Tag
-- **Date:** 2015-Jun-29
-- **JIRA Ticket:** LPS-56383
+- **Date:** 2016-Nov-24
+- **JIRA Ticket:** LPS-69321
 
 #### What changed?
 
-The `liferay-ui:journal-article` tag has been removed.
+The `liferay-ui:journal-article` tag has been moved to journal.
 
 #### Who is affected?
 
@@ -2158,7 +2158,7 @@ This affects developers using the `liferay-ui:journal-article` tag.
 
 #### How should I update my code?
 
-You should use the `liferay-ui:asset-display` tag instead.
+You should use the `liferay-journal:journal-article` tag instead.
 
 **Example**
 
@@ -2170,15 +2170,14 @@ Old code:
 
 New code:
 
-    <liferay-ui:asset-display
-        className="<%= JournalArticleResource.class.getName() %>"
-        template="<%= article.getResourcePrimKey() %>"
-    />
+    <liferay-journal:journal-article
+        articleId="<%= article.getArticleId() %>"
+        groupId="<%= article.getGroupId() %>"
+	/>
 
 #### Why was this change made?
 
-The `liferay-ui:asset-display` is a generic way to display any type of asset.
-Therefore, the `liferay-ui:journal-article` tag is no longer necessary.
+This change was made as part of journal modularization.
 
 ---------------------------------------
 

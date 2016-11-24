@@ -1,4 +1,4 @@
-<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
+<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone") />
 
 <div class="col-no-padding row">
 	<div class="col-md-3">
@@ -10,4 +10,4 @@
 	</div>
 </div>
 
-<#assign VOID = freeMarkerPortletPreferences.reset()>
+<#assign VOID = freeMarkerPortletPreferences.reset() />

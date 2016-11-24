@@ -286,15 +286,7 @@ if (portletTitleBasedNavigation) {
 			var customUrl = urlTitleInput.getAttribute('data-customUrl');
 
 			if (customUrl === 'false') {
-				html = html.replace(/[^a-zA-Z0-9_-]/g, '-');
-
-				if (html[0] === '-') {
-					html = html.replace(/^-+/, '');
-				}
-
-				html = html.replace(/--+/g, '-');
-
-				urlTitleInput.value = html.toLowerCase();
+				urlTitleInput.value = Liferay.Util.normalizeFriendlyURL(html);
 			}
 		}
 	</c:if>

@@ -206,11 +206,13 @@ AUI.add(
 						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE);
 
 						if (instance._shouldMatchUrlAndTitle()) {
+							instance._lastCustomURLTitle = urlTitleInput.val();
 							var title = window[instance.ns('titleEditor')].getText();
 							instance.updateUrlTitle(title);
 							urlTitleInput.setAttribute('disabled', true);
 						}
 						else {
+							urlTitleInput.val(instance._lastCustomURLTitle || urlTitleInput.val());
 							urlTitleInput.removeAttribute('disabled');
 						}
 					},

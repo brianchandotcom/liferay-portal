@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.model.TreeModel;
 import java.util.List;
 
 /**
+ * @author     Shinn Lok
  * @deprecated As of 7.0.0, moved to {@link
  *             com.liferay.portal.kernel.tree.TreeModelTasks}
- * @author Shinn Lok
  */
 @Deprecated
 public interface TreeModelTasks<T extends TreeModel> {

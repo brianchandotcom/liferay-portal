@@ -216,8 +216,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getLong(PortletPreferences, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getLong(PortletPreferences,
+	 *             String)}
 	 */
 	@Deprecated
 	public static long getLong(
@@ -227,8 +227,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getLong(PortletPreferences, String, long)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getLong(PortletPreferences,
+	 *             String, long)}
 	 */
 	@Deprecated
 	public static long getLong(
@@ -315,8 +315,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getShort(PortletPreferences, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getShort(PortletPreferences,
+	 *             String)}
 	 */
 	@Deprecated
 	public static short getShort(
@@ -326,8 +326,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getShort(PortletPreferences, String, short)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getShort(PortletPreferences,
+	 *             String, short)}
 	 */
 	@Deprecated
 	public static short getShort(

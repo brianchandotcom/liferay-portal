@@ -60,8 +60,8 @@ public class ClassLoaderPool {
 	 *
 	 * <p>
 	 * If the class loader is <code>null</code> or if no context name is
-	 * associated with the class loader, {@link
-	 * StringPool#<code>NULL</code>} is returned.
+	 * associated with the class loader, {@link StringPool#<code>NULL</code>} is
+	 * returned.
 	 * </p>
 	 *
 	 * @param  classLoader the class loader

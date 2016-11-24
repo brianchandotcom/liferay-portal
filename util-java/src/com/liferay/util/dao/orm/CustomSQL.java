@@ -58,7 +58,7 @@ import java.util.Properties;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  * @author Raymond Augé
- * @see com.liferay.portal.dao.orm.custom.sql.CustomSQL
+ * @see    com.liferay.portal.dao.orm.custom.sql.CustomSQL
  */
 public class CustomSQL {
 

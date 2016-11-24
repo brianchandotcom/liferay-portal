@@ -72,7 +72,8 @@ public class PortletClassInvoker {
 	}
 
 	/**
-	 * Copied from <code>com.liferay.portal.kernel.model.PortletConstants</code>.
+	 * Copied from
+	 * <code>com.liferay.portal.kernel.model.PortletConstants</code>.
 	 */
 	private static String _getRootPortletId(String portletId) {
 		int pos = portletId.indexOf(_INSTANCE_SEPARATOR);

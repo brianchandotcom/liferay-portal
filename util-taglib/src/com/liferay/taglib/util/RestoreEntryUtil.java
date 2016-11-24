@@ -28,7 +28,7 @@ import com.liferay.trash.kernel.service.TrashEntryLocalServiceUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * @author Eudaldo Alonso
+ * @author     Eudaldo Alonso
  * @deprecated As of 2.6.0, with no direct replacement
  */
 @Deprecated

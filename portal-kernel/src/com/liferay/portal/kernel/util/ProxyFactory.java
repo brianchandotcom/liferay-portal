@@ -72,8 +72,8 @@ public class ProxyFactory {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(
-	 *					Class, Class, String, boolean)}
+	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(
@@ -85,8 +85,8 @@ public class ProxyFactory {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(
-	 *					Class, Class, String, String, boolean)}
+	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
+	 *             String, String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstance(
@@ -113,8 +113,8 @@ public class ProxyFactory {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(
-	 *					Class, Class, String, boolean)}
+	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
+	 *             String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstanceWithoutDummyService(
@@ -126,8 +126,8 @@ public class ProxyFactory {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             ServiceProxyFactory#newServiceTrackedInstance(
-	 *					Class, Class, String, String, boolean)}
+	 *             ServiceProxyFactory#newServiceTrackedInstance(Class, Class,
+	 *             String, String, boolean)}
 	 */
 	@Deprecated
 	public static <T> T newServiceTrackedInstanceWithoutDummyService(

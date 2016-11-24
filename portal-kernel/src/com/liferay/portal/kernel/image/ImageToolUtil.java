@@ -185,9 +185,8 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Detects the image format and creates an {@link
-	 * ImageBag} containing the {@link
-	 * RenderedImage} and image type.
+	 * Detects the image format and creates an {@link ImageBag} containing the
+	 * {@link RenderedImage} and image type.
 	 *
 	 * @param  bytes the bytes to read
 	 * @return the {@link ImageBag}
@@ -204,9 +203,8 @@ public class ImageToolUtil {
 	}
 
 	/**
-	 * Detects the image format and creates an {@link
-	 * ImageBag} containing the {@link
-	 * RenderedImage} and image type.
+	 * Detects the image format and creates an {@link ImageBag} containing the
+	 * {@link RenderedImage} and image type.
 	 *
 	 * @param  file the file to read
 	 * @return the {@link ImageBag}

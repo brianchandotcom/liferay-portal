@@ -136,16 +136,16 @@ public interface PrefsProps {
 	public long getLong(long companyId, String name, long defaultValue);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getLong(PortletPreferences, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getLong(PortletPreferences,
+	 *             String)}
 	 */
 	@Deprecated
 	public long getLong(
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getLong(PortletPreferences, String, long)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getLong(PortletPreferences,
+	 *             String, long)}
 	 */
 	@Deprecated
 	public long getLong(
@@ -188,16 +188,16 @@ public interface PrefsProps {
 	public short getShort(long companyId, String name, short defaultValue);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getShort(PortletPreferences, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getShort(PortletPreferences,
+	 *             String)}
 	 */
 	@Deprecated
 	public short getShort(
 		PortletPreferences preferences, long companyId, String name);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getShort(PortletPreferences, String, short)}
+	 * @deprecated As of 7.0.0, replaced by {@link #getShort(PortletPreferences,
+	 *             String, short)}
 	 */
 	@Deprecated
 	public short getShort(

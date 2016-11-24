@@ -55,7 +55,7 @@ import org.xml.sax.InputSource;
 /**
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
- * @see com.liferay.petra.log4j.Log4JUtil
+ * @see    com.liferay.petra.log4j.Log4JUtil
  */
 public class Log4JUtil {
 

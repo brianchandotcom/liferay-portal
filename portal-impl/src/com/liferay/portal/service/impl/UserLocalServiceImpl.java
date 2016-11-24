@@ -754,7 +754,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * Adds the user to the user group.
 	 *
 	 * @param userGroupId the primary key of the user group
-	 * @param userIds the primary key of the user
 	 */
 	@Override
 	@SuppressWarnings("deprecation")

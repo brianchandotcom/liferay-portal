@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
- * @see com.liferay.petra.content.ContentUtil
+ * @see    com.liferay.petra.content.ContentUtil
  */
 public class ContentUtil {
 

@@ -24,8 +24,8 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * @author     Carlos Sierra Andrés
  * @deprecated As of 7.0.0, replaced by {@link PipingServletResponse}
- * @author Carlos Sierra Andrés
  */
 @Deprecated
 public class JspWriterHttpServletResponse extends HttpServletResponseWrapper {

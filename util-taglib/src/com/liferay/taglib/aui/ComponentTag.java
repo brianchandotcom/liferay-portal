@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 /**
- * @author Eduardo Lundgren
- * @author Bruno Basto
+ * @author     Eduardo Lundgren
+ * @author     Bruno Basto
  * @deprecated As of 7.0.0, with no direct replacement
  */
 @Deprecated

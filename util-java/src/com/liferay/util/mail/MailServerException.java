@@ -18,7 +18,7 @@ import org.apache.commons.lang.exception.NestableException;
 
 /**
  * @author Alexander Chow
- * @see com.liferay.petra.mail.MailServerException
+ * @see    com.liferay.petra.mail.MailServerException
  */
 public class MailServerException extends NestableException {
 

@@ -1171,8 +1171,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	 * Sets an arbitrary number of attributes of an entity to be persisted.
 	 *
 	 * <p>
-	 * These attributes should only include fields that {@link
-	 * ServiceContext} does not possess by default.
+	 * These attributes should only include fields that {@link ServiceContext}
+	 * does not possess by default.
 	 * </p>
 	 *
 	 * @param expandoBridgeAttributes the expando bridge attributes (optionally

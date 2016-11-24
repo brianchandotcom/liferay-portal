@@ -52,8 +52,8 @@ public interface ResultRow {
 	public void addDate(int index, Date date, String href);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addJSP(String, String,
-	 *             int, String, ServletContext, HttpServletRequest ,
+	 * @deprecated As of 7.0.0, replaced by {@link #addJSP(String, String, int,
+	 *             String, ServletContext, HttpServletRequest ,
 	 *             HttpServletResponse)}
 	 */
 	@Deprecated
@@ -94,8 +94,8 @@ public interface ResultRow {
 	public void addJSP(String path, String cssClass);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addJSP(String, String,
-	 *             int, String, ServletContext, HttpServletRequest ,
+	 * @deprecated As of 7.0.0, replaced by {@link #addJSP(String, String, int,
+	 *             String, ServletContext, HttpServletRequest ,
 	 *             HttpServletResponse)}
 	 */
 	@Deprecated

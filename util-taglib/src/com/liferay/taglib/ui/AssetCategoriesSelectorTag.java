@@ -20,8 +20,8 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Jorge Ferrer
+ * @author     Brian Wing Shun Chan
+ * @author     Jorge Ferrer
  * @deprecated As of 7.0.0
  */
 @Deprecated

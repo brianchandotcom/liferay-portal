@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
- * @see com.liferay.rss.util.Normalizer
+ * @see    com.liferay.rss.util.Normalizer
  */
 public class Normalizer {
 

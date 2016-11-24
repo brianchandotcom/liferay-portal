@@ -31,7 +31,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 /**
  * @author Alexander Chow
- * @see com.liferay.petra.mail.InternetAddressUtil
+ * @see    com.liferay.petra.mail.InternetAddressUtil
  */
 public class InternetAddressUtil {
 

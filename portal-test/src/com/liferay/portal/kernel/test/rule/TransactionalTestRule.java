@@ -39,7 +39,7 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.Statement;
 
 /**
- * @author Shuyang Zhou
+ * @author     Shuyang Zhou
  * @deprecated As of 3.0.0, see {@link
  *             com.liferay.portal.test.rule.TransactionalTestRule}
  */

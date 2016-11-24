@@ -85,7 +85,8 @@ public class PortletCategoryKeys {
 		"site_administration.navigation";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #SITE_ADMINISTRATION_NAVIGATION}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #SITE_ADMINISTRATION_NAVIGATION}
 	 */
 	@Deprecated
 	public static final String SITE_ADMINISTRATION_PAGES =

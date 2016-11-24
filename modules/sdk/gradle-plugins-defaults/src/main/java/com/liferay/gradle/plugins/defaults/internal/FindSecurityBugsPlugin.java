@@ -221,12 +221,16 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		File falsePositivesTxtFile = project.file(
 			"find-security-bugs-false-positives.txt");
 
+		String customConfigFile = "liferay-config/liferay.txt";
+
 		if (falsePositivesTxtFile.exists()) {
-			javaExec.systemProperty(
-				"findsecbugs.taint.customconfigfile",
-				FileUtil.getAbsolutePath(falsePositivesTxtFile) +
-					":liferay-config/liferay.txt");
+			customConfigFile =
+				customConfigFile + ":" +
+					FileUtil.getAbsolutePath(falsePositivesTxtFile);
 		}
+
+		javaExec.systemProperty(
+			"findsecbugs.taint.customconfigfile", customConfigFile);
 
 		return javaExec;
 	}

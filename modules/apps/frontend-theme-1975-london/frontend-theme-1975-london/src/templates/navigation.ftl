@@ -1,4 +1,4 @@
-<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone")>
+<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone") />
 
 <div aria-expanded="false" class="${nav_collapse} collapse" id="navigationCollapse">
 	<#if has_navigation && is_setup_complete>
@@ -8,4 +8,4 @@
 	</#if>
 </div>
 
-<#assign VOID = freeMarkerPortletPreferences.reset()>
+<#assign VOID = freeMarkerPortletPreferences.reset() />

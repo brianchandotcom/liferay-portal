@@ -1,7 +1,8 @@
-import async from 'metal/src/async/async';
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
+import dom from 'metal-dom';
 import State from 'metal-state/src/State';
+import { async } from 'metal';
+
+const CSS_CLASS_PLAYING = 'playing';
 
 /**
  * MusicPlayer
@@ -13,83 +14,131 @@ class MusicPlayer extends State {
 	/**
 	 * @inheritDoc
 	 */
-	constructor() {
-		super();
+	constructor(opt_config) {
+		super(opt_config);
 
-		var instance = this;
+		async.nextTick(() => this.bindUI_());
+	}
 
-		var body = dom.toElement(document.body);
-
-		var updateProgressBarAnimation = function() {
-			var percent = Math.floor((instance.activeAlbum.audio.currentTime / instance.activeAlbum.audio.duration) * 100);
-
-			instance.activeAlbum.progressBar.style.width = percent + '%';
-
-			if (window.requestAnimationFrame && percent < 100) {
-				requestAnimationFrame(updateProgressBarAnimation);
-			}
-
-			if (percent === 100) {
-				instance.resetAlbum_();
-			}
+	/**
+	 * @inheritDoc
+	 */
+	disposeInternal() {
+		if (this.albumClikHandle_) {
+			this.albumClikHandle_.dispose();
 		}
 
-		dom.delegate(body, 'click', '.album', function(event) {
+		super.disposeInternal();
+	}
 
-			var album = event.delegateTarget;
+	/**
+	 * Attaches the necessary event listeners of the component
+	 * @protected
+	 */
+	bindUI_() {
+		this.on('activeAlbumChanged', this.handleActiveAlbumChanged_);
 
-			if (album) {
+		this.albumHandle_ = dom.delegate(
+			document.body,
+			'click',
+			'.album',
+			(event) => this.toggleElement_(event.delegateTarget)
+		);
+	}
 
-				var audioAlbum = album.getElementsByTagName('audio')[0];
+	/**
+	 * Handles the `activeAlbumChanged` event. Stops the previously being played
+	 * album and starts the new one if any.
+	 * @param  {!Object} event
+	 * @protected
+	 */
+	handleActiveAlbumChanged_(event) {
+		this.stopAlbum_(event.prevVal);
+		this.playAlbum_(event.newVal);
+	}
 
-				var progressBar = album.getElementsByClassName('progress-bar')[0];
+	/**
+	 * Starts playing a given album element
+	 * @param  {Object} album The album to be played
+	 * @protected
+	 */
+	playAlbum_(album) {
+		if (album) {
+			album.audio.currentTime = 0;
+			album.audio.play();
 
-				if (dom.hasClass(album, 'playing')) {
-					audioAlbum.pause();
-					audioAlbum.currentTime = 0;
-				}
-				else {
-					if (instance.activeAlbum) {
-						instance.resetAlbum_();
-					}
+			dom.addClasses(album.element, CSS_CLASS_PLAYING);
 
-					audioAlbum.play();
-					instance.activeAlbum = {
-						album: album,
-						audio: audioAlbum,
-						progressBar: progressBar
-					};
+			this.updateProgressBar_();
+		}
+	}
 
-					if (window.requestAnimationFrame) {
-						window.requestAnimationFrame(updateProgressBarAnimation);
-					}
-					else{
-						instance.activeAlbum.audio.removeEventListener('timeupdate', updateProgressBarAnimation);
-						instance.activeAlbum.audio.addEventListener('timeupdate', updateProgressBarAnimation);
-					}
-				}
+	/**
+	 * Stops playing a given album element
+	 * @param  {Object} album The album to be stopped
+	 * @protected
+	 */
+	stopAlbum_(album) {
+		if (album) {
+			album.audio.pause();
+			album.progressBar.style.width = '0%';
 
-				dom.toggleClasses(album, 'playing');
+			dom.removeClasses(album.element, CSS_CLASS_PLAYING);
+		}
+	}
+
+	/**
+	 * Toggles an element between the play and paused states
+	 * @param  {Element} element The element that received the user interaction
+	 * @protected
+	 */
+	toggleElement_(element) {
+		if (dom.hasClass(element, CSS_CLASS_PLAYING)) {
+			this.activeAlbum = null;
+		} else {
+			this.activeAlbum = {
+				audio: element.querySelector('audio'),
+				element: element,
+				progressBar: element.querySelector('.progress-bar')
+			};
+		}
+	}
+
+	/**
+	 * Updates the progress bar with the currently playing state
+	 * @protected
+	 */
+	updateProgressBar_() {
+		if (this.activeAlbum) {
+			var percent = Math.ceil((this.activeAlbum.audio.currentTime / this.activeAlbum.audio.duration) * 100);
+
+			if (percent >= 100) {
+				this.activeAlbum = null;
+			} else if ( (window.requestAnimationFrame) ) {
+				this.activeAlbum.progressBar.style.width = `${percent}%`;
+
+				requestAnimationFrame(this.updateProgressBar_.bind(this));
 			}
-
-		});
+		}
 	}
-
-	resetAlbum_() {
-		this.activeAlbum.audio.pause();
-		this.activeAlbum.audio.currentTime = 0;
-		this.activeAlbum.progressBar.style.width = '0%';
-		dom.removeClasses(this.activeAlbum.album, 'playing');
-	}
-
 }
 
 /**
  * State definition.
+ * @ignore
  * @type {!Object}
  * @static
  */
 MusicPlayer.STATE = {
+	/**
+	 * Album being played. Should have the following properties:
+	 * - audio: The Audio element to be played
+	 * - element: The container node element
+	 * - progressBar: The node element to animate the progress bar
+	 * @instance
+	 * @memberof MusicPlayer
+	 * @type {Object<Element, Element, Audio>}
+	 */
 	activeAlbum: {}
 };
 

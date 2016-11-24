@@ -37,17 +37,17 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_REPORTS</td>
-	<td>//li[contains(@id,'AdminPortlet_tabs')]/a[contains(text(),'Reports')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Reports')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_DEFINITIONS</td>
-	<td>//li[contains(@id,'AdminPortlet_tabs')]/a[contains(text(),'Definitions')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Definitions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SOURCES</td>
-	<td>//li[contains(@id,'AdminPortlet_tabs')]/a[contains(text(),'Sources')]</td>
+	<td>//div[contains(@class,'navbar')]//ul/li/a[contains(.,'Sources')]</td>
 	<td></td>
 </tr>
 <tr>

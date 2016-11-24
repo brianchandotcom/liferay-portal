@@ -188,7 +188,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			sb1.append(" set ");
 			sb1.append(columnName);
 			sb1.append(" = replace(");
-			sb1.append(columnName);
+			sb1.append(_convertColumnName(columnName));
 			sb1.append(", '");
 
 			String tableSQL = sb1.toString();
@@ -228,6 +228,16 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				sb2.setIndex(0);
 			}
 		}
+	}
+
+	private String _convertColumnName(String columnName) {
+		DB db = DBManagerUtil.getDB();
+
+		if (db.getDBType() == DBType.SQLSERVER) {
+			return "CAST_TEXT(" + columnName + ")";
+		}
+
+		return columnName;
 	}
 
 	private static final String[][] _CLASS_NAMES = new String[][] {

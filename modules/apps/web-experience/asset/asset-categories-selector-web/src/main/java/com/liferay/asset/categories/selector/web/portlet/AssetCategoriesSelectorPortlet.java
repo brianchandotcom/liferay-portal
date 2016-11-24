@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.selector.web.portlet;
 
+import com.liferay.asset.categories.selector.web.contants.AssetCategoriesSelectorPortletKeys;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.service.AssetCategoryService;
@@ -56,6 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Asset Categories Selector",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + AssetCategoriesSelectorPortletKeys.ASSET_CATEGORIES_SELECTOR,
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},

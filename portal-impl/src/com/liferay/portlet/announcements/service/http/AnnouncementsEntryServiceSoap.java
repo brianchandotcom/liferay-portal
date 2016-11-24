@@ -66,9 +66,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class AnnouncementsEntryServiceSoap {
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long,
-	String, String, String, String, Date, Date, int,
-	boolean)}
+	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, String,
+	String, String, String, Date, Date, int, boolean)}
 	*/
 	@Deprecated
 	public static com.liferay.announcements.kernel.model.AnnouncementsEntrySoap addEntry(

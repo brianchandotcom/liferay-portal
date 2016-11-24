@@ -54,6 +54,8 @@ import java.io.Writer;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -823,7 +825,9 @@ public class JavadocFormatter {
 
 		String originalContent = _read(file);
 
-		if (fileName.contains("modules/third-party") ||
+		String absolutePath = _getAbsolutePath(fileName);
+
+		if (absolutePath.contains("modules/third-party") ||
 			fileName.endsWith("Application.java") ||
 			fileName.endsWith("JavadocFormatter.java") ||
 			fileName.endsWith("Mojo.java") ||
@@ -910,6 +914,17 @@ public class JavadocFormatter {
 
 	private String _formattedString(Node node) throws IOException {
 		return Dom4jUtil.toString(node);
+	}
+
+	private String _getAbsolutePath(String fileName) {
+		Path filePath = Paths.get(fileName);
+
+		filePath = filePath.toAbsolutePath();
+
+		filePath = filePath.normalize();
+
+		return StringUtil.replace(
+			filePath.toString(), CharPool.BACK_SLASH, CharPool.SLASH);
 	}
 
 	private String _getCDATA(AbstractJavaEntity abstractJavaEntity) {

@@ -218,7 +218,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY,
-			soyTemplateResourcesCollector.getTemplateResources(), false);
+			soyTemplateResourcesCollector.getAllTemplateResources(), false);
 	}
 
 	private Bundle _bundle;

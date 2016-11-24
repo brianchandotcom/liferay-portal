@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PREVIOUS_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')] | //ul[contains(@class,'pagination')]/li/a[contains(.,'Previous')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'2')] | //ul[contains(@class,'pagination')]/li/a[contains(.,'Previous')] | //ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-left')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -740,7 +740,7 @@
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
 
-		<execute macro="ReportsAdminNavigator#gotoAddDefinition" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="ReportsAdmin#viewDefinitionParameterFields" />
 	</command>

@@ -1328,64 +1328,6 @@ public class WebServerServlet extends HttpServlet {
 		}
 	}
 
-	private Callable<Void> _createFileServingCallable(
-		final HttpServletRequest request, final HttpServletResponse response,
-		final User user) {
-
-		return new Callable<Void>() {
-
-			@Override
-			public Void call() throws Exception {
-				String path = HttpUtil.fixPath(request.getPathInfo());
-
-				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
-
-				if (pathArray.length == 0) {
-					sendGroups(
-						response, user,
-						request.getServletPath() + StringPool.SLASH + path);
-				}
-				else {
-					if (Validator.isNumber(pathArray[0])) {
-						sendFile(request, response, user, pathArray);
-					}
-					else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
-						sendPortletFileEntry(request, response, pathArray);
-					}
-					else {
-						if (PropsValues.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
-							if (isLegacyImageGalleryImageId(
-								request, response)) {
-								return;
-							}
-						}
-
-						Image image = getImage(request, true);
-
-						if ((image.getCompanyId() != user.getCompanyId()) &&
-							_processCompanyInactiveRequest(
-								request, response, image.getCompanyId())) {
-
-							return;
-						}
-
-						if (image != null) {
-							writeImage(image, request, response);
-						}
-						else {
-							sendDocumentLibrary(
-								request, response, user,
-								request.getServletPath() + StringPool.SLASH +
-								path,
-								pathArray);
-						}
-					}
-				}
-			}
-
-		};
-	}
-
 	private static long _getGroupId(long companyId, String name)
 		throws Exception {
 
@@ -1433,6 +1375,69 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		return user;
+	}
+
+	private Callable<Void> _createFileServingCallable(
+		final HttpServletRequest request, final HttpServletResponse response,
+		final User user) {
+
+		return new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				String path = HttpUtil.fixPath(request.getPathInfo());
+
+				String[] pathArray = StringUtil.split(path, CharPool.SLASH);
+
+				if (pathArray.length == 0) {
+					sendGroups(
+						response, user,
+						request.getServletPath() + StringPool.SLASH + path);
+				}
+				else {
+					if (Validator.isNumber(pathArray[0])) {
+						sendFile(request, response, user, pathArray);
+					}
+					else if (PATH_PORTLET_FILE_ENTRY.equals(pathArray[0])) {
+						sendPortletFileEntry(request, response, pathArray);
+					}
+					else {
+						if (PropsValues.
+								WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY) {
+
+							if (isLegacyImageGalleryImageId(
+									request, response)) {
+
+								return null;
+							}
+						}
+
+						Image image = getImage(request, true);
+
+						if ((image.getCompanyId() != user.getCompanyId()) &&
+							_processCompanyInactiveRequest(
+								request, response, image.getCompanyId())) {
+
+							return null;
+						}
+
+						if (image != null) {
+							writeImage(image, request, response);
+						}
+						else {
+							sendDocumentLibrary(
+								request, response, user,
+								request.getServletPath() + StringPool.SLASH +
+									path,
+								pathArray);
+						}
+					}
+				}
+
+				return null;
+			}
+
+		};
 	}
 
 	private boolean _processCompanyInactiveRequest(

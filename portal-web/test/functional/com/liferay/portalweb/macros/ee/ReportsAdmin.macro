@@ -1,6 +1,6 @@
 <definition>
 	<command name="addReportDefinition">
-		<execute macro="ReportsAdminNavigator#gotoAddDefinition" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${reportsDefinitionName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${reportsDefinitionDescription}" />
@@ -96,7 +96,7 @@
 	</command>
 
 	<command name="addSource">
-		<execute function="AssertClick" locator1="ReportsAdmin#SOURCES_ADD_SOURCE_BUTTON" value1="Add Source" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="ReportsAdminEditSource#DATA_SOURCE_NAME_FIELD" value1="${reportsDataSourceName}" />
 		<execute function="Type" locator1="ReportsAdminEditSource#JDBC_DRIVER_CLASS_NAME_FIELD" value1="${reportsDataSourceClass}" />
@@ -161,7 +161,7 @@
 
 		<execute function="Click" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_ACTIONS" />
 
-		<execute function="AssertClickNoError" locator1="ReportsAdminViewReportEntry#ENTRY_FILE_MENULIST_DELETE" value1="Delete" />
+		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -322,7 +322,7 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_ACTIONS_1" />
 
-				<execute function="AssertClickNoError" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_MENULIST_DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
@@ -370,7 +370,7 @@ Sincerely,<br />
 			<then>
 				<execute function="Click" locator1="ReportsAdmin#SOURCES_SOURCE_TABLE_ACTIONS_1" />
 
-				<execute function="AssertClickNoError" locator1="ReportsAdmin#SOURCES_SOURCE_MENULIST_DELETE" value1="Delete" />
+				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 

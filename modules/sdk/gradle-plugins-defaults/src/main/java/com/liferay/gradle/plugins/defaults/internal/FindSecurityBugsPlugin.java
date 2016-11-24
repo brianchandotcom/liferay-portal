@@ -143,8 +143,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			project, FIND_SECURITY_BUGS_TASK_NAME, JavaExec.class);
 
 		javaExec.args(
-			"-effort:max", "-html", "-low", "-progress", "-sortByClass",
-			"-timestampNow");
+			"-bugCategories", "SECURITY", "-effort:max", "-html", "-low",
+			"-progress", "-timestampNow");
 
 		File excludeDir = GradleUtil.getRootDir(
 			project, _FIND_SECURITY_BUGS_EXCLUDE_FILE_NAME);

@@ -440,6 +440,13 @@
 		</execute>
 	</command>
 
+	<command name="deleteCurrentAndPreviousProcess">
+		<var name="key_rowEntry" value="${larFileName}" />
+
+		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_CLEAR" />
+	</command>
+
 	<command name="editExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

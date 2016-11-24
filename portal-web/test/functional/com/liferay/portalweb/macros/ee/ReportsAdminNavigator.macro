@@ -1,5 +1,0 @@
-<definition>
-	<command name="gotoAddDefinition">
-		<execute function="AssertClick" locator1="ReportsAdmin#DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON" value1="Add Report Definition" />
-	</command>
-</definition>

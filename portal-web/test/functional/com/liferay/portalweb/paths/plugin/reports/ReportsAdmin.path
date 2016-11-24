@@ -23,17 +23,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--OPTIONS_MENULIST-->
-<tr>
-	<td>OPTIONS_MENULIST_CONFIGURATION</td>
-	<td>//a[contains(@id,'_menu_configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_REPORTS</td>
@@ -138,38 +127,6 @@
 <tr>
 	<td>DEFINITIONS_DEFINITION_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DEFINITIONS_PAGINATION-->
-<tr>
-	<td>DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON</td>
-	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'of')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON</td>
-	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'Items per')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM</td>
-	<td>//ul[contains(@class,'menu-list')]/li/a/span[.='${key_itemsPerPage}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SOURCES-->
-<tr>
-	<td>SOURCES_ADD_SOURCE_BUTTON</td>
-	<td>//a[contains(.,'Add Source')]</td>
 	<td></td>
 </tr>
 <tr>

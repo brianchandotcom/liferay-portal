@@ -1,0 +1,61 @@
+<definition component-name="portal-staging">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Export/Import Framework" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="DeleteCustomExportProcess" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="LAR#configureExportSiteCP">
+			<var name="larFileName" value="CustomExport" />
+		</execute>
+
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<execute macro="LAR#deleteCurrentAndPreviousProcess">
+			<var name="larFileName" value="CustomExport" />
+		</execute>
+	</command>
+
+	<command name="DeletePortletExportProcess" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteCP" >
+			<var name="larFileName" value="DMExport" />
+		</execute>
+
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<execute macro="LAR#deleteCurrentAndPreviousProcess">
+			<var name="larFileName" value="DMExport" />
+		</execute>
+	</command>
+</definition>

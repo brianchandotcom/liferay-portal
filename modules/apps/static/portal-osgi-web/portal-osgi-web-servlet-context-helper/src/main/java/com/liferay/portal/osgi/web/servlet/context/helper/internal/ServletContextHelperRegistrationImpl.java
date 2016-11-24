@@ -27,6 +27,7 @@ import java.net.URL;
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -38,6 +39,7 @@ import org.apache.felix.utils.log.Logger;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
@@ -140,12 +142,32 @@ public class ServletContextHelperRegistrationImpl
 		return _wabShapedBundle;
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
-	 */
-	@Deprecated
 	@Override
 	public void setProperties(Map<String, String> contextParameters) {
+		if (contextParameters.isEmpty()) {
+			return;
+		}
+
+		ServiceReference<ServletContextHelper> serviceReference =
+			_servletContextHelperServiceRegistration.getReference();
+
+		Dictionary<String, Object> properties = new Hashtable<>();
+
+		for (String key : serviceReference.getPropertyKeys()) {
+			properties.put(key, serviceReference.getProperty(key));
+		}
+
+		for (Entry<String, String> entry : contextParameters.entrySet()) {
+			String key = entry.getKey();
+			String value = entry.getValue();
+
+			properties.put(
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_CONTEXT_INIT_PARAM_PREFIX + key,
+				value);
+		}
+
+		_servletContextHelperServiceRegistration.setProperties(properties);
 	}
 
 	protected String createContextSelectFilterString() {

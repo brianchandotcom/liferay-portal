@@ -92,6 +92,7 @@ public class AssetPublisherConfigurationAction
 		return "/configuration.jsp";
 	}
 
+	@Override
 	public void include(
 		PortletConfig portletConfig, HttpServletRequest request,
 		HttpServletResponse response)

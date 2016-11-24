@@ -9,9 +9,9 @@ AUI.add(
 
 		var STR_CHANGE = 'change';
 
-		var STR_URL_TITLE_NAME = '#urlTitle';
+		var STR_URL_TITLE = '#urlTitle';
 
-		var STR_MATCH_URL_TITLE_NAME = '#matchURLTitle';
+		var STR_MATCH_URL_TITLE = '#matchURLTitleOptions';
 
 		var STR_CLICK = 'click';
 
@@ -110,7 +110,7 @@ AUI.add(
 					},
 
 					updateUrlTitle: function(newTitle) {
-						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE_NAME);
+						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE);
 
 						if (!instance._originalTitle) {
 							instance._originalTitle = newTitle;
@@ -154,9 +154,9 @@ AUI.add(
 							);
 						}
 
-						var matchURLTitle = instance.one(STR_MATCH_URL_TITLE_NAME);
+						var matchURLTitle = instance.one(STR_MATCH_URL_TITLE);
 						eventHandles.push(
-							matchURLTitle.on(STR_CHANGE, instance._configureMatchURLTitle, instance)
+							matchURLTitle.delegate(STR_CHANGE, instance._configureMatchURLTitle, 'input[type="radio"]', instance)
 						);
 
 						instance._eventHandles = eventHandles;
@@ -203,7 +203,7 @@ AUI.add(
 					},
 
 					_configureMatchURLTitle: function() {
-						var instance = this, urlTitleInput = this.one(STR_URL_TITLE_NAME);
+						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE);
 
 						if (instance._shouldMatchUrlAndTitle()) {
 							var title = window[instance.ns('titleEditor')].getText();
@@ -430,7 +430,7 @@ AUI.add(
 					},
 
 					_shouldMatchUrlAndTitle: function() {
-						return this.one(STR_MATCH_URL_TITLE_NAME).attr('checked');
+						return this.one(STR_MATCH_URL_TITLE).one("input:checked").val() === 'true';
 					},
 
 					_showCaption: function() {

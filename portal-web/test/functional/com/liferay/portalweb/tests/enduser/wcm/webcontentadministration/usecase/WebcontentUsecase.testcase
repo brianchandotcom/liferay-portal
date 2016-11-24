@@ -685,9 +685,6 @@
 	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
 		<property name="portlet.properties.com.liferay.journal.service" value="journal.article.view.permission.check.enabled=true" />
 
-		<var name="portletOption" value="Configuration" />
-		<var name="roleName" value="Guest" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -712,7 +709,6 @@
 		</execute>
 
 		<execute macro="Role#removePermissionPG" >
-			<var name="key_roleName" value="${key_roleName}" />
 			<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 			<var name="roleName" value="Guest" />
 		</execute>
@@ -741,7 +737,7 @@
 
 		<execute macro="PermissionsInline#gotoConfigurationPG" />
 
-		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
+		<var method="StringUtil#replace('Guest', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
 		<execute function="AssertChecked" locator1="Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
@@ -1975,11 +1971,6 @@
 	</command>
 
 	<command name="WebContentAdministrationDataValidation" priority="4">
-		<var name="webContentContent" value="WC WebContent Content" />
-		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
-		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2022,9 +2013,9 @@
 		</execute>
 
 		<execute macro="WebContent#editNullCP">
-			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentContentEdit" value="WC WebContent Content" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

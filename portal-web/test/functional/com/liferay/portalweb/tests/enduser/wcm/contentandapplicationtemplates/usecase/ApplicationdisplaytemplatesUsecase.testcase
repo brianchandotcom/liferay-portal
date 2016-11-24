@@ -568,8 +568,6 @@
 	</command>
 
 	<command name="ADTStagingCategoriesNavigation" priority="3">
-		<var name="siteName" value="Test Site Name" />
-
 		<execute macro="ProductMenu#gotoSite">
 			<var name="site" value="Test Site Name" />
 		</execute>

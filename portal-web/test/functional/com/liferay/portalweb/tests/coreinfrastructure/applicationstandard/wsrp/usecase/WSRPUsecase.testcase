@@ -27,19 +27,13 @@
 	</tear-down>
 
 	<command name="AddWSRPUnitConverter" priority="4">
-		<var name="consumerName" value="Consumer Demo" />
-		<var name="consumerPortletName" value="WSRP Unit Converter" />
-		<var name="consumerPortletType" value="Unit Converter" />
-		<var name="pageName" value="WSRP Page" />
-		<var name="producerName" value="Producer Demo" />
-
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addProducerCP">
-			<var name="portletsAvailableSelect" value="${consumerPortletType}" />
-			<var name="producerName" value="${producerName}" />
+			<var name="portletsAvailableSelect" value="Unit Converter" />
+			<var name="producerName" value="Producer Demo" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
@@ -47,8 +41,8 @@
 		</execute>
 
 		<execute macro="WSRP#addConsumerCP">
-			<var name="consumerName" value="${consumerName}" />
-			<var name="producerName" value="${producerName}" />
+			<var name="consumerName" value="Consumer Demo" />
+			<var name="producerName" value="Producer Demo" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
@@ -56,27 +50,27 @@
 		</execute>
 
 		<execute macro="WSRP#addConsumerPortletCP">
-			<var name="consumerName" value="${consumerName}" />
-			<var name="consumerPortletName" value="${consumerPortletName}" />
-			<var name="consumerPortletType" value="${consumerPortletType}" />
+			<var name="consumerName" value="Consumer Demo" />
+			<var name="consumerPortletName" value="WSRP Unit Converter" />
+			<var name="consumerPortletType" value="Unit Converter" />
 		</execute>
 
-		<var name="key_consumerPortletName" value="${consumerPortletName}" />
+		<var name="key_consumerPortletName" value="WSRP Unit Converter" />
 
-		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_NAME" value1="${consumerPortletName}" />
-		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_REMOTE_PORTLET" value1="${consumerPortletType}" />
+		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_NAME" value1="WSRP Unit Converter" />
+		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_REMOTE_PORTLET" value1="Unit Converter" />
 		<execute function="AssertElementPresent" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_DELETE" value1="Delete" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="WSRP Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="WSRP Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${consumerPortletName}" />
+			<var name="portletName" value="WSRP Unit Converter" />
 		</execute>
 
 		<execute macro="WSRP#wsrpUnitConverterConvertPG">

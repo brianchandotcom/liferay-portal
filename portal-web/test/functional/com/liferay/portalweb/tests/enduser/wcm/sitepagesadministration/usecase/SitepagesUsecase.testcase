@@ -193,10 +193,8 @@
 
 	<command name="LoadMoreResultsLinkAreMissingAtAllLevelsInTreeView" priority="3">
 		<property name="custom.properties" value="layout.manage.pages.initial.children=3" />
-		<var name="childPageNameList" value="Child Page1 Name,Child Page2 Name,Child Page3 Name,Child Page4 Name, Child Page5 Name" />
-		<var name="pageNameList" value="Page1 Name,Page2 Name,Page3 Name,Page4 Name" />
 
-		<for list="${pageNameList}" param="pageName">
+		<for list="Page1 Name,Page2 Name,Page3 Name,Page4 Name" param="pageName">
 			<execute macro="Page#add">
 				<var name="pageName" value="${pageName}" />
 			</execute>
@@ -210,7 +208,7 @@
 			<var name="siteChildPages" value="false" />
 		</execute>
 
-		<for list="${childPageNameList}" param="siteChildPageName">
+		<for list="Child Page1 Name,Child Page2 Name,Child Page3 Name,Child Page4 Name, Child Page5 Name" param="siteChildPageName">
 			<execute macro="Page#addChild">
 				<var name="page" value="Public Pages" />
 				<var name="pageName" value="Welcome" />

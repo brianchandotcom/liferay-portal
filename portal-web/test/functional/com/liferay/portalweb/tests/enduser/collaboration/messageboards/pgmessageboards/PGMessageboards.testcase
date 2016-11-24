@@ -59,9 +59,7 @@
 	<command name="AddMBCategories" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var name="categoryNameList" value="MB Category1 Name,MB Category2 Name,MB Category3 Name" />
-
-		<for list="${categoryNameList}" param="categoryName" >
+		<for list="MB Category1 Name,MB Category2 Name,MB Category3 Name" param="categoryName" >
 			<execute macro="Navigator#gotoPage">
 				<var name="pageName" value="Message Boards Page" />
 			</execute>
@@ -1015,9 +1013,7 @@
 			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
-		<var name="mbThreadReplyCounter" value="1,2,3,4,5,6,7" />
-
-		<for list="${mbThreadReplyCounter}" param="replyCount">
+		<for list="1,2,3,4,5,6,7" param="replyCount">
 			<execute macro="MessageboardsThread#replyPG">
 				<var name="threadReplyBody" value="Message Boards Thread Reply ${replyCount}" />
 				<var name="threadSubject" value="Message Boards Thread Subject" />
@@ -1034,9 +1030,7 @@
 			<var name="threadSubject" value="Message Boards Thread Subject" />
 		</execute>
 
-		<var name="mbThreadReplyCounter" value="1,2,3,4" />
-
-		<for list="${mbThreadReplyCounter}" param="replyCount">
+		<for list="1,2,3,4" param="replyCount">
 			<var name="key_threadBody" value="Message Boards Thread Reply ${replyCount}" />
 
 			<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="Message Boards Thread Reply ${replyCount}" />
@@ -1044,9 +1038,7 @@
 
 		<execute function="AssertVisible" locator1="Button#MORE_MESSAGES" />
 
-		<var name="mbThreadReplyNotVisible" value="5,6,7" />
-
-		<for list="${mbThreadReplyNotVisible}" param="replyNotVisible">
+		<for list="5,6,7" param="replyNotVisible">
 			<var name="key_threadBody" value="Message Boards Thread Reply ${replyNotVisible}" />
 
 			<execute function="AssertElementNotPresent" locator1="MessageBoardsThread#THREAD_BODY" value1="Message Boards Thread Reply ${replyNotVisible}" />
@@ -1054,9 +1046,7 @@
 
 		<execute function="AssertClick" locator1="Button#MORE_MESSAGES" value1="More Messages" />
 
-		<var name="mbThreadReplyCounter" value="1,2,3,4,5,6,7" />
-
-		<for list="${mbThreadReplyCounter}" param="replyCount">
+		<for list="1,2,3,4,5,6,7" param="replyCount">
 			<var name="key_threadBody" value="Message Boards Thread Reply ${replyCount}" />
 
 			<execute function="AssertTextEquals" locator1="MessageBoardsThread#THREAD_BODY" value1="Message Boards Thread Reply ${replyCount}" />

@@ -140,9 +140,6 @@
 	</command>
 
 	<command name="CheckoutAndCheckin" priority="5">
-		<var name="pageName" value="Documents and Media Page" />
-		<var name="portletName" value="Documents and Media" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -185,26 +182,26 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="${portletName}" />
+			<var name="pageName" value="Documents and Media Page" />
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
@@ -216,7 +213,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
@@ -231,7 +228,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
@@ -249,12 +246,10 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Draft" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<var name="tagCounter" value="1,2" />
-
-		<for list="${tagCounter}" param="tagCount" >
+		<for list="1,2" param="tagCount" >
 			<execute macro="DMDocument#editCmdPG">
 				<var name="dmDocumentTagName" value="tag${tagCount}" />
 				<var name="dmDocumentTitle" value="Document_1.doc" />
@@ -263,7 +258,7 @@
 			<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 			<execute macro="Navigator#gotoPage">
-				<var name="pageName" value="${pageName}" />
+				<var name="pageName" value="Documents and Media Page" />
 			</execute>
 		</for>
 
@@ -278,7 +273,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#editCmdPG">
@@ -293,7 +288,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoCheckedOutDocument">
@@ -306,7 +301,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#saveAndCheckinEditedDocumentPG">
@@ -325,7 +320,7 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_WORKFLOW_STATUS" value1="Approved" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#checkoutPG">
@@ -333,7 +328,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<var name="key_dmDocumentTitle" value="Document1" />
@@ -356,7 +351,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#checkinPG">
@@ -372,8 +367,6 @@
 	</command>
 
 	<command name="Comments" priority="4">
-		<var name="pageName" value="Documents and Media Page" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -431,11 +424,11 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -443,13 +436,13 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -469,7 +462,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -482,7 +475,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -495,7 +488,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -508,7 +501,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMNavigator#gotoFolder">
@@ -523,9 +516,6 @@
 
 	<command name="ConfigureXugglerVideoPreviewSizePG" priority="3">
 		<property name="custom.properties" value="xuggler.enabled=true${line.separator}dl.file.entry.preview.video.width=0${line.separator}dl.file.entry.preview.video.height=0" />
-
-		<var name="videoGenerationTimeCounter" value="0" />
-		<var name="videoGenerationTimeMaxWaitTime" value="6" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Server Administration" />
@@ -594,6 +584,9 @@
 		</execute>
 
 		<execute function="Pause" locator1="30000" />
+
+		<var name="videoGenerationTimeCounter" value="0" />
+		<var name="videoGenerationTimeMaxWaitTime" value="6" />
 
 		<while>
 			<and>
@@ -726,8 +719,6 @@
 	</command>
 
 	<command name="SelectMultipleDocumentsAndDeleteViaActionsButton" priority="4">
-		<var name="dmDocumentCounterList" value="1,2,3" />
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
@@ -744,7 +735,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="${dmDocumentCounterList}" param="entryCount" >
+		<for list="1,2,3" param="entryCount" >
 			<execute macro="DMDocument#addPG">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
@@ -756,7 +747,7 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<for list="${dmDocumentCounterList}" param="entryCount" >
+		<for list="1,2,3" param="entryCount" >
 			<var name="key_dmDocumentTitle" value="Document_${entryCount}.doc" />
 
 			<execute function="Check" locator1="DocumentsAndMedia#ICON_DOCUMENT_CHECKBOX" />
@@ -1181,16 +1172,8 @@
 	</command>
 
 	<command name="ViewFileCategoryAndTags" priority="4">
-		<var name="categoryDescription" value="Category Description" />
-		<var name="categoryName" value="Category Name" />
-		<var name="dmDocumentDescription" value="Document Description" />
-		<var name="dmDocumentFile" value="Document_1.doc" />
-		<var name="dmDocumentTitle" value="Document Title" />
-		<var name="pageName" value="Documents and Media Page" />
-		<var name="tagNameList" value="tag1,tag2" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1200,13 +1183,13 @@
 		</execute>
 
 		<execute macro="Category#addCP">
-			<var name="categoryDescription" value="${categoryDescription}" />
+			<var name="categoryDescription" value="Category Description" />
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1216,52 +1199,52 @@
 		<execute macro="DMDocument#enableActionsMenuOnPortlet" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_DESCRIPTIVE" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-			<var name="dmDocumentFile" value="${dmDocumentFile}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="dmDocumentDescription" value="Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="Document Title" />
+			<var name="tagNameList" value="tag1,tag2" />
 		</execute>
 
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmDocumentTitle" value="Document Title" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<var name="key_categoryName" value="${categoryName}" />
+		<var name="key_categoryName" value="Category Name" />
 
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Categorization" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="AssetCategorization#CATEGORY" value1="Category Name" />
 
-		<for list="${tagNameList}" param="tagName">
+		<for list="tag1,tag2" param="tagName">
 			<var name="key_tagName" value="${tagName}" />
 
 			<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
 		</for>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
-			<var name="categoryName" value="${categoryName}" />
-			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="tagNameList" value="${tagNameList}" />
+			<var name="categoryName" value="Category Name" />
+			<var name="dmDocumentDescription" value="Document Description" />
+			<var name="dmDocumentTitle" value="Document Title" />
+			<var name="tagNameList" value="tag1,tag2" />
 		</execute>
 	</command>
 

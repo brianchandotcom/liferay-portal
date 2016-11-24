@@ -33,8 +33,6 @@
 	</tear-down>
 
 	<command name="FindDictionaryWord" priority="2">
-		<var name="dictionaryTerm" value="dog" />
-
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -48,10 +46,10 @@
 			<var name="dictionaryWord" value="dog" />
 		</execute>
 
-		<var name="key_dictionaryTerm" value="${dictionaryTerm}" />
+		<var name="key_dictionaryTerm" value="dog" />
 
 		<execute function="SelectWindow" locator1="title=Dog | Define Dog at Dictionary.com" />
-		<execute function="AssertTextEquals" locator1="Portlet#WORD" value1="${dictionaryTerm}" />
+		<execute function="AssertTextEquals" locator1="Portlet#WORD" value1="dog" />
 
 		<execute function="Close" locator1="title=Dog | Define Dog at Dictionary.com" />
 		<execute function="SelectWindow" locator1="title=Dictionary Page - ${siteName}" />

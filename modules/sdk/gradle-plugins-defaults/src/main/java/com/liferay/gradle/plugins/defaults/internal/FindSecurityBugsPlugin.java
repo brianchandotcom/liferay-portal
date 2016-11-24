@@ -218,10 +218,20 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			"findsecbugs.injection.customconfigfile.XssJspDetector",
 			"liferay-config/liferay-XssJspDetector.txt|XSS_JSP_PRINT");
 
-		File falsePositivesTxtFile = project.file(
-			"find-security-bugs-false-positives.txt");
+		javaExec.systemProperty("findsecbugs.taint.outputsummaries", "true");
 
 		String customConfigFile = "liferay-config/liferay.txt";
+
+		File derivedSummariesTxtFile = project.file("derived-summaries.txt");
+
+		if (derivedSummariesTxtFile.exists()) {
+			customConfigFile =
+				customConfigFile + ":" +
+					FileUtil.getAbsolutePath(derivedSummariesTxtFile);
+		}
+
+		File falsePositivesTxtFile = project.file(
+			"find-security-bugs-false-positives.txt");
 
 		if (falsePositivesTxtFile.exists()) {
 			customConfigFile =

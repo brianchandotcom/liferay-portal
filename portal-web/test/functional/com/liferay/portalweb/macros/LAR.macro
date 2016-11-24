@@ -108,11 +108,13 @@
 				<var name="key_contentName" value="${mainContent}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${uncheckSubContent}" />
 
 				<execute function="Uncheck" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_SUBCONTENT_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
@@ -125,12 +127,14 @@
 				<var name="key_contentName" value="${contentName}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_CONTENT_CHANGE_LINK" value1="Change" />
 
 				<var name="key_subContent" value="${subContent}" />
 				<var name="key_subSubContent" value="${uncheckSubSubContent}" />
 
 				<execute function="Uncheck" locator1="ExportImport#CONTENT_CHOOSE_CONTENT_SUB_SUBCONTENT_CHECKBOX" />
+
 				<execute function="AssertClick" locator1="Button#OK" value1="OK" />
 			</then>
 		</if>
@@ -139,6 +143,7 @@
 			<isset var="contentDateRange" />
 			<then>
 				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
+
 				<execute function="Click" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
@@ -171,8 +176,11 @@
 		<var name="key_larFileName" value="${larFileName}" />
 
 		<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
 		<execute function="Click" locator1="ExportImport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+
 		<execute function="DownloadTempFile" locator1="${larFileName}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -340,6 +348,7 @@
 				<execute function="AssertClickNoError" locator1="Button#IMPORT" value1="Import" />
 
 				<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
 		</if>
@@ -384,6 +393,7 @@
 			<equals arg1="importFail" arg2="true" />
 			<then>
 				<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
+
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 		</if>
@@ -452,6 +462,7 @@
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 
 		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_TEMPLATES_TABLE_NAME" value1="${exportTemplateName}" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${exportTemplateNameEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${exportTemplateDescriptionEdit}" />
 	</command>

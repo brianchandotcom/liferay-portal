@@ -64,6 +64,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -78,6 +79,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryNullName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+
 		<execute function="Click" locator1="Button#SAVE" />
 
 		<execute function="AssertTextEquals" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
@@ -92,6 +94,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryNullName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequiredField" />
@@ -106,6 +109,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -122,6 +126,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subCategorySubCategoryName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
+
 		<execute macro="PortletEntry#save" />
 	</command>
 
@@ -142,8 +147,11 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" />
 	</command>
@@ -152,10 +160,13 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${categoryNameEdit}" />
+
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
@@ -222,8 +233,11 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -257,6 +271,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORIES" value1="0" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_THREADS" value1="0" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_POSTS" value1="0" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${categoryName}" />
@@ -278,6 +293,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_THREADS" value1="${threadsNumber}" />
 		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" value1="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${categoryName}" />
@@ -332,6 +348,7 @@
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
 		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CHECKBOX" />
+
 		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${categoryName}" />
 
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${subCategoryName}" />
@@ -398,7 +415,9 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_THREADS" value1="0" />
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_POSTS" value1="0" />
 		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ACTIONS" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_CATEGORY" value1="${subCategoryName} ${subCategoryDescription}" />
+
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${subCategoryName}" />
 	</command>
 
@@ -410,7 +429,9 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${categoryName}" />
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY" value1="${subCategoryName}" />
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY_DESCRIPTION" value1="${subCategoryDescription}" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_SUBCATEGORY" />
+
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${subCategoryName}" />
 	</command>
 
@@ -428,7 +449,9 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_THREADS" value1="${threadsNumber}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoards#CATEGORY_LIST_POSTS" value1="${threadsNumber}" />
 		<execute function="AssertElementPresent" locator1="MessageBoards#CATEGORY_LIST_ACTIONS" />
+
 		<execute function="Click" locator1="MessageBoards#CATEGORY_LIST_CATEGORY" />
+
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORIES_NAME_HEADER" value1="${subCategoryName}" />
 	</command>
 </definition>

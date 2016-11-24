@@ -3,6 +3,7 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+
 		<execute function="Click" locator1="MenuItem#MANAGE" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
@@ -49,6 +50,7 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" value1="${siteTemplateName}" />
+
 		<execute function="Click" locator1="MenuItem#MANAGE" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
@@ -93,6 +95,7 @@
 		</if>
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${pageName}" />
+
 		<execute function="AssertClick" locator1="Button#ADD_PAGE_BTN" value1="Add Page" />
 	</command>
 
@@ -105,10 +108,12 @@
 			<equals arg1="${allow}" arg2="true" />
 			<then>
 				<execute function="Check" locator1="SitePages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+
 				<execute function="Click" locator1="Button#SAVE" />
 			</then>
 			<else>
 				<execute function="Uncheck" locator1="SitePages#DETAILS_PAGE_TEMPLATE_PROTOTYPE_LINK_CHECKBOX" />
+
 				<execute function="Click" locator1="Button#SAVE" />
 			</else>
 		</if>
@@ -120,6 +125,7 @@
 		<execute function="Click" locator1="SitePages#PAGE_TREE_PAGE_SPECIFIC_PAGE" value1="sitePageName" />
 
 		<execute function="Check" locator1="Checkbox#ALLOW_SITE_ADMIN_MODIFY_PAGES" />
+
 		<execute function="Click" locator1="Button#SAVE" />
 	</command>
 
@@ -127,7 +133,9 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<if>
@@ -184,7 +192,9 @@
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="MenuItem#MANAGE" value1="Manage" />
 
 		<execute macro="ProductMenuHelper#openProductMenu" />
@@ -236,8 +246,11 @@
 			<condition function="IsElementPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
 			<then>
 				<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
+
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>

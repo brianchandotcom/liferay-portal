@@ -75,6 +75,7 @@
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${contentType}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_rowEntry" value="${contentTitle}" />
@@ -82,7 +83,9 @@
 		<execute function="ClickNoError" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -105,6 +108,7 @@
 				<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 
 				<execute function="SelectFrame" value1="relative=top" />
+
 				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 				<var name="key_rowEntry" value="${otherwiseContentTitle}" />
@@ -115,7 +119,9 @@
 			</then>
 			<else>
 				<execute function="ClickNoError" locator1="ContentTargeting#OTHERWISE_PANEL" />
+
 				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
+
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
 		</if>
@@ -125,6 +131,7 @@
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="ClickNoError" locator1="Button#SAVE" />
+
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -184,6 +191,7 @@
 			<isset var="otherwiseContentType" />
 			<then>
 				<execute function="Click" locator1="ContentTargeting#OTHERWISE_PANEL" />
+
 				<execute function="AssertChecked" locator1="ContentTargeting#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 
 				<var name="key_contentType" value="${otherwiseContentType}" />

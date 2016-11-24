@@ -7,14 +7,19 @@
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Select" locator1="Configuration#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configurePaginationManageEntriesPG">
 		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+
 		<execute function="Click" locator1="Button#ITEMS_PER_PAGE" />
 
 		<var name="key_itemsPerPage" value="${itemsPerPage}" />

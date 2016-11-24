@@ -10,6 +10,7 @@
 		<var name="key_assetType" value="${assetType}" />
 
 		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_NEW_DROPDOWN" value1="Add New" />
+
 		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_NEW_MENULIST" value1="${assetType}" />
 	</command>
 

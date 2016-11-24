@@ -1,8 +1,11 @@
 <definition>
 	<command name="convertPG">
 		<execute function="Type" locator1="CurrencyConverter#NUMBER_FIELD" value1="${currencyValue}" />
+
 		<execute function="Select" locator1="CurrencyConverter#FROM_SELECT" value1="${currencyFrom}" />
+
 		<execute function="Select" locator1="CurrencyConverter#TO_SELECT" value1="${currencyTo}" />
+
 		<execute function="AssertClick" locator1="Button#CONVERT" value1="Convert" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CurrencyConverter#DATA_TABLE_FROM" value1="${currencyDataFrom}" />

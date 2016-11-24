@@ -13,6 +13,7 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${folderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${folderDescription}" />
+
 		<execute macro="PortletEntry#save" />
 
 		<execute macro="Portlet#changeDisplayStyle">
@@ -31,12 +32,16 @@
 		</execute>
 
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+
 		<execute function="AssertTextEquals" locator1="WC#FILTER_SELECTED" value1="${folderName}" />
+
 		<execute function="Click" locator1="Button#PLUS" />
+
 		<execute function="Click" locator1="MenuItem#SUBFOLDER" value1="Subfolder" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${subfolderName}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subfolderDescription}" />
+
 		<execute macro="Button#clickSave" />
 
 		<var name="key_webContentTitle" value="${subfolderName}" />
@@ -68,6 +73,7 @@
 				<equals arg1="${workflowRestriction}" arg2="Specific Restrictions" />
 				<then>
 					<execute function="Click" locator1="WCEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO" />
+
 					<execute function="AssertClick" locator1="WCEditFolder#WORKFLOW_SPECIFIC_RESTRICTIONS_CHOOSE_STRUCTURE_BUTTON" value1="Choose Structure" />
 
 					<execute function="SelectFrame" value1="relative=top" />
@@ -89,6 +95,7 @@
 				<equals arg1="${workflowRestriction}" arg2="Default Workflow" />
 				<then>
 					<execute function="Click" locator1="WCEditFolder#WORKFLOW_DEFAULT_WORKFLOW_RADIO" />
+
 					<execute function="Select" locator1="WCEditFolder#WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT" value1="${workflowDefinition}" />
 				</then>
 			</elseif>
@@ -105,6 +112,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 	</command>
 
@@ -116,7 +124,9 @@
 		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
@@ -128,8 +138,11 @@
 		<var name="key_webContentTitle" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
+
 		<execute macro="PortletEntry#clickMoveToRecycleBin" />
+
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
 	</command>
 </definition>

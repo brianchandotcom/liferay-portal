@@ -550,7 +550,9 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${entrySearchTerm}" />
+
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found that matched the keywords: ${entrySearchTerm}." />
 
 		<if>

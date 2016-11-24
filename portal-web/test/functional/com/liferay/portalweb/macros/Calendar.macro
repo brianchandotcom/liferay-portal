@@ -128,6 +128,7 @@
 					<var name="key_calendarName" value="${calendarName}" />
 
 					<execute function="AssertClick" locator1="Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />
+
 					<execute function="AssertTextEquals" locator1="Calendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
 				</then>
 			</elseif>
@@ -238,8 +239,11 @@
 				</execute>
 
 				<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+
 				<execute function="Type" locator1="TextInput#NAME" value1="${calendarNameEdit}" />
+
 				<execute macro="Button#clickSave" />
+
 				<execute macro="Alert#viewSuccessMessage" />
 
 				<execute function="SelectFrame" value1="relative=top" />
@@ -257,8 +261,11 @@
 					</execute>
 
 					<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+
 					<execute function="Type" locator1="TextInput#NAME" value1="${calendarNameEdit}" />
+
 					<execute macro="Button#clickSave" />
+
 					<execute macro="Alert#viewSuccessMessage" />
 
 					<execute function="SelectFrame" value1="relative=top" />
@@ -273,8 +280,11 @@
 					</execute>
 
 					<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+
 					<execute function="Type" locator1="TextInput#NAME" value1="${calendarNameEdit}" />
+
 					<execute macro="Button#clickSave" />
+
 					<execute macro="Alert#viewSuccessMessage" />
 
 					<execute function="SelectFrame" value1="relative=top" />
@@ -362,6 +372,7 @@
 			<equals arg1="${reminderEmail}" arg2="true" />
 			<then>
 				<execute function="AssertElementNotPresent" locator1="CalendarEditCalendar#NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_ACTIVE" />
+
 				<execute function="AssertClick" locator1="CalendarEditCalendar#NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE" value1="Reminder Email" />
 			</then>
 			<elseif>
@@ -468,6 +479,7 @@
 
 		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#HEADER_TITLE" value1="${calendarName}" />
 		<execute function="Check" locator1="CalendarEditCalendar#ENABLE_COMMENTS_CHECKBOX" />
+
 		<execute macro="Button#clickSave" />
 
 		<if>
@@ -526,8 +538,10 @@
 		<var name="key_calendarName" value="${calendarName}" />
 
 		<execute function="SelectFrame" locator1="CalendarEditCalendar#EDIT_CALENDAR_IFRAME" />
+
 		<execute function="AssertTextEquals" locator1="CalendarEditCalendar#HEADER_TITLE" value1="${calendarName}" />
 		<execute function="Check" locator1="CalendarEditCalendar#ENABLE_RATINGS_CHECKBOX" />
+
 		<execute macro="Button#clickSave" />
 
 		<if>

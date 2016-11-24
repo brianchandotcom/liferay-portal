@@ -55,6 +55,7 @@
 
 	<command name="assertCannotDeleteRecordViaDDLDisplayPG">
 		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+
 		<execute function="AssertElementNotPresent" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="AssertElementPresent" locator1="MenuItem#VIEW" value1="View" />
 	</command>
@@ -114,8 +115,11 @@
 
 	<command name="editPermissions">
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
+
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS_LEXICON" value1="Permissions" />
 	</command>
 
@@ -179,8 +183,11 @@
 			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 			<then>
 				<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 		</while>

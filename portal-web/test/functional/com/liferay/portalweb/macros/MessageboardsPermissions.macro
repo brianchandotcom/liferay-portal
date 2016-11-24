@@ -3,9 +3,13 @@
 		<execute function="AssertClick" locator1="Button#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Check" locator1="AssetPermissions#GUEST_REPLY_TO_MESSAGE_CHECKBOX" />
+
 		<execute macro="PortletEntry#save" />
+
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="Click" locator1="Icon#CLOSE" />
 	</command>
 </definition>

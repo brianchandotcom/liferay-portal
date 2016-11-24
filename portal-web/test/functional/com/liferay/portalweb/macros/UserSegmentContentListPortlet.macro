@@ -27,6 +27,7 @@
 					<condition function="IsElementPresent" locator1="UserSegmentContentList#SELECTED_ASSETS" />
 					<then>
 						<execute function="Click" locator1="UserSegmentContentList#SELECTED_ASSETS" />
+
 						<execute function="Click" locator1="UserSegmentContentList#MOVE_SELECTED_TO_AVAILABLE_BUTTON" />
 					</then>
 				</while>
@@ -35,7 +36,9 @@
 					<var name="key_assetType" value="${assetType}" />
 
 					<execute function="Click" locator1="UserSegmentContentList#AVAILABLE_ASSET_TYPE" value1="${assetType}" />
+
 					<execute function="Click" locator1="UserSegmentContentList#MOVE_AVAILABLE_TO_SELECTED_BUTTON" />
+
 					<execute function="AssertTextEquals" locator1="UserSegmentContentList#SELECTED_ASSETS" value1="${assetType}" />
 				</for>
 

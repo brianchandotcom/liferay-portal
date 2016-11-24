@@ -24,6 +24,7 @@
 
 	<command name="viewShowAllPG">
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertElementPresent" locator1="MenuItem#PERMISSIONS" />
 		<execute function="AssertElementPresent" locator1="MenuItem#ADD_FOLDER" />
 		<execute function="AssertElementPresent" locator1="MenuItem#MULTIPLE_MEDIA" />

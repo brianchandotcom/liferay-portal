@@ -50,9 +50,13 @@
 			<equals arg1="${field}" arg2="Fieldset" />
 			<then>
 				<execute function="Click" locator1="DDMEditStructure#FORM_FIELDSET" />
+
 				<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" />
+
 				<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabel}" />
+
 				<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<elseif>
@@ -164,8 +168,11 @@
 			<isset var="fieldFieldLabelEdit" />
 			<then>
 				<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" />
+
 				<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabelEdit}" />
+
 				<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabelEdit}" />
 			</then>
 		</if>
@@ -174,8 +181,11 @@
 			<isset var="fieldNameEdit" />
 			<then>
 				<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
+
 				<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameEdit}" />
+
 				<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldNameEdit}" />
 			</then>
 		</if>
@@ -193,8 +203,11 @@
 		</execute>
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_INDEXABLE" />
+
 		<execute function="Click" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_NOT_INDEXABLE_RADIO" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -235,8 +248,11 @@
 		</execute>
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_LOCALIZABLE" />
+
 		<execute function="Click" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_NO_RADIO" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -259,7 +275,9 @@
 		<execute function="AssertTextNotEquals#assertNotPartialText" locator1="DDMEditStructure#SETTINGS_NAME" value1="_" />
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
+
 		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -282,7 +300,9 @@
 		<execute macro="DynamicDataMapping#editFieldSettingsNested" />
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
+
 		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
@@ -407,6 +427,7 @@
 		</if>
 
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_PREDEFINED_VALUE" value1="${fieldPredefinedValue}" />
 
 		<execute macro="DynamicDataMapping#viewFieldPredefinedValueCmd">
@@ -429,8 +450,11 @@
 		</execute>
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_REPEATABLE" />
+
 		<execute function="Click" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_YES_RADIO" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -458,11 +482,13 @@
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_LINK" value1="Settings" />
 	</command>
 
 	<command name="editFieldSettingsNested">
 		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD_NESTED" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_LINK" value1="Settings" />
 	</command>
 
@@ -492,7 +518,9 @@
 		</if>
 
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_SHOW_LABEL" value1="${fieldShowLabel}" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -506,9 +534,13 @@
 		</execute>
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_STYLE" />
+
 		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldStyle}" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_STYLE" value1="${fieldStyle}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -520,9 +552,13 @@
 		</execute>
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_TEXT" />
+
 		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldText}" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_TEXT" value1="${fieldText}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -534,9 +570,13 @@
 		</execute>
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_TIP" />
+
 		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_TEXT_AREA" value1="${fieldTip}" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_TIP" value1="${fieldTip}" />
+
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
 
 		<execute function="SelectFrame" value1="relative=top" />
@@ -554,7 +594,9 @@
 		<var name="key_widthSize" value="${widthSize}" />
 
 		<execute function="Click" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_WIDTH" />
+
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -589,6 +631,7 @@
 		<var name="key_field" value="${field}" />
 
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#FIELDS_FIELD_UNSELECTABLE" value1="${field}" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -678,6 +721,7 @@
 			<equals arg1="${field}" arg2="Fieldset" />
 			<then>
 				<execute function="Click" locator1="DDMEditStructure#FORM_FIELDSET" />
+
 				<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 			</then>
 			<elseif>

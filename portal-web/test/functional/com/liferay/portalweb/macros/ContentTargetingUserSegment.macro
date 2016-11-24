@@ -100,6 +100,7 @@
 		</execute>
 
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_LEVEL_SELECT" value1="${facebookEducationLevel}" />
+
 		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_EDUCATION_COLLEGE_HIGH_SCHOOL_NAME_FIELD" value1="${facebookCollegeHighSchoolName}" />
 	</command>
 
@@ -109,6 +110,7 @@
 		</execute>
 
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_MORE_LESS_THAN_SELECT" value1="${moreLessThan}" />
+
 		<execute function="Type" locator1="EditUserSegment#USER_SEGMENT_RULE_SOCIAL_FACEBOOK_FRIENDS_FIELD" value1="${numberOfFriends}" />
 	</command>
 
@@ -167,6 +169,7 @@
 		</execute>
 
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_COUNTRY_SELECT" value1="${countryName}" />
+
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_SESSION_ATTRIBUTES_LOCATION_REGION_SELECT" value1="${regionName}" />
 	</command>
 
@@ -247,6 +250,7 @@
 		</execute>
 
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ORGANIZATION_SELECT" value1="${organizationName}" />
+
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_ORGANIZATION_ROLE_SELECT" value1="${organizationRole}" />
 	</command>
 
@@ -278,6 +282,7 @@
 		</execute>
 
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_ROLE_SELECT" value1="${siteRole}" />
+
 		<execute function="Select" locator1="EditUserSegment#USER_SEGMENT_RULE_USER_ATTRIBUTES_SITE_ROLE_SITE_SELECT" value1="${siteRoleSite}" />
 	</command>
 
@@ -301,7 +306,9 @@
 		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
@@ -310,8 +317,11 @@
 		<var name="key_userSegment" value="${userSegmentName}" />
 
 		<execute function="Click" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="ClickNoError" locator1="MenuItem#DELETE" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
 		<execute macro="Alert#viewSuccessMessage" />
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No User Segments were found" />
 	</command>
@@ -320,6 +330,7 @@
 		<var name="key_rowEntry" value="${userSegmentName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute macro="ContentTargetingUserSegment#openFormField">
@@ -334,7 +345,9 @@
 		<var name="key_userSegment" value="${userSegmentName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#EDIT" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${userSegmentNameEdit}" />
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${userSegmentDescriptionEdit}" />
 
@@ -421,6 +434,7 @@
 		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${userSegmentName}" />
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
 		<execute function="Click" locator1="MenuItem#EDIT" />
 
 		<execute function="AssertElementNotPresent" locator1="EditUserSegment#USER_SEGMENT_RULE_BEHAVIOR_CONTENT_VISITED_WEB_CONTENT_TITLE" />

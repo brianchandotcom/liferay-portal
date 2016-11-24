@@ -18,6 +18,7 @@
 		<var name="key_rowNumber" value="${rowNumber}" />
 
 		<execute function="Select" locator1="CampaignContentDisplay#RULE_PANEL_CAMPAIGN_SELECT" value1="${campaignName}" />
+
 		<execute function="Click" locator1="CampaignContentDisplay#RULE_PANEL_SELECT_CONTENT" />
 
 		<var name="key_menuItem" value="${contentType}" />
@@ -25,6 +26,7 @@
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_rowEntry" value="${contentTitle}" />
@@ -49,6 +51,7 @@
 		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_rowEntry" value="${contentTitle}" />
@@ -60,6 +63,7 @@
 
 	<command name="savePG">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="ClickNoError" locator1="Button#SAVE" />
 
 		<execute function="Pause" locator1="3000" />

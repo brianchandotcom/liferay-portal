@@ -6,10 +6,13 @@
 			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
 				<execute function="Click" locator1="Calendar#MY_CALENDARS_MENULIST_ARROW" />
+
 				<execute function="AssertClick" locator1="Calendar#MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
 				<execute function="Type#type" locator1="TextInput#NAME" value1="${calendarName}" />
+
 				<execute macro="Button#clickSave" />
+
 				<execute function="Click" locator1="Button#SAVE" />
 
 				<execute macro="Alert#viewSuccessMessage" />
@@ -20,10 +23,13 @@
 					<var name="key_siteName" value="${siteName}" />
 
 					<execute function="Click" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+
 					<execute function="AssertClick" locator1="Calendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
 
 					<execute function="Type#type" locator1="TextInput#NAME" value1="${calendarName}" />
+
 					<execute macro="Button#clickSave" />
+
 					<execute function="Click" locator1="Button#SAVE" />
 
 					<execute macro="Alert#viewSuccessMessage" />
@@ -37,6 +43,7 @@
 					<var name="key_calendarName" value="${calendarName}" />
 
 					<execute function="AssertClick" locator1="Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />
+
 					<execute function="AssertTextEquals" locator1="Calendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
 				</then>
 			</elseif>
@@ -52,6 +59,7 @@
 		<var name="key_user" value="${user}" />
 
 		<execute function="AssertTextEquals" locator1="Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${calendarName}" />
+
 		<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 
 		<execute macro="Calendar#_deleteCalendar" />
@@ -124,6 +132,7 @@
 					<var name="key_calendarName" value="${calendarName}" />
 
 					<execute function="AssertClick" locator1="Calendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />
+
 					<execute function="AssertTextEquals" locator1="Calendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
 				</then>
 			</elseif>

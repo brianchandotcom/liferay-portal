@@ -1,9 +1,13 @@
 <definition>
 	<command name="addCP">
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
 		<execute function="Type" locator1="TextInput#SOURCE_URL" value1="${sourceURL}" />
+
 		<execute macro="Button#clickSave" />
+
 		<execute macro="Alert#viewSuccessMessage" />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

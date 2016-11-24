@@ -90,6 +90,7 @@
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
 
 		<execute macro="PortletEntry#save" />
+
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -102,6 +103,7 @@
 		<execute function="Uncheck" locator1="Checkbox#MENTIONS" />
 
 		<execute macro="PortletEntry#save" />
+
 		<execute function="AssertNotChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -113,6 +115,7 @@
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
 		<execute macro="PortletEntry#save" />
+
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 
@@ -125,6 +128,7 @@
 		<execute function="Check" locator1="Checkbox#MENTIONS" />
 
 		<execute macro="PortletEntry#save" />
+
 		<execute function="AssertChecked" locator1="Checkbox#MENTIONS" />
 	</command>
 

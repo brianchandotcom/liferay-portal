@@ -29,6 +29,7 @@
 		</while>
 
 		<execute function="AssertTextEquals" locator1="YUICalendarWidget#DATEPICKER_SPECIFIC_MONTH_YEAR" value1="${month} ${year}" />
+
 		<execute function="AssertClick" locator1="YUICalendarWidget#DATEPICKER_SPECIFIC_DAY" value1="${day}" />
 	</command>
 </definition>

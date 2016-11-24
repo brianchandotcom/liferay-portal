@@ -3,6 +3,7 @@
 		<var name="key_appName" value="${appName}" />
 
 		<execute function="AssertClick" locator1="AppManager#APP_ACTIONS" value1="Actions" />
+
 		<execute function="AssertClick" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
 	</command>
 
@@ -10,8 +11,11 @@
 		<var name="key_appName" value="${appName}" />
 
 		<execute function="AssertClick" locator1="AppManager#APP_ACTIONS" value1="Actions" />
+
 		<execute function="AssertClickNoError" locator1="MenuItem#UNINSTALL" value1="Uninstall" />
+
 		<execute function="Confirm" value1="Are you sure you want to uninstall this?" />
+
 		<execute function="Pause" locator1="15000" />
 	</command>
 

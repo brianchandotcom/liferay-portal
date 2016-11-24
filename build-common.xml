@@ -1458,8 +1458,6 @@ rerun your task.
 	</target>
 
 	<target name="format-javadoc">
-		<echo>Run "ant compile compile-test" before using format-javadoc to generate @Override tags.</echo>
-
 		<path id="javadoc.formatter.classpath">
 			<fileset dir="${sdk.dir}/dependencies/com.liferay.javadoc.formatter/lib" includes="*.jar" />
 			<path refid="project.classpath" />

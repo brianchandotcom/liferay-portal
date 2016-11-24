@@ -164,8 +164,6 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 				<aui:button cssClass="btn-lg ddl-button" id="save" value="save-form" />
 
 				<aui:button cssClass="btn-lg btn-link" id="preview" value="preview-form" />
-
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 			</aui:button-row>
 		</div>
 

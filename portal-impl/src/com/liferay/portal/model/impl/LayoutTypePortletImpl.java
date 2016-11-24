@@ -1005,7 +1005,7 @@ public class LayoutTypePortletImpl
 				continue;
 			}
 
-			String columnValue = StringPool.BLANK;
+			String columnValue;
 
 			if (hasUserPreferences()) {
 				columnValue = getUserPreference(columnId);
@@ -1015,6 +1015,11 @@ public class LayoutTypePortletImpl
 			}
 
 			columnValue = StringUtil.removeFromList(columnValue, portletId);
+
+			if (StringUtil.endsWith(columnValue, StringPool.COMMA)) {
+				columnValue = columnValue.substring(
+					0, columnValue.length() - 1);
+			}
 
 			if (hasUserPreferences()) {
 				setUserPreference(columnId, columnValue);

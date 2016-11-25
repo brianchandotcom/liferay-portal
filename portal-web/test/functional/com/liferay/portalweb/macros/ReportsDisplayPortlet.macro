@@ -48,7 +48,7 @@
 				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REPORT_PARAMETERS_FIELD" value1="Report Parameters [${reportParameterse}]" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="ReportsAdminViewReportEntry#REPORT_PARAMETERS_DEFAULT_FIELD" value1="Report Parameters" />
+				<execute function="AssertTextEquals" locator1="Panel#ENTRY_REPORT_PARAMETERS" value1="Report Parameters" />
 			</else>
 		</if>
 

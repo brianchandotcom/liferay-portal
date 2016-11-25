@@ -280,6 +280,7 @@ AUI.add(
 						var description = window[instance.ns('descriptionEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var title = window[instance.ns('titleEditor')].getText();
+						var urlTitle = instance.one(STR_URL_TITLE).val();
 
 						var form = instance._getPrincipalForm();
 
@@ -316,6 +317,7 @@ AUI.add(
 										'referringPortletResource': instance.one('#referringPortletResource').val(),
 										'subtitle': subtitle,
 										'title': title,
+										'urlTitle': urlTitle,
 										'workflowAction': constants.ACTION_SAVE_DRAFT
 									}
 								);

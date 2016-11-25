@@ -1954,6 +1954,8 @@
 			<var name="scheduleTitleName" value="Staging Schedule Title" />
 		</execute>
 
+		<execute function="Pause" locator1="120000" />
+
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />

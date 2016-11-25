@@ -933,19 +933,23 @@ public class CalendarBookingLocalServiceTest {
 
 		long startTime = System.currentTimeMillis();
 
+		long endTime = startTime + (Time.HOUR * 10);
+
 		Recurrence recurrence = new Recurrence();
 
 		recurrence.setFrequency(Frequency.DAILY);
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
 		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime,
-			startTime + (Time.HOUR * 10), recurrence, serviceContext);
+			_user.getUserId(), calendar.getCalendarId(), startTime, endTime,
+			recurrence, serviceContext);
 
 		Map<Locale, String> earlierDescriptionMap = new HashMap<>(
 			calendarBooking.getDescriptionMap());
 
 		long instanceStartTime = startTime + Time.DAY * 2;
+
+		long instanceEndTime = instanceStartTime + (Time.HOUR * 10);
 
 		Map<Locale, String> titleMap = RandomTestUtil.randomLocaleStringMap();
 
@@ -955,8 +959,8 @@ public class CalendarBookingLocalServiceTest {
 				calendar.getCalendarId(), titleMap,
 				calendarBooking.getDescriptionMap(),
 				calendarBooking.getLocation(), instanceStartTime,
-				instanceStartTime + (Time.HOUR * 10), false, null, false, 0,
-				null, 0, null, serviceContext);
+				instanceEndTime, false, null, false, 0, null, 0, null,
+				serviceContext);
 
 		Map<Locale, String> laterDescriptionMap =
 			RandomTestUtil.randomLocaleStringMap();
@@ -965,8 +969,8 @@ public class CalendarBookingLocalServiceTest {
 			_user.getUserId(), calendarBookingInstance.getCalendarBookingId(),
 			0, calendar.getCalendarId(), titleMap, laterDescriptionMap,
 			calendarBooking.getLocation(), instanceStartTime,
-			instanceStartTime + (Time.HOUR * 10), false, null, true, 0, null, 0,
-			null, serviceContext);
+			instanceEndTime, false, null, true, 0, null, 0, null,
+			serviceContext);
 
 		List<CalendarBooking> earlierCalendarBookings = new ArrayList<>();
 		List<CalendarBooking> laterCalendarBookings = new ArrayList<>();

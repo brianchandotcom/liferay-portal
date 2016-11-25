@@ -35,6 +35,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -64,6 +65,68 @@ public class ModifiableServletContextAdapter
 			ModifiableServletContextAdapter.class.getClassLoader(), _INTERFACES,
 			new ModifiableServletContextAdapter(
 				servletContext, bundleContext, webXMLDefinition, logger));
+	}
+
+	public static ServletContext createInstance(
+		ServletContext servletContext, Map<String, Object> attributes,
+		List<ListenerDefinition> listenerDefinitions,
+		Map<String, FilterRegistrationImpl> filterRegistrations,
+		Map<String, ServletRegistrationImpl> servletRegistrations,
+		BundleContext bundleContext, WebXMLDefinition webXMLDefinition,
+		Logger logger) {
+
+		ServletContext proxiedServletContext = createInstance(
+			servletContext, bundleContext, webXMLDefinition, logger);
+
+		/* Attributes */
+		Set<String> attributeNames = attributes.keySet();
+
+		if (attributeNames != null) {
+			for (String name : attributeNames) {
+				proxiedServletContext.setAttribute(name, attributes.get(name));
+			}
+		}
+
+		/* Event Listeners */
+		if (listenerDefinitions != null) {
+			for (ListenerDefinition listenerDef : listenerDefinitions) {
+				proxiedServletContext.addListener(
+					listenerDef.getEventListener());
+			}
+		}
+
+		ModifiableServletContext modifiableServletContext =
+			(ModifiableServletContext)proxiedServletContext;
+
+		/* Filters */
+		if (filterRegistrations != null) {
+			Map<String, FilterRegistrationImpl> newFilterRegistrationsImpl =
+				modifiableServletContext.getFilterRegistrationsImpl();
+
+			for (String filterName : filterRegistrations.keySet()) {
+				FilterRegistrationImpl filterRegistrationImpl =
+					filterRegistrations.get(filterName);
+
+				newFilterRegistrationsImpl.put(
+					filterName, filterRegistrationImpl);
+			}
+		}
+
+		/* Servlets */
+		if (servletRegistrations != null) {
+			Map<String, ServletRegistrationImpl> newServletRegistrationsImpl =
+				modifiableServletContext.getServletRegistrationsImpl();
+
+			for (String servletName : servletRegistrations.keySet()) {
+				ServletRegistrationImpl servletRegistrationImpl =
+					servletRegistrations.get(servletName);
+
+				newServletRegistrationsImpl.put(
+					servletName, servletRegistrationImpl);
+			}
+		}
+
+		return proxiedServletContext;
 	}
 
 	public ModifiableServletContextAdapter(
@@ -276,9 +339,8 @@ public class ModifiableServletContextAdapter
 		return getFilterRegistrationsImpl();
 	}
 
-	public Map<String, ? extends FilterRegistrationImpl>
-		getFilterRegistrationsImpl() {
-
+	@Override
+	public Map<String, FilterRegistrationImpl> getFilterRegistrationsImpl() {
 		return _filterRegistrations;
 	}
 
@@ -359,10 +421,14 @@ public class ModifiableServletContextAdapter
 		return getServletRegistrationsImpl();
 	}
 
-	public Map<String, ? extends ServletRegistrationImpl>
-		getServletRegistrationsImpl() {
-
+	@Override
+	public Map<String, ServletRegistrationImpl> getServletRegistrationsImpl() {
 		return _servletRegistrations;
+	}
+
+	@Override
+	public Map<String, String> getUnregisteredInitParameters() {
+		return _initParameters;
 	}
 
 	@Override

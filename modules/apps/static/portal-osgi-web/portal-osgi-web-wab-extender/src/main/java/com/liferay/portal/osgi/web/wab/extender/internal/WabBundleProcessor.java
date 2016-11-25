@@ -28,6 +28,8 @@ import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServl
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ModifiableServletContextAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.osgi.web.wab.extender.internal.adapter.ServletExceptionAdapter;
+import com.liferay.portal.osgi.web.wab.extender.internal.registration.FilterRegistrationImpl;
+import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,6 +46,7 @@ import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -148,13 +151,52 @@ public class WabBundleProcessor {
 
 			initServletContainerInitializers(_bundle, servletContext);
 
+			ModifiableServletContext modifiableServletContext =
+				(ModifiableServletContext)servletContext;
+
+			Map<String, String> unregisteredInitParameters =
+				modifiableServletContext.getUnregisteredInitParameters();
+
+			if ((unregisteredInitParameters != null) &&
+				!unregisteredInitParameters.isEmpty()) {
+
+				List<ListenerDefinition> listenerDefinitions =
+					modifiableServletContext.getListenerDefinitions();
+
+				Map<String, FilterRegistrationImpl> filterRegistrationImpls =
+					modifiableServletContext.getFilterRegistrationsImpl();
+
+				Map<String, ServletRegistrationImpl> servletRegistrationImpls =
+					modifiableServletContext.getServletRegistrationsImpl();
+
+				Enumeration<String> attributeNames =
+					servletContext.getAttributeNames();
+				Map<String, Object> attributes = new HashMap<>();
+
+				while (attributeNames.hasMoreElements()) {
+					String attributeName = attributeNames.nextElement();
+
+					attributes.put(
+						attributeName,
+						servletContext.getAttribute(attributeName));
+				}
+
+				servletContextHelperRegistration.setProperties(
+					unregisteredInitParameters);
+
+				ServletContext newServletContext =
+					servletContextHelperRegistration.getServletContext();
+
+				servletContext = ModifiableServletContextAdapter.createInstance(
+					newServletContext, attributes, listenerDefinitions,
+					filterRegistrationImpls, servletRegistrationImpls,
+					_bundle.getBundleContext(), webXMLDefinition, _logger);
+			}
+
 			scanTLDsForListeners(webXMLDefinition, servletContext);
 
 			initListeners(
 				webXMLDefinition.getListenerDefinitions(), servletContext);
-
-			ModifiableServletContext modifiableServletContext =
-				(ModifiableServletContext)servletContext;
 
 			initListeners(
 				modifiableServletContext.getListenerDefinitions(),

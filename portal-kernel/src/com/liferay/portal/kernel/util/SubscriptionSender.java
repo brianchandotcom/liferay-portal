@@ -93,6 +93,12 @@ public class SubscriptionSender implements Serializable {
 		fileAttachments.add(attachment);
 	}
 
+	public void addLifecycleHook(LifecycleHook lifecycleHook) {
+		if (lifecycleHook != null) {
+			_lifecycleHooks.add(lifecycleHook);
+		}
+	}
+
 	public void addPersistedSubscribers(String className, long classPK) {
 		ObjectValuePair<String, Long> ovp = new ObjectValuePair<>(
 			className, classPK);
@@ -224,6 +230,10 @@ public class SubscriptionSender implements Serializable {
 			});
 	}
 
+	public long getCompanyId() {
+		return companyId;
+	}
+
 	public Object getContextAttribute(String key) {
 		return _context.get(key);
 	}
@@ -234,6 +244,10 @@ public class SubscriptionSender implements Serializable {
 
 	public String getMailId() {
 		return mailId;
+	}
+
+	public ServiceContext getServiceContext() {
+		return serviceContext;
 	}
 
 	/**
@@ -286,6 +300,10 @@ public class SubscriptionSender implements Serializable {
 
 		mailId = PortalUtil.getMailId(
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
+	}
+
+	public boolean isBulk() {
+		return bulk;
 	}
 
 	public void setBody(String body) {
@@ -481,6 +499,18 @@ public class SubscriptionSender implements Serializable {
 		setCurrentUserId(userId);
 	}
 
+	public interface LifecycleHook {
+
+		public void beforeSendNotificationToPersistedSubscriber(
+				SubscriptionSender sender, Subscription subscription)
+			throws PortalException;
+
+		public void processMailMessage(
+				SubscriptionSender sender, MailMessage mailMessage)
+			throws IOException, PortalException;
+
+	}
+
 	protected void deleteSubscription(Subscription subscription)
 		throws Exception {
 
@@ -613,6 +643,11 @@ public class SubscriptionSender implements Serializable {
 			_log.error(e, e);
 
 			return;
+		}
+
+		for (LifecycleHook hook : _lifecycleHooks) {
+			hook.beforeSendNotificationToPersistedSubscriber(
+				this, subscription);
 		}
 
 		sendNotification(user);
@@ -792,6 +827,10 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		processMailMessage(mailMessage, locale);
+
+		for (LifecycleHook hook : _lifecycleHooks) {
+			hook.processMailMessage(this, mailMessage);
+		}
 
 		MailServiceUtil.sendEmail(mailMessage);
 	}
@@ -990,6 +1029,7 @@ public class SubscriptionSender implements Serializable {
 	private String _entryTitle;
 	private String _entryURL;
 	private boolean _initialized;
+	private final List<LifecycleHook> _lifecycleHooks = new ArrayList<>();
 	private final Map<String, EscapableLocalizableFunction> _localizedContext =
 		new HashMap<>();
 	private Object[] _mailIdIds;

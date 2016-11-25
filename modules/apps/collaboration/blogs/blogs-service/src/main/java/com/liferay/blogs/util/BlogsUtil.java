@@ -163,6 +163,10 @@ public class BlogsUtil {
 			"[$TO_NAME$]",
 			LanguageUtil.get(
 				themeDisplay.getLocale(), "the-name-of-the-email-recipient"));
+		definitionTerms.put(
+			"[$UNSUBSCRIBE_URL$]",
+			LanguageUtil.get(
+				themeDisplay.getLocale(), "the-url-to-unsubscribe-the-user"));
 
 		return definitionTerms;
 	}

@@ -2801,7 +2801,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String content, String methodName, String... variableTypeRegexStrings) {
 
 		Pattern codeBlockPattern = Pattern.compile(
-			"(\t*(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
+			"(\t+(\\w*)\\." + methodName + "\\(\\s*\".*?\\);\n)+",
 			Pattern.DOTALL);
 
 		Matcher codeBlockMatcher = codeBlockPattern.matcher(content);

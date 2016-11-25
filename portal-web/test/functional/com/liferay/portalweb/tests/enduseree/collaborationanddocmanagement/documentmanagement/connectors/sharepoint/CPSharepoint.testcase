@@ -205,6 +205,8 @@
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="DMDocument#checkoutCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 			<var name="dmRepositoryName" value="true" />
@@ -223,6 +225,8 @@
 		<execute macro="DMNavigator#gotoDocumentCP">
 			<var name="dmDocumentTitle" value="Document_3.txt" />
 		</execute>
+
+		<execute function="Pause" locator1="5000" />
 
 		<execute macro="DMDocument#checkinCP">
 			<var name="dmRepositoryName" value="true" />

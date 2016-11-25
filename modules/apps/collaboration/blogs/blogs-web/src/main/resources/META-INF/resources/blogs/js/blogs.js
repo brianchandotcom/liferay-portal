@@ -110,13 +110,14 @@ AUI.add(
 					},
 
 					updateUrlTitle: function(newTitle) {
-						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE);
+						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE), oldTitle = urlTitleInput.val();
+
+						if ((instance._originalTitle || !oldTitle) && instance._shouldMatchUrlAndTitle()) {
+							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(newTitle));
+						}
 
 						if (!instance._originalTitle) {
 							instance._originalTitle = newTitle;
-						}
-						else if (instance._shouldMatchUrlAndTitle()) {
-							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(newTitle));
 						}
 					},
 

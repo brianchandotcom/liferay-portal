@@ -194,11 +194,19 @@ if (portletTitleBasedNavigation) {
 					Portlet portlet = PortletLocalServiceUtil.getPortletById(BlogsPortletKeys.BLOGS);
 
 					String friendlyURLPrefix = StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH;
-
-					boolean shouldMatchURLTitle = (entry == null) || BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry).equals(urlTitle);
 					%>
 
 					<div class="clearfix form-group">
+
+						<%
+						boolean shouldMatchURLTitle;
+						if (entry == null) {
+							shouldMatchURLTitle = Validator.isNull(urlTitle);
+						}
+						else {
+							shouldMatchURLTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry).equals(urlTitle);
+						}
+						%>
 
 						<h4>
 							<liferay-ui:message key="url" />

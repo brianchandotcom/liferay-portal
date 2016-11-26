@@ -41,14 +41,14 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionName} Description" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="DDL Definition Description" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -60,13 +60,13 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListName} Description" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="DDL List Description" />
+			<var name="ddlListName" value="DDL List" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DDLList#save" />
@@ -78,15 +78,15 @@
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLRecord#submitForPublication" />
@@ -96,9 +96,9 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByDetails">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="workflowAssetTitle" value="New DDL Definition for List: DDL List" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -109,14 +109,14 @@
 		</execute>
 
 		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 			<var name="workflowStatus" value="Review" />
 		</execute>
 
@@ -125,10 +125,10 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByDetails">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 			<var name="workflowAssetContent" value="Record Text" />
-			<var name="workflowAssetTitle" value="New ${ddlDataDefinitionName} for List: ${ddlListName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="New DDL Definition for List: DDL List" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -139,14 +139,14 @@
 		</execute>
 
 		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -154,12 +154,12 @@
 		</execute>
 
 		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="${ddlListName}" />
+			<var name="workflowAssetTitle" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#viewPopulatedField">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
 		</execute>
 	</command>
 
@@ -305,14 +305,14 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionName} Description" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="DDL Definition Description" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -324,13 +324,13 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListName} Description" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="DDL List Description" />
+			<var name="ddlListName" value="DDL List" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DDLList#save" />
@@ -342,15 +342,15 @@
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLRecord#submitForPublication" />
@@ -360,9 +360,9 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="workflowAssetTitle" value="${ddlListName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="workflowAssetTitle" value="DDL List" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -373,14 +373,14 @@
 		</execute>
 
 		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 			<var name="workflowStatus" value="Review" />
 		</execute>
 
@@ -389,9 +389,9 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="workflowAssetTitle" value="${ddlListName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="workflowAssetTitle" value="DDL List" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -400,9 +400,9 @@
 		</execute>
 
 		<execute macro="Workflow#viewRejectedTask">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="workflowAssetTitle" value="${ddlListName}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="workflowAssetTitle" value="DDL List" />
+			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -412,14 +412,14 @@
 		</execute>
 
 		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 			<var name="workflowStatus" value="Update" />
 		</execute>
 	</command>

@@ -324,8 +324,6 @@
 	</command>
 
 	<command name="MultipleUsersandOrganizations" priority="4">
-		<var name="count" value="1" />
-
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -338,6 +336,8 @@
 		<execute macro="ServerAdministration#executeServerResourcesActions">
 			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
+
+		<var name="count" value="1" />
 
 		<while>
 			<not>
@@ -813,9 +813,7 @@
 	</command>
 
 	<command name="OrganizationDropDownItems" priority="3">
-		<var name="siteNameList" value="Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H" />
-
-		<for list="${siteNameList}" param="siteName" >
+		<for list="Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H" param="siteName" >
 			<execute macro="ProductMenu#gotoControlPanelSites">
 				<var name="portlet" value="Sites" />
 			</execute>
@@ -829,7 +827,7 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<for list="${siteNameList}" param="siteName" >
+		<for list="Site Name A,Site Name B,Site Name C,Site Name D,Site Name E,Site Name F,Site Name G,Site Name H" param="siteName" >
 			<var name="key_siteName" value="${siteName}" />
 
 			<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
@@ -989,9 +987,6 @@
 	</command>
 
 	<command name="ValidateRegExPasswordPolicyCP" priority="4">
-		<var name="atLeastFourCharNoNumbers" value="(?=.{4})(?:[a-zA-Z]*)" />
-		<var name="atLeastSixCharNumbersPermitted" value="(?=.{6})(?:[a-zA-Z0-9]*)" />
-
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />
 		</execute>
@@ -1023,7 +1018,7 @@
 		<execute function="Type" locator1="TextInput#MINIMUM_SYMBOLS" value1="0" />
 		<execute function="Type" locator1="TextInput#MINIMUM_UPPER_CASE" value1="0" />
 
-		<execute function="Type" locator1="TextInput#REGULAR_EXPRESSION" value1="${atLeastFourCharNoNumbers}" />
+		<execute function="Type" locator1="TextInput#REGULAR_EXPRESSION" value1="(?=.{4})(?:[a-zA-Z]*)" />
 
 		<execute macro="Button#clickSave" />
 
@@ -1033,7 +1028,7 @@
 
 		<execute macro="User#editPasswordInvalidCP">
 			<var name="newPassword" value="NO1else" />
-			<var name="regex" value="${atLeastFourCharNoNumbers}" />
+			<var name="regex" value="(?=.{4})(?:[a-zA-Z]*)" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>
@@ -1062,7 +1057,7 @@
 			<var name="panelHeading" value="Password Syntax Checking" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#REGULAR_EXPRESSION" value1="${atLeastSixCharNumbersPermitted}" />
+		<execute function="Type" locator1="TextInput#REGULAR_EXPRESSION" value1="(?=.{6})(?:[a-zA-Z0-9]*)" />
 
 		<execute macro="Button#clickSave" />
 
@@ -1096,7 +1091,7 @@
 
 		<execute macro="User#editPasswordInvalidCP">
 			<var name="newPassword" value="1-2-3ABC" />
-			<var name="regex" value="${atLeastSixCharNumbersPermitted}" />
+			<var name="regex" value="(?=.{6})(?:[a-zA-Z0-9]*)" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>
@@ -1134,7 +1129,7 @@
 
 		<execute macro="User#editPasswordInvalidCP">
 			<var name="newPassword" value="12AB" />
-			<var name="regex" value="${atLeastSixCharNumbersPermitted}" />
+			<var name="regex" value="(?=.{6})(?:[a-zA-Z0-9]*)" />
 			<var name="userEmailAddress" value="test1@liferay.com" />
 			<var name="userScreenName" value="test1" />
 		</execute>

@@ -91,7 +91,7 @@
 			</execute>
 
 			<execute macro="Page#add">
-				<var name="pageName" value="${pageName}" />
+				<var name="pageName" value="${sitePageName}" />
 				<var name="siteName" value="Organization Name" />
 				<var name="sitePagePrivacy" value="Private Pages" />
 			</execute>
@@ -492,8 +492,6 @@
 	</command>
 
 	<command name="AssetPublisherCategoriesNavigation" priority="3">
-		<var name="siteName" value="Liferay" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

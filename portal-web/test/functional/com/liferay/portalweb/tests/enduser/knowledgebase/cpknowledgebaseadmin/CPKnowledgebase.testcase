@@ -95,22 +95,20 @@
 	</command>
 
 	<command name="AddKBArticlesViaKBAdmin" priority="4">
-		<var name="kbArticleCounterList" value="1,2,3" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Knowledge Base" />
 		</execute>
 
-		<for list="${kbArticleCounterList}" param="kbCount">
+		<for list="1,2,3" param="kbCount">
 			<execute macro="KBArticle#addCP">
 				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
 				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
 			</execute>
 		</for>
 
-		<for list="${kbArticleCounterList}" param="kbCount">
+		<for list="1,2,3" param="kbCount">
 			<execute macro="Navigator#openURL" />
 
 			<execute macro="ProductMenu#gotoSitesContent">
@@ -1078,15 +1076,13 @@
 	</command>
 
 	<command name="ViewKBArticlePriority" priority="4">
-		<var name="kbArticleCounterList" value="1,2" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Knowledge Base" />
 		</execute>
 
-		<for list="${kbArticleCounterList}" param="kbCount">
+		<for list="1,2" param="kbCount">
 			<execute macro="KBArticle#addCP">
 				<var name="kbArticleContent" value="Knowledge Base Article Content ${kbCount}" />
 				<var name="kbArticleTitle" value="Knowledge Base Article Title ${kbCount}" />
@@ -1146,9 +1142,6 @@
 	</command>
 
 	<command name="ViewPendingKBArticleContent" priority="3">
-		<var name="kbArticleContent" value="Knowledge Base Article Content" />
-		<var name="kbArticleTitle" value="Knowledge Base Article Title" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -1167,14 +1160,14 @@
 		</execute>
 
 		<execute macro="KBArticle#addCP">
-			<var name="kbArticleContent" value="${kbArticleContent}" />
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbWorkflowAction" value="Submit for Publication" />
 		</execute>
 
 		<execute macro="KBArticle#viewCP">
-			<var name="kbArticleContent" value="${kbArticleContent}" />
-			<var name="kbArticleTitle" value="${kbArticleTitle}" />
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
 			<var name="kbWorkflowStatus" value="Pending" />
 		</execute>
 	</command>

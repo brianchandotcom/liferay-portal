@@ -63,9 +63,6 @@
 	</command>
 
 	<command name="AddListWithoutDataDefinitionAndAssertErrorMessage" priority="3">
-		<var name="ddlDataDefinitionName" value="To Do" />
-		<var name="ddlListName" value="List Name" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -74,7 +71,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlListName}" />
+		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="List Name" />
 		<execute macro="Button#clickSave" />
 
 		<execute macro="Alert#viewRequestFailedToComplete" />
@@ -118,14 +115,6 @@
 	</command>
 
 	<command name="AddRecord" priority="4">
-		<var name="ddlDataDefinitionName" value="DDL Definition" />
-		<var name="ddlListName" value="DDL List" />
-		<var name="ddlRecordFieldData" value="Record Text" />
-		<var name="field" value="Text" />
-		<var name="fieldFieldLabel" value="Text Label" />
-		<var name="fieldName" value="TextName" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -133,14 +122,14 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionName} Description" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="DDL Definition Description" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -152,12 +141,12 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListName} Description" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="DDL List Description" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DDLList#save" />
@@ -169,24 +158,24 @@
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -194,25 +183,25 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLList#selectViaDDLDisplayPG">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -224,14 +213,14 @@
 		</execute>
 
 		<execute macro="DDLNavigator#gotoListRecords">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 	</command>
 
@@ -1208,54 +1197,49 @@
 	</command>
 
 	<command name="AssertConfigurationMenulist" priority="2">
-		<var name="ddlDataDefinitionName" value="To Do" />
-		<var name="ddlListName" value="List Name" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="To Do" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_EDITABLE_CHECKBOX" />
 			<var name="configureChecked" value="false" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLDisplayPortlet#configureListViewPG">
 			<var name="configureCheckBoxName" value="TEMPLATES_SPREADSHEET_VIEW_CHECKBOX" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLDisplayPortlet#assertCannotEditSpreadsheet" />
@@ -1264,25 +1248,16 @@
 	</command>
 
 	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="3">
-		<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
-		<var name="ddlInvalidRecordFieldData" value="0.987a" />
-		<var name="ddlListName" value="List Name" />
-		<var name="field" value="Decimal" />
-		<var name="fieldFieldLabel" value="Decimal" />
-		<var name="fieldName" value="Decimal" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1292,43 +1267,43 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Decimal" />
+			<var name="fieldFieldLabel" value="Decimal" />
+			<var name="fieldName" value="Decimal" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldName" value="Decimal" />
 
-		<execute function="Type" locator1="DDLEditRecord#DECIMAL_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#DECIMAL_FIELD" value1="0.987a" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
@@ -1337,8 +1312,6 @@
 	<command name="AssertFieldAfterNavigatingToManageTemplates" priority="3">
 		<description message="This is a use case for LPS-48736." />
 
-		<var name="ddlDataDefinitionName" value="Data Definition Title" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1346,7 +1319,7 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Data Definition Title" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -1357,20 +1330,20 @@
 
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Data Definition Title" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
-		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="Data Definition Title" />
 
-		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${ddlDataDefinitionName}" />
+		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="Data Definition Title" />
 
-		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Data Definition Title" />
 
-		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals" locator1="TextInput#NAME" value1="Data Definition Title" />
 
 		<execute macro="DynamicDataMapping#viewField">
 			<var name="fieldFieldLabel" value="Text" />
@@ -1379,24 +1352,6 @@
 	</command>
 
 	<command name="AssertGuestCannotEditRecord" priority="4">
-		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-		<var name="ddlDataDefinitionName" value="Data Definition" />
-		<var name="ddlListDescription" value="List Description" />
-		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData1" value="Text" />
-		<var name="ddlRecordFieldData1Edit" value="Text Edit" />
-		<var name="ddlRecordFieldData2" value="Document_1.doc" />
-		<var name="document" value="Document_1.doc" />
-		<var name="field1" value="Text" />
-		<var name="field2" value="Documents and Media" />
-		<var name="fieldFieldLabel1" value="Text" />
-		<var name="fieldFieldLabel2" value="Document" />
-		<var name="fieldName1" value="Text" />
-		<var name="fieldName2" value="Document" />
-		<var name="localizedLanguage" value="Catalan (Spain)" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1404,20 +1359,20 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field1}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
-			<var name="fieldName" value="${fieldName1}" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field2}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
-			<var name="fieldName" value="${fieldName2}" />
+			<var name="field" value="Documents and Media" />
+			<var name="fieldFieldLabel" value="Document" />
+			<var name="fieldName" value="Document" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -1429,7 +1384,7 @@
 		</execute>
 
 		<execute macro="DDLNavigator#gotoDataDefinitionPermissions">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#editPermissionsCP">
@@ -1440,53 +1395,53 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListDescription" value="${ddlListDescription}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="List Description" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="Data Definition" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
-			<var name="fieldName" value="${fieldName1}" />
+			<var name="ddlRecordFieldData" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="document" value="${document}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
-			<var name="fieldName" value="${fieldName2}" />
+			<var name="document" value="Document_1.doc" />
+			<var name="fieldFieldLabel" value="Document" />
+			<var name="fieldName" value="Document" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLNavigator#gotoView" />
@@ -1499,7 +1454,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#editPG" />
@@ -1514,25 +1469,25 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#viewViaDDLDisplayPG">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1}" />
-			<var name="ddlRecordFieldDataTableDisplay" value="${ddlRecordFieldData1}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
+			<var name="ddlRecordFieldData" value="Text" />
+			<var name="ddlRecordFieldDataTableDisplay" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
 			<var name="userRole" value="Guest" />
 		</execute>
 
 		<execute macro="Portlet#viewCannotEdit" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#viewSecondRecordViaDDLDisplayTemplate">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
+			<var name="ddlRecordFieldData" value="Document_1.doc" />
+			<var name="fieldFieldLabel" value="Document" />
 		</execute>
 
 		<execute macro="Portlet#viewCannotEdit" />
@@ -1548,7 +1503,7 @@
 		<execute macro="Portlet#viewCannotPublish" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#openSpecificURL">
@@ -1556,13 +1511,13 @@
 		</execute>
 
 		<execute macro="DDLRecord#viewTranslationNotAvailable">
-			<var name="localizedLanguage" value="${localizedLanguage}" />
+			<var name="localizedLanguage" value="Catalan (Spain)" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData1Edit}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel1}" />
-			<var name="fieldName" value="${fieldName1}" />
+			<var name="ddlRecordFieldData" value="Text Edit" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
 		</execute>
 
 		<execute macro="Portlet#viewCannotPublish" />
@@ -1572,7 +1527,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="fieldName" value="${fieldName2}" />
+			<var name="fieldName" value="Document" />
 			<var name="userRole" value="Guest" />
 		</execute>
 
@@ -1581,7 +1536,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#clearFieldDocumentsAndMedia">
-			<var name="fieldName" value="${fieldName2}" />
+			<var name="fieldName" value="Document" />
 		</execute>
 
 		<execute macro="Portlet#viewCannotPublish" />
@@ -1594,25 +1549,16 @@
 	</command>
 
 	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="3">
-		<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
-		<var name="ddlInvalidRecordFieldData" value="aaaa" />
-		<var name="ddlListName" value="List Name" />
-		<var name="field" value="Integer" />
-		<var name="fieldFieldLabel" value="Integer" />
-		<var name="fieldName" value="Integer" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1622,68 +1568,59 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Integer" />
+			<var name="fieldFieldLabel" value="Integer" />
+			<var name="fieldName" value="Integer" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldName" value="Integer" />
 
-		<execute function="Type" locator1="DDLEditRecord#INTEGER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#INTEGER_FIELD" value1="aaaa" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter only digits." />
 	</command>
 
 	<command name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
-		<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
-		<var name="ddlInvalidRecordFieldData" value="555b" />
-		<var name="ddlListName" value="List Name" />
-		<var name="field" value="Number" />
-		<var name="fieldFieldLabel" value="Number" />
-		<var name="fieldName" value="Number" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-		<var name="portletName" value="Dynamic Data Lists Display" />
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1693,43 +1630,43 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Number" />
+			<var name="fieldFieldLabel" value="Number" />
+			<var name="fieldName" value="Number" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
 		</execute>
 
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
+			<var name="ddlListName" value="List Name" />
 		</execute>
 
-		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldName" value="Number" />
 
-		<execute function="Type" locator1="DDLEditRecord#NUMBER_FIELD" value1="${ddlInvalidRecordFieldData}" />
+		<execute function="Type" locator1="DDLEditRecord#NUMBER_FIELD" value1="555b" />
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 		<execute function="AssertTextEquals" locator1="DDLEditRecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
@@ -2123,14 +2060,6 @@
 	</command>
 
 	<command name="DeleteStructure" priority="3">
-		<var name="ddlDataDefinitionName" value="DDL Definition" />
-		<var name="ddlListName" value="DDL List" />
-		<var name="ddlRecordFieldData" value="Record Text" />
-		<var name="field" value="Text" />
-		<var name="fieldFieldLabel" value="Text Label" />
-		<var name="fieldName" value="TextName" />
-		<var name="pageName" value="Dynamic Data Lists Display Page" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -2138,14 +2067,14 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionName} Description" />
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionDescription" value="DDL Definition Description" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
@@ -2157,12 +2086,12 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="ddlListDescription" value="${ddlListName} Description" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListDescription" value="DDL List Description" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="DDLList#save" />
@@ -2174,14 +2103,14 @@
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldText">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
+			<var name="ddlRecordFieldData" value="Record Text" />
+			<var name="fieldFieldLabel" value="Text Label" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />
@@ -2193,7 +2122,7 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#deleteNoCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -2203,7 +2132,7 @@
 		</execute>
 
 		<execute macro="DDLList#deleteCP">
-			<var name="ddlListName" value="${ddlListName}" />
+			<var name="ddlListName" value="DDL List" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -2213,7 +2142,7 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#deleteCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 	</command>
 

@@ -23,15 +23,15 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Message Boards" />
 		</execute>
 	</set-up>
 
@@ -60,25 +60,22 @@
 	</tear-down>
 
 	<command name="ApproveMessageBoardsThreadPG" priority="4">
-		<var name="threadBody" value="MB Thread Body" />
-		<var name="threadSubject" value="MB Thread Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addWithWorkflowPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewWithWorkflowPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -87,19 +84,19 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${threadSubject}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="MB Thread Subject" />
+			<var name="workflowAssetType" value="Message Boards Message" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="pageName" value="Message Boards Page" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -108,25 +105,25 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${threadSubject}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="MB Thread Subject" />
+			<var name="workflowAssetType" value="Message Boards Message" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoPG">
 			<var name="lastPostUserName" value="Test Test" />
 			<var name="postCount" value="1" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -134,34 +131,31 @@
 		</execute>
 
 		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="${threadSubject}" />
+			<var name="workflowAssetTitle" value="MB Thread Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewAsWorkflowAsset">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 		</execute>
 
 		<execute macro="MessageboardsThread#gotoViewInContext" />
 
 		<execute macro="MessageboardsThread#viewPG">
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 		</execute>
 	</command>
 
 	<command name="RejectMessageBoardsThreadPG" priority="4">
-		<var name="threadBody" value="MB Thread Body" />
-		<var name="threadSubject" value="MB Thread Subject" />
-
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#addWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="pageName" value="Message Boards Page" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -169,8 +163,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${threadSubject}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="MB Thread Subject" />
+			<var name="workflowAssetType" value="Message Boards Message" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -179,8 +173,8 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="${threadSubject}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="MB Thread Subject" />
+			<var name="workflowAssetType" value="Message Boards Message" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -189,18 +183,18 @@
 		</execute>
 
 		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="${threadSubject}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="MB Thread Subject" />
+			<var name="workflowAssetType" value="Message Boards Message" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Message Boards Page" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewWithWorkflowPG">
-			<var name="pageName" value="${pageName}" />
-			<var name="threadBody" value="${threadBody}" />
-			<var name="threadSubject" value="${threadSubject}" />
+			<var name="pageName" value="Message Boards Page" />
+			<var name="threadBody" value="MB Thread Body" />
+			<var name="threadSubject" value="MB Thread Subject" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>

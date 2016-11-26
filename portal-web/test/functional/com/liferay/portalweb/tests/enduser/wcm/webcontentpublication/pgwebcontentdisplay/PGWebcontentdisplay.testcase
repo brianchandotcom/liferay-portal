@@ -460,8 +460,6 @@
 	</command>
 
 	<command name="LocalizeWebContent" priority="4">
-		<var name="languageKey" value="zh_CN" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

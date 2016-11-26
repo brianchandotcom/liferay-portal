@@ -767,8 +767,6 @@
 	</command>
 
 	<command name="DisableMultipleCategories" priority="4">
-		<var name="vocabularyName" value="Vocabulary Name" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

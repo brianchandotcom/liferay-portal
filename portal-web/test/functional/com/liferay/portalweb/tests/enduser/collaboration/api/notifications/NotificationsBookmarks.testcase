@@ -12,15 +12,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Bookmarks" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -76,7 +76,7 @@
 
 	<command name="ViewWebsiteNotificationForNewBookmarkInFolder" priority="4">
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#addPG">
@@ -85,7 +85,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#subscribePG">
@@ -105,7 +105,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -118,7 +118,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -133,7 +133,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -168,7 +168,7 @@
 
 	<command name="ViewWebsiteNotificationForUpdatedBookmarkInFolder" priority="4">
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#addPG">
@@ -182,7 +182,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -195,7 +195,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">
@@ -210,7 +210,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="BookmarksFolder#gotoPG">
@@ -236,7 +236,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Bookmarks Page" />
 		</execute>
 
 		<execute macro="Notifications#viewBadgeCount">

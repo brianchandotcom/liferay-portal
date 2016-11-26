@@ -30,7 +30,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Page Comments" />
 		</execute>
 	</set-up>
 
@@ -59,16 +59,13 @@
 	<command name="ApprovePageCommentPG" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var name="commentAuthor" value="Test Test (You)" />
-		<var name="commentBody" value="Page Comment Comment" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
 		<execute macro="PageComment#addWithWorkflowPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -76,8 +73,8 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 			<var name="commentStatus" value="Pending (Review)" />
 		</execute>
 
@@ -86,8 +83,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${commentBody}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
+			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -96,8 +93,8 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 			<var name="commentStatus" value="Pending (Review)" />
 		</execute>
 
@@ -106,8 +103,8 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${commentBody}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
+			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -116,8 +113,8 @@
 		</execute>
 
 		<execute macro="PageComment#viewPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -125,11 +122,11 @@
 		</execute>
 
 		<execute macro="Workflow#gotoViewCompletedAssetViaMySubmissions">
-			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
 		</execute>
 
 		<execute macro="PageComment#viewAsWorkflowAsset">
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentBody" value="Page Comment Comment" />
 		</execute>
 	</command>
 
@@ -226,16 +223,13 @@
 	</command>
 
 	<command name="RejectPageCommentPG" priority="4">
-		<var name="commentAuthor" value="Test Test (You)" />
-		<var name="commentBody" value="Page Comment Comment" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Page Comments Page" />
 		</execute>
 
 		<execute macro="PageComment#addWithWorkflowPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -243,8 +237,8 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 			<var name="commentStatus" value="Pending (Review)" />
 		</execute>
 
@@ -253,7 +247,7 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
 			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -263,7 +257,7 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
 			<var name="workflowAssetType" value="Comment" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -273,7 +267,7 @@
 		</execute>
 
 		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetTitle" value="Page Comment Comment" />
 			<var name="workflowAssetType" value="Comment" />
 		</execute>
 
@@ -282,8 +276,8 @@
 		</execute>
 
 		<execute macro="PageComment#viewWithWorkflowPG">
-			<var name="commentAuthor" value="${commentAuthor}" />
-			<var name="commentBody" value="${commentBody}" />
+			<var name="commentAuthor" value="Test Test (You)" />
+			<var name="commentBody" value="Page Comment Comment" />
 			<var name="commentStatus" value="Pending (Update)" />
 		</execute>
 	</command>

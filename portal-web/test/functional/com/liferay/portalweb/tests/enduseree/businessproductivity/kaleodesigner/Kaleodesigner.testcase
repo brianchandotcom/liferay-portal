@@ -29,9 +29,6 @@
 	</tear-down>
 
 	<command name="AddConditionNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
-		<var name="nodeNodeLabel" value="Condition" />
-		<var name="nodeType" value="condition" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -41,26 +38,23 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="Condition Node Description" />
+			<var name="nodeName" value="Condition" />
+			<var name="nodeNodeLabel" value="Condition" />
+			<var name="nodeType" value="condition" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="Condition" />
+			<var name="nodeType" value="condition" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Condition" />
 		</execute>
 	</command>
 
 	<command name="AddEndNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="4">
-		<var name="nodeNodeLabel" value="TestEndNode" />
-		<var name="nodeType" value="end" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -70,26 +64,23 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="TestEndNode Node Description" />
+			<var name="nodeName" value="TestEndNode" />
+			<var name="nodeNodeLabel" value="TestEndNode" />
+			<var name="nodeType" value="end" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="TestEndNode" />
+			<var name="nodeType" value="end" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="TestEndNode" />
 		</execute>
 	</command>
 
 	<command name="AddForkNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
-		<var name="nodeNodeLabel" value="Fork" />
-		<var name="nodeType" value="fork" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -99,26 +90,23 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="Fork Node Description" />
+			<var name="nodeName" value="Fork" />
+			<var name="nodeNodeLabel" value="Fork" />
+			<var name="nodeType" value="fork" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="Fork" />
+			<var name="nodeType" value="fork" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Fork" />
 		</execute>
 	</command>
 
 	<command name="AddJoinNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
-		<var name="nodeNodeLabel" value="Join" />
-		<var name="nodeType" value="join" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -128,26 +116,23 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="Join Node Description" />
+			<var name="nodeName" value="Join" />
+			<var name="nodeNodeLabel" value="Join" />
+			<var name="nodeType" value="join" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="Join" />
+			<var name="nodeType" value="join" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Join" />
 		</execute>
 	</command>
 
 	<command name="AddJoinXORNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
-		<var name="nodeNodeLabel" value="Join XOR" />
-		<var name="nodeType" value="join-xor" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -157,19 +142,19 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="Join XOR Node Description" />
+			<var name="nodeName" value="Join XOR" />
+			<var name="nodeNodeLabel" value="Join XOR" />
+			<var name="nodeType" value="join-xor" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="Join XOR" />
+			<var name="nodeType" value="join-xor" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Join XOR" />
 		</execute>
 	</command>
 
@@ -265,9 +250,6 @@
 	</command>
 
 	<command name="AddNewWorkflowDefinitionViaViewTab" priority="5">
-		<var name="nodeNodeLabel" value="Task" />
-		<var name="nodeType" value="task" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -349,9 +331,6 @@
 	</command>
 
 	<command name="AddStartNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="4">
-		<var name="nodeNodeLabel" value="TestStartNode" />
-		<var name="nodeType" value="start" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -361,30 +340,27 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="TestStartNode Node Description" />
+			<var name="nodeName" value="TestStartNode" />
+			<var name="nodeNodeLabel" value="TestStartNode" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="TestStartNode" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="TestStartNode" />
+			<var name="nodeType" value="start" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="TestStartNode" />
 		</execute>
 	</command>
 
 	<command name="AddStateNodeEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
-		<var name="nodeNodeLabel" value="State" />
-		<var name="nodeType" value="state" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -394,32 +370,29 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="State Node Description" />
+			<var name="nodeName" value="State" />
+			<var name="nodeNodeLabel" value="State" />
+			<var name="nodeType" value="state" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="State" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="State" />
+			<var name="nodeType" value="state" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="State" />
 		</execute>
 	</command>
 
 	<command name="AddTaskNodeEditNameAndDesciptionAndRecipientsAndDeleteViaViewTab" priority="4">
 		<description message="This is a use case for LPS-53992." />
 
-		<var name="nodeNodeLabel" value="Task" />
-		<var name="nodeType" value="task" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -429,19 +402,19 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaViewTab">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
-			<var name="nodeName" value="${nodeNodeLabel}" />
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeDescription" value="Task Node Description" />
+			<var name="nodeName" value="Task" />
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeNotifications">
@@ -453,7 +426,7 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeNotifications">
@@ -464,14 +437,11 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Task" />
 		</execute>
 	</command>
 
 	<command name="AddTaskNodeViaSourceTabAndEditNameAndDesciptionAndDeleteViaViewTab" priority="3">
-		<var name="nodeNodeLabel" value="Task" />
-		<var name="nodeType" value="task" />
-
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
@@ -481,28 +451,28 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#addNodeViaSourceXML">
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeType" value="task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#selectNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeName">
-			<var name="nodeName" value="${nodeNodeLabel}" />
+			<var name="nodeName" value="Task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#editNodeDescription">
-			<var name="nodeDescription" value="${nodeNodeLabel} Node Description" />
+			<var name="nodeDescription" value="Task Node Description" />
 		</execute>
 
 		<execute macro="KaleoDesigner#viewNodeType">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
-			<var name="nodeType" value="${nodeType}" />
+			<var name="nodeNodeLabel" value="Task" />
+			<var name="nodeType" value="task" />
 		</execute>
 
 		<execute macro="KaleoDesigner#deleteNode">
-			<var name="nodeNodeLabel" value="${nodeNodeLabel}" />
+			<var name="nodeNodeLabel" value="Task" />
 		</execute>
 	</command>
 

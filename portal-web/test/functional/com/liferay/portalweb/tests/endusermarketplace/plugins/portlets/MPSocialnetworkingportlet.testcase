@@ -1,6 +1,8 @@
 <definition component-name="portal-plugins-deployment">
 	<property name="testray.main.component.name" value="Plugin Installer" />
 
+	<var name="appName" value="Social Networking" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -15,8 +17,6 @@
 
 	<command name="SocialNetworkingPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="social-networking-portlet" />
-
-		<var name="appName" value="Social Networking" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
@@ -95,7 +95,7 @@
 		</execute>
 
 		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
+			<var name="appName" value="Social Networking" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
@@ -103,7 +103,7 @@
 		</execute>
 
 		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
+			<var name="appName" value="Social Networking" />
 		</execute>
 	</command>
 </definition>

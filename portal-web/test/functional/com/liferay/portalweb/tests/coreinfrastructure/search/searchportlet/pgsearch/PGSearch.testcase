@@ -1240,11 +1240,6 @@
 	</command>
 
 	<command name="SearchWikiPage" priority="4">
-		<var name="pageName" value="Wiki Test Page" />
-		<var name="portletName" value="Wiki" />
-		<var name="wikiPageContent" value="Wiki Page Content" />
-		<var name="wikiPageTitle" value="Wiki Page Title" />
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

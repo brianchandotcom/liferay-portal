@@ -17,7 +17,7 @@
 		</execute>
 
 		<execute macro="Site#addCP">
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 			<var name="siteType" value="Blank" />
 		</execute>
 
@@ -27,12 +27,12 @@
 
 		<execute macro="Page#add">
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="${siteName}" />
-			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesPublishing">
@@ -41,11 +41,11 @@
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="pageVersioningEnabled" value="true" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">
@@ -321,7 +321,7 @@
 
 		<execute macro="Navigator#gotoStagedSitePage">
 			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="${siteName}" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -352,7 +352,7 @@
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="${siteName}" />
+			<var name="site" value="Site Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesConfiguration">

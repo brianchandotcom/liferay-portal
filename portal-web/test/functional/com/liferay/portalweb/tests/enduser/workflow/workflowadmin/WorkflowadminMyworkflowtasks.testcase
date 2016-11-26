@@ -49,10 +49,6 @@
 	</tear-down>
 
 	<command name="AddCommentToTaskAssignedToMe" priority="4">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="workflowComment" value="Workflow Comment" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -60,9 +56,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -70,8 +66,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -80,11 +76,11 @@
 		</execute>
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="${workflowComment}" />
+			<var name="workflowComment" value="Workflow Comment" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -92,19 +88,15 @@
 		</execute>
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="WorkflowComment#view">
-			<var name="workflowComment" value="${workflowComment}" />
+			<var name="workflowComment" value="Workflow Comment" />
 		</execute>
 	</command>
 
 	<command name="AddCommentToTaskAssignedToMyRoles" priority="3">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="workflowComment" value="Workflow Comment" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -112,9 +104,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -124,11 +116,11 @@
 		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="${workflowComment}" />
+			<var name="workflowComment" value="Workflow Comment" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -138,19 +130,15 @@
 		<execute macro="Workflow#gotoAssignedToMyRoles" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="WorkflowComment#view">
-			<var name="workflowComment" value="${workflowComment}" />
+			<var name="workflowComment" value="Workflow Comment" />
 		</execute>
 	</command>
 
 	<command name="AddCommentToTaskCompleted" priority="3">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="workflowComment" value="Workflow Comment" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -158,9 +146,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -168,8 +156,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -178,8 +166,8 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -190,11 +178,11 @@
 		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="WorkflowComment#add">
-			<var name="workflowComment" value="${workflowComment}" />
+			<var name="workflowComment" value="Workflow Comment" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -204,18 +192,15 @@
 		<execute macro="Workflow#gotoCompletedFilter" />
 
 		<execute macro="Workflow#gotoAssetViaTableTitle">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="WorkflowComment#view">
-			<var name="workflowComment" value="${workflowComment}" />
+			<var name="workflowComment" value="Workflow Comment" />
 		</execute>
 	</command>
 
 	<command name="ApproveResubmitTaskByActions" priority="4">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -223,9 +208,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -233,8 +218,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -243,9 +228,9 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -254,9 +239,9 @@
 		</execute>
 
 		<execute macro="Workflow#resubmitTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -265,8 +250,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -275,8 +260,8 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -287,23 +272,20 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="RejectTaskByDetails" priority="4">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -311,9 +293,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -321,8 +303,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -331,9 +313,9 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByDetails">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -342,8 +324,8 @@
 		</execute>
 
 		<execute macro="Workflow#viewRejectedTask">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -353,16 +335,13 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="ResubmitTaskByDetails" priority="5">
 		<property name="portal.acceptance" value="true" />
-
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -371,9 +350,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -381,8 +360,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -391,9 +370,9 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -402,9 +381,9 @@
 		</execute>
 
 		<execute macro="Workflow#resubmitTaskByDetails">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -415,31 +394,20 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="ReviewerApproveResubmitTaskByActionsUser" priority="3">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="userEmailAddress1" value="userea1@liferay.com" />
-		<var name="userEmailAddress2" value="userea2@liferay.com" />
-		<var name="userFirstName1" value="userfn1" />
-		<var name="userFirstName2" value="userfn2" />
-		<var name="userLastName1" value="userln1" />
-		<var name="userLastName2" value="userln2" />
-		<var name="userScreenName1" value="usersn1" />
-		<var name="userScreenName2" value="usersn2" />
-
 		<execute macro="Permissions#setUpRegRoleLoginUserCP">
 			<var name="roleTitle" value="Regrole Name" />
-			<var name="userEmailAddress" value="${userEmailAddress1}" />
-			<var name="userFirstName" value="${userFirstName1}" />
-			<var name="userLastName" value="${userLastName1}" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
-			<var name="userScreenName" value="${userScreenName1}" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -471,10 +439,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userFirstName" value="${userFirstName2}" />
-			<var name="userLastName" value="${userLastName2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -482,8 +450,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="${userEmailAddress2}" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -492,12 +460,12 @@
 
 		<execute macro="Role#assignRegRoleCP">
 			<var name="roleTitle" value="Portal Content Reviewer" />
-			<var name="userScreenName" value="${userScreenName2}" />
+			<var name="userScreenName" value="usersn2" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
-			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -507,14 +475,14 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
-			<var name="userLoginFullName" value="${userFirstName2} ${userLastName2}" />
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
 		<execute macro="UserBar#gotoMyAccount" />
@@ -524,8 +492,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -536,15 +504,15 @@
 		</execute>
 
 		<execute macro="Workflow#rejectTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
-			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -552,9 +520,9 @@
 		</execute>
 
 		<execute macro="Workflow#resubmitTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetContent" value="Blogs Entry Content" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Update" />
 		</execute>
 
@@ -565,13 +533,13 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewWithWorkflowCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress2}" />
-			<var name="userLoginFullName" value="${userFirstName2} ${userLastName2}" />
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
 		</execute>
 
 		<execute macro="UserBar#gotoMyAccount" />
@@ -581,8 +549,8 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -593,14 +561,14 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="${userEmailAddress1}" />
-			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -610,21 +578,21 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryAuthorCP">
-			<var name="entryAuthorFullName" value="${userFirstName1} ${userLastName1}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryAuthorFullName" value="userfn1 userln1" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -639,32 +607,26 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryTable">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntryAuthorCP">
-			<var name="entryAuthorFullName" value="${userFirstName1} ${userLastName1}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryAuthorFullName" value="userfn1 userln1" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#viewEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="UpdateDueDateTaskByActions" priority="5">
 		<property name="portal.acceptance" value="true" />
-
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="workflowDueDate" value="10/02/2020" />
-		<var name="workflowDueDateFormatted" value="10/2/20" />
-		<var name="workflowDueDateTime" value="12:45 PM" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -673,9 +635,9 @@
 		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Subtitle" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -683,11 +645,11 @@
 		</execute>
 
 		<execute macro="Workflow#updateDueDateTaskByActions">
-			<var name="workflowAssetTitle" value="${entryTitle}" />
-			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDueDate" value="${workflowDueDate}" />
-			<var name="workflowDueDateFormatted" value="${workflowDueDateFormatted}" />
-			<var name="workflowDueDateTime" value="${workflowDueDateTime}" />
+			<var name="workflowAssetTitle" value="Blogs Entry Title" />
+			<var name="workflowAssetType" value="Blogs Entry" />
+			<var name="workflowDueDate" value="10/02/2020" />
+			<var name="workflowDueDateFormatted" value="10/2/20" />
+			<var name="workflowDueDateTime" value="12:45 PM" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 	</command>

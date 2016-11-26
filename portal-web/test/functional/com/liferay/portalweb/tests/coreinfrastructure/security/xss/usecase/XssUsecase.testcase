@@ -79,14 +79,12 @@
 	</command>
 
 	<command name="ViewBookmarkNoXSS" priority="4">
-		<var name="userLastNameEdit"><![CDATA[><script>alert(document.cookie)</script>]]></var>
-
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
-			<var name="userLastNameEdit" value="${userLastNameEdit}" />
+			<var name="userLastNameEdit"><![CDATA[><script>alert(document.cookie)</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -161,9 +159,8 @@
 
 	<command name="ViewJSONWSNoXSS" priority="5">
 		<property name="portal.acceptance" value="true" />
-		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 
-		<execute function="Open" locator1="${url}" />
+		<execute function="Open" locator1="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
@@ -198,14 +195,12 @@
 	<command name="ViewLookAndFeelNoXSS" priority="5">
 		<property name="portal.acceptance" value="true" />
 
-		<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
-
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -328,18 +323,14 @@
 	<command name="ViewWikiNoXSS" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
-		<var name="userFirstNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
-		<var name="userLastNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
-		<var name="userMiddleNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
-
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
-			<var name="userFirstNameEdit" value="${userFirstNameEdit}" />
-			<var name="userLastNameEdit" value="${userLastNameEdit}" />
-			<var name="userMiddleNameEdit" value="${userMiddleNameEdit}" />
+			<var name="userFirstNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="userLastNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
+			<var name="userMiddleNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />

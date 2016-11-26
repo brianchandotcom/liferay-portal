@@ -12,15 +12,15 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Site Members Directory" />
 		</execute>
 	</set-up>
 
@@ -41,13 +41,6 @@
 	</tear-down>
 
 	<command name="SearchSiteMembersDirectory" priority="3">
-		<var name="pageName" value="${pageName}" />
-		<var name="userEmailAddress" value="userea@liferay.com" />
-		<var name="userFirstName" value="userfn" />
-		<var name="userLastName" value="userln" />
-		<var name="userMiddleName" value="usermn" />
-		<var name="userScreenName" value="usersn" />
-
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
@@ -58,11 +51,11 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userMiddleName" value="${userMiddleName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userMiddleName" value="usermn" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -71,132 +64,132 @@
 
 		<execute macro="User#editUserSiteCP">
 			<var name="siteName" value="${siteName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="First Name" />
-			<var name="searchTerm" value="${userFirstName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="userfn" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="First Name" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="${userFirstName}1" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="userfn1" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Middle Name" />
-			<var name="searchTerm" value="${userMiddleName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="usermn" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Middle Name" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="${userMiddleName}1" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="usermn1" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Last Name" />
-			<var name="searchTerm" value="${userLastName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="userln" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Last Name" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="${userLastName}1" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="userln1" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Screen Name" />
-			<var name="searchTerm" value="${userScreenName}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="usersn" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Screen Name" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="${userScreenName}1" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="usersn1" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Email Address" />
-			<var name="searchTerm" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Site Members Directory Page" />
 		</execute>
 
 		<execute macro="User#advancedSearchViaSiteMembersDirectoryPG">
 			<var name="searchField" value="Email Address" />
 			<var name="searchNoResults" value="true" />
-			<var name="searchTerm" value="${userEmailAddress}1" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
+			<var name="searchTerm" value="userea@liferay.com1" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
 		</execute>
 	</command>
 </definition>

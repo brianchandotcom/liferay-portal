@@ -1,6 +1,8 @@
 <definition component-name="portal-plugins-deployment">
 	<property name="testray.main.component.name" value="Plugin Installer" />
 
+	<var name="appName" value="Knowledge Base" />
+
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -15,8 +17,6 @@
 
 	<command name="KnowledgeBasePortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
-
-		<var name="appName" value="Knowledge Base" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
@@ -61,7 +61,7 @@
 		</execute>
 
 		<execute macro="AppManager#uninstallAppCP">
-			<var name="appName" value="${appName}" />
+			<var name="appName" value="Knowledge Base" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
@@ -69,7 +69,7 @@
 		</execute>
 
 		<execute macro="AppManager#viewUninstallAppCP">
-			<var name="appName" value="${appName}" />
+			<var name="appName" value="Knowledge Base" />
 		</execute>
 	</command>
 </definition>

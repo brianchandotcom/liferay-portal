@@ -405,6 +405,12 @@
 		<execute function="Click" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 	</command>
 
+	<command name="gotoTaskDetails">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+	</command>
+
 	<command name="gotoViewCompletedAssetViaMySubmissions">
 		<execute macro="Workflow#gotoCompletedFilter" />
 

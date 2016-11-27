@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
@@ -3052,6 +3053,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		FileEntry sourceFileEntry = fromRepository.getFileEntry(fileEntryId);
+
+		if (sourceFileEntry.isCheckedOut()) {
+			throw new FileEntryLockException.MustBeUnlocked();
+		}
 
 		FileEntry destinationFileEntry = copyFileEntry(
 			toRepository, sourceFileEntry, newFolderId, serviceContext);

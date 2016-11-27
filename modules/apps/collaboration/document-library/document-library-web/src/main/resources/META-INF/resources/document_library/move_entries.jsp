@@ -109,6 +109,7 @@ if (portletTitleBasedNavigation) {
 
 		<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 		<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
+		<liferay-ui:error exception="<%= FileEntryLockException.MustBeUnlocked.class %>" message="you-must-checkin-the-document-before-performing-the-operation" />
 
 		<liferay-ui:error exception="<%= InvalidFolderException.class %>">
 

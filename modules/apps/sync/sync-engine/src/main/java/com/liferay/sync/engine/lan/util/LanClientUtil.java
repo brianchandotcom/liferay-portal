@@ -50,8 +50,7 @@ public class LanClientUtil {
 		syncLanClient.setEndpoints(endpoints);
 
 		syncLanClient.setPort(port);
-		syncLanClient.setSyncLanClientUuid(
-			LanClientUtil.getSyncLanClientUuid());
+		syncLanClient.setSyncLanClientUuid(getSyncLanClientUuid());
 
 		return syncLanClient;
 	}

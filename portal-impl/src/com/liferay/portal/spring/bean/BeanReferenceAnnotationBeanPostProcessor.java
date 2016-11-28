@@ -47,7 +47,7 @@ public class BeanReferenceAnnotationBeanPostProcessor
 
 	public BeanReferenceAnnotationBeanPostProcessor() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Creating instance " + this.hashCode());
+			_log.debug("Creating instance " + hashCode());
 		}
 	}
 

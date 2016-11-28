@@ -734,8 +734,7 @@ public class SyncFileService {
 		Collections.sort(syncFiles, _syncFileFilePathNameComparator);
 
 		for (SyncFile syncFile : syncFiles) {
-			SyncFile localSyncFile = SyncFileService.fetchSyncFile(
-				syncFile.getFilePathName());
+			SyncFile localSyncFile = fetchSyncFile(syncFile.getFilePathName());
 
 			if (localSyncFile != null) {
 				if (localSyncFile.getState() != SyncFile.STATE_UNSYNCED) {
@@ -752,7 +751,7 @@ public class SyncFileService {
 			syncFile.setState(SyncFile.STATE_IN_PROGRESS);
 			syncFile.setUiEvent(SyncFile.UI_EVENT_RESYNCING);
 
-			SyncFileService.update(syncFile);
+			update(syncFile);
 
 			if (isAncestorInList(syncFile, resyncedSyncFileIds)) {
 				continue;
@@ -804,8 +803,7 @@ public class SyncFileService {
 		Collections.sort(syncFiles, _syncFileFilePathNameComparator);
 
 		for (SyncFile syncFile : syncFiles) {
-			SyncFile localSyncFile = SyncFileService.fetchSyncFile(
-				syncFile.getFilePathName());
+			SyncFile localSyncFile = fetchSyncFile(syncFile.getFilePathName());
 
 			if (localSyncFile != null) {
 				if (localSyncFile.getState() == SyncFile.STATE_UNSYNCED) {
@@ -821,7 +819,7 @@ public class SyncFileService {
 			syncFile.setState(SyncFile.STATE_UNSYNCED);
 			syncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
 
-			SyncFileService.update(syncFile);
+			update(syncFile);
 
 			if (isAncestorInList(syncFile, unsyncedSyncFileIds) ||
 				!FileUtil.exists(Paths.get(syncFile.getFilePathName()))) {
@@ -1034,7 +1032,7 @@ public class SyncFileService {
 			return false;
 		}
 
-		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
+		SyncFile parentSyncFile = fetchSyncFile(
 			syncFile.getRepositoryId(), syncFile.getSyncAccountId(),
 			syncFile.getParentFolderId());
 

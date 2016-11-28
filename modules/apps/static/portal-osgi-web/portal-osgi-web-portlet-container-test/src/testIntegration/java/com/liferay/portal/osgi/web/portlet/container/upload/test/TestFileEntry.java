@@ -215,7 +215,7 @@ public class TestFileEntry implements FileEntry {
 
 	@Override
 	public Class<?> getModelClass() {
-		return this.getClass();
+		return getClass();
 	}
 
 	@Override

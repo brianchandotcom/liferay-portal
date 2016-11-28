@@ -34,7 +34,7 @@ import org.gradle.api.plugins.PluginContainer;
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 	public static String getArchivesBaseName(Project project) {
-		BasePluginConvention basePluginConvention = GradleUtil.getConvention(
+		BasePluginConvention basePluginConvention = getConvention(
 			project, BasePluginConvention.class);
 
 		return basePluginConvention.getArchivesBaseName();

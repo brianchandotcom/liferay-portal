@@ -73,7 +73,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	@Override
 	public int doStartTag() {
-		_bundle = FrameworkUtil.getBundle(this.getClass());
+		_bundle = FrameworkUtil.getBundle(getClass());
 
 		try {
 			_template = _getTemplate();

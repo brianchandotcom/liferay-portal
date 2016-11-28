@@ -158,19 +158,19 @@ public class WikiTestUtil {
 			long groupId, long nodeId)
 		throws Exception {
 
-		WikiPage initialParentPage = WikiTestUtil.addPage(
+		WikiPage initialParentPage = addPage(
 			TestPropsValues.getUserId(), groupId, nodeId,
 			RandomTestUtil.randomString(), true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage childPage = addPage(
 			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), initialParentPage.getTitle(), true,
 			serviceContext);
 
-		WikiPage finalParentPage = WikiTestUtil.addPage(
+		WikiPage finalParentPage = addPage(
 			TestPropsValues.getUserId(), groupId, nodeId,
 			RandomTestUtil.randomString(), true);
 
@@ -192,13 +192,12 @@ public class WikiTestUtil {
 			long groupId, long nodeId)
 		throws Exception {
 
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
+		addPage(TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiTestUtil.addPage(
+		addPage(
 			TestPropsValues.getUserId(), nodeId, "TestChildPage",
 			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
 
@@ -222,14 +221,13 @@ public class WikiTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
+		addPage(TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage childPage = addPage(
 			TestPropsValues.getUserId(), nodeId, "TestChildPage",
 			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
 
-		WikiPage grandchildPage = WikiTestUtil.addPage(
+		WikiPage grandchildPage = addPage(
 			TestPropsValues.getUserId(), nodeId, "TestGrandchildPage",
 			RandomTestUtil.randomString(), "TestChildPage", true,
 			serviceContext);
@@ -253,8 +251,7 @@ public class WikiTestUtil {
 			long groupId, long nodeId, boolean explicitlyRemoveRedirectPage)
 		throws Exception {
 
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "A", true);
+		addPage(TestPropsValues.getUserId(), groupId, nodeId, "A", true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
@@ -288,8 +285,7 @@ public class WikiTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiTestUtil.addPage(
-			TestPropsValues.getUserId(), groupId, nodeId, "A", true);
+		addPage(TestPropsValues.getUserId(), groupId, nodeId, "A", true);
 
 		WikiPageLocalServiceUtil.renamePage(
 			TestPropsValues.getUserId(), nodeId, "A", "B", serviceContext);
@@ -297,7 +293,7 @@ public class WikiTestUtil {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(nodeId, "A");
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage childPage = addPage(
 			TestPropsValues.getUserId(), nodeId, "TestChildPage",
 			RandomTestUtil.randomString(), "B", true, serviceContext);
 
@@ -327,13 +323,13 @@ public class WikiTestUtil {
 			long groupId, long nodeId, boolean explicitlyRemoveChildPage)
 		throws Exception {
 
-		WikiPage page = WikiTestUtil.addPage(
+		WikiPage page = addPage(
 			TestPropsValues.getUserId(), groupId, nodeId, "TestPage", true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage childPage = addPage(
 			TestPropsValues.getUserId(), nodeId, "TestChildPage",
 			RandomTestUtil.randomString(), "TestPage", true, serviceContext);
 
@@ -357,19 +353,19 @@ public class WikiTestUtil {
 			boolean explicitMoveParentToTrash)
 		throws Exception {
 
-		WikiPage parentPage = WikiTestUtil.addPage(
+		WikiPage parentPage = addPage(
 			TestPropsValues.getUserId(), groupId, nodeId,
 			RandomTestUtil.randomString(), true);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiPage childPage = WikiTestUtil.addPage(
+		WikiPage childPage = addPage(
 			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), parentPage.getTitle(), true,
 			serviceContext);
 
-		WikiPage grandchildPage = WikiTestUtil.addPage(
+		WikiPage grandchildPage = addPage(
 			TestPropsValues.getUserId(), nodeId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), childPage.getTitle(), true,
 			serviceContext);

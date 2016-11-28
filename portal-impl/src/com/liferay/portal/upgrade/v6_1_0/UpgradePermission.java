@@ -152,7 +152,7 @@ public class UpgradePermission extends UpgradeProcess {
 				Pre7RoleLocalServiceImpl.class)) {
 
 			Class<? extends UpgradePermission> upgradePermissionClass =
-				this.getClass();
+				getClass();
 
 			ResourceActionsUtil.read(
 				null, upgradePermissionClass.getClassLoader(),

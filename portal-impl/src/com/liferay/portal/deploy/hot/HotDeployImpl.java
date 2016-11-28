@@ -61,7 +61,7 @@ public class HotDeployImpl implements HotDeploy {
 
 	public HotDeployImpl() {
 		if (_log.isDebugEnabled()) {
-			_log.debug("Initializing hot deploy manager " + this.hashCode());
+			_log.debug("Initializing hot deploy manager " + hashCode());
 		}
 
 		_dependentHotDeployEvents = new ConcurrentLinkedQueue<>();

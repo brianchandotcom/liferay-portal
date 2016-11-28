@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.NestableException;
 
 /**
  * @author Alexander Chow
- * @see com.liferay.util.mail.MailServerException
+ * @see    com.liferay.util.mail.MailServerException
  */
 public class MailServerException extends NestableException {
 

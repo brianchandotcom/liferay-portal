@@ -17,10 +17,15 @@ package com.liferay.journal.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the JournalArticleLocalization service. Represents a row in the &quot;JournalArticleLocalization&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the JournalArticleLocalization service.
+ * Represents a row in the &quot;JournalArticleLocalization&quot; database
+ * table, with each column mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.journal.model.JournalArticleLocalization} interface.
+ * Helper methods and all application logic should be put in this class.
+ * Whenever methods are added, rerun ServiceBuilder to copy their definitions
+ * into the {@link com.liferay.journal.model.JournalArticleLocalization}
+ * interface.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -32,7 +37,9 @@ public class JournalArticleLocalizationImpl
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a journal article localization model instance should use the {@link com.liferay.journal.model.JournalArticleLocalization} interface instead.
+	 * Never reference this class directly. All methods that expect a journal
+	 * article localization model instance should use the {@link
+	 * com.liferay.journal.model.JournalArticleLocalization} interface instead.
 	 */
 	public JournalArticleLocalizationImpl() {
 	}

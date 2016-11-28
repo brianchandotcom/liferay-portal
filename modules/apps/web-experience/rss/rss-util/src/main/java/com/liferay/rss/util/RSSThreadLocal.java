@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Shuyang Zhou
- * @see com.liferay.util.RSSThreadLocal
+ * @see    com.liferay.util.RSSThreadLocal
  */
 public class RSSThreadLocal {
 

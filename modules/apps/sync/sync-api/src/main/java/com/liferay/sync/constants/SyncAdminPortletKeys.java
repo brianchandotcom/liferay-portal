@@ -15,7 +15,7 @@
 package com.liferay.sync.constants;
 
 /**
- * @author Shinn Lok
+ * @author     Shinn Lok
  * @deprecated As of 2.1.0, replaced by {@link SyncPortletKeys}
  */
 @Deprecated

@@ -348,7 +348,7 @@ public class LanSession {
 						return syncLanClientQueryResultCallable.call();
 					}
 					catch (Exception e) {
-						return this.call();
+						return call();
 					}
 				}
 

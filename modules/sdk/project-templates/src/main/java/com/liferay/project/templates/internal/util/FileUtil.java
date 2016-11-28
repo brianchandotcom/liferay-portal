@@ -76,7 +76,7 @@ public class FileUtil {
 			String dirName, final Path destinationDirPath)
 		throws Exception {
 
-		File file = FileUtil.getJarFile();
+		File file = getJarFile();
 
 		if (file.isDirectory()) {
 			Path jarDirPath = file.toPath();

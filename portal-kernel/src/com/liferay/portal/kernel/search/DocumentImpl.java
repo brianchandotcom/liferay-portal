@@ -82,17 +82,17 @@ public class DocumentImpl implements Document {
 
 		String fieldName = sort.getFieldName();
 
-		if (DocumentImpl.isSortableFieldName(fieldName)) {
+		if (isSortableFieldName(fieldName)) {
 			return fieldName;
 		}
 
 		if ((sort.getType() == Sort.STRING_TYPE) &&
-			!DocumentImpl.isSortableTextField(fieldName)) {
+			!isSortableTextField(fieldName)) {
 
 			return scoreFieldName;
 		}
 
-		return DocumentImpl.getSortableFieldName(fieldName);
+		return getSortableFieldName(fieldName);
 	}
 
 	public static boolean isSortableFieldName(String name) {

@@ -81,7 +81,7 @@ public class LiferayFileItemTest {
 	@Test(expected = NullPointerException.class)
 	public void testGetContentTypeFromRealFile() throws Exception {
 		File file = DependenciesTestUtil.getDependencyAsFile(
-			this.getClass(), "LiferayFileItem.txt");
+			getClass(), "LiferayFileItem.txt");
 
 		String fieldName = RandomTestUtil.randomString();
 		String contentType = Files.probeContentType(file.toPath());

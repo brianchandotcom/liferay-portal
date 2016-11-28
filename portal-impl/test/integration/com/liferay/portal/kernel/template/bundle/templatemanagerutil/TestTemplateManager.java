@@ -119,7 +119,7 @@ public class TestTemplateManager implements TemplateManager {
 	public Template getTemplate(
 		List<TemplateResource> templateResources, boolean restricted) {
 
-		return this.getTemplate(templateResources.get(0), restricted);
+		return getTemplate(templateResources.get(0), restricted);
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class TestTemplateManager implements TemplateManager {
 		List<TemplateResource> templateResources,
 		TemplateResource errorTemplateResource, boolean restricted) {
 
-		return this.getTemplate(templateResources, restricted);
+		return getTemplate(templateResources, restricted);
 	}
 
 	@Override

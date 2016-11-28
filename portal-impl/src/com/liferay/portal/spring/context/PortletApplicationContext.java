@@ -54,7 +54,7 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 	}
 
 	public PortletApplicationContext() {
-		setClassLoader(PortletApplicationContext.getBeanClassLoader());
+		setClassLoader(getBeanClassLoader());
 	}
 
 	public interface PACL {

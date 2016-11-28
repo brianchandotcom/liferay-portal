@@ -227,8 +227,7 @@ public class RandomTestUtil {
 
 		for (int i = 0; i < propertyCount; i++) {
 			unicodeProperties.put(
-				RandomTestUtil.randomString(keyLength),
-				RandomTestUtil.randomString(valueLength));
+				randomString(keyLength), randomString(valueLength));
 		}
 
 		return unicodeProperties;

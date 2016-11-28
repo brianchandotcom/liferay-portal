@@ -110,7 +110,7 @@ public class PoshiRunnerContext {
 			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
 				classCommandName);
 
-		return PoshiRunnerContext.getFunctionLocatorCount(
+		return getFunctionLocatorCount(
 			StringUtil.upperCaseFirstLetter(commandName));
 	}
 

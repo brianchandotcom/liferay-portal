@@ -1332,7 +1332,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 				String stateMin = typeSettingsProperties.getProperty(
 					LayoutTypePortletConstants.STATE_MIN);
 
-				Layout layout = (Layout)this.clone();
+				Layout layout = (Layout)clone();
 
 				layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 

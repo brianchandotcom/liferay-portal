@@ -188,7 +188,7 @@ public class SyncAccountService {
 			String pluginVersion, String url)
 		throws Exception {
 
-		return SyncAccountService.addSyncAccount(
+		return addSyncAccount(
 			filePathName, "", false, "", "", login, 1, "", "", false, "", "",
 			password, pluginVersion, 5,
 			Collections.<SyncSite, List<SyncFile>>emptyMap(), null, false, url);
@@ -443,8 +443,7 @@ public class SyncAccountService {
 			Path targetFilePath, long syncAccountId, boolean moveFile)
 		throws Exception {
 
-		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			syncAccountId);
+		SyncAccount syncAccount = fetchSyncAccount(syncAccountId);
 
 		if (!moveFile) {
 			SyncFile syncFile = SyncFileService.fetchSyncFile(
@@ -460,7 +459,7 @@ public class SyncAccountService {
 
 		syncAccount.setActive(false);
 
-		SyncAccountService.update(syncAccount);
+		update(syncAccount);
 
 		boolean resetFileKeys = false;
 
@@ -482,7 +481,7 @@ public class SyncAccountService {
 				catch (Exception e2) {
 					syncAccount.setActive(true);
 
-					SyncAccountService.update(syncAccount);
+					update(syncAccount);
 
 					throw e2;
 				}
@@ -498,7 +497,7 @@ public class SyncAccountService {
 		syncAccount.setActive(true);
 		syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 
-		SyncAccountService.update(syncAccount);
+		update(syncAccount);
 	}
 
 	protected static void deleteSyncFiles(SyncAccount syncAccount)

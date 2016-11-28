@@ -15,7 +15,7 @@
 package com.liferay.journal.configuration;
 
 /**
- * @author Eduardo Garcia
+ * @author     Eduardo Garcia
  * @deprecated As of 4.0.0, see {@link JournalServiceConfiguration}
  */
 @Deprecated

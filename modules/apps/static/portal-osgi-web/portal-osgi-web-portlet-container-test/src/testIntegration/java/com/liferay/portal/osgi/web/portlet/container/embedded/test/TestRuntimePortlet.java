@@ -33,7 +33,6 @@ public class TestRuntimePortlet extends TestPortlet {
 
 	/**
 	 * @throws IOException
-	 * @throws PortletException
 	 */
 	@Override
 	public void render(

@@ -14,6 +14,9 @@
 
 package com.example.sample;
 
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class GreetingBuilder {
 
 	public GreetingBuilder(String name) {

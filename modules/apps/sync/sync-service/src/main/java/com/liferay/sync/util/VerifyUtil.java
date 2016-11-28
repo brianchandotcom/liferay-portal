@@ -38,7 +38,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Dennis Ju
+ * @author     Dennis Ju
  * @deprecated As of 1.2.0, with no direct replacement
  */
 @Deprecated

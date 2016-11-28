@@ -62,8 +62,9 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchDisplayContext {
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link SearchDisplayContextFactoryUtil#create(
-	 * RenderRequest, RenderResponse, PortletPreferences)}
+	 * @deprecated As of 1.1.0, replaced by {@link
+	 *             SearchDisplayContextFactoryUtil#create(RenderRequest,
+	 *             RenderResponse, PortletPreferences)}
 	 */
 	@Deprecated
 	public SearchDisplayContext(

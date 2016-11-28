@@ -51,7 +51,6 @@ public class TestPortlet extends GenericPortlet {
 
 	/**
 	 * @throws IOException
-	 * @throws PortletException
 	 */
 	@Override
 	public void render(
@@ -69,7 +68,6 @@ public class TestPortlet extends GenericPortlet {
 
 	/**
 	 * @throws IOException
-	 * @throws PortletException
 	 */
 	@Override
 	public void serveResource(

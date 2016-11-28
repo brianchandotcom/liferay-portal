@@ -1,0 +1,26 @@
+[
+	{
+		"actions": [
+			{
+				"action": "jump-to-page",
+				"target": "2"
+			}
+		],
+		"conditions": [
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "constant",
+						"value": "2"
+					}
+				],
+				"operator": "equals-to"
+			}
+		]
+	}
+]

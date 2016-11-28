@@ -835,6 +835,7 @@ AUI.add(
 						var instance = this;
 
 						var instanceId = instance.get('instanceId');
+
 						var values = instance.get('values');
 
 						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);

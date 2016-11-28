@@ -24,6 +24,8 @@
 			<var name="portletName" value="Sample Service Builder" />
 		</execute>
 
-		<execute macro="TestSearchPaginationPortlet#search50Results" />
+		<execute macro="TestSearchPaginationPortlet#search15Results">
+			<var name="itemsPerPage" value="5" />
+		</execute>
 	</command>
 </definition>

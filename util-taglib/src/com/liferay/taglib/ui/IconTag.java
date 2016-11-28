@@ -519,6 +519,10 @@ public class IconTag extends IncludeTag {
 	}
 
 	protected boolean isForcePost() {
+		if (StringUtil.equalsIgnoreCase(_target, "_blank")) {
+			return false;
+		}
+
 		String method = getMethod();
 
 		if (method.equals("post")) {

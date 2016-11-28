@@ -23,9 +23,8 @@ public class IndexSearchPropsValuesImpl implements IndexSearchPropsValues {
 
 	@Override
 	public int getCollatedSpellCheckResultScoresThreshold() {
-		return
-			PropsValues.
-				INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD;
+		return PropsValues.
+			INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD;
 	}
 
 	@Override

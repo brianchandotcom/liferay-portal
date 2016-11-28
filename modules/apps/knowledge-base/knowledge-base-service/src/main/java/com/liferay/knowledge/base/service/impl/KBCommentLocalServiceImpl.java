@@ -354,19 +354,16 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionResolvedBody();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionResolvedBody();
 		}
 		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionInProgressBody();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionInProgressBody();
 		}
 		else if (status == KBCommentConstants.STATUS_NEW) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionReceivedBody();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionReceivedBody();
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -378,19 +375,16 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionResolvedSubject();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionResolvedSubject();
 		}
 		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionInProgressSubject();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionInProgressSubject();
 		}
 		else if (status == KBCommentConstants.STATUS_NEW) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionReceivedSubject();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionReceivedSubject();
 		}
 		else {
 			throw new IllegalArgumentException(
@@ -429,19 +423,16 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 		int status, KBGroupServiceConfiguration kbGroupServiceConfiguration) {
 
 		if (status == KBCommentConstants.STATUS_COMPLETED) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionResolvedEnabled();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionResolvedEnabled();
 		}
 		else if (status == KBCommentConstants.STATUS_IN_PROGRESS) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionInProgressEnabled();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionInProgressEnabled();
 		}
 		else if (status == KBCommentConstants.STATUS_NEW) {
-			return
-				kbGroupServiceConfiguration.
-					emailKBArticleSuggestionReceivedEnabled();
+			return kbGroupServiceConfiguration.
+				emailKBArticleSuggestionReceivedEnabled();
 		}
 		else {
 			return false;

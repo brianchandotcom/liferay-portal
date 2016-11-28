@@ -925,9 +925,8 @@ public class AssetPublisherUtil {
 			return GetterUtil.getBoolean(emailAssetEntryAddedEnabled);
 		}
 		else {
-			return
-				AssetPublisherWebConfigurationValues.
-					EMAIL_ASSET_ENTRY_ADDED_ENABLED;
+			return AssetPublisherWebConfigurationValues.
+				EMAIL_ASSET_ENTRY_ADDED_ENABLED;
 		}
 	}
 

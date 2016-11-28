@@ -157,6 +157,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			new HashMap<>();
 
 		static {
+			_functionToActionMap.put("jumpToPage", "jump-to-page");
 			_functionToActionMap.put("setEnabled", "enable");
 			_functionToActionMap.put("setInvalid", "invalidate");
 			_functionToActionMap.put("setRequired", "require");

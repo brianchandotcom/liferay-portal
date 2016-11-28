@@ -50,12 +50,24 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	}
 
 	protected String convertAction(DDLFormRuleAction ddlFormRuleAction) {
-		String functionName = _actionFunctionNameMap.get(
-			ddlFormRuleAction.getAction());
+		String action = ddlFormRuleAction.getAction();
 
-		return String.format(
-			_setBooleanPropertyFormat, functionName,
-			ddlFormRuleAction.getTarget());
+		if (_actionBooleanFunctionNameMap.containsKey(action)) {
+			String functionName = _actionBooleanFunctionNameMap.get(action);
+
+			return String.format(
+				_setBooleanPropertyFormat, functionName,
+				ddlFormRuleAction.getTarget());
+		}
+		else if (_actionFunctionNameMap.containsKey(action)) {
+			String functionName = _actionFunctionNameMap.get(action);
+
+			return String.format(
+				_functionCallExpressionFormat, functionName,
+				ddlFormRuleAction.getTarget());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	protected String convertCondition(
@@ -150,6 +162,8 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		return new DDMFormRule(condition, actions);
 	}
 
+	private static final Map<String, String> _actionBooleanFunctionNameMap =
+		new HashMap<>();
 	private static final Map<String, String> _actionFunctionNameMap =
 		new HashMap<>();
 	private static final String _comparisonExpressionFormat = "%s %s %s";
@@ -161,10 +175,12 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
-		_actionFunctionNameMap.put("enable", "setEnabled");
-		_actionFunctionNameMap.put("invalidate", "setInvalid");
-		_actionFunctionNameMap.put("require", "setRequired");
-		_actionFunctionNameMap.put("show", "setVisible");
+		_actionBooleanFunctionNameMap.put("enable", "setEnabled");
+		_actionBooleanFunctionNameMap.put("invalidate", "setInvalid");
+		_actionBooleanFunctionNameMap.put("require", "setRequired");
+		_actionBooleanFunctionNameMap.put("show", "setVisible");
+
+		_actionFunctionNameMap.put("jump-to-page", "jumpToPage");
 
 		_operatorFunctionNameMap.put("contains", "contains");
 		_operatorFunctionNameMap.put("equals-to", "equals");

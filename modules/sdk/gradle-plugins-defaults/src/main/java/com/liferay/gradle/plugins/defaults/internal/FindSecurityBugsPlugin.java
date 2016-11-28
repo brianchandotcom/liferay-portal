@@ -129,8 +129,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	private void _addDependenciesFindSecurityBugsPlugins(Project project) {
 		GradleUtil.addDependency(
 			project, FIND_SECURITY_BUGS_PLUGINS_CONFIGURATION_NAME,
-			"com.liferay", "com.h3xstream.findsecbugs",
-			"1.5.0.LIFERAY-PATCHED-1");
+			"com.liferay", "com.h3xstream.findsecbugs", _VERSION);
 	}
 
 	private JavaExec _addTaskFindSecurityBugs(
@@ -319,5 +318,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 	private static final String _FIND_SECURITY_BUGS_INCLUDE_FILE_NAME =
 		"fsb-include.xml";
+
+	private static final String _VERSION = "1.5.0.LIFERAY-PATCHED-1";
 
 }

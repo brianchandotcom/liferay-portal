@@ -6,9 +6,9 @@ clean {
 
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "3.2.0"
-	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.4.0"
+	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 
 	testCompile group: "org.jboss.shrinkwrap", name: "shrinkwrap-depchain", version: "1.2.2"
 }

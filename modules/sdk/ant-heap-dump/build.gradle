@@ -5,9 +5,8 @@ clean {
 }
 
 dependencies {
-	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
-
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 }
 
 liferay {

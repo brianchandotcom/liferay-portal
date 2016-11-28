@@ -9,7 +9,8 @@ clean {
 
 dependencies {
 	compile group: "bsh", name: "bsh", version: "2.0b4"
-	compile group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+
+	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 }
 
 liferay {

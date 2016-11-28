@@ -1,6 +1,12 @@
 sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
+clean {
+	ext {
+		cleanDeployed = false
+	}
+}
+
 dependencies {
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 }

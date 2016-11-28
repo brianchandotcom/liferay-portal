@@ -2116,7 +2116,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  t.library.kernel;version="1.0.0";uses:="com.liferay.portal.kernel.exc
  eption",com.liferay.document.library.kernel.antivirus;version="1.0.0"
  ;uses:="com.liferay.portal.kernel.exception",com.liferay.document.lib
- rary.kernel.exception;version="1.0.0";uses:="com.liferay.portal.kerne
+ rary.kernel.exception;version="1.1.0";uses:="com.liferay.portal.kerne
  l.exception",com.liferay.document.library.kernel.model;version="1.0.0
  ";uses:="com.liferay.dynamic.data.mapping.kernel,com.liferay.expando.
  kernel.model,com.liferay.exportimport.kernel.lar,com.liferay.portal.k

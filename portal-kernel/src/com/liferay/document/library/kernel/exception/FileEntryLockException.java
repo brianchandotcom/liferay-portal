@@ -39,6 +39,9 @@ public class FileEntryLockException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustBeUnlocked extends FileEntryLockException {
+	}
+
 	public static class MustOwnLock extends FileEntryLockException {
 	}
 

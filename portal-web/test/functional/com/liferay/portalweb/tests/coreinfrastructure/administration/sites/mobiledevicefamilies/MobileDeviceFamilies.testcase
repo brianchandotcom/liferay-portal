@@ -30,15 +30,15 @@
 		</execute>
 
 		<execute macro="MobileDevice#addCP">
-			<var name="mobileDeviceFamilyName" value="Device Family Name" />
+			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="MDF Test Page" />
+			<var name="pageName" value="Mobile Device Family Test Page" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoEditPage">
-			<var name="page" value="MDF Test Page" />
+			<var name="page" value="Mobile Device Family Test Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoTab">
@@ -49,14 +49,14 @@
 			<var name="panelHeading" value="Mobile Device Rules" />
 		</execute>
 
-		<execute macro="Page#disableMDRSamesAsPublicPages" />
+		<execute macro="Page#disableMobileDeviceRulesAreInheritedFromPublicPages" />
 
-		<execute macro="Page#selectMDRDeviceFamily">
-			<var name="deviceFamilyName" value="Device Family Name" />
+		<execute macro="Page#selectDeviceFamily">
+			<var name="deviceFamilyName" value="Mobile Device Family Name" />
 		</execute>
 
-		<execute macro="Page#manageMDRDeviceFamilyActions">
-			<var name="actionName" value="Test Action" />
+		<execute macro="Page#manageDeviceFamilyActions">
+			<var name="actionName" value="Mobile Device Family Test Action" />
 			<var name="actionType" value="Redirect to URL" />
 			<var name="actionURL" value="https://www.google.com/" />
 		</execute>

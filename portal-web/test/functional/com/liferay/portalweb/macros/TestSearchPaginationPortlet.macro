@@ -1,5 +1,5 @@
 <definition>
-	<command name="search50Results">
+	<command name="search15Results">
 		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
 
 		<if>
@@ -7,21 +7,27 @@
 			<then>
 				<execute function="MouseDown" locator1="xpath=(//select//option[2])" />
 
-				<execute function="MouseUp" locator1="xpath=(//select//option[52])" />
+				<execute function="MouseUp" locator1="xpath=(//select//option[17])" />
 			</then>
 			<else>
 				<execute function="KeyPress#keyDown" locator1="xpath=(//select//option[2])" value1="\SHIFT" />
 
-				<execute function="KeyPress#keyUp" locator1="xpath=(//select//option[51])" value1="\SHIFT" />
+				<execute function="KeyPress#keyUp" locator1="xpath=(//select//option[16])" value1="\SHIFT" />
 			</else>
 		</if>
 
 		<execute function="Click" locator1="Button#SEARCH" />
 
-		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 1 - 20 of 50 results." />
+		<execute function="Click" locator1="Button#ITEMS_PER_PAGE" />
+
+		<var name="key_itemsPerPage" value="${itemsPerPage}" />
+
+		<execute function="AssertClick" locator1="MenuItem#ITEMS_PER_PAGE" value1="${itemsPerPage}" />
+
+		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 1 - 5 of 15 results." />
 
 		<execute function="Click" locator1="Pagination#NEXT_LINK" />
 
-		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 21 - 40 of 50 results." />
+		<execute function="AssertTextEquals" locator1="TestSearchPagination#SEARCH_RESULTS" value1="Showing 6 - 10 of 15 results." />
 	</command>
 </definition>

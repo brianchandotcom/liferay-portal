@@ -232,16 +232,16 @@ if (portletTitleBasedNavigation) {
 				</aui:field-wrapper>
 			</aui:fieldset>
 
-			<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+			<liferay-custom-field-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-					<liferay-ui:custom-attribute-list
+					<liferay-custom-field-ui:custom-attribute-list
 						className="<%= MBMessage.class.getName() %>"
 						classPK="<%= messageId %>"
 						editable="<%= true %>"
 						label="<%= true %>"
 					/>
 				</aui:fieldset>
-			</liferay-ui:custom-attributes-available>
+			</liferay-custom-field-ui:custom-attributes-available>
 
 			<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_FILE) %>">
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="attachments">

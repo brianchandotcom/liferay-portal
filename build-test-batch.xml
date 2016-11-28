@@ -1917,6 +1917,8 @@ ${output.content}</echo>
 								<equals arg1="${return.code}" arg2="0" />
 							</not>
 							<then>
+								<echo>${output.content}</echo>
+
 								<fail message="createdb failed with return code ${return.code}."  />
 							</then>
 						</if>

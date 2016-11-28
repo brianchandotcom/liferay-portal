@@ -334,7 +334,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		_configureSourceSetMain(project);
 		_configureTaskJar(project, testProject);
-		_configureTaskJavadoc(project);
+		_configureTaskJavadoc(project, portalRootDir);
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
@@ -2067,12 +2067,12 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		compileOptions.setWarnings(false);
 	}
 
-	private void _configureTaskJavadoc(Project project) {
+	private void _configureTaskJavadoc(Project project, File portalRootDir) {
 		Javadoc javadoc = (Javadoc)GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
 		_configureTaskJavadocFilter(javadoc);
-		_configureTaskJavadocOptions(javadoc);
+		_configureTaskJavadocOptions(javadoc, portalRootDir);
 		_configureTaskJavadocTitle(javadoc);
 
 		JavaVersion javaVersion = JavaVersion.current();
@@ -2136,7 +2136,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskJavadocOptions(Javadoc javadoc) {
+	private void _configureTaskJavadocOptions(
+		Javadoc javadoc, File portalRootDir) {
+
 		StandardJavadocDocletOptions standardJavadocDocletOptions =
 			(StandardJavadocDocletOptions)javadoc.getOptions();
 
@@ -2167,9 +2169,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		standardJavadocDocletOptions.tags("generated");
-
-		File portalRootDir = GradleUtil.getRootDir(
-			project.getRootProject(), "portal-impl");
 
 		if (portalRootDir != null) {
 			File stylesheetFile = new File(

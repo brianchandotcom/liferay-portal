@@ -1886,46 +1886,52 @@ ${output.content}</echo>
 
 		<retry retrycount="3">
 			<sequential>
-				<exec executable="service" failonerror="true">
-					<arg line="postgresql-${database.version} stop" />
-				</exec>
+				<trycatch>
+					<try>
+						<exec executable="service" failonerror="true">
+							<arg line="postgresql-${database.version} stop" />
+						</exec>
 
-				<exec executable="service" failonerror="true">
-					<arg line="postgresql-${database.version} start" />
-				</exec>
+						<exec executable="service" failonerror="true">
+							<arg line="postgresql-${database.version} start" />
+						</exec>
 
-				<exec executable="dropdb" outputproperty="output.content" resultproperty="return.code">
-					<env key="PGPASSWORD" value="${database.password}" />
-					<arg value="dummy" />
-					<arg value="--username=${database.username}" />
-					<arg value="--if-exists" />
-				</exec>
+						<exec executable="dropdb" outputproperty="output.content" resultproperty="return.code">
+							<env key="PGPASSWORD" value="${database.password}" />
+							<arg value="dummy" />
+							<arg value="--username=${database.username}" />
+							<arg value="--if-exists" />
+						</exec>
 
-				<local name="output.content" />
-				<local name="return.code" />
+						<local name="output.content" />
+						<local name="return.code" />
 
-				<exec executable="createdb" outputproperty="output.content" resultproperty="return.code">
-					<env key="PGPASSWORD" value="${database.password}" />
-					<arg value="dummy" />
-					<arg value="--username=${database.username}" />
-				</exec>
+						<exec executable="createdb" outputproperty="output.content" resultproperty="return.code">
+							<env key="PGPASSWORD" value="${database.password}" />
+							<arg value="dummy" />
+							<arg value="--username=${database.username}" />
+						</exec>
 
-				<if>
-					<not>
-						<equals arg1="${return.code}" arg2="0" />
-					</not>
-					<then>
-						<echo>Return code: ${return.code}${line.separator}Output:${output.content}</echo>
+						<if>
+							<not>
+								<equals arg1="${return.code}" arg2="0" />
+							</not>
+							<then>
+								<echo>Return code: ${return.code}${line.separator}Output:${output.content}</echo>
 
-						<fail message="Return code: ${return.code}"  />
-					</then>
-				</if>
-
-				<exec executable="dropdb">
-					<env key="PGPASSWORD" value="${database.password}" />
-					<arg value="dummy" />
-					<arg value="--username=${database.username}" />
-				</exec>
+								<fail message="Return code: ${return.code}"  />
+							</then>
+						</if>
+					</try>
+					<finally>
+						<exec executable="dropdb">
+							<env key="PGPASSWORD" value="${database.password}" />
+							<arg value="dummy" />
+							<arg value="--if-exists" />
+							<arg value="--username=${database.username}" />
+						</exec>
+					</finally>
+				</trycatch>
 			</sequential>
 		</retry>
 	</target>

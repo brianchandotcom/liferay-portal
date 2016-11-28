@@ -842,7 +842,7 @@ AUI.add(
 
 						var localizationMap = {};
 
-						if (!A.Object.isEmpty(fieldValue) && fieldValue.value) {
+						if (fieldValue && fieldValue.value) {
 							localizationMap = fieldValue.value;
 						}
 

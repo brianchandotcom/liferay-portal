@@ -22,7 +22,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Peter Fellwock
  */
 @ExtendedObjectClassDefinition(
-	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "other", scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	id = "com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration",

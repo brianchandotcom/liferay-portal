@@ -67,14 +67,14 @@ Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 				</div>
 			</div>
 
-			<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-				<liferay-ui:custom-attribute-list
+			<liferay-custom-field-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+				<liferay-custom-field-ui:custom-attribute-list
 					className="<%= DLFolderConstants.getClassName() %>"
 					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
 					editable="<%= false %>"
 					label="<%= true %>"
 				/>
-			</liferay-ui:custom-attributes-available>
+			</liferay-custom-field-ui:custom-attributes-available>
 		</aui:col>
 	</aui:row>
 </c:if>

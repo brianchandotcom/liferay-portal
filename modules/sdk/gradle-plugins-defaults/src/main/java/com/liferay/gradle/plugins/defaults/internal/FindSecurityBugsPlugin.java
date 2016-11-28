@@ -251,14 +251,11 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			project, WRITE_FIND_BUGS_PROJECT_TASK_NAME,
 			WriteFindBugsProjectTask.class);
 
-		Task classesTask = GradleUtil.getTask(project, "classes");
-
-		writeFindBugsProjectTask.dependsOn(classesTask);
-
 		JavaCompile compileJSPTask = (JavaCompile)GradleUtil.getTask(
 			project, JspCPlugin.COMPILE_JSP_TASK_NAME);
 
-		writeFindBugsProjectTask.dependsOn(compileJSPTask);
+		writeFindBugsProjectTask.dependsOn(
+			_UNZIP_JAR_TASK_NAME, compileJSPTask);
 
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
@@ -267,8 +264,7 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 			sourceSet.getCompileClasspath());
 
 		FileCollection classpath = project.files(
-			compileJSPTask.getDestinationDir(),
-			_getCompiledClassesDir(project));
+			compileJSPTask.getDestinationDir(), _getUnzippedJarDir(project));
 
 		writeFindBugsProjectTask.setClasspath(classpath);
 
@@ -303,14 +299,8 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 	/**
 	 * Copied from <code>com.liferay.gradle.plugins.internal.JspCDefaultsPlugin</code>.
 	 */
-	private File _getCompiledClassesDir(Project project) {
-		File unzippedJarFile = new File(project.getBuildDir(), "unzipped-jar");
-
-		if (unzippedJarFile.exists()) {
-			return unzippedJarFile;
-		}
-
-		return new File(project.getProjectDir(), "classes");
+	private File _getUnzippedJarDir(Project project) {
+		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
 	private static final String _FIND_SECURITY_BUGS_EXCLUDE_FILE_NAME =
@@ -318,6 +308,11 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 
 	private static final String _FIND_SECURITY_BUGS_INCLUDE_FILE_NAME =
 		"fsb-include.xml";
+
+	/**
+	 * Copied from <code>com.liferay.gradle.plugins.internal.JspCDefaultsPlugin</code>.
+	 */
+	private static final String _UNZIP_JAR_TASK_NAME = "unzipJar";
 
 	private static final String _VERSION = "1.5.0.LIFERAY-PATCHED-1";
 

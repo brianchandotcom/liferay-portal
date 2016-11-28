@@ -653,7 +653,7 @@ publishing.
 [Liferay Gradle Plugins Baseline] instead.
 - [LPS-67573]: Remove all deprecated methods.
 
-## 2.0.1 - 2016-11-18
+## 2.0.1 - 2016-11-21
 
 ### Added
 - [LPS-69288]: Set the `app.description` project property to override the
@@ -664,7 +664,7 @@ in the `appJavadoc` task.
 version if the `com.liferay.app.defaults.plugin` is applied.
 
 ### Changed
-- [LPS-69248]: Update the [Liferay Gradle Plugins] dependency to version 3.0.38.
+- [LPS-69271]: Update the [Liferay Gradle Plugins] dependency to version 3.0.38.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -724,7 +724,7 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 [LPS-69013]: https://issues.liferay.com/browse/LPS-69013
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
-[LPS-69248]: https://issues.liferay.com/browse/LPS-69248
+[LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841

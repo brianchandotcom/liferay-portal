@@ -603,7 +603,7 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isEmailAddress(String emailAddress) {
-		if (Validator.isNull(emailAddress)) {
+		if (isNull(emailAddress)) {
 			return false;
 		}
 

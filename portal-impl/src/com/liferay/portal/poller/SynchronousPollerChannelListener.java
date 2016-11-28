@@ -33,7 +33,7 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 	public synchronized void channelListenerRemoved(long channelId) {
 		_complete = true;
 
-		this.notify();
+		notify();
 	}
 
 	public synchronized String getNotificationEvents(
@@ -43,7 +43,7 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 
 		try {
 			if (!_complete) {
-				this.wait(timeout);
+				wait(timeout);
 			}
 		}
 		catch (InterruptedException ie) {
@@ -68,7 +68,7 @@ public class SynchronousPollerChannelListener implements ChannelListener {
 	public synchronized void notificationEventsAvailable(long channelId) {
 		_complete = true;
 
-		this.notify();
+		notify();
 	}
 
 	private boolean _complete;

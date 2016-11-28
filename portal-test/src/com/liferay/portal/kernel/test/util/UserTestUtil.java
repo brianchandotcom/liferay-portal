@@ -58,12 +58,11 @@ public class UserTestUtil {
 	}
 
 	public static User addGroupAdminUser(Group group) throws Exception {
-		return UserTestUtil.addGroupUser(
-			group, RoleConstants.SITE_ADMINISTRATOR);
+		return addGroupUser(group, RoleConstants.SITE_ADMINISTRATOR);
 	}
 
 	public static User addGroupOwnerUser(Group group) throws Exception {
-		return UserTestUtil.addGroupUser(group, RoleConstants.SITE_OWNER);
+		return addGroupUser(group, RoleConstants.SITE_OWNER);
 	}
 
 	public static User addGroupUser(Group group, String roleName)
@@ -92,14 +91,14 @@ public class UserTestUtil {
 	public static User addOrganizationAdminUser(Organization organization)
 		throws Exception {
 
-		return UserTestUtil.addOrganizationUser(
+		return addOrganizationUser(
 			organization, RoleConstants.ORGANIZATION_ADMINISTRATOR);
 	}
 
 	public static User addOrganizationOwnerUser(Organization organization)
 		throws Exception {
 
-		return UserTestUtil.addOrganizationUser(
+		return addOrganizationUser(
 			organization, RoleConstants.ORGANIZATION_OWNER);
 	}
 

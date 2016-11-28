@@ -55,8 +55,8 @@ public class SyncWatchEventService {
 
 	public static void deleteSyncWatchEvent(long syncWatchEventId) {
 		try {
-			SyncWatchEvent syncWatchEvent =
-				SyncWatchEventService.fetchSyncWatchEvent(syncWatchEventId);
+			SyncWatchEvent syncWatchEvent = fetchSyncWatchEvent(
+				syncWatchEventId);
 
 			if (syncWatchEvent == null) {
 				return;

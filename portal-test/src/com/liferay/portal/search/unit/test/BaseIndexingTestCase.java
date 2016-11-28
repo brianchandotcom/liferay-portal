@@ -37,7 +37,7 @@ import org.junit.Before;
 public abstract class BaseIndexingTestCase {
 
 	public BaseIndexingTestCase() {
-		Class<?> clazz = this.getClass();
+		Class<?> clazz = getClass();
 
 		_entryClassName = StringUtil.toLowerCase(clazz.getSimpleName());
 	}

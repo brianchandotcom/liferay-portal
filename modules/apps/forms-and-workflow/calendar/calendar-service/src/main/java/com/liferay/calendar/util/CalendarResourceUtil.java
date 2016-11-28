@@ -62,15 +62,13 @@ public class CalendarResourceUtil {
 		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
 
 		if (classNameId == groupClassNameId) {
-			return CalendarResourceUtil.getGroupCalendarResource(
-				portletRequest, classPK);
+			return getGroupCalendarResource(portletRequest, classPK);
 		}
 
 		long userClassNameId = PortalUtil.getClassNameId(User.class);
 
 		if (classNameId == userClassNameId) {
-			return CalendarResourceUtil.getUserCalendarResource(
-				portletRequest, classPK);
+			return getUserCalendarResource(portletRequest, classPK);
 		}
 
 		return CalendarResourceServiceUtil.fetchCalendarResource(

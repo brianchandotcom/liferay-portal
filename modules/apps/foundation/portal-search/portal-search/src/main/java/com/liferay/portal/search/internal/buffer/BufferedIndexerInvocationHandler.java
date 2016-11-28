@@ -145,7 +145,9 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to get resource primary key", e);
+					_log.debug(
+						"Unable to get resource primary key for class " +
+							className + " with primary key " + classPK);
 				}
 			}
 

@@ -60,7 +60,7 @@ source files to `workingDir`.
 - [LPS-69026]: Set the `--logLevel` argument of `metal-cli` based on the Gradle
 log level.
 
-## 2.3.0 - 2016-11-18
+## 2.3.0 - 2016-11-21
 
 ### Added
 - [LPS-69248]: Add the `jsCompile` configuration to provide additional

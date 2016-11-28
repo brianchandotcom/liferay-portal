@@ -42,7 +42,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 	<span class="error-message"><liferay-ui:message key="the-field-value-is-invalid" /></span>
 </div>
 
-<div id="<portlet:namespace />selectDDMStructureFieldForm">
+<div class="container-fluid-1280" id="<portlet:namespace />selectDDMStructureFieldForm">
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
 		total="<%= classType.getClassTypeFieldsCount() %>"

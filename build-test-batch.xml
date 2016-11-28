@@ -1899,8 +1899,8 @@ ${output.content}</echo>
 						<exec executable="dropdb" outputproperty="output.content" resultproperty="return.code">
 							<env key="PGPASSWORD" value="${database.password}" />
 							<arg value="dummy" />
-							<arg value="--username=${database.username}" />
 							<arg value="--if-exists" />
+							<arg value="--username=${database.username}" />
 						</exec>
 
 						<local name="output.content" />

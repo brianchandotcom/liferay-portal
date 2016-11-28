@@ -443,8 +443,7 @@ List<AssetRendererFactory<?>> classTypesAssetRendererFactories = (List<AssetRend
 				{
 					dialog: {
 						constrain: true,
-						modal: true,
-						width: 600
+						modal: true
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
 					id: '<portlet:namespace />selectDDMStructure' + currentTarget.attr('id'),

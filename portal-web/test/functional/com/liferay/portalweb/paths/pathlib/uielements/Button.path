@@ -519,6 +519,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_REPLY</td>
+	<td>//div[@class='card list-group-card panel']//button[span[contains(.,'Publish')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN</td>
 	<td>//a[@data-qa-id='recycle-binButton']</td>
 	<td></td>

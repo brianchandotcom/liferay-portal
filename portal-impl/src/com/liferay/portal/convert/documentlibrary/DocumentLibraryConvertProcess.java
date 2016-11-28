@@ -14,6 +14,7 @@
 
 package com.liferay.portal.convert.documentlibrary;
 
+import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.store.Store;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -264,8 +266,13 @@ public class DocumentLibraryConvertProcess
 			}
 
 			if (isDeleteFilesFromSourceStore()) {
-				_sourceStore.deleteFile(
-					companyId, repositoryId, fileName, versionNumber);
+				try {
+					_sourceStore.deleteFile(
+						companyId, repositoryId, fileName, versionNumber);
+				}
+				catch (AccessDeniedException ade) {
+					throw new PrincipalException(ade);
+				}
 			}
 		}
 		catch (Exception e) {

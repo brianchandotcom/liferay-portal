@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil;
+import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.DirectoryNameException;
 import com.liferay.document.library.kernel.store.DLStore;
 import com.liferay.document.library.kernel.store.Store;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.util.PropsValues;
@@ -114,7 +116,12 @@ public class DLStoreImpl implements DLStore {
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {
 
-			store.addFile(companyId, repositoryId, fileName, is);
+			try {
+				store.addFile(companyId, repositoryId, fileName, is);
+			}
+			catch (AccessDeniedException ade) {
+				throw new PrincipalException(ade);
+			}
 		}
 		else {
 			File tempFile = null;
@@ -127,7 +134,12 @@ public class DLStoreImpl implements DLStore {
 
 					is.reset();
 
-					store.addFile(companyId, repositoryId, fileName, is);
+					try {
+						store.addFile(companyId, repositoryId, fileName, is);
+					}
+					catch (AccessDeniedException ade) {
+						throw new PrincipalException(ade);
+					}
 				}
 				else {
 					tempFile = FileUtil.createTempFile();
@@ -225,7 +237,12 @@ public class DLStoreImpl implements DLStore {
 
 		Store store = _storeFactory.getStore();
 
-		store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+		try {
+			store.deleteFile(companyId, repositoryId, fileName, versionLabel);
+		}
+		catch (AccessDeniedException ade) {
+			throw new PrincipalException(ade);
+		}
 	}
 
 	@Override
@@ -457,8 +474,13 @@ public class DLStoreImpl implements DLStore {
 		if (!PropsValues.DL_STORE_ANTIVIRUS_ENABLED ||
 			!AntivirusScannerUtil.isActive()) {
 
-			store.updateFile(
-				companyId, repositoryId, fileName, versionLabel, is);
+			try {
+				store.updateFile(
+					companyId, repositoryId, fileName, versionLabel, is);
+			}
+			catch (AccessDeniedException ade) {
+				throw new PrincipalException(ade);
+			}
 		}
 		else {
 			File tempFile = null;
@@ -471,8 +493,14 @@ public class DLStoreImpl implements DLStore {
 
 					is.reset();
 
-					store.updateFile(
-						companyId, repositoryId, fileName, versionLabel, is);
+					try {
+						store.updateFile(
+							companyId, repositoryId, fileName, versionLabel,
+							is);
+					}
+					catch (AccessDeniedException ade) {
+						throw new PrincipalException(ade);
+					}
 				}
 				else {
 					tempFile = FileUtil.createTempFile();

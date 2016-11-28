@@ -159,6 +159,10 @@
 
 		<execute macro="Form#save" />
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
 		<execute macro="FormsAdmin#viewForm" />
 
 		<execute macro="FormsAdmin#viewNoDuplicateForms" />
@@ -827,6 +831,10 @@
 
 		<execute macro="Form#save" />
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
 		<execute macro="FormsAdmin#viewForm">
 			<var name="formDescription" value="" />
 			<var name="formName" value="Untitled Form" />
@@ -935,6 +943,10 @@
 		</execute>
 
 		<execute macro="Form#save" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />

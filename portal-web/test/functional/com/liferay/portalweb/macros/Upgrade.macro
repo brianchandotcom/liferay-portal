@@ -28,6 +28,10 @@
 
 		<execute macro="Form#save" />
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
 		<execute macro="FormsAdmin#viewForm">
 			<var name="formDescription" value="Form Description" />
 			<var name="formName" value="Form Name" />

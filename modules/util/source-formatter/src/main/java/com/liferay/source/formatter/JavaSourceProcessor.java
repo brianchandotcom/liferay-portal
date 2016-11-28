@@ -3298,9 +3298,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
-			if (trimmedPreviousLine.equals("return") &&
-				!line.endsWith(StringPool.PERIOD)) {
-
+			if (trimmedPreviousLine.equals("return")) {
 				for (int i = 0;; i++) {
 					String nextLine = getLine(content, lineCount + i + 1);
 

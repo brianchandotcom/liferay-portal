@@ -201,7 +201,7 @@
 				</linecontains>
 
 				<tokenfilter>
-					<replaceregex pattern="\s.*&quot;name&quot;: &quot;([a-z-]+)&quot;," replace="\1" />
+					<replaceregex pattern="\s.*&quot;name&quot;: &quot;([0-9a-z-]+)&quot;," replace="\1" />
 				</tokenfilter>
 
 				<striplinebreaks />

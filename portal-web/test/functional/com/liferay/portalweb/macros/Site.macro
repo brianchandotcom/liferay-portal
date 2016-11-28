@@ -1251,6 +1251,7 @@
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
+		<execute function="AssertTextEquals" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
 		<execute function="AssertTextEquals" locator1="MenuItem#ADD_CHILD_SITE" value1="Add Child Site" />
 		<execute function="AssertTextEquals" locator1="MenuItem#LEAVE" value1="Leave" />
 		<execute function="AssertTextEquals" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />

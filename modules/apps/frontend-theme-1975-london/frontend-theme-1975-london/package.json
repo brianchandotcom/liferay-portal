@@ -1,0 +1,32 @@
+{
+	"author": "Nathan Cavanaugh <nathan.cavanaugh@liferay.com> (https://github.com/natecavanaugh)",
+	"bugs": {
+		"url": "https://issues.liferay.com/"
+	},
+	"dependencies": {
+		"metal": "^2.2.0",
+		"metal-dom": "^2.4.0",
+		"metal-state": "^2.3.0"
+	},
+	"devDependencies": {
+		"gulp": "^3.8.10",
+		"gulp-metal": "^1.9.12",
+		"liferay-theme-deps-7.0": "*",
+		"liferay-theme-es2015-hook": "^0.0.1",
+		"liferay-theme-tasks": "*"
+	},
+	"keywords": [
+		"liferay-theme"
+	],
+	"license": "LGPL",
+	"liferayTheme": {
+		"baseTheme": "styled",
+		"hookModules": ["liferay-theme-es2015-hook"],
+		"rubySass": false,
+		"version": "7.0"
+	},
+	"main": "package.json",
+	"name": "1975-london-theme",
+	"repository": "liferay/liferay-portal",
+	"version": "1.0.0"
+}

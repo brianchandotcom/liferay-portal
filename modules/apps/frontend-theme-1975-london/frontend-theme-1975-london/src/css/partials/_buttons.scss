@@ -1,0 +1,31 @@
+.btn-xl {
+	font-size: $font-size-base;
+	font-weight: normal;
+	padding: $button-padding;
+	text-transform: uppercase;
+}
+
+.btn-theme-default {
+	background-color: $background-color-1;
+	border-color: $background-color-1;
+	color: $background-color-3;
+
+	&:active, &:hover, &:focus {
+		background-color: darken($background-color-1, 10);
+		border-color: darken($background-color-1, 10);
+		color: darken($background-color-3, 10);
+		text-decoration: none;
+	}
+}
+
+.btn-theme-primary {
+	background-color: transparent;
+	border-color: $content-color-1;
+
+	&:active, &:hover, &:focus {
+		background-color: darken($background-color-1, 10);
+		border-color: darken($background-color-1, 10);
+		color: $content-color-1;
+		text-decoration: none;
+	}
+}

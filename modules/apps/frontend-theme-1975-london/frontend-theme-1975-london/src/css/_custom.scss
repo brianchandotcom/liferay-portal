@@ -1,0 +1,50 @@
+@import "portlet_decorator";
+
+@import "partials/albums";
+@import "partials/buttons";
+@import "partials/fonts";
+@import "partials/footer";
+@import "partials/layout";
+@import "partials/modules";
+@import "partials/navbar";
+@import "partials/progress-bars";
+
+#wrapper {
+	background-color: $content-color-2;
+	color: $content-color-1;
+	padding-top: 0;
+}
+
+.portlet {
+	margin: 0;
+}
+
+.portlet-layout {
+	margin-left: 0;
+	margin-right: 0;
+
+	.col-md-12 {
+		padding: 0;
+	}
+}
+
+.h1 {
+	font-size: 54px;
+
+	@include sm {
+		font-weight: normal;
+		line-height: 1.1;
+	}
+}
+
+.floating-header .portlet-column-content .portlet-boundary:first-of-type .portlet-configurable, #banner .portlet {
+	&:hover, &.focus {
+		@include sm {
+			z-index: 1035;
+		}
+	}
+}
+
+.img-spacing {
+	margin-bottom: 15px;
+}

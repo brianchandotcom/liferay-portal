@@ -1,0 +1,69 @@
+.album-list {
+	audio {
+		display: none;
+	}
+
+	.progress {
+		@include position(absolute, null 0 0 0);
+
+		margin-bottom: 0;
+	}
+
+	.album-icon {
+		@include position(absolute, 50% null null 50%);
+		@include size($album-icon-size, $album-icon-size);
+		@include transform(translate(-50%, -50%));
+		@include transition(all 300ms $ease-out-back);
+
+		color: #FFF;
+		font-size: $album-icon-size/0.8;
+		opacity: 0;
+		z-index: 1;
+
+		&.album-icon-stop {
+			opacity: 0;
+			top: -80%;
+		}
+	}
+
+	.album {
+		overflow: hidden;
+		position: relative;
+
+		&:hover {
+			.album-icon {
+				font-size: $album-icon-size;
+				opacity: 1;
+				z-index: 2;
+			}
+
+			&:not(.playing):after {
+				z-index: 1;
+			}
+		}
+
+		&.playing {
+			.album-icon-play {
+				opacity: 0;
+				top: 80%;
+			}
+
+			.album-icon-stop {
+				opacity: 1;
+				top: 50%;
+			}
+
+			.progress {
+				display: block !important;
+			}
+		}
+
+		&:after {
+			@include position(absolute, 0 0 0 0);
+
+			background-color: rgba(0, 0, 0, 0.5);
+			content: "";
+			z-index: -1;
+		}
+	}
+}

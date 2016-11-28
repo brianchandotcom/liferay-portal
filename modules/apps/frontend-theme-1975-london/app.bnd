@@ -1,0 +1,13 @@
+Liferay-Releng-App-Description: The 1975 London theme includes an awesome site template with news and an album player to sit back and relax while listening to small fragments of your favourite songs. This theme includes some new exciting features such as:<ul><li>Different ways to show the content preview: you can choose from two different cards and two layouts to show album previews display and combine it with different text positions to get modern and awesome layouts.</li><li>Two layouts to show album previews.</li><li>Modern layout to display news</li><li>Easy way to put your header over your content through a setting.</li></ul>
+Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} 1975 London Theme
+Liferay-Releng-Bundle: false
+Liferay-Releng-Category: Themes
+Liferay-Releng-Demo-Url:
+Liferay-Releng-Deprecated: false
+Liferay-Releng-Labs: true
+Liferay-Releng-Marketplace: true
+Liferay-Releng-Portal-Required: true
+Liferay-Releng-Public: ${liferay.releng.public}
+Liferay-Releng-Restart-Required: false
+Liferay-Releng-Support-Url: http://www.liferay.com
+Liferay-Releng-Supported: ${liferay.releng.supported}

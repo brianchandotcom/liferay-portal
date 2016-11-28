@@ -4,3 +4,7 @@ dependencies {
 
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 }
+
+liferay {
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.ant.jgit/lib"
+}

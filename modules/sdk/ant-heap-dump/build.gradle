@@ -10,5 +10,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("../../../lib/development")
+	deployDir = "../../../tools/sdk/dependencies/com.liferay.ant.heap.dump/lib"
 }

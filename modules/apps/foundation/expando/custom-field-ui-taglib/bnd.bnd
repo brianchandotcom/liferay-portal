@@ -1,0 +1,8 @@
+Bundle-Name: Custom Field UI Taglib
+Bundle-SymbolicName: com.liferay.expando.custom.field.ui.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.expando.custom.field.ui.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/custom_field_ui";version:Version="${Bundle-Version}"
+Web-ContextPath: /custom-field-ui-taglib

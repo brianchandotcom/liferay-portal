@@ -470,23 +470,23 @@ public class PortalImpl implements Portal {
 		// Portal portlet
 
 		_reservedParams.add("p_p_auth");
-		_reservedParams.add("p_p_id");
-		_reservedParams.add("p_p_i_id");
-		_reservedParams.add("p_p_lifecycle");
-		_reservedParams.add("p_p_url_type");
-		_reservedParams.add("p_p_state");
-		_reservedParams.add("p_p_state_rcv"); // LPS-14144
-		_reservedParams.add("p_p_mode");
-		_reservedParams.add("p_p_resource_id");
+		_reservedParams.add("p_p_boundary");
 		_reservedParams.add("p_p_cacheability");
-		_reservedParams.add("p_p_width");
+		_reservedParams.add("p_p_col_count");
 		_reservedParams.add("p_p_col_id");
 		_reservedParams.add("p_p_col_pos");
-		_reservedParams.add("p_p_col_count");
-		_reservedParams.add("p_p_boundary");
 		_reservedParams.add("p_p_decorate");
-		_reservedParams.add("p_p_static");
+		_reservedParams.add("p_p_i_id");
+		_reservedParams.add("p_p_id");
 		_reservedParams.add("p_p_isolated");
+		_reservedParams.add("p_p_lifecycle");
+		_reservedParams.add("p_p_mode");
+		_reservedParams.add("p_p_resource_id");
+		_reservedParams.add("p_p_state");
+		_reservedParams.add("p_p_state_rcv"); // LPS-14144
+		_reservedParams.add("p_p_static");
+		_reservedParams.add("p_p_url_type");
+		_reservedParams.add("p_p_width");
 
 		// Portal theme
 

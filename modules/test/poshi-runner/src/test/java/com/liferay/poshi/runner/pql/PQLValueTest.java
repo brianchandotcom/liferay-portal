@@ -59,9 +59,9 @@ public class PQLValueTest extends TestCase {
 	public void testGetPQLResultError() throws Exception {
 		Set<String> pqls = new HashSet<>();
 
+		pqls.add("test == test");
 		pqls.add("test test");
 		pqls.add("true AND true");
-		pqls.add("test == test");
 
 		for (String pql : pqls) {
 			_validateGetPQLResultError(pql, "Invalid value: " + pql);

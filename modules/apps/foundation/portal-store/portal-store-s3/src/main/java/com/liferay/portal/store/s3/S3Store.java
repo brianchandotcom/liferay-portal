@@ -39,6 +39,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import com.amazonaws.services.s3.model.StorageClass;
 
+import com.liferay.document.library.kernel.exception.AccessDeniedException;
 import com.liferay.document.library.kernel.exception.DuplicateFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.BaseStore;
@@ -695,10 +696,12 @@ public class S3Store extends BaseStore {
 			AmazonServiceException amazonServiceException =
 				(AmazonServiceException)amazonClientException;
 
+			String errorCode = amazonServiceException.getErrorCode();
+
 			StringBundler sb = new StringBundler(11);
 
 			sb.append("{errorCode=");
-			sb.append(amazonServiceException.getErrorCode());
+			sb.append(errorCode);
 			sb.append(", errorType=");
 			sb.append(amazonServiceException.getErrorType());
 			sb.append(", message=");
@@ -708,6 +711,10 @@ public class S3Store extends BaseStore {
 			sb.append(", statusCode=");
 			sb.append(amazonServiceException.getStatusCode());
 			sb.append("}");
+
+			if (errorCode.equals("AccessDenied")) {
+				return new AccessDeniedException(sb.toString());
+			}
 
 			return new SystemException(sb.toString());
 		}

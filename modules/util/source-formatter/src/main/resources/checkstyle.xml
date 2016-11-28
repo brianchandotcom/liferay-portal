@@ -155,6 +155,9 @@
 			<message key="start.character.invalid" value="When concatenating multiple literal strings using '+', only the first literal string can start with ''{0}''" />
 			<message key="tabbing.incorrect" value="Expected indentation is ''{0}'' tabs" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.SelfReference">
+			<message key="self.reference.unneeded" value="Reference to method ''{0}'' doese not need ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZero">
 			<message key="method.use" value="Use method ''{0}'' instead" />
 		</module>

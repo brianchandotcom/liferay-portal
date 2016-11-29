@@ -2,20 +2,34 @@
 
 /**
  * @param cssClass
+ * @param inTrash
  * @param label
  * @param message
  * @param pathThemeImages
  */
 {template .render}
-{let $tooltip: not $label and $message!='' /}
+	{let $tooltip: not $label and $message!='' /}
 
-<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
-	<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" > /** if is in trash, no link */
-		<svg class="lexicon-icon">
-			<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
-		</svg>
+	<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
+		{if not $inTrash}
+			<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >
+				{call .icon data="all" /}
+			</a>
+		{else}
+			{call .icon data="all" /}
+		{/if}
+	</span>
+{/template}
 
-		<span class="taglib-text {if not $label}hide-accessible{/if}">{$message}</span>
-	</a>
-</span>
+/**
+ * @param label
+ * @param message
+ * @param pathThemeImages
+ */
+{template .icon}
+<svg class="lexicon-icon">
+	<use xlink:href="{$pathThemeImages}/lexicon/icons.svg#flag-full"></use>
+</svg>
+
+<span class="taglib-text {if not $label}hide-accessible{/if}">{$message}</span>
 {/template}

@@ -1229,6 +1229,7 @@ public class PoshiRunnerContext {
 
 		_testCaseAvailablePropertyNames.add("known-issues");
 		_testCaseAvailablePropertyNames.add("priority");
+		_testCaseAvailablePropertyNames.add("test.run.environment");
 
 		String testCaseRequiredPropertyNames =
 			PropsValues.TEST_CASE_REQUIRED_PROPERTY_NAMES;

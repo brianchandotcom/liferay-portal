@@ -18,6 +18,8 @@ import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,4 +32,10 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AnnouncementsConfigurationAction
 	extends DefaultConfigurationAction {
+
+	@Override
+	public String getJspPath(HttpServletRequest request) {
+		return "/announcements/configuration.jsp";
+	}
+
 }

@@ -42,7 +42,7 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_ATTACHMENTS</td>
-	<td>//div[@id='attachmentsHeader']//a</td>
+	<td>//div[contains(@id,'attachmentsHeader')]//a</td>
 	<td></td>
 </tr>
 <tr>

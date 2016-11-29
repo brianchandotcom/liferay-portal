@@ -49,6 +49,18 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		/>
 	</c:if>
 
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowCopyRecordSetButton() %>">
+		<liferay-portlet:actionURL name="copyRecordSet" var="copyRecordSetURL">
+			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+		</liferay-portlet:actionURL>
+
+		<liferay-ui:icon
+			message="copy"
+			url="<%= copyRecordSetURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowExportRecordSetIcon(recordSet) %>">
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />

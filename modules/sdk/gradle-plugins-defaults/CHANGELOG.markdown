@@ -686,13 +686,13 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.42.
 
-## 2.0.5 - *(Unreleased)*
+## 2.0.6 - 2016-11-29
 
 ### Added
 - [LPS-68813]: Add task `findSecurityBugs` to check for security problems.
 
 ### Changed
-- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.42.
+- [LPS-69445]: Update the [Liferay Gradle Plugins] dependency to version 3.0.43.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins

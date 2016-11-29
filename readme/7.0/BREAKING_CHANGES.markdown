@@ -2144,13 +2144,14 @@ This change was made to extend the MVC framework to have better support for
 
 ---------------------------------------
 
-### Removed the liferay-ui:journal-article Tag
+### Moved the liferay-ui:journal-article Tag to Journal
 - **Date:** 2016-Nov-24
 - **JIRA Ticket:** LPS-69321
 
 #### What changed?
 
-The `liferay-ui:journal-article` tag has been moved to journal.
+The `liferay-ui:journal-article` tag has been moved to the Journal (Web Content)
+application.
 
 #### Who is affected?
 
@@ -2175,9 +2176,13 @@ New code:
         groupId="<%= article.getGroupId() %>"
 	/>
 
+If you still want to use the `liferay-ui:journal-article` tag, you must deploy
+the `journal-taglib` module to your Liferay installation.
+
 #### Why was this change made?
 
-This change was made as part of journal modularization.
+This change was made as part of the modularization efforts for the Web
+Content application.
 
 ---------------------------------------
 

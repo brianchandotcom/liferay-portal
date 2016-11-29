@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration;
 import com.liferay.shopping.exception.DuplicateItemFieldNameException;
 import com.liferay.shopping.exception.DuplicateItemSKUException;
 import com.liferay.shopping.exception.ItemLargeImageNameException;
@@ -818,5 +820,8 @@ public class ShoppingItemLocalServiceImpl
 			throw new ItemLargeImageSizeException();
 		}
 	}
+
+	@ServiceReference(type = ShoppingFileUploadsConfiguration.class)
+	private ShoppingFileUploadsConfiguration _shoppingFileUploadsConfiguration;
 
 }

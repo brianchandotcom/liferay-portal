@@ -121,6 +121,9 @@ public class EditItemMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof ItemSmallImageSizeException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
+
+				actionResponse.setRenderParameter(
+					"mvcRenderCommandName", "/shopping/edit_item");
 			}
 			else {
 				throw e;

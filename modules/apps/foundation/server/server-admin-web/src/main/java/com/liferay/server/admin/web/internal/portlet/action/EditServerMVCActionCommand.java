@@ -14,13 +14,12 @@
 
 package com.liferay.server.admin.web.internal.portlet.action;
 
+import com.liferay.captcha.recaptcha.ReCaptchaImpl;
+import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.mail.kernel.service.MailService;
 import com.liferay.petra.log4j.Log4JUtil;
-import com.liferay.portal.captcha.CaptchaImpl;
-import com.liferay.portal.captcha.recaptcha.ReCaptchaImpl;
-import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.convert.ConvertException;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.instances.service.PortalInstancesLocalService;
@@ -29,8 +28,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.SingleVMPool;
-import com.liferay.portal.kernel.captcha.Captcha;
-import com.liferay.portal.kernel.captcha.CaptchaUtil;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
 import com.liferay.portal.kernel.image.ImageMagickUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -82,7 +79,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.xuggler.XugglerInstallException;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -525,22 +521,20 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String reCaptchaPublicKey = ParamUtil.getString(
 			actionRequest, "reCaptchaPublicKey");
 
-		Captcha captcha = null;
+		String captchaClassName = StringPool.BLANK;
 
 		if (reCaptchaEnabled) {
-			captcha = new ReCaptchaImpl();
+			captchaClassName = ReCaptchaImpl.class.getName();
 		}
 		else {
-			captcha = new SimpleCaptchaImpl();
+			captchaClassName = SimpleCaptchaImpl.class.getName();
 		}
 
 		validateCaptcha(actionRequest);
 
 		if (SessionErrors.isEmpty(actionRequest)) {
-			Class<?> clazz = captcha.getClass();
-
 			portletPreferences.setValue(
-				PropsKeys.CAPTCHA_ENGINE_IMPL, clazz.getName());
+				PropsKeys.CAPTCHA_ENGINE_IMPL, captchaClassName);
 
 			portletPreferences.setValue(
 				PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE,
@@ -550,22 +544,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 				reCaptchaPublicKey);
 
 			portletPreferences.store();
-
-			CaptchaImpl captchaImpl = null;
-
-			Captcha currentCaptcha = CaptchaUtil.getCaptcha();
-
-			if (currentCaptcha instanceof DoPrivilegedBean) {
-				DoPrivilegedBean doPrivilegedBean =
-					(DoPrivilegedBean)currentCaptcha;
-
-				captchaImpl = (CaptchaImpl)doPrivilegedBean.getActualBean();
-			}
-			else {
-				captchaImpl = (CaptchaImpl)currentCaptcha;
-			}
-
-			captchaImpl.setCaptcha(captcha);
 		}
 	}
 

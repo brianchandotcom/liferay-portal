@@ -388,7 +388,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		String text = null;
 
 		try {
-			Tika tika = new Tika(_tikaConfig);
+			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 
 			tika.setMaxStringLength(maxStringLength);
 
@@ -1117,17 +1117,6 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	private static final FileImpl _instance = new FileImpl();
 
-	private static final TikaConfig _tikaConfig;
-
-	static {
-		try {
-			_tikaConfig = new TikaConfig();
-		}
-		catch (Exception e) {
-			throw new ExceptionInInitializerError(e);
-		}
-	}
-
 	private static class ExtractTextProcessCallable
 		implements ProcessCallable<String> {
 
@@ -1137,7 +1126,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 		@Override
 		public String call() throws ProcessException {
-			Tika tika = new Tika(_tikaConfig);
+			Tika tika = new Tika(TikaConfigHolder._tikaConfig);
 
 			try {
 				return tika.parseToString(
@@ -1151,6 +1140,21 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		private static final long serialVersionUID = 1L;
 
 		private final byte[] _data;
+
+	}
+
+	private static class TikaConfigHolder {
+
+		private static final TikaConfig _tikaConfig;
+
+		static {
+			try {
+				_tikaConfig = new TikaConfig();
+			}
+			catch (Exception e) {
+				throw new ExceptionInInitializerError(e);
+			}
+		}
 
 	}
 

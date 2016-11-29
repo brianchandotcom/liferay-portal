@@ -77,7 +77,7 @@ AUI.add(
 						var target = event.target;
 
 						var checked = target.get('checked');
-						var elements = target.ancestor().siblings('input[type=text],select');
+						var elements = target.siblings('input[type=text],select');
 
 						elements.set('disabled', !checked);
 

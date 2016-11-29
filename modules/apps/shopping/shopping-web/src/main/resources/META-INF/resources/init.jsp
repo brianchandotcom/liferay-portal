@@ -70,6 +70,7 @@ page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%
 page import="com.liferay.portal.service.*" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
+page import="com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration" %><%@
 page import="com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.shopping.constants.ShoppingConstants" %><%@
 page import="com.liferay.shopping.exception.BillingCityException" %><%@

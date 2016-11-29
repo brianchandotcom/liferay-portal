@@ -200,6 +200,7 @@ if (portletTitleBasedNavigation) {
 
 						<%
 						boolean shouldMatchURLTitle;
+
 						if (entry == null) {
 							shouldMatchURLTitle = Validator.isNull(urlTitle);
 						}
@@ -213,13 +214,12 @@ if (portletTitleBasedNavigation) {
 						</h4>
 
 						<div class="form-group" id="<portlet:namespace />matchURLTitleOptions">
-							<aui:input checked="<%= shouldMatchURLTitle %>" label="automatic" name="matchURLTitle" type="radio" value="<%= true %>" helpMessage="the-url-will-be-based-on-the-entry-title"/>
+							<aui:input checked="<%= shouldMatchURLTitle %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="matchURLTitle" type="radio" value="<%= true %>" />
 
-							<aui:input checked="<%= !shouldMatchURLTitle %>" label="custom" name="matchURLTitle" type="radio" value="<%= false %>"/>
+							<aui:input checked="<%= !shouldMatchURLTitle %>" label="custom" name="matchURLTitle" type="radio" value="<%= false %>" />
 						</div>
 
 						<aui:input cssClass="input-medium" data-customUrl="<%= false %>" disabled="<%= shouldMatchURLTitle %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' ignoreRequestValue="<%= true %>" label="blog-entry-url" name="urlTitle" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
-
 					</div>
 
 					<div class="clearfix form-group">

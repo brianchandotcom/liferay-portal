@@ -14,8 +14,31 @@
 
 package com.liferay.shopping.configuration;
 
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
 /**
  * @author Drew Brokke
  */
+@ExtendedObjectClassDefinition(category = "other")
+@Meta.OCD(
+	id = "com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration",
+	localization = "content/Language",
+	name = "shopping.file.uploads.configuration.name"
+)
 public interface ShoppingFileUploadsConfiguration {
+
+		@Meta.AD(deflt = "", required = false)
+		public String[] shoppingImageExtensions();
+
+		@Meta.AD(deflt = "0", required = false)
+		public long shoppingImageLargeMaxSize();
+
+		@Meta.AD(deflt = "0", required = false)
+		public long shoppingImageMediumMaxSize();
+
+		@Meta.AD(deflt = "0", required = false)
+		public long shoppingImageSmallMaxSize();
+
 }

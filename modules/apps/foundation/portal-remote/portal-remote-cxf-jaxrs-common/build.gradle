@@ -1,6 +1,11 @@
+task deployDependencies(type: Copy)
+
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
 dependencies {
 	provided group: "javax.annotation", name: "javax.annotation-api", version: "1.2"
 	provided group: "javax.json", name: "javax.json-api", version: "1.0"
+	provided group: "javax.validation", name: "validation-api", version: "1.1.0.Final"
 	provided group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.0.1"
 	provided group: "org.apache.cxf", name: "cxf-core", version: "3.0.3"
 	provided group: "org.apache.cxf", name: "cxf-rt-frontend-jaxrs", version: "3.0.3"
@@ -10,4 +15,32 @@ dependencies {
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.http", version: "1.2.1"
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
+}
+
+deploy {
+	finalizedBy deployDependencies
+}
+
+deployDependencies {
+	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
+
+	ext {
+		autoClean = false
+	}
+
+	from configurations.provided
+
+	include "validation-*.jar"
+
+	into {
+		liferay.deployDir
+	}
+
+	outputs.upToDateWhen {
+		false
+	}
+
+	if (!keepDependencyVersions) {
+		rename new RenameDependencyClosure(project, configurations.provided.name)
+	}
 }

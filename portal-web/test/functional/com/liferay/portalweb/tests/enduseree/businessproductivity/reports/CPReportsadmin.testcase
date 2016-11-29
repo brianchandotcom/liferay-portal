@@ -644,6 +644,8 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" value1="report" />
 
+		<execute function="Pause" locator1="30000" />
+
 		<execute function="SelectWindow" locator1="title=Reports Admin - ${siteName}" />
 
 		<execute macro="ReportsAdmin#viewReportEntryFields">

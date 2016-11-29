@@ -305,3 +305,76 @@
 		margin-top: 0;
 	}
 }
+
+[class*="col-md"] {
+	.lfr-ddm-form-field-container {
+		&:not(:first-child) {
+			.liferay-ddm-form-field-fieldset {
+				legend {
+					display: none;
+				}
+			}
+		}
+
+		&:not(:only-child) {
+			.liferay-ddm-form-field-fieldset {
+				&:after {
+					background: rgba(134, 156, 173, 0.3);
+					content: '';
+					display: block;
+					height: 27px;
+					margin-left: -2px;
+					position: absolute;
+					width: 2px;
+				}
+
+				&:before {
+					background: rgba(134, 156, 173, 0.3);
+					content: '';
+					display: block;
+					height: 27px;
+					margin-left: -2px;
+					margin-top: -27px;
+					position: absolute;
+					width: 2px;
+				}
+			}
+
+			&:first-child > .liferay-ddm-form-field-fieldset {
+				&:before {
+					content: none;
+				}
+			}
+
+			&:last-child > .liferay-ddm-form-field-fieldset {
+				&:after {
+					content: none;
+				}
+			}
+		}
+	}
+}
+
+.portlet-forms-display {
+	.liferay-ddm-form-field-fieldset {
+		&:parent {
+			background-color: #FF0;
+		}
+
+		border-left: 2px solid rgba(134, 156, 173, 0.3);
+
+		fieldset {
+			legend {
+				border-width: 0;
+				color: #869CAD;
+				font-size: 12px;
+				font-weight: bold;
+				line-height: 20px;
+				margin: 0;
+				padding-left: 15px;
+				position: relative;
+				text-transform: uppercase;
+			}
+		}
+	}
+}

@@ -248,7 +248,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		GradleUtil.applyPlugin(project, LiferayOSGiPlugin.class);
 
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
+		final LiferayExtension liferayExtension = GradleUtil.getExtension(
 			project, LiferayExtension.class);
 
 		File versionOverrideFile = _getVersionOverrideFile(project);
@@ -364,7 +364,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
 		_configureConfigurations(project);
 		_configureDependencyChecker(project);
-		_configureDeployDir(project, deployToAppServerLibs, deployToTools);
+		_configureDeployDir(
+			project, liferayExtension, deployToAppServerLibs, deployToTools);
 		_configureJavaPlugin(project);
 		_configureLocalPortalTool(
 			project, portalRootDir, SourceFormatterPlugin.CONFIGURATION_NAME,
@@ -439,7 +440,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					}
 
 					if (GradleUtil.hasPlugin(project, JspCPlugin.class)) {
-						_configureTaskCompileJSP(project);
+						_configureTaskCompileJSP(project, liferayExtension);
 					}
 
 					// setProjectSnapshotVersion must be called before
@@ -449,7 +450,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					_configureTaskUploadArchives(
 						project, updateFileVersionsTask, updateVersionTask);
 
-					_configureProjectBndProperties(project);
+					_configureProjectBndProperties(project, liferayExtension);
 				}
 
 			});
@@ -1661,11 +1662,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureDeployDir(
-		final Project project, final boolean deployToAppServerLibs,
-		final boolean deployToTools) {
-
-		final LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+		final Project project, final LiferayExtension liferayExtension,
+		final boolean deployToAppServerLibs, final boolean deployToTools) {
 
 		liferayExtension.setDeployDir(
 			new Callable<File>() {
@@ -1829,9 +1827,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		project.setGroup(_GROUP);
 	}
 
-	private void _configureProjectBndProperties(Project project) {
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
+	private void _configureProjectBndProperties(
+		Project project, LiferayExtension liferayExtension) {
 
 		File appServerPortalDir = liferayExtension.getAppServerPortalDir();
 
@@ -2117,7 +2114,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 	}
 
-	private void _configureTaskCompileJSP(Project project) {
+	private void _configureTaskCompileJSP(
+		Project project, LiferayExtension liferayExtension) {
+
 		boolean jspPrecompileEnabled = GradleUtil.getProperty(
 			project, "jsp.precompile.enabled", false);
 
@@ -2161,9 +2160,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				GradleUtil.getArchivesBaseName(project) + "-" +
 					project.getVersion();
 		}
-
-		LiferayExtension liferayExtension = GradleUtil.getExtension(
-			project, LiferayExtension.class);
 
 		File dir = new File(
 			liferayExtension.getLiferayHome(), "work/" + dirName);

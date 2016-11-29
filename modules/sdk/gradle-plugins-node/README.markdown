@@ -10,7 +10,7 @@ To use the plugin, include it in your build script:
 ```gradle
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "1.3.0"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "1.4.0"
 	}
 
 	repositories {
@@ -96,6 +96,7 @@ Property Name | Type | Default Value | Description
 `inheritProxy` | `boolean` | `true` | Whether to set the `http_proxy`, `https_proxy`, and `no_proxy` environment variables in the Node.js invocation based on the values of the system properties `https.proxyHost`, `https.proxyPort`, `https.proxyUser`, `https.proxyPassword`, `https.nonProxyHosts`, `https.proxyHost`, `https.proxyPort`, `https.proxyUser`, `https.proxyPassword`, and `https.nonProxyHosts`. If these environment variables are already set, their values will not be overwritten.
 `nodeDir` | `File` | <p>**If [`node.download`](#download) is `true`:** [`node.nodeDir`](#nodedir)</p><p>**Otherwise:** `null`</p> | The directory that contains the executable to invoke. If `null`, the executable must be available in the system `PATH`.
 `npmInstallRetries` | `int` | `0` | The number of times the `node_modules` is deleted and `npm install` is retried in case the Node.js invocation defined by this task fails. This can help solving corrupted `node_modules` directories by re-downloading the project's dependencies.
+`useGradleExec` | `boolean` | <p>**If running in a [Gradle Daemon](https://docs.gradle.org/current/userguide/gradle_daemon.html):** `true`</p><p>**Otherwise:** `false`</p> | Whether to invoke Node.js using [`project.exec`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:exec(org.gradle.api.Action)), which can solve hanging problems with the Gradle Daemon.
 `workingDir` | `File` | `project.projectDir` | The working directory to use in the Node.js invocation.
 
 The properties of type `File` support any type that can be resolved by

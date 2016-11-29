@@ -39,6 +39,51 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		return null;
 	}
 
+	/**
+	 * Copied from <code>com.liferay.portal.kernel.util.ThreadUtil</code>.
+	 */
+	public static Thread[] getThreads() {
+		Thread currentThread = Thread.currentThread();
+
+		ThreadGroup threadGroup = currentThread.getThreadGroup();
+
+		while (threadGroup.getParent() != null) {
+			threadGroup = threadGroup.getParent();
+		}
+
+		int threadCountGuess = threadGroup.activeCount();
+
+		Thread[] threads = new Thread[threadCountGuess];
+
+		int threadCountActual = threadGroup.enumerate(threads);
+
+		while (threadCountActual == threadCountGuess) {
+			threadCountGuess *= 2;
+
+			threads = new Thread[threadCountGuess];
+
+			threadCountActual = threadGroup.enumerate(threads);
+		}
+
+		return threads;
+	}
+
+	public static boolean isRunningInsideDaemon() {
+		for (Thread thread : getThreads()) {
+			if (thread == null) {
+				continue;
+			}
+
+			String name = thread.getName();
+
+			if (name.startsWith("Daemon worker")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean toBoolean(Object object) {
 		object = toObject(object);
 

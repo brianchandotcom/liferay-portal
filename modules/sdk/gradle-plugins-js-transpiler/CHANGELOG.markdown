@@ -66,6 +66,12 @@ log level.
 - [LPS-69248]: Add the `jsCompile` configuration to provide additional
 JavaScript dependencies for the `transpileJS` task.
 
+## 2.3.1 - 2016-11-29
+
+### Changed
+- [LPS-69445]: Update the [Liferay Gradle Plugins Node] dependency to version
+1.4.0.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -75,3 +81,4 @@ JavaScript dependencies for the `transpileJS` task.
 [LPS-68979]: https://issues.liferay.com/browse/LPS-68979
 [LPS-69026]: https://issues.liferay.com/browse/LPS-69026
 [LPS-69248]: https://issues.liferay.com/browse/LPS-69248
+[LPS-69445]: https://issues.liferay.com/browse/LPS-69445

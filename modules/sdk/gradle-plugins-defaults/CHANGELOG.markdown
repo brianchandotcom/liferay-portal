@@ -746,6 +746,7 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
+[LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

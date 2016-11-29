@@ -660,6 +660,16 @@ to version 1.0.53.
 - [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
 1.0.319.
 
+## 3.0.43 - 2016-11-29
+
+### Changed
+- [LPS-69445]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.4.
+- [LPS-69445]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.2.
+- [LPS-69445]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.1.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -726,4 +736,5 @@ to version 1.0.53.
 [LPS-69223]: https://issues.liferay.com/browse/LPS-69223
 [LPS-69248]: https://issues.liferay.com/browse/LPS-69248
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
+[LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -260,7 +260,6 @@
 				<classpath mode="compile">lib/development/com.liferay.ant.beanshell.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.bnd.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.build.logger.jar</classpath>
-				<classpath mode="compile">lib/development/com.liferay.ant.heap.dump.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.mirrors.get.jar</classpath>
 				<classpath mode="compile">lib/development/deployment.jar</classpath>
 				<classpath mode="compile">lib/development/dtddoc.jar</classpath>

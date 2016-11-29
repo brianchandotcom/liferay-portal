@@ -130,6 +130,36 @@
 		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+
+		<var name="pauseCount" value="0" />
+
+		<if>
+			<equals arg1="${actionsDescription}" arg2="Reindex all search indexes." />
+			<then>
+				<while>
+					<and>
+						<condition function="IsElementPresent" locator1="ControlMenu#RELOAD_TOOLTIP" />
+						<not>
+							<equals arg1="${pauseCount}" arg2="24" />
+						</not>
+					</and>
+					<then>
+						<execute function="Pause" locator1="5000" />
+
+						<var method="MathUtil#sum('${pauseCount}', '1')" name="pauseCount" />
+
+						<echo>Pause count: ${pauseCount}</echo>
+					</then>
+				</while>
+
+				<if>
+					<equals arg1="${pauseCount}" arg2="24" />
+					<then>
+						<fail message="Reindex timed out after 2 minutes." />
+					</then>
+				</if>
+			</then>
+		</if>
 	</command>
 
 	<command name="searchPortalPropertiesCP">

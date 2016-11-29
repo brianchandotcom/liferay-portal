@@ -69,8 +69,8 @@ public class MirrorsGetTask extends Task {
 			throw new RuntimeException("Invalid src attribute: " + src);
 		}
 
-		_fileName = matcher.group("fileName");
-		_path = matcher.group("path");
+		_fileName = matcher.group(2);
+		_path = matcher.group(1);
 
 		if (_path.startsWith("mirrors/")) {
 			_path = _path.replace("mirrors/", _HOSTNAME);
@@ -453,7 +453,7 @@ public class MirrorsGetTask extends Task {
 	private static final String _HOSTNAME = "mirrors.lax.liferay.com";
 
 	private static final Pattern _pattern = Pattern.compile(
-		"https?://(?<path>.+/)(?<fileName>.+)");
+		"https?://(.+/)(.+)");
 
 	private File _dest;
 	private String _fileName;

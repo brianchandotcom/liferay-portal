@@ -178,6 +178,8 @@
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
+		<execute macro="ProductMenuHelper#closeProductMenu" />
+
 		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
 			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
 		</execute>
@@ -256,6 +258,8 @@
 			<var name="newNodeType" value="end" />
 			<var name="nodeType" value="join-xor" />
 		</execute>
+
+		<execute function="ScrollBy" value1="0, 60" />
 
 		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
 	</command>

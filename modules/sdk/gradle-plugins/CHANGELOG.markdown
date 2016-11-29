@@ -663,6 +663,10 @@ to version 1.0.53.
 ## 3.0.43 - 2016-11-29
 
 ### Changed
+- [LPS-69271]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.13.
+- [LPS-69271]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.18.
 - [LPS-69445]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.4.
 - [LPS-69445]: Update the [Liferay Gradle Plugins JS Module Config Generator]

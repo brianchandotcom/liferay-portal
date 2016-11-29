@@ -1,6 +1,6 @@
-task deployDependencies(type: Copy)
-
 import com.liferay.gradle.util.copy.RenameDependencyClosure
+
+task deployDependencies(type: Copy)
 
 dependencies {
 	provided group: "javax.annotation", name: "javax.annotation-api", version: "1.2"
@@ -29,8 +29,7 @@ deployDependencies {
 	}
 
 	from configurations.provided
-
-	include "validation-*.jar"
+	include "validation-api-*.jar"
 
 	into {
 		liferay.deployDir

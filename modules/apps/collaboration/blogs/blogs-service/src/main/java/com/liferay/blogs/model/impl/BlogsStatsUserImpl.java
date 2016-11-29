@@ -17,10 +17,14 @@ package com.liferay.blogs.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * The extended model implementation for the BlogsStatsUser service. Represents a row in the &quot;BlogsStatsUser&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the BlogsStatsUser service. Represents
+ * a row in the &quot;BlogsStatsUser&quot; database table, with each column
+ * mapped to a property of this class.
  *
  * <p>
- * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.blogs.model.BlogsStatsUser} interface.
+ * Helper methods and all application logic should be put in this class.
+ * Whenever methods are added, rerun ServiceBuilder to copy their definitions
+ * into the {@link com.liferay.blogs.model.BlogsStatsUser} interface.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -31,7 +35,9 @@ public class BlogsStatsUserImpl extends BlogsStatsUserBaseImpl {
 	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. All methods that expect a blogs stats user model instance should use the {@link com.liferay.blogs.model.BlogsStatsUser} interface instead.
+	 * Never reference this class directly. All methods that expect a blogs
+	 * stats user model instance should use the {@link
+	 * com.liferay.blogs.model.BlogsStatsUser} interface instead.
 	 */
 	public BlogsStatsUserImpl() {
 	}

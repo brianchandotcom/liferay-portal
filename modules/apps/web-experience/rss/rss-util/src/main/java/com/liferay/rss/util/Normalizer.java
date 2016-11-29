@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
- * @see com.liferay.util.Normalizer
+ * @see    com.liferay.util.Normalizer
  */
 public class Normalizer {
 

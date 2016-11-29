@@ -34,7 +34,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Mika Koivisto
- * @see com.liferay.util.EncryptorTest
+ * @see    com.liferay.util.EncryptorTest
  */
 @PowerMockIgnore("javax.crypto.*")
 @RunWith(PowerMockRunner.class)

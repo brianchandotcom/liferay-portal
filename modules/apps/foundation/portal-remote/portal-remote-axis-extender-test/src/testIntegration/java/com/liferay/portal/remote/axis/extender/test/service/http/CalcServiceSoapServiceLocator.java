@@ -7,6 +7,14 @@
 
 package com.liferay.portal.remote.axis.extender.test.service.http;
 
+/**
+ * CalcServiceSoapServiceLocator.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ *
+ * @author Brian Wing Shun Chan
+ */
 public class CalcServiceSoapServiceLocator extends org.apache.axis.client.Service implements com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoapService {
 
     public CalcServiceSoapServiceLocator() {
@@ -66,9 +74,8 @@ public class CalcServiceSoapServiceLocator extends org.apache.axis.client.Servic
     }
 
     /**
-     * For the given interface, get the stub implementation.
-     * If this service has no port for the given interface,
-     * then ServiceException is thrown.
+     * For the given interface, get the stub implementation. If this service has
+     * no port for the given interface, then ServiceException is thrown.
      */
     public java.rmi.Remote getPort(Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         try {
@@ -85,9 +92,8 @@ public class CalcServiceSoapServiceLocator extends org.apache.axis.client.Servic
     }
 
     /**
-     * For the given interface, get the stub implementation.
-     * If this service has no port for the given interface,
-     * then ServiceException is thrown.
+     * For the given interface, get the stub implementation. If this service has
+     * no port for the given interface, then ServiceException is thrown.
      */
     public java.rmi.Remote getPort(javax.xml.namespace.QName portName, Class serviceEndpointInterface) throws javax.xml.rpc.ServiceException {
         if (portName == null) {
@@ -119,8 +125,8 @@ public class CalcServiceSoapServiceLocator extends org.apache.axis.client.Servic
     }
 
     /**
-    * Set the endpoint address for the specified port name.
-    */
+     * Set the endpoint address for the specified port name.
+     */
     public void setEndpointAddress(java.lang.String portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         
 if ("CalcServiceSoapPort".equals(portName)) {
@@ -133,8 +139,8 @@ if ("CalcServiceSoapPort".equals(portName)) {
     }
 
     /**
-    * Set the endpoint address for the specified port name.
-    */
+     * Set the endpoint address for the specified port name.
+     */
     public void setEndpointAddress(javax.xml.namespace.QName portName, java.lang.String address) throws javax.xml.rpc.ServiceException {
         setEndpointAddress(portName.getLocalPart(), address);
     }

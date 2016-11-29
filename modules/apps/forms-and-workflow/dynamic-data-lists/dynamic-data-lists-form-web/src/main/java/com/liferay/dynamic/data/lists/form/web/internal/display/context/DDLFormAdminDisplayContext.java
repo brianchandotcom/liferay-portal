@@ -437,6 +437,10 @@ public class DDLFormAdminDisplayContext {
 			DDLActionKeys.ADD_RECORD_SET);
 	}
 
+	public boolean isShowCopyRecordSetButton() {
+		return isShowAddRecordSetButton();
+	}
+
 	public boolean isShowDeleteRecordSetIcon(DDLRecordSet recordSet) {
 		return DDLRecordSetPermission.contains(
 			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,

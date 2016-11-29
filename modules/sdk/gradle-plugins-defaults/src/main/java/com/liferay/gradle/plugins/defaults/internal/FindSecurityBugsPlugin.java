@@ -260,8 +260,10 @@ public class FindSecurityBugsPlugin implements Plugin<Project> {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		writeFindBugsProjectTask.setAuxClasspath(
-			sourceSet.getCompileClasspath());
+		FileCollection auxClasspath = project.files(
+			sourceSet.getCompileClasspath(), compileJSPTask.getClasspath());
+
+		writeFindBugsProjectTask.setAuxClasspath(auxClasspath);
 
 		FileCollection classpath = project.files(
 			compileJSPTask.getDestinationDir(), _getUnzippedJarDir(project));

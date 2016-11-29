@@ -17,7 +17,7 @@ package com.liferay.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * @author Roberto Díaz
+ * @author     Roberto Díaz
  * @deprecated As of 2.0.0, replaced by {@link FileEntryItemSelectorReturnType}
  */
 @Deprecated

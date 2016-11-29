@@ -30,9 +30,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
- *
+ * @author     Sergio González
+ * @author     Roberto Díaz
  * @deprecated As of 1.1.0, with no direct replacement
  */
 @Deprecated

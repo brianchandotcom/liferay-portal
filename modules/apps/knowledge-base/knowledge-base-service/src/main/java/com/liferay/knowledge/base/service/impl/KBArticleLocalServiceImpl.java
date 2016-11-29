@@ -890,8 +890,7 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
-	 *             int, int, int,
-	 *             OrderByComparator)}
+	 *             int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override

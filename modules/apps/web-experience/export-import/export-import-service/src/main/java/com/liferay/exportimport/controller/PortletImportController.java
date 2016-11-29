@@ -329,8 +329,8 @@ public class PortletImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link #importPortletData(
-	 *             PortletDataContext portletDataContext,
+	 * @deprecated As of 4.0.0, replaced by {@link
+	 *             #importPortletData(PortletDataContext portletDataContext,
 	 *             javax.portlet.PortletPreferences portletPreferences, Element
 	 *             portletDataElement)}
 	 */
@@ -734,8 +734,8 @@ public class PortletImportController implements ImportController {
 	}
 
 	/**
-	 * @deprecated As of 4.0.0, replaced by {@link deletePortletData(
-	 *             PortletDataContext portletDataContext,
+	 * @deprecated As of 4.0.0, replaced by {@link
+	 *             deletePortletData(PortletDataContext portletDataContext,
 	 *             javax.portlet.PortletPreferences portletPreferences)}
 	 */
 	@Deprecated

@@ -7,6 +7,14 @@
 
 package com.liferay.portal.remote.axis.extender.test.service.http;
 
+/**
+ * CalcServiceSoapPortSoapBindingStub.java
+ *
+ * This file was auto-generated from WSDL
+ * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
+ *
+ * @author Brian Wing Shun Chan
+ */
 public class CalcServiceSoapPortSoapBindingStub extends org.apache.axis.client.Stub implements com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoap {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();

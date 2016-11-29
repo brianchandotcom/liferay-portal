@@ -43,7 +43,7 @@ import javax.crypto.spec.SecretKeySpec;
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  * @author Mika Koivisto
- * @see com.liferay.util.Encryptor
+ * @see    com.liferay.util.Encryptor
  */
 public class Encryptor {
 

@@ -34,7 +34,7 @@ import org.xml.sax.XMLReader;
 /**
  * @author Brian Wing Shun Chan
  * @author Alan Zimmerman
- * @see com.liferay.util.xml.Dom4jUtil
+ * @see    com.liferay.util.xml.Dom4jUtil
  */
 public class Dom4jUtil {
 

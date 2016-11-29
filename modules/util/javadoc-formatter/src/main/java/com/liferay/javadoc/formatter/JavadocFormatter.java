@@ -1655,7 +1655,8 @@ public class JavadocFormatter {
 	}
 
 	private boolean _hasGeneratedTag(String content) {
-		if ((content.contains("* @generated") || content.contains("$ANTLR")) &&
+		if ((content.contains("* @generated") || content.contains("$ANTLR") ||
+			 content.contains("auto-generated from WSDL")) &&
 			!content.contains("hasGeneratedTag")) {
 
 			return true;

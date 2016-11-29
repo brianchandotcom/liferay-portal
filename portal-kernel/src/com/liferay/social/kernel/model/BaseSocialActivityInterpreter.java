@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -376,7 +377,21 @@ public abstract class BaseSocialActivityInterpreter
 			return path;
 		}
 
-		return serviceContext.getPortalURL() + path;
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(serviceContext.getPortalURL());
+
+		if (!path.startsWith(PortalUtil.getPathContext())) {
+			sb.append(PortalUtil.getPathContext());
+		}
+
+		if (!path.startsWith(serviceContext.getPathMain())) {
+			sb.append(serviceContext.getPathMain());
+		}
+
+		sb.append(path);
+
+		return sb.toString();
 	}
 
 	protected String getPath(

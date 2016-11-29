@@ -683,6 +683,9 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 
 ## 2.0.5 - *(Unreleased)*
 
+### Added
+- [LPS-68813]: Add task `findSecurityBugs` to check for security problems.
+
 ### Changed
 - [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.42.
 
@@ -735,6 +738,7 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 [LPS-68666]: https://issues.liferay.com/browse/LPS-68666
 [LPS-68772]: https://issues.liferay.com/browse/LPS-68772
 [LPS-68779]: https://issues.liferay.com/browse/LPS-68779
+[LPS-68813]: https://issues.liferay.com/browse/LPS-68813
 [LPS-68817]: https://issues.liferay.com/browse/LPS-68817
 [LPS-68838]: https://issues.liferay.com/browse/LPS-68838
 [LPS-68839]: https://issues.liferay.com/browse/LPS-68839

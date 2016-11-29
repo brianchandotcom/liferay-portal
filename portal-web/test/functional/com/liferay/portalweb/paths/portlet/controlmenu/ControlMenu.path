@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RELOAD_TOOLTIP</td>
+	<td>//div[contains(.,'The portal is currently reindexing.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIMULATION</td>
 	<td>//*[@data-qa-id='controlMenu']//*[@data-qa-id='simulation']</td>
 	<td></td>

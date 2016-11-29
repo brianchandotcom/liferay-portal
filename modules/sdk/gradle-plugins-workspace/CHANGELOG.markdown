@@ -48,10 +48,9 @@ of the `distBundleTar`, `distBundleZip`, and `initBundle` tasks.
 to the root project.
 
 ### Changed
-- [LPS-66222]: Update the [Liferay Gradle Plugins] dependency to version 3.0.28.
+- [LPS-69445]: Update the [Liferay Gradle Plugins] dependency to version 3.0.43.
 
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
-[LPS-66222]: https://issues.liferay.com/browse/LPS-66222
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67352]: https://issues.liferay.com/browse/LPS-67352
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -59,3 +58,4 @@ to the root project.
 [LPS-68293]: https://issues.liferay.com/browse/LPS-68293
 [LPS-68822]: https://issues.liferay.com/browse/LPS-68822
 [LPS-68849]: https://issues.liferay.com/browse/LPS-68849
+[LPS-69445]: https://issues.liferay.com/browse/LPS-69445

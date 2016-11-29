@@ -634,14 +634,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "journalImageExtensions");
 		long journalImageSmallMaxSize = ParamUtil.getLong(
 			actionRequest, "journalImageSmallMaxSize");
-		String shoppingImageExtensions = getFileExtensions(
-			actionRequest, "shoppingImageExtensions");
-		long shoppingImageLargeMaxSize = ParamUtil.getLong(
-			actionRequest, "shoppingImageLargeMaxSize");
-		long shoppingImageMediumMaxSize = ParamUtil.getLong(
-			actionRequest, "shoppingImageMediumMaxSize");
-		long shoppingImageSmallMaxSize = ParamUtil.getLong(
-			actionRequest, "shoppingImageSmallMaxSize");
 		long uploadServletRequestImplMaxSize = ParamUtil.getLong(
 			actionRequest, "uploadServletRequestImplMaxSize");
 		String uploadServletRequestImplTempDir = ParamUtil.getString(
@@ -667,17 +659,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		portletPreferences.setValue(
 			PropsKeys.JOURNAL_IMAGE_SMALL_MAX_SIZE,
 			String.valueOf(journalImageSmallMaxSize));
-		portletPreferences.setValue(
-			PropsKeys.SHOPPING_IMAGE_EXTENSIONS, shoppingImageExtensions);
-		portletPreferences.setValue(
-			PropsKeys.SHOPPING_IMAGE_LARGE_MAX_SIZE,
-			String.valueOf(shoppingImageLargeMaxSize));
-		portletPreferences.setValue(
-			PropsKeys.SHOPPING_IMAGE_MEDIUM_MAX_SIZE,
-			String.valueOf(shoppingImageMediumMaxSize));
-		portletPreferences.setValue(
-			PropsKeys.SHOPPING_IMAGE_SMALL_MAX_SIZE,
-			String.valueOf(shoppingImageSmallMaxSize));
 		portletPreferences.setValue(
 			PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 			String.valueOf(uploadServletRequestImplMaxSize));

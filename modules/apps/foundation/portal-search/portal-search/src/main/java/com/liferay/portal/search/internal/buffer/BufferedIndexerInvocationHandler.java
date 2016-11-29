@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.buffer;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -143,9 +144,11 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 					classPK = resourcedModel.getResourcePrimKey();
 				}
 			}
-			catch (Exception e) {
+			catch (NoSuchModelException nsme) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to get resource primary key", e);
+					_log.debug(
+						"Unable to get resource primary key for className: " +
+							className + " classPK " + classPK);
 				}
 			}
 

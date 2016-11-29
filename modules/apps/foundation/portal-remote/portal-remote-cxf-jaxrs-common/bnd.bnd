@@ -19,8 +19,6 @@ Fragment-Host: com.liferay.portal.remote.cxf.common
 Import-Package:\
 	!com.sun.*,\
 	\
-	!javax.validation.*,\
-	\
 	!net.sf.cglib.proxy.*,\
 	\
 	!org.apache.abdera.*,\

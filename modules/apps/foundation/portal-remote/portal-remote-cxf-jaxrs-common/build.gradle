@@ -1,5 +1,3 @@
-import com.liferay.gradle.util.copy.RenameDependencyClosure
-
 task deployDependencies(type: Copy)
 
 dependencies {
@@ -39,7 +37,11 @@ deployDependencies {
 		false
 	}
 
-	if (!keepDependencyVersions) {
-		rename new RenameDependencyClosure(project, configurations.provided.name)
+	String renameSuffix = ".jar"
+
+	if (keepDependencyVersions) {
+		renameSuffix = '-$1.jar'
 	}
+
+	rename(/validation-api-(.+)\.jar/, "javax.validation.api" + renameSuffix)
 }

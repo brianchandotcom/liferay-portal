@@ -17,3 +17,4 @@ Export-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management
 Liferay-Require-SchemaVersion: 1.0.0
+-includeresource: content=../../staging/staging-lang/src/main/resources/content

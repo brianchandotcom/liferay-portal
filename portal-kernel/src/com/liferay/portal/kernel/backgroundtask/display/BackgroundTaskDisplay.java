@@ -14,14 +14,21 @@
 
 package com.liferay.portal.kernel.backgroundtask.display;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Andrew Betts
  */
+@ProviderType
 public interface BackgroundTaskDisplay extends Serializable {
+
+	public String getDisplayName(HttpServletRequest request);
 
 	public int getPercentage();
 

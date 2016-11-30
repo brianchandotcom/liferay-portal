@@ -24,10 +24,6 @@ import org.osgi.service.metatype.MetaTypeService;
 /**
  * @author Iván Zaera
  */
-//@Component(service = ExtendedMetaTypeService.class)
-/**
- * @author Iván Zaera
- */
 public class EquinoxExtendedMetaTypeService implements ExtendedMetaTypeService {
 
 	@Override

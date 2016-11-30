@@ -90,9 +90,7 @@ public class ModulesStructureTest {
 						return FileVisitResult.CONTINUE;
 					}
 
-					Path dirNamePath = dirPath.getFileName();
-
-					String dirName = dirNamePath.toString();
+					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (dirName.charAt(0) == '.') {
 						return FileVisitResult.SKIP_SUBTREE;
@@ -166,9 +164,7 @@ public class ModulesStructureTest {
 						Path dirPath, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Path dirNamePath = dirPath.getFileName();
-
-					String dirName = dirNamePath.toString();
+					String dirName = String.valueOf(dirPath.getFileName());
 
 					if (dirPath.equals(_modulesDirPath) ||
 						Files.exists(dirPath.resolve(".gitrepo"))) {
@@ -195,9 +191,7 @@ public class ModulesStructureTest {
 						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					Path fileNamePath = path.getFileName();
-
-					String fileName = fileNamePath.toString();
+					String fileName = String.valueOf(path.getFileName());
 
 					if (fileName.equals(".gitignore")) {
 						_testGitIgnoreFile(path);
@@ -371,9 +365,8 @@ public class ModulesStructureTest {
 								 "docroot/WEB-INF/service.xml"))) &&
 						Files.isDirectory(pluginDirPath.resolve("docroot"))) {
 
-						Path relativePath = dirPath.relativize(pluginDirPath);
-
-						String pluginDirName = relativePath.toString();
+						String pluginDirName = String.valueOf(
+							dirPath.relativize(pluginDirPath));
 
 						if (File.separatorChar != CharPool.SLASH) {
 							pluginDirName = StringUtil.replace(
@@ -487,9 +480,8 @@ public class ModulesStructureTest {
 	private String _getGitRepoGradleProperties(
 		Path dirPath, String gradlePropertiesTemplate) {
 
-		Path relativePath = _modulesDirPath.relativize(dirPath);
-
-		String projectPathPrefix = relativePath.toString();
+		String projectPathPrefix = String.valueOf(
+			_modulesDirPath.relativize(dirPath));
 
 		projectPathPrefix =
 			":" +

@@ -110,7 +110,10 @@ AUI.add(
 					},
 
 					updateUrlTitle: function(newTitle) {
-						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE), oldTitle = urlTitleInput.val();
+						var instance = this;
+
+						var urlTitleInput = instance.one(STR_URL_TITLE);
+						var oldTitle = urlTitleInput.val();
 
 						if ((instance._originalTitle || !oldTitle) && instance._shouldMatchUrlAndTitle()) {
 							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(newTitle));
@@ -156,6 +159,7 @@ AUI.add(
 						}
 
 						var matchURLTitle = instance.one(STR_MATCH_URL_TITLE);
+
 						eventHandles.push(
 							matchURLTitle.delegate(STR_CHANGE, instance._configureMatchURLTitle, 'input[type="radio"]', instance)
 						);
@@ -204,16 +208,22 @@ AUI.add(
 					},
 
 					_configureMatchURLTitle: function() {
-						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE);
+						var instance = this;
+
+						var urlTitleInput = instance.one(STR_URL_TITLE);
 
 						if (instance._shouldMatchUrlAndTitle()) {
 							instance._lastCustomURLTitle = urlTitleInput.val();
+
 							var title = window[instance.ns('titleEditor')].getText();
+
 							instance.updateUrlTitle(title);
+
 							urlTitleInput.setAttribute('disabled', true);
 						}
 						else {
 							urlTitleInput.val(instance._lastCustomURLTitle || urlTitleInput.val());
+
 							urlTitleInput.removeAttribute('disabled');
 						}
 					},

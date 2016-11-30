@@ -374,19 +374,19 @@ if (portletTitleBasedNavigation) {
 </portlet:actionURL>
 
 <aui:script>
-	function <portlet:namespace />OnChangeTitle(newTitle) {
-		var blogs = Liferay.component('<portlet:namespace />Blogs');
-
-		if (blogs) {
-			blogs.updateUrlTitle(newTitle);
-		}
-	}
-
 	function <portlet:namespace />OnChangeEditor(html) {
 		var blogs = Liferay.component('<portlet:namespace />Blogs');
 
 		if (blogs) {
 			blogs.setDescription(html);
+		}
+	}
+
+	function <portlet:namespace />OnChangeTitle(newTitle) {
+		var blogs = Liferay.component('<portlet:namespace />Blogs');
+
+		if (blogs) {
+			blogs.updateUrlTitle(newTitle);
 		}
 	}
 
@@ -435,14 +435,6 @@ if (portletTitleBasedNavigation) {
 		)
 	);
 
-	var clearSaveDraftHandle = function(event) {
-		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-			blogs.destroy();
-
-			Liferay.detach('destroyPortlet', clearSaveDraftHandle);
-		}
-	};
-
 	var createAbstractEditor = function() {
 		var descriptionEditor = window['<portlet:namespace />descriptionEditor'];
 
@@ -462,7 +454,13 @@ if (portletTitleBasedNavigation) {
 		configurationContentHeader.on('show.bs.collapse', createAbstractEditor);
 	}
 
-	var form = A.one('#<portlet:namespace />fm');
+	var clearSaveDraftHandle = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			blogs.destroy();
+
+			Liferay.detach('destroyPortlet', clearSaveDraftHandle);
+		}
+	};
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>

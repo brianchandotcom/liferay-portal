@@ -199,13 +199,13 @@ if (portletTitleBasedNavigation) {
 					<div class="clearfix form-group">
 
 						<%
-						boolean shouldMatchURLTitle;
+						boolean automaticURL;
 
 						if (entry == null) {
-							shouldMatchURLTitle = Validator.isNull(urlTitle);
+							automaticURL = Validator.isNull(urlTitle);
 						}
 						else {
-							shouldMatchURLTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry).equals(urlTitle);
+							automaticURL = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry).equals(urlTitle);
 						}
 						%>
 
@@ -213,13 +213,13 @@ if (portletTitleBasedNavigation) {
 							<liferay-ui:message key="url" />
 						</h4>
 
-						<div class="form-group" id="<portlet:namespace />matchURLTitleOptions">
-							<aui:input checked="<%= shouldMatchURLTitle %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="matchURLTitle" type="radio" value="<%= true %>" />
+						<div class="form-group" id="<portlet:namespace />urlOptions">
+							<aui:input checked="<%= automaticURL %>" helpMessage="the-url-will-be-based-on-the-entry-title" label="automatic" name="automaticURL" type="radio" value="<%= true %>" />
 
-							<aui:input checked="<%= !shouldMatchURLTitle %>" label="custom" name="matchURLTitle" type="radio" value="<%= false %>" />
+							<aui:input checked="<%= !automaticURL %>" label="custom" name="automaticURL" type="radio" value="<%= false %>" />
 						</div>
 
-						<aui:input cssClass="input-medium" data-customUrl="<%= false %>" disabled="<%= shouldMatchURLTitle %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' ignoreRequestValue="<%= true %>" label="blog-entry-url" name="urlTitle" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
+						<aui:input cssClass="input-medium" data-customUrl="<%= false %>" disabled="<%= automaticURL %>" helpMessage='<%= LanguageUtil.format(resourceBundle, "for-example-x", "<em>one-day-in-the-life-of-marion-cotillard</em>") %>' ignoreRequestValue="<%= true %>" label="blog-entry-url" name="urlTitle" prefix="<%= friendlyURLPrefix %>" type="text" value="<%= urlTitle %>" />
 					</div>
 
 					<div class="clearfix form-group">
@@ -382,11 +382,11 @@ if (portletTitleBasedNavigation) {
 		}
 	}
 
-	function <portlet:namespace />OnChangeTitle(newTitle) {
+	function <portlet:namespace />OnChangeTitle(title) {
 		var blogs = Liferay.component('<portlet:namespace />Blogs');
 
 		if (blogs) {
-			blogs.updateUrlTitle(newTitle);
+			blogs.updateFriendlyURL(title);
 		}
 	}
 

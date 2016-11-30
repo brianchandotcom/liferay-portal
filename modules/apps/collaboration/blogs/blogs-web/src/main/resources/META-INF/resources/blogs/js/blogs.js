@@ -9,10 +9,6 @@ AUI.add(
 
 		var STR_CHANGE = 'change';
 
-		var STR_URL_TITLE = '#urlTitle';
-
-		var STR_MATCH_URL_TITLE = '#matchURLTitleOptions';
-
 		var STR_CLICK = 'click';
 
 		var STR_SUFFIX = '...';
@@ -109,19 +105,18 @@ AUI.add(
 						instance._syncDescriptionEditorUI();
 					},
 
-					updateUrlTitle: function(newTitle) {
+					updateFriendlyURL: function(title) {
 						var instance = this;
 
-						var urlTitleInput = instance.one(STR_URL_TITLE);
-						var oldTitle = urlTitleInput.val();
+						var urlTitleInput = instance.one('#urlTitle');
 
-						if ((instance._originalTitle || !oldTitle) && instance._shouldMatchUrlAndTitle()) {
-							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(newTitle));
+						var friendlyURLEmpty = !urlTitleInput.val();
+
+						if (instance._automaticURL() && (friendlyURLEmpty || instance._originalFriendlyURLChanged)) {
+							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(title));
 						}
 
-						if (!instance._originalTitle) {
-							instance._originalTitle = newTitle;
-						}
+						instance._originalFriendlyURLChanged = true;
 					},
 
 					_bindUI: function() {
@@ -158,10 +153,10 @@ AUI.add(
 							);
 						}
 
-						var matchURLTitle = instance.one(STR_MATCH_URL_TITLE);
+						var urlOptions = instance.one('#urlOptions');
 
 						eventHandles.push(
-							matchURLTitle.delegate(STR_CHANGE, instance._configureMatchURLTitle, 'input[type="radio"]', instance)
+							urlOptions.delegate(STR_CHANGE, instance._onChangeURLOptions, 'input[type="radio"]', instance)
 						);
 
 						instance._eventHandles = eventHandles;
@@ -207,22 +202,22 @@ AUI.add(
 						instance.setDescription(description);
 					},
 
-					_configureMatchURLTitle: function() {
+					_onChangeURLOptions: function() {
 						var instance = this;
 
-						var urlTitleInput = instance.one(STR_URL_TITLE);
+						var urlTitleInput = instance.one('#urlTitle');
 
-						if (instance._shouldMatchUrlAndTitle()) {
-							instance._lastCustomURLTitle = urlTitleInput.val();
+						if (instance._automaticURL()) {
+							instance._lastCustomURL = urlTitleInput.val();
 
 							var title = window[instance.ns('titleEditor')].getText();
 
-							instance.updateUrlTitle(title);
+							instance.updateFriendlyURL(title);
 
 							urlTitleInput.setAttribute('disabled', true);
 						}
 						else {
-							urlTitleInput.val(instance._lastCustomURLTitle || urlTitleInput.val());
+							urlTitleInput.val(instance._lastCustomURL || urlTitleInput.val());
 
 							urlTitleInput.removeAttribute('disabled');
 						}
@@ -290,7 +285,7 @@ AUI.add(
 						var description = window[instance.ns('descriptionEditor')].getHTML();
 						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var title = window[instance.ns('titleEditor')].getText();
-						var urlTitle = instance.one(STR_URL_TITLE).val();
+						var urlTitle = instance.one('#urlTitle').val();
 
 						var form = instance._getPrincipalForm();
 
@@ -444,8 +439,8 @@ AUI.add(
 						return text;
 					},
 
-					_shouldMatchUrlAndTitle: function() {
-						return this.one(STR_MATCH_URL_TITLE).one("input:checked").val() === 'true';
+					_automaticURL: function() {
+						return this.one('#urlOptions').one("input:checked").val() === 'true';
 					},
 
 					_showCaption: function() {

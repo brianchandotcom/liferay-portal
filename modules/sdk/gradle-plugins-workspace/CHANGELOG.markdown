@@ -46,6 +46,8 @@ of the `distBundleTar`, `distBundleZip`, and `initBundle` tasks.
 ### Added
 - [LPS-68849]: Apply [`LifecycleBasePlugin`](https://docs.gradle.org/current/javadoc/org/gradle/language/base/plugins/LifecycleBasePlugin.html)
 to the root project.
+- [LPS-69473]: If enabled, add the Maven central repoitory as first default
+repository for module and WAR projects.
 
 ### Changed
 - [LPS-69445]: Update the [Liferay Gradle Plugins] dependency to version 3.0.43.
@@ -64,3 +66,4 @@ to the root project.
 [LPS-68849]: https://issues.liferay.com/browse/LPS-68849
 [LPS-69294]: https://issues.liferay.com/browse/LPS-69294
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
+[LPS-69473]: https://issues.liferay.com/browse/LPS-69473

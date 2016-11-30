@@ -1,6 +1,21 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
+
 apply plugin: "org.ysb33r.gradletest"
 
+task copyDistBundleZipPluginsSdk(type: Copy)
 task copyGradleTestDependencies(type: Copy)
+
+copyDistBundleZipPluginsSdk {
+	eachFile new StripPathSegmentsAction(1)
+
+	from {
+		zipTree(FileUtil.get(project, "http://mirrors.liferay.com/releases.liferay.com/portal/7.0.2-ga3/com.liferay.portal.plugins.sdk-7.0-ga3-20160804222206210.zip"))
+	}
+
+	includeEmptyDirs = false
+	into "src/gradleTest/distBundleZip/plugins-sdk"
+}
 
 copyGradleTestDependencies {
 	from configurations.compile
@@ -16,6 +31,7 @@ dependencies {
 }
 
 gradleTest {
+	dependsOn copyDistBundleZipPluginsSdk
 	dependsOn copyGradleTestDependencies
 	dependsOn jar
 

@@ -81,9 +81,11 @@ runGradleTest {
 
 			// Projects
 
-			String zipEntryName = "${zipEntryRootName}osgi/war/foo.war"
+			for (String fileName : ["osgi/modules/baz-theme.war", "osgi/modules/com.example.bar-1.0.0.jar", "osgi/modules/qux-layouttpl-7.0.0.1.war", "osgi/war/foo.war"]) {
+				String zipEntryName = zipEntryRootName + fileName
 
-			assert zipFile.getEntry(zipEntryName) != null : zipEntryName
+				assert zipFile.getEntry(zipEntryName) != null : zipEntryName
+			}
 		}
 	}
 }

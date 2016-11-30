@@ -937,35 +937,27 @@ public class SubscriptionSender implements Serializable {
 		Map<Locale, String> localizedValueMap, Locale locale,
 		String defaultValue) {
 
-		String processedValue = null;
-
-		if (localizedValueMap != null) {
-			String localizedValue = localizedValueMap.get(locale);
-
-			if (Validator.isNull(localizedValue)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				processedValue = localizedValueMap.get(defaultLocale);
-			}
-			else {
-				processedValue = localizedValue;
-			}
-		}
-		else {
-			processedValue = defaultValue;
+		if (localizedValueMap == null) {
+			return defaultValue;
 		}
 
-		return processedValue;
+		String localizedValue = localizedValueMap.get(locale);
+
+		if (Validator.isNotNull(localizedValue)) {
+			return localizedValue;
+		}
+
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		return localizedValueMap.get(defaultLocale);
 	}
 
 	private String _getPortletName(Locale locale) {
-		String portletName = StringPool.BLANK;
-
-		if (Validator.isNotNull(portletId)) {
-			portletName = PortalUtil.getPortletTitle(portletId, locale);
+		if (Validator.isNull(portletId)) {
+			return StringPool.BLANK;
 		}
 
-		return portletName;
+		return PortalUtil.getPortletTitle(portletId, locale);
 	}
 
 	private String _getPortletTitle(String portletName, Locale locale) {

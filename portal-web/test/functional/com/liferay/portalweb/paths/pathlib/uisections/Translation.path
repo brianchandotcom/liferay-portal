@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNSELECTED_LOCALE_ICON</td>
+	<td>//span[contains(.,'${key_localizedLanguage}') and contains(@class,'translation')]/img</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTED_LOCALE</td>
 	<td>//span[contains(.,'${key_localizedLanguage}') and contains(@class,'-editing')]</td>
 	<td></td>

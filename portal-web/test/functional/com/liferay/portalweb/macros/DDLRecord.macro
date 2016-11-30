@@ -448,6 +448,12 @@
 		<execute function="Click" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_RADIO" />
 	</command>
 
+	<command name="selectTranslation">
+		<var name="key_localizedLanguage" value="${localizedLanguage}" />
+
+		<execute function="Click" locator1="Translation#UNSELECTED_LOCALE_ICON" />
+	</command>
+
 	<command name="submitForPublication">
 		<execute macro="Button#clickSubmitForPublication" />
 

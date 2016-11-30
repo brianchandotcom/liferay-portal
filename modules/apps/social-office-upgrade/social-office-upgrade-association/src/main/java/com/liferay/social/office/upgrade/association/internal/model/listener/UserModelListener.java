@@ -240,13 +240,15 @@ public class UserModelListener extends BaseModelListener<User> {
 	protected UserLocalService userLocalService;
 
 	/**
-	 * {@link com.liferay.portal.kernel.service.persistence.impl.TableMapperImpl}
+	 * {@link
+	 * com.liferay.portal.kernel.service.persistence.impl.TableMapperImpl}
 	 */
 	private static final String _MAPPING_TABLE_USERS_ROLES_NAME_LEFT_TO_RIGHT =
 		TableMapper.class.getName() + "-Users_Roles-LeftToRight";
 
 	/**
-	 * {@link com.liferay.portal.kernel.service.persistence.impl.TableMapperImpl}
+	 * {@link
+	 * com.liferay.portal.kernel.service.persistence.impl.TableMapperImpl}
 	 */
 	private static final String _MAPPING_TABLE_USERS_ROLES_NAME_RIGHT_TO_LEFT =
 		TableMapper.class.getName() + "-Users_Roles-RightToLeft";

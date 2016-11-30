@@ -67,7 +67,8 @@ public class ServiceJSONWebServiceScannerStrategy
 	}
 
 	/**
-	 * @see com.liferay.portal.jsonwebservice.SpringJSONWebServiceScannerStrategy#getTargetClass(Object)
+	 * @see com.liferay.portal.jsonwebservice.SpringJSONWebServiceScannerStrategy#getTargetClass(
+	 *      Object)
 	 */
 	protected Class<?> getTargetClass(Object service) throws Exception {
 		while (ProxyUtil.isProxyClass(service.getClass())) {

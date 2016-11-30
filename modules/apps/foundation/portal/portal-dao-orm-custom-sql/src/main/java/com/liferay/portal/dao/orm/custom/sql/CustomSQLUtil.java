@@ -26,7 +26,7 @@ import java.sql.SQLException;
  * @author Brian Wing Shun Chan
  * @author Bruno Farache
  * @author Raymond Augé
- * @see com.liferay.util.dao.orm.CustomSQLUtil
+ * @see    com.liferay.util.dao.orm.CustomSQLUtil
  */
 public class CustomSQLUtil {
 

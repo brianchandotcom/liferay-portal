@@ -117,8 +117,9 @@ public class UpgradeKBFolder extends UpgradeProcess {
 	}
 
 	/**
-	 * See {@link com.liferay.knowledge.base.util.KnowledgeBaseUtil#getUrlTitle(
-	 * long, String)}
+	 * See {@link
+	 * com.liferay.knowledge.base.util.KnowledgeBaseUtil#getUrlTitle(long,
+	 * String)}
 	 */
 	private String _getUrlTitle(long id, String title) {
 		if (title == null) {

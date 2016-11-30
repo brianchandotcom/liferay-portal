@@ -24,9 +24,9 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Brian Wing Shun Chan
- *
- * @deprecated As of 4.0.0, replaced by {@link #com.liferay.journal.properties.trasnformer.listener.JournalPropertiesTransformerListener}
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of 4.0.0, replaced by {@link
+ *             #com.liferay.journal.properties.trasnformer.listener.JournalPropertiesTransformerListener}
  */
 @Component(
 	immediate = true,

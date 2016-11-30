@@ -23,7 +23,7 @@ import org.junit.Test;
 
 /**
  * @author Miguel Pastor
- * @see com.liferay.util.mail.InternetAddressUtilTest
+ * @see    com.liferay.util.mail.InternetAddressUtilTest
  */
 public class InternetAddressUtilTest {
 

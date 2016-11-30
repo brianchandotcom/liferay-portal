@@ -166,6 +166,10 @@ public class ModulesStructureTest {
 
 					String dirName = String.valueOf(dirPath.getFileName());
 
+					if (dirName.equals("gradleTest")) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
 					if (dirPath.equals(_modulesDirPath) ||
 						Files.exists(dirPath.resolve(".gitrepo"))) {
 

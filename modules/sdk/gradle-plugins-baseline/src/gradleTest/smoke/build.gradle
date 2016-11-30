@@ -22,58 +22,45 @@ buildscript {
 	}
 }
 
+apply plugin: "com.liferay.baseline"
+apply plugin: "org.dm.bundle"
+
+Properties bndProperties = _getBndProperties(project)
+
+archivesBaseName = bndProperties[Constants.BUNDLE_SYMBOLICNAME]
+group = "com.example"
+version = bndProperties[Constants.BUNDLE_VERSION]
+
 task runGradleTest
 
-project(":sample-100") {
-	apply plugin: "maven"
+baseline {
+	ignoreFailures = true
 }
 
-project(":sample-101") {
-	apply plugin: "com.liferay.baseline"
+baselineConfiguration {
+	allowMavenLocal = true
+}
 
-	baseline {
-		dependsOn ":sample-100:install"
-		ignoreFailures = true
-	}
+bundle {
+	instruction "-include", "bnd.bnd"
+}
 
-	baselineConfiguration {
-		allowMavenLocal = true
-	}
+repositories {
+	mavenLocal()
 }
 
 runGradleTest {
-	Project sample101Project = project(":sample-101")
-
-	dependsOn sample101Project.tasks.baseline
+	dependsOn baseline
 
 	doLast {
-		Properties bndProperties = _getBndProperties(sample101Project)
+		Properties finalBndProperties = _getBndProperties(project)
 
-		assert bndProperties[Constants.BUNDLE_VERSION] == "2.0.0"
+		assert finalBndProperties[Constants.BUNDLE_VERSION] == "2.0.0"
 
-		File packageInfoFile = sample101Project.file("src/main/resources/com/example/sample/packageinfo")
+		File packageInfoFile = file("src/main/resources/com/example/sample/packageinfo")
 
 		assert packageInfoFile.exists()
 		assert packageInfoFile.text == "version 2.0.0"
-	}
-}
-
-subprojects {
-	apply plugin: "java"
-	apply plugin: "org.dm.bundle"
-
-	Properties bndProperties = _getBndProperties(project)
-
-	archivesBaseName = bndProperties[Constants.BUNDLE_SYMBOLICNAME]
-	group = "com.example"
-	version = bndProperties[Constants.BUNDLE_VERSION]
-
-	bundle {
-		instruction "-include", "bnd.bnd"
-	}
-
-	repositories {
-		mavenLocal()
 	}
 }
 
@@ -86,5 +73,5 @@ private Properties _getBndProperties(Project project) {
 		bndProperties.load it
 	}
 
-	return bndProperties
+	bndProperties
 }

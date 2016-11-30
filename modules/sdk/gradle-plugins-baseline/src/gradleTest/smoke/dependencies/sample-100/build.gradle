@@ -1,0 +1,41 @@
+import aQute.bnd.osgi.Constants
+
+import org.gradle.util.VersionNumber
+
+buildscript {
+	dependencies {
+		classpath group: "org.dm.gradle", name: "gradle-bundle-plugin", version: "0.8.6"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "java"
+apply plugin: "maven"
+apply plugin: "org.dm.bundle"
+
+Properties bndProperties = _getBndProperties(project)
+
+archivesBaseName = bndProperties[Constants.BUNDLE_SYMBOLICNAME]
+group = "com.example"
+version = bndProperties[Constants.BUNDLE_VERSION]
+
+bundle {
+	instruction "-include", "bnd.bnd"
+}
+
+private Properties _getBndProperties(Project project) {
+	Properties bndProperties = new Properties()
+
+	File bndFile = project.file("bnd.bnd")
+
+	bndFile.withInputStream {
+		bndProperties.load it
+	}
+
+	bndProperties
+}

@@ -1,15 +1,3 @@
-buildscript {
-	dependencies {
-		classpath "com.liferay:com.liferay.gradle.plugins.baseline:1.0.0"
-	}
-
-	repositories {
-		mavenLocal()
-
-		mavenCentral()
-	}
-}
-
 apply plugin: "com.liferay.baseline"
 
 archivesBaseName = "com.example.foo"

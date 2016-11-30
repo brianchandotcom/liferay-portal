@@ -20,12 +20,32 @@ import java.io.File;
 
 import java.lang.reflect.Method;
 
+import org.gradle.api.Action;
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
+import org.gradle.api.artifacts.dsl.RepositoryHandler;
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
+
+	public static void addDefaultRepositories(Project project) {
+		RepositoryHandler repositoryHandler = project.getRepositories();
+
+		repositoryHandler.maven(
+			new Action<MavenArtifactRepository>() {
+
+				@Override
+				public void execute(
+					MavenArtifactRepository mavenArtifactRepository) {
+
+					mavenArtifactRepository.setUrl(_DEFAULT_REPOSITORY_URL);
+				}
+
+			});
+	}
 
 	public static String getProjectPath(File projectDir, File rootDir) {
 		String projectPath = FileUtil.relativize(projectDir, rootDir);
@@ -94,5 +114,9 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 
 		return toString(value);
 	}
+
+	private static final String _DEFAULT_REPOSITORY_URL =
+		"https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups" +
+			"/public";
 
 }

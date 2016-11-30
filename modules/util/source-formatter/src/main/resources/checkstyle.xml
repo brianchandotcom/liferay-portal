@@ -156,7 +156,7 @@
 			<message key="tabbing.incorrect" value="Expected indentation is ''{0}'' tabs" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SelfReference">
-			<message key="self.reference.unneeded" value="Reference to method ''{0}'' doese not need ''{1}''" />
+			<message key="self.reference.unneeded" value="Reference to method ''{0}'' does not need ''{1}''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZero">
 			<message key="method.use" value="Use method ''{0}'' instead" />

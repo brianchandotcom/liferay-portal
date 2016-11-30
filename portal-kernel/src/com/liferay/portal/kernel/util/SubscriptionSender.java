@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.AggregateMailTemplateContext;
 import com.liferay.portal.kernel.mail.DefaultMailTemplate;
 import com.liferay.portal.kernel.mail.DefaultMailTemplateContextBuilder;
 import com.liferay.portal.kernel.mail.MailTemplate;
@@ -185,20 +186,8 @@ public class SubscriptionSender implements Serializable {
 			if (bulk) {
 				Locale locale = LocaleUtil.getDefault();
 
-				MailTemplateContextBuilder mailTemplateContextBuilder =
-					new DefaultMailTemplateContextBuilder();
-
-				String portletName = _getPortletName(locale);
-
-				mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
-				mailTemplateContextBuilder.put(
-					"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
-
-				_context.forEach(mailTemplateContextBuilder::put);
-				_localizedContext.forEach(mailTemplateContextBuilder::put);
-
 				MailTemplateContext mailTemplateContext =
-					mailTemplateContextBuilder.build();
+					_getBasicMailTemplateContext(locale);
 
 				MailTemplate replyToAddressMailTemplate =
 					new DefaultMailTemplate(replyToAddress, false);
@@ -701,31 +690,8 @@ public class SubscriptionSender implements Serializable {
 		InternetAddress from = mailMessage.getFrom();
 		InternetAddress to = mailMessage.getTo()[0];
 
-		MailTemplateContextBuilder mailTemplateContextBuilder =
-			new DefaultMailTemplateContextBuilder();
-
-		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", from.getAddress());
-		mailTemplateContextBuilder.put(
-			"[$FROM_NAME$]",
-			GetterUtil.getString(from.getPersonal(), from.getAddress()));
-		mailTemplateContextBuilder.put(
-			"[$TO_ADDRESS$]", HtmlUtil.escape(to.getAddress()));
-		mailTemplateContextBuilder.put(
-			"[$TO_NAME$]",
-			HtmlUtil.escape(
-				GetterUtil.getString(to.getPersonal(), to.getAddress())));
-
-		String portletName = _getPortletName(locale);
-
-		mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
-		mailTemplateContextBuilder.put(
-			"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
-
-		_context.forEach(mailTemplateContextBuilder::put);
-		_localizedContext.forEach(mailTemplateContextBuilder::put);
-
-		MailTemplateContext mailTemplateContext =
-			mailTemplateContextBuilder.build();
+		MailTemplateContext mailTemplateContext = _getBodyMailTemplateContext(
+			locale, from, to);
 
 		MailTemplate subjectMailTemplate = new DefaultMailTemplate(
 			mailMessage.getSubject(), false);
@@ -824,20 +790,8 @@ public class SubscriptionSender implements Serializable {
 	protected void sendEmail(InternetAddress to, Locale locale)
 		throws Exception {
 
-		MailTemplateContextBuilder mailTemplateContextBuilder =
-			new DefaultMailTemplateContextBuilder();
-
-		String portletName = _getPortletName(locale);
-
-		mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
-		mailTemplateContextBuilder.put(
-			"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
-
-		_context.forEach(mailTemplateContextBuilder::put);
-		_localizedContext.forEach(mailTemplateContextBuilder::put);
-
-		MailTemplateContext mailTemplateContext =
-			mailTemplateContextBuilder.build();
+		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
+			locale);
 
 		MailTemplate fromAddressMailTemplate = new DefaultMailTemplate(
 			fromAddress, false);
@@ -1019,6 +973,46 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected boolean uniqueMailId = true;
+
+	private MailTemplateContext _getBasicMailTemplateContext(Locale locale) {
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			new DefaultMailTemplateContextBuilder();
+
+		String portletName = _getPortletName(locale);
+
+		mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
+		mailTemplateContextBuilder.put(
+			"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
+
+		_context.forEach(mailTemplateContextBuilder::put);
+		_localizedContext.forEach(mailTemplateContextBuilder::put);
+
+		return mailTemplateContextBuilder.build();
+	}
+
+	private MailTemplateContext _getBodyMailTemplateContext(
+		Locale locale, InternetAddress from, InternetAddress to) {
+
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			new DefaultMailTemplateContextBuilder();
+
+		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", from.getAddress());
+		mailTemplateContextBuilder.put(
+			"[$FROM_NAME$]",
+			GetterUtil.getString(from.getPersonal(), from.getAddress()));
+		mailTemplateContextBuilder.put(
+			"[$TO_ADDRESS$]", HtmlUtil.escape(to.getAddress()));
+		mailTemplateContextBuilder.put(
+			"[$TO_NAME$]",
+			HtmlUtil.escape(
+				GetterUtil.getString(to.getPersonal(), to.getAddress())));
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		return new AggregateMailTemplateContext(
+			mailTemplateContext, _getBasicMailTemplateContext(locale));
+	}
 
 	private String _getPortletName(Locale locale) {
 		String portletName = StringPool.BLANK;

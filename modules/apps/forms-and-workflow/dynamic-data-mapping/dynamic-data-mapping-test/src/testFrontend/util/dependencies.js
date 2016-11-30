@@ -16,6 +16,7 @@ var ddmOptionsResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-t
 var ddmRadioResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-radio');
 var ddmRendererResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-form-renderer');
 var ddmTextResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-text');
+var ddmFieldSetResourcesDir = osgi.ddmBundleResourcesPath('dynamic-data-mapping-type-fieldset');
 
 module.exports = [
 	frontendTmpSrcDir + '/aui/aui/aui.js',
@@ -52,6 +53,11 @@ module.exports = [
 	{
 		included: false,
 		pattern: ddmTextResourcesDir + '/*.soy.js'
+	},
+	ddmFieldSetResourcesDir + '/!(*.soy).js',
+	{
+		included: false,
+		pattern: ddmFieldSetResourcesDir + '/*.soy.js'
 	},
 	{
 		included: false,

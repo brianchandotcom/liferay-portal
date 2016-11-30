@@ -7,14 +7,6 @@
 
 package com.liferay.portal.remote.axis.extender.test.service.http;
 
-/**
- * CalcServiceSoapPortSoapBindingStub.java
- *
- * This file was auto-generated from WSDL
- * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
- *
- * @author Brian Wing Shun Chan
- */
 public class CalcServiceSoapPortSoapBindingStub extends org.apache.axis.client.Stub implements com.liferay.portal.remote.axis.extender.test.service.http.CalcServiceSoap {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
@@ -47,12 +39,12 @@ public class CalcServiceSoapPortSoapBindingStub extends org.apache.axis.client.S
     }
 
     public CalcServiceSoapPortSoapBindingStub() throws org.apache.axis.AxisFault {
-         this(null);
+        this(null);
     }
 
     public CalcServiceSoapPortSoapBindingStub(java.net.URL endpointURL, javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
-         this(service);
-         super.cachedEndpoint = endpointURL;
+        this(service);
+        super.cachedEndpoint = endpointURL;
     }
 
     public CalcServiceSoapPortSoapBindingStub(javax.xml.rpc.Service service) throws org.apache.axis.AxisFault {
@@ -110,22 +102,22 @@ public class CalcServiceSoapPortSoapBindingStub extends org.apache.axis.client.S
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(a), new java.lang.Integer(b)});
+        try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {new java.lang.Integer(a), new java.lang.Integer(b)});
 
-        if (_resp instanceof java.rmi.RemoteException) {
-            throw (java.rmi.RemoteException)_resp;
-        }
-        else {
-            extractAttachments(_call);
-            try {
-                return ((java.lang.Integer) _resp).intValue();
-            } catch (java.lang.Exception _exception) {
-                return ((java.lang.Integer) org.apache.axis.utils.JavaUtils.convert(_resp, int.class)).intValue();
+            if (_resp instanceof java.rmi.RemoteException) {
+                throw (java.rmi.RemoteException)_resp;
             }
+            else {
+                extractAttachments(_call);
+                try {
+                    return ((java.lang.Integer) _resp).intValue();
+                } catch (java.lang.Exception _exception) {
+                    return ((java.lang.Integer) org.apache.axis.utils.JavaUtils.convert(_resp, int.class)).intValue();
+                }
+            }
+        } catch (org.apache.axis.AxisFault axisFaultException) {
+            throw axisFaultException;
         }
-  } catch (org.apache.axis.AxisFault axisFaultException) {
-  throw axisFaultException;
-}
     }
 
 }

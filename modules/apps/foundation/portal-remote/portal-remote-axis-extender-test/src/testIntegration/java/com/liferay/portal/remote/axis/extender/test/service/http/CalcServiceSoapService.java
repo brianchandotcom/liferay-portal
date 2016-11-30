@@ -7,14 +7,6 @@
 
 package com.liferay.portal.remote.axis.extender.test.service.http;
 
-/**
- * CalcServiceSoapService.java
- *
- * This file was auto-generated from WSDL
- * by the Apache Axis 1.4 Apr 22, 2006 (06:55:48 PDT) WSDL2Java emitter.
- *
- * @author Brian Wing Shun Chan
- */
 public interface CalcServiceSoapService extends javax.xml.rpc.Service {
     public java.lang.String getCalcServiceSoapPortAddress();
 

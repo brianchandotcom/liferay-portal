@@ -103,15 +103,9 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		>
 
 			<%
-			String backgroundTaskName = backgroundTask.getName();
+			BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask);
 
-			if (localPublishing && (backgroundTask.getGroupId() == liveGroupId)) {
-				backgroundTaskName = LanguageUtil.get(request, "initial-publication");
-			}
-
-			if (backgroundTaskName.equals(StringPool.BLANK)) {
-				backgroundTaskName = LanguageUtil.get(request, "untitled");
-			}
+			String backgroundTaskName = backgroundTaskDisplay.getDisplayName(request);
 			%>
 
 			<c:choose>

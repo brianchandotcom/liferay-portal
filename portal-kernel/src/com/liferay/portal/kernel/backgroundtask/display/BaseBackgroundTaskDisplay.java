@@ -33,12 +33,15 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Writer;
 
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrew Betts
@@ -52,6 +55,15 @@ public abstract class BaseBackgroundTaskDisplay
 		backgroundTaskStatus =
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
+	}
+
+	@Override
+	public String getDisplayName(HttpServletRequest request) {
+		if (Validator.isNull(backgroundTask.getName())) {
+			return LanguageUtil.get(request, "untitled");
+		}
+
+		return backgroundTask.getName();
 	}
 
 	@Override

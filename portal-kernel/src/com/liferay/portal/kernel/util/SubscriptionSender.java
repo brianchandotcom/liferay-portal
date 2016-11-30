@@ -728,63 +728,12 @@ public class SubscriptionSender implements Serializable {
 			String content, Locale locale, boolean escape)
 		throws Exception {
 
-		for (Map.Entry<String, EscapableLocalizableFunction> entry :
-				_localizedContext.entrySet()) {
+		MailTemplateContext mailTemplateContext =
+			_getBasicMailTemplateContext(locale);
 
-			String key = entry.getKey();
-			EscapableLocalizableFunction value = entry.getValue();
+		MailTemplate mailTemplate = new DefaultMailTemplate(content, escape);
 
-			String valueString = null;
-
-			if (escape) {
-				valueString = value.getEscapedValue(locale);
-			}
-			else {
-				valueString = value.getOriginalValue(locale);
-			}
-
-			content = StringUtil.replace(content, key, valueString);
-		}
-
-		for (Map.Entry<String, EscapableObject<String>> entry :
-				_context.entrySet()) {
-
-			String key = entry.getKey();
-			EscapableObject<String> value = entry.getValue();
-
-			String valueString = null;
-
-			if (escape) {
-				valueString = value.getEscapedValue();
-			}
-			else {
-				valueString = value.getOriginalValue();
-			}
-
-			content = StringUtil.replace(content, key, valueString);
-		}
-
-		String portletName = _getPortletName(locale);
-
-		content = StringUtil.replace(content, "[$PORTLET_NAME$]", portletName);
-
-		String portletTitle = _getPortletTitle(portletName, locale);
-
-		if (Validator.isNotNull(portletTitle)) {
-			content = StringUtil.replace(
-				content, "[$PORTLET_TITLE$]", portletTitle);
-		}
-
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-		content = StringUtil.replace(
-			content, new String[] {"href=\"/", "src=\"/"},
-			new String[] {
-				"href=\"" + company.getPortalURL(groupId) + "/",
-				"src=\"" + company.getPortalURL(groupId) + "/"
-			});
-
-		return content;
+		return mailTemplate.renderAsString(locale, mailTemplateContext);
 	}
 
 	protected void sendEmail(InternetAddress to, Locale locale)

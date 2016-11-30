@@ -46,6 +46,13 @@ public class CustomAttributeTag extends IncludeTag {
 	}
 
 	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
+	@Override
 	protected void cleanUp() {
 		_className = null;
 		_classPK = 0;
@@ -64,23 +71,17 @@ public class CustomAttributeTag extends IncludeTag {
 		request.setAttribute(
 			"custom-field-ui:custom-attribute:className", _className);
 		request.setAttribute(
-			"custom-field-ui:custom-attribute:classPK", String.valueOf(_classPK));
+			"custom-field-ui:custom-attribute:classPK",
+			String.valueOf(_classPK));
 		request.setAttribute(
-			"custom-field-ui:custom-attribute:editable", String.valueOf(_editable));
+			"custom-field-ui:custom-attribute:editable",
+			String.valueOf(_editable));
 		request.setAttribute(
 			"custom-field-ui:custom-attribute:label", String.valueOf(_label));
 		request.setAttribute("custom-field-ui:custom-attribute:name", _name);
 	}
 
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = ServletContextUtil.getServletContext();
-	}
-	
-	private static final String _PAGE =
-		"/custom_attribute/page.jsp";
+	private static final String _PAGE = "/custom_attribute/page.jsp";
 
 	private String _className;
 	private long _classPK;

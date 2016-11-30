@@ -42,7 +42,8 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.expando.custom.field.ui.taglib)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.expando.custom.field.ui.taglib)",
+		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

@@ -17,8 +17,6 @@ package com.liferay.expando.custom.field.ui.servlet.taglib;
 import com.liferay.expando.custom.field.ui.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -45,6 +43,13 @@ public class CustomAttributeListTag extends IncludeTag {
 
 	public void setLabel(boolean label) {
 		_label = label;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	@Override
@@ -75,19 +80,11 @@ public class CustomAttributeListTag extends IncludeTag {
 			"custom-field-ui:custom-attribute-list:ignoreAttributeNames",
 			_ignoreAttributeNames);
 		request.setAttribute(
-			"custom-field-ui:custom-attribute-list:label", String.valueOf(_label));
-		
+			"custom-field-ui:custom-attribute-list:label",
+			String.valueOf(_label));
 	}
 
-	@Override
-	public void setPageContext(PageContext pageContext) {
-		super.setPageContext(pageContext);
-
-		servletContext = ServletContextUtil.getServletContext();
-	}
-	
-	private static final String _PAGE =
-		"/custom_attribute_list/page.jsp";
+	private static final String _PAGE = "/custom_attribute_list/page.jsp";
 
 	private String _className;
 	private long _classPK;

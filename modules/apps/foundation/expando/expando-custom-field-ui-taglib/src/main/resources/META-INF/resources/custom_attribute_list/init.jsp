@@ -14,11 +14,8 @@
  */
 --%>
 
-<%@taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://liferay.com/tld/custom_field_ui" prefix="liferay-custom-field-ui" %>
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.expando.kernel.model.ExpandoColumnConstants" %><%@
-page import="com.liferay.expando.kernel.model.ExpandoTableConstants" %><%@
-page import="com.liferay.expando.kernel.service.permission.ExpandoColumnPermissionUtil" %><%@
-page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %>
+<%@ page import="com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil" %>

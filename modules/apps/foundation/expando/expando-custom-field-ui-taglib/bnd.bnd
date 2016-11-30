@@ -1,4 +1,4 @@
-Bundle-Name: Custom Field UI Taglib
+Bundle-Name: Liferay Expando Custom Field UI Taglib
 Bundle-SymbolicName: com.liferay.expando.custom.field.ui.taglib
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.expando.custom.field.ui.servlet.taglib

@@ -55,18 +55,23 @@ if (portletTitleBasedNavigation) {
 %>
 
 <liferay-util:buffer var="saveStatus">
-	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
-		<c:if test="<%= entry != null %>">
-			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"><c:if test="<%= entry != null %>">
+		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-			<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-		</c:if>
-	</small>
+		<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+	</c:if></small>
+</liferay-util:buffer>
+
+<liferay-util:buffer var="readingTime">
+	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime"><c:if test="<%= entry != null %>">
+		<liferay-ui:message arguments="<%= com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent()) %>" key="x-minutes-read" translateArguments="<%= false %>" />
+	</c:if></small>
 </liferay-util:buffer>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
 	<liferay-frontend:info-bar>
 		<%= saveStatus %>
+		<%= readingTime %>
 	</liferay-frontend:info-bar>
 </c:if>
 
@@ -169,7 +174,6 @@ if (portletTitleBasedNavigation) {
 						<aui:input name="subtitle" type="hidden" />
 
 						<div class="entry-content">
-							<div class="hide reading-time" id="<portlet:namespace />readingTime"></div>
 							<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 						</div>
 

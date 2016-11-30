@@ -383,4 +383,8 @@
 	.separator {
 		border-color: transparent;
 	}
+
+	.info-bar-center small:not(:empty) + small:not(:empty):before {
+		content: " - ";
+	}
 }

@@ -1353,6 +1353,25 @@
 		<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
 		<var name="kfProcessName" value="Kaleo Forms Process" />
 
+		<for list="Field1,Field2,Field3,Field4,Field5,Field6" param="kfFieldSetName">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Kaleo Forms Admin" />
+			</execute>
+
+			<execute macro="KaleoFormsAdmin#addFieldSet">
+				<var name="kfFieldSetName" value="${kfFieldSetName}" />
+				<var name="kfProcessName" value="${kfProcessName}" />
+			</execute>
+
+			<execute macro="DynamicDataMapping#addField">
+				<var name="field" value="Text" />
+				<var name="fieldFieldLabel" value="Text" />
+				<var name="fieldName" value="Text" />
+			</execute>
+
+			<execute macro="KaleoFormsAdmin#saveFieldSet" />
+		</for>
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

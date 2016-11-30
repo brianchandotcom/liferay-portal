@@ -1486,7 +1486,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
 	</target>
 
-	<target name="functional-smoke-tomcat8-sybase16-jdk8">
+	<target name="functional-smoke-tomcat8-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
@@ -1538,7 +1538,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-upgrade-tomcat8-postgresql94-jdk8" />
 	</target>
 
-	<target name="functional-upgrade-tomcat8-sybase16-jdk8">
+	<target name="functional-upgrade-tomcat8-sybase160-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="sybase" />
 	</target>
 
@@ -1586,7 +1586,7 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-legacy-database-dump database.type="postgresql" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-sybase16-jdk7">
+	<target name="legacy-functional-bundle-tomcat-sybase160-jdk7">
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 

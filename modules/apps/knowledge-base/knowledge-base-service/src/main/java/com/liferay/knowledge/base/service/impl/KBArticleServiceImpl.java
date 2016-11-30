@@ -222,8 +222,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #getAllDescendantKBArticles(
-	 *             long, long, int, OrderByComparator)}
+	 * @deprecated As of 1.1.0, replaced by {@link
+	 *             #getAllDescendantKBArticles(long, long, int,
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -665,8 +666,7 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 1.1.0, replaced by {@link #getKBArticles(long, long,
-	 *             int, int, int,
-	 *             OrderByComparator)}
+	 *             int, int, int, OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -953,8 +953,9 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 1.1.0, replaced by {@link #getAllDescendantKBArticles(
-	 *             long, long, int, OrderByComparator, boolean)}
+	 * @deprecated As of 1.1.0, replaced by {@link
+	 *             #getAllDescendantKBArticles(long, long, int,
+	 *             OrderByComparator, boolean)}
 	 */
 	@Deprecated
 	protected List<KBArticle> getAllDescendantKBArticles(

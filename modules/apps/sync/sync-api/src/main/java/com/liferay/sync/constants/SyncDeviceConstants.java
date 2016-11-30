@@ -22,7 +22,7 @@ public class SyncDeviceConstants {
 	/**
 	 * Feature set 1:
 	 *
-	 *  Sites removed from Sync context
+	 * Sites removed from Sync context
 	 */
 	public static final int FEATURE_SET_1 = 1;
 

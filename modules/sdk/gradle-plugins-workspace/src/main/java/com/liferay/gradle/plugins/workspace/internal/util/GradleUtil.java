@@ -34,6 +34,8 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 	public static void addDefaultRepositories(Project project) {
 		RepositoryHandler repositoryHandler = project.getRepositories();
 
+		repositoryHandler.mavenCentral();
+
 		repositoryHandler.maven(
 			new Action<MavenArtifactRepository>() {
 

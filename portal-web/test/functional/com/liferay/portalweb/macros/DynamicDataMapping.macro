@@ -85,6 +85,14 @@
 
 		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER_FIELD" value1="${field}" />
 
+		<execute macro="DynamicDataMapping#_editFieldLabel">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
+
 		<execute macro="DynamicDataMapping#editFieldNameCmd">
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />

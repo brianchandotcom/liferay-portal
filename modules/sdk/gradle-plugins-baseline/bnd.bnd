@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Gradle Plugins Baseline
 Bundle-SymbolicName: com.liferay.gradle.plugins.baseline
-Bundle-Version: 1.0.1
+Bundle-Version: 1.1.0
 Export-Package: com.liferay.gradle.plugins.baseline

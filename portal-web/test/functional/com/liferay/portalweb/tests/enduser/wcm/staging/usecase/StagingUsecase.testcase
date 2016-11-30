@@ -462,7 +462,6 @@
 
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="Publish Template Name" />
-			<var name="assetType" value="Publish Template" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">

@@ -279,15 +279,15 @@ if (parentOrganization != null) {
 					function(event) {
 						var rowColumns = [];
 
-						var href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.organizationid;
+						var href = '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>&<portlet:namespace />organizationId=' + event.entityid;
 
-						rowColumns.push(<portlet:namespace />createURL(href, event.name));
+						rowColumns.push(<portlet:namespace />createURL(href, event.entityname));
 						rowColumns.push(<portlet:namespace />createURL(href, event.type));
-						rowColumns.push('<a class="modify-link" data-rowId="' + event.organizationid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
+						rowColumns.push('<a class="modify-link" data-rowId="' + event.entityid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeOrganizationIcon) %></a>');
 
 						searchContainer.deleteRow(1, searchContainer.getData());
-						searchContainer.addRow(rowColumns, event.organizationid);
-						searchContainer.updateDataStore(event.organizationid);
+						searchContainer.addRow(rowColumns, event.entityid);
+						searchContainer.updateDataStore(event.entityid);
 					}
 				);
 			}

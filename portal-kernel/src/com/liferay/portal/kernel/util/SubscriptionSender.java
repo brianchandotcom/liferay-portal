@@ -65,7 +65,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import javax.mail.internet.InternetAddress;
 
@@ -320,8 +319,7 @@ public class SubscriptionSender implements Serializable {
 
 	public void setContextAttribute(String key, Object value, boolean escape) {
 		setContextAttribute(
-			key,
-			new HtmlEscapableObject<String>(String.valueOf(value), escape));
+			key, new HtmlEscapableObject<>(String.valueOf(value), escape));
 	}
 
 	public void setContextAttributes(Object... values) {
@@ -719,8 +717,8 @@ public class SubscriptionSender implements Serializable {
 			String content, Locale locale, boolean escape)
 		throws Exception {
 
-		MailTemplateContext mailTemplateContext =
-			_getBasicMailTemplateContext(locale);
+		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
+			locale);
 
 		MailTemplate mailTemplate = new DefaultMailTemplate(content, escape);
 

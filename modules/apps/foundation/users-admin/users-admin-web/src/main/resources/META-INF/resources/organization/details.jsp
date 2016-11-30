@@ -266,6 +266,8 @@ if (parentOrganization != null) {
 		selectOrganizationLink.on(
 			'click',
 			function(event) {
+				var searchContainerData = searchContainer.getData();
+
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
@@ -273,6 +275,7 @@ if (parentOrganization != null) {
 							modal: true
 						},
 						id: '<portlet:namespace />selectOrganization',
+						selectedData: [searchContainerData],
 						title: '<liferay-ui:message arguments="organization" key="select-x" />',
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/select_organization.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},

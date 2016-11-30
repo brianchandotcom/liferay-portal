@@ -14,7 +14,7 @@ AUI.add(
 		};
 
 		var number = function(val, node, ruleValue) {
-			var regex = /^[+\-]?(\d+)(\.\d+)?([eE][+-]?\d+)?$/;
+			var regex = /^[+\-]?(\d+)([.|,]\d+)*([eE][+-]?\d+)?$/;
 
 			return regex && regex.test(val);
 		};

@@ -213,21 +213,16 @@ public class SubscriptionSender implements Serializable {
 
 	public void flushNotificationsAsync() {
 		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
+			() -> {
+				Thread currentThread = Thread.currentThread();
 
-				@Override
-				public Void call() throws Exception {
-					Thread currentThread = Thread.currentThread();
+				_classLoader = currentThread.getContextClassLoader();
 
-					_classLoader = currentThread.getContextClassLoader();
+				MessageBusUtil.sendMessage(
+					DestinationNames.SUBSCRIPTION_SENDER,
+					SubscriptionSender.this);
 
-					MessageBusUtil.sendMessage(
-						DestinationNames.SUBSCRIPTION_SENDER,
-						SubscriptionSender.this);
-
-					return null;
-				}
-
+				return null;
 			});
 	}
 

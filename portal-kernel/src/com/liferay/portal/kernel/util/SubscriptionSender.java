@@ -23,6 +23,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.DefaultMailTemplate;
+import com.liferay.portal.kernel.mail.DefaultMailTemplateContextBuilder;
+import com.liferay.portal.kernel.mail.MailTemplate;
+import com.liferay.portal.kernel.mail.MailTemplateContext;
+import com.liferay.portal.kernel.mail.MailTemplateContextBuilder;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -180,9 +185,30 @@ public class SubscriptionSender implements Serializable {
 			if (bulk) {
 				Locale locale = LocaleUtil.getDefault();
 
+				MailTemplateContextBuilder mailTemplateContextBuilder =
+					new DefaultMailTemplateContextBuilder();
+
+				String portletName = _getPortletName(locale);
+
+				mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
+				mailTemplateContextBuilder.put(
+					"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
+
+				_context.forEach(mailTemplateContextBuilder::put);
+				_localizedContext.forEach(mailTemplateContextBuilder::put);
+
+				MailTemplateContext mailTemplateContext =
+					mailTemplateContextBuilder.build();
+
+				MailTemplate replyToAddressMailTemplate =
+					new DefaultMailTemplate(replyToAddress, false);
+
+				String processedReplyToAddress =
+					replyToAddressMailTemplate.renderAsString(
+						locale, mailTemplateContext);
+
 				InternetAddress to = new InternetAddress(
-					replaceContent(replyToAddress, locale),
-					replaceContent(replyToAddress, locale));
+					processedReplyToAddress, processedReplyToAddress);
 
 				sendEmail(to, locale);
 			}
@@ -229,7 +255,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link getCurrentUserId()}
+	 * @deprecated As of 7.0.0, replaced by {@link #getCurrentUserId()}
 	 */
 	@Deprecated
 	public long getUserId() {
@@ -675,49 +701,63 @@ public class SubscriptionSender implements Serializable {
 		InternetAddress from = mailMessage.getFrom();
 		InternetAddress to = mailMessage.getTo()[0];
 
-		String processedSubject = StringUtil.replace(
-			mailMessage.getSubject(),
-			new String[] {
-				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				from.getAddress(),
-				GetterUtil.getString(from.getPersonal(), from.getAddress()),
-				HtmlUtil.escape(to.getAddress()),
-				HtmlUtil.escape(
-					GetterUtil.getString(to.getPersonal(), to.getAddress()))
-			});
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			new DefaultMailTemplateContextBuilder();
 
-		processedSubject = replaceContent(processedSubject, locale, false);
+		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", from.getAddress());
+		mailTemplateContextBuilder.put(
+			"[$FROM_NAME$]",
+			GetterUtil.getString(from.getPersonal(), from.getAddress()));
+		mailTemplateContextBuilder.put(
+			"[$TO_ADDRESS$]", HtmlUtil.escape(to.getAddress()));
+		mailTemplateContextBuilder.put(
+			"[$TO_NAME$]",
+			HtmlUtil.escape(
+				GetterUtil.getString(to.getPersonal(), to.getAddress())));
+
+		String portletName = _getPortletName(locale);
+
+		mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
+		mailTemplateContextBuilder.put(
+			"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
+
+		_context.forEach(mailTemplateContextBuilder::put);
+		_localizedContext.forEach(mailTemplateContextBuilder::put);
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		MailTemplate subjectMailTemplate = new DefaultMailTemplate(
+			mailMessage.getSubject(), false);
+
+		String processedSubject = subjectMailTemplate.renderAsString(
+			locale, mailTemplateContext);
 
 		mailMessage.setSubject(processedSubject);
 
-		String processedBody = StringUtil.replace(
-			mailMessage.getBody(),
-			new String[] {
-				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				from.getAddress(),
-				GetterUtil.getString(from.getPersonal(), from.getAddress()),
-				HtmlUtil.escape(to.getAddress()),
-				HtmlUtil.escape(
-					GetterUtil.getString(to.getPersonal(), to.getAddress()))
-			});
+		MailTemplate bodyMailTemplate = new DefaultMailTemplate(
+			mailMessage.getBody(), true);
 
-		processedBody = replaceContent(processedBody, locale, htmlFormat);
+		String processedBody = bodyMailTemplate.renderAsString(
+			locale, mailTemplateContext);
 
 		mailMessage.setBody(processedBody);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	protected String replaceContent(String content, Locale locale)
 		throws Exception {
 
 		return replaceContent(content, locale, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	protected String replaceContent(
 			String content, Locale locale, boolean escape)
 		throws Exception {
@@ -758,31 +798,11 @@ public class SubscriptionSender implements Serializable {
 			content = StringUtil.replace(content, key, valueString);
 		}
 
-		String portletName = StringPool.BLANK;
+		String portletName = _getPortletName(locale);
 
-		if (Validator.isNotNull(portletId)) {
-			portletName = PortalUtil.getPortletTitle(portletId, locale);
+		content = StringUtil.replace(content, "[$PORTLET_NAME$]", portletName);
 
-			content = StringUtil.replace(
-				content, "[$PORTLET_NAME$]", portletName);
-		}
-
-		String portletTitle = portletName;
-
-		if (localizedPortletTitleMap != null) {
-			if (Validator.isNotNull(localizedPortletTitleMap.get(locale))) {
-				portletTitle = localizedPortletTitleMap.get(locale);
-			}
-			else {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				if (Validator.isNotNull(
-						localizedPortletTitleMap.get(defaultLocale))) {
-
-					portletTitle = localizedPortletTitleMap.get(defaultLocale);
-				}
-			}
-		}
+		String portletTitle = _getPortletTitle(portletName, locale);
 
 		if (Validator.isNotNull(portletTitle)) {
 			content = StringUtil.replace(
@@ -804,9 +824,30 @@ public class SubscriptionSender implements Serializable {
 	protected void sendEmail(InternetAddress to, Locale locale)
 		throws Exception {
 
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			new DefaultMailTemplateContextBuilder();
+
+		String portletName = _getPortletName(locale);
+
+		mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
+		mailTemplateContextBuilder.put(
+			"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
+
+		_context.forEach(mailTemplateContextBuilder::put);
+		_localizedContext.forEach(mailTemplateContextBuilder::put);
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		MailTemplate fromAddressMailTemplate = new DefaultMailTemplate(
+			fromAddress, false);
+
+		MailTemplate fromNameMailTemplate = new DefaultMailTemplate(
+			fromName, false);
+
 		InternetAddress from = new InternetAddress(
-			replaceContent(fromAddress, locale),
-			replaceContent(fromName, locale));
+			fromAddressMailTemplate.renderAsString(locale, mailTemplateContext),
+			fromNameMailTemplate.renderAsString(locale, mailTemplateContext));
 
 		String processedSubject = null;
 
@@ -869,9 +910,15 @@ public class SubscriptionSender implements Serializable {
 		mailMessage.setMessageId(mailId);
 
 		if (replyToAddress != null) {
+			MailTemplate replyToAddressMailTemplate = new DefaultMailTemplate(
+				replyToAddress, false);
+
+			String processedReplyToAddress =
+				replyToAddressMailTemplate.renderAsString(
+					locale, mailTemplateContext);
+
 			InternetAddress replyTo = new InternetAddress(
-				replaceContent(replyToAddress, locale),
-				replaceContent(replyToAddress, locale));
+				processedReplyToAddress, processedReplyToAddress);
 
 			mailMessage.setReplyTo(new InternetAddress[] {replyTo});
 		}
@@ -972,6 +1019,37 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected boolean uniqueMailId = true;
+
+	private String _getPortletName(Locale locale) {
+		String portletName = StringPool.BLANK;
+
+		if (Validator.isNotNull(portletId)) {
+			portletName = PortalUtil.getPortletTitle(portletId, locale);
+		}
+
+		return portletName;
+	}
+
+	private String _getPortletTitle(String portletName, Locale locale) {
+		String portletTitle = portletName;
+
+		if (localizedPortletTitleMap != null) {
+			if (Validator.isNotNull(localizedPortletTitleMap.get(locale))) {
+				portletTitle = localizedPortletTitleMap.get(locale);
+			}
+			else {
+				Locale defaultLocale = LocaleUtil.getDefault();
+
+				if (Validator.isNotNull(
+						localizedPortletTitleMap.get(defaultLocale))) {
+
+					portletTitle = localizedPortletTitleMap.get(defaultLocale);
+				}
+			}
+		}
+
+		return portletTitle;
+	}
 
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {

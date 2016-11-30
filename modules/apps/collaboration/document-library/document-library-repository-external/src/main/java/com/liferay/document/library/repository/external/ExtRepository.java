@@ -63,7 +63,6 @@ public interface ExtRepository {
 	 * @return the repository file entry
 	 * @throws PortalException if the repository parent folder could not be
 	 *         found or if the repository file entry's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFileEntry addExtRepositoryFileEntry(
 			String extRepositoryParentFolderKey, String mimeType, String title,
@@ -80,7 +79,6 @@ public interface ExtRepository {
 	 * @return the repository folder
 	 * @throws PortalException if the repository parent folder could not be
 	 *         found or if the repository folder's information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFolder addExtRepositoryFolder(
 			String extRepositoryParentFolderKey, String name,
@@ -98,7 +96,6 @@ public interface ExtRepository {
 	 *         version was available
 	 * @throws PortalException if the repository file entry's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFileVersion cancelCheckOut(
 			String extRepositoryFileEntryKey)
@@ -116,7 +113,6 @@ public interface ExtRepository {
 	 * @param  changeLog the description of the changes being checked in
 	 * @throws PortalException if the repository file entry's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public void checkInExtRepositoryFileEntry(
 			String extRepositoryFileEntryKey, boolean createMajorVersion,
@@ -131,7 +127,6 @@ public interface ExtRepository {
 	 * @return the checked out repository file entry
 	 * @throws PortalException if the repository file entry's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFileEntry checkOutExtRepositoryFileEntry(
 			String extRepositoryFileEntryKey)
@@ -150,7 +145,6 @@ public interface ExtRepository {
 	 *         folder
 	 * @return the repository object
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public <T extends ExtRepositoryObject> T copyExtRepositoryObject(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
@@ -165,7 +159,6 @@ public interface ExtRepository {
 	 *         folder)
 	 * @param  extRepositoryObjectKey the primary key of the repository object
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public void deleteExtRepositoryObject(
 			ExtRepositoryObjectType<? extends ExtRepositoryObject>
@@ -183,7 +176,6 @@ public interface ExtRepository {
 	 * @return the content stream of the repository file entry
 	 * @throws PortalException if the repository file entry's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public InputStream getContentStream(
 			ExtRepositoryFileEntry extRepositoryFileEntry)
@@ -197,7 +189,6 @@ public interface ExtRepository {
 	 * @return the content stream of the repository file version
 	 * @throws PortalException if the repository file version's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public InputStream getContentStream(
 			ExtRepositoryFileVersion extRepositoryFileVersion)
@@ -213,7 +204,6 @@ public interface ExtRepository {
 	 * @return the repository file version of the file entry
 	 * @throws PortalException if the repository file entry or version
 	 *         information was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFileVersion getExtRepositoryFileVersion(
 			ExtRepositoryFileEntry extRepositoryFileEntry, String version)
@@ -240,7 +230,6 @@ public interface ExtRepository {
 	 *         entry
 	 * @return the repository file versions of the repository file entry
 	 * @throws PortalException if the repository file entry was invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public List<ExtRepositoryFileVersion> getExtRepositoryFileVersions(
 			ExtRepositoryFileEntry extRepositoryFileEntry)
@@ -257,7 +246,6 @@ public interface ExtRepository {
 	 * @param  extRepositoryObjectKey the primary key of the repository object
 	 * @return the repository object matching the type and key
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public <T extends ExtRepositoryObject> T getExtRepositoryObject(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
@@ -279,7 +267,6 @@ public interface ExtRepository {
 	 * @return the repository object matching the type and title, in the parent
 	 *         folder
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public <T extends ExtRepositoryObject> T getExtRepositoryObject(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
@@ -301,7 +288,6 @@ public interface ExtRepository {
 	 *         to search
 	 * @return the repository objects matching the type, in the parent folder
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public <T extends ExtRepositoryObject> List<T> getExtRepositoryObjects(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
@@ -325,7 +311,6 @@ public interface ExtRepository {
 	 * @return the number of elements in the repository folder matching the
 	 *         object type
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public int getExtRepositoryObjectsCount(
 			ExtRepositoryObjectType<? extends ExtRepositoryObject>
@@ -341,7 +326,6 @@ public interface ExtRepository {
 	 * @return the repository parent folder of the repository object
 	 * @throws PortalException if the repository object's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFolder getExtRepositoryParentFolder(
 			ExtRepositoryObject extRepositoryObject)
@@ -366,7 +350,6 @@ public interface ExtRepository {
 	 * @return the primary key of the repository root folder
 	 * @throws PortalException if the repository root folder could not be
 	 *         accessed
-	 * @throws SystemException if a system exception occurred
 	 */
 	public String getRootFolderKey() throws PortalException;
 
@@ -380,7 +363,6 @@ public interface ExtRepository {
 	 *         repository folder
 	 * @throws PortalException if the repository folder's information was
 	 *         invalid
-	 * @throws SystemException if a system exception occurred
 	 */
 	public List<String> getSubfolderKeys(
 			String extRepositoryFolderKey, boolean recurse)
@@ -425,7 +407,6 @@ public interface ExtRepository {
 	 * @param  typeSettingsProperties the type settings properties
 	 * @param  credentialsProvider the Liferay Portal username and password
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public void initRepository(
 			UnicodeProperties typeSettingsProperties,
@@ -445,7 +426,6 @@ public interface ExtRepository {
 	 * @return the repository object
 	 * @throws PortalException if the repository object could not be moved or if
 	 *         a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public <T extends ExtRepositoryObject> T moveExtRepositoryObject(
 			ExtRepositoryObjectType<T> extRepositoryObjectType,
@@ -477,7 +457,6 @@ public interface ExtRepository {
 	 *         Liferay IDs to the native repository format
 	 * @return the repository objects fulfilling the query
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public List<ExtRepositorySearchResult<?>> search(
 			SearchContext searchContext, Query query,
@@ -493,7 +472,6 @@ public interface ExtRepository {
 	 * @param  inputStream the new repository file entry's content
 	 * @return the updated file entry
 	 * @throws PortalException if a portal exception occurred
-	 * @throws SystemException if a system exception occurred
 	 */
 	public ExtRepositoryFileEntry updateExtRepositoryFileEntry(
 			String extRepositoryFileEntryKey, String mimeType,

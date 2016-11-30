@@ -16,7 +16,7 @@ package com.liferay.petra.encryptor;
 
 /**
  * @author Brian Wing Shun Chan
- * @see com.liferay.util.EncryptorException
+ * @see    com.liferay.util.EncryptorException
  */
 public class EncryptorException extends Exception {
 

@@ -2437,8 +2437,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			Map<String, Object> args = new HashMap<>();
 
 			args.put("dir", taskCache.getCacheDir());
-			args.put(
-				"includes", Arrays.asList("config.json", "**/*.js"));
+			args.put("includes", Arrays.asList("config.json", "**/*.js"));
 
 			FileTree fileTree = project.fileTree(args);
 

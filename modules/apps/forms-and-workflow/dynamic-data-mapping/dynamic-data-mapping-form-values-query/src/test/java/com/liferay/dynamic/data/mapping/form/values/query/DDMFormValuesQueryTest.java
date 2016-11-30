@@ -316,8 +316,7 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 
 		Assert.assertEquals(0, ddmFormFieldValues.size());
 
-		ddmFormValuesQuery = createDDMFormValuesQuery(
-			"//*/text22");
+		ddmFormValuesQuery = createDDMFormValuesQuery("//*/text22");
 
 		ddmFormFieldValues = ddmFormValuesQuery.selectDDMFormFieldValues();
 

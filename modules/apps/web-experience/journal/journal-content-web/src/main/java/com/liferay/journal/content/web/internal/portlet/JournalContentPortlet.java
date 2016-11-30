@@ -179,6 +179,8 @@ public class JournalContentPortlet extends MVCPortlet {
 			String targetExtension = ParamUtil.getString(
 				resourceRequest, "targetExtension");
 
+			targetExtension = StringUtil.toUpperCase(targetExtension);
+
 			PortletPreferences portletPreferences =
 				resourceRequest.getPreferences();
 

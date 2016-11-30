@@ -211,6 +211,13 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 				_backgroundTaskExecutorRegistry.getBackgroundTaskExecutor(
 					backgroundTask.getTaskExecutorClassName());
 
+			if (backgroundTaskExecutor == null) {
+				throw new IllegalStateException(
+					"BackgroundTaskExecutor has not been properly registered " +
+						"into the BackgroundTaskExecutorRegistry: " +
+							backgroundTask.getTaskExecutorClassName());
+			}
+
 			backgroundTaskExecutor = backgroundTaskExecutor.clone();
 		}
 		else {
@@ -227,10 +234,10 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 						classLoader, backgroundTask.getTaskExecutorClassName());
 			}
 			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to create new background task executor", e);
-				}
+				throw new IllegalStateException(
+					"Cannot instantiate BackgroundTaskExecutor: " +
+						backgroundTask.getTaskExecutorClassName(),
+					e);
 			}
 		}
 

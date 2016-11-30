@@ -71,6 +71,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -282,26 +283,7 @@ public class JournalContentDisplayContext {
 			return _ddmTemplate;
 		}
 
-		JournalArticleDisplay articleDisplay = getArticleDisplay();
-
-		if ((articleDisplay == null) ||
-			Validator.isNull(articleDisplay.getDDMTemplateKey())) {
-
-			return null;
-		}
-
-		try {
-			_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
-				articleDisplay.getGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class),
-				getDDMTemplateKey(), true);
-		}
-		catch (PortalException pe) {
-			_log.error(
-				"Unable to get DDM template for article " +
-					articleDisplay.getId(),
-				pe);
-		}
+		_ddmTemplate = _getDDMTemplate(getDDMTemplateKey());
 
 		return _ddmTemplate;
 	}
@@ -360,6 +342,18 @@ public class JournalContentDisplayContext {
 		}
 
 		return _ddmTemplates;
+	}
+
+	public DDMTemplate getDefaultDDMTemplate() {
+		if (_defaultDDMTemplate != null) {
+			return _defaultDDMTemplate;
+		}
+
+		JournalArticle article = getArticle();
+
+		_defaultDDMTemplate = _getDDMTemplate(article.getDDMTemplateKey());
+
+		return _defaultDDMTemplate;
 	}
 
 	public List<ContentMetadataAssetAddonEntry>
@@ -671,6 +665,24 @@ public class JournalContentDisplayContext {
 			articleDisplay.getResourcePrimKey());
 	}
 
+	public boolean isDefaultTemplate() {
+		JournalArticleDisplay articleDisplay = getArticleDisplay();
+
+		if ((articleDisplay == null) ||
+			Validator.isNull(articleDisplay.getDDMTemplateKey())) {
+
+			return true;
+		}
+
+		if (Objects.equals(
+				articleDisplay.getDDMTemplateKey(), getDDMTemplateKey())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isEnableViewCountIncrement() {
 		if (_enableViewCountIncrement != null) {
 			return _enableViewCountIncrement;
@@ -857,6 +869,33 @@ public class JournalContentDisplayContext {
 		return _showSelectArticleIcon;
 	}
 
+	private DDMTemplate _getDDMTemplate(String ddmTemplateKey) {
+		DDMTemplate ddmTemplate = null;
+
+		JournalArticleDisplay articleDisplay = getArticleDisplay();
+
+		if ((articleDisplay == null) ||
+			Validator.isNull(articleDisplay.getDDMTemplateKey())) {
+
+			return ddmTemplate;
+		}
+
+		try {
+			_ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
+				articleDisplay.getGroupId(),
+				PortalUtil.getClassNameId(DDMStructure.class), ddmTemplateKey,
+				true);
+		}
+		catch (PortalException pe) {
+			_log.error(
+				"Unable to get DDM template for article " +
+					articleDisplay.getId(),
+				pe);
+		}
+
+		return ddmTemplate;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentDisplayContext.class);
 
@@ -883,6 +922,7 @@ public class JournalContentDisplayContext {
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
 	private List<DDMTemplate> _ddmTemplates;
+	private DDMTemplate _defaultDDMTemplate;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _expired;
 	private Boolean _hasViewPermission;

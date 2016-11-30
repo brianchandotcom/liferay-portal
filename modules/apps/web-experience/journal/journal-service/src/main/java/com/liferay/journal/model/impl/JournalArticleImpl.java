@@ -250,7 +250,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 			ddmTemplate = DDMTemplateLocalServiceUtil.fetchTemplate(
 				PortalUtil.getSiteGroupId(getGroupId()),
 				ClassNameLocalServiceUtil.getClassNameId(JournalArticle.class),
-				getDDMStructureKey(), true);
+				getDDMTemplateKey(), true);
 		}
 		catch (PortalException pe) {
 			_log.error(

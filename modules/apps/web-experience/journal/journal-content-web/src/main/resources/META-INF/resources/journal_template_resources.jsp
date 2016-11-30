@@ -17,26 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = journalContentDisplayContext.getArticle();
-DDMStructure ddmStructure = journalContentDisplayContext.getDDMStructure();
 DDMTemplate ddmTemplate = journalContentDisplayContext.getDDMTemplate();
 List<DDMTemplate> ddmTemplates = journalContentDisplayContext.getDDMTemplates();
-
-Map<String, Object> data = new HashMap<String, Object>();
-
-data.put("change-enabled", ddmTemplates.size() > 1);
-data.put("group-id", (article != null) ? article.getGroupId() : scopeGroupId);
-data.put("structure-id", (ddmStructure != null) ? ddmStructure.getClassNameId() : 0);
-data.put("structure-key", (ddmStructure != null) ? ddmStructure.getPrimaryKey() : 0);
-data.put("template-id", (ddmTemplate != null) ? ddmTemplate.getTemplateId() : StringPool.BLANK);
-data.put("template-key", ddmTemplate.getTemplateKey());
-
 String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 %>
 
+<c:choose>
+	<c:when test="<%= journalContentDisplayContext.isDefaultTemplate() %>">
+		<p class="text-muted"><liferay-ui:message key="web-content's-default-template" /> <liferay-ui:icon-help message="to-change-web-content's-default-template-you-have-to-edit-the-web-content" /></p>
+	</c:when>
+	<c:otherwise>
+		<p class="text-muted"><liferay-ui:message key="web-content-display-template" /></p>
+	</c:otherwise>
+</c:choose>
+
 <liferay-frontend:horizontal-card
-	cssClass="template-preview-content"
-	data="<%= data %>"
 	text="<%= ddmTemplate.getName(locale) %>"
 >
 	<liferay-frontend:horizontal-card-col>
@@ -52,3 +47,13 @@ String ddmTemplateImageURL = ddmTemplate.getTemplateImageURL(themeDisplay);
 		</c:choose>
 	</liferay-frontend:horizontal-card-col>
 </liferay-frontend:horizontal-card>
+
+<c:if test="<%= ddmTemplates.size() > 1 %>">
+	<div class="button-holder template-preview-button">
+		<aui:button cssClass="select-template" value="change" />
+
+		<c:if test="<%= !journalContentDisplayContext.isDefaultTemplate() %>">
+			<liferay-ui:message key="or" /> <aui:a cssClass="change-template" href="javascript:;" label="default-template" />
+		</c:if>
+	</div>
+</c:if>

@@ -55,13 +55,13 @@ public class ExportArticleMVCResourceCommand extends BaseMVCResourceCommand {
 			String targetExtension = ParamUtil.getString(
 				resourceRequest, "targetExtension");
 
+			targetExtension = StringUtil.toUpperCase(targetExtension);
+
 			PortletPreferences portletPreferences =
 				resourceRequest.getPreferences();
 
 			String[] allowedExtensions = StringUtil.split(
 				portletPreferences.getValue("extensions", null));
-
-			targetExtension = StringUtil.toUpperCase(targetExtension);
 
 			if (ArrayUtil.contains(
 					allowedExtensions,

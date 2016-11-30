@@ -20,12 +20,54 @@
 JournalArticle article = journalContentDisplayContext.getArticle();
 %>
 
-<div id="<%= article.getArticleId() %>-container">
-	<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
-	</liferay-util:include>
+<div class="article-preview row">
+	<div class="col-md-3 col-sm-6 col-xs-12">
+		<p class="text-muted"><liferay-ui:message key="layout.types.article" /></p>
 
-	<liferay-util:include page="/journal_template_resources.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="articleId" value="<%= article.getArticleId() %>" />
-	</liferay-util:include>
+		<div class="article-preview-content-container">
+			<c:if test="<%= article != null %>">
+				<liferay-util:include page="/journal_article_resources.jsp" servletContext="<%= application %>" />
+			</c:if>
+		</div>
+
+		<div class="button-holder">
+			<aui:button cssClass="web-content-selector" name="webContentSelector" value='<%= Validator.isNull(article) ? "select" : "change" %>' />
+		</div>
+	</div>
 </div>
+
+<c:if test="<%= article != null %>">
+	<div class="row template-preview">
+		<div class="col-md-3 col-sm-6 col-xs-12">
+			<liferay-util:include page="/journal_template.jsp" servletContext="<%= application %>" />
+		</div>
+	</div>
+
+	<div class="configuration-options-container row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<aui:fieldset>
+				<aui:field-wrapper label="user-tools">
+					<liferay-ui:asset-addon-entry-selector
+						assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledUserToolAssetAddonEntries() %>"
+						hiddenInput="preferences--userToolAssetAddonEntryKeys--"
+						id="userToolsAssetAddonEntriesSelector"
+						selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>"
+						title="select-user-tools"
+					/>
+				</aui:field-wrapper>
+
+				<aui:field-wrapper label="content-metadata">
+					<liferay-ui:asset-addon-entry-selector
+						assetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getEnabledContentMetadataAssetAddonEntries() %>"
+						hiddenInput="preferences--contentMetadataAssetAddonEntryKeys--"
+						id="contentMetadataAssetAddonEntriesSelector"
+						selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
+						title="select-content-metadata"
+					/>
+				</aui:field-wrapper>
+
+				<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
+			</aui:fieldset>
+		</div>
+	</div>
+</c:if>

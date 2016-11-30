@@ -202,27 +202,6 @@ AUI.add(
 						instance.setDescription(description);
 					},
 
-					_onChangeURLOptions: function() {
-						var instance = this;
-
-						var urlTitleInput = instance.one('#urlTitle');
-
-						if (instance._automaticURL()) {
-							instance._lastCustomURL = urlTitleInput.val();
-
-							var title = window[instance.ns('titleEditor')].getText();
-
-							instance.updateFriendlyURL(title);
-
-							urlTitleInput.setAttribute('disabled', true);
-						}
-						else {
-							urlTitleInput.val(instance._lastCustomURL || urlTitleInput.val());
-
-							urlTitleInput.removeAttribute('disabled');
-						}
-					},
-
 					_getPrincipalForm: function(formName) {
 						var instance = this;
 
@@ -261,6 +240,27 @@ AUI.add(
 						instance._oldContent = entry ? entry.content : STR_BLANK;
 						instance._oldSubtitle = entry ? entry.subtitle : STR_BLANK;
 						instance._oldTitle = entry ? entry.title : STR_BLANK;
+					},
+
+					_onChangeURLOptions: function() {
+						var instance = this;
+
+						var urlTitleInput = instance.one('#urlTitle');
+
+						if (instance._automaticURL()) {
+							instance._lastCustomURL = urlTitleInput.val();
+
+							var title = window[instance.ns('titleEditor')].getText();
+
+							instance.updateFriendlyURL(title);
+
+							urlTitleInput.setAttribute('disabled', true);
+						}
+						else {
+							urlTitleInput.val(instance._lastCustomURL || urlTitleInput.val());
+
+							urlTitleInput.removeAttribute('disabled');
+						}
 					},
 
 					_removeCaption: function() {

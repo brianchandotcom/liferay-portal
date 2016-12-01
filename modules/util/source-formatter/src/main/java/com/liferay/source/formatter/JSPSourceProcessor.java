@@ -2001,7 +2001,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES =
-		new String[] {"**/*.jsp", "**/*.jspf", "**/*.vm"};
+		new String[] {"**/*.jsp", "**/*.jspf", "**/*.tpl", "**/*.vm"};
 
 	private static final String[][] _LIFERAY_FRONTEND_DEFINE_OBJECTS =
 		new String[][] {

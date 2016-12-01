@@ -792,7 +792,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String copyright = _copyright;
 
-		if (fileName.endsWith(".vm") || Validator.isNull(copyright)) {
+		if (fileName.endsWith(".tpl") || fileName.endsWith(".vm") ||
+			Validator.isNull(copyright)) {
+
 			return content;
 		}
 

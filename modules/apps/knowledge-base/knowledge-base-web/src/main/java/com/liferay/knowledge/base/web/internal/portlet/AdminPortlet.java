@@ -364,7 +364,7 @@ public class AdminPortlet extends BaseKBPortlet {
 		else if (cmd.equals(Constants.UPDATE)) {
 			kbFolderService.updateKBFolder(
 				parentResourceClassNameId, parentResourcePrimKey, kbFolderId,
-				name, description);
+				name, description, serviceContext);
 		}
 	}
 

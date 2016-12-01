@@ -4,8 +4,5 @@ Bundle-Version: 1.0.6
 Web-ContextPath: /web-proxy-web
 -includeresource:\
 	@concurrent-[0-9]*.jar,\
-	@nekohtml-[0-9]*.jar,\
 	@org.portletbridge.core-[0-9]*.jar,\
-	@org.portletbridge.portlet-[0-9]*.jar,\
-	@serializer-[0-9]*.jar,\
-	@xalan-[0-9]*.jar
+	@org.portletbridge.portlet-[0-9]*.jar

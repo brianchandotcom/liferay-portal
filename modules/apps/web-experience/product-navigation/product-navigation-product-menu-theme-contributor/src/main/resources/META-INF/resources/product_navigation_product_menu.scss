@@ -9,7 +9,7 @@ body {
 		}
 	}
 
-	&.open .control-menu {
+	&.open .control-menu, &.open .affix {
 		@include sm() {
 			left: $product-menu-width;
 		}

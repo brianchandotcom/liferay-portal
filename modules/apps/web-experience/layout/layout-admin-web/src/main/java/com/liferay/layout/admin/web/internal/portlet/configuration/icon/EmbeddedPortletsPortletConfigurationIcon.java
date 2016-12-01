@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -110,10 +110,10 @@ public class EmbeddedPortletsPortletConfigurationIcon
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			List<Portlet> embeddedPortlets =
-				layoutTypePortlet.getEmbeddedPortlets();
+			List<PortletPreferences> orphanPortletPreferences =
+				layoutTypePortlet.getOrphanPortletPreferences();
 
-			if (!embeddedPortlets.isEmpty()) {
+			if (!orphanPortletPreferences.isEmpty()) {
 				return true;
 			}
 		}

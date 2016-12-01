@@ -32,10 +32,6 @@ import org.osgi.framework.Constants;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Thuong Dinh
@@ -127,12 +123,6 @@ public class OpenIdConnectProviderRegistryImpl
 			});
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		unbind = "removeOpenConnectIdProvider"
-	)
 	protected void addOpenConnectIdConnectProvider(
 		OpenIdConnectProvider openIdConnectProvider) {
 

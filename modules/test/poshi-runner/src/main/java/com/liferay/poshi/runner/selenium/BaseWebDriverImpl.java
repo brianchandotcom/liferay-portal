@@ -156,45 +156,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void addCustomRequestHeader(String key, String value) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void addLocationStrategy(
-		String strategyName, String functionDefinition) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void addScript(String script, String scriptTagId) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void addSelection(String locator, String optionLocator) {
 		WebDriverHelper.addSelection(this, locator, optionLocator);
-	}
-
-	@Override
-	public void allowNativeXpath(String allow) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void altKeyDown() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void altKeyUp() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void answerOnNextPrompt(String answer) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -579,54 +542,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void assignId(String locator, String identifier) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void attachFile(String fieldLocator, String fileLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void captureEntirePageScreenshot(String fileName, String kwargs) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String captureEntirePageScreenshotToString(String kwargs) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String captureNetworkTraffic(String type) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void captureScreenshot(String fileName) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String captureScreenshotToString() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void check(String locator) {
 		WebDriverHelper.check(this, locator);
 	}
 
-	@Override
-	public void chooseCancelOnNextConfirmation() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void chooseOkOnNextConfirmation() {
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public void click(String locator) {
@@ -748,26 +667,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void contextMenu(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void contextMenuAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void controlKeyDown() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void controlKeyUp() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void copyText(String locator) throws Exception {
 		_clipBoard = getText(locator);
 	}
@@ -778,28 +677,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void createCookie(String nameValuePair, String optionsString) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void deleteAllEmails() throws Exception {
 		LiferaySeleniumHelper.deleteAllEmails();
-	}
-
-	@Override
-	public void deleteAllVisibleCookies() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void deleteCookie(String name, String optionsString) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void deselectPopUp() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -915,11 +794,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void dragdrop(String locator, String movementsString) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void echo(String message) {
 		LiferaySeleniumHelper.echo(message);
 	}
@@ -940,16 +814,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void fireEvent(String locator, String eventName) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void focus(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void get(String url) {
 		_webDriver.get(url);
 	}
@@ -966,43 +830,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String[] getAllButtons() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getAllFields() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getAllLinks() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getAllWindowIds() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getAllWindowNames() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getAllWindowTitles() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getAttribute(String attributeLocator) {
 		return WebDriverHelper.getAttribute(this, attributeLocator);
-	}
-
-	@Override
-	public String[] getAttributeFromAllWindows(String attributeName) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1015,21 +844,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public String getConfirmation() {
 		return WebDriverHelper.getConfirmation(this);
-	}
-
-	@Override
-	public String getCookie() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getCookieByName(String name) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Number getCssCount(String css) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1075,28 +889,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public Number getCursorPosition(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public int getElementHeight(String locator) {
 		return WebDriverHelper.getElementHeight(this, locator);
-	}
-
-	@Override
-	public Number getElementIndex(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Number getElementPositionLeft(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Number getElementPositionTop(String locator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1137,11 +931,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public String getEval(String script) {
 		return WebDriverHelper.getEval(this, script);
-	}
-
-	@Override
-	public String getExpression(String expression) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1257,16 +1046,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String getLog() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Number getMouseSpeed() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getNumberDecrement(String value) {
 		return LiferaySeleniumHelper.getNumberDecrement(value);
 	}
@@ -1292,31 +1071,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String getPrompt() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getSelectedId(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getSelectedIds(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getSelectedIndex(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getSelectedIndexes(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getSelectedLabel(String selectLocator) {
 		return getSelectedLabel(selectLocator, null);
 	}
@@ -1331,33 +1085,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String getSelectedValue(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getSelectedValues(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String[] getSelectOptions(String selectLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getSikuliImagesDirName() {
 		return _sikuliImagesDirName;
-	}
-
-	@Override
-	public String getSpeed() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public String getTable(String tableCellAddress) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1420,25 +1149,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public String getValue(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean getWhetherThisFrameMatchFrameExpression(
-		String currentFrameString, String target) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean getWhetherThisWindowMatchWindowExpression(
-		String currentWindowString, String target) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public String getWindowHandle() {
 		return _webDriver.getWindowHandle();
 	}
@@ -1453,11 +1163,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public Number getXpathCount(String xPath) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void goBack() {
 		WebDriverHelper.goBack(this);
 	}
@@ -1466,16 +1171,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	public void goBackAndWait() {
 		goBack();
 		waitForPageToLoad("30000");
-	}
-
-	@Override
-	public void highlight(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void ignoreAttributesWithoutValue(String ignore) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1512,16 +1207,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String confirmation = getConfirmation();
 
 		return pattern.equals(confirmation);
-	}
-
-	@Override
-	public boolean isConfirmationPresent() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public boolean isCookiePresent(String name) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1627,11 +1312,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public boolean isOrdered(String locator1, String locator2) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public boolean isPartialText(String locator, String value) {
 		return WebDriverHelper.isPartialText(this, locator, value);
 	}
@@ -1639,11 +1319,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public boolean isPartialTextAceEditor(String locator, String value) {
 		return WebDriverHelper.isPartialTextAceEditor(this, locator, value);
-	}
-
-	@Override
-	public boolean isPromptPresent() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1662,11 +1337,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isSomethingSelected(String selectLocator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1762,11 +1432,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void keyDownNative(String keycode) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void keyPress(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
@@ -1809,11 +1474,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void keyPressNative(String keycode) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void keyUp(String locator, String keySequence) {
 		WebElement webElement = getWebElement(locator);
 
@@ -1841,11 +1501,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void keyUpNative(String keycode) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void makeVisible(String locator) {
 		WebDriverHelper.makeVisible(this, locator);
 	}
@@ -1853,16 +1508,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public Options manage() {
 		return _webDriver.manage();
-	}
-
-	@Override
-	public void metaKeyDown() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void metaKeyUp() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1917,16 +1562,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		Action action = actions.build();
 
 		action.perform();
-	}
-
-	@Override
-	public void mouseDownRight(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void mouseDownRightAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2085,16 +1720,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void mouseUpRight(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void mouseUpRightAt(String locator, String coordString) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public Navigation navigate() {
 		return _webDriver.navigate();
 	}
@@ -2102,11 +1727,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void open(String url) {
 		WebDriverHelper.open(this, url);
-	}
-
-	@Override
-	public void open(String url, String ignoreResponseCode) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2145,35 +1765,10 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void removeAllSelections(String locator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void removeScript(String scriptTagId) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void removeSelection(String locator, String optionLocator) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void replyToEmail(String to, String body) throws Exception {
 		EmailCommands.replyToEmail(to, body);
 
 		pause("3000");
-	}
-
-	@Override
-	public String retrieveLastRemoteControlLogs() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void rollup(String rollupName, String kwargs) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2354,21 +1949,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void setBrowserLogLevel(String logLevel) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setContext(String context) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setCursorPosition(String locator, String position) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void setDefaultTimeout() {
 	}
 
@@ -2378,23 +1958,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void setExtensionJs(String extensionJs) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setMouseSpeed(String pixels) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName) {
 		_primaryTestSuiteName = primaryTestSuiteName;
-	}
-
-	@Override
-	public void setSpeed(String value) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2424,31 +1989,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		int y = GetterUtil.getInteger(screenResolution[1]);
 
 		window.setSize(new Dimension(x, y));
-	}
-
-	@Override
-	public void shiftKeyDown() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void shiftKeyUp() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void showContextualBanner() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void showContextualBanner(String className, String methodName) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void shutDownSeleniumServer() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2719,21 +2259,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void start() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void start(Object optionsObject) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void start(String optionsString) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void startLogger() {
 	}
 
@@ -2744,11 +2269,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void stopLogger() {
-	}
-
-	@Override
-	public void submit(String formLocator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -2931,16 +2451,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
-	public void useXpathLibrary(String libraryName) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void waitForCondition(String script, String timeout) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
 		int timeout =
 			PropsValues.TIMEOUT_EXPLICIT_WAIT /
@@ -2997,11 +2507,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			Thread.sleep(1000);
 		}
-	}
-
-	@Override
-	public void waitForFrameToLoad(String frameAddress, String timeout) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -3339,16 +2844,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 			Thread.sleep(1000);
 		}
-	}
-
-	@Override
-	public void windowFocus() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void windowMaximize() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

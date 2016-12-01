@@ -2793,6 +2793,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
+	protected String sortMethodCalls(String content) {
+		content = sortMethodCalls(
+			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
+			"TreeSet<.*>");
+		content = sortMethodCalls(
+			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
+			"JSONObject", "TreeMap<.*>");
+		content = sortMethodCalls(content, "setAttribute");
+
+		return content;
+	}
+
 	protected String sortMethodCalls(
 		String content, String methodName, String... variableTypeRegexStrings) {
 
@@ -3165,6 +3177,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			if (matcher.find()) {
 				putOrSetParameterName2 = matcher.replaceAll(StringPool.BLANK);
+			}
+
+			if (putOrSetParameterName1.matches("\".*\"") &&
+				putOrSetParameterName2.matches("\".*\"")) {
+
+				String strippedQuotes1 = putOrSetParameterName1.substring(
+					1, putOrSetParameterName1.length() - 1);
+				String strippedQuotes2 = putOrSetParameterName2.substring(
+					1, putOrSetParameterName2.length() - 1);
+
+				return super.compare(strippedQuotes1, strippedQuotes2);
 			}
 
 			int value = super.compare(

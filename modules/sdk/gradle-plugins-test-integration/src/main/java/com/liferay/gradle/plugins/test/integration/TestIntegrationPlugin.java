@@ -358,11 +358,11 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			@Override
 			public void execute(Task task) {
-				StopTestableTomcatTask setUpTestableTomcatTask =
+				StopTestableTomcatTask stopTestableTomcatTask =
 					(StopTestableTomcatTask)task;
 
-				File binDir = setUpTestableTomcatTask.getBinDir();
-				Logger logger = setUpTestableTomcatTask.getLogger();
+				File binDir = stopTestableTomcatTask.getBinDir();
+				Logger logger = stopTestableTomcatTask.getLogger();
 
 				_startedAppServersReentrantLock.lock();
 

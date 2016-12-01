@@ -752,7 +752,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				if (javaSource) {
 					if (portalSource &&
 						!isExcludedPath(
-							_unusedVariablesExcludes, absolutePath,
+							_UNUSED_VARIABLES_EXCLUDES, absolutePath,
 							lineCount) &&
 						!_jspContents.isEmpty() &&
 						hasUnusedVariable(
@@ -1828,8 +1828,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected void preFormat() throws Exception {
 		_moveFrequentlyUsedImportsToCommonInit = GetterUtil.getBoolean(
 			getProperty("move.frequently.used.imports.to.common.init"));
-		_unusedVariablesExcludes = getPropertyList(
-			"jsp.unused.variables.excludes");
 
 		String[] excludes = new String[] {"**/null.jsp", "**/tools/**"};
 
@@ -2144,6 +2142,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	};
 
+	private static final String _UNUSED_VARIABLES_EXCLUDES =
+		"jsp.unused.variables.excludes";
+
 	private final Pattern _compressedJSPImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
@@ -2211,7 +2212,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
 		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
-	private List<String> _unusedVariablesExcludes;
 	private String _utilTaglibSrcDirName;
 	private final Pattern _xssPattern = Pattern.compile(
 		"\\s+([^\\s]+)\\s*=\\s*(Bean)?ParamUtil\\.getString\\(");

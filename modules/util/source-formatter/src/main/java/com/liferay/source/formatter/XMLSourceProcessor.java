@@ -390,7 +390,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcludedPath(_xmlExcludes, absolutePath)) {
+		if (isExcludedPath(_XML_EXCLUDES, absolutePath)) {
 			return content;
 		}
 
@@ -885,7 +885,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Element rootElement = document.getRootElement();
 
 		boolean checkNumericalPortletNameElement = !isExcludedPath(
-			_numericalPortletNameElementExcludes, absolutePath);
+			_NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES, absolutePath);
 
 		List<Element> portletElements = rootElement.elements("portlet");
 
@@ -1351,13 +1351,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return targetNames;
 	}
 
-	@Override
-	protected void preFormat() {
-		_numericalPortletNameElementExcludes = getPropertyList(
-			"numerical.portlet.name.element.excludes");
-		_xmlExcludes = getPropertyList("xml.excludes");
-	}
-
 	protected String sortAttributes(String fileName, String content)
 		throws Exception {
 
@@ -1549,6 +1542,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"**/*.xml"
 	};
 
+	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =
+		"numerical.portlet.name.element.excludes";
+
+	private static final String _XML_EXCLUDES = "xml.excludes";
+
 	private static final Pattern _commentPattern1 = Pattern.compile(
 		">\n\t+<!--[\n ]");
 	private static final Pattern _commentPattern2 = Pattern.compile(
@@ -1558,7 +1556,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"<import file=\"(.*)\"");
 	private final Pattern _incorrectDefaultPreferencesFileName =
 		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
-	private List<String> _numericalPortletNameElementExcludes;
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
 	private final Pattern _poshiCommandsPattern = Pattern.compile(
@@ -1600,7 +1597,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		new ConcurrentHashMap<>();
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
-	private List<String> _xmlExcludes;
 
 	private static class PortletPreferenceElementComparator
 		extends ElementComparator {

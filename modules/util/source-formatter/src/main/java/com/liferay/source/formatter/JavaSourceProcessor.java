@@ -719,7 +719,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-34911
 
 		if (portalSource &&
-			!isExcludedPath(_upgradeServiceUtilExcludes, absolutePath) &&
+			!isExcludedPath(_UPGRADE_SERVICE_UTIL_EXCLUDES, absolutePath) &&
 			fileName.contains("/portal/upgrade/") &&
 			!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/")) {
@@ -807,7 +807,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return;
 		}
 
-		if (isExcludedPath(_upgradeDataAccessConnectionExcludes, fileName) ||
+		if (isExcludedPath(
+				_UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES, fileName) ||
 			content.contains("ThrowableAwareRunnable")) {
 
 			return;
@@ -976,7 +977,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (!isExcludedPath(_staticLogVariableExcludes, absolutePath)) {
+		if (!isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath)) {
 			newContent = StringUtil.replace(
 				newContent, "private Log _log",
 				"private static final Log _log");
@@ -1004,10 +1005,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		boolean isRunOutsidePortalExclusion = isExcludedPath(
-			getRunOutsidePortalExcludes(), absolutePath);
+			RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath);
 
 		if (!isRunOutsidePortalExclusion &&
-			!isExcludedPath(_proxyExcludes, absolutePath) &&
+			!isExcludedPath(_PROXY_EXCLUDES, absolutePath) &&
 			newContent.contains("import java.lang.reflect.Proxy;")) {
 
 			processMessage(
@@ -1093,7 +1094,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		// LPS-39508
 
 		if (!isRunOutsidePortalExclusion &&
-			!isExcludedPath(_secureRandomExcludes, absolutePath) &&
+			!isExcludedPath(_SECURE_RANDOM_EXCLUDES, absolutePath) &&
 			content.contains("java.security.SecureRandom") &&
 			!content.contains("javax.crypto.KeyGenerator")) {
 
@@ -1146,7 +1147,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-48153
 
-		if (!isExcludedPath(_diamondOperatorExcludes, absolutePath)) {
+		if (!isExcludedPath(_DIAMOND_OPERATOR_EXCLUDES, absolutePath)) {
 			newContent = applyDiamondOperator(newContent);
 		}
 
@@ -1158,7 +1159,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
-			!isExcludedPath(_secureXmlExcludes, absolutePath)) {
+			!isExcludedPath(_SECURE_XML_EXCLUDES, absolutePath)) {
 
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
@@ -1167,7 +1168,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (!fileName.contains("/test/") &&
 			!fileName.contains("/testIntegration/") &&
-			!isExcludedPath(_secureDeserializationExcludes, absolutePath)) {
+			!isExcludedPath(_SECURE_DESERIALIZATION_EXCLUDES, absolutePath)) {
 
 			checkDeserializationSecurity(
 				fileName, content, isRunOutsidePortalExclusion);
@@ -1290,8 +1291,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newContent = formatJavaTerms(
 				className, packagePath, file, fileName, absolutePath,
 				newContent, javaClassContent, javaClassLineCount,
-				StringPool.BLANK, _checkJavaFieldTypesExcludes,
-				_javaTermSortExcludes, _testAnnotationsExcludes);
+				StringPool.BLANK, _CHECK_JAVA_FIELD_TYPES_EXCLUDES,
+				_JAVATERM_SORT_EXCLUDES, _TEST_ANNOTATIONS_EXCLUDES);
 		}
 
 		matcher = _anonymousClassPattern.matcher(newContent);
@@ -1320,8 +1321,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					StringPool.BLANK, StringPool.BLANK, file, fileName,
 					absolutePath, newContent, javaClassContent,
 					javaClassLineCount, matcher.group(1),
-					_checkJavaFieldTypesExcludes, _javaTermSortExcludes,
-					_testAnnotationsExcludes);
+					_CHECK_JAVA_FIELD_TYPES_EXCLUDES, _JAVATERM_SORT_EXCLUDES,
+					_TEST_ANNOTATIONS_EXCLUDES);
 
 				break;
 			}
@@ -2447,7 +2448,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				// LPS-42599
 
-				if (!isExcludedPath(_hibernateSQLQueryExcludes, absolutePath) &&
+				if (!isExcludedPath(
+						_HIBERNATE_SQL_QUERY_EXCLUDES, absolutePath) &&
 					line.contains("= session.createSQLQuery(") &&
 					content.contains(
 						"com.liferay.portal.kernel.dao.orm.Session")) {
@@ -2688,7 +2690,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 					else if (lineLength > _maxLineLength) {
 						if (!isExcludedPath(
-								_lineLengthExcludes, absolutePath, lineCount) &&
+								_LINE_LENGTH_EXCLUDES, absolutePath,
+								lineCount) &&
 							!isAnnotationParameter(content, trimmedLine)) {
 
 							String truncateLongLinesContent =
@@ -3141,7 +3144,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineTabCount, int previousLineTabCount) {
 
 		if (Validator.isNull(line) || Validator.isNull(previousLine) ||
-			isExcludedPath(_fitOnSingleLineExcludes, absolutePath, lineCount)) {
+			isExcludedPath(
+				_FIT_ON_SINGLE_LINE_EXCLUDES, absolutePath, lineCount)) {
 
 			return null;
 		}
@@ -4450,26 +4454,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			getProperty("add.missing.deprecation.release.version"));
 		_allowUseServiceUtilInServiceImpl = GetterUtil.getBoolean(
 			getProperty("allow.use.service.util.in.service.impl"));
-		_checkJavaFieldTypesExcludes = getPropertyList(
-			"check.java.field.types.excludes");
-		_diamondOperatorExcludes = getPropertyList("diamond.operator.excludes");
-		_fitOnSingleLineExcludes = getPropertyList(
-			"fit.on.single.line.excludes");
-		_hibernateSQLQueryExcludes = getPropertyList(
-			"hibernate.sql.query.excludes");
-		_javaTermSortExcludes = getPropertyList("javaterm.sort.excludes");
-		_lineLengthExcludes = getPropertyList("line.length.excludes");
-		_proxyExcludes = getPropertyList("proxy.excludes");
-		_secureDeserializationExcludes = getPropertyList(
-			"secure.deserialization.excluded.files");
-		_secureRandomExcludes = getPropertyList("secure.random.excludes");
-		_secureXmlExcludes = getPropertyList("secure.xml.excludes");
-		_staticLogVariableExcludes = getPropertyList("static.log.excludes");
-		_testAnnotationsExcludes = getPropertyList("test.annotations.excludes");
-		_upgradeDataAccessConnectionExcludes = getPropertyList(
-			"upgrade.data.access.connection.excludes");
-		_upgradeServiceUtilExcludes = getPropertyList(
-			"upgrade.service.util.excludes");
 	}
 
 	protected void processCheckStyle() throws Exception {
@@ -4559,7 +4543,45 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	private static final String _CHECK_JAVA_FIELD_TYPES_EXCLUDES =
+		"check.java.field.types.excludes";
+
+	private static final String _DIAMOND_OPERATOR_EXCLUDES =
+		"diamond.operator.excludes";
+
+	private static final String _FIT_ON_SINGLE_LINE_EXCLUDES =
+		"fit.on.single.line.excludes";
+
+	private static final String _HIBERNATE_SQL_QUERY_EXCLUDES =
+		"hibernate.sql.query.excludes";
+
 	private static final String[] _INCLUDES = new String[] {"**/*.java"};
+
+	private static final String _JAVATERM_SORT_EXCLUDES =
+		"javaterm.sort.excludes";
+
+	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
+
+	private static final String _PROXY_EXCLUDES = "proxy.excludes";
+
+	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
+		"secure.deserialization.excluded.files";
+
+	private static final String _SECURE_RANDOM_EXCLUDES =
+		"secure.random.excludes";
+
+	private static final String _SECURE_XML_EXCLUDES = "secure.xml.excludes";
+
+	private static final String _STATIC_LOG_EXCLUDES = "static.log.excludes";
+
+	private static final String _TEST_ANNOTATIONS_EXCLUDES =
+		"test.annotations.excludes";
+
+	private static final String _UPGRADE_DATA_ACCESS_CONNECTION_EXCLUDES =
+		"upgrade.data.access.connection.excludes";
+
+	private static final String _UPGRADE_SERVICE_UTIL_EXCLUDES =
+		"upgrade.service.util.excludes";
 
 	private static final Pattern _annotationPattern = Pattern.compile(
 		"(\t*)@(.+)\\(\n([\\s\\S]*?)\\)\n");
@@ -4582,7 +4604,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		new ConcurrentHashMap<>();
 	private final Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
-	private List<String> _checkJavaFieldTypesExcludes;
 	private boolean _checkRegistryInTestClasses;
 	private final Pattern _classPattern = Pattern.compile(
 		"(\n(\t*)(private|protected|public) ((abstract|static) )*" +
@@ -4597,13 +4618,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(
 		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+)(.+)?)?");
-	private List<String> _diamondOperatorExcludes;
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(
 		"@Override\n\tpublic Map<(.+)> fetchByPrimaryKeys\\(");
-	private List<String> _fitOnSingleLineExcludes;
-	private List<String> _hibernateSQLQueryExcludes;
 	private final Pattern _ifStatementCriteriaPattern = Pattern.compile(
 		".*?( [|&^]+( |\\Z)|\\) \\{\\Z)");
 	private final Pattern _incorrectCloseCurlyBracePattern1 = Pattern.compile(
@@ -4638,8 +4656,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Pattern.compile(
 				".*(extends [a-z\\.\\s]*ObjectInputStream).*", Pattern.DOTALL)
 	};
-	private List<String> _javaTermSortExcludes;
-	private List<String> _lineLengthExcludes;
 	private final Pattern _lineStartingWithOpenParenthesisPattern =
 		Pattern.compile("(.)\n+(\t+)\\)[^.].*\n");
 	private final Pattern _logLevelPattern = Pattern.compile(
@@ -4662,7 +4678,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private String _portalCustomSQLContent;
 	private final Pattern _processCallablePattern = Pattern.compile(
 		"implements ProcessCallable\\b");
-	private List<String> _proxyExcludes;
 	private final Pattern _redundantCommaPattern = Pattern.compile(",\n\t+\\}");
 	private final Pattern _redundantEmptyLines1 = Pattern.compile(
 		"\n\npublic ((abstract|static) )*(class|enum|interface) ");
@@ -4677,17 +4692,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\nimport (com\\.liferay\\.registry\\..+);");
 	private final Pattern _registryRegisterPattern = Pattern.compile(
 		"registry\\.register\\((.*?)\\);\n", Pattern.DOTALL);
-	private List<String> _secureDeserializationExcludes;
-	private List<String> _secureRandomExcludes;
-	private List<String> _secureXmlExcludes;
 	private final Pattern _serviceUtilImportPattern = Pattern.compile(
 		"\nimport ([A-Za-z1-9\\.]*)\\.([A-Za-z1-9]*ServiceUtil);");
 	private final Pattern _setVariablePattern = Pattern.compile(
 		"\t[A-Z]\\w+ (\\w+) =\\s+((?!\\{\n).)*?;\n", Pattern.DOTALL);
 	private final Pattern _stagedModelTypesPattern = Pattern.compile(
 		"StagedModelType\\(([a-zA-Z.]*(class|getClassName[\\(\\)]*))\\)");
-	private List<String> _staticLogVariableExcludes;
-	private List<String> _testAnnotationsExcludes;
 	private final Pattern _throwsExceptionsPattern = Pattern.compile(
 		"\\sthrows ([\\s\\w,]*)[;{]\n");
 	private final Pattern _throwsSystemExceptionPattern = Pattern.compile(
@@ -4695,7 +4705,5 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Set<File> _ungeneratedFiles = new CopyOnWriteArraySet<>();
 	private final Pattern _upgradeClassNamePattern = Pattern.compile(
 		"new .*?(\\w+)\\(", Pattern.DOTALL);
-	private List<String> _upgradeDataAccessConnectionExcludes;
-	private List<String> _upgradeServiceUtilExcludes;
 
 }

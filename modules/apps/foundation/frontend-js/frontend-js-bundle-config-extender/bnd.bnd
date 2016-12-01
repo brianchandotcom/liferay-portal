@@ -3,4 +3,3 @@ Bundle-SymbolicName: com.liferay.frontend.js.bundle.config.extender
 Bundle-Version: 1.0.5
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Frontend Infrastructure
--includeresource: @org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

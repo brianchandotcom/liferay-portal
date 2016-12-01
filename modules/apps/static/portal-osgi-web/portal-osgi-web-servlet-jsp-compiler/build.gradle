@@ -15,11 +15,11 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "2.0.0"
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.2-b01"
 	provided group: "javax.servlet.jsp.jstl", name: "javax.servlet.jsp.jstl-api", version: "1.2.1"
-	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.glassfish", name: "javax.el", version: "3.0.1-b05"
 	provided group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
 	provided group: "org.glassfish.web", name: "javax.servlet.jsp.jstl", version: "1.2.3"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":core:osgi-felix-util")
 }
 
 downloadSchemas {

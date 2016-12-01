@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.extender.internal;
 
+import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.portal.configuration.extender.BundleStorage;
 import com.liferay.portal.configuration.extender.ConfigurationDescriptionFactory;
 import com.liferay.portal.configuration.extender.NamedConfigurationContent;
@@ -30,7 +31,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.felix.utils.extender.AbstractExtender;
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
@@ -54,8 +54,6 @@ public class ConfiguratorExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		setSynchronous(true);
-
 		_logger = new Logger(bundleContext);
 
 		start(bundleContext);

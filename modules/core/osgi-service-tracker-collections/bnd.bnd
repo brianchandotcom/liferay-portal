@@ -7,4 +7,3 @@ Export-Package:\
 	com.liferay.osgi.service.tracker.collections.map
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource: @org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

@@ -70,6 +70,3 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Runtime
 Provide-Capability: liferay.extender;liferay.extender="spring.extender";version:Version="${Bundle-Version}"
--includeresource:\
-	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/extender/*,\
-	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

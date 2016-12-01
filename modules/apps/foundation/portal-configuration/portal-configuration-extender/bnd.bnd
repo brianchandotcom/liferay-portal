@@ -4,6 +4,3 @@ Bundle-Version: 2.0.8
 Export-Package: com.liferay.portal.configuration.extender
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Configuration Framework
--includeresource:\
-	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/extender/*,\
-	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

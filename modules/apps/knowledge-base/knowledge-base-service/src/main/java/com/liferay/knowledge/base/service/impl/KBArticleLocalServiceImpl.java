@@ -191,6 +191,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		kbArticle.setSourceURL(sourceURL);
 
+		kbArticle.setExpandoBridgeAttributes(serviceContext);
+
 		kbArticlePersistence.update(kbArticle);
 
 		// Resources
@@ -360,6 +362,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		// Asset
 
 		deleteAssets(kbArticle);
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(kbArticle.getKbArticleId());
 
 		// Ratings
 
@@ -1139,6 +1145,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			StringUtil.merge(AdminUtil.escapeSections(sections)));
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
+
+		kbArticle.setExpandoBridgeAttributes(serviceContext);
 
 		kbArticlePersistence.update(kbArticle);
 

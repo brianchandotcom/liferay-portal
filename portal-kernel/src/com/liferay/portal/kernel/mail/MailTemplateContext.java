@@ -23,6 +23,9 @@ import java.util.Map;
  */
 public interface MailTemplateContext {
 
+	public MailTemplateContext aggregateWith(
+		MailTemplateContext mailTemplateContext);
+
 	public Map<String, EscapableLocalizableFunction> getReplacements();
 
 }

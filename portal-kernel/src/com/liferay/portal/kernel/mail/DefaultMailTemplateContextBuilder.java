@@ -74,6 +74,13 @@ public class DefaultMailTemplateContextBuilder
 		}
 
 		@Override
+		public MailTemplateContext aggregateWith(
+			MailTemplateContext mailTemplateContext) {
+
+			return new AggregateMailTemplateContext(this, mailTemplateContext);
+		}
+
+		@Override
 		public Map<String, EscapableLocalizableFunction> getReplacements() {
 			return Collections.unmodifiableMap(_placeholders);
 		}

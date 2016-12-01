@@ -694,7 +694,7 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 ### Changed
 - [LPS-69445]: Update the [Liferay Gradle Plugins] dependency to version 3.0.43.
 
-## 2.0.7 - 2016-11-30
+## 2.0.7 - 2016-11-30 [YANKED]
 
 ### Changed
 - [LPS-69470]: Update the [Liferay Gradle Plugins Baseline] dependency to

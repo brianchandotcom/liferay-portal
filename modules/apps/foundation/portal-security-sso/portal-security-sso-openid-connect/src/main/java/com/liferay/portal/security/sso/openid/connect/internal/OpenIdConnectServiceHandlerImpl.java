@@ -282,6 +282,15 @@ public class OpenIdConnectServiceHandlerImpl
 				authenticationRequestURI.toString());
 		}
 		catch (IOException | ParseException | URISyntaxException e) {
+			httpSession.removeAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_PROVIDER_NAME);
+
+			httpSession.removeAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_STATE);
+
+			httpSession.removeAttribute(
+				OpenIdConnectWebKeys.OPEN_ID_CONNECT_NONCE);
+
 			throw new SystemException(
 				"Unable to communicate with OpenId Connect Provider", e);
 		}

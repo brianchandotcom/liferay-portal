@@ -51,11 +51,14 @@ public class OpenIdConnectProviderRegistryImpl
 	implements OpenIdConnectProviderRegistry, ManagedServiceFactory {
 
 	@Override
-	public void deleted(String s) {
-		OpenIdConnectProvider openIdConnectProvider =
-			_openIdConnectProvidersPerFactory.remove(s);
+	public void deleted(String factoryPid) {
+		_openIdConnectProvidersPerFactory.computeIfPresent(
+			factoryPid,
+			(pid, openIdConnectProvider) -> {
+				removeOpenConnectIdProvider(openIdConnectProvider);
 
-		removeOpenConnectIdProvider(openIdConnectProvider);
+				return null;
+			});
 	}
 
 	@Override
@@ -99,13 +102,31 @@ public class OpenIdConnectProviderRegistryImpl
 			ConfigurableUtil.createConfigurable(
 				OpenIdConnectProviderConfiguration.class, properties);
 
-		OpenIdConnectProvider openIdConnectProvider =
-			createOpenIdConnectProvider(openIdConnectProviderConfiguration);
+		_openIdConnectProvidersPerFactory.computeIfPresent(
+			factoryPid,
+			(oldFactoryPid, oldOpenIdConnectIdProvider) -> {
+				removeOpenConnectIdProvider(oldOpenIdConnectIdProvider);
 
-		addOpenConnectIdConnectProvider(openIdConnectProvider);
+				OpenIdConnectProvider openIdConnectProvider =
+					createOpenIdConnectProvider(
+						openIdConnectProviderConfiguration);
 
-		_openIdConnectProvidersPerFactory.put(
-			factoryPid, openIdConnectProvider);
+				addOpenConnectIdConnectProvider(openIdConnectProvider);
+
+				return openIdConnectProvider;
+			});
+
+		_openIdConnectProvidersPerFactory.computeIfAbsent(
+			factoryPid,
+			newFactoryPid -> {
+				OpenIdConnectProvider openIdConnectProvider =
+					createOpenIdConnectProvider(
+						openIdConnectProviderConfiguration);
+
+				addOpenConnectIdConnectProvider(openIdConnectProvider);
+
+				return openIdConnectProvider;
+			});
 	}
 
 	@Reference(

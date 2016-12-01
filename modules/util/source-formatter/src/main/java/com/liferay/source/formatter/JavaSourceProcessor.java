@@ -4565,7 +4565,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 
 	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
-		"secure.deserialization.excluded.files";
+		"secure.deserialization.excludes";
 
 	private static final String _SECURE_RANDOM_EXCLUDES =
 		"secure.random.excludes";

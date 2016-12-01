@@ -1,6 +1,6 @@
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
-import Component from 'metal-component/src/Component';
+import core from 'metal';
+import dom from 'metal-dom';
+import Component from 'metal-component';
 
 /**
  * PortletBase provides some helper functions that simplify querying the DOM

@@ -5,5 +5,5 @@ Bundle-Version: 1.0.0
 	.,\
 	../../../classes,\
 	../../../test-classes/integration,\
-	@../../../test-lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
+	@../../../test-lib/com.liferay.osgi.felix.util.jar!/org/apache/felix/utils/log/*,\
 	@../../../test-lib/org.osgi.service.log.jar!/org/osgi/service/log/*

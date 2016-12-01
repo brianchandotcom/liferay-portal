@@ -14,6 +14,7 @@
 
 package com.liferay.portal.remote.http.tunnel.extender.internal;
 
+import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.remote.http.tunnel.extender.configuration.HttpTunnelExtenderConfiguration;
@@ -29,7 +30,6 @@ import java.util.Map;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 
-import org.apache.felix.utils.extender.AbstractExtender;
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
@@ -58,8 +58,6 @@ public class HttpTunnelExtender extends AbstractExtender {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		_bundleContext = bundleContext;
-
 		_httpTunnelExtenderConfiguration = ConfigurableUtil.createConfigurable(
 			HttpTunnelExtenderConfiguration.class, properties);
 		_logger = new Logger(bundleContext);
@@ -68,10 +66,8 @@ public class HttpTunnelExtender extends AbstractExtender {
 	}
 
 	@Deactivate
-	protected void deactivate() throws Exception {
-		stop(_bundleContext);
-
-		_bundleContext = null;
+	protected void deactivate(BundleContext bundleContext) throws Exception {
+		stop(bundleContext);
 	}
 
 	@Override
@@ -100,7 +96,7 @@ public class HttpTunnelExtender extends AbstractExtender {
 			BundleContext bundleContext, Map<String, Object> properties)
 		throws Exception {
 
-		deactivate();
+		deactivate(bundleContext);
 
 		activate(bundleContext, properties);
 	}
@@ -110,7 +106,6 @@ public class HttpTunnelExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_WARNING, "[" + bundle + "] " + s, t);
 	}
 
-	private BundleContext _bundleContext;
 	private HttpTunnelExtenderConfiguration _httpTunnelExtenderConfiguration;
 	private Logger _logger;
 

@@ -82,6 +82,7 @@ dependencies {
 	provided group: "org.springframework", name: "spring-context", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided project(":core:jaxws-osgi-bridge")
+	provided project(":core:osgi-felix-util")
 	provided project(":core:portal-app-license-api")
 	provided project(":core:portal-impl-compat")
 	provided project(":core:portal-kernel-compat")

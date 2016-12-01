@@ -14,13 +14,13 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "commons-fileupload", name: "commons-fileupload", version: "1.3.2"
 	provided group: "commons-io", name: "commons-io", version: "1.4"
-	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.glassfish", name: "javax.servlet", version: "3.2-b06"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component", version: "1.3.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "org.osgi", name: "org.osgi.service.event", version: "1.3.1"
 	provided group: "org.osgi", name: "org.osgi.service.http.whiteboard", version: "1.0.0"
+	provided project(":core:osgi-felix-util")
 }
 
 deploy {

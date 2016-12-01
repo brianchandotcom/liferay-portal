@@ -5,7 +5,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.output.stream.container", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.5.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.jgrapht", name: "jgrapht-core", version: "0.9.1"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":core:osgi-felix-util")
 }

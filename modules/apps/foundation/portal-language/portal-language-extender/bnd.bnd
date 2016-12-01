@@ -3,6 +3,3 @@ Bundle-SymbolicName: com.liferay.portal.language.extender
 Bundle-Version: 2.0.3
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
--includeresource:\
-	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/extender/*,\
-	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

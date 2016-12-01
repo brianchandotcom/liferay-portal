@@ -1,0 +1,13 @@
+Bundle-Name: Liferay OSGiFelix Utilities
+Bundle-SymbolicName: com.liferay.osgi.felix.util
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.osgi.felix.util,\
+	\
+	org.apache.felix.utils.extender,\
+	org.apache.felix.utils.log
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-includeresource:\
+	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/extender/*,\
+	@org.apache.felix.utils-[0-9]*.jar!/org/apache/felix/utils/log/*

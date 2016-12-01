@@ -14,6 +14,7 @@
 
 package com.liferay.portal.spring.extender.internal.context;
 
+import com.liferay.osgi.felix.util.AbstractExtender;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBManager;
@@ -44,7 +45,6 @@ import javax.sql.DataSource;
 
 import org.apache.felix.dm.DependencyManager;
 import org.apache.felix.dm.ServiceDependency;
-import org.apache.felix.utils.extender.AbstractExtender;
 import org.apache.felix.utils.extender.Extension;
 import org.apache.felix.utils.log.Logger;
 
@@ -65,10 +65,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) throws Exception {
-		setSynchronous(true);
-
-		_bundleContext = bundleContext;
-
 		_dependencyManager = new DependencyManager(bundleContext);
 		_logger = new Logger(bundleContext);
 
@@ -76,10 +72,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 	}
 
 	@Deactivate
-	protected void deactivate() throws Exception {
-		stop(_bundleContext);
-
-		_bundleContext = null;
+	protected void deactivate(BundleContext bundleContext) throws Exception {
+		stop(bundleContext);
 	}
 
 	@Override
@@ -136,7 +130,6 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		_logger.log(Logger.LOG_DEBUG, "[" + bundle + "] " + s);
 	}
 
-	private BundleContext _bundleContext;
 	private DependencyManager _dependencyManager;
 	private Logger _logger;
 	private ServiceConfigurator _serviceConfigurator;
@@ -187,9 +180,12 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		public void start() throws Exception {
 			_component = _dependencyManager.createComponent();
 
+			BundleContext bundleContext =
+				ModuleApplicationContextExtender.this.getBundleContext();
+
 			_component.setImplementation(
 				new ModuleApplicationContextRegistrator(
-					_bundle, _bundleContext.getBundle(), _serviceConfigurator));
+					_bundle, bundleContext.getBundle(), _serviceConfigurator));
 
 			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
 
@@ -256,8 +252,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			properties.put("upgrade.initial.database.creation", "true");
 
 			return UpgradeStepRegistratorTracker.register(
-				_bundleContext, _bundle.getSymbolicName(), "0.0.0",
-				upgradeToSchemaVersion, properties,
+				ModuleApplicationContextExtender.this.getBundleContext(),
+				_bundle.getSymbolicName(), "0.0.0", upgradeToSchemaVersion,
+				properties,
 				new UpgradeStep() {
 
 					@Override

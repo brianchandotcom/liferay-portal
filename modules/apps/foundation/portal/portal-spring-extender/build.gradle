@@ -4,7 +4,6 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	provided group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "3.2.0"
-	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 	provided group: "org.springframework", name: "spring-aop", version: "4.1.9.RELEASE"
@@ -13,4 +12,5 @@ dependencies {
 	provided group: "org.springframework", name: "spring-core", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-orm", version: "4.1.9.RELEASE"
 	provided group: "org.springframework", name: "spring-tx", version: "4.1.9.RELEASE"
+	provided project(":core:osgi-felix-util")
 }

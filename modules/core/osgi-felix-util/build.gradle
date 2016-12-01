@@ -1,0 +1,7 @@
+dependencies {
+	provided group: "org.apache.felix", name: "org.apache.felix.utils", version: "1.6.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/core")
+}

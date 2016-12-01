@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.mail;
+package com.liferay.portal.mail;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.mail.MailTemplate;
+import com.liferay.portal.kernel.mail.MailTemplateContext;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;

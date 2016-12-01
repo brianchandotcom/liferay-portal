@@ -23,11 +23,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.DefaultMailTemplate;
-import com.liferay.portal.kernel.mail.DefaultMailTemplateContextBuilder;
 import com.liferay.portal.kernel.mail.MailTemplate;
 import com.liferay.portal.kernel.mail.MailTemplateContext;
 import com.liferay.portal.kernel.mail.MailTemplateContextBuilder;
+import com.liferay.portal.kernel.mail.MailTemplateFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -188,7 +187,8 @@ public class SubscriptionSender implements Serializable {
 					_getBasicMailTemplateContext(locale);
 
 				MailTemplate replyToAddressMailTemplate =
-					new DefaultMailTemplate(replyToAddress, false);
+					MailTemplateFactoryUtil.createMailTemplate(
+						replyToAddress, false);
 
 				String processedReplyToAddress =
 					replyToAddressMailTemplate.renderAsString(
@@ -681,16 +681,18 @@ public class SubscriptionSender implements Serializable {
 		MailTemplateContext mailTemplateContext = _getBodyMailTemplateContext(
 			locale, from, to);
 
-		MailTemplate subjectMailTemplate = new DefaultMailTemplate(
-			mailMessage.getSubject(), false);
+		MailTemplate subjectMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(
+				mailMessage.getSubject(), false);
 
 		String processedSubject = subjectMailTemplate.renderAsString(
 			locale, mailTemplateContext);
 
 		mailMessage.setSubject(processedSubject);
 
-		MailTemplate bodyMailTemplate = new DefaultMailTemplate(
-			mailMessage.getBody(), true);
+		MailTemplate bodyMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(
+				mailMessage.getBody(), true);
 
 		String processedBody = bodyMailTemplate.renderAsString(
 			locale, mailTemplateContext);
@@ -719,7 +721,8 @@ public class SubscriptionSender implements Serializable {
 		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
 			locale);
 
-		MailTemplate mailTemplate = new DefaultMailTemplate(content, escape);
+		MailTemplate mailTemplate = MailTemplateFactoryUtil.createMailTemplate(
+			content, escape);
 
 		return mailTemplate.renderAsString(locale, mailTemplateContext);
 	}
@@ -730,11 +733,11 @@ public class SubscriptionSender implements Serializable {
 		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
 			locale);
 
-		MailTemplate fromAddressMailTemplate = new DefaultMailTemplate(
-			fromAddress, false);
+		MailTemplate fromAddressMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(fromAddress, false);
 
-		MailTemplate fromNameMailTemplate = new DefaultMailTemplate(
-			fromName, false);
+		MailTemplate fromNameMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(fromName, false);
 
 		InternetAddress from = new InternetAddress(
 			fromAddressMailTemplate.renderAsString(locale, mailTemplateContext),
@@ -771,8 +774,9 @@ public class SubscriptionSender implements Serializable {
 		mailMessage.setMessageId(mailId);
 
 		if (replyToAddress != null) {
-			MailTemplate replyToAddressMailTemplate = new DefaultMailTemplate(
-				replyToAddress, false);
+			MailTemplate replyToAddressMailTemplate =
+				MailTemplateFactoryUtil.createMailTemplate(
+					replyToAddress, false);
 
 			String processedReplyToAddress =
 				replyToAddressMailTemplate.renderAsString(
@@ -887,7 +891,7 @@ public class SubscriptionSender implements Serializable {
 
 	private MailTemplateContext _getBasicMailTemplateContext(Locale locale) {
 		MailTemplateContextBuilder mailTemplateContextBuilder =
-			new DefaultMailTemplateContextBuilder();
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
 		String portletName = _getPortletName(locale);
 
@@ -905,7 +909,7 @@ public class SubscriptionSender implements Serializable {
 		Locale locale, InternetAddress from, InternetAddress to) {
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
-			new DefaultMailTemplateContextBuilder();
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", from.getAddress());
 		mailTemplateContextBuilder.put(

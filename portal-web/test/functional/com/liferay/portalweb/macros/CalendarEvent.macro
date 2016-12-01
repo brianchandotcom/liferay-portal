@@ -812,14 +812,14 @@
 							<condition function="IsElementNotPresent" locator1="xpath=(//input[contains(@value,'Repeating')])" />
 							<then>
 								<execute function="Pause" value1="1000" />
-								<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="Confirm#waitForConfirmation" value1="Deleting this event will cancel the meeting with your guests. Would you like to delete?" />
 								<execute function="Pause" value1="2000" />
 							</then>
 							<else>
 								<execute function="Pause" value1="1000" />
-								<execute function="ClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
+								<execute function="AssertClickNoError" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" value1="Delete" />
 
 								<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
 								<execute function="Pause" value1="10000" />

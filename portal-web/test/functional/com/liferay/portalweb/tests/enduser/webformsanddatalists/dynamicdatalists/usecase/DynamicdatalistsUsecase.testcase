@@ -819,7 +819,7 @@
 		</execute>
 
 		<execute macro="Role#addCP">
-			<var name="roleTitle" value="DDMRegRole Name" />
+			<var name="roleName" value="DDMRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -831,7 +831,7 @@
 			<var name="permissionDefinitionValue" value="Action" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
 			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
-			<var name="roleTitle" value="DDMRegRole Name" />
+			<var name="roleName" value="DDMRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -843,7 +843,7 @@
 			<var name="permissionDefinitionValue" value="Add Record" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
 			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
-			<var name="roleTitle" value="DDMRegRole Name" />
+			<var name="roleName" value="DDMRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -855,7 +855,7 @@
 			<var name="permissionDefinitionValue" value="View" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_DYNAMIC_DATA_LISTS" />
 			<var name="permissionNavigationValue" value="Dynamic Data Lists" />
-			<var name="roleTitle" value="DDMRegRole Name" />
+			<var name="roleName" value="DDMRegRole Name" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -883,7 +883,7 @@
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
-			<var name="roleTitle" value="DDMRegRole Name" />
+			<var name="roleName" value="DDMRegRole Name" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 

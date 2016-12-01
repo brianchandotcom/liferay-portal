@@ -159,6 +159,16 @@ public class OpenIdConnectServiceHandlerImpl
 				_openIdConnectProviderRegistry.getOpenIdConnectProvider(
 					providerName);
 
+			if (openIdConnectProvider == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Could not find openIdConnectProvider with name " +
+							providerName);
+				}
+
+				return null;
+			}
+
 			OIDCProviderMetadata oidcProviderMetadata =
 				initOIDCProviderMetadata(openIdConnectProvider);
 
@@ -215,6 +225,12 @@ public class OpenIdConnectServiceHandlerImpl
 		OpenIdConnectProvider openIdConnectProvider =
 			_openIdConnectProviderRegistry.getOpenIdConnectProvider(
 				providerName);
+
+		if (openIdConnectProvider == null) {
+			throw new SystemException(
+				"Could not find openIdConnectProvider with name " +
+					providerName);
+		}
 
 		// Generate random state string for pairing the
 		// httpServletResponse to the request

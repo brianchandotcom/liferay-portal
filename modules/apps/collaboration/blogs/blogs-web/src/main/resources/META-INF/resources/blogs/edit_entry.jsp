@@ -411,6 +411,17 @@ if (portletTitleBasedNavigation) {
 </aui:script>
 
 <aui:script use="liferay-blogs">
+
+	$('.info-bar-container').affix({
+		offset: {
+			top: 1
+		}
+	}).on('affixed.bs.affix', function() {
+		$(this).parent().css('margin-top', $(this).height());
+	}).on('affix-top.bs.affix', function() {
+		$(this).parent().css('margin-top', 0);
+	});
+
 	var blogs = Liferay.component(
 		'<portlet:namespace />Blogs',
 		new Liferay.Blogs(

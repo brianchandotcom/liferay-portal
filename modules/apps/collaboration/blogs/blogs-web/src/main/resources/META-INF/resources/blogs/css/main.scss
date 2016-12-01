@@ -384,7 +384,24 @@
 		border-color: transparent;
 	}
 
-	.info-bar-center small:not(:empty) + small:not(:empty):before {
-		content: " - ";
+	.info-bar-container {
+		background-color: #F5F7F8;
+		transition: min-height 0.15s ease-out;
+
+		&.affix {
+			min-height: 35px;
+
+			.info-bar-center {
+				margin-top: 5px;
+			}
+		}
+
+		.info-bar-center {
+			transition: margin-top 0.15s ease-out;
+		}
+
+		.info-bar-center small:not(:empty) + small:not(:empty):before {
+			content: " - ";
+		}
 	}
 }

@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -31,8 +30,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.reflect.Whitebox;
-
 /**
  * @author André de Oliveira
  */
@@ -44,11 +41,9 @@ public class IndexableActionableDynamicQueryTest {
 
 		RegistryUtil.setRegistry(createRegistry());
 
-		Whitebox.setInternalState(
-			IndexWriterHelperUtil.class, IndexWriterHelper.class,
-			indexWriterHelper);
-
 		indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setIndexWriterHelper(indexWriterHelper);
 	}
 
 	@Test

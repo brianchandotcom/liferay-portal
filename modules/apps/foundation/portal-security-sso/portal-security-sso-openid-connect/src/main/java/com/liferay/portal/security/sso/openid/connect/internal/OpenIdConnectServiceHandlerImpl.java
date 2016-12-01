@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -379,56 +378,49 @@ public class OpenIdConnectServiceHandlerImpl
 
 		OIDCProviderMetadata oidcProviderMetadata = null;
 
-		InputStream discoveryEndpointStream = null;
-
 		String discoveryEndpoint = openIdConnectProvider.getDiscoveryEndPoint();
 
-		try {
-			if (Validator.isNull(discoveryEndpoint)) {
-				Issuer issuer = new Issuer(
-					openIdConnectProvider.getIssuerUrl());
+		if (Validator.isNull(discoveryEndpoint)) {
+			Issuer issuer = new Issuer(openIdConnectProvider.getIssuerUrl());
 
-				List<SubjectType> subjectTypes = new ArrayList<>();
+			List<SubjectType> subjectTypes = new ArrayList<>();
 
-				for (String subjectType :
-						openIdConnectProvider.getSubjectTypes()) {
-
-					subjectTypes.add(SubjectType.parse(subjectType));
-				}
-
-				URI jwkSetURI = new URI(openIdConnectProvider.getJwksUri());
-
-				oidcProviderMetadata = new OIDCProviderMetadata(
-					issuer, subjectTypes, jwkSetURI);
-
-				URI authorizationEndPointURI = new URI(
-					openIdConnectProvider.getAuthorizationEndPoint());
-
-				oidcProviderMetadata.setAuthorizationEndpointURI(
-					authorizationEndPointURI);
-
-				URI tokenEndpointURI = new URI(
-					openIdConnectProvider.getTokenEndPoint());
-
-				oidcProviderMetadata.setTokenEndpointURI(tokenEndpointURI);
-
-				URI userInfoEndpointURI = new URI(
-					openIdConnectProvider.getUserInfoEndPoint());
-
-				oidcProviderMetadata.setUserInfoEndpointURI(
-					userInfoEndpointURI);
+			for (String subjectType : openIdConnectProvider.getSubjectTypes()) {
+				subjectTypes.add(SubjectType.parse(subjectType));
 			}
-			else {
-				URI discoveryEndpointURI = new URI(
-					openIdConnectProvider.getDiscoveryEndPoint());
 
-				URL discoveryEndpointURL = discoveryEndpointURI.toURL();
+			URI jwkSetURI = new URI(openIdConnectProvider.getJwksUri());
 
-				discoveryEndpointStream = discoveryEndpointURL.openStream();
+			oidcProviderMetadata = new OIDCProviderMetadata(
+				issuer, subjectTypes, jwkSetURI);
 
-				String providerInfo = null;
+			URI authorizationEndPointURI = new URI(
+				openIdConnectProvider.getAuthorizationEndPoint());
 
-				try (Scanner scanner = new Scanner(discoveryEndpointStream)) {
+			oidcProviderMetadata.setAuthorizationEndpointURI(
+				authorizationEndPointURI);
+
+			URI tokenEndpointURI = new URI(
+				openIdConnectProvider.getTokenEndPoint());
+
+			oidcProviderMetadata.setTokenEndpointURI(tokenEndpointURI);
+
+			URI userInfoEndpointURI = new URI(
+				openIdConnectProvider.getUserInfoEndPoint());
+
+			oidcProviderMetadata.setUserInfoEndpointURI(userInfoEndpointURI);
+		}
+		else {
+			URI discoveryEndpointURI = new URI(
+				openIdConnectProvider.getDiscoveryEndPoint());
+
+			URL discoveryEndpointURL = discoveryEndpointURI.toURL();
+
+			String providerInfo = null;
+
+			try (InputStream discoveryEndpointStream =
+					discoveryEndpointURL.openStream();
+				Scanner scanner = new Scanner(discoveryEndpointStream)) {
 					Scanner delimiterScanner = scanner.useDelimiter(
 						_DISCOVERY_END_POINT_DELIMITER);
 
@@ -438,15 +430,9 @@ public class OpenIdConnectServiceHandlerImpl
 					else {
 						providerInfo = StringPool.BLANK;
 					}
-				}
+			}
 
-				oidcProviderMetadata = OIDCProviderMetadata.parse(providerInfo);
-			}
-		}
-		finally {
-			if (Validator.isNotNull(discoveryEndpointStream)) {
-				StreamUtil.cleanUp(discoveryEndpointStream);
-			}
+			oidcProviderMetadata = OIDCProviderMetadata.parse(providerInfo);
 		}
 
 		return oidcProviderMetadata;

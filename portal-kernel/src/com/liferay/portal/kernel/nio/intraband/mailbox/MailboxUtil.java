@@ -122,10 +122,6 @@ public class MailboxUtil {
 
 	private static class OverdueMailReaperThread extends Thread {
 
-		public OverdueMailReaperThread(String name) {
-			super(name);
-		}
-
 		@Override
 		public void run() {
 			while (true) {
@@ -139,24 +135,13 @@ public class MailboxUtil {
 			}
 		}
 
+		private OverdueMailReaperThread(String name) {
+			super(name);
+		}
+
 	}
 
 	private static class ReceiptStub implements Delayed {
-
-		public ReceiptStub(long receipt) {
-			this(receipt, -1);
-		}
-
-		public ReceiptStub(long receipt, long currentNanoTime) {
-			long expireTime = currentNanoTime;
-
-			expireTime += TimeUnit.MILLISECONDS.toNanos(
-				_INTRABAND_MAILBOX_STORAGE_LIFE);
-
-			_expireTime = expireTime;
-
-			_receipt = receipt;
-		}
 
 		@Override
 		public int compareTo(Delayed delayed) {
@@ -188,6 +173,21 @@ public class MailboxUtil {
 		@Override
 		public int hashCode() {
 			return (int)_receipt;
+		}
+
+		private ReceiptStub(long receipt) {
+			this(receipt, -1);
+		}
+
+		private ReceiptStub(long receipt, long currentNanoTime) {
+			long expireTime = currentNanoTime;
+
+			expireTime += TimeUnit.MILLISECONDS.toNanos(
+				_INTRABAND_MAILBOX_STORAGE_LIFE);
+
+			_expireTime = expireTime;
+
+			_receipt = receipt;
 		}
 
 		private final long _expireTime;

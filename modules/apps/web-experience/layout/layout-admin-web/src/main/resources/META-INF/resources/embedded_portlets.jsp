@@ -23,17 +23,21 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-List<Portlet> embeddedPortlets = Collections.emptyList();
+List<Portlet> orphanPortlets = new ArrayList<>();
 
 if (selLayout.isSupportsEmbeddedPortlets()) {
 	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
 
-	embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
+	for (PortletPreferences orphanPortletPreferences : selLayoutTypePortlet.getOrphanPortletPreferences()) {
+		Portlet orphanPortlet = PortletLocalServiceUtil.getPortletById(orphanPortletPreferences.getCompanyId(), orphanPortletPreferences.getPortletId());
+
+		orphanPortlets.add(orphanPortlet);
+	}
 }
 
 PortletTitleComparator portletTitleComparator = new PortletTitleComparator(application, locale);
 
-embeddedPortlets = ListUtil.sort(embeddedPortlets, portletTitleComparator);
+orphanPortlets = ListUtil.sort(orphanPortlets, portletTitleComparator);
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
 
@@ -54,7 +58,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
-	searchContainerId="portlets"
+	searchContainerId="orphanPortlets"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -103,12 +107,12 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 	<aui:form action="<%= deleteEmbeddedPortletsURL %>" name="fm">
 		<liferay-ui:search-container
 			deltaConfigurable="<%= false %>"
-			id="portlets"
+			id="orphanPortlets"
 			iteratorURL="<%= portletURL %>"
 			rowChecker="<%= rowChecker %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= embeddedPortlets %>"
+				results="<%= orphanPortlets %>"
 			/>
 
 			<liferay-ui:search-container-row

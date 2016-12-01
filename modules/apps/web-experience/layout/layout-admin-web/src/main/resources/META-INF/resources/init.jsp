@@ -73,6 +73,7 @@ page import="com.liferay.portal.kernel.model.LayoutType" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTypeController" %><%@
 page import="com.liferay.portal.kernel.model.LayoutTypePortlet" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
+page import="com.liferay.portal.kernel.model.PortletPreferences" %><%@
 page import="com.liferay.portal.kernel.model.Theme" %><%@
 page import="com.liferay.portal.kernel.model.ThemeSetting" %><%@
 page import="com.liferay.portal.kernel.model.UserGroup" %><%@
@@ -122,7 +123,7 @@ page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.RobotsUtil" %><%@
 page import="com.liferay.sites.kernel.util.SitesUtil" %>
 
-<%@ page import="java.util.Collections" %><%@
+<%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@
 page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@

@@ -36,11 +36,11 @@ public class PluginGitIDFailureMessageGenerator
 		sb.append("<p>Please update ");
 
 		sb.append("<strong><a href=\"https://github.com/");
-		sb.append(project.getProperty("github.pull.request.head.username"));
+		sb.append(project.getProperty("github.origin.name"));
 		sb.append("/");
 		sb.append(project.getProperty("portal.repository"));
 		sb.append("/blob/");
-		sb.append(project.getProperty("github.pull.request.head.branch"));
+		sb.append(project.getProperty("github.sender.branch.name"));
 		sb.append("/git-commit-plugins\">git-commit-plugins</a></strong> to ");
 		sb.append("an existing git id from <strong>");
 		sb.append("<a href=\"https://github.com/liferay/");

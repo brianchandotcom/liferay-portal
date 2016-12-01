@@ -133,10 +133,9 @@ public class GitHubJobMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		project.setProperty("env.BUILD_NUMBER", "1");
 		project.setProperty("build.url", buildURLString);
+		project.setProperty("github.origin.name", "junit-pr-origin-username");
 		project.setProperty(
-			"github.pull.request.head.branch", "junit-pr-head-branch");
-		project.setProperty(
-			"github.pull.request.head.username", "junit-pr-head-username");
+			"github.sender.branch.name", "junit-pr-sender-branch");
 		project.setProperty("env.JOB_NAME", "jenkins-job-name");
 		project.setProperty("log.base.url", "log-base-url");
 		project.setProperty("env.MASTER_HOSTNAME", "test-1-1");

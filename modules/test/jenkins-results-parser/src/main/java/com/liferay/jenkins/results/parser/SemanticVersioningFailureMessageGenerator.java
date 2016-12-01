@@ -38,15 +38,15 @@ public class SemanticVersioningFailureMessageGenerator
 
 		sb.append("<p>Please fix <strong>semantic versioning</strong> on ");
 		sb.append("<strong><a href=\"https://github.com/");
-		sb.append(project.getProperty("github.pull.request.head.username"));
+		sb.append(project.getProperty("github.origin.name"));
 		sb.append("/");
 		sb.append(project.getProperty("repository"));
 		sb.append("/tree/");
-		sb.append(project.getProperty("github.pull.request.head.branch"));
+		sb.append(project.getProperty("github.sender.branch.name"));
 		sb.append("\">");
-		sb.append(project.getProperty("github.pull.request.head.username"));
+		sb.append(project.getProperty("github.origin.name"));
 		sb.append("/");
-		sb.append(project.getProperty("github.pull.request.head.branch"));
+		sb.append(project.getProperty("github.sender.branch.name"));
 		sb.append("</a></strong>.</p>");
 
 		int end = consoleOutput.indexOf(_SEMVER_END_STRING);

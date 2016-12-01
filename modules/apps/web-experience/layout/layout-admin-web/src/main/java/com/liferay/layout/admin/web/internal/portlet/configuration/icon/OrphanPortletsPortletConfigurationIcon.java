@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
 	service = PortletConfigurationIcon.class
 )
-public class EmbeddedPortletsPortletConfigurationIcon
+public class OrphanPortletsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
@@ -58,7 +58,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "embedded-portlets");
+		return LanguageUtil.get(resourceBundle, "orphan-portlets");
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 				portletRequest, portletDisplay.getId(),
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
+			portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 			portletURL.setParameter(
 				"selPlid", String.valueOf(getSelPlid(portletRequest)));

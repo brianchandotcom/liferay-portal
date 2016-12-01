@@ -73,7 +73,7 @@ public class StopTestableTomcatTask
 			boolean deleted = moduleFile.delete();
 
 			if (!deleted && logger.isWarnEnabled()) {
-				logger.warn("Unable to delete " + moduleFile);
+				logger.warn("Unable to delete {}", moduleFile);
 			}
 		}
 	}

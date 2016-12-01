@@ -300,7 +300,7 @@ public class SetUpTestableTomcatTask
 			String newSub = GradleUtil.toString(entry.getValue());
 
 			if (logger.isWarnEnabled() && !content.contains(oldSub)) {
-				logger.warn("Unable to find \"" + oldSub + "\" in " + path);
+				logger.warn("Unable to find \"{}\" in {}", oldSub, path);
 			}
 
 			content = content.replace(oldSub, newSub);

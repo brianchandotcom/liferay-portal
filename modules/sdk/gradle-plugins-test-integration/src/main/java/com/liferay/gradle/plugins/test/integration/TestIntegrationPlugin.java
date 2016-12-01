@@ -275,8 +275,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				if (started) {
 					if (logger.isDebugEnabled()) {
 						logger.debug(
-							"Application server " + binDir +
-								" is already started");
+							"Application server {} is already started", binDir);
 					}
 
 					Project project = startTestableTomcatTask.getProject();
@@ -288,8 +287,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					if (startParameter.isParallelProjectExecutionEnabled()) {
 						if (logger.isDebugEnabled()) {
 							logger.debug(
-								"Waiting for application server " + binDir +
-									" to be reachable");
+								"Waiting for application server {} to be " +
+									"reachable",
+								binDir);
 						}
 
 						startTestableTomcatTask.waitForReachable();
@@ -370,8 +370,8 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					if (!_startedAppServerBinDirs.contains(binDir)) {
 						if (logger.isDebugEnabled()) {
 							logger.debug(
-								"Application server " + binDir +
-									" is already stopped");
+								"Application server {} is already stopped",
+								binDir);
 						}
 
 						throw new StopExecutionException();
@@ -383,9 +383,9 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 					if (originalCounter > 1) {
 						if (logger.isDebugEnabled()) {
 							logger.debug(
-								"Application server " + binDir +
-									" cannot be stopped now, still " +
-										(originalCounter - 1) + " to execute");
+								"Application server {} cannot be stopped " +
+									"now, still {} to execute",
+								binDir, originalCounter - 1);
 						}
 
 						throw new StopExecutionException();

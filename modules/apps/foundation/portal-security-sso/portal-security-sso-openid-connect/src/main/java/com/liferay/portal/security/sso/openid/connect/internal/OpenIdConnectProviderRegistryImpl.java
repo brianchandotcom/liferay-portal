@@ -17,26 +17,22 @@ package com.liferay.portal.security.sso.openid.connect.internal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration;
-
-import java.io.IOException;
 
 import java.net.URL;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ConfigurationEvent;
-import org.osgi.service.cm.ConfigurationListener;
-import org.osgi.service.component.annotations.Activate;
+import org.osgi.framework.Constants;
+import org.osgi.service.cm.ConfigurationException;
+import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -48,72 +44,34 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true,
-	service = {ConfigurationListener.class, OpenIdConnectProviderRegistry.class}
+	property = Constants.SERVICE_PID + "=com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration",
+	service = {ManagedServiceFactory.class, OpenIdConnectProviderRegistry.class}
 )
 public class OpenIdConnectProviderRegistryImpl
-	implements OpenIdConnectProviderRegistry, ConfigurationListener {
+	implements OpenIdConnectProviderRegistry, ManagedServiceFactory {
 
 	@Override
-	public void configurationEvent(ConfigurationEvent configurationEvent) {
-		String factoryPid = configurationEvent.getFactoryPid();
+	public void deleted(String s) {
+		OpenIdConnectProvider openIdConnectProvider =
+			_openIdConnectProvidersPerFactory.remove(s);
 
-		if (!OpenIdConnectProviderConfiguration.class.getName().equals(
-				factoryPid)) {
+		removeOpenConnectIdProvider(openIdConnectProvider);
+	}
 
-			return;
-		}
-
-		try {
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				configurationEvent.getPid(), StringPool.QUESTION);
-
-			if (configuration.getProperties() == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"No configuration properties for: " +
-							configurationEvent.getPid());
-				}
-
-				return;
-			}
-
-			OpenIdConnectProviderConfiguration
-				openIdConnectProviderConfiguration =
-					ConfigurableUtil.createConfigurable(
-						OpenIdConnectProviderConfiguration.class,
-						configuration.getProperties());
-
-			if (configurationEvent.getType() == ConfigurationEvent.CM_DELETED) {
-				_openIdConnectProviders.remove(
-					openIdConnectProviderConfiguration.providerName());
-			}
-			else {
-				OpenIdConnectProvider openIdConnectProvider =
-					createOpenIdConnectProvider(
-						openIdConnectProviderConfiguration);
-
-				addOpenConnectIdConnectProvider(openIdConnectProvider);
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Error retrieving configuration: " +
-						configurationEvent.getPid(),
-					ioe);
-			}
-		}
+	@Override
+	public String getName() {
+		return "OpenId Connect Provider Factory";
 	}
 
 	@Override
 	public OpenIdConnectProvider getOpenIdConnectProvider(String name) {
-		return _openIdConnectProviders.get(name);
+		return _openIdConnectProvidersPerName.get(name);
 	}
 
 	@Override
 	public OpenIdConnectProvider getOpenIdConnectProvider(URL issuerUrl) {
 		for (OpenIdConnectProvider openIdConnectProvider :
-				_openIdConnectProviders.values()) {
+				_openIdConnectProvidersPerName.values()) {
 
 			if (Objects.equals(
 					openIdConnectProvider.getIssuerUrl(),
@@ -123,37 +81,31 @@ public class OpenIdConnectProviderRegistryImpl
 			}
 		}
 
-		return _openIdConnectProviders.get(
+		return _openIdConnectProvidersPerName.get(
 			OPEN_ID_CONNECT_PROVIDER_NAME_DEFAULT);
 	}
 
 	@Override
 	public Collection<String> getOpenIdConnectProviderNames() {
 		return Collections.unmodifiableCollection(
-			_openIdConnectProviders.keySet());
+			_openIdConnectProvidersPerName.keySet());
 	}
 
-	@Activate
-	protected void activate() throws Exception {
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			"(service.factoryPid=" +
-				OpenIdConnectProviderConfiguration.class.getName() + ")");
+	@Override
+	public void updated(String factoryPid, Dictionary<String, ?> properties)
+		throws ConfigurationException {
 
-		if (configurations != null) {
-			for (Configuration configuration : configurations) {
-				OpenIdConnectProviderConfiguration
-					openIdConnectProviderConfiguration =
-						ConfigurableUtil.createConfigurable(
-							OpenIdConnectProviderConfiguration.class,
-							configuration.getProperties());
+		OpenIdConnectProviderConfiguration openIdConnectProviderConfiguration =
+			ConfigurableUtil.createConfigurable(
+				OpenIdConnectProviderConfiguration.class, properties);
 
-				OpenIdConnectProvider openIdConnectProvider =
-					createOpenIdConnectProvider(
-						openIdConnectProviderConfiguration);
+		OpenIdConnectProvider openIdConnectProvider =
+			createOpenIdConnectProvider(openIdConnectProviderConfiguration);
 
-				addOpenConnectIdConnectProvider(openIdConnectProvider);
-			}
-		}
+		addOpenConnectIdConnectProvider(openIdConnectProvider);
+
+		_openIdConnectProvidersPerFactory.put(
+			factoryPid, openIdConnectProvider);
 	}
 
 	@Reference(
@@ -165,7 +117,7 @@ public class OpenIdConnectProviderRegistryImpl
 	protected void addOpenConnectIdConnectProvider(
 		OpenIdConnectProvider openIdConnectProvider) {
 
-		_openIdConnectProviders.put(
+		_openIdConnectProvidersPerName.put(
 			openIdConnectProvider.getName(), openIdConnectProvider);
 	}
 
@@ -200,16 +152,15 @@ public class OpenIdConnectProviderRegistryImpl
 	protected void removeOpenConnectIdProvider(
 		OpenIdConnectProvider openIdConnectProvider) {
 
-		_openIdConnectProviders.remove(openIdConnectProvider.getName());
+		_openIdConnectProvidersPerName.remove(openIdConnectProvider.getName());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdConnectProviderRegistryImpl.class);
 
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
-
-	private final Map<String, OpenIdConnectProvider> _openIdConnectProviders =
-		new ConcurrentHashMap<>();
+	private final Map<String, OpenIdConnectProvider>
+		_openIdConnectProvidersPerFactory = new ConcurrentHashMap<>();
+	private final Map<String, OpenIdConnectProvider>
+		_openIdConnectProvidersPerName = new ConcurrentHashMap<>();
 
 }

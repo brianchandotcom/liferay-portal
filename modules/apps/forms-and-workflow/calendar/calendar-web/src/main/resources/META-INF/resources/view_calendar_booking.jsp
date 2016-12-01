@@ -49,6 +49,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 		<aui:fieldset markupView="lexicon">
 			<dl class="property-list">
 				<dt>
+					<liferay-ui:message key="status" />:
+				</dt>
+				<dd>
+					<aui:workflow-status markupView="lexicon" model="<%= CalendarBooking.class %>" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= calendarBooking.getStatus() %>" />
+				</dd>
+				<dt>
 					<liferay-ui:message key="starts" />:
 				</dt>
 				<dd>

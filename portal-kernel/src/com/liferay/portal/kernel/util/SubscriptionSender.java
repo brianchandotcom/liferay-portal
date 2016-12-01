@@ -933,19 +933,10 @@ public class SubscriptionSender implements Serializable {
 		Map<Locale, String> localizedValueMap, Locale locale,
 		String defaultValue) {
 
-		if (localizedValueMap == null) {
-			return defaultValue;
-		}
-
-		String localizedValue = localizedValueMap.get(locale);
-
-		if (Validator.isNotNull(localizedValue)) {
-			return localizedValue;
-		}
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		return localizedValueMap.get(defaultLocale);
+		return GetterUtil.get(
+			MapUtil.getWithFallbackKey(
+				localizedValueMap, locale, LocaleUtil.getDefault()),
+			defaultValue);
 	}
 
 	private String _getPortletName(Locale locale) {

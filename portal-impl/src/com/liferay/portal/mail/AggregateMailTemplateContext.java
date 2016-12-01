@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.mail;
+package com.liferay.portal.mail;
 
+import com.liferay.portal.kernel.mail.MailTemplateContext;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 
 import java.util.Collections;
@@ -36,6 +37,13 @@ public class AggregateMailTemplateContext implements MailTemplateContext {
 		}
 
 		_replacements = Collections.unmodifiableMap(replacements);
+	}
+
+	@Override
+	public MailTemplateContext aggregateWith(
+		MailTemplateContext mailTemplateContext) {
+
+		return new AggregateMailTemplateContext(this, mailTemplateContext);
 	}
 
 	@Override

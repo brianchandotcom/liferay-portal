@@ -2846,12 +2846,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 	}
 
-	@Override
-	public void windowMaximizeAndWait() {
-		windowMaximize();
-		waitForPageToLoad("30000");
-	}
-
 	protected void acceptConfirmation() {
 		WebDriver.TargetLocator targetLocator = switchTo();
 

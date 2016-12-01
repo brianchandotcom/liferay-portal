@@ -473,6 +473,4 @@ public interface LiferaySelenium {
 
 	public void waitForVisible(String locator) throws Exception;
 
-	public void windowMaximizeAndWait();
-
 }

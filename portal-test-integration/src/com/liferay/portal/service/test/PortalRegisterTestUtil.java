@@ -24,7 +24,6 @@ import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.portlet.trash.util.TrashIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
 import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
-import com.liferay.portlet.usersadmin.util.UserIndexer;
 
 /**
  * @author Roberto Díaz
@@ -43,7 +42,6 @@ public class PortalRegisterTestUtil {
 		IndexerRegistryUtil.register(new MBMessageIndexer());
 		IndexerRegistryUtil.register(new OrganizationIndexer());
 		IndexerRegistryUtil.register(new TrashIndexer());
-		IndexerRegistryUtil.register(new UserIndexer());
 
 		_indexersRegistered = true;
 	}

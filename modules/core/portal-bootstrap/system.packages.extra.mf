@@ -2490,7 +2490,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ",com.liferay.portal.kernel.dao.db;version="7.1.0",com.liferay.portal
  .kernel.dao.jdbc;version="7.1.0",com.liferay.portal.kernel.dao.jdbc.a
  op;version="6.3.0",com.liferay.portal.kernel.dao.jdbc.pool.metrics;ve
- rsion="1.0.0",com.liferay.portal.kernel.dao.orm;version="7.0.0";uses:
+ rsion="1.0.0",com.liferay.portal.kernel.dao.orm;version="7.1.0";uses:
  ="com.liferay.exportimport.kernel.lar,com.liferay.portal.kernel.cache
  ,com.liferay.portal.kernel.exception,com.liferay.portal.kernel.model,
  com.liferay.portal.kernel.search,com.liferay.portal.kernel.security.p

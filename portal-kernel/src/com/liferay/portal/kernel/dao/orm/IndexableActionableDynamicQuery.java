@@ -17,10 +17,11 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -70,6 +71,10 @@ public class IndexableActionableDynamicQuery
 		}
 	}
 
+	public void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
+		_indexWriterHelper = indexWriterHelper;
+	}
+
 	@Override
 	public void setParallel(boolean parallel) {
 		if (isParallel() == parallel) {
@@ -90,7 +95,7 @@ public class IndexableActionableDynamicQuery
 	@Override
 	protected void actionsCompleted() throws PortalException {
 		if (Validator.isNotNull(_searchEngineId)) {
-			IndexWriterHelperUtil.commit(_searchEngineId, getCompanyId());
+			_indexWriterHelper.commit(_searchEngineId, getCompanyId());
 		}
 	}
 
@@ -120,7 +125,7 @@ public class IndexableActionableDynamicQuery
 				_documents);
 		}
 
-		IndexWriterHelperUtil.updateDocuments(
+		_indexWriterHelper.updateDocuments(
 			_searchEngineId, getCompanyId(), new ArrayList<>(_documents),
 			false);
 
@@ -148,8 +153,14 @@ public class IndexableActionableDynamicQuery
 
 	private static final long _STATUS_INTERVAL = 1000;
 
+	private static volatile IndexWriterHelper _indexWriterHelperProxy =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			IndexWriterHelper.class, IndexableActionableDynamicQuery.class,
+			"_indexWriterHelperProxy", false);
+
 	private long _count;
 	private Collection<Document> _documents = new ArrayList<>();
+	private IndexWriterHelper _indexWriterHelper = _indexWriterHelperProxy;
 	private String _searchEngineId;
 	private long _total;
 

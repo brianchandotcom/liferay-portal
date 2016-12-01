@@ -3700,11 +3700,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				companyPortletPreferences, "adminEmailVerificationBody",
 				PropsKeys.ADMIN_EMAIL_VERIFICATION_BODY);
 
-		String subject = _getLocalizedValue(
-			localizedSubjectMap, user.getLocale(), StringPool.BLANK);
+		String subject = MapUtil.getWithFallbackKey(
+			localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 
-		String body = _getLocalizedValue(
-			localizedBodyMap, user.getLocale(), StringPool.BLANK);
+		String body = MapUtil.getWithFallbackKey(
+			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
@@ -6166,11 +6166,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				PropsKeys.ADMIN_EMAIL_USER_ADDED_NO_PASSWORD_BODY);
 		}
 
-		String subject = _getLocalizedValue(
-			localizedSubjectMap, user.getLocale(), StringPool.BLANK);
+		String subject = MapUtil.getWithFallbackKey(
+			localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 
-		String body = _getLocalizedValue(
-			localizedBodyMap, user.getLocale(), StringPool.BLANK);
+		String body = MapUtil.getWithFallbackKey(
+			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
@@ -6292,9 +6292,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		PortletPreferences companyPortletPreferences =
 			PrefsPropsUtil.getPreferences(companyId, true);
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
-
 		final String bodyProperty;
 		final String prefix;
 		final String subjectProperty;
@@ -6310,21 +6307,28 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			subjectProperty = PropsKeys.ADMIN_EMAIL_PASSWORD_SENT_SUBJECT;
 		}
 
+		String localizedBody = body;
+
 		if (Validator.isNull(body)) {
-			localizedBodyMap = LocalizationUtil.getLocalizationMap(
-				companyPortletPreferences, prefix + "Body", bodyProperty);
+			Map<Locale, String> localizedBodyMap =
+				LocalizationUtil.getLocalizationMap(
+					companyPortletPreferences, prefix + "Body", bodyProperty);
+
+			localizedBody = MapUtil.getWithFallbackKey(
+				localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 		}
+
+		String localizedSubject = subject;
 
 		if (Validator.isNull(subject)) {
-			localizedSubjectMap = LocalizationUtil.getLocalizationMap(
-				companyPortletPreferences, prefix + "Subject", subjectProperty);
+			Map<Locale, String> localizedSubjectMap =
+				LocalizationUtil.getLocalizationMap(
+					companyPortletPreferences, prefix + "Subject",
+					subjectProperty);
+
+			localizedSubject = MapUtil.getWithFallbackKey(
+				localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 		}
-
-		String localizedSubject = _getLocalizedValue(
-			localizedSubjectMap, user.getLocale(), subject);
-
-		String localizedBody = _getLocalizedValue(
-			localizedBodyMap, user.getLocale(), body);
 
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
@@ -6870,25 +6874,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 	@BeanReference(type = MailService.class)
 	protected MailService mailService;
-
-	private String _getLocalizedValue(
-		Map<Locale, String> localizedValueMap, Locale locale,
-		String defaultValue) {
-
-		if (localizedValueMap == null) {
-			return defaultValue;
-		}
-
-		String value = localizedValueMap.get(locale);
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		Locale defaultLocale = LocaleUtil.getDefault();
-
-		return localizedValueMap.get(defaultLocale);
-	}
 
 	private void _sendNotificationEmail(
 			String fromAddress, String fromName, String toAddress, User toUser,

@@ -386,10 +386,10 @@
 
 	.info-bar-container {
 		background-color: #F5F7F8;
-		transition: min-height 0.15s ease-out;
 
 		&.affix {
 			min-height: 35px;
+			transition: min-height 0.15s ease-out;
 
 			.info-bar-center {
 				margin-top: 5px;

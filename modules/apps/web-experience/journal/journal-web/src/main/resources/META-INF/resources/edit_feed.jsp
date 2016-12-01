@@ -356,7 +356,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 					document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value = '';
 					document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
-					submitForm(document.<portlet:namespace />fm);
+					submitForm(document.<portlet:namespace />fm, null, false, false);
 				}
 			}
 		);
@@ -368,7 +368,7 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		document.<portlet:namespace />fm.<portlet:namespace />ddmRendererTemplateKey.value = '';
 		document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.WEB_CONTENT_DESCRIPTION %>';
 
-		submitForm(document.<portlet:namespace />fm);
+		submitForm(document.<portlet:namespace />fm, null, false, false);
 	}
 
 	function <portlet:namespace />saveFeed() {

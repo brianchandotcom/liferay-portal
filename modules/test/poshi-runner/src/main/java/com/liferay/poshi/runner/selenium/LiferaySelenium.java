@@ -20,22 +20,7 @@ package com.liferay.poshi.runner.selenium;
 @SuppressWarnings("deprecation")
 public interface LiferaySelenium {
 
-	public void addCustomRequestHeader(String key, String value);
-
-	public void addLocationStrategy(
-		String strategyName, String functionDefinition);
-
-	public void addScript(String scriptContent, String scriptTagId);
-
 	public void addSelection(String locator, String optionLocator);
-
-	public void allowNativeXpath(String allow);
-
-	public void altKeyDown();
-
-	public void altKeyUp();
-
-	public void answerOnNextPrompt(String answer);
 
 	public void antCommand(String fileName, String target) throws Exception;
 
@@ -126,25 +111,7 @@ public interface LiferaySelenium {
 
 	public void assertVisible(String locator) throws Exception;
 
-	public void assignId(String locator, String identifier);
-
-	public void attachFile(String fieldLocator, String fileLocator);
-
-	public void captureEntirePageScreenshot(String filename, String kwargs);
-
-	public String captureEntirePageScreenshotToString(String kwargs);
-
-	public String captureNetworkTraffic(String type);
-
-	public void captureScreenshot(String filename);
-
-	public String captureScreenshotToString();
-
 	public void check(String locator);
-
-	public void chooseCancelOnNextConfirmation();
-
-	public void chooseOkOnNextConfirmation();
 
 	public void click(String locator) throws Exception;
 
@@ -159,27 +126,11 @@ public interface LiferaySelenium {
 	public void connectToEmailAccount(String emailAddress, String emailPassword)
 		throws Exception;
 
-	public void contextMenu(String locator);
-
-	public void contextMenuAt(String locator, String coordString);
-
-	public void controlKeyDown();
-
-	public void controlKeyUp();
-
 	public void copyText(String locator) throws Exception;
 
 	public void copyValue(String locator) throws Exception;
 
-	public void createCookie(String nameValuePair, String optionsString);
-
 	public void deleteAllEmails() throws Exception;
-
-	public void deleteAllVisibleCookies();
-
-	public void deleteCookie(String name, String optionsString);
-
-	public void deselectPopUp();
 
 	public void doubleClick(String locator);
 
@@ -191,43 +142,17 @@ public interface LiferaySelenium {
 		String locatorOfObjectToBeDragged,
 		String locatorOfDragDestinationObject);
 
-	public void dragdrop(String locator, String movementsString);
-
 	public void echo(String message);
 
 	public void fail(String message);
 
-	public void fireEvent(String locator, String eventName);
-
-	public void focus(String locator);
-
 	public String getAlert();
 
-	public String[] getAllButtons();
-
-	public String[] getAllFields();
-
-	public String[] getAllLinks();
-
-	public String[] getAllWindowIds();
-
-	public String[] getAllWindowNames();
-
-	public String[] getAllWindowTitles();
-
 	public String getAttribute(String attributeLocator);
-
-	public String[] getAttributeFromAllWindows(String attributeName);
 
 	public String getBodyText();
 
 	public String getConfirmation();
-
-	public String getCookie();
-
-	public String getCookieByName(String name);
-
-	public Number getCssCount(String css);
 
 	public String getCurrentDay();
 
@@ -239,15 +164,7 @@ public interface LiferaySelenium {
 
 	public String getCurrentYear();
 
-	public Number getCursorPosition(String locator);
-
 	public int getElementHeight(String locator);
-
-	public Number getElementIndex(String locator);
-
-	public Number getElementPositionLeft(String locator);
-
-	public Number getElementPositionTop(String locator);
 
 	public String getElementValue(String locator) throws Exception;
 
@@ -259,8 +176,6 @@ public interface LiferaySelenium {
 
 	public String getEval(String script);
 
-	public String getExpression(String expression);
-
 	public String getFirstNumber(String locator);
 
 	public String getFirstNumberIncrement(String locator);
@@ -268,10 +183,6 @@ public interface LiferaySelenium {
 	public String getHtmlSource();
 
 	public String getLocation() throws Exception;
-
-	public String getLog();
-
-	public Number getMouseSpeed();
 
 	public String getNumberDecrement(String value);
 
@@ -281,31 +192,11 @@ public interface LiferaySelenium {
 
 	public String getPrimaryTestSuiteName();
 
-	public String getPrompt();
-
-	public String getSelectedId(String selectLocator);
-
-	public String[] getSelectedIds(String selectLocator);
-
-	public String getSelectedIndex(String selectLocator);
-
-	public String[] getSelectedIndexes(String selectLocator);
-
 	public String getSelectedLabel(String selectLocator);
 
 	public String[] getSelectedLabels(String selectLocator);
 
-	public String getSelectedValue(String selectLocator);
-
-	public String[] getSelectedValues(String selectLocator);
-
-	public String[] getSelectOptions(String selectLocator);
-
 	public String getSikuliImagesDirName();
-
-	public String getSpeed();
-
-	public String getTable(String tableCellAddress);
 
 	public String getTestDependenciesDirName();
 
@@ -313,33 +204,15 @@ public interface LiferaySelenium {
 
 	public String getTitle();
 
-	public String getValue(String locator);
-
-	public boolean getWhetherThisFrameMatchFrameExpression(
-		String currentFrameString, String target);
-
-	public boolean getWhetherThisWindowMatchWindowExpression(
-		String currentWindowString, String target);
-
-	public Number getXpathCount(String xpath);
-
 	public void goBack();
 
 	public void goBackAndWait();
-
-	public void highlight(String locator);
-
-	public void ignoreAttributesWithoutValue(String ignore);
 
 	public boolean isAlertPresent();
 
 	public boolean isChecked(String locator);
 
 	public boolean isConfirmation(String pattern);
-
-	public boolean isConfirmationPresent();
-
-	public boolean isCookiePresent(String name);
 
 	public boolean isEditable(String locator);
 
@@ -367,19 +240,13 @@ public interface LiferaySelenium {
 
 	public boolean isNotVisible(String locator);
 
-	public boolean isOrdered(String locator1, String locator2);
-
 	public boolean isPartialText(String locator, String value);
 
 	public boolean isPartialTextAceEditor(String locator, String value);
 
-	public boolean isPromptPresent();
-
 	public boolean isSelectedLabel(String selectLocator, String pattern);
 
 	public boolean isSikuliImagePresent(String image) throws Exception;
-
-	public boolean isSomethingSelected(String selectLocator);
 
 	public boolean isTCatEnabled();
 
@@ -405,33 +272,19 @@ public interface LiferaySelenium {
 
 	public void keyDownAndWait(String locator, String keySequence);
 
-	public void keyDownNative(String keycode);
-
 	public void keyPress(String locator, String keySequence);
 
 	public void keyPressAndWait(String locator, String keySequence);
-
-	public void keyPressNative(String keycode);
 
 	public void keyUp(String locator, String keySequence);
 
 	public void keyUpAndWait(String locator, String keySequence);
 
-	public void keyUpNative(String keycode);
-
 	public void makeVisible(String locator);
-
-	public void metaKeyDown();
-
-	public void metaKeyUp();
 
 	public void mouseDown(String locator);
 
 	public void mouseDownAt(String locator, String coordString);
-
-	public void mouseDownRight(String locator);
-
-	public void mouseDownRightAt(String locator, String coordString);
 
 	public void mouseMove(String locator);
 
@@ -447,13 +300,7 @@ public interface LiferaySelenium {
 
 	public void mouseUpAt(String locator, String coordString);
 
-	public void mouseUpRight(String locator);
-
-	public void mouseUpRightAt(String locator, String coordString);
-
 	public void open(String url) throws Exception;
-
-	public void open(String url, String ignoreResponseCode);
 
 	public void openWindow(String url, String windowID) throws Exception;
 
@@ -467,17 +314,7 @@ public interface LiferaySelenium {
 
 	public void refreshAndWait();
 
-	public void removeAllSelections(String locator);
-
-	public void removeScript(String scriptTagId);
-
-	public void removeSelection(String locator, String optionLocator);
-
 	public void replyToEmail(String to, String body) throws Exception;
-
-	public String retrieveLastRemoteControlLogs();
-
-	public void rollup(String rollupName, String kwargs);
 
 	public void runScript(String script);
 
@@ -523,39 +360,17 @@ public interface LiferaySelenium {
 
 	public void sendTestCaseHeaderLogger(String command);
 
-	public void setBrowserLogLevel(String logLevel);
-
-	public void setContext(String context);
-
-	public void setCursorPosition(String locator, String position);
-
 	public void setDefaultTimeout();
 
 	public void setDefaultTimeoutImplicit();
 
-	public void setExtensionJs(String extensionJs);
-
-	public void setMouseSpeed(String pixels);
-
 	public void setPrimaryTestSuiteName(String primaryTestSuiteName);
-
-	public void setSpeed(String value);
 
 	public void setTimeout(String timeout);
 
 	public void setTimeoutImplicit(String timeout);
 
 	public void setWindowSize(String coordString);
-
-	public void shiftKeyDown();
-
-	public void shiftKeyUp();
-
-	public void showContextualBanner();
-
-	public void showContextualBanner(String className, String methodName);
-
-	public void shutDownSeleniumServer();
 
 	public void sikuliAssertElementNotPresent(String image) throws Exception;
 
@@ -589,19 +404,11 @@ public interface LiferaySelenium {
 	public void sikuliUploadTempFile(String image, String value)
 		throws Exception;
 
-	public void start();
-
-	public void start(Object optionsObject);
-
-	public void start(String optionsString);
-
 	public void startLogger();
 
 	public void stop();
 
 	public void stopLogger();
-
-	public void submit(String formLocator);
 
 	public void type(String locator, String value);
 
@@ -625,17 +432,11 @@ public interface LiferaySelenium {
 
 	public void uploadTempFile(String locator, String value);
 
-	public void useXpathLibrary(String libraryName);
-
-	public void waitForCondition(String script, String timeout);
-
 	public void waitForConfirmation(String pattern) throws Exception;
 
 	public void waitForElementNotPresent(String locator) throws Exception;
 
 	public void waitForElementPresent(String locator) throws Exception;
-
-	public void waitForFrameToLoad(String frameAddress, String timeout);
 
 	public void waitForNotPartialText(String locator, String value)
 		throws Exception;
@@ -671,10 +472,6 @@ public interface LiferaySelenium {
 	public void waitForValue(String locator, String value) throws Exception;
 
 	public void waitForVisible(String locator) throws Exception;
-
-	public void windowFocus();
-
-	public void windowMaximize();
 
 	public void windowMaximizeAndWait();
 

@@ -19,13 +19,11 @@ package com.liferay.jenkins.results.parser;
  */
 public class FunctionalBatchBuild extends BatchBuild {
 
-	public FunctionalBatchBuild(String url) throws Exception {
+	public FunctionalBatchBuild(String url) {
 		super(url);
 	}
 
-	public FunctionalBatchBuild(String url, TopLevelBuild topLevelBuild)
-		throws Exception {
-
+	public FunctionalBatchBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 	}
 

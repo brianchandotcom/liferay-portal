@@ -41,9 +41,7 @@ import org.json.JSONObject;
  */
 public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
-	public RebaseErrorTopLevelBuild(String url, TopLevelBuild topLevelBuild)
-		throws Exception {
-
+	public RebaseErrorTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 
 		_validResult = false;

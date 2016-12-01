@@ -48,13 +48,11 @@ public class TopLevelBuild extends BaseBuild {
 		_updateDuration = System.currentTimeMillis() - start;
 	}
 
-	protected TopLevelBuild(String url) throws Exception {
+	protected TopLevelBuild(String url) {
 		this(url, null);
 	}
 
-	protected TopLevelBuild(String url, TopLevelBuild topLevelBuild)
-		throws Exception {
-
+	protected TopLevelBuild(String url, TopLevelBuild topLevelBuild) {
 		super(url, topLevelBuild);
 	}
 

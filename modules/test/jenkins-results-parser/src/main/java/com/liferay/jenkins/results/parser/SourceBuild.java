@@ -19,11 +19,11 @@ package com.liferay.jenkins.results.parser;
  */
 public class SourceBuild extends BaseBuild {
 
-	public SourceBuild(String url) throws Exception {
+	public SourceBuild(String url) {
 		super(url);
 	}
 
-	public SourceBuild(String url, Build parentBuild) throws Exception {
+	public SourceBuild(String url, Build parentBuild) {
 		super(url, parentBuild);
 	}
 

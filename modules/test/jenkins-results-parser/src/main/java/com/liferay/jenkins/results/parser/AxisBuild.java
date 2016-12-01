@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.UnsupportedEncodingException;
+
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,21 +37,30 @@ public class AxisBuild extends BaseBuild {
 
 	@Override
 	public String getBuildURL() {
-		try {
-			String jobURL = getJobURL();
-			int buildNumber = getBuildNumber();
+		String jobURL = getJobURL();
+		int buildNumber = getBuildNumber();
 
-			if ((jobURL == null) || (buildNumber == -1)) {
-				return null;
-			}
-
-			jobURL = JenkinsResultsParserUtil.decode(jobURL);
-
-			return JenkinsResultsParserUtil.encode(
-				jobURL + "/" + axisVariable + "/" + buildNumber + "/");
+		if ((jobURL == null) || (buildNumber == -1)) {
+			return null;
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+
+		try {
+			jobURL = JenkinsResultsParserUtil.decode(jobURL);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new RuntimeException("Could not decode " + jobURL, uee);
+		}
+
+		String buildURL = jobURL + "/" + axisVariable + "/" + buildNumber + "/";
+
+		try {
+			return JenkinsResultsParserUtil.encode(buildURL);
+		}
+		catch (MalformedURLException murle) {
+			throw new RuntimeException("Could not encode " + buildURL, murle);
+		}
+		catch (URISyntaxException urise) {
+			throw new RuntimeException("Could not encode " + buildURL, urise);
 		}
 	}
 
@@ -55,11 +69,11 @@ public class AxisBuild extends BaseBuild {
 		throw new RuntimeException("Axis builds cannot be reinvoked");
 	}
 
-	protected AxisBuild(String url) throws Exception {
+	protected AxisBuild(String url) {
 		this(url, null);
 	}
 
-	protected AxisBuild(String url, BatchBuild parentBuild) throws Exception {
+	protected AxisBuild(String url, BatchBuild parentBuild) {
 		super(JenkinsResultsParserUtil.getLocalURL(url), parentBuild);
 	}
 
@@ -68,8 +82,14 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	protected void setBuildURL(String buildURL) throws Exception {
-		buildURL = JenkinsResultsParserUtil.decode(buildURL);
+	protected void setBuildURL(String buildURL) {
+		try {
+			buildURL = JenkinsResultsParserUtil.decode(buildURL);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new IllegalArgumentException(
+				"Could not decode " + buildURL, uee);
+		}
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 

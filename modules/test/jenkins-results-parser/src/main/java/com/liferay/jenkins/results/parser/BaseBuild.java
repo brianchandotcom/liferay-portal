@@ -14,6 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -35,18 +38,19 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public void addDownstreamBuilds(String... urls) {
-		try {
-			for (String url : urls) {
+		for (String url : urls) {
+			try {
 				url = JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.decode(url));
-
-				if (!hasBuildURL(url)) {
-					downstreamBuilds.add(BuildFactory.newBuild(url, this));
-				}
 			}
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+			catch (UnsupportedEncodingException uee) {
+				throw new IllegalArgumentException(
+					"Could not decode " + url, uee);
+			}
+	
+			if (!hasBuildURL(url)) {
+				downstreamBuilds.add(BuildFactory.newBuild(url, this));
+			}
 		}
 	}
 
@@ -491,11 +495,11 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected BaseBuild(String url) throws Exception {
+	protected BaseBuild(String url) {
 		this(url, null);
 	}
 
-	protected BaseBuild(String url, Build parentBuild) throws Exception {
+	protected BaseBuild(String url, Build parentBuild) {
 		_parentBuild = parentBuild;
 
 		if (url.contains("buildWithParameters")) {
@@ -586,7 +590,7 @@ public abstract class BaseBuild implements Build {
 		return foundDownstreamBuildURLs;
 	}
 
-	protected JSONObject getBuildJSONObject(String tree) throws Exception {
+	protected JSONObject getBuildJSONObject(String tree) {
 		if (getBuildURL() == null) {
 			return null;
 		}
@@ -601,7 +605,12 @@ public abstract class BaseBuild implements Build {
 			sb.append(tree);
 		}
 
-		return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Could not find build JSON.", ioe);
+		}
 	}
 
 	protected String getBuildMessage() {
@@ -680,10 +689,17 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
-	protected Set<String> getJobParameterNames() throws Exception {
-		JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-			getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
-				"[name,type,value]]");
+	protected Set<String> getJobParameterNames() {
+		JSONObject jsonObject;
+
+		try {
+			jsonObject = JenkinsResultsParserUtil.toJSONObject(
+				getJobURL() + "/api/json?tree=actions[parameterDefinitions" +
+					"[name,type,value]]");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Build JSON could not be found.", ioe);
+		}
 
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
@@ -934,7 +950,7 @@ public abstract class BaseBuild implements Build {
 		return false;
 	}
 
-	protected void loadParametersFromBuildJSONObject() throws Exception {
+	protected void loadParametersFromBuildJSONObject() {
 		if (getBuildURL() == null) {
 			return;
 		}
@@ -979,9 +995,7 @@ public abstract class BaseBuild implements Build {
 		_parameters = Collections.emptyMap();
 	}
 
-	protected void loadParametersFromQueryString(String queryString)
-		throws Exception {
-
+	protected void loadParametersFromQueryString(String queryString) {
 		Set<String> jobParameterNames = getJobParameterNames();
 
 		for (String parameter : queryString.split("&")) {
@@ -1019,8 +1033,14 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	protected void setBuildURL(String buildURL) throws Exception {
-		buildURL = JenkinsResultsParserUtil.decode(buildURL);
+	protected void setBuildURL(String buildURL) {
+		try {
+			buildURL = JenkinsResultsParserUtil.decode(buildURL);
+		}
+		catch (UnsupportedEncodingException uee) {
+			throw new IllegalArgumentException(
+				"Could not decode " + buildURL, uee);
+		}
 
 		Matcher matcher = buildURLPattern.matcher(buildURL);
 
@@ -1041,9 +1061,15 @@ public abstract class BaseBuild implements Build {
 		checkForReinvocation();
 	}
 
-	protected void setInvocationURL(String invocationURL) throws Exception {
+	protected void setInvocationURL(String invocationURL) {
 		if (getBuildURL() == null) {
-			invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
+			try {
+				invocationURL = JenkinsResultsParserUtil.decode(invocationURL);
+			}
+			catch (UnsupportedEncodingException uee) {
+				throw new IllegalArgumentException(
+					"Could not decode " + invocationURL, uee);
+			}
 
 			Matcher invocationURLMatcher = invocationURLPattern.matcher(
 				invocationURL);

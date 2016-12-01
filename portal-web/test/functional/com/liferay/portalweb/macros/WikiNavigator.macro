@@ -48,7 +48,7 @@
 	</command>
 
 	<command name="gotoChildPageCP">
-		<execute function="AssertTextEquals" locator1="Wiki#CHILD_PAGE_CONTENT" value1="${wikiChildPageContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#CHILD_PAGE_CONTENT" value1="${wikiChildPageContent}" />
 
 		<var name="key_wikiChildPageTitle" value="${wikiChildPageTitle}" />
 

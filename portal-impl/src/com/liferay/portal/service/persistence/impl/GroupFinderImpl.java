@@ -1507,7 +1507,7 @@ public class GroupFinderImpl
 			params1.put("classNameIds", groupOrganizationClassNameIds);
 			params2.put("classNameIds", organizationClassNameId);
 			params3.put("classNameIds", groupClassNameId);
-			params4.put("classNameIds", groupClassNameId);
+			params4.put("classNameIds", groupOrganizationClassNameIds);
 		}
 		else {
 			params1.put("classNameIds", classNameIds);
@@ -1520,8 +1520,14 @@ public class GroupFinderImpl
 				params3.put("classNameIds", groupClassNameId);
 			}
 
-			if (ArrayUtil.contains(classNameIds, groupClassNameId)) {
+			if (ArrayUtil.containsAll(classNameIds, groupOrganizationClassNameIds)) {
+				params4.put("classNameIds", groupOrganizationClassNameIds);
+			}
+			else if (ArrayUtil.contains(classNameIds, groupClassNameId)) {
 				params4.put("classNameIds", groupClassNameId);
+			}
+			else if (ArrayUtil.contains(classNameIds, organizationClassNameId)){
+				params4.put("classNameIds", organizationClassNameId);
 			}
 		}
 	}

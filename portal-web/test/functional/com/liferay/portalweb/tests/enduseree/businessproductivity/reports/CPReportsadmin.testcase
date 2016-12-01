@@ -612,7 +612,7 @@
 		</execute>
 
 		<execute macro="ReportsAdmin#addReportEntry">
-			<var method="TestPropsUtil#get('email.address.2')" name="emailRecipientAddress" />
+			<var method="TestPropsUtil#get('email.address.2')" name="emailNotificationsAddress" />
 			<var name="emailRecipientAddress" value="test@liferay.com" />
 			<var name="reportFormat" value="pdf" />
 			<var name="reportsDefinitionName" value="Reports Definition Name" />
@@ -641,7 +641,7 @@
 
 		<execute function="Pause" locator1="30000" />
 
-		<execute function="SelectWindow" locator1="title=Reports Admin - ${siteName}" />
+		<execute function="SelectWindow" locator1="title=Reports Definition Name - ${siteName}" />
 
 		<execute macro="ReportsAdmin#viewReportEntryFields">
 			<var name="dataSource" value="portal" />

@@ -64,9 +64,7 @@ public class MailboxUtilTest {
 		new MailboxUtil();
 	}
 
-	@AdviseWith(
-		adviceClasses = {PropsUtilAdvice.class, ReceiptStubAdvice.class}
-	)
+	@AdviseWith(adviceClasses = PropsUtilAdvice.class)
 	@Test
 	public void testDepositMailWithReaperThreadDisabled() {
 		PropsUtilAdvice.setProps(

@@ -94,13 +94,14 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				TestIntegrationTomcatExtension.class);
 
 		SetUpTestableTomcatTask setUpTestableTomcatTask =
-			addTaskSetUpTestableTomcat(project, testIntegrationTomcatExtension);
+			_addTaskSetUpTestableTomcat(
+				project, testIntegrationTomcatExtension);
 		StopTestableTomcatTask stopTestableTomcatTask =
-			addTaskStopTestableTomcat(
+			_addTaskStopTestableTomcat(
 				project, testIntegrationTask, testIntegrationTomcatExtension);
 
 		StartTestableTomcatTask startTestableTomcatTask =
-			addTaskStartTestableTomcat(
+			_addTaskStartTestableTomcat(
 				project, setUpTestableTomcatTask, stopTestableTomcatTask,
 				testIntegrationTomcatExtension);
 
@@ -113,7 +114,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 				@Override
 				public void execute(WarPlugin warPlugin) {
 					SetUpArquillianTask setUpArquillianTask =
-						addTaskSetUpArquillian(
+						_addTaskSetUpArquillian(
 							project, testIntegrationSourceSet,
 							testIntegrationTomcatExtension);
 
@@ -122,12 +123,35 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
-		configureTaskTestIntegration(
+		_configureTaskTestIntegration(
 			testIntegrationTask, testIntegrationSourceSet,
 			testIntegrationTomcatExtension, startTestableTomcatTask);
 	}
 
-	protected SetUpArquillianTask addTaskSetUpArquillian(
+	private static int _updateStartedAppServerStopCounters(
+		File binDir, boolean increment) {
+
+		int originalCounter = 0;
+
+		if (_startedAppServerStopCounters.containsKey(binDir)) {
+			originalCounter = _startedAppServerStopCounters.get(binDir);
+		}
+
+		int counter = originalCounter;
+
+		if (increment) {
+			counter++;
+		}
+		else {
+			counter--;
+		}
+
+		_startedAppServerStopCounters.put(binDir, counter);
+
+		return originalCounter;
+	}
+
+	private SetUpArquillianTask _addTaskSetUpArquillian(
 		final Project project, final SourceSet testIntegrationSourceSet,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -143,20 +167,20 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public File call() throws Exception {
-					return getSrcDir(testIntegrationSourceSet.getResources());
+					return _getSrcDir(testIntegrationSourceSet.getResources());
 				}
 
 			});
 
-		configureJmxRemotePortSpec(
+		_configureJmxRemotePortSpec(
 			setUpArquillianTask, testIntegrationTomcatExtension);
-		configureManagerSpec(
+		_configureManagerSpec(
 			setUpArquillianTask, testIntegrationTomcatExtension);
 
 		return setUpArquillianTask;
 	}
 
-	protected SetUpTestableTomcatTask addTaskSetUpTestableTomcat(
+	private SetUpTestableTomcatTask _addTaskSetUpTestableTomcat(
 		Project project,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -202,17 +226,17 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
-		configureJmxRemotePortSpec(
+		_configureJmxRemotePortSpec(
 			setUpTestableTomcatTask, testIntegrationTomcatExtension);
-		configureManagerSpec(
+		_configureManagerSpec(
 			setUpTestableTomcatTask, testIntegrationTomcatExtension);
-		configureModuleFrameworkBaseDirSpec(
+		_configureModuleFrameworkBaseDirSpec(
 			setUpTestableTomcatTask, testIntegrationTomcatExtension);
 
 		return setUpTestableTomcatTask;
 	}
 
-	protected StartTestableTomcatTask addTaskStartTestableTomcat(
+	private StartTestableTomcatTask _addTaskStartTestableTomcat(
 		Project project, SetUpTestableTomcatTask setUpTestableTomcatTask,
 		StopTestableTomcatTask stopTestableTomcatTask,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
@@ -301,7 +325,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		startTestableTomcatTask.setDescription(
 			"Starts the local Liferay Tomcat bundle.");
 		startTestableTomcatTask.setExecutable(
-			getTomcatExecutableFileName("catalina"));
+			_getTomcatExecutableFileName("catalina"));
 		startTestableTomcatTask.setExecutableArgs(Collections.singleton("run"));
 		startTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
@@ -315,13 +339,13 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 			});
 
-		configureBaseAppServerTask(
+		_configureBaseAppServerTask(
 			startTestableTomcatTask, testIntegrationTomcatExtension);
 
 		return startTestableTomcatTask;
 	}
 
-	protected StopTestableTomcatTask addTaskStopTestableTomcat(
+	private StopTestableTomcatTask _addTaskStopTestableTomcat(
 		Project project, Test testIntegrationTask,
 		TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -401,12 +425,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		stopTestableTomcatTask.setDescription(
 			"Stops the local Liferay Tomcat bundle.");
 		stopTestableTomcatTask.setExecutable(
-			getTomcatExecutableFileName("shutdown"));
+			_getTomcatExecutableFileName("shutdown"));
 		stopTestableTomcatTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
-		configureBaseAppServerTask(
+		_configureBaseAppServerTask(
 			stopTestableTomcatTask, testIntegrationTomcatExtension);
-		configureModuleFrameworkBaseDirSpec(
+		_configureModuleFrameworkBaseDirSpec(
 			stopTestableTomcatTask, testIntegrationTomcatExtension);
 
 		Gradle gradle = project.getGradle();
@@ -437,7 +461,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return stopTestableTomcatTask;
 	}
 
-	protected void configureBaseAppServerTask(
+	private void _configureBaseAppServerTask(
 		BaseAppServerTask baseAppServerTask,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -473,7 +497,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureJmxRemotePortSpec(
+	private void _configureJmxRemotePortSpec(
 		JmxRemotePortSpec jmxRemotePortSpec,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -488,7 +512,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureManagerSpec(
+	private void _configureManagerSpec(
 		ManagerSpec managerSpec,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -513,7 +537,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureModuleFrameworkBaseDirSpec(
+	private void _configureModuleFrameworkBaseDirSpec(
 		ModuleFrameworkBaseDirSpec moduleFrameworkBaseDirSpec,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension) {
 
@@ -534,7 +558,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskSystemProperty(
+	private void _configureTaskSystemProperty(
 		JavaForkOptions javaForkOptions, String key, File file) {
 
 		Map<String, Object> systemProperties =
@@ -545,7 +569,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskTestIntegration(
+	private void _configureTaskTestIntegration(
 		final Test test, final SourceSet testIntegrationSourceSet,
 		final TestIntegrationTomcatExtension testIntegrationTomcatExtension,
 		final StartTestableTomcatTask startTestableTomcatTask) {
@@ -584,12 +608,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureTaskTestIntegrationEnabled(
+					_configureTaskTestIntegrationEnabled(
 						test, testIntegrationSourceSet);
 
 					// GRADLE-2697
 
-					configureTaskSystemProperty(
+					_configureTaskSystemProperty(
 						test, "app.server.tomcat.dir",
 						testIntegrationTomcatExtension.getDir());
 				}
@@ -597,7 +621,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureTaskTestIntegrationEnabled(
+	private void _configureTaskTestIntegrationEnabled(
 		Test test, SourceSet testIntegrationSourceSet) {
 
 		Project project = test.getProject();
@@ -628,7 +652,7 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		test.setEnabled(false);
 	}
 
-	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+	private File _getSrcDir(SourceDirectorySet sourceDirectorySet) {
 		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
 
 		Iterator<File> iterator = srcDirs.iterator();
@@ -636,35 +660,12 @@ public class TestIntegrationPlugin implements Plugin<Project> {
 		return iterator.next();
 	}
 
-	protected String getTomcatExecutableFileName(String fileName) {
+	private String _getTomcatExecutableFileName(String fileName) {
 		if (OSDetector.isWindows()) {
 			fileName += ".bat";
 		}
 
 		return fileName;
-	}
-
-	private static int _updateStartedAppServerStopCounters(
-		File binDir, boolean increment) {
-
-		int originalCounter = 0;
-
-		if (_startedAppServerStopCounters.containsKey(binDir)) {
-			originalCounter = _startedAppServerStopCounters.get(binDir);
-		}
-
-		int counter = originalCounter;
-
-		if (increment) {
-			counter++;
-		}
-		else {
-			counter--;
-		}
-
-		_startedAppServerStopCounters.put(binDir, counter);
-
-		return originalCounter;
 	}
 
 	private static final String _SKIP_MANAGED_APP_SERVER_FILE_NAME =

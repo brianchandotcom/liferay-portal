@@ -6153,7 +6153,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				companyPortletPreferences, "adminEmailUserAddedSubject",
 				PropsKeys.ADMIN_EMAIL_USER_ADDED_SUBJECT);
 
-		Map<Locale, String> localizedBodyMap = null;
+		final Map<Locale, String> localizedBodyMap;
 
 		if (Validator.isNotNull(password)) {
 			localizedBodyMap = LocalizationUtil.getLocalizationMap(
@@ -6295,9 +6295,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Map<Locale, String> localizedSubjectMap = null;
 		Map<Locale, String> localizedBodyMap = null;
 
-		String bodyProperty = null;
-		String prefix = null;
-		String subjectProperty = null;
+		final String bodyProperty;
+		final String prefix;
+		final String subjectProperty;
 
 		if (Validator.isNotNull(passwordResetURL)) {
 			bodyProperty = PropsKeys.ADMIN_EMAIL_PASSWORD_RESET_BODY;

@@ -20,6 +20,7 @@ import java.io.File;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -30,6 +31,7 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -225,11 +227,11 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 	}
 
 	private void _configureIdeaModule(
-		Project project, SourceSet testIntegrationSourceSet) {
+		Project project, final SourceSet testIntegrationSourceSet) {
 
 		IdeaModel ideaModel = GradleUtil.getExtension(project, IdeaModel.class);
 
-		IdeaModule ideaModule = ideaModel.getModule();
+		final IdeaModule ideaModule = ideaModel.getModule();
 
 		Map<String, Map<String, Collection<Configuration>>> scopes =
 			ideaModule.getScopes();
@@ -242,6 +244,24 @@ public class TestIntegrationBasePlugin implements Plugin<Project> {
 			project, testIntegrationSourceSet.getRuntimeConfigurationName());
 
 		plusConfigurations.add(configuration);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					Set<File> testSrcDirs = new LinkedHashSet<>(
+						ideaModule.getTestSourceDirs());
+
+					SourceDirectorySet sourceDirectorySet =
+						testIntegrationSourceSet.getAllSource();
+
+					testSrcDirs.addAll(sourceDirectorySet.getSrcDirs());
+
+					ideaModule.setTestSourceDirs(testSrcDirs);
+				}
+
+			});
 	}
 
 	private void _configureTaskCheck(Test test) {

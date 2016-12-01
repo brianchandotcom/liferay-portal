@@ -679,6 +679,12 @@ version 2.3.1.
 ### Added
 - [LPS-69488]: Set default Node.js version to 6.6.0.
 
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.54.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.320.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

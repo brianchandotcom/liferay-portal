@@ -43,7 +43,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertSystemSettingsPropogateToModule" priority="4">
+	<command ignore="true" name="AssertSystemSettingsPropogateToModule" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="System Settings" />
 		</execute>

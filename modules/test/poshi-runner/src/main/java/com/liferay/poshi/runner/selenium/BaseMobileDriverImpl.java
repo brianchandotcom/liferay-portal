@@ -115,11 +115,6 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public void dragdrop(String locator, String movementsString) {
-		throw new UnsupportedOperationException();
-	}
-
 	public Response execute(String driverCommand, Map<String, ?> parameters) {
 		return _mobileDriver.execute(driverCommand, parameters);
 	}
@@ -593,11 +588,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForPopUp(String windowID, String timeout) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void windowMaximizeAndWait() {
 		throw new UnsupportedOperationException();
 	}
 

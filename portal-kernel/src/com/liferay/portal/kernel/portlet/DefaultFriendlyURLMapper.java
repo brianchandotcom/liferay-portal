@@ -54,9 +54,6 @@ public class DefaultFriendlyURLMapper extends BaseFriendlyURLMapper {
 		defaultIgnoredParameters = new LinkedHashSet<>();
 
 		defaultIgnoredParameters.add("p_p_id");
-		defaultIgnoredParameters.add("p_p_col_id");
-		defaultIgnoredParameters.add("p_p_col_pos");
-		defaultIgnoredParameters.add("p_p_col_count");
 
 		defaultReservedParameters = new LinkedHashMap<>();
 

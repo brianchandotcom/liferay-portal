@@ -115,7 +115,7 @@ String refererPortletName = ParamUtil.getString(request, "refererPortletName");
 								},
 								duration: 500,
 								icon: 'info-circle',
-								message: '<%= HtmlUtil.escapeJS(LanguageUtil.get(resourceBundle, "changing-the-template-won't-affect-the-original-web-content-defautl-template.-the-change-only-applies-to-this-web-content-display")) %>',
+								message: '<%= HtmlUtil.escapeJS(LanguageUtil.get(resourceBundle, "changing-the-template-will-not-affect-the-original-web-content-defautl-template.-the-change-only-applies-to-this-web-content-display")) %>',
 								namespace: '<portlet:namespace />',
 								title: '',
 								type: 'info'

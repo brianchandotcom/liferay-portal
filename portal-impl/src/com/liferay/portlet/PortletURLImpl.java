@@ -315,23 +315,6 @@ public class PortletURLImpl
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (Validator.isNotNull(portletDisplay.getColumnId())) {
-			_reservedParameters.put("p_p_col_id", portletDisplay.getColumnId());
-		}
-
-		if (portletDisplay.getColumnPos() > 0) {
-			_reservedParameters.put(
-				"p_p_col_pos", String.valueOf(portletDisplay.getColumnPos()));
-		}
-
-		if (portletDisplay.getColumnCount() > 0) {
-			_reservedParameters.put(
-				"p_p_col_count",
-				String.valueOf(portletDisplay.getColumnCount()));
-		}
-
 		_reservedParameters = Collections.unmodifiableMap(_reservedParameters);
 
 		return _reservedParameters;

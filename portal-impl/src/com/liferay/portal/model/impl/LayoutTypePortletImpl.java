@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -426,6 +427,44 @@ public class LayoutTypePortletImpl
 		List<String> columns = layoutTemplate.getColumns();
 
 		return columns.size();
+	}
+
+	@Override
+	public List<PortletPreferences> getOrphanPortletPreferences() {
+		List<Portlet> explicitlyAddedPortlets = getExplicitlyAddedPortlets();
+
+		List<String> explicitlyAddedPortletIds = new ArrayList<>();
+
+		for (Portlet explicitlyAddedPortlet : explicitlyAddedPortlets) {
+			explicitlyAddedPortletIds.add(
+				explicitlyAddedPortlet.getPortletId());
+		}
+
+		List<PortletPreferences> orphanPortletPreferences = new ArrayList<>();
+
+		List<PortletPreferences> portletPreferences =
+			PortletPreferencesLocalServiceUtil.getPortletPreferences(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, getPlid());
+
+		for (PortletPreferences portletPreference : portletPreferences) {
+			String portletId = portletPreference.getPortletId();
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				getCompanyId(), portletId);
+
+			if (portlet.isSystem()) {
+				continue;
+			}
+
+			if (explicitlyAddedPortletIds.contains(portletId)) {
+				continue;
+			}
+
+			orphanPortletPreferences.add(portletPreference);
+		}
+
+		return orphanPortletPreferences;
 	}
 
 	@Override

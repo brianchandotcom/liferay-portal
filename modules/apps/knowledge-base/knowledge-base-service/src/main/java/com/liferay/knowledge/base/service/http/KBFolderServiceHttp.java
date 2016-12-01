@@ -509,6 +509,42 @@ public class KBFolderServiceHttp {
 		}
 	}
 
+	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
+		HttpPrincipal httpPrincipal, long parentResourceClassNameId,
+		long parentResourcePrimKey, long kbFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(KBFolderServiceUtil.class,
+					"updateKBFolder", _updateKBFolderParameterTypes14);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					parentResourceClassNameId, parentResourcePrimKey,
+					kbFolderId, name, description, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.knowledge.base.model.KBFolder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(KBFolderServiceHttp.class);
 	private static final Class<?>[] _addKBFolderParameterTypes0 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
@@ -555,5 +591,10 @@ public class KBFolderServiceHttp {
 	private static final Class<?>[] _updateKBFolderParameterTypes13 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class
+		};
+	private static final Class<?>[] _updateKBFolderParameterTypes14 = new Class[] {
+			long.class, long.class, long.class, java.lang.String.class,
+			java.lang.String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

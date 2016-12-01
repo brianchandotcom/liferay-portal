@@ -6335,6 +6335,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
 		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
+		mailTemplateContextBuilder.put(
+			"[$PASSWORD_RESET_URL$]", passwordResetURL);
 		mailTemplateContextBuilder.put("[$PORTAL_URL$]", (String)null);
 		mailTemplateContextBuilder.put(
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr());

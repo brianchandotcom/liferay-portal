@@ -18,6 +18,7 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -209,7 +210,7 @@ public class AssetRSSUtil {
 
 		AssetPublisherCustomizer assetPublisherCustomizer =
 			(AssetPublisherCustomizer)portletRequest.getAttribute(
-				"assetPublisherCustomizer");
+				AssetPublisherConstants.ASSET_PUBLISHER_CUSTOMIZER);
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(

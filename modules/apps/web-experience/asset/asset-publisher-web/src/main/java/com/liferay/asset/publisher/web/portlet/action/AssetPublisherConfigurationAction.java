@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.exception.DuplicateQueryRuleException;
 import com.liferay.asset.kernel.model.AssetQueryRule;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
@@ -108,7 +109,8 @@ public class AssetPublisherConfigurationAction
 				rootPortletId);
 
 		request.setAttribute(
-			"assetPublisherCustomizer", assetPublisherCustomizer);
+			AssetPublisherConstants.ASSET_PUBLISHER_CUSTOMIZER,
+			assetPublisherCustomizer);
 
 		super.include(portletConfig, request, response);
 	}

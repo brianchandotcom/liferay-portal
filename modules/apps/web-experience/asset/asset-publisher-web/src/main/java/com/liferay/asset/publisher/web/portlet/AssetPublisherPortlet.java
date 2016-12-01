@@ -14,6 +14,7 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
@@ -278,7 +279,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 						getAssetPublisherCustomizer(rootPortletId);
 
 				renderRequest.setAttribute(
-					"assetPublisherCustomizer", assetPublisherCustomizer);
+					AssetPublisherConstants.ASSET_PUBLISHER_CUSTOMIZER,
+					assetPublisherCustomizer);
 		}
 		catch (Exception e) {
 		}

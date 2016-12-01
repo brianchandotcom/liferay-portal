@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.test.integration.util;
+package com.liferay.gradle.plugins.test.integration.internal.util;
 
 import java.util.ArrayList;
 import java.util.Collection;

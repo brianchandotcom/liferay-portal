@@ -598,6 +598,8 @@
 			<if>
 				<equals arg1="${define}" arg2="true" />
 				<then>
+					<execute function="ScrollBy" value1="0, 400" />
+
 					<execute function="Check" locator1="RolesPermissions#${permissionDefinitionKey}" />
 				</then>
 				<elseif>

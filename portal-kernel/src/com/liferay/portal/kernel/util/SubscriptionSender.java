@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mail.AggregateMailTemplateContext;
 import com.liferay.portal.kernel.mail.DefaultMailTemplate;
 import com.liferay.portal.kernel.mail.DefaultMailTemplateContextBuilder;
 import com.liferay.portal.kernel.mail.MailTemplate;
@@ -922,8 +921,8 @@ public class SubscriptionSender implements Serializable {
 		MailTemplateContext mailTemplateContext =
 			mailTemplateContextBuilder.build();
 
-		return new AggregateMailTemplateContext(
-			mailTemplateContext, _getBasicMailTemplateContext(locale));
+		return mailTemplateContext.aggregateWith(
+			_getBasicMailTemplateContext(locale));
 	}
 
 	private String _getLocalizedValue(

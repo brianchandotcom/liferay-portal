@@ -677,7 +677,6 @@ version 2.3.1.
 ## 3.0.44 - 2016-12-01
 
 ### Added
-
 - [LPS-69488]: Set default Node.js version to 6.6.0.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin

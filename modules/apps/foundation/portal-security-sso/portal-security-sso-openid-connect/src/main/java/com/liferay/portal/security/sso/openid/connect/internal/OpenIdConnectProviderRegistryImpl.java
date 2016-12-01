@@ -15,8 +15,6 @@
 package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration;
@@ -175,9 +173,6 @@ public class OpenIdConnectProviderRegistryImpl
 
 		_openIdConnectProvidersPerName.remove(openIdConnectProvider.getName());
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OpenIdConnectProviderRegistryImpl.class);
 
 	private final Map<String, OpenIdConnectProvider>
 		_openIdConnectProvidersPerFactory = new ConcurrentHashMap<>();

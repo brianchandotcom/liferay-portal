@@ -102,8 +102,11 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 			<var name="url" value="http://localhost:9200" />
 		</execute>
 
-		<execute macro="Elasticsearch#viewClusterStatus">
+		<!-- LRQA-28998 -->
+
+		<!-- <execute macro="Elasticsearch#viewClusterStatus">
 			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
-		</execute>
+		</execute> -->
+
 	</command>
 </definition>

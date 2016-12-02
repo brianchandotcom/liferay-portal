@@ -2793,7 +2793,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String sortMethodCalls(String content) {
+	protected String sortMethodCalls(String absolutePath, String content) {
+		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
+			return content;
+		}
+
 		content = sortMethodCalls(
 			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
 			"TreeSet<.*>");
@@ -2991,6 +2995,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return line;
 	}
+
+	protected static final String METHOD_CALL_SORT_EXCLUDES =
+		"method.call.sort.excludes";
 
 	protected static final String RUN_OUTSIDE_PORTAL_EXCLUDES =
 		"run.outside.portal.excludes";

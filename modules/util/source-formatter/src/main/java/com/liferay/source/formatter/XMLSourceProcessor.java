@@ -967,21 +967,19 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Element rootElement = document.getRootElement();
 
-		List<Element> portletResourceElements = rootElement.elements(
+		List<Element> resourceElements = rootElement.elements(
 			type + "-resource");
 
-		for (Element portletResourceElement : portletResourceElements) {
-			Element portletNameElement = portletResourceElement.element(
-				type + "-name");
+		for (Element resourceElement : resourceElements) {
+			Element nameElement = resourceElement.element(type + "-name");
 
-			if (portletNameElement == null) {
+			if (nameElement == null) {
 				continue;
 			}
 
-			String portletName = portletNameElement.getText();
+			String name = nameElement.getText();
 
-			Element permissionsElement = portletResourceElement.element(
-				"permissions");
+			Element permissionsElement = resourceElement.element("permissions");
 
 			if (permissionsElement == null) {
 				continue;
@@ -992,15 +990,14 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			for (Element permissionsChildElement : permissionsChildElements) {
 				checkOrder(
-					fileName, permissionsChildElement, "action-key",
-					portletName,
+					fileName, permissionsChildElement, "action-key", name,
 					new ResourceActionActionKeyElementComparator());
 			}
 		}
 
 		checkOrder(
 			fileName, rootElement, type + "-resource", null,
-			new ResourceActionPortletResourceElementComparator(type + "-name"));
+			new ResourceActionResourceElementComparator(type + "-name"));
 	}
 
 	protected void formatServiceXML(
@@ -1630,12 +1627,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	}
 
-	private static class ResourceActionPortletResourceElementComparator
+	private static class ResourceActionResourceElementComparator
 		extends ElementComparator {
 
-		public ResourceActionPortletResourceElementComparator(
-			String nameAttribute) {
-
+		public ResourceActionResourceElementComparator(String nameAttribute) {
 			super(nameAttribute);
 		}
 

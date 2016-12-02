@@ -1749,9 +1749,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-67598 -->
-
-	<!-- <command name="CompleteProcessAndAssertFieldOrder" priority="3">
+	<command name="CompleteProcessAndAssertFieldOrder" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1989,7 +1987,7 @@
 			<var name="fieldLabel" value="Select" />
 			<var name="fieldName" value="Select" />
 		</execute>
-	</command> -->
+	</command>
 
 	<!-- LPS-66727 -->
 
@@ -4953,9 +4951,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-67598 -->
-
-	<!-- <command name="ProcessUsesEditForm" priority="4">
+	<command name="ProcessUsesEditForm" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -5145,7 +5141,7 @@
 		<execute macro="WorkflowAsset#previewViewContentFieldNotPresent">
 			<var name="fieldLabel" value="Date" />
 		</execute>
-	</command> -->
+	</command>
 
 	<command name="RejectAndResubmitProcess" priority="3">>
 		<execute macro="Navigator#openURL" />

@@ -689,6 +689,10 @@ to version 1.0.54.
 ## 3.0.45 - 2016-12-01
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.55.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.321.
 - [LPS-69492]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 1.1.0.
 

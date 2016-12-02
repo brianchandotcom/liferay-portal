@@ -9,23 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td>MATCH_SELECT</td>
-	<td>//select[contains(@id,'Operator')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>NAME_FIELD</td>
 	<td>//input[contains(@id,'name')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TITLE_FIELD</td>
-	<td>//input[contains(@id,'title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,11 +51,6 @@
 <tr>
 	<td>EMAIL_ADDRESS_FIELD</td>
 	<td>//input[contains(@id,'emailAddress')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MY_SITES_SELECTION</td>
-	<td>xpath=(//div[contains(@id,'searchadvancedContent')]//select)[2]</td>
 	<td></td>
 </tr>
 </tbody>

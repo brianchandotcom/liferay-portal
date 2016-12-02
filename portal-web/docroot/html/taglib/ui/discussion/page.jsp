@@ -105,7 +105,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 							<c:choose>
 								<c:when test="<%= commentSectionDisplayContext.isReplyButtonVisible() %>">
-									<div class="card panel">
+									<div class="panel">
 										<div class="panel-body">
 											<div class="lfr-discussion-details">
 												<liferay-ui:user-portrait

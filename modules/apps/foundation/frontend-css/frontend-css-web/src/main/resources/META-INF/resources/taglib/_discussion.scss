@@ -27,13 +27,23 @@
 	}
 
 	.lfr-discussion-details {
-		float: left;
-		padding-right: 20px;
+		@include sm {
+			float: left;
+		}
 	}
 
 	.lfr-discussion-body {
-		margin-left: 65px;
-		overflow: visible;
+		@include media-query(null, $screen-xs-max) {
+			margin-top: 15px;
+		}
+
+		@include sm {
+			margin-left: 65px;
+		}
+
+		.button-holder {
+			margin-bottom: 0;
+		}
 
 		.lfr-discussion-message {
 			.lfr-discussion-message-author {

@@ -448,7 +448,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatPoshiXML(fileName, newContent);
 		}
 		else if (fileName.contains("/resource-actions/")) {
-			formatResourceActionXML(fileName, newContent);
+			formatResourceActionXML(fileName, newContent, "portlet");
 		}
 		else if (fileName.endsWith("/service.xml")) {
 			formatServiceXML(fileName, absolutePath, newContent);
@@ -958,7 +958,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
-	protected void formatResourceActionXML(String fileName, String content)
+	protected void formatResourceActionXML(
+			String fileName, String content, String type)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -966,11 +967,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Element rootElement = document.getRootElement();
 
 		List<Element> portletResourceElements = rootElement.elements(
-			"portlet-resource");
+			type + "-resource");
 
 		for (Element portletResourceElement : portletResourceElements) {
 			Element portletNameElement = portletResourceElement.element(
-				"portlet-name");
+				type + "-name");
 
 			String portletName = portletNameElement.getText();
 
@@ -989,8 +990,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		checkOrder(
-			fileName, rootElement, "portlet-resource", null,
-			new ResourceActionPortletResourceElementComparator("portlet-name"));
+			fileName, rootElement, type + "-resource", null,
+			new ResourceActionPortletResourceElementComparator(type + "-name"));
 	}
 
 	protected void formatServiceXML(

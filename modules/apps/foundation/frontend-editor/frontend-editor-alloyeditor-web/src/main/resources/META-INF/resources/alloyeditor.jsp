@@ -381,7 +381,6 @@ name = HtmlUtil.escapeJS(name);
 	</c:if>
 
 	var destroyInstance = function(event) {
-		debugger;
 		if (event.portletId === '<%= portletId %>') {
 			try {
 				window['<%= name %>'].destroy();

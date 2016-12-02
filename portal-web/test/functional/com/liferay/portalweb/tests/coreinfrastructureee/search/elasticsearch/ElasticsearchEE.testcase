@@ -114,11 +114,13 @@
 
 		<!-- Verify the total number of Elasticsearch replicas has decreased to one -->
 
-		<execute macro="Elasticsearch#viewReplicaRemovedInConsole" />
+		<!-- LRQA-28998 -->
 
-		<execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
+		<!-- <execute macro="Elasticsearch#viewReplicaRemovedInConsole" /> -->
+
+		<!-- <execute macro="Elasticsearch#viewClusterStatusViaClusterHealthAPI">
 			<var name="numberOfNodes" value="1" />
-		</execute>
+		</execute> -->
 
 		<!-- Verify search functionality after a replica has been removed -->
 

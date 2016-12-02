@@ -804,7 +804,7 @@
 			<var name="usersEmailsList" value="userfn9@liferay.com" />
 		</execute>
 
-		<execute function="Click" locator1="Pagination#PREVIOUS_LINK" value1="2" />
+		<execute function="Click" locator1="Pagination#PREVIOUS_LINK" />
 
 		<execute function="AssertTextEquals" locator1="Pagination#CURRENT_PAGE_SELECT" value1="Showing 6 to 10 of 11 entries." />
 

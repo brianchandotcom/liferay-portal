@@ -1079,9 +1079,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		checkLanguageKeys(
 			fileName, absolutePath, newContent, languageKeyPattern);
 
-		newContent = sortMethodCalls(
-			newContent, "put", "HashMap<.*>", "JSONObject");
-		newContent = sortMethodCalls(newContent, "setAttribute");
+		newContent = sortMethodCalls(newContent);
 
 		newContent = formatStringBundler(fileName, newContent, _maxLineLength);
 

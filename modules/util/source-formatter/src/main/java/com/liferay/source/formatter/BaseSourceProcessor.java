@@ -2793,6 +2793,13 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
+	protected String sortMethodCalls(String content) {
+		content = sortMethodCalls(content, "put", "HashMap<.*>", "JSONObject");
+		content = sortMethodCalls(content, "setAttribute");
+
+		return content;
+	}
+
 	protected String sortMethodCalls(
 		String content, String methodName, String... variableTypeRegexStrings) {
 

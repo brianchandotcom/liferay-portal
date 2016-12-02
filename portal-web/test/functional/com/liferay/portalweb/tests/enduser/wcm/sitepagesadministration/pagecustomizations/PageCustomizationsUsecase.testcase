@@ -93,6 +93,10 @@
 			<var name="roleTitle" value="Roles Regrole Name" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
+		</execute>
+
 		<execute macro="Role#definePermissionCmdCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_CUSTOMIZE_CHECKBOX" />
 			<var name="permissionDefinitionValue" value="Customize" />
@@ -417,6 +421,10 @@
 		<execute macro="Role#addCP">
 			<var name="roleTitle" value="Roles Regrole Name" />
 			<var name="roleType" value="Regular" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelUsers">
+			<var name="portlet" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionCP">

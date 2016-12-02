@@ -546,7 +546,6 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		WebDriverHelper.check(this, locator);
 	}
 
-
 	@Override
 	public void click(String locator) {
 		if (locator.contains("x:")) {

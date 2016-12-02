@@ -31,4 +31,4 @@ if (Validator.isNull(id)) {
 }
 %>
 
-<input <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= id %>" name="<%= namespace %><%= param %>" onClick="<%= onClick %>" type="checkbox" />
+<input <%= value ? "checked" : "" %> class="<%= cssClass %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= HtmlUtil.escapeAttribute(id) %>" name="<%= namespace %><%= param %>" onClick="<%= onClick %>" type="checkbox" />

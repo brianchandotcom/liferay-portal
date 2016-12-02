@@ -661,8 +661,14 @@
 		}
 	}
 
-	.scheduler-base-controls .btn-group .scheduler-base-today {
-		width: 50%;
+	.scheduler-base-controls .btn-group {
+		button {
+			max-height: 40px;
+		}
+
+		.scheduler-base-today {
+			width: 50%;
+		}
 	}
 
 	.scheduler-base-hd .btn-group button {

@@ -708,6 +708,15 @@ to version 1.0.56.
 - [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
 1.0.322.
 
+## 3.0.47 - 2016-12-05
+
+### Added
+- [LPS-69501]: Allow portal tool versions to be overridden in a
+`gradle.properties` file contained in any parent directory of the project, for
+example:
+
+		com.liferay.source.formatter.version=1.0.300
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -779,5 +788,6 @@ to version 1.0.56.
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
 [LPS-69488]: https://issues.liferay.com/browse/LPS-69488
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492
+[LPS-69501]: https://issues.liferay.com/browse/LPS-69501
 [LPS-69518]: https://issues.liferay.com/browse/LPS-69518
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

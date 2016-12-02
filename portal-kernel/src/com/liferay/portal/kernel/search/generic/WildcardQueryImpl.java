@@ -42,6 +42,11 @@ public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 		return _queryTerm;
 	}
 
+	@Override
+	public String toString() {
+		return "{queryTerm=" + _queryTerm + "}";
+	}
+
 	private final QueryTerm _queryTerm;
 
 }

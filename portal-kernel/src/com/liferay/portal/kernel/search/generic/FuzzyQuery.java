@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
@@ -70,6 +71,21 @@ public class FuzzyQuery extends BaseQueryImpl {
 
 	public void setPrefixLength(Integer prefixLength) {
 		_prefixLength = prefixLength;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{field=");
+		sb.append(_field);
+		sb.append(", fuzziness=");
+		sb.append(_fuzziness);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _field;

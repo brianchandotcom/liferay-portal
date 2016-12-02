@@ -362,6 +362,11 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 		return !_booleanClauses.isEmpty();
 	}
 
+	@Override
+	public String toString() {
+		return "{booleanClauses=" + _booleanClauses + "}";
+	}
+
 	private final List<BooleanClause<Query>> _booleanClauses =
 		new ArrayList<>();
 

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search.generic;
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -55,6 +56,19 @@ public class DisMaxQuery extends BaseQueryImpl {
 
 	public void setTieBreaker(Float tieBreaker) {
 		_tieBreaker = tieBreaker;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{tieBreaker=");
+		sb.append(_tieBreaker);
+		sb.append(", queries=");
+		sb.append(_queries);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final Set<Query> _queries = new HashSet<>();

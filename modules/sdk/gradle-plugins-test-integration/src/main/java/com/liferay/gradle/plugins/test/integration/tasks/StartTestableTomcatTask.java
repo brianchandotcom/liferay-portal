@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -55,26 +55,10 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 	@Override
 	public void startAppServer() throws Exception {
 		if (isDeleteLiferayHome()) {
-			deleteLiferayHome();
+			_deleteLiferayHome();
 		}
 
 		super.startAppServer();
-	}
-
-	protected void deleteLiferayHome() {
-		Project project = getProject();
-
-		File liferayHome = getLiferayHome();
-
-		if (liferayHome == null) {
-			throw new InvalidUserDataException(
-				"No value has been specified for property 'liferayHome'.");
-		}
-
-		project.delete(
-			new File(liferayHome, "data"), new File(liferayHome, "logs"),
-			new File(liferayHome, "osgi/state"),
-			new File(liferayHome, "portal-setup-wizard.properties"));
 	}
 
 	@Override
@@ -96,6 +80,22 @@ public class StartTestableTomcatTask extends StartAppServerTask {
 				}
 
 			});
+	}
+
+	private void _deleteLiferayHome() {
+		Project project = getProject();
+
+		File liferayHome = getLiferayHome();
+
+		if (liferayHome == null) {
+			throw new InvalidUserDataException(
+				"No value has been specified for property 'liferayHome'.");
+		}
+
+		project.delete(
+			new File(liferayHome, "data"), new File(liferayHome, "logs"),
+			new File(liferayHome, "osgi/state"),
+			new File(liferayHome, "portal-setup-wizard.properties"));
 	}
 
 	private boolean _deleteLiferayHome = true;

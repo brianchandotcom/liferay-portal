@@ -1,0 +1,41 @@
+apply plugin: "com.liferay.test.integration.base"
+apply plugin: "eclipse"
+apply plugin: "idea"
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn tasks.eclipse
+	dependsOn tasks.idea
+
+	doLast {
+		for (String fileName in [".classpath", ".project", "${project.name}.iml"]) {
+			File generatedFile = file(fileName)
+
+			assert generatedFile.exists()
+		}
+
+		File eclipseClasspathFile = file(".classpath")
+		File ideaModuleFile = file("${project.name}.iml")
+
+		String eclipseClasspath = eclipseClasspathFile.text
+		String ideaModule = ideaModuleFile.text
+
+		for (String dirName : ["src/testIntegration/java", "src/testIntegration/javaBar", "src/testIntegration/javaFoo", "src/testIntegration/resources", "src/testIntegration/resourcesBar", "src/testIntegration/resourcesFoo"]) {
+			assert eclipseClasspath.contains("<classpathentry kind=\"src\" path=\"${dirName}\"/>") || eclipseClasspath.contains("<classpathentry path=\"${dirName}\" kind=\"src\"/>")
+			assert ideaModule.contains("<sourceFolder url=\"file://\$MODULE_DIR\$/${dirName}\" isTestSource=\"true\"/>") || ideaModule.contains("<sourceFolder isTestSource=\"true\" url=\"file://\$MODULE_DIR\$/${dirName}\"/>")
+		}
+	}
+}
+
+sourceSets {
+	testIntegration {
+		java {
+			srcDirs += ["src/testIntegration/javaFoo", "src/testIntegration/javaBar"]
+		}
+
+		resources {
+			srcDirs += ["src/testIntegration/resourcesFoo", "src/testIntegration/resourcesBar"]
+		}
+	}
+}

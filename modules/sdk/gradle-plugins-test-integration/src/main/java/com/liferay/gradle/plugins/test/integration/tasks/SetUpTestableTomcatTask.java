@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
-import com.liferay.gradle.plugins.test.integration.util.StringUtil;
+import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.internal.util.StringUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.copy.ExcludeExistingFileAction;
 import com.liferay.gradle.util.copy.StripPathSegmentsAction;
@@ -234,18 +234,18 @@ public class SetUpTestableTomcatTask
 
 	@TaskAction
 	public void setUpTestableTomcat() throws Exception {
-		setUpCatalinaOpts();
-		setUpJmx();
-		setUpLogging();
-		setUpManager();
-		setUpOsgiModules();
+		_setUpCatalinaOpts();
+		_setUpJmx();
+		_setUpLogging();
+		_setUpManager();
+		_setUpOsgiModules();
 	}
 
 	public void setZipUrl(Object zipUrl) {
 		_zipUrl = zipUrl;
 	}
 
-	protected boolean contains(String fileName, String s) throws IOException {
+	private boolean _contains(String fileName, String s) throws IOException {
 		File file = new File(getDir(), fileName);
 
 		String fileContent = new String(Files.readAllBytes(file.toPath()));
@@ -257,7 +257,7 @@ public class SetUpTestableTomcatTask
 		return false;
 	}
 
-	protected PrintWriter getAppendPrintWriter(String fileName)
+	private PrintWriter _getAppendPrintWriter(String fileName)
 		throws IOException {
 
 		File file = new File(getDir(), fileName);
@@ -268,7 +268,7 @@ public class SetUpTestableTomcatTask
 				StandardOpenOption.APPEND, StandardOpenOption.WRITE));
 	}
 
-	protected String getJmxOptions() {
+	private String _getJmxOptions() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("-Dcom.sun.management.jmxremote ");
@@ -282,7 +282,7 @@ public class SetUpTestableTomcatTask
 		return sb.toString();
 	}
 
-	protected void replace(String fileName, Map<String, Object> replacements)
+	private void _replace(String fileName, Map<String, Object> replacements)
 		throws IOException {
 
 		Logger logger = getLogger();
@@ -300,7 +300,7 @@ public class SetUpTestableTomcatTask
 			String newSub = GradleUtil.toString(entry.getValue());
 
 			if (logger.isWarnEnabled() && !content.contains(oldSub)) {
-				logger.warn("Unable to find \"" + oldSub + "\" in " + path);
+				logger.warn("Unable to find \"{}\" in {}", oldSub, path);
 			}
 
 			content = content.replace(oldSub, newSub);
@@ -309,22 +309,22 @@ public class SetUpTestableTomcatTask
 		Files.write(path, content.getBytes());
 	}
 
-	protected void setUpCatalinaOpts() throws IOException {
+	private void _setUpCatalinaOpts() throws IOException {
 		Map<String, Object> replacements = getCatalinaOptsReplacements();
 
 		if (replacements.isEmpty()) {
 			return;
 		}
 
-		replace("bin/setenv.bat", replacements);
-		replace("bin/setenv.sh", replacements);
+		_replace("bin/setenv.bat", replacements);
+		_replace("bin/setenv.sh", replacements);
 	}
 
-	protected void setUpJmx() throws IOException {
-		String jmxOptions = getJmxOptions();
+	private void _setUpJmx() throws IOException {
+		String jmxOptions = _getJmxOptions();
 
-		if (!contains("bin/setenv.bat", jmxOptions)) {
-			try (PrintWriter printWriter = getAppendPrintWriter(
+		if (!_contains("bin/setenv.bat", jmxOptions)) {
+			try (PrintWriter printWriter = _getAppendPrintWriter(
 					"bin/setenv.bat")) {
 
 				printWriter.println();
@@ -340,8 +340,8 @@ public class SetUpTestableTomcatTask
 			}
 		}
 
-		if (!contains("bin/setenv.sh", jmxOptions)) {
-			try (PrintWriter printWriter = getAppendPrintWriter(
+		if (!_contains("bin/setenv.sh", jmxOptions)) {
+			try (PrintWriter printWriter = _getAppendPrintWriter(
 					"bin/setenv.sh")) {
 
 				printWriter.println();
@@ -358,14 +358,14 @@ public class SetUpTestableTomcatTask
 		}
 	}
 
-	protected void setUpLogging() throws IOException {
+	private void _setUpLogging() throws IOException {
 		if (!isDebugLogging() ||
-			contains("conf/Logging.properties", "org.apache.catalina.level")) {
+			_contains("conf/Logging.properties", "org.apache.catalina.level")) {
 
 			return;
 		}
 
-		try (PrintWriter printWriter = getAppendPrintWriter(
+		try (PrintWriter printWriter = _getAppendPrintWriter(
 				"conf/Logging.properties")) {
 
 			printWriter.println("org.apache.catalina.level=ALL");
@@ -381,7 +381,7 @@ public class SetUpTestableTomcatTask
 		}
 	}
 
-	protected void setUpManager() throws Exception {
+	private void _setUpManager() throws Exception {
 		final File managerDir = new File(getDir(), "webapps/manager");
 
 		if (!managerDir.exists()) {
@@ -492,7 +492,7 @@ public class SetUpTestableTomcatTask
 		}
 	}
 
-	protected void setUpOsgiModules() {
+	private void _setUpOsgiModules() {
 		Project project = getProject();
 
 		project.copy(

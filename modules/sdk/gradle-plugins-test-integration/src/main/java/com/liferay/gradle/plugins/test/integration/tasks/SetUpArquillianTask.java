@@ -14,7 +14,7 @@
 
 package com.liferay.gradle.plugins.test.integration.tasks;
 
-import com.liferay.gradle.plugins.test.integration.util.GradleUtil;
+import com.liferay.gradle.plugins.test.integration.internal.util.GradleUtil;
 import com.liferay.gradle.util.FileUtil;
 
 import java.io.File;
@@ -41,7 +41,7 @@ public class SetUpArquillianTask
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					File outputFile = getOutputFile();
+					File outputFile = _getOutputFile();
 
 					if (outputFile.exists()) {
 						return false;
@@ -97,7 +97,7 @@ public class SetUpArquillianTask
 
 	@TaskAction
 	public void setUpArquillian() throws IOException {
-		File outputFile = getOutputFile();
+		File outputFile = _getOutputFile();
 
 		String xml = FileUtil.read(
 			"com/liferay/gradle/plugins/test/integration/dependencies" +
@@ -113,7 +113,7 @@ public class SetUpArquillianTask
 		Files.write(outputFile.toPath(), xml.getBytes(StandardCharsets.UTF_8));
 	}
 
-	protected File getOutputFile() {
+	private File _getOutputFile() {
 		return new File(getOutputDir(), "arquillian.xml");
 	}
 

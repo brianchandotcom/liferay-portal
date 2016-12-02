@@ -205,7 +205,9 @@ if (portletTitleBasedNavigation) {
 							automaticURL = Validator.isNull(urlTitle);
 						}
 						else {
-							automaticURL = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry).equals(urlTitle);
+							String uniqueUrlTitle = BlogsEntryLocalServiceUtil.getUniqueUrlTitle(entry);
+
+							automaticURL = uniqueUrlTitle.equals(urlTitle);
 						}
 						%>
 

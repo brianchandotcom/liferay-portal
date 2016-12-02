@@ -220,8 +220,8 @@ public class PQLOperatorTest extends TestCase {
 	public void testGetPQLResultStringOperatorErrors() throws Exception {
 		Set<String> conditionalOperators = new HashSet<>();
 
-		conditionalOperators.add("~");
 		conditionalOperators.add("!~");
+		conditionalOperators.add("~");
 
 		for (String operator : conditionalOperators) {
 			String expectedError =

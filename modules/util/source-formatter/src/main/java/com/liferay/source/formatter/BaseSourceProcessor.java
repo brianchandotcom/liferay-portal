@@ -2793,22 +2793,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected String sortMethodCalls(String absolutePath, String content) {
-		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
-			return content;
-		}
-
-		content = sortMethodCall(
-			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
-			"TreeSet<.*>");
-		content = sortMethodCall(
-			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
-			"JSONObject", "TreeMap<.*>");
-		content = sortMethodCall(content, "setAttribute");
-
-		return content;
-	}
-
 	protected String sortMethodCall(
 		String content, String methodName, String... variableTypeRegexStrings) {
 
@@ -2864,6 +2848,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				previousPutOrSetParameterName = putOrSetParameterName;
 			}
 		}
+
+		return content;
+	}
+
+	protected String sortMethodCalls(String absolutePath, String content) {
+		if (isExcludedPath(METHOD_CALL_SORT_EXCLUDES, absolutePath)) {
+			return content;
+		}
+
+		content = sortMethodCall(
+			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
+			"TreeSet<.*>");
+		content = sortMethodCall(
+			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
+			"JSONObject", "TreeMap<.*>");
+		content = sortMethodCall(content, "setAttribute");
 
 		return content;
 	}

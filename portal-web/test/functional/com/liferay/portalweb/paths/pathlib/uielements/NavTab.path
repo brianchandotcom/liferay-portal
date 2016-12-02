@@ -229,6 +229,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SOURCE</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Source')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIPTIONS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Subscriptions')]/a</td>
 	<td></td>

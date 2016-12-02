@@ -533,6 +533,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SOURCE_EDITOR-->
+<tr>
+	<td>SOURCE_EDITOR_CONTENT</td>
+	<td>//div[contains(@id,'formBuilderEditor')]/textarea</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ARE_YOU_SURE_DIALOG_BOX-->
 <tr>
 	<td>ARE_YOU_SURE_DIALOG_BOX_HEADER</td>

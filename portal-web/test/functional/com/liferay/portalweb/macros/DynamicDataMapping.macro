@@ -105,6 +105,12 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addFieldViaJSON">
+		<execute function="Click" locator1="NavTab#SOURCE" value1="Source" />
+
+		<execute function="Type#typeNotVisibleNoMouseOver" locator1="DDMEditStructure#SOURCE_EDITOR_CONTENT" value1="${sourceJSON} " />
+	</command>
+
 	<command name="addFieldWithoutRename">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 

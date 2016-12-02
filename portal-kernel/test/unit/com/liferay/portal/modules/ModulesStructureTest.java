@@ -509,6 +509,8 @@ public class ModulesStructureTest {
 	}
 
 	private String _read(Path path) throws IOException {
+		Assert.assertTrue("Missing " + path, Files.exists(path));
+
 		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
 		return StringUtil.replace(
@@ -532,9 +534,6 @@ public class ModulesStructureTest {
 	private void _testAppBuildScripts(Path dirPath) throws IOException {
 		Path buildGradlePath = dirPath.resolve("build.gradle");
 
-		Assert.assertTrue(
-			"Missing " + buildGradlePath, Files.exists(buildGradlePath));
-
 		String buildGradle = _read(buildGradlePath);
 
 		Assert.assertEquals(
@@ -543,8 +542,6 @@ public class ModulesStructureTest {
 
 	private void _testEquals(Path path, String expected) throws IOException {
 		if (Validator.isNotNull(expected)) {
-			Assert.assertTrue("Missing " + path, Files.exists(path));
-
 			String actual = _read(path);
 
 			Assert.assertEquals("Incorrect " + path, expected, actual);
@@ -594,20 +591,11 @@ public class ModulesStructureTest {
 		Path gradlePropertiesPath = dirPath.resolve("gradle.properties");
 		Path settingsGradlePath = dirPath.resolve("settings.gradle");
 
-		boolean buildGradleExists = Files.exists(buildGradlePath);
-		boolean gradlePropertiesExists = Files.exists(gradlePropertiesPath);
-		boolean settingsGradleExists = Files.exists(settingsGradlePath);
-
-		Assert.assertTrue("Missing " + buildGradlePath, buildGradleExists);
-
 		String buildGradle = _read(buildGradlePath);
 
 		Assert.assertEquals(
 			"Incorrect " + buildGradlePath,
 			_getGitRepoBuildGradle(dirPath, buildGradleTemplate), buildGradle);
-
-		Assert.assertTrue(
-			"Missing " + gradlePropertiesPath, gradlePropertiesExists);
 
 		String gradleProperties = _read(gradlePropertiesPath);
 
@@ -615,9 +603,6 @@ public class ModulesStructureTest {
 			"Incorrect " + gradlePropertiesPath,
 			_getGitRepoGradleProperties(dirPath, gradlePropertiesTemplate),
 			gradleProperties);
-
-		Assert.assertTrue(
-			"Missing " + settingsGradlePath, settingsGradleExists);
 
 		String settingsGradle = _read(settingsGradlePath);
 
@@ -643,9 +628,6 @@ public class ModulesStructureTest {
 		throws IOException {
 
 		Path gitIgnorePath = dirPath.resolve(".gitignore");
-
-		Assert.assertTrue(
-			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
 
 		String gitIgnore = _read(gitIgnorePath);
 
@@ -682,9 +664,6 @@ public class ModulesStructureTest {
 		}
 
 		Path gitIgnorePath = dirPath.resolve(".gitignore");
-
-		Assert.assertTrue(
-			"Missing " + gitIgnorePath, Files.exists(gitIgnorePath));
 
 		String gitIgnore = _read(gitIgnorePath);
 

@@ -3084,9 +3084,29 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (getFile("portal-impl", PORTAL_MAX_DIR_LEVEL) != null) {
 			return true;
 		}
-		else {
-			return false;
+
+		// Subrepositories should be treated as portal
+
+		String baseDirAbsolutePath = getAbsolutePath(
+			sourceFormatterArgs.getBaseDirName());
+
+		int x = baseDirAbsolutePath.length();
+
+		for (int i = 0; i < 2; i++) {
+			x = baseDirAbsolutePath.lastIndexOf(CharPool.FORWARD_SLASH, x - 1);
+
+			if (x == -1) {
+				return false;
+			}
+
+			String dirName = baseDirAbsolutePath.substring(x + 1);
+
+			if (dirName.startsWith("com-liferay-")) {
+				return true;
+			}
 		}
+
+		return false;
 	}
 
 	private String _normalizePattern(String originalPattern) {

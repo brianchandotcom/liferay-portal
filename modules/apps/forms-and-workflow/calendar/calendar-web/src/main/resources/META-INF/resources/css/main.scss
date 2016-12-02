@@ -656,8 +656,12 @@
 			width: 100%;
 		}
 
-		.scheduler-base-hd .scheduler-base-views {
-			margin-top: 5px;
+		.scheduler-base-hd {
+			.scheduler-base-controls .btn-group {
+				&:nth-child(2), .scheduler-base-views {
+					margin-top: 5px;
+				}
+			}
 		}
 	}
 
@@ -853,6 +857,7 @@
 				}
 
 				.scheduler-base-views {
+					margin-top: 5px;
 					width: 100%;
 
 					button {

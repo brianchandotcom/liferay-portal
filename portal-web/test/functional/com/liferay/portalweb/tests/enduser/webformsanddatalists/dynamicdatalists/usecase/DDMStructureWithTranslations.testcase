@@ -625,7 +625,7 @@
 		</if>
 	</tear-down>
 
-	<command name="ViewFieldInputTranslations" priority="4">
+	<command name="ViewFieldInputWhenSwitchingTranslations" priority="4">
 		<description message="This is a use case for LPS-69325." />
 
 		<execute macro="DDLRecord#addCP" />

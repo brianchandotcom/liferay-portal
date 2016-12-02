@@ -1249,6 +1249,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkVerifyUpgradeConnection(fileName, className, newContent);
 		}
 
+		// LPS-69494
+
+		if (!fileName.endsWith("AbstractExtender.java") &&
+			newContent.contains(
+				"org.apache.felix.utils.extender.AbstractExtender")) {
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Use com.liferay.osgi.felix.util.AbstractExtender ");
+			sb.append("instead of ");
+			sb.append("org.apache.felix.utils.extender.AbstractExtender, see ");
+			sb.append("LPS-69494");
+
+			processMessage(fileName, sb.toString());
+		}
+
 		checkUpgradeClass(fileName, absolutePath, className, newContent);
 
 		newContent = formatAssertEquals(fileName, newContent);

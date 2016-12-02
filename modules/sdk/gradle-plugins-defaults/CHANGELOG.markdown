@@ -714,6 +714,12 @@ moved to [Liferay Gradle Plugins].
 ### Changed
 - [LPS-69492]: Update the [Liferay Gradle Plugins] dependency to version 3.0.45.
 
+## 2.1.0 - 2016-12-02
+
+### Added
+- [LPS-68289]: Add module agent support for aspect in the `test` and
+`testIntegration` tasks.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -742,6 +748,7 @@ moved to [Liferay Gradle Plugins].
 [LPS-68014]: https://issues.liferay.com/browse/LPS-68014
 [LPS-68131]: https://issues.liferay.com/browse/LPS-68131
 [LPS-68230]: https://issues.liferay.com/browse/LPS-68230
+[LPS-68289]: https://issues.liferay.com/browse/LPS-68289
 [LPS-68293]: https://issues.liferay.com/browse/LPS-68293
 [LPS-68297]: https://issues.liferay.com/browse/LPS-68297
 [LPS-68298]: https://issues.liferay.com/browse/LPS-68298

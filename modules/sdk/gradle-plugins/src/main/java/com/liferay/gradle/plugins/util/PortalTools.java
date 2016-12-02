@@ -15,13 +15,16 @@
 package com.liferay.gradle.plugins.util;
 
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Properties;
 
 import org.gradle.api.Project;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -31,9 +34,29 @@ public class PortalTools {
 	public static final String GROUP = "com.liferay";
 
 	public static String getVersion(Project project, String name) {
-		String version = _versions.getProperty(name);
+		String key = name + ".version";
 
-		return GradleUtil.getProperty(project, name + ".version", version);
+		String version = GradleUtil.getProperty(project, key, (String)null);
+
+		if (Validator.isNotNull(version)) {
+			return version;
+		}
+
+		File dir = GradleUtil.getRootDir(
+			project.getProjectDir(), "gradle.properties");
+
+		if (dir != null) {
+			Properties properties = GUtil.loadProperties(
+				new File(dir, "gradle.properties"));
+
+			version = properties.getProperty(key);
+
+			if (Validator.isNotNull(version)) {
+				return version;
+			}
+		}
+
+		return _versions.getProperty(name);
 	}
 
 	private static final Properties _versions = new Properties();

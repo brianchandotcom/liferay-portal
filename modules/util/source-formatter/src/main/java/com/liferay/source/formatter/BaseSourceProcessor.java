@@ -3179,6 +3179,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				putOrSetParameterName2 = matcher.replaceAll(StringPool.BLANK);
 			}
 
+			if (putOrSetParameterName1.matches("\".*\"") &&
+				putOrSetParameterName2.matches("\".*\"")) {
+
+				String strippedQuotes1 = putOrSetParameterName1.substring(
+					1, putOrSetParameterName1.length() - 1);
+				String strippedQuotes2 = putOrSetParameterName2.substring(
+					1, putOrSetParameterName2.length() - 1);
+
+				return super.compare(strippedQuotes1, strippedQuotes2);
+			}
+
 			int value = super.compare(
 				putOrSetParameterName1, putOrSetParameterName2);
 

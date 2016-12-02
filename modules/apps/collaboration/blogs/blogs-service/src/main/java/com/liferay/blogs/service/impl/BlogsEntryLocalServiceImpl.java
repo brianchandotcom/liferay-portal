@@ -2323,7 +2323,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	private String _getURLTitle(long entryId) throws NoSuchEntryException {
-		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+		BlogsEntry entry = blogsEntryPersistence.fetchByPrimaryKey(entryId);
 
 		if (entry != null) {
 			return entry.getUrlTitle();

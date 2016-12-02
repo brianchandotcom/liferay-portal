@@ -230,6 +230,12 @@
 		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
 	</command>
 
+	<command name="setInputFieldLocalization">
+		<var name="key_languageValue" value="${languageValue}" />
+
+		<execute function="Click" locator1="FieldLocalization#OPTION" />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Navigator#openURL" />
 

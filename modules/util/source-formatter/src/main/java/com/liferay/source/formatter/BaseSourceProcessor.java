@@ -2798,18 +2798,18 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
-		content = sortMethodCalls(
+		content = sortMethodCall(
 			content, "add", "ConcurrentSkipListSet<.*>", "HashSet<.*>",
 			"TreeSet<.*>");
-		content = sortMethodCalls(
+		content = sortMethodCall(
 			content, "put", "ConcurrentHashMap<.*>", "HashMap<.*>",
 			"JSONObject", "TreeMap<.*>");
-		content = sortMethodCalls(content, "setAttribute");
+		content = sortMethodCall(content, "setAttribute");
 
 		return content;
 	}
 
-	protected String sortMethodCalls(
+	protected String sortMethodCall(
 		String content, String methodName, String... variableTypeRegexStrings) {
 
 		Pattern codeBlockPattern = Pattern.compile(

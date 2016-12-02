@@ -1052,8 +1052,8 @@
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
 			<var name="needsReply" value="true" />
-			<var method="TestPropsUtil#get('email.address.3')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1065,6 +1065,14 @@
 		<execute macro="PortalInstances#editCP">
 			<var name="mailDomain" value="gmail.com" />
 			<var name="virtualHost" value="localhost" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute macro="ServerAdministration#executeServerResourcesActions">
+			<var name="actionsDescription" value="Reindex all search indexes." />
 		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
@@ -1097,11 +1105,11 @@
 		</execute>
 
 		<execute macro="User#editEmailViaMyAccount">
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#configureMessageEmailFromCP">
-			<var method="TestPropsUtil#get('email.address.3')" name="emailFromAddress" />
+			<var method="TestPropsUtil#get('email.address.2')" name="emailFromAddress" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1155,7 +1163,7 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

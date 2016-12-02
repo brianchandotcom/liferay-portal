@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
@@ -142,6 +143,25 @@ public class MatchQuery extends BaseQueryImpl {
 
 	public void setZeroTermsQuery(ZeroTermsQuery zeroTermsQuery) {
 		_zeroTermsQuery = zeroTermsQuery;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("{analyzer=");
+		sb.append(_analyzer);
+		sb.append(", field=");
+		sb.append(_field);
+		sb.append(", operator=");
+		sb.append(_operator);
+		sb.append(", type=");
+		sb.append(_type);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	public enum Operator {

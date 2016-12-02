@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search.generic;
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
@@ -48,6 +49,19 @@ public class NestedQuery extends BaseQueryImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{path=");
+		sb.append(_path);
+		sb.append(", query=");
+		sb.append(_query);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _path;

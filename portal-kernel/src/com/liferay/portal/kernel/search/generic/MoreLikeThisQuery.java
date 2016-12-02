@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -193,6 +194,27 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 
 	public void setType(String type) {
 		_type = type;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(13);
+
+		sb.append("{analyzer=");
+		sb.append(_analyzer);
+		sb.append(", documentUIDs=");
+		sb.append(_documentUIDs);
+		sb.append(", fields=");
+		sb.append(_fields);
+		sb.append(", likeText=");
+		sb.append(_likeText);
+		sb.append(", stopWords=");
+		sb.append(_stopWords);
+		sb.append(", type=");
+		sb.append(_type);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private String _analyzer;

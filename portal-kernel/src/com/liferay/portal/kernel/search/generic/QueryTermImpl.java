@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.QueryTerm;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
@@ -34,6 +35,19 @@ public class QueryTermImpl implements QueryTerm {
 	@Override
 	public String getValue() {
 		return _value;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{field=");
+		sb.append(_field);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _field;

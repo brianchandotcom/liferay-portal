@@ -1,0 +1,102 @@
+
+<html>
+  <h1>junit-top-level-result-message</h1>
+  <p>Build Time: junit-top-level-build-time</p>
+  <h4>Base Branch:</h4>
+  <p>Branch Name:
+    <a href="https://github.com/liferay/junit-repository/tree/junit-branch-name">junit-branch-name</a>
+    <br/>Branch GIT ID:
+    <a href="https://github.com/liferay/junit-repository/commit/rebase-branch-git-commit">rebase-branch-git-commit</a>
+  </p>
+  <h4>Job Summary:</h4>
+  <ul>
+    <li>
+      <strike>
+        <strong>
+          <a href="${dependencies.url}/GitHubMessageUtilTest/poshi-syntax-1/">junit-top-level-build-name</a>
+        </strong>
+      </strike>
+    </li>
+    <li>
+      <a href="http://test-1-15/job/test-portal-acceptance-pullrequest-source(master)/149/">test-portal-acceptance-pullrequest-source(master)</a>
+    </li>
+    <li>
+      <a href="http://test-1-4/job/test-portal-acceptance-pullrequest-dist(master)/423/">test-portal-acceptance-pullrequest-dist(master)</a>
+    </li>
+  </ul>
+  <h5>For more details click
+    <a href="junit-top-level-shared-dir-url/jenkins-report.html">here</a>.
+  </h5>
+  <hr/>
+  <h4>Failed Jobs:</h4>
+  <ol>
+    <li>
+      <h5>
+        <a href="${dependencies.url}/GitHubMessageUtilTest/poshi-syntax-1/">junit-top-level-build-name</a>
+      </h5>
+      <h6>Job Results:</h6>
+      <p>2 Jobs Passed.
+        <br/>1 Job Failed.
+      </p>
+      <p>POSHI Validation Failure</p>
+      <pre><code>     [exec] 11 errors in POSHI	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:54)
+     [exec]
+     [exec]
+     [exec]
+     [exec] Invalid macro class THISDOESNOTEXIST
+     [exec] 	at org.gradle.api.internal.tasks.execution.ExecuteAtMostOnceTaskExecuter.execute(ExecuteAtMostOnceTaskExecuter.java:43)
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:60	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:34)
+     [exec]
+     [exec]
+     [exec] Invalid macro class THISDOESNOTEXIST	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:233)
+     [exec]
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:60
+     [exec] 	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter$EventFiringTaskWorker.execute(DefaultTaskGraphExecuter.java:215)
+     [exec]
+     [exec] Invalid macro command Calendar#THISDOESNOTEXIST	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.processTask(AbstractTaskPlanExecutor.java:74)
+     [exec]
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:56
+     [exec]
+     [exec] Invalid macro command Calendar#THISDOESNOTEXIST
+     [exec] 	at org.gradle.execution.taskgraph.AbstractTaskPlanExecutor$TaskExecutorWorker.run(AbstractTaskPlanExecutor.java:55)
+     [exec] 	at org.gradle.execution.taskgraph.DefaultTaskPlanExecutor.process(DefaultTaskPlanExecutor.java:32)
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:54	at org.gradle.execution.taskgraph.DefaultTaskGraphExecuter.execute(DefaultTaskGraphExecuter.java:113)
+     [exec]
+     [exec] Invalid macro command CalendarResource#THISDOESNOTEXIST
+     [exec]
+     [exec] 	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:37)/opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:58
+     [exec]
+     [exec]
+     [exec] Invalid macro command CalendarResource#THISDOESNOTEXIST
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:58
+     [exec]
+     [exec] Invalid macro command Navigator#THISDOESNOTEXIST
+     [exec] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:124
+     [exec]
+     [exec] 	at org.gradle.execution.DefaultBuildExecuter.access$000(DefaultBuildExecuter.java:23)
+     [exec] Invalid macro command THISDOESNOTEXIST#tearDown	at org.gradle.execution.DefaultBuildExecuter$1.proceed(DefaultBuildExecuter.java:43)
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:60
+     [exec]
+     [exec] Invalid macro command Calendar#THISDOESNOTEXIST
+     [exec]
+     [exec] 	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:32)/opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:56
+     [exec] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:37)
+     [exec]
+     [exec]
+     [exec] 	at org.gradle.execution.DefaultBuildExecuter.execute(DefaultBuildExecuter.java:30)
+     [exec] Invalid macro command THISDOESNOTEXIST#tearDown
+     [exec] 	at org.gradle.initialization.DefaultGradleLauncher$4.run(DefaultGradleLauncher.java:197)
+     [exec] /opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:60
+     [exec]
+     [exec] Invalid macro command Calendar#THISDOESNOTEXIST
+     [exec] 	at org.gradle.internal.Factories$1.create(Factories.java:25)
+     [exec] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:91)/opt/dev/projects/github/liferay-portal/portal-web/test/functional/com/liferay/portalweb/tests/enduser/calendar/pgcalendar/Calendar.testcase:54
+     [exec]
+     [exec] 	at org.gradle.internal.progress.DefaultBuildOperationExecutor.run(DefaultBuildOperationExecutor.java:53)
+     [exec]
+     [exec]
+     [exec] 	at org.gradle.initialization.DefaultGradleLauncher.doBuildStages(DefaultGradleLauncher.java:194):writePoshiProperties FAILED</code></pre>
+    </li>
+  </ol>
+</html>

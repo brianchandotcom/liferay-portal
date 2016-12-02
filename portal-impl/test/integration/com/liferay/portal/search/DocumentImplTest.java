@@ -318,7 +318,8 @@ public class DocumentImplTest {
 
 		Hits hits = _indexer.search(searchContext);
 
-		Assert.assertEquals(expectedHitsLength, hits.getLength());
+		Assert.assertEquals(
+			hits.toString(), expectedHitsLength, hits.getLength());
 	}
 
 	protected void checkSearchContext(

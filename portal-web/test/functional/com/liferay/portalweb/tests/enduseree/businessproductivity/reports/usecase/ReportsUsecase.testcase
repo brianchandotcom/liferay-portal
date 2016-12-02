@@ -1,5 +1,5 @@
 <definition component-name="portal-business-productivity-ee">
-	<property name="portal.release" value="true" />
+	<property name="portal.release" value="false" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Reports" />
 

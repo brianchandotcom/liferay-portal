@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import org.apache.tools.ant.Project;
 
 /**
+ * @author Kevin Yen
  * @author Peter Yoo
  */
 public class FailureMessageUtil {
@@ -44,6 +45,10 @@ public class FailureMessageUtil {
 	}
 
 	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new PoshiValidationFailureMessageGenerator(),
+
+		new DownstreamFailureMessageGenerator(),
+
 		new IntegrationTestTimeoutFailureMessageGenerator(),
 		new LocalGitMirrorFailureMessageGenerator(),
 		new PluginFailureMessageGenerator(),
@@ -52,6 +57,7 @@ public class FailureMessageUtil {
 		new SemanticVersioningFailureMessageGenerator(),
 		new SourceFormatFailureMessageGenerator()
 	};
+
 	private static final GenericFailureMessageGenerator
 		_genericFailureMessageGenerator = new GenericFailureMessageGenerator();
 

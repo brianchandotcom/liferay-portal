@@ -53,10 +53,8 @@ public class JCalendarUtil {
 	public static int getDSTShift(
 		Calendar jCalendar1, Calendar jCalendar2, TimeZone timeZone) {
 
-		jCalendar1 = JCalendarUtil.getJCalendar(
-			jCalendar1.getTimeInMillis(), timeZone);
-		jCalendar2 = JCalendarUtil.getJCalendar(
-			jCalendar2.getTimeInMillis(), timeZone);
+		jCalendar1 = getJCalendar(jCalendar1.getTimeInMillis(), timeZone);
+		jCalendar2 = getJCalendar(jCalendar2.getTimeInMillis(), timeZone);
 
 		Calendar sameDayJCalendar = getJCalendar(
 			jCalendar1.get(Calendar.YEAR), jCalendar1.get(Calendar.MONTH),

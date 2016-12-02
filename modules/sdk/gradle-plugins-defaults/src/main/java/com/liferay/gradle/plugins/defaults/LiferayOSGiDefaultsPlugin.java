@@ -1734,8 +1734,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			baselineTask.setBndFile("bnd.bnd");
 		}
 
-		baselineTask.setForceCalculatedVersion(true);
-
 		boolean reportDiff = false;
 
 		if (reportLevelIsDiff || reportLevelIsPersist) {

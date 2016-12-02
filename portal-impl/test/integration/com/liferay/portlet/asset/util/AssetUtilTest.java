@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -43,8 +42,6 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -110,33 +107,22 @@ public class AssetUtilTest {
 	}
 
 	protected void assertCount(
-			final int expectedCount, final AssetEntryQuery assetEntryQuery,
-			final long[] assetCategoryIds, final String[] assetTagNames,
-			final Map<String, Serializable> attributes, final long companyId,
-			final String keywords, final Layout layout, final Locale locale,
-			final long scopeGroupId, final TimeZone timezone, final long userId)
+			int expectedCount, AssetEntryQuery assetEntryQuery,
+			long[] assetCategoryIds, String[] assetTagNames,
+			Map<String, Serializable> attributes, long companyId,
+			String keywords, Layout layout, Locale locale, long scopeGroupId,
+			TimeZone timezone, long userId)
 		throws Exception {
 
-		IdempotentRetryAssert.retryAssert(
-			10, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
-			new Callable<Void>() {
+		BaseModelSearchResult<AssetEntry> baseModelSearchResult =
+			AssetUtil.searchAssetEntries(
+				assetEntryQuery, assetCategoryIds, assetTagNames, attributes,
+				companyId, keywords, layout, locale, scopeGroupId, timezone,
+				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				@Override
-				public Void call() throws Exception {
-					BaseModelSearchResult<AssetEntry> baseModelSearchResult =
-						AssetUtil.searchAssetEntries(
-							assetEntryQuery, assetCategoryIds, assetTagNames,
-							attributes, companyId, keywords, layout, locale,
-							scopeGroupId, timezone, userId, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS);
-
-					Assert.assertEquals(
-						expectedCount, baseModelSearchResult.getLength());
-
-					return null;
-				}
-
-			});
+		Assert.assertEquals(
+			baseModelSearchResult.toString(), expectedCount,
+			baseModelSearchResult.getLength());
 	}
 
 	private AssetCategory _assetCategory;

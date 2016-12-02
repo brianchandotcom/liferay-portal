@@ -49,11 +49,17 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 			"jspc-1", "1672", "test-portal-acceptance-pullrequest(master)",
 			"test-1-5");
 		downloadSample(
+			"poshi-syntax-1", "138",
+			"test-portal-acceptance-pullrequest(master)", "test-1-15");
+		downloadSample(
 			"rebase-1", "58", "test-portal-acceptance-pullrequest(ee-6.2.x)",
 			"test-1-19");
 		downloadSample(
 			"sourceformat-1", "729",
 			"test-portal-acceptance-pullrequest(master)", "test-1-1");
+		downloadSample(
+			"top-level-1", "62", "test-portal-acceptance-pullrequest(ee-7.0.x)",
+			"test-1-10");
 	}
 
 	@Test
@@ -107,6 +113,9 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 
 		String content = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(progressiveTextURL));
+
+		JenkinsResultsParserUtil.write(
+			new File(sampleDir, "logText/progressiveText"), content);
 
 		Matcher progressiveTextMatcher = _progressiveTextPattern.matcher(
 			content);
@@ -255,6 +264,6 @@ public class GitHubMessageUtilTest extends BaseJenkinsResultsParserTestCase {
 		".+://(?<hostName>[^.]+)[^/]*/job/(?<jobName>[^/]+).*/" +
 			"(?<buildNumber>\\d+)/");
 	private static final Pattern _progressiveTextPattern = Pattern.compile(
-		"\\'.*\\' started at (?<url>.+)\\.");
+		"[\\'\\\"].*[\\'\\\"] started at (?<url>.+)\\.");
 
 }

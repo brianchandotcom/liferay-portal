@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Journal Taglib
+Bundle-SymbolicName: com.liferay.journal.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.journal.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Web Content
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/journal";version:Version="${Bundle-Version}"
+Web-ContextPath: /journal-taglib

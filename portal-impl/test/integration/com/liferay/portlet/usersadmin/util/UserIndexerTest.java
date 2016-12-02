@@ -330,7 +330,7 @@ public class UserIndexerTest {
 
 		Hits hits = _indexer.search(searchContext);
 
-		Assert.assertEquals(length, hits.getLength());
+		Assert.assertEquals(hits.toString(), length, hits.getLength());
 
 		return hits;
 	}

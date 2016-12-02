@@ -24,7 +24,7 @@ poshiRunner {
 	}
 
 	openCVVersion = "2.4.10-0.10"
-	version = "1.0.48"
+	version = "1.0.50"
 }
 
 task updateGradleCache

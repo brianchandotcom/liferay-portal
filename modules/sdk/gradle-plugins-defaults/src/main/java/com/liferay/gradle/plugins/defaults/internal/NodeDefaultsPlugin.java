@@ -16,7 +16,6 @@ package com.liferay.gradle.plugins.defaults.internal;
 
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 
@@ -34,7 +33,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
-		_configureNode(project);
 		_configureTaskNpmShrinkwrap(project);
 	}
 
@@ -46,13 +44,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	private NodeDefaultsPlugin() {
 	}
 
-	private void _configureNode(Project project) {
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
-		nodeExtension.setNodeVersion(_NODE_VERSION);
-	}
-
 	private void _configureTaskNpmShrinkwrap(Project project) {
 		NpmShrinkwrapTask npmShrinkwrapTask =
 			(NpmShrinkwrapTask)GradleUtil.getTask(
@@ -61,8 +52,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 		npmShrinkwrapTask.excludeDependencies(
 			_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES);
 	}
-
-	private static final String _NODE_VERSION = "6.6.0";
 
 	private static final Iterable<String>
 		_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES = Collections.singleton(

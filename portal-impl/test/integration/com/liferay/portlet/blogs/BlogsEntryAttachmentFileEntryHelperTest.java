@@ -189,11 +189,10 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 
-		return
-			_blogsEntryAttachmentFileEntryHelper.
-				addBlogsEntryAttachmentFileEntries(
-					_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
-					folder.getFolderId(), tempFileEntries);
+		return _blogsEntryAttachmentFileEntryHelper.
+			addBlogsEntryAttachmentFileEntries(
+				_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
+				folder.getFolderId(), tempFileEntries);
 	}
 
 	protected String getContent(String tempFileEntryImgTag) {

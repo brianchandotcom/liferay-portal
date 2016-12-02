@@ -462,7 +462,6 @@
 
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="Publish Template Name" />
-			<var name="assetType" value="Publish Template" />
 		</execute>
 
 		<execute macro="Navigator#openSiteURL">
@@ -1953,14 +1952,14 @@
 			<var name="scheduleTitleName" value="Staging Schedule Title" />
 		</execute>
 
-		<execute function="Pause" locator1="120000" />
-
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />
 			<var name="siteName" value="Community Site Name" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
+
+		<execute function="Pause" locator1="120000" />
 
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Home" />

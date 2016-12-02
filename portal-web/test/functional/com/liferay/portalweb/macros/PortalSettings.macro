@@ -15,6 +15,36 @@
 		<execute macro="Button#clickSave" />
 	</command>
 
+	<command name="configureAudienceTargetingAnalytics">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Audience Targeting Analytics" />
+		</execute>
+
+		<if>
+			<isset var="enableAnalyticsList" />
+			<then>
+				<for list="${enableAnalyticsList}" param="enableAnalytics">
+					<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+						<var name="key_toggleSwitchLabel" value="${enableAnalytics}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="disableAnalyticsList" />
+			<then>
+				<for list="${disableAnalyticsList}" param="disableAnalytics">
+					<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#ANY_TOGGLE_SWITCH">
+						<var name="key_toggleSwitchLabel" value="${disableAnalytics}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+	</command>
+
 	<command name="configureContentSharingAcrossSitesCP">
 		<execute macro="Panel#expandPanel">
 			<var name="panelHeading" value="Content Sharing" />

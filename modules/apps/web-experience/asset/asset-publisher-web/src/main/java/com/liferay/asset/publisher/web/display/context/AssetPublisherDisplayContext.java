@@ -26,6 +26,7 @@ import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
+import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -109,6 +110,11 @@ public class AssetPublisherDisplayContext {
 		PortletPreferences portletPreferences) {
 
 		_request = PortalUtil.getHttpServletRequest(portletRequest);
+
+		_assetPublisherCustomizer =
+			(AssetPublisherCustomizer)_request.getAttribute(
+				"assetPublisherCustomizer");
+
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 
@@ -197,12 +203,6 @@ public class AssetPublisherDisplayContext {
 			_portletPreferences, getGroupIds(), getAllAssetCategoryIds(),
 			getAllAssetTagNames());
 
-		String portletName = getPortletName();
-
-		if (!portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-			_assetEntryQuery.setGroupIds(getGroupIds());
-		}
-
 		_assetEntryQuery.setClassTypeIds(getClassTypeIds());
 		_assetEntryQuery.setEnablePermissions(isEnablePermissions());
 		_assetEntryQuery.setExcludeZeroViewCount(isExcludeZeroViewCount());
@@ -213,16 +213,6 @@ public class AssetPublisherDisplayContext {
 			_assetEntryQuery.setLayout(themeDisplay.getLayout());
 		}
 
-		if (portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-			AssetEntry layoutAssetEntry = (AssetEntry)_request.getAttribute(
-				WebKeys.LAYOUT_ASSET_ENTRY);
-
-			if (layoutAssetEntry != null) {
-				_assetEntryQuery.setLinkedAssetEntryId(
-					layoutAssetEntry.getEntryId());
-			}
-		}
-
 		_assetEntryQuery.setPaginationType(getPaginationType());
 		_assetEntryQuery.setOrderByCol1(getOrderByColumn1());
 		_assetEntryQuery.setOrderByCol2(getOrderByColumn2());
@@ -231,6 +221,9 @@ public class AssetPublisherDisplayContext {
 
 		AssetPublisherUtil.processAssetEntryQuery(
 			themeDisplay.getUser(), _portletPreferences, _assetEntryQuery);
+
+		_assetPublisherCustomizer.setAssetEntryQueryOptions(
+			_assetEntryQuery, _request);
 
 		return _assetEntryQuery;
 	}
@@ -362,21 +355,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Integer getDelta() {
-		if (_delta != null) {
-			return _delta;
-		}
-
-		_delta = GetterUtil.getInteger(
-			_portletPreferences.getValue("delta", null),
-			SearchContainer.DEFAULT_DELTA);
-
-		String portletName = getPortletName();
-
-		if (portletName.equals(AssetPublisherPortletKeys.RECENT_CONTENT)) {
-			_delta = PropsValues.RECENT_CONTENT_MAX_DISPLAY_ITEMS;
-		}
-
-		return _delta;
+		return _assetPublisherCustomizer.getDelta(_request);
 	}
 
 	public String getDisplayStyle() {
@@ -847,34 +826,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public Boolean isEnablePermissions() {
-		if (_enablePermissions != null) {
-			return _enablePermissions;
-		}
-
-		String portletName = getPortletName();
-
-		if (!portletName.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) &&
-			!portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) &&
-			AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX) {
-
-			_enablePermissions = true;
-
-			return _enablePermissions;
-		}
-
-		if (!AssetPublisherWebConfigurationValues.
-				PERMISSION_CHECKING_CONFIGURABLE) {
-
-			_enablePermissions = true;
-
-			return _enablePermissions;
-		}
-
-		_enablePermissions = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enablePermissions", null), true);
-
-		return _enablePermissions;
+		return _assetPublisherCustomizer.isEnablePermissions(_request);
 	}
 
 	public boolean isEnablePrint() {
@@ -984,29 +936,11 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isOrderingAndGroupingEnabled() {
-		String rootPortletId = getRootPortletId();
-
-		if (rootPortletId.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(
-				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-
-			return false;
-		}
-
-		return true;
+		return _assetPublisherCustomizer.isOrderingAndGroupingEnabled(_request);
 	}
 
 	public boolean isOrderingByTitleEnabled() {
-		String rootPortletId = getRootPortletId();
-
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX ||
-			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-
-			return false;
-		}
-
-		return true;
+		return _assetPublisherCustomizer.isOrderingByTitleEnabled(_request);
 	}
 
 	public boolean isPaginationTypeNone() {
@@ -1028,18 +962,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isSelectionStyleEnabled() {
-		String rootPortletId = getRootPortletId();
-
-		if (rootPortletId.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(
-				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) ||
-			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-
-			return false;
-		}
-
-		return true;
+		return _assetPublisherCustomizer.isSelectionStyleEnabled(_request);
 	}
 
 	public boolean isSelectionStyleManual() {
@@ -1102,17 +1025,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isShowEnableAddContentButton() {
-		String rootPortletId = getRootPortletId();
-
-		if (rootPortletId.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(
-				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
-
-			return false;
-		}
-
-		return true;
+		return _assetPublisherCustomizer.isShowEnableAddContentButton(_request);
 	}
 
 	public Boolean isShowEnablePermissions() {
@@ -1125,13 +1038,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isShowEnableRelatedAssets() {
-		String rootPortletId = getRootPortletId();
-
-		if (rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-			return false;
-		}
-
-		return true;
+		return _assetPublisherCustomizer.isShowEnableRelatedAssets(_request);
 	}
 
 	public boolean isShowExtraInfo() {
@@ -1173,15 +1080,7 @@ public class AssetPublisherDisplayContext {
 	}
 
 	public boolean isShowSubtypeFieldsFilter() {
-		String rootPortletId = getRootPortletId();
-
-		if (!AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX ||
-			rootPortletId.equals(AssetPublisherPortletKeys.RELATED_ASSETS)) {
-
-			return false;
-		}
-
-		return true;
+		return _assetPublisherCustomizer.isShowSubtypeFieldsFilter(_request);
 	}
 
 	public boolean isSubtypeFieldsFilterEnabled() {
@@ -1320,6 +1219,7 @@ public class AssetPublisherDisplayContext {
 	private Boolean _anyAssetType;
 	private AssetEntryQuery _assetEntryQuery;
 	private String _assetLinkBehavior;
+	private final AssetPublisherCustomizer _assetPublisherCustomizer;
 	private Map<String, Serializable> _attributes;
 	private long[] _availableClassNameIds;
 	private long[] _classNameIds;
@@ -1331,14 +1231,12 @@ public class AssetPublisherDisplayContext {
 	private String _ddmStructureFieldName;
 	private String _ddmStructureFieldValue;
 	private Boolean _defaultAssetPublisher;
-	private Integer _delta;
 	private String _displayStyle;
 	private Long _displayStyleGroupId;
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
 	private Boolean _enableConversions;
 	private Boolean _enableFlags;
-	private Boolean _enablePermissions;
 	private Boolean _enablePrint;
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;

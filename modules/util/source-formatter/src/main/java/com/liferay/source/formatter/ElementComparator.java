@@ -44,6 +44,10 @@ public class ElementComparator extends NaturalOrderStringComparator {
 		String elementName1 = getElementName(element1);
 		String elementName2 = getElementName(element2);
 
+		if ((elementName1 == null) || (elementName2 == null)) {
+			return 0;
+		}
+
 		if (_importPackage) {
 			return elementName1.compareTo(elementName2);
 		}

@@ -974,10 +974,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			Element portletNameElement = portletResourceElement.element(
 				type + "-name");
 
+			if (portletNameElement == null) {
+				continue;
+			}
+
 			String portletName = portletNameElement.getText();
 
 			Element permissionsElement = portletResourceElement.element(
 				"permissions");
+
+			if (permissionsElement == null) {
+				continue;
+			}
 
 			List<Element> permissionsChildElements =
 				permissionsElement.elements();
@@ -1635,6 +1643,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		protected String getElementName(Element portletResourceElement) {
 			Element portletNameElement = portletResourceElement.element(
 				getNameAttribute());
+
+			if (portletNameElement == null) {
+				return null;
+			}
 
 			return portletNameElement.getText();
 		}

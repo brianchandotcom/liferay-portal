@@ -23,10 +23,10 @@ import javax.portlet.PortletPreferences;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides implementation of import capability
- * {@link AssetPublisherPortletDisplayTemplateImportCapability} for Asset
- * Publisher portlet to be able to provide specific display style and display
- * style group ID based on existence of template handler.
+ * Provides the implementation of the import capability {@link
+ * AssetPublisherPortletDisplayTemplateImportCapability} for the Asset Publisher
+ * portlet to allow the display style and display style group ID to be provided
+ * based on the existence of the template handler.
  *
  * @author Mate Thurzo
  */

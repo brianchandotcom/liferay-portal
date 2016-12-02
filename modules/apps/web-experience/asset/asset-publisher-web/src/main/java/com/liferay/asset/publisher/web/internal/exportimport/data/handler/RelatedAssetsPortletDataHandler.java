@@ -20,10 +20,11 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides implementation of {@link PortletDataHandler} for Related Assets
- * portlet which defines specific behaviour of exporting and importing of
- * Liferay data to LAR files when layouts with Related Assets portlet are
- * exported or imported.
+ * Provides the implementation of <code>PortletDataHandler</code> (in
+ * <code>com.liferay.portal.kernel</code>) for the Related Assets portlet. This
+ * class defines specific behavior when exporting and importing Liferay data to
+ * LAR files when layouts with the Related Assets portlet are exported or
+ * imported.
  *
  * @author Eudaldo Alonso
  */

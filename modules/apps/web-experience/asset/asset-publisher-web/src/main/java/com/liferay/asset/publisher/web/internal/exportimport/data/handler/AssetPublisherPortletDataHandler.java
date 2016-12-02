@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Provides implementation of {@link PortletDataHandler} for Asset Publisher
- * portlet which defines specific behaviour of exporting and importing of
- * Liferay data to LAR files when layouts with Asset Publisher portlet are
- * exported or imported.
+ * Provides the implementation of <code>PortletDataHandler</code> (in
+ * <code>com.liferay.portal.kernel</code>) for the Asset Publisher portlet. This
+ * class defines specific behavior when exporting and importing Liferay data to
+ * LAR files when layouts with the Asset Publisher are exported or imported.
  *
  * @author Julio Camarero
  */

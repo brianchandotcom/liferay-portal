@@ -75,8 +75,8 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Provides utility methods moved from Asset Publisher portlet JSP files to be
- * able to reduce the complexity of the views.
+ * Provides utility methods moved from the Asset Publisher portlet's JSP files
+ * to reduce the complexity of the views.
  *
  * @author Eudaldo Alonso
  */

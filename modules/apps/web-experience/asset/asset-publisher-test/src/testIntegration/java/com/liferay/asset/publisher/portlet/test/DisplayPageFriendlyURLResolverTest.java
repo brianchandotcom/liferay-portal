@@ -55,8 +55,8 @@ import org.junit.runner.RunWith;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
- * Tests resolving of friendly URL for existent and nonexistent web content
- * articles in Asset Publisher.
+ * Tests whether the friendly URL resolves for existent and nonexistent web
+ * content articles in the Asset Publisher.
  *
  * @author Eduardo Garcia
  */

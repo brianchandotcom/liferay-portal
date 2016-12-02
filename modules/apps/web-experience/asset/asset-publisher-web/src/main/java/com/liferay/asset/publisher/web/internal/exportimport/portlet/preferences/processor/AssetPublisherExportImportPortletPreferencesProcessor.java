@@ -88,10 +88,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides implementation of {@link ExportImportPortletPreferencesProcessor}
- * for Asset Publisher portlet. This implementation provides specific export and
- * import capabilities and routines for processing of portlet preferences while
- * exporting or importing Asset Publisher portlet instances.
+ * Provides the implementation of
+ * <code>ExportImportPortletPreferencesProcessor</code> (in the
+ * <code>com.liferay.exportimport.api</code> module) for the Asset Publisher
+ * portlet. This implementation provides specific export and import capabilities
+ * and routines for processing portlet preferences while exporting or importing
+ * Asset Publisher instances.
  *
  * @author Mate Thurzo
  */

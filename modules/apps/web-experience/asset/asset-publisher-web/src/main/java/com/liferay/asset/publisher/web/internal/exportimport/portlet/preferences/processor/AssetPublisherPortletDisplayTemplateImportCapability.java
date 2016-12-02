@@ -25,8 +25,8 @@ import org.osgi.service.component.annotations.Component;
 /**
  * Provides the implementation of the import capability {@link
  * AssetPublisherPortletDisplayTemplateImportCapability} for the Asset Publisher
- * portlet to allow the display style and display style group ID to be provided
- * based on the existence of the template handler.
+ * portlet. This allows the display style and display style group ID to be
+ * provided based on the existence of the template handler.
  *
  * @author Mate Thurzo
  */

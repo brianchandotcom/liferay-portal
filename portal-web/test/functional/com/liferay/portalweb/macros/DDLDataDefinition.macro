@@ -23,7 +23,10 @@
 		</if>
 
 		<execute function="Click" locator1="Button#PLUS" />
-		<execute function="Type#clickAtType" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
+
+		<execute macro="DDLDataDefinition#editName">
+			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute macro="DDLDataDefinition#_showDetails" />
 
@@ -172,6 +175,10 @@
 		<execute macro="DDLDataDefinition#_showDetails" />
 
 		<execute function="Type#clickAtType" locator1="DDMEditStructure#DETAILS_DESCRIPTION_FIELD" value1="${ddlDataDefinitionDescriptionEdit}" />
+	</command>
+
+	<command name="editName">
+		<execute function="Type#clickAtType" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="editPermissionsCP">

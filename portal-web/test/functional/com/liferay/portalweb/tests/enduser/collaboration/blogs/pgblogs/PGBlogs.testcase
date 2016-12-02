@@ -1477,7 +1477,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithAbstractDisplayTemplate" priority="3">
+	<command ignore="true" name="ViewBlogsEntryWithAbstractDisplayTemplate" priority="3">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

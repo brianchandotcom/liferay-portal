@@ -388,7 +388,7 @@ if (portletTitleBasedNavigation) {
 
 		if (blogs) {
 			blogs.setDescription(html);
-			blogs.calculateReadingTime(html);
+			blogs.updateReadingTime(html);
 		}
 	}
 
@@ -412,7 +412,6 @@ if (portletTitleBasedNavigation) {
 </aui:script>
 
 <aui:script use="liferay-blogs">
-
 	$('.info-bar-container').affix({
 		offset: {
 			top: 1

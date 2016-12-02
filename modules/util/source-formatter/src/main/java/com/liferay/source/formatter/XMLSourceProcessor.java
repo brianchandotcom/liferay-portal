@@ -448,6 +448,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatPoshiXML(fileName, newContent);
 		}
 		else if (fileName.contains("/resource-actions/")) {
+			formatResourceActionXML(fileName, newContent, "model");
 			formatResourceActionXML(fileName, newContent, "portlet");
 		}
 		else if (fileName.endsWith("/service.xml")) {

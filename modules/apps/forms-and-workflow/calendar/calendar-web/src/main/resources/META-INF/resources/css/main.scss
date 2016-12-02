@@ -825,32 +825,34 @@
 		.calendar-portlet-column-grid {
 			width: 65%;
 
-			.scheduler-base-content .scheduler-base-hd .scheduler-base-controls {
-				width: 100%;
+			.scheduler-base-content .scheduler-base-hd {
+				.scheduler-base-controls {
+					width: 100%;
 
-				.btn-group {
-					&:nth-child(1) {
-						margin-right: 3px;
-						width: 46%;
+					.btn-group {
+						&:nth-child(1) {
+							margin-right: 3px;
+							width: 46%;
 
-						.calendar-add-event-btn {
-							width: 100%;
-						}
-					}
-
-					&:nth-child(2) {
-						float: right;
-						width: 46%;
-
-						button {
-							&:nth-child(1), &:nth-child(3) {
-								width: 30%;
+							.calendar-add-event-btn {
+								width: 100%;
 							}
+						}
 
-							&:nth-child(2) {
-								padding-left: 2px;
-								padding-right: 2px;
-								width: 40%;
+						&:nth-child(2) {
+							float: right;
+							width: 46%;
+
+							button {
+								&:nth-child(1), &:nth-child(3) {
+									width: 30%;
+								}
+
+								&:nth-child(2) {
+									padding-left: 2px;
+									padding-right: 2px;
+									width: 40%;
+								}
 							}
 						}
 					}

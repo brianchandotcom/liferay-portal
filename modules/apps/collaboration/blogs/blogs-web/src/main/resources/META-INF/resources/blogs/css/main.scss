@@ -399,8 +399,10 @@
 		.info-bar-center {
 			transition: margin-top 0.15s ease-out;
 		}
+	}
 
-		.info-bar-center small:not(:empty) + small:not(:empty):before {
+	.info-bar-center, .status {
+		small:not(:empty) + small:not(:empty):before {
 			content: " - ";
 		}
 	}

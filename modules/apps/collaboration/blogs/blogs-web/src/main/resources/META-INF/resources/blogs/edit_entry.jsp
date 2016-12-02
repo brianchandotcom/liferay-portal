@@ -90,6 +90,7 @@ if (portletTitleBasedNavigation) {
 			<div class="entry-options">
 				<div class="status">
 					<%= saveStatus %>
+					<%= readingTime %>
 				</div>
 			</div>
 		</c:if>

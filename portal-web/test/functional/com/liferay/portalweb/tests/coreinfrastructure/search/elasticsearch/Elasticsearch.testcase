@@ -26,6 +26,41 @@
 		</if>
 	</tear-down>
 
+	<command name="AssertConfigFileValuesPropogateToModule" priority="4">
+		<property name="osgi.module.configuration.file.names" value="com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config" />
+		<property name="osgi.module.configurations" value="operationMode=&quot;EMBEDDED&quot;
+clientTransportIgnoreClusterName=&quot;false&quot;
+indexNamePrefix=&quot;liferay-&quot;
+httpCORSConfigurations=&quot;&quot;
+additionalConfigurations=&quot;&quot;
+httpCORSAllowOrigin=&quot;/https?://localhost(:[0-9]+)?/&quot;
+networkBindHost=&quot;&quot;
+transportTcpPort=&quot;&quot;
+bootstrapMlockAll=&quot;false&quot;
+networkPublishHost=&quot;&quot;
+overrideTypeMappings=&quot;&quot;
+clientTransportSniff=&quot;true&quot;
+additionalIndexConfigurations=&quot;&quot;
+retryOnConflict=&quot;5&quot;
+httpCORSEnabled=&quot;true&quot;
+clientTransportNodesSamplerInterval=&quot;5s&quot;
+additionalTypeMappings=&quot;&quot;
+logExceptionsOnly=&quot;true&quot;
+httpEnabled=&quot;true&quot;
+networkHost=&quot;&quot;
+transportAddresses=&quot;localhost:9300&quot;
+clusterName=&quot;LiferayElasticsearchCluster1&quot;
+discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://localhost:9200" />
+		</execute>
+
+		<execute macro="Elasticsearch#viewClusterStatus">
+			<var name="clusterStatus" value="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster1&quot;" />
+		</execute>
+	</command>
+
 	<command name="AssertIndexOnStartupViaRemote" priority="5">
 		<description message="This test asserts that index on startup works consistently on remote Elasticsearch." />
 

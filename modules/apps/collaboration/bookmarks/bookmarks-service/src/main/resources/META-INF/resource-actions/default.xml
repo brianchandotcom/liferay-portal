@@ -35,6 +35,34 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.bookmarks.model.BookmarksEntry</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
+			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>3</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>SUBSCRIBE</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>SUBSCRIBE</action-key>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>SUBSCRIBE</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.bookmarks.model.BookmarksFolder</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
@@ -63,34 +91,6 @@
 			<guest-unsupported>
 				<action-key>ADD_ENTRY</action-key>
 				<action-key>ADD_SUBFOLDER</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.bookmarks.model.BookmarksEntry</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksPortlet</portlet-name>
-			<portlet-name>com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet</portlet-name>
-		</portlet-ref>
-		<weight>3</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>SUBSCRIBE</action-key>
-				<action-key>UPDATE</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>SUBSCRIBE</action-key>
-				<action-key>VIEW</action-key>
-			</site-member-defaults>
-			<guest-defaults>
-				<action-key>VIEW</action-key>
-			</guest-defaults>
-			<guest-unsupported>
-				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>

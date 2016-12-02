@@ -134,29 +134,6 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.portal.kernel.model.LayoutSetBranch</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
-		</portlet-ref>
-		<weight>4</weight>
-		<permissions>
-			<supports>
-				<action-key>DELETE</action-key>
-				<action-key>MERGE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>DELETE</action-key>
-				<action-key>MERGE</action-key>
-				<action-key>PERMISSIONS</action-key>
-				<action-key>UPDATE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
 	<model-resource portal="true">
 		<model-name>com.liferay.portal.kernel.model.LayoutPrototype</model-name>
 		<portlet-ref>
@@ -176,6 +153,29 @@
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portal.kernel.model.LayoutSetBranch</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
+		</portlet-ref>
+		<weight>4</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>MERGE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>MERGE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>

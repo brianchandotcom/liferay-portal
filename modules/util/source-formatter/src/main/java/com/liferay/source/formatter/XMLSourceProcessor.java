@@ -990,7 +990,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		checkOrder(
 			fileName, rootElement, "portlet-resource", null,
-			new ResourceActionPortletResourceElementComparator());
+			new ResourceActionPortletResourceElementComparator("portlet-name"));
 	}
 
 	protected void formatServiceXML(
@@ -1623,10 +1623,16 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private static class ResourceActionPortletResourceElementComparator
 		extends ElementComparator {
 
+		public ResourceActionPortletResourceElementComparator(
+			String nameAttribute) {
+
+			super(nameAttribute);
+		}
+
 		@Override
 		protected String getElementName(Element portletResourceElement) {
 			Element portletNameElement = portletResourceElement.element(
-				"portlet-name");
+				getNameAttribute());
 
 			return portletNameElement.getText();
 		}

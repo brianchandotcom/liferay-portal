@@ -192,28 +192,47 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 					}
 				}
 
-				List<Role> roles = ListUtil.copy(ResourceActionsUtil.getRoles(company.getCompanyId(), group, modelResource, roleTypes));
+				if (roleTypes == null) {
+					roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
 
-				Role administratorRole = RoleLocalServiceUtil.getRole(company.getCompanyId(), RoleConstants.ADMINISTRATOR);
+					if (ResourceActionsUtil.isPortalModelResource(modelResource)) {
+						if (modelResource.equals(Organization.class.getName()) ||
+							modelResource.equals(User.class.getName())) {
 
-				roles.remove(administratorRole);
+							roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
+						}
+						else {
+							roleTypes = RoleConstants.TYPES_REGULAR;
+						}
+					}
+					else {
+						if (group != null) {
+							Group parentGroup = null;
 
-				if (filterGroupRoles) {
-					Role organizationAdministratorRole = RoleLocalServiceUtil.getRole(company.getCompanyId(), RoleConstants.ORGANIZATION_ADMINISTRATOR);
+							if (group.isLayout()) {
+								parentGroup = GroupLocalServiceUtil.fetchGroup(
+									group.getParentGroupId());
+							}
 
-					roles.remove(organizationAdministratorRole);
-
-					Role organizationOwnerRole = RoleLocalServiceUtil.getRole(company.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
-
-					roles.remove(organizationOwnerRole);
-
-					Role siteAdministratorRole = RoleLocalServiceUtil.getRole(company.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
-
-					roles.remove(siteAdministratorRole);
-
-					Role siteOwnerRole = RoleLocalServiceUtil.getRole(company.getCompanyId(), RoleConstants.SITE_OWNER);
-
-					roles.remove(siteOwnerRole);
+							if (parentGroup == null) {
+								if (group.isOrganization()) {
+									roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+								}
+								else if (group.isUser()) {
+									roleTypes = RoleConstants.TYPES_REGULAR;
+								}
+							}
+							else {
+								if (parentGroup.isOrganization()) {
+									roleTypes =
+										RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+								}
+								else if (parentGroup.isUser()) {
+									roleTypes = RoleConstants.TYPES_REGULAR;
+								}
+							}
+						}
+					}
 				}
 
 				long modelResourceRoleId = 0;
@@ -222,57 +241,68 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 					modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
 				}
 
-				roles.addAll(RoleLocalServiceUtil.getTeamRoles(groupId, new long[] {modelResourceRoleId}));
+				boolean filterGuestRole = false;
 
-				Iterator<Role> itr = roles.iterator();
+				if (modelResource.equals(Layout.class.getName())) {
+					Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
 
-				while (itr.hasNext()) {
-					Role role = itr.next();
+					if (resourceLayout.isPrivateLayout()) {
+						Group resourceLayoutGroup = resourceLayout.getGroup();
 
-					String name = role.getName();
-
-					if (!name.equals(RoleConstants.GUEST) && !RolePermissionUtil.contains(permissionChecker, groupId, role.getRoleId(), ActionKeys.VIEW) && (!role.isTeam() || !TeamPermissionUtil.contains(permissionChecker, role.getClassPK(), ActionKeys.PERMISSIONS))) {
-						itr.remove();
+						if (!resourceLayoutGroup.isLayoutSetPrototype()) {
+							filterGuestRole = true;
+						}
 					}
+				}
+				else if (Validator.isNotNull(portletResource)) {
+					int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
-					if (name.equals(RoleConstants.GUEST) && modelResource.equals(Layout.class.getName())) {
-						Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
+					if (pos > 0) {
+						long resourcePlid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+
+						Layout resourceLayout = LayoutLocalServiceUtil.getLayout(resourcePlid);
 
 						if (resourceLayout.isPrivateLayout()) {
 							Group resourceLayoutGroup = resourceLayout.getGroup();
 
-							if (!resourceLayoutGroup.isLayoutSetPrototype()) {
-								itr.remove();
+							if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype()) {
+								filterGuestRole = true;
 							}
 						}
 					}
+				}
 
-					if (name.equals(RoleConstants.GUEST) && Validator.isNotNull(portletResource)) {
-						int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
+				List<String> excludedRoleNames = new ArrayList<>();
 
-						if (pos > 0) {
-							long resourcePlid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+					excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
 
-							Layout resourceLayout = LayoutLocalServiceUtil.getLayout(resourcePlid);
+				if (filterGroupRoles) {
+					excludedRoleNames.add(RoleConstants.ORGANIZATION_ADMINISTRATOR);
 
-							if (resourceLayout.isPrivateLayout()) {
-								Group resourceLayoutGroup = resourceLayout.getGroup();
+					excludedRoleNames.add(RoleConstants.ORGANIZATION_OWNER);
 
-								if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype()) {
-									itr.remove();
-								}
-							}
-						}
-					}
+					excludedRoleNames.add(RoleConstants.SITE_ADMINISTRATOR);
+
+					excludedRoleNames.add(RoleConstants.SITE_OWNER);
+				}
+
+				if (filterGuestRole) {
+					excludedRoleNames.add(RoleConstants.GUEST);
+				}
+
+				long teamGroupId = group.getGroupId();
+
+				if (group.isLayout()) {
+					teamGroupId = group.getParentGroupId();
 				}
 				%>
 
 				<liferay-ui:search-container
 					iteratorURL="<%= currentURLObj %>"
-					total="<%= roles.size() %>"
+					total="<%= RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId) %>"
 				>
 					<liferay-ui:search-container-results
-						results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+						results="<%= RoleLocalServiceUtil.getGroupRolesAndTeamRoles(company.getCompanyId(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId, searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 					/>
 
 					<liferay-ui:search-container-row

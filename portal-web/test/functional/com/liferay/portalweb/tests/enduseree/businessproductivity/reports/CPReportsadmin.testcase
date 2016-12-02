@@ -659,7 +659,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewEmailRecipientDelivery" priority="4">
+	<command ignore="true" name="ViewEmailRecipientDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">

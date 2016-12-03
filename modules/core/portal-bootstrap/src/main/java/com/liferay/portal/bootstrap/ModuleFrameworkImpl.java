@@ -58,7 +58,6 @@ import java.io.InputStream;
 
 import java.net.URL;
 
-import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1174,7 +1173,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		refreshBundles.clear();
 
-		Set<String> overrideStaticFileNames = new HashSet<>();
+		Set<String> overrideFileNames = new HashSet<>();
 
 		for (Path jarPath : jarPaths) {
 			try (InputStream inputStream = Files.newInputStream(jarPath)) {
@@ -1186,16 +1185,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				if (bundle != null) {
 					bundles.add(bundle);
 
-					overrideStaticFileNames.add(
+					overrideFileNames.add(
 						path.substring(path.lastIndexOf(StringPool.SLASH) + 1));
 				}
 			}
 		}
 
-		String deployDir = bundleContext.getProperty("lpkg.deployer.dir");
-
 		File file = new File(
-			deployDir + StringPool.SLASH +
+			bundleContext.getProperty("lpkg.deployer.dir") + StringPool.SLASH +
 				StaticLPKGResolver.getStaticLPKGFileName());
 
 		if (file.exists()) {
@@ -1244,7 +1241,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 							String fileName =
 								matcher.group(1) + matcher.group(4);
 
-							if (overrideStaticFileNames.contains(fileName)) {
+							if (overrideFileNames.contains(fileName)) {
 								if (_log.isInfoEnabled()) {
 									StringBundler sb = new StringBundler(7);
 
@@ -1272,36 +1269,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 						}
 					}
 				}
-			}
-		}
-
-		Set<String> overrideLPKGFileNames = new HashSet<>();
-
-		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
-				Paths.get(deployDir, "override"))) {
-
-			for (Path path : directoryStream) {
-				String fileName = String.valueOf(path.getFileName());
-
-				String pathName = StringUtil.toLowerCase(fileName);
-
-				if (pathName.endsWith("jar")) {
-					overrideLPKGFileNames.add(fileName);
-				}
-			}
-		}
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			String location = bundle.getLocation();
-
-			Matcher matcher = _pattern.matcher(location);
-
-			if (matcher.matches()) {
-				location = matcher.group(1) + matcher.group(4);
-			}
-
-			if (overrideLPKGFileNames.contains(location)) {
-				bundle.uninstall();
 			}
 		}
 
@@ -1510,7 +1477,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		ModuleFrameworkImpl.class);
 
 	private static final Pattern _pattern = Pattern.compile(
-		"/?(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..+)?(\\.jar)");
+		"(.*?)(-\\d+\\.\\d+\\.\\d+)(\\..+)?(\\.jar)");
 
 	private Framework _framework;
 	private final Map<ApplicationContext, List<ServiceRegistration<?>>>

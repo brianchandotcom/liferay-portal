@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lpkg.override.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -33,7 +32,6 @@ import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -43,26 +41,12 @@ import org.osgi.framework.Version;
 /**
  * @author Matthew Tambara
  */
-@RunWith(Arquillian.class)
-public class LPKGOverrideVerifyTest {
+public class LPKGOverrideVerifyTestCase {
 
 	@Test
-	public void testCleanStartUp() throws Exception {
-		if (Boolean.getBoolean("lpkg.clean.startup")) {
-			_testOverriddenLPKGs();
-		}
-	}
-
-	@Test
-	public void testSecondStartup() throws Exception {
-		if (!Boolean.getBoolean("lpkg.clean.startup")) {
-			_testOverriddenLPKGs();
-		}
-	}
-
-	private void _testOverriddenLPKGs() throws Exception {
+	public void testOverriddenLPKGs() throws Exception {
 		Bundle testBundle = FrameworkUtil.getBundle(
-			LPKGOverrideVerifyTest.class);
+			LPKGOverrideVerifyTestCase.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 

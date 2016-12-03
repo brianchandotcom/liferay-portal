@@ -874,7 +874,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGOverrideVerifyTest" />
+										<arg value="*.LPKGOverrideVerifySecondStartupTest" />
 									</gradle-execute>
 								</try>
 
@@ -896,8 +896,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGOverrideVerifyTest" />
-										<arg value="-Dlpkg.clean.startup=true" />
+										<arg value="*.LPKGOverrideVerifyCleanStartupTest" />
 									</gradle-execute>
 								</try>
 								<finally>
@@ -1078,7 +1077,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGDeployerTest" />
+										<arg value="*.LPKGDeployerCleanStartupTest" />
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
@@ -1126,8 +1125,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGDeployerTest" />
-										<arg value="-Dbefore.lpkg.upgrade=true" />
+										<arg value="*.LPKGDeployerCleanStartupTest" />
 									</gradle-execute>
 
 									<antcall inheritall="false" target="run-selenium-test">
@@ -1160,7 +1158,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGDeployerTest" />
+										<arg value="*.LPKGDeployerUpgradeTest" />
 									</gradle-execute>
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">
@@ -1200,7 +1198,7 @@ app.server.type=@{app.server.type}]]></echo>
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="testIntegration">
 										<arg value="testIntegration" />
 										<arg value="--tests" />
-										<arg value="*.LPKGDeployerTest" />
+										<arg value="*.LPKGDeployerDowngradeTest" />
 									</gradle-execute>
 
 									<gradle-execute dir="modules/apps/static/portal-lpkg-deployer/portal-lpkg-deployer-test" task="test">

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lpkg.deployer.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.lpkg.StaticLPKGResolver;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,7 +44,6 @@ import java.util.zip.ZipFile;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -55,25 +53,11 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Matthew Tambara
  */
-@RunWith(Arquillian.class)
-public class LPKGDeployerTest {
+public class LPKGDeployerTestCase {
 
 	@Test
-	public void testPostUpgradeDeployedLPKGS() throws Exception {
-		if (!Boolean.getBoolean("before.lpkg.upgrade")) {
-			testDeployedLPKGs();
-		}
-	}
-
-	@Test
-	public void testPreUpgradeDeployedLPKGS() throws Exception {
-		if (Boolean.getBoolean("before.lpkg.upgrade")) {
-			testDeployedLPKGs();
-		}
-	}
-
-	protected void testDeployedLPKGs() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(LPKGDeployerTest.class);
+	public void testDeployedLPKGs() throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(LPKGDeployerTestCase.class);
 
 		BundleContext bundleContext = testBundle.getBundleContext();
 

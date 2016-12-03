@@ -37,21 +37,21 @@ public class PQLQueryTest extends TestCase {
 
 		Set<String> queries = new TreeSet<>();
 
-		queries.add("component.names ~ 'Message Boards'");
 		queries.add("component.names !~ 'Journal'");
+		queries.add("component.names ~ 'Message Boards'");
 
-		queries.add("portal.smoke == true");
 		queries.add("portal.smoke != false");
+		queries.add("portal.smoke == true");
 
-		queries.add("priority > 4");
-		queries.add("priority >= 5");
 		queries.add("priority < 6");
 		queries.add("priority <= 5");
+		queries.add("priority > 4");
+		queries.add("priority >= 5");
 
-		queries.add("priority > 4.1");
-		queries.add("priority >= 4.9");
 		queries.add("priority < 5.1");
 		queries.add("priority <= 5.1");
+		queries.add("priority > 4.1");
+		queries.add("priority >= 4.9");
 
 		for (String query : queries) {
 			_validateGetPQLResult(query, Boolean.TRUE, properties);
@@ -110,10 +110,10 @@ public class PQLQueryTest extends TestCase {
 		queries.add("portal.smoke == true AND portal.smoke != false");
 		queries.add("portal.smoke == true OR portal.smoke == false");
 
-		queries.add("true AND true");
-		queries.add("true OR true");
 		queries.add("false OR true");
+		queries.add("true AND true");
 		queries.add("true OR false");
+		queries.add("true OR true");
 
 		for (String query : queries) {
 			_validateGetPQLResult(query, Boolean.TRUE, properties);
@@ -121,13 +121,13 @@ public class PQLQueryTest extends TestCase {
 
 		queries = new TreeSet<>();
 
-		queries.add("portal.smoke == true AND portal.smoke == false");
 		queries.add("portal.smoke != true OR portal.smoke == false");
+		queries.add("portal.smoke == true AND portal.smoke == false");
 
-		queries.add("false AND true");
-		queries.add("true AND false");
 		queries.add("false AND false");
+		queries.add("false AND true");
 		queries.add("false OR false");
+		queries.add("true AND false");
 
 		for (String query : queries) {
 			_validateGetPQLResult(query, Boolean.FALSE, properties);
@@ -195,13 +195,13 @@ public class PQLQueryTest extends TestCase {
 
 		Set<String> queries = new TreeSet<>();
 
-		queries.add("(portal.smoke == true OR portal.smoke == false) AND true");
 		queries.add("(portal.smoke == true AND portal.smoke == false) OR true");
+		queries.add("(portal.smoke == true OR portal.smoke == false) AND true");
 
-		queries.add("(true OR false) AND true");
 		queries.add("(true AND false) OR true");
 		queries.add("(true AND false) OR true");
 		queries.add("(true AND true) OR false");
+		queries.add("(true OR false) AND true");
 
 		for (String query : queries) {
 			_validateGetPQLResult(query, Boolean.TRUE, properties);
@@ -209,13 +209,13 @@ public class PQLQueryTest extends TestCase {
 
 		queries = new TreeSet<>();
 
-		queries.add("(portal.smoke != true OR portal.smoke == false) AND true");
 		queries.add("(portal.smoke != true AND portal.smoke == true) OR false");
+		queries.add("(portal.smoke != true OR portal.smoke == false) AND true");
 
+		queries.add("(false AND true) OR false");
+		queries.add("(false OR false) AND false");
 		queries.add("(false OR false) AND true");
 		queries.add("(false OR true) AND false");
-		queries.add("(false OR false) AND false");
-		queries.add("(false AND true) OR false");
 
 		for (String query : queries) {
 			_validateGetPQLResult(query, Boolean.FALSE, properties);

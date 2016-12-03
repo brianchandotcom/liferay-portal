@@ -178,9 +178,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		Set<String> expectedFieldNames = new HashSet<>();
 
-		expectedFieldNames.add("field1");
 		expectedFieldNames.add("child1Field1");
 		expectedFieldNames.add("child2Field1");
+		expectedFieldNames.add("field1");
 		expectedFieldNames.add("field2");
 		expectedFieldNames.add("field3");
 
@@ -210,9 +210,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 
 		Set<String> expectedFieldNames = new HashSet<>();
 
-		expectedFieldNames.add("field1");
 		expectedFieldNames.add("child1Field1");
 		expectedFieldNames.add("child2Field1");
+		expectedFieldNames.add("field1");
 		expectedFieldNames.add("field2");
 		expectedFieldNames.add("field3");
 		expectedFieldNames.add("field4");

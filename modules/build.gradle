@@ -89,13 +89,6 @@ gradle.beforeProject {
 				xmltask rootProject.files("../lib/development/xmltask.jar")
 			}
 
-			File aspectjWeaverJar = rootProject.file("../lib/portal/aspectj-weaver.jar")
-
-			test {
-				jvmArgs "-javaagent:${aspectjWeaverJar}"
-				systemProperty "org.aspectj.weaver.loadtime.configuration", "com/liferay/aspectj/modules/aop.xml"
-			}
-
 			testIntegration {
 				doLast {
 					String databaseType = System.properties["database.type"]
@@ -120,9 +113,6 @@ gradle.beforeProject {
 						delete file
 					}
 				}
-
-				jvmArgs "-javaagent:${aspectjWeaverJar}"
-				systemProperty "org.aspectj.weaver.loadtime.configuration", "com/liferay/aspectj/modules/aop.xml"
 			}
 
 			if (bndPrintJarFiles != null) {

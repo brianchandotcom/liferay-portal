@@ -1406,6 +1406,18 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-bundle-wildfly-mysql56-jdk8" />
 	</target>
 
+	<target name="functional-bundle-smoke-jboss-mysql56-jdk8">
+		<antcall target="functional-bundle-jboss-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-bundle-smoke-tomcat-mysql56-jdk8">
+		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
+	</target>
+
+	<target name="functional-bundle-smoke-wildfly-mysql56-jdk8">
+		<antcall target="functional-bundle-wildfly-mysql56-jdk8" />
+	</target>
+
 	<target name="functional-bundle-tomcat-mysql56-jdk7">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 

@@ -696,6 +696,12 @@ to version 1.0.55.
 - [LPS-69492]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 1.1.0.
 
+## 3.0.46 - 2016-12-02
+
+### Added
+- [LPS-69518]: Automatically delete the `liferay/logs` dir generated during the
+execution of the `autoUpdateXml` task.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -767,4 +773,5 @@ to version 1.1.0.
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
 [LPS-69488]: https://issues.liferay.com/browse/LPS-69488
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492
+[LPS-69518]: https://issues.liferay.com/browse/LPS-69518
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

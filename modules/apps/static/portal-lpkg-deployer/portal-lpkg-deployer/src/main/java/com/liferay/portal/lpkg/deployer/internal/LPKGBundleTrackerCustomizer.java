@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
@@ -60,8 +61,11 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkEvent;
+import org.osgi.framework.FrameworkListener;
 import org.osgi.framework.Version;
 import org.osgi.framework.startlevel.BundleStartLevel;
+import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.url.URLConstants;
 import org.osgi.util.tracker.BundleTrackerCustomizer;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -155,9 +159,34 @@ public class LPKGBundleTrackerCustomizer
 
 				bundles.add(newBundle);
 			}
+
+			Bundle systemBundle = _bundleContext.getBundle(0);
+
+			FrameworkWiring frameworkWiring = systemBundle.adapt(
+				FrameworkWiring.class);
+
+			final DefaultNoticeableFuture<FrameworkEvent>
+				defaultNoticeableFuture = new DefaultNoticeableFuture<>();
+
+			frameworkWiring.refreshBundles(
+				null,
+				new FrameworkListener() {
+
+					@Override
+					public void frameworkEvent(FrameworkEvent frameworkEvent) {
+						defaultNoticeableFuture.set(frameworkEvent);
+					}
+
+				});
+
+			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				throw frameworkEvent.getThrowable();
+			}
 		}
-		catch (Exception e) {
-			_log.error("Rollback bundle installation for " + bundles, e);
+		catch (Throwable t) {
+			_log.error("Rollback bundle installation for " + bundles, t);
 
 			for (Bundle newBundle : bundles) {
 				try {

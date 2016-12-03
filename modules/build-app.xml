@@ -274,6 +274,7 @@
 		<java
 			classname="com.liferay.portal.tools.target.platform.indexer.client.TargetPlatformIndexerClient"
 			classpathref="target.platform.indexer.classpath"
+			failonerror="true"
 			fork="true"
 			newenvironment="true"
 		>

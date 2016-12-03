@@ -8,8 +8,3 @@ dependencies {
 test {
 	systemProperty "liferay.home", System.getProperty("liferay.home")
 }
-
-testIntegration {
-	systemProperty "before.lpkg.upgrade", System.getProperty("before.lpkg.upgrade")
-	systemProperty "lpkg.clean.startup", System.getProperty("lpkg.clean.startup")
-}

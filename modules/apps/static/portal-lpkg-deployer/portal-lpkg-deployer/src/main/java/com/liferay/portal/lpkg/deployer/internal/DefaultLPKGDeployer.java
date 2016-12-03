@@ -445,13 +445,7 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 
 				@Override
 				public void frameworkEvent(FrameworkEvent frameworkEvent) {
-					if (frameworkEvent.getType() == FrameworkEvent.ERROR) {
-						defaultNoticeableFuture.setException(
-							frameworkEvent.getThrowable());
-					}
-					else {
-						defaultNoticeableFuture.set(frameworkEvent);
-					}
+					defaultNoticeableFuture.set(frameworkEvent);
 				}
 
 			});
@@ -468,7 +462,8 @@ public class DefaultLPKGDeployer implements LPKGDeployer {
 		else {
 			throw new Exception(
 				"Unable to refresh references to the new bundle " + bundle +
-					" because of framework event " + frameworkEvent);
+					" because of framework event " + frameworkEvent,
+				frameworkEvent.getThrowable());
 		}
 	}
 

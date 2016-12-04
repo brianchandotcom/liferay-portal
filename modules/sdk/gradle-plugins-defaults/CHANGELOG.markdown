@@ -714,7 +714,7 @@ moved to [Liferay Gradle Plugins].
 ### Changed
 - [LPS-69492]: Update the [Liferay Gradle Plugins] dependency to version 3.0.45.
 
-## 2.0.10 - 2016-12-02
+## 2.1.0 - 2016-12-03
 
 ### Added
 - [LPS-68289]: Add module agent support for aspect in the `test` and

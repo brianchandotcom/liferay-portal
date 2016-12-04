@@ -696,7 +696,7 @@ to version 1.0.55.
 - [LPS-69492]: Update the [Liferay Gradle Plugins Test Integration] dependency
 to version 1.1.0.
 
-## 3.0.46 - 2016-12-02
+## 3.0.46 - 2016-12-03
 
 ### Added
 - [LPS-69518]: Automatically delete the `liferay/logs` dir generated during the

@@ -28,10 +28,6 @@ public class BlogsUtil {
 		String[] words = strippedContent.split(
 			"[" + StringPool.SPACE + _NON_BREAKING_SPACE + "]+");
 
-		if (words.length < 250) {
-			return 1;
-		}
-
 		return Math.round(words.length / 250F);
 	}
 

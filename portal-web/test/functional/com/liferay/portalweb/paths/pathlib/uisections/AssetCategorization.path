@@ -90,12 +90,12 @@
 </tr>
 <tr>
 	<td>CATEGORIES_CATEGORY_CHECKBOX</td>
-	<td>//li[contains(@id,'category') and contains(.,'${key_categoryName}')]//span[contains(@class,'tree-node-checkbox')]</td>
+	<td>//div[contains(@class,'tree-node-content') and span[contains(.,'${key_categoryName}')]]/span[contains(@class,'tree-node-checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CATEGORIES_CATEGORY_CHECKBOX_CHECKED</td>
-	<td>//li[contains(@id,'category') and contains(.,'${key_categoryName}')]/div[contains(@class,'checked')]//span[contains(@class,'tree-node-checkbox')]</td>
+	<td>//div[contains(@class,'tree-node-content') and span[contains(.,'${key_categoryName}')]]/span[contains(@class,'tree-node-checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

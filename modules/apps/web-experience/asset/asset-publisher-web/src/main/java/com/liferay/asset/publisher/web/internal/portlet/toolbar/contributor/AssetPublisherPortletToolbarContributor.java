@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.internal.portlet.toolbar.contributor;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -107,7 +108,7 @@ public class AssetPublisherPortletToolbarContributor
 
 		AssetPublisherCustomizer assetPublisherCustomizer =
 			(AssetPublisherCustomizer)portletRequest.getAttribute(
-				"assetPublisherCustomizer");
+				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(

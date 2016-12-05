@@ -21,6 +21,7 @@ import com.liferay.asset.kernel.model.AssetQueryRule;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfigurationValues;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
@@ -92,6 +93,7 @@ public class AssetPublisherConfigurationAction
 		return "/configuration.jsp";
 	}
 
+	@Override
 	public void include(
 		PortletConfig portletConfig, HttpServletRequest request,
 		HttpServletResponse response)
@@ -108,7 +110,8 @@ public class AssetPublisherConfigurationAction
 				rootPortletId);
 
 		request.setAttribute(
-			"assetPublisherCustomizer", assetPublisherCustomizer);
+			AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
+			assetPublisherCustomizer);
 
 		super.include(portletConfig, request, response);
 	}

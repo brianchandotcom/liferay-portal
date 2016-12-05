@@ -14,6 +14,7 @@
 
 package com.liferay.site.util;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -137,7 +138,11 @@ public class GroupSearchProvider {
 		if (isFilterManageableGroups(portletRequest)) {
 			User user = themeDisplay.getUser();
 
-			groups = user.getSiteGroups(true);
+			groups = user.getMySiteGroups(
+				new String[] {
+					Group.class.getName(), Organization.class.getName()
+				},
+				QueryUtil.ALL_POS);
 		}
 
 		long groupId = ParamUtil.getLong(

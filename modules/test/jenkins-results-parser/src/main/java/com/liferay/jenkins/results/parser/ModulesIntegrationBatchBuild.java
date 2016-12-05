@@ -27,16 +27,12 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 	public ModulesIntegrationBatchBuild(String url) {
 		super(url);
-
-		loadBuildProperties();
 	}
 
 	public ModulesIntegrationBatchBuild(
 		String url, TopLevelBuild topLevelBuild) {
 
 		super(url, topLevelBuild);
-
-		loadBuildProperties();
 	}
 
 	@Override
@@ -54,13 +50,15 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 			return;
 		}
 
+		if (verifiedAxisBuilds == null) {
+			verifiedAxisBuilds = new ArrayList<>();
+		}
+
 		Build reinvokeErrorAxisBuild = null;
 		String reinvokeErrorMarker = null;
 
 		for (Build axisBuild : getDownstreamBuilds("completed")) {
-			if ((verifiedAxisBuilds != null) &&
-				verifiedAxisBuilds.contains(axisBuild)) {
-
+			if (verifiedAxisBuilds.contains(axisBuild)) {
 				continue;
 			}
 
@@ -141,11 +139,19 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	}
 
 	protected String getReinvokeErrorMarker(int index) {
+		if (buildProperties == null) {
+			loadBuildProperties();
+		}
+
 		return buildProperties.getProperty(
 			getReinvokedErrorMarkerPropertyName(index));
 	}
 
 	protected boolean hasReinvokeErrorMarker(int index) {
+		if (buildProperties == null) {
+			loadBuildProperties();
+		}
+
 		return buildProperties.containsKey(
 			getReinvokedErrorMarkerPropertyName(index));
 	}
@@ -160,7 +166,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	}
 
 	protected Properties buildProperties;
-	protected List<Build> verifiedAxisBuilds = new ArrayList<>();
+	protected List<Build> verifiedAxisBuilds;
 
 	private static final String _REINVOKE_ERROR_MARKER_TEMPLATE =
 		"reinvoke.error.marker[modules-integration-?]";

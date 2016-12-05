@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -184,28 +182,16 @@ public class I18nFilter extends BasePortalFilter {
 
 				Group group = layoutSet.getGroup();
 
-				if (group.isStagingGroup()) {
-					group = group.getLiveGroup();
-				}
+				if (!LanguageUtil.isInheritLocales(group.getGroupId())) {
+					UnicodeProperties typeSettingsProperties =
+						group.getTypeSettingsProperties();
 
-				boolean inheritLocales = GetterUtil.getBoolean(
-					group.getTypeSettingsProperty(
-						GroupConstants.TYPE_SETTINGS_KEY_INHERIT_LOCALES));
+					String[] languageIds = StringUtil.split(
+						typeSettingsProperties.getProperty(PropsKeys.LOCALES));
 
-				if (!group.isSite() || group.isCompany()) {
-					inheritLocales = true;
-				}
-
-				UnicodeProperties typeSettingsProperties =
-					group.getTypeSettingsProperties();
-
-				String[] languageIds = StringUtil.split(
-					typeSettingsProperties.getProperty(PropsKeys.LOCALES));
-
-				if (!inheritLocales &&
-					!ArrayUtil.contains(languageIds, i18nLanguageId)) {
-
+					if (!ArrayUtil.contains(languageIds, i18nLanguageId)) {
 						return null;
+					}
 				}
 
 				if (groupFriendlyURL.equals(group.getFriendlyURL())) {

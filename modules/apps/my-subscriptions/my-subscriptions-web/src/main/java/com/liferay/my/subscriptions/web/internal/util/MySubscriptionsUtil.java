@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.message.boards.kernel.model.MBCategory;
@@ -199,7 +200,9 @@ public class MySubscriptionsUtil {
 
 			return wikiNode.getName();
 		}
-		else if (className.equals(Folder.class.getName())) {
+		else if (className.equals(Folder.class.getName()) ||
+				 className.equals(DLFolderConstants.getClassName())) {
+
 			if (group != null) {
 				return LanguageUtil.get(locale, "home");
 			}

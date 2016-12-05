@@ -266,7 +266,11 @@
 	}
 
 	.info-bar-container.affix + .entry-body {
-		margin-top: 45px;
+		margin-top: 47px;
+
+		@include sm() {
+			margin-top: 59px;
+		}
 	}
 
 	.nameplate-content {

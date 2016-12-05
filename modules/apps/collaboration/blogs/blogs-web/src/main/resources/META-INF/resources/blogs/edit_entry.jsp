@@ -412,20 +412,11 @@ if (portletTitleBasedNavigation) {
 </aui:script>
 
 <aui:script use="liferay-blogs">
-	$('.info-bar-container').affix({
-		offset: {
-			top: 1
-		}
-	}).on('affixed.bs.affix', function() {
-		$(this).parent().css('margin-top', $(this).height());
-	}).on('affix-top.bs.affix', function() {
-		$(this).parent().css('margin-top', 0);
-	});
-
 	var blogs = Liferay.component(
 		'<portlet:namespace />Blogs',
 		new Liferay.Blogs(
 			{
+				calculateReadingTimeURL: '<%= calculateReadingTimeURL %>',
 				constants: {
 					'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
 					'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
@@ -437,7 +428,6 @@ if (portletTitleBasedNavigation) {
 				},
 				descriptionLength: '<%= pageAbstractLength %>',
 				editEntryURL: '<%= editEntryURL %>',
-				calculateReadingTimeURL: '<%= calculateReadingTimeURL %>',
 
 				<c:if test="<%= entry != null %>">
 					entry: {

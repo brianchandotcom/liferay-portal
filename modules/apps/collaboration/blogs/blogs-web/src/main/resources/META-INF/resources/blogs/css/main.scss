@@ -259,6 +259,12 @@
 		}
 	}
 
+	.info-bar-center, .status {
+		small:not(:empty) + small:not(:empty):before {
+			content: " - ";
+		}
+	}
+
 	.nameplate-content {
 		padding-left: 0;
 		vertical-align: middle;
@@ -382,28 +388,5 @@
 
 	.separator {
 		border-color: transparent;
-	}
-
-	.info-bar-container {
-		background-color: #F5F7F8;
-
-		&.affix {
-			min-height: 35px;
-			transition: min-height 0.15s ease-out;
-
-			.info-bar-center {
-				margin-top: 5px;
-			}
-		}
-
-		.info-bar-center {
-			transition: margin-top 0.15s ease-out;
-		}
-	}
-
-	.info-bar-center, .status {
-		small:not(:empty) + small:not(:empty):before {
-			content: " - ";
-		}
 	}
 }

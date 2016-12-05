@@ -31,6 +31,29 @@ public class AxisBuild extends BaseBuild {
 	public void findDownstreamBuilds() {
 	}
 
+	@Override
+	public String getArchivePath() {
+		if (archiveName == null) {
+			System.out.println("archiveName is NULL: " + getBuildURL());
+		}
+
+		StringBuilder sb = new StringBuilder(archiveName);
+
+		if (!archiveName.endsWith("/")) {
+			sb.append("/");
+		}
+
+		sb.append(getMaster());
+		sb.append("/");
+		sb.append(getJobName());
+		sb.append("/");
+		sb.append(getAxisVariable());
+		sb.append("/");
+		sb.append(getBuildNumber());
+
+		return sb.toString();
+	}
+
 	public String getAxisVariable() {
 		return axisVariable;
 	}
@@ -42,6 +65,10 @@ public class AxisBuild extends BaseBuild {
 
 		if ((jobURL == null) || (buildNumber == -1)) {
 			return null;
+		}
+
+		if (fromArchive) {
+			return jobURL + "/" + axisVariable + "/" + buildNumber + "/";
 		}
 
 		try {
@@ -62,6 +89,33 @@ public class AxisBuild extends BaseBuild {
 		catch (URISyntaxException urise) {
 			throw new RuntimeException("Could not encode " + buildURL, urise);
 		}
+	}
+
+	@Override
+	public String getBuildURLRegex() {
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("http[s]*:\\/\\/");
+		sb.append(JenkinsResultsParserUtil.getRegexLiteral(getMaster()));
+		sb.append("[^\\/]*");
+		sb.append("[\\/]+job[\\/]+");
+
+		String regexLiteralJobName = JenkinsResultsParserUtil.getRegexLiteral(
+			getJobName());
+
+		regexLiteralJobName = regexLiteralJobName.replace("\\(", "(\\(|%28)");
+
+		regexLiteralJobName = regexLiteralJobName.replace("\\)", "(\\)|%29)");
+
+		sb.append(regexLiteralJobName);
+
+		sb.append("[\\/]+");
+		sb.append(JenkinsResultsParserUtil.getRegexLiteral(getAxisVariable()));
+		sb.append("[\\/]+");
+		sb.append(getBuildNumber());
+		sb.append("[\\/]*");
+
+		return sb.toString();
 	}
 
 	@Override
@@ -94,7 +148,14 @@ public class AxisBuild extends BaseBuild {
 		Matcher matcher = _buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
-			throw new IllegalArgumentException("Invalid build URL " + buildURL);
+			matcher = _archiveBuildURLPattern.matcher(buildURL);
+
+			if (!matcher.find()) {
+				throw new IllegalArgumentException(
+					"Invalid build URL " + buildURL);
+			}
+
+			archiveName = matcher.group("archiveName");
 		}
 
 		axisVariable = matcher.group("axisVariable");
@@ -110,6 +171,11 @@ public class AxisBuild extends BaseBuild {
 
 	protected String axisVariable;
 
+	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
+		"($\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
+			"(?<master>[^/]+)/+(?<jobName>[^/]+)/" +
+				"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
+					"(?<buildNumber>\\d+)/?");
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
 			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +

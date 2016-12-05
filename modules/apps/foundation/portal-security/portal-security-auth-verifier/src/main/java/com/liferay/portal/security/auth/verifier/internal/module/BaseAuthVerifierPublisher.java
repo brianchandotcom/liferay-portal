@@ -61,6 +61,7 @@ public abstract class BaseAuthVerifierPublisher {
 	protected void deactivate() {
 		if (_authVerifierRegistration != null) {
 			_authVerifierRegistration.unregister();
+
 			_authVerifierRegistration = null;
 		}
 	}

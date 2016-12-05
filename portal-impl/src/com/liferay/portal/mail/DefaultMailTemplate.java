@@ -69,15 +69,17 @@ public class DefaultMailTemplate implements MailTemplate {
 		EscapableLocalizableFunction escapableLocalizableFunction =
 			replacements.get("[$PORTAL_URL$]");
 
-		String portalURL = escapableLocalizableFunction.getOriginalValue(
-			locale);
+		if (escapableLocalizableFunction != null) {
+			String portalURL = escapableLocalizableFunction.getOriginalValue(
+				locale);
 
-		if (Validator.isNotNull(portalURL)) {
-			content = StringUtil.replace(
-				content, new String[] {"href=\"/", "src=\"/"},
-				new String[] {
-					"href=\"" + portalURL + "/", "src=\"" + portalURL + "/"
-				});
+			if (Validator.isNotNull(portalURL)) {
+				content = StringUtil.replace(
+					content, new String[] {"href=\"/", "src=\"/"},
+					new String[] {
+						"href=\"" + portalURL + "/", "src=\"" + portalURL + "/"
+					});
+			}
 		}
 
 		writer.append(content);

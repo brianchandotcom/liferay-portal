@@ -702,6 +702,12 @@ to version 1.1.0.
 - [LPS-69518]: Automatically delete the `liferay/logs` dir generated during the
 execution of the `autoUpdateXml` task.
 
+### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.56.
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.322.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

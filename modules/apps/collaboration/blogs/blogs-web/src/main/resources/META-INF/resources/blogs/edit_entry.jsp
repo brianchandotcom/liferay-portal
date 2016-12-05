@@ -69,7 +69,7 @@ if (portletTitleBasedNavigation) {
 </liferay-util:buffer>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
-	<liferay-frontend:info-bar>
+	<liferay-frontend:info-bar fixed="<%= Boolean.TRUE %>">
 		<%= saveStatus %>
 		<%= readingTime %>
 	</liferay-frontend:info-bar>

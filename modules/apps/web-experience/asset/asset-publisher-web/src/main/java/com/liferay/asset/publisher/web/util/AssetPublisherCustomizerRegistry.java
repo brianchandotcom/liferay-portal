@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.asset.publisher.web.util;
 
-<%
-List<AssetEntryQueryProcessor> assetEntryQueryProcessors = AssetPublisherUtil.getAssetEntryQueryProcessors();
+/**
+ * @author Pavel Savinov
+ */
+public interface AssetPublisherCustomizerRegistry {
 
-for (AssetEntryQueryProcessor assetEntryQueryProcessor : assetEntryQueryProcessors) {
-	if (assetPublisherCustomizer.isShowAssetEntryQueryProcessor(assetEntryQueryProcessor)) {
-		assetEntryQueryProcessor.include(request, new PipingServletResponse(pageContext));
-	}
+	public AssetPublisherCustomizer getAssetPublisherCustomizer(
+		String portletId);
+
 }
-%>

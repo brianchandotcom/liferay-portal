@@ -25,6 +25,14 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class RoleFinderUtil {
+	public static int countByGroupRoleAndTeamRole(long companyId,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) {
+		return getFinder()
+				   .countByGroupRoleAndTeamRole(companyId, excludedNames,
+			types, excludedTeamRoleId, teamGroupId);
+	}
+
 	public static int countByKeywords(long companyId,
 		java.lang.String keywords, java.lang.Integer[] types) {
 		return getFinder().countByKeywords(companyId, keywords, types);
@@ -66,6 +74,14 @@ public class RoleFinderUtil {
 			params, andOperator);
 	}
 
+	public static int filterCountByGroupRoleAndTeamRole(long companyId,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) {
+		return getFinder()
+				   .filterCountByGroupRoleAndTeamRole(companyId, excludedNames,
+			types, excludedTeamRoleId, teamGroupId);
+	}
+
 	public static int filterCountByKeywords(long companyId,
 		java.lang.String keywords, java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
@@ -91,6 +107,15 @@ public class RoleFinderUtil {
 		return getFinder()
 				   .filterCountByC_N_D_T(companyId, names, descriptions, types,
 			params, andOperator);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Role> filterFindByGroupRoleAndTeamRole(
+		long companyId, java.util.List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end) {
+		return getFinder()
+				   .filterFindByGroupRoleAndTeamRole(companyId, excludedNames,
+			types, excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> filterFindByKeywords(
@@ -123,6 +148,15 @@ public class RoleFinderUtil {
 		return getFinder()
 				   .filterFindByC_N_D_T(companyId, names, descriptions, types,
 			params, andOperator, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Role> findByGroupRoleAndTeamRole(
+		long companyId, java.util.List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end) {
+		return getFinder()
+				   .findByGroupRoleAndTeamRole(companyId, excludedNames, types,
+			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> findByKeywords(

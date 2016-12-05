@@ -401,6 +401,14 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 	}
 
 	@Override
+	public int getGroupRolesAndTeamRolesCount(long companyId,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) {
+		return _roleLocalService.getGroupRolesAndTeamRolesCount(companyId,
+			excludedNames, types, excludedTeamRoleId, teamGroupId);
+	}
+
+	@Override
 	public int getGroupRolesCount(long groupId) {
 		return _roleLocalService.getGroupRolesCount(groupId);
 	}
@@ -604,6 +612,15 @@ public class RoleLocalServiceWrapper implements RoleLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Role> orderByComparator) {
 		return _roleLocalService.getGroupRoles(groupId, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Role> getGroupRolesAndTeamRoles(
+		long companyId, java.util.List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end) {
+		return _roleLocalService.getGroupRolesAndTeamRoles(companyId,
+			excludedNames, types, excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	@Override

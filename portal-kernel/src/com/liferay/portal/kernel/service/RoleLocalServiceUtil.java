@@ -382,6 +382,14 @@ public class RoleLocalServiceUtil {
 		return getService().getAssigneesTotal(roleId);
 	}
 
+	public static int getGroupRolesAndTeamRolesCount(long companyId,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) {
+		return getService()
+				   .getGroupRolesAndTeamRolesCount(companyId, excludedNames,
+			types, excludedTeamRoleId, teamGroupId);
+	}
+
 	public static int getGroupRolesCount(long groupId) {
 		return getService().getGroupRolesCount(groupId);
 	}
@@ -567,6 +575,15 @@ public class RoleLocalServiceUtil {
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.kernel.model.Role> orderByComparator) {
 		return getService().getGroupRoles(groupId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.portal.kernel.model.Role> getGroupRolesAndTeamRoles(
+		long companyId, java.util.List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end) {
+		return getService()
+				   .getGroupRolesAndTeamRoles(companyId, excludedNames, types,
+			excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getResourceBlockRoles(

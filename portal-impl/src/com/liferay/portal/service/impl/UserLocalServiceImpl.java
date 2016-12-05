@@ -3706,6 +3706,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String body = MapUtil.getWithFallbackKey(
 			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
+		Company company = companyLocalService.getCompany(user.getCompanyId());
+
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
@@ -3715,7 +3717,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			"[$EMAIL_VERIFICATION_URL$]", verifyEmailAddressURL);
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
 		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
-		mailTemplateContextBuilder.put("[$PORTAL_URL$]", (String)null);
+		mailTemplateContextBuilder.put(
+			"[$PORTAL_URL$]", company.getPortalURL(0));
 		mailTemplateContextBuilder.put(
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr());
 		mailTemplateContextBuilder.put(
@@ -6172,18 +6175,30 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String body = MapUtil.getWithFallbackKey(
 			localizedBodyMap, user.getLocale(), LocaleUtil.getDefault());
 
+		String portalURL = null;
+
+		try {
+			Company company = companyLocalService.getCompany(
+				user.getCompanyId());
+
+			portalURL = company.getPortalURL(0);
+		}
+		catch (PortalException pe) {
+			ReflectionUtil.throwException(pe);
+		}
+
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
 		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
 		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
-		mailTemplateContextBuilder.put("[$PORTAL_URL$]", (String)null);
+		mailTemplateContextBuilder.put("[$PORTAL_URL$]", portalURL);
 		mailTemplateContextBuilder.put(
 			"[$TO_ADDRESS$]", user.getEmailAddress());
 		mailTemplateContextBuilder.put("[$TO_NAME$]", user.getFullName());
 		mailTemplateContextBuilder.put(
 			"[$USER_ID$]", String.valueOf(user.getUserId()));
-				mailTemplateContextBuilder.put("[$USER_PASSWORD$]", password);
+		mailTemplateContextBuilder.put("[$USER_PASSWORD$]", password);
 		mailTemplateContextBuilder.put(
 			"[$USER_SCREENNAME$]", user.getScreenName());
 
@@ -6330,6 +6345,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				localizedSubjectMap, user.getLocale(), LocaleUtil.getDefault());
 		}
 
+		String portalURL = null;
+
+		try {
+			Company company = companyLocalService.getCompany(
+				user.getCompanyId());
+
+			portalURL = company.getPortalURL(0);
+		}
+		catch (PortalException pe) {
+			ReflectionUtil.throwException(pe);
+		}
+
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
@@ -6337,7 +6364,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
 		mailTemplateContextBuilder.put(
 			"[$PASSWORD_RESET_URL$]", passwordResetURL);
-		mailTemplateContextBuilder.put("[$PORTAL_URL$]", (String)null);
+		mailTemplateContextBuilder.put("[$PORTAL_URL$]", portalURL);
 		mailTemplateContextBuilder.put(
 			"[$REMOTE_ADDRESS$]", serviceContext.getRemoteAddr());
 		mailTemplateContextBuilder.put(

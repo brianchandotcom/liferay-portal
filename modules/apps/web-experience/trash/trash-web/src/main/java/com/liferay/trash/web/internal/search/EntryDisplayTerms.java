@@ -20,6 +20,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import javax.portlet.PortletRequest;
 
 /**
+ * Defines display terms used by {@link com.liferay.taglib.ui.SearchIteratorTag}
+ * tag to render the list of recycle bin entries.
+ *
+ * Supported display terms:
+ * <code>name</code> - name of the entry
+ * <code>removedDate</code> - date when the entry was moved to the recycle bin
+ * <code>removedBy</code> - a user who moved the entry to the recycle bin
+ * <code>type</code> - type of entry which was moved to the recycle bin
+ *
  * @author Sergio González
  */
 public class EntryDisplayTerms extends DisplayTerms {

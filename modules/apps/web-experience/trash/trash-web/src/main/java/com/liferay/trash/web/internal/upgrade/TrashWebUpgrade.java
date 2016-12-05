@@ -22,6 +22,16 @@ import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Provides an upgrades registry for the recycle bin portlet.
+ *
+ * To register new upgrade process it is necessary to follow the next steps:
+ * 1.Create new upgrade process class which implements {@link
+ * com.liferay.portal.kernel.upgrade.UpgradeStep} interface.
+ * 2.In the <code>register</code> method of this class add new registry call
+ * providing bundle symbolic name of the component you want to upgrade,
+ * version from which you want to upgrade, version to which you want to upgrade
+ * and an instance of the upgrade step.
+ *
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)

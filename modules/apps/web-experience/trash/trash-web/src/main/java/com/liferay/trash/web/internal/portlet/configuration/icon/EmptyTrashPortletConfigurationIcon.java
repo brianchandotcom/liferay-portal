@@ -28,6 +28,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides an implementation of {@link PortletConfigurationIcon} interface to
+ * render an empty recycle bin menu item for the vertical ellipsis menu.
+ *
  * @author Eudaldo Alonso
  */
 @Component(

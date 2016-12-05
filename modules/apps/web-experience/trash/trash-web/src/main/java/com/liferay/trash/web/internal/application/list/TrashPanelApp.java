@@ -24,6 +24,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides an implementation of the {@link PanelApp} to render recycle bin
+ * portlet entry in the site administration section.
+ *
  * @author Eudaldo Alonso
  */
 @Component(

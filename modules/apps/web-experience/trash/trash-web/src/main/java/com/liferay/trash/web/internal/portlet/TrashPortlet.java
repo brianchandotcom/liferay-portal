@@ -51,6 +51,12 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides the recycle bin implementation of the {@link Portlet} interface.
+ * If recycle bin is enabled, this portlet allows to put assets into recycle bin
+ * instead of deleting them directly. Using recycle bin portlet site
+ * administrator is able to browse the list of removed asset entries, restore
+ * selected entries or empty the recycle bin.
+ *
  * @author Eudaldo Alonso
  */
 @Component(

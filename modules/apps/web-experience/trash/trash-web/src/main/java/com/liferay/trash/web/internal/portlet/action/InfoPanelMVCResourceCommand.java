@@ -28,6 +28,10 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Provides an implementation of {@link MVCResourceCommand} interface to be able
+ * to render an information panel for some specific recycle bin entries selected
+ * in the recycle bin portlet.
+ *
  * @author Jürgen Kappler
  */
 @Component(

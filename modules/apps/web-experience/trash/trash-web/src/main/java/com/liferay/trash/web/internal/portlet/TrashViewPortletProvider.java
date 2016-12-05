@@ -21,6 +21,11 @@ import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Provides an implementation of {@link ViewPortletProvider} interface for the
+ * recycle bin portlet. This implementation is aimed to generate instances of
+ * {@link javax.portlet.PortletURL} class to provide URLs to view recycle bin
+ * entries.
+ *
  * @author Eudaldo Alonso
  */
 @Component(

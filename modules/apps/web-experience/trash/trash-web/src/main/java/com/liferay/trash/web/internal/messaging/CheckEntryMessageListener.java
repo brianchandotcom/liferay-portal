@@ -31,6 +31,12 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides the ability for a scheduled task to empty the recycly bin when
+ * the maximum recycle bin entry ages has passed. Maximum recycle bin entry age
+ * defined by the <code>trash.entries.max.age</code> property in minutes.
+ * The scheduled task uses the <code>trash.entry.check.interval</code> property
+ * to define the execution interval (in minutes).
+ *
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = CheckEntryMessageListener.class)

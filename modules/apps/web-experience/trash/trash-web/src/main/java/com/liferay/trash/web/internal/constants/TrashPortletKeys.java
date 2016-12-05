@@ -15,6 +15,9 @@
 package com.liferay.trash.web.internal.constants;
 
 /**
+ * Provides portlet ID for implementation of the {@link
+ * com.liferay.trash.web.internal.portlet.TrashPortlet} portlet.
+ *
  * @author Eudaldo Alonso
  */
 public class TrashPortletKeys {

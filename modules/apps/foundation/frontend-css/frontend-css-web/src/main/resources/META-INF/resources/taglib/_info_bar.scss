@@ -33,7 +33,6 @@
 		margin-top: 16px;
 		position: absolute;
 		transform: translate(-50%);
-		transition: margin-top 0.15s ease-out;
 
 		@include sm() {
 			margin-top: 20px;
@@ -42,7 +41,7 @@
 
 	&.affix {
 		min-height: 35px;
-		transition: min-height 0.15s ease-out;
+		transition: min-height 0.15s ease;
 
 		.info-bar-center {
 			margin-top: 5px;

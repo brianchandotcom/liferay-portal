@@ -265,6 +265,10 @@
 		}
 	}
 
+	.info-bar-container.affix + .entry-body {
+		margin-top: 45px;
+	}
+
 	.nameplate-content {
 		padding-left: 0;
 		vertical-align: middle;

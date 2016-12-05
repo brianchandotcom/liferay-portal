@@ -78,7 +78,7 @@ if (portletTitleBasedNavigation) {
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 <portlet:actionURL name="/blogs/calculate_reading_time" var="calculateReadingTimeURL" />
 
-<div class="container-fluid-1280">
+<div class="container-fluid-1280 entry-body">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

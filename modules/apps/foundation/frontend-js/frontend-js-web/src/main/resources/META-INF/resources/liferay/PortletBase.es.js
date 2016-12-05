@@ -1,15 +1,15 @@
-import core from 'metal/src/core';
-import dom from 'metal-dom/src/dom';
-import State from 'metal-state/src/State';
+import core from 'metal';
+import dom from 'metal-dom';
+import Component from 'metal-component';
 
 /**
  * PortletBase provides some helper functions that simplify querying the DOM
  * for elements related to a specific portlet.
  *
  * @abstract
- * @extends {State}
+ * @extends {Component}
  */
-class PortletBase extends State {
+class PortletBase extends Component {
 	/**
 	 * Returns a NodeList containing all of the matching Element nodes within
 	 * the subtrees of the root object, in tree order. If there are no matching

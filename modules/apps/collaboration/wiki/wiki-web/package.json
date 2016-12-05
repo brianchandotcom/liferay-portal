@@ -1,0 +1,14 @@
+{
+	"dependencies": {
+		"metal": "^2.4.7",
+		"metal-events": "^2.5.0"
+	},
+	"devDependencies": {
+		"gulp": "^3.9.1",
+		"gulp-metal": "^1.9.10",
+		"liferay-module-config-generator": "^1.1.10",
+		"metal-cli": "^2.1.2"
+	},
+	"name": "wiki-web",
+	"version": "2.1.12"
+}

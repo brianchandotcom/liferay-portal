@@ -51,17 +51,6 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
-		String removePlugins = jsonObject.getString("removePlugins");
-
-		if (Validator.isNotNull(removePlugins)) {
-			removePlugins += ",ae_addimages";
-		}
-		else {
-			removePlugins = "ae_addimages";
-		}
-
-		jsonObject.put("removePlugins", removePlugins);
-
 		boolean allowBrowseDocuments = GetterUtil.getBoolean(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:allowBrowseDocuments"));
@@ -79,6 +68,19 @@ public abstract class BaseWikiAttachmentEditorConfigContributor
 		if (fileBrowserParamsMap != null) {
 			wikiPageResourcePrimKey = GetterUtil.getLong(
 				fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
+		}
+
+		if (wikiPageResourcePrimKey == 0) {
+			String removePlugins = jsonObject.getString("removePlugins");
+
+			if (Validator.isNotNull(removePlugins)) {
+				removePlugins += ",ae_addimages";
+			}
+			else {
+				removePlugins = "ae_addimages";
+			}
+
+			jsonObject.put("removePlugins", removePlugins);
 		}
 
 		String name = GetterUtil.getString(

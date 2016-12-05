@@ -15,7 +15,7 @@ AUI.add(
 
 		var TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
-		var BlogsUploader = A.Component.create(
+		var EditorImageUploader = A.Component.create(
 			{
 				ATTRS: {
 					strings: {
@@ -188,7 +188,12 @@ AUI.add(
 								image.removeClass(CSS_UPLOADING_IMAGE);
 
 								image.attr(data.file.attributeDataImageId, data.file.fileEntryId);
-								image.attr('src', data.file.url);
+
+								var editor = instance._editor;
+
+								var imageSrc = editor.config.attachmentURLPrefix ? editor.config.attachmentURLPrefix + data.file.title : data.file.url;
+
+								image.attr('src', imageSrc);
 
 								var imageContainer = image.ancestor();
 
@@ -262,7 +267,8 @@ AUI.add(
 			}
 		);
 
-		A.Plugin.LiferayBlogsUploader = BlogsUploader;
+		A.Plugin.LiferayBlogsUploader = EditorImageUploader;
+		A.Plugin.LiferayEditorImageUploader = EditorImageUploader;
 	},
 	'',
 	{

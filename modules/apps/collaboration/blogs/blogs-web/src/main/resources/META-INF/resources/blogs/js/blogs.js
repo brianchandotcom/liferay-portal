@@ -9,6 +9,10 @@ AUI.add(
 
 		var STR_CHANGE = 'change';
 
+		var STR_URL_TITLE_NAME = '#urlTitle';
+
+		var STR_MATCH_URL_TITLE_NAME = '#matchURLTitle';
+
 		var STR_CLICK = 'click';
 
 		var STR_SUFFIX = '...';
@@ -105,6 +109,25 @@ AUI.add(
 						instance._syncDescriptionEditorUI();
 					},
 
+					updateUrlTitle: function(newTitle) {
+						var instance = this, urlTitleInput = instance.one(STR_URL_TITLE_NAME);
+
+						if (!instance._originalTitle) {
+							instance._originalTitle = newTitle;
+						}
+						else if (instance._shouldMatchUrlAndTitle()) {
+							newTitle = newTitle.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+							if (newTitle[0] === '-') {
+								newTitle = newTitle.replace(/^-+/, '');
+							}
+
+							newTitle = newTitle.replace(/--+/g, '-');
+
+							urlTitleInput.val(newTitle.toLowerCase());
+						}
+					},
+
 					_bindUI: function() {
 						var instance = this;
 
@@ -138,6 +161,11 @@ AUI.add(
 								customAbstractOptions.delegate(STR_CHANGE, instance._configureAbstract, 'input[type="radio"]', instance)
 							);
 						}
+
+						var matchURLTitle = instance.one(STR_MATCH_URL_TITLE_NAME);
+						eventHandles.push(
+							matchURLTitle.on(STR_CHANGE, instance._configureMatchURLTitle, instance)
+						);
 
 						instance._eventHandles = eventHandles;
 					},
@@ -180,6 +208,19 @@ AUI.add(
 						instance._setDescriptionReadOnly(instance._shortenDescription);
 
 						instance.setDescription(description);
+					},
+
+					_configureMatchURLTitle: function() {
+						var instance = this, urlTitleInput = this.one(STR_URL_TITLE_NAME);
+
+						if (instance._shouldMatchUrlAndTitle()) {
+							var title = window[instance.ns('titleEditor')].getText();
+							instance.updateUrlTitle(title);
+							urlTitleInput.setAttribute('disabled', true);
+						}
+						else {
+							urlTitleInput.removeAttribute('disabled');
+						}
 					},
 
 					_getPrincipalForm: function(formName) {
@@ -394,6 +435,10 @@ AUI.add(
 						}
 
 						return text;
+					},
+
+					_shouldMatchUrlAndTitle: function() {
+						return this.one(STR_MATCH_URL_TITLE_NAME).attr('checked');
 					},
 
 					_showCaption: function() {

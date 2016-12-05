@@ -950,6 +950,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public String getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
+		return _getUniqueUrlTitle(entry);
+	}
+
+	@Override
 	public void moveEntriesToTrash(long groupId, long userId)
 		throws PortalException {
 
@@ -1246,6 +1251,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			friendlyURLLocalService.validate(
 				entry.getCompanyId(), entry.getGroupId(), classNameId, entryId,
 				urlTitle);
+		}
+		else {
+			urlTitle = _getUniqueUrlTitle(entry, title);
 		}
 
 		String oldUrlTitle = entry.getUrlTitle();
@@ -2297,8 +2305,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	private String _getUniqueUrlTitle(BlogsEntry entry) throws PortalException {
-		String urlTitle = BlogsUtil.getUrlTitle(
-			entry.getEntryId(), entry.getTitle());
+		return _getUniqueUrlTitle(entry, entry.getTitle());
+	}
+
+	private String _getUniqueUrlTitle(BlogsEntry entry, String newTitle)
+		throws PortalException {
+
+		String urlTitle = BlogsUtil.getUrlTitle(entry.getEntryId(), newTitle);
 
 		long classNameId = classNameLocalService.getClassNameId(
 			BlogsEntry.class);

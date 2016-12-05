@@ -548,6 +548,12 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.lang.String getUniqueUrlTitle(
+		com.liferay.blogs.model.BlogsEntry entry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getUniqueUrlTitle(entry);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

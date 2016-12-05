@@ -575,6 +575,13 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 		return _blogsEntryLocalService.getOSGiServiceIdentifier();
 	}
 
+	@Override
+	public java.lang.String getUniqueUrlTitle(
+		com.liferay.blogs.model.BlogsEntry entry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.getUniqueUrlTitle(entry);
+	}
+
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
 	*

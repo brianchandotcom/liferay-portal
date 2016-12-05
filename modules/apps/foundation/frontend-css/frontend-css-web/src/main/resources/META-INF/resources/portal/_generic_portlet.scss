@@ -1,4 +1,5 @@
 @import "bourbon";
+@import "mixins";
 
 .breadcrumbs {
 	margin-bottom: 10px;
@@ -10,9 +11,11 @@
 }
 
 .js {
-	.controls-hidden {
-		.lfr-meta-actions, .lfr-configurator-visibility {
-			display: none;
+	@include respond-to(phone) {
+		.controls-hidden {
+			.lfr-meta-actions, .lfr-configurator-visibility {
+				display: none;
+			}
 		}
 	}
 

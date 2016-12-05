@@ -178,46 +178,45 @@ AUI.add(
 
 					_calculateReadingTime: function(content) {
 						var instance = this;
-						var constants = instance.get('constants');
+
 						var readingTimeElement = instance.one('#readingTime');
 
-						if (content !== STR_BLANK) {
+						var data = instance.ns(
+							{
+								'content': content
+							}
+						);
 
-							var data = instance.ns(
-								{
-									'content': content
-								}
-							);
+						A.io.request(
+							instance.get('calculateReadingTimeURL'),
+							{
+								data: data,
+								dataType: 'JSON',
+								on: {
+									failure: function() {
+										readingTimeElement.hide();
+									},
+									success: function(event, id, obj) {
+										var message = this.get('responseData');
 
-							A.io.request(
-								instance.get('calculateReadingTimeURL'),
-								{
-									data: data,
-									dataType: 'JSON',
-									on: {
-										failure: function() {
+										if (message.readingTime) {
+											var constants = instance.get('constants');
+
+											var html = Lang.sub(
+												constants.X_MINUTES_READ,
+												[message.readingTime]
+											);
+
+											readingTimeElement.html(html);
+											readingTimeElement.show();
+										}
+										else {
 											readingTimeElement.hide();
-										},
-										start: function() {
-										},
-										success: function(event, id, obj) {
-											var message = this.get('responseData');
-
-											if (message && message.readingTime && (message.readingTime > 1)) {
-												readingTimeElement.set('innerHTML', Lang.sub(constants.X_MINUTES_READ, [message.readingTime]));
-												readingTimeElement.show();
-											}
-											else {
-												readingTimeElement.hide();
-											}
 										}
 									}
 								}
-							);
-						}
-						else {
-							readingTimeElement.hide();
-						}
+							}
+						);
 					},
 
 					_checkImagesBeforeSave: function(draft, ajax) {

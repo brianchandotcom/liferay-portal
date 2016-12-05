@@ -26,13 +26,13 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 
 <c:if test="<%= trashRenderer != null %>">
 	<div class="sidebar-header">
-		<ul class="sidebar-header-actions">
+		<ul class="sidebar-actions">
 			<li>
 				<liferay-util:include page="/container_action.jsp" servletContext="<%= application %>" />
 			</li>
 		</ul>
 
-		<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
+		<h4 class="sidebar-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 	</div>
 
 	<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
@@ -42,10 +42,13 @@ TrashHandler trashHandler = trashDisplayContext.getTrashHandler();
 	</aui:nav-bar>
 
 	<div class="sidebar-body">
-		<h5><liferay-ui:message key="num-of-items" /></h5>
-
-		<p>
-			<%= trashHandler.getTrashModelsCount(classPK) %>
-		</p>
+		<dl class="sidebar-block">
+			<dt class="h5">
+				<liferay-ui:message key="num-of-items" />
+			</dt>
+			<dd class="h6 sidebar-caption">
+				<%= trashHandler.getTrashModelsCount(classPK) %>
+			</dd>
+		</dl>
 	</div>
 </c:if>

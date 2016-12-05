@@ -25,7 +25,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 <c:choose>
 	<c:when test="<%= ListUtil.isEmpty(users) %>">
 		<div class="sidebar-header">
-			<h4>
+			<h4 class="sidebar-title">
 				<liferay-ui:message key="membership-type" />: <liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" />
 
 				<%
@@ -46,7 +46,7 @@ Group group = siteMembershipsDisplayContext.getGroup();
 				</c:if>
 			</h4>
 
-			<h6 class="text-muted">
+			<h6 class="sidebar-caption">
 				<liferay-ui:message key='<%= "membership-type-" + GroupConstants.getTypeLabel(group.getType()) + "-help" %>' />
 			</h6>
 		</div>
@@ -58,18 +58,20 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-users" /></h5>
+			<dl class="sidebar-block">
+				<dt class="h5"><liferay-ui:message key="num-of-users" /></dt>
 
-			<%
-			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
+				<%
+				LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
-			userParams.put("inherit", Boolean.TRUE);
-			userParams.put("usersGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
-			%>
+				userParams.put("inherit", Boolean.TRUE);
+				userParams.put("usersGroups", Long.valueOf(siteMembershipsDisplayContext.getGroupId()));
+				%>
 
-			<p>
-				<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, userParams) %>
-			</p>
+				<dd class="h6 sidebar-caption">
+					<%= UserLocalServiceUtil.searchCount(company.getCompanyId(), StringPool.BLANK, WorkflowConstants.STATUS_APPROVED, userParams) %>
+				</dd>
+			</dl>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(users) && (users.size() == 1) %>">
@@ -79,13 +81,13 @@ Group group = siteMembershipsDisplayContext.getGroup();
 		%>
 
 		<div class="sidebar-header">
-			<h4>
+			<h4 class="sidebar-title">
 				<%= curUser.getFullName() %>
 			</h4>
 
-			<h6>
+			<h5>
 				<%= curUser.getScreenName() %>
-			</h6>
+			</h5>
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
@@ -122,37 +124,40 @@ Group group = siteMembershipsDisplayContext.getGroup();
 			%>
 
 			<c:if test="<%= Validator.isNotNull(portraitURL) %>">
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="crop-img img-rounded" src="<%= portraitURL %>" />
+				<div class="crop-img crop-img-center crop-img-middle sidebar-panel">
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="img-responsive" src="<%= portraitURL %>" />
+				</div>
 			</c:if>
 
-			<h5><liferay-ui:message key="email" /></h5>
+			<dl class="sidebar-block">
+				<dt class="h5"><liferay-ui:message key="email" /></dt>
 
-			<p>
-				<%= curUser.getEmailAddress() %>
-			</p>
+				<dd class="h6 sidebar-caption">
+					<%= curUser.getEmailAddress() %>
+				</dd>
 
-			<%
-			List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(curUser.getUserId(), siteMembershipsDisplayContext.getGroupId());
+				<%
+				List<UserGroupRole> userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(curUser.getUserId(), siteMembershipsDisplayContext.getGroupId());
 
-			List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), curUser.getUserId());
+				List<Team> teams = TeamLocalServiceUtil.getUserOrUserGroupTeams(siteMembershipsDisplayContext.getGroupId(), curUser.getUserId());
 
-			List<String> siteRolesAndTeamsNames = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
+				List<String> siteRolesAndTeamsNames = ListUtil.toList(userGroupRoles, UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR);
 
-			siteRolesAndTeamsNames.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
-			%>
+				siteRolesAndTeamsNames.addAll(ListUtil.toList(teams, Team.NAME_ACCESSOR));
+				%>
 
-			<c:if test="<%= !ListUtil.isEmpty(siteRolesAndTeamsNames) %>">
-				<h5><liferay-ui:message key="site-roles-and-teams" /></h5>
+				<c:if test="<%= !ListUtil.isEmpty(siteRolesAndTeamsNames) %>">
+					<dt class="h5"><liferay-ui:message key="site-roles-and-teams" /></dt>
 
-				<p>
-					<%= HtmlUtil.escape(StringUtil.merge(siteRolesAndTeamsNames, StringPool.COMMA_AND_SPACE)) %>
-				</p>
-			</c:if>
+					<dd class="h6 sidebar-caption">
+						<%= HtmlUtil.escape(StringUtil.merge(siteRolesAndTeamsNames, StringPool.COMMA_AND_SPACE)) %>
+					</dd>
+				</c:if>
 		</div>
 	</c:when>
 	<c:when test="<%= ListUtil.isNotEmpty(users) && (users.size() > 1) %>">
 		<div class="sidebar-header">
-			<h4><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h4>
+			<h4 class="sidebar-title"><liferay-ui:message arguments="<%= users.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">

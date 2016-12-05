@@ -34,7 +34,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				%>
 
 				<div class="sidebar-header">
-					<ul class="sidebar-header-actions">
+					<ul class="sidebar-actions">
 						<li>
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(trashRenderer.renderActions(renderRequest, renderResponse)) %>">
@@ -60,7 +60,7 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 						</li>
 					</ul>
 
-					<h4><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
+					<h4 class="sidebar-title"><%= HtmlUtil.escape(trashRenderer.getTitle(locale)) %></h4>
 				</div>
 
 				<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
@@ -70,28 +70,31 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				</aui:nav-bar>
 
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="type" /></h5>
-
-					<p>
-						<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
-					</p>
-
-					<h5><liferay-ui:message key="removed-date" /></h5>
-
-					<p>
-						<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
-					</p>
-
-					<h5><liferay-ui:message key="removed-by" /></h5>
-
-					<p>
-						<%= HtmlUtil.escape(trashEntry.getUserName()) %>
-					</p>
+					<dl class="sidebar-block">
+						<dt class="h5">
+							<liferay-ui:message key="type" />
+						</dt>
+						<dd class="h6 sidebar-caption">
+							<%= ResourceActionsUtil.getModelResource(locale, trashEntry.getClassName()) %>
+						</dd>
+						<dt class="h5">
+							<liferay-ui:message key="removed-date" />
+						</dt>
+						<dd class="h6 sidebar-caption">
+							<%= dateFormatDateTime.format(trashEntry.getCreateDate()) %>
+						</dd>
+						<dt class="h5">
+							<liferay-ui:message key="removed-by" />
+						</dt>
+						<dd class="h6 sidebar-caption">
+							<%= HtmlUtil.escape(trashEntry.getUserName()) %>
+						</dd>
+					</dl>
 				</div>
 			</c:when>
 			<c:otherwise>
 				<div class="sidebar-header">
-					<h4><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
+					<h4 class="sidebar-title"><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 
 				<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
@@ -101,18 +104,21 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 				</aui:nav-bar>
 
 				<div class="sidebar-body">
-					<h5><liferay-ui:message key="num-of-items" /></h5>
-
-					<p>
-						<%= trashEntries.size() %>
-					</p>
+					<dl class="sidebar-block">
+						<dt class="h5">
+							<liferay-ui:message key="num-of-items" />
+						</dt>
+						<dd class="h6 sidebar-caption">
+							<%= trashEntries.size() %>
+						</dd>
+					</dl>
 				</div>
 			</c:otherwise>
 		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<div class="sidebar-header">
-			<h4><liferay-ui:message key="home" /></h4>
+			<h4 class="sidebar-title"><liferay-ui:message key="home" /></h4>
 		</div>
 
 		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
@@ -122,11 +128,14 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 		</aui:nav-bar>
 
 		<div class="sidebar-body">
-			<h5><liferay-ui:message key="num-of-items" /></h5>
-
-			<p>
-				<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
-			</p>
+			<dl class="sidebar-block">
+				<dt class="h5">
+					<liferay-ui:message key="num-of-items" />
+				</dt>
+				<dd class="h6 sidebar-caption">
+					<%= TrashEntryLocalServiceUtil.getEntriesCount(themeDisplay.getScopeGroupId()) %>
+				</dd>
+			</dl>
 		</div>
 	</c:otherwise>
 </c:choose>

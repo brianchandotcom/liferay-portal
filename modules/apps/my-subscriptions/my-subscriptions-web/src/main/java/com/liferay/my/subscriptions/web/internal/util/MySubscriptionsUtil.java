@@ -157,8 +157,8 @@ public class MySubscriptionsUtil {
 
 			return dlFileEntryType.getName(locale);
 		}
-		else if (className.equals(DLFolderConstants.class.getName()) ||
-				 className.equals(Folder.getClassName())) {
+		else if (className.equals(DLFolderConstants.getClassName()) ||
+				 className.equals(Folder.class.getName())) {
 
 			if (group != null) {
 				return LanguageUtil.get(locale, "home");

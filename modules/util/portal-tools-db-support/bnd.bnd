@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Tools DB Support
+Bundle-SymbolicName: com.liferay.portal.tools.db.support
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.tools.db.support,\
+	com.liferay.portal.tools.db.support.commands
+Main-Class: com.liferay.portal.tools.db.support.DBSupport
+-includeresource: @jcommander-[0-9]*.jar

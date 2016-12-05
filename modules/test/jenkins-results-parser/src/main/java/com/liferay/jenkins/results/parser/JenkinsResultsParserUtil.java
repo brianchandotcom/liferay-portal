@@ -540,6 +540,26 @@ public class JenkinsResultsParserUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
+	public static String getRegexLiteral(String string) {
+		if (string == null) {
+			throw new NullPointerException("String may not be null");
+		}
+
+		String specialCharactersString = "\\^$.|?*+()[]{}";
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char character : string.toCharArray()) {
+			if (specialCharactersString.indexOf(character) != -1) {
+				sb.append('\\');
+			}
+
+			sb.append(character);
+		}
+
+		return sb.toString();
+	}
+
 	public static List<String> getSlaves(
 		Properties buildProperties, String masterPatternString) {
 

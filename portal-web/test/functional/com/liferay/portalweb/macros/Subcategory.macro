@@ -123,33 +123,22 @@
 	</command>
 
 	<command name="moveCP">
-		<var name="key_vocabularyName" value="${vocabularyName}" />
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${vocabularyName}">
+			<var name="key_rowEntry" value="${vocabularyName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute function="AssertClick" locator1="ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK" value1="${categoryName}">
+			<var name="key_rowEntry" value="${categoryName}" />
+		</execute>
 
-		<var name="key_categoryName" value="${categoryName}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Move" />
+			<var name="rowEntry" value="${subcategoryName}" />
+		</execute>
 
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_LINK" value1="${categoryName}" />
-
-		<var name="key_rowEntry" value="${subcategoryName}" />
-
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
-
-		<execute function="Click" locator1="CategoriesEditSubcategory#CATEGORY_SELECT_BUTTON" />
-
-		<var name="key_categoryName" value="${categoryNameMove}" />
-
-		<execute function="Click" locator1="CategoriesEditSubcategory#MOVE_CATEGORIES_CATEGORY_CHECK_ICON" />
-
-		<execute function="MouseOver" locator1="CategoriesEditSubcategory#MOVE_CATEGORIES_CATEGORY_CLOSE_BUTTON" />
-
-		<execute function="Click#clickAt" locator1="CategoriesEditSubcategory#MOVE_CATEGORIES_CATEGORY_CLOSE_BUTTON" />
-
-		<execute function="AssertClick" locator1="Button#MOVE" value1="Move" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="AssetCategorization#selectCategory">
+			<var name="categoryName" value="${categoryNameMove}" />
+		</execute>
 	</command>
 
 	<command name="searchCP">

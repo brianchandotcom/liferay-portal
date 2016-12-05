@@ -451,11 +451,41 @@ public class WebServerServlet extends HttpServlet {
 
 			String path = GetterUtil.getString(request.getPathInfo());
 
-			if (path.startsWith("/user_female_portrait") ||
-				path.startsWith("/user_male_portrait") ||
-				path.startsWith("/user_portrait")) {
+			if (path.startsWith("/layout_icon") || path.startsWith("/logo")) {
+				Layout layout = LayoutLocalServiceUtil.fetchLayoutByIconImageId(
+					imageId, true);
 
-				image = getUserPortraitImageResized(image, imageId);
+				if (layout != null) {
+					long classPK = layout.getLayoutId();
+					String className = Layout.class.getName();
+					long groupId = layout.getGroupId();
+
+					User user = PortalUtil.getUser(request);
+
+					if (user == null) {
+						long companyId = PortalUtil.getCompanyId(request);
+
+						user = UserLocalServiceUtil.getDefaultUser(companyId);
+					}
+
+					PermissionChecker permissionChecker =
+						PermissionCheckerFactoryUtil.create(user);
+
+					if (!LayoutPermissionUtil.contains(
+							permissionChecker, groupId, true, classPK,
+							ActionKeys.VIEW)) {
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Error checking permissions for user " +
+									user.getUserId());
+						}
+
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker, className, classPK,
+							ActionKeys.VIEW);
+					}
+				}
 			}
 			else if (path.startsWith("/layout_set_logo")) {
 				LayoutSet layoutSet =
@@ -493,43 +523,11 @@ public class WebServerServlet extends HttpServlet {
 					}
 				}
 			}
-			else if (path.startsWith("/logo") ||
-					 path.startsWith("/layout_icon")) {
+			else if (path.startsWith("/user_female_portrait") ||
+					 path.startsWith("/user_male_portrait") ||
+					 path.startsWith("/user_portrait")) {
 
-				Layout layout = LayoutLocalServiceUtil.fetchLayoutByIconImageId(
-					imageId, true);
-
-				if (layout != null) {
-					long classPK = layout.getLayoutId();
-					String className = Layout.class.getName();
-					long groupId = layout.getGroupId();
-
-					User user = PortalUtil.getUser(request);
-
-					if (user == null) {
-						long companyId = PortalUtil.getCompanyId(request);
-
-						user = UserLocalServiceUtil.getDefaultUser(companyId);
-					}
-
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(user);
-
-					if (!LayoutPermissionUtil.contains(
-							permissionChecker, groupId, true, classPK,
-							ActionKeys.VIEW)) {
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Error checking permissions for user " +
-									user.getUserId());
-						}
-
-						throw new PrincipalException.MustHavePermission(
-							permissionChecker, className, classPK,
-							ActionKeys.VIEW);
-					}
-				}
+				image = getUserPortraitImageResized(image, imageId);
 			}
 		}
 		else {

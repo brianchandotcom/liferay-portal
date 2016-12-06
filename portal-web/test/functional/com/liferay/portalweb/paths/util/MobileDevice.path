@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DEVICE_FAMILY_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_deviceFamilyName}')]/td[3]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>DEVICE_FAMILY_TABLE_NAME_LINK</td>
 	<td>//tr[contains(.,'${key_deviceFamilyName}')]/td[contains(@class,'name')]/a</td>
 	<td></td>
@@ -66,18 +61,8 @@
 </tr>
 <!--ADD_CLASSIFICATION_RULE-->
 <tr>
-	<td>ADD_CLASSIFICATION_RULE_BUTTON</td>
-	<td>//li/a/span[contains(.,'Add Classification Rule')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD_CLASSIFICATION_RULE_NAME_FIELD</td>
 	<td>//input[@id='_178_name']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ADD_CLASSIFICATION_RULE_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_178_description']</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,10 +70,30 @@
 	<td>//tr/td[contains(.,'${key_classificationName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM</td>
+	<td>//select[contains(@id,'os')]/option[contains(.,'${key_operatingSystem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CLASSIFICATION_RULE_DEVICE_TYPE</td>
+	<td>//select[contains(@id,'tablet')]/option[contains(.,'${key_deviceType}')]</td>
+	<td></td>
+</tr>
 <!--ADD_ACTION-->
 <tr>
 	<td>ADD_ACTION_TYPE_OPTION</td>
 	<td>//option[contains(.,'${key_actionType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ACTION_SITE_OPTION</td>
+	<td>//select[contains(@id,'groupId')]/option[contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ACTION_PAGE_OPTION</td>
+	<td>//select[contains(@id,'plid')]/option[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 </tbody>

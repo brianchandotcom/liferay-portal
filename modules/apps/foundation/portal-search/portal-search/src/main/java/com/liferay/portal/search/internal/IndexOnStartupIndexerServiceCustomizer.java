@@ -16,7 +16,6 @@ package com.liferay.portal.search.internal;
 
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -80,8 +79,7 @@ public class IndexOnStartupIndexerServiceCustomizer
 
 			PortalInstanceLifecycleListener portalInstanceLifecycleListener =
 				new IndexOnStartupPortalInstanceLifecycleListener(
-					_clusterMasterExecutor, _indexWriterHelper, _props,
-					className);
+					_indexWriterHelper, _props, className);
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _bundleContext.registerService(
@@ -182,9 +180,6 @@ public class IndexOnStartupIndexerServiceCustomizer
 	private BackgroundTaskManager _backgroundTaskManager;
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

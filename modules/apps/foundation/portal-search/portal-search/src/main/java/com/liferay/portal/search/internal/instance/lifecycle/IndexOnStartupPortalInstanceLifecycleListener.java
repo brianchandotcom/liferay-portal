@@ -14,8 +14,7 @@
 
 package com.liferay.portal.search.internal.instance.lifecycle;
 
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -30,27 +29,19 @@ import com.liferay.portal.kernel.util.PropsKeys;
  * @author Michael C. Han
  */
 public class IndexOnStartupPortalInstanceLifecycleListener
-	implements PortalInstanceLifecycleListener {
+	extends BasePortalInstanceLifecycleListener {
 
 	public IndexOnStartupPortalInstanceLifecycleListener(
-		ClusterMasterExecutor clusterMasterExecutor,
 		IndexWriterHelper indexWriterHelper, Props props, String className) {
 
-		_clusterMasterExecutor = clusterMasterExecutor;
 		_indexWriterHelper = indexWriterHelper;
 		_props = props;
 		_className = className;
 	}
 
 	@Override
-	public void portalInstancePreregistered(long companyId) {
-	}
-
-	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (!GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP)) ||
-			!_clusterMasterExecutor.isMaster()) {
-
+		if (!GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP))) {
 			return;
 		}
 
@@ -65,15 +56,10 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 		}
 	}
 
-	@Override
-	public void portalInstanceUnregistered(Company company) throws Exception {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		IndexOnStartupPortalInstanceLifecycleListener.class);
 
 	private final String _className;
-	private final ClusterMasterExecutor _clusterMasterExecutor;
 	private final IndexWriterHelper _indexWriterHelper;
 	private final Props _props;
 

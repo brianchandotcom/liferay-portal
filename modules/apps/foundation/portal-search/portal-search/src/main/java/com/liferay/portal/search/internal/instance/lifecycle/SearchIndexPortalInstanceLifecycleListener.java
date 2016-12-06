@@ -16,7 +16,6 @@ package com.liferay.portal.search.internal.instance.lifecycle;
 
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -35,9 +34,7 @@ public class SearchIndexPortalInstanceLifecycleListener
 	@Override
 	public void portalInstancePreregistered(long companyId) {
 		try {
-			if (_clusterMasterExecutor.isMaster()) {
-				_searchEngineHelper.initialize(companyId);
-			}
+			_searchEngineHelper.initialize(companyId);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -49,9 +46,7 @@ public class SearchIndexPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
 		try {
-			if (_clusterMasterExecutor.isMaster()) {
-				_searchEngineHelper.initialize(company.getCompanyId());
-			}
+			_searchEngineHelper.initialize(company.getCompanyId());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -62,9 +57,7 @@ public class SearchIndexPortalInstanceLifecycleListener
 	@Override
 	public void portalInstanceUnregistered(Company company) throws Exception {
 		try {
-			if (_clusterMasterExecutor.isMaster()) {
-				_searchEngineHelper.removeCompany(company.getCompanyId());
-			}
+			_searchEngineHelper.removeCompany(company.getCompanyId());
 		}
 		catch (Exception e) {
 			_log.error(
@@ -74,9 +67,6 @@ public class SearchIndexPortalInstanceLifecycleListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchIndexPortalInstanceLifecycleListener.class);
-
-	@Reference
-	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private SearchEngineHelper _searchEngineHelper;

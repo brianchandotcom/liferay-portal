@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>BODY_HEADER</td>
-	<td>//div[@class='wiki-body']/h1</td>
+	<td>//div[@class='wiki-body']/h4</td>
 	<td></td>
 </tr>
 <tr>

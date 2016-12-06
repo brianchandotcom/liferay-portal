@@ -258,6 +258,13 @@ if (organization != null) {
 
 		submitForm(form, '<portlet:actionURL name="/users_admin/delete_organizations_and_users" />');
 	};
+
+	AUI.$('#<portlet:namespace />assignUsers').on(
+		'click',
+		function(event) {
+			<portlet:namespace />openSelectUsersDialog('<%= organizationId %>');
+		}
+	);
 </aui:script>
 
 <%!

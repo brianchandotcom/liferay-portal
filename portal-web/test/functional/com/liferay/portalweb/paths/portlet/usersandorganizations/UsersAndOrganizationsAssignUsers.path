@@ -82,7 +82,7 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]/td//input</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]/td[1]//input</td>
 	<td></td>
 </tr>
 <tr>

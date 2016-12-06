@@ -117,44 +117,32 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Organization#gotoActionsCmd">
-			<var name="orgName" value="${orgName}" />
+		<execute macro="Organization#gotoCP">
+			<var name="orgName" value="Organization Name" />
+			<var name="searchToken" value="Organization" />
 		</execute>
 
-		<var name="key_orgName" value="${orgName}" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
-		<execute macro="Navigator#gotoTab">
-			<var name="tab" value="Available" />
-		</execute>
+		<execute function="AssertElementPresent#assertVisible" locator1="Button#DONE" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
 		<execute function="Check" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute function="AssertClick#assertTextClickAtWaitForLastScript" locator1="Button#DONE" value1="Done" />
 
 		<execute macro="Alert#viewSuccessMessage" />
-
-		<execute macro="Navigator#gotoTab">
-			<var name="tab" value="Current" />
-		</execute>
-
-		<execute function="AssertChecked" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
-
-		<if>
-			<isset var="userMiddleName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="addPhoneNumbersCP">
@@ -710,9 +698,19 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<var name="key_userName" value="${userName}" />
+		<if>
+			<isset var="userMiddleName" />
+			<then>
+				<var name="key_userName" value="${userFirstName} ${userMiddleName} ${userLastName}" />
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userName}" />
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userFirstName} ${userMiddleName} ${userLastName}" />
+			</then>
+			<else>
+				<var name="key_userName" value="${userName}" />
+
+				<execute function="AssertTextEquals" locator1="UsersAndOrganizationsOrganization#USER_TABLE_NAME" value1="${userName}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewCP">

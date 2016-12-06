@@ -30,8 +30,7 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrameTop" />
 	</command>

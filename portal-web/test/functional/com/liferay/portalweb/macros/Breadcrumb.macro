@@ -165,10 +165,26 @@
 	</command>
 
 	<command name="viewSpecificPG">
-		<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
-			<execute function="AssertElementNotPresent" locator1="BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY">
-				<var name="key_breadcrumbName" value="${breadcrumbName}" />
-			</execute>
-		</for>
+		<if>
+			<isset var="breadcrumbListNotVisible" />
+			<then>
+				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
+					<execute function="AssertElementNotPresent" locator1="BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY">
+						<var name="key_breadcrumbName" value="${breadcrumbName}" />
+					</execute>
+				</for>
+			</then>
+		</if>
+
+		<if>
+			<isset var="breadcrumListVisible" />
+			<then>
+				<for list="${breadcrumbListVisible}" param="breadcrumbName">
+					<execute function="AssertElementPresent" locator1="BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY">
+						<var name="key_breadcrumbName" value="${breadcrumbName}" />
+					</execute>
+				</for>
+			</then>
+		</if>
 	</command>
 </definition>

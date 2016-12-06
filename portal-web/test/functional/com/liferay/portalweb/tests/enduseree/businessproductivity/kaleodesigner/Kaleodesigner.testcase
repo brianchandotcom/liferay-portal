@@ -1568,9 +1568,7 @@
 		</execute>
 	</command>-->
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="2">
+	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="Navigator#openURL" />
@@ -1606,7 +1604,7 @@
 
 		<execute macro="KaleoFormsAdmin#viewPublishedWorkflowDefinitions" />
 		<execute macro="KaleoFormsAdmin#viewNoUnpublishedWorkflowDefinitions" />
-	</command>-->
+	</command>
 
 	<command name="ViewWorkflowDefinitionButtonsViaKDCP" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />

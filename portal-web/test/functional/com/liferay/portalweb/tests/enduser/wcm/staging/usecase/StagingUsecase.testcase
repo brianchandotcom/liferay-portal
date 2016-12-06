@@ -481,6 +481,20 @@
 	</command>
 
 	<command name="PublishCustomPortletTitle" priority="3">
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Staging" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
 		<execute test-case="super#AddSitePagesVariation" />
 
 		<execute macro="Navigator#gotoStagedSitePage">

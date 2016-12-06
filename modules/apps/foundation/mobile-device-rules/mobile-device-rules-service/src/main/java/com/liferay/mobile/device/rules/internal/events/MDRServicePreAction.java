@@ -113,12 +113,12 @@ public class MDRServicePreAction extends Action {
 			return;
 		}
 
-		themeDisplay.setMDRRuleGroupInstance(
-			new MDRRuleGroupInstanceImpl(mdrRuleGroupInstance));
-
 		if (mdrRuleGroupInstance == null) {
 			return;
 		}
+
+		themeDisplay.setMDRRuleGroupInstance(
+			new MDRRuleGroupInstanceImpl(mdrRuleGroupInstance));
 
 		try {
 			List<MDRAction> mdrActions = _mdrActionLocalService.getActions(

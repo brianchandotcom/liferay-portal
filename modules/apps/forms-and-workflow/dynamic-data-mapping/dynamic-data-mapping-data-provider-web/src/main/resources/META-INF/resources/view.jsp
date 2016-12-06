@@ -21,6 +21,8 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 
 portletURL.setParameter("displayStyle", "descriptive");
 
+renderResponse.setTitle(LanguageUtil.get(request, "data-provider-entries"));
+
 DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(renderRequest, portletURL);
 
 OrderByComparator<DDMDataProviderInstance> orderByComparator = DDMDataProviderPortletUtil.getDDMDataProviderOrderByComparator(ddmDataProviderDisplayContext.getOrderByCol(), ddmDataProviderDisplayContext.getOrderByType());

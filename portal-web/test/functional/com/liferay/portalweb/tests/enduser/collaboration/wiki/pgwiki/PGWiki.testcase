@@ -689,6 +689,53 @@
 		</execute>
 	</command>
 
+	<command name="AddWikiPageFormatJSPWiki" priority="4">
+		<property name="osgi.modules.includes" value="wiki-engine-jspwiki" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiNavigator#gotoAddPageViaPG" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page With JSPWiki Content" />
+		</execute>
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
+
+		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="!JSPWiki Header" />
+
+		<execute function="KeyPress" locator1="TextArea#ACE_EDITOR" value1="\RETURN" />
+
+		<execute function="Type#sendKeysAceEditor" locator1="TextArea#ACE_EDITOR" value1="__JSPWiki Bold Text__" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPagesPG" />
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Page With JSPWiki Content" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoEntryViaPGTable">
+			<var name="wikiPageTitle" value="Wiki Page With JSPWiki Content" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="WikiEntry#BODY_HEADER" value1="JSPWiki Header#" />
+
+		<execute function="AssertTextEquals" locator1="WikiEntry#BODY_BOLD_TEXT" value1="JSPWiki Bold Text" />
+	</command>
+
 	<command name="AddWikiPages" priority="5">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />

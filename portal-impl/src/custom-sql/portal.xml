@@ -978,7 +978,11 @@
 				(
 					(
 						(name NOT IN ([$EXCLUDED_NAMES$])) AND
-						(type_ IN ([$TYPES$]))
+						(type_ IN ([$TYPES$])) AND
+						(
+							(lower(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(lower(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
+						)
 					) OR
 					(
 						(classNameId = ?) AND
@@ -989,7 +993,11 @@
 							FROM
 								Team
 							WHERE
-								(groupId = ?)
+								(groupId = ?) AND
+								(
+									(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+									(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
+								)
 							)
 						)
 					)
@@ -1149,11 +1157,15 @@
 			FROM
 				Role_
 			WHERE
-				(companyId = ?) AND
+				(Role_.companyId = ?) AND
 				(
 					(
 						(name NOT IN ([$EXCLUDED_NAMES$])) AND
-						(type_ IN ([$TYPES$]))
+						(type_ IN ([$TYPES$])) AND
+						(
+							(lower(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+							(lower(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
+						)
 					) OR
 					(
 						(classNameId = ?) AND
@@ -1164,7 +1176,11 @@
 							FROM
 								Team
 							WHERE
-								(groupId = ?)
+								(groupId = ?) AND
+								(
+									(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+									(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
+								)
 							)
 						)
 					)

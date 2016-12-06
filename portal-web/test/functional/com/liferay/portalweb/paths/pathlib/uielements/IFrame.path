@@ -129,9 +129,9 @@
 	<td></td>
 </tr>
 <tr>
-    <td>MODAL_IFRAME</td>
-    <td>//div[contains(@class,'modal')]//iframe</td>
-    <td></td>
+	<td>MODAL_IFRAME</td>
+	<td>//div[contains(@class,'modal')]//iframe</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_ORGANIZATION</td>

@@ -9,19 +9,19 @@
 </thead>
 <tbody>
 <tr>
-    <td>CALENDAR_EVENT</td>
-    <td>//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'Calendar')]</td>
-    <td></td>
+	<td>CALENDAR_EVENT</td>
+	<td>//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'Calendar')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PORTLET_HEADER</td>
-    <td>//h1[@class="portlet-title"]</td>
-    <td></td>
+	<td>PORTLET_HEADER</td>
+	<td>//h1[@class="portlet-title"]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ADMIN</td>
-    <td>//li[@id='_145_adminLinks']/a</td>
-    <td></td>
+	<td>ADMIN</td>
+	<td>//li[@id='_145_adminLinks']/a</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

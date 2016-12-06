@@ -163,4 +163,12 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewSpecificPG">
+		<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
+			<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_SPECIFIC_ENTRY">
+				<var name="key_breadcrumbName" value="${breadcrumbName}" />
+			</execute>
+		</for>
+	</command>
 </definition>

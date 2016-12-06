@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BREADCRUMB_SPECIFIC_ENTRY</td>
+	<td>//div[contains(@id,'SiteNavigationBreadcrumbPortlet')]//li[contains(.,'${key_breadcrumbName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BREADCRUMB_ENTRY_ACTIVE_ENTRY</td>
 	<td>//div[contains(@id,'breadcrumb')]//li[@class='active']</td>
 	<td></td>

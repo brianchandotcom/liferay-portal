@@ -295,6 +295,42 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
+	public void testBuildTemplateFormField() throws Exception {
+		File gradleProjectDir = _buildTemplateWithGradle("form-field", "foo");
+
+		_testExists(gradleProjectDir, "bnd.bnd");
+
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/foo_field.js");
+		_testExists(
+			gradleProjectDir, "src/main/resources/META-INF/resources/foo.soy");
+		_testExists(
+			gradleProjectDir,
+			"src/main/resources/META-INF/resources/config.js");
+
+		_testContains(
+			gradleProjectDir, "build.gradle",
+			"apply plugin: \"com.liferay.plugin\"");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/form/field/FooDDMFormFieldRenderer.java",
+			"public class FooDDMFormFieldRenderer extends " +
+				"BaseDDMFormFieldRenderer {");
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/foo/form/field/FooDDMFormFieldType.java",
+			"public class FooDDMFormFieldType extends BaseDDMFormFieldType {");
+
+//		File mavenProjectDir = _buildTemplateWithMaven(
+//			"form-field", "foo", "-DclassName=Foo", "-Dpackage=foo");
+//
+//		_buildProjects(
+//			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.jar",
+//			"target/foo-1.0.0.jar");
+	}
+
+	@Test
 	public void testBuildTemplateFragment() throws Exception {
 		File gradleProjectDir = _buildTemplateWithGradle(
 			"fragment", "loginhook", "--host-bundle-symbolic-name",

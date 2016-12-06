@@ -2179,6 +2179,10 @@
 		<execute function="AssertElementNotPresent" locator1="Calendar#SCHEDULER_EVENT_ATTENDING_ROW_OPTIONS" />
 	</command>
 
+	<command name="viewStatusViaDetails">
+		<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#STATUS" value1="${status}" />
+	</command>
+
 	<command name="viewTimes">
 		<execute function="AssertTextEquals#assertValue" locator1="CalendarEditEvent#START_DATE_TIME" value1="${startDateTime}" />
 		<execute function="AssertTextEquals#assertValue" locator1="CalendarEditEvent#END_DATE_TIME" value1="${endDateTime}" />

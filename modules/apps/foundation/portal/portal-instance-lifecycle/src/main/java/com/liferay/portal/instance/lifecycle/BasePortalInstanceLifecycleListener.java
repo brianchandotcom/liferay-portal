@@ -14,13 +14,21 @@
 
 package com.liferay.portal.instance.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Company;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public abstract class BasePortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
+
+	@Override
+	public boolean isMasterOnly() {
+		return true;
+	}
 
 	@Override
 	public void portalInstancePreregistered(long companyId) {

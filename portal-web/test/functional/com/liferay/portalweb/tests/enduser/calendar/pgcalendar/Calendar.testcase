@@ -5232,10 +5232,6 @@
 
 		<execute macro="MyAccount#configureDisplaySettingsLanguage">
 			<var name="languageName" value="español (España)" />
-			<var name="languagePageDisplayMessage" value="Mostrar la página en español (España)." />
-			<var name="myAccount" value="My Account" />
-			<var name="saveButton" value="Save" />
-			<var name="successMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -5260,10 +5256,8 @@
 		<execute macro="MyAccount#configureDisplaySettingsLanguageLocalized">
 			<var name="category" value="Mi cuenta" />
 			<var name="languageName" value="English (United States)" />
-			<var name="languagePageDisplayMessage" value="Display the page in English (United States)." />
 			<var name="portlet" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />
-			<var name="successMessage" value="Your request completed successfully." />
 		</execute>
 	</command>
 

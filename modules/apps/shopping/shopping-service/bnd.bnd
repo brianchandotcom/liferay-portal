@@ -9,5 +9,5 @@ Export-Package:\
 	com.liferay.shopping.upgrade.v1_0_0,\
 	com.liferay.shopping.util,\
 	com.liferay.shopping.verify
-Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.1
 Liferay-Service: true

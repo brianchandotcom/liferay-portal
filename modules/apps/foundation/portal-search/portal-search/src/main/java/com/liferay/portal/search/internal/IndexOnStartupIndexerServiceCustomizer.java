@@ -80,8 +80,7 @@ public class IndexOnStartupIndexerServiceCustomizer
 
 			PortalInstanceLifecycleListener portalInstanceLifecycleListener =
 				new IndexOnStartupPortalInstanceLifecycleListener(
-					_clusterMasterExecutor, _indexWriterHelper, _props,
-					className);
+					_indexWriterHelper, _props, className);
 
 			ServiceRegistration<PortalInstanceLifecycleListener>
 				serviceRegistration = _bundleContext.registerService(
@@ -182,9 +181,6 @@ public class IndexOnStartupIndexerServiceCustomizer
 	private BackgroundTaskManager _backgroundTaskManager;
 
 	private BundleContext _bundleContext;
-
-	@Reference
-	private ClusterMasterExecutor _clusterMasterExecutor;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

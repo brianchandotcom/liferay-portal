@@ -24,8 +24,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_ALL_CONTENT</td>
+	<td>//option[contains(@id,'allContent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_CHOOSE_CONTENT</td>
+	<td>//option[contains(@id,'chooseContent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COUNTRY</td>
 	<td>//div[label[contains(.,'Country')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_RANGE_START_DATE</td>
+	<td>xpath=(//ul[contains(@class,'date-range-options')]//input[contains(@name,'startDate') and contains(@type,'text')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_RANGE_END_DATE</td>
+	<td>xpath=(//ul[contains(@class,'date-range-options')]//input[contains(@name,'endDate') and contains(@type,'text')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,6 +101,11 @@
 <tr>
 	<td>LANGUAGE</td>
 	<td>//div[label[contains(.,'Language')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_TIME</td>
+	<td>//select[contains(@id, 'last')]/option[contains(.,'${key_lastDateRange}')]</td>
 	<td></td>
 </tr>
 <tr>

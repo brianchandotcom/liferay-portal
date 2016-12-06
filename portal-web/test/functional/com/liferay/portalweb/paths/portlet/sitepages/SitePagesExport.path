@@ -91,23 +91,8 @@
 </tr>
 <!--CONTENT-->
 <tr>
-	<td>CONTENT_ALL_CONTENT</td>
-	<td>//option[contains(@id,'allContent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_CHOOSE_CONTENT</td>
-	<td>//option[contains(@id,'chooseContent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
 	<td>//ul[@class='portlet-list']//label[contains(.,'${key_contentName}')]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
 	<td></td>
 </tr>
 <!--CURRENT-->

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE</td>
+	<td>//input[contains(@id,'rangeDateRange')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_ALL_CONTENT</td>
 	<td>//input[contains(@id,'allContent')]</td>
 	<td></td>
@@ -76,6 +81,11 @@
 <tr>
 	<td>RANGE_ALL</td>
 	<td>//label[contains(.,'All')]/input[contains(@id,'rangeAll')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RANGE_LAST</td>
+	<td>//input[contains(@id,'rangeLast')]</td>
 	<td></td>
 </tr>
 <tr>

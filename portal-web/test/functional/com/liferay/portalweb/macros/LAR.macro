@@ -103,7 +103,7 @@
 		<if>
 			<isset var="uncheckSubContent" />
 			<then>
-				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Click" locator1="Select#CONTENT_CHOOSE_CONTENT" />
 
 				<var name="key_contentName" value="${mainContent}" />
 
@@ -122,7 +122,7 @@
 		<if>
 			<isset var="uncheckSubSubContent" />
 			<then>
-				<execute function="Check" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Check" locator1="Select#CONTENT_CHOOSE_CONTENT" />
 
 				<var name="key_contentName" value="${contentName}" />
 
@@ -142,14 +142,28 @@
 		<if>
 			<isset var="contentDateRange" />
 			<then>
-				<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT" />
-
-				<execute function="Click" locator1="ExportImport#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
+				<execute function="Click" locator1="Select#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Click" locator1="Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
 
-				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
-				<execute function="Type" locator1="StagingPublishToLive#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+				<execute function="Type" locator1="Select#DATE_RANGE_START_DATE" value1="${dateRangeStartDate}" />
+				<execute function="Type" locator1="Select#DATE_RANGE_END_DATE" value1="${dateRangeEndDate}" />
+
+				<execute function="Click" locator1="Link#REFRESH_COUNTS" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="lastDateRange" />
+			<then>
+				<execute function="Click" locator1="Select#CONTENT_CHOOSE_CONTENT" />
+				<execute function="Click" locator1="Radio#RANGE_LAST" />
+
+				<var name="key_lastDateRange" value="${lastDateRange}" />
+
+				<execute function="Click" locator1="Select#LAST_TIME" value1="${lastDateRange}" />
+				<execute function="Click" locator1="Link#REFRESH_COUNTS" />
 			</then>
 		</if>
 	</command>
@@ -419,6 +433,7 @@
 			<var name="deleteMissingPages" value="${deleteMissingPages}" />
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
+			<var name="lastDateRange" value="${lastDateRange}" />
 			<var name="mainContent" value="${mainContent}" />
 			<var name="subContent" value="${subContent}" />
 			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
@@ -441,6 +456,7 @@
 			<var name="deleteMissingPages" value="${deleteMissingPages}" />
 			<var name="exportPermissions" value="${exportPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
+			<var name="lastDateRange" value="${lastDateRange}" />
 			<var name="mainContent" value="${mainContent}" />
 			<var name="subContent" value="${subContent}" />
 			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />

@@ -108,16 +108,6 @@
 </tr>
 <!--CONTENT-->
 <tr>
-	<td>CONTENT_ALL_CONTENT</td>
-	<td>//option[contains(@id,'allContent')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONTENT_CHOOSE_CONTENT</td>
-	<td>//option[contains(@id,'chooseContent')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
 	<td>//input[contains(@name,'DELETIONS')]</td>
 	<td></td>
@@ -154,11 +144,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE</td>
-	<td>//input[contains(@id,'rangeDateRange')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -172,27 +157,6 @@
 <tr>
 	<td>DATE_RANGE_POPUP_OK_BUTTON</td>
 	<td>//div[contains(@class,'modal-content') and contains (.,'Date Range')]//button[contains(.,'OK')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--DATE_RANGE-->
-<tr>
-	<td>DATE_RANGE_START_DATE</td>
-	<td>xpath=(//ul[contains(@class,'date-range-options')]//input[contains(@name,'startDate') and contains(@type,'text')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATE_RANGE_END_DATE</td>
-	<td>xpath=(//ul[contains(@class,'date-range-options')]//input[contains(@name,'endDate') and contains(@type,'text')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REFRESH_COUNTS</td>
-	<td>//a[contains(@id,'rangeLink')]</td>
 	<td></td>
 </tr>
 <tr>

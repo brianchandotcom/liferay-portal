@@ -402,4 +402,25 @@
 			<var name="userCalendarName" value="Test Test" />
 		</execute>
 	</command>
+
+	<command name="ViewPendingStatusInEventDetails">
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#addEventToday">
+			<var name="eventTitle" value="Calendar Event Today Week" />
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewStatusViaDetails">
+			<var name="status" value="Pending" />
+		</execute>
+	</command>
 </definition>

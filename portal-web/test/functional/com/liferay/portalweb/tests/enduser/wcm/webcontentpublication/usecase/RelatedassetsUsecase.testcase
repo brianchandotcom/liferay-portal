@@ -185,6 +185,7 @@
 
 		<execute macro="RelatedAssets#configureFilterByCategories">
 			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
 		<execute macro="Navigator#gotoPrivateStagedSitePage">

@@ -24,13 +24,24 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertRulesFunctionality" priority="5">
+	<command name="AssertMobileDeviceRuleActionOnSitePage" priority="5">
 		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portlet" value="Mobile Device Families" />
 		</execute>
 
 		<execute macro="MobileDevice#addCP">
 			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesConfiguration">
+			<var name="portlet" value="Mobile Device Families" />
+		</execute>
+
+		<execute macro="MobileDevice#addRuleCP">
+			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
+			<var name="ruleName" value="Rule Name" />
+			<var name="operatingSystem" value="Any Operating System" />
+			<var name="deviceType" value="Any" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -51,16 +62,24 @@
 
 		<execute macro="Page#disableMobileDeviceRulesAreInheritedFromPublicPages" />
 
-		<execute macro="Page#selectDeviceFamily">
+		<execute macro="Page#selectMobileDeviceFamily">
 			<var name="deviceFamilyName" value="Mobile Device Family Name" />
 		</execute>
 
 		<execute macro="Page#manageDeviceFamilyActions">
 			<var name="actionName" value="Mobile Device Family Test Action" />
-			<var name="actionType" value="Redirect to URL" />
-			<var name="actionURL" value="https://www.google.com/" />
+			<var name="actionType" value="Redirect to Site" />
+			<var name="siteName" value="Liferay" />
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="MobileDevice#assertRedirectActionPG">
+			<var name="pageName" value="Mobile Device Family Test Page" />
+			<var name="redirectPageName" value="Welcome" />
+		</execute>
 	</command>
 </definition>

@@ -1528,7 +1528,7 @@
 			</execute>
 
 			<execute macro="WebContentNavigator#gotoEditCP">
-				<var name="webContentTitle" value="${webContentTitle}" />
+				<var name="webContentTitle" value="WC WebContent Title ${i}" />
 			</execute>
 
 			<execute macro="WebContent#viewStatus">

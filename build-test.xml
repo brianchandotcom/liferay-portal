@@ -7209,10 +7209,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<get-testcase-property property.name="theme.file.name" />
 
 		<if>
-			<and>
-				<available file="${liferay.home}/osgi/war/${theme.file.name}" />
-				<isset property="theme.file.name" />
-			</and>
+			<isset property="theme.file.name" />
 			<then>
 				<if>
 					<resourcecount count="0" when="greater">
@@ -8915,7 +8912,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 						<delete dir="${liferay.home}/tmp" failonerror="false" />
 
-						<sleep seconds="60" />
+						<waitfor checkevery="5" maxwait="300" maxwaitunit="second" timeoutproperty="theme.not.deployed">
+							<available file="${liferay.home}/osgi/war/${theme.file.name}" />
+						</waitfor>
+
+						<fail if="theme.not.deployed" message="${theme.file.name} has failed to deploy." />
 					</then>
 				</if>
 			</then>

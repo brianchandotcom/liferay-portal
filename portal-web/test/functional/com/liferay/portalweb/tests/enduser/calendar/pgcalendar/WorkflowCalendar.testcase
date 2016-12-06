@@ -30,6 +30,26 @@
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceValue" value="Calendar Event" />
 		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#add">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+			<var name="optionSet" value="true" />
+			<var name="optionSetValue" value="inviteResource" />
+			<var name="pageName" value="Calendar Page" />
+			<var name="specificOptionSetValue" value="Test Test" />
+			<var name="workflow" value="true" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -63,26 +83,6 @@
 
 	<command name="ApproveEventWithInvitedUser" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-			<var name="workflow" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -157,26 +157,6 @@
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-			<var name="workflow" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
 		</execute>
 
 		<execute macro="CalendarNavigator#gotoView">
@@ -361,26 +341,6 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAddEvent" />
-
-		<execute macro="CalendarEvent#add">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-			<var name="optionSet" value="true" />
-			<var name="optionSetValue" value="inviteResource" />
-			<var name="pageName" value="Calendar Page" />
-			<var name="specificOptionSetValue" value="Test Test" />
-			<var name="workflow" value="true" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -440,6 +400,27 @@
 			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="siteCalendarName" value="${siteName}" />
 			<var name="userCalendarName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="ViewPendingStatusInEventDetails">
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#addEventToday">
+			<var name="eventTitle" value="Calendar Event Today Week" />
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewStatusViaDetails">
+			<var name="status" value="Pending" />
 		</execute>
 	</command>
 </definition>

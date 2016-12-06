@@ -19,18 +19,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>START_DATE_FIELD</td>
+	<td>STATUS</td>
 	<td>//dl[contains(@class,'property-list')]/dd[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>END_DATE_FIELD</td>
+	<td>START_DATE_FIELD</td>
 	<td>//dl[contains(@class,'property-list')]/dd[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RESOURCES_FIELD</td>
+	<td>END_DATE_FIELD</td>
 	<td>//dl[contains(@class,'property-list')]/dd[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCES_FIELD</td>
+	<td>//dl[contains(@class,'property-list')]/dd[4]</td>
 	<td></td>
 </tr>
 <tr>

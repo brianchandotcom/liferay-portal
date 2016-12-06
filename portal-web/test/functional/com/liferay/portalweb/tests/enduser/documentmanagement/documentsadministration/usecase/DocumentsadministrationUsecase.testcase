@@ -1188,6 +1188,16 @@
 			<var name="vocabularyName" value="Topic" />
 		</execute>
 
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<for list="${tagNameList}" param="tagName">
+			<execute macro="Tag#addCP">
+				<var name="tagName" value="${tagName}" />
+			</execute>
+		</for>
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

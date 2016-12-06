@@ -430,7 +430,7 @@
 	</command>
 
 	<command name="disableMobileDeviceRulesAreInheritedFromPublicPages">
-		<execute function="Uncheck#uncheckToggleSwitch" locator1="ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE" />
+		<execute function="Uncheck#uncheckHiddenToggleSwitch" locator1="ToggleSwitch#INHERIT_MOBILE_DEVICE_RULES_FROM_PAGE" />
 	</command>
 
 	<command name="disallowEditViaSiteAdminEditCP">
@@ -627,6 +627,17 @@
 			<then>
 				<execute function="Type" locator1="TextInput#URL" value1="${actionURL}" />
 			</then>
+			<elseif>
+				<equals arg1="${actionType}" arg2="Redirect to Site" />
+				<then>
+					<var name="key_siteName" value="${siteName}" />
+					<var name="key_pageName" value="${pageName}" />
+
+					<execute function="Click" locator1="MobileDevice#ADD_ACTION_SITE_OPTION" />
+
+					<execute function="Click" locator1="MobileDevice#ADD_ACTION_PAGE_OPTION" />
+				</then>
+			</elseif>
 		</if>
 
 		<execute macro="PortletEntry#save" />
@@ -650,7 +661,7 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="selectDeviceFamily">
+	<command name="selectMobileDeviceFamily">
 		<execute function="AssertClick" locator1="Button#SELECT_MOBILE_DEVICE_RULES" value1="Select" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />

@@ -5,4 +5,6 @@ Export-Package:\
 	com.liferay.portal.tools.db.support,\
 	com.liferay.portal.tools.db.support.commands
 Main-Class: com.liferay.portal.tools.db.support.DBSupport
--includeresource: @jcommander-[0-9]*.jar
+-includeresource:\
+	@com.liferay.portal.tools.service.builder-[0-9]*.jar!/com/liferay/portal/tools/service/builder/dependencies/bad_table_names.txt,\
+	@jcommander-[0-9]*.jar

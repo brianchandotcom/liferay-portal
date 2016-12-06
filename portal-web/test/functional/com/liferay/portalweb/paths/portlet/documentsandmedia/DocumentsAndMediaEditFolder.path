@@ -45,34 +45,34 @@
 	<td></td>
 </tr>
 <tr>
-  <td>WORKFLOW_PARENT_FOLDER_RADIO</td>
-  <td>//input[contains(@id,'restrictionTypeInherit')]</td>
-  <td></td>
+	<td>WORKFLOW_PARENT_FOLDER_RADIO</td>
+	<td>//input[contains(@id,'restrictionTypeInherit')]</td>
+	<td></td>
 </tr>
 <tr>
-  <td>WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO</td>
-  <td>//input[contains(@id,'restrictionTypeDefined')]</td>
-  <td></td>
+	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_RADIO</td>
+	<td>//input[contains(@id,'restrictionTypeDefined')]</td>
+	<td></td>
 </tr>
 <tr>
-  <td>WORKFLOW_SPECIFIC_RESTRICTIONS_SELECT_DOCUMENT_TYPE_BUTTON</td>
-  <td>//span[contains(@class,'select-file-entry-type')]/a[contains(.,'Select Document Type')]</td>
-  <td></td>
+	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_SELECT_DOCUMENT_TYPE_BUTTON</td>
+	<td>//span[contains(@class,'select-file-entry-type')]/a[contains(.,'Select Document Type')]</td>
+	<td></td>
 </tr>
 <tr>
-  <td>WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT</td>
-  <td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[2]//div/select</td>
-  <td></td>
+	<td>WORKFLOW_SPECIFIC_RESTRICTIONS_TYPE_WORKFLOW_SELECT</td>
+	<td>//tr[contains(.,'${key_dmDocumentTypeName}')]/td[2]//div/select</td>
+	<td></td>
 </tr>
 <tr>
-  <td>WORKFLOW_DEFAULT_WORKFLOW_RADIO</td>
-  <td>//input[contains(@id,'restrictionTypeWorkflow')]</td>
-  <td></td>
+	<td>WORKFLOW_DEFAULT_WORKFLOW_RADIO</td>
+	<td>//input[contains(@id,'restrictionTypeWorkflow')]</td>
+	<td></td>
 </tr>
 <tr>
-  <td>WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT</td>
-  <td>//select[contains(@id,'workflowDefinition-1')]</td>
-  <td></td>
+	<td>WORKFLOW_DEFAULT_WORKFLOW_WORKFLOW_SELECT</td>
+	<td>//select[contains(@id,'workflowDefinition-1')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

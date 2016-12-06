@@ -9,14 +9,14 @@
 </thead>
 <tbody>
 <tr>
-    <td>PAGE_TITLE</td>
-    <td>//div[@class='example']</td>
-    <td></td>
+	<td>PAGE_TITLE</td>
+	<td>//div[@class='example']</td>
+	<td></td>
 </tr>
 <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+	<td></td>
+	<td></td>
+	<td></td>
 </tr>
 </tbody>
 </table>

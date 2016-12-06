@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>NAME_FIELD</td>
-		<td>//input[contains(@id='name')]</td>
+	<td>//input[contains(@id='name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_PRIVATE_PAGE_CHECKBOX</td>
-		<td>//input[contains(@id,'privateLayoutSetPrototypeLinkEnabled')]</td>
+	<td>//input[contains(@id,'privateLayoutSetPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -64,13 +64,12 @@ public class DDMDataProviderPortletConfigurationIcon
 			portletRequest, portletId, PortletRequest.RENDER_PHASE);
 
 		try {
-			portletURL.setWindowState(LiferayWindowState.POP_UP);
+			portletURL.setWindowState(LiferayWindowState.NORMAL);
 		}
 		catch (WindowStateException wse) {
 		}
 
-		return "javascript:Liferay.DDL.Portlet.openDDMDataProvider('" +
-			portletURL.toString() + "');";
+		return portletURL.toString();
 	}
 
 	@Override

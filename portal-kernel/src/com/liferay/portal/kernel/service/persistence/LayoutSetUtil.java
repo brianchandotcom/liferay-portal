@@ -504,6 +504,67 @@ public class LayoutSetUtil {
 	}
 
 	/**
+	* Returns the layout set where logoId = &#63; and privateLayout = &#63; or throws a {@link NoSuchLayoutSetException} if it could not be found.
+	*
+	* @param logoId the logo ID
+	* @param privateLayout the private layout
+	* @return the matching layout set
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
+	*/
+	public static LayoutSet findByL_P(long logoId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetException {
+		return getPersistence().findByL_P(logoId, privateLayout);
+	}
+
+	/**
+	* Returns the layout set where logoId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param logoId the logo ID
+	* @param privateLayout the private layout
+	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
+	*/
+	public static LayoutSet fetchByL_P(long logoId, boolean privateLayout) {
+		return getPersistence().fetchByL_P(logoId, privateLayout);
+	}
+
+	/**
+	* Returns the layout set where logoId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param logoId the logo ID
+	* @param privateLayout the private layout
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
+	*/
+	public static LayoutSet fetchByL_P(long logoId, boolean privateLayout,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByL_P(logoId, privateLayout, retrieveFromCache);
+	}
+
+	/**
+	* Removes the layout set where logoId = &#63; and privateLayout = &#63; from the database.
+	*
+	* @param logoId the logo ID
+	* @param privateLayout the private layout
+	* @return the layout set that was removed
+	*/
+	public static LayoutSet removeByL_P(long logoId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutSetException {
+		return getPersistence().removeByL_P(logoId, privateLayout);
+	}
+
+	/**
+	* Returns the number of layout sets where logoId = &#63; and privateLayout = &#63;.
+	*
+	* @param logoId the logo ID
+	* @param privateLayout the private layout
+	* @return the number of matching layout sets
+	*/
+	public static int countByL_P(long logoId, boolean privateLayout) {
+		return getPersistence().countByL_P(logoId, privateLayout);
+	}
+
+	/**
 	* Caches the layout set in the entity cache if it is enabled.
 	*
 	* @param layoutSet the layout set

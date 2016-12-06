@@ -1555,6 +1555,67 @@ public class LayoutUtil {
 	}
 
 	/**
+	* Returns the layout where privateLayout = &#63; and iconImageId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	*
+	* @param privateLayout the private layout
+	* @param iconImageId the icon image ID
+	* @return the matching layout
+	* @throws NoSuchLayoutException if a matching layout could not be found
+	*/
+	public static Layout findByP_I(boolean privateLayout, long iconImageId)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+		return getPersistence().findByP_I(privateLayout, iconImageId);
+	}
+
+	/**
+	* Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param privateLayout the private layout
+	* @param iconImageId the icon image ID
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByP_I(boolean privateLayout, long iconImageId) {
+		return getPersistence().fetchByP_I(privateLayout, iconImageId);
+	}
+
+	/**
+	* Returns the layout where privateLayout = &#63; and iconImageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param privateLayout the private layout
+	* @param iconImageId the icon image ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public static Layout fetchByP_I(boolean privateLayout, long iconImageId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByP_I(privateLayout, iconImageId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the layout where privateLayout = &#63; and iconImageId = &#63; from the database.
+	*
+	* @param privateLayout the private layout
+	* @param iconImageId the icon image ID
+	* @return the layout that was removed
+	*/
+	public static Layout removeByP_I(boolean privateLayout, long iconImageId)
+		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
+		return getPersistence().removeByP_I(privateLayout, iconImageId);
+	}
+
+	/**
+	* Returns the number of layouts where privateLayout = &#63; and iconImageId = &#63;.
+	*
+	* @param privateLayout the private layout
+	* @param iconImageId the icon image ID
+	* @return the number of matching layouts
+	*/
+	public static int countByP_I(boolean privateLayout, long iconImageId) {
+		return getPersistence().countByP_I(privateLayout, iconImageId);
+	}
+
+	/**
 	* Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
 	*
 	* @param groupId the group ID

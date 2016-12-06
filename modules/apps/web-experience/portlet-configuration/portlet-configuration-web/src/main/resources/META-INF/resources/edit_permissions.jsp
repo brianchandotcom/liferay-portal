@@ -114,6 +114,19 @@ definePermissionsURL.setParameter("backURL", currentURL);
 definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
 definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
+
+PortletURL roleSearchURL = PortletURLFactoryUtil.create(renderRequest, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION, PortletRequest.RENDER_PHASE);
+
+roleSearchURL.setParameter("mvcPath", "/edit_permissions.jsp");
+roleSearchURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+roleSearchURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
+roleSearchURL.setParameter("portletResource", portletResource);
+roleSearchURL.setParameter("resourcePrimKey", resourcePrimKey);
+roleSearchURL.setWindowState(LiferayWindowState.POP_UP);
+
+SearchContainer roleSearchContainer = new RoleSearch(renderRequest, roleSearchURL);
+
+RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerms();
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
@@ -132,15 +145,21 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 		<portlet:param name="roleTypes" value="<%= roleTypesParam %>" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= updateRolePermissionsURL.toString() %>" cssClass="form" method="post" name="fm">
-		<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
+	<div class="portlet-configuration-body-content">
+		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
+				<aui:nav-item label="permissions" selected="<%= true %>" />
+			</aui:nav>
 
-		<div class="portlet-configuration-body-content">
-			<aui:nav-bar markupView="lexicon">
-				<aui:nav cssClass="navbar-nav">
-					<aui:nav-item label="permissions" selected="<%= true %>" />
-				</aui:nav>
-			</aui:nav-bar>
+			<aui:nav-bar-search>
+				<aui:form action="<%= roleSearchURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</aui:nav-bar-search>
+		</aui:nav-bar>
+
+		<aui:form action="<%= updateRolePermissionsURL.toString() %>" cssClass="form" method="post" name="fm">
+			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
 
 			<div class="container-fluid-1280">
 
@@ -295,16 +314,22 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 				if (group.isLayout()) {
 					teamGroupId = group.getParentGroupId();
 				}
+
+				roleSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
+
+				int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId);
+
+				roleSearchContainer.setTotal(count);
+
+				List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId, roleSearchContainer.getStart(), roleSearchContainer.getResultEnd());
+
+				roleSearchContainer.setResults(roles);
 				%>
 
 				<liferay-ui:search-container
-					iteratorURL="<%= currentURLObj %>"
-					total="<%= RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId) %>"
+					iteratorURL="<%= roleSearchURL %>"
+					searchContainer="<%= roleSearchContainer %>"
 				>
-					<liferay-ui:search-container-results
-						results="<%= RoleLocalServiceUtil.getGroupRolesAndTeamRoles(company.getCompanyId(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId, searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-					/>
-
 					<liferay-ui:search-container-row
 						className="com.liferay.portal.kernel.model.Role"
 						escapedModel="<%= true %>"
@@ -406,18 +431,20 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
 					</liferay-ui:search-container-row>
 
-					<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
+					<liferay-ui:search-iterator markupView="lexicon" />
 				</liferay-ui:search-container>
 			</div>
-		</div>
+		</aui:form>
+	</div>
 
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" />
-		</aui:button-row>
-	</aui:form>
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" name="saveButton" type="submit" />
+	</aui:button-row>
 </div>
 
 <aui:script sandbox="<%= true %>">
+	var form = $(document.<portlet:namespace />fm);
+
 	$('#<portlet:namespace />fm').on(
 		'mouseover',
 		'.lfr-checkbox-preselected',
@@ -425,6 +452,17 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 			var currentTarget = $(event.currentTarget);
 
 			Liferay.Portal.ToolTip.show(currentTarget, currentTarget.data('message'));
+		}
+	);
+
+	$('#<portlet:namespace />saveButton').on(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			if (<%= roleSearchContainer.getTotal() != 0 %>) {
+				submitForm(form);
+			}
 		}
 	);
 </aui:script>

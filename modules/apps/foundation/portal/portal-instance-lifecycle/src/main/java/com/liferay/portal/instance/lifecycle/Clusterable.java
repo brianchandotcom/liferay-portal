@@ -14,20 +14,8 @@
 
 package com.liferay.portal.instance.lifecycle;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.model.Company;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface PortalInstanceLifecycleListener {
-
-	public void portalInstancePreregistered(long companyId);
-
-	public void portalInstanceRegistered(Company company) throws Exception;
-
-	public void portalInstanceUnregistered(Company company) throws Exception;
-
+public interface Clusterable {
 }

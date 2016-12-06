@@ -1,0 +1,11 @@
+Bundle-Name: ${artifactId}
+Bundle-SymbolicName: ${package}
+Bundle-Version: ${version}
+Liferay-JS-Config: /META-INF/resources/config.js
+Web-ContextPath: /${artifactId}-form-field
+#if (${buildType} != "gradle")
+-jsp: *.jsp,*.jspf
+-plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
+-plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin
+-plugin.sass: com.liferay.ant.bnd.sass.SassAnalyzerPlugin
+-sass: *#end

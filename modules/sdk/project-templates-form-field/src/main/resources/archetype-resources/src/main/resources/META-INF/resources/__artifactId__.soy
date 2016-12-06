@@ -1,0 +1,32 @@
+{namespace ddm}
+
+/**
+ * Prints the form field.
+ *
+ * @param label
+ * @param name
+ * @param readOnly
+ * @param required
+ * @param showLabel
+ * @param tip
+ * @param value
+ */
+{template .${className} autoescape="deprecated-contextual"}
+	<div class="form-group ${artifactId}-form-field" data-fieldname="{$name}">
+		{if $showLabel}
+			<label class="control-label">
+				{$label}
+
+				{if $required}
+					<span class="icon-asterisk text-warning"></span>
+				{/if}
+			</label>
+
+			{if $tip}
+				<p class="liferay-ddm-form-field-tip">{$tip}</p>
+			{/if}
+		{/if}
+
+		<input class="field form-control" id="{$name}" name="{$name}" {if $readOnly}readonly{/if} type="text" value="{$value}">
+	</div>
+{/template}

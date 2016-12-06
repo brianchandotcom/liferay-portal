@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BODY_BOLD_TEXT</td>
+	<td>//div[@class='wiki-body']/b</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BODY_GENERIC</td>
 	<td>//div[@class='wiki-body']</td>
 	<td></td>

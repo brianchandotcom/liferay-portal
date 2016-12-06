@@ -16,59 +16,64 @@
 
 <%@ include file="/facets/init.jsp" %>
 
-<c:if test="<%= !termCollectors.isEmpty() %>">
+<%
+com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder userSearchFacetDisplayBuilder = new com.liferay.portal.search.web.internal.facet.display.builder.UserSearchFacetDisplayBuilder();
 
-	<%
-	int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-	int maxTerms = dataJSONObject.getInt("maxTerms", 10);
-	boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
-	%>
+userSearchFacetDisplayBuilder.setFacet(facet);
+userSearchFacetDisplayBuilder.setFrequenciesVisible(dataJSONObject.getBoolean("showAssetCount", true));
+userSearchFacetDisplayBuilder.setFrequencyThreshold(dataJSONObject.getInt("frequencyThreshold"));
+userSearchFacetDisplayBuilder.setMaxTerms(dataJSONObject.getInt("maxTerms", 10));
+userSearchFacetDisplayBuilder.setParamName(facet.getFieldId());
+userSearchFacetDisplayBuilder.setParamValue(fieldParam);
 
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="panel-title">
-				<liferay-ui:message key="users" />
+com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetDisplayContext userSearchFacetDisplayContext = userSearchFacetDisplayBuilder.build();
+%>
+
+<c:choose>
+	<c:when test="<%= userSearchFacetDisplayContext.isRenderNothing() %>">
+		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
+	</c:when>
+	<c:otherwise>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<liferay-ui:message key="users" />
+				</div>
 			</div>
-		</div>
 
-		<div class="panel-body">
-			<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-				<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+			<div class="panel-body">
+				<div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" id="<%= randomNamespace %>facet">
+					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(userSearchFacetDisplayContext.getParamName()) %>" type="hidden" value="<%= userSearchFacetDisplayContext.getParamValue() %>" />
 
-				<ul class="list-unstyled users">
-					<li class="default facet-value">
-						<a class="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
-					</li>
-
-					<%
-					String userName = GetterUtil.getString(fieldParam);
-
-					for (int i = 0; i < termCollectors.size(); i++) {
-						TermCollector termCollector = termCollectors.get(i);
-
-						String curUserName = GetterUtil.getString(termCollector.getTerm());
-
-						if (((maxTerms > 0) && (i >= maxTerms)) || ((frequencyThreshold > 0) && (frequencyThreshold > termCollector.getFrequency()))) {
-							break;
-						}
-					%>
-
-						<li class="facet-value">
-							<a class="<%= userName.equals(curUserName) ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(curUserName) %>" href="javascript:;">
-								<%= HtmlUtil.escape(curUserName) %>
-
-								<c:if test="<%= showAssetCount %>">
-									<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-								</c:if>
-							</a>
+					<ul class="list-unstyled users">
+						<li class="default facet-value">
+							<a class="<%= userSearchFacetDisplayContext.isNothingSelected() ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 						</li>
 
-					<%
-					}
-					%>
+						<%
+						java.util.List<com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext> userSearchFacetTermDisplayContexts =
+							userSearchFacetDisplayContext.getTermDisplayContexts();
 
-				</ul>
+						for (com.liferay.portal.search.web.internal.facet.display.context.UserSearchFacetTermDisplayContext userSearchFacetTermDisplayContext : userSearchFacetTermDisplayContexts) {
+						%>
+
+							<li class="facet-value">
+								<a class="<%= userSearchFacetTermDisplayContext.isSelected() ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(userSearchFacetTermDisplayContext.getUserName()) %>" href="javascript:;">
+									<%= HtmlUtil.escape(userSearchFacetTermDisplayContext.getUserName()) %>
+
+									<c:if test="<%= userSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+										<span class="frequency">(<%= userSearchFacetTermDisplayContext.getFrequency() %>)</span>
+									</c:if>
+								</a>
+							</li>
+
+						<%
+						}
+						%>
+
+					</ul>
+				</div>
 			</div>
 		</div>
-	</div>
-</c:if>
+	</c:otherwise>
+</c:choose>

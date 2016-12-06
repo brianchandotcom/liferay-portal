@@ -2399,7 +2399,7 @@
 		<execute macro="DDLRecord#populateFieldTextBox">
 			<var name="ddlRecordFieldData" value="Test 2" />
 			<var name="fieldFieldLabel" value="Text Box" />
-			<var name="fieldName" value="Text Box" />
+			<var name="fieldName" value="TextBox" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

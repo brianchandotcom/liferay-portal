@@ -126,7 +126,7 @@
 		</execute>
 
 		<execute macro="Polls#viewVotedPollPG">
-			<var name="pollsQuestionChoiceC"><![CDATA["Blonde"]]></var>
+			<var name="pollsQuestionChoice"><![CDATA["Blonde"]]></var>
 			<var name="pollsQuestionTotalVotes" value="1" />
 			<var name="pollsQuestionVoteCount" value="1" />
 			<var name="pollsQuestionVotePercent" value="100%" />

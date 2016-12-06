@@ -1224,6 +1224,7 @@
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="Document Title" />
 			<var name="tagNameList" value="tag1,tag2" />
+			<var name="vocabularyName" value="Topic" />
 		</execute>
 
 		<var name="key_dmDocumentTitle" value="Document Title" />

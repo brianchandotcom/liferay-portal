@@ -385,6 +385,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
+		newContent = newContent.replaceAll(
+			"(\\s(page|taglib))\\s+((import|uri)=)", "$1 $3");
+
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
 				newContent = formatJSPImportsOrTaglibs(
@@ -2132,7 +2135,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		"jsp.unused.variables.excludes";
 
 	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
+		"(<.*\n*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
 		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _defineObjectsPattern = Pattern.compile(
@@ -2197,7 +2200,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _testTagPattern = Pattern.compile(
 		"^<c:(if|when) test=['\"]<%= (.+) %>['\"]>$");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
-		"(<.*page.import=\".*>\n*)+", Pattern.MULTILINE);
+		"(<.*page import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(
 		"(<.*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private String _utilTaglibSrcDirName;

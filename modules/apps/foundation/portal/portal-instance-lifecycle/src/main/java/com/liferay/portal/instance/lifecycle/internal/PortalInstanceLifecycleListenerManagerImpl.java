@@ -15,6 +15,7 @@
 package com.liferay.portal.instance.lifecycle.internal;
 
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,12 +93,32 @@ public class PortalInstanceLifecycleListenerManagerImpl
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		long companyId) {
 
+		if (portalInstanceLifecycleListener.isMasterOnly() &&
+			!clusterMasterExecutor.isMaster()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Master instance required. Skipping: " +
+						portalInstanceLifecycleListener);
+			}
+		}
+
 		portalInstanceLifecycleListener.portalInstancePreregistered(companyId);
 	}
 
 	protected void registerCompany(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
+
+		if (portalInstanceLifecycleListener.isMasterOnly() &&
+			!clusterMasterExecutor.isMaster()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Master instance required. Skipping: " +
+						portalInstanceLifecycleListener);
+			}
+		}
 
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
@@ -119,6 +140,16 @@ public class PortalInstanceLifecycleListenerManagerImpl
 	protected void removePortalInstanceLifecycleListener(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener) {
 
+		if (portalInstanceLifecycleListener.isMasterOnly() &&
+			!clusterMasterExecutor.isMaster()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Master instance required. Skipping: " +
+						portalInstanceLifecycleListener);
+			}
+		}
+
 		_portalInstanceLifecycleListeners.remove(
 			portalInstanceLifecycleListener);
 	}
@@ -126,6 +157,16 @@ public class PortalInstanceLifecycleListenerManagerImpl
 	protected void unregisterCompany(
 		PortalInstanceLifecycleListener portalInstanceLifecycleListener,
 		Company company) {
+
+		if (portalInstanceLifecycleListener.isMasterOnly() &&
+			!clusterMasterExecutor.isMaster()) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Master instance required. Skipping: " +
+						portalInstanceLifecycleListener);
+			}
+		}
 
 		try {
 			portalInstanceLifecycleListener.portalInstanceUnregistered(company);
@@ -136,6 +177,9 @@ public class PortalInstanceLifecycleListenerManagerImpl
 			}
 		}
 	}
+
+	@Reference
+	protected ClusterMasterExecutor clusterMasterExecutor;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalInstanceLifecycleListenerManagerImpl.class);

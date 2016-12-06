@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.captcha.recaptcha;
+package com.liferay.captcha.recaptcha;
 
-import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
+import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
@@ -47,12 +48,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tagnaouti Boubker
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  * @author Daniel Sanz
  */
+@Component(
+	immediate = true,
+	property = {
+		"captcha.engine.impl=com.liferay.captcha.recaptcha.ReCaptchaImpl"
+	},
+	service = Captcha.class
+)
 public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 	@Override
@@ -186,8 +196,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 		return validateChallenge(request);
 	}
 
-	private static final String _TAGLIB_PATH =
-		"/html/taglib/ui/captcha/recaptcha.jsp";
+	private static final String _TAGLIB_PATH = "/captcha/recaptcha.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(ReCaptchaImpl.class);
 

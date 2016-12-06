@@ -21,6 +21,11 @@ PortletURL portletURL = ddmDataProviderDisplayContext.getPortletURL();
 
 portletURL.setParameter("displayStyle", "descriptive");
 
+String redirect = ParamUtil.getString(request, "redirect");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
 renderResponse.setTitle(LanguageUtil.get(request, "data-provider-entries"));
 
 DDMDataProviderSearch ddmDataProviderSearch = new DDMDataProviderSearch(renderRequest, portletURL);

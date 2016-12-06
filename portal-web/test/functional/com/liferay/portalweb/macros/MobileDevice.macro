@@ -13,6 +13,40 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="addRuleCP">
+		<var name="key_deviceFamilyName" value="${mobileDeviceFamilyName}" />
+		<var name="key_operatingSystem" value="${operatingSystem}" />
+		<var name="key_deviceType" value="${deviceType}" />
+
+		<execute function="AssertClick" locator1="MobileDevice#DEVICE_FAMILY_TABLE_NAME_LINK" value1="${mobileDeviceFamilyName}" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="New Classification Rule" />
+
+		<execute function="Type" locator1="TextInput#NAME" value1="${ruleName}" />
+
+		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM" />
+
+		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_DEVICE_TYPE" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="assertRedirectActionPG">
+		<execute macro-mobile="MobileNavigator#clickReorderButton" />
+
+		<execute function="AssertClick" locator1="Home#PAGE" value1="${pageName}">
+			<var name="key_pageName" value="${pageName}" />
+		</execute>
+
+		<execute function="AssertVisible" locator1="Home#PAGE_ACTIVE">
+			<var name="key_pageName" value="${redirectPageName}" />
+		</execute>
+	</command>
+
 	<command name="previewPG">
 		<execute function="Click" locator1="ControlMenu#SIMULATION" />
 

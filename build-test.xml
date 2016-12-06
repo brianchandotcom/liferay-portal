@@ -7215,13 +7215,13 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 
 		<if>
 			<and>
-				<available file="${liferay.home}/deploy/${theme.file.name}" />
+				<available file="${liferay.home}/osgi/war/${theme.file.name}" />
 				<isset property="theme.file.name" />
 			</and>
 			<then>
 				<if>
 					<resourcecount count="0" when="greater">
-						<zipfileset src="${liferay.home}/deploy/${theme.file.name}">
+						<zipfileset src="${liferay.home}/osgi/war/${theme.file.name}">
 							<patternset>
 								<include name="**/private.lar" />
 							</patternset>

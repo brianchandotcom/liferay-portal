@@ -1689,8 +1689,14 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
 				attributeName);
 
+		UnicodeProperties unicodeProperties =
+			expandoColumn.getTypeSettingsProperties();
+
+		int indexType = GetterUtil.getInteger(
+			unicodeProperties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
+
 		String fieldName = ExpandoBridgeIndexerUtil.encodeFieldName(
-			attributeName);
+			attributeName, indexType);
 
 		if (expandoColumn.getType() ==
 				ExpandoColumnConstants.STRING_LOCALIZED) {

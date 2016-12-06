@@ -14,7 +14,6 @@
 	<command name="configureFilterByCategories">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Related Assets" />
-			<var name="portletName" value="${portletName}" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 

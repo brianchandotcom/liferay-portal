@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -23,12 +25,12 @@ import java.util.Properties;
  */
 public class ModulesIntegrationBatchBuild extends BatchBuild {
 
-	public ModulesIntegrationBatchBuild(String url) throws Exception {
+	public ModulesIntegrationBatchBuild(String url) {
 		super(url);
 	}
 
-	public ModulesIntegrationBatchBuild(String url, TopLevelBuild topLevelBuild)
-		throws Exception {
+	public ModulesIntegrationBatchBuild(
+		String url, TopLevelBuild topLevelBuild) {
 
 		super(url, topLevelBuild);
 	}
@@ -46,6 +48,10 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 
 		if (_notificationsComplete) {
 			return;
+		}
+
+		if (verifiedAxisBuilds == null) {
+			verifiedAxisBuilds = new ArrayList<>();
 		}
 
 		Build reinvokeErrorAxisBuild = null;
@@ -133,18 +139,34 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 	}
 
 	protected String getReinvokeErrorMarker(int index) {
+		if (buildProperties == null) {
+			loadBuildProperties();
+		}
+
 		return buildProperties.getProperty(
 			getReinvokedErrorMarkerPropertyName(index));
 	}
 
 	protected boolean hasReinvokeErrorMarker(int index) {
+		if (buildProperties == null) {
+			loadBuildProperties();
+		}
+
 		return buildProperties.containsKey(
 			getReinvokedErrorMarkerPropertyName(index));
 	}
 
-	protected Properties buildProperties =
-		JenkinsResultsParserUtil.getBuildProperties();
-	protected List<Build> verifiedAxisBuilds = new ArrayList<>();
+	protected void loadBuildProperties() {
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Could not load build properties.", ioe);
+		}
+	}
+
+	protected Properties buildProperties;
+	protected List<Build> verifiedAxisBuilds;
 
 	private static final String _REINVOKE_ERROR_MARKER_TEMPLATE =
 		"reinvoke.error.marker[modules-integration-?]";

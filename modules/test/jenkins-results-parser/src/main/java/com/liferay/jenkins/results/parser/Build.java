@@ -24,11 +24,17 @@ public interface Build {
 
 	public void addDownstreamBuilds(String... urls);
 
+	public void archive(String archiveName);
+
+	public String getArchivePath();
+
 	public List<String> getBadBuildURLs();
 
 	public int getBuildNumber();
 
 	public String getBuildURL();
+
+	public String getBuildURLRegex();
 
 	public String getConsoleText();
 
@@ -69,6 +75,8 @@ public interface Build {
 	public boolean hasBuildURL(String buildURL);
 
 	public void reinvoke();
+
+	public String replaceBuildURL(String text);
 
 	public void update();
 

@@ -21,11 +21,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
@@ -57,7 +59,7 @@ import org.json.JSONObject;
 public class JenkinsResultsParserUtil {
 
 	public static JSONObject createJSONObject(String jsonString)
-		throws Exception {
+		throws IOException {
 
 		JSONObject jsonObject = new JSONObject(jsonString);
 
@@ -96,17 +98,23 @@ public class JenkinsResultsParserUtil {
 		return encode(url);
 	}
 
-	public static String decode(String url) throws Exception {
+	public static String decode(String url)
+		throws UnsupportedEncodingException {
+
 		return URLDecoder.decode(url, "UTF-8");
 	}
 
-	public static String encode(String url) throws Exception {
+	public static String encode(String url)
+		throws MalformedURLException, URISyntaxException {
+
 		URL encodedURL = encode(new URL(url));
 
 		return encodedURL.toExternalForm();
 	}
 
-	public static URL encode(URL url) throws Exception {
+	public static URL encode(URL url)
+		throws MalformedURLException, URISyntaxException {
+
 		URI uri = new URI(
 			url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(),
 			url.getPath(), url.getQuery(), url.getRef());
@@ -288,7 +296,7 @@ public class JenkinsResultsParserUtil {
 		return writer.toString();
 	}
 
-	public static String getActualResult(String buildURL) throws Exception {
+	public static String getActualResult(String buildURL) throws IOException {
 		String progressiveText = toString(
 			getLocalURL(buildURL + "/logText/progressiveText"), false);
 
@@ -363,7 +371,7 @@ public class JenkinsResultsParserUtil {
 		return "";
 	}
 
-	public static Properties getBuildProperties() throws Exception {
+	public static Properties getBuildProperties() throws IOException {
 		Properties properties = new Properties();
 
 		String url =
@@ -532,6 +540,26 @@ public class JenkinsResultsParserUtil {
 		return start + (int)Math.round(size * randomDouble);
 	}
 
+	public static String getRegexLiteral(String string) {
+		if (string == null) {
+			throw new NullPointerException("String may not be null");
+		}
+
+		String specialCharactersString = "\\^$.|?*+()[]{}";
+
+		StringBuilder sb = new StringBuilder();
+
+		for (char character : string.toCharArray()) {
+			if (specialCharactersString.indexOf(character) != -1) {
+				sb.append('\\');
+			}
+
+			sb.append(character);
+		}
+
+		return sb.toString();
+	}
+
 	public static List<String> getSlaves(
 		Properties buildProperties, String masterPatternString) {
 
@@ -622,14 +650,14 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static JSONObject toJSONObject(String url) throws Exception {
+	public static JSONObject toJSONObject(String url) throws IOException {
 		return toJSONObject(
 			url, true, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
 			_TIMEOUT_DEFAULT);
 	}
 
 	public static JSONObject toJSONObject(String url, boolean checkCache)
-		throws Exception {
+		throws IOException {
 
 		return createJSONObject(
 			toString(
@@ -639,7 +667,7 @@ public class JenkinsResultsParserUtil {
 
 	public static JSONObject toJSONObject(
 			String url, boolean checkCache, int timeout)
-		throws Exception {
+		throws IOException {
 
 		return toJSONObject(
 			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
@@ -649,26 +677,28 @@ public class JenkinsResultsParserUtil {
 	public static JSONObject toJSONObject(
 			String url, boolean checkCache, int maxRetries, int retryPeriod,
 			int timeout)
-		throws Exception {
+		throws IOException {
 
 		String response = toString(
 			url, checkCache, maxRetries, retryPeriod, timeout);
 
-		if (response.endsWith("was truncated due to its size.")) {
+		if ((response == null) ||
+			response.endsWith("was truncated due to its size.")) {
+
 			return null;
 		}
 
 		return createJSONObject(response);
 	}
 
-	public static String toString(String url) throws Exception {
+	public static String toString(String url) throws IOException {
 		return toString(
 			url, true, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
 			_TIMEOUT_DEFAULT);
 	}
 
 	public static String toString(String url, boolean checkCache)
-		throws Exception {
+		throws IOException {
 
 		return toString(
 			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
@@ -676,7 +706,7 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toString(String url, boolean checkCache, int timeout)
-		throws Exception {
+		throws IOException {
 
 		return toString(
 			url, checkCache, _MAX_RETRIES_DEFAULT, _RETRY_PERIOD_DEFAULT,
@@ -686,7 +716,7 @@ public class JenkinsResultsParserUtil {
 	public static String toString(
 			String url, boolean checkCache, int maxRetries, int retryPeriod,
 			int timeout)
-		throws Exception {
+		throws IOException {
 
 		url = fixURL(url);
 
@@ -697,7 +727,13 @@ public class JenkinsResultsParserUtil {
 
 			System.out.println("Loading " + url);
 
-			return _toStringCache.get(key);
+			String response = _toStringCache.get(key);
+
+			if (response != null) {
+				return response;
+			}
+
+			_toStringCache.remove(key);
 		}
 
 		int retryCount = 0;

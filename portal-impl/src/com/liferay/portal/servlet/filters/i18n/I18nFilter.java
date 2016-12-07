@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -178,6 +181,18 @@ public class I18nFilter extends BasePortalFilter {
 				String groupFriendlyURL = requestURI.substring(x, y);
 
 				Group group = layoutSet.getGroup();
+
+				if (!LanguageUtil.isInheritLocales(group.getGroupId())) {
+					UnicodeProperties typeSettingsProperties =
+						group.getTypeSettingsProperties();
+
+					String[] languageIds = StringUtil.split(
+						typeSettingsProperties.getProperty(PropsKeys.LOCALES));
+
+					if (!ArrayUtil.contains(languageIds, i18nLanguageId)) {
+						return null;
+					}
+				}
 
 				if (groupFriendlyURL.equals(group.getFriendlyURL())) {
 					redirect = contextPath + i18nPath + requestURI.substring(y);

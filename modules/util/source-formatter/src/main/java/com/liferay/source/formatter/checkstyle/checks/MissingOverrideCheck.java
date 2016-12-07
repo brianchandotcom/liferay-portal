@@ -100,7 +100,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 	private List<Tuple> _addAncestorJavaClassTuples(
 		JavaClass javaClass, List<Tuple> ancestorJavaClassTuples) {
 
-		JavaClass superJavaClass = javaClass.getSuperJavaClass();
+		JavaClass superJavaClass = _getSuperJavaClass(javaClass);
 
 		if (superJavaClass != null) {
 			ancestorJavaClassTuples.add(new Tuple(superJavaClass));
@@ -238,6 +238,25 @@ public class MissingOverrideCheck extends AbstractCheck {
 		FullIdent fullIdent = FullIdent.createFullIdent(dotAST);
 
 		return fullIdent.getText();
+	}
+
+	private JavaClass _getSuperJavaClass(JavaClass javaClass) {
+		JavaClass superJavaClass = javaClass.getSuperJavaClass();
+
+		if (superJavaClass == null) {
+			return null;
+		}
+
+		String superJavaClassName = superJavaClass.getName();
+
+		if (superJavaClassName.contains(StringPool.PERIOD)) {
+			return superJavaClass;
+		}
+
+		JavaPackage javaPackage = javaClass.getPackage();
+
+		return new JavaClass(
+			javaPackage.getName() + StringPool.PERIOD + superJavaClassName);
 	}
 
 	private boolean _hasAnnotation(

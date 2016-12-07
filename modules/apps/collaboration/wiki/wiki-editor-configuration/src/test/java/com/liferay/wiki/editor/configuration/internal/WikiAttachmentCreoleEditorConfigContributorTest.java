@@ -173,7 +173,7 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		expectedJSONObject.put(
 			"filebrowserImageBrowseUrl",
 			"itemSelectorPortletURLWithWikiUrlAndUploadSelectionViews");
-		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
+		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
@@ -205,7 +205,7 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
+		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
@@ -237,7 +237,7 @@ public class WikiAttachmentCreoleEditorConfigContributorTest
 		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
 			originalJSONObject.toJSONString());
 
-		expectedJSONObject.put("removePlugins", "plugin1,ae_addimages");
+		expectedJSONObject.put("removePlugins", "plugin1");
 
 		JSONAssert.assertEquals(
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);

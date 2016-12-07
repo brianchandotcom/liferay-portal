@@ -378,8 +378,8 @@ if (portletTitleBasedNavigation) {
 	</aui:form>
 </div>
 
-<aui:script require="wiki-web/wiki/js/wiki.es">
-	new wikiWebWikiJsWikiEs.default(
+<aui:script require="wiki-web/wiki/js/WikiPortlet.es">
+	new wikiWebWikiJsWikiPortletEs.default(
 		{
 			constants: {
 				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',

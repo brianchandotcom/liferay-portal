@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.custom.field.ui.servlet.taglib;
+package com.liferay.expando.custom.field.ui.taglib.servlet.taglib;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;

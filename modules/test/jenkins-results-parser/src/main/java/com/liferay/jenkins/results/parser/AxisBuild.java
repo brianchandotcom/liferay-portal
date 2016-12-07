@@ -87,7 +87,7 @@ public class AxisBuild extends BaseBuild {
 			jobURL = JenkinsResultsParserUtil.decode(jobURL);
 		}
 		catch (UnsupportedEncodingException uee) {
-			throw new RuntimeException("Uanble to decode " + jobURL, uee);
+			throw new RuntimeException("Unable to decode " + jobURL, uee);
 		}
 
 		String buildURL = jobURL + "/" + axisVariable + "/" + buildNumber + "/";
@@ -182,7 +182,7 @@ public class AxisBuild extends BaseBuild {
 		}
 		catch (UnsupportedEncodingException uee) {
 			throw new IllegalArgumentException(
-				"Uanble to decode " + buildURL, uee);
+				"Unable to decode " + buildURL, uee);
 		}
 
 		Matcher matcher = _buildURLPattern.matcher(buildURL);

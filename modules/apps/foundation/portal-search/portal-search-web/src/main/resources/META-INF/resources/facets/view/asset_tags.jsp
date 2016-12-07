@@ -17,99 +17,59 @@
 <%@ include file="/facets/init.jsp" %>
 
 <%
-if (termCollectors.isEmpty()) {
-	return;
-}
-
-String displayStyle = dataJSONObject.getString("displayStyle", "cloud");
-int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-int maxTerms = dataJSONObject.getInt("maxTerms", 10);
-boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
+com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext assetTagsSearchFacetDisplayContext =
+	new com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetDisplayContext(
+		facet, fieldParam,
+		dataJSONObject.getString("displayStyle", "cloud"),
+		dataJSONObject.getInt("frequencyThreshold"),
+		dataJSONObject.getInt("maxTerms", 10),
+		dataJSONObject.getBoolean("showAssetCount", true));
 %>
 
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<div class="panel-title">
-			<liferay-ui:message key="tags" />
-		</div>
-	</div>
+<c:choose>
+	<c:when test="<%= assetTagsSearchFacetDisplayContext.isRenderNothing() %>">
+		<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getFieldParamInputValue() %>" />
+	</c:when>
+	<c:otherwise>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<div class="panel-title">
+					<liferay-ui:message key="tags" />
+				</div>
+			</div>
 
-	<div class="panel-body">
-		<div class="asset-tags <%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
-			<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
+			<div class="panel-body">
+				<div class="asset-tags <%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
+					<aui:input autocomplete="off" name="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetDisplayContext.getFieldParamInputName()) %>" type="hidden" value="<%= assetTagsSearchFacetDisplayContext.getFieldParamInputValue() %>" />
 
-			<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %> list-unstyled">
-				<li class="default facet-value">
-					<a class="<%= Validator.isNull(fieldParam) ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
-				</li>
+					<ul class="<%= assetTagsSearchFacetDisplayContext.isCloudWithCount() ? "tag-cloud" : "tag-list" %> list-unstyled">
+						<li class="default facet-value">
+							<a class="<%= assetTagsSearchFacetDisplayContext.isNothingSelected() ? "text-primary" : "text-default" %>" data-value="" href="javascript:;"><liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+						</li>
 
-				<%
-				int maxCount = 1;
-				int minCount = 1;
+						<%
+						java.util.List<com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext> assetTagsSearchFacetTermDisplayContexts = assetTagsSearchFacetDisplayContext.getTermDisplayContexts();
 
-				if (showAssetCount && displayStyle.equals("cloud")) {
+						for (com.liferay.portal.search.web.internal.facet.display.context.AssetTagsSearchFacetTermDisplayContext assetTagsSearchFacetTermDisplayContext : assetTagsSearchFacetTermDisplayContexts) {
+						%>
 
-					// The cloud style may not list tags in the order of frequency,
-					// so keep looking through the results until we reach the maximum
-					// number of terms or we run out of terms.
+							<li class="facet-value tag-popularity-<%= assetTagsSearchFacetTermDisplayContext.getPopularity() %>">
+								<a class="<%= assetTagsSearchFacetTermDisplayContext.isSelected() ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(assetTagsSearchFacetTermDisplayContext.getValue()) %>" href="javascript:;">
+									<%= HtmlUtil.escape(assetTagsSearchFacetTermDisplayContext.getDisplayName()) %>
 
-					for (int i = 0, j = 0; i < termCollectors.size(); i++, j++) {
-						if (j >= maxTerms) {
-							break;
+									<c:if test="<%= assetTagsSearchFacetTermDisplayContext.isShowFrequency() %>">
+										<span class="frequency">(<%= assetTagsSearchFacetTermDisplayContext.getFrequency() %>)</span>
+									</c:if>
+								</a>
+							</li>
+
+						<%
 						}
+						%>
 
-						TermCollector termCollector = termCollectors.get(i);
-
-						int frequency = termCollector.getFrequency();
-
-						if (frequencyThreshold > frequency) {
-							j--;
-
-							continue;
-						}
-
-						maxCount = Math.max(maxCount, frequency);
-						minCount = Math.min(minCount, frequency);
-					}
-				}
-
-				double multiplier = 1;
-
-				if (maxCount != minCount) {
-					multiplier = (double)5 / (maxCount - minCount);
-				}
-
-				for (int i = 0, j = 0; i < termCollectors.size(); i++, j++) {
-					if (j >= maxTerms) {
-						break;
-					}
-
-					TermCollector termCollector = termCollectors.get(i);
-
-					int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
-
-					if (frequencyThreshold > termCollector.getFrequency()) {
-						j--;
-
-						continue;
-					}
-				%>
-
-					<li class="facet-value tag-popularity-<%= popularity %>">
-						<a class="<%= fieldParam.equals(termCollector.getTerm()) ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;">
-							<%= HtmlUtil.escape(termCollector.getTerm()) %>
-
-							<c:if test="<%= showAssetCount %>">
-								<span class="frequency">(<%= termCollector.getFrequency() %>)</span>
-							</c:if>
-						</a>
-					</li>
-
-				<%
-				}
-				%>
-
-			</ul>
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
+	</c:otherwise>
+</c:choose>

@@ -55,22 +55,26 @@ if (portletTitleBasedNavigation) {
 %>
 
 <liferay-util:buffer var="saveStatus">
-	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus"><c:if test="<%= entry != null %>">
-		<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+	<small class="text-capitalize text-muted" id="<portlet:namespace />saveStatus">
+		<c:if test="<%= entry != null %>">
+			<aui:workflow-status markupView="lexicon" showHelpMessage="<%= false %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 
-		<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-	</c:if></small>
+			<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+		</c:if>
+	</small>
 </liferay-util:buffer>
 
 <liferay-util:buffer var="readingTime">
 
 	<%
-	int readingTimeInMinutes = (entry == null ? 0 : com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent()));
+	int readingTimeInMinutes = (entry == null) ? 0 : com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent());
 	%>
 
-	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime"><c:if test="<%= readingTimeInMinutes > 0 %>">
-		<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
-	</c:if></small>
+	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime">
+		<c:if test="<%= readingTimeInMinutes > 0 %>">
+			<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
+		</c:if>
+	</small>
 </liferay-util:buffer>
 
 <c:if test="<%= portletTitleBasedNavigation %>">

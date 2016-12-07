@@ -400,12 +400,35 @@
 		width: 50%;
 	}
 
-	.btn-group .calendar-add-event-btn {
-		margin-right: 3px;
-
-		@include respond-to(phone) {
-			width: 100%;
+	.btn-group {
+		button {
+			margin-left: 0 !important;
 		}
+
+		button:not(:last-child) {
+			border-right: 1px;
+		}
+
+		.calendar-add-event-btn {
+			margin-right: 3px;
+
+			@include respond-to(phone) {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.scheduler-base-hd .scheduler-base-views {
+	button {
+		border-right: 1px;
+		margin-left: 0 !important;
+	}
+
+	button:nth-child(4) {
+		border-bottom-right-radius: 4px !important;
+		border-right: solid 2px;
+		border-top-right-radius: 4px !important;
 	}
 }
 

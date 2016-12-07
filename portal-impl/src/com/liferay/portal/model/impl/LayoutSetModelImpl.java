@@ -120,8 +120,9 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long LAYOUTSETPROTOTYPEUUID_COLUMN_BITMASK = 2L;
-	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 4L;
-	public static final long LAYOUTSETID_COLUMN_BITMASK = 8L;
+	public static final long LOGOID_COLUMN_BITMASK = 4L;
+	public static final long PRIVATELAYOUT_COLUMN_BITMASK = 8L;
+	public static final long LAYOUTSETID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -454,7 +455,19 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 	@Override
 	public void setLogoId(long logoId) {
+		_columnBitmask |= LOGOID_COLUMN_BITMASK;
+
+		if (!_setOriginalLogoId) {
+			_setOriginalLogoId = true;
+
+			_originalLogoId = _logoId;
+		}
+
 		_logoId = logoId;
+	}
+
+	public long getOriginalLogoId() {
+		return _originalLogoId;
 	}
 
 	@JSON
@@ -709,6 +722,10 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetModelImpl._setOriginalPrivateLayout = false;
 
+		layoutSetModelImpl._originalLogoId = layoutSetModelImpl._logoId;
+
+		layoutSetModelImpl._setOriginalLogoId = false;
+
 		layoutSetModelImpl._originalLayoutSetPrototypeUuid = layoutSetModelImpl._layoutSetPrototypeUuid;
 
 		setCompanyFallbackVirtualHostname(null);
@@ -934,6 +951,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;
 	private long _logoId;
+	private long _originalLogoId;
+	private boolean _setOriginalLogoId;
 	private String _themeId;
 	private String _colorSchemeId;
 	private String _css;

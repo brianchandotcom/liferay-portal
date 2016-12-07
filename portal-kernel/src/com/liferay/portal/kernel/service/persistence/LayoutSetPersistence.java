@@ -361,6 +361,56 @@ public interface LayoutSetPersistence extends BasePersistence<LayoutSet> {
 	public int countByG_P(long groupId, boolean privateLayout);
 
 	/**
+	* Returns the layout set where privateLayout = &#63; and logoId = &#63; or throws a {@link NoSuchLayoutSetException} if it could not be found.
+	*
+	* @param privateLayout the private layout
+	* @param logoId the logo ID
+	* @return the matching layout set
+	* @throws NoSuchLayoutSetException if a matching layout set could not be found
+	*/
+	public LayoutSet findByP_L(boolean privateLayout, long logoId)
+		throws NoSuchLayoutSetException;
+
+	/**
+	* Returns the layout set where privateLayout = &#63; and logoId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param privateLayout the private layout
+	* @param logoId the logo ID
+	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
+	*/
+	public LayoutSet fetchByP_L(boolean privateLayout, long logoId);
+
+	/**
+	* Returns the layout set where privateLayout = &#63; and logoId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param privateLayout the private layout
+	* @param logoId the logo ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
+	*/
+	public LayoutSet fetchByP_L(boolean privateLayout, long logoId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the layout set where privateLayout = &#63; and logoId = &#63; from the database.
+	*
+	* @param privateLayout the private layout
+	* @param logoId the logo ID
+	* @return the layout set that was removed
+	*/
+	public LayoutSet removeByP_L(boolean privateLayout, long logoId)
+		throws NoSuchLayoutSetException;
+
+	/**
+	* Returns the number of layout sets where privateLayout = &#63; and logoId = &#63;.
+	*
+	* @param privateLayout the private layout
+	* @param logoId the logo ID
+	* @return the number of matching layout sets
+	*/
+	public int countByP_L(boolean privateLayout, long logoId);
+
+	/**
 	* Caches the layout set in the entity cache if it is enabled.
 	*
 	* @param layoutSet the layout set

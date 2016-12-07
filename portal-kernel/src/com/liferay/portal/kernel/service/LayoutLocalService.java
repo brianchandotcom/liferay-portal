@@ -445,6 +445,10 @@ public interface LayoutLocalService extends BaseLocalService,
 	public Layout fetchLayoutByFriendlyURL(long groupId, boolean privateLayout,
 		java.lang.String friendlyURL);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout fetchLayoutByIconImageId(boolean privateLayout,
+		long iconImageId) throws PortalException;
+
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*

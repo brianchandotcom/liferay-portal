@@ -682,7 +682,9 @@ public class JenkinsResultsParserUtil {
 		String response = toString(
 			url, checkCache, maxRetries, retryPeriod, timeout);
 
-		if (response.endsWith("was truncated due to its size.")) {
+		if ((response == null) ||
+			response.endsWith("was truncated due to its size.")) {
+
 			return null;
 		}
 
@@ -725,7 +727,13 @@ public class JenkinsResultsParserUtil {
 
 			System.out.println("Loading " + url);
 
-			return _toStringCache.get(key);
+			String response = _toStringCache.get(key);
+
+			if (response != null) {
+				return response;
+			}
+
+			_toStringCache.remove(key);
 		}
 
 		int retryCount = 0;

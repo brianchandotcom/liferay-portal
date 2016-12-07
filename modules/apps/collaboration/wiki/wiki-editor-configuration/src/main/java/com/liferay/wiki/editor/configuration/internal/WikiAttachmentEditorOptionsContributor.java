@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.editor.configuration.internal;
 
-
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -23,11 +22,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import org.osgi.service.component.annotations.Component;
+
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
-import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrin Chaudhary
@@ -37,11 +38,12 @@ import java.util.Map;
 		"editor.config.key=contentEditor",
 		"javax.portlet.name=" + WikiPortletKeys.WIKI,
 		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY
 	},
 	service = EditorOptionsContributor.class
 )
-public class WikiAttachmentEditorOptionsContributor implements EditorOptionsContributor {
+public class WikiAttachmentEditorOptionsContributor
+	implements EditorOptionsContributor {
 
 	@Override
 	public void populateEditorOptions(
@@ -55,12 +57,6 @@ public class WikiAttachmentEditorOptionsContributor implements EditorOptionsCont
 		if (Validator.isNull(portletDisplay.getId())) {
 			return;
 		}
-
-		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
-			WikiPortletKeys.WIKI);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
 
 		Map<String, String> fileBrowserParamsMap =
 			(Map<String, String>)inputEditorTaglibAttributes.get(
@@ -77,11 +73,16 @@ public class WikiAttachmentEditorOptionsContributor implements EditorOptionsCont
 			return;
 		}
 
+		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
+			WikiPortletKeys.WIKI);
+
 		portletURL.setParameter(
-			"resourcePrimKey",
-			String.valueOf(
-				wikiPageResourcePrimKey));
+			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
+
+		portletURL.setParameter(
+			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 
 		editorOptions.setUploadURL(portletURL.toString());
 	}
+
 }

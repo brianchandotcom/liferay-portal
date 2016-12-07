@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.bundle.support;
+package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;

@@ -17,6 +17,7 @@ package com.liferay.portal.tools.bundle.support;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
+import com.liferay.portal.tools.bundle.support.commands.Command;
 import com.liferay.portal.tools.bundle.support.internal.BundleSupportArgs;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 

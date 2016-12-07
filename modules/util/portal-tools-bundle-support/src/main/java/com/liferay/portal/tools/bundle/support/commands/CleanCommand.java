@@ -17,7 +17,6 @@ package com.liferay.portal.tools.bundle.support.commands;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
-import com.liferay.portal.tools.bundle.support.BaseCommand;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 

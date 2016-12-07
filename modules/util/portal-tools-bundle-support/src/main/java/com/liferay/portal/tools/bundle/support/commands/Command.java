@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.bundle.support;
+package com.liferay.portal.tools.bundle.support.commands;
 
 /**
  * @author Andrea Di Giorgi

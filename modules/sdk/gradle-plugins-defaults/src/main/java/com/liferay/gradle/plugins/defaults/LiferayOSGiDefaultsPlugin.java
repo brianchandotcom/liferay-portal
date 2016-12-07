@@ -49,6 +49,7 @@ import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
 import com.liferay.gradle.plugins.upgrade.table.builder.UpgradeTableBuilderPlugin;
 import com.liferay.gradle.plugins.util.PortalTools;
 import com.liferay.gradle.plugins.whip.WhipPlugin;
+import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.WSDLBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
@@ -131,6 +132,7 @@ import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.GradleInternal;
+import org.gradle.api.internal.artifacts.publish.ArchivePublishArtifact;
 import org.gradle.api.internal.project.ProjectInternal;
 import org.gradle.api.invocation.Gradle;
 import org.gradle.api.logging.Logger;
@@ -1336,6 +1338,31 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		if (FileUtil.hasSourceFiles(tlddocTask, spec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarTLDDocTask);
+		}
+
+		if (GradleUtil.hasPlugin(project, WSDDBuilderPlugin.class)) {
+			BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
+				project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+
+			File serviceXmlFile = buildWSDDTask.getInputFile();
+
+			if (serviceXmlFile.exists()) {
+				Task buildWSDDJarTask = GradleUtil.getTask(
+					project, buildWSDDTask.getName() + "Jar");
+
+				artifactHandler.add(
+					Dependency.ARCHIVES_CONFIGURATION, buildWSDDJarTask,
+					new Closure<Void>(project) {
+
+						@SuppressWarnings("unused")
+						public void doCall(
+							ArchivePublishArtifact archivePublishArtifact) {
+
+							archivePublishArtifact.setClassifier("wsdd");
+						}
+
+					});
+			}
 		}
 	}
 

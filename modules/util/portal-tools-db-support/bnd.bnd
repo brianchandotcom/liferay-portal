@@ -4,8 +4,10 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.tools.db.support,\
 	com.liferay.portal.tools.db.support.ant,\
-	com.liferay.portal.tools.db.support.commands
+	com.liferay.portal.tools.db.support.commands,\
+	com.liferay.portal.tools.db.support.maven
 Import-Package:\
+	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.portal.tools.db.support.DBSupport

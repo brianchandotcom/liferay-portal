@@ -749,7 +749,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 					PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 
 					if ((passwordPolicy == null) ||
-						passwordPolicy.isChangeRequired()) {
+						passwordPolicy.isChangeable()) {
 
 						return _PATH_PORTAL_UPDATE_PASSWORD;
 					}

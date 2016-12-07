@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.custom.field.ui.servlet;
+package com.liferay.expando.custom.field.ui.taglib.internal.servlet;
 
 import javax.servlet.ServletContext;
 

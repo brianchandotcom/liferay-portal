@@ -511,9 +511,11 @@ while (manageableCalendarsIterator.hasNext()) {
 			var A = AUI();
 
 			<c:if test="<%= invitable %>">
-				var calendarId = A.one('#<portlet:namespace />calendarId').val();
 				var calendarContainer = Liferay.component('<portlet:namespace />calendarContainer');
+
 				var childCalendarIds = A.Object.keys(calendarContainer.get('availableCalendars'));
+
+				var calendarId = A.one('#<portlet:namespace />calendarId').val();
 
 				A.Array.remove(childCalendarIds, A.Array.indexOf(childCalendarIds, calendarId));
 

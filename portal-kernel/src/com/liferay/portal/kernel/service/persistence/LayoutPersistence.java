@@ -1226,6 +1226,56 @@ public interface LayoutPersistence extends BasePersistence<Layout> {
 	public int filterCountByG_P(long groupId, boolean privateLayout);
 
 	/**
+	* Returns the layout where iconImageId = &#63; and privateLayout = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
+	*
+	* @param iconImageId the icon image ID
+	* @param privateLayout the private layout
+	* @return the matching layout
+	* @throws NoSuchLayoutException if a matching layout could not be found
+	*/
+	public Layout findByI_P(long iconImageId, boolean privateLayout)
+		throws NoSuchLayoutException;
+
+	/**
+	* Returns the layout where iconImageId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param iconImageId the icon image ID
+	* @param privateLayout the private layout
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public Layout fetchByI_P(long iconImageId, boolean privateLayout);
+
+	/**
+	* Returns the layout where iconImageId = &#63; and privateLayout = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param iconImageId the icon image ID
+	* @param privateLayout the private layout
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching layout, or <code>null</code> if a matching layout could not be found
+	*/
+	public Layout fetchByI_P(long iconImageId, boolean privateLayout,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the layout where iconImageId = &#63; and privateLayout = &#63; from the database.
+	*
+	* @param iconImageId the icon image ID
+	* @param privateLayout the private layout
+	* @return the layout that was removed
+	*/
+	public Layout removeByI_P(long iconImageId, boolean privateLayout)
+		throws NoSuchLayoutException;
+
+	/**
+	* Returns the number of layouts where iconImageId = &#63; and privateLayout = &#63;.
+	*
+	* @param iconImageId the icon image ID
+	* @param privateLayout the private layout
+	* @return the number of matching layouts
+	*/
+	public int countByI_P(long iconImageId, boolean privateLayout);
+
+	/**
 	* Returns the layout where groupId = &#63; and privateLayout = &#63; and layoutId = &#63; or throws a {@link NoSuchLayoutException} if it could not be found.
 	*
 	* @param groupId the group ID

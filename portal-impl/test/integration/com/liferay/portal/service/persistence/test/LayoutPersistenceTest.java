@@ -313,6 +313,14 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByI_P() throws Exception {
+		_persistence.countByI_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByI_P(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_P_L() throws Exception {
 		_persistence.countByG_P_L(RandomTestUtil.nextLong(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
@@ -622,6 +630,13 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(Long.valueOf(existingLayout.getIconImageId()),
 			ReflectionTestUtil.<Long>invoke(existingLayout,
 				"getOriginalIconImageId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingLayout.getIconImageId()),
+			ReflectionTestUtil.<Long>invoke(existingLayout,
+				"getOriginalIconImageId", new Class<?>[0]));
+		Assert.assertEquals(Boolean.valueOf(existingLayout.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(existingLayout,
+				"getOriginalPrivateLayout", new Class<?>[0]));
 
 		Assert.assertEquals(Long.valueOf(existingLayout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingLayout,

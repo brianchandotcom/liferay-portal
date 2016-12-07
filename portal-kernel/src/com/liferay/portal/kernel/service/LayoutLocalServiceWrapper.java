@@ -539,6 +539,14 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 			privateLayout, friendlyURL);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.Layout fetchLayoutByIconImageId(
+		long iconImageId, boolean privateLayout)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutLocalService.fetchLayoutByIconImageId(iconImageId,
+			privateLayout);
+	}
+
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*

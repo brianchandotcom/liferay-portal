@@ -633,6 +633,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 		</finder>
+		<finder name="I_P" return-type="Layout">
+			<finder-column name="iconImageId" />
+			<finder-column name="privateLayout" />
+		</finder>
 		<finder name="G_P_L" return-type="Layout" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
@@ -988,6 +992,10 @@
 		</finder>
 		<finder name="G_P" return-type="LayoutSet" unique="true">
 			<finder-column name="groupId" />
+			<finder-column name="privateLayout" />
+		</finder>
+		<finder name="L_P" return-type="Layout">
+			<finder-column name="logoId" />
 			<finder-column name="privateLayout" />
 		</finder>
 

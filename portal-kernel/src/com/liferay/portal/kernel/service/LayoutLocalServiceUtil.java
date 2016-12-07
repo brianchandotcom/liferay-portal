@@ -526,6 +526,12 @@ public class LayoutLocalServiceUtil {
 				   .fetchLayoutByFriendlyURL(groupId, privateLayout, friendlyURL);
 	}
 
+	public static com.liferay.portal.kernel.model.Layout fetchLayoutByIconImageId(
+		boolean privateLayout, long iconImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchLayoutByIconImageId(privateLayout, iconImageId);
+	}
+
 	/**
 	* Returns the layout matching the UUID, group, and privacy.
 	*

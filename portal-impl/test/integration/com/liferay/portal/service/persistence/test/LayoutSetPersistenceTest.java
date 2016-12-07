@@ -207,6 +207,14 @@ public class LayoutSetPersistenceTest {
 	}
 
 	@Test
+	public void testCountByP_L() throws Exception {
+		_persistence.countByP_L(RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByP_L(RandomTestUtil.randomBoolean(), 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		LayoutSet newLayoutSet = addLayoutSet();
 
@@ -444,6 +452,14 @@ public class LayoutSetPersistenceTest {
 				existingLayoutSet.getPrivateLayout()),
 			ReflectionTestUtil.<Boolean>invoke(existingLayoutSet,
 				"getOriginalPrivateLayout", new Class<?>[0]));
+
+		Assert.assertEquals(Boolean.valueOf(
+				existingLayoutSet.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(existingLayoutSet,
+				"getOriginalPrivateLayout", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingLayoutSet.getLogoId()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutSet,
+				"getOriginalLogoId", new Class<?>[0]));
 	}
 
 	protected LayoutSet addLayoutSet() throws Exception {

@@ -984,6 +984,14 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			groupId, privateLayout, friendlyURL);
 	}
 
+	@Override
+	public Layout fetchLayoutByIconImageId(
+			boolean privateLayout, long iconImageId)
+		throws PortalException {
+
+		return layoutPersistence.fetchByP_I(privateLayout, iconImageId);
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group
 	 *

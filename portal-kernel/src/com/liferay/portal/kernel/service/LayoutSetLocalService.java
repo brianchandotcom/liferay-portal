@@ -117,6 +117,10 @@ public interface LayoutSetLocalService extends BaseLocalService,
 	public LayoutSet fetchLayoutSet(long layoutSetId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public LayoutSet fetchLayoutSetByLogoId(boolean privateLayout, long logoId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public LayoutSet getLayoutSet(java.lang.String virtualHostname)
 		throws PortalException;
 

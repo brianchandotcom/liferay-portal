@@ -188,7 +188,12 @@ AUI.add(
 								image.removeClass(CSS_UPLOADING_IMAGE);
 
 								image.attr(data.file.attributeDataImageId, data.file.fileEntryId);
-								image.attr('src', data.file.url);
+
+								var editor = instance._editor;
+
+								var imageSrc = editor.config.attachmentURLPrefix ? editor.config.attachmentURLPrefix + data.file.title : data.file.url;
+
+								image.attr('src', imageSrc);
 
 								var imageContainer = image.ancestor();
 

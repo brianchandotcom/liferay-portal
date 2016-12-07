@@ -54,6 +54,17 @@ public class AxisBuild extends BaseBuild {
 		return sb.toString();
 	}
 
+	public String getAxisNumber() {
+		Matcher matcher = _axisVariablePattern.matcher(getAxisVariable());
+
+		if (matcher.find()) {
+			return matcher.group("axisNumber");
+		}
+
+		throw new RuntimeException(
+			"Invalid axis variable detected. " + getAxisVariable());
+	}
+
 	public String getAxisVariable() {
 		return axisVariable;
 	}
@@ -135,6 +146,34 @@ public class AxisBuild extends BaseBuild {
 	protected void checkForReinvocation() {
 	}
 
+	protected String getStopPropertiesTempMapURL() {
+		if (fromArchive) {
+			return getBuildURL() + "/stop-properties.json";
+		}
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/");
+		sb.append(topLevelBuild.getMaster());
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("/");
+		sb.append(getJobName());
+		sb.append("/");
+		sb.append(getAxisVariable());
+		sb.append("/");
+		sb.append(getParameterValue("JOB_VARIANT"));
+		sb.append("/");
+		sb.append("stop.properties");
+
+		return sb.toString();
+	}
+
 	@Override
 	protected void setBuildURL(String buildURL) {
 		try {
@@ -176,6 +215,8 @@ public class AxisBuild extends BaseBuild {
 			"(?<master>[^/]+)/+(?<jobName>[^/]+)/" +
 				"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
 					"(?<buildNumber>\\d+)/?");
+	private static final Pattern _axisVariablePattern = Pattern.compile(
+		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
 			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +

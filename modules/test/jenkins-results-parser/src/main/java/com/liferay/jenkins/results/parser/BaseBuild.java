@@ -674,6 +674,38 @@ public abstract class BaseBuild implements Build {
 		downloadSampleURL(getArchivePath(), true, getBuildURL(), "api/json");
 		downloadSampleURL(
 			getArchivePath(), false, getBuildURL(), "testReport/api/json");
+
+		if (!getStartPropertiesMap().isEmpty()) {
+			try {
+				JSONObject startPropertiesJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						getStartPropertiesTempMapURL());
+
+				writeArchiveFile(
+					startPropertiesJSONObject.toString(4),
+					getArchivePath() + "/start-properties.json");
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Could not create start-properties.json", ioe);
+			}
+		}
+
+		if (!getStopPropertiesMap().isEmpty()) {
+			try {
+				JSONObject stopPropertiesJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(
+						getStopPropertiesTempMapURL());
+
+				writeArchiveFile(
+					stopPropertiesJSONObject.toString(4),
+					getArchivePath() + "/stop-properties.json");
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Could not create stop-properties.json", ioe);
+			}
+		}
 	}
 
 	protected void checkForReinvocation() {
@@ -926,28 +958,6 @@ public abstract class BaseBuild implements Build {
 		return parameterNames;
 	}
 
-	protected String getJSONMapURL(TopLevelBuild topLevelBuild) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(topLevelBuild.getMaster());
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-		sb.append("/");
-		sb.append(topLevelBuild.getBuildNumber());
-		sb.append("/");
-		sb.append(getJobName());
-		sb.append("/");
-
-		String jobVariant = getParameterValue("JOB_VARIANT");
-
-		if ((jobVariant != null) && !jobVariant.isEmpty()) {
-			sb.append(jobVariant);
-			sb.append("/");
-		}
-
-		return sb.toString();
-	}
-
 	protected Map<String, String> getParameters(JSONArray jsonArray)
 		throws Exception {
 
@@ -1053,79 +1063,72 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
-	protected Map<String, String> getStartProperties(Build targetBuild) {
-		BaseBuild parentBuild = (BaseBuild)_parentBuild;
-
-		if (parentBuild != null) {
-			return parentBuild.getStartProperties(targetBuild);
+	protected String getStartPropertiesTempMapURL() {
+		if (fromArchive) {
+			return getBuildURL() + "/start-properties.json";
 		}
 
-		return Collections.emptyMap();
+		return getParameterValue("JSON_MAP_URL");
 	}
 
-	protected Map<String, String> getStopProperties(Build targetBuild) {
-		BaseBuild parentBuild = (BaseBuild)_parentBuild;
-
-		if (parentBuild != null) {
-			return parentBuild.getStopProperties(targetBuild);
-		}
-
-		return Collections.emptyMap();
+	protected String getStopPropertiesTempMapURL() {
+		return null;
 	}
 
-	protected Map<String, String> getTempMap(String mapName) {
-		Build buildCur = this;
+	protected Map<String, String> getTempMap(String tempMapName) {
+		JSONObject tempMapJSONObject = null;
 
-		while (!(buildCur instanceof TopLevelBuild)) {
-			buildCur = buildCur.getParentBuild();
+		String tempMapURL = null;
 
-			if (buildCur == null) {
-				throw new RuntimeException("Incomplete build tree");
-			}
+		if (tempMapName.equals("start.properties")) {
+			tempMapURL = getStartPropertiesTempMapURL();
 		}
 
-		StringBuilder sb = new StringBuilder();
+		if (tempMapName.equals("stop.properties")) {
+			tempMapURL = getStopPropertiesTempMapURL();
+		}
 
-		sb.append(
-			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/");
-		sb.append(getJSONMapURL((TopLevelBuild)buildCur));
-		sb.append(mapName);
+		if (tempMapURL == null) {
+			return Collections.emptyMap();
+		}
 
 		try {
-			JSONObject tempMapJSONObject =
-				JenkinsResultsParserUtil.toJSONObject(sb.toString(), false);
-
-			if (!tempMapJSONObject.has("properties")) {
-				return Collections.emptyMap();
-			}
-
-			JSONArray propertiesJSONArray = tempMapJSONObject.getJSONArray(
-				"properties");
-
-			Map<String, String> tempMap = new HashMap<>(
-				propertiesJSONArray.length());
-
-			for (int i = 0; i < propertiesJSONArray.length(); i++) {
-				JSONObject propertyJSONObject =
-					propertiesJSONArray.getJSONObject(i);
-
-				String key = propertyJSONObject.getString("name");
-				String value = propertyJSONObject.optString("value");
-
-				if ((value != null) && !value.isEmpty()) {
-					tempMap.put(key, value);
-				}
-			}
-
-			return tempMap;
+			tempMapJSONObject = JenkinsResultsParserUtil.toJSONObject(
+				JenkinsResultsParserUtil.getLocalURL(tempMapURL), false, 0, 0,
+				0);
 		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
+		catch (IOException ioe) {
 		}
+
+		if ((tempMapJSONObject == null) ||
+			!tempMapJSONObject.has("properties")) {
+
+			return Collections.emptyMap();
+		}
+
+		JSONArray propertiesJSONArray = tempMapJSONObject.getJSONArray(
+			"properties");
+
+		Map<String, String> tempMap = new HashMap<>(
+			propertiesJSONArray.length());
+
+		for (int i = 0; i < propertiesJSONArray.length(); i++) {
+			JSONObject propertyJSONObject = propertiesJSONArray.getJSONObject(
+				i);
+
+			String key = propertyJSONObject.getString("name");
+			String value = propertyJSONObject.optString("value");
+
+			if ((value != null) && !value.isEmpty()) {
+				tempMap.put(key, value);
+			}
+		}
+
+		return tempMap;
 	}
 
-	protected Build getTopLevelBuild() {
-		Build topLevelBuild = _parentBuild;
+	protected TopLevelBuild getTopLevelBuild() {
+		Build topLevelBuild = this;
 
 		while ((topLevelBuild != null) &&
 		 !(topLevelBuild instanceof TopLevelBuild)) {
@@ -1133,7 +1136,7 @@ public abstract class BaseBuild implements Build {
 			topLevelBuild = topLevelBuild.getParentBuild();
 		}
 
-		return topLevelBuild;
+		return (TopLevelBuild)topLevelBuild;
 	}
 
 	protected boolean isParentBuildRoot() {

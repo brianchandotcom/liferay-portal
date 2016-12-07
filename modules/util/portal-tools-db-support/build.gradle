@@ -1,6 +1,7 @@
 dependencies {
 	provided group: "com.beust", name: "jcommander", version: "1.58"
 	provided group: "com.liferay", name: "com.liferay.portal.tools.service.builder", transitive: false, version: "1.0.135"
+	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 
 	testCompile group: "com.h2database", name: "h2", version: "1.4.193"
 }

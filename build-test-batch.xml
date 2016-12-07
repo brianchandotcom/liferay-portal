@@ -253,8 +253,6 @@ mariadb.executable=${mariadb.executable}]]></echo>
 
 			<database-test-action database.type="@{database.type}">
 				<action>
-					<set-portal-impl-portal-ext-properties />
-
 					<set-portal-impl-portal-test-ext-properties />
 
 					<set-portal-impl-system-ext-properties />

@@ -68,13 +68,13 @@ if (portletTitleBasedNavigation) {
 	int readingTimeInMinutes = com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent());
 	%>
 
-	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime"><c:if test="<%= entry != null  && readingTimeInMinutes > 0 %>">
+	<small class="text-capitalize text-muted" id="<portlet:namespace />readingTime"><c:if test="<%= entry != null && readingTimeInMinutes > 0 %>">
 		<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
 	</c:if></small>
 </liferay-util:buffer>
 
 <c:if test="<%= portletTitleBasedNavigation %>">
-	<liferay-frontend:info-bar fixed="<%= Boolean.TRUE %>">
+	<liferay-frontend:info-bar fixed="<%= true %>">
 		<%= saveStatus %>
 		<%= readingTime %>
 	</liferay-frontend:info-bar>

@@ -15,7 +15,7 @@ AUI.add(
 
 		var TPL_PROGRESS_BAR = '<div class="progressbar"></div>';
 
-		var BlogsUploader = A.Component.create(
+		var EditorImageUploader = A.Component.create(
 			{
 				ATTRS: {
 					strings: {
@@ -267,7 +267,7 @@ AUI.add(
 			}
 		);
 
-		A.Plugin.LiferayBlogsUploader = BlogsUploader;
+		A.Plugin.LiferayEditorImageUploader = EditorImageUploader;
 	},
 	'',
 	{

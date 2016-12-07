@@ -166,10 +166,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	}
 
 	@Override
-	public LayoutSet fetchLayoutSetByLogoId(long logoId, boolean privateLayout)
+	public LayoutSet fetchLayoutSetByLogoId(boolean privateLayout, long logoId)
 		throws PortalException {
 
-		return layoutSetPersistence.fetchByL_P(logoId, privateLayout);
+		return layoutSetPersistence.fetchByP_L(privateLayout, logoId);
 	}
 
 	@Override

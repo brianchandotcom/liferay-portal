@@ -986,10 +986,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchLayoutByIconImageId(
-			long iconImageId, boolean privateLayout)
+			boolean privateLayout, long iconImageId)
 		throws PortalException {
 
-		return layoutPersistence.fetchByI_P(iconImageId, privateLayout);
+		return layoutPersistence.fetchByP_I(privateLayout, iconImageId);
 	}
 
 	/**

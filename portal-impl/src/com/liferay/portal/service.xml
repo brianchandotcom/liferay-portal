@@ -994,9 +994,9 @@
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
 		</finder>
-		<finder name="L_P" return-type="Layout">
-			<finder-column name="logoId" />
+		<finder name="P_L" return-type="Layout">
 			<finder-column name="privateLayout" />
+			<finder-column name="logoId" />
 		</finder>
 
 		<!-- References -->

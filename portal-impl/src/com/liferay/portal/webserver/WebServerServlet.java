@@ -453,7 +453,7 @@ public class WebServerServlet extends HttpServlet {
 
 			if (path.startsWith("/layout_icon") || path.startsWith("/logo")) {
 				Layout layout = LayoutLocalServiceUtil.fetchLayoutByIconImageId(
-					imageId, true);
+					true, imageId);
 
 				if (layout != null) {
 					User user = PortalUtil.getUser(request);
@@ -485,7 +485,7 @@ public class WebServerServlet extends HttpServlet {
 			else if (path.startsWith("/layout_set_logo")) {
 				LayoutSet layoutSet =
 					LayoutSetLocalServiceUtil.fetchLayoutSetByLogoId(
-						imageId, true);
+						true, imageId);
 
 				if (layoutSet != null) {
 					User user = PortalUtil.getUser(request);

@@ -108,8 +108,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OPTIONS_DRAG_ICON</td>
-	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber}]//div[contains(@class,'drag-handle')]</td>
+	<td>OPTIONS_DRAG_ICON_1</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber1}]//div[contains(@class,'drag-handle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_DRAG_ICON_2</td>
+	<td>//div[@class='options']//div[contains(@class,'form-field-container')][${key_rowNumber2}]//div[contains(@class,'drag-handle')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -112,13 +112,10 @@
 	</command>
 
 	<command name="moveOptionsRow">
-		<var name="key_rowNumber" value="${rowNumberStart}" />
+		<var name="key_rowNumber1" value="${rowNumberStart}" />
+		<var name="key_rowNumber2" value="${rowNumberEnd}" />
 
-		<execute function="MouseDown" locator1="FormFields#OPTIONS_DRAG_ICON" />
-
-		<var name="key_rowNumber" value="${rowNumberEnd}" />
-
-		<execute function="MouseUp" locator1="FormFields#OPTIONS_DRAG_ICON" />
+		<execute function="DragAndDrop" locator1="FormFields#OPTIONS_DRAG_ICON_1" locator2="FormFields#OPTIONS_DRAG_ICON_2" value1="" />
 	</command>
 
 	<command name="removeRepeatableField">

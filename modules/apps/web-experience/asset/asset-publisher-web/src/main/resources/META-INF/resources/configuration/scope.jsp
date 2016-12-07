@@ -79,8 +79,6 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 <liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" message="select" showArrow="<%= false %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	Map<String, Object> data = new HashMap<String, Object>();
-
 	for (Group group : availableGroups) {
 		if (ArrayUtil.contains(assetPublisherDisplayContext.getGroupIds(), group.getGroupId())) {
 			continue;
@@ -102,92 +100,39 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 
 	<%
 	}
-
-	PortletURL layoutSiteBrowserURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 	%>
 
-	<c:if test="<%= (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), Layout.class.getName(), layout.getGroupId()) > 0) && (layoutSiteBrowserURL != null) %>">
-
-		<%
-		data = new HashMap<String, Object>();
-
-		layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-		layoutSiteBrowserURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
-		layoutSiteBrowserURL.setParameter("type", "layoutScopes");
-		layoutSiteBrowserURL.setParameter("eventName", eventName);
-		layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
-		layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-		data.put("href", layoutSiteBrowserURL.toString());
-
-		data.put("title", LanguageUtil.get(request, "pages"));
-		%>
-
-		<liferay-ui:icon
-			cssClass="highlited scope-selector"
-			data="<%= data %>"
-			id="selectGroup"
-			message='<%= LanguageUtil.get(request, "pages") + StringPool.TRIPLE_PERIOD %>'
-			method="get"
-			url="javascript:;"
-		/>
-	</c:if>
-
-	<%
-	PortletURL siteBrowserURL = PortletProviderUtil.getPortletURL(renderRequest, Group.class.getName(), PortletProvider.Action.BROWSE);
-
-	List<String> types = new ArrayList<String>();
-
-	if (PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
-		types.add("sites-that-i-administer");
-	}
-
-	if (GroupLocalServiceUtil.getGroupsCount(company.getCompanyId(), layout.getGroupId(), Boolean.TRUE) > 0) {
-		types.add("child-sites");
-	}
-
-	Group siteGroup = themeDisplay.getSiteGroup();
-
-	if (!siteGroup.isRoot()) {
-		types.add("parent-sites");
-	}
-	%>
-
-	<c:if test="<%= (siteBrowserURL != null) && !types.isEmpty() && !siteGroup.isLayoutPrototype() && !siteGroup.isLayoutSetPrototype() %>">
-
-		<%
-		data = new HashMap<String, Object>();
-
-		siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
-		siteBrowserURL.setParameter("types", StringUtil.merge(types));
-		siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
-		siteBrowserURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-		siteBrowserURL.setParameter("eventName", eventName);
-		siteBrowserURL.setPortletMode(PortletMode.VIEW);
-		siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
-
-		data.put("href", siteBrowserURL.toString());
-
-		data.put("title", LanguageUtil.get(request, "sites"));
-		%>
-
-		<liferay-ui:icon
-			cssClass="highlited scope-selector"
-			data="<%= data %>"
-			id="selectManageableGroup"
-			message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
-			method="get"
-			url="javascript:;"
-		/>
-	</c:if>
+	<liferay-ui:icon
+		cssClass="highlited scope-selector"
+		id="selectManageableGroup"
+		message='<%= LanguageUtil.get(request, "other-site") + StringPool.TRIPLE_PERIOD %>'
+		method="get"
+		url="javascript:;"
+	/>
 </liferay-ui:icon-menu>
+
+<%
+ItemSelector itemSelector = (ItemSelector)request.getAttribute(AssetPublisherWebKeys.ITEM_SELECTOR);
+
+SiteItemSelectorCriterion siteItemSelectorCriterion = new SiteItemSelectorCriterion();
+
+List<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new ArrayList<ItemSelectorReturnType>();
+
+desiredItemSelectorReturnTypes.add(new SiteItemSelectorReturnType());
+
+siteItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, siteItemSelectorCriterion);
+
+itemSelectorURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
+itemSelectorURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
+%>
 
 <aui:script sandbox="<%= true %>">
 	var form = document.<portlet:namespace />fm;
 
-	$('body').on(
+	$('#<portlet:namespace />selectManageableGroup').on(
 		'click',
-		'.scope-selector a',
 		function(event) {
 			event.preventDefault();
 
@@ -216,12 +161,12 @@ List<Group> selectedGroups = GroupLocalServiceUtil.getGroups(assetPublisherDispl
 					eventName: '<%= eventName %>',
 					id: '<%= eventName %>' + currentTarget.attr('id'),
 					selectedData: searchContainerData,
-					title: currentTarget.data('title'),
-					uri: currentTarget.data('href')
+					title: '<liferay-ui:message key="scopes" />',
+					uri: '<%= itemSelectorURL.toString() %>'
 				},
 				function(event) {
 					form.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-					form.<portlet:namespace />groupId.value = event.entityid;
+					form.<portlet:namespace />groupId.value = event.groupid;
 
 					submitForm(form);
 				}

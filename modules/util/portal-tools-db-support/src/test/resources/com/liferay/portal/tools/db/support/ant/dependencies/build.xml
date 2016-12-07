@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<taskdef classpath="${db.support.classpath}" resource="com/liferay/portal/tools/db/support/ant/taskdefs.properties" />
+
+	<target name="clean-service-builder">
+		<clean-service-builder
+			serviceXmlFile="${clean.service.builder.service.xml.file}"
+			servletContextName="${clean.service.builder.servlet.context.name}"
+			url="${clean.service.builder.url}"
+		/>
+	</target>
+</project>

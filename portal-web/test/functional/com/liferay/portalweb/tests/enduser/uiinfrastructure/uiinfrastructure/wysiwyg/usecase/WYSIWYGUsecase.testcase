@@ -45,7 +45,7 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
+		<execute function="Pause" locator1="10000" />
 
 		<execute macro="BlogsEntry#saveAsDraft" />
 
@@ -61,7 +61,7 @@
 			<var name="imageFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
+		<execute function="Pause" locator1="10000" />
 
 		<execute macro="PortletEntry#publish" />
 

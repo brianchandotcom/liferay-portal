@@ -24,11 +24,11 @@
 
 	<div class="closed hidden-print lfr-add-panel lfr-admin-panel sidenav-fixed sidenav-menu-slider sidenav-right" id="<%= portletNamespace %>addPanelId">
 		<div class="product-menu sidebar sidebar-inverse sidenav-menu">
-			<h4 class="sidebar-header">
+			<div class="sidebar-header">
 				<span><liferay-ui:message key="add" /></span>
 
 				<aui:icon cssClass="icon-monospaced sidenav-close" image="times" markupView="lexicon" url="javascript:;" />
-			</h4>
+			</div>
 
 			<div class="sidebar-body"></div>
 		</div>

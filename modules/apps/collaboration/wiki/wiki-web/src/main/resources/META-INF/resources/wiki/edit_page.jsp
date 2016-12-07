@@ -121,8 +121,8 @@ if (portletTitleBasedNavigation) {
 	<portlet:param name="mvcRenderCommandName" value="/wiki/edit_page" />
 </portlet:renderURL>
 
-<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
-	<aui:form action="<%= editPageActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
+<div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %> id='<%= renderResponse.getNamespace() + "wikiEditPageContainer" %>'>
+	<aui:form action="<%= editPageActionURL %>" method="post" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="editTitle" type="hidden" value="<%= editTitle %>" />
@@ -367,7 +367,7 @@ if (portletTitleBasedNavigation) {
 				%>
 
 				<aui:button-row>
-					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' primary="<%= true %>" value="<%= publishButtonLabel %>" />
+					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" primary="<%= true %>" value="<%= publishButtonLabel %>" />
 
 					<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
@@ -421,34 +421,19 @@ if (portletTitleBasedNavigation) {
 	);
 </aui:script>
 
-<aui:script>
-	function <portlet:namespace />publishPage() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('workflowAction').val('<%= WorkflowConstants.ACTION_PUBLISH %>');
-
-		<portlet:namespace />savePage();
-	}
-
-	function <portlet:namespace />savePage() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val('<%= ((wikiPage == null) || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>');
-
-		var titleEditor = window.<portlet:namespace />titleEditor;
-
-		if (titleEditor) {
-			form.fm('title').val(titleEditor.getText());
+<aui:script require="wiki-web/wiki/js/wiki.es">
+	var wiki = new wikiWebWikiJsWikiEs.default(
+		{
+			constants: {
+				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
+				'ACTION_SAVE_DRAFT': '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>',
+				'CMD': '<%= Constants.CMD %>'
+			},
+			currentAction: '<%= (wikiPage == null || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>',
+			namespace: '<portlet:namespace />',
+			rootNode: '#<portlet:namespace/>wikiEditPageContainer'
 		}
-
-		var contentEditor = window.<portlet:namespace />contentEditor;
-
-		if (contentEditor) {
-			form.fm('content').val(contentEditor.getHTML());
-		}
-
-		submitForm(form);
-	}
+	);
 </aui:script>
 
 <%

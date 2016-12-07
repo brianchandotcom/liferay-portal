@@ -67,34 +67,9 @@ class WikiPortlet extends PortletBase {
 		);
 
 		if (confirm(confirmMessage)) {
-			this.savePage_();
+			this.save_();
 		} else {
 			formatSelect.selectedIndex = this.currentFormatIndex;
-		}
-	}
-
-	/**
-	 * Checks if there are images that have not been uploaded yet.
-	 * In that case, it removes them after asking
-	 * confirmation to the user and then saves the page.
-	 *
-	 * @protected
-	 */
-	checkImagesBeforeSave_() {
-		let tempImages = this.all('img[data-random-id]');
-
-		if (tempImages.length > 0) {
-			if (confirm(this.strings.confirmDiscardImages)) {
-				tempImages.forEach(
-					node => {
-						node.parentElement.remove();
-					}
-				);
-
-				this.savePage_();
-			}
-		} else {
-			this.savePage_();
 		}
 	}
 
@@ -114,7 +89,60 @@ class WikiPortlet extends PortletBase {
 	 */
 	publishPage_() {
 		this.one('#workflowAction').value = this.constants.ACTION_PUBLISH;
-		this.checkImagesBeforeSave_();
+		this.save_();
+	}
+
+	/**
+	 * Checks if there are images that have not been uploaded yet.
+	 * In that case, it removes them after asking
+	 * confirmation to the user.
+	 *
+	 * @protected
+	 * @return {Boolean} False if there are temporal images and
+	 * user does not confirm she wants to lose them. True in other case.
+	 */
+	removeTempImages_() {
+		let tempImages = this.all('img[data-random-id]');
+
+		if (tempImages.length > 0) {
+			if (confirm(this.strings.confirmDiscardImages)) {
+				tempImages.forEach(
+					node => {
+						node.parentElement.remove();
+					}
+				);
+			}
+			else {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Submits the wiki page.
+	 *
+	 * @protected
+	 */
+	save_() {
+		if (this.removeTempImages_()) {
+			this.one('#' + this.constants.CMD).value = this.currentAction;
+
+			let titleEditor = window[this.ns('titleEditor')];
+
+			if (titleEditor) {
+				this.one('#title').value = titleEditor.getText();
+			}
+
+			let contentEditor = window[this.ns('contentEditor')];
+
+			if (contentEditor) {
+				this.one('#content').value = contentEditor.getHTML();
+			}
+
+			submitForm(document[this.ns('fm')]);
+		}
 	}
 
 	/**
@@ -124,30 +152,7 @@ class WikiPortlet extends PortletBase {
 	 */
 	saveDraft_() {
 		this.one('#workflowAction').value = this.constants.ACTION_SAVE_DRAFT;
-		this.checkImagesBeforeSave_();
-	}
-
-	/**
-	 * Submits the wiki page.
-	 *
-	 * @protected
-	 */
-	savePage_() {
-		this.one('#' + this.constants.CMD).value = this.currentAction;
-
-		let titleEditor = window[this.ns('titleEditor')];
-
-		if (titleEditor) {
-			this.one('#title').value = titleEditor.getText();
-		}
-
-		let contentEditor = window[this.ns('contentEditor')];
-
-		if (contentEditor) {
-			this.one('#content').value = contentEditor.getHTML();
-		}
-
-		submitForm(document[this.ns('fm')]);
+		this.save_();
 	}
 }
 

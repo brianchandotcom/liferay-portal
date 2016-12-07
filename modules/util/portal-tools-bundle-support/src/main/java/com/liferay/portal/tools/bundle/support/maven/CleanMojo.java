@@ -32,7 +32,7 @@ public class CleanMojo extends AbstractLiferayMojo {
 	public void execute() throws MojoExecutionException {
 		String packaging = project.getPackaging();
 
-		if (packaging.equals("jar") && !packaging.equals("war")) {
+		if (!packaging.equals("jar") && !packaging.equals("war")) {
 			return;
 		}
 

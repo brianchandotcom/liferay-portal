@@ -40,7 +40,7 @@ public final class TextBlock extends TemplateElement {
 
     public TextBlock(String text, boolean unparsed) {
         this.text = text;
-		this.unparsed = unparsed;
+        this.unparsed = unparsed;
     }
 
     /**

@@ -175,8 +175,15 @@ class JspWriterAdapter extends JspWriter {
         out.write(arg0, arg1, arg2);
     }
 
-	public void write(String str, int off, int len) throws IOException {
-		out.write(str, off, len);
-	}
+    @Override
+    public void write(String s) throws IOException {
+        out.write(s);
+    }
+
+    @Override
+    public void write(String s, int offset, int length) throws IOException {
+        out.write(s, offset, length);
+    }
+
 }
 /* @generated */

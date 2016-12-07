@@ -431,7 +431,7 @@
 		</execute>
 
 		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Autosave interval" />
+			<var name="fieldLabel" value="Autosave Interval" />
 			<var name="fieldName" value="autosaveInterval" />
 		</execute>
 

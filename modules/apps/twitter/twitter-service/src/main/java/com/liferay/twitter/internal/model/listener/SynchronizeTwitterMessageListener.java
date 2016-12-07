@@ -86,9 +86,7 @@ public class SynchronizeTwitterMessageListener
 	private static volatile TwitterGroupServiceConfiguration
 		_twitterGroupServiceConfiguration;
 
-	@Reference
 	private FeedLocalService _feedLocalService;
-
 	private SchedulerEngineHelper _schedulerEngineHelper;
 
 }

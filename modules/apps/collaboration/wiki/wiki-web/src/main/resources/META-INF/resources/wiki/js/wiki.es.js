@@ -5,16 +5,25 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  * WikiPortlet
  */
 class WikiPortlet extends PortletBase {
-	constructor(options) {
-		super(options);
-
-		this.STR_CLICK = 'click';
+	constructor(opt_config) {
+		super(opt_config);
 
 		this.bindUI_();
 	}
 
 	bindUI_() {
 		let eventHandles = [];
+
+		let formatSelect = this.one('#format');
+
+		this.currentFormatLabel = formatSelect.options[formatSelect.selectedIndex].text.trim();
+		this.currentFormatIndex = formatSelect.selectedIndex;
+
+		if (formatSelect) {
+			eventHandles.push(
+				formatSelect.addEventListener('change', (e) => { this.changeWikiFormat_(e); })
+			);
+		}
 
 		let publishButton = this.one('#publishButton');
 
@@ -33,13 +42,37 @@ class WikiPortlet extends PortletBase {
 		}
 	}
 
+	/**
+	 * Changes the wiki page format, only if the
+	 * user accepts that some formatting may lose.
+	 *
+	 * @param  {Event} event The select event that triggered the change action
+	 * @protected
+	 */
+	changeWikiFormat_(event) {
+		let formatSelect = event.currentTarget;
+
+		let newFormat = formatSelect.options[formatSelect.selectedIndex].text.trim();
+
+		let confirmMessage = _.sub(
+			this.get('strings').confirmLoseFormatting,
+			this.currentFormatLabel,
+			newFormat
+		);
+
+		if (confirm(confirmMessage)) {
+			this.savePage_();
+		}
+		else {
+			formatSelect.selectedIndex = this.currentFormatIndex;
+		}
+	}
+
 	checkImagesBeforeSave_() {
 		if (this.hasTempImages_()) {
 			if (confirm(this.get('strings').confirmDiscardImages)) {
-				this.getTempImages_().each(
-					function(node) {
-						node.ancestor().remove();
-					}
+				this.getTempImages_().forEach(
+					node => { node.parentElement.remove(); }
 				);
 
 				this.savePage_();
@@ -102,10 +135,10 @@ WikiPortlet.STATE = {
 	strings: {
 		validator: core.isObject,
 		value: {
-			confirmDiscardImages: Liferay.Language.get('uploads-are-in-progress-confirmation')
+			confirmDiscardImages: Liferay.Language.get('uploads-are-in-progress-confirmation'),
+			confirmLoseFormatting: Liferay.Language.get('you-may-lose-formatting-when-switching-from-x-to-x')
 		}
 	}
 };
 
 export default WikiPortlet;
-

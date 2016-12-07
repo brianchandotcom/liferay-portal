@@ -388,6 +388,7 @@ if (portletTitleBasedNavigation) {
 			},
 			currentAction: '<%= (wikiPage == null || wikiPage.isNew()) ? Constants.ADD : Constants.UPDATE %>',
 			namespace: '<portlet:namespace />',
+			renderUrl: '<%= editPageRenderURL %>',
 			rootNode: '#<portlet:namespace/>wikiEditPageContainer'
 		}
 	);

@@ -267,6 +267,7 @@ AUI.add(
 			}
 		);
 
+		A.Plugin.LiferayBlogsUploader = EditorImageUploader;
 		A.Plugin.LiferayEditorImageUploader = EditorImageUploader;
 	},
 	'',

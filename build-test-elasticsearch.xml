@@ -549,6 +549,8 @@ username=liferay</echo>
 			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
 		</replace>
 
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">action.auto_create_index: false</echo>
+
 		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
 
 		<get-testcase-property property.name="elastic.shield.enabled" />

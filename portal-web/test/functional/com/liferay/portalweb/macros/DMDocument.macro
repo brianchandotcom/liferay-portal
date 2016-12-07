@@ -340,8 +340,8 @@
 				</execute>
 
 				<execute macro="AssetCategorization#addCategory">
-					<var name="vocabularyName" value="${vocabularyName}" />
 					<var name="categoryName" value="${categoryName}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
 				</execute>
 			</then>
 		</if>
@@ -362,7 +362,7 @@
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Categorization" />
 				</execute>
-				
+
 				<for list="${tagNameList}" param="tagName">
 					<execute macro="AssetCategorization#addTag">
 						<var name="tagName" value="${tagName}" />

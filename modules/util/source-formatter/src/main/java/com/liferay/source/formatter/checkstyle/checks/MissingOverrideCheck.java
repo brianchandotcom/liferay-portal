@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
@@ -112,7 +113,8 @@ public class MissingOverrideCheck extends AbstractCheck {
 
 		for (Type implement : implementz) {
 			Type[] actualTypeArguments = implement.getActualTypeArguments();
-			JavaClass implementedInterface = implement.getJavaClass();
+			JavaClass implementedInterface = _getImplementedInterface(
+				javaClass, implement);
 
 			if (actualTypeArguments == null) {
 				ancestorJavaClassTuples.add(new Tuple(implementedInterface));
@@ -175,6 +177,24 @@ public class MissingOverrideCheck extends AbstractCheck {
 		FileText fileText = fileContents.getText();
 
 		return (String)fileText.getFullText();
+	}
+
+	private JavaClass _getImplementedInterface(
+		JavaClass javaClass, Type implement) {
+
+		JavaClass implementedInterface = implement.getJavaClass();
+
+		String implementedInterfaceName = implementedInterface.getName();
+
+		if (implementedInterfaceName.contains(StringPool.PERIOD)) {
+			return implementedInterface;
+		}
+
+		JavaPackage javaPackage = javaClass.getPackage();
+
+		return new JavaClass(
+			javaPackage.getName() + StringPool.PERIOD +
+				implementedInterfaceName);
 	}
 
 	private JavaDocBuilder _getJavaDocBuilder(String fileName) {

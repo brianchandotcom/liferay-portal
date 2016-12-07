@@ -1,6 +1,6 @@
 <definition component-name="portal-user-interface">
 	<property name="blacklist.portal.profile.names.remove" value="com.liferay.chat.service,com.liferay.chat.web" />
-	<property name="portal.release" value="true" />
+	<property name="portal.release" value="false" />
 	<property name="testray.main.component.name" value="User Interface" />
 
 	<set-up>

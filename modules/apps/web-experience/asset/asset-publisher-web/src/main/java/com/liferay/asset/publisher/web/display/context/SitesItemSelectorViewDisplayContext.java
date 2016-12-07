@@ -21,10 +21,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortalPreferences;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -36,7 +32,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
-import com.liferay.site.browser.web.internal.constants.SiteBrowserPortletKeys;
+import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
@@ -50,29 +46,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class SitesItemSelectorViewDisplayContext {
+public class SitesItemSelectorViewDisplayContext
+	extends BaseItemSelectorViewDisplayContext {
 
 	public SitesItemSelectorViewDisplayContext(
-		HttpServletRequest request, LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse) {
+		HttpServletRequest request,
+		SiteItemSelectorCriterion siteItemSelectorCriterion,
+		String itemSelectedEventName, PortletURL portletURL) {
 
-		_request = request;
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
-	}
-
-	public String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
-		}
-
-		PortalPreferences portalPreferences =
-			PortletPreferencesFactoryUtil.getPortalPreferences(_request);
-
-		_displayStyle = portalPreferences.getValue(
-			SiteBrowserPortletKeys.SITE_BROWSER, "display-style", "list");
-
-		return _displayStyle;
+		super(
+			request, siteItemSelectorCriterion, itemSelectedEventName,
+			portletURL);
 	}
 
 	public String getFilter() {
@@ -80,7 +64,7 @@ public class SitesItemSelectorViewDisplayContext {
 			return _filter;
 		}
 
-		_filter = ParamUtil.getString(_request, "filter");
+		_filter = ParamUtil.getString(request, "filter");
 
 		return _filter;
 	}
@@ -90,7 +74,7 @@ public class SitesItemSelectorViewDisplayContext {
 			return _groupId;
 		}
 
-		_groupId = ParamUtil.getLong(_request, "groupId");
+		_groupId = ParamUtil.getLong(request, "groupId");
 
 		return _groupId;
 	}
@@ -102,13 +86,13 @@ public class SitesItemSelectorViewDisplayContext {
 			return _groupParams;
 		}
 
-		long groupId = ParamUtil.getLong(_request, "groupId");
+		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean includeCurrentGroup = ParamUtil.getBoolean(
-			_request, "includeCurrentGroup", true);
+			request, "includeCurrentGroup", true);
 
 		String type = getType();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
@@ -162,14 +146,15 @@ public class SitesItemSelectorViewDisplayContext {
 		return _groupParams;
 	}
 
+	@Override
 	public GroupSearch getGroupSearch() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Company company = themeDisplay.getCompany();
 
 		GroupSearch groupSearch = new GroupSearch(
-			_liferayPortletRequest, getPortletURL());
+			getPortletRequest(), getPortletURL());
 
 		GroupSearchTerms groupSearchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
@@ -180,9 +165,9 @@ public class SitesItemSelectorViewDisplayContext {
 		int total = 0;
 
 		boolean includeCompany = ParamUtil.getBoolean(
-			_request, "includeCompany");
+			request, "includeCompany");
 		boolean includeUserPersonalSite = ParamUtil.getBoolean(
-			_request, "includeUserPersonalSite");
+			request, "includeUserPersonalSite");
 
 		long[] classNameIds = _CLASS_NAME_IDS;
 
@@ -277,52 +262,12 @@ public class SitesItemSelectorViewDisplayContext {
 		return groupSearch;
 	}
 
-	public PortletURL getPortletURL() throws PortalException {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
-
-		User selUser = PortalUtil.getSelectedUser(_request);
-
-		if (selUser != null) {
-			portletURL.setParameter(
-				"p_u_i_d", String.valueOf(selUser.getUserId()));
-		}
-
-		boolean includeCompany = ParamUtil.getBoolean(
-			_request, "includeCompany");
-		boolean includeCurrentGroup = ParamUtil.getBoolean(
-			_request, "includeCurrentGroup", true);
-		boolean includeUserPersonalSite = ParamUtil.getBoolean(
-			_request, "includeUserPersonalSite");
-		String eventName = ParamUtil.getString(
-			_request, "eventName",
-			_liferayPortletResponse.getNamespace() + "selectSite");
-		String target = ParamUtil.getString(_request, "target");
-
-		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
-		portletURL.setParameter("type", getType());
-		portletURL.setParameter("types", getTypes());
-		portletURL.setParameter("displayStyle", getDisplayStyle());
-		portletURL.setParameter("filter", getFilter());
-		portletURL.setParameter(
-			"includeCompany", String.valueOf(includeCompany));
-		portletURL.setParameter(
-			"includeCurrentGroup", String.valueOf(includeCurrentGroup));
-		portletURL.setParameter(
-			"includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
-		portletURL.setParameter(
-			"manualMembership", String.valueOf(isManualMembership()));
-		portletURL.setParameter("eventName", eventName);
-		portletURL.setParameter("target", target);
-
-		return portletURL;
-	}
-
 	public String getType() {
 		if (_type != null) {
 			return _type;
 		}
 
-		_type = ParamUtil.getString(_request, "type");
+		_type = ParamUtil.getString(request, "type");
 
 		String[] types = getTypes();
 
@@ -338,7 +283,7 @@ public class SitesItemSelectorViewDisplayContext {
 			return _types;
 		}
 
-		_types = ParamUtil.getParameterValues(_request, "types");
+		_types = ParamUtil.getParameterValues(request, "types");
 
 		if (_types.length == 0) {
 			_types = new String[] {"sites-that-i-administer"};
@@ -352,7 +297,7 @@ public class SitesItemSelectorViewDisplayContext {
 			return _manualMembership;
 		}
 
-		_manualMembership = ParamUtil.getBoolean(_request, "manualMembership");
+		_manualMembership = ParamUtil.getBoolean(request, "manualMembership");
 
 		return _manualMembership;
 	}
@@ -362,7 +307,7 @@ public class SitesItemSelectorViewDisplayContext {
 			return _privateLayout;
 		}
 
-		_privateLayout = ParamUtil.getBoolean(_request, "privateLayout");
+		_privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
 		return _privateLayout;
 	}
@@ -429,15 +374,11 @@ public class SitesItemSelectorViewDisplayContext {
 		PortalUtil.getClassNameId(Organization.class)
 	};
 
-	private String _displayStyle;
 	private String _filter;
 	private Long _groupId;
 	private LinkedHashMap<String, Object> _groupParams;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private Boolean _manualMembership;
 	private Boolean _privateLayout;
-	private final HttpServletRequest _request;
 	private String _type;
 	private String[] _types;
 

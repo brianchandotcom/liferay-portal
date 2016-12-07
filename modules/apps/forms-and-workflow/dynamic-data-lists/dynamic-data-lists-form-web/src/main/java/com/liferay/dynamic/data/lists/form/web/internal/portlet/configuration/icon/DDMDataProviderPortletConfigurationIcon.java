@@ -17,6 +17,8 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet.configuration.i
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -73,6 +75,7 @@ public class DDMDataProviderPortletConfigurationIcon
 			portletURL.setParameter("redirect", formsPortletURL.toString());
 		}
 		catch (WindowStateException wse) {
+			_log.error(wse);
 		}
 
 		return portletURL.toString();
@@ -97,5 +100,8 @@ public class DDMDataProviderPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMDataProviderPortletConfigurationIcon.class);
 
 }

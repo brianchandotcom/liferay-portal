@@ -5,12 +5,20 @@ import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
  * WikiPortlet
  */
 class WikiPortlet extends PortletBase {
+	/**
+	 * @inheritDoc
+	 */
 	constructor(opt_config) {
 		super(opt_config);
 
 		this.bindUI_();
 	}
 
+	/**
+	 * Bind DOM Events
+	 *
+	 * @protected
+	 */
 	bindUI_() {
 		let eventHandles = [];
 
@@ -68,6 +76,13 @@ class WikiPortlet extends PortletBase {
 		}
 	}
 
+	/**
+	 * Checks if there are images that have not
+	 * been uploaded yet, and removes them if user accepts
+	 * before saving the page
+	 *
+	 * @protected
+	 */
 	checkImagesBeforeSave_() {
 		if (this.hasTempImages_()) {
 			if (confirm(this.get('strings').confirmDiscardImages)) {
@@ -83,24 +98,54 @@ class WikiPortlet extends PortletBase {
 		}
 	}
 
+	/**
+	 * Get all the images that have not been completely uploaded.
+	 *
+	 * @return {NodeList object} List of <img> elements that have
+	 * the data-random-id attribute
+	 * @protected
+	 */
 	getTempImages_() {
 		return this.all('img[data-random-id]');
 	}
 
+	/**
+	 * Checks if there are images that have not
+	 * been uploaded yet
+	 *
+	 * @return {Boolean} true if there are any image that
+	 * have not been uploaded, false otherwise.
+	 * @protected
+	 */
 	hasTempImages_() {
 		return this.getTempImages_().length > 0;
 	}
 
+	/**
+	 * Publish the wiki page
+	 *
+	 * @protected
+	 */
 	publishPage_() {
 		this.one('#workflowAction').value = this.get('constants').ACTION_PUBLISH;
 		this.checkImagesBeforeSave_();
 	}
 
+	/**
+	 * Saves the wiki page as a draft
+	 *
+	 * @protected
+	 */
 	saveDraft_() {
 		this.one('#workflowAction').value = this.get('constants').ACTION_SAVE_DRAFT;
 		this.checkImagesBeforeSave_();
 	}
 
+	/**
+	 * Submits the wiki page
+	 *
+	 * @protected
+	 */
 	savePage_() {
 		this.one('#' + this.get('constants').CMD).value = this.get('currentAction');
 
@@ -121,17 +166,32 @@ class WikiPortlet extends PortletBase {
 }
 
 /**
- * PortletBase State definition.
+ * WikiPortlet State definition.
  * @type {!Object}
  * @static
  */
 WikiPortlet.STATE = {
+	/**
+	 * WikiPortlet Constants
+	 * @type {!Object}
+	 */
 	constants: {
 		validator: core.isObject
 	},
+
+	/**
+	 * The current action (CMD.ADD, CMD.UPDATE, ...) for the
+	 * wiki page.
+	 * @type {String}
+	 */
 	currentAction: {
 		validator: core.isString
 	},
+
+	/**
+	 * String messages
+	 * @type {Object}
+	 */
 	strings: {
 		validator: core.isObject,
 		value: {

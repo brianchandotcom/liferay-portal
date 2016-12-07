@@ -61,6 +61,8 @@
 			<var name="imageFileName" value="Document_1.jpg" />
 		</execute>
 
+		<execute function="Pause" locator1="1000" />
+
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="BlogsNavigator#gotoEntryPG">

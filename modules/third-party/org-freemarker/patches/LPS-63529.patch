@@ -1,5 +1,5 @@
 diff --git a/freemarker/core/TextBlock.java b/freemarker/core/TextBlock.java
-index 9353610..fa80a33 100644
+index 9353610..c29c53c 100644
 --- a/freemarker/core/TextBlock.java
 +++ b/freemarker/core/TextBlock.java
 @@ -24,14 +24,14 @@ import freemarker.template.utility.StringUtil;
@@ -20,7 +20,7 @@ index 9353610..fa80a33 100644
      private final boolean unparsed;
  
      public TextBlock(String text) {
-@@ -39,12 +39,8 @@ public final class TextBlock extends TemplateElement {
+@@ -39,10 +39,6 @@ public final class TextBlock extends TemplateElement {
      }
  
      public TextBlock(String text, boolean unparsed) {
@@ -29,11 +29,8 @@ index 9353610..fa80a33 100644
 -
 -    private TextBlock(char[] text, boolean unparsed) {
          this.text = text;
--        this.unparsed = unparsed;
-+		this.unparsed = unparsed;
+         this.unparsed = unparsed;
      }
- 
-     /**
 @@ -87,11 +83,11 @@ public final class TextBlock extends TemplateElement {
      }
  
@@ -272,9 +269,8 @@ index 9353610..fa80a33 100644
 +
  }
 +/* @generated */
-\ No newline at end of file
 diff --git a/freemarker/ext/jsp/JspWriterAdapter.java b/freemarker/ext/jsp/JspWriterAdapter.java
-index ad53eed..dc62f96 100644
+index ad53eed..2bab201 100644
 --- a/freemarker/ext/jsp/JspWriterAdapter.java
 +++ b/freemarker/ext/jsp/JspWriterAdapter.java
 @@ -24,7 +24,7 @@ import javax.servlet.jsp.JspWriter;
@@ -286,15 +282,23 @@ index ad53eed..dc62f96 100644
      
      private final Writer out;
      
-@@ -174,4 +174,9 @@ class JspWriterAdapter extends JspWriter {
+@@ -174,4 +174,16 @@ class JspWriterAdapter extends JspWriter {
      {
          out.write(arg0, arg1, arg2);
      }
 -}
+\ No newline at end of file
 +
-+	public void write(String str, int off, int len) throws IOException {
-+		out.write(str, off, len);
-+	}
++    @Override
++    public void write(String s) throws IOException {
++        out.write(s);
++    }
++
++    @Override
++    public void write(String s, int offset, int length) throws IOException {
++        out.write(s, offset, length);
++    }
++
 +}
 +/* @generated */
 \ No newline at end of file

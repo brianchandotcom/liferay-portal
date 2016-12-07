@@ -1,4 +1,4 @@
-import core from 'metal/src/core';
+import core from 'metal';
 import { EventHandler } from 'metal-events';
 import PortletBase from 'frontend-js-web/liferay/PortletBase.es';
 
@@ -75,7 +75,6 @@ class WikiPortlet extends PortletBase {
 	}
 
 	/**
-	 *
 	 * @inheritDoc
 	 */
 	detached() {
@@ -112,8 +111,7 @@ class WikiPortlet extends PortletBase {
 						node.parentElement.remove();
 					}
 				);
-			}
-			else {
+			} else {
 				return false;
 			}
 		}

@@ -25,12 +25,9 @@ public class BlogsUtil {
 	public static int getReadingTimeMinutes(String content) {
 		String strippedContent = HtmlUtil.stripHtml(content);
 
-		String[] words = strippedContent.split(
-			"[" + StringPool.SPACE + _NON_BREAKING_SPACE + "]+");
+		String[] words = strippedContent.split("(?:\\h|\\v)+");
 
 		return Math.round(words.length / 250F);
 	}
-
-	private static final String _NON_BREAKING_SPACE = "\u00A0";
 
 }

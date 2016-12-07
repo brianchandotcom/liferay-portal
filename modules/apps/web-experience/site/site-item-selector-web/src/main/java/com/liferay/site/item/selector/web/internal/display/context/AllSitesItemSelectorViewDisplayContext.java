@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
@@ -96,7 +96,7 @@ public class AllSitesItemSelectorViewDisplayContext
 
 		if (groupId > 0) {
 			try {
-				return GroupServiceUtil.getGroup(groupId);
+				return GroupLocalServiceUtil.getGroup(groupId);
 			}
 			catch (PortalException pe) {
 				_log.error("Unable to obtain group " + groupId, pe);

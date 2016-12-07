@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -203,7 +202,7 @@ public class GroupSearchProvider {
 			portletRequest, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		if (groupId > 0) {
-			group = _groupService.getGroup(groupId);
+			group = _groupLocalService.getGroup(groupId);
 		}
 
 		if (group != null) {
@@ -240,11 +239,6 @@ public class GroupSearchProvider {
 		_groupLocalService = groupLocalService;
 	}
 
-	@Reference(unbind = "-")
-	protected void setGroupService(GroupService groupService) {
-		_groupService = groupService;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
@@ -258,6 +252,5 @@ public class GroupSearchProvider {
 
 	private long[] _classNameIds;
 	private GroupLocalService _groupLocalService;
-	private GroupService _groupService;
 
 }

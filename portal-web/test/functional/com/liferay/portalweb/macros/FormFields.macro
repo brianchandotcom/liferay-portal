@@ -294,7 +294,15 @@
 	<command name="viewOptionsRowFieldValue">
 		<var name="key_rowNumber" value="${rowNumber}" />
 
-		<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
+		<if>
+			<condition function="IsVisible" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" />
+			<then>
+				<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD" value1="${fieldValue}" />
+			</then>
+			<else>
+				<execute function="AssertTextEquals" locator1="FormFields#OPTIONS_OPTION_VALUE_FIELD_VISIBLE" value1="${fieldValue}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewParagraphField">

@@ -78,7 +78,6 @@ public class WikiAttachmentEditorOptionsContributor
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "/wiki/upload_page_attachment");
-
 		portletURL.setParameter(
 			"resourcePrimKey", String.valueOf(wikiPageResourcePrimKey));
 

@@ -92,6 +92,9 @@ import java.util.jar.Manifest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
@@ -181,6 +184,10 @@ import org.gradle.plugins.ide.idea.model.IdeaModule;
 import org.gradle.process.ExecSpec;
 import org.gradle.util.CollectionUtils;
 import org.gradle.util.GUtil;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * @author Andrea Di Giorgi
@@ -373,6 +380,17 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						ServiceBuilderPlugin.CONFIGURATION_NAME,
 						_SERVICE_BUILDER_PORTAL_TOOL_NAME);
 					_configureTaskBuildService(project);
+				}
+
+			});
+
+		GradleUtil.withPlugin(
+			project, WSDDBuilderPlugin.class,
+			new Action<WSDDBuilderPlugin>() {
+
+				@Override
+				public void execute(WSDDBuilderPlugin wsddBuilderPlugin) {
+					_configureTaskBuildWSDD(project);
 				}
 
 			});
@@ -1344,9 +1362,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
 				project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
 
-			File serviceXmlFile = buildWSDDTask.getInputFile();
-
-			if (serviceXmlFile.exists()) {
+			if (buildWSDDTask.getEnabled()) {
 				Task buildWSDDJarTask = GradleUtil.getTask(
 					project, buildWSDDTask.getName() + "Jar");
 
@@ -1971,6 +1987,25 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
 
 		buildServiceTask.setBuildNumberIncrement(false);
+	}
+
+	private void _configureTaskBuildWSDD(Project project) {
+		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
+			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+
+		boolean remoteServices = false;
+
+		try {
+			remoteServices = _hasRemoteServices(buildWSDDTask.getInputFile());
+		}
+		catch (Exception e) {
+			throw new GradleException(
+				"Unable to read " + buildWSDDTask.getInputFile(), e);
+		}
+
+		if (!remoteServices) {
+			buildWSDDTask.setEnabled(false);
+		}
 	}
 
 	private void _configureTaskCompileJSP(Project project) {
@@ -2864,6 +2899,39 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 
 		return versions;
+	}
+
+	private boolean _hasRemoteServices(File serviceXmlFile) throws Exception {
+		if (!serviceXmlFile.exists()) {
+			return false;
+		}
+
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		Document document = documentBuilder.parse(serviceXmlFile);
+
+		Element serviceBuilderElement = document.getDocumentElement();
+
+		NodeList entityNodeList = serviceBuilderElement.getElementsByTagName(
+			"entity");
+
+		for (int i = 0; i < entityNodeList.getLength(); i++) {
+			Element entityElement = (Element)entityNodeList.item(i);
+
+			String remoteService = entityElement.getAttribute("remote-service");
+
+			if (Validator.isNull(remoteService) ||
+				Boolean.parseBoolean(remoteService)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _hasTests(Project project) {

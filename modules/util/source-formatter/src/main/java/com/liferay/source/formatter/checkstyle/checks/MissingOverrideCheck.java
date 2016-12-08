@@ -17,6 +17,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.source.formatter.util.ThreadSafeClassLibrary;
@@ -84,7 +85,7 @@ public class MissingOverrideCheck extends AbstractCheck {
 			_getPackagePath(detailAST) + "." + _getClassName(fileName));
 
 		List<Tuple> ancestorJavaClassTuples = _addAncestorJavaClassTuples(
-			javaClass, new ArrayList<Tuple>());
+			javaClass, fileName, javaDocBuilder, new ArrayList<Tuple>());
 
 		for (JavaMethod javaMethod : javaClass.getMethods()) {
 			if (!_hasAnnotation(javaMethod, "Override") &&
@@ -97,22 +98,27 @@ public class MissingOverrideCheck extends AbstractCheck {
 	}
 
 	private List<Tuple> _addAncestorJavaClassTuples(
-		JavaClass javaClass, List<Tuple> ancestorJavaClassTuples) {
+		JavaClass javaClass, String fileName, JavaDocBuilder javaDocBuilder,
+		List<Tuple> ancestorJavaClassTuples) {
 
-		JavaClass superJavaClass = javaClass.getSuperJavaClass();
+		JavaClass superJavaClass = _fixJavaClass(
+			javaClass.getSuperJavaClass(), javaClass.getPackageName(), fileName,
+			javaDocBuilder);
 
 		if (superJavaClass != null) {
 			ancestorJavaClassTuples.add(new Tuple(superJavaClass));
 
 			ancestorJavaClassTuples = _addAncestorJavaClassTuples(
-				superJavaClass, ancestorJavaClassTuples);
+				superJavaClass, null, javaDocBuilder, ancestorJavaClassTuples);
 		}
 
 		Type[] implementz = javaClass.getImplements();
 
 		for (Type implement : implementz) {
 			Type[] actualTypeArguments = implement.getActualTypeArguments();
-			JavaClass implementedInterface = implement.getJavaClass();
+			JavaClass implementedInterface = _fixJavaClass(
+				implement.getJavaClass(), javaClass.getPackageName(), fileName,
+				javaDocBuilder);
 
 			if (actualTypeArguments == null) {
 				ancestorJavaClassTuples.add(new Tuple(implementedInterface));
@@ -123,7 +129,8 @@ public class MissingOverrideCheck extends AbstractCheck {
 			}
 
 			ancestorJavaClassTuples = _addAncestorJavaClassTuples(
-				implementedInterface, ancestorJavaClassTuples);
+				implementedInterface, null, javaDocBuilder,
+				ancestorJavaClassTuples);
 		}
 
 		return ancestorJavaClassTuples;
@@ -161,6 +168,41 @@ public class MissingOverrideCheck extends AbstractCheck {
 		}
 
 		return urls;
+	}
+
+	private JavaClass _fixJavaClass(
+		JavaClass javaClass, String packageName, String fileName,
+		JavaDocBuilder javaDocBuilder) {
+
+		// The methods getImplements and getSuperJavaClass in
+		// com.thoughtworks.qdox.model.JavaClass incorrectly return an empty
+		// class when the implemented or superclass are in the same package.
+		// This method corrects that.
+
+		if ((javaClass == null) || (fileName == null)) {
+			return javaClass;
+		}
+
+		String fullyQualifiedName = javaClass.getFullyQualifiedName();
+
+		if (fullyQualifiedName.contains(StringPool.PERIOD)) {
+			return javaClass;
+		}
+
+		int pos = fileName.lastIndexOf("/");
+
+		File file = new File(
+			fileName.substring(0, pos + 1) + fullyQualifiedName + ".java");
+
+		try {
+			javaDocBuilder.addSource(file);
+		}
+		catch (Exception e) {
+			return javaClass;
+		}
+
+		return javaDocBuilder.getClassByName(
+			packageName + "." + fullyQualifiedName);
 	}
 
 	private String _getClassName(String fileName) {

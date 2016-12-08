@@ -1488,22 +1488,6 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.shopping.service"
 		},
 		new String[] {
-			"shopping.image.extensions", "image.extensions",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.image.large.max.size", "image.large.max.size",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.image.medium.max.size", "image.medium.max.size",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
-			"shopping.image.small.max.size", "image.small.max.size",
-			"com.liferay.shopping.service"
-		},
-		new String[] {
 			"shopping.insurance", "insurance", "com.liferay.shopping.service"
 		},
 		new String[] {

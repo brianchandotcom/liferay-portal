@@ -70,11 +70,7 @@ public class ${className}Report extends BaseJSPReport {
 	}
 
 	@Reference(unbind = "-")
-	public void setReportInstanceLocalService(
-		ReportInstanceLocalService reportInstanceLocalService) {
-
-		_reportInstanceLocalService = reportInstanceLocalService;
-	}
+	private volatile ReportInstanceLocalService _reportInstanceLocalService;
 
 	@Override
 	@Reference(
@@ -132,7 +128,4 @@ public class ${className}Report extends BaseJSPReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		${className}Report.class);
-
-	private ReportInstanceLocalService _reportInstanceLocalService;
-
 }

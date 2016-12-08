@@ -81,12 +81,6 @@ public class ${className}Portlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	private AssetEntryLocalService _assetEntryLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
 
 }

@@ -468,7 +468,8 @@ public class HtmlImpl implements Html {
 
 	@Override
 	public String fromInputSafe(String text) {
-		return StringUtil.replace(text, "&amp;", "&");
+		return StringUtil.replace(
+			text, new String[] {"&amp;", "&quot;"}, new String[] {"&", "\""});
 	}
 
 	@Override

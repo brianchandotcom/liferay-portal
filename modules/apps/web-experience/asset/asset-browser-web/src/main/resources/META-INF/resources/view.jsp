@@ -183,7 +183,7 @@
 					<liferay-ui:search-container-column-text
 						name="description"
 						truncate="<%= true %>"
-						value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
+						value="<%= HtmlUtil.fromInputSafe(HtmlUtil.stripHtml(assetEntry.getDescription(locale))) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

@@ -232,8 +232,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 								LiferayThemeDefaultsPlugin.
 									WRITE_PARENT_THEMES_DIGEST_TASK_NAME);
 
-						printArtifactPublishCommandsTask.prepNextFiles(
-							writeDigestTask.getDigestFile());
+						printArtifactPublishCommandsTask.prepNextCommitFile(
+							"digest", writeDigestTask.getDigestFile());
 					}
 				}
 

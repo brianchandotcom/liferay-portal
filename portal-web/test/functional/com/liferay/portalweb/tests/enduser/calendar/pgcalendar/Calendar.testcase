@@ -409,7 +409,6 @@
 
 		<execute macro="CalendarEvent#addRSVP">
 			<var name="eventTitle" value="Calendar Event All Day Title" />
-			<var name="eventType" value="All Day" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 
@@ -922,7 +921,6 @@
 
 		<execute macro="CalendarEvent#addRSVP">
 			<var name="eventTitle" value="Calendar Event Regular Title" />
-			<var name="eventType" value="Regular" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 
@@ -1299,7 +1297,6 @@
 
 		<execute macro="CalendarEvent#addRSVP">
 			<var name="eventTitle" value="Calendar Event Repeating Title" />
-			<var name="eventType" value="Repeating" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 

@@ -38,6 +38,7 @@ import org.gradle.api.Task;
 import org.gradle.api.internal.plugins.osgi.OsgiHelper;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -149,6 +150,18 @@ public class NodePlugin implements Plugin<Project> {
 
 		npmInstallTask.setDescription(
 			"Installs Node packages from package.json.");
+
+		TaskOutputs taskOutputs = npmInstallTask.getOutputs();
+
+		taskOutputs.upToDateWhen(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					return false;
+				}
+
+			});
 
 		return npmInstallTask;
 	}

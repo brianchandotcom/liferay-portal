@@ -717,6 +717,16 @@ example:
 
 		com.liferay.source.formatter.version=1.0.300
 
+## 3.0.48 - 2016-12-08
+
+### Changed
+- [LPS-69618]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.5.
+- [LPS-69618]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.3.
+- [LPS-69618]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.2.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -790,4 +800,5 @@ example:
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492
 [LPS-69501]: https://issues.liferay.com/browse/LPS-69501
 [LPS-69518]: https://issues.liferay.com/browse/LPS-69518
+[LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

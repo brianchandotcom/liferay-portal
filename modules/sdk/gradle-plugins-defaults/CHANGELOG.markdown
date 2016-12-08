@@ -728,9 +728,14 @@ moved to [Liferay Gradle Plugins].
 ### Changed
 - [LPS-69501]: Update the [Liferay Gradle Plugins] dependency to version 3.0.47.
 
-## 2.1.2 - 2016-12-08
+## 2.2.0 - 2016-12-08
+
+### Added
+- [LPS-63943]: Add the ability to create additional *prep next* commits via
+`PrintArtifactPublishCommands` tasks.
 
 ### Changed
+- [LPS-63943]: Commit themes' `.digest` files in a separate *prep next* commit.
 - [LPS-69618]: Update the [Liferay Gradle Plugins] dependency to version 3.0.48.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

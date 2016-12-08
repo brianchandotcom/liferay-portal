@@ -738,6 +738,11 @@ moved to [Liferay Gradle Plugins].
 - [LPS-63943]: Commit themes' `.digest` files in a separate *prep next* commit.
 - [LPS-69618]: Update the [Liferay Gradle Plugins] dependency to version 3.0.48.
 
+## 2.2.1 - 2016-12-08
+
+### Changed
+- [LPS-69501]: Update the [Liferay Gradle Plugins] dependency to version 3.0.49.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

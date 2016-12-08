@@ -727,6 +727,12 @@ dependency to version 2.1.3.
 - [LPS-69618]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.2.
 
+## 3.0.49 - 2016-12-08
+
+### Fixed
+- [LPS-69501]: Keep searching in the parent directories for a custom portal tool
+version defined in a gradle.properties until one is found.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

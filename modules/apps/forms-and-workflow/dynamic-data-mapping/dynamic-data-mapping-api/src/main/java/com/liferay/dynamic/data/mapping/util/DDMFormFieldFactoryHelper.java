@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -82,6 +83,14 @@ public class DDMFormFieldFactoryHelper {
 		ddmFormField.setTip(getDDMFormFieldTip());
 		ddmFormField.setVisibilityExpression(
 			getDDMFormFieldVisibilityExpression());
+
+		if (Objects.equals(type, "fieldset")) {
+			com.liferay.dynamic.data.mapping.model.DDMForm nestedDDMForm =
+				_getNestedDDMForm();
+
+			ddmFormField.setNestedDDMFormFields(
+				nestedDDMForm.getDDMFormFields());
+		}
 
 		return ddmFormField;
 	}
@@ -143,10 +152,10 @@ public class DDMFormFieldFactoryHelper {
 			return _ddmFormField.dataType();
 		}
 
-		Class<?> returnType = _method.getReturnType();
+		Class<?> returnType = _getReturnType();
 
-		if (returnType.isArray()) {
-			returnType = returnType.getComponentType();
+		if (returnType.isAnnotationPresent(DDMForm.class)) {
+			return StringPool.BLANK;
 		}
 
 		if (returnType.isAssignableFrom(boolean.class) ||
@@ -255,7 +264,11 @@ public class DDMFormFieldFactoryHelper {
 			return _ddmFormField.type();
 		}
 
-		Class<?> returnType = _method.getReturnType();
+		Class<?> returnType = _getReturnType();
+
+		if (returnType.isAnnotationPresent(DDMForm.class)) {
+			return "fieldset";
+		}
 
 		if (returnType.isAssignableFrom(boolean.class) ||
 			returnType.isAssignableFrom(Boolean.class)) {
@@ -410,6 +423,22 @@ public class DDMFormFieldFactoryHelper {
 
 	protected void setDefaultLocale(Locale defaultLocale) {
 		_defaultLocale = defaultLocale;
+	}
+
+	private com.liferay.dynamic.data.mapping.model.DDMForm _getNestedDDMForm() {
+		Class<?> returnType = _getReturnType();
+
+		return DDMFormFactory.create(returnType);
+	}
+
+	private Class<?> _getReturnType() {
+		Class<?> returnType = _method.getReturnType();
+
+		if (returnType.isArray()) {
+			returnType = returnType.getComponentType();
+		}
+
+		return returnType;
 	}
 
 	private Set<Locale> _availableLocales;

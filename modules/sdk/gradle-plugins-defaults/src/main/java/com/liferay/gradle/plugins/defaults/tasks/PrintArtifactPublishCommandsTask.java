@@ -25,8 +25,11 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.DefaultTask;
@@ -94,6 +97,23 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	}
 
 	@Input
+	public Map<String, FileCollection> getPrepNextCommitFiles() {
+		Project project = getProject();
+
+		Map<String, FileCollection> prepNextCommitFileCollections =
+			new LinkedHashMap<>();
+
+		for (Map.Entry<String, Set<Object>> entry :
+				_prepNextCommitFiles.entrySet()) {
+
+			prepNextCommitFileCollections.put(
+				entry.getKey(), project.files(entry.getValue()));
+		}
+
+		return prepNextCommitFileCollections;
+	}
+
+	@Input
 	public FileCollection getPrepNextFiles() {
 		Project project = getProject();
 
@@ -112,6 +132,22 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	@Input
 	public boolean isGradleDaemon() {
 		return _gradleDaemon;
+	}
+
+	public PrintArtifactPublishCommandsTask prepNextCommitFile(
+		String message, File file) {
+
+		Set<Object> files = _prepNextCommitFiles.get(message);
+
+		if (files == null) {
+			files = new HashSet<>();
+
+			_prepNextCommitFiles.put(message, files);
+		}
+
+		files.add(file);
+
+		return this;
 	}
 
 	public PrintArtifactPublishCommandsTask prepNextFiles(
@@ -232,6 +268,28 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		setPrepNextFiles(Arrays.asList(prepNextFiles));
 	}
 
+	private void _addPrepNextCommitCommands(
+		List<String> commands, String message, Iterable<File> files,
+		boolean checkExistence) {
+
+		boolean prepNext = false;
+
+		for (File file : files) {
+			if (checkExistence && !file.exists()) {
+				continue;
+			}
+
+			prepNext = true;
+
+			commands.add("git add " + _getRelativePath(file));
+		}
+
+		if (!checkExistence || prepNext) {
+			commands.add(
+				_getGitCommitCommand(message, false, true, !checkExistence));
+		}
+	}
+
 	private void _addPublishCommands(
 		List<String> commands, boolean firstPublish) {
 
@@ -259,20 +317,19 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 		// Commit "prep next"
 
-		boolean prepNext = false;
+		_addPrepNextCommitCommands(
+			commands, "prep next", getPrepNextFiles(), true);
 
-		for (File file : getPrepNextFiles()) {
-			if (!file.exists()) {
-				continue;
-			}
+		// Other "prep next" commits
 
-			prepNext = true;
+		Map<String, FileCollection> prepNextCommitFileCollections =
+			getPrepNextCommitFiles();
 
-			commands.add("git add " + _getRelativePath(file));
-		}
+		for (Map.Entry<String, FileCollection> entry :
+				prepNextCommitFileCollections.entrySet()) {
 
-		if (prepNext) {
-			commands.add(_getGitCommitCommand("prep next", false, true, false));
+			_addPrepNextCommitCommands(
+				commands, entry.getKey(), entry.getValue(), false);
 		}
 
 		// Commit "artifact properties"
@@ -416,6 +473,8 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 	private boolean _gradleDaemon;
 	private Object _gradleDir;
 	private Object _lowestPublishedVersion = "1.0.0";
+	private final Map<String, Set<Object>> _prepNextCommitFiles =
+		new LinkedHashMap<>();
 	private final Set<Object> _prepNextFiles = new LinkedHashSet<>();
 
 }

@@ -15,7 +15,9 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -65,6 +67,46 @@ public class DDMFormFactoryTest {
 			new String[] {"action1"}, ddmFormRuleActions.toArray());
 	}
 
+	@Test
+	public void testeCreateDynamicFormWithFieldSet() {
+		DDMForm ddmForm = DDMFormFactory.create(DynamicFormWithFieldSet.class);
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		Assert.assertEquals(1, ddmFormFields.size());
+
+		DDMFormField ddmFormField = ddmFormFields.get(0);
+
+		Assert.assertEquals("parameters", ddmFormField.getName());
+		Assert.assertEquals("fieldset", ddmFormField.getType());
+		Assert.assertEquals(StringPool.BLANK, ddmFormField.getDataType());
+
+		Assert.assertTrue(ddmFormField.isRepeatable());
+
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
+
+		Assert.assertEquals(2, nestedDDMFormFields.size());
+
+		DDMFormField nestedDDMFormField1 = nestedDDMFormFields.get(0);
+
+		Assert.assertEquals("parameterName", nestedDDMFormField1.getName());
+		Assert.assertEquals("text", nestedDDMFormField1.getType());
+
+		DDMFormField nestedDDMFormField2 = nestedDDMFormFields.get(1);
+
+		Assert.assertEquals("parameterValue", nestedDDMFormField2.getName());
+		Assert.assertEquals("text", nestedDDMFormField2.getType());
+	}
+
+	@com.liferay.dynamic.data.mapping.annotations.DDMForm
+	private interface DynamicFormWithFieldSet {
+
+		@com.liferay.dynamic.data.mapping.annotations.DDMFormField
+		public ParametersFieldSetSettings[] parameters();
+
+	}
+
 	@com.liferay.dynamic.data.mapping.annotations.DDMForm
 	private interface DynamicFormWithoutRules {
 	}
@@ -80,6 +122,17 @@ public class DDMFormFactoryTest {
 		}
 	)
 	private interface DynamicFormWithRules {
+	}
+
+	@com.liferay.dynamic.data.mapping.annotations.DDMForm
+	private interface ParametersFieldSetSettings {
+
+		@com.liferay.dynamic.data.mapping.annotations.DDMFormField
+		public String parameterName();
+
+		@com.liferay.dynamic.data.mapping.annotations.DDMFormField
+		public String parameterValue();
+
 	}
 
 }

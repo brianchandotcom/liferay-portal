@@ -38,10 +38,10 @@
 		</execute>
 
 		<execute macro="MobileDevice#addRuleCP">
-			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
-			<var name="ruleName" value="Rule Name" />
-			<var name="operatingSystem" value="Any Operating System" />
 			<var name="deviceType" value="Any" />
+			<var name="mobileDeviceFamilyName" value="Mobile Device Family Name" />
+			<var name="operatingSystem" value="Any Operating System" />
+			<var name="ruleName" value="Rule Name" />
 		</execute>
 
 		<execute macro="Page#add">
@@ -69,8 +69,8 @@
 		<execute macro="Page#manageDeviceFamilyActions">
 			<var name="actionName" value="Mobile Device Family Test Action" />
 			<var name="actionType" value="Redirect to Site" />
-			<var name="siteName" value="Liferay" />
 			<var name="pageName" value="Welcome" />
+			<var name="siteName" value="Liferay" />
 		</execute>
 
 		<execute macro="PortletEntry#save" />

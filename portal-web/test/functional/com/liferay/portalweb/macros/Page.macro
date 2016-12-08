@@ -631,9 +631,10 @@
 				<equals arg1="${actionType}" arg2="Redirect to Site" />
 				<then>
 					<var name="key_siteName" value="${siteName}" />
-					<var name="key_pageName" value="${pageName}" />
 
 					<execute function="Click" locator1="MobileDevice#ADD_ACTION_SITE_OPTION" />
+
+					<var name="key_pageName" value="${pageName}" />
 
 					<execute function="Click" locator1="MobileDevice#ADD_ACTION_PAGE_OPTION" />
 				</then>

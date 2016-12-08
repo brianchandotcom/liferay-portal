@@ -107,9 +107,7 @@ public class UserPermissionImpl
 					 actionId.equals(ActionKeys.UPDATE) ||
 					 actionId.equals(ActionKeys.VIEW)) &&
 					!permissionChecker.isOmniadmin() &&
-					(PortalUtil.isOmniadmin(user) ||
-					 (!permissionChecker.isCompanyAdmin() &&
-					  PortalUtil.isCompanyAdmin(user)))) {
+					PortalUtil.isOmniadmin(user)) {
 
 					return false;
 				}

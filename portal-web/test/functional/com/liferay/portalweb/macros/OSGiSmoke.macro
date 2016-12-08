@@ -10,8 +10,8 @@
 
 		<execute function="AssertClick" locator1="ListGroupItem#INDEPENDENT_MODULES_LINK" value1="Independent Modules" />
 
-		<execute function="AssertVisible" locator1="AppManager#BREADCRUMB_2_LINK">
-			<var name="key_breadCrumb" value="Independent Modules" />
+		<execute macro="Breadcrumb#viewActiveEntry">
+			<var name="breadcrumbName" value="Independent Modules" />
 		</execute>
 
 		<var name="key_itemName" value="${appName}" />

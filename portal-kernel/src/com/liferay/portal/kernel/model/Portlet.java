@@ -336,7 +336,9 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* Returns the Facebook integration method of the portlet.
 	*
 	* @return the Facebook integration method of the portlet
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated()
 	public java.lang.String getFacebookIntegration();
 
 	/**
@@ -1663,7 +1665,9 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* Sets the Facebook integration method of the portlet.
 	*
 	* @param facebookIntegration the Facebook integration method of the portlet
+	* @deprecated As of 7.0.0, with no direct replacement
 	*/
+	@java.lang.Deprecated()
 	public void setFacebookIntegration(java.lang.String facebookIntegration);
 
 	/**

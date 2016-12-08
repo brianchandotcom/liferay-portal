@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
  * be visible and accessible to the company's administrator. In a portlet's
  * <code>liferay-portlet.xml</code> file, this class can be specified as the
  * value for the <a
- * href="http://docs.liferay.com/portal/7.0/definitions/liferay-portlet-app_7_0_0.dtd.html#control-panel-entry-class"
+ * href="http://docs.liferay.com/portal/7.1/definitions/liferay-portlet-app_7_1_0.dtd.html#control-panel-entry-class"
  * > control-panel-entry-class </a> element.
  *
  * @author Brian Wing Shun Chan

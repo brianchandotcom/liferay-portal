@@ -464,10 +464,6 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "css-class-wrapper"),
 				portletModel.getCssClassWrapper()));
-		portletModel.setFacebookIntegration(
-			GetterUtil.getString(
-				get(serviceReference, "facebook-integration"),
-				portletModel.getFacebookIntegration()));
 		portletModel.setFooterPortalCss(
 			StringPlus.asList(get(serviceReference, "footer-portal-css")));
 		portletModel.setFooterPortalJavaScript(

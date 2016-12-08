@@ -102,44 +102,37 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 	}
 	%>
 
+	<input name="<%= namespace %><%= param %>TabsScroll" type="hidden" />
+
 	<c:choose>
-		<c:when test="<%= themeDisplay.isFacebook() %>">
-			<fb:tabs>
+		<c:when test='<%= type.equals("dropdown") %>'>
+
+			<%
+			String name = value;
+
+			int pos = Arrays.binarySearch(values, value);
+
+			if (pos != -1) {
+				name = names[pos];
+			}
+			%>
+
+			<nav class="navbar navbar-default <%= cssClass %>">
+				<div class="container-fluid">
+					<ul class="nav navbar-nav">
+						<c:if test="<%= names.length > 1 %>">
+							<li class="active dropdown">
+								<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+									<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, name) %></span>
+
+									<span class="caret"></span>
+								</a>
+
+								<ul class="dropdown-menu">
+						</c:if>
 		</c:when>
 		<c:otherwise>
-			<input name="<%= namespace %><%= param %>TabsScroll" type="hidden" />
-
-			<c:choose>
-				<c:when test='<%= type.equals("dropdown") %>'>
-
-					<%
-					String name = value;
-
-					int pos = Arrays.binarySearch(values, value);
-
-					if (pos != -1) {
-						name = names[pos];
-					}
-					%>
-
-					<nav class="navbar navbar-default <%= cssClass %>">
-						<div class="container-fluid">
-							<ul class="nav navbar-nav">
-								<c:if test="<%= names.length > 1 %>">
-									<li class="active dropdown">
-										<a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
-											<span id="<%= namespace + param + "dropdownTitle" %>"><%= LanguageUtil.get(resourceBundle, name) %></span>
-
-											<span class="caret"></span>
-										</a>
-
-										<ul class="dropdown-menu">
-								</c:if>
-				</c:when>
-				<c:otherwise>
-					<ul class="lfr-nav nav nav-<%= type %> <%= cssClass %>">
-				</c:otherwise>
-			</c:choose>
+			<ul class="lfr-nav nav nav-<%= type %> <%= cssClass %>">
 		</c:otherwise>
 	</c:choose>
 
@@ -206,65 +199,34 @@ String type = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs
 		}
 	%>
 
-		<c:choose>
-			<c:when test="<%= themeDisplay.isFacebook() %>">
-				<fb:tab_item
-					align="left"
-					href="<%= curURL %>"
-					selected="<%= selected %>"
-					title="<%= LanguageUtil.get(resourceBundle, names[i]) %>"
-				/>
-			</c:when>
-			<c:otherwise>
-				<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
-					<a href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
-						<%= LanguageUtil.get(resourceBundle, names[i]) %>
-					</a>
-				</li>
-			</c:otherwise>
-		</c:choose>
+		<li class="<%= cssClassName %>" id="<%= namespace %><%= param %><%= StringUtil.toCharCode(values[i]) %>TabsId">
+			<a href="<%= Validator.isNotNull(curURL) ? HtmlUtil.escapeAttribute(curURL) : "javascript:;" %>" onClick="<%= Validator.isNotNull(curOnClick) ? curOnClick : StringPool.BLANK %>">
+				<%= LanguageUtil.get(resourceBundle, names[i]) %>
+			</a>
+		</li>
 
 	<%
 	}
 	%>
 
 	<c:if test="<%= Validator.isNotNull(backURL) %>">
-		<c:choose>
-			<c:when test="<%= themeDisplay.isFacebook() %>">
-				<fb:tab_item
-					align="left"
-					href="<%= backURL %>"
-					selected="<%= false %>"
-					title='<%= Validator.isNotNull(backLabel) ? HtmlUtil.escapeAttribute(backLabel) : "&laquo;" + LanguageUtil.get(resourceBundle, "back") %>'
-				/>
-			</c:when>
-			<c:otherwise>
-				<li>
-					<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? HtmlUtil.escape(backLabel) : "&laquo;" + LanguageUtil.get(resourceBundle, "back") %></a>
-				</li>
-			</c:otherwise>
-		</c:choose>
+		<li>
+			<a class="tab" href="<%= backURL %>" id="<%= namespace %><%= param %>TabsBack"><%= Validator.isNotNull(backLabel) ? HtmlUtil.escape(backLabel) : "&laquo;" + LanguageUtil.get(resourceBundle, "back") %></a>
+		</li>
 	</c:if>
 
 	<c:choose>
-		<c:when test="<%= themeDisplay.isFacebook() %>">
-			</fb:tabs>
+		<c:when test='<%= type.equals("dropdown") %>'>
+						<c:if test="<%= names.length == 1 %>">
+								</ul>
+							</li>
+						</c:if>
+					</ul>
+				</div>
+			</nav>
 		</c:when>
 		<c:otherwise>
-			<c:choose>
-				<c:when test='<%= type.equals("dropdown") %>'>
-								<c:if test="<%= names.length == 1 %>">
-										</ul>
-									</li>
-								</c:if>
-							</ul>
-						</div>
-					</nav>
-				</c:when>
-				<c:otherwise>
-					</ul>
-				</c:otherwise>
-			</c:choose>
+			</ul>
 		</c:otherwise>
 	</c:choose>
 

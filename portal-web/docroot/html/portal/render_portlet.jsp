@@ -866,7 +866,7 @@ if ((layout.isTypePanel() || layout.isTypeControlPanel()) && !portletDisplay.get
 	PortalUtil.setPageTitle(portletDisplay.getTitle(), request);
 }
 
-Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY), true) && !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive();
+Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY), true) && !themeDisplay.isStateExclusive();
 %>
 
 <c:if test="<%= renderPortletBoundary %>">

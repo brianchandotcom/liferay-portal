@@ -82,10 +82,6 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						boolean facebookShowAddAppLink = GetterUtil.getBoolean(portletPreferences.getValue("lfrFacebookShowAddAppLink", null), true);
 
 						String callbackURL = widgetURL;
-
-						if (portlet.getFacebookIntegration().equals(PortletConstants.FACEBOOK_INTEGRATION_FBML)) {
-							callbackURL = PortalUtil.getFacebookURL(portlet, facebookCanvasPageURL, themeDisplay);
-						}
 						%>
 
 						<div class="alert alert-info">
@@ -102,14 +98,7 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 							<div class="alert alert-info">
 								<liferay-ui:message key="copy-the-callback-url-and-specify-it-in-facebook" />
 
-								<c:choose>
-									<c:when test="<%= portlet.getFacebookIntegration().equals(PortletConstants.FACEBOOK_INTEGRATION_FBML) %>">
-										<liferay-ui:message key="this-application-is-exposed-to-facebook-via-fbml" />
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="this-application-is-exposed-to-facebook-via-an-iframe" />
-									</c:otherwise>
-								</c:choose>
+								<liferay-ui:message key="this-application-is-exposed-to-facebook-via-an-iframe" />
 							</div>
 
 							<aui:input name="callbackURL" type="resource" value="<%= callbackURL %>" />

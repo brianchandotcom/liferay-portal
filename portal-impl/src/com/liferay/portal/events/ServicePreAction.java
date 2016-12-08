@@ -714,9 +714,6 @@ public class ServicePreAction extends Action {
 
 		boolean isolated = ParamUtil.getBoolean(request, "p_p_isolated");
 
-		String facebookCanvasPageURL = (String)request.getAttribute(
-			WebKeys.FACEBOOK_CANVAS_PAGE_URL);
-
 		boolean widget = false;
 
 		Boolean widgetObj = (Boolean)request.getAttribute(WebKeys.WIDGET);
@@ -739,7 +736,6 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setCDNHost(cdnHost);
 		themeDisplay.setCDNDynamicResourcesHost(dynamicResourcesCDNHost);
-		themeDisplay.setFacebookCanvasPageURL(facebookCanvasPageURL);
 		themeDisplay.setPortalDomain(_getPortalDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
 		themeDisplay.setRefererPlid(refererPlid);

@@ -29,45 +29,38 @@ numberFormat.setMinimumFractionDigits(0);
 String scoreString = numberFormat.format(score);
 %>
 
-<c:choose>
-	<c:when test="<%= themeDisplay.isFacebook() %>">
-		<%= scoreString %> Stars
-	</c:when>
-	<c:otherwise>
-		<div class="score taglib-ratings" id="<%= randomNamespace %>averageRating">
-			<div class="helper-clearfix" id="<%= randomNamespace %>averageRatingContent">
+<div class="score taglib-ratings" id="<%= randomNamespace %>averageRating">
+	<div class="helper-clearfix" id="<%= randomNamespace %>averageRatingContent">
 
-				<%
-				for (int i = 1; i <= 5; i++) {
-				%>
+		<%
+		for (int i = 1; i <= 5; i++) {
+		%>
 
-					<a class="rating-element <%= (i <= score) ? "rating-element-on" : StringPool.BLANK %>" href="javascript:;"></a>
+			<a class="rating-element <%= (i <= score) ? "rating-element-on" : StringPool.BLANK %>" href="javascript:;"></a>
 
-				<%
-				}
-				%>
+		<%
+		}
+		%>
 
-			</div>
-		</div>
+	</div>
+</div>
 
-		<aui:script use="aui-rating">
-			var ratingScore = new A.Rating(
-				{
-					boundingBox: '#<%= randomNamespace %>averageRating',
-					defaultSelected: <%= MathUtil.format(score, 1, 1) %>,
-					disabled: true,
-					srcNode: '#<%= randomNamespace %>averageRatingContent'
-				}
-			).render();
+<aui:script use="aui-rating">
+	var ratingScore = new A.Rating(
+		{
+			boundingBox: '#<%= randomNamespace %>averageRating',
+			defaultSelected: <%= MathUtil.format(score, 1, 1) %>,
+			disabled: true,
+			srcNode: '#<%= randomNamespace %>averageRatingContent'
+		}
+	).render();
 
-			ratingScore.get('boundingBox').on(
-				'mouseenter',
-				function(event) {
-					var el = A.Node.getDOMNode(event.currentTarget);
+	ratingScore.get('boundingBox').on(
+		'mouseenter',
+		function(event) {
+			var el = A.Node.getDOMNode(event.currentTarget);
 
-					Liferay.Portal.ToolTip.show(el, '<%= scoreString %> Stars');
-				}
-			);
-		</aui:script>
-	</c:otherwise>
-</c:choose>
+			Liferay.Portal.ToolTip.show(el, '<%= scoreString %> Stars');
+		}
+	);
+</aui:script>

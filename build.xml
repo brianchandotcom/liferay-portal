@@ -1067,6 +1067,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 				<dtd location="${definitions.dir}/liferay-portlet-app_6_1_0.dtd" publicId="-//Liferay//DTD Portlet Application 6.1.0//EN" />
 				<dtd location="${definitions.dir}/liferay-portlet-app_6_2_0.dtd" publicId="-//Liferay//DTD Portlet Application 6.2.0//EN" />
 				<dtd location="${definitions.dir}/liferay-portlet-app_7_0_0.dtd" publicId="-//Liferay//DTD Portlet Application 7.0.0//EN" />
+				<dtd location="${definitions.dir}/liferay-portlet-app_7_1_0.dtd" publicId="-//Liferay//DTD Portlet Application 7.1.0//EN" />
 				<dtd location="${definitions.dir}/liferay-resource-action-mapping_6_0_0.dtd" publicId="-//Liferay//DTD Resource Action Mapping 6.0.0//EN" />
 				<dtd location="${definitions.dir}/liferay-resource-action-mapping_6_1_0.dtd" publicId="-//Liferay//DTD Resource Action Mapping 6.1.0//EN" />
 				<dtd location="${definitions.dir}/liferay-resource-action-mapping_6_2_0.dtd" publicId="-//Liferay//DTD Resource Action Mapping 6.2.0//EN" />

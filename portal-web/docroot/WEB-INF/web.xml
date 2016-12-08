@@ -141,11 +141,6 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
-		<servlet-name>Facebook Servlet</servlet-name>
-		<servlet-class>com.liferay.portal.facebook.FacebookServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>
 		<servlet-class>com.liferay.portal.servlet.FriendlyURLServlet</servlet-class>
 		<init-param>
@@ -308,10 +303,6 @@
 	<servlet-mapping>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>
 		<url-pattern>/sprite/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>Facebook Servlet</servlet-name>
-		<url-pattern>/facebook/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Friendly URL Servlet - Private Group</servlet-name>

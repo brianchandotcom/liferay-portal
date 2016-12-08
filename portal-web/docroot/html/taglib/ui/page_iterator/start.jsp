@@ -163,69 +163,60 @@ if (forcePost && (portletURL != null)) {
 			<c:if test="<%= PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES.length > 0 %>">
 				<div class="lfr-pagination-config">
 					<div class="lfr-pagination-page-selector">
-						<c:choose>
-							<c:when test="<%= themeDisplay.isFacebook() %>">
-								<liferay-ui:message key="page" />
 
-								<%= cur %>
-							</c:when>
-							<c:otherwise>
+						<%
+						String suffix = LanguageUtil.get(resourceBundle, "of") + StringPool.SPACE + numberFormat.format(pages);
 
-								<%
-								String suffix = LanguageUtil.get(resourceBundle, "of") + StringPool.SPACE + numberFormat.format(pages);
+						if (type.equals("approximate") || type.equals("more")) {
+							suffix = StringPool.BLANK;
+						}
+						%>
 
-								if (type.equals("approximate") || type.equals("more")) {
-									suffix = StringPool.BLANK;
+						<liferay-ui:icon-menu
+							cssClass="current-page-menu"
+							direction="down"
+							icon=""
+							message='<%= LanguageUtil.get(resourceBundle, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>'
+							showWhenSingleIcon="<%= true %>"
+						>
+
+							<%
+							int pagesIteratorMax = maxPages;
+							int pagesIteratorBegin = 1;
+							int pagesIteratorEnd = pages;
+
+							if (pages > pagesIteratorMax) {
+								pagesIteratorBegin = cur - pagesIteratorMax;
+								pagesIteratorEnd = cur + pagesIteratorMax;
+
+								if (pagesIteratorBegin < 1) {
+									pagesIteratorBegin = 1;
 								}
-								%>
 
-								<liferay-ui:icon-menu
-									cssClass="current-page-menu"
-									direction="down"
-									icon=""
-									message='<%= LanguageUtil.get(resourceBundle, "page") + StringPool.SPACE + cur + StringPool.SPACE + suffix %>'
-									showWhenSingleIcon="<%= true %>"
-								>
+								if (pagesIteratorEnd > pages) {
+									pagesIteratorEnd = pages;
+								}
+							}
 
-									<%
-									int pagesIteratorMax = maxPages;
-									int pagesIteratorBegin = 1;
-									int pagesIteratorEnd = pages;
+							for (int i = pagesIteratorBegin; i <= pagesIteratorEnd; i++) {
+							%>
 
-									if (pages > pagesIteratorMax) {
-										pagesIteratorBegin = cur - pagesIteratorMax;
-										pagesIteratorEnd = cur + pagesIteratorMax;
+								<liferay-ui:icon
+									message="<%= String.valueOf(i) %>"
+									onClick='<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>'
+									url='<%= url + namespace + curParam + "=" + i + urlAnchor %>'
+								/>
 
-										if (pagesIteratorBegin < 1) {
-											pagesIteratorBegin = 1;
-										}
+							<%
+							}
+							%>
 
-										if (pagesIteratorEnd > pages) {
-											pagesIteratorEnd = pages;
-										}
-									}
-
-									for (int i = pagesIteratorBegin; i <= pagesIteratorEnd; i++) {
-									%>
-
-										<liferay-ui:icon
-											message="<%= String.valueOf(i) %>"
-											onClick='<%= forcePost ? _getOnClick(namespace, curParam, i) : "" %>'
-											url='<%= url + namespace + curParam + "=" + i + urlAnchor %>'
-										/>
-
-									<%
-									}
-									%>
-
-								</liferay-ui:icon-menu>
-							</c:otherwise>
-						</c:choose>
+						</liferay-ui:icon-menu>
 					</div>
 
 					<div class="lfr-pagination-delta-selector">
 						<c:choose>
-							<c:when test="<%= !deltaConfigurable || themeDisplay.isFacebook() %>">
+							<c:when test="<%= !deltaConfigurable %>">
 								&mdash;
 
 								<liferay-ui:message arguments="<%= delta %>" key="x-items-per-page" />

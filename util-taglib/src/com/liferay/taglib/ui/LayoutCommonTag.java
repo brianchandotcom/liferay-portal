@@ -49,8 +49,8 @@ public class LayoutCommonTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() &&
-			!themeDisplay.isStatePopUp() && !themeDisplay.isWidget()) {
+		if (!themeDisplay.isStateExclusive() && !themeDisplay.isStatePopUp() &&
+			!themeDisplay.isWidget()) {
 
 			_includeStaticPortlets = true;
 		}

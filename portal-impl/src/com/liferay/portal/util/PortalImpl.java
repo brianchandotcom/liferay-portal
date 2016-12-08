@@ -1936,18 +1936,6 @@ public class PortalImpl implements Portal {
 				currentURL = currentURL.substring(
 					currentURL.indexOf(CharPool.SLASH));
 			}
-
-			if (Validator.isNotNull(currentURL) &&
-				FacebookUtil.isFacebook(currentURL)) {
-
-				String[] facebookData = FacebookUtil.getFacebookData(request);
-
-				if (facebookData != null) {
-					currentURL =
-						FacebookUtil.FACEBOOK_APPS_URL + facebookData[0] +
-							facebookData[2];
-				}
-			}
 		}
 
 		if (Validator.isNull(currentURL)) {
@@ -2338,6 +2326,10 @@ public class PortalImpl implements Portal {
 			(HttpServletRequest)uploadPortletRequest, name, type, displayType);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public String getFacebookURL(
 			Portlet portlet, String facebookCanvasPageURL,

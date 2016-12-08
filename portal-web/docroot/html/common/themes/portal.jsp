@@ -19,7 +19,7 @@
 <%
 StringBundler sb = (StringBundler)request.getAttribute(WebKeys.LAYOUT_CONTENT);
 
-if ((sb != null) && (themeDisplay.isFacebook() || themeDisplay.isStateExclusive())) {
+if ((sb != null) && themeDisplay.isStateExclusive()) {
 	sb.writeTo(out);
 }
 else {

@@ -29,12 +29,18 @@ public class PortletConstants {
 
 	/**
 	 * Facebook integration method for FBML.
+	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public static final String FACEBOOK_INTEGRATION_FBML = "fbml";
 
 	/**
 	 * Facebook integration method for IFrame.
+	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public static final String FACEBOOK_INTEGRATION_IFRAME = "iframe";
 
 	/**

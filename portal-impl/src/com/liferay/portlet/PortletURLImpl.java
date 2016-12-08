@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.util.Encryptor;
 import com.liferay.util.EncryptorException;
 
@@ -840,42 +839,24 @@ public class PortletURLImpl
 			sb.append(StringPool.AMPERSAND);
 		}
 		else {
-			if (themeDisplay.isFacebook()) {
-				sb.append(FacebookUtil.FACEBOOK_APPS_URL);
-				sb.append(themeDisplay.getFacebookCanvasPageURL());
+
+			// A virtual host URL will contain the complete path. Do not
+			// append the portal URL if the virtual host URL starts with
+			// "http://" or "https://".
+
+			if (!_layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
+				!_layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
+
+				sb.append(PortalUtil.getPortalURL(_request, _secure));
 			}
-			else {
 
-				// A virtual host URL will contain the complete path. Do not
-				// append the portal URL if the virtual host URL starts with
-				// "http://" or "https://".
-
-				if (!_layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
-					!_layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
-
-					sb.append(PortalUtil.getPortalURL(_request, _secure));
-				}
-
-				sb.append(_layoutFriendlyURL);
-			}
+			sb.append(_layoutFriendlyURL);
 
 			String friendlyURLPath = getPortletFriendlyURLPath();
 
 			if (Validator.isNotNull(friendlyURLPath)) {
-				if (themeDisplay.isFacebook()) {
-					int pos = friendlyURLPath.indexOf(CharPool.SLASH, 1);
-
-					if (pos != -1) {
-						sb.append(friendlyURLPath.substring(pos));
-					}
-					else {
-						sb.append(friendlyURLPath);
-					}
-				}
-				else {
-					sb.append("/-");
-					sb.append(friendlyURLPath);
-				}
+				sb.append("/-");
+				sb.append(friendlyURLPath);
 			}
 
 			sb.append(StringPool.QUESTION);
@@ -1065,26 +1046,7 @@ public class PortletURLImpl
 			result = result.substring(0, result.length() - 1);
 		}
 
-		if (themeDisplay.isFacebook()) {
-
-			// Facebook requires the path portion of the URL to end with a slash
-
-			int pos = result.indexOf(CharPool.QUESTION);
-
-			if (pos == -1) {
-				if (!result.endsWith(StringPool.SLASH)) {
-					result += StringPool.SLASH;
-				}
-			}
-			else {
-				String path = result.substring(0, pos);
-
-				if (!result.endsWith(StringPool.SLASH)) {
-					result = path + StringPool.SLASH + result.substring(pos);
-				}
-			}
-		}
-		else if (!CookieKeys.hasSessionId(_request)) {
+		if (!CookieKeys.hasSessionId(_request)) {
 			result = PortalUtil.getURLWithSessionId(
 				result, _request.getSession().getId());
 		}

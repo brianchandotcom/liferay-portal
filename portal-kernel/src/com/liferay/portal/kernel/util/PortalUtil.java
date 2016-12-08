@@ -915,6 +915,10 @@ public class PortalUtil {
 			uploadPortletRequest, name, type, displayType);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String getFacebookURL(
 			Portlet portlet, String facebookCanvasPageURL,
 			ThemeDisplay themeDisplay)

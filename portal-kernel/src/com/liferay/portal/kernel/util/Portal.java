@@ -652,6 +652,10 @@ public interface Portal {
 			String displayType)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getFacebookURL(
 			Portlet portlet, String facebookCanvasPageURL,
 			ThemeDisplay themeDisplay)

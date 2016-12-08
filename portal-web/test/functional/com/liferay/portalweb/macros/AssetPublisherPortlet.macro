@@ -702,7 +702,7 @@
 	<command name="viewConfigureFlaggableDisplaySettingsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Display Settings" />
 		</execute>
 

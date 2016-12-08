@@ -6,7 +6,7 @@
 			<var name="page" value="${pageName}" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Advanced" />
 		</execute>
 
@@ -34,7 +34,7 @@
 	</command>
 
 	<command name="gotoCustomizationSettingsPG">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Advanced" />
 		</execute>
 

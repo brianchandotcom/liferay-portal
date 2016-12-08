@@ -196,7 +196,7 @@
 			<var name="page" value="${pageName}" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Advanced" />
 		</execute>
 
@@ -212,7 +212,7 @@
 	</command>
 
 	<command name="addPageCategory">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="SEO" />
 		</execute>
 
@@ -842,7 +842,7 @@
 
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="SEO" />
 		</execute>
 

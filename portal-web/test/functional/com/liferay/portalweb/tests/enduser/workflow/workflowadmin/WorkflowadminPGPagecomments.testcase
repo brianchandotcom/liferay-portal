@@ -204,9 +204,8 @@
 
 		<execute macro="Workflow#gotoPreviewEdit" />
 
-		<execute macro="FormFields#editTextMultiline">
-			<var name="fieldName" value="CommentPortlet" />
-			<var name="fieldValue" value="EDIT Comment" />
+		<execute macro="PageComment#editCommentField">
+			<var name="commentBody" value="EDIT Comment" />
 		</execute>
 
 		<execute macro="Button#clickSave" />

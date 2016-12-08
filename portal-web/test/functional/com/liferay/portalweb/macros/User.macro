@@ -1855,6 +1855,25 @@
 
 		<execute function="Click" locator1="Button#SIGN_IN" />
 
+		<execute function="Pause" locator1="3000" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="OpenIDLogin#LOGIN_OPENID_FIELD" />
+			<then>
+				<execute macro="Navigator#openURL" />
+
+				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+				<execute function="AssertClick" locator1="Link#OPENID" value1="OpenID" />
+
+				<execute function="Type" locator1="SignInOpenID#OPENID_FIELD" value1="http://${openIDUsername}.openid.org.cn" />
+
+				<execute function="Click" locator1="Button#SIGN_IN" />
+
+				<execute function="Pause" locator1="3000" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="OpenIDLogin#LOGIN_OPENID_FIELD" value1="${openIDUsername}" />
 		<execute function="Type" locator1="OpenIDLogin#LOGIN_PASSWORD_FIELD" value1="${openIDPassword}" />
 

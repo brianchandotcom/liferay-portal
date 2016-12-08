@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.ldap.internal.messaging;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
@@ -51,6 +53,11 @@ public class UserImportMessageListener
 
 		int interval = ldapImportConfiguration.importInterval();
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"LDAP user imports will occur every " + interval + " min");
+		}
+
 		schedulerEntryImpl.setTrigger(
 			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(), interval,
@@ -83,6 +90,17 @@ public class UserImportMessageListener
 
 			if (!ldapImportConfiguration.importEnabled()) {
 				continue;
+			}
+
+			if (ldapImportConfiguration.importInterval() <= 0) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Skipping ldap import for: " + companyId +
+							". Import interval configured for : " +
+								ldapImportConfiguration.importEnabled());
+				}
+
+				return;
 			}
 
 			if (time >= ldapImportConfiguration.importInterval()) {
@@ -131,6 +149,9 @@ public class UserImportMessageListener
 	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UserImportMessageListener.class);
 
 	private CompanyLocalService _companyLocalService;
 	private ConfigurationProvider<LDAPImportConfiguration>

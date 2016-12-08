@@ -474,6 +474,12 @@
 		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_ACTIONS_MENULIST_CLEAR" />
 	</command>
 
+	<command name="downloadLar">
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+
+		<execute function="DownloadTempFile" />
+	</command>
+
 	<command name="editExportTemplateCP">
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

@@ -1,0 +1,133 @@
+<definition component-name="portal-staging">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Export/Import Framework" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Export" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="DeleteExportTemplate" priority="4">
+		<execute macro="LAR#addExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#saveExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#viewExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#moveToTheRecycleBinExportTemplate">
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewCP">
+			<var name="assetName" value="Export Template Name" />
+			<var name="assetType" value="Export Import Template" />
+			<var name="deleteUser" value="Test Test" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreCP">
+			<var name="assetName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Export" />
+		</execute>
+
+		<execute macro="LAR#gotoExportTemplateCP" />
+
+		<execute macro="LAR#viewExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+	</command>
+
+	<command name="ExportWithRelaunchedProcess" priority="3">
+		<execute macro="LAR#configureExportSiteCP" />
+
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<var name="key_larFileName" value="${larFileName}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
+
+		<echo message="lar file name ${larFileName}" />
+
+		<execute macro="LAR#relaunchExport">
+			<var name="larFileName" value="${larFileName}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+	</command>
+
+	<command name="SearchExportTemplate" priority="4">
+		<execute macro="LAR#addExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="LAR#configureExportOptions">
+			<var name="uncheckContentNameList" value="Blogs" />
+		</execute>
+
+		<execute macro="LAR#saveExportTemplateCP">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesPublishing">
+			<var name="portlet" value="Export" />
+		</execute>
+
+		<execute macro="LAR#gotoExportTemplateCP" />
+
+		<execute macro="LAR#searchTemplate">
+			<var name="exportTemplateDescription" value="Export Template Description" />
+			<var name="exportTemplateName" value="Export Template Name" />
+		</execute>
+	</command>
+</definition>

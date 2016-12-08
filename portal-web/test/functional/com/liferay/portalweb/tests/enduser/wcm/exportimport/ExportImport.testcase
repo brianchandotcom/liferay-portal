@@ -24,68 +24,10 @@
 
 				<execute macro="Page#tearDownPG" />
 
-				<execute macro="Role#tearDownCP" />
-
 				<execute macro="Site#tearDownCP" />
 			</else>
 		</if>
 	</tear-down>
-
-	<command name="DeleteExportTemplate" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#addExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#viewExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#moveToTheRecycleBinExportTemplate">
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Recycle Bin" />
-		</execute>
-
-		<execute macro="RecycleBin#viewCP">
-			<var name="assetName" value="Export Template Name" />
-			<var name="assetType" value="Export Import Template" />
-			<var name="deleteUser" value="Test Test" />
-		</execute>
-
-		<execute macro="RecycleBin#restoreCP">
-			<var name="assetName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#gotoExportTemplateCP" />
-
-		<execute macro="LAR#viewExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-	</command>
 
 	<command name="EditExportTemplate" priority="4">
 		<execute macro="Navigator#openURL" />
@@ -147,9 +89,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -214,9 +154,7 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -394,8 +332,7 @@
 
 		<echo message="file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -446,8 +383,7 @@
 
 		<echo message="file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -522,8 +458,7 @@
 
 		<echo message="file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -550,8 +485,6 @@
 	</command>
 
 	<command name="ExportImportPrivatePage" priority="5">
-		<property name="portal.acceptance" value="true" />
-
 		<execute macro="Page#add">
 			<var name="pageName" value="Private Page" />
 			<var name="sitePagePrivacy" value="Private" />
@@ -578,8 +511,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -690,9 +622,7 @@
 
 		<echo message="file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -789,33 +719,6 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSelectedLastDateRange" priority="3">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMFolder#addCP">
-			<var name="dmFolderDescription" value="DM Folder Description" />
-			<var name="dmFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteCP">
-			<var name="lastDateRange" value="24 Hours" />
-		</execute>
-
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-	</command>
-
 	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
 		<property name="portal.acceptance" value="true" />
 		<property name="test.name.skip.portal.instance" value="ExportImport#ExportImportSiteWithChangedSiteDefaultLanguage" />
@@ -887,8 +790,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -969,8 +871,7 @@
 
 		<echo message="file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
@@ -1030,8 +931,7 @@
 
 		<echo message="file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -1045,34 +945,6 @@
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="Site Name" />
 		</execute>
-	</command>
-
-	<command name="ExportImportWithRelaunchedProcess" priority="3">
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#configureExportSiteCP" />
-
-		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
-
-		<var name="key_larFileName" value="${larFileName}" />
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-
-		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
-
-		<echo message="value name ${valueName}" />
-
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
-
-		<echo message="lar file name ${larFileName}" />
-
-		<execute macro="LAR#relaunchExport">
-			<var name="larFileName" value="${larFileName}" />
-		</execute>
-
-		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 	</command>
 
 	<!-- LRQA-26034 -->
@@ -1150,8 +1022,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
-		<execute function="DownloadTempFile" />
+		<execute macro="LAR#downloadLar" />
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
@@ -1195,41 +1066,6 @@
 			<var name="cannotImport" value="true" />
 			<var name="larFileName" value="bookmarks-corrupted.portlet.lar" />
 			<var name="uploadFrom" value="dependencies" />
-		</execute>
-	</command>
-
-	<command name="SearchExportTemplate" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#addExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="LAR#configureExportOptions">
-			<var name="uncheckContentNameList" value="Blogs" />
-		</execute>
-
-		<execute macro="LAR#saveExportTemplateCP">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesPublishing">
-			<var name="portlet" value="Export" />
-		</execute>
-
-		<execute macro="LAR#gotoExportTemplateCP" />
-
-		<execute macro="LAR#searchTemplate">
-			<var name="exportTemplateDescription" value="Export Template Description" />
-			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 	</command>
 </definition>

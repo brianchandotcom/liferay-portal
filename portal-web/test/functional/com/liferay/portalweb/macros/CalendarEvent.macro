@@ -596,6 +596,13 @@
 		<execute function="Pause" value1="3000" />
 
 		<if>
+			<condition function="IsElementPresent" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" />
+			<then>
+				<execute function="AssertClick" locator1="CalendarEditEvent#ENTIRE_SERIES_BUTTON" value1="Entire Series"  />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${rsvp}" arg2="No" />
 			<then>
 				<execute macro="CalendarScheduler#viewSpecificEventNotPresent">

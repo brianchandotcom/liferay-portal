@@ -155,7 +155,7 @@
 	</command>
 
 	<command name="configureCustomStylesViaLookandfeelPG">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Text Styles" />
 		</execute>
 
@@ -163,7 +163,7 @@
 
 		<execute function="Select" locator1="Portlet#TEXT_FONT_SIZE_SELECT" value1="2em" />
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Border Styles" />
 		</execute>
 

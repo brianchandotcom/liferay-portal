@@ -24,6 +24,10 @@
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ruleName}" />
 
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Operating System and Type" />
+		</execute>
+
 		<var name="key_operatingSystem" value="${operatingSystem}" />
 
 		<execute function="Click" locator1="MobileDevice#ADD_CLASSIFICATION_RULE_OPERATING_SYSTEM" />

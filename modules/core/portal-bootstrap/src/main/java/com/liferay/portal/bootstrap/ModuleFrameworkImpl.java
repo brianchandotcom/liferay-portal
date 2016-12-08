@@ -916,6 +916,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 
 		FileUtil.mkdirs(PropsValues.MODULE_FRAMEWORK_BASE_DIR + "/static");
+
+		FileUtil.mkdirs(
+			PropsValues.MODULE_FRAMEWORK_MARKETPLACE_DIR + "/override");
 	}
 
 	private Bundle _installInitialBundle(

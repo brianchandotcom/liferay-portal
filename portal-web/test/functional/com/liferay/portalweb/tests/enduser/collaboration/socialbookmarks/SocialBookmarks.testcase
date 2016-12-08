@@ -1,0 +1,35 @@
+<definition component-name="portal-collaboration">
+	<property name="custom.properties" value="default.layout.template.id=1_column" />
+	<property name="hook.plugins.includes" value="social-bookmarks-hook" />
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Social Bookmarks" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="BlogsEntry#tearDownCP" />
+
+				<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
+					<var name="pageName" value="Blogs Page" />
+					<var name="portletName" value="Blogs" />
+				</execute>
+
+				<execute macro="KBArticle#tearDownCP" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+</definition>

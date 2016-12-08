@@ -218,6 +218,7 @@ import com.liferay.wiki.social.WikiActivityKeys;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 
 import java.text.Format;
 
@@ -2232,8 +2233,9 @@ public class DataFactory {
 
 		try (InputStream is = DataFactory.class.getResourceAsStream(
 				"dependencies/releases.txt");
+			Reader reader = new InputStreamReader(is);
 			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(is))) {
+				new UnsyncBufferedReader(reader)) {
 
 			String line = null;
 

@@ -7482,7 +7482,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					<elseif>
 						<equals arg1="${app.server.type}" arg2="weblogic" />
 						<then>
-							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic" />
+							<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
 						</then>
 					</elseif>
 				</if>

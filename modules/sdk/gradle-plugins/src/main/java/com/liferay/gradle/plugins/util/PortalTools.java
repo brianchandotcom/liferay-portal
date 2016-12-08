@@ -42,18 +42,23 @@ public class PortalTools {
 			return version;
 		}
 
-		File dir = GradleUtil.getRootDir(
-			project.getProjectDir(), "gradle.properties");
+		File dir = project.getProjectDir();
 
-		if (dir != null) {
-			Properties properties = GUtil.loadProperties(
-				new File(dir, "gradle.properties"));
+		while ((dir != null) && Validator.isNull(version)) {
+			File gradlePropertiesFile = new File(dir, "gradle.properties");
 
-			version = properties.getProperty(key);
+			if (gradlePropertiesFile.exists()) {
+				Properties gradleProperties = GUtil.loadProperties(
+					gradlePropertiesFile);
 
-			if (Validator.isNotNull(version)) {
-				return version;
+				version = gradleProperties.getProperty(key);
 			}
+
+			dir = dir.getParentFile();
+		}
+
+		if (Validator.isNotNull(version)) {
+			return version;
 		}
 
 		return _versions.getProperty(name);

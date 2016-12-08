@@ -125,7 +125,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Available" />
 		</execute>
 
@@ -138,7 +138,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Current" />
 		</execute>
 

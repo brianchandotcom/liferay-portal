@@ -1,0 +1,70 @@
+<definition component-name="portal-user-interface">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="User Interface" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="AddThemeSite" priority="5">
+		<property name="portal.acceptance" value="pending" />
+		<property name="test.name.skip.portal.instance" value="1975LondonTheme#AddThemeSite" />
+		<property name="theme.file.name" value="1975-london-theme.war" />
+
+		<var method="TestPropsUtil#get('theme.contains.resources')" name="themeContainsResources" />
+
+		<if>
+			<equals arg1="${themeContainsResources}" arg2="true" />
+			<then>
+				<execute macro="ProductMenu#gotoControlPanelSites">
+					<var name="portlet" value="Sites" />
+				</execute>
+
+				<execute macro="Site#addSiteTemplateCP">
+					<var name="siteName" value="1975 London Theme Site" />
+					<var name="siteTemplateName" value="1975 London Theme" />
+				</execute>
+
+				<execute macro="ProductMenu#gotoSite">
+					<var name="site" value="1975 London Theme Site" />
+				</execute>
+
+				<execute function="AssertClick" locator1="Home#PAGE" value1="HOME">
+					<var name="key_pageName" value="home" />
+				</execute>
+
+				<execute function="AssertTextEquals" locator1="Header#H3_TITLE" value1="We love Music">
+					<var name="key_title" value="We love Music" />
+				</execute>
+			</then>
+			<else>
+				<var name="appName" value="1975-london-theme" />
+
+				<execute macro="ProductMenu#gotoControlPanelApps">
+					<var name="portlet" value="App Manager" />
+				</execute>
+
+				<execute function="Type" locator1="TextInput#SEARCH" value1="${appName}" />
+
+				<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+
+				<execute function="AssertVisible" locator1="ListGroupItem#ITEM_NAME_LINK">
+					<var name="key_itemName" value="1975-london-theme" />
+				</execute>
+			</else>
+		</if>
+	</command>
+</definition>

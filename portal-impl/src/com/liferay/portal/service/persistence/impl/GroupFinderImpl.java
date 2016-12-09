@@ -1520,13 +1520,17 @@ public class GroupFinderImpl
 				params3.put("classNameIds", groupClassNameId);
 			}
 
-			if (ArrayUtil.containsAll(classNameIds, groupOrganizationClassNameIds)) {
+			if (ArrayUtil.containsAll(
+					classNameIds, groupOrganizationClassNameIds)) {
+
 				params4.put("classNameIds", groupOrganizationClassNameIds);
 			}
 			else if (ArrayUtil.contains(classNameIds, groupClassNameId)) {
 				params4.put("classNameIds", groupClassNameId);
 			}
-			else if (ArrayUtil.contains(classNameIds, organizationClassNameId)){
+			else if (ArrayUtil.contains(
+						classNameIds, organizationClassNameId)) {
+
 				params4.put("classNameIds", organizationClassNameId);
 			}
 		}

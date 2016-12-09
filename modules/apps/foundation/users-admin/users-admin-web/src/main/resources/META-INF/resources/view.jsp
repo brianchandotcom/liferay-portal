@@ -239,4 +239,58 @@ else {
 
 		location.href = Liferay.Util.addParams('<portlet:namespace />status=' + status.value, '<%= HtmlUtil.escapeJS(showUsersURL.toString()) %>');
 	}
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />openSelectUsersDialog',
+		function(organizationId) {
+			var A = AUI();
+
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			<portlet:renderURL var="selectUsersURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="mvcPath" value="/select_organization_users.jsp" />
+			</portlet:renderURL>
+
+			var selectUsersURL = Liferay.PortletURL.createURL('<%= selectUsersURL.toString() %>');
+
+			selectUsersURL.setParameter('organizationId', organizationId);
+
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+				{
+					eventName: '<portlet:namespace />selectUsers',
+					on: {
+						selectedItemChange: function(event) {
+							var data = event.newVal;
+
+							if (data) {
+								var editAssignmentURL = Liferay.PortletURL.createURL('<portlet:actionURL name="/users_admin/edit_organization_assignments" />');
+
+								editAssignmentURL.setParameter('addUserIds', data.selected);
+								editAssignmentURL.setParameter('removeUserIds', data.unselected);
+								editAssignmentURL.setParameter('organizationId', organizationId);
+
+								var assignmentsRedirectURL = Liferay.PortletURL.createURL('<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/users_admin/view" /><portlet:param name="toolbarItem" value="view-all-organizations" /><portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" /></portlet:renderURL>');
+
+								assignmentsRedirectURL.setParameter('organizationId', organizationId);
+
+								editAssignmentURL.setParameter('assignmentsRedirect', assignmentsRedirectURL.toString());
+
+								submitForm(form, editAssignmentURL.toString());
+							}
+						}
+					},
+					strings: {
+						add: '<liferay-ui:message key="done" />',
+						cancel: '<liferay-ui:message key="cancel" />'
+					},
+					title: '<liferay-ui:message key="assign-users" />',
+					url: selectUsersURL.toString()
+				}
+			);
+
+			itemSelectorDialog.open();
+		},
+		['liferay-item-selector-dialog', 'liferay-portlet-url']
+	);
 </aui:script>

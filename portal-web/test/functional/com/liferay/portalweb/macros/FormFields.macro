@@ -201,8 +201,17 @@
 		<var name="key_fieldLabel" value="${fieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="AssertElementNotPresent" locator1="FormFields#DATE_LABEL" />
-		<execute function="AssertElementNotPresent" locator1="FormFields#DATE_FIELD" />
+		<if>
+			<condition function="IsElementPresent" locator1="FormFields#DATE_FIELD" />
+			<then>
+				<execute function="AssertElementNotPresent#assertNotVisible" locator1="FormFields#DATE_LABEL" />
+				<execute function="AssertElementNotPresent#assertNotVisible" locator1="FormFields#DATE_FIELD" />
+			</then>
+			<else>
+				<execute function="AssertElementNotPresent" locator1="FormFields#DATE_LABEL" />
+				<execute function="AssertElementNotPresent" locator1="FormFields#DATE_FIELD" />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewDateLabel">

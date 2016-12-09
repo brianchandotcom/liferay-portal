@@ -190,7 +190,7 @@ if (portletTitleBasedNavigation) {
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
 						<liferay-ui:custom-attribute-list
 							className="<%= KBArticle.class.getName() %>"
-							classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>"
+							classPK="<%= (kbArticle != null) ? kbArticle.getKbArticleId() : 0 %>"
 							editable="<%= true %>"
 							label="<%= true %>"
 						/>

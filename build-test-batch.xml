@@ -640,7 +640,7 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<and>
 							<or>
-								<matches pattern="https?://" string="@{test.portal.bundle.war.utl}" />
+								<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
 								<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
 							</or>
 							<matches pattern="https?://" string="@{test.sql.zip.url}" />

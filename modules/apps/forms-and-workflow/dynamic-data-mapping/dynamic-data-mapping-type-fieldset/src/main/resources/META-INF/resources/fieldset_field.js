@@ -5,8 +5,8 @@ AUI.add(
 			{
 				ATTRS: {
 					fields: {
-						state: true,
 						setter: '_setFields',
+						state: true,
 						validator: Array.isArray,
 						value: []
 					},

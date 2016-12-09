@@ -14,9 +14,7 @@
 
 package com.liferay.asset.publisher.web.display.context;
 
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -54,53 +52,21 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Company company = themeDisplay.getCompany();
-
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), getPortletURL());
-
-		List<Group> results = new ArrayList<>();
-
-		int additionalSites = 0;
-
-		boolean includeUserPersonalSite = ParamUtil.getBoolean(
-			request, "includeUserPersonalSite");
-
-		if (includeUserPersonalSite) {
-			if (groupSearch.getStart() == 0) {
-				Group userPersonalSite = GroupLocalServiceUtil.getGroup(
-					company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
-
-				results.add(userPersonalSite);
-			}
-
-			additionalSites++;
-		}
 
 		int total = GroupLocalServiceUtil.getGroupsCount(
 			themeDisplay.getCompanyId(), Layout.class.getName(), getGroupId());
 
-		total += additionalSites;
-
 		groupSearch.setTotal(total);
 
-		int start = groupSearch.getStart();
-
-		if (groupSearch.getStart() > additionalSites) {
-			start = groupSearch.getStart() - additionalSites;
-		}
-
-		int end = groupSearch.getEnd() - additionalSites;
-
 		List<Group> groups = GroupLocalServiceUtil.getGroups(
-			company.getCompanyId(), Layout.class.getName(), getGroupId(), start,
-			end);
+			themeDisplay.getCompanyId(), Layout.class.getName(), getGroupId(),
+			groupSearch.getStart(), groupSearch.getEnd());
 
 		groups = _filterLayoutGroups(groups, _isPrivateLayout());
 
-		results.addAll(groups);
-
-		groupSearch.setResults(results);
+		groupSearch.setResults(groups);
 
 		return groupSearch;
 	}

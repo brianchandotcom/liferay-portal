@@ -17,16 +17,15 @@ package com.liferay.asset.publisher.web.display.context;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
 import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
@@ -57,25 +56,12 @@ public class SitesItemSelectorViewDisplayContext
 			portletURL);
 	}
 
-	public String getFilter() {
-		if (_filter != null) {
-			return _filter;
-		}
-
-		_filter = ParamUtil.getString(request, "filter");
-
-		return _filter;
-	}
-
 	public LinkedHashMap<String, Object> getGroupParams()
 		throws PortalException {
 
 		if (_groupParams != null) {
 			return _groupParams;
 		}
-
-		boolean includeCurrentGroup = ParamUtil.getBoolean(
-			request, "includeCurrentGroup", true);
 
 		String type = getType();
 
@@ -96,10 +82,6 @@ public class SitesItemSelectorViewDisplayContext
 
 		_groupParams.put("active", Boolean.TRUE);
 
-		if (isManualMembership()) {
-			_groupParams.put("manualMembership", Boolean.TRUE);
-		}
-
 		if (type.equals("child-sites")) {
 			Group parentGroup = GroupLocalServiceUtil.getGroup(getGroupId());
 
@@ -115,7 +97,7 @@ public class SitesItemSelectorViewDisplayContext
 
 		_groupParams.put("site", Boolean.TRUE);
 
-		if (!includeCurrentGroup && (getGroupId() > 0)) {
+		if (getGroupId() > 0) {
 			List<Long> excludedGroupIds = new ArrayList<>();
 
 			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
@@ -146,33 +128,9 @@ public class SitesItemSelectorViewDisplayContext
 		GroupSearchTerms groupSearchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
 
-		List<Group> results = new ArrayList<>();
-
-		int additionalSites = 0;
 		int total = 0;
 
-		boolean includeCompany = ParamUtil.getBoolean(
-			request, "includeCompany");
-		boolean includeUserPersonalSite = ParamUtil.getBoolean(
-			request, "includeUserPersonalSite");
-
 		long[] classNameIds = _CLASS_NAME_IDS;
-
-		if (includeCompany) {
-			classNameIds = ArrayUtil.append(
-				classNameIds, PortalUtil.getClassNameId(Company.class));
-		}
-
-		if (includeUserPersonalSite) {
-			if (groupSearch.getStart() == 0) {
-				Group userPersonalSite = GroupLocalServiceUtil.getGroup(
-					company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
-
-				results.add(userPersonalSite);
-			}
-
-			additionalSites++;
-		}
 
 		String type = getType();
 
@@ -184,17 +142,7 @@ public class SitesItemSelectorViewDisplayContext
 				groupSearchTerms.getKeywords(), getGroupParams());
 		}
 
-		total += additionalSites;
-
 		groupSearch.setTotal(total);
-
-		int start = groupSearch.getStart();
-
-		if (groupSearch.getStart() > additionalSites) {
-			start = groupSearch.getStart() - additionalSites;
-		}
-
-		int end = groupSearch.getEnd() - additionalSites;
 
 		List<Group> groups = null;
 
@@ -203,36 +151,23 @@ public class SitesItemSelectorViewDisplayContext
 
 			groups = group.getAncestors();
 
-			String filter = getFilter();
+			groups = _filterGroups(groups);
 
-			if (Validator.isNotNull(filter)) {
-				groups = _filterGroups(groups, filter);
-			}
-
-			total = groups.size();
-
-			total += additionalSites;
-
-			groupSearch.setTotal(total);
+			groupSearch.setTotal(groups.size());
 		}
 		else {
 			groups = GroupLocalServiceUtil.search(
 				company.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), getGroupParams(), start, end,
+				groupSearchTerms.getKeywords(), getGroupParams(),
+				groupSearch.getStart(), groupSearch.getEnd(),
 				groupSearch.getOrderByComparator());
 
 			groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
 
-			total = groups.size();
-
-			total += additionalSites;
-
-			groupSearch.setTotal(total);
+			groupSearch.setTotal(groups.size());
 		}
 
-		results.addAll(groups);
-
-		groupSearch.setResults(results);
+		groupSearch.setResults(groups);
 
 		return groupSearch;
 	}
@@ -242,44 +177,57 @@ public class SitesItemSelectorViewDisplayContext
 			return _type;
 		}
 
-		_type = ParamUtil.getString(request, "type");
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		String[] types = getTypes();
+		if (PrefsPropsUtil.getBoolean(
+				themeDisplay.getCompanyId(),
+				PropsKeys.
+					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
 
-		if (Validator.isNull(_type)) {
-			_type = types[0];
+			_type = "sites-that-i-administer";
+
+			return _type;
 		}
+
+		Layout layout = themeDisplay.getLayout();
+
+		int groupsCount = GroupLocalServiceUtil.getGroupsCount(
+			themeDisplay.getCompanyId(), layout.getGroupId(), Boolean.TRUE);
+
+		if (groupsCount > 0) {
+			_type = "child-sites";
+
+			return _type;
+		}
+
+		Group siteGroup = themeDisplay.getSiteGroup();
+
+		if (!siteGroup.isRoot()) {
+			_type = "parent-sites";
+
+			return _type;
+		}
+
+		_type = "sites-that-i-administer";
 
 		return _type;
 	}
 
-	public String[] getTypes() {
-		if (_types != null) {
-			return _types;
+	private List<Group> _filterGroups(List<Group> groups) {
+		List<Group> filteredGroups = new ArrayList();
+
+		for (Group group : groups) {
+			if (SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+				filteredGroups.add(group);
+			}
 		}
 
-		_types = ParamUtil.getParameterValues(request, "types");
-
-		if (_types.length == 0) {
-			_types = new String[] {"sites-that-i-administer"};
-		}
-
-		return _types;
-	}
-
-	public Boolean isManualMembership() {
-		if (_manualMembership != null) {
-			return _manualMembership;
-		}
-
-		_manualMembership = ParamUtil.getBoolean(request, "manualMembership");
-
-		return _manualMembership;
+		return filteredGroups;
 	}
 
 	private List<Group> _filterGroups(
-			List<Group> groups, PermissionChecker permissionChecker)
-		throws Exception {
+		List<Group> groups, PermissionChecker permissionChecker) {
 
 		List<Group> filteredGroups = new ArrayList();
 
@@ -292,31 +240,12 @@ public class SitesItemSelectorViewDisplayContext
 		return filteredGroups;
 	}
 
-	private List<Group> _filterGroups(List<Group> groups, String filter)
-		throws Exception {
-
-		List<Group> filteredGroups = new ArrayList();
-
-		for (Group group : groups) {
-			if (filter.equals("contentSharingWithChildrenEnabled") &&
-				SitesUtil.isContentSharingWithChildrenEnabled(group)) {
-
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
-	}
-
 	private static final long[] _CLASS_NAME_IDS = new long[] {
 		PortalUtil.getClassNameId(Group.class),
 		PortalUtil.getClassNameId(Organization.class)
 	};
 
-	private String _filter;
 	private LinkedHashMap<String, Object> _groupParams;
-	private Boolean _manualMembership;
 	private String _type;
-	private String[] _types;
 
 }

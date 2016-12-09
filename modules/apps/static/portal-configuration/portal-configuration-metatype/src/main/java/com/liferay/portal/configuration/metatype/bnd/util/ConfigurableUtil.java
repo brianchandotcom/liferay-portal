@@ -16,14 +16,8 @@ package com.liferay.portal.configuration.metatype.bnd.util;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.util.ProxyUtil;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-
 import java.util.Dictionary;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Shuyang Zhou
@@ -33,65 +27,13 @@ public class ConfigurableUtil {
 	public static <T> T createConfigurable(
 		Class<T> clazz, Dictionary<?, ?> properties) {
 
-		Object proxy = ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {clazz},
-			new CachedConfigurableInvocationHandler<>(
-				Configurable.createConfigurable(clazz, properties)));
-
-		return clazz.cast(proxy);
+		return Configurable.createConfigurable(clazz, properties);
 	}
 
 	public static <T> T createConfigurable(
 		Class<T> clazz, Map<?, ?> properties) {
 
-		Object proxy = ProxyUtil.newProxyInstance(
-			clazz.getClassLoader(), new Class<?>[] {clazz},
-			new CachedConfigurableInvocationHandler<>(
-				Configurable.createConfigurable(clazz, properties)));
-
-		return clazz.cast(proxy);
-	}
-
-	private static class CachedConfigurableInvocationHandler<T>
-		implements InvocationHandler {
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args)
-			throws Throwable {
-
-			String methodName = method.getName();
-
-			Object returnValue = _returnValues.get(methodName);
-
-			if (returnValue == null) {
-				method.setAccessible(true);
-
-				returnValue = method.invoke(_configurable, args);
-
-				if (returnValue == null) {
-					returnValue = _NULL_OBJECT;
-				}
-
-				_returnValues.put(methodName, returnValue);
-			}
-
-			if (returnValue == _NULL_OBJECT) {
-				return null;
-			}
-
-			return returnValue;
-		}
-
-		private CachedConfigurableInvocationHandler(T configurable) {
-			_configurable = configurable;
-		}
-
-		private static final Object _NULL_OBJECT = new Object();
-
-		private final T _configurable;
-		private final Map<String, Object> _returnValues =
-			new ConcurrentHashMap<>();
-
+		return Configurable.createConfigurable(clazz, properties);
 	}
 
 }

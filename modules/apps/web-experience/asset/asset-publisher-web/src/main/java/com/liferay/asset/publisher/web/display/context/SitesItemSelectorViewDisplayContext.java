@@ -56,14 +56,97 @@ public class SitesItemSelectorViewDisplayContext
 			portletURL);
 	}
 
-	public LinkedHashMap<String, Object> getGroupParams()
+	@Override
+	public GroupSearch getGroupSearch() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Company company = themeDisplay.getCompany();
+
+		GroupSearch groupSearch = new GroupSearch(
+			getPortletRequest(), getPortletURL());
+
+		GroupSearchTerms groupSearchTerms =
+			(GroupSearchTerms)groupSearch.getSearchTerms();
+
+		int total = 0;
+
+		long[] classNameIds = _CLASS_NAME_IDS;
+
+		String type = _getType();
+
+		if (type.equals("parent-sites")) {
+		}
+		else {
+			total = GroupLocalServiceUtil.searchCount(
+				themeDisplay.getCompanyId(), classNameIds,
+				groupSearchTerms.getKeywords(), _getGroupParams());
+		}
+
+		groupSearch.setTotal(total);
+
+		List<Group> groups = null;
+
+		if (type.equals("parent-sites")) {
+			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+			groups = group.getAncestors();
+
+			groups = _filterGroups(groups);
+
+			groupSearch.setTotal(groups.size());
+		}
+		else {
+			groups = GroupLocalServiceUtil.search(
+				company.getCompanyId(), classNameIds,
+				groupSearchTerms.getKeywords(), _getGroupParams(),
+				groupSearch.getStart(), groupSearch.getEnd(),
+				groupSearch.getOrderByComparator());
+
+			groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
+
+			groupSearch.setTotal(groups.size());
+		}
+
+		groupSearch.setResults(groups);
+
+		return groupSearch;
+	}
+
+	private List<Group> _filterGroups(List<Group> groups) {
+		List<Group> filteredGroups = new ArrayList();
+
+		for (Group group : groups) {
+			if (SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+				filteredGroups.add(group);
+			}
+		}
+
+		return filteredGroups;
+	}
+
+	private List<Group> _filterGroups(
+		List<Group> groups, PermissionChecker permissionChecker) {
+
+		List<Group> filteredGroups = new ArrayList();
+
+		for (Group group : groups) {
+			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+				filteredGroups.add(group);
+			}
+		}
+
+		return filteredGroups;
+	}
+
+	private LinkedHashMap<String, Object> _getGroupParams()
 		throws PortalException {
 
 		if (_groupParams != null) {
 			return _groupParams;
 		}
 
-		String type = getType();
+		String type = _getType();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -115,64 +198,7 @@ public class SitesItemSelectorViewDisplayContext
 		return _groupParams;
 	}
 
-	@Override
-	public GroupSearch getGroupSearch() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Company company = themeDisplay.getCompany();
-
-		GroupSearch groupSearch = new GroupSearch(
-			getPortletRequest(), getPortletURL());
-
-		GroupSearchTerms groupSearchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
-		int total = 0;
-
-		long[] classNameIds = _CLASS_NAME_IDS;
-
-		String type = getType();
-
-		if (type.equals("parent-sites")) {
-		}
-		else {
-			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), getGroupParams());
-		}
-
-		groupSearch.setTotal(total);
-
-		List<Group> groups = null;
-
-		if (type.equals("parent-sites")) {
-			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
-
-			groups = group.getAncestors();
-
-			groups = _filterGroups(groups);
-
-			groupSearch.setTotal(groups.size());
-		}
-		else {
-			groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), getGroupParams(),
-				groupSearch.getStart(), groupSearch.getEnd(),
-				groupSearch.getOrderByComparator());
-
-			groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
-
-			groupSearch.setTotal(groups.size());
-		}
-
-		groupSearch.setResults(groups);
-
-		return groupSearch;
-	}
-
-	public String getType() {
+	private String _getType() {
 		if (_type != null) {
 			return _type;
 		}
@@ -212,32 +238,6 @@ public class SitesItemSelectorViewDisplayContext
 		_type = "sites-that-i-administer";
 
 		return _type;
-	}
-
-	private List<Group> _filterGroups(List<Group> groups) {
-		List<Group> filteredGroups = new ArrayList();
-
-		for (Group group : groups) {
-			if (SitesUtil.isContentSharingWithChildrenEnabled(group)) {
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
-	}
-
-	private List<Group> _filterGroups(
-		List<Group> groups, PermissionChecker permissionChecker) {
-
-		List<Group> filteredGroups = new ArrayList();
-
-		for (Group group : groups) {
-			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
 	}
 
 	private static final long[] _CLASS_NAME_IDS = new long[] {

@@ -2,9 +2,11 @@
 	<command name="deactivateAppCP">
 		<var name="key_appName" value="${appName}" />
 
-		<execute function="AssertClick" locator1="AppManager#APP_ACTIONS" value1="Actions" />
+		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
+		
+		<execute function="AssertClickNoError" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
 
-		<execute function="AssertClick" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
+		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 	</command>
 
 	<command name="uninstallAppCP">

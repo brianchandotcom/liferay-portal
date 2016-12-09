@@ -305,16 +305,16 @@ if (portletTitleBasedNavigation) {
 					</c:if>
 				</aui:fieldset>
 
-				<liferay-custom-field-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+				<liferay-expando:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-						<liferay-custom-field-ui:custom-attribute-list
+						<liferay-expando:custom-attribute-list
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entryId %>"
 							editable="<%= true %>"
 							label="<%= true %>"
 						/>
 					</aui:fieldset>
-				</liferay-custom-field-ui:custom-attributes-available>
+				</liferay-expando:custom-attributes-available>
 
 				<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">

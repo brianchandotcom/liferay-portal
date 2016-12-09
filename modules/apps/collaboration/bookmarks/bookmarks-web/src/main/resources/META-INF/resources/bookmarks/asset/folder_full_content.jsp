@@ -67,14 +67,14 @@ BookmarksFolder folder = (BookmarksFolder)request.getAttribute(BookmarksWebKeys.
 				</div>
 			</div>
 
-			<liferay-custom-field-ui:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
-				<liferay-custom-field-ui:custom-attribute-list
+			<liferay-expando:custom-attributes-available className="<%= BookmarksFolder.class.getName() %>">
+				<liferay-expando:custom-attribute-list
 					className="<%= BookmarksFolder.class.getName() %>"
 					classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
 					editable="<%= false %>"
 					label="<%= true %>"
 				/>
-			</liferay-custom-field-ui:custom-attributes-available>
+			</liferay-expando:custom-attributes-available>
 		</aui:col>
 	</aui:row>
 </c:if>

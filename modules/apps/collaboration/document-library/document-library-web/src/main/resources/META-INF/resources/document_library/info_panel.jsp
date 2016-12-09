@@ -248,14 +248,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(fileEntries) && ListUtil.isEmp
 						classPK="<%= fileEntry.getFileEntryId() %>"
 					/>
 
-					<liferay-custom-field-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
-						<liferay-custom-field-ui:custom-attribute-list
+					<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+						<liferay-expando:custom-attribute-list
 							className="<%= DLFileEntryConstants.getClassName() %>"
 							classPK="<%= fileVersion.getFileVersionId() %>"
 							editable="<%= false %>"
 							label="<%= true %>"
 						/>
-					</liferay-custom-field-ui:custom-attributes-available>
+					</liferay-expando:custom-attributes-available>
 
 					<%
 					AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(DLFileEntryConstants.getClassName(), assetClassPK);

@@ -72,6 +72,16 @@ public abstract class BaseItemSelectorViewDisplayContext
 		return displayStyle;
 	}
 
+	public long getGroupId() {
+		if (_groupId != null) {
+			return _groupId;
+		}
+
+		_groupId = ParamUtil.getLong(request, "groupId");
+
+		return _groupId;
+	}
+
 	@Override
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
@@ -103,6 +113,7 @@ public abstract class BaseItemSelectorViewDisplayContext
 	protected final PortletURL portletURL;
 	protected final HttpServletRequest request;
 
+	private Long _groupId;
 	private final String _itemSelectedEventName;
 	private final SiteItemSelectorCriterion _siteItemSelectorCriterion;
 

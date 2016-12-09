@@ -67,16 +67,6 @@ public class SitesItemSelectorViewDisplayContext
 		return _filter;
 	}
 
-	public long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		_groupId = ParamUtil.getLong(request, "groupId");
-
-		return _groupId;
-	}
-
 	public LinkedHashMap<String, Object> getGroupParams()
 		throws PortalException {
 
@@ -84,7 +74,6 @@ public class SitesItemSelectorViewDisplayContext
 			return _groupParams;
 		}
 
-		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean includeCurrentGroup = ParamUtil.getBoolean(
 			request, "includeCurrentGroup", true);
 
@@ -112,7 +101,7 @@ public class SitesItemSelectorViewDisplayContext
 		}
 
 		if (type.equals("child-sites")) {
-			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
+			Group parentGroup = GroupLocalServiceUtil.getGroup(getGroupId());
 
 			List<Group> parentGroups = new ArrayList<>();
 
@@ -126,16 +115,16 @@ public class SitesItemSelectorViewDisplayContext
 
 		_groupParams.put("site", Boolean.TRUE);
 
-		if (!includeCurrentGroup && (groupId > 0)) {
+		if (!includeCurrentGroup && (getGroupId() > 0)) {
 			List<Long> excludedGroupIds = new ArrayList<>();
 
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
+			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
 			if (group.isStagingGroup()) {
 				excludedGroupIds.add(group.getLiveGroupId());
 			}
 			else {
-				excludedGroupIds.add(groupId);
+				excludedGroupIds.add(getGroupId());
 			}
 
 			_groupParams.put("excludedGroupIds", excludedGroupIds);
@@ -325,7 +314,6 @@ public class SitesItemSelectorViewDisplayContext
 	};
 
 	private String _filter;
-	private Long _groupId;
 	private LinkedHashMap<String, Object> _groupParams;
 	private Boolean _manualMembership;
 	private String _type;

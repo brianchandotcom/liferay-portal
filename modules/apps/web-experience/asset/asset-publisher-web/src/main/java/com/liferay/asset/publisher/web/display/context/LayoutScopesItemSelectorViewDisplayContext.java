@@ -49,16 +49,6 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			portletURL);
 	}
 
-	public long getGroupId() {
-		if (_groupId != null) {
-			return _groupId;
-		}
-
-		_groupId = ParamUtil.getLong(request, "groupId");
-
-		return _groupId;
-	}
-
 	@Override
 	public GroupSearch getGroupSearch() throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -151,7 +141,6 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		return _privateLayout;
 	}
 
-	private Long _groupId;
 	private Boolean _privateLayout;
 
 }

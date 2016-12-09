@@ -731,7 +731,7 @@ version 2.3.2.
 
 ### Fixed
 - [LPS-69501]: Continue searching in the parent directories for a custom portal
-tool version defined in a `gradle.properties` until one is found.
+tool version defined in a `gradle.properties` file until one is found.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

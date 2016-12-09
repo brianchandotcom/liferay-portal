@@ -53,6 +53,8 @@
 			<var name="webContentTitle" value="Apple" />
 		</execute>
 
+		<execute macro="PortletEntry#publish" />
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -116,6 +118,8 @@
 			<var name="webContentContent" value="WC Content" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
+
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="ProductMenu#gotoControlPanelUsers">
 			<var name="portlet" value="Users and Organizations" />

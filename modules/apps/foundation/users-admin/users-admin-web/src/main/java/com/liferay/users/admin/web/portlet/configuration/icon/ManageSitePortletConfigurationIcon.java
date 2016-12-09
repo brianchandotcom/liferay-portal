@@ -91,7 +91,7 @@ public class ManageSitePortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 105;
+		return 104;
 	}
 
 	@Override

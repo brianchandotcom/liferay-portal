@@ -86,7 +86,7 @@ public class EditOrganizationPortletConfigurationIcon
 
 	@Override
 	public double getWeight() {
-		return 106;
+		return 105;
 	}
 
 	@Override

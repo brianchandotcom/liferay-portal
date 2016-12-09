@@ -17,11 +17,11 @@
 <%@ include file="/custom_attribute_list/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("custom-field-ui:custom-attribute-list:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("custom-field-ui:custom-attribute-list:classPK"));
-boolean editable = GetterUtil.getBoolean((String)request.getAttribute("custom-field-ui:custom-attribute-list:editable"));
-String ignoreAttributeNames = GetterUtil.getString((String)request.getAttribute("custom-field-ui:custom-attribute-list:ignoreAttributeNames"));
-boolean label = GetterUtil.getBoolean((String)request.getAttribute("custom-field-ui:custom-attribute-list:label"));
+String className = (String)request.getAttribute("liferay-expando:custom-attribute-list:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-expando:custom-attribute-list:classPK"));
+boolean editable = GetterUtil.getBoolean((String)request.getAttribute("liferay-expando:custom-attribute-list:editable"));
+String ignoreAttributeNames = GetterUtil.getString((String)request.getAttribute("liferay-expando:custom-attribute-list:ignoreAttributeNames"));
+boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-expando:custom-attribute-list:label"));
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), className, classPK);
 
@@ -36,7 +36,7 @@ List<String> attributeNames = ListUtil.remove(Collections.list(expandoBridge.get
 	for (String attributeName : attributeNames) {
 	%>
 
-		<liferay-custom-field-ui:custom-attribute
+		<liferay-expando:custom-attribute
 			className="<%= className %>"
 			classPK="<%= classPK %>"
 			editable="<%= editable %>"

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/custom_field_ui" prefix="liferay-custom-field-ui" %>
+<%@ taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %>
 
 <%@ include file="/init.jsp" %>
 

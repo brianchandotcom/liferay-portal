@@ -19,11 +19,11 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_custom_attribute_page") + StringPool.UNDERLINE;
 
-String className = (String)request.getAttribute("custom-field-ui:custom-attribute:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("custom-field-ui:custom-attribute:classPK"));
-boolean editable = GetterUtil.getBoolean((String)request.getAttribute("custom-field-ui:custom-attribute:editable"));
-boolean label = GetterUtil.getBoolean((String)request.getAttribute("custom-field-ui:custom-attribute:label"));
-String name = (String)request.getAttribute("custom-field-ui:custom-attribute:name");
+String className = (String)request.getAttribute("liferay-expando:custom-attribute:className");
+long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-expando:custom-attribute:classPK"));
+boolean editable = GetterUtil.getBoolean((String)request.getAttribute("liferay-expando:custom-attribute:editable"));
+boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-expando:custom-attribute:label"));
+String name = (String)request.getAttribute("liferay-expando:custom-attribute:name");
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), className, classPK);
 %>

@@ -141,7 +141,7 @@
 
 	<command name="configureCurrentLanguagesCP">
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Miscellaneous" />
+			<var name="navTab" value="Miscellaneous" />
 		</execute>
 
 		<if>
@@ -202,7 +202,7 @@
 
 	<command name="configureTimeZone">
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Miscellaneous" />
+			<var name="navTab" value="Miscellaneous" />
 		</execute>
 
 		<execute function="Select" locator1="Select#TIME_ZONE" value1="${timeZone}" />
@@ -756,7 +756,7 @@
 
 	<command name="viewCurrentDefaultPortalLanguageCP">
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Miscellaneous" />
+			<var name="navTab" value="Miscellaneous" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />
@@ -764,7 +764,7 @@
 
 	<command name="viewDefaultLanguageCP">
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Miscellaneous" />
+			<var name="navTab" value="Miscellaneous" />
 		</execute>
 
 		<execute function="AssertSelectedLabel" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${defaultPortalLanguage}" />

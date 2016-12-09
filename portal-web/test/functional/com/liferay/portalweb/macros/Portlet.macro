@@ -156,7 +156,7 @@
 
 	<command name="configureCustomStylesViaLookandfeelPG">
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Text Styles" />
+			<var name="navTab" value="Text Styles" />
 		</execute>
 
 		<execute function="Select" locator1="Portlet#TEXT_FONT_SELECT" value1="Verdana" />
@@ -164,7 +164,7 @@
 		<execute function="Select" locator1="Portlet#TEXT_FONT_SIZE_SELECT" value1="2em" />
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Border Styles" />
+			<var name="navTab" value="Border Styles" />
 		</execute>
 
 		<execute function="Type" locator1="Portlet#BORDER_WIDTH_TOP_INPUT" value1="20" />

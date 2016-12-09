@@ -126,7 +126,7 @@
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Available" />
+			<var name="navTab" value="Available" />
 		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
@@ -139,7 +139,7 @@
 		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Current" />
+			<var name="navTab" value="Current" />
 		</execute>
 
 		<execute function="AssertChecked" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />

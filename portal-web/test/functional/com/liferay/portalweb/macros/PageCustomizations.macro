@@ -7,7 +7,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Advanced" />
+			<var name="navTab" value="Advanced" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">
@@ -35,7 +35,7 @@
 
 	<command name="gotoCustomizationSettingsPG">
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Advanced" />
+			<var name="navTab" value="Advanced" />
 		</execute>
 
 		<execute macro="Panel#expandPanel">

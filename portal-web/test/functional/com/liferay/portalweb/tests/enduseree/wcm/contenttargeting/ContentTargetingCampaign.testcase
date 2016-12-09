@@ -436,7 +436,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Configuration" />
+			<var name="navTab" value="Configuration" />
 		</execute>
 
 		<execute macro="ContentTargeting#enableAnalytics">
@@ -621,7 +621,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Configuration" />
+			<var name="navTab" value="Configuration" />
 		</execute>
 
 		<execute macro="ContentTargeting#enableAnalytics">
@@ -848,7 +848,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Configuration" />
+			<var name="navTab" value="Configuration" />
 		</execute>
 
 		<execute macro="ContentTargeting#enableAnalytics">

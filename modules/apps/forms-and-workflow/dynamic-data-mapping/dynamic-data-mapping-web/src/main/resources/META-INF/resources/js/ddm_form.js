@@ -2413,7 +2413,7 @@ AUI.add(
 
 							var altNode = A.one('#' + instance.getInputName() + 'Alt');
 
-							altNode.val(parsedValue.val);
+							altNode.val(parsedValue.alt);
 
 							value = JSON.stringify(parsedValue);
 						}

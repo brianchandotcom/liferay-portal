@@ -25,6 +25,17 @@
 				}
 			},
 			{
+				"template_geolocation": {
+					"mapping": {
+						"index": "not_analyzed",
+					 	"lat_lon": true,
+						"store": true,
+						"type": "geo_point"
+					},
+					"match": "*_geolocation"
+				}
+			},
+			{
 				"template_assetCategoryTitles": {
 					"mapping": {
 						"index": "analyzed",

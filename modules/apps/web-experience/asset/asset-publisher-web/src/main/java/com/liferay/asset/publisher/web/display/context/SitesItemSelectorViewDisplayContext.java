@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -189,12 +187,7 @@ public class SitesItemSelectorViewDisplayContext
 
 		String type = getType();
 
-		if (type.equals("layoutScopes")) {
-			total = GroupLocalServiceUtil.getGroupsCount(
-				themeDisplay.getCompanyId(), Layout.class.getName(),
-				getGroupId());
-		}
-		else if (type.equals("parent-sites")) {
+		if (type.equals("parent-sites")) {
 		}
 		else {
 			total = GroupLocalServiceUtil.searchCount(
@@ -216,14 +209,7 @@ public class SitesItemSelectorViewDisplayContext
 
 		List<Group> groups = null;
 
-		if (type.equals("layoutScopes")) {
-			groups = GroupLocalServiceUtil.getGroups(
-				company.getCompanyId(), Layout.class.getName(), getGroupId(),
-				start, end);
-
-			groups = _filterLayoutGroups(groups, isPrivateLayout());
-		}
-		else if (type.equals("parent-sites")) {
+		if (type.equals("parent-sites")) {
 			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
 			groups = group.getAncestors();
@@ -302,16 +288,6 @@ public class SitesItemSelectorViewDisplayContext
 		return _manualMembership;
 	}
 
-	public Boolean isPrivateLayout() {
-		if (_privateLayout != null) {
-			return _privateLayout;
-		}
-
-		_privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-
-		return _privateLayout;
-	}
-
 	private List<Group> _filterGroups(
 			List<Group> groups, PermissionChecker permissionChecker)
 		throws Exception {
@@ -343,32 +319,6 @@ public class SitesItemSelectorViewDisplayContext
 		return filteredGroups;
 	}
 
-	private List<Group> _filterLayoutGroups(
-			List<Group> groups, Boolean privateLayout)
-		throws Exception {
-
-		List<Group> filteredGroups = new ArrayList();
-
-		if (privateLayout == null) {
-			return groups;
-		}
-
-		for (Group group : groups) {
-			if (!group.isLayout()) {
-				continue;
-			}
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				group.getClassPK());
-
-			if (layout.isPrivateLayout() == privateLayout) {
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
-	}
-
 	private static final long[] _CLASS_NAME_IDS = new long[] {
 		PortalUtil.getClassNameId(Group.class),
 		PortalUtil.getClassNameId(Organization.class)
@@ -378,7 +328,6 @@ public class SitesItemSelectorViewDisplayContext
 	private Long _groupId;
 	private LinkedHashMap<String, Object> _groupParams;
 	private Boolean _manualMembership;
-	private Boolean _privateLayout;
 	private String _type;
 	private String[] _types;
 

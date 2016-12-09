@@ -14,27 +14,19 @@
 
 package com.liferay.asset.publisher.web.display.context;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.usersadmin.search.GroupSearch;
-import com.liferay.portlet.usersadmin.search.GroupSearchTerms;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
-import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -57,16 +49,6 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			portletURL);
 	}
 
-	public String getFilter() {
-		if (_filter != null) {
-			return _filter;
-		}
-
-		_filter = ParamUtil.getString(request, "filter");
-
-		return _filter;
-	}
-
 	public long getGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -87,25 +69,12 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		GroupSearch groupSearch = new GroupSearch(
 			getPortletRequest(), getPortletURL());
 
-		GroupSearchTerms groupSearchTerms =
-			(GroupSearchTerms)groupSearch.getSearchTerms();
-
 		List<Group> results = new ArrayList<>();
 
 		int additionalSites = 0;
-		int total = 0;
 
-		boolean includeCompany = ParamUtil.getBoolean(
-			request, "includeCompany");
 		boolean includeUserPersonalSite = ParamUtil.getBoolean(
 			request, "includeUserPersonalSite");
-
-		long[] classNameIds = _CLASS_NAME_IDS;
-
-		if (includeCompany) {
-			classNameIds = ArrayUtil.append(
-				classNameIds, PortalUtil.getClassNameId(Company.class));
-		}
 
 		if (includeUserPersonalSite) {
 			if (groupSearch.getStart() == 0) {
@@ -118,15 +87,8 @@ public class LayoutScopesItemSelectorViewDisplayContext
 			additionalSites++;
 		}
 
-		String type = _getType();
-
-		if (type.equals("parent-sites")) {
-		}
-		else {
-			total = GroupLocalServiceUtil.searchCount(
-				themeDisplay.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), _getGroupParams());
-		}
+		int total = GroupLocalServiceUtil.getGroupsCount(
+			themeDisplay.getCompanyId(), Layout.class.getName(), getGroupId());
 
 		total += additionalSites;
 
@@ -140,39 +102,11 @@ public class LayoutScopesItemSelectorViewDisplayContext
 
 		int end = groupSearch.getEnd() - additionalSites;
 
-		List<Group> groups = null;
+		List<Group> groups = GroupLocalServiceUtil.getGroups(
+			company.getCompanyId(), Layout.class.getName(), getGroupId(), start,
+			end);
 
-		if (type.equals("parent-sites")) {
-			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
-
-			groups = group.getAncestors();
-
-			String filter = getFilter();
-
-			if (Validator.isNotNull(filter)) {
-				groups = _filterGroups(groups, filter);
-			}
-
-			total = groups.size();
-
-			total += additionalSites;
-
-			groupSearch.setTotal(total);
-		}
-		else {
-			groups = GroupLocalServiceUtil.search(
-				company.getCompanyId(), classNameIds,
-				groupSearchTerms.getKeywords(), _getGroupParams(), start, end,
-				groupSearch.getOrderByComparator());
-
-			groups = _filterGroups(groups, themeDisplay.getPermissionChecker());
-
-			total = groups.size();
-
-			total += additionalSites;
-
-			groupSearch.setTotal(total);
-		}
+		groups = _filterLayoutGroups(groups, _isPrivateLayout());
 
 		results.addAll(groups);
 
@@ -181,14 +115,25 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		return groupSearch;
 	}
 
-	private List<Group> _filterGroups(
-			List<Group> groups, PermissionChecker permissionChecker)
+	private List<Group> _filterLayoutGroups(
+			List<Group> groups, Boolean privateLayout)
 		throws Exception {
 
 		List<Group> filteredGroups = new ArrayList();
 
+		if (privateLayout == null) {
+			return groups;
+		}
+
 		for (Group group : groups) {
-			if (permissionChecker.isGroupAdmin(group.getGroupId())) {
+			if (!group.isLayout()) {
+				continue;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				group.getClassPK());
+
+			if (layout.isPrivateLayout() == privateLayout) {
 				filteredGroups.add(group);
 			}
 		}
@@ -196,139 +141,17 @@ public class LayoutScopesItemSelectorViewDisplayContext
 		return filteredGroups;
 	}
 
-	private List<Group> _filterGroups(List<Group> groups, String filter)
-		throws Exception {
-
-		List<Group> filteredGroups = new ArrayList();
-
-		for (Group group : groups) {
-			if (filter.equals("contentSharingWithChildrenEnabled") &&
-				SitesUtil.isContentSharingWithChildrenEnabled(group)) {
-
-				filteredGroups.add(group);
-			}
+	private Boolean _isPrivateLayout() {
+		if (_privateLayout != null) {
+			return _privateLayout;
 		}
 
-		return filteredGroups;
+		_privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
+		return _privateLayout;
 	}
 
-	private LinkedHashMap<String, Object> _getGroupParams()
-		throws PortalException {
-
-		if (_groupParams != null) {
-			return _groupParams;
-		}
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean includeCurrentGroup = ParamUtil.getBoolean(
-			request, "includeCurrentGroup", true);
-
-		String type = _getType();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-		User user = themeDisplay.getUser();
-
-		boolean filterManageableGroups = true;
-
-		if (permissionChecker.isCompanyAdmin()) {
-			filterManageableGroups = false;
-		}
-
-		_groupParams = new LinkedHashMap<>();
-
-		_groupParams.put("active", Boolean.TRUE);
-
-		if (_isManualMembership()) {
-			_groupParams.put("manualMembership", Boolean.TRUE);
-		}
-
-		if (type.equals("child-sites")) {
-			Group parentGroup = GroupLocalServiceUtil.getGroup(groupId);
-
-			List<Group> parentGroups = new ArrayList<>();
-
-			parentGroups.add(parentGroup);
-
-			_groupParams.put("groupsTree", parentGroups);
-		}
-		else if (filterManageableGroups) {
-			_groupParams.put("usersGroups", user.getUserId());
-		}
-
-		_groupParams.put("site", Boolean.TRUE);
-
-		if (!includeCurrentGroup && (groupId > 0)) {
-			List<Long> excludedGroupIds = new ArrayList<>();
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			if (group.isStagingGroup()) {
-				excludedGroupIds.add(group.getLiveGroupId());
-			}
-			else {
-				excludedGroupIds.add(groupId);
-			}
-
-			_groupParams.put("excludedGroupIds", excludedGroupIds);
-		}
-
-		return _groupParams;
-	}
-
-	private String _getType() {
-		if (_type != null) {
-			return _type;
-		}
-
-		_type = ParamUtil.getString(request, "type");
-
-		String[] types = _getTypes();
-
-		if (Validator.isNull(_type)) {
-			_type = types[0];
-		}
-
-		return _type;
-	}
-
-	private String[] _getTypes() {
-		if (_types != null) {
-			return _types;
-		}
-
-		_types = ParamUtil.getParameterValues(request, "types");
-
-		if (_types.length == 0) {
-			_types = new String[] {"sites-that-i-administer"};
-		}
-
-		return _types;
-	}
-
-	private Boolean _isManualMembership() {
-		if (_manualMembership != null) {
-			return _manualMembership;
-		}
-
-		_manualMembership = ParamUtil.getBoolean(request, "manualMembership");
-
-		return _manualMembership;
-	}
-
-	private static final long[] _CLASS_NAME_IDS = new long[] {
-		PortalUtil.getClassNameId(Group.class),
-		PortalUtil.getClassNameId(Organization.class)
-	};
-
-	private String _filter;
 	private Long _groupId;
-	private LinkedHashMap<String, Object> _groupParams;
-	private Boolean _manualMembership;
-	private String _type;
-	private String[] _types;
+	private Boolean _privateLayout;
 
 }

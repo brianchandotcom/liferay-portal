@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Expando Taglib
+Bundle-SymbolicName: com.liferay.expando.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.expando.taglib.servlet.taglib
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+Provide-Capability: osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/expando";version:Version="${Bundle-Version}"
+Web-ContextPath: /expando-taglib

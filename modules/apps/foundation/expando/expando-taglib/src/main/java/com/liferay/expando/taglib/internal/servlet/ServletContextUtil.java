@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.expando.custom.field.ui.taglib.internal.servlet;
+package com.liferay.expando.taglib.internal.servlet;
 
 import javax.servlet.ServletContext;
 
@@ -42,7 +42,7 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.expando.custom.field.ui.taglib)",
+		target = "(osgi.web.symbolicname=com.liferay.expando.taglib)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {

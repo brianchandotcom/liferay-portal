@@ -13,7 +13,7 @@
 			<condition function="IsElementPresent" locator1="NavTab#TAB_LINK" />
 			<then>
 				<execute macro="Navigator#gotoNavTab">
-					<var name="tab" value="Display Settings" />
+					<var name="navTab" value="Display Settings" />
 				</execute>
 			</then>
 		</if>

@@ -703,7 +703,7 @@
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
 		<execute macro="Navigator#gotoNavTab">
-			<var name="tab" value="Display Settings" />
+			<var name="navTab" value="Display Settings" />
 		</execute>
 
 		<if>

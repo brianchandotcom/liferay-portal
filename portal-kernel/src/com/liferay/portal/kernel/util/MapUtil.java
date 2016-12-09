@@ -334,6 +334,22 @@ public class MapUtil {
 		return GetterUtil.getString(String.valueOf(value), defaultValue);
 	}
 
+	public static <K, V> V getWithFallbackKey(
+		Map<K, V> map, K key, K fallbackKey) {
+
+		if (map == null) {
+			return null;
+		}
+
+		V value = map.get(key);
+
+		if (value != null) {
+			return value;
+		}
+
+		return map.get(fallbackKey);
+	}
+
 	public static boolean isEmpty(Map<?, ?> map) {
 		if ((map == null) || map.isEmpty()) {
 			return true;

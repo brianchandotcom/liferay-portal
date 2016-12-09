@@ -23,6 +23,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mail.MailTemplate;
+import com.liferay.portal.kernel.mail.MailTemplateContext;
+import com.liferay.portal.kernel.mail.MailTemplateContextBuilder;
+import com.liferay.portal.kernel.mail.MailTemplateFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -59,7 +63,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 
 import javax.mail.internet.InternetAddress;
 
@@ -180,9 +183,19 @@ public class SubscriptionSender implements Serializable {
 			if (bulk) {
 				Locale locale = LocaleUtil.getDefault();
 
+				MailTemplateContext mailTemplateContext =
+					_getBasicMailTemplateContext(locale);
+
+				MailTemplate replyToAddressMailTemplate =
+					MailTemplateFactoryUtil.createMailTemplate(
+						replyToAddress, false);
+
+				String processedReplyToAddress =
+					replyToAddressMailTemplate.renderAsString(
+						locale, mailTemplateContext);
+
 				InternetAddress to = new InternetAddress(
-					replaceContent(replyToAddress, locale),
-					replaceContent(replyToAddress, locale));
+					processedReplyToAddress, processedReplyToAddress);
 
 				sendEmail(to, locale);
 			}
@@ -198,21 +211,16 @@ public class SubscriptionSender implements Serializable {
 
 	public void flushNotificationsAsync() {
 		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
+			() -> {
+				Thread currentThread = Thread.currentThread();
 
-				@Override
-				public Void call() throws Exception {
-					Thread currentThread = Thread.currentThread();
+				_classLoader = currentThread.getContextClassLoader();
 
-					_classLoader = currentThread.getContextClassLoader();
+				MessageBusUtil.sendMessage(
+					DestinationNames.SUBSCRIPTION_SENDER,
+					SubscriptionSender.this);
 
-					MessageBusUtil.sendMessage(
-						DestinationNames.SUBSCRIPTION_SENDER,
-						SubscriptionSender.this);
-
-					return null;
-				}
-
+				return null;
 			});
 	}
 
@@ -229,7 +237,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link getCurrentUserId()}
+	 * @deprecated As of 7.0.0, replaced by {@link #getCurrentUserId()}
 	 */
 	@Deprecated
 	public long getUserId() {
@@ -310,8 +318,7 @@ public class SubscriptionSender implements Serializable {
 
 	public void setContextAttribute(String key, Object value, boolean escape) {
 		setContextAttribute(
-			key,
-			new HtmlEscapableObject<String>(String.valueOf(value), escape));
+			key, new HtmlEscapableObject<>(String.valueOf(value), escape));
 	}
 
 	public void setContextAttributes(Object... values) {
@@ -613,11 +620,7 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			if (bulk) {
-				if (_bulkAddresses == null) {
-					_bulkAddresses = new ArrayList<>();
-				}
-
-				_bulkAddresses.add(to);
+				_addBulkAddress(to);
 
 				return;
 			}
@@ -660,174 +663,76 @@ public class SubscriptionSender implements Serializable {
 		InternetAddress from = mailMessage.getFrom();
 		InternetAddress to = mailMessage.getTo()[0];
 
-		String processedSubject = StringUtil.replace(
-			mailMessage.getSubject(),
-			new String[] {
-				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				from.getAddress(),
-				GetterUtil.getString(from.getPersonal(), from.getAddress()),
-				HtmlUtil.escape(to.getAddress()),
-				HtmlUtil.escape(
-					GetterUtil.getString(to.getPersonal(), to.getAddress()))
-			});
+		MailTemplateContext mailTemplateContext = _getBodyMailTemplateContext(
+			locale, from, to);
 
-		processedSubject = replaceContent(processedSubject, locale, false);
+		MailTemplate subjectMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(
+				mailMessage.getSubject(), false);
+
+		String processedSubject = subjectMailTemplate.renderAsString(
+			locale, mailTemplateContext);
 
 		mailMessage.setSubject(processedSubject);
 
-		String processedBody = StringUtil.replace(
-			mailMessage.getBody(),
-			new String[] {
-				"[$FROM_ADDRESS$]", "[$FROM_NAME$]", "[$TO_ADDRESS$]",
-				"[$TO_NAME$]"
-			},
-			new String[] {
-				from.getAddress(),
-				GetterUtil.getString(from.getPersonal(), from.getAddress()),
-				HtmlUtil.escape(to.getAddress()),
-				HtmlUtil.escape(
-					GetterUtil.getString(to.getPersonal(), to.getAddress()))
-			});
+		MailTemplate bodyMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(
+				mailMessage.getBody(), true);
 
-		processedBody = replaceContent(processedBody, locale, htmlFormat);
+		String processedBody = bodyMailTemplate.renderAsString(
+			locale, mailTemplateContext);
 
 		mailMessage.setBody(processedBody);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	protected String replaceContent(String content, Locale locale)
 		throws Exception {
 
 		return replaceContent(content, locale, true);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	protected String replaceContent(
 			String content, Locale locale, boolean escape)
 		throws Exception {
 
-		for (Map.Entry<String, EscapableLocalizableFunction> entry :
-				_localizedContext.entrySet()) {
+		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
+			locale);
 
-			String key = entry.getKey();
-			EscapableLocalizableFunction value = entry.getValue();
+		MailTemplate mailTemplate = MailTemplateFactoryUtil.createMailTemplate(
+			content, escape);
 
-			String valueString = null;
-
-			if (escape) {
-				valueString = value.getEscapedValue(locale);
-			}
-			else {
-				valueString = value.getOriginalValue(locale);
-			}
-
-			content = StringUtil.replace(content, key, valueString);
-		}
-
-		for (Map.Entry<String, EscapableObject<String>> entry :
-				_context.entrySet()) {
-
-			String key = entry.getKey();
-			EscapableObject<String> value = entry.getValue();
-
-			String valueString = null;
-
-			if (escape) {
-				valueString = value.getEscapedValue();
-			}
-			else {
-				valueString = value.getOriginalValue();
-			}
-
-			content = StringUtil.replace(content, key, valueString);
-		}
-
-		String portletName = StringPool.BLANK;
-
-		if (Validator.isNotNull(portletId)) {
-			portletName = PortalUtil.getPortletTitle(portletId, locale);
-
-			content = StringUtil.replace(
-				content, "[$PORTLET_NAME$]", portletName);
-		}
-
-		String portletTitle = portletName;
-
-		if (localizedPortletTitleMap != null) {
-			if (Validator.isNotNull(localizedPortletTitleMap.get(locale))) {
-				portletTitle = localizedPortletTitleMap.get(locale);
-			}
-			else {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				if (Validator.isNotNull(
-						localizedPortletTitleMap.get(defaultLocale))) {
-
-					portletTitle = localizedPortletTitleMap.get(defaultLocale);
-				}
-			}
-		}
-
-		if (Validator.isNotNull(portletTitle)) {
-			content = StringUtil.replace(
-				content, "[$PORTLET_TITLE$]", portletTitle);
-		}
-
-		Company company = CompanyLocalServiceUtil.getCompany(companyId);
-
-		content = StringUtil.replace(
-			content, new String[] {"href=\"/", "src=\"/"},
-			new String[] {
-				"href=\"" + company.getPortalURL(groupId) + "/",
-				"src=\"" + company.getPortalURL(groupId) + "/"
-			});
-
-		return content;
+		return mailTemplate.renderAsString(locale, mailTemplateContext);
 	}
 
 	protected void sendEmail(InternetAddress to, Locale locale)
 		throws Exception {
 
+		MailTemplateContext mailTemplateContext = _getBasicMailTemplateContext(
+			locale);
+
+		MailTemplate fromAddressMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(fromAddress, false);
+
+		MailTemplate fromNameMailTemplate =
+			MailTemplateFactoryUtil.createMailTemplate(fromName, false);
+
 		InternetAddress from = new InternetAddress(
-			replaceContent(fromAddress, locale),
-			replaceContent(fromName, locale));
+			fromAddressMailTemplate.renderAsString(locale, mailTemplateContext),
+			fromNameMailTemplate.renderAsString(locale, mailTemplateContext));
 
-		String processedSubject = null;
+		String processedSubject = _getLocalizedValue(
+			localizedSubjectMap, locale, subject);
 
-		if (localizedSubjectMap != null) {
-			String localizedSubject = localizedSubjectMap.get(locale);
-
-			if (Validator.isNull(localizedSubject)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				processedSubject = localizedSubjectMap.get(defaultLocale);
-			}
-			else {
-				processedSubject = localizedSubject;
-			}
-		}
-		else {
-			processedSubject = subject;
-		}
-
-		String processedBody = null;
-
-		if (localizedBodyMap != null) {
-			String localizedBody = localizedBodyMap.get(locale);
-
-			if (Validator.isNull(localizedBody)) {
-				Locale defaultLocale = LocaleUtil.getDefault();
-
-				processedBody = localizedBodyMap.get(defaultLocale);
-			}
-			else {
-				processedBody = localizedBody;
-			}
-		}
-		else {
-			processedBody = body;
-		}
+		String processedBody = _getLocalizedValue(
+			localizedBodyMap, locale, body);
 
 		MailMessage mailMessage = new MailMessage(
 			from, to, processedSubject, processedBody, htmlFormat);
@@ -854,9 +759,16 @@ public class SubscriptionSender implements Serializable {
 		mailMessage.setMessageId(mailId);
 
 		if (replyToAddress != null) {
+			MailTemplate replyToAddressMailTemplate =
+				MailTemplateFactoryUtil.createMailTemplate(
+					replyToAddress, false);
+
+			String processedReplyToAddress =
+				replyToAddressMailTemplate.renderAsString(
+					locale, mailTemplateContext);
+
 			InternetAddress replyTo = new InternetAddress(
-				replaceContent(replyToAddress, locale),
-				replaceContent(replyToAddress, locale));
+				processedReplyToAddress, processedReplyToAddress);
 
 			mailMessage.setReplyTo(new InternetAddress[] {replyTo});
 		}
@@ -880,11 +792,7 @@ public class SubscriptionSender implements Serializable {
 				user.getEmailAddress(), user.getFullName());
 
 			if (bulk) {
-				if (_bulkAddresses == null) {
-					_bulkAddresses = new ArrayList<>();
-				}
-
-				_bulkAddresses.add(to);
+				_addBulkAddress(to);
 
 				return;
 			}
@@ -957,6 +865,77 @@ public class SubscriptionSender implements Serializable {
 	protected SMTPAccount smtpAccount;
 	protected String subject;
 	protected boolean uniqueMailId = true;
+
+	private void _addBulkAddress(InternetAddress internetAddress) {
+		if (_bulkAddresses == null) {
+			_bulkAddresses = new ArrayList<>();
+		}
+
+		_bulkAddresses.add(internetAddress);
+	}
+
+	private MailTemplateContext _getBasicMailTemplateContext(Locale locale) {
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+		String portletName = _getPortletName(locale);
+
+		mailTemplateContextBuilder.put("[$PORTLET_NAME$]", portletName);
+		mailTemplateContextBuilder.put(
+			"[$PORTLET_TITLE$]", _getPortletTitle(portletName, locale));
+
+		_context.forEach(mailTemplateContextBuilder::put);
+		_localizedContext.forEach(mailTemplateContextBuilder::put);
+
+		return mailTemplateContextBuilder.build();
+	}
+
+	private MailTemplateContext _getBodyMailTemplateContext(
+		Locale locale, InternetAddress from, InternetAddress to) {
+
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", from.getAddress());
+		mailTemplateContextBuilder.put(
+			"[$FROM_NAME$]",
+			GetterUtil.getString(from.getPersonal(), from.getAddress()));
+		mailTemplateContextBuilder.put(
+			"[$TO_ADDRESS$]", HtmlUtil.escape(to.getAddress()));
+		mailTemplateContextBuilder.put(
+			"[$TO_NAME$]",
+			HtmlUtil.escape(
+				GetterUtil.getString(to.getPersonal(), to.getAddress())));
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		return mailTemplateContext.aggregateWith(
+			_getBasicMailTemplateContext(locale));
+	}
+
+	private String _getLocalizedValue(
+		Map<Locale, String> localizedValueMap, Locale locale,
+		String defaultValue) {
+
+		return GetterUtil.get(
+			MapUtil.getWithFallbackKey(
+				localizedValueMap, locale, LocaleUtil.getDefault()),
+			defaultValue);
+	}
+
+	private String _getPortletName(Locale locale) {
+		if (Validator.isNull(portletId)) {
+			return StringPool.BLANK;
+		}
+
+		return PortalUtil.getPortletTitle(portletId, locale);
+	}
+
+	private String _getPortletTitle(String portletName, Locale locale) {
+		return _getLocalizedValue(
+			localizedPortletTitleMap, locale, portletName);
+	}
 
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {

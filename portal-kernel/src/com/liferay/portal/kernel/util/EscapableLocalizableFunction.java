@@ -40,7 +40,7 @@ public class EscapableLocalizableFunction implements Serializable {
 				_escapedValue = escape(locale);
 			}
 			else {
-				_escapedValue = String.valueOf(_function);
+				_escapedValue = getOriginalValue(locale);
 			}
 		}
 

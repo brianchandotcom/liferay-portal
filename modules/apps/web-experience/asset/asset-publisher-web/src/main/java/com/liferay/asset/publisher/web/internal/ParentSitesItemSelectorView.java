@@ -15,7 +15,7 @@
 package com.liferay.asset.publisher.web.internal;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
-import com.liferay.asset.publisher.web.display.context.SitesItemSelectorViewDisplayContext;
+import com.liferay.asset.publisher.web.display.context.ParentSitesItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.model.Group;
@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
@@ -56,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"item.selector.view.order:Integer=100"},
 	service = ItemSelectorView.class
 )
-public class SitesItemSelectorView
+public class ParentSitesItemSelectorView
 	implements ItemSelectorView<SiteItemSelectorCriterion> {
 
 	@Override
@@ -73,7 +71,7 @@ public class SitesItemSelectorView
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = PortalUtil.getResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(resourceBundle, "sites");
+		return ResourceBundleUtil.getString(resourceBundle, "parent-sites");
 	}
 
 	@Override
@@ -93,24 +91,12 @@ public class SitesItemSelectorView
 			return false;
 		}
 
-		if (PrefsPropsUtil.getBoolean(
-				themeDisplay.getCompanyId(),
-				PropsKeys.
-					SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
-
-			return true;
-		}
-
 		Layout layout = themeDisplay.getLayout();
 
 		int groupsCount = _groupLocalService.getGroupsCount(
 			themeDisplay.getCompanyId(), layout.getGroupId(), Boolean.TRUE);
 
 		if (groupsCount > 0) {
-			return true;
-		}
-
-		if (!siteGroup.isRoot()) {
 			return true;
 		}
 
@@ -124,15 +110,15 @@ public class SitesItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		SitesItemSelectorViewDisplayContext
-			sitesItemSelectorViewDisplayContext =
-				new SitesItemSelectorViewDisplayContext(
+		ParentSitesItemSelectorViewDisplayContext
+			parentSitesItemSelectorViewDisplayContext =
+				new ParentSitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)request, siteItemSelectorCriterion,
 					itemSelectedEventName, portletURL);
 
 		request.setAttribute(
 			AssetPublisherWebKeys.ITEM_SELECTOR_DISPLAY_CONTEXT,
-			sitesItemSelectorViewDisplayContext);
+			parentSitesItemSelectorViewDisplayContext);
 
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher("/view_sites.jsp");

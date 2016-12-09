@@ -29,6 +29,10 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					calculateReadingTimeURL: {
+						validator: Lang.isString
+					},
+
 					entry: {
 						validator: Lang.isObject
 					},
@@ -79,6 +83,8 @@ AUI.add(
 						instance._shortenDescription = !customDescriptionEnabled;
 
 						instance.setDescription(window[instance.ns('contentEditor')].getText());
+
+						instance._calculateReadingTimeFn = A.debounce(instance._calculateReadingTime, 500, instance);
 					},
 
 					destructor: function() {
@@ -112,11 +118,19 @@ AUI.add(
 
 						var friendlyURLEmpty = !urlTitleInput.val();
 
-						if (instance._automaticURL() && (friendlyURLEmpty || instance._originalFriendlyURLChanged)) {
-							urlTitleInput.val(Liferay.Util.normalizeFriendlyURL(title));
+						if (instance._automaticURL() && (friendlyURLEmpty ||
+														 instance._originalFriendlyURLChanged)) {
+							urlTitleInput.val(
+								Liferay.Util.normalizeFriendlyURL(title));
 						}
 
 						instance._originalFriendlyURLChanged = true;
+					},
+
+					updateReadingTime: function(content) {
+						var instance = this;
+
+						instance._calculateReadingTimeFn(content);
 					},
 
 					_bindUI: function() {
@@ -160,6 +174,49 @@ AUI.add(
 						);
 
 						instance._eventHandles = eventHandles;
+					},
+
+					_calculateReadingTime: function(content) {
+						var instance = this;
+
+						var readingTimeElement = instance.one('#readingTime');
+
+						var data = instance.ns(
+							{
+								'content': content
+							}
+						);
+
+						A.io.request(
+							instance.get('calculateReadingTimeURL'),
+							{
+								data: data,
+								dataType: 'JSON',
+								on: {
+									failure: function() {
+										readingTimeElement.hide();
+									},
+									success: function(event, id, obj) {
+										var message = this.get('responseData');
+
+										if (message.readingTime) {
+											var constants = instance.get('constants');
+
+											var html = Lang.sub(
+												constants.X_MINUTES_READ,
+												[message.readingTime]
+											);
+
+											readingTimeElement.html(html);
+											readingTimeElement.show();
+										}
+										else {
+											readingTimeElement.hide();
+										}
+									}
+								}
+							}
+						);
 					},
 
 					_checkImagesBeforeSave: function(draft, ajax) {

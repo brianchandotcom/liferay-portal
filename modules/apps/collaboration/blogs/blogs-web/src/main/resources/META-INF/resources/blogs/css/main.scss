@@ -259,6 +259,20 @@
 		}
 	}
 
+	.info-bar-center, .status {
+		small:not(:empty) + small:not(:empty):before {
+			content: " - ";
+		}
+	}
+
+	.info-bar-container.affix + .entry-body {
+		margin-top: 47px;
+
+		@include sm() {
+			margin-top: 59px;
+		}
+	}
+
 	.nameplate-content {
 		padding-left: 0;
 		vertical-align: middle;

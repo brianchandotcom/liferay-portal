@@ -15,8 +15,7 @@
 package com.liferay.blogs.web.internal.util;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Roberto Díaz
@@ -26,11 +25,11 @@ public class BlogsUtil {
 	public static int getReadingTimeMinutes(String content) {
 		String strippedContent = HtmlUtil.stripHtml(content);
 
-		String[] words = StringUtil.split(strippedContent, StringPool.SPACE);
-
-		if (words.length < 250) {
-			return 1;
+		if (Validator.isNull(strippedContent)) {
+			return 0;
 		}
+
+		String[] words = strippedContent.split("(?:\\h|\\v)+");
 
 		return Math.round(words.length / 250F);
 	}

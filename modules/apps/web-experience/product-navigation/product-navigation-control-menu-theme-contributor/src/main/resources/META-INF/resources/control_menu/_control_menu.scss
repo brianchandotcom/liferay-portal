@@ -1,5 +1,5 @@
 .has-control-menu {
-	#wrapper {
+	.affix, #wrapper {
 		margin-top: $has-control-menu-margin-top-mobile;
 
 		@include sm() {
@@ -7,7 +7,7 @@
 		}
 	}
 
-	&.has-customization-menu #wrapper {
+	&.has-customization-menu .affix, &.has-customization-menu #wrapper {
 		margin-top: ($has-control-menu-margin-top-mobile + $has-customization-menu-margin-top-mobile);
 
 		@include sm() {
@@ -16,7 +16,7 @@
 	}
 }
 
-.control-menu {
+.affix, .control-menu {
 	left: 0;
 	position: fixed;
 	right: 0;
@@ -229,7 +229,8 @@
 
 .sidenav-transition {
 	.control-menu,
-	.control-menu-level-2 {
+	.control-menu-level-2,
+	.affix {
 		@include transition($control-menu-css-transition);
 	}
 }

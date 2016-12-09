@@ -39,8 +39,8 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Provides utility methods moved from the trash entry model container JSP file
- * to reduce the complexity of that particular view.
+ * Provides utility methods moved from the trash entry model container's JSP
+ * file to reduce the complexity of that particular view.
  *
  * @author Jürgen Kappler
  */

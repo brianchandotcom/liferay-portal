@@ -20,14 +20,28 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * Defines display terms used by {@link com.liferay.taglib.ui.SearchIteratorTag}
- * tag to render the list of recycle bin entries.
+ * Defines display terms used by the <code>SearchIteratorTag</code> (in
+ * <code>com.liferay.util.taglib</code>) to render the list of Recycle Bin
+ * entries.
  *
+ * <p>
  * Supported display terms:
- * <code>name</code> - name of the entry
- * <code>removedDate</code> - date when the entry was moved to the recycle bin
- * <code>removedBy</code> - a user who moved the entry to the recycle bin
- * <code>type</code> - type of entry which was moved to the recycle bin
+ * </p>
+ *
+ * <ul>
+ * <li>
+ * <code>name</code> - the name of the entry
+ * </li>
+ * <li>
+ * <code>removedDate</code> - the date the entry was moved to the Recycle Bin
+ * </li>
+ * <li>
+ * <code>removedBy</code> - the user who moved the entry to the Recycle Bin
+ * </li>
+ * <li>
+ * <code>type</code> - the type of entry that was moved to the Recycle Bin
+ * </li>
+ * </ul>
  *
  * @author Sergio González
  */

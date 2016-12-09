@@ -19,16 +19,30 @@ import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 import javax.portlet.PortletRequest;
 
 /**
- * Defines search terms used by {@link
- * com.liferay.portal.kernel.dao.search.SearchContainer} to filter recycle bin
- * entries using the set of search parameters.
+ * Defines search terms used by the <code>SearchContainer</code> (in
+ * <code>com.liferay.portal.kernel</code>) to filter Recycle Bin entries.
  *
+ * <p>
  * Supported search parameters:
- * <code>keywords</code> - keywords to search in the entries content
- * <code>name</code> - name of the entry
- * <code>removedDate</code> - date when the entry was moved to the recycle bin
- * <code>removedBy</code> - a user who moved the entry to the recycle bin
- * <code>type</code> - type of entry which was moved to the recycle bin
+ * </p>
+ *
+ * <ul>
+ * <li>
+ * <code>keywords</code> - the keywords for which to search in the entries
+ * content
+ * </li>
+ * <li>
+ * <code>name</code> - the name of the entry
+ * </li>
+ * <li>
+ * <code>removedDate</code> - the date the entry was moved to the Recycle Bin
+ * </li>
+ * <li>
+ * <code>removedBy</code> - the user who moved the entry to the Recycle Bin
+ * </li>
+ * <li>
+ * <code>type</code> - the type of entry that was moved to the Recycle Bin
+ * </li>
  *
  * @author Sergio González
  */

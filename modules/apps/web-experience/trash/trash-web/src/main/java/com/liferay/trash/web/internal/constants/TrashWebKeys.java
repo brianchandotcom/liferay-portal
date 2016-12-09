@@ -15,8 +15,8 @@
 package com.liferay.trash.web.internal.constants;
 
 /**
- * Provides attribute names for implementation of the {@link
- * com.liferay.trash.web.internal.portlet.TrashPortlet} portlet
+ * Provides attribute names for the implementation of the {@link
+ * com.liferay.trash.web.internal.portlet.TrashPortlet} portlet.
  *
  * @author Jürgen Kappler
  */

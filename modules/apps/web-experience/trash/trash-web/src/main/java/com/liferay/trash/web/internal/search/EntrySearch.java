@@ -37,9 +37,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
- * Provides a {@link SearchContainer} implementation for {@link TrashEntry}
- * objects. Search container is used to show the list of objects using {@link
- * com.liferay.taglib.ui.SearchIteratorTag} tag.
+ * Provides a <code>SearchContainer</code> (in
+ * <code>com.liferay.portal.kernel</code>) implementation for
+ * <code>TrashEntry</code> (in <code>com.liferay.portal.kernel</code>) objects.
+ * The search container is used to show the list of objects using the
+ * <code>SearchIteratorTag</code> (in <code>com.liferay.taglib.ui</code>).
  *
  * @author Sergio González
  */

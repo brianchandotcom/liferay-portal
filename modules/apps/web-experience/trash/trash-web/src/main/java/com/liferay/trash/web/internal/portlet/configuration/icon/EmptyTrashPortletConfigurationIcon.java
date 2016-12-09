@@ -28,8 +28,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides an implementation of {@link PortletConfigurationIcon} interface to
- * render an empty recycle bin menu item for the vertical ellipsis menu.
+ * Provides an implementation of <code>PortletConfigurationIcon</code> (in
+ * <code>com.liferay.portal.kernel</code>) to render the <i>Empty the Recycle
+ * Bin</i> menu item for the Options menu.
  *
  * @author Eudaldo Alonso
  */

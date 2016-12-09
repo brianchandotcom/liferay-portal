@@ -3,7 +3,7 @@
 		<var name="key_appName" value="${appName}" />
 
 		<execute function="Click" locator1="AppManager#APP_ACTIONS" />
-		
+
 		<execute function="AssertClickNoError" locator1="MenuItem#DEACTIVATE" value1="Deactivate" />
 
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />

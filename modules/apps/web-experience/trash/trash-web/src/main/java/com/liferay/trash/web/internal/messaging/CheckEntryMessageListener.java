@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides a scheduled task to empty the Recycly Bin when the maximum Recycle
- * Bin entry ages has been exceeded. The maximum Recycle Bin entry age is
+ * Bin entry age has been exceeded. The maximum Recycle Bin entry age is
  * defined by the <code>trash.entries.max.age</code> property (in minutes). The
  * scheduled task uses the <code>trash.entry.check.interval</code> property to
  * define the execution interval (in minutes).

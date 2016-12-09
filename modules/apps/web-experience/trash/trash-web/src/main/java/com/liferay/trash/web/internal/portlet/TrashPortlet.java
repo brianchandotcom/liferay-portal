@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * (in <code>javax.portlet</code>). If the Recycle Bin is enabled, this portlet
  * moves assets into the Recycle Bin instead of deleting them directly. The site
  * administrator is able to browse the list of removed asset entries, restore
- * selected entries, or empty the Recycle Bin.
+ * selected entries, and empty the Recycle Bin.
  *
  * @author Eudaldo Alonso
  */

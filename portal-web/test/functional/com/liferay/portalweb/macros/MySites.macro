@@ -5,9 +5,13 @@
 			<var name="rowEntry" value="${siteName}" />
 		</execute>
 
+		<execute function="SelectWindow#selectPopUp" locator1="null" />
+
 		<execute macro="Navigator#_gotoPage">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<execute function="Close#closeWindow" locator1="null" />
 	</command>
 
 	<command name="viewMembershipRequested">

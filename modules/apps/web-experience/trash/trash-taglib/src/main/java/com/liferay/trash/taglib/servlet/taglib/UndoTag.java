@@ -32,8 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * Creates a message confirming items were moved to the recycle bin and
- * presenting an option to restore them.
+ * Creates a message confirming items were moved to the Recycle Bin and presents
+ * an option to restore them.
  *
  * @author Julio Camarero
  */

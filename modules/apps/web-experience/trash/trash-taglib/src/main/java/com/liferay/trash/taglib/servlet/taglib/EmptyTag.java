@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
- * Creates a component for users to permanently delete items such as images,
- * articles, etc. from the recycle bin.
+ * Creates a component for users to permanently delete items (articles, images,
+ * etc.) from the Recycle Bin.
  *
  * @author Sergio González
  */

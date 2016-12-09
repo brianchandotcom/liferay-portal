@@ -22,7 +22,8 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Provides utility method to get servlet context for recycle bin tags.
+ * Provides utility methods to get servlet context information for Recycle Bin
+ * tags.
  *
  * @author Michael Bradford
  */

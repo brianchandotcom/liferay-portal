@@ -140,7 +140,7 @@
 	</command>
 
 	<command name="configureCurrentLanguagesCP">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Miscellaneous" />
 		</execute>
 
@@ -201,7 +201,7 @@
 	</command>
 
 	<command name="configureTimeZone">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Miscellaneous" />
 		</execute>
 
@@ -755,7 +755,7 @@
 	</command>
 
 	<command name="viewCurrentDefaultPortalLanguageCP">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Miscellaneous" />
 		</execute>
 
@@ -763,7 +763,7 @@
 	</command>
 
 	<command name="viewDefaultLanguageCP">
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Miscellaneous" />
 		</execute>
 

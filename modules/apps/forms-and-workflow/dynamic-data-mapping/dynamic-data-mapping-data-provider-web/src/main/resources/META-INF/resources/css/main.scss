@@ -1,10 +1,5 @@
 @import "mixins";
 
-.portal-popup.dialog-iframe-popup #main-content,
-.portal-popup.dialog-iframe-popup > #wrapper {
-	overflow-x: hidden;
-}
-
 .portlet-dynamic-data-mapping-data-provider {
 	.btn-action {
 		height: 64px;

@@ -90,20 +90,6 @@ AUI.add(
 
 				NAME: 'liferay-ddl-portlet',
 
-				openDDMDataProvider: function(dataProviderURL) {
-					Liferay.Util.openWindow(
-						{
-							dialog: {
-								cssClass: 'dynamic-data-mapping-data-providers-modal',
-								destroyOnHide: true
-							},
-							id: 'ddmDataProvider',
-							title: Liferay.Language.get('data-providers'),
-							uri: dataProviderURL
-						}
-					);
-				},
-
 				prototype: {
 					initializer: function() {
 						var instance = this;

@@ -14,23 +14,11 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pei-Jung Lan
+ * @deprecated As of 2.1.0, with no direct replacement
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/edit_organization_assignments"
-	},
-	service = MVCRenderCommand.class
-)
+@Deprecated
 public class EditOrganizationAssignmentsMVCRenderCommand
 	extends GetOrganizationMVCRenderCommand {
 

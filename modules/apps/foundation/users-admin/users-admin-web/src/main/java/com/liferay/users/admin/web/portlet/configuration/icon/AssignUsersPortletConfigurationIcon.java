@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
@@ -33,19 +32,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Pei-Jung Lan
+ * @deprecated As of 2.1.0, with no direct replacement
  */
-@Component(
-	immediate = true,
-	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"path=/users_admin/view"
-	},
-	service = PortletConfigurationIcon.class
-)
+@Deprecated
 public class AssignUsersPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 

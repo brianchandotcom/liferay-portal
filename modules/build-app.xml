@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project name="build-app">
+	<extension-point name="release-tool-dependencies" />
+
 	<property file="../app.server.${user.name}.properties" />
 	<property file="../app.server.${env.COMPUTERNAME}.properties" />
 	<property file="../app.server.${env.HOST}.properties" />
@@ -413,7 +415,7 @@
 		</subant>
 	</target>
 
-	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id" name="write-app-change-log">
+	<target depends="dist-module-artifacts,get-app-artifacts,get-app-change-log,get-app-change-log-header,get-app-git-id,release-tool-dependencies" name="write-app-change-log">
 		<property name="double.space" value="${line.separator}${line.separator}" />
 
 		<echo append="true" file="${releng.app.dir}/app.changelog" message="${app.change.log.header}" />

@@ -56,8 +56,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		removedBundle(bundle, bundleEvent, bundleCapabilities);
 
-		List<BundleCapability> newBundleCapabilities =
-			addingBundle(bundle, bundleEvent);
+		List<BundleCapability> newBundleCapabilities = addingBundle(
+			bundle, bundleEvent);
 
 		bundleCapabilities.clear();
 

@@ -14,18 +14,16 @@
 
 package com.liferay.portal.microsofttranslator;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Hugo Huijser
@@ -39,7 +37,6 @@ public class MicrosoftTranslatorAuthenticator {
 	public MicrosoftTranslatorAuthenticator(
 		String clientId, String clientSecret) {
 
-		_clientId = clientId;
 		_clientSecret = clientSecret;
 
 		init(true);
@@ -62,44 +59,40 @@ public class MicrosoftTranslatorAuthenticator {
 	}
 
 	protected void doInit() {
-		if (Validator.isNull(_clientId)) {
-			_clientId = PropsValues.MICROSOFT_TRANSLATOR_CLIENT_ID;
+		_accessToken = null;
+		_error = null;
+
+		if (Validator.isNull(_clientSecret)) {
 			_clientSecret = PropsValues.MICROSOFT_TRANSLATOR_CLIENT_SECRET;
 		}
 
 		try {
 			Http.Options options = new Http.Options();
 
-			StringBundler sb = new StringBundler(5);
-
-			sb.append("grant_type=client_credentials&client_id=");
-			sb.append(HttpUtil.encodeURL(_clientId));
-			sb.append("&client_secret=");
-			sb.append(HttpUtil.encodeURL(_clientSecret));
-			sb.append("&scope=http://api.microsofttranslator.com");
-
-			options.setBody(
-				sb.toString(), ContentTypes.APPLICATION_X_WWW_FORM_URLENCODED,
-				StringPool.UTF8);
+			options.addHeader(HttpHeaders.CONTENT_LENGTH, "0");
+			options.addHeader("Ocp-Apim-Subscription-Key", _clientSecret);
 
 			options.setLocation(_URL);
 
 			options.setPost(true);
 
-			String jsonString = HttpUtil.URLtoString(options);
+			String content = HttpUtil.URLtoString(options);
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				jsonString);
+			Http.Response response = options.getResponse();
 
-			_error = jsonObject.getString("error_description");
+			int responseCode = response.getResponseCode();
 
-			if (_error != null) {
+			if (responseCode != HttpServletResponse.SC_OK) {
+				_error = content;
+
 				if (_log.isInfoEnabled()) {
-					_log.info("Unable to initialize access token: " + _error);
+					_log.info(
+						"Unable to initialize access token: " + _error);
 				}
 			}
-
-			_accessToken = jsonObject.getString("access_token");
+			else {
+				_accessToken = content;
+			}
 
 			if (_accessToken != null) {
 				_log.info("Access token " + _accessToken);
@@ -126,13 +119,12 @@ public class MicrosoftTranslatorAuthenticator {
 	private static final long _EXPIRE_TIME = 10 * Time.MINUTE;
 
 	private static final String _URL =
-		"https://datamarket.accesscontrol.windows.net/v2/OAuth2-13";
+		"https://api.cognitive.microsoft.com/sts/v1.0/issueToken";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MicrosoftTranslatorAuthenticator.class);
 
 	private String _accessToken;
-	private String _clientId;
 	private String _clientSecret;
 	private String _error;
 	private long _initTime;

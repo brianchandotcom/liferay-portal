@@ -383,7 +383,7 @@
 		</execute>
 
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Show Metadata" />
+			<var name="panelHeading" value="Metadata" />
 		</execute>
 
 		<if>
@@ -702,7 +702,7 @@
 	<command name="viewConfigureFlaggableDisplaySettingsPG">
 		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Display Settings" />
 		</execute>
 

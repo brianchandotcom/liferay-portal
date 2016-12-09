@@ -45,6 +45,8 @@
 		<var name="key_tab" value="${navTab}" />
 
 		<execute function="AssertClick" locator1="NavTab#TAB_LINK" value1="${navTab}" />
+
+		<execute function="AssertElementPresent" locator1="NavTab#ACTIVE_TAB_LINK" />
 	</command>
 
 	<command name="gotoPage" summary="Navigate to the page named '${pageName}'">
@@ -110,14 +112,6 @@
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
 		<execute function="Click" locator1="Link#STAGING" />
-	</command>
-
-	<command name="gotoTab">
-		<var name="key_tab" value="${tab}" />
-
-		<execute function="Click" locator1="NavTab#TAB_LINK" />
-
-		<execute function="AssertElementPresent" locator1="NavTab#ACTIVE_TAB_LINK" />
 	</command>
 
 	<command name="gotoViewPage">

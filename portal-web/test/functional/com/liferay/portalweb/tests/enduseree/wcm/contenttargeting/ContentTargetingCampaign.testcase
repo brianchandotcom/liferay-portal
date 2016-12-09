@@ -435,7 +435,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Configuration" />
 		</execute>
 
@@ -620,7 +620,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Configuration" />
 		</execute>
 
@@ -847,7 +847,7 @@
 			<var name="portlet" value="Instance Settings" />
 		</execute>
 
-		<execute macro="Navigator#gotoTab">
+		<execute macro="Navigator#gotoNavTab">
 			<var name="tab" value="Configuration" />
 		</execute>
 

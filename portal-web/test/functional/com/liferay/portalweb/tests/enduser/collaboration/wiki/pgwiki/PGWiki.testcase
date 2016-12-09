@@ -692,6 +692,30 @@
 	<command name="AddWikiPageFormatJSPWiki" priority="4">
 		<property name="osgi.modules.includes" value="wiki-engine-jspwiki" />
 
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Creole" />
+		</execute>
+
+		<execute macro="AppManager#deactivateAppCP">
+			<var name="appName" value="Creole" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelApps">
+			<var name="portlet" value="App Manager" />
+		</execute>
+
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Creole" />
+		</execute>
+
+		<var name="key_appName" value="Creole" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="AppManager#APP_STATUS" value1="Resolved" />
+
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>

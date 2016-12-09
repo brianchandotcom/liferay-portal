@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
@@ -1027,6 +1028,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 
 		KBArticle kbArticle = kbArticleLocalService.getKBArticle(
 			resourcePrimKey, version);
+
+		ExpandoBridge expandoBridge = kbArticle.getExpandoBridge();
+
+		serviceContext.setExpandoBridgeAttributes(
+			expandoBridge.getAttributes());
 
 		return updateKBArticle(
 			userId, resourcePrimKey, kbArticle.getTitle(),

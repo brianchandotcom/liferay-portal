@@ -34,7 +34,7 @@ ddmDataProviderSearch.setOrderByType(ddmDataProviderDisplayContext.getOrderByTyp
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(LanguageUtil.get(request, "data-provider-entries"));
+renderResponse.setTitle(LanguageUtil.get(request, "data-providers"));
 %>
 
 <liferay-ui:error exception="<%= RequiredDataProviderInstanceException.MustNotDeleteDataProviderInstanceReferencedByDataProviderInstanceLinks.class %>" message="the-data-provider-cannot-be-deleted-because-it-is-required-by-one-or-more-forms" />

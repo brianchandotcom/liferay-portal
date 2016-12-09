@@ -33,10 +33,8 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
 
 	public IndexOnStartupPortalInstanceLifecycleListener(
-		ClusterMasterExecutor clusterMasterExecutor,
 		IndexWriterHelper indexWriterHelper, Props props, String className) {
 
-		_clusterMasterExecutor = clusterMasterExecutor;
 		_indexWriterHelper = indexWriterHelper;
 		_props = props;
 		_className = className;
@@ -48,8 +46,7 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		if (!GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP)) ||
-			!_clusterMasterExecutor.isMaster()) {
+		if (!GetterUtil.getBoolean(_props.get(PropsKeys.INDEX_ON_STARTUP))) {
 
 			return;
 		}
@@ -73,7 +70,6 @@ public class IndexOnStartupPortalInstanceLifecycleListener
 		IndexOnStartupPortalInstanceLifecycleListener.class);
 
 	private final String _className;
-	private final ClusterMasterExecutor _clusterMasterExecutor;
 	private final IndexWriterHelper _indexWriterHelper;
 	private final Props _props;
 

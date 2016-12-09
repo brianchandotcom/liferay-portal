@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Instance Lifecycle
 Bundle-SymbolicName: com.liferay.portal.instance.lifecycle
-Bundle-Version: 3.0.2
+Bundle-Version: 3.1.0
 Export-Package: com.liferay.portal.instance.lifecycle
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Portal Instance Lifecycle

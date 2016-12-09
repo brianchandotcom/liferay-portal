@@ -179,10 +179,28 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 		kbFolderLocalService.moveKBFolder(kbFolderId, parentKBFolderId);
 	}
 
+	/**
+	 * @deprecated As of 1.1.0, replaced by {@link
+	 *             #updateKBFolder(long, long, long, String, String,
+	 *             ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public KBFolder updateKBFolder(
 			long parentResourceClassNameId, long parentResourcePrimKey,
 			long kbFolderId, String name, String description)
+		throws PortalException {
+
+		return updateKBFolder(
+			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
+			description, new ServiceContext());
+	}
+
+	@Override
+	public KBFolder updateKBFolder(
+			long parentResourceClassNameId, long parentResourcePrimKey,
+			long kbFolderId, String name, String description,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		KBFolderPermission.check(
@@ -190,7 +208,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 		return kbFolderLocalService.updateKBFolder(
 			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
-			description);
+			description, serviceContext);
 	}
 
 }

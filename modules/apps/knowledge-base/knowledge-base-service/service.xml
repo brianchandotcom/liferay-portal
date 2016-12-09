@@ -199,6 +199,7 @@
 		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
 		<reference entity="AssetLink" package-path="com.liferay.portlet.asset" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 		<reference entity="SocialActivity" package-path="com.liferay.portlet.social" />
 	</entity>
@@ -316,6 +317,7 @@
 		<!-- References -->
 
 		<reference entity="ClassName" package-path="com.liferay.portal" />
+		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
 	<entity local-service="true" name="KBTemplate" remote-service="true" uuid="true">
 

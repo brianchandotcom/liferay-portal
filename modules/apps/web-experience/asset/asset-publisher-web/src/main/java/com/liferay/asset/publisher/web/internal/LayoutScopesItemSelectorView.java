@@ -18,6 +18,8 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.web.display.context.LayoutScopesItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -78,7 +80,17 @@ public class LayoutScopesItemSelectorView
 
 	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
-		return true;
+		Layout layout = themeDisplay.getLayout();
+
+		int groupsCount = _groupLocalService.getGroupsCount(
+			themeDisplay.getCompanyId(), Layout.class.getName(),
+			layout.getGroupId());
+
+		if (groupsCount > 0) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -112,6 +124,11 @@ public class LayoutScopesItemSelectorView
 		_servletContext = servletContext;
 	}
 
+	@Reference(unbind = "-")
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -119,6 +136,7 @@ public class LayoutScopesItemSelectorView
 					new SiteItemSelectorReturnType()
 				}));
 
+	private GroupLocalService _groupLocalService;
 	private ServletContext _servletContext;
 
 }

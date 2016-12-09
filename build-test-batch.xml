@@ -640,7 +640,7 @@ app.server.type=@{app.server.type}]]></echo>
 					<if>
 						<and>
 							<or>
-								<matches pattern="https?://" string="@{test.portal.bundle.war.utl}" />
+								<matches pattern="https?://" string="@{test.portal.bundle.war.url}" />
 								<matches pattern="https?://" string="@{test.portal.bundle.zip.url}" />
 							</or>
 							<matches pattern="https?://" string="@{test.sql.zip.url}" />
@@ -1413,7 +1413,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 		<run-functional-test
 			app.server.type="tomcat"
-			database.type="maria"
+			database.type="mariadb"
 			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
 			test.fix.pack.base.url="${test.fix.pack.base.url}"
 			test.license.xml.url="${test.license.xml.url}"

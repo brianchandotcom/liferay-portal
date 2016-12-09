@@ -2,8 +2,6 @@
 	<var name="formName" value="Created Form Name" />
 
 	<command name="gotoAddDataProvider">
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
 		<execute function="Click" locator1="FormsAdmin#DATA_PROVIDER_PLUS_BUTTON" />
 	</command>
 

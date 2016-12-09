@@ -69,11 +69,7 @@
 	</command>
 
 	<command name="saveDataProvider">
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<execute macro="Button#clickSave" />
-
-		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

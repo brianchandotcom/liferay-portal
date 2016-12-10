@@ -32,6 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * Creates a message confirming items were moved to the Recycle Bin, and presents
+ * an option to restore them.
+ *
  * @author Julio Camarero
  */
 public class UndoTag extends IncludeTag {

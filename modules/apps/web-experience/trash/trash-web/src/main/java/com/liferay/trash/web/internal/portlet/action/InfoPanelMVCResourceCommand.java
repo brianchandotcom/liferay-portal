@@ -28,6 +28,10 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Provides an implementation of <code>MVCResourceCommand</code> (in
+ * <code>com.liferay.portal.kernel</code>) to allow Recycle Bin entries selected
+ * in the Recycle Bin portlet to render an information panel.
+ *
  * @author Jürgen Kappler
  */
 @Component(

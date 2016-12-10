@@ -26,6 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Provides an implementation of <code>ResultRowSplitter</code> (in
+ * <code>com.liferay.portal.kernel</code>) for the {@link
+ * com.liferay.trash.web.internal.portlet.TrashPortlet}. This class renders
+ * search results in the <code>SearchIteratorTag</code> (in
+ * <code>com.liferay.util.taglib</code>) using the <code>TrashHandler</code> (in
+ * <code>com.liferay.portal.kernel</code>) corresponding to each Recycle Bin
+ * entry.
+ *
  * @author Eudaldo Alonso
  */
 public class TrashResultRowSplitter implements ResultRowSplitter {

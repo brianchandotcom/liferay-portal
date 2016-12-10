@@ -37,6 +37,9 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * Provides utility methods moved from the Recycle Bin portlet's JSP files to
+ * reduce the complexity of the views.
+ *
  * @author Jürgen Kappler
  */
 public class TrashDisplayContext {

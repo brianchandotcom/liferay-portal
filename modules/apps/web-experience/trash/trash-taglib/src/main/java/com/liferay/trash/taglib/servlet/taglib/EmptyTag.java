@@ -23,6 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * Creates a component for users to permanently delete items (articles, images,
+ * etc.) from the Recycle Bin.
+ *
  * @author Sergio González
  */
 public class EmptyTag extends IncludeTag {

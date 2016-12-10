@@ -24,6 +24,9 @@ import java.util.List;
 import javax.portlet.ResourceRequest;
 
 /**
+ * Provides a utility method to get Recycle Bin entries by row IDs from the
+ * render request to render the Recycle Bin portlet's information panel.
+ *
  * @author Jürgen Kappler
  */
 public class ActionUtil {

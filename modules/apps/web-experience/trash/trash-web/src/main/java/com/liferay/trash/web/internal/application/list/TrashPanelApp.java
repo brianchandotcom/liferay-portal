@@ -24,6 +24,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * Provides an implementation of <code>PanelApp</code> (in the
+ * <code>com.liferay.application.list.api</code> module) to render a Recycle Bin
+ * portlet entry in the Site Administration section.
+ *
  * @author Eudaldo Alonso
  */
 @Component(

@@ -21,6 +21,11 @@ import com.liferay.trash.web.internal.constants.TrashPortletKeys;
 import org.osgi.service.component.annotations.Component;
 
 /**
+ * Provides an implementation of <code>FriendlyURLMapper</code> (in
+ * <code>com.liferay.portal.kernel</code>) to use with Recycle Bin friendly URL
+ * routes. To add a friendly URL mapping to the Recycle Bin portlet, add a new
+ * route to the <code>META-INF/friendly-url-routes/routes.xml</code> file.
+ *
  * @author Juergen Kappler
  */
 @Component(

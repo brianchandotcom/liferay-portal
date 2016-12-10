@@ -1,0 +1,68 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.dao.orm.common.transformers;
+
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.regex.Matcher;
+
+/**
+ * @author Manuel de la Peña
+ */
+public class OracleTransformer extends BaseSQLTransformer {
+
+	@Override
+	protected String postTransform(
+		boolean supportsStringCaseSensitiveQuery, String sql) {
+
+		sql = _replaceEscape(sql);
+		sql = _replaceNotEqualsBlankStringComparison(sql);
+
+		return sql;
+	}
+
+	@Override
+	protected String replaceBitwiseCheck(String sql) {
+		return sql;
+	}
+
+	@Override
+	protected String replaceCastClobText(String sql) {
+		Matcher matcher = castClobTextPattern.matcher(sql);
+
+		return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
+	}
+
+	@Override
+	protected String replaceCastText(Matcher matcher) {
+		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
+	}
+
+	@Override
+	protected String replaceIntegerDivision(String sql) {
+		Matcher matcher = integerDivisionPattern.matcher(sql);
+
+		return matcher.replaceAll("TRUNC($1 / $2)");
+	}
+
+	private String _replaceEscape(String sql) {
+		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
+	}
+
+	private String _replaceNotEqualsBlankStringComparison(String sql) {
+		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
+	}
+
+}

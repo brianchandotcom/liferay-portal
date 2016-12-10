@@ -21,7 +21,7 @@
 </tr>
 <tr>
 	<td>APP_STATUS</td>
-	<td>//div[contains(@class,'list-group-item-content') and contains (.,'${key_appName}')]//div/div/following-sibling::div[contains(@class,'additional-info-item') and contains (.,'Resolved')]</td>
+	<td>//div[contains(@class,'list-group-item-content') and contains (.,'${key_appName}')]//div/div/following-sibling::div[contains(@class,'additional-info-item') and contains (.,'${key_appStatus}')]</td>
 	<td></td>
 </tr>
 <tr>

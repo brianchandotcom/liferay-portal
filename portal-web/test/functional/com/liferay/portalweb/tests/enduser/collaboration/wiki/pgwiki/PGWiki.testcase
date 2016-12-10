@@ -713,6 +713,7 @@
 		</execute>
 
 		<var name="key_appName" value="Creole" />
+		<var name="key_appStatus" value="Resolved" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="AppManager#APP_STATUS" value1="Resolved" />
 

@@ -2247,6 +2247,50 @@ information. Make sure to commit in all build services results.
 		</run-batch-test>
 	</target>
 
+	<target name="source-format-jdk8">
+		<run-batch-test>
+			<test-action>
+				<if>
+					<contains string="${liferay.releng.branch}" substring="master" />
+					<then>
+						<gradle-execute dir="modules/util/source-formatter" task="deploy">
+							<arg value="clean" />
+						</gradle-execute>
+					</then>
+				</if>
+
+				<if>
+					<not>
+						<resourcecontains resource="${project.dir}/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" substring=" DXP " />
+					</not>
+					<then>
+						<property name="source.formatter.excludes" value="modules/private/**" />
+					</then>
+				</if>
+
+				<ant dir="portal-impl" target="format-source">
+					<property name="source.auto.fix" value="false" />
+					<property name="source.formatter.excludes" value="${source.formatter.excludes}" />
+					<property name="source.print.errors" value="true" />
+					<property name="source.throw.exception" value="true" />
+					<property name="source.use.properties" value="false" />
+				</ant>
+			</test-action>
+
+			<test-set-up>
+				<if>
+					<isset property="env.DIST_PATH" />
+					<then>
+						<prepare-test-environment />
+					</then>
+					<else>
+						<prepare-test-build />
+					</else>
+				</if>
+			</test-set-up>
+		</run-batch-test>
+	</target>
+
 	<target name="subrepository-compile-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 

@@ -16,6 +16,9 @@ package com.liferay.portal.search.solr.internal.query;
 
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.solr.query.WildcardQueryTranslator;
 
 import org.apache.lucene.index.Term;
@@ -37,13 +40,18 @@ public class WildcardQueryTranslatorImpl implements WildcardQueryTranslator {
 
 		org.apache.lucene.search.WildcardQuery luceneWildcardQuery =
 			new org.apache.lucene.search.WildcardQuery(
-				new Term(queryTerm.getField(), queryTerm.getValue()));
+				new Term(queryTerm.getField(), escape(queryTerm.getValue())));
 
 		if (!wildcardQuery.isDefaultBoost()) {
 			luceneWildcardQuery.setBoost(wildcardQuery.getBoost());
 		}
 
 		return luceneWildcardQuery;
+	}
+
+	protected String escape(String value) {
+		return StringUtil.replace(
+			value, CharPool.SPACE, StringPool.BACK_SLASH + StringPool.SPACE);
 	}
 
 }

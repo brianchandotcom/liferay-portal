@@ -52,47 +52,10 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			runSQL(sb.toString());
 
-			long classNameId = PortalUtil.getClassNameId(
-				MBDiscussion.class.getName());
-
-			sb = new StringBundler(7);
-
-			sb.append("delete from AssetEntry where classPK in (");
-			sb.append("select MBMessage.messageId from MBMessage inner join ");
-			sb.append(tempTableName);
-			sb.append(" on MBMessage.threadId = ");
-			sb.append(tempTableName);
-			sb.append(".threadId) and classNameId = ");
-			sb.append(classNameId);
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBDiscussion where threadId in (");
-			sb.append("select threadId from ");
-			sb.append(tempTableName);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBMessage where threadId in (");
-			sb.append("select threadId from ");
-			sb.append(tempTableName);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBThread where threadId in (");
-			sb.append("select threadId from ");
-			sb.append(tempTableName);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			runSQL(sb.toString());
+			_deleteAssetEntry(tempTableName);
+			_deleteTable("MBDiscussion", tempTableName);
+			_deleteTable("MBMessage", tempTableName);
+			_deleteTable("MBThread", tempTableName);
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
@@ -137,6 +100,38 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 				ps1.executeBatch();
 			}
 		}
+	}
+
+	private void _deleteAssetEntry(String tempTableName) throws Exception {
+		long classNameId = PortalUtil.getClassNameId(
+			MBDiscussion.class.getName());
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("delete from AssetEntry where classPK in (");
+		sb.append("select MBMessage.messageId from MBMessage inner join ");
+		sb.append(tempTableName);
+		sb.append(" on MBMessage.threadId = ");
+		sb.append(tempTableName);
+		sb.append(".threadId) and classNameId = ");
+		sb.append(classNameId);
+
+		runSQL(sb.toString());
+	}
+
+	private void _deleteTable(String tableName, String tempTableName)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("delete from ");
+		sb.append(tableName);
+		sb.append(" where threadId in (");
+		sb.append("select threadId from ");
+		sb.append(tempTableName);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		runSQL(sb.toString());
 	}
 
 }

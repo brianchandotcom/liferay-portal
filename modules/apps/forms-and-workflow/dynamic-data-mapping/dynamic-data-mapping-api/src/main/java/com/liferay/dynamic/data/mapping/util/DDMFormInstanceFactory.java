@@ -14,10 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -40,13 +48,164 @@ public class DDMFormInstanceFactory {
 				"DDM form values does not match with the given class " + clazz);
 		}
 
-		DDMFormInstanceFactoryHelper ddmFormInstanceFactoryHelper =
-			new DDMFormInstanceFactoryHelper(clazz, ddmFormValues, locale);
+		Object proxy = ProxyUtil.newProxyInstance(
+			clazz.getClassLoader(), new Class<?>[] {clazz},
+			new DDMFormInstanceInvocationHandler<>(
+				clazz, ddmFormValues, locale));
 
-		Map<String, Object> properties =
-			ddmFormInstanceFactoryHelper.getProperties();
+		return clazz.cast(proxy);
+	}
 
-		return ConfigurableUtil.createConfigurable(clazz, properties);
+	private static class DDMFormInstanceInvocationHandler<T>
+		implements InvocationHandler {
+
+		public DDMFormInstanceInvocationHandler(
+			T clazz, DDMFormValues ddmFormValues, Locale locale) {
+
+			_clazz = clazz;
+			_ddmFormValues = ddmFormValues;
+			_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
+			_locale = locale;
+		}
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+
+			if (!method.isAnnotationPresent(DDMFormField.class)) {
+				return null;
+			}
+
+			DDMFormFieldFactoryHelper ddmFormFieldFactoryHelper =
+				new DDMFormFieldFactoryHelper(method);
+
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				_ddmFormFieldValuesMap.get(
+					ddmFormFieldFactoryHelper.getDDMFormFieldName());
+
+			return convert(method.getReturnType(), ddmFormFieldValues);
+		}
+
+		protected Object convert(
+			Class<?> returnType, List<DDMFormFieldValue> ddmFormFieldValues) {
+
+			if (returnType.isArray()) {
+				return toArray(
+					returnType.getComponentType(), ddmFormFieldValues);
+			}
+
+			return toPrimitive(returnType, ddmFormFieldValues.get(0));
+		}
+
+		protected Object toArray(
+			Class<?> returnType, List<DDMFormFieldValue> ddmFormFieldValues) {
+
+			Object array = Array.newInstance(
+				returnType, ddmFormFieldValues.size());
+
+			int i = 0;
+
+			for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
+				Array.set(
+					array, i++, toPrimitive(returnType, ddmFormFieldValue));
+			}
+
+			return array;
+		}
+
+		protected boolean toBoolean(Value value) {
+			return Boolean.valueOf(value.getString(_locale));
+		}
+
+		protected double toDouble(Value value) {
+			return Double.valueOf(value.getString(_locale));
+		}
+
+		protected Object toDynamicForm(
+			Class<?> clazz, DDMFormFieldValue ddmFormFieldValue) {
+
+			DDMFormValues ddmFormValues = new DDMFormValues(
+				DDMFormFactory.create(clazz));
+
+			ddmFormValues.setAvailableLocales(
+				_ddmFormValues.getAvailableLocales());
+			ddmFormValues.setDefaultLocale(_ddmFormValues.getDefaultLocale());
+
+			ddmFormValues.setDDMFormFieldValues(
+				ddmFormFieldValue.getNestedDDMFormFieldValues());
+
+			Object proxy = ProxyUtil.newProxyInstance(
+				clazz.getClassLoader(), new Class<?>[] {clazz},
+				new DDMFormInstanceInvocationHandler<>(
+					clazz, ddmFormValues, _locale));
+
+			return clazz.cast(proxy);
+		}
+
+		protected float toFloat(Value value) {
+			return Float.valueOf(value.getString(_locale));
+		}
+
+		protected int toInteger(Value value) {
+			return Integer.valueOf(value.getString(_locale));
+		}
+
+		protected long toLong(Value value) {
+			return Long.valueOf(value.getString(_locale));
+		}
+
+		protected Object toPrimitive(
+			Class<?> returnType, DDMFormFieldValue ddmFormFieldValue) {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			if ((returnType == boolean.class) ||
+				(returnType == Boolean.class)) {
+
+				return toBoolean(value);
+			}
+
+			if ((returnType == double.class) || (returnType == Double.class)) {
+				return toDouble(value);
+			}
+
+			if ((returnType == float.class) || (returnType == Float.class)) {
+				return toFloat(value);
+			}
+
+			if ((returnType == int.class) || (returnType == Integer.class)) {
+				return toInteger(value);
+			}
+
+			if ((returnType == long.class) || (returnType == Long.class)) {
+				return toLong(value);
+			}
+
+			if ((returnType == short.class) || (returnType == Short.class)) {
+				return toShort(value);
+			}
+
+			if (returnType == String.class) {
+				return toString(value);
+			}
+
+			return toDynamicForm(returnType, ddmFormFieldValue);
+		}
+
+		protected short toShort(Value value) {
+			return Short.valueOf(value.getString(_locale));
+		}
+
+		protected String toString(Value value) {
+			return value.getString(_locale);
+		}
+
+		private final T _clazz;
+		private final Map<String, List<DDMFormFieldValue>>
+			_ddmFormFieldValuesMap;
+		private final DDMFormValues _ddmFormValues;
+		private final Locale _locale;
+
 	}
 
 }

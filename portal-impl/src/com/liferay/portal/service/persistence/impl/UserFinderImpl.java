@@ -461,9 +461,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
 			}
 
-			int stringBundlerSize = (paramsList.size() * 4) + 1;
-
-			StringBundler sb = new StringBundler(stringBundlerSize);
+			StringBundler sb = new StringBundler(paramsList.size() * 3 + 2);
 
 			sb.append("SELECT COUNT(userId) AS COUNT_VALUE FROM (");
 

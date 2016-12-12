@@ -193,16 +193,14 @@ public class GroupSearchProvider {
 		return groupParams;
 	}
 
-	protected long getParentGroupId(PortletRequest portletRequest)
-		throws PortalException {
-
+	protected long getParentGroupId(PortletRequest portletRequest) {
 		Group group = null;
 
 		long groupId = ParamUtil.getLong(
 			portletRequest, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		if (groupId > 0) {
-			group = _groupLocalService.getGroup(groupId);
+			group = _groupLocalService.fetchGroup(groupId);
 		}
 
 		if (group != null) {

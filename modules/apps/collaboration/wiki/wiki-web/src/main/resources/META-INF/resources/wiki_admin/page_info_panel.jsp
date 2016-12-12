@@ -20,47 +20,58 @@
 WikiEngineRenderer wikiEngineRenderer = (WikiEngineRenderer)request.getAttribute(WikiWebKeys.WIKI_ENGINE_RENDERER);
 
 WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext = wikiDisplayContextProvider.getWikiPageInfoPanelDisplayContext(request, response);
+
+request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
 %>
 
-<c:if test="<%= wikiPageInfoPanelDisplayContext.isShowSidebarHeader() %>">
-	<div class="sidebar-header">
-		<c:choose>
-			<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
-				<ul class="sidebar-header-actions">
+<c:choose>
+	<c:when test="<%= wikiPageInfoPanelDisplayContext.isShowSidebarHeader() %>">
+		<div class="sidebar-header">
+			<c:choose>
+				<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
+					<ul class="sidebar-actions">
+						<li>
+							<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
+						</li>
+						<li>
+							<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
+						</li>
+					</ul>
 
 					<%
-					request.setAttribute("page_info_panel.jsp-wikiPage", wikiPageInfoPanelDisplayContext.getFirstPage());
+					WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
 					%>
 
-					<li>
-						<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
-					</li>
-					<li>
-						<liferay-util:include page="/wiki/page_action.jsp" servletContext="<%= application %>" />
-					</li>
-				</ul>
+					<h4 class="sidebar-title">
+						<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+					</h4>
 
-				<%
-				WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
-				%>
+					<h5>
+						<liferay-ui:message key="page" />
+					</h5>
+				</c:when>
+				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
+					<h4 class="sidebar-title"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
+				</c:when>
+				<c:otherwise>
+					<h4 class="sidebar-title"><liferay-ui:message key="pages" /></h4>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="sidebar-header visible-xs">
 
-				<h4>
-					<%= HtmlUtil.escape(wikiPage.getTitle()) %>
-				</h4>
+			<%
+			WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
+			%>
 
-				<p>
-					<liferay-ui:message key="page" />
-				</p>
-			</c:when>
-			<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
-				<h4><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h4>
-			</c:when>
-			<c:otherwise>
-				<h4><liferay-ui:message key="pages" /></h4>
-			</c:otherwise>
-		</c:choose>
-	</div>
-</c:if>
+			<h4 class="sidebar-title">
+				<%= HtmlUtil.escape(wikiPage.getTitle()) %>
+			</h4>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <%
 String sections = "details";
@@ -73,115 +84,125 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 <liferay-ui:tabs cssClass="navbar-no-collapse" names="<%= sections %>" refresh="<%= false %>" type="dropdown">
 	<liferay-ui:section>
 		<div class="sidebar-body">
-			<dl>
-				<c:choose>
-					<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
+			<c:choose>
+				<c:when test="<%= wikiPageInfoPanelDisplayContext.isSinglePageSelection() %>">
 
-						<%
-						WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
-						%>
+					<%
+					WikiPage wikiPage = wikiPageInfoPanelDisplayContext.getFirstPage();
+					%>
 
+					<dl class="sidebar-block">
 						<c:if test="<%= Validator.isNotNull(wikiPage.getSummary()) %>">
-							<dt class="h5"><liferay-ui:message key="summary" /></dt>
-
-							<dd>
+							<dt class="h5">
+								<liferay-ui:message key="summary" />
+							</dt>
+							<dd class="h6 sidebar-caption">
 								<%= HtmlUtil.escape(wikiPage.getSummary()) %>
 							</dd>
 						</c:if>
 
-						<dt class="h5"><liferay-ui:message key="format" /></dt>
-
-						<dd>
+						<dt class="h5">
+							<liferay-ui:message key="format" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<liferay-ui:message key="<%= wikiEngineRenderer.getFormatLabel(wikiPage.getFormat(), locale) %>" />
 						</dd>
-						<dt class="h5"><liferay-ui:message key="latest-version" /></dt>
-
-						<dd>
+						<dt class="h5">
+							<liferay-ui:message key="latest-version" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<%= wikiPage.getVersion() %>
 
 							<c:if test="<%= wikiPage.isMinorEdit() %>">
 								(<liferay-ui:message key="minor-edit" />)
 							</c:if>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="create-date" /></dt>
-
-						<dd>
+						<dt class="h5">
+							<liferay-ui:message key="create-date" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<%= dateFormatDateTime.format(wikiPage.getCreateDate()) %>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="last-modified" /></dt>
-
-						<dd>
+						<dt class="h5">
+							<liferay-ui:message key="last-modified" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<%= dateFormatDateTime.format(wikiPage.getModifiedDate()) %>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="attachments" /></dt>
-
-						<dd>
+						<dt class="h5">
+							<liferay-ui:message key="attachments" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<%= wikiPage.getAttachmentsFileEntriesCount() %>
 						</dd>
-						<dt class="h5"><liferay-ui:message key="rss" /></dt>
-
-						<dd>
+						<dt class="h5">
+							<liferay-ui:message key="rss" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<aui:a href="<%= wikiPageInfoPanelDisplayContext.getPageRSSURL(wikiPage) %>" target="_blank">
 								<liferay-ui:message key="feed" />
 							</aui:a>
 						</dd>
+					</dl>
 
-						<div class="lfr-asset-categories">
-							<liferay-ui:asset-categories-summary
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-								message="categories"
+					<div class="lfr-asset-categories sidebar-block">
+						<liferay-ui:asset-categories-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="categories"
+						/>
+					</div>
+
+					<div class="lfr-asset-tags sidebar-block">
+						<liferay-ui:asset-tags-summary
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							message="tags"
+						/>
+					</div>
+
+					<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
+						<liferay-ui:ratings
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+						/>
+					</c:if>
+
+					<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-ui:custom-attribute-list
+							className="<%= WikiPage.class.getName() %>"
+							classPK="<%= wikiPage.getResourcePrimKey() %>"
+							editable="<%= false %>"
+							label="<%= true %>"
+						/>
+					</liferay-ui:custom-attributes-available>
+
+					<%
+					AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
+					%>
+
+					<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
+						<div class="entry-links">
+							<liferay-ui:asset-links
+								assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
 							/>
 						</div>
-
-						<div class="lfr-asset-tags">
-							<liferay-ui:asset-tags-summary
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-								message="tags"
-							/>
-						</div>
-
-						<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
-							<liferay-ui:ratings
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-							/>
-						</c:if>
-
-						<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
-							<liferay-ui:custom-attribute-list
-								className="<%= WikiPage.class.getName() %>"
-								classPK="<%= wikiPage.getResourcePrimKey() %>"
-								editable="<%= false %>"
-								label="<%= true %>"
-							/>
-						</liferay-ui:custom-attributes-available>
-
-						<%
-						AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());
-						%>
-
-						<c:if test="<%= (wikiPageAssetEntry != null) && wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
-							<div class="entry-links">
-								<liferay-ui:asset-links
-									assetEntryId="<%= wikiPageAssetEntry.getEntryId() %>"
-								/>
-							</div>
-						</c:if>
-					</c:when>
-					<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
-						<dt class="h5"><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></dt>
-					</c:when>
-					<c:otherwise>
-						<dt class="h5"><liferay-ui:message key="num-of-items" /></dt>
-
-						<dd>
+					</c:if>
+				</c:when>
+				<c:when test="<%= wikiPageInfoPanelDisplayContext.isMultiplePageSelection() %>">
+					<h5><liferay-ui:message arguments="<%= wikiPageInfoPanelDisplayContext.getSelectedPagesCount() %>" key="x-items-are-selected" /></h5>
+				</c:when>
+				<c:otherwise>
+					<dl class="sidebar-block">
+						<dt class="h5">
+							<liferay-ui:message key="num-of-items" />
+						</dt>
+						<dd class="h6 sidebar-caption">
 							<%= wikiPageInfoPanelDisplayContext.getPagesCount() %>
 						</dd>
-					</c:otherwise>
-				</c:choose>
-			</dl>
+					</dl>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</liferay-ui:section>
 
@@ -193,62 +214,71 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 
 		<liferay-ui:section>
 			<div class="sidebar-body">
+				<ul class="sidebar-block tabular-list-group-unstyled">
 
-				<%
-				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
+					<%
+					List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, new PageVersionComparator());
 
-				for (WikiPage curPage : pages) {
-				%>
+					for (WikiPage curPage : pages) {
+					%>
 
-					<div>
-						<ul class="sidebar-header-actions">
-							<li>
+						<li class="list-group-item">
+							<div class="list-group-item-content">
+								<div class="h5">
+									<liferay-ui:message arguments="<%= curPage.getVersion() %>" key="version-x" />
+								</div>
+
+								<div class="h6 sidebar-caption">
+									<liferay-ui:message arguments="<%= new Object[] {curPage.getUserName(), dateFormatDateTime.format(curPage.getCreateDate())} %>" key="by-x-on-x" />
+								</div>
+							</div>
+
+							<div class="list-group-item-field">
 
 								<%
 								request.setAttribute("page_info_panel.jsp-wikiPage", curPage);
 								%>
 
 								<liferay-util:include page="/wiki/page_history_action.jsp" servletContext="<%= application %>" />
-							</li>
-						</ul>
+							</div>
+						</li>
 
-						<dl>
-							<dt class="h5">
-								<h4><liferay-ui:message arguments="<%= curPage.getVersion() %>" key="version-x" /></h4>
-							</dt>
-							<dd>
-								<small class="text-muted">
-									<liferay-ui:message arguments="<%= new Object[] {curPage.getUserName(), dateFormatDateTime.format(curPage.getCreateDate())} %>" key="by-x-on-x" />
-								</small>
-							</dd>
-						</dl>
-					</div>
+					<%
+					}
+					%>
 
-				<%
-				}
-				%>
-
+				</ul>
 			</div>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<div class="sidebar-body">
+				<ul class="sidebar-block tabular-list-group-unstyled">
 
-				<%
-				WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
+					<%
+					WikiSocialActivityHelper wikiSocialActivityHelper = new WikiSocialActivityHelper(wikiRequestHelper);
 
-				List<SocialActivity> socialActivities = SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					List<SocialActivity> socialActivities = SocialActivityLocalServiceUtil.getActivities(0, WikiPage.class.getName(), wikiPage.getResourcePrimKey(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				for (SocialActivity socialActivity : socialActivities) {
-					JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
+					for (SocialActivity socialActivity : socialActivities) {
+						JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(socialActivity.getExtraData());
 
-					String path = wikiSocialActivityHelper.getSocialActivityActionJSP(socialActivity, extraDataJSONObject);
-				%>
+						String path = wikiSocialActivityHelper.getSocialActivityActionJSP(socialActivity, extraDataJSONObject);
+					%>
 
-					<c:if test="<%= Validator.isNotNull(path) %>">
-						<div>
-							<ul class="sidebar-header-actions">
-								<li>
+						<li class="list-group-item">
+							<div class="list-group-item-content">
+								<div class="h5">
+									<%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %>
+								</div>
+
+								<div class="h6 sidebar-caption">
+									<%= dateFormatDateTime.format(socialActivity.getCreateDate()) %>
+								</div>
+							</div>
+
+							<c:if test="<%= Validator.isNotNull(path) %>">
+								<div class="list-group-item-field">
 
 									<%
 									request.setAttribute(WikiWebKeys.WIKI_PAGE, wikiPage);
@@ -256,31 +286,22 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 									%>
 
 									<liferay-util:include page="<%= path %>" servletContext="<%= application %>" />
-								</li>
-							</ul>
-						</div>
-					</c:if>
+								</div>
+							</c:if>
+						</li>
 
-					<dl>
-						<dt class="h5">
-							<h4><%= wikiSocialActivityHelper.getSocialActivityDescription(wikiPage, socialActivity, extraDataJSONObject, resourceBundle) %></h4>
-						</dt>
-						<dd>
-							<small class="text-muted">
-								<%= dateFormatDateTime.format(socialActivity.getCreateDate()) %>
-							</small>
-						</dd>
-					</dl>
+					<%
+					}
+					%>
 
-				<%
-				}
-				%>
-
+				</ul>
 			</div>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
-			<liferay-util:include page="/wiki/page_links.jsp" servletContext="<%= application %>" />
+			<div class="sidebar-body">
+				<liferay-util:include page="/wiki/page_links.jsp" servletContext="<%= application %>" />
+			</div>
 		</liferay-ui:section>
 	</c:if>
 </liferay-ui:tabs>

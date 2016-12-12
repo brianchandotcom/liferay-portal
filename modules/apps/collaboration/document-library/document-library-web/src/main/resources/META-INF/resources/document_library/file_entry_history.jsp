@@ -16,49 +16,48 @@
 
 <%@ include file="/document_library/init.jsp" %>
 
-<%
-FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
+<ul class="sidebar-block tabular-list-group-unstyled">
 
-int status = WorkflowConstants.STATUS_APPROVED;
+	<%
+	FileEntry fileEntry = (FileEntry)request.getAttribute("info_panel.jsp-fileEntry");
 
-if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
-	status = WorkflowConstants.STATUS_ANY;
-}
+	int status = WorkflowConstants.STATUS_APPROVED;
 
-List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
+	if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
+		status = WorkflowConstants.STATUS_ANY;
+	}
 
-for (FileVersion fileVersion : fileVersions) {
-	request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
-%>
+	List<FileVersion> fileVersions = fileEntry.getFileVersions(status);
 
-	<aui:row>
-		<aui:col width="<%= 100 %>">
-			<ul class="sidebar-header-actions">
-				<li>
-					<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
-				</li>
-			</ul>
+	for (FileVersion fileVersion : fileVersions) {
+		request.setAttribute("info_panel.jsp-fileVersion", fileVersion);
+	%>
 
-			<dl>
-				<dt class="h5">
+		<li class="list-group-item">
+			<div class="list-group-item-content">
+				<div class="h5">
 					<liferay-ui:message arguments="<%= fileVersion.getVersion() %>" key="version-x" />
-				</dt>
-				<dd>
-					<c:choose>
-						<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
-							<small class="text-muted">
-								<liferay-ui:message key="no-change-log" />
-							</small>
-						</c:when>
-						<c:otherwise>
-							<%= fileVersion.getChangeLog() %>
-						</c:otherwise>
-					</c:choose>
-				</dd>
-			</dl>
-		</aui:col>
-	</aui:row>
+				</div>
 
-<%
-}
-%>
+				<c:choose>
+					<c:when test="<%= Validator.isNull(fileVersion.getChangeLog()) %>">
+						<div class="h6 sidebar-caption">
+							<liferay-ui:message key="no-change-log" />
+						</div>
+					</c:when>
+					<c:otherwise>
+						<%= fileVersion.getChangeLog() %>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+			<div class="list-group-item-field">
+				<liferay-util:include page="/document_library/file_entry_history_action.jsp" servletContext="<%= application %>" />
+			</div>
+		</li>
+
+	<%
+	}
+	%>
+
+</ul>

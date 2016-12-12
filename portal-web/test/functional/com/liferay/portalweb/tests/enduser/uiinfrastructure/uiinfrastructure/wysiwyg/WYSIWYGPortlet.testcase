@@ -1,4 +1,4 @@
-<definition component-name="portal-plugins-osgi">
+<definition component-name="portal-user-interface">
 	<property name="portal.release" value="false" />
 	<property name="testray.main.component.name" value="User Interface" />
 
@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="WYSIWYG Page" />
 		</execute>
 	</set-up>
 
@@ -14,13 +14,32 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="WYSIWYGPortletSmoke" priority="4">
+	<command name="AddContent" priority="4">
 		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Test Page" />
+			<var name="pageName" value="WYSIWYG Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="WYSIWYG" />
 		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="WYSIWYG" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute function="Type#typeEditor" locator1="CKEditor#BODY_FIELD" value1="WYSIWYG Test Content" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+
+		<execute function="SelectFrame#selectFrameTop" />
+
+		<execute function="Click" locator1="Modal#CLOSE_BUTTON" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#PORTLET_CONTENT" value1="WYSIWYG Test Content" />
 	</command>
 </definition>

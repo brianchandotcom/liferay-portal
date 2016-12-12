@@ -119,19 +119,29 @@ public class SaveRecordSetMVCCommandHelper {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String name = ParamUtil.getString(portletRequest, "name");
+		String description = ParamUtil.getString(portletRequest, "description");
+
+		return addRecordSet(
+			portletRequest, ddmStructureId,
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
+			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description));
+	}
+
+	protected DDLRecordSet addRecordSet(
+			PortletRequest portletRequest, long ddmStructureId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap)
+		throws Exception {
+
 		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		String recordSetKey = ParamUtil.getString(
 			portletRequest, "recordSetKey");
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), portletRequest);
 
 		return ddlRecordSetService.addRecordSet(
-			groupId, ddmStructureId, recordSetKey,
-			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), name),
-			getLocalizedMap(themeDisplay.getSiteDefaultLocale(), description),
+			groupId, ddmStructureId, recordSetKey, nameMap, descriptionMap,
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
 			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
 	}

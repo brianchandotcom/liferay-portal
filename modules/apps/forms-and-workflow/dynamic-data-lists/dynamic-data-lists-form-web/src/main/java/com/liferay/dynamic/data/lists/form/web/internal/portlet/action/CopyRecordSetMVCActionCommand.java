@@ -14,37 +14,40 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
 import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
-import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletSession;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
  * @author Pedro Queiroz
  */
-
 @Component(
 	immediate = true,
 	property = {
@@ -53,85 +56,130 @@ import java.util.ResourceBundle;
 	},
 	service = MVCActionCommand.class
 )
-public class CopyRecordSetMVCActionCommand extends BaseMVCActionCommand {
+public class CopyRecordSetMVCActionCommand
+	extends BaseTransactionalMVCActionCommand {
 
-	public Map<Locale, String> getRecordSetNameCopy(long recordSetId)
+	protected DDMStructure copyRecordSetDDMStructure(
+			ActionRequest actionRequest, DDLRecordSet recordSet)
 		throws Exception {
-		DDLRecordSet ddlRecordSet = _ddlRecordSetService
-			.getRecordSet(recordSetId);
-		Locale siteDefaultLocale = LocaleUtil.getSiteDefault();
 
-		Map<Locale, String> nameMapCopy = new HashMap<>();
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMStructure.class.getName(), actionRequest);
 
-		String nameCopy =
-			LanguageUtil.format(getResourceBundle(siteDefaultLocale),
-				"copy-of-x", ddlRecordSet.getName(siteDefaultLocale, Boolean.TRUE));
+		return ddmStructureService.copyStructure(
+			recordSet.getDDMStructureId(), serviceContext);
+	}
 
-		nameMapCopy.put(siteDefaultLocale, nameCopy);
+	protected void copySettingsStorageTypeValue(
+			DDMFormValues settingsDDMFormValues,
+			DDMFormValues defaultSettingsDDMFormValues)
+		throws Exception {
 
-		return nameMapCopy;
+		DDMFormFieldValue storageTypeDDMFormFieldValue =
+			getStorageTypeDDMFormFieldValue(defaultSettingsDDMFormValues);
+
+		if (storageTypeDDMFormFieldValue == null) {
+			return;
+		}
+
+		String storageType = saveRecordSetMVCCommandHelper.getStorageType(
+			settingsDDMFormValues);
+
+		storageTypeDDMFormFieldValue.setValue(
+			new UnlocalizedValue(storageType));
+	}
+
+	protected DDMFormValues createRecordSetSettingsDDMFormValues(
+			ActionRequest actionRequest, DDLRecordSet recordSet)
+		throws Exception {
+
+		DDMForm settingsDDMForm = DDMFormFactory.create(
+			DDLRecordSetSettings.class);
+
+		DDMFormValues defaultSettingsDDMFormValues =
+			ddmFormValuesFactory.create(actionRequest, settingsDDMForm);
+
+		copySettingsStorageTypeValue(
+			recordSet.getSettingsDDMFormValues(), defaultSettingsDDMFormValues);
+
+		return defaultSettingsDDMFormValues;
+	}
+
+	@Override
+	protected void doTransactionalCommand(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+
+		DDLRecordSet recordSet = ddlRecordSetService.getRecordSet(recordSetId);
+
+		DDMStructure ddmStructureCopy = copyRecordSetDDMStructure(
+			actionRequest, recordSet);
+
+		DDLRecordSet recordSetCopy = saveRecordSetMVCCommandHelper.addRecordSet(
+			actionRequest, ddmStructureCopy.getStructureId(),
+			getNameMap(recordSet, themeDisplay.getSiteDefaultLocale()),
+			getDescriptionMap(recordSet, themeDisplay.getSiteDefaultLocale()));
+
+		DDMFormValues settingsDDMFormValues =
+			createRecordSetSettingsDDMFormValues(actionRequest, recordSet);
+
+		ddlRecordSetService.updateRecordSet(
+			recordSetCopy.getRecordSetId(), settingsDDMFormValues);
+	}
+
+	protected Map<Locale, String> getDescriptionMap(
+		DDLRecordSet recordSet, Locale locale) {
+
+		return saveRecordSetMVCCommandHelper.getLocalizedMap(
+			locale, recordSet.getDescription(locale, true));
+	}
+
+	protected Map<Locale, String> getNameMap(
+		DDLRecordSet recordSet, Locale locale) {
+
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		String name = LanguageUtil.format(
+			resourceBundle, "copy-of-x", recordSet.getName(locale, true));
+
+		return saveRecordSetMVCCommandHelper.getLocalizedMap(locale, name);
 	}
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
-
 		Class<?> clazz = getClass();
 
 		return ResourceBundleUtil.getBundle("content.Language", locale, clazz);
 	}
 
-	protected void copyRecordSet(ActionRequest actionRequest)
-		throws Exception {
+	protected DDMFormFieldValue getStorageTypeDDMFormFieldValue(
+		DDMFormValues ddmFormValues) {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
+		for (DDMFormFieldValue ddmFormFieldValue :
+				ddmFormValues.getDDMFormFieldValues()) {
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), actionRequest);
-
-		serviceContext.setAddGroupPermissions(Boolean.TRUE);
-		serviceContext.setAddGuestPermissions(Boolean.TRUE);
-
-		_ddlRecordSetService.copyRecordSet(groupId, recordSetId,
-			getRecordSetNameCopy(recordSetId), serviceContext);
-
-	}
-
-	@Override
-	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			copyRecordSet(actionRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRecordSetException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				PortletSession portletSession =
-					actionRequest.getPortletSession();
-
-				PortletContext portletContext =
-					portletSession.getPortletContext();
-
-				PortletRequestDispatcher portletRequestDispatcher =
-					portletContext.getRequestDispatcher("/error.jsp");
-
-				portletRequestDispatcher.include(actionRequest, actionResponse);
-			}
-			else {
-				throw e;
+			if (Objects.equals(ddmFormFieldValue.getName(), "storageType")) {
+				return ddmFormFieldValue;
 			}
 		}
+
+		return null;
 	}
 
-	@Reference(unbind = "-")
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
+	@Reference
+	protected DDLRecordSetService ddlRecordSetService;
 
-		_ddlRecordSetService = ddlRecordSetService;
-	}
+	@Reference
+	protected DDMFormValuesFactory ddmFormValuesFactory;
 
-	private DDLRecordSetService _ddlRecordSetService;
+	@Reference
+	protected DDMStructureService ddmStructureService;
+
+	@Reference
+	protected SaveRecordSetMVCCommandHelper saveRecordSetMVCCommandHelper;
+
 }

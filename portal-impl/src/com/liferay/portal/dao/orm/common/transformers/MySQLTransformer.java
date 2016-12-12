@@ -16,6 +16,7 @@ package com.liferay.portal.dao.orm.common.transformers;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
@@ -28,7 +29,7 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		boolean supportsStringCaseSensitiveQuery, String sql) {
 
 		if (!supportsStringCaseSensitiveQuery) {
-			sql = _removeLower(sql);
+			sql = _lowerTransformation.apply(sql);
 		}
 
 		return sql;
@@ -41,7 +42,11 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("$1 DIV $2");
 	}
 
-	private String _removeLower(String sql) {
+	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
+
+	private static final String _LOWER_OPEN = "lower(";
+
+	private Function<String, String> _lowerTransformation = (String sql) -> {
 		int x = sql.indexOf(_LOWER_OPEN);
 
 		if (x == -1) {
@@ -79,10 +84,6 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		sql = sb.toString();
 
 		return sql;
-	}
-
-	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
-
-	private static final String _LOWER_OPEN = "lower(";
+	};
 
 }

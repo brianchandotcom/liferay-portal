@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.activator;
 
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.kaleo.runtime.KaleoDefaults;
+import com.liferay.portal.workflow.kaleo.runtime.activator.KaleoDefaults;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
 import com.liferay.portal.workflow.kaleo.runtime.internal.messaging.KaleoWorkflowMessagingConfigurator;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;

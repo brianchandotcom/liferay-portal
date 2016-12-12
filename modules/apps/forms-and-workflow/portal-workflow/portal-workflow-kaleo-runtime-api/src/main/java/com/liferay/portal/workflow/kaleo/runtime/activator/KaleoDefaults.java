@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.workflow.kaleo.runtime;
+package com.liferay.portal.workflow.kaleo.runtime.activator;
 
 /**
  * @author Inácio Nery

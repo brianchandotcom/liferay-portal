@@ -60,7 +60,7 @@
 					request.setAttribute(WebKeys.ASSET_RENDERER_FACTORY, assetRendererFactory);
 				%>
 
-					<strong><%= assetEntry.getTitle() %></strong>
+					<strong><%= assetRenderer.getTitle(locale) %></strong>
 
 					<br /><br />
 

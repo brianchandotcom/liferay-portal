@@ -71,6 +71,8 @@
 		>
 
 			<%
+			AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
 			AssetRendererFactory assetRendererFactory = assetBrowserDisplayContext.getAssetRendererFactory();
 
 			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
@@ -82,7 +84,7 @@
 			if (assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId()) {
 				data.put("assetclassname", assetEntry.getClassName());
 				data.put("assetclasspk", assetEntry.getClassPK());
-				data.put("assettitle", assetEntry.getTitle(locale));
+				data.put("assettitle", assetRenderer.getTitle(locale));
 				data.put("assettype", assetRendererFactory.getTypeName(locale, assetBrowserDisplayContext.getSubtypeSelectionId()));
 				data.put("entityid", assetEntry.getEntryId());
 				data.put("groupdescriptivename", group.getDescriptiveName(locale));
@@ -118,11 +120,11 @@
 							<c:choose>
 								<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 									<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
-										<%= assetEntry.getTitle(locale) %>
+										<%= assetRenderer.getTitle(locale) %>
 									</aui:a>
 								</c:when>
 								<c:otherwise>
-									<%= assetEntry.getTitle(locale) %>
+									<%= assetRenderer.getTitle(locale) %>
 								</c:otherwise>
 							</c:choose>
 						</h5>
@@ -136,8 +138,6 @@
 
 					<%
 					row.setCssClass("entry-card lfr-asset-item");
-
-					AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
 					%>
 
 					<liferay-ui:search-container-column-text>
@@ -148,7 +148,7 @@
 									data="<%= data %>"
 									imageUrl="<%= assetRenderer.getThumbnailPath(renderRequest) %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-									title="<%= assetEntry.getTitle(locale) %>"
+									title="<%= assetRenderer.getTitle(locale) %>"
 								/>
 							</c:when>
 							<c:otherwise>
@@ -157,7 +157,7 @@
 									data="<%= data %>"
 									icon="<%= assetRendererFactory.getIconCssClass() %>"
 									subtitle="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-									title="<%= assetEntry.getTitle(locale) %>"
+									title="<%= assetRenderer.getTitle(locale) %>"
 								/>
 							</c:otherwise>
 						</c:choose>
@@ -171,11 +171,11 @@
 						<c:choose>
 							<c:when test="<%= assetEntry.getEntryId() != assetBrowserDisplayContext.getRefererAssetEntryId() %>">
 								<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="javascript:;">
-									<%= assetEntry.getTitle(locale) %>
+									<%= assetRenderer.getTitle(locale) %>
 								</aui:a>
 							</c:when>
 							<c:otherwise>
-								<%= assetEntry.getTitle(locale) %>
+								<%= assetRenderer.getTitle(locale) %>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>
@@ -183,7 +183,7 @@
 					<liferay-ui:search-container-column-text
 						name="description"
 						truncate="<%= true %>"
-						value="<%= HtmlUtil.fromInputSafe(HtmlUtil.stripHtml(assetEntry.getDescription(locale))) %>"
+						value="<%= assetRenderer.getSummary(renderRequest, renderResponse) %>"
 					/>
 
 					<liferay-ui:search-container-column-text

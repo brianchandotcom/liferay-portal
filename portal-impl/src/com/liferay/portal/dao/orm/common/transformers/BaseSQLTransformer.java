@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,10 +42,10 @@ public abstract class BaseSQLTransformer implements Transformer {
 		String newSQL = sql;
 
 		newSQL = replaceBitwiseCheck(newSQL);
-		newSQL = _replaceBoolean(newSQL);
+		newSQL = _booleanTransformation.apply(newSQL);
 		newSQL = replaceCastClobText(newSQL);
 		newSQL = replaceCastLong(newSQL);
-		newSQL = _replaceCastText(newSQL);
+		newSQL = _castTextTransformation.apply(newSQL);
 		newSQL = replaceCrossJoin(newSQL);
 		newSQL = replaceInStr(newSQL);
 		newSQL = replaceIntegerDivision(newSQL);
@@ -134,15 +135,16 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected DB db;
 
-	private String _replaceBoolean(String sql) {
-		return StringUtil.replace(
+	private Function<String, String> _booleanTransformation =
+		(String sql) -> StringUtil.replace(
 			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
-			new String[] {db.getTemplateFalse(), db.getTemplateTrue()});
-	}
+			new String[] {
+				db.getTemplateFalse(), db.getTemplateTrue()
+			}
+	);
 
-	private String _replaceCastText(String sql) {
-		return replaceCastText(_castTextPattern.matcher(sql));
-	}
+	private Function<String, String> _castTextTransformation = 
+		(String sql) -> replaceCastText(_castTextPattern.matcher(sql));
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSQLTransformer.class);

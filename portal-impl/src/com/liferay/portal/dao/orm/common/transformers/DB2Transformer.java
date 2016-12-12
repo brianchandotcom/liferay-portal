@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ public class DB2Transformer extends BaseSQLTransformer {
 	protected String postTransform(
 		boolean supportsStringCaseSensitiveQuery, String sql) {
 
-		sql = _replaceLike(sql);
+		sql = _likeTransformation.apply(sql);
 
 		return sql;
 	}
@@ -41,14 +42,14 @@ public class DB2Transformer extends BaseSQLTransformer {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
 	}
 
-	private String _replaceLike(String sql) {
+	private static final Pattern _likePattern = Pattern.compile(
+		"LIKE \\?", Pattern.CASE_INSENSITIVE);
+
+	private Function<String, String> _likeTransformation = (String sql) -> {
 		Matcher matcher = _likePattern.matcher(sql);
 
 		return matcher.replaceAll(
 			"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
-	}
-
-	private static final Pattern _likePattern = Pattern.compile(
-		"LIKE \\?", Pattern.CASE_INSENSITIVE);
+	};
 
 }

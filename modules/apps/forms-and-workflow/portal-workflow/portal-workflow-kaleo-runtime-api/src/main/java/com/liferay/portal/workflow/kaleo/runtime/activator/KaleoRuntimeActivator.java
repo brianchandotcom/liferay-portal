@@ -17,5 +17,5 @@ package com.liferay.portal.workflow.kaleo.runtime.activator;
 /**
  * @author Inácio Nery
  */
-public interface KaleoDefaults {
+public interface KaleoRuntimeActivator {
 }

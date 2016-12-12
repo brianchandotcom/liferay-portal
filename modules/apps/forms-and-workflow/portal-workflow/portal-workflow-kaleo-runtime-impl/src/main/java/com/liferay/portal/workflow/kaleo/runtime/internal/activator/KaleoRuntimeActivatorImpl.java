@@ -15,8 +15,8 @@
 package com.liferay.portal.workflow.kaleo.runtime.internal.activator;
 
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.workflow.kaleo.runtime.activator.KaleoDefaults;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
+import com.liferay.portal.workflow.kaleo.runtime.activator.KaleoRuntimeActivator;
 import com.liferay.portal.workflow.kaleo.runtime.internal.messaging.KaleoWorkflowMessagingConfigurator;
 import com.liferay.portal.workflow.kaleo.runtime.manager.PortalKaleoManager;
 
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class KaleoActivator implements KaleoDefaults {
+public class KaleoRuntimeActivatorImpl implements KaleoRuntimeActivator {
 
 	@Activate
 	protected void activate() throws Exception {

@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRequest
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,11 +37,26 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
+		String[] defaultDDMFormFieldParameterValues =
+			getDefaultDDMFormFieldParameterValues(
+				defaultDDMFormFieldParameterValue);
+
 		String[] parameterValues = ParamUtil.getParameterValues(
 			httpServletRequest, ddmFormFieldParameterName,
-			GetterUtil.DEFAULT_STRING_VALUES);
+			defaultDDMFormFieldParameterValues);
 
 		return jsonFactory.serialize(parameterValues);
+	}
+
+	protected String[] getDefaultDDMFormFieldParameterValues(
+		String defaultDDMFormFieldParameterValue) {
+
+		if (Validator.isNull(defaultDDMFormFieldParameterValue)) {
+			return GetterUtil.DEFAULT_STRING_VALUES;
+		}
+
+		return jsonFactory.looseDeserialize(
+			defaultDDMFormFieldParameterValue, String[].class);
 	}
 
 	@Reference

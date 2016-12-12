@@ -29,6 +29,17 @@ String title = BeanParamUtil.getString(wikiPage, request, "title");
 boolean editTitle = ParamUtil.getBoolean(request, "editTitle");
 
 String selectedFormat = BeanParamUtil.getString(wikiPage, request, "format", wikiGroupServiceOverriddenConfiguration.defaultFormat());
+
+Collection<String> formats = wikiEngineRenderer.getFormats();
+
+if (!formats.contains(selectedFormat)) {
+	Iterator<String> itr = formats.iterator();
+
+	if (itr.hasNext()) {
+		selectedFormat = itr.next();
+	}
+}
+
 String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean editable = false;
@@ -277,10 +288,6 @@ if (portletTitleBasedNavigation) {
 						</c:if>
 
 						<aui:input label="Summary" name="summary" />
-
-						<%
-						Collection<String> formats = wikiEngineRenderer.getFormats();
-						%>
 
 						<c:choose>
 							<c:when test="<%= !formats.isEmpty() %>">

@@ -364,7 +364,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		return ddmFormFieldValueRequestParameterRetriever.get(
 			httpServletRequest, sb.toString(),
-			defaultDDMFormFieldParameterValue);
+			GetterUtil.getString(defaultDDMFormFieldParameterValue));
 	}
 
 	protected String getDDMFormFieldPrefix() {

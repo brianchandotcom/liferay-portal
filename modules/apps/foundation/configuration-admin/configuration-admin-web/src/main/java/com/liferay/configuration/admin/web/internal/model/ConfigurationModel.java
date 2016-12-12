@@ -42,6 +42,11 @@ import org.osgi.service.metatype.ObjectClassDefinition;
  */
 public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
+	public static final String CONFIG_FILE_EXTENSION = ".config";
+
+	public static final String FELIX_FILEINSTALL_FILENAME =
+		"felix.fileinstall.filename";
+
 	public static final String PROPERTY_KEY_COMPANY_ID = "companyId";
 
 	public static final String PROPERTY_VALUE_COMPANY_ID_DEFAULT = "0";

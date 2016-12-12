@@ -32,8 +32,11 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -204,6 +207,30 @@ public class BindConfigurationMVCActionCommand implements MVCActionCommand {
 				configuredProperties.put(
 					ConfigurationModel.PROPERTY_KEY_COMPANY_ID,
 					ConfigurationModel.PROPERTY_VALUE_COMPANY_ID_DEFAULT);
+			}
+
+			// LPS-69521
+
+			if (configurationModel.isFactory()) {
+				String pid = configuration.getPid();
+
+				int index = pid.lastIndexOf('.');
+
+				String factoryPid = pid.substring(index + 1);
+
+				StringBundler sb = new StringBundler(7);
+
+				sb.append("file:");
+				sb.append(PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR);
+				sb.append(StringPool.SLASH);
+				sb.append(configuration.getFactoryPid());
+				sb.append(StringPool.DASH);
+				sb.append(factoryPid);
+				sb.append(ConfigurationModel.CONFIG_FILE_EXTENSION);
+
+				configuredProperties.put(
+					ConfigurationModel.FELIX_FILEINSTALL_FILENAME,
+					sb.toString());
 			}
 
 			configuration.update(configuredProperties);

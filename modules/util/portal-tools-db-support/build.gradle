@@ -1,0 +1,31 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
+buildPluginDescriptor {
+	ext {
+		autoClean = false
+	}
+
+	finalizedBy formatSource
+	finalizedBy formatXML
+
+	goalPrefix = "liferay-db-support"
+}
+
+dependencies {
+	provided group: "com.beust", name: "jcommander", version: "1.58"
+	provided group: "com.liferay", name: "com.liferay.portal.tools.service.builder", transitive: false, version: "1.0.135"
+	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
+	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+
+	testCompile group: "com.h2database", name: "h2", version: "1.4.193"
+	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
+}
+
+formatSource {
+	mustRunAfter formatXML
+}
+
+test {
+	dependsOn jar
+	systemProperty "db.support.classpath", jar.archivePath
+}

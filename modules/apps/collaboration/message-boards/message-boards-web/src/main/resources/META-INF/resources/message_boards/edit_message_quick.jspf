@@ -155,14 +155,14 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
 					</c:if>
 
-					<liferay-ui:custom-attributes-available className="<%= MBMessage.class.getName() %>">
-						<liferay-ui:custom-attribute-list
+					<liferay-expando:custom-attributes-available className="<%= MBMessage.class.getName() %>">
+						<liferay-expando:custom-attribute-list
 							className="<%= MBMessage.class.getName() %>"
 							classPK="<%= (message != null) ? message.getMessageId() : 0 %>"
 							editable="<%= true %>"
 							label="<%= true %>"
 						/>
-					</liferay-ui:custom-attributes-available>
+					</liferay-expando:custom-attributes-available>
 
 					<aui:button-row>
 

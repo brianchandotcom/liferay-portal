@@ -197,14 +197,14 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 						</div>
 					</div>
 
-					<liferay-ui:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
-						<liferay-ui:custom-attribute-list
+					<liferay-expando:custom-attributes-available className="<%= DLFolderConstants.getClassName() %>">
+						<liferay-expando:custom-attribute-list
 							className="<%= DLFolderConstants.getClassName() %>"
 							classPK="<%= (folder != null) ? folder.getFolderId() : 0 %>"
 							editable="<%= false %>"
 							label="<%= true %>"
 						/>
-					</liferay-ui:custom-attributes-available>
+					</liferay-expando:custom-attributes-available>
 				</c:if>
 
 				<liferay-util:include page="/image_gallery_display/view_images.jsp" servletContext="<%= application %>" />

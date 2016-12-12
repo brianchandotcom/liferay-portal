@@ -20,7 +20,7 @@
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 %>
 
-<liferay-ui:custom-attribute-list
+<liferay-expando:custom-attribute-list
 	className="<%= Group.class.getName() %>"
 	classPK="<%= (liveGroup != null) ? liveGroup.getGroupId() : 0 %>"
 	editable="<%= true %>"

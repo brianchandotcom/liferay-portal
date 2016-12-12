@@ -156,16 +156,16 @@ if (portletTitleBasedNavigation) {
 					<aui:input name="description" />
 				</aui:fieldset>
 
-				<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+				<liferay-expando:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-						<liferay-ui:custom-attribute-list
+						<liferay-expando:custom-attribute-list
 							className="<%= BookmarksEntry.class.getName() %>"
 							classPK="<%= entryId %>"
 							editable="<%= true %>"
 							label="<%= true %>"
 						/>
 					</aui:fieldset>
-				</liferay-ui:custom-attributes-available>
+				</liferay-expando:custom-attributes-available>
 
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 					<liferay-asset:asset-categories-selector className="<%= BookmarksEntry.class.getName() %>" classPK="<%= entryId %>" />

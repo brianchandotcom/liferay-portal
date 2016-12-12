@@ -1,5 +1,4 @@
 <definition component-name="portal-plugins-osgi">
-	<property name="plugins.deployment.type" value="osgi" />
 	<property name="portal.release" value="false" />
 	<property name="testray.main.component.name" value="User Interface" />
 
@@ -16,10 +15,6 @@
 	</tear-down>
 
 	<command name="WYSIWYGPortletSmoke" priority="4">
-		<property name="portlet.plugins.includes" value="wysiwyg-portlet" />
-
-		<var name="appName" value="WYSIWYG" />
-
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Test Page" />
 		</execute>
@@ -27,7 +22,5 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="WYSIWYG" />
 		</execute>
-
-		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=wysiwyg-portlet" />
 	</command>
 </definition>

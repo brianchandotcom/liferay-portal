@@ -94,7 +94,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(
 	configurationPid = "com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration",
-	immediate = true, service = SchedulerEngineHelper.class
+	enabled = false, immediate = true, service = SchedulerEngineHelper.class
 )
 public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 

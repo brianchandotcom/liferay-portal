@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	property = {"verify.process.name=com.liferay.portal.scheduler.internal.verify"},
 	service = VerifyProcess.class
 )

@@ -384,6 +384,10 @@ body {
 		padding-left: 10px;
 	}
 
+	.layout-tree-options.open > a {
+		background-color: transparent;
+	}
+
 	.layout-set-tabs {
 		.selected-layout-set {
 			.layout-set-link, .icon-monospaced {

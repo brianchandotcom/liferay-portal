@@ -93,7 +93,7 @@
 			<execute macro="Page#add">
 				<var name="pageName" value="${sitePageName}" />
 				<var name="siteName" value="Organization Name" />
-				<var name="sitePagePrivacy" value="Private Pages" />
+				<var name="sitePagePrivacy" value="Private" />
 			</execute>
 		</for>
 

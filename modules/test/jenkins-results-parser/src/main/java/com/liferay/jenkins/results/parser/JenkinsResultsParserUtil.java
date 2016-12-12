@@ -24,11 +24,13 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
@@ -762,6 +764,23 @@ public class JenkinsResultsParserUtil {
 				URL urlObject = new URL(url);
 
 				URLConnection urlConnection = urlObject.openConnection();
+
+				if (url.startsWith("https://api.github.com")) {
+					HttpURLConnection httpURLConnection =
+						(HttpURLConnection)urlConnection;
+
+					httpURLConnection.setRequestMethod("GET");
+
+					Properties buildProperties = getBuildProperties();
+
+					httpURLConnection.setRequestProperty(
+						"Authorization",
+						"token " +
+							buildProperties.getProperty("github.access.token"));
+
+					httpURLConnection.setRequestProperty(
+						"Content-Type", "application/json");
+				}
 
 				if (timeout != 0) {
 					urlConnection.setConnectTimeout(timeout);

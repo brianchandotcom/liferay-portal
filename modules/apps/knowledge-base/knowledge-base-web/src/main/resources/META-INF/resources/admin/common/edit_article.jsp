@@ -186,6 +186,17 @@ if (portletTitleBasedNavigation) {
 					</div>
 				</aui:fieldset>
 
+				<liferay-ui:custom-attributes-available className="<%= KBArticle.class.getName() %>">
+					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
+						<liferay-ui:custom-attribute-list
+							className="<%= KBArticle.class.getName() %>"
+							classPK="<%= (kbArticle != null) ? kbArticle.getKbArticleId() : 0 %>"
+							editable="<%= true %>"
+							label="<%= true %>"
+						/>
+					</aui:fieldset>
+				</liferay-ui:custom-attributes-available>
+
 				<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="categorization">
 					<liferay-asset:asset-categories-selector className="<%= KBArticle.class.getName() %>" classPK="<%= (kbArticle != null) ? kbArticle.getClassPK() : 0 %>" />
 

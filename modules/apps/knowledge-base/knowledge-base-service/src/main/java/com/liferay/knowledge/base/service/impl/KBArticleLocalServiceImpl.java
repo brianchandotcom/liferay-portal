@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
+import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBArticleConstants;
@@ -191,6 +192,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		kbArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
 		kbArticle.setSourceURL(sourceURL);
 
+		kbArticle.setExpandoBridgeAttributes(serviceContext);
+
 		kbArticlePersistence.update(kbArticle);
 
 		// Resources
@@ -360,6 +363,10 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		// Asset
 
 		deleteAssets(kbArticle);
+
+		// Expando
+
+		expandoRowLocalService.deleteRows(kbArticle.getKbArticleId());
 
 		// Ratings
 
@@ -1022,6 +1029,11 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 		KBArticle kbArticle = kbArticleLocalService.getKBArticle(
 			resourcePrimKey, version);
 
+		ExpandoBridge expandoBridge = kbArticle.getExpandoBridge();
+
+		serviceContext.setExpandoBridgeAttributes(
+			expandoBridge.getAttributes());
+
 		return updateKBArticle(
 			userId, resourcePrimKey, kbArticle.getTitle(),
 			kbArticle.getContent(), kbArticle.getDescription(),
@@ -1139,6 +1151,8 @@ public class KBArticleLocalServiceImpl extends KBArticleLocalServiceBaseImpl {
 			StringUtil.merge(AdminUtil.escapeSections(sections)));
 		kbArticle.setLatest(true);
 		kbArticle.setMain(false);
+
+		kbArticle.setExpandoBridgeAttributes(serviceContext);
 
 		kbArticlePersistence.update(kbArticle);
 

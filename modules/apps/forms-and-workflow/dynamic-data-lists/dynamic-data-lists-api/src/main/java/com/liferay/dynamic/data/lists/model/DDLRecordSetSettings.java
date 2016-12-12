@@ -116,7 +116,7 @@ public interface DDLRecordSetSettings {
 	public boolean sendEmailNotification();
 
 	@DDMFormField(
-		label = "%select-a-storage-type",
+		label = "%select-a-storage-type", predefinedValue = "[\"json\"]",
 		properties = {
 			"dataSourceType=data-provider",
 			"ddmDataProviderInstanceId=ddm-storage-types"

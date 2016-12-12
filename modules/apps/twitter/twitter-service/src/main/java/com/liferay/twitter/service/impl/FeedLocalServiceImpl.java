@@ -38,6 +38,9 @@ import com.liferay.twitter.util.TimelineProcessorUtil;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -162,10 +165,40 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 
 				extraDataJSONObject.put("text", text);
 
-				socialActivityLocalService.addActivity(
+				int tries = _TWEET_CREATE_DATE_RETRY_LIMIT;
+
+				int count = socialActivityLocalService.getActivitiesCount(
 					user.getUserId(), 0, createDate, Feed.class.getName(),
-					statusId, TwitterActivityKeys.ADD_STATUS,
-					extraDataJSONObject.toString(), 0);
+					statusId, TwitterActivityKeys.ADD_STATUS, 0);
+
+				while ((tries > 0) && (count > 0)) {
+					Instant createInstant = createDate.toInstant();
+
+					Instant adjustedCreateInstant = createInstant.plus(
+						1, ChronoUnit.MINUTES);
+
+					createDate = Date.from(adjustedCreateInstant);
+
+					tries--;
+
+					count = socialActivityLocalService.getActivitiesCount(
+						user.getUserId(), 0, createDate, Feed.class.getName(),
+						statusId, TwitterActivityKeys.ADD_STATUS, 0);
+				}
+
+				if (tries == 0) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Couldn't create social activity for tweet due " +
+								"to createDate collision");
+					}
+				}
+				else {
+					socialActivityLocalService.addActivity(
+						user.getUserId(), 0, createDate, Feed.class.getName(),
+						statusId, TwitterActivityKeys.ADD_STATUS,
+						extraDataJSONObject.toString(), 0);
+				}
 			}
 		}
 		finally {
@@ -174,6 +207,8 @@ public class FeedLocalServiceImpl extends FeedLocalServiceBaseImpl {
 			feedPersistence.update(feed);
 		}
 	}
+
+	private static final int _TWEET_CREATE_DATE_RETRY_LIMIT = 10;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeedLocalServiceImpl.class);

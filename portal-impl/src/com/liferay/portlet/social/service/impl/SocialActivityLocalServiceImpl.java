@@ -599,6 +599,18 @@ public class SocialActivityLocalServiceImpl
 		return socialActivityPersistence.countByClassNameId(classNameId);
 	}
 
+	@Override
+	public int getActivitiesCount(
+		long userId, long groupId, Date createDate, String className,
+		long classPK, int type, long receiverUserId) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return socialActivityPersistence.countByG_U_CD_C_C_T_R(
+			groupId, userId, createDate.getTime(), classNameId, classPK, type,
+			receiverUserId);
+	}
+
 	/**
 	 * Returns the number of activities done on the asset identified by the
 	 * class name ID and class primary key that are mirrors of the activity

@@ -215,6 +215,10 @@ public interface SocialActivityLocalService extends BaseLocalService,
 	public int getActivitiesCount(long mirrorActivityId, long classNameId,
 		long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getActivitiesCount(long userId, long groupId, Date createDate,
+		java.lang.String className, long classPK, int type, long receiverUserId);
+
 	/**
 	* Returns the number of activities done in the group.
 	*

@@ -224,6 +224,14 @@ public class SocialActivityLocalServiceUtil {
 				   .getActivitiesCount(mirrorActivityId, classNameId, classPK);
 	}
 
+	public static int getActivitiesCount(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, long receiverUserId) {
+		return getService()
+				   .getActivitiesCount(userId, groupId, createDate, className,
+			classPK, type, receiverUserId);
+	}
+
 	/**
 	* Returns the number of activities done in the group.
 	*

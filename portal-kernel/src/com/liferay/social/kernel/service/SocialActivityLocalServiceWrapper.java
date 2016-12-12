@@ -238,6 +238,14 @@ public class SocialActivityLocalServiceWrapper
 			classNameId, classPK);
 	}
 
+	@Override
+	public int getActivitiesCount(long userId, long groupId,
+		java.util.Date createDate, java.lang.String className, long classPK,
+		int type, long receiverUserId) {
+		return _socialActivityLocalService.getActivitiesCount(userId, groupId,
+			createDate, className, classPK, type, receiverUserId);
+	}
+
 	/**
 	* Returns the number of activities done in the group.
 	*

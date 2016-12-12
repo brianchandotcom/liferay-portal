@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
-import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialActivityInterpreter;
 import com.liferay.social.kernel.model.SocialActivity;
 import com.liferay.social.kernel.model.SocialActivityInterpreter;
+import com.liferay.twitter.constants.TwitterPortletKeys;
 import com.liferay.twitter.model.Feed;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,12 +39,27 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  * @author Peter Fellwock
  */
-@Component(immediate = true, service = SocialActivityInterpreter.class)
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + TwitterPortletKeys.TWITTER},
+	service = SocialActivityInterpreter.class
+)
 public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
+	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.twitter.web)", unbind = "-"
+	)
+	public void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		_resourceBundleLoader = new AggregateResourceBundleLoader(
+			resourceBundleLoader,
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}
 
 	@Override
@@ -116,11 +131,7 @@ public class TwitterActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private static final String[] _CLASS_NAMES = {Feed.class.getName()};
 
-	private final ResourceBundleLoader _resourceBundleLoader =
-		new AggregateResourceBundleLoader(
-			new ClassResourceBundleLoader(
-				"content.Language", TwitterActivityInterpreter.class),
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+	private ResourceBundleLoader _resourceBundleLoader;
 	private UserLocalService _userLocalService;
 
 }

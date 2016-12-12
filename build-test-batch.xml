@@ -1330,12 +1330,6 @@ app.server.type=@{app.server.type}]]></echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-source-formatter">
-		<sequential>
-			<gradle-execute dir="modules/util/source-formatter" task="test" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="setup-lpkg-test">
 		<attribute name="database.type" />
 
@@ -1949,13 +1943,6 @@ ${output.content}</echo>
 						<ant dir="portal-web" target="compile-tomcat" />
 
 						<run-poshi-validation />
-
-						<if>
-							<equals arg1="${env.TEST_PORTAL_WEB}" arg2="true" />
-							<then>
-								<run-source-formatter />
-							</then>
-						</if>
 					</test-action>
 				</database-test-run-test>
 			</test-action>

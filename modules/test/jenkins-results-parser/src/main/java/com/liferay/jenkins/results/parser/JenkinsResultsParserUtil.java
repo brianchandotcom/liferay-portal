@@ -39,6 +39,7 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -355,17 +356,20 @@ public class JenkinsResultsParserUtil {
 	public static Properties getBuildProperties() throws IOException {
 		Properties properties = new Properties();
 
-		String url =
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-				"/liferay-jenkins-ee/build.properties";
+		if ((_buildProperties != null) && !_buildProperties.isEmpty()) {
+			properties.putAll(_buildProperties);
 
-		properties.load(new StringReader(toString(getLocalURL(url), false)));
+			return properties;
+		}
 
-		url =
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-				"/liferay-jenkins-ee/commands/build.properties";
+		if (_buildPropertiesURLs == null) {
+			_buildPropertiesURLs = DEFAULT_BUILD_PROPERTIES_URLS;
+		}
 
-		properties.load(new StringReader(toString(getLocalURL(url), false)));
+		for (String url : _buildPropertiesURLs) {
+			properties.load(
+				new StringReader(toString(getLocalURL(url), false)));
+		}
 
 		return properties;
 	}
@@ -633,6 +637,18 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void setBuildProperties(Hashtable<?, ?> buildProperties) {
+		_buildPropertiesURLs = null;
+
+		_buildProperties = buildProperties;
+	}
+
+	public static void setBuildProperties(String... urls) {
+		_buildProperties = null;
+
+		_buildPropertiesURLs = urls;
+	}
+
 	public static void sleep(long duration) {
 		try {
 			Thread.sleep(duration);
@@ -857,6 +873,19 @@ public class JenkinsResultsParserUtil {
 		write(new File(path), content);
 	}
 
+	public static final String[] DEFAULT_BUILD_PROPERTIES_URLS = {
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/commands/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/ci.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/test.properties"
+	};
+
 	protected static final String DEPENDENCIES_URL_FILE;
 
 	protected static final String DEPENDENCIES_URL_HTTP =
@@ -901,6 +930,10 @@ public class JenkinsResultsParserUtil {
 
 		return duration;
 	}
+
+	private static Hashtable<?, ?> _buildProperties;
+
+	private static String[] _buildPropertiesURLs;
 
 	private static final int _MAX_RETRIES_DEFAULT = 3;
 

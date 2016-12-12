@@ -43,6 +43,7 @@ import javax.portlet.PortletRequest;
  * <li>
  * <code>type</code> - the type of entry that was moved to the Recycle Bin
  * </li>
+ * </ul>
  *
  * @author Sergio González
  */

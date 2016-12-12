@@ -16,6 +16,7 @@ package com.liferay.portal.dao.orm.common.transformers;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
@@ -27,8 +28,8 @@ public class OracleTransformer extends BaseSQLTransformer {
 	protected String postTransform(
 		boolean supportsStringCaseSensitiveQuery, String sql) {
 
-		sql = _replaceEscape(sql);
-		sql = _replaceNotEqualsBlankStringComparison(sql);
+		sql = _escapeTransformation.apply(sql);
+		sql = _notEqualsBlankStringTransformation.apply(sql);
 
 		return sql;
 	}
@@ -57,12 +58,10 @@ public class OracleTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("TRUNC($1 / $2)");
 	}
 
-	private String _replaceEscape(String sql) {
-		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
-	}
+	private Function<String, String> _escapeTransformation =
+		(String sql) -> StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 
-	private String _replaceNotEqualsBlankStringComparison(String sql) {
-		return StringUtil.replace(sql, " != ''", " IS NOT NULL");
-	}
+	private Function<String, String> _notEqualsBlankStringTransformation =
+		(String sql) -> StringUtil.replace(sql, " != ''", " IS NOT NULL");
 
 }

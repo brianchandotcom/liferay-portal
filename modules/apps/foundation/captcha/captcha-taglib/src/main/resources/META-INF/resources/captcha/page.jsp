@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,21 +12,8 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.captcha.simplecaptcha;
+<%@ include file="/captcha/init.jsp" %>
 
-import com.liferay.portal.kernel.words.WordsUtil;
-
-import nl.captcha.text.producer.TextProducer;
-
-/**
- * @author Brian Wing Shun Chan
- */
-public class DictionaryWordTextProducer implements TextProducer {
-
-	@Override
-	public String getText() {
-		return WordsUtil.getRandomWord();
-	}
-
-}
+<liferay-util:include page="<%= CaptchaUtil.getTaglibPath() %>" servletContext="<%= application %>" />

@@ -20,8 +20,12 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -63,6 +67,35 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 			new DummyUpgradeStep());
 
 		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				try (PreparedStatement ps1 = connection.prepareStatement(
+						"select P1.portletPreferencesId from " +
+							"PortletPreferences P1 inner join " +
+								"PortletPreferences P2 on P1.plid = P2.plid " +
+									"where P1.portletId = " +
+										"'1_WAR_soannouncementsportlet' and " +
+											"P2.portletId = '84'");
+					PreparedStatement ps2 =
+						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+							connection,
+							"delete from PortletPreferences where " +
+								"portletPreferencesId = ?")) {
+
+					ResultSet rs = ps1.executeQuery();
+
+					while (rs.next()) {
+						ps2.setLong(1, rs.getLong(1));
+
+						ps2.addBatch();
+					}
+
+					ps2.executeBatch();
+				}
+
+				super.doUpgrade();
+			}
 
 			@Override
 			protected String[][] getRenamePortletIdsArray() {

@@ -111,6 +111,42 @@ public class DDMFormInstanceFactoryTest {
 	}
 
 	@Test
+	public void testCreateDynamicFormWithPrimitiveArrayTypes() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DynamicFormWithPrimitiveArrayTypes.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		Boolean[] expectedBooleanValues = {true, false, true};
+
+		for (boolean expectedBooleanValue : expectedBooleanValues) {
+			ddmFormValues.addDDMFormFieldValue(
+				DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+					"boolean", Boolean.toString(expectedBooleanValue)));
+		}
+
+		String[] expectedStringValues = {"Nina Simone", "Billie Holiday"};
+
+		for (String expectedStringValue : expectedStringValues) {
+			ddmFormValues.addDDMFormFieldValue(
+				DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+					"string", expectedStringValue));
+		}
+
+		DynamicFormWithPrimitiveArrayTypes dynamicFormWithPrimitiveArrayTypes =
+			DDMFormInstanceFactory.create(
+				DynamicFormWithPrimitiveArrayTypes.class, ddmFormValues);
+
+		Assert.assertArrayEquals(
+			expectedBooleanValues,
+			dynamicFormWithPrimitiveArrayTypes.booleanValues());
+		Assert.assertArrayEquals(
+			expectedStringValues,
+			dynamicFormWithPrimitiveArrayTypes.stringValues());
+	}
+
+	@Test
 	public void testCreateDynamicFormWithPrimitiveArrayTypesFieldSet() {
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
 			DDMFormFactory.create(
@@ -188,6 +224,78 @@ public class DDMFormInstanceFactoryTest {
 		Assert.assertArrayEquals(
 			new String[] {"C", "D", "E"},
 			dynamicFormWithPrimitiveArrayTypes[1].stringValues());
+	}
+
+	@Test
+	public void testCreateDynamicFormWithPrimitiveTypes() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DynamicFormWithPrimitiveTypes.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		boolean expectedBooleanValue = true;
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"boolean", Boolean.toString(expectedBooleanValue)));
+
+		double expectedDoubleValue = 2.5d;
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"double", Double.toString(expectedDoubleValue)));
+
+		float expectedFloatValue = 3.5f;
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"float", Float.toString(expectedFloatValue)));
+
+		int expectedIntegerValue = 2015;
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"integer", Integer.toString(expectedIntegerValue)));
+
+		long expectedLongValue = 1000L;
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"long", Long.toString(expectedLongValue)));
+
+		short expectedShortValue = 5;
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"short", Short.toString(expectedShortValue)));
+
+		String expectedStringValue = "Frank Sinatra";
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"string", expectedStringValue));
+
+		DynamicFormWithPrimitiveTypes dynamicFormWithPrimitiveTypes =
+			DDMFormInstanceFactory.create(
+				DynamicFormWithPrimitiveTypes.class, ddmFormValues);
+
+		Assert.assertEquals(
+			expectedBooleanValue, dynamicFormWithPrimitiveTypes.booleanValue());
+		Assert.assertEquals(
+			expectedDoubleValue, dynamicFormWithPrimitiveTypes.doubleValue(),
+			0.1);
+		Assert.assertEquals(
+			expectedFloatValue, dynamicFormWithPrimitiveTypes.floatValue(),
+			0.1);
+		Assert.assertEquals(
+			expectedIntegerValue, dynamicFormWithPrimitiveTypes.integerValue());
+		Assert.assertEquals(
+			expectedLongValue, dynamicFormWithPrimitiveTypes.longValue());
+		Assert.assertEquals(
+			expectedShortValue, dynamicFormWithPrimitiveTypes.shortValue());
+		Assert.assertEquals(
+			expectedStringValue, dynamicFormWithPrimitiveTypes.stringValue());
 	}
 
 	@Test

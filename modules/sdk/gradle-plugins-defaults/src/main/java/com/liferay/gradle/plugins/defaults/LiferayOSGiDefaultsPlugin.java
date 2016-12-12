@@ -1996,7 +1996,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		boolean remoteServices = false;
 
 		try {
-			remoteServices = _hasRemoteServices(buildWSDDTask.getInputFile());
+			remoteServices = _hasRemoteServices(buildWSDDTask);
 		}
 		catch (Exception e) {
 			throw new GradleException(
@@ -2902,7 +2902,15 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		return versions;
 	}
 
-	private boolean _hasRemoteServices(File serviceXmlFile) throws Exception {
+	private boolean _hasRemoteServices(BuildWSDDTask buildWSDDTask)
+		throws Exception {
+
+		if (FileUtil.exists(buildWSDDTask.getProject(), "server-config.wsdd")) {
+			return true;
+		}
+
+		File serviceXmlFile = buildWSDDTask.getInputFile();
+
 		if (!serviceXmlFile.exists()) {
 			return false;
 		}

@@ -118,7 +118,7 @@
 
 	<command name="addMemberCP">
 		<execute macro="Organization#gotoCP">
-			<var name="orgName" value="Organization Name" />
+			<var name="orgName" value="${orgName}" />
 			<var name="searchToken" value="Organization" />
 		</execute>
 

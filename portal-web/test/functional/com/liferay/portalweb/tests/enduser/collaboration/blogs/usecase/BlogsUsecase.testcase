@@ -1726,7 +1726,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewBlogsEntryWithCustomAbstract" priority="4">
+	<command name="ViewBlogsEntryWithCustomAbstract" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -1794,7 +1794,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
+	<command name="ViewBlogsEntryWithFutureDisplayDateViaBlogsAggregator" priority="3">
 		<execute macro="Page#add">
 			<var name="pageName" value="Blogs Aggregator Page" />
 		</execute>

@@ -1860,7 +1860,7 @@ public class ExpandoValueLocalServiceImpl
 
 		String string = (String)object;
 
-		if (string.startsWith(StringPool.OPEN_BRACKET) &&
+		if (isTypeArray(type) && string.startsWith(StringPool.OPEN_BRACKET) &&
 			string.endsWith(StringPool.CLOSE_BRACKET)) {
 
 			string = string.substring(1, string.length() - 1);

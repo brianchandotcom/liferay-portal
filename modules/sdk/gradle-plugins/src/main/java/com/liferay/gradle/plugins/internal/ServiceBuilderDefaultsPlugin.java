@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins.internal;
 
 import com.liferay.gradle.plugins.BasePortalToolDefaultsPlugin;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
+import com.liferay.gradle.plugins.db.support.DBSupportPlugin;
+import com.liferay.gradle.plugins.db.support.tasks.CleanServiceBuilderTask;
 import com.liferay.gradle.plugins.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
@@ -52,7 +54,14 @@ public class ServiceBuilderDefaultsPlugin
 
 		super.configureDefaults(project, serviceBuilderPlugin);
 
+		BuildServiceTask buildServiceTask =
+			(BuildServiceTask)GradleUtil.getTask(
+				project, ServiceBuilderPlugin.BUILD_SERVICE_TASK_NAME);
+
+		GradleUtil.applyPlugin(project, DBSupportPlugin.class);
+
 		_addTaskBuildDB(project);
+		_configureTaskCleanServiceBuilder(buildServiceTask);
 
 		GradleUtil.withPlugin(
 			project, LiferayBasePlugin.class,
@@ -138,6 +147,25 @@ public class ServiceBuilderDefaultsPlugin
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setOsgiModule(true);
+	}
+
+	private void _configureTaskCleanServiceBuilder(
+		final BuildServiceTask buildServiceTask) {
+
+		CleanServiceBuilderTask cleanServiceBuilderTask =
+			(CleanServiceBuilderTask)GradleUtil.getTask(
+				buildServiceTask.getProject(),
+				DBSupportPlugin.CLEAN_SERVICE_BUILDER_TASK_NAME);
+
+		cleanServiceBuilderTask.setServiceXmlFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return buildServiceTask.getInputFile();
+				}
+
+			});
 	}
 
 	private void _configureTasksBuildDB(

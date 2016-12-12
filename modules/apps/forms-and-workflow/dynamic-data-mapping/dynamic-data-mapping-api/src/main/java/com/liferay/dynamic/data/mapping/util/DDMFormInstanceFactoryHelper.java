@@ -32,8 +32,10 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * @author Marcellus Tavares
+ * @author     Marcellus Tavares
+ * @deprecated As of 3.5.0, with no direct replacement
  */
+@Deprecated
 public class DDMFormInstanceFactoryHelper {
 
 	public DDMFormInstanceFactoryHelper(

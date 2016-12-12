@@ -95,12 +95,7 @@ public class AllSitesItemSelectorViewDisplayContext
 			request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		if (groupId > 0) {
-			try {
-				return GroupLocalServiceUtil.getGroup(groupId);
-			}
-			catch (PortalException pe) {
-				_log.error("Unable to obtain group " + groupId, pe);
-			}
+			return GroupLocalServiceUtil.fetchGroup(groupId);
 		}
 
 		return null;

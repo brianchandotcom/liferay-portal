@@ -1621,6 +1621,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			return;
 		}
 
+		File dir = new File(
+			portalRootDir, "tools/sdk/dependencies/" + portalToolName + "/lib");
+
+		if (!dir.exists()) {
+			Logger logger = project.getLogger();
+
+			if (logger.isWarnEnabled()) {
+				logger.warn(
+					"Unable to find {}, using default version of {}", dir,
+					portalToolName);
+			}
+
+			return;
+		}
+
 		Configuration configuration = GradleUtil.getConfiguration(
 			project, configurationName);
 
@@ -1630,9 +1645,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		args.put("module", portalToolName);
 
 		configuration.exclude(args);
-
-		File dir = new File(
-			portalRootDir, "tools/sdk/dependencies/" + portalToolName + "/lib");
 
 		FileTree fileTree = FileUtil.getJarsFileTree(project, dir);
 

@@ -29,7 +29,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
 
@@ -483,6 +482,15 @@ public class JenkinsResultsParserUtil {
 		return masters;
 	}
 
+	public static String getNounForm(
+		int count, String plural, String singular) {
+		if (count == 1) {
+			return singular;
+		}
+
+		return plural;
+	}
+
 	public static List<String> getRandomList(List<String> list, int size) {
 		if (list.size() < size) {
 			throw new IllegalStateException(
@@ -630,6 +638,31 @@ public class JenkinsResultsParserUtil {
 		catch (InterruptedException ie) {
 			throw new RuntimeException(ie);
 		}
+	}
+
+	public static String toDurationString(long duration) {
+		StringBuilder sb = new StringBuilder();
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_DAY, sb, "day", "days");
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_HOUR, sb, "hour", "hours");
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_MINUTE, sb, "minute", "minutes");
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_SECOND, sb, "second", "seconds");
+
+		String durationString = sb.toString();
+
+		if (durationString.endsWith(" ")) {
+			durationString = durationString.substring(
+				0, durationString.length() - 1);
+		}
+
+		return durationString;
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
@@ -826,7 +859,39 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	private static long _appendDurationStringForUnit(
+		long duration, long millisInUnit, StringBuilder sb,
+		String unitDescriptionSingular, String unitDescriptionPlural) {
+
+		if (duration >= millisInUnit) {
+			long units = duration / millisInUnit;
+
+			sb.append(units);
+
+			sb.append(" ");
+
+			sb.append(
+				getNounForm(
+					(int)units, unitDescriptionPlural,
+					unitDescriptionSingular));
+
+			sb.append(" ");
+
+			return duration % millisInUnit;
+		}
+
+		return duration;
+	}
+
 	private static final int _MAX_RETRIES_DEFAULT = 3;
+
+	private static final long _MILLIS_IN_DAY = 24L * 60L * 60L * 1000L;
+
+	private static final long _MILLIS_IN_HOUR = 60L * 60L * 1000L;
+
+	private static final long _MILLIS_IN_MINUTE = 60L * 1000L;
+
+	private static final long _MILLIS_IN_SECOND = 1000L;
 
 	private static final int _RETRY_PERIOD_DEFAULT = 5;
 

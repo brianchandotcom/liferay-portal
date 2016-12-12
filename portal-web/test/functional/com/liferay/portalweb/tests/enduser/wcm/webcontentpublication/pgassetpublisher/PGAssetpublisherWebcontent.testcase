@@ -625,16 +625,6 @@
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Tags" />
-		</execute>
-
-		<execute macro="Tag#addCP">
-			<var name="tagName" value="tag name" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Web Content" />
 		</execute>
 

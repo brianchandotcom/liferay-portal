@@ -16,6 +16,7 @@ package com.liferay.portal.dao.orm.common.transformers;
 
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +29,7 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 	protected String postTransform(
 		boolean supportsStringCaseSensitiveQuery, String sql) {
 
-		sql = _replaceNegativeComparison(sql);
+		sql = _negativeComparisonTransformation.apply(sql);
 
 		return sql;
 	}
@@ -51,13 +52,14 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 	}
 
-	private String _replaceNegativeComparison(String sql) {
-		Matcher matcher = _negativeComparisonPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 ($2)");
-	}
-
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(
 		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
+
+	private Function<String, String> _negativeComparisonTransformation =
+		(String sql) ->  {
+			Matcher matcher = _negativeComparisonPattern.matcher(sql);
+
+			return matcher.replaceAll("$1 ($2)");
+		};
 
 }

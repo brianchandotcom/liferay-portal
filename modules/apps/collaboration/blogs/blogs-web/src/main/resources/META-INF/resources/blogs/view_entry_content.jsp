@@ -167,14 +167,14 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 							<%= entry.getContent() %>
 						</div>
 
-						<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-							<liferay-ui:custom-attribute-list
+						<liferay-custom-field-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+							<liferay-custom-field-ui:custom-attribute-list
 								className="<%= BlogsEntry.class.getName() %>"
 								classPK="<%= entry.getEntryId() %>"
 								editable="<%= false %>"
 								label="<%= true %>"
 							/>
-						</liferay-ui:custom-attributes-available>
+						</liferay-custom-field-ui:custom-attributes-available>
 					</c:when>
 				</c:choose>
 			</div>

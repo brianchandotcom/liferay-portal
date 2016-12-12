@@ -55,13 +55,13 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 
 		<%= entry.getContent() %>
 
-		<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-			<liferay-ui:custom-attribute-list
+		<liferay-custom-field-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+			<liferay-custom-field-ui:custom-attribute-list
 				className="<%= BlogsEntry.class.getName() %>"
 				classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
 				editable="<%= false %>"
 				label="<%= true %>"
 			/>
-		</liferay-ui:custom-attributes-available>
+		</liferay-custom-field-ui:custom-attributes-available>
 	</div>
 </div>

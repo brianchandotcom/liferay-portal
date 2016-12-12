@@ -173,14 +173,14 @@ if (ListUtil.isEmpty(folders) && ListUtil.isEmpty(entries)) {
 				classPK="<%= entry.getEntryId() %>"
 			/>
 
-			<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
-				<liferay-ui:custom-attribute-list
+			<liferay-custom-field-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+				<liferay-custom-field-ui:custom-attribute-list
 					className="<%= BookmarksEntry.class.getName() %>"
 					classPK="<%= entry.getEntryId() %>"
 					editable="<%= false %>"
 					label="<%= true %>"
 				/>
-			</liferay-ui:custom-attributes-available>
+			</liferay-custom-field-ui:custom-attributes-available>
 
 			<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.enableRelatedAssets() %>">
 

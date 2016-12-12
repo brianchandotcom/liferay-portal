@@ -219,14 +219,14 @@ else {
 				</liferay-ui:panel>
 			</c:if>
 
-			<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
-				<liferay-ui:custom-attribute-list
+			<liferay-custom-field-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>">
+				<liferay-custom-field-ui:custom-attribute-list
 					className="<%= DLFileEntryConstants.getClassName() %>"
 					classPK="<%= fileVersionId %>"
 					editable="<%= true %>"
 					label="<%= true %>"
 				/>
-			</liferay-ui:custom-attributes-available>
+			</liferay-custom-field-ui:custom-attributes-available>
 		</c:if>
 
 		<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">

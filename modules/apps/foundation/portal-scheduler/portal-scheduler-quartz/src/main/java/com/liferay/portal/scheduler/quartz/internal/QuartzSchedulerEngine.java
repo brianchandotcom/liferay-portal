@@ -78,7 +78,7 @@ import org.quartz.impl.matchers.GroupMatcher;
  * @author Edward C. Han
  */
 @Component(
-	immediate = true,
+	enabled = false, immediate = true,
 	service = {QuartzSchedulerEngine.class, SchedulerEngine.class}
 )
 public class QuartzSchedulerEngine implements SchedulerEngine {

@@ -36,7 +36,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(immediate = true, service = QuartzSchemaManager.class)
+@Component(
+	enabled = false, immediate = true, service = QuartzSchemaManager.class
+)
 public class QuartzSchemaManager {
 
 	@Activate

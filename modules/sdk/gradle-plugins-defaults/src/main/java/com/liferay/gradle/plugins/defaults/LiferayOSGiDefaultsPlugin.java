@@ -43,6 +43,7 @@ import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
+import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.test.integration.TestIntegrationBasePlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.TLDDocBuilderPlugin;
 import com.liferay.gradle.plugins.tlddoc.builder.tasks.TLDDocTask;
@@ -339,6 +340,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureConfigurations(project);
 		_configureDeployDir(project, deployToAppServerLibs, deployToTools);
 		_configureJavaPlugin(project);
+		_configureLocalPortalTool(
+			project, portalRootDir, SourceFormatterPlugin.CONFIGURATION_NAME,
+			_SOURCE_FORMATTER_PORTAL_TOOL_NAME);
 		_configurePmd(project, portalRootDir);
 		_configureProject(project);
 		configureRepositories(project);
@@ -3119,6 +3123,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private static final String _SERVICE_BUILDER_PORTAL_TOOL_NAME =
 		"com.liferay.portal.tools.service.builder";
+
+	private static final String _SOURCE_FORMATTER_PORTAL_TOOL_NAME =
+		"com.liferay.source.formatter";
 
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();

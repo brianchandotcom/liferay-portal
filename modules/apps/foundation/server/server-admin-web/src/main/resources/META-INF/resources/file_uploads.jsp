@@ -43,16 +43,6 @@
 				<aui:input cssClass="lfr-input-text-container" label="allowed-file-extensions" name="journalImageExtensions" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.JOURNAL_IMAGE_EXTENSIONS) %>" />
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminShoppingCartImagesPanel" markupView="lexicon" persistState="<%= true %>" title="shopping-cart-images">
-				<aui:input cssClass="lfr-input-text-container" label='<%= LanguageUtil.get(request, "maximum-file-size") + "(" + LanguageUtil.get(request, "large-image") + ")" %>' name="shoppingImageLargeMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.SHOPPING_IMAGE_LARGE_MAX_SIZE) %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label='<%= LanguageUtil.get(request, "maximum-file-size") + "(" + LanguageUtil.get(request, "medium-image") + ")" %>' name="shoppingImageMediumMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.SHOPPING_IMAGE_MEDIUM_MAX_SIZE) %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label='<%= LanguageUtil.get(request, "maximum-file-size") + "(" + LanguageUtil.get(request, "small-image") + ")" %>' name="shoppingImageSmallMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.SHOPPING_IMAGE_SMALL_MAX_SIZE) %>" />
-
-				<aui:input cssClass="lfr-input-text-container" label="allowed-file-extensions" name="shoppingImageExtensions" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.SHOPPING_IMAGE_EXTENSIONS) %>" />
-			</liferay-ui:panel>
-
 			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="adminUserImagesPanel" markupView="lexicon" persistState="<%= true %>" title="user-images">
 				<aui:input cssClass="lfr-input-text-container" label="maximum-file-size" name="usersImageMaxSize" type="text" value="<%= PrefsPropsUtil.getLong(PropsKeys.USERS_IMAGE_MAX_SIZE) %>" />
 			</liferay-ui:panel>

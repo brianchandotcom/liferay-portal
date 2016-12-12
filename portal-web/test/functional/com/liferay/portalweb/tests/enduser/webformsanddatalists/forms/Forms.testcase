@@ -462,7 +462,7 @@
 
 		<execute function="Pause" locator1="60000" />
 
-		<execute macro="Navigator#gotoBack" />
+		<execute macro="FormsAdminNavigator#gotoBack" />
 
 		<execute macro="FormsAdmin#viewNoForms" />
 
@@ -482,7 +482,7 @@
 
 		<execute function="Pause" locator1="120000" />
 
-		<execute macro="Navigator#gotoBack" />
+		<execute macro="FormsAdminNavigator#gotoBack" />
 
 		<execute macro="FormsAdminNavigator#gotoEdit" />
 	</command>
@@ -1562,7 +1562,7 @@
 			<var name="formName" value="Text" />
 		</execute>
 
-		<execute macro="Navigator#gotoBack" />
+		<execute macro="FormsAdminNavigator#gotoBack" />
 
 		<execute macro="FormsAdminNavigator#gotoAddForm" />
 
@@ -1592,7 +1592,7 @@
 			<var name="formName" value="Checkbox" />
 		</execute>
 
-		<execute macro="Navigator#gotoBack" />
+		<execute macro="FormsAdminNavigator#gotoBack" />
 
 		<execute macro="FormsAdminNavigator#gotoEditFormByName">
 			<var name="formName" value="Text" />
@@ -4604,7 +4604,7 @@
 
 		<execute macro="Form#viewSaveNotification" />
 
-		<execute macro="Navigator#gotoBack" />
+		<execute macro="FormsAdminNavigator#gotoBack" />
 
 		<execute macro="FormsAdminNavigator#gotoEdit" />
 	</command>

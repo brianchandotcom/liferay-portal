@@ -424,6 +424,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LEAVE</td>
+	<td>//button[contains(.,'Leave')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE</td>
 	<td>//button[contains(.,'Merge')]</td>
 	<td></td>

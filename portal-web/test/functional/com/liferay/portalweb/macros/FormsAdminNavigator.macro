@@ -9,6 +9,17 @@
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
+	<command name="gotoBack">
+		<execute macro="Navigator#gotoBack" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="Button#LEAVE" />
+			<then>
+				<execute function="Click" locator1="Button#LEAVE" />
+			</then>
+		</if>
+	</command>
+
 	<command name="gotoDataProviders">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 

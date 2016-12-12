@@ -117,11 +117,7 @@ if (comment instanceof WorkflowableComment) {
 	function <portlet:namespace />saveComment() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var bodyEditor = window.<portlet:namespace />bodyEditor;
-
-		if (bodyEditor) {
-			form.fm('body').val(bodyEditor.getText());
-		}
+		form.fm('body').val(window.<portlet:namespace />bodyEditor.getHTML());
 
 		submitForm(form);
 	}

@@ -40,6 +40,26 @@ body.open-admin-panel, body.sidenav-transition {
 	}
 }
 
+.lfr-add-panel {
+	.search-bar {
+		display: block;
+		margin: 10px;
+
+		.form-control {
+			display: block;
+			float: none;
+		}
+	}
+
+	.input-group-btn {
+		display: block;
+		margin-top: -8px;
+		position: absolute;
+		right: 20px;
+		top: 50%;
+	}
+}
+
 .lfr-add-panel .add-content-menu {
 	.add-portlet-message {
 		background-color: #1B2228;
@@ -58,14 +78,6 @@ body.open-admin-panel, body.sidenav-transition {
 		&.lfr-archived-setup {
 			padding-left: 30px;
 		}
-	}
-
-	.search-bar {
-		margin: 10px;
-	}
-
-	.input-group-btn {
-		right: 20px;
 	}
 
 	.display-style-bar {

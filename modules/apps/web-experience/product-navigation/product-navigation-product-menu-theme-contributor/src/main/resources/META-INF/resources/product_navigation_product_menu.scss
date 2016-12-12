@@ -46,6 +46,30 @@ body {
 }
 
 .product-menu {
+	.form-control {
+		background-color: #1B2228;
+		border-radius: 0;
+		border-width: 0;
+		box-shadow: none;
+		color: #869CAD;
+		height: 40px;
+		padding: 8px 12px;
+
+		@include placeholder {
+			color: #869CAD;
+		}
+
+		&:focus {
+			color: #65B6F0;
+
+			@include placeholder {
+				color: #65B6F0;
+			}
+		}
+	}
+}
+
+.product-menu {
 	.collapse-icon:before {
 		right: 25px;
 	}

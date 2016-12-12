@@ -14,23 +14,30 @@
 
 package com.liferay.shopping.web.internal.portlet.action;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration;
 import com.liferay.shopping.constants.ShoppingPortletKeys;
 import com.liferay.shopping.exception.NoSuchItemException;
+
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Fellwock
  */
 @Component(
+	configurationPid = "com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration",
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ShoppingPortletKeys.SHOPPING,
@@ -48,6 +55,10 @@ public class EditItemMVCRenderCommand implements MVCRenderCommand {
 
 		try {
 			ActionUtil.getItem(renderRequest);
+
+			renderRequest.setAttribute(
+				ShoppingFileUploadsConfiguration.class.getName(),
+				_shoppingFileUploadsConfiguration);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchItemException ||
@@ -64,5 +75,15 @@ public class EditItemMVCRenderCommand implements MVCRenderCommand {
 
 		return "/edit_item.jsp";
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_shoppingFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
+			ShoppingFileUploadsConfiguration.class, properties);
+	}
+
+	private volatile ShoppingFileUploadsConfiguration
+		_shoppingFileUploadsConfiguration;
 
 }

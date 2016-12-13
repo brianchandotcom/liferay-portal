@@ -486,7 +486,6 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 					sb.append(" UNION (");
 				}
 
-
 				if (sybase) {
 					sb.append("SELECT userId FROM ");
 				}

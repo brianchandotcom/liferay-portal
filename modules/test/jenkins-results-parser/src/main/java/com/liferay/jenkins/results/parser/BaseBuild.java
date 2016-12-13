@@ -18,6 +18,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -1220,6 +1223,63 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected void recordTestResults() throws Exception {
+		if (getDownstreamBuildCount(null) == 0) {
+			String testReportURL = getBuildURL() + "/testReport/api/json";
+
+			URL url = new URL(testReportURL);
+
+			HttpURLConnection huc = (HttpURLConnection)url.openConnection();
+
+			if (huc.getResponseCode() == 200) {
+				JSONObject testReportJSONObject =
+					JenkinsResultsParserUtil.toJSONObject(testReportURL);
+
+				JSONArray suitesJSONArray = testReportJSONObject.getJSONArray(
+					"suites");
+
+				for (int i = 0; i < suitesJSONArray.length(); i++) {
+					JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(
+						i);
+
+					JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
+						"cases");
+
+					for (int j = 0; j < casesJSONArray.length(); j++) {
+						JSONObject caseJSONObject =
+							casesJSONArray.getJSONObject(j);
+
+						String testClassName = caseJSONObject.getString(
+							"className");
+
+						int x = testClassName.lastIndexOf(".");
+
+						String testSimpleClassName = testClassName.substring(
+							x + 1);
+
+						String testPackageName = testClassName.substring(0, x);
+
+						String testMethodName = caseJSONObject.getString(
+							"name");
+
+						testMethodName = testMethodName.replace("[", "_");
+						testMethodName = testMethodName.replace("]", "_");
+						testMethodName = testMethodName.replace("#", "_");
+
+						if (testPackageName.equals("junit.framework")) {
+							testMethodName = testMethodName.replace(".", "_");
+						}
+
+						testResults.add(
+							new TestResult(
+								testSimpleClassName, null, testMethodName,
+								caseJSONObject.getString("status")));
+					}
+				}
+			}
+		}
+	}
+
 	protected void reset() {
 		result = null;
 
@@ -1353,6 +1413,7 @@ public abstract class BaseBuild implements Build {
 	protected String master;
 	protected String result;
 	protected long statusModifiedTime;
+	protected ArrayList<TestResult> testResults = new ArrayList<>();
 
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;

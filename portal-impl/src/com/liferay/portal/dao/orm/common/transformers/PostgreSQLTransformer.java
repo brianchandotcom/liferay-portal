@@ -30,6 +30,7 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(castLongTransformation);
+		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(_negativeComparisonTransformation);
 	}

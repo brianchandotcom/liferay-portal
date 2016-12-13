@@ -30,6 +30,7 @@ public class SybaseTransformer extends BaseSQLTransformer {
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(_castLongTransformation);
+		transformations.add(castTextTransformation);
 		transformations.add(_crossJoinTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);

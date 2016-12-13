@@ -26,15 +26,22 @@ import javax.portlet.PortletURL;
  */
 public class PortletURLFactoryImpl implements PortletURLFactory {
 
-	@Override
-	public PortletURL getPortletURL(
-			PortletRequest portletRequest, MimeResponse mimeResponse)
-		throws PortletException {
+	public PortletURLFactoryImpl(
+		PortletRequest portletRequest, MimeResponse mimeResponse) {
 
-		PortletURL portletURL = PortletURLUtil.getCurrent(
-			portletRequest, mimeResponse);
-
-		return PortletURLUtil.clone(portletURL, mimeResponse);
+		_portletRequest = portletRequest;
+		_mimeResponse = mimeResponse;
 	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortletException {
+		PortletURL portletURL = PortletURLUtil.getCurrent(
+			_portletRequest, _mimeResponse);
+
+		return PortletURLUtil.clone(portletURL, _mimeResponse);
+	}
+
+	private final MimeResponse _mimeResponse;
+	private final PortletRequest _portletRequest;
 
 }

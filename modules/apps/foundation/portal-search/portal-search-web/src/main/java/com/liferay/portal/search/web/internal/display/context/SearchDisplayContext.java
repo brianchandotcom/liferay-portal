@@ -49,7 +49,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,15 +58,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SearchDisplayContext {
 
 	public SearchDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			PortletPreferences portletPreferences, Portal portal, Html html,
-			Language language, FacetedSearcherManager facetedSearcherManager,
+			RenderRequest renderRequest, PortletPreferences portletPreferences,
+			Portal portal, Html html, Language language,
+			FacetedSearcherManager facetedSearcherManager,
 			IndexSearchPropsValues indexSearchPropsValues,
 			PortletURLFactory portletURLFactory)
 		throws Exception {
 
 		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
 		_indexSearchPropsValues = indexSearchPropsValues;
 		_portletURLFactory = portletURLFactory;
@@ -192,8 +190,11 @@ public class SearchDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
-		return _portletURLFactory.getPortletURL(
-			_renderRequest, _renderResponse);
+		return _portletURLFactory.getPortletURL();
+	}
+
+	public PortletURLFactory getPortletURLFactory() {
+		return _portletURLFactory;
 	}
 
 	public QueryConfig getQueryConfig() {
@@ -563,7 +564,6 @@ public class SearchDisplayContext {
 	private Boolean _querySuggestionsEnabled;
 	private Integer _querySuggestionsMax;
 	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private String _searchConfiguration;
 	private final SearchContainer<Document> _searchContainer;
 	private final SearchContext _searchContext;

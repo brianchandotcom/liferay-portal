@@ -4328,6 +4328,40 @@
 		<execute macro="Form#save" />
 	</command>
 
+	<command name="ViewConfirmationWhenLeavingFormWithoutSaving" priority="3">
+		<description message="This is a use case for LPS-69214." />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#editFieldLabel">
+			<var name="fieldValue" value="Text Field" />
+		</execute>
+
+		<execute macro="Form#closeSidebar" />
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute function="AssertElementPresent" locator1="Button#LEAVE" />
+
+		<execute function="Click" locator1="Button#STAY" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="FormsAdminNavigator#gotoEdit">
+			<var name="formName" value="Untitled Form" />
+		</execute>
+	</command>
+
 	<command name="ViewDefaultFieldNamesWithPunctuationCharacters" priority="4">
 		<description message="This is a use case for LPS-64305." />
 

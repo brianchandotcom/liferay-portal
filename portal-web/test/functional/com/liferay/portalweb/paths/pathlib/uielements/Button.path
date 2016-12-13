@@ -709,6 +709,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>STAY</td>
+	<td>//button[contains(.,'Stay')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBMIT</td>
 	<td>//button[@type='submit']</td>
 	<td></td>

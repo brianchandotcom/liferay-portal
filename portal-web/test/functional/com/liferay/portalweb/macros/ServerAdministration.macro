@@ -116,6 +116,18 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="enableRecaptcha">
+		<execute function="Check" locator1="ServerAdministrationCaptcha#ENABLE_RECAPTCHA_CHECKBOX" />
+
+		<execute function="Type" locator1="ServerAdministrationCaptcha#RECAPTCHA_PUBLIC_KEY" value1="${publicKey}" />
+
+		<execute function="Type" locator1="ServerAdministrationCaptcha#RECAPTCHA_PRIVATE_KEY" value1="${privateKey}" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="executeServerResourcesActions">
 		<execute function="AssertClick" locator1="NavBar#RESOURCES" value1="Resources" />
 

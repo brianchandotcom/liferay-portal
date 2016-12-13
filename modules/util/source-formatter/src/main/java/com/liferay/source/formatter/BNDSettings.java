@@ -14,12 +14,16 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
+
 import java.io.File;
 import java.io.FileInputStream;
 
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.apache.maven.artifact.versioning.ComparableVersion;
 
 /**
  * @author Hugo Huijser
@@ -73,9 +77,9 @@ public class BNDSettings {
 		return _languageProperties;
 	}
 
-	public String getReleaseVersion() {
-		if (_releaseVersion != null) {
-			return _releaseVersion;
+	public ComparableVersion getReleaseComparableVersion() {
+		if (_releaseComparableVersion != null) {
+			return _releaseComparableVersion;
 		}
 
 		Matcher matcher = _releaseVersionPattern.matcher(_content);
@@ -84,9 +88,15 @@ public class BNDSettings {
 			return null;
 		}
 
-		_releaseVersion = matcher.group(1);
+		String releaseVersion = matcher.group(1);
 
-		return _releaseVersion;
+		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
+
+		releaseVersion = releaseVersion.substring(0, pos) + ".0";
+
+		_releaseComparableVersion = new ComparableVersion(releaseVersion);
+
+		return _releaseComparableVersion;
 	}
 
 	public boolean isInheritRequired() {
@@ -103,7 +113,7 @@ public class BNDSettings {
 	private final String _fileLocation;
 	private boolean _inheritRequired;
 	private Properties _languageProperties;
-	private String _releaseVersion;
+	private ComparableVersion _releaseComparableVersion;
 	private final Pattern _releaseVersionPattern = Pattern.compile(
 		"Bundle-Version: (.*)(\n|\\Z)");
 

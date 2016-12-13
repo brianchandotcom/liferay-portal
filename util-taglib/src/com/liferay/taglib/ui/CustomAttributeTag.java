@@ -20,7 +20,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.expando.taglib.servlet.taglib.CustomAttributeTag}
  */
+@Deprecated
 public class CustomAttributeTag extends IncludeTag {
 
 	public void setClassName(String className) {

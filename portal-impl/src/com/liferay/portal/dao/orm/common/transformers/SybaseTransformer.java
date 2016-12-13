@@ -17,6 +17,7 @@ package com.liferay.portal.dao.orm.common.transformers;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
@@ -28,8 +29,8 @@ public class SybaseTransformer extends BaseSQLTransformer {
 	protected String postTransform(
 		boolean supportsStringCaseSensitiveQuery, String sql) {
 
-		sql = replaceMod(sql);
-		sql = replaceReplace(sql);
+		sql = _modTransformation.apply(sql);
+		sql = _replaceTransformation.apply(sql);
 
 		return sql;
 	}
@@ -64,5 +65,14 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
+
+	private Function<String, String> _modTransformation = (String sql) -> {
+		Matcher matcher = modPattern.matcher(sql);
+
+		return matcher.replaceAll("$1 % $2");
+	};
+
+	private Function<String, String> _replaceTransformation = (String sql) ->
+		sql.replaceAll("(?i)replace\\(", "str_replace(");
 
 }

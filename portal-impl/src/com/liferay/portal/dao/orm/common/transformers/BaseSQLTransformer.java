@@ -105,7 +105,7 @@ public abstract class BaseSQLTransformer implements Transformer {
 	}
 
 	protected String replaceMod(String sql) {
-		Matcher matcher = _modPattern.matcher(sql);
+		Matcher matcher = modPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 % $2");
 	}
@@ -130,6 +130,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	protected static final Pattern integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern modPattern = Pattern.compile(
+		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	protected static final Pattern substrPattern = Pattern.compile(
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
@@ -153,7 +155,5 @@ public abstract class BaseSQLTransformer implements Transformer {
 		"BITAND\\((.+?),(.+?)\\)");
 	private static final Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-	private static final Pattern _modPattern = Pattern.compile(
-		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
 }

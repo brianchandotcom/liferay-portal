@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
@@ -25,7 +26,7 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 	protected String postTransform(
 		boolean supportsStringCaseSensitiveQuery, String sql) {
 
-		sql = replaceMod(sql);
+		sql = _modTransformation.apply(sql);
 
 		return sql;
 	}
@@ -48,5 +49,11 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
+
+	private Function<String, String> _modTransformation = (String sql) -> {
+		Matcher matcher = modPattern.matcher(sql);
+
+		return matcher.replaceAll("$1 % $2");
+	};
 
 }

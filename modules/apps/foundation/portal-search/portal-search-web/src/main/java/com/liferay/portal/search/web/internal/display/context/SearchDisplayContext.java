@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherMa
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -126,24 +125,6 @@ public class SearchDisplayContext {
 		_hits = hits;
 		_searchContext = searchContext;
 		_searchContainer = searchContainer;
-	}
-
-	public String checkViewURL(String viewURL, String currentURL) {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		if (Validator.isNotNull(viewURL) &&
-			viewURL.startsWith(themeDisplay.getURLPortal())) {
-
-			viewURL = HttpUtil.setParameter(
-				viewURL, "inheritRedirect", isViewInContext());
-
-			if (!isViewInContext()) {
-				viewURL = HttpUtil.setParameter(
-					viewURL, "redirect", currentURL);
-			}
-		}
-
-		return viewURL;
 	}
 
 	public int getCollatedSpellCheckResultDisplayThreshold() {

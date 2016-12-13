@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,6 +62,10 @@ public abstract class BaseSQLTransformer implements Transformer {
 		}
 
 		return newSQL;
+	}
+
+	protected List<Function<String, String>> getTransformations() {
+		return transformations;
 	}
 
 	protected String postTransform(
@@ -136,6 +142,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
 	protected DB db;
+	protected List<Function<String, String>> transformations =
+		new ArrayList<>();
 
 	private Function<String, String> _booleanTransformation =
 		(String sql) -> StringUtil.replace(

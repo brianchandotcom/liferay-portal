@@ -38,6 +38,11 @@
 	<td>title=Welcome - Liferay</td>
 	<td></td>
 </tr>
+<tr>
+	<td>RECAPTCHA_LABEL</td>
+	<td>//label[contains(@id,'recaptcha')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

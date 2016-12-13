@@ -81,6 +81,12 @@ public class UpgradeExpando extends UpgradeProcess {
 					"client-id");
 
 			if (oldExpandoColumn == null) {
+				oldExpandoColumn = _expandoColumnLocalService.getColumn(
+					companyId, User.class.getName(), expandoTable.getName(),
+					"clientId");
+			}
+
+			if (oldExpandoColumn == null) {
 				return;
 			}
 

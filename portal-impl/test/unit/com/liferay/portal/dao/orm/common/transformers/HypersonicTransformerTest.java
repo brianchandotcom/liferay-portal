@@ -56,7 +56,7 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 	public void testReplaceCastClobText() {
 		String sql = "select CAST_CLOB_TEXT(foo) from Foo";
 
-		String transformedSql = _transformer.replaceCastClobText(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals(
 			"select CONVERT(foo, SQL_VARCHAR) from Foo", transformedSql);

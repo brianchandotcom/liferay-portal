@@ -26,15 +26,9 @@ public class OracleTransformer extends BaseSQLTransformer {
 
 	public OracleTransformer() {
 		transformations.add(bitwiseCheckDefaultTransformation);
+		transformations.add(_castClobTextTransformation);
 		transformations.add(_escapeTransformation);
 		transformations.add(_notEqualsBlankStringTransformation);
-	}
-
-	@Override
-	protected String replaceCastClobText(String sql) {
-		Matcher matcher = castClobTextPattern.matcher(sql);
-
-		return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 	}
 
 	@Override
@@ -48,6 +42,13 @@ public class OracleTransformer extends BaseSQLTransformer {
 
 		return matcher.replaceAll("TRUNC($1 / $2)");
 	}
+
+	private Function<String, String> _castClobTextTransformation =
+		(String sql) -> {
+			Matcher matcher = castClobTextPattern.matcher(sql);
+
+			return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
+		};
 
 	private Function<String, String> _escapeTransformation =
 		(String sql) -> StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");

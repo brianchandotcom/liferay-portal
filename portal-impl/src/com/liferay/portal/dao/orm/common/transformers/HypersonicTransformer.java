@@ -23,6 +23,7 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 
 	public HypersonicTransformer() {
 		transformations.add(bitwiseCheckDefaultTransformation);
+		transformations.add(castClobTextTransformation);
 	}
 
 	@Override

@@ -25,6 +25,7 @@ public class DB2Transformer extends BaseSQLTransformer {
 
 	public DB2Transformer() {
 		transformations.add(bitwiseCheckDefaultTransformation);
+		transformations.add(castClobTextTransformation);
 		transformations.add(_likeTransformation);
 	}
 

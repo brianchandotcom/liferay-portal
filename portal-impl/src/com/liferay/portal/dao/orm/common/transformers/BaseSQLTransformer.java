@@ -44,7 +44,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 		final String[] newSQL = {sql};
 
 		newSQL[0] = _booleanTransformation.apply(newSQL[0]);
-		newSQL[0] = replaceCastClobText(newSQL[0]);
 		newSQL[0] = replaceCastLong(newSQL[0]);
 		newSQL[0] = _castTextTransformation.apply(newSQL[0]);
 		newSQL[0] = replaceCrossJoin(newSQL[0]);
@@ -68,12 +67,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected List<Function<String, String>> getTransformations() {
 		return transformations;
-	}
-
-	protected String replaceCastClobText(String sql) {
-		Matcher matcher = castClobTextPattern.matcher(sql);
-
-		return replaceCastText(matcher);
 	}
 
 	protected String replaceCastLong(String sql) {
@@ -130,6 +123,14 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected static final Pattern castClobTextPattern = Pattern.compile(
 		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	protected Function<String, String> castClobTextTransformation =
+		(String sql) -> {
+			Matcher matcher = castClobTextPattern.matcher(sql);
+
+			return replaceCastText(matcher);
+		};
+
 	protected static final Pattern castLongPattern = Pattern.compile(
 		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
 	protected static final Pattern instrPattern = Pattern.compile(

@@ -26,6 +26,8 @@ public interface Build {
 
 	public void archive(String archiveName);
 
+	public List<TestResult> getAggregateTestResults(String status);
+
 	public String getArchivePath();
 
 	public List<String> getBadBuildURLs();

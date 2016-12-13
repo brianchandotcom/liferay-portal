@@ -117,6 +117,35 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public List<TestResult> getAggregateTestResults(String status) {
+		List<TestResult> aggregateTestResults = new ArrayList<>();
+
+		if (status == null) {
+			aggregateTestResults = (List<TestResult>)testResults.clone();
+		}
+		else {
+			for (TestResult aggregateTestResult : aggregateTestResults) {
+				if (status.equals(aggregateTestResult.getStatus())) {
+					aggregateTestResults.add(aggregateTestResult);
+				}
+			}
+		}
+
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		if (downstreamBuilds.isEmpty()) {
+			return aggregateTestResults;
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			aggregateTestResults.addAll(
+				downstreamBuild.getAggregateTestResults(status));
+		}
+
+		return aggregateTestResults;
+	}
+
+	@Override
 	public String getArchivePath() {
 		StringBuilder sb = new StringBuilder(archiveName);
 

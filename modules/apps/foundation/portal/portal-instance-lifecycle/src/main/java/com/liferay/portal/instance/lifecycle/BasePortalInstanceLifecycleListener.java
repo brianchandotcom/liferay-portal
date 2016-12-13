@@ -14,11 +14,14 @@
 
 package com.liferay.portal.instance.lifecycle;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.model.Company;
 
 /**
  * @author Michael C. Han
  */
+@ProviderType
 public abstract class BasePortalInstanceLifecycleListener
 	implements PortalInstanceLifecycleListener {
 

@@ -102,3 +102,36 @@ This was done as a preliminar step of a bigger story to creating portlet urls
 without passing the request as a necessary parameter.
 
 ---------------------------------------
+
+### Move the expando custom field tags to expando-taglib
+- **Date:** 2016-Dec-12
+- **JIRA Ticket:** LPS-69400
+
+#### What changed?
+The tags related to expando custom fields have been moved <br/>
+from `liferay-ui` to `expando-taglib` module.
+
+#### Who is affected?
+This affects developers using expando custom fields related tags.
+
+#### How should I update my code?
+
+You should use the `expando-taglig` <br/>
+`<%@taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %>`
+
+Old code
+
+`<liferay-ui:custom-attributes-available>` <br/>
+`<liferay-ui:custom-attribute-list>` <br/>
+`<liferay-ui:custom-attribute>` <br/>
+
+New Code
+
+`<liferay-expando:custom-attributes-available>` <br/>
+`<liferay-expando:custom-attribute-list>` <br/>
+`<liferay-expando:custom-attribute>` <br/>
+
+#### Why was this change made?
+This change was made as part of modularization efforts for expando custom fields.
+
+---------------------------------------

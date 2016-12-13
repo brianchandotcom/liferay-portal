@@ -77,7 +77,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 	public void testReplaceCrossJoin() {
 		String sql = "select * from Foo CROSS JOIN Bar";
 
-		String transformedSql = _transformer.replaceCrossJoin(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals(sql, transformedSql);
 	}

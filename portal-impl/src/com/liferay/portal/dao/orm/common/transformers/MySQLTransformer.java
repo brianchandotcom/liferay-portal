@@ -28,6 +28,7 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		transformations.add(bitwiseCheckTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(castLongTransformation);
+		transformations.add(crossJoinDefaultTransformation);
 
 		if (!supportsStringCaseSensitiveQuery) {
 			transformations.add(_lowerTransformation);

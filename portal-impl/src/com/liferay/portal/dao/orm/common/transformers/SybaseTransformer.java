@@ -29,6 +29,7 @@ public class SybaseTransformer extends BaseSQLTransformer {
 		transformations.add(bitwiseCheckTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(_castLongTransformation);
+		transformations.add(_crossJoinTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);
 	}
@@ -36,11 +37,6 @@ public class SybaseTransformer extends BaseSQLTransformer {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
-	}
-
-	@Override
-	protected String replaceCrossJoin(String sql) {
-		return StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
 	}
 
 	@Override
@@ -62,6 +58,9 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 		return matcher.replaceAll("CONVERT(BIGINT, $1)");
 	};
+
+	private Function<String, String> _crossJoinTransformation =
+		(String sql) -> StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
 
 	private Function<String, String> _modTransformation = (String sql) -> {
 		Matcher matcher = modPattern.matcher(sql);

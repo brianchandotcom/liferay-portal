@@ -45,7 +45,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		newSQL[0] = _booleanTransformation.apply(newSQL[0]);
 		newSQL[0] = _castTextTransformation.apply(newSQL[0]);
-		newSQL[0] = replaceCrossJoin(newSQL[0]);
 		newSQL[0] = replaceInStr(newSQL[0]);
 		newSQL[0] = replaceIntegerDivision(newSQL[0]);
 		newSQL[0] = replaceNullDate(newSQL[0]);
@@ -70,10 +69,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
-	}
-
-	protected String replaceCrossJoin(String sql) {
-		return sql;
 	}
 
 	protected String replaceInStr(String sql) {
@@ -133,6 +128,10 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected static final Pattern castLongPattern = Pattern.compile(
 		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	protected Function<String, String> crossJoinDefaultTransformation =
+		(String sql) -> sql;
+
 	protected static final Pattern instrPattern = Pattern.compile(
 		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	protected static final Pattern integerDivisionPattern = Pattern.compile(

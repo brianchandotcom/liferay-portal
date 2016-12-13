@@ -7534,6 +7534,24 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				</unzip>
 
 				<delete file="liferay-portal-dependencies.zip" />
+
+				<mirrors-get
+					dest="liferay-portal-osgi.zip"
+					src="${test.build.portal.osgi.zip.url}"
+				/>
+
+				<unzip
+					dest="${liferay.home}"
+					src="liferay-portal-osgi.zip"
+				>
+					<mapper
+						from="[^/]+/(osgi)"
+						to="\1"
+						type="regexp"
+					/>
+				</unzip>
+
+				<delete file="liferay-portal-osgi.zip" />
 			</else>
 		</if>
 	</target>

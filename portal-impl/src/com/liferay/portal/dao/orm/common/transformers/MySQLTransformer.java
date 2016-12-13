@@ -26,6 +26,7 @@ public class MySQLTransformer extends BaseSQLTransformer {
 
 	public MySQLTransformer(boolean supportsStringCaseSensitiveQuery) {
 		transformations.add(bitwiseCheckTransformation);
+		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(castLongTransformation);
 		transformations.add(crossJoinDefaultTransformation);

@@ -24,6 +24,7 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 
 	public HypersonicTransformer() {
 		transformations.add(bitwiseCheckDefaultTransformation);
+		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(_castLongTransformation);
 		transformations.add(crossJoinDefaultTransformation);

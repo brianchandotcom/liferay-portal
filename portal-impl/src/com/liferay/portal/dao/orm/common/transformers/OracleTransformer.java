@@ -26,6 +26,7 @@ public class OracleTransformer extends BaseSQLTransformer {
 
 	public OracleTransformer() {
 		transformations.add(bitwiseCheckDefaultTransformation);
+		transformations.add(booleanTransformation);
 		transformations.add(_castClobTextTransformation);
 		transformations.add(castLongTransformation);
 		transformations.add(crossJoinDefaultTransformation);

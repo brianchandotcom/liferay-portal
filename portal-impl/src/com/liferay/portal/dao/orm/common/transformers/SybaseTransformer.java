@@ -27,6 +27,7 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 	public SybaseTransformer() {
 		transformations.add(bitwiseCheckTransformation);
+		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(_castLongTransformation);
 		transformations.add(_crossJoinTransformation);

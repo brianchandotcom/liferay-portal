@@ -24,6 +24,7 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 
 	public SQLServerTransformer() {
 		transformations.add(bitwiseCheckTransformation);
+		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);
 		transformations.add(castLongTransformation);
 		transformations.add(crossJoinDefaultTransformation);

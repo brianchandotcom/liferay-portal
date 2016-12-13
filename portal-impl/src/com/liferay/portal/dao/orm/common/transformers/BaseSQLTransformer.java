@@ -43,7 +43,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		final String[] newSQL = {sql};
 
-		newSQL[0] = _booleanTransformation.apply(newSQL[0]);
 		newSQL[0] = _castTextTransformation.apply(newSQL[0]);
 		newSQL[0] = replaceInStr(newSQL[0]);
 		newSQL[0] = replaceIntegerDivision(newSQL[0]);
@@ -106,8 +105,18 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return matcher.replaceAll("($1 & $2)");
 		};
 
+	protected DB db;
+
 	protected Function<String, String> bitwiseCheckDefaultTransformation =
 		(String sql) -> sql;
+
+	protected Function<String, String> booleanTransformation =
+		(String sql) -> StringUtil.replace(
+			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
+			new String[] {
+				db.getTemplateFalse(), db.getTemplateTrue()
+			}
+		);
 
 	protected static final Pattern castClobTextPattern = Pattern.compile(
 		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
@@ -141,17 +150,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 	protected static final Pattern substrPattern = Pattern.compile(
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
-	protected DB db;
 	protected List<Function<String, String>> transformations =
 		new ArrayList<>();
-
-	private Function<String, String> _booleanTransformation =
-		(String sql) -> StringUtil.replace(
-			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
-			new String[] {
-				db.getTemplateFalse(), db.getTemplateTrue()
-			}
-	);
 
 	private Function<String, String> _castTextTransformation = 
 		(String sql) -> replaceCastText(_castTextPattern.matcher(sql));

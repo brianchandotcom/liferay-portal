@@ -1,0 +1,52 @@
+<definition component-name="portal-security">
+	<property name="portal.release" value="true" />
+	<property name="testray.main.component.name" value="Security" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#firstLoginPG" />
+
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="AssertCaptchaThenRecaptcha" priority="4">
+		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
+		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
+
+		<execute macro="User#viewCaptchaPG">
+			<var name="captchaType" value="captcha" />
+		</execute>
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoControlPanelConfiguration">
+			<var name="portlet" value="Server Administration" />
+		</execute>
+
+		<execute function="AssertClick" locator1="NavBar#CAPTCHA" value1="CAPTCHA" />
+
+		<execute macro="ServerAdministration#enableRecaptcha">
+			<var name="privateKey" value="recaptchaPrivateKey" />
+			<var name="publicKey" value="recaptchaPublicKey" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#viewCaptchaPG">
+			<var name="captchaType" value="recaptcha" />
+		</execute>
+	</command>
+</definition>

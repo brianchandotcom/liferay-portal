@@ -15,9 +15,9 @@
 package com.liferay.contacts.internal.upgrade.v2_0_0;
 
 import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalServiceUtil;
+import com.liferay.contacts.service.EntryLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
@@ -28,6 +28,14 @@ import java.util.List;
  */
 public class UpgradeEntry extends UpgradeProcess {
 
+	public UpgradeEntry(
+		EntryLocalService entryLocalService,
+		UserLocalService userLocalService) {
+
+		_entryLocalService = entryLocalService;
+		_userLocalService = userLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateEntries();
@@ -35,20 +43,23 @@ public class UpgradeEntry extends UpgradeProcess {
 
 	protected void updateEntries() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Entry> entries = EntryLocalServiceUtil.getEntries(
+			List<Entry> entries = _entryLocalService.getEntries(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (Entry entry : entries) {
 				try {
-					UserLocalServiceUtil.getUserByEmailAddress(
+					_userLocalService.getUserByEmailAddress(
 						entry.getCompanyId(), entry.getEmailAddress());
 
-					EntryLocalServiceUtil.deleteEntry(entry);
+					_entryLocalService.deleteEntry(entry);
 				}
 				catch (Exception e) {
 				}
 			}
 		}
 	}
+
+	private final EntryLocalService _entryLocalService;
+	private final UserLocalService _userLocalService;
 
 }

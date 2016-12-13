@@ -56,7 +56,7 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
-			message="copy"
+			message="duplicate"
 			url="<%= copyRecordSetURL %>"
 		/>
 	</c:if>

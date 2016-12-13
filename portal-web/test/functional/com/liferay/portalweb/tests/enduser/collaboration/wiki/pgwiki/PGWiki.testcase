@@ -524,24 +524,13 @@
 			<var name="pageName" value="Wiki Test Page" />
 		</execute>
 
-		<execute macro="WikiPage#_editEmptyFrontPage">
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="htmlSource" value="true" />
 			<var name="wikiPageContent">
 			<![CDATA[<p><a href="/">Home</a></p>
 			]]>
 			</var>
 		</execute>
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_FIELD" />
-
-		<execute function="Click" locator1="AlloyEditor#CONTENT_EDITOR_SWITCH_ACE_EDITOR" />
-
-		<execute macro="WikiEntry#selectPageFormat">
-			<var name="pageFormat" value="HTML" />
-		</execute>
-
-		<execute macro="WikiEntry#confirmHTML" />
-
-		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Wiki Test Page" />

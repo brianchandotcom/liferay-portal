@@ -30,7 +30,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author     Eduardo Lundgren
  * @author     Bruno Basto
- * @deprecated As of 2.6.0, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
  */
 @Deprecated
 public class ComponentTag extends BaseComponentTag {

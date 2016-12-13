@@ -278,7 +278,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #deletePortletFolder}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #deletePortletFolder}
 	 */
 	@Deprecated
 	@Override

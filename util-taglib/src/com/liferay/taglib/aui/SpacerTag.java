@@ -22,7 +22,7 @@ import javax.servlet.jsp.JspWriter;
 
 /**
  * @author     Eduardo Lundgren
- * @deprecated As of 2.6.0, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
  */
 @Deprecated
 public class SpacerTag extends TagSupport {

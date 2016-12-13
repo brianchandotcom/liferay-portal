@@ -115,7 +115,7 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 2.6.0, replaced by {@link #setEditorName(String)}
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link #setEditorName(String)}
 	 */
 	@Deprecated
 	public void setEditorImpl(String editorImpl) {
@@ -135,7 +135,7 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 2.6.0, replaced by {@link #setContents(String)}
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link #setContents(String)}
 	 */
 	@Deprecated
 	public void setInitMethod(String initMethod) {

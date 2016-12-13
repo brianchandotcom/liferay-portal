@@ -44,7 +44,7 @@ public class NoKnownDevices implements KnownDevices {
 	}
 
 	/**
-	 * @deprecated As of 2.18.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

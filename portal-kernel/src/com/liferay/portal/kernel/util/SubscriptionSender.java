@@ -229,7 +229,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 2.18.0, replaced by {@link getCurrentUserId()}
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link getCurrentUserId()}
 	 */
 	@Deprecated
 	public long getUserId() {
@@ -453,7 +453,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 2.18.0, replaced by {@link #setCurrentUserId(long)}
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link #setCurrentUserId(long)}
 	 */
 	@Deprecated
 	public void setUserId(long userId) {
@@ -630,7 +630,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 2.18.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link
 	 *             #notifyPersistedSubscriber(Subscription)}
 	 */
 	@Deprecated

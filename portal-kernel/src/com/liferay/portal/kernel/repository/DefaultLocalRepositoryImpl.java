@@ -335,7 +335,7 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	/**
-	 * @deprecated As of 2.18.0
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0
 	 */
 	@Deprecated
 	@Override

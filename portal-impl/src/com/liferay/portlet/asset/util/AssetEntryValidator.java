@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 2.10.0, moved to {@link
+ * @deprecated As of com.liferay.portal.impl#2.10.0, moved to {@link
  *             com.liferay.asset.kernel.validator.AssetEntryValidator}
  */
 @Deprecated

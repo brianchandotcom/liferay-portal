@@ -91,7 +91,7 @@ public class PageIteratorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 2.6.0, replaced by {@link #setPortletURL(PortletURL)}
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link #setPortletURL(PortletURL)}
 	 */
 	@Deprecated
 	public void setUrl(String url) {

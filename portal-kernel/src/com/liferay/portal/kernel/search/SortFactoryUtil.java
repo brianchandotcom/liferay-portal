@@ -58,7 +58,7 @@ public class SortFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.18.0, replaced by {@link #_getSortFactory()}
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link #_getSortFactory()}
 	 */
 	@Deprecated
 	public static SortFactory getSortFactory() {

@@ -22,7 +22,7 @@ import java.util.Set;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 2.18.0
+ * @deprecated As of com.liferay.portal.kernel#2.18.0
  */
 @Deprecated
 public class Randomizer extends Random {

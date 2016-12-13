@@ -32,7 +32,7 @@ public interface IndexSearcher extends QuerySuggester {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of 2.18.0, replaced by {@link #search(SearchContext,
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link #search(SearchContext,
 	 *             Query)}
 	 */
 	@Deprecated

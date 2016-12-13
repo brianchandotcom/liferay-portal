@@ -23,7 +23,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author     Sergio González
- * @deprecated As of 2.6.0, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
  */
 @Deprecated
 public class AppViewToolbarTag extends TagSupport {

@@ -165,7 +165,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #updateEntry(long, Date,
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateEntry(long, Date,
 	 *             Date, String, long, String, long, long[], String[], boolean,
 	 *             boolean, Date, Date, Date, Date, String, String, String,
 	 *             String, String, String, int, int, Double)}
@@ -193,7 +193,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #updateEntry(long, Date,
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateEntry(long, Date,
 	 *             Date, String, long, String, long, long[], String[], boolean,
 	 *             boolean, Date, Date, Date, Date, String, String, String,
 	 *             String, String, String, int, int, Double)}

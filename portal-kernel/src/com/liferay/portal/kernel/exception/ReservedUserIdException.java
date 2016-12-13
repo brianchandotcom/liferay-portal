@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.exception;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 2.18.0, replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link
  *             UserIdException.MustNotBeReserved}
  */
 @Deprecated

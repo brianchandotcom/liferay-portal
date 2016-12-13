@@ -193,31 +193,30 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkBndInheritAnnotationOption() {
-		for (Map.Entry<String, Tuple> entry :
-				_bndInheritRequiredTupleMap.entrySet()) {
+		Map<String, BNDSettings> bndSettingsMap = getBNDndSettingsMap();
 
-			String bndFileLocation = entry.getKey();
+		for (Map.Entry<String, BNDSettings> entry : bndSettingsMap.entrySet()) {
+			BNDSettings bndSettings = entry.getValue();
 
-			Tuple bndInheritTuple = entry.getValue();
+			String content = bndSettings.getContent();
+			String fileLocation = bndSettings.getFileLocation();
+			boolean inheritRequired = bndSettings.isInheritRequired();
 
-			String bndContent = (String)bndInheritTuple.getObject(0);
-			boolean bndInheritRequired = (Boolean)bndInheritTuple.getObject(1);
-
-			if (bndContent.contains("-dsannotations-options: inherit")) {
+			if (content.contains("-dsannotations-options: inherit")) {
 				/*
-				if (!bndInheritRequired) {
+				if (!inheritRequired) {
 					printError(
-						bndFileLocation,
+						fileLocation,
 						"Redundant '-dsannotations-options: inherit': " +
-							bndFileLocation + "bnd.bnd");
+							fileLocation + "bnd.bnd");
 				}
 				*/
 			}
-			else if (bndInheritRequired) {
+			else if (inheritRequired) {
 				printError(
-					bndFileLocation,
-					"Add '-dsannotations-options: inherit': " +
-						bndFileLocation + "bnd.bnd");
+					fileLocation,
+					"Add '-dsannotations-options: inherit': " + fileLocation +
+						"bnd.bnd");
 			}
 		}
 	}
@@ -4502,22 +4501,17 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String fileName, boolean bndInheritRequired)
 		throws Exception {
 
-		Tuple bndFileLocationAndContentTuple =
-			getBNDFileLocationAndContentTuple(fileName);
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-		String bndFileLocation =
-			(String)bndFileLocationAndContentTuple.getObject(0);
-
-		Tuple bndInheritTuple = _bndInheritRequiredTupleMap.get(
-			bndFileLocation);
-
-		if ((bndInheritTuple == null) || bndInheritRequired) {
-			String bndContent =
-				(String)bndFileLocationAndContentTuple.getObject(1);
-
-			_bndInheritRequiredTupleMap.put(
-				bndFileLocation, new Tuple(bndContent, bndInheritRequired));
+		if (bndSettings == null) {
+			return;
 		}
+
+		if (bndInheritRequired) {
+			bndSettings.setInheritRequired(bndInheritRequired);
+		}
+
+		putBNDSettings(bndSettings);
 	}
 
 	protected String sortExceptions(String content) {
@@ -4618,8 +4612,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"(\n\t*.* =) (new \\w*\\[\\] \\{)\n(\t*)(.+)\n\t*(\\};)\n");
 	private final Pattern _assertEqualsPattern = Pattern.compile(
 		"Assert\\.assertEquals\\((.*?)\\);\n", Pattern.DOTALL);
-	private final Map<String, Tuple> _bndInheritRequiredTupleMap =
-		new ConcurrentHashMap<>();
 	private final Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkRegistryInTestClasses;

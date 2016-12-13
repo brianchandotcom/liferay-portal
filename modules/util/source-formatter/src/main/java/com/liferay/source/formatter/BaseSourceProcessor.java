@@ -569,8 +569,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					continue;
 				}
 
+				BNDSettings bndSettings = getBNDSettings(fileName);
+
 				Properties bndFileLanguageProperties =
-					getBNDFileLanguageProperties(fileName);
+					bndSettings.getLanguageProperties();
 
 				if ((bndFileLanguageProperties != null) &&
 					!bndFileLanguageProperties.containsKey(languageKey)) {
@@ -578,6 +580,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					processMessage(
 						fileName, "Missing language key '" + languageKey + "'");
 				}
+
+				putBNDSettings(bndSettings);
 			}
 		}
 	}
@@ -1704,70 +1708,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return _annotationsExclusions;
 	}
 
-	protected Properties getBNDFileLanguageProperties(String fileName)
-		throws Exception {
+	protected BNDSettings getBNDSettings(String fileName) throws Exception {
+		for (Map.Entry<String, BNDSettings> entry :
+				_bndSettingsMap.entrySet()) {
 
-		Tuple bndFileLocationAndContentTuple =
-			getBNDFileLocationAndContentTuple(fileName);
+			String bndFileLocation = entry.getKey();
 
-		if (bndFileLocationAndContentTuple == null) {
-			return new Properties();
-		}
-
-		String bndFileLocation =
-			(String)bndFileLocationAndContentTuple.getObject(0);
-
-		Properties properties = _bndLanguagePropertiesMap.get(bndFileLocation);
-
-		if (properties != null) {
-			return properties;
-		}
-
-		String bndContent = (String)bndFileLocationAndContentTuple.getObject(1);
-
-		if (bndContent.matches(
-				"[\\s\\S]*Provide-Capability:.*liferay\\.resource\\.bundle" +
-					"[\\s\\S]*")) {
-
-			// Return null, in order to skip checking for language keys for
-			// modules that use LanguageExtender. No fix in place for this right
-			// now.
-
-			return null;
-		}
-
-		Matcher matcher = bndContentDirPattern.matcher(bndContent);
-
-		if (matcher.find()) {
-			File file = new File(
-				bndFileLocation + matcher.group(1) + "/Language.properties");
-
-			if (!file.exists()) {
-				return new Properties();
+			if (fileName.startsWith(bndFileLocation)) {
+				return entry.getValue();
 			}
-
-			properties = new Properties();
-
-			InputStream inputStream = new FileInputStream(file);
-
-			properties.load(inputStream);
-
-			_bndLanguagePropertiesMap.put(bndFileLocation, properties);
-
-			return properties;
-		}
-
-		return new Properties();
-	}
-
-	protected Tuple getBNDFileLocationAndContentTuple(String fileName)
-		throws Exception {
-
-		Tuple bndFileLocationAndContentTuple =
-			_bndFileLocationAndContentMap.get(fileName);
-
-		if (bndFileLocationAndContentTuple != null) {
-			return bndFileLocationAndContentTuple;
 		}
 
 		String bndFileLocation = fileName;
@@ -1784,20 +1733,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			File file = new File(bndFileLocation + "bnd.bnd");
 
 			if (file.exists()) {
-				String bndContent = FileUtil.read(file);
-
-				bndFileLocationAndContentTuple = new Tuple(
-					bndFileLocation, bndContent);
-
-				_bndFileLocationAndContentMap.put(
-					fileName, bndFileLocationAndContentTuple);
-
-				return bndFileLocationAndContentTuple;
+				return new BNDSettings(bndFileLocation, FileUtil.read(file));
 			}
 
 			bndFileLocation = StringUtil.replaceLast(
 				bndFileLocation, StringPool.SLASH, StringPool.BLANK);
 		}
+	}
+
+	protected Map<String, BNDSettings> getBNDndSettingsMap() {
+		return _bndSettingsMap;
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws Exception {
@@ -2163,23 +2108,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			releaseVersion = ReleaseInfo.getVersion();
 		}
 		else {
-			Tuple bndFileLocationAndContentTuple =
-				getBNDFileLocationAndContentTuple(fileName);
+			BNDSettings bndSettings = getBNDSettings(fileName);
 
-			if (bndFileLocationAndContentTuple == null) {
+			releaseVersion = bndSettings.getReleaseVersion();
+
+			if (releaseVersion == null) {
 				return null;
 			}
 
-			String bndContent =
-				(String)bndFileLocationAndContentTuple.getObject(1);
-
-			Matcher matcher = bndReleaseVersionPattern.matcher(bndContent);
-
-			if (!matcher.find()) {
-				return null;
-			}
-
-			releaseVersion = matcher.group(1);
+			putBNDSettings(bndSettings);
 		}
 
 		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
@@ -2724,6 +2661,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		_modifiedFileNames.add(file.getAbsolutePath());
 	}
 
+	protected void putBNDSettings(BNDSettings bndSettings) {
+		_bndSettingsMap.put(bndSettings.getFileLocation(), bndSettings);
+	}
+
 	protected Document readXML(String content) throws DocumentException {
 		SAXReader saxReader = SAXReaderFactory.getSAXReader(null, false, false);
 
@@ -3009,10 +2950,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");
-	protected static Pattern bndContentDirPattern = Pattern.compile(
-		"\\scontent=(.*?)(,\\\\|\n|$)");
-	protected static Pattern bndReleaseVersionPattern = Pattern.compile(
-		"Bundle-Version: (.*)\n");
 	protected static Pattern emptyArrayPattern = Pattern.compile(
 		"((\\[\\])+) \\{\\}");
 	protected static Pattern emptyCollectionPattern = Pattern.compile(
@@ -3144,10 +3081,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private Set<String> _annotationsExclusions;
-	private final Map<String, Tuple> _bndFileLocationAndContentMap =
-		new HashMap<>();
-	private final Map<String, Properties> _bndLanguagePropertiesMap =
-		new HashMap<>();
+	private Map<String, BNDSettings> _bndSettingsMap =
+		new ConcurrentHashMap<>();
 	private Map<String, String> _compatClassNamesMap;
 	private String _copyright;
 	private final Pattern _definitionPattern = Pattern.compile(

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
@@ -41,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
 import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
+import com.liferay.portal.search.web.internal.portlet.SearchPortletSearchResultPreferences;
 
 import java.util.List;
 
@@ -71,6 +71,12 @@ public class SearchDisplayContext {
 
 		ThemeDisplaySupplier themeDisplaySupplier =
 			new PortletRequestThemeDisplaySupplier(renderRequest);
+
+		SearchResultPreferences searchResultPreferences =
+			new SearchPortletSearchResultPreferences(
+				portletPreferences, themeDisplaySupplier);
+
+		_searchResultPreferences = searchResultPreferences;
 
 		_themeDisplaySupplier = themeDisplaySupplier;
 
@@ -296,6 +302,10 @@ public class SearchDisplayContext {
 		return _searchContext;
 	}
 
+	public SearchResultPreferences getSearchResultPreferences() {
+		return _searchResultPreferences;
+	}
+
 	public long getSearchScopeGroupId() {
 		SearchScope searchScope = getSearchScope();
 
@@ -366,23 +376,7 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isDisplayResultsInDocumentForm() {
-		if (_displayResultsInDocumentForm != null) {
-			return _displayResultsInDocumentForm;
-		}
-
-		_displayResultsInDocumentForm = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayResultsInDocumentForm", null));
-
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin()) {
-			_displayResultsInDocumentForm = false;
-		}
-
-		return _displayResultsInDocumentForm;
+		return _searchResultPreferences.isDisplayResultsInDocumentForm();
 	}
 
 	public boolean isDLLinkToViewURL() {
@@ -471,14 +465,7 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isViewInContext() {
-		if (_viewInContext != null) {
-			return _viewInContext;
-		}
-
-		_viewInContext = GetterUtil.getBoolean(
-			_portletPreferences.getValue("viewInContext", null), true);
-
-		return _viewInContext;
+		return _searchResultPreferences.isViewInContext();
 	}
 
 	protected void addAssetEntriesFacet(SearchContext searchContext) {
@@ -553,7 +540,6 @@ public class SearchDisplayContext {
 	private Boolean _collatedSpellCheckResultEnabled;
 	private Boolean _displayMainQuery;
 	private Boolean _displayOpenSearchResults;
-	private Boolean _displayResultsInDocumentForm;
 	private Boolean _dlLinkToViewURL;
 	private List<SearchFacet> _enabledSearchFacets;
 	private final Hits _hits;
@@ -571,8 +557,8 @@ public class SearchDisplayContext {
 	private String _searchConfiguration;
 	private final SearchContainer<Document> _searchContainer;
 	private final SearchContext _searchContext;
+	private final SearchResultPreferences _searchResultPreferences;
 	private String _searchScopePreferenceString;
 	private final ThemeDisplaySupplier _themeDisplaySupplier;
-	private Boolean _viewInContext;
 
 }

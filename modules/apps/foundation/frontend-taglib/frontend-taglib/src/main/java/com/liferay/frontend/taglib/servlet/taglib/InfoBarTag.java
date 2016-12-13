@@ -26,8 +26,20 @@ public class InfoBarTag extends BaseBarTag {
 	@Override
 	public int doEndTag() throws JspException {
 		request.setAttribute("liferay-frontend:info-bar:buttons", buttons);
+		request.setAttribute("liferay-frontend:info-bar:fixed", _fixed);
 
 		return super.doEndTag();
+	}
+
+	public void setFixed(boolean fixed) {
+		_fixed = fixed;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_fixed = false;
 	}
 
 	@Override
@@ -43,5 +55,7 @@ public class InfoBarTag extends BaseBarTag {
 	private static final String _END_PAGE = "/info_bar/end.jsp";
 
 	private static final String _START_PAGE = "/info_bar/start.jsp";
+
+	private boolean _fixed;
 
 }

@@ -26,3 +26,14 @@
 		</div>
 	</div>
 </div>
+
+<c:if test="<%= fixed %>">
+	<aui:script require="metal-affix/src/Affix">
+		new metalAffixSrcAffix.default(
+			{
+				element: '.info-bar-container',
+				offsetTop: 15
+			}
+		);
+	</aui:script>
+</c:if>

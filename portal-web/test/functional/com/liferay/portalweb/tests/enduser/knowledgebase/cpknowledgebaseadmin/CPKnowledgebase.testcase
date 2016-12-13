@@ -1,4 +1,5 @@
 <definition component-name="portal-knowledge-base">
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Knowledge Base" />
 
 	<set-up>

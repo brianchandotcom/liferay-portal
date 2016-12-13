@@ -28,15 +28,9 @@ public class SybaseTransformer extends BaseSQLTransformer {
 	public SybaseTransformer() {
 		transformations.add(bitwiseCheckTransformation);
 		transformations.add(castClobTextTransformation);
+		transformations.add(_castLongTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);
-	}
-
-	@Override
-	protected String replaceCastLong(String sql) {
-		Matcher matcher = castLongPattern.matcher(sql);
-
-		return matcher.replaceAll("CONVERT(BIGINT, $1)");
 	}
 
 	@Override
@@ -62,6 +56,12 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
+
+	private Function<String, String> _castLongTransformation = (String sql) -> {
+		Matcher matcher = castLongPattern.matcher(sql);
+
+		return matcher.replaceAll("CONVERT(BIGINT, $1)");
+	};
 
 	private Function<String, String> _modTransformation = (String sql) -> {
 		Matcher matcher = modPattern.matcher(sql);

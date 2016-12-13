@@ -64,7 +64,7 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	public void testReplaceCastLong() {
 		String sql = "select CAST_LONG(foo) from Foo";
 
-		String transformedSql = _transformer.replaceCastLong(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select foo from Foo", transformedSql);
 	}

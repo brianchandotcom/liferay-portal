@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import java.util.function.Function;
 import java.util.regex.Matcher;
 
 /**
@@ -24,18 +25,18 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 	public HypersonicTransformer() {
 		transformations.add(bitwiseCheckDefaultTransformation);
 		transformations.add(castClobTextTransformation);
-	}
-
-	@Override
-	protected String replaceCastLong(String sql) {
-		Matcher matcher = castLongPattern.matcher(sql);
-
-		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+		transformations.add(_castLongTransformation);
 	}
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
+
+	private Function<String, String> _castLongTransformation = (String sql) -> {
+		Matcher matcher = castLongPattern.matcher(sql);
+
+		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");
+	};
 
 }

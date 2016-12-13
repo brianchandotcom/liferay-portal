@@ -26,6 +26,7 @@ import java.util.regex.Matcher;
 public class SybaseTransformer extends BaseSQLTransformer {
 
 	public SybaseTransformer() {
+		transformations.add(bitwiseCheckTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);
 	}

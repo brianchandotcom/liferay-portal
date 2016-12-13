@@ -25,6 +25,8 @@ import java.util.regex.Matcher;
 public class MySQLTransformer extends BaseSQLTransformer {
 
 	public MySQLTransformer(boolean supportsStringCaseSensitiveQuery) {
+		transformations.add(bitwiseCheckTransformation);
+
 		if (!supportsStringCaseSensitiveQuery) {
 			transformations.add(_lowerTransformation);
 		}

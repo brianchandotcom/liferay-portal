@@ -24,12 +24,8 @@ import java.util.regex.Pattern;
 public class DB2Transformer extends BaseSQLTransformer {
 
 	public DB2Transformer() {
+		transformations.add(bitwiseCheckDefaultTransformation);
 		transformations.add(_likeTransformation);
-	}
-
-	@Override
-	protected String replaceBitwiseCheck(String sql) {
-		return sql;
 	}
 
 	@Override

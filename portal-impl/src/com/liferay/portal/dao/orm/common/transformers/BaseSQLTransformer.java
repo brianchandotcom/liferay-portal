@@ -43,7 +43,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		final String[] newSQL = {sql};
 
-		newSQL[0] = replaceBitwiseCheck(newSQL[0]);
 		newSQL[0] = _booleanTransformation.apply(newSQL[0]);
 		newSQL[0] = replaceCastClobText(newSQL[0]);
 		newSQL[0] = replaceCastLong(newSQL[0]);
@@ -69,12 +68,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected List<Function<String, String>> getTransformations() {
 		return transformations;
-	}
-
-	protected String replaceBitwiseCheck(String sql) {
-		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
-
-		return matcher.replaceAll("($1 & $2)");
 	}
 
 	protected String replaceCastClobText(String sql) {
@@ -124,6 +117,16 @@ public abstract class BaseSQLTransformer implements Transformer {
 	protected String replaceSubstr(String sql) {
 		return sql;
 	}
+
+	protected Function<String, String> bitwiseCheckTransformation =
+		(String sql) -> {
+			Matcher matcher = _bitwiseCheckPattern.matcher(sql);
+
+			return matcher.replaceAll("($1 & $2)");
+		};
+
+	protected Function<String, String> bitwiseCheckDefaultTransformation =
+		(String sql) -> sql;
 
 	protected static final Pattern castClobTextPattern = Pattern.compile(
 		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);

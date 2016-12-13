@@ -25,13 +25,9 @@ import java.util.regex.Matcher;
 public class OracleTransformer extends BaseSQLTransformer {
 
 	public OracleTransformer() {
+		transformations.add(bitwiseCheckDefaultTransformation);
 		transformations.add(_escapeTransformation);
 		transformations.add(_notEqualsBlankStringTransformation);
-	}
-
-	@Override
-	protected String replaceBitwiseCheck(String sql) {
-		return sql;
 	}
 
 	@Override

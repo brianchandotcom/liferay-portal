@@ -26,6 +26,7 @@ import java.util.regex.Pattern;
 public class PostgreSQLTransformer extends BaseSQLTransformer {
 
 	public PostgreSQLTransformer() {
+		transformations.add(bitwiseCheckTransformation);
 		transformations.add(_negativeComparisonTransformation);
 	}
 

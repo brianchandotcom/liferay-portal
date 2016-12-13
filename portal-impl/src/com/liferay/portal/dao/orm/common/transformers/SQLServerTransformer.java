@@ -23,6 +23,7 @@ import java.util.regex.Matcher;
 public class SQLServerTransformer extends BaseSQLTransformer {
 
 	public SQLServerTransformer() {
+		transformations.add(bitwiseCheckTransformation);
 		transformations.add(_modTransformation);
 	}
 

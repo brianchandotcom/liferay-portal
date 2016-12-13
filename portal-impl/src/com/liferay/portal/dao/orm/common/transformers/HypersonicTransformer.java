@@ -21,9 +21,8 @@ import java.util.regex.Matcher;
  */
 public class HypersonicTransformer extends BaseSQLTransformer {
 
-	@Override
-	protected String replaceBitwiseCheck(String sql) {
-		return sql;
+	public HypersonicTransformer() {
+		transformations.add(bitwiseCheckDefaultTransformation);
 	}
 
 	@Override

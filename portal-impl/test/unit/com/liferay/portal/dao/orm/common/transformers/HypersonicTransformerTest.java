@@ -46,7 +46,7 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 	public void testReplaceBitwiseCheck() {
 		String sql = "select BITAND(foo,bar) from Foo";
 
-		String transformedSql = _transformer.replaceBitwiseCheck(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals(sql, transformedSql);
 	}

@@ -46,7 +46,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 	public void testReplaceBitwiseCheck() {
 		String sql = "select BITAND(foo,bar) from Foo";
 
-		String transformedSql = _transformer.replaceBitwiseCheck(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select (foo & bar) from Foo", transformedSql);
 	}

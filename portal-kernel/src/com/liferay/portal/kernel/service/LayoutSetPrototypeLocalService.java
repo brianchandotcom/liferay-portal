@@ -87,8 +87,9 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		LayoutSetPrototype layoutSetPrototype);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutSetPrototype(long,
-	long, Map, Map, boolean, boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#addLayoutSetPrototype(long, long, Map, Map, boolean,
+	boolean, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public LayoutSetPrototype addLayoutSetPrototype(long userId,
@@ -187,7 +188,7 @@ public interface LayoutSetPrototypeLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	#updateLayoutSetPrototype(long, Map, Map, boolean, boolean,
 	ServiceContext)}
 	*/

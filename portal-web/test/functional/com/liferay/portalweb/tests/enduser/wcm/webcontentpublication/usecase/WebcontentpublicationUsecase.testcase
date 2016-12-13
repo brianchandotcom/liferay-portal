@@ -315,6 +315,23 @@
 		</execute>
 	</command>
 
+	<command name="AssertGuestRefreshNoConsoleErrors" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaAP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC Webcontent Title" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute function="Refresh" />
+
+		<execute function="AssertConsoleTextNotPresent" value1="NoSuchResourceActionException" />
+	</command>
+
 	<command name="AssetPublisherCategoriesLocalization" priority="3">
 		<execute macro="Navigator#openURL" />
 

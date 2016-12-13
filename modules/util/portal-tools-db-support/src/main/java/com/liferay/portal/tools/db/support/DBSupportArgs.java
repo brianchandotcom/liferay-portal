@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -28,20 +29,26 @@ import java.util.Properties;
  */
 public class DBSupportArgs {
 
-	public String getPassword() {
-		return _properties.getProperty("jdbc.default.password", _password);
+	public String getPassword() throws IOException {
+		Properties properties = _readProperties();
+
+		return properties.getProperty("jdbc.default.password", _password);
 	}
 
 	public File getPropertiesFile() {
 		return _propertiesFile;
 	}
 
-	public String getUrl() {
-		return _properties.getProperty("jdbc.default.url", _url);
+	public String getUrl() throws IOException {
+		Properties properties = _readProperties();
+
+		return properties.getProperty("jdbc.default.url", _url);
 	}
 
-	public String getUserName() {
-		return _properties.getProperty("jdbc.default.username", _userName);
+	public String getUserName() throws IOException {
+		Properties properties = _readProperties();
+
+		return properties.getProperty("jdbc.default.username", _userName);
 	}
 
 	public void setPassword(String password) {
@@ -50,16 +57,6 @@ public class DBSupportArgs {
 
 	public void setPropertiesFile(File propertiesFile) throws IOException {
 		_propertiesFile = propertiesFile;
-
-		_properties.clear();
-
-		if (_propertiesFile != null) {
-			try (FileInputStream fileInputStream = new FileInputStream(
-					_propertiesFile)) {
-
-				_properties.load(fileInputStream);
-			}
-		}
 	}
 
 	public void setUrl(String url) {
@@ -74,6 +71,29 @@ public class DBSupportArgs {
 		return _help;
 	}
 
+	private Properties _readProperties() throws IOException {
+		if (Objects.equals(_cachedPropertiesFile, _propertiesFile)) {
+			return _cachedProperties;
+		}
+
+		_cachedProperties.clear();
+
+		if (_propertiesFile != null) {
+			try (FileInputStream fileInputStream = new FileInputStream(
+					_propertiesFile)) {
+
+				_cachedProperties.load(fileInputStream);
+			}
+		}
+
+		_cachedPropertiesFile = _propertiesFile;
+
+		return _cachedProperties;
+	}
+
+	private final Properties _cachedProperties = new Properties();
+	private File _cachedPropertiesFile;
+
 	@Parameter(
 		description = "Print this message.", help = true,
 		names = {"-h", "--help"}
@@ -85,8 +105,6 @@ public class DBSupportArgs {
 		names = {"-p", "--password"}, password = true
 	)
 	private String _password;
-
-	private final Properties _properties = new Properties();
 
 	@Parameter(
 		converter = FileConverter.class,

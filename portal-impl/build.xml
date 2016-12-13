@@ -563,6 +563,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			classname="com.liferay.source.formatter.SourceFormatter"
 			classpathref="source.formatter.classpath"
 			dir="${source.formatter.dir}"
+			failonerror="${source.fail.on.error}"
 			fork="true"
 			newenvironment="true"
 		>

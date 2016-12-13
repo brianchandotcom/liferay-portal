@@ -2257,6 +2257,7 @@ information. Make sure to commit in all build services results.
 
 				<ant dir="portal-impl" target="format-source">
 					<property name="source.auto.fix" value="false" />
+					<property name="source.fail.on.error" value="true" />
 					<property name="source.formatter.excludes" value="${source.formatter.excludes}" />
 					<property name="source.print.errors" value="true" />
 					<property name="source.throw.exception" value="true" />

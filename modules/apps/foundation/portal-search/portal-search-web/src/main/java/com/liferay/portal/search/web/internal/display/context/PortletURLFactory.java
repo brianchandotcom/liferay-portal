@@ -14,9 +14,7 @@
 
 package com.liferay.portal.search.web.internal.display.context;
 
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -24,8 +22,6 @@ import javax.portlet.PortletURL;
  */
 public interface PortletURLFactory {
 
-	public PortletURL getPortletURL(
-			PortletRequest portletRequest, MimeResponse mimeResponse)
-		throws PortletException;
+	public PortletURL getPortletURL() throws PortletException;
 
 }

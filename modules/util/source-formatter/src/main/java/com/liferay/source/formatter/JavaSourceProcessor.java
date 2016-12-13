@@ -193,7 +193,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkBndInheritAnnotationOption() {
-		Map<String, BNDSettings> bndSettingsMap = getBNDndSettingsMap();
+		Map<String, BNDSettings> bndSettingsMap = getBNDSettingsMap();
 
 		for (Map.Entry<String, BNDSettings> entry : bndSettingsMap.entrySet()) {
 			BNDSettings bndSettings = entry.getValue();

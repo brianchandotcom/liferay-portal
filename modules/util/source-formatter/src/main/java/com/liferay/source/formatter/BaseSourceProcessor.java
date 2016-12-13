@@ -1741,7 +1741,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected Map<String, BNDSettings> getBNDndSettingsMap() {
+	protected Map<String, BNDSettings> getBNDSettingsMap() {
 		return _bndSettingsMap;
 	}
 

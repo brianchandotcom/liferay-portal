@@ -787,9 +787,7 @@ public class UserFinderImpl extends UserFinderBaseImpl implements UserFinder {
 				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
 			}
 
-			int stringBundlerSize = (paramsList.size() * 4) + 1;
-
-			StringBundler sb = new StringBundler(stringBundlerSize);
+			StringBundler sb = new StringBundler(paramsList.size() * 3 + 2);
 
 			for (int i = 0; i < paramsList.size(); i++) {
 				if (i == 0) {

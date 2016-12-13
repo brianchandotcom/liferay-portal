@@ -135,15 +135,11 @@ public class GroupSearchProvider {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (isFilterManageableGroups(portletRequest)) {
-			User user = themeDisplay.getUser();
+		User user = themeDisplay.getUser();
 
-			groups = user.getMySiteGroups(
-				new String[] {
-					Group.class.getName(), Organization.class.getName()
-				},
-				QueryUtil.ALL_POS);
-		}
+		groups = user.getMySiteGroups(
+			new String[] {Group.class.getName(), Organization.class.getName()},
+			QueryUtil.ALL_POS);
 
 		long groupId = ParamUtil.getLong(
 			portletRequest, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);

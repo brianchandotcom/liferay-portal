@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0
+ * @deprecated As of 2.10.0
  */
 @Deprecated
 public class ExtDeployer extends BaseDeployer {

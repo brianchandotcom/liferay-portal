@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Jorge Ferrer
- * @deprecated As of 7.0.0
+ * @deprecated As of 2.6.0
  */
 @Deprecated
 public class AssetCategoriesSelectorTag extends IncludeTag {

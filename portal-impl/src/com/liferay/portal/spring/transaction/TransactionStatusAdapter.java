@@ -37,7 +37,7 @@ public class TransactionStatusAdapter
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 2.10.0, replaced by {@link
 	 *             #TransactionStatusAdapter(PlatformTransactionManager,
 	 *             TransactionStatus)}
 	 */

@@ -104,7 +104,7 @@ public class CachelessTableMapperImpl
 		}
 
 		/**
-		 * @deprecated As of 7.0.0, replaced by {@link #getPortalCacheName()}
+		 * @deprecated As of 2.18.0, replaced by {@link #getPortalCacheName()}
 		 */
 		@Deprecated
 		@Override

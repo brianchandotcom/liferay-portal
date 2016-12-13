@@ -134,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECAPTCHA</td>
+	<td>//iframe[contains(@title,'recaptcha')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_ORGANIZATION</td>
 	<td>//iframe[contains(@id,'selectOrganization_iframe')]</td>
 	<td></td>

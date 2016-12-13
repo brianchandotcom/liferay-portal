@@ -2162,6 +2162,27 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
+	<command name="viewCaptchaPG">
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="AssertClick" locator1="Link#CREATE_ACCOUNT" value1="Create Account" />
+
+		<if>
+			<equals arg1="${captchaType}" arg2="captcha" />
+			<then>
+				<execute function="AssertElementPresent#assertElementPresent" locator1="SignInCreateAccount#CAPTCHA_IMAGE" />
+			</then>
+			<elseif>
+				<equals arg1="${captchaType}" arg2="recaptcha" />
+				<then>
+					<execute function="SelectFrame" locator1="IFrame#RECAPTCHA" />
+
+					<execute function="AssertElementPresent#assertElementPresent" locator1="SignInCreateAccount#RECAPTCHA_LABEL" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
 	<command name="viewCP">
 		<if>
 			<equals arg1="${userEmailAddressVariation}" arg2="At" />

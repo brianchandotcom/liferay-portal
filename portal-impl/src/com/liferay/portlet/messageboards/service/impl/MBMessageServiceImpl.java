@@ -589,8 +589,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getMessageDisplay(long,
-	 *             int)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getMessageDisplay(long, int)}
 	 */
 	@Deprecated
 	@Override

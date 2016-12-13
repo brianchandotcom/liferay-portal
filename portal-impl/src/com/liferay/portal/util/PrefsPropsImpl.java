@@ -238,8 +238,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getLong(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getLong(PortletPreferences, String)}
 	 */
 	@Deprecated
 	@Override
@@ -250,8 +250,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getLong(PortletPreferences,
-	 *             String, long)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getLong(PortletPreferences, String, long)}
 	 */
 	@Deprecated
 	@Override
@@ -340,8 +340,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getShort(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getShort(PortletPreferences, String)}
 	 */
 	@Deprecated
 	@Override
@@ -352,8 +352,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getShort(PortletPreferences,
-	 *             String, short)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getShort(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	@Override

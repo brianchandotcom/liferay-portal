@@ -112,8 +112,9 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, {@link #addUserNotificationEvent(long, String,
-	 *             long, int, long, String, boolean, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, {@link
+	 *             #addUserNotificationEvent(long, String, long, int, long,
+	 *             String, boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

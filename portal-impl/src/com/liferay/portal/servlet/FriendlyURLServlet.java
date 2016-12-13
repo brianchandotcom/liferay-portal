@@ -181,7 +181,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected String getFriendlyURL(String pathInfo) {
@@ -207,7 +208,8 @@ public class FriendlyURLServlet extends HttpServlet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected Object[] getRedirect(

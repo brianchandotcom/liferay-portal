@@ -647,9 +647,11 @@ public abstract class BaseBuild implements Build {
 		_parentBuild = parentBuild;
 
 		try {
-			JenkinsResultsParserUtil.toString(
+			String archiveMarkerContent = JenkinsResultsParserUtil.toString(
 				url + "/archive-marker", false, 0, 0, 0);
-			fromArchive = true;
+
+			fromArchive =
+				archiveMarkerContent != null && !archiveMarkerContent.isEmpty();
 		}
 		catch (IOException ioe) {
 			fromArchive = false;

@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -32,12 +31,10 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,24 +57,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eudaldo Alonso
  */
 public class SearchDisplayContext {
-
-	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
-	 *             SearchDisplayContextFactoryUtil#create(RenderRequest,
-	 *             RenderResponse, PortletPreferences)}
-	 */
-	@Deprecated
-	public SearchDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		this(
-			renderRequest, renderResponse, portletPreferences,
-			PortalUtil.getPortal(), HtmlUtil.getHtml(),
-			LanguageUtil.getLanguage(), null, new IndexSearchPropsValuesImpl(),
-			new PortletURLFactoryImpl());
-	}
 
 	public SearchDisplayContext(
 			RenderRequest renderRequest, RenderResponse renderResponse,

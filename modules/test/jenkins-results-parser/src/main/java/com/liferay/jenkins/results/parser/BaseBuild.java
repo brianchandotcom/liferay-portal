@@ -631,6 +631,8 @@ public abstract class BaseBuild implements Build {
 						(result != null)) {
 
 						setStatus("completed");
+
+						recordTestResults();
 					}
 				}
 			}

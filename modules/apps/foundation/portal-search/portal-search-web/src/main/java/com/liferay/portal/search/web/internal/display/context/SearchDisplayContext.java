@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
 import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
@@ -70,6 +69,11 @@ public class SearchDisplayContext {
 		_indexSearchPropsValues = indexSearchPropsValues;
 		_portletURLFactory = portletURLFactory;
 
+		ThemeDisplaySupplier themeDisplaySupplier =
+			new PortletRequestThemeDisplaySupplier(renderRequest);
+
+		_themeDisplaySupplier = themeDisplaySupplier;
+
 		String keywords = getKeywords();
 
 		if (keywords == null) {
@@ -82,9 +86,6 @@ public class SearchDisplayContext {
 
 		HttpServletRequest request = portal.getHttpServletRequest(
 			_renderRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String emptyResultMessage = language.format(
 			request, "no-results-were-found-that-matched-the-keywords-x",
@@ -107,7 +108,7 @@ public class SearchDisplayContext {
 
 		addScopeFacet(searchContext);
 
-		addEnabledSearchFacets(themeDisplay.getCompanyId(), searchContext);
+		addEnabledSearchFacets(searchContext);
 
 		Hits hits = facetedSearcher.search(searchContext);
 
@@ -488,9 +489,12 @@ public class SearchDisplayContext {
 		searchContext.addFacet(assetEntriesFacet);
 	}
 
-	protected void addEnabledSearchFacets(
-			long companyId, SearchContext searchContext)
+	protected void addEnabledSearchFacets(SearchContext searchContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = _themeDisplaySupplier.getThemeDisplay();
+
+		long companyId = themeDisplay.getCompanyId();
 
 		for (SearchFacet searchFacet : getEnabledSearchFacets()) {
 			searchFacet.init(
@@ -542,7 +546,7 @@ public class SearchDisplayContext {
 	}
 
 	protected ThemeDisplay getThemeDisplay() {
-		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		return _themeDisplaySupplier.getThemeDisplay();
 	}
 
 	private Integer _collatedSpellCheckResultDisplayThreshold;
@@ -568,6 +572,7 @@ public class SearchDisplayContext {
 	private final SearchContainer<Document> _searchContainer;
 	private final SearchContext _searchContext;
 	private String _searchScopePreferenceString;
+	private final ThemeDisplaySupplier _themeDisplaySupplier;
 	private Boolean _viewInContext;
 
 }

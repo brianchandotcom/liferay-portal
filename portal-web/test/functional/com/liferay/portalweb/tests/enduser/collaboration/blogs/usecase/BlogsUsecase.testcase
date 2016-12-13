@@ -2000,6 +2000,8 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute macro="PortletEntry#publish" />
 
 		<execute macro="Navigator#gotoPage">

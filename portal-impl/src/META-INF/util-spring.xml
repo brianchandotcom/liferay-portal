@@ -186,7 +186,7 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil" id="com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil">
-		   <property name="rawMetadataProcessor" ref="com.liferay.portal.kernel.metadata.RawMetadataProcessor" />
+		<property name="rawMetadataProcessor" ref="com.liferay.portal.kernel.metadata.RawMetadataProcessor" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil" id="com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil">
 		<property name="microsoftTranslatorFactory">

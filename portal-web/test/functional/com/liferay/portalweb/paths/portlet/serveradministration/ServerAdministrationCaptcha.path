@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>ServerAdministrationCaptcha</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ServerAdministrationCaptcha</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ENABLE_RECAPTCHA_CHECKBOX</td>
+	<td>//label[contains(.,'Enable reCAPTCHA')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECAPTCHA_PRIVATE_KEY</td>
+	<td>//div[label[contains(.,'Private Key')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECAPTCHA_PUBLIC_KEY</td>
+	<td>//div[label[contains(.,'Public Key')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

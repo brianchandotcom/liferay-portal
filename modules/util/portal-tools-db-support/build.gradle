@@ -29,3 +29,7 @@ test {
 	dependsOn jar
 	systemProperty "db.support.classpath", jar.archivePath
 }
+
+updateFileVersions {
+	match(/com\.liferay\.portal\.tools\.db\.support=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+}

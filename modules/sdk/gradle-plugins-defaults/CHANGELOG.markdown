@@ -754,6 +754,11 @@ moved to [Liferay Gradle Plugins].
 the `tools/sdk/dependencies/com.liferay.source.formatter/lib` directory, if
 found.
 
+## 2.2.3 - 2016-12-13
+
+### Changed
+- [LPS-67688]: Update the [Liferay Gradle Plugins] dependency to version 3.0.50.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -773,6 +778,7 @@ found.
 [LPS-67434]: https://issues.liferay.com/browse/LPS-67434
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67658]: https://issues.liferay.com/browse/LPS-67658
+[LPS-67688]: https://issues.liferay.com/browse/LPS-67688
 [LPS-67694]: https://issues.liferay.com/browse/LPS-67694
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766
 [LPS-67804]: https://issues.liferay.com/browse/LPS-67804

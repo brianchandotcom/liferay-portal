@@ -43,7 +43,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		final String[] newSQL = {sql};
 
-		newSQL[0] = replaceIntegerDivision(newSQL[0]);
 		newSQL[0] = replaceNullDate(newSQL[0]);
 		newSQL[0] = replaceSubstr(newSQL[0]);
 		newSQL[0] = replaceMod(newSQL[0]);
@@ -66,12 +65,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
-	}
-
-	protected String replaceIntegerDivision(String sql) {
-		Matcher matcher = integerDivisionPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 / $2");
 	}
 
 	protected String replaceMod(String sql) {
@@ -146,6 +139,14 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected static final Pattern integerDivisionPattern = Pattern.compile(
 		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	protected Function<String, String> integerDivisionTransformation =
+		(String sql) -> {
+			Matcher matcher = integerDivisionPattern.matcher(sql);
+
+			return matcher.replaceAll("$1 / $2");
+		};
+
 	protected static final Pattern modPattern = Pattern.compile(
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	protected static final Pattern substrPattern = Pattern.compile(

@@ -31,6 +31,7 @@ public class DB2Transformer extends BaseSQLTransformer {
 		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(inStrDefaultTransformation);
+		transformations.add(integerDivisionTransformation);
 		transformations.add(_likeTransformation);
 	}
 

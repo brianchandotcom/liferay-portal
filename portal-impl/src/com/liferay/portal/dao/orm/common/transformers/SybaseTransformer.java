@@ -33,6 +33,7 @@ public class SybaseTransformer extends BaseSQLTransformer {
 		transformations.add(castTextTransformation);
 		transformations.add(_crossJoinTransformation);
 		transformations.add(_inStrTransformation);
+		transformations.add(integerDivisionTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);
 	}

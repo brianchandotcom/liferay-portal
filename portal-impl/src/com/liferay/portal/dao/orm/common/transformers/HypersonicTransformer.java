@@ -30,6 +30,7 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(inStrDefaultTransformation);
+		transformations.add(integerDivisionTransformation);
 	}
 
 	@Override

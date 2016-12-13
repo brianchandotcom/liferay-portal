@@ -97,7 +97,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 	public void testReplaceIntegerDivision() {
 		String sql = "select INTEGER_DIV(foo,bar) from Foo";
 
-		String transformedSql = _transformer.replaceIntegerDivision(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select foo / bar from Foo", transformedSql);
 	}

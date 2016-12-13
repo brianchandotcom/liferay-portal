@@ -32,22 +32,23 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(inStrDefaultTransformation);
+		transformations.add(_integerDivisionTransformation);
 
 		if (!supportsStringCaseSensitiveQuery) {
 			transformations.add(_lowerTransformation);
 		}
 	}
 
-	@Override
-	protected String replaceIntegerDivision(String sql) {
-		Matcher matcher = integerDivisionPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 DIV $2");
-	}
-
 	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
 
 	private static final String _LOWER_OPEN = "lower(";
+
+	private Function<String, String> _integerDivisionTransformation =
+		(String sql) -> {
+			Matcher matcher = integerDivisionPattern.matcher(sql);
+
+			return matcher.replaceAll("$1 DIV $2");
+		};
 
 	private Function<String, String> _lowerTransformation = (String sql) -> {
 		int x = sql.indexOf(_LOWER_OPEN);

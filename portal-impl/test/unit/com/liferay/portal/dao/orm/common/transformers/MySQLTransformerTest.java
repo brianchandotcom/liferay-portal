@@ -94,7 +94,7 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	public void testReplaceIntegerDivision() {
 		String sql = "select INTEGER_DIV(foo,bar) from Foo";
 
-		String transformedSql = _transformer.replaceIntegerDivision(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select foo DIV bar from Foo", transformedSql);
 	}

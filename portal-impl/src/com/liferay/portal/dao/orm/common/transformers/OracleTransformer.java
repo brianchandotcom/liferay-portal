@@ -32,6 +32,7 @@ public class OracleTransformer extends BaseSQLTransformer {
 		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(inStrDefaultTransformation);
+		transformations.add(_integerDivisionTransformation);
 		transformations.add(_escapeTransformation);
 		transformations.add(_notEqualsBlankStringTransformation);
 	}
@@ -39,13 +40,6 @@ public class OracleTransformer extends BaseSQLTransformer {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
-	}
-
-	@Override
-	protected String replaceIntegerDivision(String sql) {
-		Matcher matcher = integerDivisionPattern.matcher(sql);
-
-		return matcher.replaceAll("TRUNC($1 / $2)");
 	}
 
 	private Function<String, String> _castClobTextTransformation =
@@ -57,6 +51,13 @@ public class OracleTransformer extends BaseSQLTransformer {
 
 	private Function<String, String> _escapeTransformation =
 		(String sql) -> StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
+
+	private Function<String, String> _integerDivisionTransformation =
+		(String sql) -> {
+			Matcher matcher = integerDivisionPattern.matcher(sql);
+
+			return matcher.replaceAll("TRUNC($1 / $2)");
+		};
 
 	private Function<String, String> _notEqualsBlankStringTransformation =
 		(String sql) -> StringUtil.replace(sql, " != ''", " IS NOT NULL");

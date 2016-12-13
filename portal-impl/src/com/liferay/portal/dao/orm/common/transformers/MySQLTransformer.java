@@ -31,6 +31,7 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		transformations.add(castLongTransformation);
 		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
+		transformations.add(inStrDefaultTransformation);
 
 		if (!supportsStringCaseSensitiveQuery) {
 			transformations.add(_lowerTransformation);

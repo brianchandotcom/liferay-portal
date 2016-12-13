@@ -29,6 +29,7 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 		transformations.add(castLongTransformation);
 		transformations.add(castTextTransformation);
 		transformations.add(crossJoinDefaultTransformation);
+		transformations.add(_inStrTransformation);
 		transformations.add(_modTransformation);
 	}
 
@@ -38,18 +39,17 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 	}
 
 	@Override
-	protected String replaceInStr(String sql) {
-		Matcher matcher = instrPattern.matcher(sql);
-
-		return matcher.replaceAll("CHARINDEX($2, $1)");
-	}
-
-	@Override
 	protected String replaceSubstr(String sql) {
 		Matcher matcher = substrPattern.matcher(sql);
 
 		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
+
+	private Function<String, String> _inStrTransformation = (String sql) -> {
+		Matcher matcher = instrPattern.matcher(sql);
+
+		return matcher.replaceAll("CHARINDEX($2, $1)");
+	};
 
 	private Function<String, String> _modTransformation = (String sql) -> {
 		Matcher matcher = modPattern.matcher(sql);

@@ -87,7 +87,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 	public void testReplaceInStr() {
 		String sql = "select INSTR(foo) from Foo";
 
-		String transformedSql = _transformer.replaceInStr(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals(sql, transformedSql);
 	}

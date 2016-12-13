@@ -15,6 +15,7 @@
 package com.liferay.document.library.item.selector.web.internal.file;
 
 import com.liferay.document.library.item.selector.web.internal.BaseDLItemSelectorView;
+import com.liferay.document.library.item.selector.web.internal.constants.DLItemSelectorViewConstants;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
@@ -31,7 +32,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(
-	property = {"item.selector.view.order:Integer=100"},
+	property = {
+		"item.selector.view.key=" + DLItemSelectorViewConstants.DL_FILE_ITEM_SELECTOR_VIEW_KEY,
+		"item.selector.view.order:Integer=100"
+	},
 	service = ItemSelectorView.class
 )
 public class DLFileItemSelectorView

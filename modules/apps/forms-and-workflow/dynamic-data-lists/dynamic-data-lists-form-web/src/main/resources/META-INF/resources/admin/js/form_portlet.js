@@ -240,9 +240,9 @@ AUI.add(
 
 						return {
 							definition: definition,
-							description: instance.get('description'),
+							description: instance.get('description').trim(),
 							layout: layout,
-							name: instance.get('name'),
+							name: instance.get('name').trim(),
 							rules: rules
 						};
 					},

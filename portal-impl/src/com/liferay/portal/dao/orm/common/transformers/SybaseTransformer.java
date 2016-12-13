@@ -25,14 +25,9 @@ import java.util.regex.Matcher;
  */
 public class SybaseTransformer extends BaseSQLTransformer {
 
-	@Override
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
-		sql = _modTransformation.apply(sql);
-		sql = _replaceTransformation.apply(sql);
-
-		return sql;
+	public SybaseTransformer() {
+		transformations.add(_modTransformation);
+		transformations.add(_replaceTransformation);
 	}
 
 	@Override

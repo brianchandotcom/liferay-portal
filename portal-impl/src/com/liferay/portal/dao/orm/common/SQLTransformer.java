@@ -84,7 +84,8 @@ public class SQLTransformer {
 			_transformer = new HypersonicTransformer();
 		}
 		else if (dbType == DBType.MYSQL) {
-			_transformer = new MySQLTransformer();
+			_transformer = new MySQLTransformer(
+				db.isSupportsStringCaseSensitiveQuery());
 		}
 		else if (dbType == DBType.ORACLE) {
 			_transformer = new OracleTransformer();

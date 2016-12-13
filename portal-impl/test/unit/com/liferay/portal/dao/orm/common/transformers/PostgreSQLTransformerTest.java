@@ -14,41 +14,31 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
+@PrepareForTest(DBManagerUtil.class)
+@RunWith(PowerMockRunner.class)
 public class PostgreSQLTransformerTest implements TransformerTestCase {
 
-	@Override
-	@Test
-	public void testPostTransform() {
-		String sql = "select * from Foo";
+	@Before
+	public void setUp() {
+		PostgreSQLDB db = new PostgreSQLDB(1, 0);
 
-		String transformedSql = _transformer.postTransform(false, sql);
+		mockDB(db);
 
-		Assert.assertEquals(sql, transformedSql);
-
-		transformedSql = _transformer.postTransform(true, sql);
-
-		Assert.assertEquals(sql, transformedSql);
-	}
-
-	@Test
-	public void testPostTransformReplaceNegativeComparison() {
-		String sql = "select * from Foo where foo != -1";
-
-		String transformedSql = _transformer.postTransform(false, sql);
-
-		Assert.assertEquals(
-			"select * from Foo where foo != ( -1)", transformedSql);
-
-		transformedSql = _transformer.postTransform(true, sql);
-
-		Assert.assertEquals(
-			"select * from Foo where foo != ( -1)", transformedSql);
+		_transformer.setDB(db);
 	}
 
 	@Override
@@ -151,6 +141,25 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 		String transformedSql = _transformer.replaceSubstr(sql);
 
 		Assert.assertEquals(sql, transformedSql);
+	}
+
+	@Test
+	public void testTransform() {
+		String sql = "select * from Foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals(sql, transformedSql);
+	}
+
+	@Test
+	public void testTransformReplaceNegativeComparison() {
+		String sql = "select * from Foo where foo != -1";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals(
+			"select * from Foo where foo != ( -1)", transformedSql);
 	}
 
 	private final PostgreSQLTransformer _transformer =

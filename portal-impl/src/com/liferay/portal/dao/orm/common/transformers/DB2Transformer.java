@@ -23,13 +23,8 @@ import java.util.regex.Pattern;
  */
 public class DB2Transformer extends BaseSQLTransformer {
 
-	@Override
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
-		sql = _likeTransformation.apply(sql);
-
-		return sql;
+	public DB2Transformer() {
+		transformations.add(_likeTransformation);
 	}
 
 	@Override

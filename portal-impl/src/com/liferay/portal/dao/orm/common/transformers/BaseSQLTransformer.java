@@ -41,37 +41,34 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return sql;
 		}
 
-		String newSQL = sql;
+		final String[] newSQL = {sql};
 
-		newSQL = replaceBitwiseCheck(newSQL);
-		newSQL = _booleanTransformation.apply(newSQL);
-		newSQL = replaceCastClobText(newSQL);
-		newSQL = replaceCastLong(newSQL);
-		newSQL = _castTextTransformation.apply(newSQL);
-		newSQL = replaceCrossJoin(newSQL);
-		newSQL = replaceInStr(newSQL);
-		newSQL = replaceIntegerDivision(newSQL);
-		newSQL = replaceNullDate(newSQL);
-		newSQL = replaceSubstr(newSQL);
+		newSQL[0] = replaceBitwiseCheck(newSQL[0]);
+		newSQL[0] = _booleanTransformation.apply(newSQL[0]);
+		newSQL[0] = replaceCastClobText(newSQL[0]);
+		newSQL[0] = replaceCastLong(newSQL[0]);
+		newSQL[0] = _castTextTransformation.apply(newSQL[0]);
+		newSQL[0] = replaceCrossJoin(newSQL[0]);
+		newSQL[0] = replaceInStr(newSQL[0]);
+		newSQL[0] = replaceIntegerDivision(newSQL[0]);
+		newSQL[0] = replaceNullDate(newSQL[0]);
+		newSQL[0] = replaceSubstr(newSQL[0]);
+		newSQL[0] = replaceMod(newSQL[0]);
+		newSQL[0] = replaceReplace(newSQL[0]);
 
-		newSQL = postTransform(db.isSupportsStringCaseSensitiveQuery(), newSQL);
+		transformations.forEach(
+			transformation -> newSQL[0] = transformation.apply(newSQL[0]));
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Original SQL " + sql);
-			_log.debug("Modified SQL " + newSQL);
+			_log.debug("Modified SQL " + newSQL[0]);
 		}
 
-		return newSQL;
+		return newSQL[0];
 	}
 
 	protected List<Function<String, String>> getTransformations() {
 		return transformations;
-	}
-
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
-		return sql;
 	}
 
 	protected String replaceBitwiseCheck(String sql) {

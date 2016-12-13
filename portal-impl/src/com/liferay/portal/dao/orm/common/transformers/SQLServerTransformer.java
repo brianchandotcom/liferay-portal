@@ -22,13 +22,8 @@ import java.util.regex.Matcher;
  */
 public class SQLServerTransformer extends BaseSQLTransformer {
 
-	@Override
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
-		sql = _modTransformation.apply(sql);
-
-		return sql;
+	public SQLServerTransformer() {
+		transformations.add(_modTransformation);
 	}
 
 	@Override

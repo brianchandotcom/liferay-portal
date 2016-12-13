@@ -14,12 +14,21 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Manuel de la Peña
  */
 public interface TransformerTestCase {
 
-	public void testPostTransform();
+	public default void mockDB(DB db) {
+		PowerMockito.mockStatic(DBManagerUtil.class);
+
+		PowerMockito.when(DBManagerUtil.getDB()).thenReturn(db);
+	}
 
 	public void testReplaceBitwiseCheck();
 

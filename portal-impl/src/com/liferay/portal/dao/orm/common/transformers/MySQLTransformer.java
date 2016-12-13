@@ -24,15 +24,10 @@ import java.util.regex.Matcher;
  */
 public class MySQLTransformer extends BaseSQLTransformer {
 
-	@Override
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
+	public MySQLTransformer(boolean supportsStringCaseSensitiveQuery) {
 		if (!supportsStringCaseSensitiveQuery) {
-			sql = _lowerTransformation.apply(sql);
+			transformations.add(_lowerTransformation);
 		}
-
-		return sql;
 	}
 
 	@Override

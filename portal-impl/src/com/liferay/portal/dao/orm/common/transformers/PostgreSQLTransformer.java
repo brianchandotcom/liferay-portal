@@ -25,13 +25,8 @@ import java.util.regex.Pattern;
  */
 public class PostgreSQLTransformer extends BaseSQLTransformer {
 
-	@Override
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
-		sql = _negativeComparisonTransformation.apply(sql);
-
-		return sql;
+	public PostgreSQLTransformer() {
+		transformations.add(_negativeComparisonTransformation);
 	}
 
 	@Override

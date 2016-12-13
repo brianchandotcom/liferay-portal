@@ -14,78 +14,29 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.dao.db.MySQLDB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Manuel de la Peña
  */
+@PrepareForTest(DBManagerUtil.class)
+@RunWith(PowerMockRunner.class)
 public class MySQLTransformerTest implements TransformerTestCase {
 
-	@Override
-	@Test
-	public void testPostTransform() {
-		String sql = "select * from Foo";
+	@Before
+	public void setUp() {
+		mockDB(_db);
 
-		String transformedSql = _transformer.postTransform(
-			_SUPPORTS_STRING_CASE_SENSITIVE_QUERY, sql);
-
-		Assert.assertEquals(sql, transformedSql);
-	}
-
-	@Test
-	public void testPostTransformLower() {
-		String sql = "select lower(foo) from Foo";
-
-		String transformedSql = _transformer.postTransform(
-			_SUPPORTS_STRING_CASE_SENSITIVE_QUERY, sql);
-
-		Assert.assertEquals("select foo from Foo", transformedSql);
-	}
-
-	@Test
-	public void testPostTransformLowerMultiple() {
-		String sql = "select lower(foo), bar, lower(baaz) from Foo";
-
-		String transformedSql = _transformer.postTransform(
-			_SUPPORTS_STRING_CASE_SENSITIVE_QUERY, sql);
-
-		Assert.assertEquals("select foo, bar, baaz from Foo", transformedSql);
-	}
-
-	@Test
-	public void testPostTransformLowerRecursive() {
-		String sql = "select lower( lower(foo)) from Foo";
-
-		String transformedSql = _transformer.postTransform(
-			_SUPPORTS_STRING_CASE_SENSITIVE_QUERY, sql);
-
-		Assert.assertEquals("select  lower(foo) from Foo", transformedSql);
-	}
-
-	@Test
-	public void testPostTransformLowerWithoutClosing() {
-		String sql = "select lower(foo from Foo";
-
-		String transformedSql = _transformer.postTransform(
-			_SUPPORTS_STRING_CASE_SENSITIVE_QUERY, sql);
-
-		Assert.assertEquals(sql, transformedSql);
-	}
-
-	@Test
-	public void testPostTransformSupportsStringCaseSensitiveQuery() {
-		String sql = "select * from foo";
-
-		String transformedSql = _transformer.postTransform(true, sql);
-
-		Assert.assertEquals("select * from foo", transformedSql);
-
-		sql = "select lower(foo) from Foo";
-
-		transformedSql = _transformer.postTransform(true, sql);
-
-		Assert.assertEquals(sql, transformedSql);
+		_transformer.setDB(_db);
 	}
 
 	@Override
@@ -188,8 +139,75 @@ public class MySQLTransformerTest implements TransformerTestCase {
 		Assert.assertEquals(sql, transformedSql);
 	}
 
+	@Test
+	public void testTransform() {
+		String sql = "select * from Foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals(sql, transformedSql);
+	}
+
+	@Test
+	public void testTransformLower() {
+		String sql = "select lower(foo) from Foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals("select foo from Foo", transformedSql);
+	}
+
+	@Test
+	public void testTransformLowerMultiple() {
+		String sql = "select lower(foo), bar, lower(baaz) from Foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals("select foo, bar, baaz from Foo", transformedSql);
+	}
+
+	@Test
+	public void testTransformLowerRecursive() {
+		String sql = "select lower( lower(foo)) from Foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals("select  lower(foo) from Foo", transformedSql);
+	}
+
+	@Test
+	public void testTransformLowerWithoutClosing() {
+		String sql = "select lower(foo from Foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals(sql, transformedSql);
+	}
+
+	@Test
+	public void testTransformSupportsStringCaseSensitiveQuery() {
+		_transformer = new MySQLTransformer(true);
+
+		_transformer.setDB(_db);
+
+		String sql = "select * from foo";
+
+		String transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals("select * from foo", transformedSql);
+
+		sql = "select lower(foo) from Foo";
+
+		transformedSql = _transformer.transform(sql);
+
+		Assert.assertEquals(sql, transformedSql);
+	}
+
 	private static final boolean _SUPPORTS_STRING_CASE_SENSITIVE_QUERY = false;
 
-	private final MySQLTransformer _transformer = new MySQLTransformer();
+	private final MySQLDB _db = new MySQLDB(5, 7);
+
+	private MySQLTransformer _transformer = new MySQLTransformer(
+		_SUPPORTS_STRING_CASE_SENSITIVE_QUERY);
 
 }

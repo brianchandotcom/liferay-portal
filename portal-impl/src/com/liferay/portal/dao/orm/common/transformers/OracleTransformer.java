@@ -24,14 +24,9 @@ import java.util.regex.Matcher;
  */
 public class OracleTransformer extends BaseSQLTransformer {
 
-	@Override
-	protected String postTransform(
-		boolean supportsStringCaseSensitiveQuery, String sql) {
-
-		sql = _escapeTransformation.apply(sql);
-		sql = _notEqualsBlankStringTransformation.apply(sql);
-
-		return sql;
+	public OracleTransformer() {
+		transformations.add(_escapeTransformation);
+		transformations.add(_notEqualsBlankStringTransformation);
 	}
 
 	@Override

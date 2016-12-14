@@ -34,6 +34,7 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 		transformations.add(nullDateTransformation);
 		transformations.add(_substrTransformation);
 		transformations.add(_modTransformation);
+		transformations.add(replaceTransformation);
 	}
 
 	@Override

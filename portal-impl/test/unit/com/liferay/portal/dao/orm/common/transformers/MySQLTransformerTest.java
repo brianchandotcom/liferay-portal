@@ -124,7 +124,7 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	public void testReplaceReplace() {
 		String sql = "select replace(foo) from Foo";
 
-		String transformedSql = _transformer.replaceReplace(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select str_replace(foo) from Foo", transformedSql);
 	}

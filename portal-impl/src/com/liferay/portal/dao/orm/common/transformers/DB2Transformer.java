@@ -35,6 +35,7 @@ public class DB2Transformer extends BaseSQLTransformer {
 		transformations.add(nullDateTransformation);
 		transformations.add(substrDefaultTransformation);
 		transformations.add(modTransformation);
+		transformations.add(replaceTransformation);
 		transformations.add(_likeTransformation);
 	}
 

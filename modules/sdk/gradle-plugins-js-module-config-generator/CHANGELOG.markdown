@@ -61,6 +61,12 @@ with if preceded by spaces or tabs.
 - [LPS-69618]: Update the [Liferay Gradle Plugins Node] dependency to version
 1.4.1.
 
+## 2.1.4 - 2016-12-14
+
+### Changed
+- [LPS-69677]: Update the [Liferay Gradle Plugins Node] dependency to version
+1.4.2.
+
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
@@ -71,3 +77,4 @@ with if preceded by spaces or tabs.
 [LPS-68298]: https://issues.liferay.com/browse/LPS-68298
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
+[LPS-69677]: https://issues.liferay.com/browse/LPS-69677

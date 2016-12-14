@@ -84,7 +84,11 @@ public class ExecuteNpmTask extends ExecuteNodeScriptTask {
 	public void executeNode() throws Exception {
 		Project project = getProject();
 
-		if (FileUtil.isChild(getCacheDir(), project.getProjectDir())) {
+		File cacheDir = getCacheDir();
+
+		if ((cacheDir != null) &&
+			FileUtil.isChild(cacheDir, project.getProjectDir())) {
+
 			super.executeNode();
 		}
 		else {

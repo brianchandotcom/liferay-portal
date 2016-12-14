@@ -49,7 +49,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 				@Override
 				protected String[] getPortletIds() {
 					return new String[] {
-						"1_WAR_soannouncementsportlet", "84",
+						"1_WAR_soannouncementsportlet", "83", "84",
 						PortletKeys.ANNOUNCEMENTS
 					};
 				}
@@ -114,6 +114,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 						"1_WAR_soannouncementsportlet",
 						PortletKeys.ANNOUNCEMENTS
 					},
+					new String[] {"83", PortletKeys.ALERTS},
 					new String[] {"84", PortletKeys.ANNOUNCEMENTS}
 				};
 			}

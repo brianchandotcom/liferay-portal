@@ -3,7 +3,7 @@
 		&.alloy-editor-placeholder {
 			color: #2B4259;
 
-			&:empty:not(:focus) {
+			&.ae-placeholder:not(:focus) {
 				background: transparent;
 				border-left-color: #DBDDE1;
 				color: #B0B4BB;

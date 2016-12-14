@@ -7545,7 +7545,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="liferay-portal-osgi.zip"
 				>
 					<mapper
-						from="[^/]+/(osgi)"
+						from="[^/]+/(osgi.*)"
 						to="\1"
 						type="regexp"
 					/>

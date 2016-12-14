@@ -16,10 +16,14 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.annotations.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
@@ -83,7 +87,16 @@ public class DDMFormInstanceFactory {
 				_ddmFormFieldValuesMap.get(
 					ddmFormFieldFactoryHelper.getDDMFormFieldName());
 
-			return convert(method.getReturnType(), ddmFormFieldValues);
+			if (ListUtil.isEmpty(ddmFormFieldValues)) {
+				LocalizedValue predefinedValue =
+					ddmFormFieldFactoryHelper.getDDMFormFieldPredefinedValue();
+
+				return convert(
+					method.getReturnType(), predefinedValue.getString(_locale));
+			}
+			else {
+				return convert(method.getReturnType(), ddmFormFieldValues);
+			}
 		}
 
 		protected Object convert(
@@ -95,6 +108,45 @@ public class DDMFormInstanceFactory {
 			}
 
 			return toPrimitive(returnType, ddmFormFieldValues.get(0));
+		}
+
+		protected Object convert(Class<?> returnType, String predefinedValue) {
+			if (returnType.isArray()) {
+				return Array.newInstance(returnType.getComponentType(), 0);
+			}
+
+			if ((returnType == boolean.class) ||
+				(returnType == Boolean.class)) {
+
+				return GetterUtil.getBoolean(predefinedValue);
+			}
+
+			if ((returnType == double.class) || (returnType == Double.class)) {
+				return GetterUtil.getDouble(predefinedValue);
+			}
+
+			if ((returnType == float.class) || (returnType == Float.class)) {
+				return GetterUtil.getFloat(predefinedValue);
+			}
+
+			if ((returnType == int.class) || (returnType == Integer.class)) {
+				return GetterUtil.getInteger(predefinedValue);
+			}
+
+			if ((returnType == long.class) || (returnType == Long.class)) {
+				return GetterUtil.getLong(predefinedValue);
+			}
+
+			if ((returnType == short.class) || (returnType == Short.class)) {
+				return GetterUtil.getShort(predefinedValue);
+			}
+
+			if (returnType == String.class) {
+				return
+					Validator.isBlank(predefinedValue) ? null : predefinedValue;
+			}
+
+			return null;
 		}
 
 		protected Object toArray(

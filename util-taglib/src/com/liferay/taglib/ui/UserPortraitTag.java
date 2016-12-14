@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -89,7 +88,7 @@ public class UserPortraitTag extends IncludeTag {
 
 		String[] userNames = StringUtil.split(userName, CharPool.SPACE);
 
-		StringBundler sb = new StringBundler(2);
+		StringBuilder sb = new StringBuilder(2);
 
 		for (int i = 0; (i < userNames.length) && (i < 2); i++) {
 			if (!userNames[i].isEmpty()) {

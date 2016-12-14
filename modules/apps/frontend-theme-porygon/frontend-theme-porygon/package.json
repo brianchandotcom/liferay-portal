@@ -12,7 +12,7 @@
 		"metal-state": "^2.3.0"
 	},
 	"devDependencies": {
-		"liferay-theme-es2015-hook": "^0.0.1"
+		"liferay-theme-es2015-hook": "^0.1.0"
 	},
 	"keywords": [
 		"liferay-theme"

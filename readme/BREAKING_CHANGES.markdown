@@ -1,4 +1,4 @@
-# What are the Breaking Changes for Liferay 7.0?
+# What are the Breaking Changes for Liferay 7.1?
 
 This document presents a chronological list of changes that break existing
 functionality, APIs, or contracts with third party Liferay developers or users.

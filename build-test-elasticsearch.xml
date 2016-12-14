@@ -550,7 +550,7 @@ username=liferay</echo>
 			<replacevalue><![CDATA[cluster.name: LiferayElasticsearchCluster]]></replacevalue>
 		</replace>
 
-		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">action.auto_create_index: false</echo>
+		<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">action.auto_create_index: .marvel-*,.security</echo>
 
 		<antcall target="configure-elasticsearch-osgi-bundle-properties" />
 

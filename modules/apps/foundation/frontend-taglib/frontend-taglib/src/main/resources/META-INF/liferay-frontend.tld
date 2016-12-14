@@ -475,6 +475,11 @@
 		<name>info-bar</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.InfoBarTag</tag-class>
 		<body-content>JSP</body-content>
+		<attribute>
+			<name>fixed</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>info-bar-button</name>

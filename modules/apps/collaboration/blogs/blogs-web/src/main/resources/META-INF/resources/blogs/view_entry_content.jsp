@@ -78,8 +78,17 @@ String socialBookmarksDisplayPosition = blogsPortletInstanceConfiguration.social
 						<span> - </span>
 						<span class="hide-accessible"><liferay-ui:message key="published-date" /></span>
 						<%= dateFormatDate.format(entry.getDisplayDate()) %>
-						<span> - </span>
-						<span><%= LanguageUtil.format(resourceBundle, "x-minutes-read", new String[] {String.valueOf(com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent()))}, false) %></span>
+
+						<%
+						int readingTimeInMinutes = com.liferay.blogs.web.internal.util.BlogsUtil.getReadingTimeMinutes(entry.getContent());
+						%>
+
+						<c:if test="<%= readingTimeInMinutes > 0 %>">
+							<span> - </span>
+							<span>
+								<liferay-ui:message arguments="<%= readingTimeInMinutes %>" key="x-minutes-read" translateArguments="<%= false %>" />
+							</span>
+						</c:if>
 					</small>
 
 					<c:if test='<%= viewSingleEntry && blogsPortletInstanceConfiguration.enableSocialBookmarks() && socialBookmarksDisplayPosition.equals("top") %>'>

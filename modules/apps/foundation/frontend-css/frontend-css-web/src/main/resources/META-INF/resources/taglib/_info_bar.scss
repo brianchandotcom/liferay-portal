@@ -1,4 +1,5 @@
 .info-bar-container {
+	background-color: #F5F7F8;
 	border-bottom: 1px solid #EDF0F2;
 	min-height: 47px;
 
@@ -31,10 +32,21 @@
 		left: 50%;
 		margin-top: 16px;
 		position: absolute;
+		text-align: center;
 		transform: translate(-50%);
+		width: 100%;
 
 		@include sm() {
 			margin-top: 20px;
+		}
+	}
+
+	&.affix {
+		min-height: 35px;
+		transition: min-height 0.15s ease;
+
+		.info-bar-center {
+			margin-top: 5px;
 		}
 	}
 }

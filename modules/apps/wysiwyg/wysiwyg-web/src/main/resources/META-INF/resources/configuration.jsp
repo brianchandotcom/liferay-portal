@@ -18,14 +18,22 @@
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage();" %>'>
+<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-ui:input-editor contents="<%= message %>" />
+	<aui:fieldset-group>
+		<aui:fieldset>
+			<liferay-ui:input-editor contents="<%= message %>" />
+		</aui:fieldset>
+	</aui:fieldset-group>
 
 	<aui:input name="preferences--message--" type="hidden" />
 
-	<aui:button type="submit" />
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" type="submit" />
+
+		<aui:button cssClass="btn-lg" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script>

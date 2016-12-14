@@ -64,7 +64,7 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 		}
 
 		registry.register(
-			"com.liferay.announcements.web", "0.0.0", "1.0.2",
+			"com.liferay.announcements.web", "0.0.0", "1.0.3",
 			new DummyUpgradeStep());
 
 		UpgradeStep upgradePortletId = new BaseReplacePortletId() {
@@ -134,6 +134,12 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.announcements.web", "1.0.1", "1.0.2",
 			new UpgradePermission());
+
+		// See LPS-69656
+
+		registry.register(
+			"com.liferay.announcements.web", "1.0.2", "1.0.3", upgradePortletId,
+			new UpgradePermission(true));
 	}
 
 }

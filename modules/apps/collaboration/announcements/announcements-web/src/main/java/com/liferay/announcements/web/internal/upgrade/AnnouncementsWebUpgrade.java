@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.release.BaseUpgradeWebModuleRelease;
@@ -70,13 +71,16 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 
 			@Override
 			protected void doUpgrade() throws Exception {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("select P1.portletPreferencesId from ");
+				sb.append("PortletPreferences P1 inner join ");
+				sb.append("PortletPreferences P2 on P1.plid = P2.plid where ");
+				sb.append("P1.portletId = '1_WAR_soannouncementsportlet' and ");
+				sb.append("P2.portletId = '84'");
+
 				try (PreparedStatement ps1 = connection.prepareStatement(
-						"select P1.portletPreferencesId from " +
-							"PortletPreferences P1 inner join " +
-								"PortletPreferences P2 on P1.plid = P2.plid " +
-									"where P1.portletId = " +
-										"'1_WAR_soannouncementsportlet' and " +
-											"P2.portletId = '84'");
+						sb.toString());
 					PreparedStatement ps2 =
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 							connection,
@@ -85,13 +89,19 @@ public class AnnouncementsWebUpgrade implements UpgradeStepRegistrator {
 
 					ResultSet rs = ps1.executeQuery();
 
+					int deleteCount = 0;
+
 					while (rs.next()) {
 						ps2.setLong(1, rs.getLong(1));
 
 						ps2.addBatch();
+
+						deleteCount++;
 					}
 
-					ps2.executeBatch();
+					if (deleteCount > 0) {
+						ps2.executeBatch();
+					}
 				}
 
 				super.doUpgrade();

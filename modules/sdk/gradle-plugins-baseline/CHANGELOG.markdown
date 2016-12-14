@@ -4,7 +4,7 @@
 
 ### Added
 - [LPS-69470]: Add the property `forceCalculatedVersion` to all tasks that
-extend `BaselineTask`. If `true`, the baselone check will fail if the
+extend `BaselineTask`. If `true`, the baseline check will fail if the
 `Bundle-Version` has been excessively increased.
 
 ### Changed

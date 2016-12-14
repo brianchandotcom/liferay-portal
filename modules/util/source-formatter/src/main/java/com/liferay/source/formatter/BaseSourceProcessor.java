@@ -364,6 +364,17 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		ifClause = stripQuotes(ifClause);
 
+		if (ifClause.matches(
+				"[^()]*\\((\\(?\\w+ instanceof \\w+\\)?( \\|\\| )?)+" +
+					"\\)[^()]*") &&
+			!ifClause.matches("[^()]*\\([^()]*\\)[^()]*")) {
+
+			processMessage(
+				fileName, "Redundant parentheses in if-statement", lineCount);
+
+			return;
+		}
+
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {
 
@@ -2406,6 +2417,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected boolean hasRedundantParentheses(String s) {
+		//if (s.matches("\\w+ instanceof \\w+")) {
+		//	return true;
+		//}
+
 		int x = -1;
 
 		while (true) {

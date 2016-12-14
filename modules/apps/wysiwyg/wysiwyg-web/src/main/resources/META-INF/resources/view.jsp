@@ -18,6 +18,11 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNull(message) %>">
+
+		<%
+		renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+		%>
+
 		<div class="alert alert-info text-center">
 			<div>
 				<liferay-ui:message key="this-application-is-not-visible-to-users" />

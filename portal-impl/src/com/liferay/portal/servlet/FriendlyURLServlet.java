@@ -141,8 +141,8 @@ public class FriendlyURLServlet extends HttpServlet {
 				_log.warn(e);
 			}
 
-			if ((e instanceof NoSuchGroupException) ||
-				(e instanceof NoSuchLayoutException)) {
+			if (e instanceof NoSuchGroupException ||
+				e instanceof NoSuchLayoutException) {
 
 				PortalUtil.sendError(
 					HttpServletResponse.SC_NOT_FOUND, e, request, response);

@@ -99,15 +99,14 @@ public class PublishPortletMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception e) {
-			if ((e instanceof LARFileException) ||
-				(e instanceof LARFileNameException) ||
-				(e instanceof LARFileSizeException) ||
-				(e instanceof LARTypeException) ||
-				(e instanceof LocaleException) ||
-				(e instanceof NoSuchLayoutException) ||
-				(e instanceof PortletIdException) ||
-				(e instanceof PrincipalException) ||
-				(e instanceof StructureDuplicateStructureKeyException)) {
+			if (e instanceof LARFileException ||
+				e instanceof LARFileNameException ||
+				e instanceof LARFileSizeException ||
+				e instanceof LARTypeException || e instanceof LocaleException ||
+				e instanceof NoSuchLayoutException ||
+				e instanceof PortletIdException ||
+				e instanceof PrincipalException ||
+				e instanceof StructureDuplicateStructureKeyException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

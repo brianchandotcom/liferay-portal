@@ -249,14 +249,14 @@ public class ImportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 					ExportImportHelper.TEMP_FOLDER_NAME, e);
 			}
 			else {
-				if ((e instanceof LARFileException) ||
-					(e instanceof LARFileSizeException) ||
-					(e instanceof LARTypeException)) {
+				if (e instanceof LARFileException ||
+					e instanceof LARFileSizeException ||
+					e instanceof LARTypeException) {
 
 					SessionErrors.add(actionRequest, e.getClass());
 				}
-				else if ((e instanceof LayoutPrototypeException) ||
-						 (e instanceof LocaleException)) {
+				else if (e instanceof LayoutPrototypeException ||
+						 e instanceof LocaleException) {
 
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}

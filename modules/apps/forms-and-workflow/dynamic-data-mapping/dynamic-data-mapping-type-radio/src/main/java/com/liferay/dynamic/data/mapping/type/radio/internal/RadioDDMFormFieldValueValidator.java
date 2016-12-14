@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -107,6 +108,7 @@ public class RadioDDMFormFieldValueValidator
 		}
 	}
 
+	@Reference
 	protected JSONFactory jsonFactory;
 
 }

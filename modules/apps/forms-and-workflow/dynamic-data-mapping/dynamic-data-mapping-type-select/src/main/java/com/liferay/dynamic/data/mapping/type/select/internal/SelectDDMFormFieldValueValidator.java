@@ -32,6 +32,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -122,6 +123,7 @@ public class SelectDDMFormFieldValueValidator
 		}
 	}
 
+	@Reference
 	protected JSONFactory jsonFactory;
 
 }

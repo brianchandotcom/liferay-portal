@@ -148,6 +148,12 @@
 	}
 
 	.edit-entry {
+		.alloy-editor-placeholder:before {
+			display: block;
+			text-align: inherit;
+			width: 100%;
+		}
+
 		.entry-title h1 p {
 			line-height: 80px;
 		}

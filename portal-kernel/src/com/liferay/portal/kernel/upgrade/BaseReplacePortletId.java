@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.upgrade;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,17 +74,42 @@ public abstract class BaseReplacePortletId extends BaseUpgradePortletId {
 		throws Exception {
 
 		if (hasResourceAction(newName)) {
-			try (PreparedStatement ps = connection.prepareStatement(
-					"delete from ResourceAction where name = ?")) {
+			StringBundler sb = new StringBundler(3);
 
-				ps.setString(1, oldName);
+			sb.append("select RA1.resourceActionId from ResourceAction RA1 ");
+			sb.append("inner join ResourceAction RA2 on RA1.actionId = ");
+			sb.append("RA2.actionId where RA1.name = ? and RA2.name = ?");
 
-				ps.execute();
+			try (PreparedStatement ps1 = connection.prepareStatement(
+					sb.toString());
+				PreparedStatement ps2 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"delete from ResourceAction where resourceActionId = " +
+							"?")) {
+
+				ps1.setString(1, oldName);
+				ps1.setString(2, newName);
+
+				ResultSet rs = ps1.executeQuery();
+
+				int deleteCount = 0;
+
+				while (rs.next()) {
+					ps2.setLong(1, rs.getLong(1));
+
+					ps2.addBatch();
+
+					deleteCount++;
+				}
+
+				if (deleteCount > 0) {
+					ps2.executeBatch();
+				}
 			}
 		}
-		else {
-			super.updateResourceAction(oldName, newName);
-		}
+
+		super.updateResourceAction(oldName, newName);
 	}
 
 	@Override

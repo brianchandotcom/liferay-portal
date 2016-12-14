@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.microsofttranslator;
+package com.liferay.microsoft.translator.internal;
 
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;

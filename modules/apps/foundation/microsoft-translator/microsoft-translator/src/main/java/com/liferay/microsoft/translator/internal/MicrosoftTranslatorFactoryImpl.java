@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.microsofttranslator;
+package com.liferay.microsoft.translator.internal;
 
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Hugo Huijser
  */
+@Component(immediate = true, service = MicrosoftTranslatorFactory.class)
 @DoPrivileged
 public class MicrosoftTranslatorFactoryImpl
 	implements MicrosoftTranslatorFactory {

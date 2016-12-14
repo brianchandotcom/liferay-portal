@@ -29,7 +29,13 @@ if (selLayout != null) {
 <aui:input cssClass="lfr-input-text-container" id="url" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>">
 	<aui:validator errorMessage="please-enter-a-valid-url" name="required">
 		function(node) {
-			return AUI().one('#<portlet:namespace />template').val() === 'url';
+			var select = AUI().one('#<portlet:namespace />template');
+
+			if (!select) {
+				select = AUI().one('#<portlet:namespace />type');
+			}
+
+			return select.val() === 'url';
 		}
 	</aui:validator>
 </aui:input>

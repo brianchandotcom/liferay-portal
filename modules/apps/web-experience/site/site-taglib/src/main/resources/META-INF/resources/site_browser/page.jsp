@@ -23,6 +23,7 @@ String eventName = GetterUtil.getString(request.getAttribute("liferay-site:site-
 List<Group> groups = (List<Group>)request.getAttribute("liferay-site:site-browser:groups");
 int groupsCount = GetterUtil.getInteger(request.getAttribute("liferay-site:site-browser:groupsCount"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-site:site-browser:portletURL");
+long[] selectedGroupIds = GetterUtil.getLongValues(request.getAttribute("liferay-site:site-browser:selectedGroupIds"));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "name");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
@@ -90,9 +91,16 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-							</aui:a>
+							<c:choose>
+								<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
+									<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+										<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+									</aui:a>
+								</c:when>
+								<c:otherwise>
+									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+								</c:otherwise>
+							</c:choose>
 						</h5>
 
 						<h6 class="text-default">
@@ -115,7 +123,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(group.getLogoURL(themeDisplay, false)) %>">
 									<liferay-frontend:vertical-card
-										cssClass="selector-button"
+										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? StringPool.BLANK : "selector-button" %>'
 										data="<%= data %>"
 										imageUrl="<%= group.getLogoURL(themeDisplay, false) %>"
 										resultRow="<%= row %>"
@@ -126,7 +134,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 								</c:when>
 								<c:otherwise>
 									<liferay-frontend:icon-vertical-card
-										cssClass="selector-button"
+										cssClass='<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) ? StringPool.BLANK : "selector-button" %>'
 										data="<%= data %>"
 										icon="sites"
 										resultRow="<%= row %>"
@@ -144,9 +152,16 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 						name="name"
 						truncate="<%= true %>"
 					>
-						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-							<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
-						</aui:a>
+						<c:choose>
+							<c:when test="<%= ArrayUtil.contains(selectedGroupIds, group.getGroupId()) %>">
+								<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+									<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+								</aui:a>
+							</c:when>
+							<c:otherwise>
+								<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+							</c:otherwise>
+						</c:choose>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

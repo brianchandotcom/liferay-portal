@@ -155,7 +155,7 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	}
 
 	@Override
-	public JSONObject getGeolocation() throws PortalException {
+	public JSONObject getGeolocationJSONObject() throws PortalException {
 		validate(ExpandoColumnConstants.GEOLOCATION);
 
 		return JSONFactoryUtil.createJSONObject(getData());
@@ -418,7 +418,9 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 	}
 
 	@Override
-	public void setGeoLocation(JSONObject data) throws PortalException {
+	public void setGeolocationJSONObject(JSONObject data)
+		throws PortalException {
+
 		validate(ExpandoColumnConstants.GEOLOCATION);
 
 		setData(data.toJSONString());

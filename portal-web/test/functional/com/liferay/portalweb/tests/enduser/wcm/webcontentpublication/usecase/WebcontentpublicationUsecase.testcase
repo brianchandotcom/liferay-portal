@@ -153,9 +153,21 @@
 			<var name="virtualHostsURL" value="http://www.baker.com:8080" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="Asset Publisher Page">
-			<var name="key_pageName" value="Asset Publisher Page" />
+		<for list="Home,Documents and Media,News" param="sitePageName">
+			<var name="key_pageName" value="${sitePageName}" />
+
+			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="${sitePageName}" />
+		</for>
+
+		<execute macro="Navigator#openSpecificURL">
+			<var name="url" value="http://www.able.com:8080" />
 		</execute>
+
+		<for list="Documents and Media,News" param="sitePageName">
+			<var name="key_pageName" value="${sitePageName}" />
+
+			<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${sitePageName}" />
+		</for>
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

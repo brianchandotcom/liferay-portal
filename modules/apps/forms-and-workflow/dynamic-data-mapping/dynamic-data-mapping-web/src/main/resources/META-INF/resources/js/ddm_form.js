@@ -1790,7 +1790,7 @@ AUI.add(
 								}
 							}
 							else if (scrollTop + innerHeight === scrollHeight) {
-								start = end + 1;
+								start = end;
 								end = start + delta;
 
 								if (start <= cache.total) {

@@ -36,10 +36,6 @@ public interface ServletContextHelperRegistration {
 
 	public boolean isWabShapedBundle();
 
-	/**
-	 * @deprecated As of 2.1.0, with no direct replacement
-	 */
-	@Deprecated
 	public void setProperties(Map<String, String> contextParameters);
 
 }

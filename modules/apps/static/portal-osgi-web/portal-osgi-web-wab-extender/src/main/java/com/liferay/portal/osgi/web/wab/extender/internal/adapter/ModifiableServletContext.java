@@ -15,8 +15,11 @@
 package com.liferay.portal.osgi.web.wab.extender.internal.adapter;
 
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.ListenerDefinition;
+import com.liferay.portal.osgi.web.wab.extender.internal.registration.FilterRegistrationImpl;
+import com.liferay.portal.osgi.web.wab.extender.internal.registration.ServletRegistrationImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -29,7 +32,13 @@ public interface ModifiableServletContext {
 
 	public Bundle getBundle();
 
+	public Map<String, FilterRegistrationImpl> getFilterRegistrationImpls();
+
 	public List<ListenerDefinition> getListenerDefinitions();
+
+	public Map<String, ServletRegistrationImpl> getServletRegistrationImpls();
+
+	public Map<String, String> getUnregisteredInitParameters();
 
 	public ServletContext getWrappedServletContext();
 

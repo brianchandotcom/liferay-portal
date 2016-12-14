@@ -36,12 +36,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationRenderRequest;
 
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -201,11 +198,10 @@ public class SearchDisplayContextTest {
 		jsonFactoryUtil.setJSONFactory(createJSONFactory());
 
 		return new SearchDisplayContext(
-			renderRequest, Mockito.mock(RenderResponse.class),
-			portletPreferences, createPortal(themeDisplay, renderRequest),
-			Mockito.mock(Html.class), Mockito.mock(Language.class),
-			facetedSearcherManager, Mockito.mock(IndexSearchPropsValues.class),
-			portletURLFactory);
+			renderRequest, portletPreferences,
+			createPortal(themeDisplay, renderRequest), Mockito.mock(Html.class),
+			Mockito.mock(Language.class), facetedSearcherManager,
+			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory);
 	}
 
 	protected ThemeDisplay createThemeDisplay() throws Exception {
@@ -248,8 +244,7 @@ public class SearchDisplayContextTest {
 			Mockito.mock(PortletURL.class)
 		).when(
 			portletURLFactory
-		).getPortletURL(
-			Mockito.<PortletRequest>any(), Mockito.<MimeResponse>any());
+		).getPortletURL();
 	}
 
 	protected void setUpRenderRequest() throws Exception {

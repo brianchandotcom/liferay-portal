@@ -16,7 +16,6 @@ package com.liferay.portal.search.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -28,23 +27,19 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcher;
 import com.liferay.portal.kernel.search.facet.faceted.searcher.FacetedSearcherManager;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
 import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
+import com.liferay.portal.search.web.internal.portlet.SearchPortletSearchResultPreferences;
 
 import java.util.List;
 
@@ -52,7 +47,6 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -61,37 +55,29 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchDisplayContext {
 
-	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
-	 *             SearchDisplayContextFactoryUtil#create(RenderRequest,
-	 *             RenderResponse, PortletPreferences)}
-	 */
-	@Deprecated
 	public SearchDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		this(
-			renderRequest, renderResponse, portletPreferences,
-			PortalUtil.getPortal(), HtmlUtil.getHtml(),
-			LanguageUtil.getLanguage(), null, new IndexSearchPropsValuesImpl(),
-			new PortletURLFactoryImpl());
-	}
-
-	public SearchDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			PortletPreferences portletPreferences, Portal portal, Html html,
-			Language language, FacetedSearcherManager facetedSearcherManager,
+			RenderRequest renderRequest, PortletPreferences portletPreferences,
+			Portal portal, Html html, Language language,
+			FacetedSearcherManager facetedSearcherManager,
 			IndexSearchPropsValues indexSearchPropsValues,
 			PortletURLFactory portletURLFactory)
 		throws Exception {
 
 		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_portletPreferences = portletPreferences;
 		_indexSearchPropsValues = indexSearchPropsValues;
 		_portletURLFactory = portletURLFactory;
+
+		ThemeDisplaySupplier themeDisplaySupplier =
+			new PortletRequestThemeDisplaySupplier(renderRequest);
+
+		SearchResultPreferences searchResultPreferences =
+			new SearchPortletSearchResultPreferences(
+				portletPreferences, themeDisplaySupplier);
+
+		_searchResultPreferences = searchResultPreferences;
+
+		_themeDisplaySupplier = themeDisplaySupplier;
 
 		String keywords = getKeywords();
 
@@ -105,9 +91,6 @@ public class SearchDisplayContext {
 
 		HttpServletRequest request = portal.getHttpServletRequest(
 			_renderRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String emptyResultMessage = language.format(
 			request, "no-results-were-found-that-matched-the-keywords-x",
@@ -130,7 +113,7 @@ public class SearchDisplayContext {
 
 		addScopeFacet(searchContext);
 
-		addEnabledSearchFacets(themeDisplay.getCompanyId(), searchContext);
+		addEnabledSearchFacets(searchContext);
 
 		Hits hits = facetedSearcher.search(searchContext);
 
@@ -142,24 +125,6 @@ public class SearchDisplayContext {
 		_hits = hits;
 		_searchContext = searchContext;
 		_searchContainer = searchContainer;
-	}
-
-	public String checkViewURL(String viewURL, String currentURL) {
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		if (Validator.isNotNull(viewURL) &&
-			viewURL.startsWith(themeDisplay.getURLPortal())) {
-
-			viewURL = HttpUtil.setParameter(
-				viewURL, "inheritRedirect", isViewInContext());
-
-			if (!isViewInContext()) {
-				viewURL = HttpUtil.setParameter(
-					viewURL, "redirect", currentURL);
-			}
-		}
-
-		return viewURL;
 	}
 
 	public int getCollatedSpellCheckResultDisplayThreshold() {
@@ -203,7 +168,7 @@ public class SearchDisplayContext {
 		return _enabledSearchFacets;
 	}
 
-	public Hits getHits() throws Exception {
+	public Hits getHits() {
 		return _hits;
 	}
 
@@ -213,8 +178,11 @@ public class SearchDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortletException {
-		return _portletURLFactory.getPortletURL(
-			_renderRequest, _renderResponse);
+		return _portletURLFactory.getPortletURL();
+	}
+
+	public PortletURLFactory getPortletURLFactory() {
+		return _portletURLFactory;
 	}
 
 	public QueryConfig getQueryConfig() {
@@ -290,7 +258,7 @@ public class SearchDisplayContext {
 		return _querySuggestionsMax;
 	}
 
-	public String[] getQueryTerms() throws Exception {
+	public String[] getQueryTerms() {
 		Hits hits = getHits();
 
 		return hits.getQueryTerms();
@@ -307,12 +275,16 @@ public class SearchDisplayContext {
 		return _searchConfiguration;
 	}
 
-	public SearchContainer<Document> getSearchContainer() throws Exception {
+	public SearchContainer<Document> getSearchContainer() {
 		return _searchContainer;
 	}
 
-	public SearchContext getSearchContext() throws Exception {
+	public SearchContext getSearchContext() {
 		return _searchContext;
+	}
+
+	public SearchResultPreferences getSearchResultPreferences() {
+		return _searchResultPreferences;
 	}
 
 	public long getSearchScopeGroupId() {
@@ -385,23 +357,7 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isDisplayResultsInDocumentForm() {
-		if (_displayResultsInDocumentForm != null) {
-			return _displayResultsInDocumentForm;
-		}
-
-		_displayResultsInDocumentForm = GetterUtil.getBoolean(
-			_portletPreferences.getValue("displayResultsInDocumentForm", null));
-
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!permissionChecker.isCompanyAdmin()) {
-			_displayResultsInDocumentForm = false;
-		}
-
-		return _displayResultsInDocumentForm;
+		return _searchResultPreferences.isDisplayResultsInDocumentForm();
 	}
 
 	public boolean isDLLinkToViewURL() {
@@ -490,14 +446,7 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isViewInContext() {
-		if (_viewInContext != null) {
-			return _viewInContext;
-		}
-
-		_viewInContext = GetterUtil.getBoolean(
-			_portletPreferences.getValue("viewInContext", null), true);
-
-		return _viewInContext;
+		return _searchResultPreferences.isViewInContext();
 	}
 
 	protected void addAssetEntriesFacet(SearchContext searchContext) {
@@ -508,9 +457,12 @@ public class SearchDisplayContext {
 		searchContext.addFacet(assetEntriesFacet);
 	}
 
-	protected void addEnabledSearchFacets(
-			long companyId, SearchContext searchContext)
+	protected void addEnabledSearchFacets(SearchContext searchContext)
 		throws Exception {
+
+		ThemeDisplay themeDisplay = _themeDisplaySupplier.getThemeDisplay();
+
+		long companyId = themeDisplay.getCompanyId();
 
 		for (SearchFacet searchFacet : getEnabledSearchFacets()) {
 			searchFacet.init(
@@ -562,14 +514,13 @@ public class SearchDisplayContext {
 	}
 
 	protected ThemeDisplay getThemeDisplay() {
-		return (ThemeDisplay)_renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		return _themeDisplaySupplier.getThemeDisplay();
 	}
 
 	private Integer _collatedSpellCheckResultDisplayThreshold;
 	private Boolean _collatedSpellCheckResultEnabled;
 	private Boolean _displayMainQuery;
 	private Boolean _displayOpenSearchResults;
-	private Boolean _displayResultsInDocumentForm;
 	private Boolean _dlLinkToViewURL;
 	private List<SearchFacet> _enabledSearchFacets;
 	private final Hits _hits;
@@ -584,11 +535,11 @@ public class SearchDisplayContext {
 	private Boolean _querySuggestionsEnabled;
 	private Integer _querySuggestionsMax;
 	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private String _searchConfiguration;
 	private final SearchContainer<Document> _searchContainer;
 	private final SearchContext _searchContext;
+	private final SearchResultPreferences _searchResultPreferences;
 	private String _searchScopePreferenceString;
-	private Boolean _viewInContext;
+	private final ThemeDisplaySupplier _themeDisplaySupplier;
 
 }

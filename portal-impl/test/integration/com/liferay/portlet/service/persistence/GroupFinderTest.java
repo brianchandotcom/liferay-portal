@@ -78,6 +78,8 @@ public class GroupFinderTest {
 	public static void setUpClass() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_organization = OrganizationTestUtil.addOrganization(true);
+
 		List<ResourceAction> resourceActions =
 			ResourceActionLocalServiceUtil.getResourceActions(0, 1);
 
@@ -101,15 +103,10 @@ public class GroupFinderTest {
 			_modelResourceAction.getName(),
 			StringUtil.valueOf(_group.getGroupId()),
 			_resourceTypePermission.getRoleId(), ResourceConstants.SCOPE_GROUP);
-
-		_organization = OrganizationTestUtil.addOrganization(true);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
-		GroupLocalServiceUtil.deleteGroup(_userGroupGroup);
-
 		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
 			_resourcePermission);
 
@@ -121,6 +118,9 @@ public class GroupFinderTest {
 		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 
 		OrganizationLocalServiceUtil.deleteOrganization(_organization);
+
+		GroupLocalServiceUtil.deleteGroup(_group);
+		GroupLocalServiceUtil.deleteGroup(_userGroupGroup);
 	}
 
 	@Test

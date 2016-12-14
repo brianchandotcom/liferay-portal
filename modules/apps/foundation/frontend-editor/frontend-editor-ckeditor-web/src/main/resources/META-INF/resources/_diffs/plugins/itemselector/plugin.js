@@ -373,7 +373,7 @@
 
 									editor.insertElement(el);
 
-									editor.setData(editor.getData());
+									editor.focus();
 								}
 							}
 						}

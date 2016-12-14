@@ -33,6 +33,7 @@ public class OracleTransformer extends BaseSQLTransformer {
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(inStrDefaultTransformation);
 		transformations.add(_integerDivisionTransformation);
+		transformations.add(nullDateTransformation);
 		transformations.add(_escapeTransformation);
 		transformations.add(_notEqualsBlankStringTransformation);
 	}

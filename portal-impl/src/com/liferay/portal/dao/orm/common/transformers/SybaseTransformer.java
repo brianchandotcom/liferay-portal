@@ -34,6 +34,7 @@ public class SybaseTransformer extends BaseSQLTransformer {
 		transformations.add(_crossJoinTransformation);
 		transformations.add(_inStrTransformation);
 		transformations.add(integerDivisionTransformation);
+		transformations.add(nullDateTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);
 	}

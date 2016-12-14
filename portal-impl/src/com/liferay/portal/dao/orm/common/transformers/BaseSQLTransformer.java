@@ -43,7 +43,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		final String[] newSQL = {sql};
 
-		newSQL[0] = replaceNullDate(newSQL[0]);
 		newSQL[0] = replaceSubstr(newSQL[0]);
 		newSQL[0] = replaceMod(newSQL[0]);
 		newSQL[0] = replaceReplace(newSQL[0]);
@@ -71,10 +70,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 		Matcher matcher = modPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 % $2");
-	}
-
-	protected String replaceNullDate(String sql) {
-		return StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 	}
 
 	protected String replaceReplace(String sql) {
@@ -146,6 +141,9 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 			return matcher.replaceAll("$1 / $2");
 		};
+
+	protected Function<String, String> nullDateTransformation =
+		(String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 
 	protected static final Pattern modPattern = Pattern.compile(
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);

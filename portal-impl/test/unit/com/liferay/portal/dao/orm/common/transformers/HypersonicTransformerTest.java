@@ -118,7 +118,7 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 	public void testReplaceNullDate() {
 		String sql = "select [$NULL_DATE$] from Foo";
 
-		String transformedSql = _transformer.replaceNullDate(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select NULL from Foo", transformedSql);
 	}

@@ -34,18 +34,13 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(_inStrTransformation);
 		transformations.add(integerDivisionTransformation);
+		transformations.add(_nullDateTransformation);
 		transformations.add(_negativeComparisonTransformation);
 	}
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS TEXT)");
-	}
-
-	@Override
-	protected String replaceNullDate(String sql) {
-		return StringUtil.replace(
-			sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 	}
 
 	private Function<String, String> _inStrTransformation = (String sql) -> {
@@ -63,5 +58,9 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 
 			return matcher.replaceAll("$1 ($2)");
 		};
+
+	private Function<String, String> _nullDateTransformation =
+		(String sql) ->
+			StringUtil.replace(sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 
 }

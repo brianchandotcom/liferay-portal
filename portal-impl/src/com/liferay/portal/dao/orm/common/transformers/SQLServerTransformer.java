@@ -31,6 +31,7 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 		transformations.add(crossJoinDefaultTransformation);
 		transformations.add(_inStrTransformation);
 		transformations.add(integerDivisionTransformation);
+		transformations.add(nullDateTransformation);
 		transformations.add(_modTransformation);
 	}
 

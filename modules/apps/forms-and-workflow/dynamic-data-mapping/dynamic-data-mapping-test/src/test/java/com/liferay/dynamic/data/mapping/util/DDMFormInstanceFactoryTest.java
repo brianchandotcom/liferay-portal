@@ -340,6 +340,123 @@ public class DDMFormInstanceFactoryTest {
 		}
 	}
 
+	@Test
+	public void testGetDefaultValueDynamicFormWithFieldSet() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DynamicFormWithFieldSet.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DynamicFormWithFieldSet dynamicFormWithFieldSet =
+			DDMFormInstanceFactory.create(
+				DynamicFormWithFieldSet.class, ddmFormValues);
+
+		Assert.assertEquals(null, dynamicFormWithFieldSet.parameter());
+	}
+
+	@Test
+	public void testGetDefaultValueDynamicFormWithPrimitiveArrayTypes() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DynamicFormWithPrimitiveArrayTypes.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DynamicFormWithPrimitiveArrayTypes dynamicFormWithPrimitiveArrayTypes =
+			DDMFormInstanceFactory.create(
+				DynamicFormWithPrimitiveArrayTypes.class, ddmFormValues);
+
+		Assert.assertArrayEquals(
+			new String[0], dynamicFormWithPrimitiveArrayTypes.stringValues());
+		Assert.assertArrayEquals(
+			new Boolean[0], dynamicFormWithPrimitiveArrayTypes.booleanValues());
+	}
+
+	@Test
+	public void testGetDefaultValueDynamicFormWithRepeatableFieldSet() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DynamicFormWithRepeatableFieldSet.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DynamicFormWithRepeatableFieldSet dynamicFormWithRepeatableFieldSet =
+			DDMFormInstanceFactory.create(
+				DynamicFormWithRepeatableFieldSet.class, ddmFormValues);
+
+		Assert.assertArrayEquals(
+			new Parameter[0], dynamicFormWithRepeatableFieldSet.parameters());
+	}
+
+	@Test
+	public void testGetDefaultValueFromPrimitiveTypes() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DynamicFormWithPrimitiveTypes.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DynamicFormWithPrimitiveTypes dynamicFormWithPrimitiveTypes =
+			DDMFormInstanceFactory.create(
+				DynamicFormWithPrimitiveTypes.class, ddmFormValues);
+
+		Assert.assertEquals(
+			false, dynamicFormWithPrimitiveTypes.booleanValue());
+		Assert.assertEquals(
+			0.0d, dynamicFormWithPrimitiveTypes.doubleValue(), 0.1);
+		Assert.assertEquals(
+			0.0f, dynamicFormWithPrimitiveTypes.floatValue(), 0.1);
+		Assert.assertEquals(0, dynamicFormWithPrimitiveTypes.integerValue());
+		Assert.assertEquals(0, dynamicFormWithPrimitiveTypes.longValue());
+		Assert.assertEquals(0, dynamicFormWithPrimitiveTypes.shortValue());
+		Assert.assertEquals(null, dynamicFormWithPrimitiveTypes.stringValue());
+	}
+
+	@Test
+	public void testGetDefaultValueFromPrimitiveTypesWithPredefinedValue() {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(
+				DynamicFormWithPrimitiveTypesWithPredefinedValue.class);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DynamicFormWithPrimitiveTypesWithPredefinedValue
+			dynamicFormWithPrimitiveTypesWithPredefinedValue =
+				DDMFormInstanceFactory.create(
+					DynamicFormWithPrimitiveTypesWithPredefinedValue.class,
+					ddmFormValues);
+
+		Assert.assertEquals(
+			true,
+			dynamicFormWithPrimitiveTypesWithPredefinedValue.booleanValue());
+		Assert.assertEquals(
+			1.0d,
+			dynamicFormWithPrimitiveTypesWithPredefinedValue.doubleValue(),
+			0.1);
+		Assert.assertEquals(
+			1.0f, dynamicFormWithPrimitiveTypesWithPredefinedValue.floatValue(),
+			0.1);
+		Assert.assertEquals(
+			1, dynamicFormWithPrimitiveTypesWithPredefinedValue.integerValue());
+		Assert.assertEquals(
+			1, dynamicFormWithPrimitiveTypesWithPredefinedValue.longValue());
+		Assert.assertEquals(
+			1, dynamicFormWithPrimitiveTypesWithPredefinedValue.shortValue());
+		Assert.assertEquals(
+			"Joe",
+			dynamicFormWithPrimitiveTypesWithPredefinedValue.stringValue());
+	}
+
+	@DDMForm
+	private interface DynamicFormWithFieldSet {
+
+		@DDMFormField
+		public Parameter parameter();
+
+	}
+
 	@DDMForm
 	private interface DynamicFormWithPrimitiveArrayTypes {
 
@@ -382,6 +499,32 @@ public class DDMFormInstanceFactoryTest {
 
 		@DDMFormField
 		public DynamicFormWithPrimitiveTypes primitiveTypes();
+
+	}
+
+	@DDMForm
+	private interface DynamicFormWithPrimitiveTypesWithPredefinedValue {
+
+		@DDMFormField(name = "boolean", predefinedValue = "true")
+		public boolean booleanValue();
+
+		@DDMFormField(name = "double", predefinedValue = "1.0")
+		public double doubleValue();
+
+		@DDMFormField(name = "float", predefinedValue = "1.0")
+		public float floatValue();
+
+		@DDMFormField(name = "integer", predefinedValue = "1")
+		public int integerValue();
+
+		@DDMFormField(name = "long", predefinedValue = "1")
+		public long longValue();
+
+		@DDMFormField(name = "short", predefinedValue = "1")
+		public short shortValue();
+
+		@DDMFormField(name = "string", predefinedValue = "Joe")
+		public String stringValue();
 
 	}
 

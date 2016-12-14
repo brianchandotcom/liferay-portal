@@ -630,7 +630,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveCheckedoutDocumentToFolder" priority="5">
+	<command ignore="true" name="MoveCheckedoutDocumentToFolder" priority="5">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -816,7 +816,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEditedCheckedoutDocument" priority="5">
+	<command ignore="true" name="ViewEditedCheckedoutDocument" priority="5">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Documentum Repository Name" />
 		</execute>

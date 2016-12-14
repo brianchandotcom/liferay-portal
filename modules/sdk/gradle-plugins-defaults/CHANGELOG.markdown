@@ -689,7 +689,7 @@ version if the `com.liferay.app.defaults.plugin` is applied.
 ## 2.0.6 - 2016-11-29
 
 ### Added
-- [LPS-68813]: Add task `findSecurityBugs` to check for security problems.
+- [LPS-68813]: Add the `findSecurityBugs` task to check for security problems.
 
 ### Changed
 - [LPS-69445]: Update the [Liferay Gradle Plugins] dependency to version 3.0.43.
@@ -706,8 +706,8 @@ version 1.1.0.
 - [LPS-69488]: Update the [Liferay Gradle Plugins] dependency to version 3.0.44.
 
 ### Removed
-- [LPS-69488]: Remove the default Node.js version configuration, as it has been
-moved to [Liferay Gradle Plugins].
+- [LPS-69488]: Remove the default Node.js version configuration since it has
+been moved to [Liferay Gradle Plugins].
 
 ## 2.0.9 - 2016-12-01
 

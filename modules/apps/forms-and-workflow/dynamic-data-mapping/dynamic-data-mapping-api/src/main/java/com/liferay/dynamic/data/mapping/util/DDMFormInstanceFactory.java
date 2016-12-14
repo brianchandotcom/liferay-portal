@@ -141,9 +141,10 @@ public class DDMFormInstanceFactory {
 				return GetterUtil.getShort(predefinedValue);
 			}
 
-			if (returnType == String.class) {
-				return
-					Validator.isBlank(predefinedValue) ? null : predefinedValue;
+			if ((returnType == String.class) &&
+				Validator.isNotNull(predefinedValue)) {
+
+				return predefinedValue;
 			}
 
 			return null;

@@ -327,7 +327,7 @@ public class ExpandoValueLocalServiceImpl
 
 		value.setCompanyId(table.getCompanyId());
 		value.setColumnId(column.getColumnId());
-		value.setGeoLocation(data);
+		value.setGeolocation(data);
 
 		return expandoValueLocalService.addValue(
 			table.getClassNameId(), table.getTableId(), column.getColumnId(),
@@ -780,7 +780,7 @@ public class ExpandoValueLocalServiceImpl
 				JSONObject geolocation = JSONFactoryUtil.createJSONObject(
 					attributeValue.toString());
 
-				value.setGeoLocation(geolocation);
+				value.setGeolocation(geolocation);
 			}
 			else if (type == ExpandoColumnConstants.INTEGER) {
 				value.setInteger((Integer)attributeValue);

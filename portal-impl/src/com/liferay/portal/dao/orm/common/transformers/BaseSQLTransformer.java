@@ -75,6 +75,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 	protected static final Pattern substrPattern = Pattern.compile(
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
+	protected DB db;
+
 	protected Function<String, String> bitwiseCheckDefaultTransformation =
 		(String sql) -> sql;
 
@@ -108,7 +110,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 		(String sql) -> replaceCastText(_castTextPattern.matcher(sql));
 	protected Function<String, String> crossJoinDefaultTransformation =
 		(String sql) -> sql;
-	protected DB db;
 	protected Function<String, String> inStrDefaultTransformation =
 		(String sql) -> sql;
 

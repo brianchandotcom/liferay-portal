@@ -327,7 +327,7 @@ public class ExpandoValueLocalServiceImpl
 
 		value.setCompanyId(table.getCompanyId());
 		value.setColumnId(column.getColumnId());
-		value.setGeoLocation(data);
+		value.setGeolocationJSONObject(data);
 
 		return expandoValueLocalService.addValue(
 			table.getClassNameId(), table.getTableId(), column.getColumnId(),
@@ -780,7 +780,7 @@ public class ExpandoValueLocalServiceImpl
 				JSONObject geolocation = JSONFactoryUtil.createJSONObject(
 					attributeValue.toString());
 
-				value.setGeoLocation(geolocation);
+				value.setGeolocationJSONObject(geolocation);
 			}
 			else if (type == ExpandoColumnConstants.INTEGER) {
 				value.setInteger((Integer)attributeValue);
@@ -1303,7 +1303,7 @@ public class ExpandoValueLocalServiceImpl
 			return defaultData;
 		}
 		else {
-			return value.getGeolocation();
+			return value.getGeolocationJSONObject();
 		}
 	}
 
@@ -1784,7 +1784,7 @@ public class ExpandoValueLocalServiceImpl
 		else if (type == ExpandoColumnConstants.GEOLOCATION) {
 			return expandoValueLocalService.getData(
 				companyId, className, tableName, columnName, classPK,
-				value.getGeolocation());
+				value.getGeolocationJSONObject());
 		}
 		else if (type == ExpandoColumnConstants.INTEGER) {
 			return expandoValueLocalService.getData(

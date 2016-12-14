@@ -68,7 +68,7 @@ public class ExpandoColumnImpl extends ExpandoColumnBaseImpl {
 				return value.getFloatArray();
 			}
 			else if (type == ExpandoColumnConstants.GEOLOCATION) {
-				return value.getGeolocation();
+				return value.getGeolocationJSONObject();
 			}
 			else if (type == ExpandoColumnConstants.INTEGER) {
 				return value.getInteger();

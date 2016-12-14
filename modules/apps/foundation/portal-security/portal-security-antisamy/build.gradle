@@ -28,6 +28,10 @@ processResources {
 processSanitizerConfiguration {
 	File sanitizerConfigurationFile = new File("src/main/resources/META-INF/resources/sanitizer-configuration.xml")
 
+	ext {
+		autoClean = false
+	}
+
 	filter {
 		String line ->
 

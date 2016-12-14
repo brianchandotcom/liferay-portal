@@ -33,12 +33,12 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -117,10 +117,11 @@ public class UserIndexerTest {
 
 	@Test
 	public void testEmptyQuery() throws Exception {
-		User user1 = addUser();
-		User user2 = getTestUser();
+		List<User> users = getUsers(StringPool.BLANK);
 
-		assertSearch("", user1, user2);
+		users.add(addUser());
+
+		assertSearch(StringPool.BLANK, users);
 	}
 
 	@Test
@@ -154,24 +155,26 @@ public class UserIndexerTest {
 
 	@Test
 	public void testLikeCharacter() throws Exception {
-		User user1 = addUser();
-		User user2 = getTestUser();
+		List<User> users = getUsers(StringPool.PERCENT);
 
-		assertSearch("%", user1, user2);
+		users.add(addUser());
 
-		assertNoHits("%" + RandomTestUtil.randomString());
+		assertSearch(StringPool.PERCENT, users);
+
+		assertNoHits(StringPool.PERCENT + RandomTestUtil.randomString());
 	}
 
 	@Test
 	public void testLuceneQueryParserUnfriendlyCharacters() throws Exception {
-		User user1 = addUser();
-		User user2 = getTestUser();
+		List<User> users = getUsers(StringPool.AT);
 
-		assertSearch("@", user1, user2);
+		users.add(addUser());
 
-		assertNoHits("@" + RandomTestUtil.randomString());
-		assertNoHits("!");
-		assertNoHits("!" + RandomTestUtil.randomString());
+		assertSearch(StringPool.AT, users);
+
+		assertNoHits(StringPool.AT + RandomTestUtil.randomString());
+		assertNoHits(StringPool.EXCLAMATION);
+		assertNoHits(StringPool.EXCLAMATION + RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -363,21 +366,13 @@ public class UserIndexerTest {
 		assertLength(hits, 0);
 	}
 
-	protected void assertSearch(String keywords, User...users)
+	protected void assertSearch(String keywords, List<User> expectedUsers)
 		throws Exception {
 
-		Hits hits = search(keywords);
-
-		Document[] documents = hits.getDocs();
-
-		List<User> actualUsers = new ArrayList<>(documents.length);
-
-		for (Document document : documents) {
-			actualUsers.add(getUser(document));
-		}
+		List<User> actualUsers = getUsers(keywords);
 
 		Assert.assertEquals(
-			getScreenNames(Arrays.asList(users)), getScreenNames(actualUsers));
+			getScreenNames(expectedUsers), getScreenNames(actualUsers));
 	}
 
 	protected User assertSearchOneUser(String keywords) throws Exception {
@@ -415,10 +410,6 @@ public class UserIndexerTest {
 		return searchContext;
 	}
 
-	protected User getTestUser() throws Exception {
-		return TestPropsValues.getUser();
-	}
-
 	protected User getUser(Document document) throws Exception {
 		long userId = GetterUtil.getLong(document.get(Field.USER_ID));
 
@@ -431,6 +422,20 @@ public class UserIndexerTest {
 		Document document = hits.doc(0);
 
 		return getUser(document);
+	}
+
+	protected List<User> getUsers(String keywords) throws Exception {
+		Hits hits = search(keywords);
+
+		Document[] documents = hits.getDocs();
+
+		List<User> users = new ArrayList<>(documents.length);
+
+		for (Document document : documents) {
+			users.add(getUser(document));
+		}
+
+		return users;
 	}
 
 	protected Hits search(SearchContext searchContext) throws Exception {

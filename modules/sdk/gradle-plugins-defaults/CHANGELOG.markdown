@@ -759,6 +759,13 @@ found.
 ### Changed
 - [LPS-69677]: Update the [Liferay Gradle Plugins] dependency to version 3.0.50.
 
+## 2.2.4 - 2016-12-14
+
+### Changed
+- [LPS-67694]: Disable the `install` and `uploadArchives` tasks for `*-test`
+OSGi projects, Ant plugins and themes if the `-PsnapshotIfStale` argument is
+provided.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

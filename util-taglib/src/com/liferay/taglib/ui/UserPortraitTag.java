@@ -110,14 +110,15 @@ public class UserPortraitTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		User user = getUser();
+
 		request.setAttribute(
 			"liferay-ui:user-portrait:colorCssClass",
-			LexiconUtil.getUserColorCssClass(getUser()));
+			LexiconUtil.getUserColorCssClass(user));
+
 		request.setAttribute("liferay-ui:user-portrait:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:user-portrait:imageCssClass", _imageCssClass);
-
-		User user = getUser();
 
 		if ((user != null) && (user.getPortraitId() > 0)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

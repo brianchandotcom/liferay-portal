@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +83,16 @@ public class YouTubeDisplayContext {
 			return _height;
 		}
 
-		_height = _portletPreferences.getValue("height", "360");
+		if (isCustomSize()) {
+			_height = _portletPreferences.getValue("height", "360");
+		}
+		else {
+			String presetSize = getPresetSize();
+
+			String[] dimensions = presetSize.split("x");
+
+			_height = dimensions[1];
+		}
 
 		return _height;
 	}
@@ -110,7 +121,14 @@ public class YouTubeDisplayContext {
 	}
 
 	public String getPresetSize() {
-		return getWidth() + "x" + getHeight();
+		if (_presetSize != null) {
+			return _presetSize;
+		}
+
+		_presetSize = _portletPreferences.getValue(
+			"presetSize", StringPool.BLANK);
+
+		return _presetSize;
 	}
 
 	public String getStartTime() {
@@ -144,7 +162,16 @@ public class YouTubeDisplayContext {
 			return _width;
 		}
 
-		_width = _portletPreferences.getValue("width", "480");
+		if (isCustomSize()) {
+			_width = _portletPreferences.getValue("width", "480");
+		}
+		else {
+			String presetSize = getPresetSize();
+
+			String[] dimensions = presetSize.split("x");
+
+			_width = dimensions[0];
+		}
 
 		return _width;
 	}
@@ -180,6 +207,16 @@ public class YouTubeDisplayContext {
 			_portletPreferences.getValue("closedCaptioning", "false"));
 
 		return _closedCaptioning;
+	}
+
+	public boolean isCustomSize() {
+		String presetSize = getPresetSize();
+
+		if (Objects.equals(presetSize, "custom")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isEnableKeyboardControls() {
@@ -223,6 +260,7 @@ public class YouTubeDisplayContext {
 	private String _id;
 	private Boolean _loop;
 	private final PortletPreferences _portletPreferences;
+	private String _presetSize;
 	private final HttpServletRequest _request;
 	private Boolean _showThumbnail;
 	private String _startTime;

@@ -369,7 +369,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		if (publishing) {
 			_configureTasksEnabledIfStaleSnapshot(
-				project, MavenPlugin.INSTALL_TASK_NAME,
+				project, testProject, MavenPlugin.INSTALL_TASK_NAME,
 				BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
 		}
 
@@ -2373,7 +2373,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksEnabledIfStaleSnapshot(
-		Project project, String... taskNames) {
+		Project project, boolean testProject, String... taskNames) {
 
 		boolean snapshotIfStale = false;
 
@@ -2382,7 +2382,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, SNAPSHOT_IF_STALE_PROPERTY_NAME, true);
 		}
 
-		if (!snapshotIfStale || _isSnapshotStale(project)) {
+		if (!snapshotIfStale || (!testProject && _isSnapshotStale(project))) {
 			return;
 		}
 

@@ -43,7 +43,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		final String[] newSQL = {sql};
 
-		newSQL[0] = replaceMod(newSQL[0]);
 		newSQL[0] = replaceReplace(newSQL[0]);
 
 		transformations.forEach(
@@ -63,12 +62,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("$1");
-	}
-
-	protected String replaceMod(String sql) {
-		Matcher matcher = modPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 % $2");
 	}
 
 	protected String replaceReplace(String sql) {
@@ -142,6 +135,13 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected static final Pattern modPattern = Pattern.compile(
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	protected Function<String, String> modTransformation = (String sql) -> {
+		Matcher matcher = modPattern.matcher(sql);
+
+		return matcher.replaceAll("$1 % $2");
+	};
+
 	protected static final Pattern substrPattern = Pattern.compile(
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 

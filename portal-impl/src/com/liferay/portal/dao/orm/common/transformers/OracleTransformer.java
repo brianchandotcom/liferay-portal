@@ -37,6 +37,7 @@ public class OracleTransformer extends BaseSQLTransformer {
 		transformations.add(substrDefaultTransformation);
 		transformations.add(_escapeTransformation);
 		transformations.add(_notEqualsBlankStringTransformation);
+		transformations.add(modTransformation);
 	}
 
 	@Override

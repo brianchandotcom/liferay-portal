@@ -104,7 +104,7 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	public void testReplaceMod() {
 		String sql = "select MOD(foo,bar) from Foo";
 
-		String transformedSql = _transformer.replaceMod(sql);
+		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals("select foo % bar from Foo", transformedSql);
 	}

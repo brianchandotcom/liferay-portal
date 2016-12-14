@@ -30,6 +30,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -314,6 +317,39 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Element getGitHubMessageBuildLink() {
+		Element link = new DefaultElement("a");
+
+		link.addAttribute("href", getBuildURL());
+
+		Element labelElement = link;
+
+		String result = getResult();
+
+		if (!result.equals("SUCCESS")) {
+			Element strongElement = new DefaultElement("strong");
+
+			link.add(strongElement);
+
+			labelElement = new DefaultElement("strike");
+
+			strongElement.add(labelElement);
+		}
+
+		labelElement.addText(getJobName());
+
+		String jobVariant = getParameterValue("JOB_VARIANT");
+
+		if ((jobVariant != null) && !jobVariant.isEmpty()) {
+			labelElement.addText("/");
+
+			labelElement.addText(jobVariant);
+		}
+
+		return link;
+	}
+
+	@Override
 	public String getInvocationURL() {
 		String jobURL = getJobURL();
 
@@ -449,6 +485,24 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return repositoryName;
+	}
+
+	@Override
+	public String getRepositorySHA(String repositoryName) {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		if (repositoryName.equals("liferay-jenkins-ee")) {
+			Map<String, String> topLevelBuildStartPropertiesTempMap =
+				topLevelBuild.getStartPropertiesTempMap();
+
+			return topLevelBuildStartPropertiesTempMap.get(
+				"JENKINS_GITHUB_UPSTREAM_SHA");
+		}
+
+		Map<String, String> repositoryGitDetailsTempMap =
+			topLevelBuild.getGitRepositoryDetailsTempMap(repositoryName);
+
+		return repositoryGitDetailsTempMap.get("github.upstream.branch.sha");
 	}
 
 	@Override

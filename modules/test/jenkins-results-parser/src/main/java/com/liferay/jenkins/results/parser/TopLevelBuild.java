@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -23,6 +25,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONObject;
 
@@ -53,6 +58,22 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return displayName;
+	}
+
+	@Override
+	public String getGitHubMessage() {
+		if (getParentBuild() == null) {
+			try {
+				return JenkinsResultsParserUtil.format(
+					getGitHubMessageHeader());
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to format GitHubMessage HTML", ioe);
+			}
+		}
+
+		return "";
 	}
 
 	public Map<String, String> getGitRepositoryDetailsTempMap(
@@ -151,9 +172,9 @@ public class TopLevelBuild extends BaseBuild {
 							getGitRepositoryDetailsPropertiesTempMapURL(
 								repositoryType));
 
-					Set<?> set = gitRepositoryDetailsJSONObject.keySet();
+					Set<?> keySet = gitRepositoryDetailsJSONObject.keySet();
 
-					if (set.isEmpty()) {
+					if (keySet.isEmpty()) {
 						continue;
 					}
 
@@ -187,6 +208,113 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return super.getFailureMessageGenerators();
+	}
+
+	protected Element getGitHubMessageHeader() {
+		update();
+
+		Element rootElement = new DefaultElement("html");
+
+		Element resultElement = new DefaultElement("h1");
+
+		rootElement.add(resultElement);
+
+		getResult();
+
+		if (!result.equals("SUCCESS")) {
+			resultElement.addText("Some tests FAILED.");
+		}
+		else {
+			resultElement.addText("All tests PASSED.");
+		}
+
+		Element buildTimeElement = new DefaultElement("p");
+
+		buildTimeElement.addText(
+			"Build Time: " +
+				JenkinsResultsParserUtil.toDurationString(getDuration()));
+
+		rootElement.add(buildTimeElement);
+
+		Element baseBranchHeadingElement = new DefaultElement("h4");
+
+		baseBranchHeadingElement.addText("Base Branch:");
+		rootElement.add(baseBranchHeadingElement);
+
+		Element branchDetailsElement = new DefaultElement("p");
+
+		branchDetailsElement.addText("BranchName: ");
+
+		Element branchAnchorElement = new DefaultElement("a");
+
+		branchAnchorElement.addAttribute(
+			"href",
+			"https://github.com/liferay/" + getRepositoryName() + "/" +
+				getBranchName());
+		branchAnchorElement.addText(getBranchName());
+		branchDetailsElement.add(branchAnchorElement);
+
+		branchDetailsElement.add(new DefaultElement("br"));
+
+		branchDetailsElement.addText("Branch GIT ID: ");
+
+		Element gitIDAnchorElement = new DefaultElement("a");
+
+		String repositorySHA = getRepositorySHA(getRepositoryName());
+
+		gitIDAnchorElement.addAttribute(
+			"href",
+			"https://github.com/liferay/" + getRepositoryName() + "/commit/" +
+				repositorySHA);
+
+		gitIDAnchorElement.addText(repositorySHA);
+
+		branchDetailsElement.add(gitIDAnchorElement);
+
+		rootElement.add(branchDetailsElement);
+
+		Element jobSummaryHeadingElement = new DefaultElement("h4");
+
+		rootElement.add(jobSummaryHeadingElement);
+
+		jobSummaryHeadingElement.addText("Job Summary:");
+
+		Element jobSummaryListElement = new DefaultElement("ul");
+
+		rootElement.add(jobSummaryListElement);
+
+		List<Build> builds = new ArrayList<>();
+
+		builds.add(this);
+
+		builds.addAll(getDownstreamBuilds(null));
+
+		for (Build downstreamBuild : builds) {
+			Element jobSummaryListItemElement = new DefaultElement("li");
+
+			jobSummaryListElement.add(jobSummaryListItemElement);
+
+			jobSummaryListItemElement.add(
+				downstreamBuild.getGitHubMessageBuildLink());
+		}
+
+		Element moreDetailsElement = new DefaultElement("h5");
+
+		rootElement.add(moreDetailsElement);
+
+		moreDetailsElement.addText("For more details click ");
+
+		Element jenkinsReportLink = new DefaultElement("a");
+
+		jenkinsReportLink.addAttribute("href", "jenkins.report.html");
+
+		jenkinsReportLink.addText("here");
+
+		moreDetailsElement.add(jenkinsReportLink);
+
+		moreDetailsElement.addText(".");
+
+		return rootElement;
 	}
 
 	protected String getGitRepositoryDetailsPropertiesTempMapURL(

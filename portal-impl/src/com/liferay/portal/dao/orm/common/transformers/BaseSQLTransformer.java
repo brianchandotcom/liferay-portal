@@ -43,7 +43,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		final String[] newSQL = {sql};
 
-		newSQL[0] = replaceSubstr(newSQL[0]);
 		newSQL[0] = replaceMod(newSQL[0]);
 		newSQL[0] = replaceReplace(newSQL[0]);
 
@@ -74,10 +73,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 	protected String replaceReplace(String sql) {
 		return sql.replaceAll("(?i)replace\\(", "str_replace(");
-	}
-
-	protected String replaceSubstr(String sql) {
-		return sql;
 	}
 
 	protected Function<String, String> bitwiseCheckTransformation =
@@ -149,6 +144,9 @@ public abstract class BaseSQLTransformer implements Transformer {
 		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	protected static final Pattern substrPattern = Pattern.compile(
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	protected Function<String, String> substrDefaultTransformation =
+		(String sql) -> sql;
 
 	protected List<Function<String, String>> transformations =
 		new ArrayList<>();

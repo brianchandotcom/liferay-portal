@@ -34,6 +34,7 @@ public class MySQLTransformer extends BaseSQLTransformer {
 		transformations.add(inStrDefaultTransformation);
 		transformations.add(_integerDivisionTransformation);
 		transformations.add(nullDateTransformation);
+		transformations.add(substrDefaultTransformation);
 
 		if (!supportsStringCaseSensitiveQuery) {
 			transformations.add(_lowerTransformation);

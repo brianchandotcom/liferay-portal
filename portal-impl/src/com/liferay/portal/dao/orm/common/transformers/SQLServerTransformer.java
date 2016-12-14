@@ -32,19 +32,13 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 		transformations.add(_inStrTransformation);
 		transformations.add(integerDivisionTransformation);
 		transformations.add(nullDateTransformation);
+		transformations.add(_substrTransformation);
 		transformations.add(_modTransformation);
 	}
 
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
-	}
-
-	@Override
-	protected String replaceSubstr(String sql) {
-		Matcher matcher = substrPattern.matcher(sql);
-
-		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
 
 	private Function<String, String> _inStrTransformation = (String sql) -> {
@@ -57,6 +51,12 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 		Matcher matcher = modPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 % $2");
+	};
+
+	private Function<String, String> _substrTransformation = (String sql) -> {
+		Matcher matcher = substrPattern.matcher(sql);
+
+		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	};
 
 }

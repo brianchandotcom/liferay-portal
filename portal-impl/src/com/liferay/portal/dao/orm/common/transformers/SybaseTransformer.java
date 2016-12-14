@@ -35,6 +35,7 @@ public class SybaseTransformer extends BaseSQLTransformer {
 		transformations.add(_inStrTransformation);
 		transformations.add(integerDivisionTransformation);
 		transformations.add(nullDateTransformation);
+		transformations.add(_substrTransformation);
 		transformations.add(_modTransformation);
 		transformations.add(_replaceTransformation);
 	}
@@ -42,13 +43,6 @@ public class SybaseTransformer extends BaseSQLTransformer {
 	@Override
 	protected String replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
-	}
-
-	@Override
-	protected String replaceSubstr(String sql) {
-		Matcher matcher = substrPattern.matcher(sql);
-
-		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 	}
 
 	private Function<String, String> _castLongTransformation = (String sql) -> {
@@ -74,5 +68,11 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 	private Function<String, String> _replaceTransformation = (String sql) ->
 		sql.replaceAll("(?i)replace\\(", "str_replace(");
+
+	private Function<String, String> _substrTransformation = (String sql) -> {
+		Matcher matcher = substrPattern.matcher(sql);
+
+		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+	};
 
 }

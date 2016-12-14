@@ -35,6 +35,7 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 		transformations.add(_inStrTransformation);
 		transformations.add(integerDivisionTransformation);
 		transformations.add(_nullDateTransformation);
+		transformations.add(substrDefaultTransformation);
 		transformations.add(_negativeComparisonTransformation);
 	}
 

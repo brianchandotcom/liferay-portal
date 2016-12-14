@@ -18,13 +18,16 @@
 
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(youTubeDisplayContext.getURL()) %>">
-		<c:if test="<%= youTubeDisplayContext.isShowThumbnail() %>">
-			<aui:a href="<%= youTubeDisplayContext.getWatchURL() %>" rel="external" title='<%= HtmlUtil.escapeAttribute(LanguageUtil.get(request, "watch-this-video-at-youtube")) %>'>
-				<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="youtube-video" />" height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getImageURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" />
-			</aui:a>
-		</c:if>
-
-		<iframe allowfullscreen frameborder="0" height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getEmbedURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" wmode="Opaque" /></iframe>
+		<c:choose>
+			<c:when test="<%= youTubeDisplayContext.isShowThumbnail() %>">
+				<aui:a href="<%= youTubeDisplayContext.getWatchURL() %>" rel="external" title='<%= HtmlUtil.escapeAttribute(LanguageUtil.get(request, "watch-this-video-at-youtube")) %>'>
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="youtube-video" />" height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getImageURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" />
+				</aui:a>
+			</c:when>
+			<c:otherwise>
+				<iframe allowfullscreen frameborder="0" height="<%= youTubeDisplayContext.getHeight() %>" src="<%= youTubeDisplayContext.getEmbedURL() %>" width="<%= youTubeDisplayContext.getWidth() %>" wmode="Opaque" /></iframe>
+			</c:otherwise>
+		</c:choose>
 	</c:when>
 	<c:otherwise>
 		<liferay-util:include page="/html/portal/portlet_not_setup.jsp" />

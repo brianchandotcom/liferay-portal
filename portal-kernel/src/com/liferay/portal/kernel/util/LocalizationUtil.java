@@ -242,7 +242,7 @@ public class LocalizationUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getLocalizedName(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link #getLocalizedName(String,
 	 *             String)}
 	 */
 	@Deprecated

@@ -127,7 +127,8 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, Replaced by {@link #deleteCategories(long[])}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, Replaced by {@link
+	#deleteCategories(long[])}
 	*/
 	@Deprecated
 	public static com.liferay.asset.kernel.model.AssetCategorySoap[] deleteCategories(

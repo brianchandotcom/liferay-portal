@@ -64,7 +64,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #MBMessageDisplayImpl(MBMessage, MBMessage, MBCategory,
 	 *             MBThread, int, MBMessageLocalService, Comparator)}
 	 */
@@ -118,7 +118,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -132,7 +133,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -146,7 +148,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

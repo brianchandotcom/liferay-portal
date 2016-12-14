@@ -17,7 +17,7 @@ package com.liferay.util.format;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Manuel de la Peña
- * @deprecated As of 6.2.0, moved to {@link
+ * @deprecated As of com.liferay.util.java#2.2.0, moved to {@link
  *             com.liferay.portal.kernel.format.PhoneNumberFormat}
  */
 @Deprecated

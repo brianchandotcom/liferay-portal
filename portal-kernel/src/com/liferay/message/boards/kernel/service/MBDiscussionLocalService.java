@@ -66,8 +66,8 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	 */
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addDiscussion(long, long,
-	long, long, long, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#addDiscussion(long, long, long, long, long, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public MBDiscussion addDiscussion(long userId, long classNameId,

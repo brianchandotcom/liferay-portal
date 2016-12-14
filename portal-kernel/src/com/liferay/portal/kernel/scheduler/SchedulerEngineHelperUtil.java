@@ -193,7 +193,7 @@ public class SchedulerEngineHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_getSchedulerEngineHelper()}
+	 * @deprecated As of com.liferay.portal.kernel#2.18.0, replaced by {@link #_getSchedulerEngineHelper()}
 	 */
 	@Deprecated
 	public static SchedulerEngineHelper getSchedulerEngineHelper() {

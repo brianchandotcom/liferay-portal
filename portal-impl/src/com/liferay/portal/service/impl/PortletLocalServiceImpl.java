@@ -209,7 +209,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #clearPortletsMap)}
 	 */
 	@Clusterable
 	@Deprecated
@@ -962,7 +963,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #loadGetPortletsMap(long))}
 	 */
 	@Deprecated
 	@Override

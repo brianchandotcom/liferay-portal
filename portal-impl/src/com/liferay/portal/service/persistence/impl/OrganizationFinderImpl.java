@@ -106,9 +106,9 @@ public class OrganizationFinderImpl
 		OrganizationFinder.class.getName() + ".joinO_ByUsersOrgs";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #countO_ByKeywords(long,
-	 *             long, String, String, String, Long, Long,
-	 *             LinkedHashMap<String, Object>)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #countO_ByKeywords(long, long, String, String, String, Long,
+	 *             Long, LinkedHashMap<String, Object>)}
 	 */
 	@Deprecated
 	@Override
@@ -123,7 +123,8 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #countO_ByO_U(long, long)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #countO_ByO_U(long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -132,7 +133,7 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #countO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
 	 *             String, String, String, String, Long, Long,
 	 *             LinkedHashMap<String, Object>, boolean)}
@@ -152,7 +153,7 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #countO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String[],
 	 *             String, String[], String[], String[], Long, Long,
 	 *             LinkedHashMap<String, Object>, boolean)}
@@ -440,9 +441,10 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByKeywords(long, long,
-	 *             String, String, String, Long, Long, LinkedHashMap<String,
-	 *             Object>, int, int, OrderByComparator<Organization>)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #findO_ByKeywords(long, long, String, String, String, Long,
+	 *             Long, LinkedHashMap<String, Object>, int, int,
+	 *             OrderByComparator<Organization>)}
 	 */
 	@Deprecated
 	@Override
@@ -458,7 +460,8 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByNoAssets()}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #findO_ByNoAssets()}
 	 */
 	@Deprecated
 	@Override
@@ -467,8 +470,8 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #findO_ByC_P(long, long,
-	 *             long, int)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #findO_ByC_P(long, long, long, int)}
 	 */
 	@Deprecated
 	@Override
@@ -481,7 +484,7 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String,
 	 *             String, String, String, String, Long, Long,
 	 *             LinkedHashMap<String, Object>, boolean, int, int,
@@ -503,7 +506,7 @@ public class OrganizationFinderImpl
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #findO_ByC_PO_N_T_S_C_Z_R_C(long, long, String, String[],
 	 *             String, String[], String[], String[], Long, Long,
 	 *             LinkedHashMap<String, Object>, boolean, int, int

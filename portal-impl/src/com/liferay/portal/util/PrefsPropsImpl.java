@@ -40,7 +40,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getBoolean(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -52,7 +52,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getBoolean(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
@@ -92,7 +92,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getContent(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -124,7 +124,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getDouble(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -136,7 +136,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getDouble(PortletPreferences, String, double)}
 	 */
 	@Deprecated
@@ -181,7 +181,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getInteger(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -193,7 +193,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getInteger(PortletPreferences, String, int)}
 	 */
 	@Deprecated
@@ -238,8 +238,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getLong(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getLong(PortletPreferences, String)}
 	 */
 	@Deprecated
 	@Override
@@ -250,8 +250,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getLong(PortletPreferences,
-	 *             String, long)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getLong(PortletPreferences, String, long)}
 	 */
 	@Deprecated
 	@Override
@@ -305,7 +305,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getProperties(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
@@ -340,8 +340,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getShort(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getShort(PortletPreferences, String)}
 	 */
 	@Deprecated
 	@Override
@@ -352,8 +352,8 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getShort(PortletPreferences,
-	 *             String, short)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getShort(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	@Override
@@ -397,7 +397,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String)}
 	 */
 	@Deprecated
@@ -409,7 +409,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
@@ -422,7 +422,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String, double)}
 	 */
 	@Deprecated
@@ -435,7 +435,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String, int)}
 	 */
 	@Deprecated
@@ -448,7 +448,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String, long)}
 	 */
 	@Deprecated
@@ -461,7 +461,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String, short)}
 	 */
 	@Deprecated
@@ -474,7 +474,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getString(PortletPreferences, String, String)}
 	 */
 	@Deprecated
@@ -559,7 +559,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getStringArray(PortletPreferences, String, String)}
 	 */
 	@Deprecated
@@ -572,7 +572,7 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	 *             #getStringArray(PortletPreferences, String, String,
 	 *             String[])}
 	 */

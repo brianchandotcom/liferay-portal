@@ -39,5 +39,11 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>selectedGroupIds</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long[]</type>
+		</attribute>
 	</tag>
 </taglib>

@@ -1,0 +1,93 @@
+import groovy.sql.Sql
+
+import java.sql.DatabaseMetaData
+import java.sql.ResultSet
+
+apply plugin: "base"
+apply plugin: "com.liferay.portal.tools.db.support"
+
+archivesBaseName = "com.example.sample.service"
+
+task initDB
+task runGradleTest
+
+cleanServiceBuilder {
+	dependsOn initDB
+	url = "jdbc:h2:" + _getAbsolutePath(new File(buildDir, "db"))
+}
+
+dependencies {
+	dbSupport group: "com.h2database", name: "h2", version: "1.4.193"
+}
+
+initDB {
+	dependsOn clean
+
+	doLast {
+		Sql.withInstance(cleanServiceBuilder.url, null, null, "org.h2.Driver") {
+			Sql sql ->
+
+			for (String fileName in ["init.sql", "src/main/resources/META-INF/sql/tables.sql", "src/main/resources/META-INF/sql/indexes.sql"]) {
+				String absolutePath = _getAbsolutePath(project, fileName)
+
+				sql.executeUpdate "runscript from ${absolutePath}"
+			}
+
+			assert sql.executeUpdate("insert into Release_ (mvccVersion, releaseId, servletContextName, buildNumber, verified, state_) values (0, 1, ${cleanServiceBuilder.servletContextName}, 1, true, 1)") == 1
+			assert sql.executeUpdate("insert into ServiceComponent (mvccVersion, serviceComponentId, buildNamespace, buildNumber) values (0, 1, 'Sample', 1)") == 1
+		}
+	}
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	dependsOn cleanServiceBuilder
+
+	doLast {
+		Sql.withInstance(cleanServiceBuilder.url, null, null, "org.h2.Driver") {
+			Sql sql ->
+
+			DatabaseMetaData databaseMetaData = sql.connection.metaData
+
+			for (String tableName in ["SampleBar", "Sample_Foo", "Sample_User"]) {
+				ResultSet resultSet = databaseMetaData.getTables(null, null, tableName.toUpperCase(), ["TABLES"] as String[])
+
+				try {
+					assert !resultSet.next()
+				}
+				finally {
+					resultSet.close()
+				}
+			}
+
+			for (String tableName in ["Release_", "ServiceComponent"]) {
+				Map map = sql.firstRow("select count(*) as count from Release_")
+
+				assert !map.count
+			}
+		}
+	}
+}
+
+URLClassLoader urlClassLoader = GroovyObject.class.classLoader
+
+configurations.dbSupport.each {
+	File jarFile ->
+
+	urlClassLoader.addURL jarFile.toURL()
+}
+
+private String _getAbsolutePath(Project project, String fileName) {
+	_getAbsolutePath(project.file(fileName))
+}
+
+private String _getAbsolutePath(File file) {
+	file.absolutePath.replace(File.separatorChar, '/' as char)
+}

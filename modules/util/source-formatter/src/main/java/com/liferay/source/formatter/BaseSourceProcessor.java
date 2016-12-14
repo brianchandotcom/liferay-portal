@@ -362,12 +362,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkIfClauseParentheses(
 		String ifClause, String fileName, int lineCount) {
 
-		int quoteCount = StringUtil.count(ifClause, CharPool.QUOTE);
-
-		if ((quoteCount % 2) == 1) {
-			return;
-		}
-
 		ifClause = stripQuotes(ifClause);
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||

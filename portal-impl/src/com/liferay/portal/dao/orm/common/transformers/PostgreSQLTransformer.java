@@ -46,23 +46,24 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
 
-	private Function<String, String> _inStrTransformation = (String sql) -> {
+	private static final Pattern _negativeComparisonPattern = Pattern.compile(
+		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
+
+	private final Function<String, String> _inStrTransformation = (
+		String sql) -> {
 		Matcher matcher = instrPattern.matcher(sql);
 
 		return matcher.replaceAll("POSITION($2 in $1)");
 	};
 
-	private static final Pattern _negativeComparisonPattern = Pattern.compile(
-		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
-
-	private Function<String, String> _negativeComparisonTransformation =
-		(String sql) ->  {
+	private final Function<String, String> _negativeComparisonTransformation =
+		(String sql) -> {
 			Matcher matcher = _negativeComparisonPattern.matcher(sql);
 
 			return matcher.replaceAll("$1 ($2)");
 		};
 
-	private Function<String, String> _nullDateTransformation =
+	private final Function<String, String> _nullDateTransformation =
 		(String sql) ->
 			StringUtil.replace(sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
 

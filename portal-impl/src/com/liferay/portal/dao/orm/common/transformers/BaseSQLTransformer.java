@@ -62,6 +62,22 @@ public abstract class BaseSQLTransformer implements Transformer {
 		return matcher.replaceAll("$1");
 	}
 
+	protected static final Pattern castClobTextPattern = Pattern.compile(
+		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern castLongPattern = Pattern.compile(
+		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern instrPattern = Pattern.compile(
+		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern integerDivisionPattern = Pattern.compile(
+		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern modPattern = Pattern.compile(
+		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+	protected static final Pattern substrPattern = Pattern.compile(
+		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	protected Function<String, String> bitwiseCheckDefaultTransformation =
+		(String sql) -> sql;
+
 	protected Function<String, String> bitwiseCheckTransformation =
 		(String sql) -> {
 			Matcher matcher = _bitwiseCheckPattern.matcher(sql);
@@ -69,21 +85,10 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return matcher.replaceAll("($1 & $2)");
 		};
 
-	protected DB db;
-
-	protected Function<String, String> bitwiseCheckDefaultTransformation =
-		(String sql) -> sql;
-
 	protected Function<String, String> booleanTransformation =
 		(String sql) -> StringUtil.replace(
 			sql, new String[] {"[$FALSE$]", "[$TRUE$]"},
-			new String[] {
-				db.getTemplateFalse(), db.getTemplateTrue()
-			}
-		);
-
-	protected static final Pattern castClobTextPattern = Pattern.compile(
-		"CAST_CLOB_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+			new String[] {db.getTemplateFalse(), db.getTemplateTrue()});
 
 	protected Function<String, String> castClobTextTransformation =
 		(String sql) -> {
@@ -99,23 +104,13 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return matcher.replaceAll("$1");
 		};
 
-	protected static final Pattern castLongPattern = Pattern.compile(
-		"CAST_LONG\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
-
 	protected Function<String, String> castTextTransformation =
 		(String sql) -> replaceCastText(_castTextPattern.matcher(sql));
-
 	protected Function<String, String> crossJoinDefaultTransformation =
 		(String sql) -> sql;
-
-	protected static final Pattern instrPattern = Pattern.compile(
-		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
-
+	protected DB db;
 	protected Function<String, String> inStrDefaultTransformation =
 		(String sql) -> sql;
-
-	protected static final Pattern integerDivisionPattern = Pattern.compile(
-		"INTEGER_DIV\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 
 	protected Function<String, String> integerDivisionTransformation =
 		(String sql) -> {
@@ -124,27 +119,18 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return matcher.replaceAll("$1 / $2");
 		};
 
-	protected Function<String, String> nullDateTransformation =
-		(String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
-
-	protected static final Pattern modPattern = Pattern.compile(
-		"MOD\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
-
 	protected Function<String, String> modTransformation = (String sql) -> {
 		Matcher matcher = modPattern.matcher(sql);
 
 		return matcher.replaceAll("$1 % $2");
 	};
 
+	protected Function<String, String> nullDateTransformation =
+		(String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 	protected Function<String, String> replaceTransformation =
 		(String sql) -> sql.replaceAll("(?i)replace\\(", "str_replace(");
-
-	protected static final Pattern substrPattern = Pattern.compile(
-		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
-
 	protected Function<String, String> substrDefaultTransformation =
 		(String sql) -> sql;
-
 	protected List<Function<String, String>> transformations =
 		new ArrayList<>();
 

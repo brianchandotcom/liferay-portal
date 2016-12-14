@@ -46,24 +46,24 @@ public class OracleTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("CAST($1 AS VARCHAR(4000))");
 	}
 
-	private Function<String, String> _castClobTextTransformation =
+	private final Function<String, String> _castClobTextTransformation =
 		(String sql) -> {
 			Matcher matcher = castClobTextPattern.matcher(sql);
 
 			return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 		};
 
-	private Function<String, String> _escapeTransformation =
+	private final Function<String, String> _escapeTransformation =
 		(String sql) -> StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
 
-	private Function<String, String> _integerDivisionTransformation =
+	private final Function<String, String> _integerDivisionTransformation =
 		(String sql) -> {
 			Matcher matcher = integerDivisionPattern.matcher(sql);
 
 			return matcher.replaceAll("TRUNC($1 / $2)");
 		};
 
-	private Function<String, String> _notEqualsBlankStringTransformation =
+	private final Function<String, String> _notEqualsBlankStringTransformation =
 		(String sql) -> StringUtil.replace(sql, " != ''", " IS NOT NULL");
 
 }

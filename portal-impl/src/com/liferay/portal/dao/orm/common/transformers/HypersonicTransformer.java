@@ -42,7 +42,8 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
 	}
 
-	private Function<String, String> _castLongTransformation = (String sql) -> {
+	private final Function<String, String> _castLongTransformation = (
+		String sql) -> {
 		Matcher matcher = castLongPattern.matcher(sql);
 
 		return matcher.replaceAll("CONVERT($1, SQL_BIGINT)");

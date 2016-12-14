@@ -47,7 +47,8 @@ public class DB2Transformer extends BaseSQLTransformer {
 	private static final Pattern _likePattern = Pattern.compile(
 		"LIKE \\?", Pattern.CASE_INSENSITIVE);
 
-	private Function<String, String> _likeTransformation = (String sql) -> {
+	private final Function<String, String> _likeTransformation = (String sql) ->
+		{
 		Matcher matcher = _likePattern.matcher(sql);
 
 		return matcher.replaceAll(

@@ -206,7 +206,6 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	private static final boolean _SUPPORTS_STRING_CASE_SENSITIVE_QUERY = false;
 
 	private final MySQLDB _db = new MySQLDB(5, 7);
-
 	private MySQLTransformer _transformer = new MySQLTransformer(
 		_SUPPORTS_STRING_CASE_SENSITIVE_QUERY);
 

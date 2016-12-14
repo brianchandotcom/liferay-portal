@@ -47,14 +47,15 @@ public class MySQLTransformer extends BaseSQLTransformer {
 
 	private static final String _LOWER_OPEN = "lower(";
 
-	private Function<String, String> _integerDivisionTransformation =
+	private final Function<String, String> _integerDivisionTransformation =
 		(String sql) -> {
 			Matcher matcher = integerDivisionPattern.matcher(sql);
 
 			return matcher.replaceAll("$1 DIV $2");
 		};
 
-	private Function<String, String> _lowerTransformation = (String sql) -> {
+	private final Function<String, String> _lowerTransformation = (
+		String sql) -> {
 		int x = sql.indexOf(_LOWER_OPEN);
 
 		if (x == -1) {

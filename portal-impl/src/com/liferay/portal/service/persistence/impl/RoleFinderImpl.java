@@ -797,16 +797,6 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 		String[] keywordsArray = CustomSQLUtil.keywords(keywords);
 
-		if ((types == null) || (types.length == 0)) {
-			return 0;
-		}
-
-		if ((excludedNames == null) || excludedNames.isEmpty()) {
-			excludedNames = new ArrayList<>();
-
-			excludedNames.add("");
-		}
-
 		Session session = null;
 
 		try {
@@ -968,16 +958,6 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		}
 
 		String[] keywordsArray = CustomSQLUtil.keywords(keywords);
-
-		if ((types == null) || (types.length == 0)) {
-			return Collections.emptyList();
-		}
-
-		if ((excludedNames == null) || excludedNames.isEmpty()) {
-			excludedNames = new ArrayList<>();
-
-			excludedNames.add("");
-		}
 
 		Session session = null;
 

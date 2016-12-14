@@ -363,7 +363,12 @@ link.setAttribute('data-cke-saved-href', link.href);
 
     g.h1.children = g.h2.children = g.h3.children =
             g.h4.children = g.h5.children = g.h6.children =
-            g.singleLine.children = g.paragraph.children =
+        [ g.escapedSequence, g.br, g.rawUri,
+            g.namedUri, g.namedInterwikiLink, g.namedLink,
+            g.unnamedUri, g.unnamedInterwikiLink, g.unnamedLink,
+            g.tt, g.img ];
+
+    g.singleLine.children = g.paragraph.children =
             g.text.children = g.strong.children = g.em.children =
         [ g.escapedSequence, g.strong, g.em, g.br, g.rawUri,
             g.namedUri, g.namedInterwikiLink, g.namedLink,

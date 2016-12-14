@@ -53,9 +53,15 @@ which can solve hanging problems with the Gradle Daemon.
 ### Fixed
 - [LPS-69618]: Disable up-to-date check for the `npmInstall` task.
 
+## 1.4.2 - 2016-12-14
+
+### Fixed
+- [LPS-69677]: Fix problem with `ExecuteNpmTask` when `node.download = false`.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-68564]: https://issues.liferay.com/browse/LPS-68564
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
+[LPS-69677]: https://issues.liferay.com/browse/LPS-69677

@@ -733,6 +733,16 @@ version 2.3.2.
 - [LPS-69501]: Continue searching in the parent directories for a custom portal
 tool version defined in a `gradle.properties` file until one is found.
 
+## 3.0.50 - 2016-12-14
+
+### Changed
+- [LPS-69677]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.6.
+- [LPS-69677]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.4.
+- [LPS-69677]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.3.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -807,4 +817,5 @@ tool version defined in a `gradle.properties` file until one is found.
 [LPS-69501]: https://issues.liferay.com/browse/LPS-69501
 [LPS-69518]: https://issues.liferay.com/browse/LPS-69518
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
+[LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

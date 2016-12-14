@@ -876,8 +876,8 @@ public class WebServerServlet extends HttpServlet {
 			return;
 		}
 		catch (Exception e) {
-			if ((e instanceof NoSuchFileEntryException) ||
-				(e instanceof PrincipalException)) {
+			if (e instanceof NoSuchFileEntryException ||
+				e instanceof PrincipalException) {
 
 				try {
 					sendFile(response, user, groupId, folderId, "index.htm");

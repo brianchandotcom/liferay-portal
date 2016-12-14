@@ -42,7 +42,7 @@ public class DefaultFieldSerializer implements FieldSerializer {
 		if (object == null) {
 			sb.append("null");
 		}
-		else if ((object instanceof Date) || (object instanceof Timestamp)) {
+		else if (object instanceof Date || object instanceof Timestamp) {
 			sb.append("'");
 			sb.append(_dateFormat.format(object));
 			sb.append("'");

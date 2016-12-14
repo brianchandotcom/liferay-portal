@@ -157,9 +157,8 @@ public class BaseTestRule<C, M>
 			statement = statementWrapper.getStatement();
 		}
 
-		if ((statement instanceof InvokeMethod) ||
-			(statement instanceof RunAfters) ||
-			(statement instanceof RunBefores)) {
+		if (statement instanceof InvokeMethod ||
+			statement instanceof RunAfters || statement instanceof RunBefores) {
 
 			return ReflectionTestUtil.getFieldValue(statement, "target");
 		}

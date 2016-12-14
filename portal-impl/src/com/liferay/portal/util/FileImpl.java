@@ -423,9 +423,9 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		catch (Throwable t) {
 			Throwable throwable = ExceptionUtils.getRootCause(t);
 
-			if ((throwable instanceof CryptographyException) ||
-				(throwable instanceof EncryptedDocumentException) ||
-				(throwable instanceof UnsupportedZipFeatureException)) {
+			if (throwable instanceof CryptographyException ||
+				throwable instanceof EncryptedDocumentException ||
+				throwable instanceof UnsupportedZipFeatureException) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(

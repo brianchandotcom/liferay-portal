@@ -80,9 +80,9 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 		catch (Exception e) {
 			Throwable throwable = ExceptionUtils.getRootCause(e);
 
-			if ((throwable instanceof CryptographyException) ||
-				(throwable instanceof EncryptedDocumentException) ||
-				(throwable instanceof UnsupportedZipFeatureException)) {
+			if (throwable instanceof CryptographyException ||
+				throwable instanceof EncryptedDocumentException ||
+				throwable instanceof UnsupportedZipFeatureException) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(

@@ -34,7 +34,7 @@ public class PostgreSQLFieldSerializer implements FieldSerializer {
 		if (object == null) {
 			sb.append("null");
 		}
-		else if ((object instanceof Date) || (object instanceof Timestamp)) {
+		else if (object instanceof Date || object instanceof Timestamp) {
 			sb.append("to_timestamp('");
 			sb.append(_dateFormat.format(object));
 			sb.append("', 'YYYY-MM-DD HH24:MI:SS:MS')");

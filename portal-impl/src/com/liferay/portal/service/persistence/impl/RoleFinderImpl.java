@@ -1113,7 +1113,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 		StringBundler sb = new StringBundler(excludedNames.size());
 
 		for (int i = 0; i < excludedNames.size() - 1; i++) {
-			sb.append("?,");
+			sb.append("?, ");
 		}
 
 		sb.append("?");

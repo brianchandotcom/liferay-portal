@@ -552,40 +552,6 @@ public class DDMFormValuesValidatorTest {
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}
 
-	@Test(expected = MustSetValidValue.class)
-	public void testValidationWithRequiredSelectAndEmptyDefaultLocaleValue()
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormField ddmFormField = new DDMFormField("option", "select");
-
-		ddmFormField.setDataType("string");
-		ddmFormField.setRequired(true);
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
-		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
-		ddmFormField.setLocalizable(false);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		String instanceId = StringUtil.randomString();
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				instanceId, "option", new UnlocalizedValue("[\"\"]")));
-
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
-	}
-
 	@Test(expected = MustNotSetValue.class)
 	public void testValidationWithSeparatorField() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
@@ -730,37 +696,6 @@ public class DDMFormValuesValidatorTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Age", new UnlocalizedValue("5")));
-
-		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
-	}
-
-	@Test(expected = MustSetValidValue.class)
-	public void testValidationWithWrongValueSetForSelect() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
-
-		DDMFormField ddmFormField = new DDMFormField("option", "select");
-
-		ddmFormField.setDataType("string");
-
-		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-
-		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
-		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
-
-		ddmFormField.setLocalizable(false);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
-			ddmForm);
-
-		String instanceId = StringUtil.randomString();
-
-		ddmFormValues.addDDMFormFieldValue(
-			DDMFormValuesTestUtil.createDDMFormFieldValue(
-				instanceId, "option", new UnlocalizedValue("[\"Invalid\"]")));
 
 		_ddmFormValuesValidatorImpl.validate(ddmFormValues);
 	}

@@ -14,25 +14,20 @@
 
 package com.liferay.contacts.internal.upgrade.v2_0_0;
 
-import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Jonathan Lee
  */
 public class UpgradeEntry extends UpgradeProcess {
 
-	public UpgradeEntry(
-		EntryLocalService entryLocalService,
-		UserLocalService userLocalService) {
-
-		_entryLocalService = entryLocalService;
+	public UpgradeEntry(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
@@ -41,25 +36,29 @@ public class UpgradeEntry extends UpgradeProcess {
 		updateEntries();
 	}
 
-	protected void updateEntries() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Entry> entries = _entryLocalService.getEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	protected void updateEntries() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select companyId, emailAddress, entryId from Contacts_Entry");
+			ResultSet rs = ps.executeQuery()) {
 
-			for (Entry entry : entries) {
-				try {
-					_userLocalService.getUserByEmailAddress(
-						entry.getCompanyId(), entry.getEmailAddress());
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				String emailAddress = rs.getString("emailAddress");
+				long entryId = rs.getLong("entryId");
 
-					_entryLocalService.deleteEntry(entry);
-				}
-				catch (Exception e) {
+				User user = _userLocalService.fetchUserByEmailAddress(
+					companyId, emailAddress);
+
+				if (user != null) {
+					runSQL(
+						"delete from Contacts_Entry where entryId = " +
+							String.valueOf(entryId));
 				}
 			}
 		}
 	}
 
-	private final EntryLocalService _entryLocalService;
 	private final UserLocalService _userLocalService;
 
 }

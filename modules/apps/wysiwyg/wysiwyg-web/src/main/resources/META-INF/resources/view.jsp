@@ -16,4 +16,19 @@
 
 <%@ include file="/init.jsp" %>
 
-<%= message %>
+<c:choose>
+	<c:when test="<%= Validator.isNull(message) %>">
+		<div class="alert alert-info text-center">
+			<div>
+				<liferay-ui:message key="this-application-is-not-visible-to-users" />
+			</div>
+
+			<div>
+				<aui:a href="javascript:;" onClick="<%= portletDisplay.getURLConfigurationJS() %>"><liferay-ui:message key="add-some-content-to-make-it-visible" /></aui:a>
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<%= message %>
+	</c:otherwise>
+</c:choose>

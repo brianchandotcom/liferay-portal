@@ -118,7 +118,8 @@ public class YouTubeDisplayContext {
 			return _startTime;
 		}
 
-		_startTime = _portletPreferences.getValue("startTime", "480");
+		_startTime = _portletPreferences.getValue(
+			"startTime", StringPool.BLANK);
 
 		return _startTime;
 	}

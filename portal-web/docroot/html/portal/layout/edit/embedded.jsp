@@ -18,7 +18,6 @@
 
 <%
 String url = StringPool.BLANK;
-String description = StringPool.BLANK;
 
 if (selLayout != null) {
 	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();

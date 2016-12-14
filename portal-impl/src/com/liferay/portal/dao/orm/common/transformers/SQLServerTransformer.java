@@ -42,25 +42,25 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(MAX))");
 	}
 
-	private final Function<String, String> _inStrTransformation = (
-		String sql) -> {
-		Matcher matcher = instrPattern.matcher(sql);
+	private final Function<String, String> _inStrTransformation =
+		(String sql) -> {
+			Matcher matcher = instrPattern.matcher(sql);
 
-		return matcher.replaceAll("CHARINDEX($2, $1)");
-	};
+			return matcher.replaceAll("CHARINDEX($2, $1)");
+		};
 
-	private final Function<String, String> _modTransformation = (String sql) ->
-		{
-		Matcher matcher = modPattern.matcher(sql);
+	private final Function<String, String> _modTransformation =
+		(String sql) -> {
+			Matcher matcher = modPattern.matcher(sql);
 
-		return matcher.replaceAll("$1 % $2");
-	};
+			return matcher.replaceAll("$1 % $2");
+		};
 
-	private final Function<String, String> _substrTransformation = (
-		String sql) -> {
-		Matcher matcher = substrPattern.matcher(sql);
+	private final Function<String, String> _substrTransformation =
+		(String sql) -> {
+			Matcher matcher = substrPattern.matcher(sql);
 
-		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
-	};
+			return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+		};
 
 }

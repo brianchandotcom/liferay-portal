@@ -45,38 +45,38 @@ public class SybaseTransformer extends BaseSQLTransformer {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
-	private final Function<String, String> _castLongTransformation = (
-		String sql) -> {
-		Matcher matcher = castLongPattern.matcher(sql);
+	private final Function<String, String> _castLongTransformation =
+		(String sql) -> {
+			Matcher matcher = castLongPattern.matcher(sql);
 
-		return matcher.replaceAll("CONVERT(BIGINT, $1)");
-	};
+			return matcher.replaceAll("CONVERT(BIGINT, $1)");
+		};
 
 	private final Function<String, String> _crossJoinTransformation =
 		(String sql) -> StringUtil.replace(sql, "CROSS JOIN", StringPool.COMMA);
 
-	private final Function<String, String> _inStrTransformation = (
-		String sql) -> {
-		Matcher matcher = instrPattern.matcher(sql);
+	private final Function<String, String> _inStrTransformation =
+		(String sql) -> {
+			Matcher matcher = instrPattern.matcher(sql);
 
-		return matcher.replaceAll("CHARINDEX($2, $1)");
-	};
+			return matcher.replaceAll("CHARINDEX($2, $1)");
+		};
 
-	private final Function<String, String> _modTransformation = (String sql) ->
-		{
-		Matcher matcher = modPattern.matcher(sql);
+	private final Function<String, String> _modTransformation =
+		(String sql) -> {
+			Matcher matcher = modPattern.matcher(sql);
 
-		return matcher.replaceAll("$1 % $2");
-	};
+			return matcher.replaceAll("$1 % $2");
+		};
 
-	private final Function<String, String> _replaceTransformation = (String sql) ->
-		sql.replaceAll("(?i)replace\\(", "str_replace(");
+	private final Function<String, String> _replaceTransformation =
+		(String sql) -> sql.replaceAll("(?i)replace\\(", "str_replace(");
 
-	private final Function<String, String> _substrTransformation = (
-		String sql) -> {
-		Matcher matcher = substrPattern.matcher(sql);
+	private final Function<String, String> _substrTransformation =
+		(String sql) -> {
+			Matcher matcher = substrPattern.matcher(sql);
 
-		return matcher.replaceAll("SUBSTRING($1, $2, $3)");
-	};
+			return matcher.replaceAll("SUBSTRING($1, $2, $3)");
+		};
 
 }

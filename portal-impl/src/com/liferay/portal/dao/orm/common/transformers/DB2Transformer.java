@@ -47,12 +47,12 @@ public class DB2Transformer extends BaseSQLTransformer {
 	private static final Pattern _likePattern = Pattern.compile(
 		"LIKE \\?", Pattern.CASE_INSENSITIVE);
 
-	private final Function<String, String> _likeTransformation = (String sql) ->
-		{
-		Matcher matcher = _likePattern.matcher(sql);
+	private final Function<String, String> _likeTransformation =
+		(String sql) -> {
+			Matcher matcher = _likePattern.matcher(sql);
 
-		return matcher.replaceAll(
-			"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
-	};
+			return matcher.replaceAll(
+				"LIKE COALESCE(CAST(? AS VARCHAR(32672)),'')");
+		};
 
 }

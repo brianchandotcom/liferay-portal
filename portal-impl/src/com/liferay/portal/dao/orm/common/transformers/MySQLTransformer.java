@@ -54,45 +54,45 @@ public class MySQLTransformer extends BaseSQLTransformer {
 			return matcher.replaceAll("$1 DIV $2");
 		};
 
-	private final Function<String, String> _lowerTransformation = (
-		String sql) -> {
-		int x = sql.indexOf(_LOWER_OPEN);
-
-		if (x == -1) {
-			return sql;
-		}
-
-		StringBuilder sb = new StringBuilder(sql.length());
-
-		int y = 0;
-
-		while (true) {
-			sb.append(sql.substring(y, x));
-
-			y = sql.indexOf(_LOWER_CLOSE, x);
-
-			if (y == -1) {
-				sb.append(sql.substring(x));
-
-				break;
-			}
-
-			sb.append(sql.substring(x + _LOWER_OPEN.length(), y));
-
-			y++;
-
-			x = sql.indexOf(_LOWER_OPEN, y);
+	private final Function<String, String> _lowerTransformation =
+		(String sql) -> {
+			int x = sql.indexOf(_LOWER_OPEN);
 
 			if (x == -1) {
-				sb.append(sql.substring(y));
-
-				break;
+				return sql;
 			}
-		}
 
-		sql = sb.toString();
+			StringBuilder sb = new StringBuilder(sql.length());
 
-		return sql;
-	};
+			int y = 0;
+
+			while (true) {
+				sb.append(sql.substring(y, x));
+
+				y = sql.indexOf(_LOWER_CLOSE, x);
+
+				if (y == -1) {
+					sb.append(sql.substring(x));
+
+					break;
+				}
+
+				sb.append(sql.substring(x + _LOWER_OPEN.length(), y));
+
+				y++;
+
+				x = sql.indexOf(_LOWER_OPEN, y);
+
+				if (x == -1) {
+					sb.append(sql.substring(y));
+
+					break;
+				}
+			}
+
+			sql = sb.toString();
+
+			return sql;
+		};
 
 }

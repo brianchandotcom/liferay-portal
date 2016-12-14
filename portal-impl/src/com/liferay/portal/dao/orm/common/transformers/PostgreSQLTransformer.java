@@ -49,12 +49,12 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(
 		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
 
-	private final Function<String, String> _inStrTransformation = (
-		String sql) -> {
-		Matcher matcher = instrPattern.matcher(sql);
+	private final Function<String, String> _inStrTransformation =
+		(String sql) -> {
+			Matcher matcher = instrPattern.matcher(sql);
 
-		return matcher.replaceAll("POSITION($2 in $1)");
-	};
+			return matcher.replaceAll("POSITION($2 in $1)");
+		};
 
 	private final Function<String, String> _negativeComparisonTransformation =
 		(String sql) -> {

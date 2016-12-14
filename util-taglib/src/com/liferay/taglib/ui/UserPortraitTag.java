@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -87,17 +87,17 @@ public class UserPortraitTag extends IncludeTag {
 			userName = LanguageUtil.get(resourceBundle, "user");
 		}
 
-		String[] userNames = StringUtil.split(userName, StringPool.SPACE);
+		String[] userNames = StringUtil.split(userName, CharPool.SPACE);
 
-		if (userNames.length > 1) {
-			userNames = ArrayUtil.subset(userNames, 0, 2);
-		}
+		StringBundler sb = new StringBundler(2);
 
-		StringBundler sb = new StringBundler(userNames.length);
+		for (int i = 0; (i < userNames.length) && (i < 2); i++) {
+			if (!userNames[i].isEmpty()) {
+				int codePoint = Character.toUpperCase(
+					userNames[i].codePointAt(0));
 
-		for (String curUserName : userNames) {
-			sb.append(
-				StringUtil.toUpperCase(StringUtil.shorten(curUserName, 1)));
+				sb.append(Character.toChars(codePoint));
+			}
 		}
 
 		return sb.toString();

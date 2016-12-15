@@ -52,14 +52,15 @@ for the remaining selectors/fields.
 
 **Example 1:**
 
-The *Portal Settings* &rarr; *Authentication* &rarr; *General* page consistently
-uses phrases (in this case, question phrases) for all of its checkboxes:
+The *Instance Settings* &rarr; *Authentication* &rarr; *General* page
+consistently uses phrases (in this case, question phrases) for all of its
+checkboxes:
 
 ![ ](./images/language/authentication_checkboxes.png)
 
 **Example 2:**
 
-The *Portal Settings* &rarr; *Users* &rarr; *Fields* page consistently uses
+The *Instance Settings* &rarr; *Users* &rarr; *Fields* page consistently uses
 concise titles for all of its checkboxes:
 
 ![ ](./images/language/user_fields_checkboxes.png)
@@ -145,9 +146,9 @@ button, selector, or field.
 **Examples:**
 
 - *Please enter JDBC information for new database.*
-- *Configure the file upload settings.*
+- *Migrate documents from one repository to another.*
 
-    ![ ](./images/language/file_upload_settings.png)
+    ![ ](./images/language/data_migration_instructions.png)
 
 ### 5. UI Component Labels
 
@@ -166,7 +167,7 @@ Use titles to label menus and high level tabs.
 
 ![ ](./images/language/menu_example.png)
 
-![ ](./images/language/control_panel_menu.png)
+![ ](./images/language/server_admin_options.png)
 
 ### 7. Section and Text Area Descriptions
 

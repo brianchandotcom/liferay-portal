@@ -759,6 +759,12 @@ found.
 ### Changed
 - [LPS-69677]: Update the [Liferay Gradle Plugins] dependency to version 3.0.50.
 
+## 2.2.4 - 2016-12-14
+
+### Added
+- [LPS-69719]: Exclude `**/archetype-resources/**.java` files from the
+`.classpath` file to avoid compilation errors in Eclipse.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -831,6 +837,7 @@ found.
 [LPS-69606]: https://issues.liferay.com/browse/LPS-69606
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
+[LPS-69719]: https://issues.liferay.com/browse/LPS-69719
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

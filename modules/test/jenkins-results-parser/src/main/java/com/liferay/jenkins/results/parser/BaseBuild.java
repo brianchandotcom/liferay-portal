@@ -183,6 +183,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public JSONObject getBuildJSONObject() {
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				getBuildURL() + "api/json", false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build JSONObject", ioe);
+		}
+	}
+
+	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
 	}
@@ -504,6 +515,18 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Map<String, String> getStopPropertiesMap() {
 		return getTempMap("stop.properties");
+	}
+
+	@Override
+	public JSONObject getTestReportJSONObject() {
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				getBuildURL() + "testReport/api/json", false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unbale to get testReport JSONObject", ioe);
+		}
 	}
 
 	@Override

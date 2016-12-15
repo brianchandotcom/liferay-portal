@@ -12,16 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.display.context;
+package com.liferay.portal.search.web.internal.result.display.context;
 
-import javax.portlet.PortletException;
-import javax.portlet.PortletURL;
+import java.io.Serializable;
 
 /**
  * @author André de Oliveira
  */
-public interface PortletURLFactory {
+public class SearchResultFieldDisplayContext implements Serializable {
 
-	public PortletURL getPortletURL() throws PortletException;
+	public float boost;
+	public boolean isArray;
+	public boolean isNumeric;
+	public boolean isTokenized;
+	public String name;
+	public String valuesToString;
 
 }

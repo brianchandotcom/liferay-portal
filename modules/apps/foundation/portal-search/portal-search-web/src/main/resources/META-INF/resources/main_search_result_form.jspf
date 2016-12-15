@@ -14,20 +14,11 @@
  */
 --%>
 
-<%
-viewURL = searchDisplayContext.checkViewURL(viewURL, currentURL);
-
-summary.setHighlight(searchDisplayContext.isHighlightEnabled());
-summary.setQueryTerms(searchDisplayContext.getQueryTerms());
-
-AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
-%>
-
-<c:if test="<%= assetEntry != null %>">
+<c:if test="<%= searchResultSummaryDisplayContext.hasUserPortrait %>">
 	<liferay-ui:search-container-column-text>
 		<liferay-ui:user-portrait
 			cssClass="user-icon-lg"
-			userId="<%= Objects.equals(assetEntry.getClassName(), User.class.getName()) ? assetEntry.getClassPK() : assetEntry.getUserId() %>"
+			userId="<%= searchResultSummaryDisplayContext.assetEntryUserId %>"
 		/>
 	</liferay-ui:search-container-column-text>
 </c:if>
@@ -36,55 +27,50 @@ AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK
 	colspan="<%= 2 %>"
 >
 	<h5>
-		<a href="<%= viewURL %>">
-			<strong><%= summary.getHighlightedTitle() %></strong>
+		<a href="<%= searchResultSummaryDisplayContext.viewURL %>">
+			<strong><%= searchResultSummaryDisplayContext.highlightedTitle %></strong>
 		</a>
 
-		<c:if test="<%= (assetRenderer != null) && Validator.isNotNull(assetRenderer.getURLDownload(themeDisplay)) %>">
-			<aui:a href="<%= assetRenderer.getURLDownload(themeDisplay) %>">
-				<liferay-ui:message arguments="<%= HtmlUtil.escape(summary.getTitle()) %>" key="download-x" />
+		<c:if test="<%= searchResultSummaryDisplayContext.hasAssetRendererURLDownload %>">
+			<aui:a href="<%= searchResultSummaryDisplayContext.assetRendererURLDownload %>">
+				<liferay-ui:message arguments="<%= HtmlUtil.escape(searchResultSummaryDisplayContext.title) %>" key="download-x" />
 			</aui:a>
 		</c:if>
 	</h5>
 
 	<h6 class="text-default">
-		<%= ResourceActionsUtil.getModelResource(themeDisplay.getLocale(), className) %>
+		<%= searchResultSummaryDisplayContext.modelResource %>
 
-		<c:if test="<%= locale != summary.getLocale() %>">
-
-			<%
-			Locale summaryLocale = summary.getLocale();
-			%>
-
-			<liferay-ui:icon image='<%= "../language/" + LocaleUtil.toLanguageId(summaryLocale) %>' message='<%= LanguageUtil.format(request, "this-result-comes-from-the-x-version-of-this-content", summaryLocale.getDisplayLanguage(locale), false) %>' />
+		<c:if test="<%= searchResultSummaryDisplayContext.hasLocaleReminder %>">
+			<liferay-ui:icon image='<%= "../language/" + searchResultSummaryDisplayContext.localeLanguageId %>' message="<%= searchResultSummaryDisplayContext.localeReminder %>" />
 		</c:if>
 	</h6>
 
-	<c:if test="<%= Validator.isNotNull(summary.getContent()) %>">
+	<c:if test="<%= searchResultSummaryDisplayContext.hasContent %>">
 		<h6 class="text-default">
-			<%= summary.getHighlightedContent() %>
+			<%= searchResultSummaryDisplayContext.content %>
 		</h6>
 	</c:if>
 
-	<c:if test="<%= (assetEntry != null) && (ArrayUtil.isNotEmpty(assetEntry.getCategoryIds()) || ArrayUtil.isNotEmpty(assetEntry.getTagNames())) %>">
+	<c:if test="<%= searchResultSummaryDisplayContext.hasAssetCategoriesOrTags %>">
 		<h6 class="text-default">
 			<liferay-ui:asset-tags-summary
-				className="<%= className %>"
-				classPK="<%= classPK %>"
-				paramName="<%= Field.ASSET_TAG_NAMES %>"
-				portletURL="<%= searchDisplayContext.getPortletURL() %>"
+				className="<%= searchResultSummaryDisplayContext.className %>"
+				classPK="<%= searchResultSummaryDisplayContext.classPK %>"
+				paramName="<%= searchResultSummaryDisplayContext.fieldAssetTagNames %>"
+				portletURL="<%= searchResultSummaryDisplayContext.portletURL %>"
 			/>
 
 			<liferay-ui:asset-categories-summary
-				className="<%= className %>"
-				classPK="<%= classPK %>"
-				paramName="<%= Field.ASSET_CATEGORY_IDS %>"
-				portletURL="<%= searchDisplayContext.getPortletURL() %>"
+				className="<%= searchResultSummaryDisplayContext.className %>"
+				classPK="<%= searchResultSummaryDisplayContext.classPK %>"
+				paramName="<%= searchResultSummaryDisplayContext.fieldAssetCategoryIds %>"
+				portletURL="<%= searchResultSummaryDisplayContext.portletURL %>"
 			/>
 		</h6>
 	</c:if>
 
-	<c:if test="<%= searchDisplayContext.isDisplayResultsInDocumentForm() %>">
+	<c:if test="<%= searchResultSummaryDisplayContext.hasDocumentForm %>">
 		<h6 class="expand-details text-default"><a href="javascript:;"><liferay-ui:message key="details" />...</a></h6>
 
 		<div class="hide table-details table-responsive">
@@ -103,72 +89,24 @@ AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK
 				<tbody>
 
 					<%
-					List<Map.Entry<String, Field>> fields = new LinkedList(document.getFields().entrySet());
-
-					Collections.sort(
-						fields,
-						new Comparator<Map.Entry<String, Field>>() {
-
-							public int compare(Map.Entry<String, Field> entry1, Map.Entry<String, Field> entry2) {
-								return entry1.getKey().compareTo(entry2.getKey());
-							}
-
-						}
-					);
-
-					for (Map.Entry<String, Field> entry : fields) {
-						Field field = entry.getValue();
-
-						String fieldName = field.getName();
-
-						if (fieldName.equals(Field.UID)) {
-							continue;
-						}
-
-						String[] values = field.getValues();
+					for (com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext searchResultFieldDisplayContext : searchResultSummaryDisplayContext.documentFormFieldDisplayContexts) {
 					%>
 
 						<tr>
 							<td>
-								<strong><%= HtmlUtil.escape(field.getName()) %></strong>
+								<strong><%= HtmlUtil.escape(searchResultFieldDisplayContext.name) %></strong>
 
 								<br />
 
 								<em>
-									<liferay-ui:message key="array" /> = <%= values.length > 1 %>, <liferay-ui:message key="boost" /> = <%= field.getBoost() %>,<br />
+									<liferay-ui:message key="array" /> = <%= searchResultFieldDisplayContext.isArray %>, <liferay-ui:message key="boost" /> = <%= searchResultFieldDisplayContext.boost %>,<br />
 
-									<liferay-ui:message key="numeric" /> = <%= field.isNumeric() %>, <liferay-ui:message key="tokenized" /> = <%= field.isTokenized() %>
+									<liferay-ui:message key="numeric" /> = <%= searchResultFieldDisplayContext.isNumeric %>, <liferay-ui:message key="tokenized" /> = <%= searchResultFieldDisplayContext.isTokenized %>
 								</em>
 							</td>
 							<td>
 								<code>
-
-									<%
-									StringBundler sb = new StringBundler(4 * values.length);
-
-									for (int i = 0; i < values.length; i++) {
-										if (field.isNumeric()) {
-											sb.append(HtmlUtil.escape(values[i]));
-										}
-										else {
-											sb.append(StringPool.QUOTE);
-											sb.append(HtmlUtil.escape(values[i]));
-											sb.append(StringPool.QUOTE);
-										}
-
-										sb.append(StringPool.COMMA_AND_SPACE);
-									}
-
-									sb.setIndex(sb.index() - 1);
-
-									if (values.length > 1) {
-										sb.setStringAt(StringPool.OPEN_BRACKET, 0);
-
-										sb.append(StringPool.CLOSE_BRACKET);
-									}
-									%>
-
-									<%= sb.toString() %>
+									<%= searchResultFieldDisplayContext.valuesToString %>
 								</code>
 							</td>
 						</tr>

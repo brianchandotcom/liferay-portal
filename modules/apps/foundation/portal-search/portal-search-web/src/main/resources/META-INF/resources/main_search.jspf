@@ -91,40 +91,27 @@ Hits hits = searchDisplayContext.getHits();
 			>
 
 				<%
-				String className = document.get(Field.ENTRY_CLASS_NAME);
-				long classPK = GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK));
+				com.liferay.portal.search.web.internal.result.display.builder.SearchResultSummaryDisplayBuilder searchResultSummaryDisplayBuilder = new com.liferay.portal.search.web.internal.result.display.builder.SearchResultSummaryDisplayBuilder();
 
-				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+				searchResultSummaryDisplayBuilder.setAssetEntryLocalService(com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil.getService());
+				searchResultSummaryDisplayBuilder.setCurrentURL(currentURL);
+				searchResultSummaryDisplayBuilder.setDocument(document);
+				searchResultSummaryDisplayBuilder.setHighlightEnabled(searchDisplayContext.isHighlightEnabled());
+				searchResultSummaryDisplayBuilder.setLanguage(com.liferay.portal.kernel.language.LanguageUtil.getLanguage());
+				searchResultSummaryDisplayBuilder.setLocale(locale);
+				searchResultSummaryDisplayBuilder.setPortletURLFactory(searchDisplayContext.getPortletURLFactory());
+				searchResultSummaryDisplayBuilder.setQueryTerms(searchDisplayContext.getQueryTerms());
+				searchResultSummaryDisplayBuilder.setRenderRequest(renderRequest);
+				searchResultSummaryDisplayBuilder.setRenderResponse(renderResponse);
+				searchResultSummaryDisplayBuilder.setRequest(request);
+				searchResultSummaryDisplayBuilder.setResourceActions(com.liferay.portal.kernel.security.permission.ResourceActionsUtil.getResourceActions());
+				searchResultSummaryDisplayBuilder.setSearchResultPreferences(searchDisplayContext.getSearchResultPreferences());
+				searchResultSummaryDisplayBuilder.setThemeDisplay(themeDisplay);
 
-				AssetRenderer<?> assetRenderer = null;
-
-				if (assetRendererFactory != null) {
-					long resourcePrimKey = GetterUtil.getLong(document.get(Field.ROOT_ENTRY_CLASS_PK));
-
-					if (resourcePrimKey > 0) {
-						classPK = resourcePrimKey;
-					}
-
-					assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
-				}
-
-				String viewURL = com.liferay.portal.search.web.internal.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, className, classPK, searchDisplayContext.isViewInContext(), currentURL);
-
-				Indexer indexer = IndexerRegistryUtil.getIndexer(className);
-
-				Summary summary = null;
-
-				if (indexer != null) {
-					String snippet = document.get(Field.SNIPPET);
-
-					summary = indexer.getSummary(document, snippet, renderRequest, renderResponse);
-				}
-				else if (assetRenderer != null) {
-					summary = new Summary(locale, assetRenderer.getTitle(locale), assetRenderer.getSearchSummary(locale));
-				}
+				com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext searchResultSummaryDisplayContext = searchResultSummaryDisplayBuilder.build();
 				%>
 
-				<c:if test="<%= summary != null %>">
+				<c:if test="<%= searchResultSummaryDisplayContext != null %>">
 					<%@ include file="/main_search_result_form.jspf" %>
 				</c:if>
 			</liferay-ui:search-container-row>

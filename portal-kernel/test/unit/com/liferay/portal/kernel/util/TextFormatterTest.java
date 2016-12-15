@@ -100,6 +100,13 @@ public class TextFormatterTest {
 		String actual = TextFormatter.format(original, TextFormatter.H);
 
 		Assert.assertEquals(expected, actual);
+
+		original = "FriendlyURL";
+		expected = "friendly url";
+
+		actual = TextFormatter.format(original, TextFormatter.H);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test

@@ -23,7 +23,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 %>
 
 <aui:fieldset>
-	<liferay-ui:custom-attribute-list
+	<liferay-expando:custom-attribute-list
 		className="<%= Organization.class.getName() %>"
 		classPK="<%= (organization != null) ? organization.getOrganizationId() : 0 %>"
 		editable="<%= true %>"

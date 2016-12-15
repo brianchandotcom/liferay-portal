@@ -288,14 +288,14 @@ while (manageableCalendarsIterator.hasNext()) {
 
 					<aui:input name="location" />
 
-					<liferay-ui:custom-attributes-available className="<%= CalendarBooking.class.getName() %>">
-						<liferay-ui:custom-attribute-list
+					<liferay-expando:custom-attributes-available className="<%= CalendarBooking.class.getName() %>">
+						<liferay-expando:custom-attribute-list
 							className="<%= CalendarBooking.class.getName() %>"
 							classPK="<%= (calendarBooking != null) ? calendarBooking.getCalendarBookingId() : 0 %>"
 							editable="<%= true %>"
 							label="<%= true %>"
 						/>
-					</liferay-ui:custom-attributes-available>
+					</liferay-expando:custom-attributes-available>
 
 					<c:if test="<%= calendarBooking == null %>">
 						<aui:field-wrapper label="permissions">

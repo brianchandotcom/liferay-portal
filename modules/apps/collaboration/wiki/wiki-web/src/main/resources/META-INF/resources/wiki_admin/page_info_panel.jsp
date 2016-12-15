@@ -153,14 +153,14 @@ if (wikiPageInfoPanelDisplayContext.isSinglePageSelection()) {
 						/>
 					</c:if>
 
-					<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
-						<liferay-ui:custom-attribute-list
+					<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-expando:custom-attribute-list
 							className="<%= WikiPage.class.getName() %>"
 							classPK="<%= wikiPage.getResourcePrimKey() %>"
 							editable="<%= false %>"
 							label="<%= true %>"
 						/>
-					</liferay-ui:custom-attributes-available>
+					</liferay-expando:custom-attributes-available>
 
 					<%
 					AssetEntry wikiPageAssetEntry = AssetEntryLocalServiceUtil.fetchEntry(WikiPage.class.getName(), wikiPage.getPrimaryKey());

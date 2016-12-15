@@ -317,16 +317,16 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 
 					<c:if test="<%= wikiPage != null %>">
-						<liferay-ui:custom-attributes-available className="<%= WikiPage.class.getName() %>">
+						<liferay-expando:custom-attributes-available className="<%= WikiPage.class.getName() %>">
 							<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="custom-fields">
-								<liferay-ui:custom-attribute-list
+								<liferay-expando:custom-attribute-list
 									className="<%= WikiPage.class.getName() %>"
 									classPK="<%= (templatePage != null) ? templatePage.getPrimaryKey() : wikiPage.getPrimaryKey() %>"
 									editable="<%= true %>"
 									label="<%= true %>"
 								/>
 							</aui:fieldset>
-						</liferay-ui:custom-attributes-available>
+						</liferay-expando:custom-attributes-available>
 					</c:if>
 
 					<c:if test="<%= (wikiPage == null) || wikiPage.isNew() %>">

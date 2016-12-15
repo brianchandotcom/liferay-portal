@@ -24,7 +24,7 @@ Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 <aui:model-context bean="<%= selLayout %>" model="<%= Layout.class %>" />
 
-<liferay-ui:custom-attribute-list
+<liferay-expando:custom-attribute-list
 	className="<%= Layout.class.getName() %>"
 	classPK="<%= (selLayout != null) ? selLayout.getPlid() : 0 %>"
 	editable="<%= true %>"

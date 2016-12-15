@@ -154,9 +154,9 @@
 		</execute>
 
 		<for list="Home,Documents and Media,News" param="sitePageName">
-			<var name="key_pageName" value="${sitePageName}" />
-
-			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="${sitePageName}" />
+			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="${sitePageName}">
+				<var name="key_pageName" value="${sitePageName}" />
+			</execute>
 		</for>
 
 		<execute macro="Navigator#openSpecificURL">
@@ -164,9 +164,9 @@
 		</execute>
 
 		<for list="Documents and Media,News" param="sitePageName">
-			<var name="key_pageName" value="${sitePageName}" />
-
-			<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${sitePageName}" />
+			<execute function="AssertElementNotPresent" locator1="Home#PAGE" value1="${sitePageName}">
+				<var name="key_pageName" value="${sitePageName}" />
+			</execute>
 		</for>
 
 		<execute macro="User#firstLoginPG">

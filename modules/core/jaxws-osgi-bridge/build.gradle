@@ -1,6 +1,5 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
-	provided group: "javax.xml.ws", name: "jaxws-api", version: "2.2.11"
 }
 
 liferay {

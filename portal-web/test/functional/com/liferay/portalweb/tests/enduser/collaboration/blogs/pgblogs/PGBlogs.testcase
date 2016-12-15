@@ -1765,7 +1765,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<execute function="Pause" locator1="5000" />
+		<var name="key_uploadFileName" value="Document_1" />
+
+		<execute function="AssertVisible" locator1="BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED" />
 
 		<execute macro="PortletEntry#publish" />
 

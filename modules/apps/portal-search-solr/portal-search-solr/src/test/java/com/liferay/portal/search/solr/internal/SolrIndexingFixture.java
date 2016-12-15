@@ -50,7 +50,7 @@ import com.liferay.portal.search.solr.internal.query.TermQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.query.WildcardQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.stats.DefaultStatsTranslator;
-import com.liferay.portal.search.unit.test.IndexingFixture;
+import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -14,41 +14,51 @@
 
 package com.liferay.contacts.internal.upgrade.v2_0_0;
 
-import com.liferay.contacts.model.Entry;
-import com.liferay.contacts.service.EntryLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
-import java.util.List;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * @author Jonathan Lee
  */
 public class UpgradeEntry extends UpgradeProcess {
 
+	public UpgradeEntry(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateEntries();
 	}
 
-	protected void updateEntries() {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			List<Entry> entries = EntryLocalServiceUtil.getEntries(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	protected void updateEntries() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer();
+			PreparedStatement ps = connection.prepareStatement(
+				"select companyId, emailAddress, entryId from Contacts_Entry");
+			ResultSet rs = ps.executeQuery()) {
 
-			for (Entry entry : entries) {
-				try {
-					UserLocalServiceUtil.getUserByEmailAddress(
-						entry.getCompanyId(), entry.getEmailAddress());
+			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
+				String emailAddress = rs.getString("emailAddress");
+				long entryId = rs.getLong("entryId");
 
-					EntryLocalServiceUtil.deleteEntry(entry);
-				}
-				catch (Exception e) {
+				User user = _userLocalService.fetchUserByEmailAddress(
+					companyId, emailAddress);
+
+				if (user != null) {
+					runSQL(
+						"delete from Contacts_Entry where entryId = " +
+							String.valueOf(entryId));
 				}
 			}
 		}
 	}
+
+	private final UserLocalService _userLocalService;
 
 }

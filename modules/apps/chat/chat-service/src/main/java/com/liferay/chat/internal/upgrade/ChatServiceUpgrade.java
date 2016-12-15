@@ -12,40 +12,24 @@
  * details.
  */
 
-package com.liferay.contacts.internal.upgrade;
+package com.liferay.chat.internal.upgrade;
 
-import com.liferay.contacts.internal.upgrade.v2_0_0.UpgradeEntry;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class ContactsServiceUpgrade implements UpgradeStepRegistrator {
+public class ChatServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
 		registry.register(
-			"com.liferay.contacts.service", "0.0.1", "1.0.0",
-			new DummyUpgradeStep());
-
-		// See LPS-65946
-
-		registry.register(
-			"com.liferay.contacts.service", "1.0.0", "2.0.1",
-			new UpgradeEntry(_userLocalService));
-
-		registry.register(
-			"com.liferay.contacts.service", "2.0.0", "2.0.1",
+			"com.liferay.chat.service", "0.0.1", "1.0.0",
 			new DummyUpgradeStep());
 	}
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

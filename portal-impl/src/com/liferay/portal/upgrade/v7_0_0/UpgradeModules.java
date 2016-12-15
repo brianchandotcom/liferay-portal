@@ -177,6 +177,8 @@ public class UpgradeModules extends UpgradeProcess {
 
 	private static final String[][] _CONVERTED_LEGACY_MODULES = {
 		{"calendar-portlet", "com.liferay.calendar.service", "Calendar"},
+		{"chat-portlet", "com.liferay.chat.service", "Chat"},
+		{"contacts-portlet", "com.liferay.contacts.service", "Contacts"},
 		{
 			"kaleo-designer-portlet",
 			"com.liferay.portal.workflow.kaleo.designer.service",
@@ -192,6 +194,10 @@ public class UpgradeModules extends UpgradeProcess {
 			"Marketplace"
 		},
 		{"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"},
+		{
+			"private-messaging-portlet",
+			"com.liferay.social.privatemessaging.service", "PM"
+		},
 		{"so-portlet", "com.liferay.invitation.invite.members.service", "SO"},
 		{
 			"social-networking-portlet",

@@ -28,8 +28,6 @@ public interface Build {
 
 	public void archive(String archiveName);
 
-	public List<TestResult> getAggregateTestResults(String status);
-
 	public String getArchivePath();
 
 	public List<String> getBadBuildURLs();
@@ -79,6 +77,8 @@ public interface Build {
 	public Map<String, String> getStopPropertiesMap();
 
 	public JSONObject getTestReportJSONObject();
+
+	public List<TestResult> getTestResults();
 
 	public boolean hasBuildURL(String buildURL);
 

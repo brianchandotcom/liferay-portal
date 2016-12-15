@@ -20,6 +20,8 @@ import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -41,19 +43,34 @@ public class WritePropertiesTask extends DefaultTask {
 	@Input
 	@SkipWhenEmpty
 	public Map<String, Object> getProperties() {
-		return _properties;
+		Map<String, Object> properties = new TreeMap<>();
+
+		for (KeyValuePair keyValuePair : _keyValuePairs) {
+			String key = GradleUtil.toString(keyValuePair.key);
+
+			properties.put(key, keyValuePair.value);
+		}
+
+		return properties;
 	}
 
 	public WritePropertiesTask properties(Map<String, ?> properties) {
-		_properties.putAll(properties);
+		for (Map.Entry<String, ?> entry : properties.entrySet()) {
+			_keyValuePairs.add(
+				new KeyValuePair(entry.getKey(), entry.getValue()));
+		}
+
+		return this;
+	}
+
+	public WritePropertiesTask property(Object key, Object value) {
+		_keyValuePairs.add(new KeyValuePair(key, value));
 
 		return this;
 	}
 
 	public WritePropertiesTask property(String key, Object value) {
-		_properties.put(key, value);
-
-		return this;
+		return property((Object)key, value);
 	}
 
 	public void setOutputFile(Object outputFile) {
@@ -61,7 +78,7 @@ public class WritePropertiesTask extends DefaultTask {
 	}
 
 	public void setProperties(Map<String, ?> properties) {
-		_properties.clear();
+		_keyValuePairs.clear();
 
 		properties(properties);
 	}
@@ -71,7 +88,19 @@ public class WritePropertiesTask extends DefaultTask {
 		FileUtil.writeProperties(getOutputFile(), getProperties());
 	}
 
+	private final List<KeyValuePair> _keyValuePairs = new ArrayList<>();
 	private Object _outputFile;
-	private final Map<String, Object> _properties = new TreeMap<>();
+
+	private static class KeyValuePair {
+
+		public KeyValuePair(Object key, Object value) {
+			this.key = key;
+			this.value = value;
+		}
+
+		public final Object key;
+		public final Object value;
+
+	}
 
 }

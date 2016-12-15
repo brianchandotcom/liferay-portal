@@ -120,16 +120,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return matcher.replaceAll("$1 / $2");
 		};
 
-	protected Function<String, String> modTransformation = (String sql) -> {
-		Matcher matcher = modPattern.matcher(sql);
-
-		return matcher.replaceAll("$1 % $2");
-	};
-
 	protected Function<String, String> nullDateTransformation =
 		(String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
-	protected Function<String, String> replaceTransformation =
-		(String sql) -> sql.replaceAll("(?i)replace\\(", "str_replace(");
 	protected Function<String, String> substrDefaultTransformation =
 		(String sql) -> sql;
 	protected List<Function<String, String>> transformations =

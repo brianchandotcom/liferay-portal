@@ -33,8 +33,6 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 		transformations.add(integerDivisionTransformation);
 		transformations.add(nullDateTransformation);
 		transformations.add(substrDefaultTransformation);
-		transformations.add(modTransformation);
-		transformations.add(replaceTransformation);
 	}
 
 	@Override

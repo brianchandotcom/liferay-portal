@@ -110,7 +110,7 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 
 		String transformedSql = _transformer.transform(sql);
 
-		Assert.assertEquals("select foo % bar from Foo", transformedSql);
+		Assert.assertEquals("select MOD(foo,bar) from Foo", transformedSql);
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 
 		String transformedSql = _transformer.transform(sql);
 
-		Assert.assertEquals("select str_replace(foo) from Foo", transformedSql);
+		Assert.assertEquals("select replace(foo) from Foo", transformedSql);
 	}
 
 	@Override

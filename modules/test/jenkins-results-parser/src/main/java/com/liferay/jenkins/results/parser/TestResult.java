@@ -44,9 +44,9 @@ public class TestResult {
 		return testName;
 	}
 
-	public String className;
-	public String duration;
-	public String status;
-	public String testName;
+	protected String className;
+	protected String duration;
+	protected String status;
+	protected String testName;
 
 }

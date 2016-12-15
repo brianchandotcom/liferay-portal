@@ -6669,8 +6669,8 @@ public class PortalImpl implements Portal {
 			}
 		}
 		else if ((e instanceof PortalException) && _log.isDebugEnabled()) {
-			if ((e instanceof NoSuchLayoutException) ||
-				(e instanceof PrincipalException)) {
+			if (e instanceof NoSuchLayoutException ||
+				e instanceof PrincipalException) {
 
 				String msg = e.getMessage();
 

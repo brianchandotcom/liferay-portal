@@ -292,7 +292,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				Serializable value = field.getValue(locale);
 
-				if ((value instanceof Boolean) || (value instanceof Number)) {
+				if (value instanceof Boolean || value instanceof Number) {
 					sb.append(value);
 					sb.append(StringPool.SPACE);
 				}

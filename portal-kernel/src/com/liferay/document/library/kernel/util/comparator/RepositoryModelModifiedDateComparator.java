@@ -67,15 +67,15 @@ public class RepositoryModelModifiedDateComparator<T>
 		Date modifiedDate2 = getModifiedDate(t2);
 
 		if (_orderByModel) {
-			if (((t1 instanceof DLFolder) || (t1 instanceof Folder)) &&
-				((t2 instanceof DLFolder) || (t2 instanceof Folder))) {
+			if ((t1 instanceof DLFolder || t1 instanceof Folder) &&
+				(t2 instanceof DLFolder || t2 instanceof Folder)) {
 
 				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
 			}
-			else if ((t1 instanceof DLFolder) || (t1 instanceof Folder)) {
+			else if (t1 instanceof DLFolder || t1 instanceof Folder) {
 				value = -1;
 			}
-			else if ((t2 instanceof DLFolder) || (t2 instanceof Folder)) {
+			else if (t2 instanceof DLFolder || t2 instanceof Folder) {
 				value = 1;
 			}
 			else {

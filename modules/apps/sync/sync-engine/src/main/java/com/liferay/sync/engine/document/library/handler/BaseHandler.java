@@ -119,14 +119,13 @@ public class BaseHandler implements Handler<Void> {
 			}
 		}
 
-		if ((e instanceof ClientProtocolException) ||
-			(e instanceof ConnectTimeoutException) ||
-			(e instanceof HttpHostConnectException) ||
-			(e instanceof NoHttpResponseException) ||
-			(e instanceof SocketException) ||
-			(e instanceof SocketTimeoutException) ||
-			(e instanceof SSLException) ||
-			(e instanceof UnknownHostException)) {
+		if (e instanceof ClientProtocolException ||
+			e instanceof ConnectTimeoutException ||
+			e instanceof HttpHostConnectException ||
+			e instanceof NoHttpResponseException ||
+			e instanceof SocketException ||
+			e instanceof SocketTimeoutException || e instanceof SSLException ||
+			e instanceof UnknownHostException) {
 
 			retryServerConnection(SyncAccount.UI_EVENT_CONNECTION_EXCEPTION);
 		}

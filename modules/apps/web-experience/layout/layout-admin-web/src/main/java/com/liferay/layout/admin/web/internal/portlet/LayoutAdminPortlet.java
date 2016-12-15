@@ -999,11 +999,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 			cause instanceof LayoutSetVirtualHostException ||
 			cause instanceof LayoutTypeException ||
 			cause instanceof NoSuchGroupException ||
+			cause instanceof PrincipalException ||
 			cause instanceof RequiredLayoutException ||
 			cause instanceof SitemapChangeFrequencyException ||
 			cause instanceof SitemapIncludeException ||
 			cause instanceof SitemapPagePriorityException ||
-			cause instanceof PrincipalException ||
 			cause instanceof UploadException) {
 
 			return true;

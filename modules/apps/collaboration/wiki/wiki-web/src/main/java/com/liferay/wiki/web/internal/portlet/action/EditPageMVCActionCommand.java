@@ -203,8 +203,8 @@ public class EditPageMVCActionCommand extends BaseMVCActionCommand {
 			}
 			else if (e instanceof DuplicatePageException ||
 					 e instanceof PageContentException ||
-					 e instanceof PageVersionException ||
 					 e instanceof PageTitleException ||
+					 e instanceof PageVersionException ||
 					 e instanceof SanitizerException) {
 
 				SessionErrors.add(actionRequest, e.getClass());

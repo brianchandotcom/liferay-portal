@@ -96,8 +96,8 @@ public class EditCompanyMVCActionCommand extends BaseFormMVCActionCommand {
 
 				mvcPath = "/error.jsp";
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AccountNameException ||
+			else if (e instanceof AccountNameException ||
+					 e instanceof AddressCityException ||
 					 e instanceof AddressStreetException ||
 					 e instanceof AddressZipException ||
 					 e instanceof CompanyMxException ||

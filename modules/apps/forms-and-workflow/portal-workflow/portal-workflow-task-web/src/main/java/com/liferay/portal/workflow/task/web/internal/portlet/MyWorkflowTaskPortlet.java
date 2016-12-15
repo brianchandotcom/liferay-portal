@@ -160,8 +160,8 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof WorkflowException ||
-			cause instanceof PrincipalException) {
+		if (cause instanceof PrincipalException ||
+			cause instanceof WorkflowException) {
 
 			return true;
 		}

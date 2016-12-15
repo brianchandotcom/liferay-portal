@@ -47,7 +47,7 @@ public class DefaultSolrDocumentFactory implements SolrDocumentFactory {
 
 			if (!field.isLocalized()) {
 				for (String value : field.getValues()) {
-					if (Validator.isNull(value)) {
+					if (value == null) {
 						continue;
 					}
 

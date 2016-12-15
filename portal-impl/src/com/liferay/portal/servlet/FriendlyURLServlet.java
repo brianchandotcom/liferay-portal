@@ -441,9 +441,7 @@ public class FriendlyURLServlet extends HttpServlet {
 			this(path, false, false);
 		}
 
-		public Redirect(
-			String path, boolean force, boolean permanent) {
-
+		public Redirect(String path, boolean force, boolean permanent) {
 			_path = path;
 			_force = force;
 			_permanent = permanent;

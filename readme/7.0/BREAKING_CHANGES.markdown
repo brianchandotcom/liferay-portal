@@ -12,13 +12,13 @@ Here are some of the types of changes documented in this file:
 * Changes to context variables available to templates
 * Changes in CSS classes available to Liferay themes and portlets
 * Configuration changes: Changes in configuration files, like
- `portal.properties`, `system.properties`, etc.
+  `portal.properties`, `system.properties`, etc.
 * Execution requirements: Java version, J2EE Version, browser versions, etc.
 * Deprecations or end of support: For example, warning that a certain
-feature or API will be dropped in an upcoming version.
+  feature or API will be dropped in an upcoming version.
 * Recommendations: For example, recommending using a newly introduced API that
-replaces an old API, in spite of the old API being kept in Liferay Portal for
-backwards compatibility.
+  replaces an old API, in spite of the old API being kept in Liferay Portal for
+  backwards compatibility.
 
 *This document has been reviewed through commit `9a2d9b1`.*
 
@@ -28,20 +28,20 @@ Each change must have a brief descriptive title and contain the following
 information:
 
 * **[Title]** Provide a brief descriptive title. Use past tense and follow
-the capitalization rules from
-<http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
+  the capitalization rules from
+  <http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles>.
 * **Date:** Specify the date you submitted the change. Format the date as
-*YYYY-MMM* (e.g., 2014-Mar) or *YYYY-MMM-DD* (e.g., 2014-Feb-25).
+  *YYYY-MMM* (e.g., 2014-Mar) or *YYYY-MMM-DD* (e.g., 2014-Feb-25).
 * **JIRA Ticket:** Reference the related JIRA ticket (e.g., LPS-123456)
-(Optional).
+  (Optional).
 * **What changed?** Identify the affected component and the type of change that
-was made.
+  was made.
 * **Who is affected?** Are end-users affected? Are developers affected? If the
-only affected people are those using a certain feature or API, say so.
+  only affected people are those using a certain feature or API, say so.
 * **How should I update my code?** Explain any client code changes required.
 * **Why was this change made?** Explain the reason for the change. If
-applicable, justify why the breaking change was made instead of following a
-deprecation process.
+  applicable, justify why the breaking change was made instead of following a
+  deprecation process.
 
 Here's the template to use for each breaking change (note how it ends with a
 horizontal rule):
@@ -89,7 +89,7 @@ support the new features:
 - `hasUpdateLogoPermission`: `true` if the current user can update the logo
 - `maxFileSize`: the size limit for the logo to be uploaded
 - `tempImageFileName`: the unique identifier to store the temporary image on
-upload
+  upload
 
 #### Who is affected?
 
@@ -400,9 +400,9 @@ clicking on the checkboxes.
 In your front-end JavaScript code, follow these steps:
 
 - Remove the `Checkbox` suffix when querying for the node in any of its forms,
-like `A.one(...)`, `$(...)`, etc.
+  like `A.one(...)`, `$(...)`, etc.
 - Remove any action that tries to set the value of the checkbox on the
-previously generated hidden field.
+  previously generated hidden field.
 
 #### Why was this change made?
 
@@ -477,9 +477,9 @@ Client code which is handling any of the following exceptions:
 Replace the old exception with the equivalent inner class exception as follows:
 
 - `DuplicateUserScreenNameException` &rarr;
-`UserScreenNameException.MustNotBeDuplicate`
+  `UserScreenNameException.MustNotBeDuplicate`
 - `DuplicateUserEmailAddressException` &rarr;
-`UserEmailAddressException.MustNotBeDuplicate`
+  `UserEmailAddressException.MustNotBeDuplicate`
 
 #### Why was this change made?
 
@@ -1250,10 +1250,10 @@ the `ScreenNameValidator` interface.
 You should implement the new methods introduced in the interface.
 
 - `getDescription(Locale)`: returns a description of what the screen name
-validator validates.
+  validator validates.
 
 - `getJSValidation()`: returns the JavaScript input validator on the client
-side.
+  side.
 
 #### Why was this change made?
 
@@ -2037,12 +2037,12 @@ configuration.
 Depending on the changes, different extension methods are available:
 
 - For CKEditor configuration options, an implementation of
-`EditorConfigContributor` can be created to pass or modify the expected
-parameters.
+  `EditorConfigContributor` can be created to pass or modify the expected
+  parameters.
 - For CKEditor instance manipulation (setting attributes, adding listeners,
-etc.), the `DynamicInclude` extension point
-`#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the
-possibility of injecting JavaScript, when needed.
+  etc.), the `DynamicInclude` extension point
+  `#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the
+  possibility of injecting JavaScript, when needed.
 
 #### Why was this change made?
 
@@ -2580,10 +2580,11 @@ to D&M services.
 
 The `DuplicateFileException` exception was used in two different
 contexts:
-- When creating a new file through D&M and a row in the database
-already existed for a file entry with the same title.
-- When the stores tried to save a file and the underlying storage unit
-(a file in the case of `FileSystemStore`) already existed.
+
+- When creating a new file through D&M and a row in the database already existed
+  for a file entry with the same title.
+- When the stores tried to save a file and the underlying storage unit (a file
+  in the case of `FileSystemStore`) already existed.
 
 This made it impossible to detect and recover from store corruption
 issues, as they were undifferentiable from other errors.
@@ -2811,8 +2812,8 @@ The following attributes and methods have been removed:
 - The attribute `hover` of the `liferay-ui:search-container` tag.
 - The method `isHover()` of the `SearchContainerTag` class.
 - The attributes `classNameHover`, `hover`, `rowClassNameAlternate`,
-`rowClassNameAlternateHover`, `rowClassNameBody`, `rowClassNameBodyHover` of the
-`liferay-search-container` JavaScript module.
+  `rowClassNameAlternateHover`, `rowClassNameBody`, `rowClassNameBodyHover` of
+  the `liferay-search-container` JavaScript module.
 
 #### Who is affected?
 
@@ -2851,11 +2852,11 @@ If you are using any of these modules, you can make use of the following
 `SearchContainer` APIs:
 
 - Listen to the `rowToggled` event of the search container to be notified about
-changes to the search container state.
+  changes to the search container state.
 - Configure your search container *move* options creating a `RowMover` and
-define the allowed *move* targets and associated actions.
+  define the allowed *move* targets and associated actions.
 - Use the `registerAction` method of the search container to execute your *move*
-logic when the user completes a *move* action.
+  logic when the user completes a *move* action.
 
 #### Why was this change made?
 
@@ -3336,19 +3337,19 @@ If you don't apply any change to your source code, you will experience the
 following behaviors based on the portlet type:
 
 - **Struts Portlet:** If you've defined a `view-action` init parameter, the
-configuration options are only displayed for that particular view when invoking
-a URL with a parameter `struts_action` with the value indicated in the
-`view-action` init parameter and also in the default view of the portlet (when
-there is no `struts_action` parameter in the request).
+  configuration options are only displayed for that particular view when
+  invoking a URL with a parameter `struts_action` with the value indicated in
+  the `view-action` init parameter and also in the default view of the portlet
+  (when there is no `struts_action` parameter in the request).
 
 - **Liferay MVC Portlet:** If you've defined a `view-template` init parameter,
-the configuration options are only displayed when that template is rendered by
-invoking a URL with a parameter `mvcPath` with the value indicated in the
-`view-template` init parameter. and also in the default view of the portlet
-(when there is no `mvcPath` parameter in the request).
+  the configuration options are only displayed when that template is rendered by
+  invoking a URL with a parameter `mvcPath` with the value indicated in the
+  `view-template` init parameter. and also in the default view of the portlet
+  (when there is no `mvcPath` parameter in the request).
 
 - If it's a portlet using any other framework, the configuration options are
-always displayed.
+  always displayed.
 
 In order to keep the old behavior of adding the configuration options in every
 view, you need to add the init parameter
@@ -3831,16 +3832,16 @@ This change was made as a part of the ongoing strategy to deprecate unused tags.
 #### What changed?
 
 - `com.liferay.portal.kernel.scripting.ScriptingExecutor` no longer uses the
-provided class loaders in the eval methods.
+  provided class loaders in the eval methods.
 - `com.liferay.portal.kernel.scripting.Scripting` no longer uses the provided
-class loaders and servlet context names in eval and exec methods.
+  class loaders and servlet context names in eval and exec methods.
 
 #### Who is affected?
 
 - All implementations of `com.liferay.portal.kernel.scripting.ScriptingExecutor`
-are affected.
+  are affected.
 - All classes that call `com.liferay.portal.kernel.scripting.Scripting` are
-affected.
+  affected.
 
 #### How should I update my code?
 
@@ -3861,27 +3862,25 @@ in the OSGi container.
 #### What changed?
 
 - `com.liferay.portal.kernel.security.exportimport.UserImporter`,
-`com.liferay.portal.kernel.security.exportimport.UserExporter`,
-and `com.liferay.portal.kernel.security.exportimport.UserOperation`  have been
-moved from portal-kernel to the portal-security-export-import-api module.
+  `com.liferay.portal.kernel.security.exportimport.UserExporter`,
+  and `com.liferay.portal.kernel.security.exportimport.UserOperation`  have been
+  moved from portal-kernel to the portal-security-export-import-api module.
 
 - `com.liferay.portal.kernel.security.exportimport.UserImporterUtil` and
-`com.liferay.portal.kernel.security.exportimport.UserExporterUtil` have been
-removed with no replacement.
+  `com.liferay.portal.kernel.security.exportimport.UserExporterUtil` have been
+  removed with no replacement.
 
 #### Who is affected?
 
 - All implementations of
-`com.liferay.portal.kernel.security.exportimport.UserImporter` or
-`com.liferay.portal.kernel.security.exportimport.UserExporter`
-are affected.
+  `com.liferay.portal.kernel.security.exportimport.UserImporter` or
+  `com.liferay.portal.kernel.security.exportimport.UserExporter` are affected.
 
 - All code that uses
-`com.liferay.portal.kernel.security.exportimport.UserImporterUtil`,
-`com.liferay.portal.kernel.security.exportimport.UserExporterUtil`,
-`com.liferay.portal.kernel.security.exportimport.UserImporter`, or
-`com.liferay.portal.kernel.security.exportimport.UserExporter`
-is affected.
+  `com.liferay.portal.kernel.security.exportimport.UserImporterUtil`,
+  `com.liferay.portal.kernel.security.exportimport.UserExporterUtil`,
+  `com.liferay.portal.kernel.security.exportimport.UserImporter`, or
+  `com.liferay.portal.kernel.security.exportimport.UserExporter` is affected.
 
 #### How should I update my code?
 
@@ -4064,9 +4063,9 @@ The following things have been changed:
 - Removed the `com.liferay.frontend.editor.bbcode.web` OSGi bundle
 - Removed all hardcoded references/logic for the editor
 - Added a log warning and logic to upgrade the editor property to
-`ckeditor_bbcode` if the old `bbcode` is being used. This log warning and logic
-will be removed in the future, along with
-[LPS-64099](https://issues.liferay.com/browse/LPS-64099).
+  `ckeditor_bbcode` if the old `bbcode` is being used. This log warning and
+  logic will be removed in the future, along with
+  [LPS-64099](https://issues.liferay.com/browse/LPS-64099).
 
 #### Who is affected?
 

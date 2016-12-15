@@ -720,6 +720,10 @@ example,
 ## 3.0.48 - 2016-12-08
 
 ### Changed
+- [LPS-69271]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.58.
+- [LPS-69271]: Update the [Liferay Source Formatter] dependency to version
+1.0.324.
 - [LPS-69618]: Update the [Liferay Gradle Plugins Gulp] dependency to version
 2.0.5.
 - [LPS-69618]: Update the [Liferay Gradle Plugins JS Module Config Generator]

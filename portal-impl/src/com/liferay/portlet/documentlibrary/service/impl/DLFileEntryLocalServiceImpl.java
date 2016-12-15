@@ -416,8 +416,8 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 			catch (PortalException pe) {
-				if ((pe instanceof ExpiredLockException) ||
-					(pe instanceof NoSuchLockException)) {
+				if (pe instanceof ExpiredLockException ||
+					pe instanceof NoSuchLockException) {
 				}
 				else {
 					throw pe;
@@ -2121,8 +2121,8 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 		catch (PortalException pe) {
-			if ((pe instanceof ExpiredLockException) ||
-				(pe instanceof NoSuchLockException)) {
+			if (pe instanceof ExpiredLockException ||
+				pe instanceof NoSuchLockException) {
 
 				DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
 					fileEntryId);

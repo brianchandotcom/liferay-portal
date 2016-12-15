@@ -247,8 +247,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 					cause = t.getCause();
 				}
 
-				if ((cause instanceof ConstraintViolationException) ||
-					(cause instanceof LockAcquisitionException)) {
+				if (cause instanceof ConstraintViolationException ||
+					cause instanceof LockAcquisitionException) {
 
 					continue;
 				}
@@ -363,8 +363,8 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 					cause = t.getCause();
 				}
 
-				if ((cause instanceof ConstraintViolationException) ||
-					(cause instanceof LockAcquisitionException)) {
+				if (cause instanceof ConstraintViolationException ||
+					cause instanceof LockAcquisitionException) {
 
 					continue;
 				}

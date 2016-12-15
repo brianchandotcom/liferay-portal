@@ -23,6 +23,7 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -64,6 +65,25 @@ public class GradleUtil extends com.liferay.gradle.util.GradleUtil {
 		args.put(Task.TASK_TYPE, clazz);
 
 		return (T)project.task(args, name);
+	}
+
+	public static void excludeTasksWithProperty(
+		Project project, String propertyName, boolean defaultValue,
+		String... taskNames) {
+
+		if (!project.hasProperty(propertyName) ||
+			!getProperty(project, propertyName, defaultValue)) {
+
+			return;
+		}
+
+		for (String taskName : taskNames) {
+			Task task = getTask(project, taskName);
+
+			task.setDependsOn(Collections.emptySet());
+			task.setEnabled(false);
+			task.setFinalizedBy(Collections.emptySet());
+		}
 	}
 
 	public static String getArchivesBaseName(Project project) {

@@ -117,6 +117,11 @@ public class LiferayThemeDefaultsPlugin implements Plugin<Project> {
 			zipResourcesImporterArchivesTask, frontendThemeStyledProject,
 			frontendThemeUnstyledProject);
 
+		GradleUtil.excludeTasksWithProperty(
+			project, LiferayOSGiDefaultsPlugin.SNAPSHOT_IF_STALE_PROPERTY_NAME,
+			true, MavenPlugin.INSTALL_TASK_NAME,
+			BasePlugin.UPLOAD_ARCHIVES_TASK_NAME);
+
 		project.afterEvaluate(
 			new Action<Project>() {
 

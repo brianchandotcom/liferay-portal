@@ -352,9 +352,12 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 		if ((buildWSDDTask != null) && buildWSDDTask.getEnabled()) {
 			Project project = getProject();
 
-			commands.add(
+			String command =
 				"git add --all " + _getRelativePath(project.getProjectDir()) +
-					File.separator + "*.wsdd");
+					File.separator;
+
+			commands.add(command + "*.wsdd");
+			commands.add(command + "**" + File.separator + "*.wsdd");
 
 			commands.add(_getGitCommitCommand("wsdd", false, false, true));
 		}

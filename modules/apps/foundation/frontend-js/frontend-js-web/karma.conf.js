@@ -17,7 +17,5 @@ module.exports = function(config) {
 		'test/**/fixtures/*.html'
 	];
 
-	config.browsers = ['Chrome'];
-
 	config.preprocessors['test/**/fixtures/*.html'] = ['html2js'];
 };

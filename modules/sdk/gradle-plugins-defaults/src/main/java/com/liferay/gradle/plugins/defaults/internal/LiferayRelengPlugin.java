@@ -598,6 +598,7 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		String name = GradleUtil.getArchivesBaseName(project);
 
 		sb.append(name);
+
 		sb.append('/');
 		sb.append(project.getVersion());
 		sb.append('/');

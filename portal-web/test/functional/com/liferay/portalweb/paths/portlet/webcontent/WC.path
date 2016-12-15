@@ -23,6 +23,12 @@
 	<td>//li[contains(.,'${key_pageName}')]/input[@type='radio']</td>
 	<td></td>
 </tr>
+
+<tr>
+	<td>PRIORITY</td>
+	<td>//input[contains(@id,'assetPriority')]</td>
+	<td></td>
+</tr>
 <!--SEARCH-->
 <tr>
 	<td>SEARCH_NONE</td>

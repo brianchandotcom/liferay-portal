@@ -1052,8 +1052,8 @@
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
 			<var name="needsReply" value="true" />
-			<var method="TestPropsUtil#get('email.address.2')" name="userName" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1105,11 +1105,11 @@
 		</execute>
 
 		<execute macro="User#editEmailViaMyAccount">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#configureMessageEmailFromCP">
-			<var method="TestPropsUtil#get('email.address.2')" name="emailFromAddress" />
+			<var method="TestPropsUtil#get('email.address.3')" name="emailFromAddress" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -1163,7 +1163,7 @@
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

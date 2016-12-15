@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `b6a7500`.*
+*This document has been reviewed through commit `24a4f24`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -73,32 +73,35 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### Url parameters p_p_col_id, p_p_col_pos and p_p_col_count are no longer present in every portlet url.
+### Removed URL Parameters p_p_col_id, p_p_col_pos, and p_p_col_count from Every Portlet URL.
 - **Date:** 2016-Dec-12
 - **JIRA Ticket:** LPS-69482
 
 #### What changed?
 
-The parameters p_p_col_count, p_p_col_id and p_p_col_pos are no longer present
-in every portlet url.
+The parameters `p_p_col_count`, `p_p_col_id`, and `p_p_col_pos` are no longer
+present in every portlet URL.
 
 #### Who is affected?
 
-Developers who were reading those parameters in their custom code.
+This affects developers who are reading these parameters in their custom code.
 
 #### How should I update my code?
 
-You cannot obtain those parameters from the portlet url anymore. If you need to
-read those parameters, you should do it from `PortletDisplay`.
+You can no longer obtain these parameters from the portlet URL. If you need to
+read them, you should do it from `PortletDisplay`.
 
-The parameter p_p_col_count can be obtain via `portletDisplay.getColumnCount()`.
-The parameter p_p_col_id can be obtain via `portletDisplay.getColumnId()`.
-The parameter p_p_col_pos can be obtain via `portletDisplay.getColumnPos()`.
+- The parameter `p_p_col_count` can be obtained via the
+  `portletDisplay.getColumnCount()` method.
+- The parameter `p_p_col_id` can be obtained via the
+  `portletDisplay.getColumnId()` method.
+- The parameter `p_p_col_pos` can be obtained via the
+  `portletDisplay.getColumnPos()` method.
 
 #### Why was this change made?
 
-This change simplifies the urls so it only contains the required parameters.
-This was done as a preliminar step of a bigger story to creating portlet urls
-without passing the request as a necessary parameter.
+This change simplifies portlet URLs so they only contain the required
+parameters. This was done as a preliminary step of a bigger story to create
+portlet URLs without passing the request as a necessary parameter.
 
 ---------------------------------------

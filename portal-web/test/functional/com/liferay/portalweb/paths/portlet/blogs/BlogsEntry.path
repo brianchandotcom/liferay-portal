@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_COVER_IMAGE_UNPUBLISHED</td>
+	<td>//div[@class='image-wrapper']//img[contains(@src,'${key_uploadFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_VIEW_COUNT</td>
 	<td>//div[contains(@class,'profile-header')]//div[contains(@class,'nameplate')]</td>
 	<td></td>

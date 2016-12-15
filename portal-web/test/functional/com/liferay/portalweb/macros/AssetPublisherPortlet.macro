@@ -835,7 +835,7 @@
 	</command>
 
 	<command name="viewDisplayOrderPG">
-		<execute function="AssertTextEquals" locator1="APAsset#ASSET_PRIORITY" value1="${assetTitle}">
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_ROW_ENTRY_TITLE" value1="${assetTitle}">
 			<var name="key_rowNumber" value="${rowNumber}" />
 		</execute>
 	</command>

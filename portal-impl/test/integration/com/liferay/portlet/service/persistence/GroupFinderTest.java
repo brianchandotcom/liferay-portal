@@ -107,20 +107,21 @@ public class GroupFinderTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
-			_resourcePermission);
-
 		ResourceTypePermissionLocalServiceUtil.deleteResourceTypePermission(
 			_resourceTypePermission);
 
+		ResourcePermissionLocalServiceUtil.deleteResourcePermission(
+			_resourcePermission);
+
 		UserLocalServiceUtil.deleteUser(_userGroupUser);
+
+		GroupLocalServiceUtil.deleteGroup(_userGroupGroup);
 
 		UserGroupLocalServiceUtil.deleteUserGroup(_userGroup);
 
 		OrganizationLocalServiceUtil.deleteOrganization(_organization);
 
 		GroupLocalServiceUtil.deleteGroup(_group);
-		GroupLocalServiceUtil.deleteGroup(_userGroupGroup);
 	}
 
 	@Test

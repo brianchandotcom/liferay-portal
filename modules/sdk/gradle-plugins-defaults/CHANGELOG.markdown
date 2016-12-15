@@ -771,6 +771,13 @@ provided.
 ### Changed
 - [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.0.51.
 
+## 2.3.0 - 2016-12-15
+
+### Fixed
+- [LPS-69606]: Fix artifact publish commands for the "WSDD" commit in older
+versions of Git.
+- [LPS-69606]: Fix artifact URL generation in the `artifact.properties` files.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

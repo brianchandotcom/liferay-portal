@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `b6a7500`.*
+*This document has been reviewed through commit `9a2d9b1`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -4215,16 +4215,19 @@ Content application.
 ---------------------------------------
 
 ### Moved Shopping File Uploads Portlet Properties to OSGi Configuration
-- **Date:** 2016-Dec 08
+- **Date:** 2016-Dec-08
 - **JIRA Ticket:** LPS-69210
 
 #### What changed?
 
-Shopping file uploads portlet properties have been moved from Server Administration to an OSGI configuration named `ShoppingFileUploadsConfiguration` in the `shopping-api` module.
+The Shopping file uploads portlet properties have been moved from Server
+Administration to an OSGI configuration named `ShoppingFileUploadsConfiguration`
+in the `shopping-api` module.
 
 #### Who is affected?
 
 This affects anyone who is using the following portlet properties:
+
 - `shopping.image.extensions`
 - `shopping.image.large.max.size`
 - `shopping.image.medium.max.size`
@@ -4232,16 +4235,18 @@ This affects anyone who is using the following portlet properties:
 
 #### How should I update my code?
 
-Instead of overriding the `portal.properties` file, you can
-manage the properties from Portal's configuration administrator. This can be
-accessed by navigating to Liferay's Control Panel &rarr; *System Settings*
-&rarr; *Shopping Cart Images* and editing the settings there.
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay's Control Panel &rarr; *Configuration* &rarr; *System
+Settings* &rarr; *Shopping Cart Images* and editing the settings there.
 
-If you would like to include the new configuration in your application, please follow the instructions for [making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
 
 #### Why was this change made?
 
-This change was made as part of modularization efforts to ease portal
+This change was made as part of the modularization efforts to ease portal
 configuration changes.
 
 ---------------------------------------

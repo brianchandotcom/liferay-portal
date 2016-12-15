@@ -98,6 +98,9 @@
 			<message key="name.collectionPrivatePattern" value="Private collection ''{0}'' must match pattern ''{1}''" />
 			<message key="name.collectionProtectedPublicPattern" value="Protected or public collection ''{0}'' must match pattern ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.InstanceofOrder">
+			<message key="instanceof.order" value="''{0}'' should come before ''{1}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Javadoc">
 			<message key="javadoc.empty.line" value="First or last line in javadoc should not be empty" />
 			<message key="javadoc.incorrect.first.line" value="Javadoc should start with ''/**''" />

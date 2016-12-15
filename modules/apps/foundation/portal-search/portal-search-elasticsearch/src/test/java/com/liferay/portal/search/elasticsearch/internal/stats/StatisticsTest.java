@@ -16,9 +16,9 @@ package com.liferay.portal.search.elasticsearch.internal.stats;
 
 import com.liferay.portal.search.elasticsearch.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.unit.test.BaseIndexingTestCase;
-import com.liferay.portal.search.unit.test.IndexingFixture;
-import com.liferay.portal.search.unit.test.stats.BaseStatisticsTestCase;
+import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
+import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.search.test.util.stats.BaseStatisticsTestCase;
 
 import org.junit.Test;
 

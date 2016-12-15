@@ -26,8 +26,9 @@ import com.liferay.portal.search.elasticsearch.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch.internal.connection.IndicesAdminClientSupplier;
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreationHelper;
 import com.liferay.portal.search.elasticsearch.internal.index.LiferayDocumentTypeFactory;
-import com.liferay.portal.search.unit.test.BaseIndexingTestCase;
-import com.liferay.portal.search.unit.test.IndexingFixture;
+import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
+import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
+import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.Arrays;
 import java.util.concurrent.Callable;

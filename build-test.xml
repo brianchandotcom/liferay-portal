@@ -6420,6 +6420,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		<antcall target="prepare-selenium-facebook-properties" />
 		<antcall target="prepare-selenium-google-properties" />
 		<antcall target="prepare-selenium-openid-properties" />
+		<antcall target="prepare-selenium-recaptcha-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -7273,6 +7274,26 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					openid.username=${openid.username}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-recaptcha-properties">
+		<if>
+			<isset property="recaptcha.private.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					recaptcha.private.key=${recaptcha.private.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="recaptcha.public.key" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					recaptcha.public.key=${recaptcha.public.key}
 				</echo>
 			</then>
 		</if>

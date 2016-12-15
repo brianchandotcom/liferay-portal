@@ -205,6 +205,14 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="addPriority">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Metadata" />
+		</execute>
+
+		<execute function="Type" locator1="WC#PRIORITY" value1="${priority}" />
+	</command>
+
 	<command name="addStructuredPGViaWCD">
 		<execute macro="WebContentNavigator#gotoAddPGViaWCD">
 			<var name="structureName" value="${structureName}" />

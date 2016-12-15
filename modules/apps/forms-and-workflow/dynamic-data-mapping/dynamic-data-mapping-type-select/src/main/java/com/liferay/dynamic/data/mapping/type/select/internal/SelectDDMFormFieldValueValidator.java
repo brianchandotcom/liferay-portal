@@ -23,6 +23,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -65,6 +67,13 @@ public class SelectDDMFormFieldValueValidator
 			return jsonFactory.createJSONArray(json);
 		}
 		catch (JSONException jsone) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
+
 			throw new DDMFormFieldValueValidationException(
 				String.format(
 					"Invalid data stored for select field \"%s\"", fieldName));
@@ -125,5 +134,8 @@ public class SelectDDMFormFieldValueValidator
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SelectDDMFormFieldValueValidator.class);
 
 }

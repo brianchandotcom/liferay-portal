@@ -2246,6 +2246,8 @@ information. Make sure to commit in all build services results.
 					</then>
 				</if>
 
+				<local name="source.formatter.excludes" />
+
 				<if>
 					<not>
 						<resourcecontains resource="${project.dir}/portal-kernel/src/com/liferay/portal/kernel/util/ReleaseInfo.java" substring=" DXP " />

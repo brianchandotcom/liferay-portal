@@ -196,7 +196,7 @@ public class UpgradeModules extends UpgradeProcess {
 		{"microblogs-portlet", "com.liferay.microblogs.service", "Microblogs"},
 		{
 			"private-messaging-portlet",
-			"com.liferay.social.privatemessaging.service", "UserThread"
+			"com.liferay.social.privatemessaging.service", "PM"
 		},
 		{"so-portlet", "com.liferay.invitation.invite.members.service", "SO"},
 		{

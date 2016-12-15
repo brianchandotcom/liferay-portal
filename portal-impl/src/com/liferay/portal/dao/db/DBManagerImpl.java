@@ -151,10 +151,10 @@ public class DBManagerImpl implements DBManager {
 			return DBType.SQLSERVER;
 		}
 
-		if (dialect instanceof SybaseDialect ||
-			dialect instanceof Sybase11Dialect ||
+		if (dialect instanceof Sybase11Dialect ||
 			dialect instanceof SybaseAnywhereDialect ||
-			dialect instanceof SybaseASE15Dialect) {
+			dialect instanceof SybaseASE15Dialect ||
+			dialect instanceof SybaseDialect) {
 
 			return DBType.SYBASE;
 		}

@@ -45,8 +45,8 @@ public class DirectoryWebUpgrade implements UpgradeStepRegistrator {
 						"11", "186", "187", "188",
 						DirectoryPortletKeys.DIRECTORY,
 						DirectoryPortletKeys.FRIENDS_DIRECTORY,
-						DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY,
-						DirectoryPortletKeys.MY_SITES_DIRECTORY
+						DirectoryPortletKeys.MY_SITES_DIRECTORY,
+						DirectoryPortletKeys.SITE_MEMBERS_DIRECTORY
 					};
 				}
 

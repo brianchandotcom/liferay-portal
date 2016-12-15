@@ -51,9 +51,10 @@ public class SocialNetworkingWebUpgrade implements UpgradeStepRegistrator {
 						"8_WAR_socialnetworkingportlet",
 						SocialNetworkingPortletKeys.FRIENDS,
 						SocialNetworkingPortletKeys.FRIENDS_ACTIVITIES,
-						SocialNetworkingPortletKeys.MEETUPS,
+						SocialNetworkingPortletKeys.MAP,
 						SocialNetworkingPortletKeys.MEMBERS,
 						SocialNetworkingPortletKeys.MEMBERS_ACTIVITIES,
+						SocialNetworkingPortletKeys.MEETUPS,
 						SocialNetworkingPortletKeys.SUMMARY,
 						SocialNetworkingPortletKeys.WALL
 					};

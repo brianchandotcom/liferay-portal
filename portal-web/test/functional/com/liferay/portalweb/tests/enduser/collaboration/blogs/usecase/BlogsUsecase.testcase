@@ -2000,9 +2000,9 @@
 			<var name="uploadFileName" value="Document_1.jpg" />
 		</execute>
 
-		<var name="key_uploadFileName" value="Document_1" />
-
-		<execute function="AssertVisible" locator1="BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED" />
+		<execute function="AssertVisible" locator1="BlogsEntry#ENTRY_COVER_IMAGE_UNPUBLISHED">
+			<var name="key_uploadFileName" value="Document_1" />
+		</execute>
 
 		<execute macro="PortletEntry#publish" />
 

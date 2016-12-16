@@ -576,6 +576,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 				BNDSettings bndSettings = getBNDSettings(fileName);
 
+				if (bndSettings == null) {
+					continue;
+				}
+
 				Properties bndFileLanguageProperties =
 					bndSettings.getLanguageProperties();
 
@@ -2114,6 +2118,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 		else {
 			BNDSettings bndSettings = getBNDSettings(fileName);
+
+			if (bndSettings == null) {
+				return null;
+			}
 
 			releaseVersion = bndSettings.getReleaseVersion();
 

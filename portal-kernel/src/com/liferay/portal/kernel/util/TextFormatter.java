@@ -83,8 +83,10 @@ public class TextFormatter {
 
 	public static final int O = 14;
 
-	// FormatID --> format-id
-
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #K}
+	 */
+	@Deprecated
 	public static final int P = 15;
 
 	// FORMATId --> format-id
@@ -144,7 +146,7 @@ public class TextFormatter {
 			return _formatO(s);
 		}
 		else if (style == P) {
-			return _formatP(s);
+			return _formatK(s);
 		}
 		else if (style == Q) {
 			return _formatQ(s);
@@ -394,29 +396,6 @@ public class TextFormatter {
 
 	private static String _formatO(String s) {
 		return StringUtil.replace(s, CharPool.UNDERLINE, CharPool.DASH);
-	}
-
-	private static String _formatP(String s) {
-		StringBuilder sb = new StringBuilder(s.length() + s.length() / 2);
-
-		for (int i = 0; i < s.length() - 1; i++) {
-			char c = s.charAt(i);
-
-			if (Character.isUpperCase(c)) {
-				sb.append(Character.toLowerCase(c));
-			}
-			else {
-				sb.append(c);
-
-				if (Character.isUpperCase(s.charAt(i + 1))) {
-					sb.append(CharPool.DASH);
-				}
-			}
-		}
-
-		sb.append(Character.toLowerCase(s.charAt(s.length() - 1)));
-
-		return sb.toString();
 	}
 
 	private static String _formatQ(String s) {

@@ -34,8 +34,8 @@ public class MicrosoftTranslatorAuthenticator {
 		init(true);
 	}
 
-	public MicrosoftTranslatorAuthenticator(String clientSecret) {
-		_clientSecret = clientSecret;
+	public MicrosoftTranslatorAuthenticator(String subscriptionKey) {
+		_subscriptionKey = subscriptionKey;
 
 		init(true);
 	}
@@ -60,15 +60,15 @@ public class MicrosoftTranslatorAuthenticator {
 		_accessToken = null;
 		_error = null;
 
-		if (Validator.isNull(_clientSecret)) {
-			_clientSecret = PropsValues.MICROSOFT_TRANSLATOR_CLIENT_SECRET;
+		if (Validator.isNull(_subscriptionKey)) {
+			_subscriptionKey = PropsValues.MICROSOFT_TRANSLATOR_CLIENT_SECRET;
 		}
 
 		try {
 			Http.Options options = new Http.Options();
 
 			options.addHeader(HttpHeaders.CONTENT_LENGTH, "0");
-			options.addHeader("Ocp-Apim-Subscription-Key", _clientSecret);
+			options.addHeader("Ocp-Apim-Subscription-Key", _subscriptionKey);
 
 			options.setLocation(_URL);
 
@@ -84,8 +84,7 @@ public class MicrosoftTranslatorAuthenticator {
 				_error = content;
 
 				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Unable to initialize access token: " + _error);
+					_log.info("Unable to initialize access token: " + _error);
 				}
 			}
 			else {
@@ -123,8 +122,8 @@ public class MicrosoftTranslatorAuthenticator {
 		MicrosoftTranslatorAuthenticator.class);
 
 	private String _accessToken;
-	private String _clientSecret;
 	private String _error;
 	private long _initTime;
+	private String _subscriptionKey;
 
 }

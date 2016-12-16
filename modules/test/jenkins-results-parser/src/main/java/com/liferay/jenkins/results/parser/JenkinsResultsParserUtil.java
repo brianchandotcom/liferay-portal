@@ -385,7 +385,7 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static String getJobVariant(JSONObject jsonObject) throws Exception {
+	public static String getJobVariant(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,10 +27,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Hugo Huijser
  */
 public class MicrosoftTranslatorAuthenticator {
-
-	public MicrosoftTranslatorAuthenticator() {
-		init(true);
-	}
 
 	public MicrosoftTranslatorAuthenticator(String subscriptionKey) {
 		_subscriptionKey = subscriptionKey;
@@ -59,10 +53,6 @@ public class MicrosoftTranslatorAuthenticator {
 	protected void doInit() {
 		_accessToken = null;
 		_error = null;
-
-		if (Validator.isNull(_subscriptionKey)) {
-			_subscriptionKey = PropsValues.MICROSOFT_TRANSLATOR_CLIENT_SECRET;
-		}
 
 		try {
 			Http.Options options = new Http.Options();
@@ -124,6 +114,6 @@ public class MicrosoftTranslatorAuthenticator {
 	private String _accessToken;
 	private String _error;
 	private long _initTime;
-	private String _subscriptionKey;
+	private final String _subscriptionKey;
 
 }

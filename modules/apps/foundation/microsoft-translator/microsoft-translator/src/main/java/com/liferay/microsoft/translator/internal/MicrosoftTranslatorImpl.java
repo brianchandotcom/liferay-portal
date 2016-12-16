@@ -28,14 +28,9 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 
-	public MicrosoftTranslatorImpl() {
+	public MicrosoftTranslatorImpl(String subscriptionKey) {
 		_microsoftTranslatorAuthenticator =
-			new MicrosoftTranslatorAuthenticator();
-	}
-
-	public MicrosoftTranslatorImpl(String clientSecret) {
-		_microsoftTranslatorAuthenticator =
-			new MicrosoftTranslatorAuthenticator(clientSecret);
+			new MicrosoftTranslatorAuthenticator(subscriptionKey);
 	}
 
 	public MicrosoftTranslatorAuthenticator

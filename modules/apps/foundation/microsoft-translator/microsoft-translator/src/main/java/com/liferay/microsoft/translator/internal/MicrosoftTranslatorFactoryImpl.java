@@ -14,16 +14,26 @@
 
 package com.liferay.microsoft.translator.internal;
 
+import com.liferay.microsoft.translator.internal.configuration.MicrosoftTranslatorConfiguration;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactory;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Hugo Huijser
  */
-@Component(immediate = true, service = MicrosoftTranslatorFactory.class)
+@Component(
+	configurationPid = "com.liferay.microsoft.translator.internal.configuration.MicrosoftTranslatorConfiguration",
+	immediate = true, service = MicrosoftTranslatorFactory.class
+)
 @DoPrivileged
 public class MicrosoftTranslatorFactoryImpl
 	implements MicrosoftTranslatorFactory {
@@ -31,7 +41,8 @@ public class MicrosoftTranslatorFactoryImpl
 	@Override
 	public MicrosoftTranslator getMicrosoftTranslator() {
 		if (_microsoftTranslator == null) {
-			_microsoftTranslator = new MicrosoftTranslatorImpl();
+			_microsoftTranslator = new MicrosoftTranslatorImpl(
+				_microsoftTranslatorConfiguration.subscriptionKey());
 		}
 
 		return _microsoftTranslator;
@@ -44,6 +55,22 @@ public class MicrosoftTranslatorFactoryImpl
 		return new MicrosoftTranslatorImpl(clientSecret);
 	}
 
-	private MicrosoftTranslator _microsoftTranslator;
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_microsoftTranslatorConfiguration = ConfigurableUtil.createConfigurable(
+			MicrosoftTranslatorConfiguration.class, properties);
+
+		_microsoftTranslator = null;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_microsoftTranslator = null;
+	}
+
+	private volatile MicrosoftTranslator _microsoftTranslator;
+	private volatile MicrosoftTranslatorConfiguration
+		_microsoftTranslatorConfiguration;
 
 }

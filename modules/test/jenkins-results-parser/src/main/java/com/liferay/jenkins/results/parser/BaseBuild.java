@@ -408,6 +408,41 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getRepositoryName() {
+		if (repositoryName == null) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("repository[");
+
+			TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+			sb.append(topLevelBuild.getJobName());
+
+			sb.append("]");
+
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to get build.properties.", ioe);
+			}
+
+			repositoryName = buildProperties.getProperty(sb.toString());
+
+			if (repositoryName == null) {
+				throw new RuntimeException(
+					"Unable to find repository name for job " +
+						topLevelBuild.getJobName());
+			}
+		}
+
+		return repositoryName;
+	}
+
+	@Override
 	public String getResult() {
 		String buildURL = getBuildURL();
 

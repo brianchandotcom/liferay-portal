@@ -33,7 +33,7 @@ public class FailureMessageUtil {
 				_failureMessageGenerators) {
 
 			String message = failureMessageGenerator.getMessage(
-				buildURL, consoleOutput, project);
+				buildURL, consoleOutput, project.getProperties());
 
 			if (message != null) {
 				return message;
@@ -41,7 +41,7 @@ public class FailureMessageUtil {
 		}
 
 		return _genericFailureMessageGenerator.getMessage(
-			buildURL, consoleOutput, project);
+			buildURL, consoleOutput, project.getProperties());
 	}
 
 	private static final FailureMessageGenerator[] _failureMessageGenerators = {

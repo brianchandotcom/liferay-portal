@@ -14,7 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.tools.ant.Project;
+import java.util.Hashtable;
+
+import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
 
 /**
  * @author Peter Yoo
@@ -24,9 +27,42 @@ public class SemanticVersioningFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public Element getMessage(Build build) {
+		String consoleText = build.getConsoleText();
+
+		if (!consoleText.contains(_SEMVER_END_STRING) ||
+			!consoleText.contains(_SEMVER_START_STRING)) {
+
+			return null;
+		}
+
+		Element messageElement = new DefaultElement("div");
+
+		Dom4JUtil.addToElement(
+			Dom4JUtil.getNewElement("p", messageElement), "Please fix ",
+			Dom4JUtil.wrapWithNewElement("semantic versioning", "strong"),
+			" on ",
+			Dom4JUtil.wrapWithNewElement(
+				getBaseBranchAnchorElement(build.getTopLevelBuild()),
+				"strong"));
+
+		int end = consoleText.indexOf(_SEMVER_END_STRING);
+
+		end = consoleText.indexOf("\n", end);
+
+		int start = consoleText.lastIndexOf(_SEMVER_START_STRING, end);
+
+		start = consoleText.lastIndexOf("\n", start);
+
+		messageElement.add(
+			getConsoleOutputSnippetElement(consoleText, true, start, end));
+
+		return messageElement;
+	}
+
+	@Override
 	public String getMessage(
-			String buildURL, String consoleOutput, Project project)
-		throws Exception {
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
 		if (!consoleOutput.contains(_SEMVER_END_STRING) ||
 			!consoleOutput.contains(_SEMVER_START_STRING)) {
@@ -38,15 +74,15 @@ public class SemanticVersioningFailureMessageGenerator
 
 		sb.append("<p>Please fix <strong>semantic versioning</strong> on ");
 		sb.append("<strong><a href=\"https://github.com/");
-		sb.append(project.getProperty("github.origin.name"));
+		sb.append(properties.get("github.origin.name"));
 		sb.append("/");
-		sb.append(project.getProperty("repository"));
+		sb.append(properties.get("repository"));
 		sb.append("/tree/");
-		sb.append(project.getProperty("github.sender.branch.name"));
+		sb.append(properties.get("github.sender.branch.name"));
 		sb.append("\">");
-		sb.append(project.getProperty("github.origin.name"));
+		sb.append(properties.get("github.origin.name"));
 		sb.append("/");
-		sb.append(project.getProperty("github.sender.branch.name"));
+		sb.append(properties.get("github.sender.branch.name"));
 		sb.append("</a></strong>.</p>");
 
 		int end = consoleOutput.indexOf(_SEMVER_END_STRING);

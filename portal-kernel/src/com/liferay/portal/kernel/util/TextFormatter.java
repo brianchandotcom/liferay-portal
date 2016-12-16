@@ -47,23 +47,23 @@ public class TextFormatter {
 
 	public static final int F = 5;
 
-	// formatId --> FormatId
+	// formatId --> FormatId, FriendlyURLMapper --> FriendlyURLMapper
 
 	public static final int G = 6;
 
-	// formatId --> format id
+	// formatId --> format id, FriendlyURLMapper --> friendly url mapper
 
 	public static final int H = 7;
 
-	// FormatId --> formatId
+	// FormatId --> formatId, FriendlyURLMapper --> friendlyURLMapper
 
 	public static final int I = 8;
 
-	// format-id --> Format Id
+	// format-id --> Format Id, friendly-url-mapper --> Friendly Url Mapper
 
 	public static final int J = 9;
 
-	// formatId --> format-id, formatID --> format-id
+	// formatId --> format-id, FriendlyURLMapper --> friendly-url-mapper
 
 	public static final int K = 10;
 
@@ -71,15 +71,15 @@ public class TextFormatter {
 
 	public static final int L = 11;
 
-	// format-id --> formatId
+	// format-id --> formatId, friendly-url-mapper --> friendlyUrlMapper
 
 	public static final int M = 12;
 
-	// format-id --> format_id
+	// format-id --> format_id, friendly-url-mapper --> friendly_url_mapper
 
 	public static final int N = 13;
 
-	// format_id --> format-id
+	// format_id --> format-id, friendly_url_mapper --> friendly-url-mapper
 
 	public static final int O = 14;
 

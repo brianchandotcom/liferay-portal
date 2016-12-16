@@ -32,25 +32,16 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 <aui:input name="addUserGroupIds" type="hidden" />
 <aui:input name="removeUserGroupIds" type="hidden" />
 
-<div>
+<div class="alert alert-info">
 	<liferay-ui:message arguments='<%= new String[] {"2", "2"} %>' key="step-x-of-x" translateArguments="<%= false %>" />
 
 	<liferay-ui:message arguments='<%= new String[] {HtmlUtil.escape(role.getTitle(locale)), HtmlUtil.escape(groupDescriptiveName), LanguageUtil.get(request, (group.isOrganization() ? LanguageUtil.get(request, "organization") : LanguageUtil.get(request, "site")))} %>' key="current-signifies-current-user-groups-associated-with-the-x-role.-available-signifies-all-user-groups-associated-with-the-x-x" translateArguments="<%= false %>" />
 </div>
 
-<br />
-
-<liferay-ui:tabs
-	names="current,available"
-	param="tabs1"
-	url="<%= portletURL.toString() %>"
-/>
-
 <liferay-ui:search-container
 	rowChecker="<%= new UserGroupGroupRoleUserGroupChecker(renderResponse, group, role) %>"
 	searchContainer="<%= new UserGroupSearch(renderRequest, portletURL) %>"
 >
-	<liferay-ui:input-search />
 
 	<%
 	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
@@ -90,15 +81,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		/>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
-
-	<%
-	portletURL.setParameter("cur", String.valueOf(cur));
-
-	String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupGroupRoleUsers('" + portletURL.toString() + "');";
-	%>
-
-	<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="update-associations" />
-
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

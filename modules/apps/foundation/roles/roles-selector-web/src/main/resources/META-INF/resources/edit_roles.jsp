@@ -26,18 +26,14 @@ int roleType = (Integer)request.getAttribute("edit_roles.jsp-roleType");
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
 %>
 
-<div>
+<div class="alert alert-info">
 	<liferay-ui:message arguments='<%= new String[] {"1", "2"} %>' key="step-x-of-x" translateArguments="<%= false %>" />
-
 	<liferay-ui:message key="choose-a-role" />
 </div>
-
-<br />
 
 <liferay-ui:search-container
 	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
 >
-	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="col-xs-12 form-search" placeholder="keywords" />
 
 	<%
 	RoleSearchTerms searchTerms = (RoleSearchTerms)searchContainer.getSearchTerms();
@@ -89,7 +85,5 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 		/>
 	</liferay-ui:search-container-row>
 
-	<div class="separator"><!-- --></div>
-
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>

@@ -85,29 +85,93 @@ request.setAttribute("edit_roles.jsp-roleType", roleType);
 request.setAttribute("edit_roles.jsp-portletURL", portletURL);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<c:choose>
+			<c:when test="<%= role == null %>">
+				<aui:nav-item label="roles" selected="<%= true %>" />
+			</c:when>
+			<c:otherwise>
+
+				<%
+				portletURL.setParameter("tabs1", "current");
+				%>
+
+				<aui:nav-item href="<%= portletURL.toString() %>" label="current" selected='<%= tabs1.equals("current") %>' />
+
+				<%
+				portletURL.setParameter("tabs1", "available");
+				%>
+
+				<aui:nav-item href="<%= portletURL.toString() %>" label="available" selected='<%= tabs1.equals("available") %>' />
+
+				<%
+				portletURL.setParameter("tabs1", tabs1);
+				%>
+
+			</c:otherwise>
+		</c:choose>
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(group.getGroupId()) %>" />
 	<aui:input name="roleId" type="hidden" value="<%= roleId %>" />
 
-	<c:choose>
-		<c:when test="<%= role == null %>">
-			<liferay-util:include page="/edit_roles.jsp" servletContext="<%= application %>" />
-		</c:when>
-		<c:otherwise>
+	<%
+	String methodName = null;
+	%>
+
+	<div class="roles-selector-body">
+		<div class="container-fluid-1280">
 			<c:choose>
-				<c:when test="<%= className.equals(User.class.getName()) %>">
-					<liferay-util:include page="/edit_roles_users.jsp" servletContext="<%= application %>" />
+				<c:when test="<%= role == null %>">
+					<liferay-util:include page="/edit_roles.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/edit_roles_user_groups.jsp" servletContext="<%= application %>" />
+					<c:choose>
+						<c:when test="<%= className.equals(User.class.getName()) %>">
+
+							<%
+							methodName = "updateUserGroupRoleUsers";
+							%>
+
+							<liferay-util:include page="/edit_roles_users.jsp" servletContext="<%= application %>" />
+						</c:when>
+						<c:otherwise>
+
+							<%
+							methodName = "updateUserGroupGroupRoleUsers";
+							%>
+
+							<liferay-util:include page="/edit_roles_user_groups.jsp" servletContext="<%= application %>" />
+						</c:otherwise>
+					</c:choose>
 				</c:otherwise>
 			</c:choose>
-		</c:otherwise>
-	</c:choose>
+		</div>
+	</div>
 
 	<aui:button-row>
+		<c:if test="<%= methodName != null %>">
+
+			<%
+			portletURL.setParameter("cur", String.valueOf(cur));
+
+			String taglibOnClick = renderResponse.getNamespace() + methodName + "('" + portletURL.toString() + "');";
+			%>
+
+			<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" primary="<%= true %>" value="update-associations" />
+		</c:if>
+
 		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </aui:form>

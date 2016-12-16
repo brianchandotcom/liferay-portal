@@ -63,7 +63,7 @@ public class TextFormatter {
 
 	public static final int J = 9;
 
-	// formatId --> format-id, formatID --> format-i-d
+	// formatId --> format-id, formatID --> format-id
 
 	public static final int K = 10;
 
@@ -277,16 +277,24 @@ public class TextFormatter {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (Character.isUpperCase(c)) {
-				sb.append(CharPool.SPACE);
-				sb.append(Character.toLowerCase(c));
-			}
-			else {
+			if (!Character.isUpperCase(c)) {
 				sb.append(c);
+
+				continue;
 			}
+
+			if ((i > 0) &&
+				(Character.isLowerCase(s.charAt(i - 1)) ||
+				 ((i < (s.length() - 1)) &&
+				  Character.isLowerCase(s.charAt(i + 1))))) {
+
+				sb.append(CharPool.SPACE);
+			}
+
+			sb.append(Character.toLowerCase(c));
 		}
 
-		return sb.toString().trim();
+		return sb.toString();
 	}
 
 	private static String _formatI(String s) {

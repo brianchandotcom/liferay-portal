@@ -36,7 +36,8 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	public void setUp() {
 		mockDB(_db);
 
-		_transformer.setDB(_db);
+		_transformer = new MySQLTransformer(
+			_db, _SUPPORTS_STRING_CASE_SENSITIVE_QUERY);
 	}
 
 	@Override
@@ -186,9 +187,7 @@ public class MySQLTransformerTest implements TransformerTestCase {
 
 	@Test
 	public void testTransformSupportsStringCaseSensitiveQuery() {
-		_transformer = new MySQLTransformer(true);
-
-		_transformer.setDB(_db);
+		_transformer = new MySQLTransformer(_db, true);
 
 		String sql = "select * from foo";
 
@@ -206,7 +205,6 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	private static final boolean _SUPPORTS_STRING_CASE_SENSITIVE_QUERY = false;
 
 	private final MySQLDB _db = new MySQLDB(5, 7);
-	private MySQLTransformer _transformer = new MySQLTransformer(
-		_SUPPORTS_STRING_CASE_SENSITIVE_QUERY);
+	private MySQLTransformer _transformer;
 
 }

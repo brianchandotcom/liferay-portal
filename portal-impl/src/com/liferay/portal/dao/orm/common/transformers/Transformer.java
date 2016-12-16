@@ -14,14 +14,10 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
-import com.liferay.portal.kernel.dao.db.DB;
-
 /**
  * @author Manuel de la Peña
  */
 public interface Transformer {
-
-	public void setDB(DB db);
 
 	public String transform(String sql);
 

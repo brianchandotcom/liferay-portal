@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -24,7 +25,9 @@ import java.util.regex.Matcher;
  */
 public class OracleTransformer extends BaseSQLTransformer {
 
-	public OracleTransformer() {
+	public OracleTransformer(DB db) {
+		super(db);
+
 		transformations.add(bitwiseCheckDefaultTransformation);
 		transformations.add(booleanTransformation);
 		transformations.add(_castClobTextTransformation);

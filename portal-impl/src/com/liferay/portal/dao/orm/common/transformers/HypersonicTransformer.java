@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
+
 import java.util.function.Function;
 import java.util.regex.Matcher;
 
@@ -22,7 +24,9 @@ import java.util.regex.Matcher;
  */
 public class HypersonicTransformer extends BaseSQLTransformer {
 
-	public HypersonicTransformer() {
+	public HypersonicTransformer(DB db) {
+		super(db);
+
 		transformations.add(bitwiseCheckDefaultTransformation);
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);

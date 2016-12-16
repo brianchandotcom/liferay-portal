@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -25,7 +26,9 @@ import java.util.regex.Matcher;
  */
 public class SybaseTransformer extends BaseSQLTransformer {
 
-	public SybaseTransformer() {
+	public SybaseTransformer(DB db) {
+		super(db);
+
 		transformations.add(bitwiseCheckTransformation);
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);

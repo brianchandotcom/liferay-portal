@@ -14,6 +14,8 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
+
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,7 +25,9 @@ import java.util.regex.Pattern;
  */
 public class DB2Transformer extends BaseSQLTransformer {
 
-	public DB2Transformer() {
+	public DB2Transformer(DB db) {
+		super(db);
+
 		transformations.add(bitwiseCheckDefaultTransformation);
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);

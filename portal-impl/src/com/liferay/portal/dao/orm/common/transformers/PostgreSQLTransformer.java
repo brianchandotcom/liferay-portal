@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -25,7 +26,9 @@ import java.util.regex.Pattern;
  */
 public class PostgreSQLTransformer extends BaseSQLTransformer {
 
-	public PostgreSQLTransformer() {
+	public PostgreSQLTransformer(DB db) {
+		super(db);
+
 		transformations.add(bitwiseCheckTransformation);
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);

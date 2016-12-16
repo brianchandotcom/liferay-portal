@@ -38,7 +38,7 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 
 		mockDB(db);
 
-		_transformer.setDB(db);
+		_transformer = new HypersonicTransformer(db);
 	}
 
 	@Override
@@ -152,7 +152,6 @@ public class HypersonicTransformerTest implements TransformerTestCase {
 		Assert.assertEquals(sql, transformedSql);
 	}
 
-	private final HypersonicTransformer _transformer =
-		new HypersonicTransformer();
+	private HypersonicTransformer _transformer;
 
 }

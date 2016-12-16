@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common.transformers;
 
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.function.Function;
@@ -24,7 +25,9 @@ import java.util.regex.Matcher;
  */
 public class MySQLTransformer extends BaseSQLTransformer {
 
-	public MySQLTransformer(boolean supportsStringCaseSensitiveQuery) {
+	public MySQLTransformer(DB db, boolean supportsStringCaseSensitiveQuery) {
+		super(db);
+
 		transformations.add(bitwiseCheckTransformation);
 		transformations.add(booleanTransformation);
 		transformations.add(castClobTextTransformation);

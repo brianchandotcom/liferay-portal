@@ -38,7 +38,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 
 		mockDB(db);
 
-		_transformer.setDB(db);
+		_transformer = new PostgreSQLTransformer(db);
 	}
 
 	@Override
@@ -162,7 +162,6 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 			"select * from Foo where foo != ( -1)", transformedSql);
 	}
 
-	private final PostgreSQLTransformer _transformer =
-		new PostgreSQLTransformer();
+	private PostgreSQLTransformer _transformer;
 
 }

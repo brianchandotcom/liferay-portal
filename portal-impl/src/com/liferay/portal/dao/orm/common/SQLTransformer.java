@@ -78,29 +78,27 @@ public class SQLTransformer {
 		DBType dbType = db.getDBType();
 
 		if (dbType == DBType.DB2) {
-			_transformer = new DB2Transformer();
+			_transformer = new DB2Transformer(db);
 		}
 		else if (dbType == DBType.HYPERSONIC) {
-			_transformer = new HypersonicTransformer();
+			_transformer = new HypersonicTransformer(db);
 		}
 		else if (dbType == DBType.MYSQL) {
 			_transformer = new MySQLTransformer(
-				db.isSupportsStringCaseSensitiveQuery());
+				db, db.isSupportsStringCaseSensitiveQuery());
 		}
 		else if (dbType == DBType.ORACLE) {
-			_transformer = new OracleTransformer();
+			_transformer = new OracleTransformer(db);
 		}
 		else if (dbType == DBType.POSTGRESQL) {
-			_transformer = new PostgreSQLTransformer();
+			_transformer = new PostgreSQLTransformer(db);
 		}
 		else if (dbType == DBType.SQLSERVER) {
-			_transformer = new SQLServerTransformer();
+			_transformer = new SQLServerTransformer(db);
 		}
 		else if (dbType == DBType.SYBASE) {
-			_transformer = new SybaseTransformer();
+			_transformer = new SybaseTransformer(db);
 		}
-
-		_transformer.setDB(db);
 	}
 
 	private String _transformFromHqlToJpql(String sql) {

@@ -30,7 +30,10 @@ import java.util.regex.Pattern;
  */
 public abstract class BaseSQLTransformer implements Transformer {
 
-	@Override
+	public BaseSQLTransformer(DB db) {
+		this.db = db;
+	}
+
 	public void setDB(DB db) {
 		this.db = db;
 	}

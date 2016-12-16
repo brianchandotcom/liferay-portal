@@ -1100,7 +1100,7 @@
 	</command>
 
 	<command name="EditWikiPageFormatMediaWiki" priority="5">
-		<property name="osgi.modules.includes" value="wiki-engine-mediawiki" />
+		<property name="osgi.app.includes" value="wiki-engine-mediawiki" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Navigator#gotoPage">

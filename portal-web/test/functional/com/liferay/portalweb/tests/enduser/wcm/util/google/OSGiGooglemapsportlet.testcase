@@ -1,5 +1,5 @@
 <definition component-name="portal-plugins-osgi">
-	<property name="osgi.modules.includes" value="google-maps-web" />
+	<property name="osgi.app.includes" value="google-maps" />
 	<property name="plugins.deployment.type" value="osgi" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Google" />

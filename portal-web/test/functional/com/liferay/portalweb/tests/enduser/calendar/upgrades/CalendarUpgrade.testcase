@@ -12,7 +12,7 @@
 
 	<command name="ViewCalendarArchive6012" priority="5">
 		<property name="data.archive.type" value="data-archive-calendar" />
-		<property name="osgi.modules.includes" value="calevent-importer" />
+		<property name="osgi.app.includes" value="calevent" />
 		<property name="portal.version" value="6.0.12" />
 
 		<execute macro="Upgrade#viewCalendar" />
@@ -20,7 +20,7 @@
 
 	<command name="ViewCalendarArchive612" priority="5">
 		<property name="data.archive.type" value="data-archive-calendar" />
-		<property name="osgi.modules.includes" value="calevent-importer" />
+		<property name="osgi.app.includes" value="calevent" />
 		<property name="portal.version" value="6.1.2" />
 
 		<execute macro="Upgrade#viewCalendar" />
@@ -28,7 +28,7 @@
 
 	<command name="ViewCalendarArchive6130" priority="5">
 		<property name="data.archive.type" value="data-archive-calendar" />
-		<property name="osgi.modules.includes" value="calevent-importer" />
+		<property name="osgi.app.includes" value="calevent" />
 		<property name="portal.version" value="6.1.30" />
 
 		<execute macro="Upgrade#viewCalendar" />

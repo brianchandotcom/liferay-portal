@@ -1,5 +1,5 @@
 <definition component-name="portal-util-misc">
-	<property name="osgi.modules.includes" value="loan-calculator-web" />
+	<property name="osgi.app.includes" value="loan-calculator" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Util" />
 

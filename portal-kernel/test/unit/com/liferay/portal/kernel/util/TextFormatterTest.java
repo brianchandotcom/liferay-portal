@@ -56,26 +56,34 @@ public class TextFormatterTest {
 	@Test
 	public void testFormatG() {
 		_testFormat("formatId", "FormatId", TextFormatter.G);
+		_testFormat("FriendlyURLMapper", "FriendlyURLMapper", TextFormatter.G);
 	}
 
 	@Test
 	public void testFormatH() {
 		_testFormat("formatId", "format id", TextFormatter.H);
+		_testFormat(
+			"FriendlyURLMapper", "friendly url mapper", TextFormatter.H);
 	}
 
 	@Test
 	public void testFormatI() {
 		_testFormat("FormatId", "formatId", TextFormatter.I);
+		_testFormat("FriendlyURLMapper", "friendlyURLMapper", TextFormatter.I);
 	}
 
 	@Test
 	public void testFormatJ() {
 		_testFormat("format-id", "Format Id", TextFormatter.J);
+		_testFormat(
+			"friendly-url-mapper", "Friendly Url Mapper", TextFormatter.J);
 	}
 
 	@Test
 	public void testFormatK() {
 		_testFormat("formatId", "format-id", TextFormatter.K);
+		_testFormat(
+			"FriendlyURLMapper", "friendly-url-mapper", TextFormatter.K);
 	}
 
 	@Test
@@ -87,16 +95,22 @@ public class TextFormatterTest {
 	@Test
 	public void testFormatM() {
 		_testFormat("format-id", "formatId", TextFormatter.M);
+		_testFormat(
+			"friendly-url-mapper", "friendlyUrlMapper", TextFormatter.M);
 	}
 
 	@Test
 	public void testFormatN() {
 		_testFormat("format-id", "format_id", TextFormatter.N);
+		_testFormat(
+			"friendly-url-mapper", "friendly_url_mapper", TextFormatter.N);
 	}
 
 	@Test
 	public void testFormatO() {
 		_testFormat("format_id", "format-id", TextFormatter.O);
+		_testFormat(
+			"friendly_url_mapper", "friendly-url-mapper", TextFormatter.O);
 	}
 
 	@Test

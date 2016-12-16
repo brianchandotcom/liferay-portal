@@ -678,10 +678,11 @@ app.server.type=@{app.server.type}]]></echo>
 										src="@{test.plugins.war.zip.url}"
 									/>
 
-									<unzip
-										dest="."
-										src="plugins.war.zip"
-									/>
+									<unzip dest="." src="plugins.war.zip">
+										<mapper>
+											<globmapper from="plugins/*" to="plugins/marketplace/*" />
+										</mapper>
+									</unzip>
 
 									<delete file="plugins.war.zip" />
 								</then>

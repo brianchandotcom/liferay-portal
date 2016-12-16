@@ -16,7 +16,7 @@
 				<then>
 					<pathconvert pathsep="," property="plugin.war" setonempty="false">
 						<path>
-							<fileset dir="plugins" includes="@{plugin}*.war" />
+							<fileset dir="plugins/marketplace" includes="@{plugin}*.war" />
 						</path>
 					</pathconvert>
 

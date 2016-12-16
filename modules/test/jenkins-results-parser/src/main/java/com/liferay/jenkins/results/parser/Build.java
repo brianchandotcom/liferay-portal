@@ -78,6 +78,8 @@ public interface Build {
 
 	public Build getParentBuild();
 
+	public String getRepositoryName();
+
 	public String getResult();
 
 	public Map<String, String> getStartPropertiesMap();

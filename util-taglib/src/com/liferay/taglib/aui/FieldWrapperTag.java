@@ -38,7 +38,7 @@ public class FieldWrapperTag extends BaseFieldWrapperTag {
 		String label = getLabel();
 
 		if (label == null) {
-			label = TextFormatter.format(getName(), TextFormatter.P);
+			label = TextFormatter.format(getName(), TextFormatter.K);
 		}
 
 		setNamespacedAttribute(request, "label", label);

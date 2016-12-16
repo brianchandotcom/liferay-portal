@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.knowledge.base.api</artifactId>
-  <version>4.5.0</version>
+  <version>4.6.0</version>
   <description>Liferay Knowledge Base API</description>
   <licenses>
     <license>

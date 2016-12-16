@@ -12,28 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.internal.stats;
+package com.liferay.portal.search.unit.test.util;
 
-import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.unit.test.base.indexing.IndexingFixture;
-import com.liferay.portal.search.unit.test.base.stats.BaseStatisticsTestCase;
-
-import org.junit.Test;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.search.unit.test.base.indexing.BaseIndexingTestCase.DocumentCreationHelper;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author André de Oliveira
  */
-public class StatisticsTest extends BaseStatisticsTestCase {
+public class DocumentCreationHelpers {
 
-	@Override
-	@Test
-	public void testGetStats() throws Exception {
-		super.testGetStats();
-	}
+	public static DocumentCreationHelper singleField(
+		final String field, final String... values) {
 
-	@Override
-	protected IndexingFixture createIndexingFixture() {
-		return new SolrIndexingFixture();
+		return new DocumentCreationHelper() {
+
+			@Override
+			public void populate(Document document) {
+				document.addText(field, values);
+			}
+
+		};
 	}
 
 }

@@ -16,9 +16,9 @@ package com.liferay.portal.search.elasticsearch.internal.groupby;
 
 import com.liferay.portal.search.elasticsearch.internal.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.unit.test.BaseIndexingTestCase;
-import com.liferay.portal.search.unit.test.IndexingFixture;
-import com.liferay.portal.search.unit.test.groupby.BaseGroupByTestCase;
+import com.liferay.portal.search.unit.test.base.groupby.BaseGroupByTestCase;
+import com.liferay.portal.search.unit.test.base.indexing.BaseIndexingTestCase;
+import com.liferay.portal.search.unit.test.base.indexing.IndexingFixture;
 
 import org.junit.Test;
 

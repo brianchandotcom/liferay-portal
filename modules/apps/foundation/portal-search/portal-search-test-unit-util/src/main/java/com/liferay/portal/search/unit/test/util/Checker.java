@@ -12,25 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.unit.test;
+package com.liferay.portal.search.unit.test.util;
 
-import com.liferay.portal.kernel.search.IndexSearcher;
-import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.search.Hits;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
  * @author André de Oliveira
  */
-public interface IndexingFixture {
+public interface Checker {
 
-	public IndexSearcher getIndexSearcher();
-
-	public IndexWriter getIndexWriter();
-
-	public boolean isSearchEngineAvailable();
-
-	public void setUp() throws Exception;
-
-	public void tearDown() throws Exception;
+	public void check(Hits hits);
 
 }

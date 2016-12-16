@@ -757,9 +757,9 @@ app.server.type=@{app.server.type}]]></echo>
 					</if>
 
 					<if>
-						<available file="${project.dir}/plugins/@{test.portal.lpkg.name}" />
+						<available file="${project.dir}/plugins/dist/@{test.portal.lpkg.name}" />
 						<then>
-							<copy file="${project.dir}/plugins/@{test.portal.lpkg.name}" todir="${liferay.home}/osgi/marketplace" />
+							<copy file="${project.dir}/plugins/dist/@{test.portal.lpkg.name}" todir="${liferay.home}/osgi/marketplace" />
 						</then>
 					</if>
 

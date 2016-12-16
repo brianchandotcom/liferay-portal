@@ -19,174 +19,89 @@ import org.junit.Test;
 
 /**
  * @author Shuyang Zhou
+ * @author Hugo Huijser
  */
 public class TextFormatterTest {
 
 	@Test
 	public void testFormatA() {
-		String original = "Web Search";
-		String expected = "WEB_SEARCH";
-
-		String actual = TextFormatter.format(original, TextFormatter.A);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("Web Search", "WEB_SEARCH", TextFormatter.A);
 	}
 
 	@Test
 	public void testFormatB() {
-		String original = "Web Search";
-		String expected = "websearch";
-
-		String actual = TextFormatter.format(original, TextFormatter.B);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("Web Search", "websearch", TextFormatter.B);
 	}
 
 	@Test
 	public void testFormatC() {
-		String original = "Web Search";
-		String expected = "web_search";
-
-		String actual = TextFormatter.format(original, TextFormatter.C);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("Web Search", "web_search", TextFormatter.C);
 	}
 
 	@Test
 	public void testFormatD() {
-		String original = "Web Search";
-		String expected = "WebSearch";
-
-		String actual = TextFormatter.format(original, TextFormatter.D);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("Web Search", "WebSearch", TextFormatter.D);
 	}
 
 	@Test
 	public void testFormatE() {
-		String original = "Web Search";
-		String expected = "web search";
-
-		String actual = TextFormatter.format(original, TextFormatter.E);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("Web Search", "web search", TextFormatter.E);
 	}
 
 	@Test
 	public void testFormatF() {
-		String original = "Web Search";
-		String expected = "webSearch";
-
-		String actual = TextFormatter.format(original, TextFormatter.F);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("Web Search", "webSearch", TextFormatter.F);
 	}
 
 	@Test
 	public void testFormatG() {
-		String original = "formatId";
-		String expected = "FormatId";
-
-		String actual = TextFormatter.format(original, TextFormatter.G);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("formatId", "FormatId", TextFormatter.G);
 	}
 
 	@Test
 	public void testFormatH() {
-		String original = "formatId";
-		String expected = "format id";
-
-		String actual = TextFormatter.format(original, TextFormatter.H);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("formatId", "format id", TextFormatter.H);
 	}
 
 	@Test
 	public void testFormatI() {
-		String original = "FormatId";
-		String expected = "formatId";
-
-		String actual = TextFormatter.format(original, TextFormatter.I);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("FormatId", "formatId", TextFormatter.I);
 	}
 
 	@Test
 	public void testFormatJ() {
-		String original = "format-id";
-		String expected = "Format Id";
-
-		String actual = TextFormatter.format(original, TextFormatter.J);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("format-id", "Format Id", TextFormatter.J);
 	}
 
 	@Test
 	public void testFormatK() {
-		String original = "formatId";
-		String expected = "format-id";
-
-		String actual = TextFormatter.format(original, TextFormatter.K);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("formatId", "format-id", TextFormatter.K);
 	}
 
 	@Test
 	public void testFormatL() {
-		String original = "FormatId";
-		String expected = "formatId";
-
-		String actual = TextFormatter.format(original, TextFormatter.L);
-
-		Assert.assertEquals(expected, actual);
-
-		original = "FOrmatId";
-		expected = "FOrmatId";
-
-		actual = TextFormatter.format(original, TextFormatter.L);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("FormatId", "formatId", TextFormatter.L);
+		_testFormat("FOrmatId", "FOrmatId", TextFormatter.L);
 	}
 
 	@Test
 	public void testFormatM() {
-		String original = "format-id";
-		String expected = "formatId";
-
-		String actual = TextFormatter.format(original, TextFormatter.M);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("format-id", "formatId", TextFormatter.M);
 	}
 
 	@Test
 	public void testFormatN() {
-		String original = "format-id";
-		String expected = "format_id";
-
-		String actual = TextFormatter.format(original, TextFormatter.N);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("format-id", "format_id", TextFormatter.N);
 	}
 
 	@Test
 	public void testFormatO() {
-		String original = "format_id";
-		String expected = "format-id";
-
-		String actual = TextFormatter.format(original, TextFormatter.O);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("format_id", "format-id", TextFormatter.O);
 	}
 
 	@Test
 	public void testFormatQ() {
-		String original = "FORMATId";
-		String expected = "format-id";
-
-		String actual = TextFormatter.format(original, TextFormatter.Q);
-
-		Assert.assertEquals(expected, actual);
+		_testFormat("FORMATId", "format-id", TextFormatter.Q);
 	}
 
 	@Test
@@ -217,6 +132,12 @@ public class TextFormatterTest {
 			"1MB", TextFormatter.formatStorageSize(bytes, LocaleUtil.SPAIN));
 		Assert.assertEquals(
 			"1MB", TextFormatter.formatStorageSize(bytes, LocaleUtil.US));
+	}
+
+	private void _testFormat(String original, String expected, int style) {
+		String actual = TextFormatter.format(original, style);
+
+		Assert.assertEquals(expected, actual);
 	}
 
 }

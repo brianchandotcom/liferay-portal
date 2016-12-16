@@ -14,7 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.tools.ant.Project;
+import java.util.Hashtable;
+
+import org.dom4j.Element;
 
 /**
  * @author Kevin Yen
@@ -23,9 +25,19 @@ public class DownstreamFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public Element getMessage(Build build) {
+		String consoleOutput = build.getConsoleText();
+
+		if (consoleOutput.contains("Downstream jobs FAILED.")) {
+			return Dom4JUtil.toCodeSnippetElement("Downstream jobs FAILED.");
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getMessage(
-			String buildURL, String consoleOutput, Project project)
-		throws Exception {
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
 		if (consoleOutput.contains("Downstream jobs FAILED.")) {
 			return "<pre><code>Downstream jobs FAILED</code></pre>";

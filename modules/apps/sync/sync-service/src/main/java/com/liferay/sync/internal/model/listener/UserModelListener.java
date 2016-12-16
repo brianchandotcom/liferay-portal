@@ -66,10 +66,9 @@ public class UserModelListener extends SyncBaseModelListener<User> {
 			return;
 		}
 
-		long roleId = (Long)associationClassPK;
-
 		List<ResourcePermission> resourcePermissions =
-			resourcePermissionLocalService.getRoleResourcePermissions(roleId);
+			resourcePermissionLocalService.getRoleResourcePermissions(
+				(Long)associationClassPK);
 
 		for (ResourcePermission resourcePermission : resourcePermissions) {
 			if (resourcePermission.hasActionId(ActionKeys.VIEW)) {
@@ -104,7 +103,7 @@ public class UserModelListener extends SyncBaseModelListener<User> {
 				SyncDLObject syncDLObject = getSyncDLObject(resourcePermission);
 
 				if (syncDLObject == null) {
-					return;
+					continue;
 				}
 
 				Date date = new Date();

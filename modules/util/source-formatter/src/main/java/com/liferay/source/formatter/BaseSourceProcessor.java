@@ -2545,6 +2545,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected boolean isExcludedPath(
 		String property, String path, int lineCount, String javaTermName) {
 
+		if (property == null) {
+			return false;
+		}
+
 		List<String> excludes = _exclusionPropertiesMap.get(property);
 
 		if (excludes == null) {

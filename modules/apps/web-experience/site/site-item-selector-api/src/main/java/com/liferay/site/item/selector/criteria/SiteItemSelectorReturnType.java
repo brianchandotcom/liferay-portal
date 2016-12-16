@@ -17,6 +17,19 @@ package com.liferay.site.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
+ * This return type should return the following information of a group as a
+ * JSON object:
+ *
+ * <code>
+ * {
+ * 		groupDescriptiveName: The name of the selected group
+ * 		groupId: The group ID of the selected group
+ * 		groupType: The type of the selected group
+ * 		url: The URL of the selected group
+ * 		uuid: The UUID of the selected group
+ * }
+ * </code>
+ *
  * @author Eudaldo Alonso
  */
 public class SiteItemSelectorReturnType implements ItemSelectorReturnType {

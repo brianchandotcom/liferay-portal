@@ -184,7 +184,8 @@ subjectKeyIdentifier = hash</echo>
 				<arg value="liferay" />
 			</exec>
 
-			<echo file="${elasticsearch.dir}/config/elasticsearch.yml" append="true">shield.authc:
+			<echo file="${elasticsearch.dir}/config/elasticsearch.yml" append="true">
+shield.authc:
   realms:
       esusers:
           type: esusers

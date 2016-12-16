@@ -33,9 +33,9 @@ public class MicrosoftTranslatorImpl implements MicrosoftTranslator {
 			new MicrosoftTranslatorAuthenticator();
 	}
 
-	public MicrosoftTranslatorImpl(String clientId, String clientSecret) {
+	public MicrosoftTranslatorImpl(String clientSecret) {
 		_microsoftTranslatorAuthenticator =
-			new MicrosoftTranslatorAuthenticator(clientId, clientSecret);
+			new MicrosoftTranslatorAuthenticator(clientSecret);
 	}
 
 	public MicrosoftTranslatorAuthenticator

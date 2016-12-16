@@ -38,7 +38,7 @@ public class MicrosoftTranslatorFactoryImpl
 	public MicrosoftTranslator getMicrosoftTranslator(
 		String clientId, String clientSecret) {
 
-		return new MicrosoftTranslatorImpl(clientId, clientSecret);
+		return new MicrosoftTranslatorImpl(clientSecret);
 	}
 
 	private MicrosoftTranslator _microsoftTranslator;

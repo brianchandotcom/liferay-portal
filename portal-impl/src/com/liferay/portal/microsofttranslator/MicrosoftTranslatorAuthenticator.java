@@ -34,9 +34,7 @@ public class MicrosoftTranslatorAuthenticator {
 		init(true);
 	}
 
-	public MicrosoftTranslatorAuthenticator(
-		String clientId, String clientSecret) {
-
+	public MicrosoftTranslatorAuthenticator(String clientSecret) {
 		_clientSecret = clientSecret;
 
 		init(true);

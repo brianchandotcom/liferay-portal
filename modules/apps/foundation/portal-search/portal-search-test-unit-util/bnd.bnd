@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Search Test Unit Util
+Bundle-SymbolicName: com.liferay.portal.search.test.unit.util
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Search

@@ -76,7 +76,9 @@ public class ConfigurableUtilTest {
 		}
 		catch (RuntimeException re) {
 			Assert.assertEquals(
-				"Unable to create snapshot class instance", re.getMessage());
+				"Unable to create snapshot class for " +
+					TestConfiguration.class,
+				re.getMessage());
 
 			Throwable throwable = re.getCause();
 
@@ -97,15 +99,30 @@ public class ConfigurableUtilTest {
 		TestConfiguration testConfiguration, String requiredString) {
 
 		Assert.assertTrue(testConfiguration.testBoolean());
-		Assert.assertEquals(100, testConfiguration.testInt());
+		Assert.assertEquals(1, testConfiguration.testByte());
+		Assert.assertEquals(1.0, testConfiguration.testDouble(), 0);
+		Assert.assertEquals(TestEnum.TEST_VALUE, testConfiguration.testEnum());
 		Assert.assertEquals(1.0, testConfiguration.testFloat(), 0);
+		Assert.assertEquals(100, testConfiguration.testInt());
+		Assert.assertEquals(
+			requiredString, testConfiguration.testReqiredString());
+		Assert.assertEquals(1, testConfiguration.testShort());
+		Assert.assertEquals("test_string", testConfiguration.testString());
 		Assert.assertArrayEquals(
 			new String[] {"test_string_1", "test_string_2"},
 			testConfiguration.testStringArray());
-		Assert.assertEquals("test_string", testConfiguration.testString());
-		Assert.assertNull(testConfiguration.testObject());
-		Assert.assertEquals(
-			requiredString, testConfiguration.testReqiredString());
+
+		try {
+			testConfiguration.testClass();
+
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException uoe) {
+			Assert.assertEquals("Not supported yet.", uoe.getMessage());
+		}
+	}
+
+	private class TestClass {
 	}
 
 	private interface TestConfiguration {
@@ -113,23 +130,44 @@ public class ConfigurableUtilTest {
 		@Meta.AD(deflt = "true", required = false)
 		public boolean testBoolean();
 
+		@Meta.AD(deflt = "1", required = false)
+		public byte testByte();
+
+		@Meta.AD(required = false)
+		public TestClass testClass();
+
+		@Meta.AD(deflt = "1.0", required = false)
+		public double testDouble();
+
+		@Meta.AD(deflt = "TEST_VALUE", required = false)
+		public TestEnum testEnum();
+
 		@Meta.AD(deflt = "1.0", required = false)
 		public float testFloat();
 
 		@Meta.AD(deflt = "100", required = false)
 		public int testInt();
 
-		@Meta.AD(required = false)
-		public Object testObject();
+		@Meta.AD(deflt = "100", required = false)
+		public long testLong();
 
 		@Meta.AD(required = true)
 		public String testReqiredString();
+
+		@Meta.AD(deflt = "1", required = false)
+		public short testShort();
 
 		@Meta.AD(deflt = "test_string", required = false)
 		public String testString();
 
 		@Meta.AD(deflt = "test_string_1|test_string_2", required = false)
 		public String[] testStringArray();
+
+	}
+
+	private enum TestEnum {
+
+		TEST_VALUE
 
 	}
 

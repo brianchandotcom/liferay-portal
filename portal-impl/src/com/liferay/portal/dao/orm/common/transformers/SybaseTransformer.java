@@ -29,18 +29,13 @@ public class SybaseTransformer extends BaseSQLTransformer {
 	public SybaseTransformer(DB db) {
 		super(db);
 
-		transformations.add(bitwiseCheckTransformation);
-		transformations.add(booleanTransformation);
-		transformations.add(castClobTextTransformation);
-		transformations.add(_castLongTransformation);
-		transformations.add(castTextTransformation);
-		transformations.add(_crossJoinTransformation);
-		transformations.add(_inStrTransformation);
-		transformations.add(integerDivisionTransformation);
-		transformations.add(nullDateTransformation);
-		transformations.add(_substrTransformation);
-		transformations.add(_modTransformation);
-		transformations.add(_replaceTransformation);
+		register(
+			bitwiseCheckTransformation, booleanTransformation,
+			castClobTextTransformation, _castLongTransformation,
+			castTextTransformation, _crossJoinTransformation,
+			_inStrTransformation, integerDivisionTransformation,
+			nullDateTransformation, _substrTransformation, _modTransformation,
+			_replaceTransformation);
 	}
 
 	@Override

@@ -29,17 +29,13 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 	public PostgreSQLTransformer(DB db) {
 		super(db);
 
-		transformations.add(bitwiseCheckTransformation);
-		transformations.add(booleanTransformation);
-		transformations.add(castClobTextTransformation);
-		transformations.add(castLongTransformation);
-		transformations.add(castTextTransformation);
-		transformations.add(crossJoinDefaultTransformation);
-		transformations.add(_inStrTransformation);
-		transformations.add(integerDivisionTransformation);
-		transformations.add(_nullDateTransformation);
-		transformations.add(substrDefaultTransformation);
-		transformations.add(_negativeComparisonTransformation);
+		register(
+			bitwiseCheckTransformation, booleanTransformation,
+			castClobTextTransformation, castLongTransformation,
+			castTextTransformation, crossJoinDefaultTransformation,
+			_inStrTransformation, integerDivisionTransformation,
+			_nullDateTransformation, substrDefaultTransformation,
+			_negativeComparisonTransformation);
 	}
 
 	@Override

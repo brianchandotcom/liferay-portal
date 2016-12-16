@@ -28,18 +28,13 @@ public class OracleTransformer extends BaseSQLTransformer {
 	public OracleTransformer(DB db) {
 		super(db);
 
-		transformations.add(bitwiseCheckDefaultTransformation);
-		transformations.add(booleanTransformation);
-		transformations.add(_castClobTextTransformation);
-		transformations.add(castLongTransformation);
-		transformations.add(castTextTransformation);
-		transformations.add(crossJoinDefaultTransformation);
-		transformations.add(inStrDefaultTransformation);
-		transformations.add(_integerDivisionTransformation);
-		transformations.add(nullDateTransformation);
-		transformations.add(substrDefaultTransformation);
-		transformations.add(_escapeTransformation);
-		transformations.add(_notEqualsBlankStringTransformation);
+		register(
+			bitwiseCheckDefaultTransformation, booleanTransformation,
+			_castClobTextTransformation, castLongTransformation,
+			castTextTransformation, crossJoinDefaultTransformation,
+			inStrDefaultTransformation, _integerDivisionTransformation,
+			nullDateTransformation, substrDefaultTransformation,
+			_escapeTransformation, _notEqualsBlankStringTransformation);
 	}
 
 	@Override

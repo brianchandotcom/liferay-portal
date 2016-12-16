@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -34,8 +35,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 		this.db = db;
 	}
 
-	public void setDB(DB db) {
-		this.db = db;
+	public void register(Function<String, String>... transformations) {
+		Collections.addAll(_transformations, transformations);
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public abstract class BaseSQLTransformer implements Transformer {
 
 		String newSQL = sql;
 
-		for (Function<String, String> transformation : transformations) {
+		for (Function<String, String> transformation : _transformations) {
 			newSQL = transformation.apply(newSQL);
 		}
 
@@ -56,10 +57,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 		}
 
 		return newSQL;
-	}
-
-	protected List<Function<String, String>> getTransformations() {
-		return transformations;
 	}
 
 	protected String replaceCastText(Matcher matcher) {
@@ -128,8 +125,6 @@ public abstract class BaseSQLTransformer implements Transformer {
 		(String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 	protected Function<String, String> substrDefaultTransformation =
 		(String sql) -> sql;
-	protected List<Function<String, String>> transformations =
-		new ArrayList<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSQLTransformer.class);
@@ -138,5 +133,8 @@ public abstract class BaseSQLTransformer implements Transformer {
 		"BITAND\\((.+?),(.+?)\\)");
 	private static final Pattern _castTextPattern = Pattern.compile(
 		"CAST_TEXT\\((.+?)\\)", Pattern.CASE_INSENSITIVE);
+
+	private final List<Function<String, String>> _transformations =
+		new ArrayList<>();
 
 }

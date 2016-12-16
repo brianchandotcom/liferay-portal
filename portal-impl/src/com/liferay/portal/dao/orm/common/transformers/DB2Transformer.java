@@ -28,17 +28,13 @@ public class DB2Transformer extends BaseSQLTransformer {
 	public DB2Transformer(DB db) {
 		super(db);
 
-		transformations.add(bitwiseCheckDefaultTransformation);
-		transformations.add(booleanTransformation);
-		transformations.add(castClobTextTransformation);
-		transformations.add(castLongTransformation);
-		transformations.add(castTextTransformation);
-		transformations.add(crossJoinDefaultTransformation);
-		transformations.add(inStrDefaultTransformation);
-		transformations.add(integerDivisionTransformation);
-		transformations.add(nullDateTransformation);
-		transformations.add(substrDefaultTransformation);
-		transformations.add(_likeTransformation);
+		register(
+			bitwiseCheckDefaultTransformation, booleanTransformation,
+			castClobTextTransformation, castLongTransformation,
+			castTextTransformation, crossJoinDefaultTransformation,
+			inStrDefaultTransformation, integerDivisionTransformation,
+			nullDateTransformation, substrDefaultTransformation,
+			_likeTransformation);
 	}
 
 	@Override

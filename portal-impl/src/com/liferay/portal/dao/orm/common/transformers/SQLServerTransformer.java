@@ -27,17 +27,12 @@ public class SQLServerTransformer extends BaseSQLTransformer {
 	public SQLServerTransformer(DB db) {
 		super(db);
 
-		transformations.add(bitwiseCheckTransformation);
-		transformations.add(booleanTransformation);
-		transformations.add(castClobTextTransformation);
-		transformations.add(castLongTransformation);
-		transformations.add(castTextTransformation);
-		transformations.add(crossJoinDefaultTransformation);
-		transformations.add(_inStrTransformation);
-		transformations.add(integerDivisionTransformation);
-		transformations.add(nullDateTransformation);
-		transformations.add(_substrTransformation);
-		transformations.add(_modTransformation);
+		register(
+			bitwiseCheckTransformation, booleanTransformation,
+			castClobTextTransformation, castLongTransformation,
+			castTextTransformation, crossJoinDefaultTransformation,
+			_inStrTransformation, integerDivisionTransformation,
+			nullDateTransformation, _substrTransformation, _modTransformation);
 	}
 
 	@Override

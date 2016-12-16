@@ -27,16 +27,12 @@ public class HypersonicTransformer extends BaseSQLTransformer {
 	public HypersonicTransformer(DB db) {
 		super(db);
 
-		transformations.add(bitwiseCheckDefaultTransformation);
-		transformations.add(booleanTransformation);
-		transformations.add(castClobTextTransformation);
-		transformations.add(_castLongTransformation);
-		transformations.add(castTextTransformation);
-		transformations.add(crossJoinDefaultTransformation);
-		transformations.add(inStrDefaultTransformation);
-		transformations.add(integerDivisionTransformation);
-		transformations.add(nullDateTransformation);
-		transformations.add(substrDefaultTransformation);
+		register(
+			bitwiseCheckDefaultTransformation, booleanTransformation,
+			castClobTextTransformation, _castLongTransformation,
+			castTextTransformation, crossJoinDefaultTransformation,
+			inStrDefaultTransformation, integerDivisionTransformation,
+			nullDateTransformation, substrDefaultTransformation);
 	}
 
 	@Override

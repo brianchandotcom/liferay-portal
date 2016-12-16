@@ -293,7 +293,7 @@ AUI.add(
 									},
 									width: 600
 								},
-								title: Liferay.Language.get('confirm')
+								title: Liferay.Language.get('leave-form')
 							}
 						);
 

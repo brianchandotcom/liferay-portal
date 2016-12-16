@@ -32,13 +32,13 @@
 		</if>
 	</tear-down>
 
-	<command name="SearchAcrossMultipleSites" priority="4">
+	<command name="SearchAssetsScopeEverythingAcrossMultipleSites" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="Site Name" />
+			<var name="siteName" value="Site Name 1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">
@@ -54,6 +54,14 @@
 
 		<execute macro="PortletEntry#publish" />
 
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoSitesContent">
 			<var name="portlet" value="Documents and Media" />
 		</execute>
@@ -62,6 +70,14 @@
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="Apple" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name 3" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSitesContent">

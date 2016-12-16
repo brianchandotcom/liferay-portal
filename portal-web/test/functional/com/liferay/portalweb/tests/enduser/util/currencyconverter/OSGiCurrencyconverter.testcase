@@ -1,5 +1,5 @@
 <definition component-name="portal-util-misc">
-	<property name="osgi.modules.includes" value="currency-converter-web" />
+	<property name="osgi.app.includes" value="currency-converter" />
 	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Util" />
 

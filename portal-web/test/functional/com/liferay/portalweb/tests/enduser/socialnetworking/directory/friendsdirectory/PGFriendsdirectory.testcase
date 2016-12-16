@@ -1,5 +1,5 @@
 <definition component-name="portal-social-networking">
-	<property name="osgi.modules.includes" value="social-networking-web" />
+	<property name="osgi.app.includes" value="social-networking" />
 	<property name="portal.release" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="testray.main.component.name" value="Social Networking" />

@@ -25,7 +25,7 @@
 	</tear-down>
 
 	<command name="AddChildPageFormatMediaWiki" priority="4">
-		<property name="osgi.modules.includes" value="wiki-engine-mediawiki" />
+		<property name="osgi.app.includes" value="wiki-engine-mediawiki" />
 		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="Navigator#openURL" />

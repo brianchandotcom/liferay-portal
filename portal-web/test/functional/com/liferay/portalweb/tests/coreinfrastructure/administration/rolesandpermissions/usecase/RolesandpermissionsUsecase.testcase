@@ -2353,7 +2353,7 @@
 	</command>
 
 	<command name="ViewPreferencesPanelPermissionSiteMemberRole" priority="4">
-		<property name="osgi.modules.includes" value="currency-converter-web" />
+		<property name="osgi.app.includes" value="currency-converter" />
 
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

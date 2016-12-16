@@ -12,28 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.internal.stats;
+package com.liferay.portal.search.unit.test.base.indexing;
 
-import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.unit.test.base.indexing.IndexingFixture;
-import com.liferay.portal.search.unit.test.base.stats.BaseStatisticsTestCase;
-
-import org.junit.Test;
+import com.liferay.portal.kernel.search.IndexSearcher;
+import com.liferay.portal.kernel.search.IndexWriter;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
+ * @author André de Oliveira
  */
-public class StatisticsTest extends BaseStatisticsTestCase {
+public interface IndexingFixture {
 
-	@Override
-	@Test
-	public void testGetStats() throws Exception {
-		super.testGetStats();
-	}
+	public IndexSearcher getIndexSearcher();
 
-	@Override
-	protected IndexingFixture createIndexingFixture() {
-		return new SolrIndexingFixture();
-	}
+	public IndexWriter getIndexWriter();
+
+	public boolean isSearchEngineAvailable();
+
+	public void setUp() throws Exception;
+
+	public void tearDown() throws Exception;
 
 }

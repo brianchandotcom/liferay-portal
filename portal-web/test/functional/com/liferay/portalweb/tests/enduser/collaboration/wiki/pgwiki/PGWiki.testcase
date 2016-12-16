@@ -690,7 +690,7 @@
 	</command>
 
 	<command name="AddWikiPageFormatJSPWiki" priority="4">
-		<property name="osgi.modules.includes" value="wiki-engine-jspwiki" />
+		<property name="osgi.app.includes" value="wiki-engine-jspwiki" />
 
 		<execute macro="ProductMenu#gotoControlPanelApps">
 			<var name="portlet" value="App Manager" />

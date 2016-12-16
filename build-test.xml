@@ -2122,10 +2122,11 @@ tell application "Safari" to quit
 						src="${test.build.plugins.war.zip.url}"
 					/>
 
-					<unzip
-						dest="."
-						src="plugins.war.zip"
-					/>
+					<unzip dest="." src="plugins.war.zip">
+						<mapper>
+							<globmapper from="plugins/*" to="plugins/marketplace/*" />
+						</mapper>
+					</unzip>
 
 					<delete file="plugins.war.zip" />
 				</then>

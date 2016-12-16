@@ -577,6 +577,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				BNDSettings bndSettings = getBNDSettings(fileName);
 
 				if (bndSettings == null) {
+					processMessage(
+						fileName, "Missing language key '" + languageKey + "'");
+
 					continue;
 				}
 

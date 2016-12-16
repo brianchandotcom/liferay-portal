@@ -44,17 +44,18 @@ public abstract class BaseSQLTransformer implements Transformer {
 			return sql;
 		}
 
-		final String[] newSQL = {sql};
+		String newSQL = sql;
 
-		transformations.forEach(
-			transformation -> newSQL[0] = transformation.apply(newSQL[0]));
+		for (Function<String, String> transformation : transformations) {
+			newSQL = transformation.apply(newSQL);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Original SQL " + sql);
-			_log.debug("Modified SQL " + newSQL[0]);
+			_log.debug("Modified SQL " + newSQL);
 		}
 
-		return newSQL[0];
+		return newSQL;
 	}
 
 	protected List<Function<String, String>> getTransformations() {

@@ -48,6 +48,10 @@ public class MicrosoftTranslatorFactoryImpl
 		return _microsoftTranslator;
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public MicrosoftTranslator getMicrosoftTranslator(
 		String clientId, String clientSecret) {

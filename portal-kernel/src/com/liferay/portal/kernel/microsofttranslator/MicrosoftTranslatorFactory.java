@@ -21,6 +21,10 @@ public interface MicrosoftTranslatorFactory {
 
 	public MicrosoftTranslator getMicrosoftTranslator();
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public MicrosoftTranslator getMicrosoftTranslator(
 		String clientId, String clientSecret);
 

@@ -16,10 +16,14 @@ package com.liferay.dynamic.data.mapping.type;
 
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidationException;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueValidator;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -31,7 +35,50 @@ import org.junit.Test;
 public abstract class BaseDDMFormFieldOptionsValidationTest {
 
 	@Test(expected = DDMFormFieldValueValidationException.class)
-	public void testValidationWithRequiredSelectAndEmptyDefaultLocaleValue()
+	public void testValidationWithNonRequiredOptionAndInvalidLocalizedValue()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField("option", "select");
+
+		ddmFormField.setDataType("string");
+		ddmFormField.setRequired(false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("A", LocaleUtil.US, "Option A");
+		ddmFormFieldOptions.addOptionLabel("B", LocaleUtil.US, "Option B");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmFormField.setLocalizable(true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.BRAZIL);
+
+		LocalizedValue localizedValue =
+			DDMFormValuesTestUtil.createLocalizedValue(
+				"[\"\"]", "[\"C\"]", LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"option", localizedValue);
+
+		ddmFormFieldValue.setDDMFormValues(ddmFormValues);
+
+		DDMFormFieldValueValidator ddmFormFieldValueValidator =
+			getDDMFormFieldValueValidator();
+
+		ddmFormFieldValueValidator.validate(ddmFormField, ddmFormFieldValue);
+	}
+
+	@Test(expected = DDMFormFieldValueValidationException.class)
+	public void testValidationWithRequiredOptionAndEmptyDefaultLocaleValue()
 		throws Exception {
 
 		DDMFormField ddmFormField = new DDMFormField("option", "select");

@@ -122,12 +122,12 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 		sb = new StringBundler(8);
 
-		sb.append("delete AssetEntry from AssetEntry inner join MBMessage  ");
+		sb.append("delete AssetEntry from AssetEntry inner join MBMessage ");
 		sb.append("inner join ");
 		sb.append(tempTableName);
 		sb.append(" where MBMessage.threadId = ");
 		sb.append(tempTableName);
-		sb.append(".threadId and AssetEntry.classPK = MBMessage.messageId  ");
+		sb.append(".threadId and AssetEntry.classPK = MBMessage.messageId ");
 		sb.append("and AssetEntry.classNameId = ");
 		sb.append(classNameId);
 

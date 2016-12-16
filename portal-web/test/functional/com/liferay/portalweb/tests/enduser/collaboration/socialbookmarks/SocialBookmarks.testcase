@@ -1,7 +1,6 @@
 <definition component-name="portal-collaboration">
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="hook.plugins.includes" value="social-bookmarks-hook" />
-	<property name="portal.release" value="true" />
 	<property name="testray.main.component.name" value="Social Bookmarks" />
 
 	<set-up>

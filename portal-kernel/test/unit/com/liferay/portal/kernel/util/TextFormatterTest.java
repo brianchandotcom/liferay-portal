@@ -180,16 +180,6 @@ public class TextFormatterTest {
 	}
 
 	@Test
-	public void testFormatP() {
-		String original = "formatID";
-		String expected = "format-id";
-
-		String actual = TextFormatter.format(original, TextFormatter.P);
-
-		Assert.assertEquals(expected, actual);
-	}
-
-	@Test
 	public void testFormatQ() {
 		String original = "FORMATId";
 		String expected = "format-id";

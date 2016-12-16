@@ -139,9 +139,17 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			List<Expression> parameters =
 				functionCallExpression.getParameterExpressions();
 
-			String target = doVisit(parameters.get(0));
+			if (Objects.equals(action, "jump-to-page")) {
+				String source = doVisit(parameters.get(0));
+				String target = doVisit(parameters.get(1));
 
-			return new DDLFormRuleAction(action, target);
+				return new DDLFormRuleAction(action, source, target);
+			}
+			else {
+				String target = doVisit(parameters.get(0));
+
+				return new DDLFormRuleAction(action, null, target);
+			}
 		}
 
 		@Override

@@ -20,9 +20,9 @@ import java.util.Map;
 /**
  * @author Mariano Alvaro Saiz
  */
-public class EnhancedDBSQL {
+public class SqlQuery {
 
-	public EnhancedDBSQL(String defaultSQL) {
+	public SqlQuery(String defaultSQL) {
 		_defaultSQL = defaultSQL;
 	}
 

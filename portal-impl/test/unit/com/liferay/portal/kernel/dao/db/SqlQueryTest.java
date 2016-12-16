@@ -20,26 +20,26 @@ import org.junit.Test;
 /**
  * @author Mariano Alvaro Saiz
  */
-public class EnhancedDBSQLTest {
+public class SqlQueryTest {
 
 	@Test
 	public void testWhenMatchingDBTypeMatchingIsReturned() {
-		EnhancedDBSQL enhancedDBSQL = new EnhancedDBSQL(_DEFAULT_SQL);
+		SqlQuery sqlQuery = new SqlQuery(_DEFAULT_SQL);
 
-		enhancedDBSQL.addSpecificSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
+		sqlQuery.addSpecificSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
 
-		String sql = enhancedDBSQL.getDBSQL(DBType.MYSQL);
+		String sql = sqlQuery.getDBSQL(DBType.MYSQL);
 
 		Assert.assertEquals(_DEFAULT_MYSQL_SQL, sql);
 	}
 
 	@Test
 	public void testWhenNoMatchingDBTypeDefaultIsReturned() {
-		EnhancedDBSQL enhancedDBSQL = new EnhancedDBSQL(_DEFAULT_SQL);
+		SqlQuery sqlQuery = new SqlQuery(_DEFAULT_SQL);
 
-		enhancedDBSQL.addSpecificSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
+		sqlQuery.addSpecificSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
 
-		String sql = enhancedDBSQL.getDBSQL(DBType.ORACLE);
+		String sql = sqlQuery.getDBSQL(DBType.ORACLE);
 
 		Assert.assertEquals(_DEFAULT_SQL, sql);
 	}

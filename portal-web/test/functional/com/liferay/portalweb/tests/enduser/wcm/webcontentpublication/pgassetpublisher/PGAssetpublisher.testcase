@@ -747,6 +747,103 @@
 		</execute>
 	</command>
 
+	<command name="OrderWCByPriorityViaAP" priority="4">
+		<for list="1,5,3" param="i">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Web Content" />
+			</execute>
+
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="WC WebContent Content" />
+				<var name="webContentTitle" value="WC Priority ${i} Title" />
+			</execute>
+
+			<execute macro="WebContent#addPriority">
+				<var name="priority" value="${i}" />
+			</execute>
+
+			<execute macro="PortletEntry#publish" />
+		</for>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 3 Title" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 5 Title" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 1 Title" />
+			<var name="rowNumber" value="3" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
+			<var name="assetSubtype" value="Any" />
+			<var name="selectedAsset" value="Web Content Article" />order
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Priority" />
+			<var name="sortOrder" value="Ascending" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 1 Title" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 3 Title" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 5 Title" />
+			<var name="rowNumber" value="3" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
+			<var name="fieldNameOrder" value="Priority" />
+			<var name="sortOrder" value="Descending" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 5 Title" />
+			<var name="rowNumber" value="1" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 3 Title" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
+			<var name="assetTitle" value="WC Priority 1 Title" />
+			<var name="rowNumber" value="3" />
+		</execute>
+	</command>
+
 	<command name="OrderWCByPublishDateViaAP" priority="3">
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Asset Publisher Page" />
@@ -872,103 +969,6 @@
 
 		<execute macro="AssetPublisherPortlet#deleteConfigurationTemplatePG">
 			<var name="configurationName" value="AP Manual Display" />
-		</execute>
-	</command>
-
-	<command name="ViewOrderWebContentByPriorityViaAssetPublisher" priority="4">
-		<for list="1,5,3" param="i">
-			<execute macro="ProductMenu#gotoSitesContent">
-				<var name="portlet" value="Web Content" />
-			</execute>
-
-			<execute macro="WebContentNavigator#gotoAddCP" />
-
-			<execute macro="WebContent#addCP">
-				<var name="webContentContent" value="WC WebContent Content" />
-				<var name="webContentTitle" value="WC Priority ${i} Title" />
-			</execute>
-
-			<execute macro="WebContent#addPriority">
-				<var name="priority" value="${i}" />
-			</execute>
-
-			<execute macro="PortletEntry#publish" />
-		</for>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 3 Title" />
-			<var name="rowNumber" value="1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 5 Title" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 1 Title" />
-			<var name="rowNumber" value="3" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetTypePG">
-			<var name="assetSubtype" value="Any" />
-			<var name="selectedAsset" value="Web Content Article" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
-			<var name="fieldNameOrder" value="Priority" />
-			<var name="sortOrder" value="Ascending" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 1 Title" />
-			<var name="rowNumber" value="1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 3 Title" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 5 Title" />
-			<var name="rowNumber" value="3" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#configureAssetDisplayOrderPG">
-			<var name="fieldNameOrder" value="Priority" />
-			<var name="sortOrder" value="Descending" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="Asset Publisher Page" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 5 Title" />
-			<var name="rowNumber" value="1" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 3 Title" />
-			<var name="rowNumber" value="2" />
-		</execute>
-
-		<execute macro="AssetPublisherPortlet#viewDisplayOrderPG">
-			<var name="assetTitle" value="WC Priority 1 Title" />
-			<var name="rowNumber" value="3" />
 		</execute>
 	</command>
 </definition>

@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.CallFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.GetPropertyFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.JumpPageFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetEnabledFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetInvalidFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.impl.internal.functions.SetPropertyFunction;
@@ -49,11 +50,13 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Leonardo Barros
@@ -100,6 +103,10 @@ public class DDMFormEvaluatorHelper {
 
 		ddmFormEvaluationResult.setDDMFormFieldEvaluationResults(
 			ddmFormFieldEvaluationResults);
+
+		Set<Integer> disabledPagesIndexes = getDisabledPagesIndexes();
+
+		ddmFormEvaluationResult.setDisabledPagesIndexes(disabledPagesIndexes);
 
 		return ddmFormEvaluationResult;
 	}
@@ -237,6 +244,21 @@ public class DDMFormEvaluatorHelper {
 		return defaultValue;
 	}
 
+	protected Set<Integer> getDisabledPagesIndexes() {
+		Set<Integer> disabledPagesIndexes = new HashSet<>();
+
+		for (Map.Entry<Integer, Integer> entry : _pageFlow.entrySet()) {
+			int fromPageIndex = entry.getKey();
+			int toPageIndex = entry.getValue();
+
+			for (int i = fromPageIndex + 1; i < toPageIndex; i++) {
+				disabledPagesIndexes.add(i);
+			}
+		}
+
+		return disabledPagesIndexes;
+	}
+
 	protected String getJSONArrayValueString(String valueString) {
 		try {
 			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
@@ -330,6 +352,8 @@ public class DDMFormEvaluatorHelper {
 			"getValue",
 			new GetPropertyFunction(
 				_ddmFormFieldEvaluationResultsMap, "value"));
+		ddmFormRuleEvaluator.setDDMExpressionFunction(
+			"jumpPage", new JumpPageFunction(_pageFlow));
 		ddmFormRuleEvaluator.setDDMExpressionFunction(
 			"setEnabled",
 			new SetEnabledFunction(_ddmFormFieldEvaluationResultsMap));
@@ -546,5 +570,6 @@ public class DDMFormEvaluatorHelper {
 	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer;
 	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
+	private final Map<Integer, Integer> _pageFlow = new HashMap<>();
 
 }

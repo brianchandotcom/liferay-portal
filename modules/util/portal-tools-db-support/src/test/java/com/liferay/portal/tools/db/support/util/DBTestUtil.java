@@ -41,9 +41,7 @@ public class DBTestUtil {
 			DatabaseMetaData databaseMetaData, String name)
 		throws SQLException {
 
-		try (ResultSet resultSet = databaseMetaData.getTables(
-				null, null, name.toUpperCase(), new String[] {"TABLE"})) {
-
+		try (ResultSet resultSet = _getTables(databaseMetaData, name)) {
 			Assert.assertFalse(
 				"Unexpected table \"" + name + "\"", resultSet.next());
 		}

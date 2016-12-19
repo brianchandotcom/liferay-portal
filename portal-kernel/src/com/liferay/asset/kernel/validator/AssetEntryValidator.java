@@ -27,7 +27,7 @@ public interface AssetEntryValidator {
 		throws PortalException {
 
 		validate(groupId, className, classTypePK, categoryIds, entryNames);
-	};
+	}
 
 	public void validate(
 			long groupId, String className, long classTypePK,

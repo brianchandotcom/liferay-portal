@@ -14,19 +14,22 @@
 
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
-import com.liferay.frontend.js.spa.web.internal.constants.SPAWebKeys;
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.util.SPAUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,9 +51,51 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 			String key)
 		throws IOException {
 
-		request.setAttribute(SPAWebKeys.SPA_UTIL, _spaUtil);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		super.include(request, response, key);
+		StringBundler sb = new StringBundler(26);
+
+		sb.append("var $ = AUI.$;var _ = AUI._;\n");
+		sb.append("Liferay.SPA = Liferay.SPA || {};\n");
+		sb.append("Liferay.SPA.cacheExpirationTime = ");
+		sb.append(_spaUtil.getCacheExpirationTime(themeDisplay.getCompanyId()));
+		sb.append(";\nLiferay.SPA.clearScreensCache = ");
+		sb.append(_spaUtil.isClearScreensCache(request, request.getSession()));
+		sb.append(";\nLiferay.SPA.excludedPaths = ");
+		sb.append(_spaUtil.getExcludedPaths());
+		sb.append(";\nLiferay.SPA.loginRedirect = '");
+		sb.append(_html.escapeJS(_spaUtil.getLoginRedirect(request)));
+		sb.append("';\nLiferay.SPA.navigationExceptionSelectors = '");
+		sb.append(_spaUtil.getNavigationExceptionSelectors());
+		sb.append("';\nLiferay.SPA.requestTimeout = ");
+		sb.append(_spaUtil.getRequestTimeout());
+		sb.append(";\nLiferay.SPA.userNotification = {\nmessage: '");
+		sb.append(
+			_language.get(
+				_spaUtil.getLanguageResourceBundle(themeDisplay.getLocale()),
+				"it-looks-like-this-is-taking-longer-than-expected"));
+		sb.append("',\ntimeout: ");
+		sb.append(_spaUtil.getUserNotificationTimeout());
+		sb.append(",\ntitle: '");
+		sb.append(
+			_language.get(
+				_spaUtil.getLanguageResourceBundle(themeDisplay.getLocale()),
+				"oops"));
+		sb.append("'};\nfrontendJsSpaWebLiferayInitEs.default.init(\n");
+		sb.append("function(app) {\napp.setPortletsBlacklist(");
+		sb.append(_spaUtil.getPortletsBlacklist(themeDisplay));
+		sb.append(");\napp.setValidStatusCodes(");
+		sb.append(_spaUtil.getValidStatusCodes());
+		sb.append(");\n}\n);");
+
+		ScriptData scriptData = new ScriptData();
+
+		scriptData.append(
+			null, sb, "frontend-js-spa-web/liferay/init.es",
+			ScriptData.ModulesType.ES6);
+
+		scriptData.writeTo(response.getWriter());
 	}
 
 	@Override
@@ -67,21 +112,12 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	protected String getJspPath() {
-		return "/init.jsp";
+		return null;
 	}
 
 	@Override
 	protected Log getLog() {
-		return _log;
-	}
-
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.js.spa.web)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		return null;
 	}
 
 	@Reference(
@@ -97,8 +133,11 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		_spaUtil = null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SPATopHeadJSPDynamicInclude.class);
+	@Reference
+	private Html _html;
+
+	@Reference
+	private Language _language;
 
 	private SPAUtil _spaUtil;
 

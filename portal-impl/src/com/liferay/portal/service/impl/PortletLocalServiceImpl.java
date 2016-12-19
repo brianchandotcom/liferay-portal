@@ -333,23 +333,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		clearCache();
 
-		List<String> portletActions =
-			ResourceActionsUtil.getPortletResourceActions(
-				portlet.getPortletId());
-
-		resourceActionLocalService.checkResourceActions(
-			portlet.getPortletId(), portletActions);
-
-		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
-			portlet.getPortletId());
-
-		for (String modelName : modelNames) {
-			List<String> modelActions =
-				ResourceActionsUtil.getModelResourceActions(modelName);
-
-			resourceActionLocalService.checkResourceActions(
-				modelName, modelActions);
-		}
+		ResourceActionsUtil.check(portlet.getPortletId());
 
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			portlet.getCompanyId(), WebKeys.PORTLET_CATEGORY);

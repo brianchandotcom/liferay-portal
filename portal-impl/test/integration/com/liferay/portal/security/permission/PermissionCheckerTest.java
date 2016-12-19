@@ -78,7 +78,7 @@ public class PermissionCheckerTest {
 	public static void setUpClass() throws Exception {
 		registerResourceActions();
 
-		checkResourceActions(_PORTLET_RESOURCE_NAME);
+		ResourceActionsUtil.check(_PORTLET_RESOURCE_NAME);
 	}
 
 	@AfterClass
@@ -852,25 +852,6 @@ public class PermissionCheckerTest {
 		Assert.assertFalse(
 			permissionChecker.isOrganizationOwner(
 				_organization.getOrganizationId()));
-	}
-
-	protected static void checkResourceActions(String portletName) {
-		List<String> portletActions =
-			ResourceActionsUtil.getPortletResourceActions(portletName);
-
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			portletName, portletActions);
-
-		List<String> modelNames = ResourceActionsUtil.getPortletModelResources(
-			portletName);
-
-		for (String modelName : modelNames) {
-			List<String> modelActions =
-				ResourceActionsUtil.getModelResourceActions(modelName);
-
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				modelName, modelActions);
-		}
 	}
 
 	protected static void registerResourceActions() throws Exception {

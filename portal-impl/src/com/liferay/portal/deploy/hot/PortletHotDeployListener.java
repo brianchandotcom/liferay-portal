@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.PortletServlet;
@@ -280,26 +279,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		processPortletProperties(servletContextName, classLoader);
 
 		for (Portlet portlet : portlets) {
-			List<String> modelNames =
-				ResourceActionsUtil.getPortletModelResources(
-					portlet.getPortletId());
-
-			List<String> portletActions =
-				ResourceActionsUtil.getPortletResourceActions(
-					portlet.getPortletId());
-
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				portlet.getPortletId(), portletActions);
+			ResourceActionsUtil.check(portlet.getPortletId());
 
 			checkResourceBundles(classLoader, portlet);
-
-			for (String modelName : modelNames) {
-				List<String> modelActions =
-					ResourceActionsUtil.getModelResourceActions(modelName);
-
-				ResourceActionLocalServiceUtil.checkResourceActions(
-					modelName, modelActions);
-			}
 
 			for (long companyId : companyIds) {
 				Portlet curPortlet = PortletLocalServiceUtil.getPortletById(

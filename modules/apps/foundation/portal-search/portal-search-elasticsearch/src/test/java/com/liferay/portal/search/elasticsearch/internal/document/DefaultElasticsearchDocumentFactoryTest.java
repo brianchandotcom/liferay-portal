@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
-import com.liferay.portal.search.unit.test.DocumentFixture;
+import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 
 import org.junit.After;
 import org.junit.Assert;

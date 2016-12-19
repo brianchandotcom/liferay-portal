@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.unit.test;
+package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -25,8 +26,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.text.SimpleDateFormat;
-
-import org.apache.commons.lang.math.RandomUtils;
 
 import org.mockito.Mockito;
 
@@ -43,7 +42,7 @@ public class DocumentFixture {
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword(Field.GROUP_ID, groupId);
 
-		long entryClassPK = RandomUtils.nextLong();
+		long entryClassPK = RandomTestUtil.randomLong();
 
 		document.addUID(entryClassName, entryClassPK);
 

@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.internal.stats;
+package com.liferay.portal.search.test.util;
 
-import com.liferay.portal.search.solr.internal.SolrIndexingFixture;
-import com.liferay.portal.search.test.util.indexing.IndexingFixture;
-import com.liferay.portal.search.test.util.stats.BaseStatisticsTestCase;
-
-import org.junit.Test;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
 /**
- * @author Miguel Angelo Caldas Gallindo
+ * @author André de Oliveira
  */
-public class StatisticsTest extends BaseStatisticsTestCase {
+public class SearchAssert {
 
-	@Override
-	@Test
-	public void testGetStats() throws Exception {
-		super.testGetStats();
-	}
+	public static void assertSearch(
+			final Searcher searcher, final Checker checker)
+		throws Exception {
 
-	@Override
-	protected IndexingFixture createIndexingFixture() {
-		return new SolrIndexingFixture();
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					checker.check(searcher.search());
+
+					return null;
+				}
+
+			});
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.unit.test;
+package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;

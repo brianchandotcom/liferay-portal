@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.unit.test;
+package com.liferay.portal.search.test.util.indexing;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -70,12 +70,6 @@ public abstract class BaseIndexingTestCase {
 		_indexingFixture.tearDown();
 	}
 
-	public interface DocumentCreationHelper {
-
-		public void populate(Document document);
-
-	}
-
 	protected static SearchContext createSearchContext() {
 		SearchContext searchContext = new SearchContext();
 
@@ -112,6 +106,12 @@ public abstract class BaseIndexingTestCase {
 	protected Hits search(SearchContext searchContext) throws Exception {
 		Query query = new TermQueryImpl(
 			Field.ENTRY_CLASS_NAME, _entryClassName);
+
+		return search(searchContext, query);
+	}
+
+	protected Hits search(SearchContext searchContext, Query query)
+		throws Exception {
 
 		return _indexSearcher.search(searchContext, query);
 	}

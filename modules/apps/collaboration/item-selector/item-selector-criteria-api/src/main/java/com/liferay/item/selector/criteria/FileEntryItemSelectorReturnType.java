@@ -20,15 +20,23 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  * This return type should return the following information of a file entry as a
  * JSON object:
  *
- * <code>
- * {
- * 		fileEntryId: The ID of the selected file entry
- * 		groupId: The group ID of the selected file entry
- * 		title: The title of the selected file entry
- * 		url: The URL of the selected FileEntry
- * 		uuid: The UUID of the selected file entry
- * }
- * </code>
+ * <ul>
+ * <li>
+ * <code>fileEntryId</code>: The ID of the selected file entry
+ * </li>
+ * <li>
+ * <code>groupId</code>: The group ID of the selected file entry
+ * </li>
+ * <li>
+ * <code>title</code>: The title of the selected file entry
+ * </li>
+ * <li>
+ * <code>url</code>: The URL of the selected file entry
+ * </li>
+ * <li>
+ * <code>uuid</code>: The UUID of the selected file entry
+ * </li>
+ * </ul>
  *
  * @author Sergio González
  */

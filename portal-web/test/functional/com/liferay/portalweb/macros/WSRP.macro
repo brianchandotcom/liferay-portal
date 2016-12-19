@@ -10,7 +10,7 @@
 		<execute function="AssertClick" locator1="Button#ADD_CONSUMER" value1="Add Consumer" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${consumerName}" />
-		<execute function="Paste" locator1="TextInput#URL" />
+		<execute function="Paste" locator1="TextArea#URL" />
 		<execute macro="PortletEntry#save" />
 	</command>
 

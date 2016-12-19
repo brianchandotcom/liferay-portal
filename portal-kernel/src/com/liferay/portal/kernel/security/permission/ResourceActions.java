@@ -149,4 +149,9 @@ public interface ResourceActions {
 	public void read(String servletContextName, InputStream inputStream)
 		throws Exception;
 
+	public void readAndCheck(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception;
+
 }

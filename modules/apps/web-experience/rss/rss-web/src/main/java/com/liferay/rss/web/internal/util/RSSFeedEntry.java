@@ -109,31 +109,17 @@ public class RSSFeedEntry {
 			String type = syndContent.getType();
 
 			if (Objects.equals(RSSUtil.getFormatType(feedType), RSSUtil.ATOM) &&
-				 (type.equals("html") || type.equals("xhtml"))) {
+				(type.equals("html") || type.equals("xhtml"))) {
 
-				String value = StringUtil.replace(
-					syndContent.getValue(),
-					new String[] {"src=\"/", "href=\"/"},
-					new String[] {
-						"src=\"" + baseURL + "/", "href=\"" + baseURL + "/"
-					});
+				sanitizedValue = _sanitizedValue(
+					syndContent.getValue(), baseURL);
+			}
+			else if (Objects.equals(
+						RSSUtil.getFormatType(feedType), RSSUtil.RSS) &&
+					 (type.equals("text/html") || type.equals("text/xhtml"))) {
 
-				try {
-					sanitizedValue = SanitizerUtil.sanitize(
-						_themeDisplay.getCompanyGroupId(),
-						_themeDisplay.getScopeGroupId(),
-						_themeDisplay.getUserId(), null, 0,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value,
-						null);
-				}
-				catch (SanitizerException se) {
-
-					// LPS-52675
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(se, se);
-					}
-				}
+				sanitizedValue = _sanitizedValue(
+					syndContent.getValue(), baseURL);
 			}
 			else {
 				sanitizedValue = HtmlUtil.escape(syndContent.getValue());
@@ -173,6 +159,30 @@ public class RSSFeedEntry {
 		syndContents.add(syndContent);
 
 		return syndContents;
+	}
+
+	private String _sanitizedValue(String value, String baseURL) {
+		value = StringUtil.replace(
+			value, new String[] {"src=\"/", "href=\"/"},
+			new String[] {"src=\"" + baseURL + "/", "href=\"" + baseURL + "/"});
+
+		try {
+			value = SanitizerUtil.sanitize(
+				_themeDisplay.getCompanyGroupId(),
+				_themeDisplay.getScopeGroupId(), _themeDisplay.getUserId(),
+				null, 0, ContentTypes.TEXT_HTML, Sanitizer.MODE_XSS, value,
+				null);
+		}
+		catch (SanitizerException se) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(se, se);
+			}
+		}
+
+		return value;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RSSFeedEntry.class);

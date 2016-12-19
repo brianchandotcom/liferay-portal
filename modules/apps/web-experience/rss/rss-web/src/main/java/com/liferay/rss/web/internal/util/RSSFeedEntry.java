@@ -36,6 +36,7 @@ import com.sun.syndication.feed.synd.SyndFeed;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Eudaldo Alonso
@@ -107,8 +108,8 @@ public class RSSFeedEntry {
 			String feedType = syndFeed.getFeedType();
 			String type = syndContent.getType();
 
-			if (RSSUtil.getFormatType(feedType).equals(RSSUtil.ATOM) &&
-				(type.equals("html") || type.equals("xhtml"))) {
+			if (Objects.equals(RSSUtil.getFormatType(feedType), RSSUtil.ATOM) &&
+				 (type.equals("html") || type.equals("xhtml"))) {
 
 				String value = StringUtil.replace(
 					syndContent.getValue(),

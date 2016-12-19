@@ -22,7 +22,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertCaptchaThenRecaptcha" priority="4">
+	<command name="AssertCaptchaAndRecaptchaElements" priority="4">
 		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
 		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
 

@@ -1232,7 +1232,9 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isVariableName(String variableName) {
-		if (isNull(variableName)) {
+		if (isNull(variableName) ||
+			ArrayUtil.contains(_JAVA_KEYWORDS, variableName)) {
+
 			return false;
 		}
 
@@ -1323,6 +1325,17 @@ public class Validator {
 	private static final char[] _EMAIL_ADDRESS_SPECIAL_CHAR = new char[] {
 		'.', '!', '#', '$', '%', '&', '\'', '*', '+', '-', '/', '=', '?', '^',
 		'_', '`', '{', '|', '}', '~'
+	};
+
+	private static final String[] _JAVA_KEYWORDS = new String[] {
+		"abstract", "assert", "boolean", "break", "byte", "case", "catch",
+		"char", "class", "const", "continue", "default", "do", "double", "else",
+		"enum", "extends", "false", "final", "finally", "float", "for", "goto",
+		"if", "implements", "import", "instanceof", "int", "interface", "long",
+		"native", "new", "null", "package", "private", "protected", "public",
+		"return", "short", "static", "strictfp", "super", "switch",
+		"synchronized", "this", "throw", "throws", "transient", "true", "try",
+		"void", "volatile", "while"
 	};
 
 	private static final String _VARIABLE_TERM_BEGIN = "[$";

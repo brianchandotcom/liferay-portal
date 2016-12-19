@@ -162,17 +162,17 @@ public interface SocialActivityLimitModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this social activity limit.
+	 * Returns the class pk of this social activity limit.
 	 *
-	 * @return the class p k of this social activity limit
+	 * @return the class pk of this social activity limit
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this social activity limit.
+	 * Sets the class pk of this social activity limit.
 	 *
-	 * @param classPK the class p k of this social activity limit
+	 * @param classPK the class pk of this social activity limit
 	 */
 	@Override
 	public void setClassPK(long classPK);

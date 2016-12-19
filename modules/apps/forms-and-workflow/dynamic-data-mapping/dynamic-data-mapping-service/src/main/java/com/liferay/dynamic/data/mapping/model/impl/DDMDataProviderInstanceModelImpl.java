@@ -76,7 +76,7 @@ public class DDMDataProviderInstanceModelImpl extends BaseModelImpl<DDMDataProvi
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m data provider instance model instance should use the {@link DDMDataProviderInstance} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm data provider instance model instance should use the {@link DDMDataProviderInstance} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMDataProviderInstance";
 	public static final Object[][] TABLE_COLUMNS = {

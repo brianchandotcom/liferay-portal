@@ -193,9 +193,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is approved.
+	* Returns <code>true</code> if this ddl record version is approved.
 	*
-	* @return <code>true</code> if this d d l record version is approved; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is approved; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isApproved() {
@@ -208,9 +208,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is denied.
+	* Returns <code>true</code> if this ddl record version is denied.
 	*
-	* @return <code>true</code> if this d d l record version is denied; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is denied; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isDenied() {
@@ -218,9 +218,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is a draft.
+	* Returns <code>true</code> if this ddl record version is a draft.
 	*
-	* @return <code>true</code> if this d d l record version is a draft; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is a draft; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isDraft() {
@@ -233,9 +233,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is expired.
+	* Returns <code>true</code> if this ddl record version is expired.
 	*
-	* @return <code>true</code> if this d d l record version is expired; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is expired; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isExpired() {
@@ -243,9 +243,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is inactive.
+	* Returns <code>true</code> if this ddl record version is inactive.
 	*
-	* @return <code>true</code> if this d d l record version is inactive; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is inactive; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isInactive() {
@@ -253,9 +253,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is incomplete.
+	* Returns <code>true</code> if this ddl record version is incomplete.
 	*
-	* @return <code>true</code> if this d d l record version is incomplete; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is incomplete; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isIncomplete() {
@@ -268,9 +268,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is pending.
+	* Returns <code>true</code> if this ddl record version is pending.
 	*
-	* @return <code>true</code> if this d d l record version is pending; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is pending; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isPending() {
@@ -278,9 +278,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d l record version is scheduled.
+	* Returns <code>true</code> if this ddl record version is scheduled.
 	*
-	* @return <code>true</code> if this d d l record version is scheduled; <code>false</code> otherwise
+	* @return <code>true</code> if this ddl record version is scheduled; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isScheduled() {
@@ -309,9 +309,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the display index of this d d l record version.
+	* Returns the display index of this ddl record version.
 	*
-	* @return the display index of this d d l record version
+	* @return the display index of this ddl record version
 	*/
 	@Override
 	public int getDisplayIndex() {
@@ -319,9 +319,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the status of this d d l record version.
+	* Returns the status of this ddl record version.
 	*
-	* @return the status of this d d l record version
+	* @return the status of this ddl record version
 	*/
 	@Override
 	public int getStatus() {
@@ -344,9 +344,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the status by user name of this d d l record version.
+	* Returns the status by user name of this ddl record version.
 	*
-	* @return the status by user name of this d d l record version
+	* @return the status by user name of this ddl record version
 	*/
 	@Override
 	public java.lang.String getStatusByUserName() {
@@ -354,9 +354,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the status by user uuid of this d d l record version.
+	* Returns the status by user uuid of this ddl record version.
 	*
-	* @return the status by user uuid of this d d l record version
+	* @return the status by user uuid of this ddl record version
 	*/
 	@Override
 	public java.lang.String getStatusByUserUuid() {
@@ -364,9 +364,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the user name of this d d l record version.
+	* Returns the user name of this ddl record version.
 	*
-	* @return the user name of this d d l record version
+	* @return the user name of this ddl record version
 	*/
 	@Override
 	public java.lang.String getUserName() {
@@ -374,9 +374,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the user uuid of this d d l record version.
+	* Returns the user uuid of this ddl record version.
 	*
-	* @return the user uuid of this d d l record version
+	* @return the user uuid of this ddl record version
 	*/
 	@Override
 	public java.lang.String getUserUuid() {
@@ -384,9 +384,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the version of this d d l record version.
+	* Returns the version of this ddl record version.
 	*
-	* @return the version of this d d l record version
+	* @return the version of this ddl record version
 	*/
 	@Override
 	public java.lang.String getVersion() {
@@ -404,9 +404,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the create date of this d d l record version.
+	* Returns the create date of this ddl record version.
 	*
-	* @return the create date of this d d l record version
+	* @return the create date of this ddl record version
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -414,9 +414,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the status date of this d d l record version.
+	* Returns the status date of this ddl record version.
 	*
-	* @return the status date of this d d l record version
+	* @return the status date of this ddl record version
 	*/
 	@Override
 	public Date getStatusDate() {
@@ -424,9 +424,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the company ID of this d d l record version.
+	* Returns the company ID of this ddl record version.
 	*
-	* @return the company ID of this d d l record version
+	* @return the company ID of this ddl record version
 	*/
 	@Override
 	public long getCompanyId() {
@@ -434,9 +434,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the d d m storage ID of this d d l record version.
+	* Returns the ddm storage ID of this ddl record version.
 	*
-	* @return the d d m storage ID of this d d l record version
+	* @return the ddm storage ID of this ddl record version
 	*/
 	@Override
 	public long getDDMStorageId() {
@@ -444,9 +444,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the group ID of this d d l record version.
+	* Returns the group ID of this ddl record version.
 	*
-	* @return the group ID of this d d l record version
+	* @return the group ID of this ddl record version
 	*/
 	@Override
 	public long getGroupId() {
@@ -454,9 +454,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the primary key of this d d l record version.
+	* Returns the primary key of this ddl record version.
 	*
-	* @return the primary key of this d d l record version
+	* @return the primary key of this ddl record version
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -464,9 +464,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the record ID of this d d l record version.
+	* Returns the record ID of this ddl record version.
 	*
-	* @return the record ID of this d d l record version
+	* @return the record ID of this ddl record version
 	*/
 	@Override
 	public long getRecordId() {
@@ -474,9 +474,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the record set ID of this d d l record version.
+	* Returns the record set ID of this ddl record version.
 	*
-	* @return the record set ID of this d d l record version
+	* @return the record set ID of this ddl record version
 	*/
 	@Override
 	public long getRecordSetId() {
@@ -484,9 +484,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the record version ID of this d d l record version.
+	* Returns the record version ID of this ddl record version.
 	*
-	* @return the record version ID of this d d l record version
+	* @return the record version ID of this ddl record version
 	*/
 	@Override
 	public long getRecordVersionId() {
@@ -494,9 +494,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the status by user ID of this d d l record version.
+	* Returns the status by user ID of this ddl record version.
 	*
-	* @return the status by user ID of this d d l record version
+	* @return the status by user ID of this ddl record version
 	*/
 	@Override
 	public long getStatusByUserId() {
@@ -504,9 +504,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Returns the user ID of this d d l record version.
+	* Returns the user ID of this ddl record version.
 	*
-	* @return the user ID of this d d l record version
+	* @return the user ID of this ddl record version
 	*/
 	@Override
 	public long getUserId() {
@@ -524,9 +524,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the company ID of this d d l record version.
+	* Sets the company ID of this ddl record version.
 	*
-	* @param companyId the company ID of this d d l record version
+	* @param companyId the company ID of this ddl record version
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -534,9 +534,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the create date of this d d l record version.
+	* Sets the create date of this ddl record version.
 	*
-	* @param createDate the create date of this d d l record version
+	* @param createDate the create date of this ddl record version
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -544,9 +544,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the d d m storage ID of this d d l record version.
+	* Sets the ddm storage ID of this ddl record version.
 	*
-	* @param DDMStorageId the d d m storage ID of this d d l record version
+	* @param DDMStorageId the ddm storage ID of this ddl record version
 	*/
 	@Override
 	public void setDDMStorageId(long DDMStorageId) {
@@ -554,9 +554,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the display index of this d d l record version.
+	* Sets the display index of this ddl record version.
 	*
-	* @param displayIndex the display index of this d d l record version
+	* @param displayIndex the display index of this ddl record version
 	*/
 	@Override
 	public void setDisplayIndex(int displayIndex) {
@@ -580,9 +580,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the group ID of this d d l record version.
+	* Sets the group ID of this ddl record version.
 	*
-	* @param groupId the group ID of this d d l record version
+	* @param groupId the group ID of this ddl record version
 	*/
 	@Override
 	public void setGroupId(long groupId) {
@@ -595,9 +595,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the primary key of this d d l record version.
+	* Sets the primary key of this ddl record version.
 	*
-	* @param primaryKey the primary key of this d d l record version
+	* @param primaryKey the primary key of this ddl record version
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -610,9 +610,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the record ID of this d d l record version.
+	* Sets the record ID of this ddl record version.
 	*
-	* @param recordId the record ID of this d d l record version
+	* @param recordId the record ID of this ddl record version
 	*/
 	@Override
 	public void setRecordId(long recordId) {
@@ -620,9 +620,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the record set ID of this d d l record version.
+	* Sets the record set ID of this ddl record version.
 	*
-	* @param recordSetId the record set ID of this d d l record version
+	* @param recordSetId the record set ID of this ddl record version
 	*/
 	@Override
 	public void setRecordSetId(long recordSetId) {
@@ -630,9 +630,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the record version ID of this d d l record version.
+	* Sets the record version ID of this ddl record version.
 	*
-	* @param recordVersionId the record version ID of this d d l record version
+	* @param recordVersionId the record version ID of this ddl record version
 	*/
 	@Override
 	public void setRecordVersionId(long recordVersionId) {
@@ -640,9 +640,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the status of this d d l record version.
+	* Sets the status of this ddl record version.
 	*
-	* @param status the status of this d d l record version
+	* @param status the status of this ddl record version
 	*/
 	@Override
 	public void setStatus(int status) {
@@ -650,9 +650,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the status by user ID of this d d l record version.
+	* Sets the status by user ID of this ddl record version.
 	*
-	* @param statusByUserId the status by user ID of this d d l record version
+	* @param statusByUserId the status by user ID of this ddl record version
 	*/
 	@Override
 	public void setStatusByUserId(long statusByUserId) {
@@ -660,9 +660,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the status by user name of this d d l record version.
+	* Sets the status by user name of this ddl record version.
 	*
-	* @param statusByUserName the status by user name of this d d l record version
+	* @param statusByUserName the status by user name of this ddl record version
 	*/
 	@Override
 	public void setStatusByUserName(java.lang.String statusByUserName) {
@@ -670,9 +670,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the status by user uuid of this d d l record version.
+	* Sets the status by user uuid of this ddl record version.
 	*
-	* @param statusByUserUuid the status by user uuid of this d d l record version
+	* @param statusByUserUuid the status by user uuid of this ddl record version
 	*/
 	@Override
 	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
@@ -680,9 +680,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the status date of this d d l record version.
+	* Sets the status date of this ddl record version.
 	*
-	* @param statusDate the status date of this d d l record version
+	* @param statusDate the status date of this ddl record version
 	*/
 	@Override
 	public void setStatusDate(Date statusDate) {
@@ -690,9 +690,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the user ID of this d d l record version.
+	* Sets the user ID of this ddl record version.
 	*
-	* @param userId the user ID of this d d l record version
+	* @param userId the user ID of this ddl record version
 	*/
 	@Override
 	public void setUserId(long userId) {
@@ -700,9 +700,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the user name of this d d l record version.
+	* Sets the user name of this ddl record version.
 	*
-	* @param userName the user name of this d d l record version
+	* @param userName the user name of this ddl record version
 	*/
 	@Override
 	public void setUserName(java.lang.String userName) {
@@ -710,9 +710,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the user uuid of this d d l record version.
+	* Sets the user uuid of this ddl record version.
 	*
-	* @param userUuid the user uuid of this d d l record version
+	* @param userUuid the user uuid of this ddl record version
 	*/
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
@@ -720,9 +720,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	/**
-	* Sets the version of this d d l record version.
+	* Sets the version of this ddl record version.
 	*
-	* @param version the version of this d d l record version
+	* @param version the version of this ddl record version
 	*/
 	@Override
 	public void setVersion(java.lang.String version) {

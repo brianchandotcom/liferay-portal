@@ -64,14 +64,14 @@ public interface KBCommentLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link KBCommentLocalServiceUtil} to access the k b comment local service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBCommentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link KBCommentLocalServiceUtil} to access the kb comment local service. Add custom service methods to {@link com.liferay.knowledge.base.service.impl.KBCommentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the k b comment to the database. Also notifies the appropriate model listeners.
+	* Adds the kb comment to the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbComment the k b comment
-	* @return the k b comment that was added
+	* @param kbComment the kb comment
+	* @return the kb comment that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBComment addKBComment(KBComment kbComment);
@@ -85,18 +85,18 @@ public interface KBCommentLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Creates a new k b comment with the primary key. Does not add the k b comment to the database.
+	* Creates a new kb comment with the primary key. Does not add the kb comment to the database.
 	*
-	* @param kbCommentId the primary key for the new k b comment
-	* @return the new k b comment
+	* @param kbCommentId the primary key for the new kb comment
+	* @return the new kb comment
 	*/
 	public KBComment createKBComment(long kbCommentId);
 
 	/**
-	* Deletes the k b comment from the database. Also notifies the appropriate model listeners.
+	* Deletes the kb comment from the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbComment the k b comment
-	* @return the k b comment that was removed
+	* @param kbComment the kb comment
+	* @return the kb comment that was removed
 	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
@@ -105,11 +105,11 @@ public interface KBCommentLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Deletes the k b comment with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the kb comment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbCommentId the primary key of the k b comment
-	* @return the k b comment that was removed
-	* @throws PortalException if a k b comment with the primary key could not be found
+	* @param kbCommentId the primary key of the kb comment
+	* @return the kb comment that was removed
+	* @throws PortalException if a kb comment with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public KBComment deleteKBComment(long kbCommentId)
@@ -119,22 +119,22 @@ public interface KBCommentLocalService extends BaseLocalService,
 	public KBComment fetchKBComment(long kbCommentId);
 
 	/**
-	* Returns the k b comment matching the UUID and group.
+	* Returns the kb comment matching the UUID and group.
 	*
-	* @param uuid the k b comment's UUID
+	* @param uuid the kb comment's UUID
 	* @param groupId the primary key of the group
-	* @return the matching k b comment, or <code>null</code> if a matching k b comment could not be found
+	* @return the matching kb comment, or <code>null</code> if a matching kb comment could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment fetchKBCommentByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
 	/**
-	* Returns the k b comment with the primary key.
+	* Returns the kb comment with the primary key.
 	*
-	* @param kbCommentId the primary key of the k b comment
-	* @return the k b comment
-	* @throws PortalException if a k b comment with the primary key could not be found
+	* @param kbCommentId the primary key of the kb comment
+	* @return the kb comment
+	* @throws PortalException if a kb comment with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment getKBComment(long kbCommentId) throws PortalException;
@@ -144,22 +144,22 @@ public interface KBCommentLocalService extends BaseLocalService,
 		long classPK) throws PortalException;
 
 	/**
-	* Returns the k b comment matching the UUID and group.
+	* Returns the kb comment matching the UUID and group.
 	*
-	* @param uuid the k b comment's UUID
+	* @param uuid the kb comment's UUID
 	* @param groupId the primary key of the group
-	* @return the matching k b comment
-	* @throws PortalException if a matching k b comment could not be found
+	* @return the matching kb comment
+	* @throws PortalException if a matching kb comment could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KBComment getKBCommentByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
 
 	/**
-	* Updates the k b comment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the kb comment in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param kbComment the k b comment
-	* @return the k b comment that was updated
+	* @param kbComment the kb comment
+	* @return the kb comment that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public KBComment updateKBComment(KBComment kbComment);
@@ -200,9 +200,9 @@ public interface KBCommentLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of k b comments.
+	* Returns the number of kb comments.
 	*
-	* @return the number of k b comments
+	* @return the number of kb comments
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getKBCommentsCount();
@@ -272,15 +272,15 @@ public interface KBCommentLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the k b comments.
+	* Returns a range of all the kb comments.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.knowledge.base.model.impl.KBCommentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of k b comments
-	* @param end the upper bound of the range of k b comments (not inclusive)
-	* @return the range of k b comments
+	* @param start the lower bound of the range of kb comments
+	* @param end the upper bound of the range of kb comments (not inclusive)
+	* @return the range of kb comments
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBComments(int start, int end);
@@ -320,25 +320,25 @@ public interface KBCommentLocalService extends BaseLocalService,
 		OrderByComparator<KBComment> orderByComparator);
 
 	/**
-	* Returns all the k b comments matching the UUID and company.
+	* Returns all the kb comments matching the UUID and company.
 	*
-	* @param uuid the UUID of the k b comments
+	* @param uuid the UUID of the kb comments
 	* @param companyId the primary key of the company
-	* @return the matching k b comments, or an empty list if no matches were found
+	* @return the matching kb comments, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBCommentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
-	* Returns a range of k b comments matching the UUID and company.
+	* Returns a range of kb comments matching the UUID and company.
 	*
-	* @param uuid the UUID of the k b comments
+	* @param uuid the UUID of the kb comments
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of k b comments
-	* @param end the upper bound of the range of k b comments (not inclusive)
+	* @param start the lower bound of the range of kb comments
+	* @param end the upper bound of the range of kb comments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching k b comments, or an empty list if no matches were found
+	* @return the range of matching kb comments, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KBComment> getKBCommentsByUuidAndCompanyId(

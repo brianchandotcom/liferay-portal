@@ -44,7 +44,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @return the matching kaleo timers
 	*/
 	public java.util.List<KaleoTimer> findByKCN_KCPK(
@@ -58,7 +58,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param start the lower bound of the range of kaleo timers
 	* @param end the upper bound of the range of kaleo timers (not inclusive)
 	* @return the range of matching kaleo timers
@@ -74,7 +74,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param start the lower bound of the range of kaleo timers
 	* @param end the upper bound of the range of kaleo timers (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -92,7 +92,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param start the lower bound of the range of kaleo timers
 	* @param end the upper bound of the range of kaleo timers (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -108,7 +108,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the first kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer
 	* @throws NoSuchTimerException if a matching kaleo timer could not be found
@@ -122,7 +122,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the first kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
 	*/
@@ -134,7 +134,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer
 	* @throws NoSuchTimerException if a matching kaleo timer could not be found
@@ -148,7 +148,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
 	*/
@@ -161,7 +161,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	*
 	* @param kaleoTimerId the primary key of the current kaleo timer
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer
 	* @throws NoSuchTimerException if a kaleo timer with the primary key could not be found
@@ -175,7 +175,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	*/
 	public void removeByKCN_KCPK(java.lang.String kaleoClassName,
 		long kaleoClassPK);
@@ -184,7 +184,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the number of kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @return the number of matching kaleo timers
 	*/
 	public int countByKCN_KCPK(java.lang.String kaleoClassName,
@@ -194,7 +194,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @return the matching kaleo timers
 	*/
@@ -209,7 +209,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param start the lower bound of the range of kaleo timers
 	* @param end the upper bound of the range of kaleo timers (not inclusive)
@@ -227,7 +227,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param start the lower bound of the range of kaleo timers
 	* @param end the upper bound of the range of kaleo timers (not inclusive)
@@ -247,7 +247,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param start the lower bound of the range of kaleo timers
 	* @param end the upper bound of the range of kaleo timers (not inclusive)
@@ -265,7 +265,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the first kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer
@@ -280,7 +280,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the first kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
@@ -293,7 +293,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer
@@ -308,7 +308,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the last kaleo timer in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo timer, or <code>null</code> if a matching kaleo timer could not be found
@@ -322,7 +322,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	*
 	* @param kaleoTimerId the primary key of the current kaleo timer
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo timer
@@ -337,7 +337,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Removes all the kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63; from the database.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	*/
 	public void removeByKCN_KCPK_Blocking(java.lang.String kaleoClassName,
@@ -347,7 +347,7 @@ public interface KaleoTimerPersistence extends BasePersistence<KaleoTimer> {
 	* Returns the number of kaleo timers where kaleoClassName = &#63; and kaleoClassPK = &#63; and blocking = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param blocking the blocking
 	* @return the number of matching kaleo timers
 	*/

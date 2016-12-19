@@ -43,10 +43,10 @@ public class DDLRecordSetLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the d d l record set to the database. Also notifies the appropriate model listeners.
+	* Adds the ddl record set to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecordSet the d d l record set
-	* @return the d d l record set that was added
+	* @param ddlRecordSet the ddl record set
+	* @return the ddl record set that was added
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet addDDLRecordSet(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
@@ -91,10 +91,10 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new d d l record set with the primary key. Does not add the d d l record set to the database.
+	* Creates a new ddl record set with the primary key. Does not add the ddl record set to the database.
 	*
-	* @param recordSetId the primary key for the new d d l record set
-	* @return the new d d l record set
+	* @param recordSetId the primary key for the new ddl record set
+	* @return the new ddl record set
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet createDDLRecordSet(
 		long recordSetId) {
@@ -102,10 +102,10 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d d l record set from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddl record set from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecordSet the d d l record set
-	* @return the d d l record set that was removed
+	* @param ddlRecordSet the ddl record set
+	* @return the ddl record set that was removed
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet deleteDDLRecordSet(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
@@ -113,11 +113,11 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d d l record set with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddl record set with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param recordSetId the primary key of the d d l record set
-	* @return the d d l record set that was removed
-	* @throws PortalException if a d d l record set with the primary key could not be found
+	* @param recordSetId the primary key of the ddl record set
+	* @return the ddl record set that was removed
+	* @throws PortalException if a ddl record set with the primary key could not be found
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet deleteDDLRecordSet(
 		long recordSetId)
@@ -131,11 +131,11 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d l record set matching the UUID and group.
+	* Returns the ddl record set matching the UUID and group.
 	*
-	* @param uuid the d d l record set's UUID
+	* @param uuid the ddl record set's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
+	* @return the matching ddl record set, or <code>null</code> if a matching ddl record set could not be found
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
@@ -168,11 +168,11 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d l record set with the primary key.
+	* Returns the ddl record set with the primary key.
 	*
-	* @param recordSetId the primary key of the d d l record set
-	* @return the d d l record set
-	* @throws PortalException if a d d l record set with the primary key could not be found
+	* @param recordSetId the primary key of the ddl record set
+	* @return the ddl record set
+	* @throws PortalException if a ddl record set with the primary key could not be found
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSet(
 		long recordSetId)
@@ -181,12 +181,12 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d l record set matching the UUID and group.
+	* Returns the ddl record set matching the UUID and group.
 	*
-	* @param uuid the d d l record set's UUID
+	* @param uuid the ddl record set's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d l record set
-	* @throws PortalException if a matching d d l record set could not be found
+	* @return the matching ddl record set
+	* @throws PortalException if a matching ddl record set could not be found
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet getDDLRecordSetByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
@@ -228,10 +228,10 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d d l record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddl record set in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecordSet the d d l record set
-	* @return the d d l record set that was updated
+	* @param ddlRecordSet the ddl record set
+	* @return the ddl record set that was updated
 	*/
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateDDLRecordSet(
 		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
@@ -395,9 +395,9 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of d d l record sets.
+	* Returns the number of ddl record sets.
 	*
-	* @return the number of d d l record sets
+	* @return the number of ddl record sets
 	*/
 	public static int getDDLRecordSetsCount() {
 		return getService().getDDLRecordSetsCount();
@@ -528,15 +528,15 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the d d l record sets.
+	* Returns a range of all the ddl record sets.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d l record sets
-	* @param end the upper bound of the range of d d l record sets (not inclusive)
-	* @return the range of d d l record sets
+	* @param start the lower bound of the range of ddl record sets
+	* @param end the upper bound of the range of ddl record sets (not inclusive)
+	* @return the range of ddl record sets
 	*/
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getDDLRecordSets(
 		int start, int end) {
@@ -544,11 +544,11 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the d d l record sets matching the UUID and company.
+	* Returns all the ddl record sets matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d l record sets
+	* @param uuid the UUID of the ddl record sets
 	* @param companyId the primary key of the company
-	* @return the matching d d l record sets, or an empty list if no matches were found
+	* @return the matching ddl record sets, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getDDLRecordSetsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -556,14 +556,14 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of d d l record sets matching the UUID and company.
+	* Returns a range of ddl record sets matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d l record sets
+	* @param uuid the UUID of the ddl record sets
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of d d l record sets
-	* @param end the upper bound of the range of d d l record sets (not inclusive)
+	* @param start the lower bound of the range of ddl record sets
+	* @param end the upper bound of the range of ddl record sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching d d l record sets, or an empty list if no matches were found
+	* @return the range of matching ddl record sets, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getDDLRecordSetsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,

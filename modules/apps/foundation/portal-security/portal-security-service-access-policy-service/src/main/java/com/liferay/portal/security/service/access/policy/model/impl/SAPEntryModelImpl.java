@@ -75,7 +75,7 @@ public class SAPEntryModelImpl extends BaseModelImpl<SAPEntry>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a s a p entry model instance should use the {@link SAPEntry} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a sap entry model instance should use the {@link SAPEntry} interface instead.
 	 */
 	public static final String TABLE_NAME = "SAPEntry";
 	public static final Object[][] TABLE_COLUMNS = {

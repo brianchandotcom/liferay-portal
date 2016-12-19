@@ -354,9 +354,9 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 	}
 
 	/**
-	* Returns the assignee class p k of this kaleo task assignment.
+	* Returns the assignee class pk of this kaleo task assignment.
 	*
-	* @return the assignee class p k of this kaleo task assignment
+	* @return the assignee class pk of this kaleo task assignment
 	*/
 	@Override
 	public long getAssigneeClassPK() {
@@ -384,9 +384,9 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 	}
 
 	/**
-	* Returns the kaleo class p k of this kaleo task assignment.
+	* Returns the kaleo class pk of this kaleo task assignment.
 	*
-	* @return the kaleo class p k of this kaleo task assignment
+	* @return the kaleo class pk of this kaleo task assignment
 	*/
 	@Override
 	public long getKaleoClassPK() {
@@ -469,9 +469,9 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 	}
 
 	/**
-	* Sets the assignee class p k of this kaleo task assignment.
+	* Sets the assignee class pk of this kaleo task assignment.
 	*
-	* @param assigneeClassPK the assignee class p k of this kaleo task assignment
+	* @param assigneeClassPK the assignee class pk of this kaleo task assignment
 	*/
 	@Override
 	public void setAssigneeClassPK(long assigneeClassPK) {
@@ -572,9 +572,9 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 	}
 
 	/**
-	* Sets the kaleo class p k of this kaleo task assignment.
+	* Sets the kaleo class pk of this kaleo task assignment.
 	*
-	* @param kaleoClassPK the kaleo class p k of this kaleo task assignment
+	* @param kaleoClassPK the kaleo class pk of this kaleo task assignment
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {

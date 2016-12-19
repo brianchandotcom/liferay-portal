@@ -68,14 +68,14 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLocalServiceUtil} to access the d d m template local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLocalServiceUtil} to access the ddm template local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d d m template to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm template to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplate the d d m template
-	* @return the d d m template that was added
+	* @param ddmTemplate the ddm template
+	* @return the ddm template that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplate addDDMTemplate(DDMTemplate ddmTemplate);
@@ -180,28 +180,28 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Creates a new d d m template with the primary key. Does not add the d d m template to the database.
+	* Creates a new ddm template with the primary key. Does not add the ddm template to the database.
 	*
-	* @param templateId the primary key for the new d d m template
-	* @return the new d d m template
+	* @param templateId the primary key for the new ddm template
+	* @return the new ddm template
 	*/
 	public DDMTemplate createDDMTemplate(long templateId);
 
 	/**
-	* Deletes the d d m template from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm template from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplate the d d m template
-	* @return the d d m template that was removed
+	* @param ddmTemplate the ddm template
+	* @return the ddm template that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMTemplate deleteDDMTemplate(DDMTemplate ddmTemplate);
 
 	/**
-	* Deletes the d d m template with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm template with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param templateId the primary key of the d d m template
-	* @return the d d m template that was removed
-	* @throws PortalException if a d d m template with the primary key could not be found
+	* @param templateId the primary key of the ddm template
+	* @return the ddm template that was removed
+	* @throws PortalException if a ddm template with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMTemplate deleteDDMTemplate(long templateId)
@@ -211,11 +211,11 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	public DDMTemplate fetchDDMTemplate(long templateId);
 
 	/**
-	* Returns the d d m template matching the UUID and group.
+	* Returns the ddm template matching the UUID and group.
 	*
-	* @param uuid the d d m template's UUID
+	* @param uuid the ddm template's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
+	* @return the matching ddm template, or <code>null</code> if a matching ddm template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate fetchDDMTemplateByUuidAndGroupId(java.lang.String uuid,
@@ -274,23 +274,23 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	public DDMTemplate fetchTemplate(long templateId);
 
 	/**
-	* Returns the d d m template with the primary key.
+	* Returns the ddm template with the primary key.
 	*
-	* @param templateId the primary key of the d d m template
-	* @return the d d m template
-	* @throws PortalException if a d d m template with the primary key could not be found
+	* @param templateId the primary key of the ddm template
+	* @return the ddm template
+	* @throws PortalException if a ddm template with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate getDDMTemplate(long templateId)
 		throws PortalException;
 
 	/**
-	* Returns the d d m template matching the UUID and group.
+	* Returns the ddm template matching the UUID and group.
 	*
-	* @param uuid the d d m template's UUID
+	* @param uuid the ddm template's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d m template
-	* @throws PortalException if a matching d d m template could not be found
+	* @return the matching ddm template
+	* @throws PortalException if a matching ddm template could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplate getDDMTemplateByUuidAndGroupId(java.lang.String uuid,
@@ -352,10 +352,10 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the d d m template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm template in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplate the d d m template
-	* @return the d d m template that was updated
+	* @param ddmTemplate the ddm template
+	* @return the ddm template that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplate updateDDMTemplate(DDMTemplate ddmTemplate);
@@ -449,9 +449,9 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of d d m templates.
+	* Returns the number of ddm templates.
 	*
-	* @return the number of d d m templates
+	* @return the number of ddm templates
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMTemplatesCount();
@@ -720,39 +720,39 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the d d m templates.
+	* Returns a range of all the ddm templates.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m templates
-	* @param end the upper bound of the range of d d m templates (not inclusive)
-	* @return the range of d d m templates
+	* @param start the lower bound of the range of ddm templates
+	* @param end the upper bound of the range of ddm templates (not inclusive)
+	* @return the range of ddm templates
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> getDDMTemplates(int start, int end);
 
 	/**
-	* Returns all the d d m templates matching the UUID and company.
+	* Returns all the ddm templates matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d m templates
+	* @param uuid the UUID of the ddm templates
 	* @param companyId the primary key of the company
-	* @return the matching d d m templates, or an empty list if no matches were found
+	* @return the matching ddm templates, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> getDDMTemplatesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
-	* Returns a range of d d m templates matching the UUID and company.
+	* Returns a range of ddm templates matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d m templates
+	* @param uuid the UUID of the ddm templates
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of d d m templates
-	* @param end the upper bound of the range of d d m templates (not inclusive)
+	* @param start the lower bound of the range of ddm templates
+	* @param end the upper bound of the range of ddm templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching d d m templates, or an empty list if no matches were found
+	* @return the range of matching ddm templates, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplate> getDDMTemplatesByUuidAndCompanyId(

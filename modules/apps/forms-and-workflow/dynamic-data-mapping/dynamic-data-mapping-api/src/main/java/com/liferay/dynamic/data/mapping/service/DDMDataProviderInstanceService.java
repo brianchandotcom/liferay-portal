@@ -57,7 +57,7 @@ public interface DDMDataProviderInstanceService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceServiceUtil} to access the d d m data provider instance remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMDataProviderInstanceServiceUtil} to access the ddm data provider instance remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DDMDataProviderInstance addDataProviderInstance(long groupId,
 		Map<Locale, java.lang.String> nameMap,

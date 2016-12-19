@@ -162,9 +162,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the event of this d l sync event.
+	* Returns the event of this dl sync event.
 	*
-	* @return the event of this d l sync event
+	* @return the event of this dl sync event
 	*/
 	@Override
 	public java.lang.String getEvent() {
@@ -172,9 +172,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the type of this d l sync event.
+	* Returns the type of this dl sync event.
 	*
-	* @return the type of this d l sync event
+	* @return the type of this dl sync event
 	*/
 	@Override
 	public java.lang.String getType() {
@@ -192,9 +192,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the company ID of this d l sync event.
+	* Returns the company ID of this dl sync event.
 	*
-	* @return the company ID of this d l sync event
+	* @return the company ID of this dl sync event
 	*/
 	@Override
 	public long getCompanyId() {
@@ -202,9 +202,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the modified time of this d l sync event.
+	* Returns the modified time of this dl sync event.
 	*
-	* @return the modified time of this d l sync event
+	* @return the modified time of this dl sync event
 	*/
 	@Override
 	public long getModifiedTime() {
@@ -212,9 +212,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the primary key of this d l sync event.
+	* Returns the primary key of this dl sync event.
 	*
-	* @return the primary key of this d l sync event
+	* @return the primary key of this dl sync event
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -222,9 +222,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the sync event ID of this d l sync event.
+	* Returns the sync event ID of this dl sync event.
 	*
-	* @return the sync event ID of this d l sync event
+	* @return the sync event ID of this dl sync event
 	*/
 	@Override
 	public long getSyncEventId() {
@@ -232,9 +232,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Returns the type p k of this d l sync event.
+	* Returns the type pk of this dl sync event.
 	*
-	* @return the type p k of this d l sync event
+	* @return the type pk of this dl sync event
 	*/
 	@Override
 	public long getTypePK() {
@@ -252,9 +252,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the company ID of this d l sync event.
+	* Sets the company ID of this dl sync event.
 	*
-	* @param companyId the company ID of this d l sync event
+	* @param companyId the company ID of this dl sync event
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -262,9 +262,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the event of this d l sync event.
+	* Sets the event of this dl sync event.
 	*
-	* @param event the event of this d l sync event
+	* @param event the event of this dl sync event
 	*/
 	@Override
 	public void setEvent(java.lang.String event) {
@@ -288,9 +288,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the modified time of this d l sync event.
+	* Sets the modified time of this dl sync event.
 	*
-	* @param modifiedTime the modified time of this d l sync event
+	* @param modifiedTime the modified time of this dl sync event
 	*/
 	@Override
 	public void setModifiedTime(long modifiedTime) {
@@ -303,9 +303,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the primary key of this d l sync event.
+	* Sets the primary key of this dl sync event.
 	*
-	* @param primaryKey the primary key of this d l sync event
+	* @param primaryKey the primary key of this dl sync event
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -318,9 +318,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the sync event ID of this d l sync event.
+	* Sets the sync event ID of this dl sync event.
 	*
-	* @param syncEventId the sync event ID of this d l sync event
+	* @param syncEventId the sync event ID of this dl sync event
 	*/
 	@Override
 	public void setSyncEventId(long syncEventId) {
@@ -328,9 +328,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the type of this d l sync event.
+	* Sets the type of this dl sync event.
 	*
-	* @param type the type of this d l sync event
+	* @param type the type of this dl sync event
 	*/
 	@Override
 	public void setType(java.lang.String type) {
@@ -338,9 +338,9 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	/**
-	* Sets the type p k of this d l sync event.
+	* Sets the type pk of this dl sync event.
 	*
-	* @param typePK the type p k of this d l sync event
+	* @param typePK the type pk of this dl sync event
 	*/
 	@Override
 	public void setTypePK(long typePK) {

@@ -53,208 +53,208 @@ public interface DDMDataProviderInstanceModel extends BaseModel<DDMDataProviderI
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d d m data provider instance model instance should use the {@link DDMDataProviderInstance} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a ddm data provider instance model instance should use the {@link DDMDataProviderInstance} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d d m data provider instance.
+	 * Returns the primary key of this ddm data provider instance.
 	 *
-	 * @return the primary key of this d d m data provider instance
+	 * @return the primary key of this ddm data provider instance
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d d m data provider instance.
+	 * Sets the primary key of this ddm data provider instance.
 	 *
-	 * @param primaryKey the primary key of this d d m data provider instance
+	 * @param primaryKey the primary key of this ddm data provider instance
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d d m data provider instance.
+	 * Returns the uuid of this ddm data provider instance.
 	 *
-	 * @return the uuid of this d d m data provider instance
+	 * @return the uuid of this ddm data provider instance
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d d m data provider instance.
+	 * Sets the uuid of this ddm data provider instance.
 	 *
-	 * @param uuid the uuid of this d d m data provider instance
+	 * @param uuid the uuid of this ddm data provider instance
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the data provider instance ID of this d d m data provider instance.
+	 * Returns the data provider instance ID of this ddm data provider instance.
 	 *
-	 * @return the data provider instance ID of this d d m data provider instance
+	 * @return the data provider instance ID of this ddm data provider instance
 	 */
 	public long getDataProviderInstanceId();
 
 	/**
-	 * Sets the data provider instance ID of this d d m data provider instance.
+	 * Sets the data provider instance ID of this ddm data provider instance.
 	 *
-	 * @param dataProviderInstanceId the data provider instance ID of this d d m data provider instance
+	 * @param dataProviderInstanceId the data provider instance ID of this ddm data provider instance
 	 */
 	public void setDataProviderInstanceId(long dataProviderInstanceId);
 
 	/**
-	 * Returns the group ID of this d d m data provider instance.
+	 * Returns the group ID of this ddm data provider instance.
 	 *
-	 * @return the group ID of this d d m data provider instance
+	 * @return the group ID of this ddm data provider instance
 	 */
 	@Override
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d d m data provider instance.
+	 * Sets the group ID of this ddm data provider instance.
 	 *
-	 * @param groupId the group ID of this d d m data provider instance
+	 * @param groupId the group ID of this ddm data provider instance
 	 */
 	@Override
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d d m data provider instance.
+	 * Returns the company ID of this ddm data provider instance.
 	 *
-	 * @return the company ID of this d d m data provider instance
+	 * @return the company ID of this ddm data provider instance
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d d m data provider instance.
+	 * Sets the company ID of this ddm data provider instance.
 	 *
-	 * @param companyId the company ID of this d d m data provider instance
+	 * @param companyId the company ID of this ddm data provider instance
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d d m data provider instance.
+	 * Returns the user ID of this ddm data provider instance.
 	 *
-	 * @return the user ID of this d d m data provider instance
+	 * @return the user ID of this ddm data provider instance
 	 */
 	@Override
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d d m data provider instance.
+	 * Sets the user ID of this ddm data provider instance.
 	 *
-	 * @param userId the user ID of this d d m data provider instance
+	 * @param userId the user ID of this ddm data provider instance
 	 */
 	@Override
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d d m data provider instance.
+	 * Returns the user uuid of this ddm data provider instance.
 	 *
-	 * @return the user uuid of this d d m data provider instance
+	 * @return the user uuid of this ddm data provider instance
 	 */
 	@Override
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this d d m data provider instance.
+	 * Sets the user uuid of this ddm data provider instance.
 	 *
-	 * @param userUuid the user uuid of this d d m data provider instance
+	 * @param userUuid the user uuid of this ddm data provider instance
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this d d m data provider instance.
+	 * Returns the user name of this ddm data provider instance.
 	 *
-	 * @return the user name of this d d m data provider instance
+	 * @return the user name of this ddm data provider instance
 	 */
 	@AutoEscape
 	@Override
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this d d m data provider instance.
+	 * Sets the user name of this ddm data provider instance.
 	 *
-	 * @param userName the user name of this d d m data provider instance
+	 * @param userName the user name of this ddm data provider instance
 	 */
 	@Override
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this d d m data provider instance.
+	 * Returns the create date of this ddm data provider instance.
 	 *
-	 * @return the create date of this d d m data provider instance
+	 * @return the create date of this ddm data provider instance
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d d m data provider instance.
+	 * Sets the create date of this ddm data provider instance.
 	 *
-	 * @param createDate the create date of this d d m data provider instance
+	 * @param createDate the create date of this ddm data provider instance
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this d d m data provider instance.
+	 * Returns the modified date of this ddm data provider instance.
 	 *
-	 * @return the modified date of this d d m data provider instance
+	 * @return the modified date of this ddm data provider instance
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this d d m data provider instance.
+	 * Sets the modified date of this ddm data provider instance.
 	 *
-	 * @param modifiedDate the modified date of this d d m data provider instance
+	 * @param modifiedDate the modified date of this ddm data provider instance
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this d d m data provider instance.
+	 * Returns the name of this ddm data provider instance.
 	 *
-	 * @return the name of this d d m data provider instance
+	 * @return the name of this ddm data provider instance
 	 */
 	public String getName();
 
 	/**
-	 * Returns the localized name of this d d m data provider instance in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm data provider instance in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized name of this d d m data provider instance
+	 * @return the localized name of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
-	 * Returns the localized name of this d d m data provider instance in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm data provider instance in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this d d m data provider instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized name of this ddm data provider instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized name of this d d m data provider instance in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm data provider instance in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized name of this d d m data provider instance
+	 * @return the localized name of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getName(String languageId);
 
 	/**
-	 * Returns the localized name of this d d m data provider instance in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm data provider instance in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this d d m data provider instance
+	 * @return the localized name of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
@@ -266,31 +266,31 @@ public interface DDMDataProviderInstanceModel extends BaseModel<DDMDataProviderI
 	public String getNameCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized names of this d d m data provider instance.
+	 * Returns a map of the locales and localized names of this ddm data provider instance.
 	 *
-	 * @return the locales and localized names of this d d m data provider instance
+	 * @return the locales and localized names of this ddm data provider instance
 	 */
 	public Map<Locale, String> getNameMap();
 
 	/**
-	 * Sets the name of this d d m data provider instance.
+	 * Sets the name of this ddm data provider instance.
 	 *
-	 * @param name the name of this d d m data provider instance
+	 * @param name the name of this ddm data provider instance
 	 */
 	public void setName(String name);
 
 	/**
-	 * Sets the localized name of this d d m data provider instance in the language.
+	 * Sets the localized name of this ddm data provider instance in the language.
 	 *
-	 * @param name the localized name of this d d m data provider instance
+	 * @param name the localized name of this ddm data provider instance
 	 * @param locale the locale of the language
 	 */
 	public void setName(String name, Locale locale);
 
 	/**
-	 * Sets the localized name of this d d m data provider instance in the language, and sets the default locale.
+	 * Sets the localized name of this ddm data provider instance in the language, and sets the default locale.
 	 *
-	 * @param name the localized name of this d d m data provider instance
+	 * @param name the localized name of this ddm data provider instance
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -299,61 +299,61 @@ public interface DDMDataProviderInstanceModel extends BaseModel<DDMDataProviderI
 	public void setNameCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized names of this d d m data provider instance from the map of locales and localized names.
+	 * Sets the localized names of this ddm data provider instance from the map of locales and localized names.
 	 *
-	 * @param nameMap the locales and localized names of this d d m data provider instance
+	 * @param nameMap the locales and localized names of this ddm data provider instance
 	 */
 	public void setNameMap(Map<Locale, String> nameMap);
 
 	/**
-	 * Sets the localized names of this d d m data provider instance from the map of locales and localized names, and sets the default locale.
+	 * Sets the localized names of this ddm data provider instance from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @param nameMap the locales and localized names of this d d m data provider instance
+	 * @param nameMap the locales and localized names of this ddm data provider instance
 	 * @param defaultLocale the default locale
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the description of this d d m data provider instance.
+	 * Returns the description of this ddm data provider instance.
 	 *
-	 * @return the description of this d d m data provider instance
+	 * @return the description of this ddm data provider instance
 	 */
 	public String getDescription();
 
 	/**
-	 * Returns the localized description of this d d m data provider instance in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized description of this ddm data provider instance in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized description of this d d m data provider instance
+	 * @return the localized description of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
-	 * Returns the localized description of this d d m data provider instance in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized description of this ddm data provider instance in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this d d m data provider instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized description of this ddm data provider instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized description of this d d m data provider instance in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized description of this ddm data provider instance in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized description of this d d m data provider instance
+	 * @return the localized description of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
-	 * Returns the localized description of this d d m data provider instance in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized description of this ddm data provider instance in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this d d m data provider instance
+	 * @return the localized description of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
@@ -365,31 +365,31 @@ public interface DDMDataProviderInstanceModel extends BaseModel<DDMDataProviderI
 	public String getDescriptionCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized descriptions of this d d m data provider instance.
+	 * Returns a map of the locales and localized descriptions of this ddm data provider instance.
 	 *
-	 * @return the locales and localized descriptions of this d d m data provider instance
+	 * @return the locales and localized descriptions of this ddm data provider instance
 	 */
 	public Map<Locale, String> getDescriptionMap();
 
 	/**
-	 * Sets the description of this d d m data provider instance.
+	 * Sets the description of this ddm data provider instance.
 	 *
-	 * @param description the description of this d d m data provider instance
+	 * @param description the description of this ddm data provider instance
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Sets the localized description of this d d m data provider instance in the language.
+	 * Sets the localized description of this ddm data provider instance in the language.
 	 *
-	 * @param description the localized description of this d d m data provider instance
+	 * @param description the localized description of this ddm data provider instance
 	 * @param locale the locale of the language
 	 */
 	public void setDescription(String description, Locale locale);
 
 	/**
-	 * Sets the localized description of this d d m data provider instance in the language, and sets the default locale.
+	 * Sets the localized description of this ddm data provider instance in the language, and sets the default locale.
 	 *
-	 * @param description the localized description of this d d m data provider instance
+	 * @param description the localized description of this ddm data provider instance
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -399,48 +399,48 @@ public interface DDMDataProviderInstanceModel extends BaseModel<DDMDataProviderI
 	public void setDescriptionCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized descriptions of this d d m data provider instance from the map of locales and localized descriptions.
+	 * Sets the localized descriptions of this ddm data provider instance from the map of locales and localized descriptions.
 	 *
-	 * @param descriptionMap the locales and localized descriptions of this d d m data provider instance
+	 * @param descriptionMap the locales and localized descriptions of this ddm data provider instance
 	 */
 	public void setDescriptionMap(Map<Locale, String> descriptionMap);
 
 	/**
-	 * Sets the localized descriptions of this d d m data provider instance from the map of locales and localized descriptions, and sets the default locale.
+	 * Sets the localized descriptions of this ddm data provider instance from the map of locales and localized descriptions, and sets the default locale.
 	 *
-	 * @param descriptionMap the locales and localized descriptions of this d d m data provider instance
+	 * @param descriptionMap the locales and localized descriptions of this ddm data provider instance
 	 * @param defaultLocale the default locale
 	 */
 	public void setDescriptionMap(Map<Locale, String> descriptionMap,
 		Locale defaultLocale);
 
 	/**
-	 * Returns the definition of this d d m data provider instance.
+	 * Returns the definition of this ddm data provider instance.
 	 *
-	 * @return the definition of this d d m data provider instance
+	 * @return the definition of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getDefinition();
 
 	/**
-	 * Sets the definition of this d d m data provider instance.
+	 * Sets the definition of this ddm data provider instance.
 	 *
-	 * @param definition the definition of this d d m data provider instance
+	 * @param definition the definition of this ddm data provider instance
 	 */
 	public void setDefinition(String definition);
 
 	/**
-	 * Returns the type of this d d m data provider instance.
+	 * Returns the type of this ddm data provider instance.
 	 *
-	 * @return the type of this d d m data provider instance
+	 * @return the type of this ddm data provider instance
 	 */
 	@AutoEscape
 	public String getType();
 
 	/**
-	 * Sets the type of this d d m data provider instance.
+	 * Sets the type of this ddm data provider instance.
 	 *
-	 * @param type the type of this d d m data provider instance
+	 * @param type the type of this ddm data provider instance
 	 */
 	public void setType(String type);
 

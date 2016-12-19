@@ -29,7 +29,7 @@ import org.osgi.util.tracker.ServiceTracker;
 import java.util.List;
 
 /**
- * The persistence utility for the d d m content service. This utility wraps {@link com.liferay.dynamic.data.mapping.service.persistence.impl.DDMContentPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the ddm content service. This utility wraps {@link com.liferay.dynamic.data.mapping.service.persistence.impl.DDMContentPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -112,26 +112,26 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns all the d d m contents where uuid = &#63;.
+	* Returns all the ddm contents where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the matching d d m contents
+	* @return the matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
 	/**
-	* Returns a range of all the d d m contents where uuid = &#63;.
+	* Returns a range of all the ddm contents where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
-	* @return the range of matching d d m contents
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
+	* @return the range of matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid(java.lang.String uuid, int start,
 		int end) {
@@ -139,17 +139,17 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where uuid = &#63;.
+	* Returns an ordered range of all the ddm contents where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid(java.lang.String uuid, int start,
 		int end, OrderByComparator<DDMContent> orderByComparator) {
@@ -157,18 +157,18 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where uuid = &#63;.
+	* Returns an ordered range of all the ddm contents where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid(java.lang.String uuid, int start,
 		int end, OrderByComparator<DDMContent> orderByComparator,
@@ -179,12 +179,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where uuid = &#63;.
+	* Returns the first ddm content in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the first matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByUuid_First(java.lang.String uuid,
 		OrderByComparator<DDMContent> orderByComparator)
@@ -193,11 +193,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where uuid = &#63;.
+	* Returns the first ddm content in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the first matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByUuid_First(java.lang.String uuid,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -205,12 +205,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where uuid = &#63;.
+	* Returns the last ddm content in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the last matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DDMContent> orderByComparator)
@@ -219,11 +219,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where uuid = &#63;.
+	* Returns the last ddm content in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByUuid_Last(java.lang.String uuid,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -231,13 +231,13 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m contents before and after the current d d m content in the ordered set where uuid = &#63;.
+	* Returns the ddm contents before and after the current ddm content in the ordered set where uuid = &#63;.
 	*
-	* @param contentId the primary key of the current d d m content
+	* @param contentId the primary key of the current ddm content
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @return the previous, current, and next ddm content
+	* @throws NoSuchContentException if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent[] findByUuid_PrevAndNext(long contentId,
 		java.lang.String uuid, OrderByComparator<DDMContent> orderByComparator)
@@ -247,7 +247,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes all the d d m contents where uuid = &#63; from the database.
+	* Removes all the ddm contents where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
 	*/
@@ -256,22 +256,22 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the number of d d m contents where uuid = &#63;.
+	* Returns the number of ddm contents where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the number of matching d d m contents
+	* @return the number of matching ddm contents
 	*/
 	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
 	/**
-	* Returns the d d m content where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchContentException} if it could not be found.
+	* Returns the ddm content where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchContentException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
@@ -279,23 +279,23 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m content where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the ddm content where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns the d d m content where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the ddm content where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByUUID_G(java.lang.String uuid, long groupId,
 		boolean retrieveFromCache) {
@@ -303,11 +303,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes the d d m content where uuid = &#63; and groupId = &#63; from the database.
+	* Removes the ddm content where uuid = &#63; and groupId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the d d m content that was removed
+	* @return the ddm content that was removed
 	*/
 	public static DDMContent removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
@@ -315,22 +315,22 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the number of d d m contents where uuid = &#63; and groupId = &#63;.
+	* Returns the number of ddm contents where uuid = &#63; and groupId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the number of matching d d m contents
+	* @return the number of matching ddm contents
 	*/
 	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns all the d d m contents where uuid = &#63; and companyId = &#63;.
+	* Returns all the ddm contents where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @return the matching d d m contents
+	* @return the matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid_C(java.lang.String uuid,
 		long companyId) {
@@ -338,7 +338,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns a range of all the d d m contents where uuid = &#63; and companyId = &#63;.
+	* Returns a range of all the ddm contents where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -346,9 +346,9 @@ public class DDMContentUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
-	* @return the range of matching d d m contents
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
+	* @return the range of matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end) {
@@ -356,7 +356,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where uuid = &#63; and companyId = &#63;.
+	* Returns an ordered range of all the ddm contents where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -364,10 +364,10 @@ public class DDMContentUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
@@ -377,7 +377,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where uuid = &#63; and companyId = &#63;.
+	* Returns an ordered range of all the ddm contents where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -385,11 +385,11 @@ public class DDMContentUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
@@ -401,13 +401,13 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the first ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the first matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMContent> orderByComparator)
@@ -417,12 +417,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the first ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the first matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMContent> orderByComparator) {
@@ -431,13 +431,13 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the last ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the last matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMContent> orderByComparator)
@@ -447,12 +447,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the last ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<DDMContent> orderByComparator) {
@@ -461,14 +461,14 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m contents before and after the current d d m content in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the ddm contents before and after the current ddm content in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param contentId the primary key of the current d d m content
+	* @param contentId the primary key of the current ddm content
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @return the previous, current, and next ddm content
+	* @throws NoSuchContentException if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent[] findByUuid_C_PrevAndNext(long contentId,
 		java.lang.String uuid, long companyId,
@@ -480,7 +480,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes all the d d m contents where uuid = &#63; and companyId = &#63; from the database.
+	* Removes all the ddm contents where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
@@ -490,37 +490,37 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the number of d d m contents where uuid = &#63; and companyId = &#63;.
+	* Returns the number of ddm contents where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @return the number of matching d d m contents
+	* @return the number of matching ddm contents
 	*/
 	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
 	/**
-	* Returns all the d d m contents where groupId = &#63;.
+	* Returns all the ddm contents where groupId = &#63;.
 	*
 	* @param groupId the group ID
-	* @return the matching d d m contents
+	* @return the matching ddm contents
 	*/
 	public static List<DDMContent> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
 	/**
-	* Returns a range of all the d d m contents where groupId = &#63;.
+	* Returns a range of all the ddm contents where groupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
-	* @return the range of matching d d m contents
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
+	* @return the range of matching ddm contents
 	*/
 	public static List<DDMContent> findByGroupId(long groupId, int start,
 		int end) {
@@ -528,17 +528,17 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where groupId = &#63;.
+	* Returns an ordered range of all the ddm contents where groupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<DDMContent> orderByComparator) {
@@ -547,18 +547,18 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where groupId = &#63;.
+	* Returns an ordered range of all the ddm contents where groupId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByGroupId(long groupId, int start,
 		int end, OrderByComparator<DDMContent> orderByComparator,
@@ -569,12 +569,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where groupId = &#63;.
+	* Returns the first ddm content in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the first matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByGroupId_First(long groupId,
 		OrderByComparator<DDMContent> orderByComparator)
@@ -583,11 +583,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where groupId = &#63;.
+	* Returns the first ddm content in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the first matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByGroupId_First(long groupId,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -595,12 +595,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where groupId = &#63;.
+	* Returns the last ddm content in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the last matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByGroupId_Last(long groupId,
 		OrderByComparator<DDMContent> orderByComparator)
@@ -609,11 +609,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where groupId = &#63;.
+	* Returns the last ddm content in the ordered set where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByGroupId_Last(long groupId,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -621,13 +621,13 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m contents before and after the current d d m content in the ordered set where groupId = &#63;.
+	* Returns the ddm contents before and after the current ddm content in the ordered set where groupId = &#63;.
 	*
-	* @param contentId the primary key of the current d d m content
+	* @param contentId the primary key of the current ddm content
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @return the previous, current, and next ddm content
+	* @throws NoSuchContentException if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent[] findByGroupId_PrevAndNext(long contentId,
 		long groupId, OrderByComparator<DDMContent> orderByComparator)
@@ -638,7 +638,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes all the d d m contents where groupId = &#63; from the database.
+	* Removes all the ddm contents where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
 	*/
@@ -647,36 +647,36 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the number of d d m contents where groupId = &#63;.
+	* Returns the number of ddm contents where groupId = &#63;.
 	*
 	* @param groupId the group ID
-	* @return the number of matching d d m contents
+	* @return the number of matching ddm contents
 	*/
 	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
 	/**
-	* Returns all the d d m contents where companyId = &#63;.
+	* Returns all the ddm contents where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @return the matching d d m contents
+	* @return the matching ddm contents
 	*/
 	public static List<DDMContent> findByCompanyId(long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
 	/**
-	* Returns a range of all the d d m contents where companyId = &#63;.
+	* Returns a range of all the ddm contents where companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
-	* @return the range of matching d d m contents
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
+	* @return the range of matching ddm contents
 	*/
 	public static List<DDMContent> findByCompanyId(long companyId, int start,
 		int end) {
@@ -684,17 +684,17 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where companyId = &#63;.
+	* Returns an ordered range of all the ddm contents where companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<DDMContent> orderByComparator) {
@@ -703,18 +703,18 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents where companyId = &#63;.
+	* Returns an ordered range of all the ddm contents where companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m contents
+	* @return the ordered range of matching ddm contents
 	*/
 	public static List<DDMContent> findByCompanyId(long companyId, int start,
 		int end, OrderByComparator<DDMContent> orderByComparator,
@@ -725,12 +725,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where companyId = &#63;.
+	* Returns the first ddm content in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the first matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByCompanyId_First(long companyId,
 		OrderByComparator<DDMContent> orderByComparator)
@@ -740,11 +740,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the first d d m content in the ordered set where companyId = &#63;.
+	* Returns the first ddm content in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the first matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByCompanyId_First(long companyId,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -753,12 +753,12 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where companyId = &#63;.
+	* Returns the last ddm content in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content
-	* @throws NoSuchContentException if a matching d d m content could not be found
+	* @return the last matching ddm content
+	* @throws NoSuchContentException if a matching ddm content could not be found
 	*/
 	public static DDMContent findByCompanyId_Last(long companyId,
 		OrderByComparator<DDMContent> orderByComparator)
@@ -768,11 +768,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the last d d m content in the ordered set where companyId = &#63;.
+	* Returns the last ddm content in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the last matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	public static DDMContent fetchByCompanyId_Last(long companyId,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -781,13 +781,13 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m contents before and after the current d d m content in the ordered set where companyId = &#63;.
+	* Returns the ddm contents before and after the current ddm content in the ordered set where companyId = &#63;.
 	*
-	* @param contentId the primary key of the current d d m content
+	* @param contentId the primary key of the current ddm content
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @return the previous, current, and next ddm content
+	* @throws NoSuchContentException if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent[] findByCompanyId_PrevAndNext(long contentId,
 		long companyId, OrderByComparator<DDMContent> orderByComparator)
@@ -798,7 +798,7 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes all the d d m contents where companyId = &#63; from the database.
+	* Removes all the ddm contents where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
 	*/
@@ -807,49 +807,49 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the number of d d m contents where companyId = &#63;.
+	* Returns the number of ddm contents where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @return the number of matching d d m contents
+	* @return the number of matching ddm contents
 	*/
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**
-	* Caches the d d m content in the entity cache if it is enabled.
+	* Caches the ddm content in the entity cache if it is enabled.
 	*
-	* @param ddmContent the d d m content
+	* @param ddmContent the ddm content
 	*/
 	public static void cacheResult(DDMContent ddmContent) {
 		getPersistence().cacheResult(ddmContent);
 	}
 
 	/**
-	* Caches the d d m contents in the entity cache if it is enabled.
+	* Caches the ddm contents in the entity cache if it is enabled.
 	*
-	* @param ddmContents the d d m contents
+	* @param ddmContents the ddm contents
 	*/
 	public static void cacheResult(List<DDMContent> ddmContents) {
 		getPersistence().cacheResult(ddmContents);
 	}
 
 	/**
-	* Creates a new d d m content with the primary key. Does not add the d d m content to the database.
+	* Creates a new ddm content with the primary key. Does not add the ddm content to the database.
 	*
-	* @param contentId the primary key for the new d d m content
-	* @return the new d d m content
+	* @param contentId the primary key for the new ddm content
+	* @return the new ddm content
 	*/
 	public static DDMContent create(long contentId) {
 		return getPersistence().create(contentId);
 	}
 
 	/**
-	* Removes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the ddm content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content that was removed
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @param contentId the primary key of the ddm content
+	* @return the ddm content that was removed
+	* @throws NoSuchContentException if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent remove(long contentId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
@@ -861,11 +861,11 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m content with the primary key or throws a {@link NoSuchContentException} if it could not be found.
+	* Returns the ddm content with the primary key or throws a {@link NoSuchContentException} if it could not be found.
 	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content
-	* @throws NoSuchContentException if a d d m content with the primary key could not be found
+	* @param contentId the primary key of the ddm content
+	* @return the ddm content
+	* @throws NoSuchContentException if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent findByPrimaryKey(long contentId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchContentException {
@@ -873,10 +873,10 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns the d d m content with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the ddm content with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content, or <code>null</code> if a d d m content with the primary key could not be found
+	* @param contentId the primary key of the ddm content
+	* @return the ddm content, or <code>null</code> if a ddm content with the primary key could not be found
 	*/
 	public static DDMContent fetchByPrimaryKey(long contentId) {
 		return getPersistence().fetchByPrimaryKey(contentId);
@@ -888,40 +888,40 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns all the d d m contents.
+	* Returns all the ddm contents.
 	*
-	* @return the d d m contents
+	* @return the ddm contents
 	*/
 	public static List<DDMContent> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the d d m contents.
+	* Returns a range of all the ddm contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
-	* @return the range of d d m contents
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
+	* @return the range of ddm contents
 	*/
 	public static List<DDMContent> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents.
+	* Returns an ordered range of all the ddm contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d d m contents
+	* @return the ordered range of ddm contents
 	*/
 	public static List<DDMContent> findAll(int start, int end,
 		OrderByComparator<DDMContent> orderByComparator) {
@@ -929,17 +929,17 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m contents.
+	* Returns an ordered range of all the ddm contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of d d m contents
+	* @return the ordered range of ddm contents
 	*/
 	public static List<DDMContent> findAll(int start, int end,
 		OrderByComparator<DDMContent> orderByComparator,
@@ -949,16 +949,16 @@ public class DDMContentUtil {
 	}
 
 	/**
-	* Removes all the d d m contents from the database.
+	* Removes all the ddm contents from the database.
 	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of d d m contents.
+	* Returns the number of ddm contents.
 	*
-	* @return the number of d d m contents
+	* @return the number of ddm contents
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();

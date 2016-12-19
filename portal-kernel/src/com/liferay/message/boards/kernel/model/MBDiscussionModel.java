@@ -237,17 +237,17 @@ public interface MBDiscussionModel extends AttachedModel, BaseModel<MBDiscussion
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this message boards discussion.
+	 * Returns the class pk of this message boards discussion.
 	 *
-	 * @return the class p k of this message boards discussion
+	 * @return the class pk of this message boards discussion
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this message boards discussion.
+	 * Sets the class pk of this message boards discussion.
 	 *
-	 * @param classPK the class p k of this message boards discussion
+	 * @param classPK the class pk of this message boards discussion
 	 */
 	@Override
 	public void setClassPK(long classPK);

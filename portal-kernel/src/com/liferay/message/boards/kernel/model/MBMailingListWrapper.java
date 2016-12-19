@@ -280,9 +280,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Returns the in use s s l of this message boards mailing list.
+	* Returns the in use ssl of this message boards mailing list.
 	*
-	* @return the in use s s l of this message boards mailing list
+	* @return the in use ssl of this message boards mailing list
 	*/
 	@Override
 	public boolean getInUseSSL() {
@@ -300,9 +300,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Returns the out use s s l of this message boards mailing list.
+	* Returns the out use ssl of this message boards mailing list.
 	*
-	* @return the out use s s l of this message boards mailing list
+	* @return the out use ssl of this message boards mailing list
 	*/
 	@Override
 	public boolean getOutUseSSL() {
@@ -340,9 +340,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Returns <code>true</code> if this message boards mailing list is in use s s l.
+	* Returns <code>true</code> if this message boards mailing list is in use ssl.
 	*
-	* @return <code>true</code> if this message boards mailing list is in use s s l; <code>false</code> otherwise
+	* @return <code>true</code> if this message boards mailing list is in use ssl; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isInUseSSL() {
@@ -365,9 +365,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Returns <code>true</code> if this message boards mailing list is out use s s l.
+	* Returns <code>true</code> if this message boards mailing list is out use ssl.
 	*
-	* @return <code>true</code> if this message boards mailing list is out use s s l; <code>false</code> otherwise
+	* @return <code>true</code> if this message boards mailing list is out use ssl; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isOutUseSSL() {
@@ -791,9 +791,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Sets whether this message boards mailing list is in use s s l.
+	* Sets whether this message boards mailing list is in use ssl.
 	*
-	* @param inUseSSL the in use s s l of this message boards mailing list
+	* @param inUseSSL the in use ssl of this message boards mailing list
 	*/
 	@Override
 	public void setInUseSSL(boolean inUseSSL) {
@@ -886,9 +886,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	/**
-	* Sets whether this message boards mailing list is out use s s l.
+	* Sets whether this message boards mailing list is out use ssl.
 	*
-	* @param outUseSSL the out use s s l of this message boards mailing list
+	* @param outUseSSL the out use ssl of this message boards mailing list
 	*/
 	@Override
 	public void setOutUseSSL(boolean outUseSSL) {

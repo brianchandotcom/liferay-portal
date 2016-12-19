@@ -29,7 +29,7 @@ import org.osgi.util.tracker.ServiceTracker;
 import java.util.List;
 
 /**
- * The persistence utility for the m d r action service. This utility wraps {@link com.liferay.mobile.device.rules.service.persistence.impl.MDRActionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the mdr action service. This utility wraps {@link com.liferay.mobile.device.rules.service.persistence.impl.MDRActionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -112,26 +112,26 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns all the m d r actions where uuid = &#63;.
+	* Returns all the mdr actions where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the matching m d r actions
+	* @return the matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
 	/**
-	* Returns a range of all the m d r actions where uuid = &#63;.
+	* Returns a range of all the mdr actions where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
-	* @return the range of matching m d r actions
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
+	* @return the range of matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid(java.lang.String uuid, int start,
 		int end) {
@@ -139,17 +139,17 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions where uuid = &#63;.
+	* Returns an ordered range of all the mdr actions where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching m d r actions
+	* @return the ordered range of matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid(java.lang.String uuid, int start,
 		int end, OrderByComparator<MDRAction> orderByComparator) {
@@ -157,18 +157,18 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions where uuid = &#63;.
+	* Returns an ordered range of all the mdr actions where uuid = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching m d r actions
+	* @return the ordered range of matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid(java.lang.String uuid, int start,
 		int end, OrderByComparator<MDRAction> orderByComparator,
@@ -179,12 +179,12 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the first m d r action in the ordered set where uuid = &#63;.
+	* Returns the first mdr action in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the first matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByUuid_First(java.lang.String uuid,
 		OrderByComparator<MDRAction> orderByComparator)
@@ -193,11 +193,11 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the first m d r action in the ordered set where uuid = &#63;.
+	* Returns the first mdr action in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the first matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByUuid_First(java.lang.String uuid,
 		OrderByComparator<MDRAction> orderByComparator) {
@@ -205,12 +205,12 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where uuid = &#63;.
+	* Returns the last mdr action in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the last matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MDRAction> orderByComparator)
@@ -219,11 +219,11 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where uuid = &#63;.
+	* Returns the last mdr action in the ordered set where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the last matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByUuid_Last(java.lang.String uuid,
 		OrderByComparator<MDRAction> orderByComparator) {
@@ -231,13 +231,13 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where uuid = &#63;.
+	* Returns the mdr actions before and after the current mdr action in the ordered set where uuid = &#63;.
 	*
-	* @param actionId the primary key of the current m d r action
+	* @param actionId the primary key of the current mdr action
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next m d r action
-	* @throws NoSuchActionException if a m d r action with the primary key could not be found
+	* @return the previous, current, and next mdr action
+	* @throws NoSuchActionException if a mdr action with the primary key could not be found
 	*/
 	public static MDRAction[] findByUuid_PrevAndNext(long actionId,
 		java.lang.String uuid, OrderByComparator<MDRAction> orderByComparator)
@@ -247,7 +247,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Removes all the m d r actions where uuid = &#63; from the database.
+	* Removes all the mdr actions where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
 	*/
@@ -256,22 +256,22 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the number of m d r actions where uuid = &#63;.
+	* Returns the number of mdr actions where uuid = &#63;.
 	*
 	* @param uuid the uuid
-	* @return the number of matching m d r actions
+	* @return the number of matching mdr actions
 	*/
 	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
 	/**
-	* Returns the m d r action where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchActionException} if it could not be found.
+	* Returns the mdr action where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchActionException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchActionException {
@@ -279,23 +279,23 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r action where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the mdr action where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns the m d r action where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the mdr action where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByUUID_G(java.lang.String uuid, long groupId,
 		boolean retrieveFromCache) {
@@ -303,11 +303,11 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Removes the m d r action where uuid = &#63; and groupId = &#63; from the database.
+	* Removes the mdr action where uuid = &#63; and groupId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the m d r action that was removed
+	* @return the mdr action that was removed
 	*/
 	public static MDRAction removeByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchActionException {
@@ -315,22 +315,22 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the number of m d r actions where uuid = &#63; and groupId = &#63;.
+	* Returns the number of mdr actions where uuid = &#63; and groupId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @return the number of matching m d r actions
+	* @return the number of matching mdr actions
 	*/
 	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
 	/**
-	* Returns all the m d r actions where uuid = &#63; and companyId = &#63;.
+	* Returns all the mdr actions where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @return the matching m d r actions
+	* @return the matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid_C(java.lang.String uuid,
 		long companyId) {
@@ -338,7 +338,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns a range of all the m d r actions where uuid = &#63; and companyId = &#63;.
+	* Returns a range of all the mdr actions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -346,9 +346,9 @@ public class MDRActionUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
-	* @return the range of matching m d r actions
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
+	* @return the range of matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end) {
@@ -356,7 +356,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions where uuid = &#63; and companyId = &#63;.
+	* Returns an ordered range of all the mdr actions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -364,10 +364,10 @@ public class MDRActionUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching m d r actions
+	* @return the ordered range of matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
@@ -377,7 +377,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions where uuid = &#63; and companyId = &#63;.
+	* Returns an ordered range of all the mdr actions where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -385,11 +385,11 @@ public class MDRActionUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching m d r actions
+	* @return the ordered range of matching mdr actions
 	*/
 	public static List<MDRAction> findByUuid_C(java.lang.String uuid,
 		long companyId, int start, int end,
@@ -401,13 +401,13 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the first m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the first mdr action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the first matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MDRAction> orderByComparator)
@@ -417,12 +417,12 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the first m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the first mdr action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the first matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<MDRAction> orderByComparator) {
@@ -431,13 +431,13 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the last mdr action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the last matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MDRAction> orderByComparator)
@@ -447,12 +447,12 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the last mdr action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the last matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<MDRAction> orderByComparator) {
@@ -461,14 +461,14 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where uuid = &#63; and companyId = &#63;.
+	* Returns the mdr actions before and after the current mdr action in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param actionId the primary key of the current m d r action
+	* @param actionId the primary key of the current mdr action
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next m d r action
-	* @throws NoSuchActionException if a m d r action with the primary key could not be found
+	* @return the previous, current, and next mdr action
+	* @throws NoSuchActionException if a mdr action with the primary key could not be found
 	*/
 	public static MDRAction[] findByUuid_C_PrevAndNext(long actionId,
 		java.lang.String uuid, long companyId,
@@ -480,7 +480,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Removes all the m d r actions where uuid = &#63; and companyId = &#63; from the database.
+	* Removes all the mdr actions where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
@@ -490,21 +490,21 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the number of m d r actions where uuid = &#63; and companyId = &#63;.
+	* Returns the number of mdr actions where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @return the number of matching m d r actions
+	* @return the number of matching mdr actions
 	*/
 	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
 	/**
-	* Returns all the m d r actions where ruleGroupInstanceId = &#63;.
+	* Returns all the mdr actions where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
-	* @return the matching m d r actions
+	* @return the matching mdr actions
 	*/
 	public static List<MDRAction> findByRuleGroupInstanceId(
 		long ruleGroupInstanceId) {
@@ -512,16 +512,16 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns a range of all the m d r actions where ruleGroupInstanceId = &#63;.
+	* Returns a range of all the mdr actions where ruleGroupInstanceId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
-	* @return the range of matching m d r actions
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
+	* @return the range of matching mdr actions
 	*/
 	public static List<MDRAction> findByRuleGroupInstanceId(
 		long ruleGroupInstanceId, int start, int end) {
@@ -530,17 +530,17 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions where ruleGroupInstanceId = &#63;.
+	* Returns an ordered range of all the mdr actions where ruleGroupInstanceId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching m d r actions
+	* @return the ordered range of matching mdr actions
 	*/
 	public static List<MDRAction> findByRuleGroupInstanceId(
 		long ruleGroupInstanceId, int start, int end,
@@ -551,18 +551,18 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions where ruleGroupInstanceId = &#63;.
+	* Returns an ordered range of all the mdr actions where ruleGroupInstanceId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching m d r actions
+	* @return the ordered range of matching mdr actions
 	*/
 	public static List<MDRAction> findByRuleGroupInstanceId(
 		long ruleGroupInstanceId, int start, int end,
@@ -574,12 +574,12 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the first m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the first mdr action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the first matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByRuleGroupInstanceId_First(
 		long ruleGroupInstanceId, OrderByComparator<MDRAction> orderByComparator)
@@ -590,11 +590,11 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the first m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the first mdr action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the first matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByRuleGroupInstanceId_First(
 		long ruleGroupInstanceId, OrderByComparator<MDRAction> orderByComparator) {
@@ -604,12 +604,12 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the last mdr action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching m d r action
-	* @throws NoSuchActionException if a matching m d r action could not be found
+	* @return the last matching mdr action
+	* @throws NoSuchActionException if a matching mdr action could not be found
 	*/
 	public static MDRAction findByRuleGroupInstanceId_Last(
 		long ruleGroupInstanceId, OrderByComparator<MDRAction> orderByComparator)
@@ -620,11 +620,11 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the last m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the last mdr action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
+	* @return the last matching mdr action, or <code>null</code> if a matching mdr action could not be found
 	*/
 	public static MDRAction fetchByRuleGroupInstanceId_Last(
 		long ruleGroupInstanceId, OrderByComparator<MDRAction> orderByComparator) {
@@ -634,13 +634,13 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r actions before and after the current m d r action in the ordered set where ruleGroupInstanceId = &#63;.
+	* Returns the mdr actions before and after the current mdr action in the ordered set where ruleGroupInstanceId = &#63;.
 	*
-	* @param actionId the primary key of the current m d r action
+	* @param actionId the primary key of the current mdr action
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next m d r action
-	* @throws NoSuchActionException if a m d r action with the primary key could not be found
+	* @return the previous, current, and next mdr action
+	* @throws NoSuchActionException if a mdr action with the primary key could not be found
 	*/
 	public static MDRAction[] findByRuleGroupInstanceId_PrevAndNext(
 		long actionId, long ruleGroupInstanceId,
@@ -652,7 +652,7 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Removes all the m d r actions where ruleGroupInstanceId = &#63; from the database.
+	* Removes all the mdr actions where ruleGroupInstanceId = &#63; from the database.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	*/
@@ -661,49 +661,49 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the number of m d r actions where ruleGroupInstanceId = &#63;.
+	* Returns the number of mdr actions where ruleGroupInstanceId = &#63;.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
-	* @return the number of matching m d r actions
+	* @return the number of matching mdr actions
 	*/
 	public static int countByRuleGroupInstanceId(long ruleGroupInstanceId) {
 		return getPersistence().countByRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
 	/**
-	* Caches the m d r action in the entity cache if it is enabled.
+	* Caches the mdr action in the entity cache if it is enabled.
 	*
-	* @param mdrAction the m d r action
+	* @param mdrAction the mdr action
 	*/
 	public static void cacheResult(MDRAction mdrAction) {
 		getPersistence().cacheResult(mdrAction);
 	}
 
 	/**
-	* Caches the m d r actions in the entity cache if it is enabled.
+	* Caches the mdr actions in the entity cache if it is enabled.
 	*
-	* @param mdrActions the m d r actions
+	* @param mdrActions the mdr actions
 	*/
 	public static void cacheResult(List<MDRAction> mdrActions) {
 		getPersistence().cacheResult(mdrActions);
 	}
 
 	/**
-	* Creates a new m d r action with the primary key. Does not add the m d r action to the database.
+	* Creates a new mdr action with the primary key. Does not add the mdr action to the database.
 	*
-	* @param actionId the primary key for the new m d r action
-	* @return the new m d r action
+	* @param actionId the primary key for the new mdr action
+	* @return the new mdr action
 	*/
 	public static MDRAction create(long actionId) {
 		return getPersistence().create(actionId);
 	}
 
 	/**
-	* Removes the m d r action with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the mdr action with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action that was removed
-	* @throws NoSuchActionException if a m d r action with the primary key could not be found
+	* @param actionId the primary key of the mdr action
+	* @return the mdr action that was removed
+	* @throws NoSuchActionException if a mdr action with the primary key could not be found
 	*/
 	public static MDRAction remove(long actionId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchActionException {
@@ -715,11 +715,11 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r action with the primary key or throws a {@link NoSuchActionException} if it could not be found.
+	* Returns the mdr action with the primary key or throws a {@link NoSuchActionException} if it could not be found.
 	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action
-	* @throws NoSuchActionException if a m d r action with the primary key could not be found
+	* @param actionId the primary key of the mdr action
+	* @return the mdr action
+	* @throws NoSuchActionException if a mdr action with the primary key could not be found
 	*/
 	public static MDRAction findByPrimaryKey(long actionId)
 		throws com.liferay.mobile.device.rules.exception.NoSuchActionException {
@@ -727,10 +727,10 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns the m d r action with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the mdr action with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param actionId the primary key of the m d r action
-	* @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
+	* @param actionId the primary key of the mdr action
+	* @return the mdr action, or <code>null</code> if a mdr action with the primary key could not be found
 	*/
 	public static MDRAction fetchByPrimaryKey(long actionId) {
 		return getPersistence().fetchByPrimaryKey(actionId);
@@ -742,40 +742,40 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns all the m d r actions.
+	* Returns all the mdr actions.
 	*
-	* @return the m d r actions
+	* @return the mdr actions
 	*/
 	public static List<MDRAction> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the m d r actions.
+	* Returns a range of all the mdr actions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
-	* @return the range of m d r actions
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
+	* @return the range of mdr actions
 	*/
 	public static List<MDRAction> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions.
+	* Returns an ordered range of all the mdr actions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of m d r actions
+	* @return the ordered range of mdr actions
 	*/
 	public static List<MDRAction> findAll(int start, int end,
 		OrderByComparator<MDRAction> orderByComparator) {
@@ -783,17 +783,17 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the m d r actions.
+	* Returns an ordered range of all the mdr actions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MDRActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of m d r actions
-	* @param end the upper bound of the range of m d r actions (not inclusive)
+	* @param start the lower bound of the range of mdr actions
+	* @param end the upper bound of the range of mdr actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of m d r actions
+	* @return the ordered range of mdr actions
 	*/
 	public static List<MDRAction> findAll(int start, int end,
 		OrderByComparator<MDRAction> orderByComparator,
@@ -803,16 +803,16 @@ public class MDRActionUtil {
 	}
 
 	/**
-	* Removes all the m d r actions from the database.
+	* Removes all the mdr actions from the database.
 	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of m d r actions.
+	* Returns the number of mdr actions.
 	*
-	* @return the number of m d r actions
+	* @return the number of mdr actions
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();

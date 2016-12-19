@@ -884,7 +884,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns all the social activities where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching social activities
 	*/
 	public java.util.List<SocialActivity> findByC_C(long classNameId,
@@ -898,7 +898,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
@@ -914,7 +914,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -932,7 +932,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -948,7 +948,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
 	* @throws NoSuchActivityException if a matching social activity could not be found
@@ -961,7 +961,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
@@ -972,7 +972,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
 	* @throws NoSuchActivityException if a matching social activity could not be found
@@ -985,7 +985,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
@@ -997,7 +997,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param activityId the primary key of the current social activity
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
 	* @throws NoSuchActivityException if a social activity with the primary key could not be found
@@ -1011,7 +1011,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Removes all the social activities where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByC_C(long classNameId, long classPK);
 
@@ -1019,7 +1019,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the number of social activities where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching social activities
 	*/
 	public int countByC_C(long classNameId, long classPK);
@@ -1029,7 +1029,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching social activities
 	*/
 	public java.util.List<SocialActivity> findByM_C_C(long mirrorActivityId,
@@ -1044,7 +1044,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @return the range of matching social activities
@@ -1061,7 +1061,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1080,7 +1080,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1097,7 +1097,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
 	* @throws NoSuchActivityException if a matching social activity could not be found
@@ -1112,7 +1112,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
@@ -1125,7 +1125,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
 	* @throws NoSuchActivityException if a matching social activity could not be found
@@ -1140,7 +1140,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
 	*/
@@ -1154,7 +1154,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param activityId the primary key of the current social activity
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
 	* @throws NoSuchActivityException if a social activity with the primary key could not be found
@@ -1169,7 +1169,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByM_C_C(long mirrorActivityId, long classNameId,
 		long classPK);
@@ -1179,7 +1179,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param mirrorActivityId the mirror activity ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching social activities
 	*/
 	public int countByM_C_C(long mirrorActivityId, long classNameId,
@@ -1189,7 +1189,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns all the social activities where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the matching social activities
 	*/
@@ -1204,7 +1204,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
@@ -1221,7 +1221,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
@@ -1240,7 +1240,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of social activities
 	* @param end the upper bound of the range of social activities (not inclusive)
@@ -1257,7 +1257,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity
@@ -1272,7 +1272,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the first social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity, or <code>null</code> if a matching social activity could not be found
@@ -1285,7 +1285,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity
@@ -1300,7 +1300,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the last social activity in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity, or <code>null</code> if a matching social activity could not be found
@@ -1314,7 +1314,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	*
 	* @param activityId the primary key of the current social activity
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity
@@ -1329,7 +1329,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Removes all the social activities where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	*/
 	public void removeByC_C_T(long classNameId, long classPK, int type);
@@ -1338,7 +1338,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* Returns the number of social activities where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the number of matching social activities
 	*/
@@ -1350,7 +1350,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activities
@@ -1369,7 +1369,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param start the lower bound of the range of social activities
@@ -1390,7 +1390,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param start the lower bound of the range of social activities
@@ -1413,7 +1413,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param start the lower bound of the range of social activities
@@ -1434,7 +1434,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1452,7 +1452,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1468,7 +1468,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1486,7 +1486,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1503,7 +1503,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1522,7 +1522,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	*/
@@ -1535,7 +1535,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the number of matching social activities
@@ -1550,7 +1550,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param userId the user ID
 	* @param createDate the create date
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activity
@@ -1567,7 +1567,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param userId the user ID
 	* @param createDate the create date
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the matching social activity, or <code>null</code> if a matching social activity could not be found
@@ -1583,7 +1583,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param userId the user ID
 	* @param createDate the create date
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
@@ -1600,7 +1600,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param userId the user ID
 	* @param createDate the create date
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the social activity that was removed
@@ -1616,7 +1616,7 @@ public interface SocialActivityPersistence extends BasePersistence<SocialActivit
 	* @param userId the user ID
 	* @param createDate the create date
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the number of matching social activities

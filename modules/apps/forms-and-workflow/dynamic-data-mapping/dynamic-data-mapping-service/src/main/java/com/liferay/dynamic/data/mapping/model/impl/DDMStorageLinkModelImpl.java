@@ -59,7 +59,7 @@ public class DDMStorageLinkModelImpl extends BaseModelImpl<DDMStorageLink>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m storage link model instance should use the {@link DDMStorageLink} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm storage link model instance should use the {@link DDMStorageLink} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStorageLink";
 	public static final Object[][] TABLE_COLUMNS = {

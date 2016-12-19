@@ -61,7 +61,7 @@ public class WSRPConsumerPortletModelImpl extends BaseModelImpl<WSRPConsumerPort
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a w s r p consumer portlet model instance should use the {@link WSRPConsumerPortlet} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a wsrp consumer portlet model instance should use the {@link WSRPConsumerPortlet} interface instead.
 	 */
 	public static final String TABLE_NAME = "WSRP_WSRPConsumerPortlet";
 	public static final Object[][] TABLE_COLUMNS = {

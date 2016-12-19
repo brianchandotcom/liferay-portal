@@ -715,9 +715,9 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	/**
-	* Returns the class p k of this document library file entry.
+	* Returns the class pk of this document library file entry.
 	*
-	* @return the class p k of this document library file entry
+	* @return the class pk of this document library file entry
 	*/
 	@Override
 	public long getClassPK() {
@@ -895,9 +895,9 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	/**
-	* Sets the class p k of this document library file entry.
+	* Sets the class pk of this document library file entry.
 	*
-	* @param classPK the class p k of this document library file entry
+	* @param classPK the class pk of this document library file entry
 	*/
 	@Override
 	public void setClassPK(long classPK) {

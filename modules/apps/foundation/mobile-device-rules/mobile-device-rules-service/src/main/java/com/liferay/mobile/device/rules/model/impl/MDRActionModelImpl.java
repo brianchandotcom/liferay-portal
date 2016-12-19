@@ -76,7 +76,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a m d r action model instance should use the {@link MDRAction} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a mdr action model instance should use the {@link MDRAction} interface instead.
 	 */
 	public static final String TABLE_NAME = "MDRAction";
 	public static final Object[][] TABLE_COLUMNS = {

@@ -53,208 +53,208 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d d m content model instance should use the {@link DDMContent} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a ddm content model instance should use the {@link DDMContent} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d d m content.
+	 * Returns the primary key of this ddm content.
 	 *
-	 * @return the primary key of this d d m content
+	 * @return the primary key of this ddm content
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d d m content.
+	 * Sets the primary key of this ddm content.
 	 *
-	 * @param primaryKey the primary key of this d d m content
+	 * @param primaryKey the primary key of this ddm content
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d d m content.
+	 * Returns the uuid of this ddm content.
 	 *
-	 * @return the uuid of this d d m content
+	 * @return the uuid of this ddm content
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d d m content.
+	 * Sets the uuid of this ddm content.
 	 *
-	 * @param uuid the uuid of this d d m content
+	 * @param uuid the uuid of this ddm content
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the content ID of this d d m content.
+	 * Returns the content ID of this ddm content.
 	 *
-	 * @return the content ID of this d d m content
+	 * @return the content ID of this ddm content
 	 */
 	public long getContentId();
 
 	/**
-	 * Sets the content ID of this d d m content.
+	 * Sets the content ID of this ddm content.
 	 *
-	 * @param contentId the content ID of this d d m content
+	 * @param contentId the content ID of this ddm content
 	 */
 	public void setContentId(long contentId);
 
 	/**
-	 * Returns the group ID of this d d m content.
+	 * Returns the group ID of this ddm content.
 	 *
-	 * @return the group ID of this d d m content
+	 * @return the group ID of this ddm content
 	 */
 	@Override
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this d d m content.
+	 * Sets the group ID of this ddm content.
 	 *
-	 * @param groupId the group ID of this d d m content
+	 * @param groupId the group ID of this ddm content
 	 */
 	@Override
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this d d m content.
+	 * Returns the company ID of this ddm content.
 	 *
-	 * @return the company ID of this d d m content
+	 * @return the company ID of this ddm content
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d d m content.
+	 * Sets the company ID of this ddm content.
 	 *
-	 * @param companyId the company ID of this d d m content
+	 * @param companyId the company ID of this ddm content
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this d d m content.
+	 * Returns the user ID of this ddm content.
 	 *
-	 * @return the user ID of this d d m content
+	 * @return the user ID of this ddm content
 	 */
 	@Override
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this d d m content.
+	 * Sets the user ID of this ddm content.
 	 *
-	 * @param userId the user ID of this d d m content
+	 * @param userId the user ID of this ddm content
 	 */
 	@Override
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this d d m content.
+	 * Returns the user uuid of this ddm content.
 	 *
-	 * @return the user uuid of this d d m content
+	 * @return the user uuid of this ddm content
 	 */
 	@Override
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this d d m content.
+	 * Sets the user uuid of this ddm content.
 	 *
-	 * @param userUuid the user uuid of this d d m content
+	 * @param userUuid the user uuid of this ddm content
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this d d m content.
+	 * Returns the user name of this ddm content.
 	 *
-	 * @return the user name of this d d m content
+	 * @return the user name of this ddm content
 	 */
 	@AutoEscape
 	@Override
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this d d m content.
+	 * Sets the user name of this ddm content.
 	 *
-	 * @param userName the user name of this d d m content
+	 * @param userName the user name of this ddm content
 	 */
 	@Override
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this d d m content.
+	 * Returns the create date of this ddm content.
 	 *
-	 * @return the create date of this d d m content
+	 * @return the create date of this ddm content
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this d d m content.
+	 * Sets the create date of this ddm content.
 	 *
-	 * @param createDate the create date of this d d m content
+	 * @param createDate the create date of this ddm content
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this d d m content.
+	 * Returns the modified date of this ddm content.
 	 *
-	 * @return the modified date of this d d m content
+	 * @return the modified date of this ddm content
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this d d m content.
+	 * Sets the modified date of this ddm content.
 	 *
-	 * @param modifiedDate the modified date of this d d m content
+	 * @param modifiedDate the modified date of this ddm content
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this d d m content.
+	 * Returns the name of this ddm content.
 	 *
-	 * @return the name of this d d m content
+	 * @return the name of this ddm content
 	 */
 	public String getName();
 
 	/**
-	 * Returns the localized name of this d d m content in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm content in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized name of this d d m content
+	 * @return the localized name of this ddm content
 	 */
 	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
-	 * Returns the localized name of this d d m content in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm content in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this d d m content. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized name of this ddm content. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized name of this d d m content in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm content in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized name of this d d m content
+	 * @return the localized name of this ddm content
 	 */
 	@AutoEscape
 	public String getName(String languageId);
 
 	/**
-	 * Returns the localized name of this d d m content in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this ddm content in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this d d m content
+	 * @return the localized name of this ddm content
 	 */
 	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
@@ -266,31 +266,31 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
 	public String getNameCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized names of this d d m content.
+	 * Returns a map of the locales and localized names of this ddm content.
 	 *
-	 * @return the locales and localized names of this d d m content
+	 * @return the locales and localized names of this ddm content
 	 */
 	public Map<Locale, String> getNameMap();
 
 	/**
-	 * Sets the name of this d d m content.
+	 * Sets the name of this ddm content.
 	 *
-	 * @param name the name of this d d m content
+	 * @param name the name of this ddm content
 	 */
 	public void setName(String name);
 
 	/**
-	 * Sets the localized name of this d d m content in the language.
+	 * Sets the localized name of this ddm content in the language.
 	 *
-	 * @param name the localized name of this d d m content
+	 * @param name the localized name of this ddm content
 	 * @param locale the locale of the language
 	 */
 	public void setName(String name, Locale locale);
 
 	/**
-	 * Sets the localized name of this d d m content in the language, and sets the default locale.
+	 * Sets the localized name of this ddm content in the language, and sets the default locale.
 	 *
-	 * @param name the localized name of this d d m content
+	 * @param name the localized name of this ddm content
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -299,47 +299,47 @@ public interface DDMContentModel extends BaseModel<DDMContent>, GroupedModel,
 	public void setNameCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized names of this d d m content from the map of locales and localized names.
+	 * Sets the localized names of this ddm content from the map of locales and localized names.
 	 *
-	 * @param nameMap the locales and localized names of this d d m content
+	 * @param nameMap the locales and localized names of this ddm content
 	 */
 	public void setNameMap(Map<Locale, String> nameMap);
 
 	/**
-	 * Sets the localized names of this d d m content from the map of locales and localized names, and sets the default locale.
+	 * Sets the localized names of this ddm content from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @param nameMap the locales and localized names of this d d m content
+	 * @param nameMap the locales and localized names of this ddm content
 	 * @param defaultLocale the default locale
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the description of this d d m content.
+	 * Returns the description of this ddm content.
 	 *
-	 * @return the description of this d d m content
+	 * @return the description of this ddm content
 	 */
 	@AutoEscape
 	public String getDescription();
 
 	/**
-	 * Sets the description of this d d m content.
+	 * Sets the description of this ddm content.
 	 *
-	 * @param description the description of this d d m content
+	 * @param description the description of this ddm content
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Returns the data of this d d m content.
+	 * Returns the data of this ddm content.
 	 *
-	 * @return the data of this d d m content
+	 * @return the data of this ddm content
 	 */
 	@AutoEscape
 	public String getData();
 
 	/**
-	 * Sets the data of this d d m content.
+	 * Sets the data of this ddm content.
 	 *
-	 * @param data the data of this d d m content
+	 * @param data the data of this ddm content
 	 */
 	public void setData(String data);
 

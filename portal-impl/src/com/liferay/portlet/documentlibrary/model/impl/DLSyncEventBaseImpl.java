@@ -37,7 +37,7 @@ public abstract class DLSyncEventBaseImpl extends DLSyncEventModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d l sync event model instance should use the {@link DLSyncEvent} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a dl sync event model instance should use the {@link DLSyncEvent} interface instead.
 	 */
 	@Override
 	public void persist() {

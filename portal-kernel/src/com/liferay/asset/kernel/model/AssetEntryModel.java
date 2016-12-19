@@ -224,17 +224,17 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this asset entry.
+	 * Returns the class pk of this asset entry.
 	 *
-	 * @return the class p k of this asset entry
+	 * @return the class pk of this asset entry
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this asset entry.
+	 * Sets the class pk of this asset entry.
 	 *
-	 * @param classPK the class p k of this asset entry
+	 * @param classPK the class pk of this asset entry
 	 */
 	@Override
 	public void setClassPK(long classPK);

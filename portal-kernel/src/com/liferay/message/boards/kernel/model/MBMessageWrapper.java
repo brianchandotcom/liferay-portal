@@ -772,9 +772,9 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	/**
-	* Returns the class p k of this message-boards message.
+	* Returns the class pk of this message-boards message.
 	*
-	* @return the class p k of this message-boards message
+	* @return the class pk of this message-boards message
 	*/
 	@Override
 	public long getClassPK() {
@@ -968,9 +968,9 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	/**
-	* Sets the class p k of this message-boards message.
+	* Sets the class pk of this message-boards message.
 	*
-	* @param classPK the class p k of this message-boards message
+	* @param classPK the class pk of this message-boards message
 	*/
 	@Override
 	public void setClassPK(long classPK) {

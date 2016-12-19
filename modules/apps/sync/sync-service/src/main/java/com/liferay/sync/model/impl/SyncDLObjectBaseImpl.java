@@ -37,7 +37,7 @@ public abstract class SyncDLObjectBaseImpl extends SyncDLObjectModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a sync d l object model instance should use the {@link SyncDLObject} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a sync dl object model instance should use the {@link SyncDLObject} interface instead.
 	 */
 	@Override
 	public void persist() {

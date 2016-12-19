@@ -442,7 +442,7 @@ public class RatingsEntryUtil {
 	* Returns all the ratings entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching ratings entries
 	*/
 	public static List<RatingsEntry> findByC_C(long classNameId, long classPK) {
@@ -457,7 +457,7 @@ public class RatingsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
@@ -475,7 +475,7 @@ public class RatingsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -496,7 +496,7 @@ public class RatingsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -515,7 +515,7 @@ public class RatingsEntryUtil {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
@@ -531,7 +531,7 @@ public class RatingsEntryUtil {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
@@ -545,7 +545,7 @@ public class RatingsEntryUtil {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
@@ -561,7 +561,7 @@ public class RatingsEntryUtil {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
@@ -576,7 +576,7 @@ public class RatingsEntryUtil {
 	*
 	* @param entryId the primary key of the current ratings entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
 	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
@@ -594,7 +594,7 @@ public class RatingsEntryUtil {
 	* Removes all the ratings entries where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
@@ -604,7 +604,7 @@ public class RatingsEntryUtil {
 	* Returns the number of ratings entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching ratings entries
 	*/
 	public static int countByC_C(long classNameId, long classPK) {
@@ -616,7 +616,7 @@ public class RatingsEntryUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
@@ -631,7 +631,7 @@ public class RatingsEntryUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
 	public static RatingsEntry fetchByU_C_C(long userId, long classNameId,
@@ -644,7 +644,7 @@ public class RatingsEntryUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
@@ -659,7 +659,7 @@ public class RatingsEntryUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the ratings entry that was removed
 	*/
 	public static RatingsEntry removeByU_C_C(long userId, long classNameId,
@@ -673,7 +673,7 @@ public class RatingsEntryUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching ratings entries
 	*/
 	public static int countByU_C_C(long userId, long classNameId, long classPK) {
@@ -684,7 +684,7 @@ public class RatingsEntryUtil {
 	* Returns all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @return the matching ratings entries
 	*/
@@ -701,7 +701,7 @@ public class RatingsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
@@ -721,7 +721,7 @@ public class RatingsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
@@ -744,7 +744,7 @@ public class RatingsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
@@ -765,7 +765,7 @@ public class RatingsEntryUtil {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
@@ -784,7 +784,7 @@ public class RatingsEntryUtil {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
@@ -801,7 +801,7 @@ public class RatingsEntryUtil {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
@@ -819,7 +819,7 @@ public class RatingsEntryUtil {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
@@ -837,7 +837,7 @@ public class RatingsEntryUtil {
 	*
 	* @param entryId the primary key of the current ratings entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
@@ -856,7 +856,7 @@ public class RatingsEntryUtil {
 	* Removes all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	*/
 	public static void removeByC_C_S(long classNameId, long classPK,
@@ -868,7 +868,7 @@ public class RatingsEntryUtil {
 	* Returns the number of ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @return the number of matching ratings entries
 	*/

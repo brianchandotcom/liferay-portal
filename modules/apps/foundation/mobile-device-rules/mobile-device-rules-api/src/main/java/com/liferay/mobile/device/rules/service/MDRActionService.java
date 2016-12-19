@@ -55,7 +55,7 @@ public interface MDRActionService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MDRActionServiceUtil} to access the m d r action remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link MDRActionServiceUtil} to access the mdr action remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRActionServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MDRAction addAction(long ruleGroupInstanceId,
 		Map<Locale, java.lang.String> nameMap,

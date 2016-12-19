@@ -37,7 +37,7 @@ public abstract class DDMTemplateVersionBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m template version model instance should use the {@link DDMTemplateVersion} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm template version model instance should use the {@link DDMTemplateVersion} interface instead.
 	 */
 	@Override
 	public void persist() {

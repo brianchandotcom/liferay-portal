@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
+import java.util.Map;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Charles May
@@ -118,6 +121,19 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		else {
 			return false;
 		}
+	}
+
+	public String getAccessorName(String className) {
+		String accessorName = _accessorNames.get(className + "." + _name);
+
+		if (Validator.isNull(accessorName)) {
+			accessorName = TextFormatter.format(
+				TextFormatter.format(_name, TextFormatter.H), TextFormatter.A);
+
+			accessorName += "_ACCESSOR";
+		}
+
+		return accessorName;
 	}
 
 	public String getArrayableOperator() {
@@ -471,6 +487,12 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 
 		return comparator;
 	}
+
+	private static final Map<String, String> _accessorNames =
+		Collections.singletonMap(
+			"com.liferay.portal.kernel.model.LayoutFriendlyURL." +
+				"layoutFriendlyURLId",
+			"LAYOUT_FRIENDLY_U_R_L_ID_ACCESSOR");
 
 	private final boolean _accessor;
 	private String _arrayableOperator;

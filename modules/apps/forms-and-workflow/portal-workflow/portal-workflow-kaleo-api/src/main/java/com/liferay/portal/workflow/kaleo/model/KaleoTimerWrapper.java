@@ -409,9 +409,9 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	}
 
 	/**
-	* Returns the kaleo class p k of this kaleo timer.
+	* Returns the kaleo class pk of this kaleo timer.
 	*
-	* @return the kaleo class p k of this kaleo timer
+	* @return the kaleo class pk of this kaleo timer
 	*/
 	@Override
 	public long getKaleoClassPK() {
@@ -555,9 +555,9 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 	}
 
 	/**
-	* Sets the kaleo class p k of this kaleo timer.
+	* Sets the kaleo class pk of this kaleo timer.
 	*
-	* @param kaleoClassPK the kaleo class p k of this kaleo timer
+	* @param kaleoClassPK the kaleo class pk of this kaleo timer
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {

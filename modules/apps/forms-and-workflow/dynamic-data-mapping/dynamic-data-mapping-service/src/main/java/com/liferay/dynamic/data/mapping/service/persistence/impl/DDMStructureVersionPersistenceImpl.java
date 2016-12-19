@@ -52,7 +52,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the d d m structure version service.
+ * The persistence implementation for the ddm structure version service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -69,7 +69,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DDMStructureVersionUtil} to access the d d m structure version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DDMStructureVersionUtil} to access the ddm structure version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DDMStructureVersionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -111,10 +111,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structure versions where structureId = &#63;.
+	 * Returns all the ddm structure versions where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
-	 * @return the matching d d m structure versions
+	 * @return the matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByStructureId(long structureId) {
@@ -123,16 +123,16 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns a range of all the d d m structure versions where structureId = &#63;.
+	 * Returns a range of all the ddm structure versions where structureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
-	 * @return the range of matching d d m structure versions
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
+	 * @return the range of matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByStructureId(long structureId,
@@ -141,17 +141,17 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure versions where structureId = &#63;.
+	 * Returns an ordered range of all the ddm structure versions where structureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structure versions
+	 * @return the ordered range of matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByStructureId(long structureId,
@@ -162,18 +162,18 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure versions where structureId = &#63;.
+	 * Returns an ordered range of all the ddm structure versions where structureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structure versions
+	 * @return the ordered range of matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByStructureId(long structureId,
@@ -280,12 +280,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the first d d m structure version in the ordered set where structureId = &#63;.
+	 * Returns the first ddm structure version in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure version
-	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 * @return the first matching ddm structure version
+	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByStructureId_First(long structureId,
@@ -311,11 +311,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the first d d m structure version in the ordered set where structureId = &#63;.
+	 * Returns the first ddm structure version in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 * @return the first matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByStructureId_First(long structureId,
@@ -331,12 +331,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the last d d m structure version in the ordered set where structureId = &#63;.
+	 * Returns the last ddm structure version in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure version
-	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 * @return the last matching ddm structure version
+	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByStructureId_Last(long structureId,
@@ -362,11 +362,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the last d d m structure version in the ordered set where structureId = &#63;.
+	 * Returns the last ddm structure version in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 * @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByStructureId_Last(long structureId,
@@ -388,13 +388,13 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure versions before and after the current d d m structure version in the ordered set where structureId = &#63;.
+	 * Returns the ddm structure versions before and after the current ddm structure version in the ordered set where structureId = &#63;.
 	 *
-	 * @param structureVersionId the primary key of the current d d m structure version
+	 * @param structureVersionId the primary key of the current ddm structure version
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure version
-	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 * @return the previous, current, and next ddm structure version
+	 * @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion[] findByStructureId_PrevAndNext(
@@ -537,7 +537,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Removes all the d d m structure versions where structureId = &#63; from the database.
+	 * Removes all the ddm structure versions where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
 	 */
@@ -550,10 +550,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the number of d d m structure versions where structureId = &#63;.
+	 * Returns the number of ddm structure versions where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
-	 * @return the number of matching d d m structure versions
+	 * @return the number of matching ddm structure versions
 	 */
 	@Override
 	public int countByStructureId(long structureId) {
@@ -614,12 +614,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the d d m structure version where structureId = &#63; and version = &#63; or throws a {@link NoSuchStructureVersionException} if it could not be found.
+	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or throws a {@link NoSuchStructureVersionException} if it could not be found.
 	 *
 	 * @param structureId the structure ID
 	 * @param version the version
-	 * @return the matching d d m structure version
-	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 * @return the matching ddm structure version
+	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByS_V(long structureId, String version)
@@ -651,11 +651,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param structureId the structure ID
 	 * @param version the version
-	 * @return the matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 * @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByS_V(long structureId, String version) {
@@ -663,12 +663,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure version where structureId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param structureId the structure ID
 	 * @param version the version
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 * @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByS_V(long structureId, String version,
@@ -769,11 +769,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Removes the d d m structure version where structureId = &#63; and version = &#63; from the database.
+	 * Removes the ddm structure version where structureId = &#63; and version = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
 	 * @param version the version
-	 * @return the d d m structure version that was removed
+	 * @return the ddm structure version that was removed
 	 */
 	@Override
 	public DDMStructureVersion removeByS_V(long structureId, String version)
@@ -784,11 +784,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the number of d d m structure versions where structureId = &#63; and version = &#63;.
+	 * Returns the number of ddm structure versions where structureId = &#63; and version = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param version the version
-	 * @return the number of matching d d m structure versions
+	 * @return the number of matching ddm structure versions
 	 */
 	@Override
 	public int countByS_V(long structureId, String version) {
@@ -880,11 +880,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			new String[] { Long.class.getName(), Integer.class.getName() });
 
 	/**
-	 * Returns all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 * Returns all the ddm structure versions where structureId = &#63; and status = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
-	 * @return the matching d d m structure versions
+	 * @return the matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByS_S(long structureId, int status) {
@@ -893,7 +893,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns a range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 * Returns a range of all the ddm structure versions where structureId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -901,9 +901,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
-	 * @return the range of matching d d m structure versions
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
+	 * @return the range of matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByS_S(long structureId, int status,
@@ -912,7 +912,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -920,10 +920,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structure versions
+	 * @return the ordered range of matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByS_S(long structureId, int status,
@@ -934,7 +934,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the ddm structure versions where structureId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -942,11 +942,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structure versions
+	 * @return the ordered range of matching ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findByS_S(long structureId, int status,
@@ -1062,13 +1062,13 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the first d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 * Returns the first ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure version
-	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 * @return the first matching ddm structure version
+	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByS_S_First(long structureId, int status,
@@ -1097,12 +1097,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the first d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 * Returns the first ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 * @return the first matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByS_S_First(long structureId, int status,
@@ -1118,13 +1118,13 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the last d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 * Returns the last ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure version
-	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 * @return the last matching ddm structure version
+	 * @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByS_S_Last(long structureId, int status,
@@ -1153,12 +1153,12 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the last d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 * Returns the last ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 * @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByS_S_Last(long structureId, int status,
@@ -1180,14 +1180,14 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure versions before and after the current d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 * Returns the ddm structure versions before and after the current ddm structure version in the ordered set where structureId = &#63; and status = &#63;.
 	 *
-	 * @param structureVersionId the primary key of the current d d m structure version
+	 * @param structureVersionId the primary key of the current ddm structure version
 	 * @param structureId the structure ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure version
-	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 * @return the previous, current, and next ddm structure version
+	 * @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion[] findByS_S_PrevAndNext(
@@ -1333,7 +1333,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Removes all the d d m structure versions where structureId = &#63; and status = &#63; from the database.
+	 * Removes all the ddm structure versions where structureId = &#63; and status = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
@@ -1347,11 +1347,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the number of d d m structure versions where structureId = &#63; and status = &#63;.
+	 * Returns the number of ddm structure versions where structureId = &#63; and status = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param status the status
-	 * @return the number of matching d d m structure versions
+	 * @return the number of matching ddm structure versions
 	 */
 	@Override
 	public int countByS_S(long structureId, int status) {
@@ -1410,9 +1410,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Caches the d d m structure version in the entity cache if it is enabled.
+	 * Caches the ddm structure version in the entity cache if it is enabled.
 	 *
-	 * @param ddmStructureVersion the d d m structure version
+	 * @param ddmStructureVersion the ddm structure version
 	 */
 	@Override
 	public void cacheResult(DDMStructureVersion ddmStructureVersion) {
@@ -1430,9 +1430,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Caches the d d m structure versions in the entity cache if it is enabled.
+	 * Caches the ddm structure versions in the entity cache if it is enabled.
 	 *
-	 * @param ddmStructureVersions the d d m structure versions
+	 * @param ddmStructureVersions the ddm structure versions
 	 */
 	@Override
 	public void cacheResult(List<DDMStructureVersion> ddmStructureVersions) {
@@ -1450,7 +1450,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Clears the cache for all d d m structure versions.
+	 * Clears the cache for all ddm structure versions.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1466,7 +1466,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Clears the cache for the d d m structure version.
+	 * Clears the cache for the ddm structure version.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1538,10 +1538,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Creates a new d d m structure version with the primary key. Does not add the d d m structure version to the database.
+	 * Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
 	 *
-	 * @param structureVersionId the primary key for the new d d m structure version
-	 * @return the new d d m structure version
+	 * @param structureVersionId the primary key for the new ddm structure version
+	 * @return the new ddm structure version
 	 */
 	@Override
 	public DDMStructureVersion create(long structureVersionId) {
@@ -1556,11 +1556,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Removes the d d m structure version with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm structure version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param structureVersionId the primary key of the d d m structure version
-	 * @return the d d m structure version that was removed
-	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 * @param structureVersionId the primary key of the ddm structure version
+	 * @return the ddm structure version that was removed
+	 * @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion remove(long structureVersionId)
@@ -1569,11 +1569,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Removes the d d m structure version with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm structure version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d d m structure version
-	 * @return the d d m structure version that was removed
-	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure version
+	 * @return the ddm structure version that was removed
+	 * @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion remove(Serializable primaryKey)
@@ -1765,11 +1765,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure version with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the ddm structure version with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m structure version
-	 * @return the d d m structure version
-	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure version
+	 * @return the ddm structure version
+	 * @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByPrimaryKey(Serializable primaryKey)
@@ -1789,11 +1789,11 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure version with the primary key or throws a {@link NoSuchStructureVersionException} if it could not be found.
+	 * Returns the ddm structure version with the primary key or throws a {@link NoSuchStructureVersionException} if it could not be found.
 	 *
-	 * @param structureVersionId the primary key of the d d m structure version
-	 * @return the d d m structure version
-	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 * @param structureVersionId the primary key of the ddm structure version
+	 * @return the ddm structure version
+	 * @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion findByPrimaryKey(long structureVersionId)
@@ -1802,10 +1802,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure version with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm structure version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m structure version
-	 * @return the d d m structure version, or <code>null</code> if a d d m structure version with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure version
+	 * @return the ddm structure version, or <code>null</code> if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByPrimaryKey(Serializable primaryKey) {
@@ -1850,10 +1850,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the d d m structure version with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm structure version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param structureVersionId the primary key of the d d m structure version
-	 * @return the d d m structure version, or <code>null</code> if a d d m structure version with the primary key could not be found
+	 * @param structureVersionId the primary key of the ddm structure version
+	 * @return the ddm structure version, or <code>null</code> if a ddm structure version with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureVersion fetchByPrimaryKey(long structureVersionId) {
@@ -1956,9 +1956,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns all the d d m structure versions.
+	 * Returns all the ddm structure versions.
 	 *
-	 * @return the d d m structure versions
+	 * @return the ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findAll() {
@@ -1966,15 +1966,15 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns a range of all the d d m structure versions.
+	 * Returns a range of all the ddm structure versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
-	 * @return the range of d d m structure versions
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
+	 * @return the range of ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findAll(int start, int end) {
@@ -1982,16 +1982,16 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure versions.
+	 * Returns an ordered range of all the ddm structure versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d d m structure versions
+	 * @return the ordered range of ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findAll(int start, int end,
@@ -2000,17 +2000,17 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure versions.
+	 * Returns an ordered range of all the ddm structure versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structure versions
-	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param start the lower bound of the range of ddm structure versions
+	 * @param end the upper bound of the range of ddm structure versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of d d m structure versions
+	 * @return the ordered range of ddm structure versions
 	 */
 	@Override
 	public List<DDMStructureVersion> findAll(int start, int end,
@@ -2099,7 +2099,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Removes all the d d m structure versions from the database.
+	 * Removes all the ddm structure versions from the database.
 	 *
 	 */
 	@Override
@@ -2110,9 +2110,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Returns the number of d d m structure versions.
+	 * Returns the number of ddm structure versions.
 	 *
-	 * @return the number of d d m structure versions
+	 * @return the number of ddm structure versions
 	 */
 	@Override
 	public int countAll() {
@@ -2157,7 +2157,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	/**
-	 * Initializes the d d m structure version persistence.
+	 * Initializes the ddm structure version persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

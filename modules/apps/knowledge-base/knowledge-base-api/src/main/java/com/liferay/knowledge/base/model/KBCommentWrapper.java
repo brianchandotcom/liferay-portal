@@ -205,9 +205,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the status of this k b comment.
+	* Returns the status of this kb comment.
 	*
-	* @return the status of this k b comment
+	* @return the status of this kb comment
 	*/
 	@Override
 	public int getStatus() {
@@ -215,9 +215,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the user rating of this k b comment.
+	* Returns the user rating of this kb comment.
 	*
-	* @return the user rating of this k b comment
+	* @return the user rating of this kb comment
 	*/
 	@Override
 	public int getUserRating() {
@@ -240,9 +240,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the fully qualified class name of this k b comment.
+	* Returns the fully qualified class name of this kb comment.
 	*
-	* @return the fully qualified class name of this k b comment
+	* @return the fully qualified class name of this kb comment
 	*/
 	@Override
 	public java.lang.String getClassName() {
@@ -250,9 +250,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the content of this k b comment.
+	* Returns the content of this kb comment.
 	*
-	* @return the content of this k b comment
+	* @return the content of this kb comment
 	*/
 	@Override
 	public java.lang.String getContent() {
@@ -260,9 +260,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the user name of this k b comment.
+	* Returns the user name of this kb comment.
 	*
-	* @return the user name of this k b comment
+	* @return the user name of this kb comment
 	*/
 	@Override
 	public java.lang.String getUserName() {
@@ -270,9 +270,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the user uuid of this k b comment.
+	* Returns the user uuid of this kb comment.
 	*
-	* @return the user uuid of this k b comment
+	* @return the user uuid of this kb comment
 	*/
 	@Override
 	public java.lang.String getUserUuid() {
@@ -280,9 +280,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the uuid of this k b comment.
+	* Returns the uuid of this kb comment.
 	*
-	* @return the uuid of this k b comment
+	* @return the uuid of this kb comment
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -300,9 +300,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the create date of this k b comment.
+	* Returns the create date of this kb comment.
 	*
-	* @return the create date of this k b comment
+	* @return the create date of this kb comment
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -310,9 +310,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the last publish date of this k b comment.
+	* Returns the last publish date of this kb comment.
 	*
-	* @return the last publish date of this k b comment
+	* @return the last publish date of this kb comment
 	*/
 	@Override
 	public Date getLastPublishDate() {
@@ -320,9 +320,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the modified date of this k b comment.
+	* Returns the modified date of this kb comment.
 	*
-	* @return the modified date of this k b comment
+	* @return the modified date of this kb comment
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -330,9 +330,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the class name ID of this k b comment.
+	* Returns the class name ID of this kb comment.
 	*
-	* @return the class name ID of this k b comment
+	* @return the class name ID of this kb comment
 	*/
 	@Override
 	public long getClassNameId() {
@@ -340,9 +340,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the class p k of this k b comment.
+	* Returns the class pk of this kb comment.
 	*
-	* @return the class p k of this k b comment
+	* @return the class pk of this kb comment
 	*/
 	@Override
 	public long getClassPK() {
@@ -350,9 +350,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the company ID of this k b comment.
+	* Returns the company ID of this kb comment.
 	*
-	* @return the company ID of this k b comment
+	* @return the company ID of this kb comment
 	*/
 	@Override
 	public long getCompanyId() {
@@ -360,9 +360,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the group ID of this k b comment.
+	* Returns the group ID of this kb comment.
 	*
-	* @return the group ID of this k b comment
+	* @return the group ID of this kb comment
 	*/
 	@Override
 	public long getGroupId() {
@@ -370,9 +370,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the kb comment ID of this k b comment.
+	* Returns the kb comment ID of this kb comment.
 	*
-	* @return the kb comment ID of this k b comment
+	* @return the kb comment ID of this kb comment
 	*/
 	@Override
 	public long getKbCommentId() {
@@ -380,9 +380,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the primary key of this k b comment.
+	* Returns the primary key of this kb comment.
 	*
-	* @return the primary key of this k b comment
+	* @return the primary key of this kb comment
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -390,9 +390,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Returns the user ID of this k b comment.
+	* Returns the user ID of this kb comment.
 	*
-	* @return the user ID of this k b comment
+	* @return the user ID of this kb comment
 	*/
 	@Override
 	public long getUserId() {
@@ -415,9 +415,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the class name ID of this k b comment.
+	* Sets the class name ID of this kb comment.
 	*
-	* @param classNameId the class name ID of this k b comment
+	* @param classNameId the class name ID of this kb comment
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
@@ -425,9 +425,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the class p k of this k b comment.
+	* Sets the class pk of this kb comment.
 	*
-	* @param classPK the class p k of this k b comment
+	* @param classPK the class pk of this kb comment
 	*/
 	@Override
 	public void setClassPK(long classPK) {
@@ -435,9 +435,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the company ID of this k b comment.
+	* Sets the company ID of this kb comment.
 	*
-	* @param companyId the company ID of this k b comment
+	* @param companyId the company ID of this kb comment
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -445,9 +445,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the content of this k b comment.
+	* Sets the content of this kb comment.
 	*
-	* @param content the content of this k b comment
+	* @param content the content of this kb comment
 	*/
 	@Override
 	public void setContent(java.lang.String content) {
@@ -455,9 +455,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the create date of this k b comment.
+	* Sets the create date of this kb comment.
 	*
-	* @param createDate the create date of this k b comment
+	* @param createDate the create date of this kb comment
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -481,9 +481,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the group ID of this k b comment.
+	* Sets the group ID of this kb comment.
 	*
-	* @param groupId the group ID of this k b comment
+	* @param groupId the group ID of this kb comment
 	*/
 	@Override
 	public void setGroupId(long groupId) {
@@ -491,9 +491,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the kb comment ID of this k b comment.
+	* Sets the kb comment ID of this kb comment.
 	*
-	* @param kbCommentId the kb comment ID of this k b comment
+	* @param kbCommentId the kb comment ID of this kb comment
 	*/
 	@Override
 	public void setKbCommentId(long kbCommentId) {
@@ -501,9 +501,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the last publish date of this k b comment.
+	* Sets the last publish date of this kb comment.
 	*
-	* @param lastPublishDate the last publish date of this k b comment
+	* @param lastPublishDate the last publish date of this kb comment
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -511,9 +511,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the modified date of this k b comment.
+	* Sets the modified date of this kb comment.
 	*
-	* @param modifiedDate the modified date of this k b comment
+	* @param modifiedDate the modified date of this kb comment
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -526,9 +526,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the primary key of this k b comment.
+	* Sets the primary key of this kb comment.
 	*
-	* @param primaryKey the primary key of this k b comment
+	* @param primaryKey the primary key of this kb comment
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -541,9 +541,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the status of this k b comment.
+	* Sets the status of this kb comment.
 	*
-	* @param status the status of this k b comment
+	* @param status the status of this kb comment
 	*/
 	@Override
 	public void setStatus(int status) {
@@ -551,9 +551,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the user ID of this k b comment.
+	* Sets the user ID of this kb comment.
 	*
-	* @param userId the user ID of this k b comment
+	* @param userId the user ID of this kb comment
 	*/
 	@Override
 	public void setUserId(long userId) {
@@ -561,9 +561,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the user name of this k b comment.
+	* Sets the user name of this kb comment.
 	*
-	* @param userName the user name of this k b comment
+	* @param userName the user name of this kb comment
 	*/
 	@Override
 	public void setUserName(java.lang.String userName) {
@@ -571,9 +571,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the user rating of this k b comment.
+	* Sets the user rating of this kb comment.
 	*
-	* @param userRating the user rating of this k b comment
+	* @param userRating the user rating of this kb comment
 	*/
 	@Override
 	public void setUserRating(int userRating) {
@@ -581,9 +581,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the user uuid of this k b comment.
+	* Sets the user uuid of this kb comment.
 	*
-	* @param userUuid the user uuid of this k b comment
+	* @param userUuid the user uuid of this kb comment
 	*/
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
@@ -591,9 +591,9 @@ public class KBCommentWrapper implements KBComment, ModelWrapper<KBComment> {
 	}
 
 	/**
-	* Sets the uuid of this k b comment.
+	* Sets the uuid of this kb comment.
 	*
-	* @param uuid the uuid of this k b comment
+	* @param uuid the uuid of this kb comment
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {

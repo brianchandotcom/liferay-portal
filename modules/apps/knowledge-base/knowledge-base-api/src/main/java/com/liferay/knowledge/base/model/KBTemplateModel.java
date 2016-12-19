@@ -48,209 +48,209 @@ public interface KBTemplateModel extends BaseModel<KBTemplate>, ShardedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a k b template model instance should use the {@link KBTemplate} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a kb template model instance should use the {@link KBTemplate} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this k b template.
+	 * Returns the primary key of this kb template.
 	 *
-	 * @return the primary key of this k b template
+	 * @return the primary key of this kb template
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this k b template.
+	 * Sets the primary key of this kb template.
 	 *
-	 * @param primaryKey the primary key of this k b template
+	 * @param primaryKey the primary key of this kb template
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this k b template.
+	 * Returns the uuid of this kb template.
 	 *
-	 * @return the uuid of this k b template
+	 * @return the uuid of this kb template
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this k b template.
+	 * Sets the uuid of this kb template.
 	 *
-	 * @param uuid the uuid of this k b template
+	 * @param uuid the uuid of this kb template
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the kb template ID of this k b template.
+	 * Returns the kb template ID of this kb template.
 	 *
-	 * @return the kb template ID of this k b template
+	 * @return the kb template ID of this kb template
 	 */
 	public long getKbTemplateId();
 
 	/**
-	 * Sets the kb template ID of this k b template.
+	 * Sets the kb template ID of this kb template.
 	 *
-	 * @param kbTemplateId the kb template ID of this k b template
+	 * @param kbTemplateId the kb template ID of this kb template
 	 */
 	public void setKbTemplateId(long kbTemplateId);
 
 	/**
-	 * Returns the group ID of this k b template.
+	 * Returns the group ID of this kb template.
 	 *
-	 * @return the group ID of this k b template
+	 * @return the group ID of this kb template
 	 */
 	@Override
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this k b template.
+	 * Sets the group ID of this kb template.
 	 *
-	 * @param groupId the group ID of this k b template
+	 * @param groupId the group ID of this kb template
 	 */
 	@Override
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this k b template.
+	 * Returns the company ID of this kb template.
 	 *
-	 * @return the company ID of this k b template
+	 * @return the company ID of this kb template
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this k b template.
+	 * Sets the company ID of this kb template.
 	 *
-	 * @param companyId the company ID of this k b template
+	 * @param companyId the company ID of this kb template
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this k b template.
+	 * Returns the user ID of this kb template.
 	 *
-	 * @return the user ID of this k b template
+	 * @return the user ID of this kb template
 	 */
 	@Override
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this k b template.
+	 * Sets the user ID of this kb template.
 	 *
-	 * @param userId the user ID of this k b template
+	 * @param userId the user ID of this kb template
 	 */
 	@Override
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this k b template.
+	 * Returns the user uuid of this kb template.
 	 *
-	 * @return the user uuid of this k b template
+	 * @return the user uuid of this kb template
 	 */
 	@Override
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this k b template.
+	 * Sets the user uuid of this kb template.
 	 *
-	 * @param userUuid the user uuid of this k b template
+	 * @param userUuid the user uuid of this kb template
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this k b template.
+	 * Returns the user name of this kb template.
 	 *
-	 * @return the user name of this k b template
+	 * @return the user name of this kb template
 	 */
 	@AutoEscape
 	@Override
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this k b template.
+	 * Sets the user name of this kb template.
 	 *
-	 * @param userName the user name of this k b template
+	 * @param userName the user name of this kb template
 	 */
 	@Override
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this k b template.
+	 * Returns the create date of this kb template.
 	 *
-	 * @return the create date of this k b template
+	 * @return the create date of this kb template
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this k b template.
+	 * Sets the create date of this kb template.
 	 *
-	 * @param createDate the create date of this k b template
+	 * @param createDate the create date of this kb template
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this k b template.
+	 * Returns the modified date of this kb template.
 	 *
-	 * @return the modified date of this k b template
+	 * @return the modified date of this kb template
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this k b template.
+	 * Sets the modified date of this kb template.
 	 *
-	 * @param modifiedDate the modified date of this k b template
+	 * @param modifiedDate the modified date of this kb template
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the title of this k b template.
+	 * Returns the title of this kb template.
 	 *
-	 * @return the title of this k b template
+	 * @return the title of this kb template
 	 */
 	@AutoEscape
 	public String getTitle();
 
 	/**
-	 * Sets the title of this k b template.
+	 * Sets the title of this kb template.
 	 *
-	 * @param title the title of this k b template
+	 * @param title the title of this kb template
 	 */
 	public void setTitle(String title);
 
 	/**
-	 * Returns the content of this k b template.
+	 * Returns the content of this kb template.
 	 *
-	 * @return the content of this k b template
+	 * @return the content of this kb template
 	 */
 	@AutoEscape
 	public String getContent();
 
 	/**
-	 * Sets the content of this k b template.
+	 * Sets the content of this kb template.
 	 *
-	 * @param content the content of this k b template
+	 * @param content the content of this kb template
 	 */
 	public void setContent(String content);
 
 	/**
-	 * Returns the last publish date of this k b template.
+	 * Returns the last publish date of this kb template.
 	 *
-	 * @return the last publish date of this k b template
+	 * @return the last publish date of this kb template
 	 */
 	@Override
 	public Date getLastPublishDate();
 
 	/**
-	 * Sets the last publish date of this k b template.
+	 * Sets the last publish date of this kb template.
 	 *
-	 * @param lastPublishDate the last publish date of this k b template
+	 * @param lastPublishDate the last publish date of this kb template
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);

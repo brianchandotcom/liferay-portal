@@ -45,57 +45,57 @@ public interface DDMTemplateLinkModel extends AttachedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d d m template link model instance should use the {@link DDMTemplateLink} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a ddm template link model instance should use the {@link DDMTemplateLink} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d d m template link.
+	 * Returns the primary key of this ddm template link.
 	 *
-	 * @return the primary key of this d d m template link
+	 * @return the primary key of this ddm template link
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d d m template link.
+	 * Sets the primary key of this ddm template link.
 	 *
-	 * @param primaryKey the primary key of this d d m template link
+	 * @param primaryKey the primary key of this ddm template link
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the template link ID of this d d m template link.
+	 * Returns the template link ID of this ddm template link.
 	 *
-	 * @return the template link ID of this d d m template link
+	 * @return the template link ID of this ddm template link
 	 */
 	public long getTemplateLinkId();
 
 	/**
-	 * Sets the template link ID of this d d m template link.
+	 * Sets the template link ID of this ddm template link.
 	 *
-	 * @param templateLinkId the template link ID of this d d m template link
+	 * @param templateLinkId the template link ID of this ddm template link
 	 */
 	public void setTemplateLinkId(long templateLinkId);
 
 	/**
-	 * Returns the company ID of this d d m template link.
+	 * Returns the company ID of this ddm template link.
 	 *
-	 * @return the company ID of this d d m template link
+	 * @return the company ID of this ddm template link
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d d m template link.
+	 * Sets the company ID of this ddm template link.
 	 *
-	 * @param companyId the company ID of this d d m template link
+	 * @param companyId the company ID of this ddm template link
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the fully qualified class name of this d d m template link.
+	 * Returns the fully qualified class name of this ddm template link.
 	 *
-	 * @return the fully qualified class name of this d d m template link
+	 * @return the fully qualified class name of this ddm template link
 	 */
 	@Override
 	public String getClassName();
@@ -103,48 +103,48 @@ public interface DDMTemplateLinkModel extends AttachedModel,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class name ID of this d d m template link.
+	 * Returns the class name ID of this ddm template link.
 	 *
-	 * @return the class name ID of this d d m template link
+	 * @return the class name ID of this ddm template link
 	 */
 	@Override
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this d d m template link.
+	 * Sets the class name ID of this ddm template link.
 	 *
-	 * @param classNameId the class name ID of this d d m template link
+	 * @param classNameId the class name ID of this ddm template link
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this d d m template link.
+	 * Returns the class pk of this ddm template link.
 	 *
-	 * @return the class p k of this d d m template link
+	 * @return the class pk of this ddm template link
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this d d m template link.
+	 * Sets the class pk of this ddm template link.
 	 *
-	 * @param classPK the class p k of this d d m template link
+	 * @param classPK the class pk of this ddm template link
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the template ID of this d d m template link.
+	 * Returns the template ID of this ddm template link.
 	 *
-	 * @return the template ID of this d d m template link
+	 * @return the template ID of this ddm template link
 	 */
 	public long getTemplateId();
 
 	/**
-	 * Sets the template ID of this d d m template link.
+	 * Sets the template ID of this ddm template link.
 	 *
-	 * @param templateId the template ID of this d d m template link
+	 * @param templateId the template ID of this ddm template link
 	 */
 	public void setTemplateId(long templateId);
 

@@ -168,9 +168,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the fully qualified class name of this d d m storage link.
+	* Returns the fully qualified class name of this ddm storage link.
 	*
-	* @return the fully qualified class name of this d d m storage link
+	* @return the fully qualified class name of this ddm storage link
 	*/
 	@Override
 	public java.lang.String getClassName() {
@@ -184,9 +184,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the uuid of this d d m storage link.
+	* Returns the uuid of this ddm storage link.
 	*
-	* @return the uuid of this d d m storage link
+	* @return the uuid of this ddm storage link
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -204,9 +204,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the class name ID of this d d m storage link.
+	* Returns the class name ID of this ddm storage link.
 	*
-	* @return the class name ID of this d d m storage link
+	* @return the class name ID of this ddm storage link
 	*/
 	@Override
 	public long getClassNameId() {
@@ -214,9 +214,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the class p k of this d d m storage link.
+	* Returns the class pk of this ddm storage link.
 	*
-	* @return the class p k of this d d m storage link
+	* @return the class pk of this ddm storage link
 	*/
 	@Override
 	public long getClassPK() {
@@ -224,9 +224,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the company ID of this d d m storage link.
+	* Returns the company ID of this ddm storage link.
 	*
-	* @return the company ID of this d d m storage link
+	* @return the company ID of this ddm storage link
 	*/
 	@Override
 	public long getCompanyId() {
@@ -234,9 +234,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the primary key of this d d m storage link.
+	* Returns the primary key of this ddm storage link.
 	*
-	* @return the primary key of this d d m storage link
+	* @return the primary key of this ddm storage link
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -244,9 +244,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the storage link ID of this d d m storage link.
+	* Returns the storage link ID of this ddm storage link.
 	*
-	* @return the storage link ID of this d d m storage link
+	* @return the storage link ID of this ddm storage link
 	*/
 	@Override
 	public long getStorageLinkId() {
@@ -254,9 +254,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Returns the structure ID of this d d m storage link.
+	* Returns the structure ID of this ddm storage link.
 	*
-	* @return the structure ID of this d d m storage link
+	* @return the structure ID of this ddm storage link
 	*/
 	@Override
 	public long getStructureId() {
@@ -279,9 +279,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the class name ID of this d d m storage link.
+	* Sets the class name ID of this ddm storage link.
 	*
-	* @param classNameId the class name ID of this d d m storage link
+	* @param classNameId the class name ID of this ddm storage link
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
@@ -289,9 +289,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the class p k of this d d m storage link.
+	* Sets the class pk of this ddm storage link.
 	*
-	* @param classPK the class p k of this d d m storage link
+	* @param classPK the class pk of this ddm storage link
 	*/
 	@Override
 	public void setClassPK(long classPK) {
@@ -299,9 +299,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the company ID of this d d m storage link.
+	* Sets the company ID of this ddm storage link.
 	*
-	* @param companyId the company ID of this d d m storage link
+	* @param companyId the company ID of this ddm storage link
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -330,9 +330,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the primary key of this d d m storage link.
+	* Sets the primary key of this ddm storage link.
 	*
-	* @param primaryKey the primary key of this d d m storage link
+	* @param primaryKey the primary key of this ddm storage link
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -345,9 +345,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the storage link ID of this d d m storage link.
+	* Sets the storage link ID of this ddm storage link.
 	*
-	* @param storageLinkId the storage link ID of this d d m storage link
+	* @param storageLinkId the storage link ID of this ddm storage link
 	*/
 	@Override
 	public void setStorageLinkId(long storageLinkId) {
@@ -355,9 +355,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the structure ID of this d d m storage link.
+	* Sets the structure ID of this ddm storage link.
 	*
-	* @param structureId the structure ID of this d d m storage link
+	* @param structureId the structure ID of this ddm storage link
 	*/
 	@Override
 	public void setStructureId(long structureId) {
@@ -365,9 +365,9 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	}
 
 	/**
-	* Sets the uuid of this d d m storage link.
+	* Sets the uuid of this ddm storage link.
 	*
-	* @param uuid the uuid of this d d m storage link
+	* @param uuid the uuid of this ddm storage link
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {

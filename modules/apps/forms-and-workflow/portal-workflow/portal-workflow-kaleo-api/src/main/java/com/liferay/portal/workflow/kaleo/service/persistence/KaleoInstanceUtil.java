@@ -803,7 +803,7 @@ public class KaleoInstanceUtil {
 	* Returns all the kaleo instances where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching kaleo instances
 	*/
 	public static List<KaleoInstance> findByCN_CPK(java.lang.String className,
@@ -819,7 +819,7 @@ public class KaleoInstanceUtil {
 	* </p>
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of kaleo instances
 	* @param end the upper bound of the range of kaleo instances (not inclusive)
 	* @return the range of matching kaleo instances
@@ -837,7 +837,7 @@ public class KaleoInstanceUtil {
 	* </p>
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of kaleo instances
 	* @param end the upper bound of the range of kaleo instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -859,7 +859,7 @@ public class KaleoInstanceUtil {
 	* </p>
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of kaleo instances
 	* @param end the upper bound of the range of kaleo instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -879,7 +879,7 @@ public class KaleoInstanceUtil {
 	* Returns the first kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance
 	* @throws NoSuchInstanceException if a matching kaleo instance could not be found
@@ -895,7 +895,7 @@ public class KaleoInstanceUtil {
 	* Returns the first kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
 	*/
@@ -910,7 +910,7 @@ public class KaleoInstanceUtil {
 	* Returns the last kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance
 	* @throws NoSuchInstanceException if a matching kaleo instance could not be found
@@ -926,7 +926,7 @@ public class KaleoInstanceUtil {
 	* Returns the last kaleo instance in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo instance, or <code>null</code> if a matching kaleo instance could not be found
 	*/
@@ -941,7 +941,7 @@ public class KaleoInstanceUtil {
 	*
 	* @param kaleoInstanceId the primary key of the current kaleo instance
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo instance
 	* @throws NoSuchInstanceException if a kaleo instance with the primary key could not be found
@@ -959,7 +959,7 @@ public class KaleoInstanceUtil {
 	* Removes all the kaleo instances where className = &#63; and classPK = &#63; from the database.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByCN_CPK(java.lang.String className, long classPK) {
 		getPersistence().removeByCN_CPK(className, classPK);
@@ -969,7 +969,7 @@ public class KaleoInstanceUtil {
 	* Returns the number of kaleo instances where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching kaleo instances
 	*/
 	public static int countByCN_CPK(java.lang.String className, long classPK) {

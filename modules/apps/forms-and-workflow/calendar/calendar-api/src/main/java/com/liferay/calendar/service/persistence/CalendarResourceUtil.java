@@ -1742,7 +1742,7 @@ public class CalendarResourceUtil {
 	* Returns the calendar resource where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchResourceException} if it could not be found.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching calendar resource
 	* @throws NoSuchResourceException if a matching calendar resource could not be found
 	*/
@@ -1755,7 +1755,7 @@ public class CalendarResourceUtil {
 	* Returns the calendar resource where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
 	*/
 	public static CalendarResource fetchByC_C(long classNameId, long classPK) {
@@ -1766,7 +1766,7 @@ public class CalendarResourceUtil {
 	* Returns the calendar resource where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching calendar resource, or <code>null</code> if a matching calendar resource could not be found
 	*/
@@ -1780,7 +1780,7 @@ public class CalendarResourceUtil {
 	* Removes the calendar resource where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the calendar resource that was removed
 	*/
 	public static CalendarResource removeByC_C(long classNameId, long classPK)
@@ -1792,7 +1792,7 @@ public class CalendarResourceUtil {
 	* Returns the number of calendar resources where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching calendar resources
 	*/
 	public static int countByC_C(long classNameId, long classPK) {

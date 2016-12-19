@@ -208,16 +208,16 @@ public interface KaleoLogModel extends BaseModel<KaleoLog>, GroupedModel,
 	public void setKaleoClassName(String kaleoClassName);
 
 	/**
-	 * Returns the kaleo class p k of this kaleo log.
+	 * Returns the kaleo class pk of this kaleo log.
 	 *
-	 * @return the kaleo class p k of this kaleo log
+	 * @return the kaleo class pk of this kaleo log
 	 */
 	public long getKaleoClassPK();
 
 	/**
-	 * Sets the kaleo class p k of this kaleo log.
+	 * Sets the kaleo class pk of this kaleo log.
 	 *
-	 * @param kaleoClassPK the kaleo class p k of this kaleo log
+	 * @param kaleoClassPK the kaleo class pk of this kaleo log
 	 */
 	public void setKaleoClassPK(long kaleoClassPK);
 
@@ -402,16 +402,16 @@ public interface KaleoLogModel extends BaseModel<KaleoLog>, GroupedModel,
 	public void setPreviousAssigneeClassName(String previousAssigneeClassName);
 
 	/**
-	 * Returns the previous assignee class p k of this kaleo log.
+	 * Returns the previous assignee class pk of this kaleo log.
 	 *
-	 * @return the previous assignee class p k of this kaleo log
+	 * @return the previous assignee class pk of this kaleo log
 	 */
 	public long getPreviousAssigneeClassPK();
 
 	/**
-	 * Sets the previous assignee class p k of this kaleo log.
+	 * Sets the previous assignee class pk of this kaleo log.
 	 *
-	 * @param previousAssigneeClassPK the previous assignee class p k of this kaleo log
+	 * @param previousAssigneeClassPK the previous assignee class pk of this kaleo log
 	 */
 	public void setPreviousAssigneeClassPK(long previousAssigneeClassPK);
 
@@ -431,16 +431,16 @@ public interface KaleoLogModel extends BaseModel<KaleoLog>, GroupedModel,
 	public void setCurrentAssigneeClassName(String currentAssigneeClassName);
 
 	/**
-	 * Returns the current assignee class p k of this kaleo log.
+	 * Returns the current assignee class pk of this kaleo log.
 	 *
-	 * @return the current assignee class p k of this kaleo log
+	 * @return the current assignee class pk of this kaleo log
 	 */
 	public long getCurrentAssigneeClassPK();
 
 	/**
-	 * Sets the current assignee class p k of this kaleo log.
+	 * Sets the current assignee class pk of this kaleo log.
 	 *
-	 * @param currentAssigneeClassPK the current assignee class p k of this kaleo log
+	 * @param currentAssigneeClassPK the current assignee class pk of this kaleo log
 	 */
 	public void setCurrentAssigneeClassPK(long currentAssigneeClassPK);
 

@@ -43,10 +43,10 @@ public class KBFolderLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the k b folder to the database. Also notifies the appropriate model listeners.
+	* Adds the kb folder to the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbFolder the k b folder
-	* @return the k b folder that was added
+	* @param kbFolder the kb folder
+	* @return the kb folder that was added
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder addKBFolder(
 		com.liferay.knowledge.base.model.KBFolder kbFolder) {
@@ -65,10 +65,10 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new k b folder with the primary key. Does not add the k b folder to the database.
+	* Creates a new kb folder with the primary key. Does not add the kb folder to the database.
 	*
-	* @param kbFolderId the primary key for the new k b folder
-	* @return the new k b folder
+	* @param kbFolderId the primary key for the new kb folder
+	* @return the new kb folder
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder createKBFolder(
 		long kbFolderId) {
@@ -76,10 +76,10 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the k b folder from the database. Also notifies the appropriate model listeners.
+	* Deletes the kb folder from the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbFolder the k b folder
-	* @return the k b folder that was removed
+	* @param kbFolder the kb folder
+	* @return the kb folder that was removed
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder deleteKBFolder(
 		com.liferay.knowledge.base.model.KBFolder kbFolder) {
@@ -87,11 +87,11 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the k b folder with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the kb folder with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbFolderId the primary key of the k b folder
-	* @return the k b folder that was removed
-	* @throws PortalException if a k b folder with the primary key could not be found
+	* @param kbFolderId the primary key of the kb folder
+	* @return the kb folder that was removed
+	* @throws PortalException if a kb folder with the primary key could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder deleteKBFolder(
 		long kbFolderId)
@@ -130,11 +130,11 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the k b folder matching the UUID and group.
+	* Returns the kb folder matching the UUID and group.
 	*
-	* @param uuid the k b folder's UUID
+	* @param uuid the kb folder's UUID
 	* @param groupId the primary key of the group
-	* @return the matching k b folder, or <code>null</code> if a matching k b folder could not be found
+	* @return the matching kb folder, or <code>null</code> if a matching kb folder could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder fetchKBFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
@@ -142,11 +142,11 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the k b folder with the primary key.
+	* Returns the kb folder with the primary key.
 	*
-	* @param kbFolderId the primary key of the k b folder
-	* @return the k b folder
-	* @throws PortalException if a k b folder with the primary key could not be found
+	* @param kbFolderId the primary key of the kb folder
+	* @return the kb folder
+	* @throws PortalException if a kb folder with the primary key could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder getKBFolder(
 		long kbFolderId)
@@ -162,12 +162,12 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the k b folder matching the UUID and group.
+	* Returns the kb folder matching the UUID and group.
 	*
-	* @param uuid the k b folder's UUID
+	* @param uuid the kb folder's UUID
 	* @param groupId the primary key of the group
-	* @return the matching k b folder
-	* @throws PortalException if a matching k b folder could not be found
+	* @return the matching kb folder
+	* @throws PortalException if a matching kb folder could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder getKBFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
@@ -176,10 +176,10 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Updates the k b folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the kb folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param kbFolder the k b folder
-	* @return the k b folder that was updated
+	* @param kbFolder the kb folder
+	* @return the kb folder that was updated
 	*/
 	public static com.liferay.knowledge.base.model.KBFolder updateKBFolder(
 		com.liferay.knowledge.base.model.KBFolder kbFolder) {
@@ -251,9 +251,9 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of k b folders.
+	* Returns the number of kb folders.
 	*
-	* @return the number of k b folders
+	* @return the number of kb folders
 	*/
 	public static int getKBFoldersCount() {
 		return getService().getKBFoldersCount();
@@ -324,15 +324,15 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the k b folders.
+	* Returns a range of all the kb folders.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.knowledge.base.model.impl.KBFolderModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of k b folders
-	* @param end the upper bound of the range of k b folders (not inclusive)
-	* @return the range of k b folders
+	* @param start the lower bound of the range of kb folders
+	* @param end the upper bound of the range of kb folders (not inclusive)
+	* @return the range of kb folders
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFolders(
 		int start, int end) {
@@ -355,11 +355,11 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the k b folders matching the UUID and company.
+	* Returns all the kb folders matching the UUID and company.
 	*
-	* @param uuid the UUID of the k b folders
+	* @param uuid the UUID of the kb folders
 	* @param companyId the primary key of the company
-	* @return the matching k b folders, or an empty list if no matches were found
+	* @return the matching kb folders, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFoldersByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -367,14 +367,14 @@ public class KBFolderLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of k b folders matching the UUID and company.
+	* Returns a range of kb folders matching the UUID and company.
 	*
-	* @param uuid the UUID of the k b folders
+	* @param uuid the UUID of the kb folders
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of k b folders
-	* @param end the upper bound of the range of k b folders (not inclusive)
+	* @param start the lower bound of the range of kb folders
+	* @param end the upper bound of the range of kb folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching k b folders, or an empty list if no matches were found
+	* @return the range of matching kb folders, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBFolder> getKBFoldersByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,

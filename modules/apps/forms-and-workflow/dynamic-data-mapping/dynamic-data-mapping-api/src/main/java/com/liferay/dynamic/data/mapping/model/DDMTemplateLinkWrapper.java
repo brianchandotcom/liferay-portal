@@ -161,9 +161,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the fully qualified class name of this d d m template link.
+	* Returns the fully qualified class name of this ddm template link.
 	*
-	* @return the fully qualified class name of this d d m template link
+	* @return the fully qualified class name of this ddm template link
 	*/
 	@Override
 	public java.lang.String getClassName() {
@@ -181,9 +181,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the class name ID of this d d m template link.
+	* Returns the class name ID of this ddm template link.
 	*
-	* @return the class name ID of this d d m template link
+	* @return the class name ID of this ddm template link
 	*/
 	@Override
 	public long getClassNameId() {
@@ -191,9 +191,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the class p k of this d d m template link.
+	* Returns the class pk of this ddm template link.
 	*
-	* @return the class p k of this d d m template link
+	* @return the class pk of this ddm template link
 	*/
 	@Override
 	public long getClassPK() {
@@ -201,9 +201,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the company ID of this d d m template link.
+	* Returns the company ID of this ddm template link.
 	*
-	* @return the company ID of this d d m template link
+	* @return the company ID of this ddm template link
 	*/
 	@Override
 	public long getCompanyId() {
@@ -211,9 +211,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the primary key of this d d m template link.
+	* Returns the primary key of this ddm template link.
 	*
-	* @return the primary key of this d d m template link
+	* @return the primary key of this ddm template link
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -221,9 +221,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the template ID of this d d m template link.
+	* Returns the template ID of this ddm template link.
 	*
-	* @return the template ID of this d d m template link
+	* @return the template ID of this ddm template link
 	*/
 	@Override
 	public long getTemplateId() {
@@ -231,9 +231,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Returns the template link ID of this d d m template link.
+	* Returns the template link ID of this ddm template link.
 	*
-	* @return the template link ID of this d d m template link
+	* @return the template link ID of this ddm template link
 	*/
 	@Override
 	public long getTemplateLinkId() {
@@ -256,9 +256,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Sets the class name ID of this d d m template link.
+	* Sets the class name ID of this ddm template link.
 	*
-	* @param classNameId the class name ID of this d d m template link
+	* @param classNameId the class name ID of this ddm template link
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
@@ -266,9 +266,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Sets the class p k of this d d m template link.
+	* Sets the class pk of this ddm template link.
 	*
-	* @param classPK the class p k of this d d m template link
+	* @param classPK the class pk of this ddm template link
 	*/
 	@Override
 	public void setClassPK(long classPK) {
@@ -276,9 +276,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Sets the company ID of this d d m template link.
+	* Sets the company ID of this ddm template link.
 	*
-	* @param companyId the company ID of this d d m template link
+	* @param companyId the company ID of this ddm template link
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -307,9 +307,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Sets the primary key of this d d m template link.
+	* Sets the primary key of this ddm template link.
 	*
-	* @param primaryKey the primary key of this d d m template link
+	* @param primaryKey the primary key of this ddm template link
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -322,9 +322,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Sets the template ID of this d d m template link.
+	* Sets the template ID of this ddm template link.
 	*
-	* @param templateId the template ID of this d d m template link
+	* @param templateId the template ID of this ddm template link
 	*/
 	@Override
 	public void setTemplateId(long templateId) {
@@ -332,9 +332,9 @@ public class DDMTemplateLinkWrapper implements DDMTemplateLink,
 	}
 
 	/**
-	* Sets the template link ID of this d d m template link.
+	* Sets the template link ID of this ddm template link.
 	*
-	* @param templateLinkId the template link ID of this d d m template link
+	* @param templateLinkId the template link ID of this ddm template link
 	*/
 	@Override
 	public void setTemplateLinkId(long templateLinkId) {

@@ -33,18 +33,18 @@ public class SyncDLObjectFinderBaseImpl extends BasePersistenceImpl<SyncDLObject
 	}
 
 	/**
-	 * Returns the sync d l object persistence.
+	 * Returns the sync dl object persistence.
 	 *
-	 * @return the sync d l object persistence
+	 * @return the sync dl object persistence
 	 */
 	public SyncDLObjectPersistence getSyncDLObjectPersistence() {
 		return syncDLObjectPersistence;
 	}
 
 	/**
-	 * Sets the sync d l object persistence.
+	 * Sets the sync dl object persistence.
 	 *
-	 * @param syncDLObjectPersistence the sync d l object persistence
+	 * @param syncDLObjectPersistence the sync dl object persistence
 	 */
 	public void setSyncDLObjectPersistence(
 		SyncDLObjectPersistence syncDLObjectPersistence) {

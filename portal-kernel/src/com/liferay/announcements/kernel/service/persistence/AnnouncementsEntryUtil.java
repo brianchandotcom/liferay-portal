@@ -835,7 +835,7 @@ public class AnnouncementsEntryUtil {
 	* Returns all the announcements entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching announcements entries
 	*/
 	public static List<AnnouncementsEntry> findByC_C(long classNameId,
@@ -851,7 +851,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
@@ -869,7 +869,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -891,7 +891,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -911,7 +911,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
 	* @throws NoSuchEntryException if a matching announcements entry could not be found
@@ -927,7 +927,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
@@ -941,7 +941,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
 	* @throws NoSuchEntryException if a matching announcements entry could not be found
@@ -957,7 +957,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
 	*/
@@ -972,7 +972,7 @@ public class AnnouncementsEntryUtil {
 	*
 	* @param entryId the primary key of the current announcements entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
@@ -990,7 +990,7 @@ public class AnnouncementsEntryUtil {
 	* Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching announcements entries that the user has permission to view
 	*/
 	public static List<AnnouncementsEntry> filterFindByC_C(long classNameId,
@@ -1006,7 +1006,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
@@ -1024,7 +1024,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1043,7 +1043,7 @@ public class AnnouncementsEntryUtil {
 	*
 	* @param entryId the primary key of the current announcements entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws NoSuchEntryException if a announcements entry with the primary key could not be found
@@ -1061,7 +1061,7 @@ public class AnnouncementsEntryUtil {
 	* Removes all the announcements entries where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
@@ -1071,7 +1071,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the number of announcements entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching announcements entries
 	*/
 	public static int countByC_C(long classNameId, long classPK) {
@@ -1082,7 +1082,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the number of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching announcements entries that the user has permission to view
 	*/
 	public static int filterCountByC_C(long classNameId, long classPK) {
@@ -1093,7 +1093,7 @@ public class AnnouncementsEntryUtil {
 	* Returns all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @return the matching announcements entries
 	*/
@@ -1110,7 +1110,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
@@ -1130,7 +1130,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
@@ -1153,7 +1153,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
@@ -1174,7 +1174,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
@@ -1193,7 +1193,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
@@ -1210,7 +1210,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
@@ -1229,7 +1229,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
@@ -1247,7 +1247,7 @@ public class AnnouncementsEntryUtil {
 	*
 	* @param entryId the primary key of the current announcements entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
@@ -1266,7 +1266,7 @@ public class AnnouncementsEntryUtil {
 	* Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @return the matching announcements entries that the user has permission to view
 	*/
@@ -1283,7 +1283,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
@@ -1303,7 +1303,7 @@ public class AnnouncementsEntryUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
@@ -1323,7 +1323,7 @@ public class AnnouncementsEntryUtil {
 	*
 	* @param entryId the primary key of the current announcements entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
@@ -1342,7 +1342,7 @@ public class AnnouncementsEntryUtil {
 	* Removes all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	*/
 	public static void removeByC_C_A(long classNameId, long classPK,
@@ -1354,7 +1354,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the number of announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @return the number of matching announcements entries
 	*/
@@ -1366,7 +1366,7 @@ public class AnnouncementsEntryUtil {
 	* Returns the number of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param alert the alert
 	* @return the number of matching announcements entries that the user has permission to view
 	*/

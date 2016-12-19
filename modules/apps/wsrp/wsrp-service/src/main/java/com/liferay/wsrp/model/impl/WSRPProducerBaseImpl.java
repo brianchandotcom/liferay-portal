@@ -37,7 +37,7 @@ public abstract class WSRPProducerBaseImpl extends WSRPProducerModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a w s r p producer model instance should use the {@link WSRPProducer} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a wsrp producer model instance should use the {@link WSRPProducer} interface instead.
 	 */
 	@Override
 	public void persist() {

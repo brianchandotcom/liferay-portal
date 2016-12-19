@@ -51,7 +51,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the d d m template version service.
+ * The persistence implementation for the ddm template version service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -68,7 +68,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DDMTemplateVersionUtil} to access the d d m template version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DDMTemplateVersionUtil} to access the ddm template version persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DDMTemplateVersionImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -110,10 +110,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m template versions where templateId = &#63;.
+	 * Returns all the ddm template versions where templateId = &#63;.
 	 *
 	 * @param templateId the template ID
-	 * @return the matching d d m template versions
+	 * @return the matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByTemplateId(long templateId) {
@@ -122,16 +122,16 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns a range of all the d d m template versions where templateId = &#63;.
+	 * Returns a range of all the ddm template versions where templateId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param templateId the template ID
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
-	 * @return the range of matching d d m template versions
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
+	 * @return the range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByTemplateId(long templateId,
@@ -140,17 +140,17 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m template versions where templateId = &#63;.
+	 * Returns an ordered range of all the ddm template versions where templateId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param templateId the template ID
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m template versions
+	 * @return the ordered range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByTemplateId(long templateId,
@@ -160,18 +160,18 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m template versions where templateId = &#63;.
+	 * Returns an ordered range of all the ddm template versions where templateId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param templateId the template ID
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m template versions
+	 * @return the ordered range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByTemplateId(long templateId,
@@ -278,12 +278,12 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the first d d m template version in the ordered set where templateId = &#63;.
+	 * Returns the first ddm template version in the ordered set where templateId = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m template version
-	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 * @return the first matching ddm template version
+	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByTemplateId_First(long templateId,
@@ -309,11 +309,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the first d d m template version in the ordered set where templateId = &#63;.
+	 * Returns the first ddm template version in the ordered set where templateId = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 * @return the first matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByTemplateId_First(long templateId,
@@ -329,12 +329,12 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the last d d m template version in the ordered set where templateId = &#63;.
+	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m template version
-	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 * @return the last matching ddm template version
+	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByTemplateId_Last(long templateId,
@@ -360,11 +360,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the last d d m template version in the ordered set where templateId = &#63;.
+	 * Returns the last ddm template version in the ordered set where templateId = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByTemplateId_Last(long templateId,
@@ -386,13 +386,13 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63;.
+	 * Returns the ddm template versions before and after the current ddm template version in the ordered set where templateId = &#63;.
 	 *
-	 * @param templateVersionId the primary key of the current d d m template version
+	 * @param templateVersionId the primary key of the current ddm template version
 	 * @param templateId the template ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m template version
-	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 * @return the previous, current, and next ddm template version
+	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion[] findByTemplateId_PrevAndNext(
@@ -534,7 +534,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Removes all the d d m template versions where templateId = &#63; from the database.
+	 * Removes all the ddm template versions where templateId = &#63; from the database.
 	 *
 	 * @param templateId the template ID
 	 */
@@ -547,10 +547,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the number of d d m template versions where templateId = &#63;.
+	 * Returns the number of ddm template versions where templateId = &#63;.
 	 *
 	 * @param templateId the template ID
-	 * @return the number of matching d d m template versions
+	 * @return the number of matching ddm template versions
 	 */
 	@Override
 	public int countByTemplateId(long templateId) {
@@ -611,12 +611,12 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the d d m template version where templateId = &#63; and version = &#63; or throws a {@link NoSuchTemplateVersionException} if it could not be found.
+	 * Returns the ddm template version where templateId = &#63; and version = &#63; or throws a {@link NoSuchTemplateVersionException} if it could not be found.
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
-	 * @return the matching d d m template version
-	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 * @return the matching ddm template version
+	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByT_V(long templateId, String version)
@@ -647,11 +647,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
-	 * @return the matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 * @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByT_V(long templateId, String version) {
@@ -659,12 +659,12 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 * @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByT_V(long templateId, String version,
@@ -765,11 +765,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Removes the d d m template version where templateId = &#63; and version = &#63; from the database.
+	 * Removes the ddm template version where templateId = &#63; and version = &#63; from the database.
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
-	 * @return the d d m template version that was removed
+	 * @return the ddm template version that was removed
 	 */
 	@Override
 	public DDMTemplateVersion removeByT_V(long templateId, String version)
@@ -780,11 +780,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the number of d d m template versions where templateId = &#63; and version = &#63;.
+	 * Returns the number of ddm template versions where templateId = &#63; and version = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param version the version
-	 * @return the number of matching d d m template versions
+	 * @return the number of matching ddm template versions
 	 */
 	@Override
 	public int countByT_V(long templateId, String version) {
@@ -876,11 +876,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			new String[] { Long.class.getName(), Integer.class.getName() });
 
 	/**
-	 * Returns all the d d m template versions where templateId = &#63; and status = &#63;.
+	 * Returns all the ddm template versions where templateId = &#63; and status = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
-	 * @return the matching d d m template versions
+	 * @return the matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByT_S(long templateId, int status) {
@@ -889,7 +889,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns a range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	 * Returns a range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -897,9 +897,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
-	 * @return the range of matching d d m template versions
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
+	 * @return the range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByT_S(long templateId, int status,
@@ -908,7 +908,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -916,10 +916,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m template versions
+	 * @return the ordered range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByT_S(long templateId, int status,
@@ -929,7 +929,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	 * Returns an ordered range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -937,11 +937,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m template versions
+	 * @return the ordered range of matching ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findByT_S(long templateId, int status,
@@ -1057,13 +1057,13 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 * Returns the first ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m template version
-	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 * @return the first matching ddm template version
+	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByT_S_First(long templateId, int status,
@@ -1092,12 +1092,12 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 * Returns the first ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 * @return the first matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByT_S_First(long templateId, int status,
@@ -1113,13 +1113,13 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m template version
-	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 * @return the last matching ddm template version
+	 * @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByT_S_Last(long templateId, int status,
@@ -1148,12 +1148,12 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 * Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 * @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByT_S_Last(long templateId, int status,
@@ -1175,14 +1175,14 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 * Returns the ddm template versions before and after the current ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	 *
-	 * @param templateVersionId the primary key of the current d d m template version
+	 * @param templateVersionId the primary key of the current ddm template version
 	 * @param templateId the template ID
 	 * @param status the status
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m template version
-	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 * @return the previous, current, and next ddm template version
+	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion[] findByT_S_PrevAndNext(long templateVersionId,
@@ -1328,7 +1328,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Removes all the d d m template versions where templateId = &#63; and status = &#63; from the database.
+	 * Removes all the ddm template versions where templateId = &#63; and status = &#63; from the database.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
@@ -1342,11 +1342,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the number of d d m template versions where templateId = &#63; and status = &#63;.
+	 * Returns the number of ddm template versions where templateId = &#63; and status = &#63;.
 	 *
 	 * @param templateId the template ID
 	 * @param status the status
-	 * @return the number of matching d d m template versions
+	 * @return the number of matching ddm template versions
 	 */
 	@Override
 	public int countByT_S(long templateId, int status) {
@@ -1405,9 +1405,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Caches the d d m template version in the entity cache if it is enabled.
+	 * Caches the ddm template version in the entity cache if it is enabled.
 	 *
-	 * @param ddmTemplateVersion the d d m template version
+	 * @param ddmTemplateVersion the ddm template version
 	 */
 	@Override
 	public void cacheResult(DDMTemplateVersion ddmTemplateVersion) {
@@ -1425,9 +1425,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Caches the d d m template versions in the entity cache if it is enabled.
+	 * Caches the ddm template versions in the entity cache if it is enabled.
 	 *
-	 * @param ddmTemplateVersions the d d m template versions
+	 * @param ddmTemplateVersions the ddm template versions
 	 */
 	@Override
 	public void cacheResult(List<DDMTemplateVersion> ddmTemplateVersions) {
@@ -1445,7 +1445,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Clears the cache for all d d m template versions.
+	 * Clears the cache for all ddm template versions.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1461,7 +1461,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Clears the cache for the d d m template version.
+	 * Clears the cache for the ddm template version.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1532,10 +1532,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Creates a new d d m template version with the primary key. Does not add the d d m template version to the database.
+	 * Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
 	 *
-	 * @param templateVersionId the primary key for the new d d m template version
-	 * @return the new d d m template version
+	 * @param templateVersionId the primary key for the new ddm template version
+	 * @return the new ddm template version
 	 */
 	@Override
 	public DDMTemplateVersion create(long templateVersionId) {
@@ -1550,11 +1550,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Removes the d d m template version with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm template version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param templateVersionId the primary key of the d d m template version
-	 * @return the d d m template version that was removed
-	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 * @param templateVersionId the primary key of the ddm template version
+	 * @return the ddm template version that was removed
+	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion remove(long templateVersionId)
@@ -1563,11 +1563,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Removes the d d m template version with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm template version with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d d m template version
-	 * @return the d d m template version that was removed
-	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm template version
+	 * @return the ddm template version that was removed
+	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion remove(Serializable primaryKey)
@@ -1756,11 +1756,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template version with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the ddm template version with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m template version
-	 * @return the d d m template version
-	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm template version
+	 * @return the ddm template version
+	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByPrimaryKey(Serializable primaryKey)
@@ -1780,11 +1780,11 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template version with the primary key or throws a {@link NoSuchTemplateVersionException} if it could not be found.
+	 * Returns the ddm template version with the primary key or throws a {@link NoSuchTemplateVersionException} if it could not be found.
 	 *
-	 * @param templateVersionId the primary key of the d d m template version
-	 * @return the d d m template version
-	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 * @param templateVersionId the primary key of the ddm template version
+	 * @return the ddm template version
+	 * @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion findByPrimaryKey(long templateVersionId)
@@ -1793,10 +1793,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template version with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm template version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m template version
-	 * @return the d d m template version, or <code>null</code> if a d d m template version with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm template version
+	 * @return the ddm template version, or <code>null</code> if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByPrimaryKey(Serializable primaryKey) {
@@ -1841,10 +1841,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the d d m template version with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm template version with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param templateVersionId the primary key of the d d m template version
-	 * @return the d d m template version, or <code>null</code> if a d d m template version with the primary key could not be found
+	 * @param templateVersionId the primary key of the ddm template version
+	 * @return the ddm template version, or <code>null</code> if a ddm template version with the primary key could not be found
 	 */
 	@Override
 	public DDMTemplateVersion fetchByPrimaryKey(long templateVersionId) {
@@ -1947,9 +1947,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns all the d d m template versions.
+	 * Returns all the ddm template versions.
 	 *
-	 * @return the d d m template versions
+	 * @return the ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findAll() {
@@ -1957,15 +1957,15 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns a range of all the d d m template versions.
+	 * Returns a range of all the ddm template versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
-	 * @return the range of d d m template versions
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
+	 * @return the range of ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findAll(int start, int end) {
@@ -1973,16 +1973,16 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m template versions.
+	 * Returns an ordered range of all the ddm template versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d d m template versions
+	 * @return the ordered range of ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findAll(int start, int end,
@@ -1991,17 +1991,17 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m template versions.
+	 * Returns an ordered range of all the ddm template versions.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m template versions
-	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param start the lower bound of the range of ddm template versions
+	 * @param end the upper bound of the range of ddm template versions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of d d m template versions
+	 * @return the ordered range of ddm template versions
 	 */
 	@Override
 	public List<DDMTemplateVersion> findAll(int start, int end,
@@ -2090,7 +2090,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Removes all the d d m template versions from the database.
+	 * Removes all the ddm template versions from the database.
 	 *
 	 */
 	@Override
@@ -2101,9 +2101,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Returns the number of d d m template versions.
+	 * Returns the number of ddm template versions.
 	 *
-	 * @return the number of d d m template versions
+	 * @return the number of ddm template versions
 	 */
 	@Override
 	public int countAll() {
@@ -2143,7 +2143,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	}
 
 	/**
-	 * Initializes the d d m template version persistence.
+	 * Initializes the ddm template version persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

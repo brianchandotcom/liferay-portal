@@ -46,457 +46,457 @@ public interface SyncDLObjectModel extends BaseModel<SyncDLObject>, ShardedModel
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a sync d l object model instance should use the {@link SyncDLObject} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a sync dl object model instance should use the {@link SyncDLObject} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this sync d l object.
+	 * Returns the primary key of this sync dl object.
 	 *
-	 * @return the primary key of this sync d l object
+	 * @return the primary key of this sync dl object
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this sync d l object.
+	 * Sets the primary key of this sync dl object.
 	 *
-	 * @param primaryKey the primary key of this sync d l object
+	 * @param primaryKey the primary key of this sync dl object
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the sync d l object ID of this sync d l object.
+	 * Returns the sync dl object ID of this sync dl object.
 	 *
-	 * @return the sync d l object ID of this sync d l object
+	 * @return the sync dl object ID of this sync dl object
 	 */
 	public long getSyncDLObjectId();
 
 	/**
-	 * Sets the sync d l object ID of this sync d l object.
+	 * Sets the sync dl object ID of this sync dl object.
 	 *
-	 * @param syncDLObjectId the sync d l object ID of this sync d l object
+	 * @param syncDLObjectId the sync dl object ID of this sync dl object
 	 */
 	public void setSyncDLObjectId(long syncDLObjectId);
 
 	/**
-	 * Returns the company ID of this sync d l object.
+	 * Returns the company ID of this sync dl object.
 	 *
-	 * @return the company ID of this sync d l object
+	 * @return the company ID of this sync dl object
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this sync d l object.
+	 * Sets the company ID of this sync dl object.
 	 *
-	 * @param companyId the company ID of this sync d l object
+	 * @param companyId the company ID of this sync dl object
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this sync d l object.
+	 * Returns the user ID of this sync dl object.
 	 *
-	 * @return the user ID of this sync d l object
+	 * @return the user ID of this sync dl object
 	 */
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this sync d l object.
+	 * Sets the user ID of this sync dl object.
 	 *
-	 * @param userId the user ID of this sync d l object
+	 * @param userId the user ID of this sync dl object
 	 */
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this sync d l object.
+	 * Returns the user uuid of this sync dl object.
 	 *
-	 * @return the user uuid of this sync d l object
+	 * @return the user uuid of this sync dl object
 	 */
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this sync d l object.
+	 * Sets the user uuid of this sync dl object.
 	 *
-	 * @param userUuid the user uuid of this sync d l object
+	 * @param userUuid the user uuid of this sync dl object
 	 */
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this sync d l object.
+	 * Returns the user name of this sync dl object.
 	 *
-	 * @return the user name of this sync d l object
+	 * @return the user name of this sync dl object
 	 */
 	@AutoEscape
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this sync d l object.
+	 * Sets the user name of this sync dl object.
 	 *
-	 * @param userName the user name of this sync d l object
+	 * @param userName the user name of this sync dl object
 	 */
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create time of this sync d l object.
+	 * Returns the create time of this sync dl object.
 	 *
-	 * @return the create time of this sync d l object
+	 * @return the create time of this sync dl object
 	 */
 	public long getCreateTime();
 
 	/**
-	 * Sets the create time of this sync d l object.
+	 * Sets the create time of this sync dl object.
 	 *
-	 * @param createTime the create time of this sync d l object
+	 * @param createTime the create time of this sync dl object
 	 */
 	public void setCreateTime(long createTime);
 
 	/**
-	 * Returns the modified time of this sync d l object.
+	 * Returns the modified time of this sync dl object.
 	 *
-	 * @return the modified time of this sync d l object
+	 * @return the modified time of this sync dl object
 	 */
 	public long getModifiedTime();
 
 	/**
-	 * Sets the modified time of this sync d l object.
+	 * Sets the modified time of this sync dl object.
 	 *
-	 * @param modifiedTime the modified time of this sync d l object
+	 * @param modifiedTime the modified time of this sync dl object
 	 */
 	public void setModifiedTime(long modifiedTime);
 
 	/**
-	 * Returns the repository ID of this sync d l object.
+	 * Returns the repository ID of this sync dl object.
 	 *
-	 * @return the repository ID of this sync d l object
+	 * @return the repository ID of this sync dl object
 	 */
 	public long getRepositoryId();
 
 	/**
-	 * Sets the repository ID of this sync d l object.
+	 * Sets the repository ID of this sync dl object.
 	 *
-	 * @param repositoryId the repository ID of this sync d l object
+	 * @param repositoryId the repository ID of this sync dl object
 	 */
 	public void setRepositoryId(long repositoryId);
 
 	/**
-	 * Returns the parent folder ID of this sync d l object.
+	 * Returns the parent folder ID of this sync dl object.
 	 *
-	 * @return the parent folder ID of this sync d l object
+	 * @return the parent folder ID of this sync dl object
 	 */
 	public long getParentFolderId();
 
 	/**
-	 * Sets the parent folder ID of this sync d l object.
+	 * Sets the parent folder ID of this sync dl object.
 	 *
-	 * @param parentFolderId the parent folder ID of this sync d l object
+	 * @param parentFolderId the parent folder ID of this sync dl object
 	 */
 	public void setParentFolderId(long parentFolderId);
 
 	/**
-	 * Returns the tree path of this sync d l object.
+	 * Returns the tree path of this sync dl object.
 	 *
-	 * @return the tree path of this sync d l object
+	 * @return the tree path of this sync dl object
 	 */
 	@AutoEscape
 	public String getTreePath();
 
 	/**
-	 * Sets the tree path of this sync d l object.
+	 * Sets the tree path of this sync dl object.
 	 *
-	 * @param treePath the tree path of this sync d l object
+	 * @param treePath the tree path of this sync dl object
 	 */
 	public void setTreePath(String treePath);
 
 	/**
-	 * Returns the name of this sync d l object.
+	 * Returns the name of this sync dl object.
 	 *
-	 * @return the name of this sync d l object
+	 * @return the name of this sync dl object
 	 */
 	@AutoEscape
 	public String getName();
 
 	/**
-	 * Sets the name of this sync d l object.
+	 * Sets the name of this sync dl object.
 	 *
-	 * @param name the name of this sync d l object
+	 * @param name the name of this sync dl object
 	 */
 	public void setName(String name);
 
 	/**
-	 * Returns the extension of this sync d l object.
+	 * Returns the extension of this sync dl object.
 	 *
-	 * @return the extension of this sync d l object
+	 * @return the extension of this sync dl object
 	 */
 	@AutoEscape
 	public String getExtension();
 
 	/**
-	 * Sets the extension of this sync d l object.
+	 * Sets the extension of this sync dl object.
 	 *
-	 * @param extension the extension of this sync d l object
+	 * @param extension the extension of this sync dl object
 	 */
 	public void setExtension(String extension);
 
 	/**
-	 * Returns the mime type of this sync d l object.
+	 * Returns the mime type of this sync dl object.
 	 *
-	 * @return the mime type of this sync d l object
+	 * @return the mime type of this sync dl object
 	 */
 	@AutoEscape
 	public String getMimeType();
 
 	/**
-	 * Sets the mime type of this sync d l object.
+	 * Sets the mime type of this sync dl object.
 	 *
-	 * @param mimeType the mime type of this sync d l object
+	 * @param mimeType the mime type of this sync dl object
 	 */
 	public void setMimeType(String mimeType);
 
 	/**
-	 * Returns the description of this sync d l object.
+	 * Returns the description of this sync dl object.
 	 *
-	 * @return the description of this sync d l object
+	 * @return the description of this sync dl object
 	 */
 	@AutoEscape
 	public String getDescription();
 
 	/**
-	 * Sets the description of this sync d l object.
+	 * Sets the description of this sync dl object.
 	 *
-	 * @param description the description of this sync d l object
+	 * @param description the description of this sync dl object
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Returns the change log of this sync d l object.
+	 * Returns the change log of this sync dl object.
 	 *
-	 * @return the change log of this sync d l object
+	 * @return the change log of this sync dl object
 	 */
 	@AutoEscape
 	public String getChangeLog();
 
 	/**
-	 * Sets the change log of this sync d l object.
+	 * Sets the change log of this sync dl object.
 	 *
-	 * @param changeLog the change log of this sync d l object
+	 * @param changeLog the change log of this sync dl object
 	 */
 	public void setChangeLog(String changeLog);
 
 	/**
-	 * Returns the extra settings of this sync d l object.
+	 * Returns the extra settings of this sync dl object.
 	 *
-	 * @return the extra settings of this sync d l object
+	 * @return the extra settings of this sync dl object
 	 */
 	@AutoEscape
 	public String getExtraSettings();
 
 	/**
-	 * Sets the extra settings of this sync d l object.
+	 * Sets the extra settings of this sync dl object.
 	 *
-	 * @param extraSettings the extra settings of this sync d l object
+	 * @param extraSettings the extra settings of this sync dl object
 	 */
 	public void setExtraSettings(String extraSettings);
 
 	/**
-	 * Returns the version of this sync d l object.
+	 * Returns the version of this sync dl object.
 	 *
-	 * @return the version of this sync d l object
+	 * @return the version of this sync dl object
 	 */
 	@AutoEscape
 	public String getVersion();
 
 	/**
-	 * Sets the version of this sync d l object.
+	 * Sets the version of this sync dl object.
 	 *
-	 * @param version the version of this sync d l object
+	 * @param version the version of this sync dl object
 	 */
 	public void setVersion(String version);
 
 	/**
-	 * Returns the version ID of this sync d l object.
+	 * Returns the version ID of this sync dl object.
 	 *
-	 * @return the version ID of this sync d l object
+	 * @return the version ID of this sync dl object
 	 */
 	public long getVersionId();
 
 	/**
-	 * Sets the version ID of this sync d l object.
+	 * Sets the version ID of this sync dl object.
 	 *
-	 * @param versionId the version ID of this sync d l object
+	 * @param versionId the version ID of this sync dl object
 	 */
 	public void setVersionId(long versionId);
 
 	/**
-	 * Returns the size of this sync d l object.
+	 * Returns the size of this sync dl object.
 	 *
-	 * @return the size of this sync d l object
+	 * @return the size of this sync dl object
 	 */
 	public long getSize();
 
 	/**
-	 * Sets the size of this sync d l object.
+	 * Sets the size of this sync dl object.
 	 *
-	 * @param size the size of this sync d l object
+	 * @param size the size of this sync dl object
 	 */
 	public void setSize(long size);
 
 	/**
-	 * Returns the checksum of this sync d l object.
+	 * Returns the checksum of this sync dl object.
 	 *
-	 * @return the checksum of this sync d l object
+	 * @return the checksum of this sync dl object
 	 */
 	@AutoEscape
 	public String getChecksum();
 
 	/**
-	 * Sets the checksum of this sync d l object.
+	 * Sets the checksum of this sync dl object.
 	 *
-	 * @param checksum the checksum of this sync d l object
+	 * @param checksum the checksum of this sync dl object
 	 */
 	public void setChecksum(String checksum);
 
 	/**
-	 * Returns the event of this sync d l object.
+	 * Returns the event of this sync dl object.
 	 *
-	 * @return the event of this sync d l object
+	 * @return the event of this sync dl object
 	 */
 	@AutoEscape
 	public String getEvent();
 
 	/**
-	 * Sets the event of this sync d l object.
+	 * Sets the event of this sync dl object.
 	 *
-	 * @param event the event of this sync d l object
+	 * @param event the event of this sync dl object
 	 */
 	public void setEvent(String event);
 
 	/**
-	 * Returns the lan token key of this sync d l object.
+	 * Returns the lan token key of this sync dl object.
 	 *
-	 * @return the lan token key of this sync d l object
+	 * @return the lan token key of this sync dl object
 	 */
 	@AutoEscape
 	public String getLanTokenKey();
 
 	/**
-	 * Sets the lan token key of this sync d l object.
+	 * Sets the lan token key of this sync dl object.
 	 *
-	 * @param lanTokenKey the lan token key of this sync d l object
+	 * @param lanTokenKey the lan token key of this sync dl object
 	 */
 	public void setLanTokenKey(String lanTokenKey);
 
 	/**
-	 * Returns the last permission change date of this sync d l object.
+	 * Returns the last permission change date of this sync dl object.
 	 *
-	 * @return the last permission change date of this sync d l object
+	 * @return the last permission change date of this sync dl object
 	 */
 	public Date getLastPermissionChangeDate();
 
 	/**
-	 * Sets the last permission change date of this sync d l object.
+	 * Sets the last permission change date of this sync dl object.
 	 *
-	 * @param lastPermissionChangeDate the last permission change date of this sync d l object
+	 * @param lastPermissionChangeDate the last permission change date of this sync dl object
 	 */
 	public void setLastPermissionChangeDate(Date lastPermissionChangeDate);
 
 	/**
-	 * Returns the lock expiration date of this sync d l object.
+	 * Returns the lock expiration date of this sync dl object.
 	 *
-	 * @return the lock expiration date of this sync d l object
+	 * @return the lock expiration date of this sync dl object
 	 */
 	public Date getLockExpirationDate();
 
 	/**
-	 * Sets the lock expiration date of this sync d l object.
+	 * Sets the lock expiration date of this sync dl object.
 	 *
-	 * @param lockExpirationDate the lock expiration date of this sync d l object
+	 * @param lockExpirationDate the lock expiration date of this sync dl object
 	 */
 	public void setLockExpirationDate(Date lockExpirationDate);
 
 	/**
-	 * Returns the lock user ID of this sync d l object.
+	 * Returns the lock user ID of this sync dl object.
 	 *
-	 * @return the lock user ID of this sync d l object
+	 * @return the lock user ID of this sync dl object
 	 */
 	public long getLockUserId();
 
 	/**
-	 * Sets the lock user ID of this sync d l object.
+	 * Sets the lock user ID of this sync dl object.
 	 *
-	 * @param lockUserId the lock user ID of this sync d l object
+	 * @param lockUserId the lock user ID of this sync dl object
 	 */
 	public void setLockUserId(long lockUserId);
 
 	/**
-	 * Returns the lock user uuid of this sync d l object.
+	 * Returns the lock user uuid of this sync dl object.
 	 *
-	 * @return the lock user uuid of this sync d l object
+	 * @return the lock user uuid of this sync dl object
 	 */
 	public String getLockUserUuid();
 
 	/**
-	 * Sets the lock user uuid of this sync d l object.
+	 * Sets the lock user uuid of this sync dl object.
 	 *
-	 * @param lockUserUuid the lock user uuid of this sync d l object
+	 * @param lockUserUuid the lock user uuid of this sync dl object
 	 */
 	public void setLockUserUuid(String lockUserUuid);
 
 	/**
-	 * Returns the lock user name of this sync d l object.
+	 * Returns the lock user name of this sync dl object.
 	 *
-	 * @return the lock user name of this sync d l object
+	 * @return the lock user name of this sync dl object
 	 */
 	@AutoEscape
 	public String getLockUserName();
 
 	/**
-	 * Sets the lock user name of this sync d l object.
+	 * Sets the lock user name of this sync dl object.
 	 *
-	 * @param lockUserName the lock user name of this sync d l object
+	 * @param lockUserName the lock user name of this sync dl object
 	 */
 	public void setLockUserName(String lockUserName);
 
 	/**
-	 * Returns the type of this sync d l object.
+	 * Returns the type of this sync dl object.
 	 *
-	 * @return the type of this sync d l object
+	 * @return the type of this sync dl object
 	 */
 	@AutoEscape
 	public String getType();
 
 	/**
-	 * Sets the type of this sync d l object.
+	 * Sets the type of this sync dl object.
 	 *
-	 * @param type the type of this sync d l object
+	 * @param type the type of this sync dl object
 	 */
 	public void setType(String type);
 
 	/**
-	 * Returns the type p k of this sync d l object.
+	 * Returns the type pk of this sync dl object.
 	 *
-	 * @return the type p k of this sync d l object
+	 * @return the type pk of this sync dl object
 	 */
 	public long getTypePK();
 
 	/**
-	 * Sets the type p k of this sync d l object.
+	 * Sets the type pk of this sync dl object.
 	 *
-	 * @param typePK the type p k of this sync d l object
+	 * @param typePK the type pk of this sync dl object
 	 */
 	public void setTypePK(long typePK);
 
 	/**
-	 * Returns the type uuid of this sync d l object.
+	 * Returns the type uuid of this sync dl object.
 	 *
-	 * @return the type uuid of this sync d l object
+	 * @return the type uuid of this sync dl object
 	 */
 	@AutoEscape
 	public String getTypeUuid();
 
 	/**
-	 * Sets the type uuid of this sync d l object.
+	 * Sets the type uuid of this sync dl object.
 	 *
-	 * @param typeUuid the type uuid of this sync d l object
+	 * @param typeUuid the type uuid of this sync dl object
 	 */
 	public void setTypeUuid(String typeUuid);
 

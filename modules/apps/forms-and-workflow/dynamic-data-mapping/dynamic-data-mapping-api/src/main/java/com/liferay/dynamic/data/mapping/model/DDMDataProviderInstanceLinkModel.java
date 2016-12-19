@@ -44,78 +44,78 @@ public interface DDMDataProviderInstanceLinkModel extends BaseModel<DDMDataProvi
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d d m data provider instance link model instance should use the {@link DDMDataProviderInstanceLink} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a ddm data provider instance link model instance should use the {@link DDMDataProviderInstanceLink} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d d m data provider instance link.
+	 * Returns the primary key of this ddm data provider instance link.
 	 *
-	 * @return the primary key of this d d m data provider instance link
+	 * @return the primary key of this ddm data provider instance link
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d d m data provider instance link.
+	 * Sets the primary key of this ddm data provider instance link.
 	 *
-	 * @param primaryKey the primary key of this d d m data provider instance link
+	 * @param primaryKey the primary key of this ddm data provider instance link
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the data provider instance link ID of this d d m data provider instance link.
+	 * Returns the data provider instance link ID of this ddm data provider instance link.
 	 *
-	 * @return the data provider instance link ID of this d d m data provider instance link
+	 * @return the data provider instance link ID of this ddm data provider instance link
 	 */
 	public long getDataProviderInstanceLinkId();
 
 	/**
-	 * Sets the data provider instance link ID of this d d m data provider instance link.
+	 * Sets the data provider instance link ID of this ddm data provider instance link.
 	 *
-	 * @param dataProviderInstanceLinkId the data provider instance link ID of this d d m data provider instance link
+	 * @param dataProviderInstanceLinkId the data provider instance link ID of this ddm data provider instance link
 	 */
 	public void setDataProviderInstanceLinkId(long dataProviderInstanceLinkId);
 
 	/**
-	 * Returns the company ID of this d d m data provider instance link.
+	 * Returns the company ID of this ddm data provider instance link.
 	 *
-	 * @return the company ID of this d d m data provider instance link
+	 * @return the company ID of this ddm data provider instance link
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d d m data provider instance link.
+	 * Sets the company ID of this ddm data provider instance link.
 	 *
-	 * @param companyId the company ID of this d d m data provider instance link
+	 * @param companyId the company ID of this ddm data provider instance link
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the data provider instance ID of this d d m data provider instance link.
+	 * Returns the data provider instance ID of this ddm data provider instance link.
 	 *
-	 * @return the data provider instance ID of this d d m data provider instance link
+	 * @return the data provider instance ID of this ddm data provider instance link
 	 */
 	public long getDataProviderInstanceId();
 
 	/**
-	 * Sets the data provider instance ID of this d d m data provider instance link.
+	 * Sets the data provider instance ID of this ddm data provider instance link.
 	 *
-	 * @param dataProviderInstanceId the data provider instance ID of this d d m data provider instance link
+	 * @param dataProviderInstanceId the data provider instance ID of this ddm data provider instance link
 	 */
 	public void setDataProviderInstanceId(long dataProviderInstanceId);
 
 	/**
-	 * Returns the structure ID of this d d m data provider instance link.
+	 * Returns the structure ID of this ddm data provider instance link.
 	 *
-	 * @return the structure ID of this d d m data provider instance link
+	 * @return the structure ID of this ddm data provider instance link
 	 */
 	public long getStructureId();
 
 	/**
-	 * Sets the structure ID of this d d m data provider instance link.
+	 * Sets the structure ID of this ddm data provider instance link.
 	 *
-	 * @param structureId the structure ID of this d d m data provider instance link
+	 * @param structureId the structure ID of this ddm data provider instance link
 	 */
 	public void setStructureId(long structureId);
 

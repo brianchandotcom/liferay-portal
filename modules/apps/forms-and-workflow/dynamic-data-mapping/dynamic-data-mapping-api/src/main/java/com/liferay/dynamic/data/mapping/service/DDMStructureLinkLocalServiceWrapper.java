@@ -35,10 +35,10 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Adds the d d m structure link to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm structure link to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureLink the d d m structure link
-	* @return the d d m structure link that was added
+	* @param ddmStructureLink the ddm structure link
+	* @return the ddm structure link that was added
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLink addDDMStructureLink(
@@ -54,10 +54,10 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Creates a new d d m structure link with the primary key. Does not add the d d m structure link to the database.
+	* Creates a new ddm structure link with the primary key. Does not add the ddm structure link to the database.
 	*
-	* @param structureLinkId the primary key for the new d d m structure link
-	* @return the new d d m structure link
+	* @param structureLinkId the primary key for the new ddm structure link
+	* @return the new ddm structure link
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLink createDDMStructureLink(
@@ -66,10 +66,10 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d m structure link from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm structure link from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureLink the d d m structure link
-	* @return the d d m structure link that was removed
+	* @param ddmStructureLink the ddm structure link
+	* @return the ddm structure link that was removed
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLink deleteDDMStructureLink(
@@ -78,11 +78,11 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d m structure link with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm structure link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param structureLinkId the primary key of the d d m structure link
-	* @return the d d m structure link that was removed
-	* @throws PortalException if a d d m structure link with the primary key could not be found
+	* @param structureLinkId the primary key of the ddm structure link
+	* @return the ddm structure link that was removed
+	* @throws PortalException if a ddm structure link with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLink deleteDDMStructureLink(
@@ -98,11 +98,11 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns the d d m structure link with the primary key.
+	* Returns the ddm structure link with the primary key.
 	*
-	* @param structureLinkId the primary key of the d d m structure link
-	* @return the d d m structure link
-	* @throws PortalException if a d d m structure link with the primary key could not be found
+	* @param structureLinkId the primary key of the ddm structure link
+	* @return the ddm structure link
+	* @throws PortalException if a ddm structure link with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLink getDDMStructureLink(
@@ -127,10 +127,10 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Updates the d d m structure link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm structure link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureLink the d d m structure link
-	* @return the d d m structure link that was updated
+	* @param ddmStructureLink the ddm structure link
+	* @return the ddm structure link that was updated
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMStructureLink updateDDMStructureLink(
@@ -179,9 +179,9 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of d d m structure links.
+	* Returns the number of ddm structure links.
 	*
-	* @return the number of d d m structure links
+	* @return the number of ddm structure links
 	*/
 	@Override
 	public int getDDMStructureLinksCount() {
@@ -265,15 +265,15 @@ public class DDMStructureLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the d d m structure links.
+	* Returns a range of all the ddm structure links.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m structure links
-	* @param end the upper bound of the range of d d m structure links (not inclusive)
-	* @return the range of d d m structure links
+	* @param start the lower bound of the range of ddm structure links
+	* @param end the upper bound of the range of ddm structure links (not inclusive)
+	* @return the range of ddm structure links
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructureLink> getDDMStructureLinks(

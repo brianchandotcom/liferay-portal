@@ -57,7 +57,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the d d m structure layout service.
+ * The persistence implementation for the ddm structure layout service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -74,7 +74,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DDMStructureLayoutUtil} to access the d d m structure layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DDMStructureLayoutUtil} to access the ddm structure layout persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DDMStructureLayoutImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -114,10 +114,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the d d m structure layouts where uuid = &#63;.
+	 * Returns all the ddm structure layouts where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching d d m structure layouts
+	 * @return the matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid(String uuid) {
@@ -125,16 +125,16 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns a range of all the d d m structure layouts where uuid = &#63;.
+	 * Returns a range of all the ddm structure layouts where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
-	 * @return the range of matching d d m structure layouts
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @return the range of matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid(String uuid, int start, int end) {
@@ -142,17 +142,17 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure layouts where uuid = &#63;.
+	 * Returns an ordered range of all the ddm structure layouts where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structure layouts
+	 * @return the ordered range of matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid(String uuid, int start, int end,
@@ -161,18 +161,18 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure layouts where uuid = &#63;.
+	 * Returns an ordered range of all the ddm structure layouts where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structure layouts
+	 * @return the ordered range of matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid(String uuid, int start, int end,
@@ -292,12 +292,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the first d d m structure layout in the ordered set where uuid = &#63;.
+	 * Returns the first ddm structure layout in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @return the first matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_First(String uuid,
@@ -323,11 +323,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the first d d m structure layout in the ordered set where uuid = &#63;.
+	 * Returns the first ddm structure layout in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByUuid_First(String uuid,
@@ -342,12 +342,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the last d d m structure layout in the ordered set where uuid = &#63;.
+	 * Returns the last ddm structure layout in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @return the last matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_Last(String uuid,
@@ -373,11 +373,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the last d d m structure layout in the ordered set where uuid = &#63;.
+	 * Returns the last ddm structure layout in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByUuid_Last(String uuid,
@@ -399,13 +399,13 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layouts before and after the current d d m structure layout in the ordered set where uuid = &#63;.
+	 * Returns the ddm structure layouts before and after the current ddm structure layout in the ordered set where uuid = &#63;.
 	 *
-	 * @param structureLayoutId the primary key of the current d d m structure layout
+	 * @param structureLayoutId the primary key of the current ddm structure layout
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @return the previous, current, and next ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout[] findByUuid_PrevAndNext(long structureLayoutId,
@@ -560,7 +560,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes all the d d m structure layouts where uuid = &#63; from the database.
+	 * Removes all the ddm structure layouts where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
@@ -573,10 +573,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the number of d d m structure layouts where uuid = &#63;.
+	 * Returns the number of ddm structure layouts where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching d d m structure layouts
+	 * @return the number of matching ddm structure layouts
 	 */
 	@Override
 	public int countByUuid(String uuid) {
@@ -653,12 +653,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the d d m structure layout where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
+	 * Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @return the matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUUID_G(String uuid, long groupId)
@@ -689,11 +689,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByUUID_G(String uuid, long groupId) {
@@ -701,12 +701,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure layout where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByUUID_G(String uuid, long groupId,
@@ -807,11 +807,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes the d d m structure layout where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the ddm structure layout where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the d d m structure layout that was removed
+	 * @return the ddm structure layout that was removed
 	 */
 	@Override
 	public DDMStructureLayout removeByUUID_G(String uuid, long groupId)
@@ -822,11 +822,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the number of d d m structure layouts where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of ddm structure layouts where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching d d m structure layouts
+	 * @return the number of matching ddm structure layouts
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
@@ -919,11 +919,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structure layouts where uuid = &#63; and companyId = &#63;.
+	 * Returns all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching d d m structure layouts
+	 * @return the matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid_C(String uuid, long companyId) {
@@ -932,7 +932,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns a range of all the d d m structure layouts where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -940,9 +940,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
-	 * @return the range of matching d d m structure layouts
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @return the range of matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid_C(String uuid, long companyId,
@@ -951,7 +951,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure layouts where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -959,10 +959,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structure layouts
+	 * @return the ordered range of matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid_C(String uuid, long companyId,
@@ -972,7 +972,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure layouts where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the ddm structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -980,11 +980,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structure layouts
+	 * @return the ordered range of matching ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findByUuid_C(String uuid, long companyId,
@@ -1114,13 +1114,13 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the first d d m structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @return the first matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_C_First(String uuid, long companyId,
@@ -1149,12 +1149,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the first d d m structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the first matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByUuid_C_First(String uuid, long companyId,
@@ -1170,13 +1170,13 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the last d d m structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @return the last matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByUuid_C_Last(String uuid, long companyId,
@@ -1205,12 +1205,12 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the last d d m structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the last matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByUuid_C_Last(String uuid, long companyId,
@@ -1232,14 +1232,14 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layouts before and after the current d d m structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the ddm structure layouts before and after the current ddm structure layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param structureLayoutId the primary key of the current d d m structure layout
+	 * @param structureLayoutId the primary key of the current ddm structure layout
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @return the previous, current, and next ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout[] findByUuid_C_PrevAndNext(
@@ -1399,7 +1399,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes all the d d m structure layouts where uuid = &#63; and companyId = &#63; from the database.
+	 * Removes all the ddm structure layouts where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1413,11 +1413,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the number of d d m structure layouts where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of ddm structure layouts where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching d d m structure layouts
+	 * @return the number of matching ddm structure layouts
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
@@ -1497,11 +1497,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			"countByStructureVersionId", new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the d d m structure layout where structureVersionId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
+	 * Returns the ddm structure layout where structureVersionId = &#63; or throws a {@link NoSuchStructureLayoutException} if it could not be found.
 	 *
 	 * @param structureVersionId the structure version ID
-	 * @return the matching d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a matching d d m structure layout could not be found
+	 * @return the matching ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByStructureVersionId(long structureVersionId)
@@ -1529,10 +1529,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param structureVersionId the structure version ID
-	 * @return the matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByStructureVersionId(long structureVersionId) {
@@ -1540,11 +1540,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure layout where structureVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param structureVersionId the structure version ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m structure layout, or <code>null</code> if a matching d d m structure layout could not be found
+	 * @return the matching ddm structure layout, or <code>null</code> if a matching ddm structure layout could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByStructureVersionId(
@@ -1625,10 +1625,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes the d d m structure layout where structureVersionId = &#63; from the database.
+	 * Removes the ddm structure layout where structureVersionId = &#63; from the database.
 	 *
 	 * @param structureVersionId the structure version ID
-	 * @return the d d m structure layout that was removed
+	 * @return the ddm structure layout that was removed
 	 */
 	@Override
 	public DDMStructureLayout removeByStructureVersionId(
@@ -1639,10 +1639,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the number of d d m structure layouts where structureVersionId = &#63;.
+	 * Returns the number of ddm structure layouts where structureVersionId = &#63;.
 	 *
 	 * @param structureVersionId the structure version ID
-	 * @return the number of matching d d m structure layouts
+	 * @return the number of matching ddm structure layouts
 	 */
 	@Override
 	public int countByStructureVersionId(long structureVersionId) {
@@ -1697,9 +1697,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Caches the d d m structure layout in the entity cache if it is enabled.
+	 * Caches the ddm structure layout in the entity cache if it is enabled.
 	 *
-	 * @param ddmStructureLayout the d d m structure layout
+	 * @param ddmStructureLayout the ddm structure layout
 	 */
 	@Override
 	public void cacheResult(DDMStructureLayout ddmStructureLayout) {
@@ -1720,9 +1720,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Caches the d d m structure layouts in the entity cache if it is enabled.
+	 * Caches the ddm structure layouts in the entity cache if it is enabled.
 	 *
-	 * @param ddmStructureLayouts the d d m structure layouts
+	 * @param ddmStructureLayouts the ddm structure layouts
 	 */
 	@Override
 	public void cacheResult(List<DDMStructureLayout> ddmStructureLayouts) {
@@ -1740,7 +1740,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Clears the cache for all d d m structure layouts.
+	 * Clears the cache for all ddm structure layouts.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1756,7 +1756,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Clears the cache for the d d m structure layout.
+	 * Clears the cache for the ddm structure layout.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1857,10 +1857,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Creates a new d d m structure layout with the primary key. Does not add the d d m structure layout to the database.
+	 * Creates a new ddm structure layout with the primary key. Does not add the ddm structure layout to the database.
 	 *
-	 * @param structureLayoutId the primary key for the new d d m structure layout
-	 * @return the new d d m structure layout
+	 * @param structureLayoutId the primary key for the new ddm structure layout
+	 * @return the new ddm structure layout
 	 */
 	@Override
 	public DDMStructureLayout create(long structureLayoutId) {
@@ -1879,11 +1879,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes the d d m structure layout with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm structure layout with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param structureLayoutId the primary key of the d d m structure layout
-	 * @return the d d m structure layout that was removed
-	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @param structureLayoutId the primary key of the ddm structure layout
+	 * @return the ddm structure layout that was removed
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout remove(long structureLayoutId)
@@ -1892,11 +1892,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes the d d m structure layout with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm structure layout with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d d m structure layout
-	 * @return the d d m structure layout that was removed
-	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure layout
+	 * @return the ddm structure layout that was removed
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout remove(Serializable primaryKey)
@@ -2107,11 +2107,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the ddm structure layout with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m structure layout
-	 * @return the d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure layout
+	 * @return the ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByPrimaryKey(Serializable primaryKey)
@@ -2131,11 +2131,11 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout with the primary key or throws a {@link NoSuchStructureLayoutException} if it could not be found.
+	 * Returns the ddm structure layout with the primary key or throws a {@link NoSuchStructureLayoutException} if it could not be found.
 	 *
-	 * @param structureLayoutId the primary key of the d d m structure layout
-	 * @return the d d m structure layout
-	 * @throws NoSuchStructureLayoutException if a d d m structure layout with the primary key could not be found
+	 * @param structureLayoutId the primary key of the ddm structure layout
+	 * @return the ddm structure layout
+	 * @throws NoSuchStructureLayoutException if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout findByPrimaryKey(long structureLayoutId)
@@ -2144,10 +2144,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm structure layout with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m structure layout
-	 * @return the d d m structure layout, or <code>null</code> if a d d m structure layout with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure layout
+	 * @return the ddm structure layout, or <code>null</code> if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByPrimaryKey(Serializable primaryKey) {
@@ -2192,10 +2192,10 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the d d m structure layout with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm structure layout with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param structureLayoutId the primary key of the d d m structure layout
-	 * @return the d d m structure layout, or <code>null</code> if a d d m structure layout with the primary key could not be found
+	 * @param structureLayoutId the primary key of the ddm structure layout
+	 * @return the ddm structure layout, or <code>null</code> if a ddm structure layout with the primary key could not be found
 	 */
 	@Override
 	public DDMStructureLayout fetchByPrimaryKey(long structureLayoutId) {
@@ -2298,9 +2298,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns all the d d m structure layouts.
+	 * Returns all the ddm structure layouts.
 	 *
-	 * @return the d d m structure layouts
+	 * @return the ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findAll() {
@@ -2308,15 +2308,15 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns a range of all the d d m structure layouts.
+	 * Returns a range of all the ddm structure layouts.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
-	 * @return the range of d d m structure layouts
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
+	 * @return the range of ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findAll(int start, int end) {
@@ -2324,16 +2324,16 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure layouts.
+	 * Returns an ordered range of all the ddm structure layouts.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d d m structure layouts
+	 * @return the ordered range of ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findAll(int start, int end,
@@ -2342,17 +2342,17 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structure layouts.
+	 * Returns an ordered range of all the ddm structure layouts.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureLayoutModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structure layouts
-	 * @param end the upper bound of the range of d d m structure layouts (not inclusive)
+	 * @param start the lower bound of the range of ddm structure layouts
+	 * @param end the upper bound of the range of ddm structure layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of d d m structure layouts
+	 * @return the ordered range of ddm structure layouts
 	 */
 	@Override
 	public List<DDMStructureLayout> findAll(int start, int end,
@@ -2441,7 +2441,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Removes all the d d m structure layouts from the database.
+	 * Removes all the ddm structure layouts from the database.
 	 *
 	 */
 	@Override
@@ -2452,9 +2452,9 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Returns the number of d d m structure layouts.
+	 * Returns the number of ddm structure layouts.
 	 *
-	 * @return the number of d d m structure layouts
+	 * @return the number of ddm structure layouts
 	 */
 	@Override
 	public int countAll() {
@@ -2499,7 +2499,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 	}
 
 	/**
-	 * Initializes the d d m structure layout persistence.
+	 * Initializes the ddm structure layout persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

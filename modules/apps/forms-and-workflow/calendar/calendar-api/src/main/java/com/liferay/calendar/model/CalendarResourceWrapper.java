@@ -579,9 +579,9 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	/**
-	* Returns the class p k of this calendar resource.
+	* Returns the class pk of this calendar resource.
 	*
-	* @return the class p k of this calendar resource
+	* @return the class pk of this calendar resource
 	*/
 	@Override
 	public long getClassPK() {
@@ -702,9 +702,9 @@ public class CalendarResourceWrapper implements CalendarResource,
 	}
 
 	/**
-	* Sets the class p k of this calendar resource.
+	* Sets the class pk of this calendar resource.
 	*
-	* @param classPK the class p k of this calendar resource
+	* @param classPK the class pk of this calendar resource
 	*/
 	@Override
 	public void setClassPK(long classPK) {

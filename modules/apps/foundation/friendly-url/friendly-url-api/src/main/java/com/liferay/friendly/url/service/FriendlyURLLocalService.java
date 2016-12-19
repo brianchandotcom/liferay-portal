@@ -62,14 +62,14 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link FriendlyURLLocalServiceUtil} to access the friendly u r l local service. Add custom service methods to {@link com.liferay.friendly.url.service.impl.FriendlyURLLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link FriendlyURLLocalServiceUtil} to access the friendly url local service. Add custom service methods to {@link com.liferay.friendly.url.service.impl.FriendlyURLLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the friendly u r l to the database. Also notifies the appropriate model listeners.
+	* Adds the friendly url to the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURL the friendly u r l
-	* @return the friendly u r l that was added
+	* @param friendlyURL the friendly url
+	* @return the friendly url that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public FriendlyURL addFriendlyURL(FriendlyURL friendlyURL);
@@ -83,28 +83,28 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Creates a new friendly u r l with the primary key. Does not add the friendly u r l to the database.
+	* Creates a new friendly url with the primary key. Does not add the friendly url to the database.
 	*
-	* @param friendlyURLId the primary key for the new friendly u r l
-	* @return the new friendly u r l
+	* @param friendlyURLId the primary key for the new friendly url
+	* @return the new friendly url
 	*/
 	public FriendlyURL createFriendlyURL(long friendlyURLId);
 
 	/**
-	* Deletes the friendly u r l from the database. Also notifies the appropriate model listeners.
+	* Deletes the friendly url from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURL the friendly u r l
-	* @return the friendly u r l that was removed
+	* @param friendlyURL the friendly url
+	* @return the friendly url that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public FriendlyURL deleteFriendlyURL(FriendlyURL friendlyURL);
 
 	/**
-	* Deletes the friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURLId the primary key of the friendly u r l
-	* @return the friendly u r l that was removed
-	* @throws PortalException if a friendly u r l with the primary key could not be found
+	* @param friendlyURLId the primary key of the friendly url
+	* @return the friendly url that was removed
+	* @throws PortalException if a friendly url with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public FriendlyURL deleteFriendlyURL(long friendlyURLId)
@@ -122,34 +122,34 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 	public FriendlyURL fetchFriendlyURL(long friendlyURLId);
 
 	/**
-	* Returns the friendly u r l matching the UUID and group.
+	* Returns the friendly url matching the UUID and group.
 	*
-	* @param uuid the friendly u r l's UUID
+	* @param uuid the friendly url's UUID
 	* @param groupId the primary key of the group
-	* @return the matching friendly u r l, or <code>null</code> if a matching friendly u r l could not be found
+	* @return the matching friendly url, or <code>null</code> if a matching friendly url could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURL fetchFriendlyURLByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
 	/**
-	* Returns the friendly u r l with the primary key.
+	* Returns the friendly url with the primary key.
 	*
-	* @param friendlyURLId the primary key of the friendly u r l
-	* @return the friendly u r l
-	* @throws PortalException if a friendly u r l with the primary key could not be found
+	* @param friendlyURLId the primary key of the friendly url
+	* @return the friendly url
+	* @throws PortalException if a friendly url with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURL getFriendlyURL(long friendlyURLId)
 		throws PortalException;
 
 	/**
-	* Returns the friendly u r l matching the UUID and group.
+	* Returns the friendly url matching the UUID and group.
 	*
-	* @param uuid the friendly u r l's UUID
+	* @param uuid the friendly url's UUID
 	* @param groupId the primary key of the group
-	* @return the matching friendly u r l
-	* @throws PortalException if a matching friendly u r l could not be found
+	* @return the matching friendly url
+	* @throws PortalException if a matching friendly url could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FriendlyURL getFriendlyURLByUuidAndGroupId(java.lang.String uuid,
@@ -164,10 +164,10 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		long classNameId, long classPK) throws PortalException;
 
 	/**
-	* Updates the friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param friendlyURL the friendly u r l
-	* @return the friendly u r l that was updated
+	* @param friendlyURL the friendly url
+	* @return the friendly url that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public FriendlyURL updateFriendlyURL(FriendlyURL friendlyURL);
@@ -197,9 +197,9 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of friendly u r ls.
+	* Returns the number of friendly urls.
 	*
-	* @return the number of friendly u r ls
+	* @return the number of friendly urls
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFriendlyURLsCount();
@@ -255,15 +255,15 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the friendly u r ls.
+	* Returns a range of all the friendly urls.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.friendly.url.model.impl.FriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of friendly u r ls
-	* @param end the upper bound of the range of friendly u r ls (not inclusive)
-	* @return the range of friendly u r ls
+	* @param start the lower bound of the range of friendly urls
+	* @param end the upper bound of the range of friendly urls (not inclusive)
+	* @return the range of friendly urls
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FriendlyURL> getFriendlyURLs(int start, int end);
@@ -273,25 +273,25 @@ public interface FriendlyURLLocalService extends BaseLocalService,
 		long classNameId, long classPK);
 
 	/**
-	* Returns all the friendly u r ls matching the UUID and company.
+	* Returns all the friendly urls matching the UUID and company.
 	*
-	* @param uuid the UUID of the friendly u r ls
+	* @param uuid the UUID of the friendly urls
 	* @param companyId the primary key of the company
-	* @return the matching friendly u r ls, or an empty list if no matches were found
+	* @return the matching friendly urls, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FriendlyURL> getFriendlyURLsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
-	* Returns a range of friendly u r ls matching the UUID and company.
+	* Returns a range of friendly urls matching the UUID and company.
 	*
-	* @param uuid the UUID of the friendly u r ls
+	* @param uuid the UUID of the friendly urls
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of friendly u r ls
-	* @param end the upper bound of the range of friendly u r ls (not inclusive)
+	* @param start the lower bound of the range of friendly urls
+	* @param end the upper bound of the range of friendly urls (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching friendly u r ls, or an empty list if no matches were found
+	* @return the range of matching friendly urls, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FriendlyURL> getFriendlyURLsByUuidAndCompanyId(

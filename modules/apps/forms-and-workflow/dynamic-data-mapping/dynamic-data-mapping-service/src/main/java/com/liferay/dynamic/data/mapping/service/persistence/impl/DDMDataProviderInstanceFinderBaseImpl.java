@@ -34,18 +34,18 @@ public class DDMDataProviderInstanceFinderBaseImpl extends BasePersistenceImpl<D
 	}
 
 	/**
-	 * Returns the d d m data provider instance persistence.
+	 * Returns the ddm data provider instance persistence.
 	 *
-	 * @return the d d m data provider instance persistence
+	 * @return the ddm data provider instance persistence
 	 */
 	public DDMDataProviderInstancePersistence getDDMDataProviderInstancePersistence() {
 		return ddmDataProviderInstancePersistence;
 	}
 
 	/**
-	 * Sets the d d m data provider instance persistence.
+	 * Sets the ddm data provider instance persistence.
 	 *
-	 * @param ddmDataProviderInstancePersistence the d d m data provider instance persistence
+	 * @param ddmDataProviderInstancePersistence the ddm data provider instance persistence
 	 */
 	public void setDDMDataProviderInstancePersistence(
 		DDMDataProviderInstancePersistence ddmDataProviderInstancePersistence) {

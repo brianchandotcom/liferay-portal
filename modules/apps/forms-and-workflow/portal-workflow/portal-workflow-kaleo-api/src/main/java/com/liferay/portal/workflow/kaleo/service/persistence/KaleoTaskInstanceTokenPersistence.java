@@ -502,7 +502,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Returns all the kaleo task instance tokens where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching kaleo task instance tokens
 	*/
 	public java.util.List<KaleoTaskInstanceToken> findByCN_CPK(
@@ -516,7 +516,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* </p>
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of kaleo task instance tokens
 	* @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
 	* @return the range of matching kaleo task instance tokens
@@ -532,7 +532,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* </p>
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of kaleo task instance tokens
 	* @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -550,7 +550,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* </p>
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of kaleo task instance tokens
 	* @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -566,7 +566,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Returns the first kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task instance token
 	* @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
@@ -580,7 +580,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Returns the first kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
 	*/
@@ -592,7 +592,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Returns the last kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task instance token
 	* @throws NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
@@ -606,7 +606,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Returns the last kaleo task instance token in the ordered set where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
 	*/
@@ -619,7 +619,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	*
 	* @param kaleoTaskInstanceTokenId the primary key of the current kaleo task instance token
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task instance token
 	* @throws NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
@@ -634,7 +634,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Removes all the kaleo task instance tokens where className = &#63; and classPK = &#63; from the database.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByCN_CPK(java.lang.String className, long classPK);
 
@@ -642,7 +642,7 @@ public interface KaleoTaskInstanceTokenPersistence extends BasePersistence<Kaleo
 	* Returns the number of kaleo task instance tokens where className = &#63; and classPK = &#63;.
 	*
 	* @param className the class name
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching kaleo task instance tokens
 	*/
 	public int countByCN_CPK(java.lang.String className, long classPK);

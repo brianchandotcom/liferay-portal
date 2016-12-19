@@ -283,9 +283,9 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
-	* Returns the class p k of this ratings entry.
+	* Returns the class pk of this ratings entry.
 	*
-	* @return the class p k of this ratings entry
+	* @return the class pk of this ratings entry
 	*/
 	@Override
 	public long getClassPK() {
@@ -358,9 +358,9 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	}
 
 	/**
-	* Sets the class p k of this ratings entry.
+	* Sets the class pk of this ratings entry.
 	*
-	* @param classPK the class p k of this ratings entry
+	* @param classPK the class pk of this ratings entry
 	*/
 	@Override
 	public void setClassPK(long classPK) {

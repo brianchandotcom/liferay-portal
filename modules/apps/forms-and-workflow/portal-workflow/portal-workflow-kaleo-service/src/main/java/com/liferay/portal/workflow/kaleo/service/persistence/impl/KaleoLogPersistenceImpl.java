@@ -2760,7 +2760,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Returns all the kaleo logs where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @return the matching kaleo logs
@@ -2781,7 +2781,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * </p>
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param start the lower bound of the range of kaleo logs
@@ -2804,7 +2804,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * </p>
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param start the lower bound of the range of kaleo logs
@@ -2828,7 +2828,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * </p>
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param start the lower bound of the range of kaleo logs
@@ -2995,7 +2995,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Returns the first kaleo log in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3039,7 +3039,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Returns the first kaleo log in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3064,7 +3064,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Returns the last kaleo log in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3108,7 +3108,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Returns the last kaleo log in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3141,7 +3141,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 *
 	 * @param kaleoLogId the primary key of the current kaleo log
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -3333,7 +3333,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Removes all the kaleo logs where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63; from the database.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 */
@@ -3351,7 +3351,7 @@ public class KaleoLogPersistenceImpl extends BasePersistenceImpl<KaleoLog>
 	 * Returns the number of kaleo logs where kaleoClassName = &#63; and kaleoClassPK = &#63; and kaleoInstanceTokenId = &#63; and type = &#63;.
 	 *
 	 * @param kaleoClassName the kaleo class name
-	 * @param kaleoClassPK the kaleo class p k
+	 * @param kaleoClassPK the kaleo class pk
 	 * @param kaleoInstanceTokenId the kaleo instance token ID
 	 * @param type the type
 	 * @return the number of matching kaleo logs

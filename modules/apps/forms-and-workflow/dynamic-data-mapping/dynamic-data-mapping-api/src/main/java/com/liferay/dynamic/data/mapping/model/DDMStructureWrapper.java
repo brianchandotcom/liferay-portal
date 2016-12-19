@@ -317,9 +317,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the type of this d d m structure.
+	* Returns the type of this ddm structure.
 	*
-	* @return the type of this d d m structure
+	* @return the type of this ddm structure
 	*/
 	@Override
 	public int getType() {
@@ -342,9 +342,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the fully qualified class name of this d d m structure.
+	* Returns the fully qualified class name of this ddm structure.
 	*
-	* @return the fully qualified class name of this d d m structure
+	* @return the fully qualified class name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getClassName() {
@@ -357,9 +357,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the definition of this d d m structure.
+	* Returns the definition of this ddm structure.
 	*
-	* @return the definition of this d d m structure
+	* @return the definition of this ddm structure
 	*/
 	@Override
 	public java.lang.String getDefinition() {
@@ -367,9 +367,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the description of this d d m structure.
+	* Returns the description of this ddm structure.
 	*
-	* @return the description of this d d m structure
+	* @return the description of this ddm structure
 	*/
 	@Override
 	public java.lang.String getDescription() {
@@ -377,10 +377,10 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized description of this d d m structure in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm structure in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
-	* @return the localized description of this d d m structure
+	* @return the localized description of this ddm structure
 	*/
 	@Override
 	public java.lang.String getDescription(java.lang.String languageId) {
@@ -388,11 +388,11 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized description of this d d m structure in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm structure in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this d d m structure
+	* @return the localized description of this ddm structure
 	*/
 	@Override
 	public java.lang.String getDescription(java.lang.String languageId,
@@ -401,10 +401,10 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized description of this d d m structure in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm structure in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param locale the locale of the language
-	* @return the localized description of this d d m structure
+	* @return the localized description of this ddm structure
 	*/
 	@Override
 	public java.lang.String getDescription(java.util.Locale locale) {
@@ -412,11 +412,11 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized description of this d d m structure in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm structure in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param locale the local of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this d d m structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	* @return the localized description of this ddm structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
 	public java.lang.String getDescription(java.util.Locale locale,
@@ -482,9 +482,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the name of this d d m structure.
+	* Returns the name of this ddm structure.
 	*
-	* @return the name of this d d m structure
+	* @return the name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getName() {
@@ -492,10 +492,10 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized name of this d d m structure in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm structure in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
-	* @return the localized name of this d d m structure
+	* @return the localized name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getName(java.lang.String languageId) {
@@ -503,11 +503,11 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized name of this d d m structure in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm structure in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this d d m structure
+	* @return the localized name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getName(java.lang.String languageId,
@@ -516,10 +516,10 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized name of this d d m structure in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm structure in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param locale the locale of the language
-	* @return the localized name of this d d m structure
+	* @return the localized name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getName(java.util.Locale locale) {
@@ -527,11 +527,11 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the localized name of this d d m structure in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm structure in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param locale the local of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this d d m structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	* @return the localized name of this ddm structure. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
 	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
@@ -549,9 +549,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the storage type of this d d m structure.
+	* Returns the storage type of this ddm structure.
 	*
-	* @return the storage type of this d d m structure
+	* @return the storage type of this ddm structure
 	*/
 	@Override
 	public java.lang.String getStorageType() {
@@ -559,9 +559,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the structure key of this d d m structure.
+	* Returns the structure key of this ddm structure.
 	*
-	* @return the structure key of this d d m structure
+	* @return the structure key of this ddm structure
 	*/
 	@Override
 	public java.lang.String getStructureKey() {
@@ -577,9 +577,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the user name of this d d m structure.
+	* Returns the user name of this ddm structure.
 	*
-	* @return the user name of this d d m structure
+	* @return the user name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getUserName() {
@@ -587,9 +587,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the user uuid of this d d m structure.
+	* Returns the user uuid of this ddm structure.
 	*
-	* @return the user uuid of this d d m structure
+	* @return the user uuid of this ddm structure
 	*/
 	@Override
 	public java.lang.String getUserUuid() {
@@ -597,9 +597,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the uuid of this d d m structure.
+	* Returns the uuid of this ddm structure.
 	*
-	* @return the uuid of this d d m structure
+	* @return the uuid of this ddm structure
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -607,9 +607,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the version of this d d m structure.
+	* Returns the version of this ddm structure.
 	*
-	* @return the version of this d d m structure
+	* @return the version of this ddm structure
 	*/
 	@Override
 	public java.lang.String getVersion() {
@@ -617,9 +617,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the version user name of this d d m structure.
+	* Returns the version user name of this ddm structure.
 	*
-	* @return the version user name of this d d m structure
+	* @return the version user name of this ddm structure
 	*/
 	@Override
 	public java.lang.String getVersionUserName() {
@@ -627,9 +627,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the version user uuid of this d d m structure.
+	* Returns the version user uuid of this ddm structure.
 	*
-	* @return the version user uuid of this d d m structure
+	* @return the version user uuid of this ddm structure
 	*/
 	@Override
 	public java.lang.String getVersionUserUuid() {
@@ -668,9 +668,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the create date of this d d m structure.
+	* Returns the create date of this ddm structure.
 	*
-	* @return the create date of this d d m structure
+	* @return the create date of this ddm structure
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -678,9 +678,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the last publish date of this d d m structure.
+	* Returns the last publish date of this ddm structure.
 	*
-	* @return the last publish date of this d d m structure
+	* @return the last publish date of this ddm structure
 	*/
 	@Override
 	public Date getLastPublishDate() {
@@ -688,9 +688,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the modified date of this d d m structure.
+	* Returns the modified date of this ddm structure.
 	*
-	* @return the modified date of this d d m structure
+	* @return the modified date of this ddm structure
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -721,9 +721,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this d d m structure.
+	* Returns a map of the locales and localized descriptions of this ddm structure.
 	*
-	* @return the locales and localized descriptions of this d d m structure
+	* @return the locales and localized descriptions of this ddm structure
 	*/
 	@Override
 	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
@@ -737,9 +737,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this d d m structure.
+	* Returns a map of the locales and localized names of this ddm structure.
 	*
-	* @return the locales and localized names of this d d m structure
+	* @return the locales and localized names of this ddm structure
 	*/
 	@Override
 	public Map<java.util.Locale, java.lang.String> getNameMap() {
@@ -752,9 +752,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the class name ID of this d d m structure.
+	* Returns the class name ID of this ddm structure.
 	*
-	* @return the class name ID of this d d m structure
+	* @return the class name ID of this ddm structure
 	*/
 	@Override
 	public long getClassNameId() {
@@ -762,9 +762,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the company ID of this d d m structure.
+	* Returns the company ID of this ddm structure.
 	*
-	* @return the company ID of this d d m structure
+	* @return the company ID of this ddm structure
 	*/
 	@Override
 	public long getCompanyId() {
@@ -772,9 +772,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the group ID of this d d m structure.
+	* Returns the group ID of this ddm structure.
 	*
-	* @return the group ID of this d d m structure
+	* @return the group ID of this ddm structure
 	*/
 	@Override
 	public long getGroupId() {
@@ -782,9 +782,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the parent structure ID of this d d m structure.
+	* Returns the parent structure ID of this ddm structure.
 	*
-	* @return the parent structure ID of this d d m structure
+	* @return the parent structure ID of this ddm structure
 	*/
 	@Override
 	public long getParentStructureId() {
@@ -792,9 +792,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the primary key of this d d m structure.
+	* Returns the primary key of this ddm structure.
 	*
-	* @return the primary key of this d d m structure
+	* @return the primary key of this ddm structure
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -802,9 +802,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the structure ID of this d d m structure.
+	* Returns the structure ID of this ddm structure.
 	*
-	* @return the structure ID of this d d m structure
+	* @return the structure ID of this ddm structure
 	*/
 	@Override
 	public long getStructureId() {
@@ -812,9 +812,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the user ID of this d d m structure.
+	* Returns the user ID of this ddm structure.
 	*
-	* @return the user ID of this d d m structure
+	* @return the user ID of this ddm structure
 	*/
 	@Override
 	public long getUserId() {
@@ -822,9 +822,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Returns the version user ID of this d d m structure.
+	* Returns the version user ID of this ddm structure.
 	*
-	* @return the version user ID of this d d m structure
+	* @return the version user ID of this ddm structure
 	*/
 	@Override
 	public long getVersionUserId() {
@@ -860,9 +860,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the class name ID of this d d m structure.
+	* Sets the class name ID of this ddm structure.
 	*
-	* @param classNameId the class name ID of this d d m structure
+	* @param classNameId the class name ID of this ddm structure
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
@@ -870,9 +870,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the company ID of this d d m structure.
+	* Sets the company ID of this ddm structure.
 	*
-	* @param companyId the company ID of this d d m structure
+	* @param companyId the company ID of this ddm structure
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -880,9 +880,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the create date of this d d m structure.
+	* Sets the create date of this ddm structure.
 	*
-	* @param createDate the create date of this d d m structure
+	* @param createDate the create date of this ddm structure
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -895,9 +895,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the definition of this d d m structure.
+	* Sets the definition of this ddm structure.
 	*
-	* @param definition the definition of this d d m structure
+	* @param definition the definition of this ddm structure
 	*/
 	@Override
 	public void setDefinition(java.lang.String definition) {
@@ -905,9 +905,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the description of this d d m structure.
+	* Sets the description of this ddm structure.
 	*
-	* @param description the description of this d d m structure
+	* @param description the description of this ddm structure
 	*/
 	@Override
 	public void setDescription(java.lang.String description) {
@@ -915,9 +915,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized description of this d d m structure in the language.
+	* Sets the localized description of this ddm structure in the language.
 	*
-	* @param description the localized description of this d d m structure
+	* @param description the localized description of this ddm structure
 	* @param locale the locale of the language
 	*/
 	@Override
@@ -927,9 +927,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized description of this d d m structure in the language, and sets the default locale.
+	* Sets the localized description of this ddm structure in the language, and sets the default locale.
 	*
-	* @param description the localized description of this d d m structure
+	* @param description the localized description of this ddm structure
 	* @param locale the locale of the language
 	* @param defaultLocale the default locale
 	*/
@@ -945,9 +945,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized descriptions of this d d m structure from the map of locales and localized descriptions.
+	* Sets the localized descriptions of this ddm structure from the map of locales and localized descriptions.
 	*
-	* @param descriptionMap the locales and localized descriptions of this d d m structure
+	* @param descriptionMap the locales and localized descriptions of this ddm structure
 	*/
 	@Override
 	public void setDescriptionMap(
@@ -956,9 +956,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized descriptions of this d d m structure from the map of locales and localized descriptions, and sets the default locale.
+	* Sets the localized descriptions of this ddm structure from the map of locales and localized descriptions, and sets the default locale.
 	*
-	* @param descriptionMap the locales and localized descriptions of this d d m structure
+	* @param descriptionMap the locales and localized descriptions of this ddm structure
 	* @param defaultLocale the default locale
 	*/
 	@Override
@@ -985,9 +985,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the group ID of this d d m structure.
+	* Sets the group ID of this ddm structure.
 	*
-	* @param groupId the group ID of this d d m structure
+	* @param groupId the group ID of this ddm structure
 	*/
 	@Override
 	public void setGroupId(long groupId) {
@@ -995,9 +995,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the last publish date of this d d m structure.
+	* Sets the last publish date of this ddm structure.
 	*
-	* @param lastPublishDate the last publish date of this d d m structure
+	* @param lastPublishDate the last publish date of this ddm structure
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -1005,9 +1005,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the modified date of this d d m structure.
+	* Sets the modified date of this ddm structure.
 	*
-	* @param modifiedDate the modified date of this d d m structure
+	* @param modifiedDate the modified date of this ddm structure
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -1015,9 +1015,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the name of this d d m structure.
+	* Sets the name of this ddm structure.
 	*
-	* @param name the name of this d d m structure
+	* @param name the name of this ddm structure
 	*/
 	@Override
 	public void setName(java.lang.String name) {
@@ -1025,9 +1025,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized name of this d d m structure in the language.
+	* Sets the localized name of this ddm structure in the language.
 	*
-	* @param name the localized name of this d d m structure
+	* @param name the localized name of this ddm structure
 	* @param locale the locale of the language
 	*/
 	@Override
@@ -1036,9 +1036,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized name of this d d m structure in the language, and sets the default locale.
+	* Sets the localized name of this ddm structure in the language, and sets the default locale.
 	*
-	* @param name the localized name of this d d m structure
+	* @param name the localized name of this ddm structure
 	* @param locale the locale of the language
 	* @param defaultLocale the default locale
 	*/
@@ -1054,9 +1054,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized names of this d d m structure from the map of locales and localized names.
+	* Sets the localized names of this ddm structure from the map of locales and localized names.
 	*
-	* @param nameMap the locales and localized names of this d d m structure
+	* @param nameMap the locales and localized names of this ddm structure
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
@@ -1064,9 +1064,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the localized names of this d d m structure from the map of locales and localized names, and sets the default locale.
+	* Sets the localized names of this ddm structure from the map of locales and localized names, and sets the default locale.
 	*
-	* @param nameMap the locales and localized names of this d d m structure
+	* @param nameMap the locales and localized names of this ddm structure
 	* @param defaultLocale the default locale
 	*/
 	@Override
@@ -1081,9 +1081,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the parent structure ID of this d d m structure.
+	* Sets the parent structure ID of this ddm structure.
 	*
-	* @param parentStructureId the parent structure ID of this d d m structure
+	* @param parentStructureId the parent structure ID of this ddm structure
 	*/
 	@Override
 	public void setParentStructureId(long parentStructureId) {
@@ -1091,9 +1091,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the primary key of this d d m structure.
+	* Sets the primary key of this ddm structure.
 	*
-	* @param primaryKey the primary key of this d d m structure
+	* @param primaryKey the primary key of this ddm structure
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -1106,9 +1106,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the storage type of this d d m structure.
+	* Sets the storage type of this ddm structure.
 	*
-	* @param storageType the storage type of this d d m structure
+	* @param storageType the storage type of this ddm structure
 	*/
 	@Override
 	public void setStorageType(java.lang.String storageType) {
@@ -1116,9 +1116,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the structure ID of this d d m structure.
+	* Sets the structure ID of this ddm structure.
 	*
-	* @param structureId the structure ID of this d d m structure
+	* @param structureId the structure ID of this ddm structure
 	*/
 	@Override
 	public void setStructureId(long structureId) {
@@ -1126,9 +1126,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the structure key of this d d m structure.
+	* Sets the structure key of this ddm structure.
 	*
-	* @param structureKey the structure key of this d d m structure
+	* @param structureKey the structure key of this ddm structure
 	*/
 	@Override
 	public void setStructureKey(java.lang.String structureKey) {
@@ -1136,9 +1136,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the type of this d d m structure.
+	* Sets the type of this ddm structure.
 	*
-	* @param type the type of this d d m structure
+	* @param type the type of this ddm structure
 	*/
 	@Override
 	public void setType(int type) {
@@ -1146,9 +1146,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the user ID of this d d m structure.
+	* Sets the user ID of this ddm structure.
 	*
-	* @param userId the user ID of this d d m structure
+	* @param userId the user ID of this ddm structure
 	*/
 	@Override
 	public void setUserId(long userId) {
@@ -1156,9 +1156,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the user name of this d d m structure.
+	* Sets the user name of this ddm structure.
 	*
-	* @param userName the user name of this d d m structure
+	* @param userName the user name of this ddm structure
 	*/
 	@Override
 	public void setUserName(java.lang.String userName) {
@@ -1166,9 +1166,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the user uuid of this d d m structure.
+	* Sets the user uuid of this ddm structure.
 	*
-	* @param userUuid the user uuid of this d d m structure
+	* @param userUuid the user uuid of this ddm structure
 	*/
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
@@ -1176,9 +1176,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the uuid of this d d m structure.
+	* Sets the uuid of this ddm structure.
 	*
-	* @param uuid the uuid of this d d m structure
+	* @param uuid the uuid of this ddm structure
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {
@@ -1186,9 +1186,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the version of this d d m structure.
+	* Sets the version of this ddm structure.
 	*
-	* @param version the version of this d d m structure
+	* @param version the version of this ddm structure
 	*/
 	@Override
 	public void setVersion(java.lang.String version) {
@@ -1196,9 +1196,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the version user ID of this d d m structure.
+	* Sets the version user ID of this ddm structure.
 	*
-	* @param versionUserId the version user ID of this d d m structure
+	* @param versionUserId the version user ID of this ddm structure
 	*/
 	@Override
 	public void setVersionUserId(long versionUserId) {
@@ -1206,9 +1206,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the version user name of this d d m structure.
+	* Sets the version user name of this ddm structure.
 	*
-	* @param versionUserName the version user name of this d d m structure
+	* @param versionUserName the version user name of this ddm structure
 	*/
 	@Override
 	public void setVersionUserName(java.lang.String versionUserName) {
@@ -1216,9 +1216,9 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
-	* Sets the version user uuid of this d d m structure.
+	* Sets the version user uuid of this ddm structure.
 	*
-	* @param versionUserUuid the version user uuid of this d d m structure
+	* @param versionUserUuid the version user uuid of this ddm structure
 	*/
 	@Override
 	public void setVersionUserUuid(java.lang.String versionUserUuid) {

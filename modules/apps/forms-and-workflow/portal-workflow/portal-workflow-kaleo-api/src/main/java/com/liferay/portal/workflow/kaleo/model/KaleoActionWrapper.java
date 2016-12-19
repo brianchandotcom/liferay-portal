@@ -418,9 +418,9 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	/**
-	* Returns the kaleo class p k of this kaleo action.
+	* Returns the kaleo class pk of this kaleo action.
 	*
-	* @return the kaleo class p k of this kaleo action
+	* @return the kaleo class pk of this kaleo action
 	*/
 	@Override
 	public long getKaleoClassPK() {
@@ -554,9 +554,9 @@ public class KaleoActionWrapper implements KaleoAction,
 	}
 
 	/**
-	* Sets the kaleo class p k of this kaleo action.
+	* Sets the kaleo class pk of this kaleo action.
 	*
-	* @param kaleoClassPK the kaleo class p k of this kaleo action
+	* @param kaleoClassPK the kaleo class pk of this kaleo action
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {

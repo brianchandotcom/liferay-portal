@@ -173,9 +173,9 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	/**
-	* Returns the class p k of this expando row.
+	* Returns the class pk of this expando row.
 	*
-	* @return the class p k of this expando row
+	* @return the class pk of this expando row
 	*/
 	@Override
 	public long getClassPK() {
@@ -233,9 +233,9 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	/**
-	* Sets the class p k of this expando row.
+	* Sets the class pk of this expando row.
 	*
-	* @param classPK the class p k of this expando row
+	* @param classPK the class pk of this expando row
 	*/
 	@Override
 	public void setClassPK(long classPK) {

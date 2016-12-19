@@ -62,7 +62,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the d d m structure service.
+ * The persistence implementation for the ddm structure service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -79,7 +79,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DDMStructureUtil} to access the d d m structure persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DDMStructureUtil} to access the ddm structure persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DDMStructureImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -115,10 +115,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where uuid = &#63;.
+	 * Returns all the ddm structures where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid(String uuid) {
@@ -126,16 +126,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where uuid = &#63;.
+	 * Returns a range of all the ddm structures where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid(String uuid, int start, int end) {
@@ -143,17 +143,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where uuid = &#63;.
+	 * Returns an ordered range of all the ddm structures where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid(String uuid, int start, int end,
@@ -162,18 +162,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where uuid = &#63;.
+	 * Returns an ordered range of all the ddm structures where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid(String uuid, int start, int end,
@@ -293,12 +293,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where uuid = &#63;.
+	 * Returns the first ddm structure in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByUuid_First(String uuid,
@@ -323,11 +323,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where uuid = &#63;.
+	 * Returns the first ddm structure in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByUuid_First(String uuid,
@@ -342,12 +342,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where uuid = &#63;.
+	 * Returns the last ddm structure in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByUuid_Last(String uuid,
@@ -372,11 +372,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where uuid = &#63;.
+	 * Returns the last ddm structure in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByUuid_Last(String uuid,
@@ -398,13 +398,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where uuid = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where uuid = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByUuid_PrevAndNext(long structureId, String uuid,
@@ -558,7 +558,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where uuid = &#63; from the database.
+	 * Removes all the ddm structures where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
@@ -571,10 +571,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where uuid = &#63;.
+	 * Returns the number of ddm structures where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByUuid(String uuid) {
@@ -650,12 +650,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the d d m structure where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureException} if it could not be found.
+	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByUUID_G(String uuid, long groupId)
@@ -686,11 +686,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByUUID_G(String uuid, long groupId) {
@@ -698,12 +698,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByUUID_G(String uuid, long groupId,
@@ -804,11 +804,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes the d d m structure where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the ddm structure where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the d d m structure that was removed
+	 * @return the ddm structure that was removed
 	 */
 	@Override
 	public DDMStructure removeByUUID_G(String uuid, long groupId)
@@ -819,11 +819,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of ddm structures where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
@@ -914,11 +914,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where uuid = &#63; and companyId = &#63;.
+	 * Returns all the ddm structures where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid_C(String uuid, long companyId) {
@@ -927,7 +927,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the ddm structures where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -935,9 +935,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid_C(String uuid, long companyId,
@@ -946,7 +946,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the ddm structures where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -954,10 +954,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid_C(String uuid, long companyId,
@@ -966,7 +966,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the ddm structures where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -974,11 +974,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByUuid_C(String uuid, long companyId,
@@ -1107,13 +1107,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByUuid_C_First(String uuid, long companyId,
@@ -1142,12 +1142,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByUuid_C_First(String uuid, long companyId,
@@ -1163,13 +1163,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByUuid_C_Last(String uuid, long companyId,
@@ -1198,12 +1198,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByUuid_C_Last(String uuid, long companyId,
@@ -1225,14 +1225,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByUuid_C_PrevAndNext(long structureId,
@@ -1391,7 +1391,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where uuid = &#63; and companyId = &#63; from the database.
+	 * Removes all the ddm structures where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1405,11 +1405,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of ddm structures where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
@@ -1503,10 +1503,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where groupId = &#63;.
+	 * Returns all the ddm structures where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long groupId) {
@@ -1514,16 +1514,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where groupId = &#63;.
+	 * Returns a range of all the ddm structures where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long groupId, int start, int end) {
@@ -1531,17 +1531,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long groupId, int start, int end,
@@ -1550,18 +1550,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long groupId, int start, int end,
@@ -1667,12 +1667,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByGroupId_First(long groupId,
@@ -1698,11 +1698,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByGroupId_First(long groupId,
@@ -1717,12 +1717,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByGroupId_Last(long groupId,
@@ -1748,11 +1748,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByGroupId_Last(long groupId,
@@ -1774,13 +1774,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByGroupId_PrevAndNext(long structureId,
@@ -1920,10 +1920,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures that the user has permission to view where groupId = &#63;.
+	 * Returns all the ddm structures that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching d d m structures that the user has permission to view
+	 * @return the matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long groupId) {
@@ -1932,16 +1932,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures that the user has permission to view where groupId = &#63;.
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures that the user has permission to view
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long groupId, int start,
@@ -1950,17 +1950,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures that the user has permissions to view where groupId = &#63;.
+	 * Returns an ordered range of all the ddm structures that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures that the user has permission to view
+	 * @return the ordered range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long groupId, int start,
@@ -2045,13 +2045,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] filterFindByGroupId_PrevAndNext(long structureId,
@@ -2231,10 +2231,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures that the user has permission to view where groupId = any &#63;.
+	 * Returns all the ddm structures that the user has permission to view where groupId = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @return the matching d d m structures that the user has permission to view
+	 * @return the matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long[] groupIds) {
@@ -2243,16 +2243,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures that the user has permission to view where groupId = any &#63;.
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures that the user has permission to view
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long[] groupIds, int start,
@@ -2261,17 +2261,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures that the user has permission to view where groupId = any &#63;.
+	 * Returns an ordered range of all the ddm structures that the user has permission to view where groupId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures that the user has permission to view
+	 * @return the ordered range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByGroupId(long[] groupIds, int start,
@@ -2366,14 +2366,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures where groupId = any &#63;.
+	 * Returns all the ddm structures where groupId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long[] groupIds) {
@@ -2382,16 +2382,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where groupId = any &#63;.
+	 * Returns a range of all the ddm structures where groupId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long[] groupIds, int start, int end) {
@@ -2399,17 +2399,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = any &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = any &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupIds the group IDs
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long[] groupIds, int start,
@@ -2418,18 +2418,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63;, optionally using the finder cache.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByGroupId(long[] groupIds, int start,
@@ -2552,7 +2552,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where groupId = &#63; from the database.
+	 * Removes all the ddm structures where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 */
@@ -2565,10 +2565,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = &#63;.
+	 * Returns the number of ddm structures where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
@@ -2616,10 +2616,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = any &#63;.
+	 * Returns the number of ddm structures where groupId = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByGroupId(long[] groupIds) {
@@ -2686,10 +2686,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures that the user has permission to view where groupId = &#63;.
+	 * Returns the number of ddm structures that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching d d m structures that the user has permission to view
+	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
@@ -2734,10 +2734,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures that the user has permission to view where groupId = any &#63;.
+	 * Returns the number of ddm structures that the user has permission to view where groupId = any &#63;.
 	 *
 	 * @param groupIds the group IDs
-	 * @return the number of matching d d m structures that the user has permission to view
+	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public int filterCountByGroupId(long[] groupIds) {
@@ -2823,10 +2823,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			"countByParentStructureId", new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where parentStructureId = &#63;.
+	 * Returns all the ddm structures where parentStructureId = &#63;.
 	 *
 	 * @param parentStructureId the parent structure ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByParentStructureId(long parentStructureId) {
@@ -2835,16 +2835,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where parentStructureId = &#63;.
+	 * Returns a range of all the ddm structures where parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByParentStructureId(long parentStructureId,
@@ -2853,17 +2853,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where parentStructureId = &#63;.
+	 * Returns an ordered range of all the ddm structures where parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByParentStructureId(long parentStructureId,
@@ -2873,18 +2873,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where parentStructureId = &#63;.
+	 * Returns an ordered range of all the ddm structures where parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByParentStructureId(long parentStructureId,
@@ -2994,12 +2994,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where parentStructureId = &#63;.
+	 * Returns the first ddm structure in the ordered set where parentStructureId = &#63;.
 	 *
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByParentStructureId_First(long parentStructureId,
@@ -3025,11 +3025,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where parentStructureId = &#63;.
+	 * Returns the first ddm structure in the ordered set where parentStructureId = &#63;.
 	 *
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByParentStructureId_First(long parentStructureId,
@@ -3045,12 +3045,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where parentStructureId = &#63;.
+	 * Returns the last ddm structure in the ordered set where parentStructureId = &#63;.
 	 *
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByParentStructureId_Last(long parentStructureId,
@@ -3076,11 +3076,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where parentStructureId = &#63;.
+	 * Returns the last ddm structure in the ordered set where parentStructureId = &#63;.
 	 *
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByParentStructureId_Last(long parentStructureId,
@@ -3102,13 +3102,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where parentStructureId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where parentStructureId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByParentStructureId_PrevAndNext(
@@ -3249,7 +3249,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where parentStructureId = &#63; from the database.
+	 * Removes all the ddm structures where parentStructureId = &#63; from the database.
 	 *
 	 * @param parentStructureId the parent structure ID
 	 */
@@ -3262,10 +3262,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where parentStructureId = &#63;.
+	 * Returns the number of ddm structures where parentStructureId = &#63;.
 	 *
 	 * @param parentStructureId the parent structure ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByParentStructureId(long parentStructureId) {
@@ -3336,10 +3336,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where classNameId = &#63;.
+	 * Returns all the ddm structures where classNameId = &#63;.
 	 *
 	 * @param classNameId the class name ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByClassNameId(long classNameId) {
@@ -3348,16 +3348,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where classNameId = &#63;.
+	 * Returns a range of all the ddm structures where classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByClassNameId(long classNameId, int start,
@@ -3366,17 +3366,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByClassNameId(long classNameId, int start,
@@ -3386,18 +3386,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByClassNameId(long classNameId, int start,
@@ -3503,12 +3503,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where classNameId = &#63;.
+	 * Returns the first ddm structure in the ordered set where classNameId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByClassNameId_First(long classNameId,
@@ -3534,11 +3534,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where classNameId = &#63;.
+	 * Returns the first ddm structure in the ordered set where classNameId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByClassNameId_First(long classNameId,
@@ -3554,12 +3554,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where classNameId = &#63;.
+	 * Returns the last ddm structure in the ordered set where classNameId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByClassNameId_Last(long classNameId,
@@ -3585,11 +3585,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where classNameId = &#63;.
+	 * Returns the last ddm structure in the ordered set where classNameId = &#63;.
 	 *
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByClassNameId_Last(long classNameId,
@@ -3611,13 +3611,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where classNameId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where classNameId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByClassNameId_PrevAndNext(long structureId,
@@ -3757,7 +3757,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where classNameId = &#63; from the database.
+	 * Removes all the ddm structures where classNameId = &#63; from the database.
 	 *
 	 * @param classNameId the class name ID
 	 */
@@ -3770,10 +3770,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where classNameId = &#63;.
+	 * Returns the number of ddm structures where classNameId = &#63;.
 	 *
 	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByClassNameId(long classNameId) {
@@ -3843,10 +3843,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where structureKey = &#63;.
+	 * Returns all the ddm structures where structureKey = &#63;.
 	 *
 	 * @param structureKey the structure key
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByStructureKey(String structureKey) {
@@ -3855,16 +3855,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where structureKey = &#63;.
+	 * Returns a range of all the ddm structures where structureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureKey the structure key
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByStructureKey(String structureKey,
@@ -3873,17 +3873,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where structureKey = &#63;.
+	 * Returns an ordered range of all the ddm structures where structureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureKey the structure key
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByStructureKey(String structureKey,
@@ -3893,18 +3893,18 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where structureKey = &#63;.
+	 * Returns an ordered range of all the ddm structures where structureKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureKey the structure key
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByStructureKey(String structureKey,
@@ -4029,12 +4029,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where structureKey = &#63;.
+	 * Returns the first ddm structure in the ordered set where structureKey = &#63;.
 	 *
 	 * @param structureKey the structure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByStructureKey_First(String structureKey,
@@ -4060,11 +4060,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where structureKey = &#63;.
+	 * Returns the first ddm structure in the ordered set where structureKey = &#63;.
 	 *
 	 * @param structureKey the structure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByStructureKey_First(String structureKey,
@@ -4080,12 +4080,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where structureKey = &#63;.
+	 * Returns the last ddm structure in the ordered set where structureKey = &#63;.
 	 *
 	 * @param structureKey the structure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByStructureKey_Last(String structureKey,
@@ -4111,11 +4111,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where structureKey = &#63;.
+	 * Returns the last ddm structure in the ordered set where structureKey = &#63;.
 	 *
 	 * @param structureKey the structure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByStructureKey_Last(String structureKey,
@@ -4137,13 +4137,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where structureKey = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where structureKey = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param structureKey the structure key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByStructureKey_PrevAndNext(long structureId,
@@ -4297,7 +4297,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where structureKey = &#63; from the database.
+	 * Removes all the ddm structures where structureKey = &#63; from the database.
 	 *
 	 * @param structureKey the structure key
 	 */
@@ -4310,10 +4310,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where structureKey = &#63;.
+	 * Returns the number of ddm structures where structureKey = &#63;.
 	 *
 	 * @param structureKey the structure key
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByStructureKey(String structureKey) {
@@ -4398,11 +4398,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns all the ddm structures where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_P(long groupId, long parentStructureId) {
@@ -4411,7 +4411,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns a range of all the ddm structures where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -4419,9 +4419,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_P(long groupId, long parentStructureId,
@@ -4430,7 +4430,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -4438,10 +4438,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_P(long groupId, long parentStructureId,
@@ -4451,7 +4451,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -4459,11 +4459,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_P(long groupId, long parentStructureId,
@@ -4578,13 +4578,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_P_First(long groupId, long parentStructureId,
@@ -4613,12 +4613,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_P_First(long groupId, long parentStructureId,
@@ -4634,13 +4634,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_P_Last(long groupId, long parentStructureId,
@@ -4669,12 +4669,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_P_Last(long groupId, long parentStructureId,
@@ -4696,14 +4696,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and parentStructureId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByG_P_PrevAndNext(long structureId, long groupId,
@@ -4848,11 +4848,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @return the matching d d m structures that the user has permission to view
+	 * @return the matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_P(long groupId,
@@ -4862,7 +4862,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -4870,9 +4870,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures that the user has permission to view
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_P(long groupId,
@@ -4881,7 +4881,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures that the user has permissions to view where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns an ordered range of all the ddm structures that the user has permissions to view where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -4889,10 +4889,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures that the user has permission to view
+	 * @return the ordered range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_P(long groupId,
@@ -4983,14 +4983,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] filterFindByG_P_PrevAndNext(long structureId,
@@ -5175,7 +5175,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where groupId = &#63; and parentStructureId = &#63; from the database.
+	 * Removes all the ddm structures where groupId = &#63; and parentStructureId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
@@ -5189,11 +5189,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the number of ddm structures where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByG_P(long groupId, long parentStructureId) {
@@ -5245,11 +5245,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
+	 * Returns the number of ddm structures that the user has permission to view where groupId = &#63; and parentStructureId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param parentStructureId the parent structure ID
-	 * @return the number of matching d d m structures that the user has permission to view
+	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_P(long groupId, long parentStructureId) {
@@ -5324,11 +5324,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	 * Returns all the ddm structures where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long groupId, long classNameId) {
@@ -5337,7 +5337,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	 * Returns a range of all the ddm structures where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -5345,9 +5345,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long groupId, long classNameId,
@@ -5356,7 +5356,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -5364,10 +5364,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long groupId, long classNameId,
@@ -5377,7 +5377,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -5385,11 +5385,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long groupId, long classNameId,
@@ -5504,13 +5504,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_C_First(long groupId, long classNameId,
@@ -5539,12 +5539,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_C_First(long groupId, long classNameId,
@@ -5560,13 +5560,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_C_Last(long groupId, long classNameId,
@@ -5595,12 +5595,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_C_Last(long groupId, long classNameId,
@@ -5622,14 +5622,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and classNameId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and classNameId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByG_C_PrevAndNext(long structureId, long groupId,
@@ -5773,11 +5773,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @return the matching d d m structures that the user has permission to view
+	 * @return the matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long groupId, long classNameId) {
@@ -5786,7 +5786,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -5794,9 +5794,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures that the user has permission to view
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long groupId, long classNameId,
@@ -5805,7 +5805,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures that the user has permissions to view where groupId = &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures that the user has permissions to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -5813,10 +5813,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures that the user has permission to view
+	 * @return the ordered range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long groupId, long classNameId,
@@ -5905,14 +5905,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] filterFindByG_C_PrevAndNext(long structureId,
@@ -6097,11 +6097,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	 * Returns all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @return the matching d d m structures that the user has permission to view
+	 * @return the matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long[] groupIds, long classNameId) {
@@ -6110,7 +6110,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6118,9 +6118,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures that the user has permission to view
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long[] groupIds,
@@ -6129,7 +6129,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6137,10 +6137,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures that the user has permission to view
+	 * @return the ordered range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_C(long[] groupIds,
@@ -6245,7 +6245,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures where groupId = any &#63; and classNameId = &#63;.
+	 * Returns all the ddm structures where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6253,7 +6253,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long[] groupIds, long classNameId) {
@@ -6262,7 +6262,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where groupId = any &#63; and classNameId = &#63;.
+	 * Returns a range of all the ddm structures where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6270,9 +6270,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long[] groupIds, long classNameId,
@@ -6281,7 +6281,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = any &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6289,10 +6289,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long[] groupIds, long classNameId,
@@ -6302,7 +6302,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and classNameId = &#63;, optionally using the finder cache.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and classNameId = &#63;, optionally using the finder cache.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6310,11 +6310,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_C(long[] groupIds, long classNameId,
@@ -6447,7 +6447,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where groupId = &#63; and classNameId = &#63; from the database.
+	 * Removes all the ddm structures where groupId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
@@ -6461,11 +6461,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = &#63; and classNameId = &#63;.
+	 * Returns the number of ddm structures where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByG_C(long groupId, long classNameId) {
@@ -6517,11 +6517,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = any &#63; and classNameId = &#63;.
+	 * Returns the number of ddm structures where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByG_C(long[] groupIds, long classNameId) {
@@ -6598,11 +6598,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
+	 * Returns the number of ddm structures that the user has permission to view where groupId = &#63; and classNameId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures that the user has permission to view
+	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_C(long groupId, long classNameId) {
@@ -6651,11 +6651,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
+	 * Returns the number of ddm structures that the user has permission to view where groupId = any &#63; and classNameId = &#63;.
 	 *
 	 * @param groupIds the group IDs
 	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures that the user has permission to view
+	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_C(long[] groupIds, long classNameId) {
@@ -6749,11 +6749,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 * Returns all the ddm structures where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByC_C(long companyId, long classNameId) {
@@ -6762,7 +6762,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 * Returns a range of all the ddm structures where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6770,9 +6770,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByC_C(long companyId, long classNameId,
@@ -6781,7 +6781,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6789,10 +6789,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByC_C(long companyId, long classNameId,
@@ -6802,7 +6802,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where companyId = &#63; and classNameId = &#63;.
+	 * Returns an ordered range of all the ddm structures where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -6810,11 +6810,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByC_C(long companyId, long classNameId,
@@ -6929,13 +6929,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 * Returns the first ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByC_C_First(long companyId, long classNameId,
@@ -6964,12 +6964,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 * Returns the first ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByC_C_First(long companyId, long classNameId,
@@ -6985,13 +6985,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 * Returns the last ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByC_C_Last(long companyId, long classNameId,
@@ -7020,12 +7020,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 * Returns the last ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByC_C_Last(long companyId, long classNameId,
@@ -7047,14 +7047,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where companyId = &#63; and classNameId = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where companyId = &#63; and classNameId = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByC_C_PrevAndNext(long structureId,
@@ -7199,7 +7199,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where companyId = &#63; and classNameId = &#63; from the database.
+	 * Removes all the ddm structures where companyId = &#63; and classNameId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
@@ -7213,11 +7213,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where companyId = &#63; and classNameId = &#63;.
+	 * Returns the number of ddm structures where companyId = &#63; and classNameId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByC_C(long companyId, long classNameId) {
@@ -7289,13 +7289,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			});
 
 	/**
-	 * Returns the d d m structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or throws a {@link NoSuchStructureException} if it could not be found.
+	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or throws a {@link NoSuchStructureException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @return the matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_C_S(long groupId, long classNameId,
@@ -7330,12 +7330,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_C_S(long groupId, long classNameId,
@@ -7344,13 +7344,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_C_S(long groupId, long classNameId,
@@ -7457,12 +7457,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes the d d m structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; from the database.
+	 * Removes the ddm structure where groupId = &#63; and classNameId = &#63; and structureKey = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @return the d d m structure that was removed
+	 * @return the ddm structure that was removed
 	 */
 	@Override
 	public DDMStructure removeByG_C_S(long groupId, long classNameId,
@@ -7474,12 +7474,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = &#63; and classNameId = &#63; and structureKey = &#63;.
+	 * Returns the number of ddm structures where groupId = &#63; and classNameId = &#63; and structureKey = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param structureKey the structure key
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByG_C_S(long groupId, long classNameId, String structureKey) {
@@ -7582,12 +7582,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			});
 
 	/**
-	 * Returns all the d d m structures where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns all the ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @return the matching d d m structures
+	 * @return the matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_N_D(long groupId, String name,
@@ -7597,7 +7597,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns a range of all the ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -7606,9 +7606,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_N_D(long groupId, String name,
@@ -7617,7 +7617,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -7626,10 +7626,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_N_D(long groupId, String name,
@@ -7640,7 +7640,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns an ordered range of all the ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -7649,11 +7649,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m structures
+	 * @return the ordered range of matching ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findByG_N_D(long groupId, String name,
@@ -7803,14 +7803,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the first matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_N_D_First(long groupId, String name,
@@ -7842,13 +7842,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the first d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the first ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the first matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_N_D_First(long groupId, String name,
@@ -7864,14 +7864,14 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure
-	 * @throws NoSuchStructureException if a matching d d m structure could not be found
+	 * @return the last matching ddm structure
+	 * @throws NoSuchStructureException if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure findByG_N_D_Last(long groupId, String name,
@@ -7903,13 +7903,13 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the last d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the last ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	 * @return the last matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	 */
 	@Override
 	public DDMStructure fetchByG_N_D_Last(long groupId, String name,
@@ -7931,15 +7931,15 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] findByG_N_D_PrevAndNext(long structureId,
@@ -8117,12 +8117,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns all the ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @return the matching d d m structures that the user has permission to view
+	 * @return the matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_N_D(long groupId, String name,
@@ -8132,7 +8132,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns a range of all the ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -8141,9 +8141,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of matching d d m structures that the user has permission to view
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_N_D(long groupId, String name,
@@ -8152,7 +8152,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures that the user has permissions to view where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns an ordered range of all the ddm structures that the user has permissions to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -8161,10 +8161,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m structures that the user has permission to view
+	 * @return the ordered range of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public List<DDMStructure> filterFindByG_N_D(long groupId, String name,
@@ -8287,15 +8287,15 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structures before and after the current d d m structure in the ordered set of d d m structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the ddm structures before and after the current ddm structure in the ordered set of ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
-	 * @param structureId the primary key of the current d d m structure
+	 * @param structureId the primary key of the current ddm structure
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @return the previous, current, and next ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure[] filterFindByG_N_D_PrevAndNext(long structureId,
@@ -8513,7 +8513,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures where groupId = &#63; and name = &#63; and description = &#63; from the database.
+	 * Removes all the ddm structures where groupId = &#63; and name = &#63; and description = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
@@ -8528,12 +8528,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the number of ddm structures where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @return the number of matching d d m structures
+	 * @return the number of matching ddm structures
 	 */
 	@Override
 	public int countByG_N_D(long groupId, String name, String description) {
@@ -8617,12 +8617,12 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
+	 * Returns the number of ddm structures that the user has permission to view where groupId = &#63; and name = &#63; and description = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @param description the description
-	 * @return the number of matching d d m structures that the user has permission to view
+	 * @return the number of matching ddm structures that the user has permission to view
 	 */
 	@Override
 	public int filterCountByG_N_D(long groupId, String name, String description) {
@@ -8715,9 +8715,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Caches the d d m structure in the entity cache if it is enabled.
+	 * Caches the ddm structure in the entity cache if it is enabled.
 	 *
-	 * @param ddmStructure the d d m structure
+	 * @param ddmStructure the ddm structure
 	 */
 	@Override
 	public void cacheResult(DDMStructure ddmStructure) {
@@ -8738,9 +8738,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Caches the d d m structures in the entity cache if it is enabled.
+	 * Caches the ddm structures in the entity cache if it is enabled.
 	 *
-	 * @param ddmStructures the d d m structures
+	 * @param ddmStructures the ddm structures
 	 */
 	@Override
 	public void cacheResult(List<DDMStructure> ddmStructures) {
@@ -8757,7 +8757,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Clears the cache for all d d m structures.
+	 * Clears the cache for all ddm structures.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -8773,7 +8773,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Clears the cache for the d d m structure.
+	 * Clears the cache for the ddm structure.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -8875,10 +8875,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Creates a new d d m structure with the primary key. Does not add the d d m structure to the database.
+	 * Creates a new ddm structure with the primary key. Does not add the ddm structure to the database.
 	 *
-	 * @param structureId the primary key for the new d d m structure
-	 * @return the new d d m structure
+	 * @param structureId the primary key for the new ddm structure
+	 * @return the new ddm structure
 	 */
 	@Override
 	public DDMStructure create(long structureId) {
@@ -8897,11 +8897,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm structure with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param structureId the primary key of the d d m structure
-	 * @return the d d m structure that was removed
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @param structureId the primary key of the ddm structure
+	 * @return the ddm structure that was removed
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure remove(long structureId)
@@ -8910,11 +8910,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm structure with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d d m structure
-	 * @return the d d m structure that was removed
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure
+	 * @return the ddm structure that was removed
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure remove(Serializable primaryKey)
@@ -9287,11 +9287,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the ddm structure with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m structure
-	 * @return the d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure
+	 * @return the ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure findByPrimaryKey(Serializable primaryKey)
@@ -9311,11 +9311,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure with the primary key or throws a {@link NoSuchStructureException} if it could not be found.
+	 * Returns the ddm structure with the primary key or throws a {@link NoSuchStructureException} if it could not be found.
 	 *
-	 * @param structureId the primary key of the d d m structure
-	 * @return the d d m structure
-	 * @throws NoSuchStructureException if a d d m structure with the primary key could not be found
+	 * @param structureId the primary key of the ddm structure
+	 * @return the ddm structure
+	 * @throws NoSuchStructureException if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure findByPrimaryKey(long structureId)
@@ -9324,10 +9324,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm structure with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m structure
-	 * @return the d d m structure, or <code>null</code> if a d d m structure with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm structure
+	 * @return the ddm structure, or <code>null</code> if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure fetchByPrimaryKey(Serializable primaryKey) {
@@ -9372,10 +9372,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the d d m structure with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm structure with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param structureId the primary key of the d d m structure
-	 * @return the d d m structure, or <code>null</code> if a d d m structure with the primary key could not be found
+	 * @param structureId the primary key of the ddm structure
+	 * @return the ddm structure, or <code>null</code> if a ddm structure with the primary key could not be found
 	 */
 	@Override
 	public DDMStructure fetchByPrimaryKey(long structureId) {
@@ -9477,9 +9477,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns all the d d m structures.
+	 * Returns all the ddm structures.
 	 *
-	 * @return the d d m structures
+	 * @return the ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findAll() {
@@ -9487,15 +9487,15 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns a range of all the d d m structures.
+	 * Returns a range of all the ddm structures.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
-	 * @return the range of d d m structures
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
+	 * @return the range of ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findAll(int start, int end) {
@@ -9503,16 +9503,16 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures.
+	 * Returns an ordered range of all the ddm structures.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d d m structures
+	 * @return the ordered range of ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findAll(int start, int end,
@@ -9521,17 +9521,17 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m structures.
+	 * Returns an ordered range of all the ddm structures.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m structures
-	 * @param end the upper bound of the range of d d m structures (not inclusive)
+	 * @param start the lower bound of the range of ddm structures
+	 * @param end the upper bound of the range of ddm structures (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of d d m structures
+	 * @return the ordered range of ddm structures
 	 */
 	@Override
 	public List<DDMStructure> findAll(int start, int end,
@@ -9620,7 +9620,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Removes all the d d m structures from the database.
+	 * Removes all the ddm structures from the database.
 	 *
 	 */
 	@Override
@@ -9631,9 +9631,9 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Returns the number of d d m structures.
+	 * Returns the number of ddm structures.
 	 *
-	 * @return the number of d d m structures
+	 * @return the number of ddm structures
 	 */
 	@Override
 	public int countAll() {
@@ -9678,7 +9678,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	}
 
 	/**
-	 * Initializes the d d m structure persistence.
+	 * Initializes the ddm structure persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

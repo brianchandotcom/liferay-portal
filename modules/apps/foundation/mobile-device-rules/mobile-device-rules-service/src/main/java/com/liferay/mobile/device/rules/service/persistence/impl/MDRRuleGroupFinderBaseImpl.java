@@ -33,18 +33,18 @@ public class MDRRuleGroupFinderBaseImpl extends BasePersistenceImpl<MDRRuleGroup
 	}
 
 	/**
-	 * Returns the m d r rule group persistence.
+	 * Returns the mdr rule group persistence.
 	 *
-	 * @return the m d r rule group persistence
+	 * @return the mdr rule group persistence
 	 */
 	public MDRRuleGroupPersistence getMDRRuleGroupPersistence() {
 		return mdrRuleGroupPersistence;
 	}
 
 	/**
-	 * Sets the m d r rule group persistence.
+	 * Sets the mdr rule group persistence.
 	 *
-	 * @param mdrRuleGroupPersistence the m d r rule group persistence
+	 * @param mdrRuleGroupPersistence the mdr rule group persistence
 	 */
 	public void setMDRRuleGroupPersistence(
 		MDRRuleGroupPersistence mdrRuleGroupPersistence) {

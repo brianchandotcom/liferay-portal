@@ -43,10 +43,10 @@ public class KBArticleLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the k b article to the database. Also notifies the appropriate model listeners.
+	* Adds the kb article to the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbArticle the k b article
-	* @return the k b article that was added
+	* @param kbArticle the kb article
+	* @return the kb article that was added
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle addKBArticle(
 		com.liferay.knowledge.base.model.KBArticle kbArticle) {
@@ -68,10 +68,10 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new k b article with the primary key. Does not add the k b article to the database.
+	* Creates a new kb article with the primary key. Does not add the kb article to the database.
 	*
-	* @param kbArticleId the primary key for the new k b article
-	* @return the new k b article
+	* @param kbArticleId the primary key for the new kb article
+	* @return the new kb article
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle createKBArticle(
 		long kbArticleId) {
@@ -79,10 +79,10 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the k b article from the database. Also notifies the appropriate model listeners.
+	* Deletes the kb article from the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbArticle the k b article
-	* @return the k b article that was removed
+	* @param kbArticle the kb article
+	* @return the kb article that was removed
 	* @throws PortalException
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle deleteKBArticle(
@@ -92,11 +92,11 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the k b article with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the kb article with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param kbArticleId the primary key of the k b article
-	* @return the k b article that was removed
-	* @throws PortalException if a k b article with the primary key could not be found
+	* @param kbArticleId the primary key of the kb article
+	* @return the kb article that was removed
+	* @throws PortalException if a kb article with the primary key could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle deleteKBArticle(
 		long kbArticleId)
@@ -135,11 +135,11 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the k b article matching the UUID and group.
+	* Returns the kb article matching the UUID and group.
 	*
-	* @param uuid the k b article's UUID
+	* @param uuid the kb article's UUID
 	* @param groupId the primary key of the group
-	* @return the matching k b article, or <code>null</code> if a matching k b article could not be found
+	* @return the matching kb article, or <code>null</code> if a matching kb article could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle fetchKBArticleByUuidAndGroupId(
 		java.lang.String uuid, long groupId) {
@@ -164,11 +164,11 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the k b article with the primary key.
+	* Returns the kb article with the primary key.
 	*
-	* @param kbArticleId the primary key of the k b article
-	* @return the k b article
-	* @throws PortalException if a k b article with the primary key could not be found
+	* @param kbArticleId the primary key of the kb article
+	* @return the kb article
+	* @throws PortalException if a kb article with the primary key could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle getKBArticle(
 		long kbArticleId)
@@ -197,12 +197,12 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the k b article matching the UUID and group.
+	* Returns the kb article matching the UUID and group.
 	*
-	* @param uuid the k b article's UUID
+	* @param uuid the kb article's UUID
 	* @param groupId the primary key of the group
-	* @return the matching k b article
-	* @throws PortalException if a matching k b article could not be found
+	* @return the matching kb article
+	* @throws PortalException if a matching kb article could not be found
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle getKBArticleByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
@@ -234,10 +234,10 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Updates the k b article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the kb article in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param kbArticle the k b article
-	* @return the k b article that was updated
+	* @param kbArticle the kb article
+	* @return the kb article that was updated
 	*/
 	public static com.liferay.knowledge.base.model.KBArticle updateKBArticle(
 		com.liferay.knowledge.base.model.KBArticle kbArticle) {
@@ -335,9 +335,9 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of k b articles.
+	* Returns the number of kb articles.
 	*
-	* @return the number of k b articles
+	* @return the number of kb articles
 	*/
 	public static int getKBArticlesCount() {
 		return getService().getKBArticlesCount();
@@ -493,15 +493,15 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the k b articles.
+	* Returns a range of all the kb articles.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.knowledge.base.model.impl.KBArticleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of k b articles
-	* @param end the upper bound of the range of k b articles (not inclusive)
-	* @return the range of k b articles
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
+	* @return the range of kb articles
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticles(
 		int start, int end) {
@@ -525,11 +525,11 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns all the k b articles matching the UUID and company.
+	* Returns all the kb articles matching the UUID and company.
 	*
-	* @param uuid the UUID of the k b articles
+	* @param uuid the UUID of the kb articles
 	* @param companyId the primary key of the company
-	* @return the matching k b articles, or an empty list if no matches were found
+	* @return the matching kb articles, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticlesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -537,14 +537,14 @@ public class KBArticleLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of k b articles matching the UUID and company.
+	* Returns a range of kb articles matching the UUID and company.
 	*
-	* @param uuid the UUID of the k b articles
+	* @param uuid the UUID of the kb articles
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of k b articles
-	* @param end the upper bound of the range of k b articles (not inclusive)
+	* @param start the lower bound of the range of kb articles
+	* @param end the upper bound of the range of kb articles (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching k b articles, or an empty list if no matches were found
+	* @return the range of matching kb articles, or an empty list if no matches were found
 	*/
 	public static java.util.List<com.liferay.knowledge.base.model.KBArticle> getKBArticlesByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,

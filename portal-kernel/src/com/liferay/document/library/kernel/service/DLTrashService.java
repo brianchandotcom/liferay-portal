@@ -48,7 +48,7 @@ public interface DLTrashService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLTrashServiceUtil} to access the d l trash remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLTrashServiceUtil} to access the dl trash remote service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLTrashServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**

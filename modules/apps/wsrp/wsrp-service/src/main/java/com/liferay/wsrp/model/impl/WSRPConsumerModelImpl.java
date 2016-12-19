@@ -61,7 +61,7 @@ public class WSRPConsumerModelImpl extends BaseModelImpl<WSRPConsumer>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a w s r p consumer model instance should use the {@link WSRPConsumer} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a wsrp consumer model instance should use the {@link WSRPConsumer} interface instead.
 	 */
 	public static final String TABLE_NAME = "WSRP_WSRPConsumer";
 	public static final Object[][] TABLE_COLUMNS = {

@@ -267,7 +267,7 @@ public class ExpandoRowUtil {
 	/**
 	* Returns all the expando rows where classPK = &#63;.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching expando rows
 	*/
 	public static List<ExpandoRow> findByClassPK(long classPK) {
@@ -281,7 +281,7 @@ public class ExpandoRowUtil {
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoRowModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of expando rows
 	* @param end the upper bound of the range of expando rows (not inclusive)
 	* @return the range of matching expando rows
@@ -298,7 +298,7 @@ public class ExpandoRowUtil {
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoRowModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of expando rows
 	* @param end the upper bound of the range of expando rows (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -317,7 +317,7 @@ public class ExpandoRowUtil {
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ExpandoRowModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of expando rows
 	* @param end the upper bound of the range of expando rows (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -335,7 +335,7 @@ public class ExpandoRowUtil {
 	/**
 	* Returns the first expando row in the ordered set where classPK = &#63;.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando row
 	* @throws NoSuchRowException if a matching expando row could not be found
@@ -349,7 +349,7 @@ public class ExpandoRowUtil {
 	/**
 	* Returns the first expando row in the ordered set where classPK = &#63;.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando row, or <code>null</code> if a matching expando row could not be found
 	*/
@@ -361,7 +361,7 @@ public class ExpandoRowUtil {
 	/**
 	* Returns the last expando row in the ordered set where classPK = &#63;.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando row
 	* @throws NoSuchRowException if a matching expando row could not be found
@@ -375,7 +375,7 @@ public class ExpandoRowUtil {
 	/**
 	* Returns the last expando row in the ordered set where classPK = &#63;.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando row, or <code>null</code> if a matching expando row could not be found
 	*/
@@ -388,7 +388,7 @@ public class ExpandoRowUtil {
 	* Returns the expando rows before and after the current expando row in the ordered set where classPK = &#63;.
 	*
 	* @param rowId the primary key of the current expando row
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando row
 	* @throws NoSuchRowException if a expando row with the primary key could not be found
@@ -403,7 +403,7 @@ public class ExpandoRowUtil {
 	/**
 	* Removes all the expando rows where classPK = &#63; from the database.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByClassPK(long classPK) {
 		getPersistence().removeByClassPK(classPK);
@@ -412,7 +412,7 @@ public class ExpandoRowUtil {
 	/**
 	* Returns the number of expando rows where classPK = &#63;.
 	*
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching expando rows
 	*/
 	public static int countByClassPK(long classPK) {
@@ -423,7 +423,7 @@ public class ExpandoRowUtil {
 	* Returns the expando row where tableId = &#63; and classPK = &#63; or throws a {@link NoSuchRowException} if it could not be found.
 	*
 	* @param tableId the table ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching expando row
 	* @throws NoSuchRowException if a matching expando row could not be found
 	*/
@@ -436,7 +436,7 @@ public class ExpandoRowUtil {
 	* Returns the expando row where tableId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param tableId the table ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	*/
 	public static ExpandoRow fetchByT_C(long tableId, long classPK) {
@@ -447,7 +447,7 @@ public class ExpandoRowUtil {
 	* Returns the expando row where tableId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param tableId the table ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching expando row, or <code>null</code> if a matching expando row could not be found
 	*/
@@ -460,7 +460,7 @@ public class ExpandoRowUtil {
 	* Removes the expando row where tableId = &#63; and classPK = &#63; from the database.
 	*
 	* @param tableId the table ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the expando row that was removed
 	*/
 	public static ExpandoRow removeByT_C(long tableId, long classPK)
@@ -472,7 +472,7 @@ public class ExpandoRowUtil {
 	* Returns the number of expando rows where tableId = &#63; and classPK = &#63;.
 	*
 	* @param tableId the table ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching expando rows
 	*/
 	public static int countByT_C(long tableId, long classPK) {

@@ -243,17 +243,17 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this message-boards message.
+	 * Returns the class pk of this message-boards message.
 	 *
-	 * @return the class p k of this message-boards message
+	 * @return the class pk of this message-boards message
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this message-boards message.
+	 * Sets the class pk of this message-boards message.
 	 *
-	 * @param classPK the class p k of this message-boards message
+	 * @param classPK the class pk of this message-boards message
 	 */
 	@Override
 	public void setClassPK(long classPK);

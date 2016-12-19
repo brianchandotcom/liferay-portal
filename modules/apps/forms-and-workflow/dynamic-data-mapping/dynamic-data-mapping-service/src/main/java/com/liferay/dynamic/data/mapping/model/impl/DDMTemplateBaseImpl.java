@@ -37,7 +37,7 @@ public abstract class DDMTemplateBaseImpl extends DDMTemplateModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m template model instance should use the {@link DDMTemplate} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm template model instance should use the {@link DDMTemplate} interface instead.
 	 */
 	@Override
 	public void persist() {

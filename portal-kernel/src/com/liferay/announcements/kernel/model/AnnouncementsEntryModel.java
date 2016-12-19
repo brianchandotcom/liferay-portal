@@ -221,17 +221,17 @@ public interface AnnouncementsEntryModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this announcements entry.
+	 * Returns the class pk of this announcements entry.
 	 *
-	 * @return the class p k of this announcements entry
+	 * @return the class pk of this announcements entry
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this announcements entry.
+	 * Sets the class pk of this announcements entry.
 	 *
-	 * @param classPK the class p k of this announcements entry
+	 * @param classPK the class pk of this announcements entry
 	 */
 	@Override
 	public void setClassPK(long classPK);

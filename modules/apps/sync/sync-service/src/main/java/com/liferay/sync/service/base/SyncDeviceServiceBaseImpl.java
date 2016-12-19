@@ -113,18 +113,18 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync d l file version diff local service.
+	 * Returns the sync dl file version diff local service.
 	 *
-	 * @return the sync d l file version diff local service
+	 * @return the sync dl file version diff local service
 	 */
 	public com.liferay.sync.service.SyncDLFileVersionDiffLocalService getSyncDLFileVersionDiffLocalService() {
 		return syncDLFileVersionDiffLocalService;
 	}
 
 	/**
-	 * Sets the sync d l file version diff local service.
+	 * Sets the sync dl file version diff local service.
 	 *
-	 * @param syncDLFileVersionDiffLocalService the sync d l file version diff local service
+	 * @param syncDLFileVersionDiffLocalService the sync dl file version diff local service
 	 */
 	public void setSyncDLFileVersionDiffLocalService(
 		com.liferay.sync.service.SyncDLFileVersionDiffLocalService syncDLFileVersionDiffLocalService) {
@@ -132,18 +132,18 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync d l file version diff persistence.
+	 * Returns the sync dl file version diff persistence.
 	 *
-	 * @return the sync d l file version diff persistence
+	 * @return the sync dl file version diff persistence
 	 */
 	public SyncDLFileVersionDiffPersistence getSyncDLFileVersionDiffPersistence() {
 		return syncDLFileVersionDiffPersistence;
 	}
 
 	/**
-	 * Sets the sync d l file version diff persistence.
+	 * Sets the sync dl file version diff persistence.
 	 *
-	 * @param syncDLFileVersionDiffPersistence the sync d l file version diff persistence
+	 * @param syncDLFileVersionDiffPersistence the sync dl file version diff persistence
 	 */
 	public void setSyncDLFileVersionDiffPersistence(
 		SyncDLFileVersionDiffPersistence syncDLFileVersionDiffPersistence) {
@@ -151,18 +151,18 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync d l object local service.
+	 * Returns the sync dl object local service.
 	 *
-	 * @return the sync d l object local service
+	 * @return the sync dl object local service
 	 */
 	public com.liferay.sync.service.SyncDLObjectLocalService getSyncDLObjectLocalService() {
 		return syncDLObjectLocalService;
 	}
 
 	/**
-	 * Sets the sync d l object local service.
+	 * Sets the sync dl object local service.
 	 *
-	 * @param syncDLObjectLocalService the sync d l object local service
+	 * @param syncDLObjectLocalService the sync dl object local service
 	 */
 	public void setSyncDLObjectLocalService(
 		com.liferay.sync.service.SyncDLObjectLocalService syncDLObjectLocalService) {
@@ -170,18 +170,18 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync d l object remote service.
+	 * Returns the sync dl object remote service.
 	 *
-	 * @return the sync d l object remote service
+	 * @return the sync dl object remote service
 	 */
 	public com.liferay.sync.service.SyncDLObjectService getSyncDLObjectService() {
 		return syncDLObjectService;
 	}
 
 	/**
-	 * Sets the sync d l object remote service.
+	 * Sets the sync dl object remote service.
 	 *
-	 * @param syncDLObjectService the sync d l object remote service
+	 * @param syncDLObjectService the sync dl object remote service
 	 */
 	public void setSyncDLObjectService(
 		com.liferay.sync.service.SyncDLObjectService syncDLObjectService) {
@@ -189,18 +189,18 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync d l object persistence.
+	 * Returns the sync dl object persistence.
 	 *
-	 * @return the sync d l object persistence
+	 * @return the sync dl object persistence
 	 */
 	public SyncDLObjectPersistence getSyncDLObjectPersistence() {
 		return syncDLObjectPersistence;
 	}
 
 	/**
-	 * Sets the sync d l object persistence.
+	 * Sets the sync dl object persistence.
 	 *
-	 * @param syncDLObjectPersistence the sync d l object persistence
+	 * @param syncDLObjectPersistence the sync dl object persistence
 	 */
 	public void setSyncDLObjectPersistence(
 		SyncDLObjectPersistence syncDLObjectPersistence) {
@@ -208,18 +208,18 @@ public abstract class SyncDeviceServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the sync d l object finder.
+	 * Returns the sync dl object finder.
 	 *
-	 * @return the sync d l object finder
+	 * @return the sync dl object finder
 	 */
 	public SyncDLObjectFinder getSyncDLObjectFinder() {
 		return syncDLObjectFinder;
 	}
 
 	/**
-	 * Sets the sync d l object finder.
+	 * Sets the sync dl object finder.
 	 *
-	 * @param syncDLObjectFinder the sync d l object finder
+	 * @param syncDLObjectFinder the sync dl object finder
 	 */
 	public void setSyncDLObjectFinder(SyncDLObjectFinder syncDLObjectFinder) {
 		this.syncDLObjectFinder = syncDLObjectFinder;

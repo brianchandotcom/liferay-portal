@@ -242,17 +242,17 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this document library file entry.
+	 * Returns the class pk of this document library file entry.
 	 *
-	 * @return the class p k of this document library file entry
+	 * @return the class pk of this document library file entry
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this document library file entry.
+	 * Sets the class pk of this document library file entry.
 	 *
-	 * @param classPK the class p k of this document library file entry
+	 * @param classPK the class pk of this document library file entry
 	 */
 	@Override
 	public void setClassPK(long classPK);

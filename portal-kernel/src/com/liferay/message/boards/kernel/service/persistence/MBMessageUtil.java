@@ -2549,7 +2549,7 @@ public class MBMessageUtil {
 	* Returns all the message-boards messages where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching message-boards messages
 	*/
 	public static List<MBMessage> findByC_C(long classNameId, long classPK) {
@@ -2564,7 +2564,7 @@ public class MBMessageUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
@@ -2582,7 +2582,7 @@ public class MBMessageUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2603,7 +2603,7 @@ public class MBMessageUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2622,7 +2622,7 @@ public class MBMessageUtil {
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws NoSuchMessageException if a matching message-boards message could not be found
@@ -2638,7 +2638,7 @@ public class MBMessageUtil {
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	*/
@@ -2652,7 +2652,7 @@ public class MBMessageUtil {
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws NoSuchMessageException if a matching message-boards message could not be found
@@ -2668,7 +2668,7 @@ public class MBMessageUtil {
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	*/
@@ -2683,7 +2683,7 @@ public class MBMessageUtil {
 	*
 	* @param messageId the primary key of the current message-boards message
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
@@ -2701,7 +2701,7 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
@@ -2711,7 +2711,7 @@ public class MBMessageUtil {
 	* Returns the number of message-boards messages where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching message-boards messages
 	*/
 	public static int countByC_C(long classNameId, long classPK) {
@@ -4254,7 +4254,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching message-boards messages
 	*/
 	public static List<MBMessage> findByU_C_C(long userId, long classNameId,
@@ -4271,7 +4271,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
@@ -4291,7 +4291,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4314,7 +4314,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -4335,7 +4335,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws NoSuchMessageException if a matching message-boards message could not be found
@@ -4353,7 +4353,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	*/
@@ -4369,7 +4369,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws NoSuchMessageException if a matching message-boards message could not be found
@@ -4387,7 +4387,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
 	*/
@@ -4404,7 +4404,7 @@ public class MBMessageUtil {
 	* @param messageId the primary key of the current message-boards message
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
@@ -4423,7 +4423,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByU_C_C(long userId, long classNameId, long classPK) {
 		getPersistence().removeByU_C_C(userId, classNameId, classPK);
@@ -4434,7 +4434,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching message-boards messages
 	*/
 	public static int countByU_C_C(long userId, long classNameId, long classPK) {
@@ -4734,7 +4734,7 @@ public class MBMessageUtil {
 	* Returns all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @return the matching message-boards messages
 	*/
@@ -4751,7 +4751,7 @@ public class MBMessageUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
@@ -4771,7 +4771,7 @@ public class MBMessageUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
@@ -4794,7 +4794,7 @@ public class MBMessageUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
@@ -4815,7 +4815,7 @@ public class MBMessageUtil {
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
@@ -4833,7 +4833,7 @@ public class MBMessageUtil {
 	* Returns the first message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
@@ -4849,7 +4849,7 @@ public class MBMessageUtil {
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
@@ -4867,7 +4867,7 @@ public class MBMessageUtil {
 	* Returns the last message-boards message in the ordered set where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
@@ -4884,7 +4884,7 @@ public class MBMessageUtil {
 	*
 	* @param messageId the primary key of the current message-boards message
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
@@ -4903,7 +4903,7 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	*/
 	public static void removeByC_C_S(long classNameId, long classPK, int status) {
@@ -4914,7 +4914,7 @@ public class MBMessageUtil {
 	* Returns the number of message-boards messages where classNameId = &#63; and classPK = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @return the number of matching message-boards messages
 	*/
@@ -5545,7 +5545,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @return the matching message-boards messages
 	*/
@@ -5564,7 +5564,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
@@ -5586,7 +5586,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
@@ -5610,7 +5610,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
@@ -5632,7 +5632,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
@@ -5651,7 +5651,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
@@ -5668,7 +5668,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
@@ -5687,7 +5687,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
@@ -5705,7 +5705,7 @@ public class MBMessageUtil {
 	* @param messageId the primary key of the current message-boards message
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
@@ -5725,7 +5725,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	*/
 	public static void removeByU_C_C_S(long userId, long classNameId,
@@ -5738,7 +5738,7 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param status the status
 	* @return the number of matching message-boards messages
 	*/

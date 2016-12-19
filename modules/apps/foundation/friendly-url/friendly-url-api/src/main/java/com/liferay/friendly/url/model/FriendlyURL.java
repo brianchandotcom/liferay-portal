@@ -37,7 +37,7 @@ public interface FriendlyURL extends FriendlyURLModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.friendly.url.model.impl.FriendlyURLImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<FriendlyURL, Long> FRIENDLY_U_R_L_ID_ACCESSOR = new Accessor<FriendlyURL, Long>() {
+	public static final Accessor<FriendlyURL, Long> FRIENDLY_URL_ID_ACCESSOR = new Accessor<FriendlyURL, Long>() {
 			@Override
 			public Long get(FriendlyURL friendlyURL) {
 				return friendlyURL.getFriendlyURLId();

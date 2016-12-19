@@ -191,16 +191,16 @@ public interface UserThreadModel extends AuditedModel, BaseModel<UserThread>,
 	public void setMbThreadId(long mbThreadId);
 
 	/**
-	 * Returns the top m b message ID of this user thread.
+	 * Returns the top mb message ID of this user thread.
 	 *
-	 * @return the top m b message ID of this user thread
+	 * @return the top mb message ID of this user thread
 	 */
 	public long getTopMBMessageId();
 
 	/**
-	 * Sets the top m b message ID of this user thread.
+	 * Sets the top mb message ID of this user thread.
 	 *
-	 * @param topMBMessageId the top m b message ID of this user thread
+	 * @param topMBMessageId the top mb message ID of this user thread
 	 */
 	public void setTopMBMessageId(long topMBMessageId);
 

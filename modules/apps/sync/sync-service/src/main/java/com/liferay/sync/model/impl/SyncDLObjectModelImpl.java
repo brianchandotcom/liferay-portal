@@ -66,7 +66,7 @@ public class SyncDLObjectModelImpl extends BaseModelImpl<SyncDLObject>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a sync d l object model instance should use the {@link SyncDLObject} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a sync dl object model instance should use the {@link SyncDLObject} interface instead.
 	 */
 	public static final String TABLE_NAME = "SyncDLObject";
 	public static final Object[][] TABLE_COLUMNS = {

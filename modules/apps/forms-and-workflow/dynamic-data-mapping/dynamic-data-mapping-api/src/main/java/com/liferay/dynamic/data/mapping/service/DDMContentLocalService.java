@@ -62,7 +62,7 @@ public interface DDMContentLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMContentLocalServiceUtil} to access the d d m content local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMContentLocalServiceUtil} to access the ddm content local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMContentLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DDMContent addContent(long userId, long groupId,
 		java.lang.String name, java.lang.String description,
@@ -70,37 +70,37 @@ public interface DDMContentLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Adds the d d m content to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm content to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmContent the d d m content
-	* @return the d d m content that was added
+	* @param ddmContent the ddm content
+	* @return the ddm content that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMContent addDDMContent(DDMContent ddmContent);
 
 	/**
-	* Creates a new d d m content with the primary key. Does not add the d d m content to the database.
+	* Creates a new ddm content with the primary key. Does not add the ddm content to the database.
 	*
-	* @param contentId the primary key for the new d d m content
-	* @return the new d d m content
+	* @param contentId the primary key for the new ddm content
+	* @return the new ddm content
 	*/
 	public DDMContent createDDMContent(long contentId);
 
 	/**
-	* Deletes the d d m content from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm content from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmContent the d d m content
-	* @return the d d m content that was removed
+	* @param ddmContent the ddm content
+	* @return the ddm content that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMContent deleteDDMContent(DDMContent ddmContent);
 
 	/**
-	* Deletes the d d m content with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm content with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content that was removed
-	* @throws PortalException if a d d m content with the primary key could not be found
+	* @param contentId the primary key of the ddm content
+	* @return the ddm content that was removed
+	* @throws PortalException if a ddm content with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMContent deleteDDMContent(long contentId)
@@ -110,11 +110,11 @@ public interface DDMContentLocalService extends BaseLocalService,
 	public DDMContent fetchDDMContent(long contentId);
 
 	/**
-	* Returns the d d m content matching the UUID and group.
+	* Returns the ddm content matching the UUID and group.
 	*
-	* @param uuid the d d m content's UUID
+	* @param uuid the ddm content's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
+	* @return the matching ddm content, or <code>null</code> if a matching ddm content could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMContent fetchDDMContentByUuidAndGroupId(java.lang.String uuid,
@@ -124,22 +124,22 @@ public interface DDMContentLocalService extends BaseLocalService,
 	public DDMContent getContent(long contentId) throws PortalException;
 
 	/**
-	* Returns the d d m content with the primary key.
+	* Returns the ddm content with the primary key.
 	*
-	* @param contentId the primary key of the d d m content
-	* @return the d d m content
-	* @throws PortalException if a d d m content with the primary key could not be found
+	* @param contentId the primary key of the ddm content
+	* @return the ddm content
+	* @throws PortalException if a ddm content with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMContent getDDMContent(long contentId) throws PortalException;
 
 	/**
-	* Returns the d d m content matching the UUID and group.
+	* Returns the ddm content matching the UUID and group.
 	*
-	* @param uuid the d d m content's UUID
+	* @param uuid the ddm content's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d m content
-	* @throws PortalException if a matching d d m content could not be found
+	* @return the matching ddm content
+	* @throws PortalException if a matching ddm content could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMContent getDDMContentByUuidAndGroupId(java.lang.String uuid,
@@ -150,10 +150,10 @@ public interface DDMContentLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Updates the d d m content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmContent the d d m content
-	* @return the d d m content that was updated
+	* @param ddmContent the ddm content
+	* @return the ddm content that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMContent updateDDMContent(DDMContent ddmContent);
@@ -186,9 +186,9 @@ public interface DDMContentLocalService extends BaseLocalService,
 	public int getContentsCount(long groupId);
 
 	/**
-	* Returns the number of d d m contents.
+	* Returns the number of ddm contents.
 	*
-	* @return the number of d d m contents
+	* @return the number of ddm contents
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMContentsCount();
@@ -249,39 +249,39 @@ public interface DDMContentLocalService extends BaseLocalService,
 	public List<DDMContent> getContents(long groupId, int start, int end);
 
 	/**
-	* Returns a range of all the d d m contents.
+	* Returns a range of all the ddm contents.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
-	* @return the range of d d m contents
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
+	* @return the range of ddm contents
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMContent> getDDMContents(int start, int end);
 
 	/**
-	* Returns all the d d m contents matching the UUID and company.
+	* Returns all the ddm contents matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d m contents
+	* @param uuid the UUID of the ddm contents
 	* @param companyId the primary key of the company
-	* @return the matching d d m contents, or an empty list if no matches were found
+	* @return the matching ddm contents, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMContent> getDDMContentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
-	* Returns a range of d d m contents matching the UUID and company.
+	* Returns a range of ddm contents matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d m contents
+	* @param uuid the UUID of the ddm contents
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of d d m contents
-	* @param end the upper bound of the range of d d m contents (not inclusive)
+	* @param start the lower bound of the range of ddm contents
+	* @param end the upper bound of the range of ddm contents (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching d d m contents, or an empty list if no matches were found
+	* @return the range of matching ddm contents, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMContent> getDDMContentsByUuidAndCompanyId(

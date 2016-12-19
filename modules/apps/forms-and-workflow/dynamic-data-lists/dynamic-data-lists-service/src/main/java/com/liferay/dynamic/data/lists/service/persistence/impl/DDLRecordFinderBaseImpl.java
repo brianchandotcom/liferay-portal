@@ -33,18 +33,18 @@ public class DDLRecordFinderBaseImpl extends BasePersistenceImpl<DDLRecord> {
 	}
 
 	/**
-	 * Returns the d d l record persistence.
+	 * Returns the ddl record persistence.
 	 *
-	 * @return the d d l record persistence
+	 * @return the ddl record persistence
 	 */
 	public DDLRecordPersistence getDDLRecordPersistence() {
 		return ddlRecordPersistence;
 	}
 
 	/**
-	 * Sets the d d l record persistence.
+	 * Sets the ddl record persistence.
 	 *
-	 * @param ddlRecordPersistence the d d l record persistence
+	 * @param ddlRecordPersistence the ddl record persistence
 	 */
 	public void setDDLRecordPersistence(
 		DDLRecordPersistence ddlRecordPersistence) {

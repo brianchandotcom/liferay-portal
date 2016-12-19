@@ -208,16 +208,16 @@ public interface KaleoNotificationModel extends BaseModel<KaleoNotification>,
 	public void setKaleoClassName(String kaleoClassName);
 
 	/**
-	 * Returns the kaleo class p k of this kaleo notification.
+	 * Returns the kaleo class pk of this kaleo notification.
 	 *
-	 * @return the kaleo class p k of this kaleo notification
+	 * @return the kaleo class pk of this kaleo notification
 	 */
 	public long getKaleoClassPK();
 
 	/**
-	 * Sets the kaleo class p k of this kaleo notification.
+	 * Sets the kaleo class pk of this kaleo notification.
 	 *
-	 * @param kaleoClassPK the kaleo class p k of this kaleo notification
+	 * @param kaleoClassPK the kaleo class pk of this kaleo notification
 	 */
 	public void setKaleoClassPK(long kaleoClassPK);
 

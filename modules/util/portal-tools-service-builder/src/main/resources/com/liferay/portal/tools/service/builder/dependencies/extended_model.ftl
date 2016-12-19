@@ -83,7 +83,7 @@ public interface ${entity.name} extends
 
 	<#list entity.columnList as column>
 		<#if column.isAccessor() || column.isPrimary()>
-			public static final Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}> ${textFormatter.format(textFormatter.format(column.name, 7), 0)}_ACCESSOR = new Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}>() {
+			public static final Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}> ${column.getAccessorName(apiPackagePath + ".model." + entity.name)} = new Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}>() {
 
 				@Override
 				public ${serviceBuilder.getPrimitiveObj(column.type)} get(${entity.name} ${entity.varName}) {

@@ -134,17 +134,17 @@ public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this trash version.
+	 * Returns the class pk of this trash version.
 	 *
-	 * @return the class p k of this trash version
+	 * @return the class pk of this trash version
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this trash version.
+	 * Sets the class pk of this trash version.
 	 *
-	 * @param classPK the class p k of this trash version
+	 * @param classPK the class pk of this trash version
 	 */
 	@Override
 	public void setClassPK(long classPK);

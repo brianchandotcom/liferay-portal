@@ -59,7 +59,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the k b template service.
+ * The persistence implementation for the kb template service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -76,7 +76,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link KBTemplateUtil} to access the k b template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link KBTemplateUtil} to access the kb template persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = KBTemplateImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -113,10 +113,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the k b templates where uuid = &#63;.
+	 * Returns all the kb templates where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching k b templates
+	 * @return the matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid(String uuid) {
@@ -124,16 +124,16 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns a range of all the k b templates where uuid = &#63;.
+	 * Returns a range of all the kb templates where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
-	 * @return the range of matching k b templates
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
+	 * @return the range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid(String uuid, int start, int end) {
@@ -141,17 +141,17 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates where uuid = &#63;.
+	 * Returns an ordered range of all the kb templates where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching k b templates
+	 * @return the ordered range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid(String uuid, int start, int end,
@@ -160,18 +160,18 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates where uuid = &#63;.
+	 * Returns an ordered range of all the kb templates where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching k b templates
+	 * @return the ordered range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid(String uuid, int start, int end,
@@ -291,12 +291,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the first k b template in the ordered set where uuid = &#63;.
+	 * Returns the first kb template in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the first matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByUuid_First(String uuid,
@@ -321,11 +321,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the first k b template in the ordered set where uuid = &#63;.
+	 * Returns the first kb template in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the first matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByUuid_First(String uuid,
@@ -340,12 +340,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the last k b template in the ordered set where uuid = &#63;.
+	 * Returns the last kb template in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the last matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByUuid_Last(String uuid,
@@ -370,11 +370,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the last k b template in the ordered set where uuid = &#63;.
+	 * Returns the last kb template in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByUuid_Last(String uuid,
@@ -396,13 +396,13 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b templates before and after the current k b template in the ordered set where uuid = &#63;.
+	 * Returns the kb templates before and after the current kb template in the ordered set where uuid = &#63;.
 	 *
-	 * @param kbTemplateId the primary key of the current k b template
+	 * @param kbTemplateId the primary key of the current kb template
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next k b template
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @return the previous, current, and next kb template
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate[] findByUuid_PrevAndNext(long kbTemplateId, String uuid,
@@ -556,7 +556,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes all the k b templates where uuid = &#63; from the database.
+	 * Removes all the kb templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
@@ -569,10 +569,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the number of k b templates where uuid = &#63;.
+	 * Returns the number of kb templates where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching k b templates
+	 * @return the number of matching kb templates
 	 */
 	@Override
 	public int countByUuid(String uuid) {
@@ -648,12 +648,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the k b template where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTemplateException} if it could not be found.
+	 * Returns the kb template where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTemplateException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByUUID_G(String uuid, long groupId)
@@ -684,11 +684,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the kb template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByUUID_G(String uuid, long groupId) {
@@ -696,12 +696,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the kb template where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByUUID_G(String uuid, long groupId,
@@ -802,11 +802,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes the k b template where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the kb template where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the k b template that was removed
+	 * @return the kb template that was removed
 	 */
 	@Override
 	public KBTemplate removeByUUID_G(String uuid, long groupId)
@@ -817,11 +817,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the number of k b templates where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of kb templates where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching k b templates
+	 * @return the number of matching kb templates
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
@@ -913,11 +913,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the k b templates where uuid = &#63; and companyId = &#63;.
+	 * Returns all the kb templates where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching k b templates
+	 * @return the matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid_C(String uuid, long companyId) {
@@ -926,7 +926,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns a range of all the k b templates where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the kb templates where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -934,9 +934,9 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
-	 * @return the range of matching k b templates
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
+	 * @return the range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid_C(String uuid, long companyId,
@@ -945,7 +945,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the kb templates where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -953,10 +953,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching k b templates
+	 * @return the ordered range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid_C(String uuid, long companyId,
@@ -965,7 +965,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the kb templates where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -973,11 +973,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching k b templates
+	 * @return the ordered range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByUuid_C(String uuid, long companyId,
@@ -1106,13 +1106,13 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the first k b template in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first kb template in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the first matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByUuid_C_First(String uuid, long companyId,
@@ -1141,12 +1141,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the first k b template in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first kb template in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the first matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByUuid_C_First(String uuid, long companyId,
@@ -1162,13 +1162,13 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the last k b template in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last kb template in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the last matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByUuid_C_Last(String uuid, long companyId,
@@ -1197,12 +1197,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the last k b template in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last kb template in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByUuid_C_Last(String uuid, long companyId,
@@ -1224,14 +1224,14 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b templates before and after the current k b template in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the kb templates before and after the current kb template in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param kbTemplateId the primary key of the current k b template
+	 * @param kbTemplateId the primary key of the current kb template
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next k b template
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @return the previous, current, and next kb template
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate[] findByUuid_C_PrevAndNext(long kbTemplateId,
@@ -1390,7 +1390,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes all the k b templates where uuid = &#63; and companyId = &#63; from the database.
+	 * Removes all the kb templates where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1404,11 +1404,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the number of k b templates where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of kb templates where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching k b templates
+	 * @return the number of matching kb templates
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
@@ -1499,10 +1499,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the k b templates where groupId = &#63;.
+	 * Returns all the kb templates where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching k b templates
+	 * @return the matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByGroupId(long groupId) {
@@ -1510,16 +1510,16 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns a range of all the k b templates where groupId = &#63;.
+	 * Returns a range of all the kb templates where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
-	 * @return the range of matching k b templates
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
+	 * @return the range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByGroupId(long groupId, int start, int end) {
@@ -1527,17 +1527,17 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates where groupId = &#63;.
+	 * Returns an ordered range of all the kb templates where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching k b templates
+	 * @return the ordered range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByGroupId(long groupId, int start, int end,
@@ -1546,18 +1546,18 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates where groupId = &#63;.
+	 * Returns an ordered range of all the kb templates where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching k b templates
+	 * @return the ordered range of matching kb templates
 	 */
 	@Override
 	public List<KBTemplate> findByGroupId(long groupId, int start, int end,
@@ -1663,12 +1663,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the first k b template in the ordered set where groupId = &#63;.
+	 * Returns the first kb template in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the first matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByGroupId_First(long groupId,
@@ -1693,11 +1693,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the first k b template in the ordered set where groupId = &#63;.
+	 * Returns the first kb template in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the first matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByGroupId_First(long groupId,
@@ -1712,12 +1712,12 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the last k b template in the ordered set where groupId = &#63;.
+	 * Returns the last kb template in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching k b template
-	 * @throws NoSuchTemplateException if a matching k b template could not be found
+	 * @return the last matching kb template
+	 * @throws NoSuchTemplateException if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate findByGroupId_Last(long groupId,
@@ -1742,11 +1742,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the last k b template in the ordered set where groupId = &#63;.
+	 * Returns the last kb template in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @return the last matching kb template, or <code>null</code> if a matching kb template could not be found
 	 */
 	@Override
 	public KBTemplate fetchByGroupId_Last(long groupId,
@@ -1768,13 +1768,13 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b templates before and after the current k b template in the ordered set where groupId = &#63;.
+	 * Returns the kb templates before and after the current kb template in the ordered set where groupId = &#63;.
 	 *
-	 * @param kbTemplateId the primary key of the current k b template
+	 * @param kbTemplateId the primary key of the current kb template
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next k b template
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @return the previous, current, and next kb template
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate[] findByGroupId_PrevAndNext(long kbTemplateId,
@@ -1914,10 +1914,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns all the k b templates that the user has permission to view where groupId = &#63;.
+	 * Returns all the kb templates that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching k b templates that the user has permission to view
+	 * @return the matching kb templates that the user has permission to view
 	 */
 	@Override
 	public List<KBTemplate> filterFindByGroupId(long groupId) {
@@ -1926,16 +1926,16 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns a range of all the k b templates that the user has permission to view where groupId = &#63;.
+	 * Returns a range of all the kb templates that the user has permission to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
-	 * @return the range of matching k b templates that the user has permission to view
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
+	 * @return the range of matching kb templates that the user has permission to view
 	 */
 	@Override
 	public List<KBTemplate> filterFindByGroupId(long groupId, int start, int end) {
@@ -1943,17 +1943,17 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates that the user has permissions to view where groupId = &#63;.
+	 * Returns an ordered range of all the kb templates that the user has permissions to view where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching k b templates that the user has permission to view
+	 * @return the ordered range of matching kb templates that the user has permission to view
 	 */
 	@Override
 	public List<KBTemplate> filterFindByGroupId(long groupId, int start,
@@ -2037,13 +2037,13 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b templates before and after the current k b template in the ordered set of k b templates that the user has permission to view where groupId = &#63;.
+	 * Returns the kb templates before and after the current kb template in the ordered set of kb templates that the user has permission to view where groupId = &#63;.
 	 *
-	 * @param kbTemplateId the primary key of the current k b template
+	 * @param kbTemplateId the primary key of the current kb template
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next k b template
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @return the previous, current, and next kb template
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate[] filterFindByGroupId_PrevAndNext(long kbTemplateId,
@@ -2223,7 +2223,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes all the k b templates where groupId = &#63; from the database.
+	 * Removes all the kb templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 */
@@ -2236,10 +2236,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the number of k b templates where groupId = &#63;.
+	 * Returns the number of kb templates where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching k b templates
+	 * @return the number of matching kb templates
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
@@ -2287,10 +2287,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the number of k b templates that the user has permission to view where groupId = &#63;.
+	 * Returns the number of kb templates that the user has permission to view where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching k b templates that the user has permission to view
+	 * @return the number of matching kb templates that the user has permission to view
 	 */
 	@Override
 	public int filterCountByGroupId(long groupId) {
@@ -2341,9 +2341,9 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Caches the k b template in the entity cache if it is enabled.
+	 * Caches the kb template in the entity cache if it is enabled.
 	 *
-	 * @param kbTemplate the k b template
+	 * @param kbTemplate the kb template
 	 */
 	@Override
 	public void cacheResult(KBTemplate kbTemplate) {
@@ -2358,9 +2358,9 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Caches the k b templates in the entity cache if it is enabled.
+	 * Caches the kb templates in the entity cache if it is enabled.
 	 *
-	 * @param kbTemplates the k b templates
+	 * @param kbTemplates the kb templates
 	 */
 	@Override
 	public void cacheResult(List<KBTemplate> kbTemplates) {
@@ -2377,7 +2377,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Clears the cache for all k b templates.
+	 * Clears the cache for all kb templates.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -2393,7 +2393,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Clears the cache for the k b template.
+	 * Clears the cache for the kb template.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -2460,10 +2460,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Creates a new k b template with the primary key. Does not add the k b template to the database.
+	 * Creates a new kb template with the primary key. Does not add the kb template to the database.
 	 *
-	 * @param kbTemplateId the primary key for the new k b template
-	 * @return the new k b template
+	 * @param kbTemplateId the primary key for the new kb template
+	 * @return the new kb template
 	 */
 	@Override
 	public KBTemplate create(long kbTemplateId) {
@@ -2482,11 +2482,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes the k b template with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the kb template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param kbTemplateId the primary key of the k b template
-	 * @return the k b template that was removed
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @param kbTemplateId the primary key of the kb template
+	 * @return the kb template that was removed
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate remove(long kbTemplateId) throws NoSuchTemplateException {
@@ -2494,11 +2494,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes the k b template with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the kb template with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the k b template
-	 * @return the k b template that was removed
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @param primaryKey the primary key of the kb template
+	 * @return the kb template that was removed
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate remove(Serializable primaryKey)
@@ -2722,11 +2722,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b template with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the kb template with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the k b template
-	 * @return the k b template
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @param primaryKey the primary key of the kb template
+	 * @return the kb template
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate findByPrimaryKey(Serializable primaryKey)
@@ -2746,11 +2746,11 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b template with the primary key or throws a {@link NoSuchTemplateException} if it could not be found.
+	 * Returns the kb template with the primary key or throws a {@link NoSuchTemplateException} if it could not be found.
 	 *
-	 * @param kbTemplateId the primary key of the k b template
-	 * @return the k b template
-	 * @throws NoSuchTemplateException if a k b template with the primary key could not be found
+	 * @param kbTemplateId the primary key of the kb template
+	 * @return the kb template
+	 * @throws NoSuchTemplateException if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate findByPrimaryKey(long kbTemplateId)
@@ -2759,10 +2759,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b template with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the kb template with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the k b template
-	 * @return the k b template, or <code>null</code> if a k b template with the primary key could not be found
+	 * @param primaryKey the primary key of the kb template
+	 * @return the kb template, or <code>null</code> if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate fetchByPrimaryKey(Serializable primaryKey) {
@@ -2807,10 +2807,10 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the k b template with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the kb template with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param kbTemplateId the primary key of the k b template
-	 * @return the k b template, or <code>null</code> if a k b template with the primary key could not be found
+	 * @param kbTemplateId the primary key of the kb template
+	 * @return the kb template, or <code>null</code> if a kb template with the primary key could not be found
 	 */
 	@Override
 	public KBTemplate fetchByPrimaryKey(long kbTemplateId) {
@@ -2912,9 +2912,9 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns all the k b templates.
+	 * Returns all the kb templates.
 	 *
-	 * @return the k b templates
+	 * @return the kb templates
 	 */
 	@Override
 	public List<KBTemplate> findAll() {
@@ -2922,15 +2922,15 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns a range of all the k b templates.
+	 * Returns a range of all the kb templates.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
-	 * @return the range of k b templates
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
+	 * @return the range of kb templates
 	 */
 	@Override
 	public List<KBTemplate> findAll(int start, int end) {
@@ -2938,16 +2938,16 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates.
+	 * Returns an ordered range of all the kb templates.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of k b templates
+	 * @return the ordered range of kb templates
 	 */
 	@Override
 	public List<KBTemplate> findAll(int start, int end,
@@ -2956,17 +2956,17 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns an ordered range of all the k b templates.
+	 * Returns an ordered range of all the kb templates.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KBTemplateModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of k b templates
-	 * @param end the upper bound of the range of k b templates (not inclusive)
+	 * @param start the lower bound of the range of kb templates
+	 * @param end the upper bound of the range of kb templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of k b templates
+	 * @return the ordered range of kb templates
 	 */
 	@Override
 	public List<KBTemplate> findAll(int start, int end,
@@ -3055,7 +3055,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Removes all the k b templates from the database.
+	 * Removes all the kb templates from the database.
 	 *
 	 */
 	@Override
@@ -3066,9 +3066,9 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Returns the number of k b templates.
+	 * Returns the number of kb templates.
 	 *
-	 * @return the number of k b templates
+	 * @return the number of kb templates
 	 */
 	@Override
 	public int countAll() {
@@ -3113,7 +3113,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	}
 
 	/**
-	 * Initializes the k b template persistence.
+	 * Initializes the kb template persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

@@ -49,171 +49,171 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a m d r rule group instance model instance should use the {@link MDRRuleGroupInstance} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a mdr rule group instance model instance should use the {@link MDRRuleGroupInstance} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this m d r rule group instance.
+	 * Returns the primary key of this mdr rule group instance.
 	 *
-	 * @return the primary key of this m d r rule group instance
+	 * @return the primary key of this mdr rule group instance
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this m d r rule group instance.
+	 * Sets the primary key of this mdr rule group instance.
 	 *
-	 * @param primaryKey the primary key of this m d r rule group instance
+	 * @param primaryKey the primary key of this mdr rule group instance
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this m d r rule group instance.
+	 * Returns the uuid of this mdr rule group instance.
 	 *
-	 * @return the uuid of this m d r rule group instance
+	 * @return the uuid of this mdr rule group instance
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this m d r rule group instance.
+	 * Sets the uuid of this mdr rule group instance.
 	 *
-	 * @param uuid the uuid of this m d r rule group instance
+	 * @param uuid the uuid of this mdr rule group instance
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the rule group instance ID of this m d r rule group instance.
+	 * Returns the rule group instance ID of this mdr rule group instance.
 	 *
-	 * @return the rule group instance ID of this m d r rule group instance
+	 * @return the rule group instance ID of this mdr rule group instance
 	 */
 	public long getRuleGroupInstanceId();
 
 	/**
-	 * Sets the rule group instance ID of this m d r rule group instance.
+	 * Sets the rule group instance ID of this mdr rule group instance.
 	 *
-	 * @param ruleGroupInstanceId the rule group instance ID of this m d r rule group instance
+	 * @param ruleGroupInstanceId the rule group instance ID of this mdr rule group instance
 	 */
 	public void setRuleGroupInstanceId(long ruleGroupInstanceId);
 
 	/**
-	 * Returns the group ID of this m d r rule group instance.
+	 * Returns the group ID of this mdr rule group instance.
 	 *
-	 * @return the group ID of this m d r rule group instance
+	 * @return the group ID of this mdr rule group instance
 	 */
 	@Override
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this m d r rule group instance.
+	 * Sets the group ID of this mdr rule group instance.
 	 *
-	 * @param groupId the group ID of this m d r rule group instance
+	 * @param groupId the group ID of this mdr rule group instance
 	 */
 	@Override
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this m d r rule group instance.
+	 * Returns the company ID of this mdr rule group instance.
 	 *
-	 * @return the company ID of this m d r rule group instance
+	 * @return the company ID of this mdr rule group instance
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this m d r rule group instance.
+	 * Sets the company ID of this mdr rule group instance.
 	 *
-	 * @param companyId the company ID of this m d r rule group instance
+	 * @param companyId the company ID of this mdr rule group instance
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this m d r rule group instance.
+	 * Returns the user ID of this mdr rule group instance.
 	 *
-	 * @return the user ID of this m d r rule group instance
+	 * @return the user ID of this mdr rule group instance
 	 */
 	@Override
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this m d r rule group instance.
+	 * Sets the user ID of this mdr rule group instance.
 	 *
-	 * @param userId the user ID of this m d r rule group instance
+	 * @param userId the user ID of this mdr rule group instance
 	 */
 	@Override
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this m d r rule group instance.
+	 * Returns the user uuid of this mdr rule group instance.
 	 *
-	 * @return the user uuid of this m d r rule group instance
+	 * @return the user uuid of this mdr rule group instance
 	 */
 	@Override
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this m d r rule group instance.
+	 * Sets the user uuid of this mdr rule group instance.
 	 *
-	 * @param userUuid the user uuid of this m d r rule group instance
+	 * @param userUuid the user uuid of this mdr rule group instance
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this m d r rule group instance.
+	 * Returns the user name of this mdr rule group instance.
 	 *
-	 * @return the user name of this m d r rule group instance
+	 * @return the user name of this mdr rule group instance
 	 */
 	@AutoEscape
 	@Override
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this m d r rule group instance.
+	 * Sets the user name of this mdr rule group instance.
 	 *
-	 * @param userName the user name of this m d r rule group instance
+	 * @param userName the user name of this mdr rule group instance
 	 */
 	@Override
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this m d r rule group instance.
+	 * Returns the create date of this mdr rule group instance.
 	 *
-	 * @return the create date of this m d r rule group instance
+	 * @return the create date of this mdr rule group instance
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this m d r rule group instance.
+	 * Sets the create date of this mdr rule group instance.
 	 *
-	 * @param createDate the create date of this m d r rule group instance
+	 * @param createDate the create date of this mdr rule group instance
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this m d r rule group instance.
+	 * Returns the modified date of this mdr rule group instance.
 	 *
-	 * @return the modified date of this m d r rule group instance
+	 * @return the modified date of this mdr rule group instance
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this m d r rule group instance.
+	 * Sets the modified date of this mdr rule group instance.
 	 *
-	 * @param modifiedDate the modified date of this m d r rule group instance
+	 * @param modifiedDate the modified date of this mdr rule group instance
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the fully qualified class name of this m d r rule group instance.
+	 * Returns the fully qualified class name of this mdr rule group instance.
 	 *
-	 * @return the fully qualified class name of this m d r rule group instance
+	 * @return the fully qualified class name of this mdr rule group instance
 	 */
 	@Override
 	public String getClassName();
@@ -221,77 +221,77 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class name ID of this m d r rule group instance.
+	 * Returns the class name ID of this mdr rule group instance.
 	 *
-	 * @return the class name ID of this m d r rule group instance
+	 * @return the class name ID of this mdr rule group instance
 	 */
 	@Override
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this m d r rule group instance.
+	 * Sets the class name ID of this mdr rule group instance.
 	 *
-	 * @param classNameId the class name ID of this m d r rule group instance
+	 * @param classNameId the class name ID of this mdr rule group instance
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this m d r rule group instance.
+	 * Returns the class pk of this mdr rule group instance.
 	 *
-	 * @return the class p k of this m d r rule group instance
+	 * @return the class pk of this mdr rule group instance
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this m d r rule group instance.
+	 * Sets the class pk of this mdr rule group instance.
 	 *
-	 * @param classPK the class p k of this m d r rule group instance
+	 * @param classPK the class pk of this mdr rule group instance
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the rule group ID of this m d r rule group instance.
+	 * Returns the rule group ID of this mdr rule group instance.
 	 *
-	 * @return the rule group ID of this m d r rule group instance
+	 * @return the rule group ID of this mdr rule group instance
 	 */
 	public long getRuleGroupId();
 
 	/**
-	 * Sets the rule group ID of this m d r rule group instance.
+	 * Sets the rule group ID of this mdr rule group instance.
 	 *
-	 * @param ruleGroupId the rule group ID of this m d r rule group instance
+	 * @param ruleGroupId the rule group ID of this mdr rule group instance
 	 */
 	public void setRuleGroupId(long ruleGroupId);
 
 	/**
-	 * Returns the priority of this m d r rule group instance.
+	 * Returns the priority of this mdr rule group instance.
 	 *
-	 * @return the priority of this m d r rule group instance
+	 * @return the priority of this mdr rule group instance
 	 */
 	public int getPriority();
 
 	/**
-	 * Sets the priority of this m d r rule group instance.
+	 * Sets the priority of this mdr rule group instance.
 	 *
-	 * @param priority the priority of this m d r rule group instance
+	 * @param priority the priority of this mdr rule group instance
 	 */
 	public void setPriority(int priority);
 
 	/**
-	 * Returns the last publish date of this m d r rule group instance.
+	 * Returns the last publish date of this mdr rule group instance.
 	 *
-	 * @return the last publish date of this m d r rule group instance
+	 * @return the last publish date of this mdr rule group instance
 	 */
 	@Override
 	public Date getLastPublishDate();
 
 	/**
-	 * Sets the last publish date of this m d r rule group instance.
+	 * Sets the last publish date of this mdr rule group instance.
 	 *
-	 * @param lastPublishDate the last publish date of this m d r rule group instance
+	 * @param lastPublishDate the last publish date of this mdr rule group instance
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);

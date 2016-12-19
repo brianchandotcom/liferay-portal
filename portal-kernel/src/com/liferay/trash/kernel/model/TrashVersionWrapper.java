@@ -235,9 +235,9 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	/**
-	* Returns the class p k of this trash version.
+	* Returns the class pk of this trash version.
 	*
-	* @return the class p k of this trash version
+	* @return the class pk of this trash version
 	*/
 	@Override
 	public long getClassPK() {
@@ -310,9 +310,9 @@ public class TrashVersionWrapper implements TrashVersion,
 	}
 
 	/**
-	* Sets the class p k of this trash version.
+	* Sets the class pk of this trash version.
 	*
-	* @param classPK the class p k of this trash version
+	* @param classPK the class pk of this trash version
 	*/
 	@Override
 	public void setClassPK(long classPK) {

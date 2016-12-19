@@ -2795,7 +2795,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns all the kaleo task assignment instances where groupId = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @return the matching kaleo task assignment instances
 	 */
 	@Override
@@ -2813,7 +2813,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @return the range of matching kaleo task assignment instances
@@ -2832,7 +2832,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2854,7 +2854,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -2978,7 +2978,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the first kaleo task assignment instance in the ordered set where groupId = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
@@ -3014,7 +3014,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the first kaleo task assignment instance in the ordered set where groupId = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
@@ -3036,7 +3036,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the last kaleo task assignment instance in the ordered set where groupId = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
@@ -3072,7 +3072,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the last kaleo task assignment instance in the ordered set where groupId = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
@@ -3101,7 +3101,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 *
 	 * @param kaleoTaskAssignmentInstanceId the primary key of the current kaleo task assignment instance
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
@@ -3257,7 +3257,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Removes all the kaleo task assignment instances where groupId = &#63; and assigneeClassPK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 */
 	@Override
 	public void removeByG_ACPK(long groupId, long assigneeClassPK) {
@@ -3272,7 +3272,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the number of kaleo task assignment instances where groupId = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @return the number of matching kaleo task assignment instances
 	 */
 	@Override
@@ -3354,7 +3354,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns all the kaleo task assignment instances where assigneeClassName = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @return the matching kaleo task assignment instances
 	 */
 	@Override
@@ -3372,7 +3372,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * </p>
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @return the range of matching kaleo task assignment instances
@@ -3392,7 +3392,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * </p>
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -3414,7 +3414,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * </p>
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param start the lower bound of the range of kaleo task assignment instances
 	 * @param end the upper bound of the range of kaleo task assignment instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -3553,7 +3553,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the first kaleo task assignment instance in the ordered set where assigneeClassName = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
@@ -3589,7 +3589,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the first kaleo task assignment instance in the ordered set where assigneeClassName = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
@@ -3611,7 +3611,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the last kaleo task assignment instance in the ordered set where assigneeClassName = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a matching kaleo task assignment instance could not be found
@@ -3647,7 +3647,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the last kaleo task assignment instance in the ordered set where assigneeClassName = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching kaleo task assignment instance, or <code>null</code> if a matching kaleo task assignment instance could not be found
 	 */
@@ -3676,7 +3676,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 *
 	 * @param kaleoTaskAssignmentInstanceId the primary key of the current kaleo task assignment instance
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next kaleo task assignment instance
 	 * @throws NoSuchTaskAssignmentInstanceException if a kaleo task assignment instance with the primary key could not be found
@@ -3847,7 +3847,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Removes all the kaleo task assignment instances where assigneeClassName = &#63; and assigneeClassPK = &#63; from the database.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 */
 	@Override
 	public void removeByACN_ACPK(String assigneeClassName, long assigneeClassPK) {
@@ -3862,7 +3862,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 	 * Returns the number of kaleo task assignment instances where assigneeClassName = &#63; and assigneeClassPK = &#63;.
 	 *
 	 * @param assigneeClassName the assignee class name
-	 * @param assigneeClassPK the assignee class p k
+	 * @param assigneeClassPK the assignee class pk
 	 * @return the number of matching kaleo task assignment instances
 	 */
 	@Override

@@ -74,7 +74,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m structure version model instance should use the {@link DDMStructureVersion} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm structure version model instance should use the {@link DDMStructureVersion} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructureVersion";
 	public static final Object[][] TABLE_COLUMNS = {

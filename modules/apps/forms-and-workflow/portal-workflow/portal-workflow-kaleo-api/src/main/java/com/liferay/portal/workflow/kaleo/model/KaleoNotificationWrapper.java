@@ -390,9 +390,9 @@ public class KaleoNotificationWrapper implements KaleoNotification,
 	}
 
 	/**
-	* Returns the kaleo class p k of this kaleo notification.
+	* Returns the kaleo class pk of this kaleo notification.
 	*
-	* @return the kaleo class p k of this kaleo notification
+	* @return the kaleo class pk of this kaleo notification
 	*/
 	@Override
 	public long getKaleoClassPK() {
@@ -526,9 +526,9 @@ public class KaleoNotificationWrapper implements KaleoNotification,
 	}
 
 	/**
-	* Sets the kaleo class p k of this kaleo notification.
+	* Sets the kaleo class pk of this kaleo notification.
 	*
-	* @param kaleoClassPK the kaleo class p k of this kaleo notification
+	* @param kaleoClassPK the kaleo class pk of this kaleo notification
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {

@@ -33,18 +33,18 @@ public class DDMStructureFinderBaseImpl extends BasePersistenceImpl<DDMStructure
 	}
 
 	/**
-	 * Returns the d d m structure persistence.
+	 * Returns the ddm structure persistence.
 	 *
-	 * @return the d d m structure persistence
+	 * @return the ddm structure persistence
 	 */
 	public DDMStructurePersistence getDDMStructurePersistence() {
 		return ddmStructurePersistence;
 	}
 
 	/**
-	 * Sets the d d m structure persistence.
+	 * Sets the ddm structure persistence.
 	 *
-	 * @param ddmStructurePersistence the d d m structure persistence
+	 * @param ddmStructurePersistence the ddm structure persistence
 	 */
 	public void setDDMStructurePersistence(
 		DDMStructurePersistence ddmStructurePersistence) {

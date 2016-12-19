@@ -208,16 +208,16 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel,
 	public void setKaleoClassName(String kaleoClassName);
 
 	/**
-	 * Returns the kaleo class p k of this kaleo timer.
+	 * Returns the kaleo class pk of this kaleo timer.
 	 *
-	 * @return the kaleo class p k of this kaleo timer
+	 * @return the kaleo class pk of this kaleo timer
 	 */
 	public long getKaleoClassPK();
 
 	/**
-	 * Sets the kaleo class p k of this kaleo timer.
+	 * Sets the kaleo class pk of this kaleo timer.
 	 *
-	 * @param kaleoClassPK the kaleo class p k of this kaleo timer
+	 * @param kaleoClassPK the kaleo class pk of this kaleo timer
 	 */
 	public void setKaleoClassPK(long kaleoClassPK);
 

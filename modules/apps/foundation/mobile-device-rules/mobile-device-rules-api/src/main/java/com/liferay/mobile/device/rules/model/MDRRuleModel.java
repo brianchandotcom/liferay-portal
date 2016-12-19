@@ -52,222 +52,222 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a m d r rule model instance should use the {@link MDRRule} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a mdr rule model instance should use the {@link MDRRule} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this m d r rule.
+	 * Returns the primary key of this mdr rule.
 	 *
-	 * @return the primary key of this m d r rule
+	 * @return the primary key of this mdr rule
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this m d r rule.
+	 * Sets the primary key of this mdr rule.
 	 *
-	 * @param primaryKey the primary key of this m d r rule
+	 * @param primaryKey the primary key of this mdr rule
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this m d r rule.
+	 * Returns the uuid of this mdr rule.
 	 *
-	 * @return the uuid of this m d r rule
+	 * @return the uuid of this mdr rule
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this m d r rule.
+	 * Sets the uuid of this mdr rule.
 	 *
-	 * @param uuid the uuid of this m d r rule
+	 * @param uuid the uuid of this mdr rule
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the rule ID of this m d r rule.
+	 * Returns the rule ID of this mdr rule.
 	 *
-	 * @return the rule ID of this m d r rule
+	 * @return the rule ID of this mdr rule
 	 */
 	public long getRuleId();
 
 	/**
-	 * Sets the rule ID of this m d r rule.
+	 * Sets the rule ID of this mdr rule.
 	 *
-	 * @param ruleId the rule ID of this m d r rule
+	 * @param ruleId the rule ID of this mdr rule
 	 */
 	public void setRuleId(long ruleId);
 
 	/**
-	 * Returns the group ID of this m d r rule.
+	 * Returns the group ID of this mdr rule.
 	 *
-	 * @return the group ID of this m d r rule
+	 * @return the group ID of this mdr rule
 	 */
 	@Override
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this m d r rule.
+	 * Sets the group ID of this mdr rule.
 	 *
-	 * @param groupId the group ID of this m d r rule
+	 * @param groupId the group ID of this mdr rule
 	 */
 	@Override
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this m d r rule.
+	 * Returns the company ID of this mdr rule.
 	 *
-	 * @return the company ID of this m d r rule
+	 * @return the company ID of this mdr rule
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this m d r rule.
+	 * Sets the company ID of this mdr rule.
 	 *
-	 * @param companyId the company ID of this m d r rule
+	 * @param companyId the company ID of this mdr rule
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this m d r rule.
+	 * Returns the user ID of this mdr rule.
 	 *
-	 * @return the user ID of this m d r rule
+	 * @return the user ID of this mdr rule
 	 */
 	@Override
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this m d r rule.
+	 * Sets the user ID of this mdr rule.
 	 *
-	 * @param userId the user ID of this m d r rule
+	 * @param userId the user ID of this mdr rule
 	 */
 	@Override
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this m d r rule.
+	 * Returns the user uuid of this mdr rule.
 	 *
-	 * @return the user uuid of this m d r rule
+	 * @return the user uuid of this mdr rule
 	 */
 	@Override
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this m d r rule.
+	 * Sets the user uuid of this mdr rule.
 	 *
-	 * @param userUuid the user uuid of this m d r rule
+	 * @param userUuid the user uuid of this mdr rule
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this m d r rule.
+	 * Returns the user name of this mdr rule.
 	 *
-	 * @return the user name of this m d r rule
+	 * @return the user name of this mdr rule
 	 */
 	@AutoEscape
 	@Override
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this m d r rule.
+	 * Sets the user name of this mdr rule.
 	 *
-	 * @param userName the user name of this m d r rule
+	 * @param userName the user name of this mdr rule
 	 */
 	@Override
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this m d r rule.
+	 * Returns the create date of this mdr rule.
 	 *
-	 * @return the create date of this m d r rule
+	 * @return the create date of this mdr rule
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this m d r rule.
+	 * Sets the create date of this mdr rule.
 	 *
-	 * @param createDate the create date of this m d r rule
+	 * @param createDate the create date of this mdr rule
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this m d r rule.
+	 * Returns the modified date of this mdr rule.
 	 *
-	 * @return the modified date of this m d r rule
+	 * @return the modified date of this mdr rule
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this m d r rule.
+	 * Sets the modified date of this mdr rule.
 	 *
-	 * @param modifiedDate the modified date of this m d r rule
+	 * @param modifiedDate the modified date of this mdr rule
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the rule group ID of this m d r rule.
+	 * Returns the rule group ID of this mdr rule.
 	 *
-	 * @return the rule group ID of this m d r rule
+	 * @return the rule group ID of this mdr rule
 	 */
 	public long getRuleGroupId();
 
 	/**
-	 * Sets the rule group ID of this m d r rule.
+	 * Sets the rule group ID of this mdr rule.
 	 *
-	 * @param ruleGroupId the rule group ID of this m d r rule
+	 * @param ruleGroupId the rule group ID of this mdr rule
 	 */
 	public void setRuleGroupId(long ruleGroupId);
 
 	/**
-	 * Returns the name of this m d r rule.
+	 * Returns the name of this mdr rule.
 	 *
-	 * @return the name of this m d r rule
+	 * @return the name of this mdr rule
 	 */
 	public String getName();
 
 	/**
-	 * Returns the localized name of this m d r rule in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized name of this m d r rule
+	 * @return the localized name of this mdr rule
 	 */
 	@AutoEscape
 	public String getName(Locale locale);
 
 	/**
-	 * Returns the localized name of this m d r rule in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this m d r rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized name of this mdr rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
 	public String getName(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized name of this m d r rule in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized name of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized name of this m d r rule
+	 * @return the localized name of this mdr rule
 	 */
 	@AutoEscape
 	public String getName(String languageId);
 
 	/**
-	 * Returns the localized name of this m d r rule in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized name of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized name of this m d r rule
+	 * @return the localized name of this mdr rule
 	 */
 	@AutoEscape
 	public String getName(String languageId, boolean useDefault);
@@ -279,31 +279,31 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	public String getNameCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized names of this m d r rule.
+	 * Returns a map of the locales and localized names of this mdr rule.
 	 *
-	 * @return the locales and localized names of this m d r rule
+	 * @return the locales and localized names of this mdr rule
 	 */
 	public Map<Locale, String> getNameMap();
 
 	/**
-	 * Sets the name of this m d r rule.
+	 * Sets the name of this mdr rule.
 	 *
-	 * @param name the name of this m d r rule
+	 * @param name the name of this mdr rule
 	 */
 	public void setName(String name);
 
 	/**
-	 * Sets the localized name of this m d r rule in the language.
+	 * Sets the localized name of this mdr rule in the language.
 	 *
-	 * @param name the localized name of this m d r rule
+	 * @param name the localized name of this mdr rule
 	 * @param locale the locale of the language
 	 */
 	public void setName(String name, Locale locale);
 
 	/**
-	 * Sets the localized name of this m d r rule in the language, and sets the default locale.
+	 * Sets the localized name of this mdr rule in the language, and sets the default locale.
 	 *
-	 * @param name the localized name of this m d r rule
+	 * @param name the localized name of this mdr rule
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -312,61 +312,61 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	public void setNameCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized names of this m d r rule from the map of locales and localized names.
+	 * Sets the localized names of this mdr rule from the map of locales and localized names.
 	 *
-	 * @param nameMap the locales and localized names of this m d r rule
+	 * @param nameMap the locales and localized names of this mdr rule
 	 */
 	public void setNameMap(Map<Locale, String> nameMap);
 
 	/**
-	 * Sets the localized names of this m d r rule from the map of locales and localized names, and sets the default locale.
+	 * Sets the localized names of this mdr rule from the map of locales and localized names, and sets the default locale.
 	 *
-	 * @param nameMap the locales and localized names of this m d r rule
+	 * @param nameMap the locales and localized names of this mdr rule
 	 * @param defaultLocale the default locale
 	 */
 	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale);
 
 	/**
-	 * Returns the description of this m d r rule.
+	 * Returns the description of this mdr rule.
 	 *
-	 * @return the description of this m d r rule
+	 * @return the description of this mdr rule
 	 */
 	public String getDescription();
 
 	/**
-	 * Returns the localized description of this m d r rule in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized description of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized description of this m d r rule
+	 * @return the localized description of this mdr rule
 	 */
 	@AutoEscape
 	public String getDescription(Locale locale);
 
 	/**
-	 * Returns the localized description of this m d r rule in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized description of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this m d r rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized description of this mdr rule. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
 	public String getDescription(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized description of this m d r rule in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized description of this mdr rule in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized description of this m d r rule
+	 * @return the localized description of this mdr rule
 	 */
 	@AutoEscape
 	public String getDescription(String languageId);
 
 	/**
-	 * Returns the localized description of this m d r rule in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized description of this mdr rule in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized description of this m d r rule
+	 * @return the localized description of this mdr rule
 	 */
 	@AutoEscape
 	public String getDescription(String languageId, boolean useDefault);
@@ -378,31 +378,31 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	public String getDescriptionCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized descriptions of this m d r rule.
+	 * Returns a map of the locales and localized descriptions of this mdr rule.
 	 *
-	 * @return the locales and localized descriptions of this m d r rule
+	 * @return the locales and localized descriptions of this mdr rule
 	 */
 	public Map<Locale, String> getDescriptionMap();
 
 	/**
-	 * Sets the description of this m d r rule.
+	 * Sets the description of this mdr rule.
 	 *
-	 * @param description the description of this m d r rule
+	 * @param description the description of this mdr rule
 	 */
 	public void setDescription(String description);
 
 	/**
-	 * Sets the localized description of this m d r rule in the language.
+	 * Sets the localized description of this mdr rule in the language.
 	 *
-	 * @param description the localized description of this m d r rule
+	 * @param description the localized description of this mdr rule
 	 * @param locale the locale of the language
 	 */
 	public void setDescription(String description, Locale locale);
 
 	/**
-	 * Sets the localized description of this m d r rule in the language, and sets the default locale.
+	 * Sets the localized description of this mdr rule in the language, and sets the default locale.
 	 *
-	 * @param description the localized description of this m d r rule
+	 * @param description the localized description of this mdr rule
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -412,63 +412,63 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	public void setDescriptionCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized descriptions of this m d r rule from the map of locales and localized descriptions.
+	 * Sets the localized descriptions of this mdr rule from the map of locales and localized descriptions.
 	 *
-	 * @param descriptionMap the locales and localized descriptions of this m d r rule
+	 * @param descriptionMap the locales and localized descriptions of this mdr rule
 	 */
 	public void setDescriptionMap(Map<Locale, String> descriptionMap);
 
 	/**
-	 * Sets the localized descriptions of this m d r rule from the map of locales and localized descriptions, and sets the default locale.
+	 * Sets the localized descriptions of this mdr rule from the map of locales and localized descriptions, and sets the default locale.
 	 *
-	 * @param descriptionMap the locales and localized descriptions of this m d r rule
+	 * @param descriptionMap the locales and localized descriptions of this mdr rule
 	 * @param defaultLocale the default locale
 	 */
 	public void setDescriptionMap(Map<Locale, String> descriptionMap,
 		Locale defaultLocale);
 
 	/**
-	 * Returns the type of this m d r rule.
+	 * Returns the type of this mdr rule.
 	 *
-	 * @return the type of this m d r rule
+	 * @return the type of this mdr rule
 	 */
 	@AutoEscape
 	public String getType();
 
 	/**
-	 * Sets the type of this m d r rule.
+	 * Sets the type of this mdr rule.
 	 *
-	 * @param type the type of this m d r rule
+	 * @param type the type of this mdr rule
 	 */
 	public void setType(String type);
 
 	/**
-	 * Returns the type settings of this m d r rule.
+	 * Returns the type settings of this mdr rule.
 	 *
-	 * @return the type settings of this m d r rule
+	 * @return the type settings of this mdr rule
 	 */
 	@AutoEscape
 	public String getTypeSettings();
 
 	/**
-	 * Sets the type settings of this m d r rule.
+	 * Sets the type settings of this mdr rule.
 	 *
-	 * @param typeSettings the type settings of this m d r rule
+	 * @param typeSettings the type settings of this mdr rule
 	 */
 	public void setTypeSettings(String typeSettings);
 
 	/**
-	 * Returns the last publish date of this m d r rule.
+	 * Returns the last publish date of this mdr rule.
 	 *
-	 * @return the last publish date of this m d r rule
+	 * @return the last publish date of this mdr rule
 	 */
 	@Override
 	public Date getLastPublishDate();
 
 	/**
-	 * Sets the last publish date of this m d r rule.
+	 * Sets the last publish date of this mdr rule.
 	 *
-	 * @param lastPublishDate the last publish date of this m d r rule
+	 * @param lastPublishDate the last publish date of this mdr rule
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);

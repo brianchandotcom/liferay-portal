@@ -37,7 +37,7 @@ public abstract class KBTemplateBaseImpl extends KBTemplateModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a k b template model instance should use the {@link KBTemplate} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kb template model instance should use the {@link KBTemplate} interface instead.
 	 */
 	@Override
 	public void persist() {

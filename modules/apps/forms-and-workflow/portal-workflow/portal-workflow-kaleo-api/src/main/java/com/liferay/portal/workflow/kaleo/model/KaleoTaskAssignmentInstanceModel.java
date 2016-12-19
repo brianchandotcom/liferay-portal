@@ -294,16 +294,16 @@ public interface KaleoTaskAssignmentInstanceModel extends BaseModel<KaleoTaskAss
 	public void setAssigneeClassName(String assigneeClassName);
 
 	/**
-	 * Returns the assignee class p k of this kaleo task assignment instance.
+	 * Returns the assignee class pk of this kaleo task assignment instance.
 	 *
-	 * @return the assignee class p k of this kaleo task assignment instance
+	 * @return the assignee class pk of this kaleo task assignment instance
 	 */
 	public long getAssigneeClassPK();
 
 	/**
-	 * Sets the assignee class p k of this kaleo task assignment instance.
+	 * Sets the assignee class pk of this kaleo task assignment instance.
 	 *
-	 * @param assigneeClassPK the assignee class p k of this kaleo task assignment instance
+	 * @param assigneeClassPK the assignee class pk of this kaleo task assignment instance
 	 */
 	public void setAssigneeClassPK(long assigneeClassPK);
 

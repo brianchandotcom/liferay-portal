@@ -74,10 +74,10 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Adds the w s r p consumer portlet to the database. Also notifies the appropriate model listeners.
+	* Adds the wsrp consumer portlet to the database. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumerPortlet the w s r p consumer portlet
-	* @return the w s r p consumer portlet that was added
+	* @param wsrpConsumerPortlet the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was added
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet addWSRPConsumerPortlet(
 		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet) {
@@ -105,10 +105,10 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new w s r p consumer portlet with the primary key. Does not add the w s r p consumer portlet to the database.
+	* Creates a new wsrp consumer portlet with the primary key. Does not add the wsrp consumer portlet to the database.
 	*
-	* @param wsrpConsumerPortletId the primary key for the new w s r p consumer portlet
-	* @return the new w s r p consumer portlet
+	* @param wsrpConsumerPortletId the primary key for the new wsrp consumer portlet
+	* @return the new wsrp consumer portlet
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet createWSRPConsumerPortlet(
 		long wsrpConsumerPortletId) {
@@ -116,10 +116,10 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the w s r p consumer portlet from the database. Also notifies the appropriate model listeners.
+	* Deletes the wsrp consumer portlet from the database. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumerPortlet the w s r p consumer portlet
-	* @return the w s r p consumer portlet that was removed
+	* @param wsrpConsumerPortlet the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was removed
 	* @throws PortalException
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet deleteWSRPConsumerPortlet(
@@ -129,11 +129,11 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the w s r p consumer portlet with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the wsrp consumer portlet with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumerPortletId the primary key of the w s r p consumer portlet
-	* @return the w s r p consumer portlet that was removed
-	* @throws PortalException if a w s r p consumer portlet with the primary key could not be found
+	* @param wsrpConsumerPortletId the primary key of the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was removed
+	* @throws PortalException if a wsrp consumer portlet with the primary key could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet deleteWSRPConsumerPortlet(
 		long wsrpConsumerPortletId)
@@ -147,11 +147,11 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Returns the w s r p consumer portlet with the matching UUID and company.
+	* Returns the wsrp consumer portlet with the matching UUID and company.
 	*
-	* @param uuid the w s r p consumer portlet's UUID
+	* @param uuid the wsrp consumer portlet's UUID
 	* @param companyId the primary key of the company
-	* @return the matching w s r p consumer portlet, or <code>null</code> if a matching w s r p consumer portlet could not be found
+	* @return the matching wsrp consumer portlet, or <code>null</code> if a matching wsrp consumer portlet could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet fetchWSRPConsumerPortletByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -172,11 +172,11 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Returns the w s r p consumer portlet with the primary key.
+	* Returns the wsrp consumer portlet with the primary key.
 	*
-	* @param wsrpConsumerPortletId the primary key of the w s r p consumer portlet
-	* @return the w s r p consumer portlet
-	* @throws PortalException if a w s r p consumer portlet with the primary key could not be found
+	* @param wsrpConsumerPortletId the primary key of the wsrp consumer portlet
+	* @return the wsrp consumer portlet
+	* @throws PortalException if a wsrp consumer portlet with the primary key could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet getWSRPConsumerPortlet(
 		long wsrpConsumerPortletId)
@@ -185,12 +185,12 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Returns the w s r p consumer portlet with the matching UUID and company.
+	* Returns the wsrp consumer portlet with the matching UUID and company.
 	*
-	* @param uuid the w s r p consumer portlet's UUID
+	* @param uuid the wsrp consumer portlet's UUID
 	* @param companyId the primary key of the company
-	* @return the matching w s r p consumer portlet
-	* @throws PortalException if a matching w s r p consumer portlet could not be found
+	* @return the matching wsrp consumer portlet
+	* @throws PortalException if a matching wsrp consumer portlet could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet getWSRPConsumerPortletByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
@@ -200,10 +200,10 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Updates the w s r p consumer portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the wsrp consumer portlet in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumerPortlet the w s r p consumer portlet
-	* @return the w s r p consumer portlet that was updated
+	* @param wsrpConsumerPortlet the wsrp consumer portlet
+	* @return the wsrp consumer portlet that was updated
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumerPortlet updateWSRPConsumerPortlet(
 		com.liferay.wsrp.model.WSRPConsumerPortlet wsrpConsumerPortlet) {
@@ -218,9 +218,9 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of w s r p consumer portlets.
+	* Returns the number of wsrp consumer portlets.
 	*
-	* @return the number of w s r p consumer portlets
+	* @return the number of wsrp consumer portlets
 	*/
 	public static int getWSRPConsumerPortletsCount() {
 		return getService().getWSRPConsumerPortletsCount();
@@ -290,15 +290,15 @@ public class WSRPConsumerPortletLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the w s r p consumer portlets.
+	* Returns a range of all the wsrp consumer portlets.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wsrp.model.impl.WSRPConsumerPortletModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of w s r p consumer portlets
-	* @param end the upper bound of the range of w s r p consumer portlets (not inclusive)
-	* @return the range of w s r p consumer portlets
+	* @param start the lower bound of the range of wsrp consumer portlets
+	* @param end the upper bound of the range of wsrp consumer portlets (not inclusive)
+	* @return the range of wsrp consumer portlets
 	*/
 	public static java.util.List<com.liferay.wsrp.model.WSRPConsumerPortlet> getWSRPConsumerPortlets(
 		int start, int end) {

@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -589,8 +590,22 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		String newPassword1 = actionRequest.getParameter("password1");
 		String newPassword2 = actionRequest.getParameter("password2");
-		boolean passwordReset = ParamUtil.getBoolean(
-			actionRequest, "passwordReset");
+
+		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+		boolean passwordReset;
+
+		if ((user.getLastLoginDate() == null) &&
+			((passwordPolicy == null) ||
+			 (passwordPolicy.isChangeable() &&
+			  passwordPolicy.isChangeRequired()))) {
+
+				passwordReset = true;
+		}
+		else {
+			passwordReset = ParamUtil.getBoolean(
+				actionRequest, "passwordReset");
+		}
 
 		String reminderQueryQuestion = BeanParamUtil.getString(
 			user, actionRequest, "reminderQueryQuestion");

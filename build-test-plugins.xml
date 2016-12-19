@@ -101,7 +101,7 @@
 					</then>
 					<elseif>
 						<and>
-							<available file="plugins" />
+							<available file="plugins/marketplace" />
 							<isset property="marketplace.app[@{plugin}]" />
 						</and>
 						<then>
@@ -111,7 +111,7 @@
 
 							<get-auto-deploy-dir />
 
-							<copy file="plugins/${marketplace.app}" todir="${auto.deploy.dir}" />
+							<copy file="plugins/marketplace/${marketplace.app}" todir="${auto.deploy.dir}" />
 						</then>
 					</elseif>
 				</if>

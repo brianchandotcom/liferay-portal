@@ -1312,7 +1312,7 @@ this task.
 				<![CDATA[
 					<subsystem xmlns="urn:jboss:domain:web:2.2" default-virtual-server="default-host" native="false">
 						<configuration>
-							<jsp-configuration development="true" />
+							<jsp-configuration development="true" source-vm="1.8" target-vm="1.8" />
 						</configuration>
 				]]>
 			</replacevalue>

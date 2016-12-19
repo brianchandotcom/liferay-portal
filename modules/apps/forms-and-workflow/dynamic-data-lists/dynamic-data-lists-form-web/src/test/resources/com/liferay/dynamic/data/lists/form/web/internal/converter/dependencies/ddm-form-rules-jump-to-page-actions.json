@@ -1,0 +1,8 @@
+[
+	{
+		"actions": [
+			"jumpToPage('2', '4')"
+		],
+		"condition": "equals(getValue('Field1'), '2')"
+	}
+]

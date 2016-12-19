@@ -62,6 +62,13 @@ public class DDMFormRulesToDDLFormRulesConverterTest
 			"ddl-form-rules-comparison-operators-condition.json");
 	}
 
+	@Test
+	public void testJumpToPageActions() throws Exception {
+		assertConversion(
+			"ddm-form-rules-jump-to-page-actions.json",
+			"ddl-form-rules-jump-to-page-actions.json");
+	}
+
 	protected void assertConversion(String fromFileName, String toFileName)
 		throws Exception {
 

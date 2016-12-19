@@ -104,6 +104,14 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
 	</command>
 
+	<command name="viewFeedContent">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="${panelHeading}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CONTENT" value1="${feedContent}" />
+	</command>
+
 	<command name="viewNavigationDisplayFeedTitle">
 		<var name="key_feedTitle" value="${feedTitle}" />
 

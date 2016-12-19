@@ -54,6 +54,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FEED_ITEM_CONTENT</td>
+	<td>//select[contains(@id,'contentFieldSelector')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_TYPE</td>
+	<td>//select[contains(@id,'feedType')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPORT_IMPORT_CONTENT</td>
 	<td>//select[contains(@id,'PORTLET_DATA')]</td>
 	<td></td>

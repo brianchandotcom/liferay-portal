@@ -470,7 +470,7 @@
 </tr>
 <tr>
 	<td>URL</td>
-	<td>//input[contains(@id,'url')]</td>
+	<td>//input[contains(@id,'url') or contains(@id,'Url')]</td>
 	<td></td>
 </tr>
 <tr>

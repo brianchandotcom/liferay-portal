@@ -210,6 +210,84 @@
 		</execute>
 	</command>
 
+	<command name="AddWebContentFeed" priority="3">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddFeed" />
+
+		<execute macro="WebContent#addFeed">
+			<var name="description" value="WC Feed Description" />
+			<var name="feedContent" value="Content(ddm-text-html)" />
+			<var name="feedTitle" value="WC Feed Title" />
+			<var name="feedType" value="RSS 2.0" />
+			<var name="structureName" value="Basic Web Content" />
+			<var name="targetFriendlyUrl" value="/web/guest/home" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditFeed">
+			<var name="rowEntry" value="WC Feed Title" />
+		</execute>
+
+		<var attribute="value" locator="//input[contains(@id,'JournalPortlet_url') and contains(@value,'journal/rss')]" name="rssFeedUrl" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS Publisher" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS Publisher" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="RSS#addFeed">
+			<var name="feedRowIndexNumber" value="0" />
+			<var name="feedTitle" value="Web Content Feed Title" />
+			<var name="feedUrlLink" value="${rssFeedUrl}" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="RSS#viewDisplayFeedTitle">
+			<var name="feedTitle" value="Web Content Feed Title" />
+		</execute>
+
+		<execute macro="RSS#viewFeedContent">
+			<var name="feedContent" value="Web Content Content" />
+			<var name="panelHeading" value="Web Content Title" />
+		</execute>
+	</command>
+
 	<command name="ChangeDefaultToNavigationDisplay" priority="3">
 		<execute macro="Navigator#gotoSitePage">
 			<var name="pageName" value="Site Page Name" />

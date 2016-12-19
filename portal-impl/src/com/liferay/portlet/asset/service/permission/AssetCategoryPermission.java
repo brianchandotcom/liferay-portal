@@ -108,7 +108,7 @@ public class AssetCategoryPermission {
 		throws PortalException {
 
 		if (categoryId == AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			return AssetPermission.contains(
+			return AssetCategoriesPermission.contains(
 				permissionChecker, groupId, actionId);
 		}
 		else {

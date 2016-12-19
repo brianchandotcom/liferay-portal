@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.asset.service.permission.AssetPermission;
+import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryCreateDateComparator;
 import com.liferay.portlet.asset.util.comparator.AssetVocabularyCreateDateComparator;
 
@@ -557,7 +557,7 @@ public class AssetCategoriesDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (AssetPermission.contains(
+		if (AssetCategoriesPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY)) {
 
@@ -586,7 +586,7 @@ public class AssetCategoriesDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (AssetPermission.contains(
+		if (AssetCategoriesPermission.contains(
 				themeDisplay.getPermissionChecker(),
 				themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY)) {
 

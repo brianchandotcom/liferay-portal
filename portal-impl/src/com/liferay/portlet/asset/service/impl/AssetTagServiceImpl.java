@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetTagServiceBaseImpl;
-import com.liferay.portlet.asset.service.permission.AssetPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
+import com.liferay.portlet.asset.service.permission.AssetTagsPermission;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 import com.liferay.util.Autocomplete;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -53,7 +53,7 @@ public class AssetTagServiceImpl extends AssetTagServiceBaseImpl {
 			long groupId, String name, ServiceContext serviceContext)
 		throws PortalException {
 
-		AssetPermission.check(
+		AssetTagsPermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_TAG);
 
 		return assetTagLocalService.addTag(

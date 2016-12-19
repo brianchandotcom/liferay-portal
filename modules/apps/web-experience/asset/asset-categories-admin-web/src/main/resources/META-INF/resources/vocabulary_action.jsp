@@ -35,7 +35,7 @@ AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= AssetPermission.contains(permissionChecker, vocabulary.getGroupId(), ActionKeys.ADD_CATEGORY) %>">
+	<c:if test="<%= AssetCategoriesPermission.contains(permissionChecker, vocabulary.getGroupId(), ActionKeys.ADD_CATEGORY) %>">
 		<portlet:renderURL var="addCategoryURL">
 			<portlet:param name="mvcPath" value="/edit_category.jsp" />
 			<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabulary.getVocabularyId()) %>" />

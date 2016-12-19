@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portlet.asset.service.permission.AssetPermission;
+import com.liferay.portlet.asset.service.permission.AssetCategoriesPermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import javax.portlet.PortletRequest;
@@ -95,7 +95,7 @@ public class PermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
-			if (!AssetPermission.contains(
+			if (!AssetCategoriesPermission.contains(
 					permissionChecker, themeDisplay.getSiteGroupId(),
 					ActionKeys.PERMISSIONS) ||
 				!GroupPermissionUtil.contains(

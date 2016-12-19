@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FEEDS_CONTENT</td>
+	<td>//div[contains(@class,'feed-entry-content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FEEDS_CONTENT_TITLE</td>
 	<td>//div[@class='panel-toggle']/span[contains(.,'${key_feedContentTitle}')]</td>
 	<td></td>

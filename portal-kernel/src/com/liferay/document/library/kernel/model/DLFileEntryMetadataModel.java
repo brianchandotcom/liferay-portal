@@ -108,30 +108,30 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the d d m storage ID of this document library file entry metadata.
+	 * Returns the ddm storage ID of this document library file entry metadata.
 	 *
-	 * @return the d d m storage ID of this document library file entry metadata
+	 * @return the ddm storage ID of this document library file entry metadata
 	 */
 	public long getDDMStorageId();
 
 	/**
-	 * Sets the d d m storage ID of this document library file entry metadata.
+	 * Sets the ddm storage ID of this document library file entry metadata.
 	 *
-	 * @param DDMStorageId the d d m storage ID of this document library file entry metadata
+	 * @param DDMStorageId the ddm storage ID of this document library file entry metadata
 	 */
 	public void setDDMStorageId(long DDMStorageId);
 
 	/**
-	 * Returns the d d m structure ID of this document library file entry metadata.
+	 * Returns the ddm structure ID of this document library file entry metadata.
 	 *
-	 * @return the d d m structure ID of this document library file entry metadata
+	 * @return the ddm structure ID of this document library file entry metadata
 	 */
 	public long getDDMStructureId();
 
 	/**
-	 * Sets the d d m structure ID of this document library file entry metadata.
+	 * Sets the ddm structure ID of this document library file entry metadata.
 	 *
-	 * @param DDMStructureId the d d m structure ID of this document library file entry metadata
+	 * @param DDMStructureId the ddm structure ID of this document library file entry metadata
 	 */
 	public void setDDMStructureId(long DDMStructureId);
 

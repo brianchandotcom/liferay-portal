@@ -235,17 +235,17 @@ public interface RoleModel extends AttachedModel, BaseModel<Role>, LocalizedMode
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this role.
+	 * Returns the class pk of this role.
 	 *
-	 * @return the class p k of this role
+	 * @return the class pk of this role
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this role.
+	 * Sets the class pk of this role.
 	 *
-	 * @param classPK the class p k of this role
+	 * @param classPK the class pk of this role
 	 */
 	@Override
 	public void setClassPK(long classPK);

@@ -119,16 +119,16 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow>, ShardedModel {
 	public void setTableId(long tableId);
 
 	/**
-	 * Returns the class p k of this expando row.
+	 * Returns the class pk of this expando row.
 	 *
-	 * @return the class p k of this expando row
+	 * @return the class pk of this expando row
 	 */
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this expando row.
+	 * Sets the class pk of this expando row.
 	 *
-	 * @param classPK the class p k of this expando row
+	 * @param classPK the class pk of this expando row
 	 */
 	public void setClassPK(long classPK);
 

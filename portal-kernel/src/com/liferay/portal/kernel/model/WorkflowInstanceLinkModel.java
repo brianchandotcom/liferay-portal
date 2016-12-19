@@ -231,17 +231,17 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this workflow instance link.
+	 * Returns the class pk of this workflow instance link.
 	 *
-	 * @return the class p k of this workflow instance link
+	 * @return the class pk of this workflow instance link
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this workflow instance link.
+	 * Sets the class pk of this workflow instance link.
 	 *
-	 * @param classPK the class p k of this workflow instance link
+	 * @param classPK the class pk of this workflow instance link
 	 */
 	@Override
 	public void setClassPK(long classPK);

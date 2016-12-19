@@ -44,108 +44,108 @@ public interface DLSyncEventModel extends BaseModel<DLSyncEvent>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d l sync event model instance should use the {@link DLSyncEvent} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a dl sync event model instance should use the {@link DLSyncEvent} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d l sync event.
+	 * Returns the primary key of this dl sync event.
 	 *
-	 * @return the primary key of this d l sync event
+	 * @return the primary key of this dl sync event
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d l sync event.
+	 * Sets the primary key of this dl sync event.
 	 *
-	 * @param primaryKey the primary key of this d l sync event
+	 * @param primaryKey the primary key of this dl sync event
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the sync event ID of this d l sync event.
+	 * Returns the sync event ID of this dl sync event.
 	 *
-	 * @return the sync event ID of this d l sync event
+	 * @return the sync event ID of this dl sync event
 	 */
 	public long getSyncEventId();
 
 	/**
-	 * Sets the sync event ID of this d l sync event.
+	 * Sets the sync event ID of this dl sync event.
 	 *
-	 * @param syncEventId the sync event ID of this d l sync event
+	 * @param syncEventId the sync event ID of this dl sync event
 	 */
 	public void setSyncEventId(long syncEventId);
 
 	/**
-	 * Returns the company ID of this d l sync event.
+	 * Returns the company ID of this dl sync event.
 	 *
-	 * @return the company ID of this d l sync event
+	 * @return the company ID of this dl sync event
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d l sync event.
+	 * Sets the company ID of this dl sync event.
 	 *
-	 * @param companyId the company ID of this d l sync event
+	 * @param companyId the company ID of this dl sync event
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the modified time of this d l sync event.
+	 * Returns the modified time of this dl sync event.
 	 *
-	 * @return the modified time of this d l sync event
+	 * @return the modified time of this dl sync event
 	 */
 	public long getModifiedTime();
 
 	/**
-	 * Sets the modified time of this d l sync event.
+	 * Sets the modified time of this dl sync event.
 	 *
-	 * @param modifiedTime the modified time of this d l sync event
+	 * @param modifiedTime the modified time of this dl sync event
 	 */
 	public void setModifiedTime(long modifiedTime);
 
 	/**
-	 * Returns the event of this d l sync event.
+	 * Returns the event of this dl sync event.
 	 *
-	 * @return the event of this d l sync event
+	 * @return the event of this dl sync event
 	 */
 	@AutoEscape
 	public String getEvent();
 
 	/**
-	 * Sets the event of this d l sync event.
+	 * Sets the event of this dl sync event.
 	 *
-	 * @param event the event of this d l sync event
+	 * @param event the event of this dl sync event
 	 */
 	public void setEvent(String event);
 
 	/**
-	 * Returns the type of this d l sync event.
+	 * Returns the type of this dl sync event.
 	 *
-	 * @return the type of this d l sync event
+	 * @return the type of this dl sync event
 	 */
 	@AutoEscape
 	public String getType();
 
 	/**
-	 * Sets the type of this d l sync event.
+	 * Sets the type of this dl sync event.
 	 *
-	 * @param type the type of this d l sync event
+	 * @param type the type of this dl sync event
 	 */
 	public void setType(String type);
 
 	/**
-	 * Returns the type p k of this d l sync event.
+	 * Returns the type pk of this dl sync event.
 	 *
-	 * @return the type p k of this d l sync event
+	 * @return the type pk of this dl sync event
 	 */
 	public long getTypePK();
 
 	/**
-	 * Sets the type p k of this d l sync event.
+	 * Sets the type pk of this dl sync event.
 	 *
-	 * @param typePK the type p k of this d l sync event
+	 * @param typePK the type pk of this dl sync event
 	 */
 	public void setTypePK(long typePK);
 

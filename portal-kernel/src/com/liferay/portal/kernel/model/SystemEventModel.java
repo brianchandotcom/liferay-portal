@@ -205,17 +205,17 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this system event.
+	 * Returns the class pk of this system event.
 	 *
-	 * @return the class p k of this system event
+	 * @return the class pk of this system event
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this system event.
+	 * Sets the class pk of this system event.
 	 *
-	 * @param classPK the class p k of this system event
+	 * @param classPK the class pk of this system event
 	 */
 	@Override
 	public void setClassPK(long classPK);

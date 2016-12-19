@@ -553,9 +553,9 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* Returns the cover image u r l of this blogs entry.
+	* Returns the cover image url of this blogs entry.
 	*
-	* @return the cover image u r l of this blogs entry
+	* @return the cover image url of this blogs entry
 	*/
 	@Override
 	public java.lang.String getCoverImageURL() {
@@ -597,9 +597,9 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* Returns the small image u r l of this blogs entry.
+	* Returns the small image url of this blogs entry.
 	*
-	* @return the small image u r l of this blogs entry
+	* @return the small image url of this blogs entry
 	*/
 	@Override
 	public java.lang.String getSmallImageURL() {
@@ -934,9 +934,9 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* Sets the cover image u r l of this blogs entry.
+	* Sets the cover image url of this blogs entry.
 	*
-	* @param coverImageURL the cover image u r l of this blogs entry
+	* @param coverImageURL the cover image url of this blogs entry
 	*/
 	@Override
 	public void setCoverImageURL(java.lang.String coverImageURL) {
@@ -1085,9 +1085,9 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
-	* Sets the small image u r l of this blogs entry.
+	* Sets the small image url of this blogs entry.
 	*
-	* @param smallImageURL the small image u r l of this blogs entry
+	* @param smallImageURL the small image url of this blogs entry
 	*/
 	@Override
 	public void setSmallImageURL(java.lang.String smallImageURL) {

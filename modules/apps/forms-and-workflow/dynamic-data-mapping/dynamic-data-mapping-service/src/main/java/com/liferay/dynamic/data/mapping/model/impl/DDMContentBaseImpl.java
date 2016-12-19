@@ -37,7 +37,7 @@ public abstract class DDMContentBaseImpl extends DDMContentModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m content model instance should use the {@link DDMContent} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm content model instance should use the {@link DDMContent} interface instead.
 	 */
 	@Override
 	public void persist() {

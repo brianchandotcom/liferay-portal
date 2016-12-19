@@ -36,7 +36,7 @@ public interface LayoutFriendlyURL extends LayoutFriendlyURLModel, PersistedMode
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.LayoutFriendlyURLImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutFriendlyURL, Long> LAYOUT_FRIENDLY_U_R_L_ID_ACCESSOR =
+	public static final Accessor<LayoutFriendlyURL, Long> LAYOUT_FRIENDLY_URL_ID_ACCESSOR =
 		new Accessor<LayoutFriendlyURL, Long>() {
 			@Override
 			public Long get(LayoutFriendlyURL layoutFriendlyURL) {

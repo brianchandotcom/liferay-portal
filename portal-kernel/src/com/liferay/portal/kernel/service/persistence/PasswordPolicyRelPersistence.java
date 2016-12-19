@@ -180,7 +180,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns the password policy rel where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchPasswordPolicyRelException} if it could not be found.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching password policy rel
 	* @throws NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
 	*/
@@ -191,7 +191,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns the password policy rel where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
 	*/
 	public PasswordPolicyRel fetchByC_C(long classNameId, long classPK);
@@ -200,7 +200,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns the password policy rel where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
 	*/
@@ -211,7 +211,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Removes the password policy rel where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the password policy rel that was removed
 	*/
 	public PasswordPolicyRel removeByC_C(long classNameId, long classPK)
@@ -221,7 +221,7 @@ public interface PasswordPolicyRelPersistence extends BasePersistence<PasswordPo
 	* Returns the number of password policy rels where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching password policy rels
 	*/
 	public int countByC_C(long classNameId, long classPK);

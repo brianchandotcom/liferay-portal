@@ -37,7 +37,7 @@ public abstract class DDLRecordBaseImpl extends DDLRecordModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d l record model instance should use the {@link DDLRecord} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddl record model instance should use the {@link DDLRecord} interface instead.
 	 */
 	@Override
 	public void persist() {

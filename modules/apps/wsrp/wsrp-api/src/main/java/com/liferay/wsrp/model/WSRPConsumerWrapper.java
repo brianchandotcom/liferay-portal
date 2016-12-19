@@ -231,9 +231,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the forward cookies of this w s r p consumer.
+	* Returns the forward cookies of this wsrp consumer.
 	*
-	* @return the forward cookies of this w s r p consumer
+	* @return the forward cookies of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getForwardCookies() {
@@ -241,9 +241,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the forward headers of this w s r p consumer.
+	* Returns the forward headers of this wsrp consumer.
 	*
-	* @return the forward headers of this w s r p consumer
+	* @return the forward headers of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getForwardHeaders() {
@@ -251,9 +251,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the markup character sets of this w s r p consumer.
+	* Returns the markup character sets of this wsrp consumer.
 	*
-	* @return the markup character sets of this w s r p consumer
+	* @return the markup character sets of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getMarkupCharacterSets() {
@@ -261,9 +261,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the name of this w s r p consumer.
+	* Returns the name of this wsrp consumer.
 	*
-	* @return the name of this w s r p consumer
+	* @return the name of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getName() {
@@ -271,9 +271,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the registration context string of this w s r p consumer.
+	* Returns the registration context string of this wsrp consumer.
 	*
-	* @return the registration context string of this w s r p consumer
+	* @return the registration context string of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getRegistrationContextString() {
@@ -281,9 +281,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the registration properties string of this w s r p consumer.
+	* Returns the registration properties string of this wsrp consumer.
 	*
-	* @return the registration properties string of this w s r p consumer
+	* @return the registration properties string of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getRegistrationPropertiesString() {
@@ -291,9 +291,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the url of this w s r p consumer.
+	* Returns the url of this wsrp consumer.
 	*
-	* @return the url of this w s r p consumer
+	* @return the url of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getUrl() {
@@ -301,9 +301,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the uuid of this w s r p consumer.
+	* Returns the uuid of this wsrp consumer.
 	*
-	* @return the uuid of this w s r p consumer
+	* @return the uuid of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -311,9 +311,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the wsdl of this w s r p consumer.
+	* Returns the wsdl of this wsrp consumer.
 	*
-	* @return the wsdl of this w s r p consumer
+	* @return the wsdl of this wsrp consumer
 	*/
 	@Override
 	public java.lang.String getWsdl() {
@@ -331,9 +331,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the create date of this w s r p consumer.
+	* Returns the create date of this wsrp consumer.
 	*
-	* @return the create date of this w s r p consumer
+	* @return the create date of this wsrp consumer
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -341,9 +341,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the last publish date of this w s r p consumer.
+	* Returns the last publish date of this wsrp consumer.
 	*
-	* @return the last publish date of this w s r p consumer
+	* @return the last publish date of this wsrp consumer
 	*/
 	@Override
 	public Date getLastPublishDate() {
@@ -351,9 +351,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the modified date of this w s r p consumer.
+	* Returns the modified date of this wsrp consumer.
 	*
-	* @return the modified date of this w s r p consumer
+	* @return the modified date of this wsrp consumer
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -361,9 +361,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the company ID of this w s r p consumer.
+	* Returns the company ID of this wsrp consumer.
 	*
-	* @return the company ID of this w s r p consumer
+	* @return the company ID of this wsrp consumer
 	*/
 	@Override
 	public long getCompanyId() {
@@ -371,9 +371,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the primary key of this w s r p consumer.
+	* Returns the primary key of this wsrp consumer.
 	*
-	* @return the primary key of this w s r p consumer
+	* @return the primary key of this wsrp consumer
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -381,9 +381,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Returns the wsrp consumer ID of this w s r p consumer.
+	* Returns the wsrp consumer ID of this wsrp consumer.
 	*
-	* @return the wsrp consumer ID of this w s r p consumer
+	* @return the wsrp consumer ID of this wsrp consumer
 	*/
 	@Override
 	public long getWsrpConsumerId() {
@@ -406,9 +406,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the company ID of this w s r p consumer.
+	* Sets the company ID of this wsrp consumer.
 	*
-	* @param companyId the company ID of this w s r p consumer
+	* @param companyId the company ID of this wsrp consumer
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -416,9 +416,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the create date of this w s r p consumer.
+	* Sets the create date of this wsrp consumer.
 	*
-	* @param createDate the create date of this w s r p consumer
+	* @param createDate the create date of this wsrp consumer
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -442,9 +442,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the forward cookies of this w s r p consumer.
+	* Sets the forward cookies of this wsrp consumer.
 	*
-	* @param forwardCookies the forward cookies of this w s r p consumer
+	* @param forwardCookies the forward cookies of this wsrp consumer
 	*/
 	@Override
 	public void setForwardCookies(java.lang.String forwardCookies) {
@@ -452,9 +452,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the forward headers of this w s r p consumer.
+	* Sets the forward headers of this wsrp consumer.
 	*
-	* @param forwardHeaders the forward headers of this w s r p consumer
+	* @param forwardHeaders the forward headers of this wsrp consumer
 	*/
 	@Override
 	public void setForwardHeaders(java.lang.String forwardHeaders) {
@@ -462,9 +462,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the last publish date of this w s r p consumer.
+	* Sets the last publish date of this wsrp consumer.
 	*
-	* @param lastPublishDate the last publish date of this w s r p consumer
+	* @param lastPublishDate the last publish date of this wsrp consumer
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -472,9 +472,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the markup character sets of this w s r p consumer.
+	* Sets the markup character sets of this wsrp consumer.
 	*
-	* @param markupCharacterSets the markup character sets of this w s r p consumer
+	* @param markupCharacterSets the markup character sets of this wsrp consumer
 	*/
 	@Override
 	public void setMarkupCharacterSets(java.lang.String markupCharacterSets) {
@@ -482,9 +482,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the modified date of this w s r p consumer.
+	* Sets the modified date of this wsrp consumer.
 	*
-	* @param modifiedDate the modified date of this w s r p consumer
+	* @param modifiedDate the modified date of this wsrp consumer
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -492,9 +492,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the name of this w s r p consumer.
+	* Sets the name of this wsrp consumer.
 	*
-	* @param name the name of this w s r p consumer
+	* @param name the name of this wsrp consumer
 	*/
 	@Override
 	public void setName(java.lang.String name) {
@@ -507,9 +507,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the primary key of this w s r p consumer.
+	* Sets the primary key of this wsrp consumer.
 	*
-	* @param primaryKey the primary key of this w s r p consumer
+	* @param primaryKey the primary key of this wsrp consumer
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -528,9 +528,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the registration context string of this w s r p consumer.
+	* Sets the registration context string of this wsrp consumer.
 	*
-	* @param registrationContextString the registration context string of this w s r p consumer
+	* @param registrationContextString the registration context string of this wsrp consumer
 	*/
 	@Override
 	public void setRegistrationContextString(
@@ -545,9 +545,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the registration properties string of this w s r p consumer.
+	* Sets the registration properties string of this wsrp consumer.
 	*
-	* @param registrationPropertiesString the registration properties string of this w s r p consumer
+	* @param registrationPropertiesString the registration properties string of this wsrp consumer
 	*/
 	@Override
 	public void setRegistrationPropertiesString(
@@ -556,9 +556,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the url of this w s r p consumer.
+	* Sets the url of this wsrp consumer.
 	*
-	* @param url the url of this w s r p consumer
+	* @param url the url of this wsrp consumer
 	*/
 	@Override
 	public void setUrl(java.lang.String url) {
@@ -566,9 +566,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the uuid of this w s r p consumer.
+	* Sets the uuid of this wsrp consumer.
 	*
-	* @param uuid the uuid of this w s r p consumer
+	* @param uuid the uuid of this wsrp consumer
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {
@@ -576,9 +576,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the wsdl of this w s r p consumer.
+	* Sets the wsdl of this wsrp consumer.
 	*
-	* @param wsdl the wsdl of this w s r p consumer
+	* @param wsdl the wsdl of this wsrp consumer
 	*/
 	@Override
 	public void setWsdl(java.lang.String wsdl) {
@@ -586,9 +586,9 @@ public class WSRPConsumerWrapper implements WSRPConsumer,
 	}
 
 	/**
-	* Sets the wsrp consumer ID of this w s r p consumer.
+	* Sets the wsrp consumer ID of this wsrp consumer.
 	*
-	* @param wsrpConsumerId the wsrp consumer ID of this w s r p consumer
+	* @param wsrpConsumerId the wsrp consumer ID of this wsrp consumer
 	*/
 	@Override
 	public void setWsrpConsumerId(long wsrpConsumerId) {

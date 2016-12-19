@@ -22,7 +22,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateLink;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 /**
- * The persistence interface for the d d m template link service.
+ * The persistence interface for the ddm template link service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -38,62 +38,62 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkUtil} to access the d d m template link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkUtil} to access the ddm template link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this interface.
 	 */
 
 	/**
-	* Returns all the d d m template links where classNameId = &#63;.
+	* Returns all the ddm template links where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @return the matching d d m template links
+	* @return the matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByClassNameId(long classNameId);
 
 	/**
-	* Returns a range of all the d d m template links where classNameId = &#63;.
+	* Returns a range of all the ddm template links where classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
-	* @return the range of matching d d m template links
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
+	* @return the range of matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByClassNameId(long classNameId,
 		int start, int end);
 
 	/**
-	* Returns an ordered range of all the d d m template links where classNameId = &#63;.
+	* Returns an ordered range of all the ddm template links where classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m template links
+	* @return the ordered range of matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByClassNameId(long classNameId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the d d m template links where classNameId = &#63;.
+	* Returns an ordered range of all the ddm template links where classNameId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m template links
+	* @return the ordered range of matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByClassNameId(long classNameId,
 		int start, int end,
@@ -101,57 +101,57 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first d d m template link in the ordered set where classNameId = &#63;.
+	* Returns the first ddm template link in the ordered set where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template link
-	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @return the first matching ddm template link
+	* @throws NoSuchTemplateLinkException if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink findByClassNameId_First(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the first d d m template link in the ordered set where classNameId = &#63;.
+	* Returns the first ddm template link in the ordered set where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
+	* @return the first matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink fetchByClassNameId_First(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns the last d d m template link in the ordered set where classNameId = &#63;.
+	* Returns the last ddm template link in the ordered set where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template link
-	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @return the last matching ddm template link
+	* @throws NoSuchTemplateLinkException if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink findByClassNameId_Last(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the last d d m template link in the ordered set where classNameId = &#63;.
+	* Returns the last ddm template link in the ordered set where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
+	* @return the last matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink fetchByClassNameId_Last(long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns the d d m template links before and after the current d d m template link in the ordered set where classNameId = &#63;.
+	* Returns the ddm template links before and after the current ddm template link in the ordered set where classNameId = &#63;.
 	*
-	* @param templateLinkId the primary key of the current d d m template link
+	* @param templateLinkId the primary key of the current ddm template link
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m template link
-	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @return the previous, current, and next ddm template link
+	* @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
 	*/
 	public DDMTemplateLink[] findByClassNameId_PrevAndNext(
 		long templateLinkId, long classNameId,
@@ -159,73 +159,73 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Removes all the d d m template links where classNameId = &#63; from the database.
+	* Removes all the ddm template links where classNameId = &#63; from the database.
 	*
 	* @param classNameId the class name ID
 	*/
 	public void removeByClassNameId(long classNameId);
 
 	/**
-	* Returns the number of d d m template links where classNameId = &#63;.
+	* Returns the number of ddm template links where classNameId = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @return the number of matching d d m template links
+	* @return the number of matching ddm template links
 	*/
 	public int countByClassNameId(long classNameId);
 
 	/**
-	* Returns all the d d m template links where templateId = &#63;.
+	* Returns all the ddm template links where templateId = &#63;.
 	*
 	* @param templateId the template ID
-	* @return the matching d d m template links
+	* @return the matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByTemplateId(long templateId);
 
 	/**
-	* Returns a range of all the d d m template links where templateId = &#63;.
+	* Returns a range of all the ddm template links where templateId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
-	* @return the range of matching d d m template links
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
+	* @return the range of matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByTemplateId(long templateId,
 		int start, int end);
 
 	/**
-	* Returns an ordered range of all the d d m template links where templateId = &#63;.
+	* Returns an ordered range of all the ddm template links where templateId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m template links
+	* @return the ordered range of matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByTemplateId(long templateId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the d d m template links where templateId = &#63;.
+	* Returns an ordered range of all the ddm template links where templateId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m template links
+	* @return the ordered range of matching ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findByTemplateId(long templateId,
 		int start, int end,
@@ -233,57 +233,57 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first d d m template link in the ordered set where templateId = &#63;.
+	* Returns the first ddm template link in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template link
-	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @return the first matching ddm template link
+	* @throws NoSuchTemplateLinkException if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink findByTemplateId_First(long templateId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the first d d m template link in the ordered set where templateId = &#63;.
+	* Returns the first ddm template link in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
+	* @return the first matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink fetchByTemplateId_First(long templateId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns the last d d m template link in the ordered set where templateId = &#63;.
+	* Returns the last ddm template link in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template link
-	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @return the last matching ddm template link
+	* @throws NoSuchTemplateLinkException if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink findByTemplateId_Last(long templateId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the last d d m template link in the ordered set where templateId = &#63;.
+	* Returns the last ddm template link in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
+	* @return the last matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink fetchByTemplateId_Last(long templateId,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns the d d m template links before and after the current d d m template link in the ordered set where templateId = &#63;.
+	* Returns the ddm template links before and after the current ddm template link in the ordered set where templateId = &#63;.
 	*
-	* @param templateLinkId the primary key of the current d d m template link
+	* @param templateLinkId the primary key of the current ddm template link
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m template link
-	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @return the previous, current, and next ddm template link
+	* @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
 	*/
 	public DDMTemplateLink[] findByTemplateId_PrevAndNext(long templateLinkId,
 		long templateId,
@@ -291,98 +291,98 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Removes all the d d m template links where templateId = &#63; from the database.
+	* Removes all the ddm template links where templateId = &#63; from the database.
 	*
 	* @param templateId the template ID
 	*/
 	public void removeByTemplateId(long templateId);
 
 	/**
-	* Returns the number of d d m template links where templateId = &#63;.
+	* Returns the number of ddm template links where templateId = &#63;.
 	*
 	* @param templateId the template ID
-	* @return the number of matching d d m template links
+	* @return the number of matching ddm template links
 	*/
 	public int countByTemplateId(long templateId);
 
 	/**
-	* Returns the d d m template link where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchTemplateLinkException} if it could not be found.
+	* Returns the ddm template link where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchTemplateLinkException} if it could not be found.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching d d m template link
-	* @throws NoSuchTemplateLinkException if a matching d d m template link could not be found
+	* @param classPK the class pk
+	* @return the matching ddm template link
+	* @throws NoSuchTemplateLinkException if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink findByC_C(long classNameId, long classPK)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the d d m template link where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the ddm template link where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
+	* @param classPK the class pk
+	* @return the matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink fetchByC_C(long classNameId, long classPK);
 
 	/**
-	* Returns the d d m template link where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the ddm template link where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching d d m template link, or <code>null</code> if a matching d d m template link could not be found
+	* @return the matching ddm template link, or <code>null</code> if a matching ddm template link could not be found
 	*/
 	public DDMTemplateLink fetchByC_C(long classNameId, long classPK,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes the d d m template link where classNameId = &#63; and classPK = &#63; from the database.
+	* Removes the ddm template link where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the d d m template link that was removed
+	* @param classPK the class pk
+	* @return the ddm template link that was removed
 	*/
 	public DDMTemplateLink removeByC_C(long classNameId, long classPK)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the number of d d m template links where classNameId = &#63; and classPK = &#63;.
+	* Returns the number of ddm template links where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the number of matching d d m template links
+	* @param classPK the class pk
+	* @return the number of matching ddm template links
 	*/
 	public int countByC_C(long classNameId, long classPK);
 
 	/**
-	* Caches the d d m template link in the entity cache if it is enabled.
+	* Caches the ddm template link in the entity cache if it is enabled.
 	*
-	* @param ddmTemplateLink the d d m template link
+	* @param ddmTemplateLink the ddm template link
 	*/
 	public void cacheResult(DDMTemplateLink ddmTemplateLink);
 
 	/**
-	* Caches the d d m template links in the entity cache if it is enabled.
+	* Caches the ddm template links in the entity cache if it is enabled.
 	*
-	* @param ddmTemplateLinks the d d m template links
+	* @param ddmTemplateLinks the ddm template links
 	*/
 	public void cacheResult(java.util.List<DDMTemplateLink> ddmTemplateLinks);
 
 	/**
-	* Creates a new d d m template link with the primary key. Does not add the d d m template link to the database.
+	* Creates a new ddm template link with the primary key. Does not add the ddm template link to the database.
 	*
-	* @param templateLinkId the primary key for the new d d m template link
-	* @return the new d d m template link
+	* @param templateLinkId the primary key for the new ddm template link
+	* @return the new ddm template link
 	*/
 	public DDMTemplateLink create(long templateLinkId);
 
 	/**
-	* Removes the d d m template link with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the ddm template link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param templateLinkId the primary key of the d d m template link
-	* @return the d d m template link that was removed
-	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @param templateLinkId the primary key of the ddm template link
+	* @return the ddm template link that was removed
+	* @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
 	*/
 	public DDMTemplateLink remove(long templateLinkId)
 		throws NoSuchTemplateLinkException;
@@ -390,20 +390,20 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 	public DDMTemplateLink updateImpl(DDMTemplateLink ddmTemplateLink);
 
 	/**
-	* Returns the d d m template link with the primary key or throws a {@link NoSuchTemplateLinkException} if it could not be found.
+	* Returns the ddm template link with the primary key or throws a {@link NoSuchTemplateLinkException} if it could not be found.
 	*
-	* @param templateLinkId the primary key of the d d m template link
-	* @return the d d m template link
-	* @throws NoSuchTemplateLinkException if a d d m template link with the primary key could not be found
+	* @param templateLinkId the primary key of the ddm template link
+	* @return the ddm template link
+	* @throws NoSuchTemplateLinkException if a ddm template link with the primary key could not be found
 	*/
 	public DDMTemplateLink findByPrimaryKey(long templateLinkId)
 		throws NoSuchTemplateLinkException;
 
 	/**
-	* Returns the d d m template link with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the ddm template link with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param templateLinkId the primary key of the d d m template link
-	* @return the d d m template link, or <code>null</code> if a d d m template link with the primary key could not be found
+	* @param templateLinkId the primary key of the ddm template link
+	* @return the ddm template link, or <code>null</code> if a ddm template link with the primary key could not be found
 	*/
 	public DDMTemplateLink fetchByPrimaryKey(long templateLinkId);
 
@@ -412,66 +412,66 @@ public interface DDMTemplateLinkPersistence extends BasePersistence<DDMTemplateL
 		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
-	* Returns all the d d m template links.
+	* Returns all the ddm template links.
 	*
-	* @return the d d m template links
+	* @return the ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findAll();
 
 	/**
-	* Returns a range of all the d d m template links.
+	* Returns a range of all the ddm template links.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
-	* @return the range of d d m template links
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
+	* @return the range of ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findAll(int start, int end);
 
 	/**
-	* Returns an ordered range of all the d d m template links.
+	* Returns an ordered range of all the ddm template links.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d d m template links
+	* @return the ordered range of ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the d d m template links.
+	* Returns an ordered range of all the ddm template links.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of d d m template links
+	* @return the ordered range of ddm template links
 	*/
 	public java.util.List<DDMTemplateLink> findAll(int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<DDMTemplateLink> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes all the d d m template links from the database.
+	* Removes all the ddm template links from the database.
 	*/
 	public void removeAll();
 
 	/**
-	* Returns the number of d d m template links.
+	* Returns the number of ddm template links.
 	*
-	* @return the number of d d m template links
+	* @return the number of ddm template links
 	*/
 	public int countAll();
 }

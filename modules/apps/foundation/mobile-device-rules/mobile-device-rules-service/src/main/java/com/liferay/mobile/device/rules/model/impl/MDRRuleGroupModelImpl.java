@@ -77,7 +77,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a m d r rule group model instance should use the {@link MDRRuleGroup} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a mdr rule group model instance should use the {@link MDRRuleGroup} interface instead.
 	 */
 	public static final String TABLE_NAME = "MDRRuleGroup";
 	public static final Object[][] TABLE_COLUMNS = {

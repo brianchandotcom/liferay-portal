@@ -29,7 +29,7 @@ import org.osgi.util.tracker.ServiceTracker;
 import java.util.List;
 
 /**
- * The persistence utility for the d d m template version service. This utility wraps {@link com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateVersionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the ddm template version service. This utility wraps {@link com.liferay.dynamic.data.mapping.service.persistence.impl.DDMTemplateVersionPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -113,26 +113,26 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns all the d d m template versions where templateId = &#63;.
+	* Returns all the ddm template versions where templateId = &#63;.
 	*
 	* @param templateId the template ID
-	* @return the matching d d m template versions
+	* @return the matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByTemplateId(long templateId) {
 		return getPersistence().findByTemplateId(templateId);
 	}
 
 	/**
-	* Returns a range of all the d d m template versions where templateId = &#63;.
+	* Returns a range of all the ddm template versions where templateId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
-	* @return the range of matching d d m template versions
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
+	* @return the range of matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByTemplateId(long templateId,
 		int start, int end) {
@@ -140,17 +140,17 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m template versions where templateId = &#63;.
+	* Returns an ordered range of all the ddm template versions where templateId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m template versions
+	* @return the ordered range of matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByTemplateId(long templateId,
 		int start, int end,
@@ -160,18 +160,18 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m template versions where templateId = &#63;.
+	* Returns an ordered range of all the ddm template versions where templateId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param templateId the template ID
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m template versions
+	* @return the ordered range of matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByTemplateId(long templateId,
 		int start, int end,
@@ -183,12 +183,12 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the first d d m template version in the ordered set where templateId = &#63;.
+	* Returns the first ddm template version in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template version
-	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @return the first matching ddm template version
+	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion findByTemplateId_First(long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
@@ -198,11 +198,11 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the first d d m template version in the ordered set where templateId = &#63;.
+	* Returns the first ddm template version in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	* @return the first matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByTemplateId_First(long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator) {
@@ -211,12 +211,12 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the last d d m template version in the ordered set where templateId = &#63;.
+	* Returns the last ddm template version in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template version
-	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @return the last matching ddm template version
+	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion findByTemplateId_Last(long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator)
@@ -226,11 +226,11 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the last d d m template version in the ordered set where templateId = &#63;.
+	* Returns the last ddm template version in the ordered set where templateId = &#63;.
 	*
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	* @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByTemplateId_Last(long templateId,
 		OrderByComparator<DDMTemplateVersion> orderByComparator) {
@@ -239,13 +239,13 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63;.
+	* Returns the ddm template versions before and after the current ddm template version in the ordered set where templateId = &#63;.
 	*
-	* @param templateVersionId the primary key of the current d d m template version
+	* @param templateVersionId the primary key of the current ddm template version
 	* @param templateId the template ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m template version
-	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @return the previous, current, and next ddm template version
+	* @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion[] findByTemplateId_PrevAndNext(
 		long templateVersionId, long templateId,
@@ -257,7 +257,7 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Removes all the d d m template versions where templateId = &#63; from the database.
+	* Removes all the ddm template versions where templateId = &#63; from the database.
 	*
 	* @param templateId the template ID
 	*/
@@ -266,22 +266,22 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the number of d d m template versions where templateId = &#63;.
+	* Returns the number of ddm template versions where templateId = &#63;.
 	*
 	* @param templateId the template ID
-	* @return the number of matching d d m template versions
+	* @return the number of matching ddm template versions
 	*/
 	public static int countByTemplateId(long templateId) {
 		return getPersistence().countByTemplateId(templateId);
 	}
 
 	/**
-	* Returns the d d m template version where templateId = &#63; and version = &#63; or throws a {@link NoSuchTemplateVersionException} if it could not be found.
+	* Returns the ddm template version where templateId = &#63; and version = &#63; or throws a {@link NoSuchTemplateVersionException} if it could not be found.
 	*
 	* @param templateId the template ID
 	* @param version the version
-	* @return the matching d d m template version
-	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @return the matching ddm template version
+	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion findByT_V(long templateId,
 		java.lang.String version)
@@ -290,11 +290,11 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the d d m template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param templateId the template ID
 	* @param version the version
-	* @return the matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	* @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByT_V(long templateId,
 		java.lang.String version) {
@@ -302,12 +302,12 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the d d m template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the ddm template version where templateId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param templateId the template ID
 	* @param version the version
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	* @return the matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByT_V(long templateId,
 		java.lang.String version, boolean retrieveFromCache) {
@@ -316,11 +316,11 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Removes the d d m template version where templateId = &#63; and version = &#63; from the database.
+	* Removes the ddm template version where templateId = &#63; and version = &#63; from the database.
 	*
 	* @param templateId the template ID
 	* @param version the version
-	* @return the d d m template version that was removed
+	* @return the ddm template version that was removed
 	*/
 	public static DDMTemplateVersion removeByT_V(long templateId,
 		java.lang.String version)
@@ -329,29 +329,29 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the number of d d m template versions where templateId = &#63; and version = &#63;.
+	* Returns the number of ddm template versions where templateId = &#63; and version = &#63;.
 	*
 	* @param templateId the template ID
 	* @param version the version
-	* @return the number of matching d d m template versions
+	* @return the number of matching ddm template versions
 	*/
 	public static int countByT_V(long templateId, java.lang.String version) {
 		return getPersistence().countByT_V(templateId, version);
 	}
 
 	/**
-	* Returns all the d d m template versions where templateId = &#63; and status = &#63;.
+	* Returns all the ddm template versions where templateId = &#63; and status = &#63;.
 	*
 	* @param templateId the template ID
 	* @param status the status
-	* @return the matching d d m template versions
+	* @return the matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByT_S(long templateId, int status) {
 		return getPersistence().findByT_S(templateId, status);
 	}
 
 	/**
-	* Returns a range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	* Returns a range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -359,9 +359,9 @@ public class DDMTemplateVersionUtil {
 	*
 	* @param templateId the template ID
 	* @param status the status
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
-	* @return the range of matching d d m template versions
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
+	* @return the range of matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByT_S(long templateId,
 		int status, int start, int end) {
@@ -369,7 +369,7 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	* Returns an ordered range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -377,10 +377,10 @@ public class DDMTemplateVersionUtil {
 	*
 	* @param templateId the template ID
 	* @param status the status
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d m template versions
+	* @return the ordered range of matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByT_S(long templateId,
 		int status, int start, int end,
@@ -390,7 +390,7 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	* Returns an ordered range of all the ddm template versions where templateId = &#63; and status = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -398,11 +398,11 @@ public class DDMTemplateVersionUtil {
 	*
 	* @param templateId the template ID
 	* @param status the status
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d d m template versions
+	* @return the ordered range of matching ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findByT_S(long templateId,
 		int status, int start, int end,
@@ -414,13 +414,13 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	* Returns the first ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	*
 	* @param templateId the template ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template version
-	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @return the first matching ddm template version
+	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion findByT_S_First(long templateId,
 		int status, OrderByComparator<DDMTemplateVersion> orderByComparator)
@@ -430,12 +430,12 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	* Returns the first ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	*
 	* @param templateId the template ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	* @return the first matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByT_S_First(long templateId,
 		int status, OrderByComparator<DDMTemplateVersion> orderByComparator) {
@@ -444,13 +444,13 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	* Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	*
 	* @param templateId the template ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template version
-	* @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	* @return the last matching ddm template version
+	* @throws NoSuchTemplateVersionException if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion findByT_S_Last(long templateId,
 		int status, OrderByComparator<DDMTemplateVersion> orderByComparator)
@@ -460,12 +460,12 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	* Returns the last ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	*
 	* @param templateId the template ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	* @return the last matching ddm template version, or <code>null</code> if a matching ddm template version could not be found
 	*/
 	public static DDMTemplateVersion fetchByT_S_Last(long templateId,
 		int status, OrderByComparator<DDMTemplateVersion> orderByComparator) {
@@ -474,14 +474,14 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	* Returns the ddm template versions before and after the current ddm template version in the ordered set where templateId = &#63; and status = &#63;.
 	*
-	* @param templateVersionId the primary key of the current d d m template version
+	* @param templateVersionId the primary key of the current ddm template version
 	* @param templateId the template ID
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d m template version
-	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @return the previous, current, and next ddm template version
+	* @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion[] findByT_S_PrevAndNext(
 		long templateVersionId, long templateId, int status,
@@ -493,7 +493,7 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Removes all the d d m template versions where templateId = &#63; and status = &#63; from the database.
+	* Removes all the ddm template versions where templateId = &#63; and status = &#63; from the database.
 	*
 	* @param templateId the template ID
 	* @param status the status
@@ -503,50 +503,50 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the number of d d m template versions where templateId = &#63; and status = &#63;.
+	* Returns the number of ddm template versions where templateId = &#63; and status = &#63;.
 	*
 	* @param templateId the template ID
 	* @param status the status
-	* @return the number of matching d d m template versions
+	* @return the number of matching ddm template versions
 	*/
 	public static int countByT_S(long templateId, int status) {
 		return getPersistence().countByT_S(templateId, status);
 	}
 
 	/**
-	* Caches the d d m template version in the entity cache if it is enabled.
+	* Caches the ddm template version in the entity cache if it is enabled.
 	*
-	* @param ddmTemplateVersion the d d m template version
+	* @param ddmTemplateVersion the ddm template version
 	*/
 	public static void cacheResult(DDMTemplateVersion ddmTemplateVersion) {
 		getPersistence().cacheResult(ddmTemplateVersion);
 	}
 
 	/**
-	* Caches the d d m template versions in the entity cache if it is enabled.
+	* Caches the ddm template versions in the entity cache if it is enabled.
 	*
-	* @param ddmTemplateVersions the d d m template versions
+	* @param ddmTemplateVersions the ddm template versions
 	*/
 	public static void cacheResult(List<DDMTemplateVersion> ddmTemplateVersions) {
 		getPersistence().cacheResult(ddmTemplateVersions);
 	}
 
 	/**
-	* Creates a new d d m template version with the primary key. Does not add the d d m template version to the database.
+	* Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
 	*
-	* @param templateVersionId the primary key for the new d d m template version
-	* @return the new d d m template version
+	* @param templateVersionId the primary key for the new ddm template version
+	* @return the new ddm template version
 	*/
 	public static DDMTemplateVersion create(long templateVersionId) {
 		return getPersistence().create(templateVersionId);
 	}
 
 	/**
-	* Removes the d d m template version with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the ddm template version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param templateVersionId the primary key of the d d m template version
-	* @return the d d m template version that was removed
-	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @param templateVersionId the primary key of the ddm template version
+	* @return the ddm template version that was removed
+	* @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion remove(long templateVersionId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
@@ -559,11 +559,11 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the d d m template version with the primary key or throws a {@link NoSuchTemplateVersionException} if it could not be found.
+	* Returns the ddm template version with the primary key or throws a {@link NoSuchTemplateVersionException} if it could not be found.
 	*
-	* @param templateVersionId the primary key of the d d m template version
-	* @return the d d m template version
-	* @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	* @param templateVersionId the primary key of the ddm template version
+	* @return the ddm template version
+	* @throws NoSuchTemplateVersionException if a ddm template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion findByPrimaryKey(long templateVersionId)
 		throws com.liferay.dynamic.data.mapping.exception.NoSuchTemplateVersionException {
@@ -571,10 +571,10 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns the d d m template version with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the ddm template version with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param templateVersionId the primary key of the d d m template version
-	* @return the d d m template version, or <code>null</code> if a d d m template version with the primary key could not be found
+	* @param templateVersionId the primary key of the ddm template version
+	* @return the ddm template version, or <code>null</code> if a ddm template version with the primary key could not be found
 	*/
 	public static DDMTemplateVersion fetchByPrimaryKey(long templateVersionId) {
 		return getPersistence().fetchByPrimaryKey(templateVersionId);
@@ -586,40 +586,40 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns all the d d m template versions.
+	* Returns all the ddm template versions.
 	*
-	* @return the d d m template versions
+	* @return the ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the d d m template versions.
+	* Returns a range of all the ddm template versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
-	* @return the range of d d m template versions
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
+	* @return the range of ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the d d m template versions.
+	* Returns an ordered range of all the ddm template versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d d m template versions
+	* @return the ordered range of ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findAll(int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator) {
@@ -627,17 +627,17 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d d m template versions.
+	* Returns an ordered range of all the ddm template versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of d d m template versions
+	* @return the ordered range of ddm template versions
 	*/
 	public static List<DDMTemplateVersion> findAll(int start, int end,
 		OrderByComparator<DDMTemplateVersion> orderByComparator,
@@ -647,16 +647,16 @@ public class DDMTemplateVersionUtil {
 	}
 
 	/**
-	* Removes all the d d m template versions from the database.
+	* Removes all the ddm template versions from the database.
 	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of d d m template versions.
+	* Returns the number of ddm template versions.
 	*
-	* @return the number of d d m template versions
+	* @return the number of ddm template versions
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();

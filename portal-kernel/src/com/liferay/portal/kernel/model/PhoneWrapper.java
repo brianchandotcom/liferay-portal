@@ -345,9 +345,9 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	/**
-	* Returns the class p k of this phone.
+	* Returns the class pk of this phone.
 	*
-	* @return the class p k of this phone
+	* @return the class pk of this phone
 	*/
 	@Override
 	public long getClassPK() {
@@ -440,9 +440,9 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	/**
-	* Sets the class p k of this phone.
+	* Sets the class pk of this phone.
 	*
-	* @param classPK the class p k of this phone
+	* @param classPK the class pk of this phone
 	*/
 	@Override
 	public void setClassPK(long classPK) {

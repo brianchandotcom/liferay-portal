@@ -73,14 +73,14 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDLRecordLocalServiceUtil} to access the d d l record local service. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDLRecordLocalServiceUtil} to access the ddl record local service. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d d l record to the database. Also notifies the appropriate model listeners.
+	* Adds the ddl record to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecord the d d l record
-	* @return the d d l record that was added
+	* @param ddlRecord the ddl record
+	* @return the ddl record that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord addDDLRecord(DDLRecord ddlRecord);
@@ -155,28 +155,28 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Creates a new d d l record with the primary key. Does not add the d d l record to the database.
+	* Creates a new ddl record with the primary key. Does not add the ddl record to the database.
 	*
-	* @param recordId the primary key for the new d d l record
-	* @return the new d d l record
+	* @param recordId the primary key for the new ddl record
+	* @return the new ddl record
 	*/
 	public DDLRecord createDDLRecord(long recordId);
 
 	/**
-	* Deletes the d d l record from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddl record from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecord the d d l record
-	* @return the d d l record that was removed
+	* @param ddlRecord the ddl record
+	* @return the ddl record that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDLRecord deleteDDLRecord(DDLRecord ddlRecord);
 
 	/**
-	* Deletes the d d l record with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddl record with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param recordId the primary key of the d d l record
-	* @return the d d l record that was removed
-	* @throws PortalException if a d d l record with the primary key could not be found
+	* @param recordId the primary key of the ddl record
+	* @return the ddl record that was removed
+	* @throws PortalException if a ddl record with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDLRecord deleteDDLRecord(long recordId) throws PortalException;
@@ -212,11 +212,11 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public DDLRecord fetchDDLRecord(long recordId);
 
 	/**
-	* Returns the d d l record matching the UUID and group.
+	* Returns the ddl record matching the UUID and group.
 	*
-	* @param uuid the d d l record's UUID
+	* @param uuid the ddl record's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
+	* @return the matching ddl record, or <code>null</code> if a matching ddl record could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecord fetchDDLRecordByUuidAndGroupId(java.lang.String uuid,
@@ -233,22 +233,22 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public DDLRecord fetchRecord(long recordId);
 
 	/**
-	* Returns the d d l record with the primary key.
+	* Returns the ddl record with the primary key.
 	*
-	* @param recordId the primary key of the d d l record
-	* @return the d d l record
-	* @throws PortalException if a d d l record with the primary key could not be found
+	* @param recordId the primary key of the ddl record
+	* @return the ddl record
+	* @throws PortalException if a ddl record with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecord getDDLRecord(long recordId) throws PortalException;
 
 	/**
-	* Returns the d d l record matching the UUID and group.
+	* Returns the ddl record matching the UUID and group.
 	*
-	* @param uuid the d d l record's UUID
+	* @param uuid the ddl record's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d l record
-	* @throws PortalException if a matching d d l record could not be found
+	* @return the matching ddl record
+	* @throws PortalException if a matching ddl record could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDLRecord getDDLRecordByUuidAndGroupId(java.lang.String uuid,
@@ -265,10 +265,10 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public DDLRecord getRecord(long recordId) throws PortalException;
 
 	/**
-	* Updates the d d l record in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddl record in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecord the d d l record
-	* @return the d d l record that was updated
+	* @param ddlRecord the ddl record
+	* @return the ddl record that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDLRecord updateDDLRecord(DDLRecord ddlRecord);
@@ -467,9 +467,9 @@ public interface DDLRecordLocalService extends BaseLocalService,
 	public int getCompanyRecordsCount(long companyId, int status, int scope);
 
 	/**
-	* Returns the number of d d l records.
+	* Returns the number of ddl records.
 	*
-	* @return the number of d d l records
+	* @return the number of ddl records
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDLRecordsCount();
@@ -584,39 +584,39 @@ public interface DDLRecordLocalService extends BaseLocalService,
 		OrderByComparator<DDLRecord> orderByComparator);
 
 	/**
-	* Returns a range of all the d d l records.
+	* Returns a range of all the ddl records.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d l records
-	* @param end the upper bound of the range of d d l records (not inclusive)
-	* @return the range of d d l records
+	* @param start the lower bound of the range of ddl records
+	* @param end the upper bound of the range of ddl records (not inclusive)
+	* @return the range of ddl records
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecord> getDDLRecords(int start, int end);
 
 	/**
-	* Returns all the d d l records matching the UUID and company.
+	* Returns all the ddl records matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d l records
+	* @param uuid the UUID of the ddl records
 	* @param companyId the primary key of the company
-	* @return the matching d d l records, or an empty list if no matches were found
+	* @return the matching ddl records, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
-	* Returns a range of d d l records matching the UUID and company.
+	* Returns a range of ddl records matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d l records
+	* @param uuid the UUID of the ddl records
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of d d l records
-	* @param end the upper bound of the range of d d l records (not inclusive)
+	* @param start the lower bound of the range of ddl records
+	* @param end the upper bound of the range of ddl records (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching d d l records, or an empty list if no matches were found
+	* @return the range of matching ddl records, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDLRecord> getDDLRecordsByUuidAndCompanyId(

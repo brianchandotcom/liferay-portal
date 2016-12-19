@@ -189,17 +189,17 @@ public interface SocialActivitySetModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this social activity set.
+	 * Returns the class pk of this social activity set.
 	 *
-	 * @return the class p k of this social activity set
+	 * @return the class pk of this social activity set
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this social activity set.
+	 * Sets the class pk of this social activity set.
 	 *
-	 * @param classPK the class p k of this social activity set
+	 * @param classPK the class pk of this social activity set
 	 */
 	@Override
 	public void setClassPK(long classPK);

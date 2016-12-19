@@ -59,7 +59,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a web d a v props model instance should use the {@link WebDAVProps} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a web dav props model instance should use the {@link WebDAVProps} interface instead.
 	 */
 	public static final String TABLE_NAME = "WebDAVProps";
 	public static final Object[][] TABLE_COLUMNS = {

@@ -215,17 +215,17 @@ public interface ContactModel extends AttachedModel, AuditedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this contact.
+	 * Returns the class pk of this contact.
 	 *
-	 * @return the class p k of this contact
+	 * @return the class pk of this contact
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this contact.
+	 * Sets the class pk of this contact.
 	 *
-	 * @param classPK the class p k of this contact
+	 * @param classPK the class pk of this contact
 	 */
 	@Override
 	public void setClassPK(long classPK);

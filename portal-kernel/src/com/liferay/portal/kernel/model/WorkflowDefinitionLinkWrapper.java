@@ -306,9 +306,9 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	/**
-	* Returns the class p k of this workflow definition link.
+	* Returns the class pk of this workflow definition link.
 	*
-	* @return the class p k of this workflow definition link
+	* @return the class pk of this workflow definition link
 	*/
 	@Override
 	public long getClassPK() {
@@ -356,9 +356,9 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	/**
-	* Returns the type p k of this workflow definition link.
+	* Returns the type pk of this workflow definition link.
 	*
-	* @return the type p k of this workflow definition link
+	* @return the type pk of this workflow definition link
 	*/
 	@Override
 	public long getTypePK() {
@@ -411,9 +411,9 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	/**
-	* Sets the class p k of this workflow definition link.
+	* Sets the class pk of this workflow definition link.
 	*
-	* @param classPK the class p k of this workflow definition link
+	* @param classPK the class pk of this workflow definition link
 	*/
 	@Override
 	public void setClassPK(long classPK) {
@@ -506,9 +506,9 @@ public class WorkflowDefinitionLinkWrapper implements WorkflowDefinitionLink,
 	}
 
 	/**
-	* Sets the type p k of this workflow definition link.
+	* Sets the type pk of this workflow definition link.
 	*
-	* @param typePK the type p k of this workflow definition link
+	* @param typePK the type pk of this workflow definition link
 	*/
 	@Override
 	public void setTypePK(long typePK) {

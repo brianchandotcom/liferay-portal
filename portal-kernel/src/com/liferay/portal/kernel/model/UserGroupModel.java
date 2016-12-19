@@ -250,23 +250,23 @@ public interface UserGroupModel extends BaseModel<UserGroup>, MVCCModel,
 	public void setDescription(String description);
 
 	/**
-	 * Returns the added by l d a p import of this user group.
+	 * Returns the added by ldap import of this user group.
 	 *
-	 * @return the added by l d a p import of this user group
+	 * @return the added by ldap import of this user group
 	 */
 	public boolean getAddedByLDAPImport();
 
 	/**
-	 * Returns <code>true</code> if this user group is added by l d a p import.
+	 * Returns <code>true</code> if this user group is added by ldap import.
 	 *
-	 * @return <code>true</code> if this user group is added by l d a p import; <code>false</code> otherwise
+	 * @return <code>true</code> if this user group is added by ldap import; <code>false</code> otherwise
 	 */
 	public boolean isAddedByLDAPImport();
 
 	/**
-	 * Sets whether this user group is added by l d a p import.
+	 * Sets whether this user group is added by ldap import.
 	 *
-	 * @param addedByLDAPImport the added by l d a p import of this user group
+	 * @param addedByLDAPImport the added by ldap import of this user group
 	 */
 	public void setAddedByLDAPImport(boolean addedByLDAPImport);
 

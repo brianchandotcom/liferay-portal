@@ -784,7 +784,7 @@ public class DLFileEntryMetadataUtil {
 	/**
 	* Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or throws a {@link NoSuchFileEntryMetadataException} if it could not be found.
 	*
-	* @param DDMStructureId the d d m structure ID
+	* @param DDMStructureId the ddm structure ID
 	* @param fileVersionId the file version ID
 	* @return the matching document library file entry metadata
 	* @throws NoSuchFileEntryMetadataException if a matching document library file entry metadata could not be found
@@ -798,7 +798,7 @@ public class DLFileEntryMetadataUtil {
 	/**
 	* Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param DDMStructureId the d d m structure ID
+	* @param DDMStructureId the ddm structure ID
 	* @param fileVersionId the file version ID
 	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
 	*/
@@ -810,7 +810,7 @@ public class DLFileEntryMetadataUtil {
 	/**
 	* Returns the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param DDMStructureId the d d m structure ID
+	* @param DDMStructureId the ddm structure ID
 	* @param fileVersionId the file version ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
@@ -824,7 +824,7 @@ public class DLFileEntryMetadataUtil {
 	/**
 	* Removes the document library file entry metadata where DDMStructureId = &#63; and fileVersionId = &#63; from the database.
 	*
-	* @param DDMStructureId the d d m structure ID
+	* @param DDMStructureId the ddm structure ID
 	* @param fileVersionId the file version ID
 	* @return the document library file entry metadata that was removed
 	*/
@@ -837,7 +837,7 @@ public class DLFileEntryMetadataUtil {
 	/**
 	* Returns the number of document library file entry metadatas where DDMStructureId = &#63; and fileVersionId = &#63;.
 	*
-	* @param DDMStructureId the d d m structure ID
+	* @param DDMStructureId the ddm structure ID
 	* @param fileVersionId the file version ID
 	* @return the number of matching document library file entry metadatas
 	*/

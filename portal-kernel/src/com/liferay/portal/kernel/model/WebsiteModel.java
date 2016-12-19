@@ -232,17 +232,17 @@ public interface WebsiteModel extends AttachedModel, BaseModel<Website>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this website.
+	 * Returns the class pk of this website.
 	 *
-	 * @return the class p k of this website
+	 * @return the class pk of this website
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this website.
+	 * Sets the class pk of this website.
 	 *
-	 * @param classPK the class p k of this website
+	 * @param classPK the class pk of this website
 	 */
 	@Override
 	public void setClassPK(long classPK);

@@ -58,14 +58,14 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkLocalServiceUtil} to access the d d m template link local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLinkLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMTemplateLinkLocalServiceUtil} to access the ddm template link local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLinkLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d d m template link to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm template link to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplateLink the d d m template link
-	* @return the d d m template link that was added
+	* @param ddmTemplateLink the ddm template link
+	* @return the ddm template link that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplateLink addDDMTemplateLink(DDMTemplateLink ddmTemplateLink);
@@ -74,29 +74,29 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		long templateId);
 
 	/**
-	* Creates a new d d m template link with the primary key. Does not add the d d m template link to the database.
+	* Creates a new ddm template link with the primary key. Does not add the ddm template link to the database.
 	*
-	* @param templateLinkId the primary key for the new d d m template link
-	* @return the new d d m template link
+	* @param templateLinkId the primary key for the new ddm template link
+	* @return the new ddm template link
 	*/
 	public DDMTemplateLink createDDMTemplateLink(long templateLinkId);
 
 	/**
-	* Deletes the d d m template link from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm template link from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplateLink the d d m template link
-	* @return the d d m template link that was removed
+	* @param ddmTemplateLink the ddm template link
+	* @return the ddm template link that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMTemplateLink deleteDDMTemplateLink(
 		DDMTemplateLink ddmTemplateLink);
 
 	/**
-	* Deletes the d d m template link with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm template link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param templateLinkId the primary key of the d d m template link
-	* @return the d d m template link that was removed
-	* @throws PortalException if a d d m template link with the primary key could not be found
+	* @param templateLinkId the primary key of the ddm template link
+	* @return the ddm template link that was removed
+	* @throws PortalException if a ddm template link with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMTemplateLink deleteDDMTemplateLink(long templateLinkId)
@@ -113,11 +113,11 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 	public DDMTemplateLink fetchDDMTemplateLink(long templateLinkId);
 
 	/**
-	* Returns the d d m template link with the primary key.
+	* Returns the ddm template link with the primary key.
 	*
-	* @param templateLinkId the primary key of the d d m template link
-	* @return the d d m template link
-	* @throws PortalException if a d d m template link with the primary key could not be found
+	* @param templateLinkId the primary key of the ddm template link
+	* @return the ddm template link
+	* @throws PortalException if a ddm template link with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMTemplateLink getDDMTemplateLink(long templateLinkId)
@@ -132,10 +132,10 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the d d m template link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm template link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplateLink the d d m template link
-	* @return the d d m template link that was updated
+	* @param ddmTemplateLink the ddm template link
+	* @return the ddm template link that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMTemplateLink updateDDMTemplateLink(
@@ -168,9 +168,9 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of d d m template links.
+	* Returns the number of ddm template links.
 	*
-	* @return the number of d d m template links
+	* @return the number of ddm template links
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMTemplateLinksCount();
@@ -222,15 +222,15 @@ public interface DDMTemplateLinkLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the d d m template links.
+	* Returns a range of all the ddm template links.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template links
-	* @param end the upper bound of the range of d d m template links (not inclusive)
-	* @return the range of d d m template links
+	* @param start the lower bound of the range of ddm template links
+	* @param end the upper bound of the range of ddm template links (not inclusive)
+	* @return the range of ddm template links
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMTemplateLink> getDDMTemplateLinks(int start, int end);

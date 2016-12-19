@@ -231,32 +231,32 @@ public interface WorkflowDefinitionLinkModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this workflow definition link.
+	 * Returns the class pk of this workflow definition link.
 	 *
-	 * @return the class p k of this workflow definition link
+	 * @return the class pk of this workflow definition link
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this workflow definition link.
+	 * Sets the class pk of this workflow definition link.
 	 *
-	 * @param classPK the class p k of this workflow definition link
+	 * @param classPK the class pk of this workflow definition link
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the type p k of this workflow definition link.
+	 * Returns the type pk of this workflow definition link.
 	 *
-	 * @return the type p k of this workflow definition link
+	 * @return the type pk of this workflow definition link
 	 */
 	public long getTypePK();
 
 	/**
-	 * Sets the type p k of this workflow definition link.
+	 * Sets the type pk of this workflow definition link.
 	 *
-	 * @param typePK the type p k of this workflow definition link
+	 * @param typePK the type pk of this workflow definition link
 	 */
 	public void setTypePK(long typePK);
 

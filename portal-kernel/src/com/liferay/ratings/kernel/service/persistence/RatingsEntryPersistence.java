@@ -325,7 +325,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns all the ratings entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching ratings entries
 	*/
 	public java.util.List<RatingsEntry> findByC_C(long classNameId, long classPK);
@@ -338,7 +338,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of matching ratings entries
@@ -354,7 +354,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -372,7 +372,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -388,7 +388,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
@@ -401,7 +401,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
@@ -412,7 +412,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
@@ -425,7 +425,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
@@ -437,7 +437,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param entryId the primary key of the current ratings entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
 	* @throws NoSuchEntryException if a ratings entry with the primary key could not be found
@@ -451,7 +451,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Removes all the ratings entries where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByC_C(long classNameId, long classPK);
 
@@ -459,7 +459,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the number of ratings entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching ratings entries
 	*/
 	public int countByC_C(long classNameId, long classPK);
@@ -469,7 +469,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching ratings entry
 	* @throws NoSuchEntryException if a matching ratings entry could not be found
 	*/
@@ -481,7 +481,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
 	public RatingsEntry fetchByU_C_C(long userId, long classNameId, long classPK);
@@ -491,7 +491,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
 	*/
@@ -503,7 +503,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the ratings entry that was removed
 	*/
 	public RatingsEntry removeByU_C_C(long userId, long classNameId,
@@ -514,7 +514,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching ratings entries
 	*/
 	public int countByU_C_C(long userId, long classNameId, long classPK);
@@ -523,7 +523,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @return the matching ratings entries
 	*/
@@ -538,7 +538,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
@@ -555,7 +555,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
@@ -574,7 +574,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
@@ -591,7 +591,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry
@@ -606,7 +606,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the first ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
@@ -619,7 +619,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry
@@ -634,7 +634,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the last ratings entry in the ordered set where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
@@ -648,7 +648,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	*
 	* @param entryId the primary key of the current ratings entry
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ratings entry
@@ -663,7 +663,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Removes all the ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	*/
 	public void removeByC_C_S(long classNameId, long classPK, double score);
@@ -672,7 +672,7 @@ public interface RatingsEntryPersistence extends BasePersistence<RatingsEntry> {
 	* Returns the number of ratings entries where classNameId = &#63; and classPK = &#63; and score = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param score the score
 	* @return the number of matching ratings entries
 	*/

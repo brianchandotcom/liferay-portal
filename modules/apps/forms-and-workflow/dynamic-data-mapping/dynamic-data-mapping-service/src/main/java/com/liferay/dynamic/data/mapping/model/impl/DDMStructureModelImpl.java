@@ -76,7 +76,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m structure model instance should use the {@link DDMStructure} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm structure model instance should use the {@link DDMStructure} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructure";
 	public static final Object[][] TABLE_COLUMNS = {

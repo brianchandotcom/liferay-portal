@@ -572,17 +572,17 @@ public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
 	public void setLoginDate(Date loginDate);
 
 	/**
-	 * Returns the login i p of this user.
+	 * Returns the login ip of this user.
 	 *
-	 * @return the login i p of this user
+	 * @return the login ip of this user
 	 */
 	@AutoEscape
 	public String getLoginIP();
 
 	/**
-	 * Sets the login i p of this user.
+	 * Sets the login ip of this user.
 	 *
-	 * @param loginIP the login i p of this user
+	 * @param loginIP the login ip of this user
 	 */
 	public void setLoginIP(String loginIP);
 
@@ -601,17 +601,17 @@ public interface UserModel extends BaseModel<User>, MVCCModel, ShardedModel,
 	public void setLastLoginDate(Date lastLoginDate);
 
 	/**
-	 * Returns the last login i p of this user.
+	 * Returns the last login ip of this user.
 	 *
-	 * @return the last login i p of this user
+	 * @return the last login ip of this user
 	 */
 	@AutoEscape
 	public String getLastLoginIP();
 
 	/**
-	 * Sets the last login i p of this user.
+	 * Sets the last login ip of this user.
 	 *
-	 * @param lastLoginIP the last login i p of this user
+	 * @param lastLoginIP the last login ip of this user
 	 */
 	public void setLastLoginIP(String lastLoginIP);
 

@@ -187,9 +187,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the name of this w s r p consumer portlet.
+	* Returns the name of this wsrp consumer portlet.
 	*
-	* @return the name of this w s r p consumer portlet
+	* @return the name of this wsrp consumer portlet
 	*/
 	@Override
 	public java.lang.String getName() {
@@ -197,9 +197,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the portlet handle of this w s r p consumer portlet.
+	* Returns the portlet handle of this wsrp consumer portlet.
 	*
-	* @return the portlet handle of this w s r p consumer portlet
+	* @return the portlet handle of this wsrp consumer portlet
 	*/
 	@Override
 	public java.lang.String getPortletHandle() {
@@ -207,9 +207,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the uuid of this w s r p consumer portlet.
+	* Returns the uuid of this wsrp consumer portlet.
 	*
-	* @return the uuid of this w s r p consumer portlet
+	* @return the uuid of this wsrp consumer portlet
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -227,9 +227,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the create date of this w s r p consumer portlet.
+	* Returns the create date of this wsrp consumer portlet.
 	*
-	* @return the create date of this w s r p consumer portlet
+	* @return the create date of this wsrp consumer portlet
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -237,9 +237,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the last publish date of this w s r p consumer portlet.
+	* Returns the last publish date of this wsrp consumer portlet.
 	*
-	* @return the last publish date of this w s r p consumer portlet
+	* @return the last publish date of this wsrp consumer portlet
 	*/
 	@Override
 	public Date getLastPublishDate() {
@@ -247,9 +247,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the modified date of this w s r p consumer portlet.
+	* Returns the modified date of this wsrp consumer portlet.
 	*
-	* @return the modified date of this w s r p consumer portlet
+	* @return the modified date of this wsrp consumer portlet
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -257,9 +257,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the company ID of this w s r p consumer portlet.
+	* Returns the company ID of this wsrp consumer portlet.
 	*
-	* @return the company ID of this w s r p consumer portlet
+	* @return the company ID of this wsrp consumer portlet
 	*/
 	@Override
 	public long getCompanyId() {
@@ -267,9 +267,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the primary key of this w s r p consumer portlet.
+	* Returns the primary key of this wsrp consumer portlet.
 	*
-	* @return the primary key of this w s r p consumer portlet
+	* @return the primary key of this wsrp consumer portlet
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -277,9 +277,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the wsrp consumer ID of this w s r p consumer portlet.
+	* Returns the wsrp consumer ID of this wsrp consumer portlet.
 	*
-	* @return the wsrp consumer ID of this w s r p consumer portlet
+	* @return the wsrp consumer ID of this wsrp consumer portlet
 	*/
 	@Override
 	public long getWsrpConsumerId() {
@@ -287,9 +287,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Returns the wsrp consumer portlet ID of this w s r p consumer portlet.
+	* Returns the wsrp consumer portlet ID of this wsrp consumer portlet.
 	*
-	* @return the wsrp consumer portlet ID of this w s r p consumer portlet
+	* @return the wsrp consumer portlet ID of this wsrp consumer portlet
 	*/
 	@Override
 	public long getWsrpConsumerPortletId() {
@@ -307,9 +307,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the company ID of this w s r p consumer portlet.
+	* Sets the company ID of this wsrp consumer portlet.
 	*
-	* @param companyId the company ID of this w s r p consumer portlet
+	* @param companyId the company ID of this wsrp consumer portlet
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -317,9 +317,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the create date of this w s r p consumer portlet.
+	* Sets the create date of this wsrp consumer portlet.
 	*
-	* @param createDate the create date of this w s r p consumer portlet
+	* @param createDate the create date of this wsrp consumer portlet
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -343,9 +343,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the last publish date of this w s r p consumer portlet.
+	* Sets the last publish date of this wsrp consumer portlet.
 	*
-	* @param lastPublishDate the last publish date of this w s r p consumer portlet
+	* @param lastPublishDate the last publish date of this wsrp consumer portlet
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -353,9 +353,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the modified date of this w s r p consumer portlet.
+	* Sets the modified date of this wsrp consumer portlet.
 	*
-	* @param modifiedDate the modified date of this w s r p consumer portlet
+	* @param modifiedDate the modified date of this wsrp consumer portlet
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -363,9 +363,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the name of this w s r p consumer portlet.
+	* Sets the name of this wsrp consumer portlet.
 	*
-	* @param name the name of this w s r p consumer portlet
+	* @param name the name of this wsrp consumer portlet
 	*/
 	@Override
 	public void setName(java.lang.String name) {
@@ -378,9 +378,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the portlet handle of this w s r p consumer portlet.
+	* Sets the portlet handle of this wsrp consumer portlet.
 	*
-	* @param portletHandle the portlet handle of this w s r p consumer portlet
+	* @param portletHandle the portlet handle of this wsrp consumer portlet
 	*/
 	@Override
 	public void setPortletHandle(java.lang.String portletHandle) {
@@ -388,9 +388,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the primary key of this w s r p consumer portlet.
+	* Sets the primary key of this wsrp consumer portlet.
 	*
-	* @param primaryKey the primary key of this w s r p consumer portlet
+	* @param primaryKey the primary key of this wsrp consumer portlet
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -403,9 +403,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the uuid of this w s r p consumer portlet.
+	* Sets the uuid of this wsrp consumer portlet.
 	*
-	* @param uuid the uuid of this w s r p consumer portlet
+	* @param uuid the uuid of this wsrp consumer portlet
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {
@@ -413,9 +413,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the wsrp consumer ID of this w s r p consumer portlet.
+	* Sets the wsrp consumer ID of this wsrp consumer portlet.
 	*
-	* @param wsrpConsumerId the wsrp consumer ID of this w s r p consumer portlet
+	* @param wsrpConsumerId the wsrp consumer ID of this wsrp consumer portlet
 	*/
 	@Override
 	public void setWsrpConsumerId(long wsrpConsumerId) {
@@ -423,9 +423,9 @@ public class WSRPConsumerPortletWrapper implements WSRPConsumerPortlet,
 	}
 
 	/**
-	* Sets the wsrp consumer portlet ID of this w s r p consumer portlet.
+	* Sets the wsrp consumer portlet ID of this wsrp consumer portlet.
 	*
-	* @param wsrpConsumerPortletId the wsrp consumer portlet ID of this w s r p consumer portlet
+	* @param wsrpConsumerPortletId the wsrp consumer portlet ID of this wsrp consumer portlet
 	*/
 	@Override
 	public void setWsrpConsumerPortletId(long wsrpConsumerPortletId) {

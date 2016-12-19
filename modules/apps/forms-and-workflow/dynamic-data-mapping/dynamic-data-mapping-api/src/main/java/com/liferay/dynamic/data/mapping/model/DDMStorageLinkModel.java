@@ -46,72 +46,72 @@ public interface DDMStorageLinkModel extends AttachedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d d m storage link model instance should use the {@link DDMStorageLink} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a ddm storage link model instance should use the {@link DDMStorageLink} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d d m storage link.
+	 * Returns the primary key of this ddm storage link.
 	 *
-	 * @return the primary key of this d d m storage link
+	 * @return the primary key of this ddm storage link
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d d m storage link.
+	 * Sets the primary key of this ddm storage link.
 	 *
-	 * @param primaryKey the primary key of this d d m storage link
+	 * @param primaryKey the primary key of this ddm storage link
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this d d m storage link.
+	 * Returns the uuid of this ddm storage link.
 	 *
-	 * @return the uuid of this d d m storage link
+	 * @return the uuid of this ddm storage link
 	 */
 	@AutoEscape
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this d d m storage link.
+	 * Sets the uuid of this ddm storage link.
 	 *
-	 * @param uuid the uuid of this d d m storage link
+	 * @param uuid the uuid of this ddm storage link
 	 */
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the storage link ID of this d d m storage link.
+	 * Returns the storage link ID of this ddm storage link.
 	 *
-	 * @return the storage link ID of this d d m storage link
+	 * @return the storage link ID of this ddm storage link
 	 */
 	public long getStorageLinkId();
 
 	/**
-	 * Sets the storage link ID of this d d m storage link.
+	 * Sets the storage link ID of this ddm storage link.
 	 *
-	 * @param storageLinkId the storage link ID of this d d m storage link
+	 * @param storageLinkId the storage link ID of this ddm storage link
 	 */
 	public void setStorageLinkId(long storageLinkId);
 
 	/**
-	 * Returns the company ID of this d d m storage link.
+	 * Returns the company ID of this ddm storage link.
 	 *
-	 * @return the company ID of this d d m storage link
+	 * @return the company ID of this ddm storage link
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d d m storage link.
+	 * Sets the company ID of this ddm storage link.
 	 *
-	 * @param companyId the company ID of this d d m storage link
+	 * @param companyId the company ID of this ddm storage link
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the fully qualified class name of this d d m storage link.
+	 * Returns the fully qualified class name of this ddm storage link.
 	 *
-	 * @return the fully qualified class name of this d d m storage link
+	 * @return the fully qualified class name of this ddm storage link
 	 */
 	@Override
 	public String getClassName();
@@ -119,48 +119,48 @@ public interface DDMStorageLinkModel extends AttachedModel,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class name ID of this d d m storage link.
+	 * Returns the class name ID of this ddm storage link.
 	 *
-	 * @return the class name ID of this d d m storage link
+	 * @return the class name ID of this ddm storage link
 	 */
 	@Override
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this d d m storage link.
+	 * Sets the class name ID of this ddm storage link.
 	 *
-	 * @param classNameId the class name ID of this d d m storage link
+	 * @param classNameId the class name ID of this ddm storage link
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this d d m storage link.
+	 * Returns the class pk of this ddm storage link.
 	 *
-	 * @return the class p k of this d d m storage link
+	 * @return the class pk of this ddm storage link
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this d d m storage link.
+	 * Sets the class pk of this ddm storage link.
 	 *
-	 * @param classPK the class p k of this d d m storage link
+	 * @param classPK the class pk of this ddm storage link
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the structure ID of this d d m storage link.
+	 * Returns the structure ID of this ddm storage link.
 	 *
-	 * @return the structure ID of this d d m storage link
+	 * @return the structure ID of this ddm storage link
 	 */
 	public long getStructureId();
 
 	/**
-	 * Sets the structure ID of this d d m storage link.
+	 * Sets the structure ID of this ddm storage link.
 	 *
-	 * @param structureId the structure ID of this d d m storage link
+	 * @param structureId the structure ID of this ddm storage link
 	 */
 	public void setStructureId(long structureId);
 

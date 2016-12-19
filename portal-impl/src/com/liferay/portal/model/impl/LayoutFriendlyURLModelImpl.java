@@ -63,7 +63,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a layout friendly u r l model instance should use the {@link LayoutFriendlyURL} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a layout friendly url model instance should use the {@link LayoutFriendlyURL} interface instead.
 	 */
 	public static final String TABLE_NAME = "LayoutFriendlyURL";
 	public static final Object[][] TABLE_COLUMNS = {

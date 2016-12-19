@@ -148,17 +148,17 @@ public interface TicketModel extends AttachedModel, BaseModel<Ticket>, MVCCModel
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this ticket.
+	 * Returns the class pk of this ticket.
 	 *
-	 * @return the class p k of this ticket
+	 * @return the class pk of this ticket
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this ticket.
+	 * Sets the class pk of this ticket.
 	 *
-	 * @param classPK the class p k of this ticket
+	 * @param classPK the class pk of this ticket
 	 */
 	@Override
 	public void setClassPK(long classPK);

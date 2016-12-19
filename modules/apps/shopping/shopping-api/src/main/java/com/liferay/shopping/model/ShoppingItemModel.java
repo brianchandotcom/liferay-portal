@@ -527,17 +527,17 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 	public void setSmallImageId(long smallImageId);
 
 	/**
-	 * Returns the small image u r l of this shopping item.
+	 * Returns the small image url of this shopping item.
 	 *
-	 * @return the small image u r l of this shopping item
+	 * @return the small image url of this shopping item
 	 */
 	@AutoEscape
 	public String getSmallImageURL();
 
 	/**
-	 * Sets the small image u r l of this shopping item.
+	 * Sets the small image url of this shopping item.
 	 *
-	 * @param smallImageURL the small image u r l of this shopping item
+	 * @param smallImageURL the small image url of this shopping item
 	 */
 	public void setSmallImageURL(String smallImageURL);
 
@@ -577,17 +577,17 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 	public void setMediumImageId(long mediumImageId);
 
 	/**
-	 * Returns the medium image u r l of this shopping item.
+	 * Returns the medium image url of this shopping item.
 	 *
-	 * @return the medium image u r l of this shopping item
+	 * @return the medium image url of this shopping item
 	 */
 	@AutoEscape
 	public String getMediumImageURL();
 
 	/**
-	 * Sets the medium image u r l of this shopping item.
+	 * Sets the medium image url of this shopping item.
 	 *
-	 * @param mediumImageURL the medium image u r l of this shopping item
+	 * @param mediumImageURL the medium image url of this shopping item
 	 */
 	public void setMediumImageURL(String mediumImageURL);
 
@@ -627,17 +627,17 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 	public void setLargeImageId(long largeImageId);
 
 	/**
-	 * Returns the large image u r l of this shopping item.
+	 * Returns the large image url of this shopping item.
 	 *
-	 * @return the large image u r l of this shopping item
+	 * @return the large image url of this shopping item
 	 */
 	@AutoEscape
 	public String getLargeImageURL();
 
 	/**
-	 * Sets the large image u r l of this shopping item.
+	 * Sets the large image url of this shopping item.
 	 *
-	 * @param largeImageURL the large image u r l of this shopping item
+	 * @param largeImageURL the large image url of this shopping item
 	 */
 	public void setLargeImageURL(String largeImageURL);
 

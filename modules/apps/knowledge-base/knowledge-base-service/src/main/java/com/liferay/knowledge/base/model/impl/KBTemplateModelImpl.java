@@ -70,7 +70,7 @@ public class KBTemplateModelImpl extends BaseModelImpl<KBTemplate>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a k b template model instance should use the {@link KBTemplate} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kb template model instance should use the {@link KBTemplate} interface instead.
 	 */
 	public static final String TABLE_NAME = "KBTemplate";
 	public static final Object[][] TABLE_COLUMNS = {

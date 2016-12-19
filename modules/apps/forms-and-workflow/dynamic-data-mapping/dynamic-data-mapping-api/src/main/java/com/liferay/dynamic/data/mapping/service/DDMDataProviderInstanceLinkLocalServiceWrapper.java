@@ -35,10 +35,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Adds the d d m data provider instance link to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm data provider instance link to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmDataProviderInstanceLink the d d m data provider instance link
-	* @return the d d m data provider instance link that was added
+	* @param ddmDataProviderInstanceLink the ddm data provider instance link
+	* @return the ddm data provider instance link that was added
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink addDDMDataProviderInstanceLink(
@@ -54,10 +54,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Creates a new d d m data provider instance link with the primary key. Does not add the d d m data provider instance link to the database.
+	* Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
 	*
-	* @param dataProviderInstanceLinkId the primary key for the new d d m data provider instance link
-	* @return the new d d m data provider instance link
+	* @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
+	* @return the new ddm data provider instance link
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink createDDMDataProviderInstanceLink(
@@ -66,10 +66,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d m data provider instance link from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm data provider instance link from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmDataProviderInstanceLink the d d m data provider instance link
-	* @return the d d m data provider instance link that was removed
+	* @param ddmDataProviderInstanceLink the ddm data provider instance link
+	* @return the ddm data provider instance link that was removed
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink deleteDDMDataProviderInstanceLink(
@@ -78,11 +78,11 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d m data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dataProviderInstanceLinkId the primary key of the d d m data provider instance link
-	* @return the d d m data provider instance link that was removed
-	* @throws PortalException if a d d m data provider instance link with the primary key could not be found
+	* @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
+	* @return the ddm data provider instance link that was removed
+	* @throws PortalException if a ddm data provider instance link with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink deleteDDMDataProviderInstanceLink(
@@ -105,11 +105,11 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns the d d m data provider instance link with the primary key.
+	* Returns the ddm data provider instance link with the primary key.
 	*
-	* @param dataProviderInstanceLinkId the primary key of the d d m data provider instance link
-	* @return the d d m data provider instance link
-	* @throws PortalException if a d d m data provider instance link with the primary key could not be found
+	* @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
+	* @return the ddm data provider instance link
+	* @throws PortalException if a ddm data provider instance link with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink getDDMDataProviderInstanceLink(
@@ -119,10 +119,10 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Updates the d d m data provider instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm data provider instance link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmDataProviderInstanceLink the d d m data provider instance link
-	* @return the d d m data provider instance link that was updated
+	* @param ddmDataProviderInstanceLink the ddm data provider instance link
+	* @return the ddm data provider instance link that was updated
 	*/
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink updateDDMDataProviderInstanceLink(
@@ -163,9 +163,9 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of d d m data provider instance links.
+	* Returns the number of ddm data provider instance links.
 	*
-	* @return the number of d d m data provider instance links
+	* @return the number of ddm data provider instance links
 	*/
 	@Override
 	public int getDDMDataProviderInstanceLinksCount() {
@@ -237,15 +237,15 @@ public class DDMDataProviderInstanceLinkLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the d d m data provider instance links.
+	* Returns a range of all the ddm data provider instance links.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m data provider instance links
-	* @param end the upper bound of the range of d d m data provider instance links (not inclusive)
-	* @return the range of d d m data provider instance links
+	* @param start the lower bound of the range of ddm data provider instance links
+	* @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	* @return the range of ddm data provider instance links
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstanceLink> getDDMDataProviderInstanceLinks(

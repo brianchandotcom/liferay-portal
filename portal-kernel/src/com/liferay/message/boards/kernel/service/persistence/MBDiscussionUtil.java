@@ -719,7 +719,7 @@ public class MBDiscussionUtil {
 	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchDiscussionException} if it could not be found.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching message boards discussion
 	* @throws NoSuchDiscussionException if a matching message boards discussion could not be found
 	*/
@@ -732,7 +732,7 @@ public class MBDiscussionUtil {
 	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
 	public static MBDiscussion fetchByC_C(long classNameId, long classPK) {
@@ -743,7 +743,7 @@ public class MBDiscussionUtil {
 	* Returns the message boards discussion where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
 	*/
@@ -757,7 +757,7 @@ public class MBDiscussionUtil {
 	* Removes the message boards discussion where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the message boards discussion that was removed
 	*/
 	public static MBDiscussion removeByC_C(long classNameId, long classPK)
@@ -769,7 +769,7 @@ public class MBDiscussionUtil {
 	* Returns the number of message boards discussions where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching message boards discussions
 	*/
 	public static int countByC_C(long classNameId, long classPK) {

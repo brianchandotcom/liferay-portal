@@ -76,7 +76,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m template model instance should use the {@link DDMTemplate} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm template model instance should use the {@link DDMTemplate} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMTemplate";
 	public static final Object[][] TABLE_COLUMNS = {

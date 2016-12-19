@@ -171,9 +171,9 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	/**
-	* Returns the added by l d a p import of this user group.
+	* Returns the added by ldap import of this user group.
 	*
-	* @return the added by l d a p import of this user group
+	* @return the added by ldap import of this user group
 	*/
 	@Override
 	public boolean getAddedByLDAPImport() {
@@ -193,9 +193,9 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	/**
-	* Returns <code>true</code> if this user group is added by l d a p import.
+	* Returns <code>true</code> if this user group is added by ldap import.
 	*
-	* @return <code>true</code> if this user group is added by l d a p import; <code>false</code> otherwise
+	* @return <code>true</code> if this user group is added by ldap import; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isAddedByLDAPImport() {
@@ -406,9 +406,9 @@ public class UserGroupWrapper implements UserGroup, ModelWrapper<UserGroup> {
 	}
 
 	/**
-	* Sets whether this user group is added by l d a p import.
+	* Sets whether this user group is added by ldap import.
 	*
-	* @param addedByLDAPImport the added by l d a p import of this user group
+	* @param addedByLDAPImport the added by ldap import of this user group
 	*/
 	@Override
 	public void setAddedByLDAPImport(boolean addedByLDAPImport) {

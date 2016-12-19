@@ -301,9 +301,9 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	/**
-	* Returns the class p k of this social request.
+	* Returns the class pk of this social request.
 	*
-	* @return the class p k of this social request
+	* @return the class pk of this social request
 	*/
 	@Override
 	public long getClassPK() {
@@ -416,9 +416,9 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	/**
-	* Sets the class p k of this social request.
+	* Sets the class pk of this social request.
 	*
-	* @param classPK the class p k of this social request
+	* @param classPK the class pk of this social request
 	*/
 	@Override
 	public void setClassPK(long classPK) {

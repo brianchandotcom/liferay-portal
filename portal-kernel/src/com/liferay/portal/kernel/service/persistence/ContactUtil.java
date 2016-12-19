@@ -430,7 +430,7 @@ public class ContactUtil {
 	* Returns all the contacts where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching contacts
 	*/
 	public static List<Contact> findByC_C(long classNameId, long classPK) {
@@ -445,7 +445,7 @@ public class ContactUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of contacts
 	* @param end the upper bound of the range of contacts (not inclusive)
 	* @return the range of matching contacts
@@ -463,7 +463,7 @@ public class ContactUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of contacts
 	* @param end the upper bound of the range of contacts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -484,7 +484,7 @@ public class ContactUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of contacts
 	* @param end the upper bound of the range of contacts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -503,7 +503,7 @@ public class ContactUtil {
 	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching contact
 	* @throws NoSuchContactException if a matching contact could not be found
@@ -519,7 +519,7 @@ public class ContactUtil {
 	* Returns the first contact in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching contact, or <code>null</code> if a matching contact could not be found
 	*/
@@ -533,7 +533,7 @@ public class ContactUtil {
 	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching contact
 	* @throws NoSuchContactException if a matching contact could not be found
@@ -549,7 +549,7 @@ public class ContactUtil {
 	* Returns the last contact in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching contact, or <code>null</code> if a matching contact could not be found
 	*/
@@ -564,7 +564,7 @@ public class ContactUtil {
 	*
 	* @param contactId the primary key of the current contact
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next contact
 	* @throws NoSuchContactException if a contact with the primary key could not be found
@@ -582,7 +582,7 @@ public class ContactUtil {
 	* Removes all the contacts where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
@@ -592,7 +592,7 @@ public class ContactUtil {
 	* Returns the number of contacts where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching contacts
 	*/
 	public static int countByC_C(long classNameId, long classPK) {

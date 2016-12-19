@@ -57,7 +57,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the w s r p producer service.
+ * The persistence implementation for the wsrp producer service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -74,7 +74,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link WSRPProducerUtil} to access the w s r p producer persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link WSRPProducerUtil} to access the wsrp producer persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = WSRPProducerImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -111,10 +111,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the w s r p producers where uuid = &#63;.
+	 * Returns all the wsrp producers where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching w s r p producers
+	 * @return the matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid(String uuid) {
@@ -122,16 +122,16 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns a range of all the w s r p producers where uuid = &#63;.
+	 * Returns a range of all the wsrp producers where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
-	 * @return the range of matching w s r p producers
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
+	 * @return the range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid(String uuid, int start, int end) {
@@ -139,17 +139,17 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers where uuid = &#63;.
+	 * Returns an ordered range of all the wsrp producers where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching w s r p producers
+	 * @return the ordered range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid(String uuid, int start, int end,
@@ -158,18 +158,18 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers where uuid = &#63;.
+	 * Returns an ordered range of all the wsrp producers where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching w s r p producers
+	 * @return the ordered range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid(String uuid, int start, int end,
@@ -289,12 +289,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the first w s r p producer in the ordered set where uuid = &#63;.
+	 * Returns the first wsrp producer in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the first matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByUuid_First(String uuid,
@@ -319,11 +319,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the first w s r p producer in the ordered set where uuid = &#63;.
+	 * Returns the first wsrp producer in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the first matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByUuid_First(String uuid,
@@ -338,12 +338,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the last w s r p producer in the ordered set where uuid = &#63;.
+	 * Returns the last wsrp producer in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the last matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByUuid_Last(String uuid,
@@ -368,11 +368,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the last w s r p producer in the ordered set where uuid = &#63;.
+	 * Returns the last wsrp producer in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the last matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByUuid_Last(String uuid,
@@ -394,13 +394,13 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producers before and after the current w s r p producer in the ordered set where uuid = &#63;.
+	 * Returns the wsrp producers before and after the current wsrp producer in the ordered set where uuid = &#63;.
 	 *
-	 * @param wsrpProducerId the primary key of the current w s r p producer
+	 * @param wsrpProducerId the primary key of the current wsrp producer
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next w s r p producer
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @return the previous, current, and next wsrp producer
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer[] findByUuid_PrevAndNext(long wsrpProducerId,
@@ -554,7 +554,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes all the w s r p producers where uuid = &#63; from the database.
+	 * Removes all the wsrp producers where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
@@ -567,10 +567,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the number of w s r p producers where uuid = &#63;.
+	 * Returns the number of wsrp producers where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching w s r p producers
+	 * @return the number of matching wsrp producers
 	 */
 	@Override
 	public int countByUuid(String uuid) {
@@ -646,12 +646,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the w s r p producer where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchProducerException} if it could not be found.
+	 * Returns the wsrp producer where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchProducerException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByUUID_G(String uuid, long groupId)
@@ -682,11 +682,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producer where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the wsrp producer where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByUUID_G(String uuid, long groupId) {
@@ -694,12 +694,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producer where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the wsrp producer where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByUUID_G(String uuid, long groupId,
@@ -800,11 +800,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes the w s r p producer where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the wsrp producer where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the w s r p producer that was removed
+	 * @return the wsrp producer that was removed
 	 */
 	@Override
 	public WSRPProducer removeByUUID_G(String uuid, long groupId)
@@ -815,11 +815,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the number of w s r p producers where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of wsrp producers where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching w s r p producers
+	 * @return the number of matching wsrp producers
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
@@ -911,11 +911,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the w s r p producers where uuid = &#63; and companyId = &#63;.
+	 * Returns all the wsrp producers where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching w s r p producers
+	 * @return the matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid_C(String uuid, long companyId) {
@@ -924,7 +924,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns a range of all the w s r p producers where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the wsrp producers where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -932,9 +932,9 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
-	 * @return the range of matching w s r p producers
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
+	 * @return the range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid_C(String uuid, long companyId,
@@ -943,7 +943,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the wsrp producers where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -951,10 +951,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching w s r p producers
+	 * @return the ordered range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid_C(String uuid, long companyId,
@@ -963,7 +963,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the wsrp producers where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -971,11 +971,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching w s r p producers
+	 * @return the ordered range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByUuid_C(String uuid, long companyId,
@@ -1104,13 +1104,13 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the first w s r p producer in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first wsrp producer in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the first matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByUuid_C_First(String uuid, long companyId,
@@ -1139,12 +1139,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the first w s r p producer in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first wsrp producer in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the first matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByUuid_C_First(String uuid, long companyId,
@@ -1160,13 +1160,13 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the last w s r p producer in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last wsrp producer in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the last matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByUuid_C_Last(String uuid, long companyId,
@@ -1195,12 +1195,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the last w s r p producer in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last wsrp producer in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the last matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByUuid_C_Last(String uuid, long companyId,
@@ -1222,14 +1222,14 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producers before and after the current w s r p producer in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the wsrp producers before and after the current wsrp producer in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param wsrpProducerId the primary key of the current w s r p producer
+	 * @param wsrpProducerId the primary key of the current wsrp producer
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next w s r p producer
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @return the previous, current, and next wsrp producer
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer[] findByUuid_C_PrevAndNext(long wsrpProducerId,
@@ -1388,7 +1388,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes all the w s r p producers where uuid = &#63; and companyId = &#63; from the database.
+	 * Removes all the wsrp producers where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1402,11 +1402,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the number of w s r p producers where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of wsrp producers where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching w s r p producers
+	 * @return the number of matching wsrp producers
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
@@ -1498,10 +1498,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the w s r p producers where companyId = &#63;.
+	 * Returns all the wsrp producers where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching w s r p producers
+	 * @return the matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByCompanyId(long companyId) {
@@ -1510,16 +1510,16 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns a range of all the w s r p producers where companyId = &#63;.
+	 * Returns a range of all the wsrp producers where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
-	 * @return the range of matching w s r p producers
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
+	 * @return the range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByCompanyId(long companyId, int start, int end) {
@@ -1527,17 +1527,17 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers where companyId = &#63;.
+	 * Returns an ordered range of all the wsrp producers where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching w s r p producers
+	 * @return the ordered range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByCompanyId(long companyId, int start,
@@ -1546,18 +1546,18 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers where companyId = &#63;.
+	 * Returns an ordered range of all the wsrp producers where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching w s r p producers
+	 * @return the ordered range of matching wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findByCompanyId(long companyId, int start,
@@ -1663,12 +1663,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the first w s r p producer in the ordered set where companyId = &#63;.
+	 * Returns the first wsrp producer in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the first matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByCompanyId_First(long companyId,
@@ -1694,11 +1694,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the first w s r p producer in the ordered set where companyId = &#63;.
+	 * Returns the first wsrp producer in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the first matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByCompanyId_First(long companyId,
@@ -1714,12 +1714,12 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the last w s r p producer in the ordered set where companyId = &#63;.
+	 * Returns the last wsrp producer in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching w s r p producer
-	 * @throws NoSuchProducerException if a matching w s r p producer could not be found
+	 * @return the last matching wsrp producer
+	 * @throws NoSuchProducerException if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer findByCompanyId_Last(long companyId,
@@ -1745,11 +1745,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the last w s r p producer in the ordered set where companyId = &#63;.
+	 * Returns the last wsrp producer in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching w s r p producer, or <code>null</code> if a matching w s r p producer could not be found
+	 * @return the last matching wsrp producer, or <code>null</code> if a matching wsrp producer could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByCompanyId_Last(long companyId,
@@ -1771,13 +1771,13 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producers before and after the current w s r p producer in the ordered set where companyId = &#63;.
+	 * Returns the wsrp producers before and after the current wsrp producer in the ordered set where companyId = &#63;.
 	 *
-	 * @param wsrpProducerId the primary key of the current w s r p producer
+	 * @param wsrpProducerId the primary key of the current wsrp producer
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next w s r p producer
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @return the previous, current, and next wsrp producer
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer[] findByCompanyId_PrevAndNext(long wsrpProducerId,
@@ -1917,7 +1917,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes all the w s r p producers where companyId = &#63; from the database.
+	 * Removes all the wsrp producers where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 */
@@ -1930,10 +1930,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the number of w s r p producers where companyId = &#63;.
+	 * Returns the number of wsrp producers where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the number of matching w s r p producers
+	 * @return the number of matching wsrp producers
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
@@ -1987,9 +1987,9 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Caches the w s r p producer in the entity cache if it is enabled.
+	 * Caches the wsrp producer in the entity cache if it is enabled.
 	 *
-	 * @param wsrpProducer the w s r p producer
+	 * @param wsrpProducer the wsrp producer
 	 */
 	@Override
 	public void cacheResult(WSRPProducer wsrpProducer) {
@@ -2004,9 +2004,9 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Caches the w s r p producers in the entity cache if it is enabled.
+	 * Caches the wsrp producers in the entity cache if it is enabled.
 	 *
-	 * @param wsrpProducers the w s r p producers
+	 * @param wsrpProducers the wsrp producers
 	 */
 	@Override
 	public void cacheResult(List<WSRPProducer> wsrpProducers) {
@@ -2023,7 +2023,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Clears the cache for all w s r p producers.
+	 * Clears the cache for all wsrp producers.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -2039,7 +2039,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Clears the cache for the w s r p producer.
+	 * Clears the cache for the wsrp producer.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -2107,10 +2107,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Creates a new w s r p producer with the primary key. Does not add the w s r p producer to the database.
+	 * Creates a new wsrp producer with the primary key. Does not add the wsrp producer to the database.
 	 *
-	 * @param wsrpProducerId the primary key for the new w s r p producer
-	 * @return the new w s r p producer
+	 * @param wsrpProducerId the primary key for the new wsrp producer
+	 * @return the new wsrp producer
 	 */
 	@Override
 	public WSRPProducer create(long wsrpProducerId) {
@@ -2129,11 +2129,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes the w s r p producer with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the wsrp producer with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param wsrpProducerId the primary key of the w s r p producer
-	 * @return the w s r p producer that was removed
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @param wsrpProducerId the primary key of the wsrp producer
+	 * @return the wsrp producer that was removed
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer remove(long wsrpProducerId)
@@ -2142,11 +2142,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes the w s r p producer with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the wsrp producer with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the w s r p producer
-	 * @return the w s r p producer that was removed
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @param primaryKey the primary key of the wsrp producer
+	 * @return the wsrp producer that was removed
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer remove(Serializable primaryKey)
@@ -2370,11 +2370,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producer with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the wsrp producer with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the w s r p producer
-	 * @return the w s r p producer
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @param primaryKey the primary key of the wsrp producer
+	 * @return the wsrp producer
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer findByPrimaryKey(Serializable primaryKey)
@@ -2394,11 +2394,11 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producer with the primary key or throws a {@link NoSuchProducerException} if it could not be found.
+	 * Returns the wsrp producer with the primary key or throws a {@link NoSuchProducerException} if it could not be found.
 	 *
-	 * @param wsrpProducerId the primary key of the w s r p producer
-	 * @return the w s r p producer
-	 * @throws NoSuchProducerException if a w s r p producer with the primary key could not be found
+	 * @param wsrpProducerId the primary key of the wsrp producer
+	 * @return the wsrp producer
+	 * @throws NoSuchProducerException if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer findByPrimaryKey(long wsrpProducerId)
@@ -2407,10 +2407,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producer with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the wsrp producer with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the w s r p producer
-	 * @return the w s r p producer, or <code>null</code> if a w s r p producer with the primary key could not be found
+	 * @param primaryKey the primary key of the wsrp producer
+	 * @return the wsrp producer, or <code>null</code> if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByPrimaryKey(Serializable primaryKey) {
@@ -2455,10 +2455,10 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the w s r p producer with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the wsrp producer with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param wsrpProducerId the primary key of the w s r p producer
-	 * @return the w s r p producer, or <code>null</code> if a w s r p producer with the primary key could not be found
+	 * @param wsrpProducerId the primary key of the wsrp producer
+	 * @return the wsrp producer, or <code>null</code> if a wsrp producer with the primary key could not be found
 	 */
 	@Override
 	public WSRPProducer fetchByPrimaryKey(long wsrpProducerId) {
@@ -2560,9 +2560,9 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns all the w s r p producers.
+	 * Returns all the wsrp producers.
 	 *
-	 * @return the w s r p producers
+	 * @return the wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findAll() {
@@ -2570,15 +2570,15 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns a range of all the w s r p producers.
+	 * Returns a range of all the wsrp producers.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
-	 * @return the range of w s r p producers
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
+	 * @return the range of wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findAll(int start, int end) {
@@ -2586,16 +2586,16 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers.
+	 * Returns an ordered range of all the wsrp producers.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of w s r p producers
+	 * @return the ordered range of wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findAll(int start, int end,
@@ -2604,17 +2604,17 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns an ordered range of all the w s r p producers.
+	 * Returns an ordered range of all the wsrp producers.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WSRPProducerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of w s r p producers
-	 * @param end the upper bound of the range of w s r p producers (not inclusive)
+	 * @param start the lower bound of the range of wsrp producers
+	 * @param end the upper bound of the range of wsrp producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of w s r p producers
+	 * @return the ordered range of wsrp producers
 	 */
 	@Override
 	public List<WSRPProducer> findAll(int start, int end,
@@ -2703,7 +2703,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Removes all the w s r p producers from the database.
+	 * Removes all the wsrp producers from the database.
 	 *
 	 */
 	@Override
@@ -2714,9 +2714,9 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Returns the number of w s r p producers.
+	 * Returns the number of wsrp producers.
 	 *
-	 * @return the number of w s r p producers
+	 * @return the number of wsrp producers
 	 */
 	@Override
 	public int countAll() {
@@ -2761,7 +2761,7 @@ public class WSRPProducerPersistenceImpl extends BasePersistenceImpl<WSRPProduce
 	}
 
 	/**
-	 * Initializes the w s r p producer persistence.
+	 * Initializes the wsrp producer persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

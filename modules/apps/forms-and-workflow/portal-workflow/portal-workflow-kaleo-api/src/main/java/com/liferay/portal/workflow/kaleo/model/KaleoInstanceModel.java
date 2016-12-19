@@ -265,16 +265,16 @@ public interface KaleoInstanceModel extends BaseModel<KaleoInstance>,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class p k of this kaleo instance.
+	 * Returns the class pk of this kaleo instance.
 	 *
-	 * @return the class p k of this kaleo instance
+	 * @return the class pk of this kaleo instance
 	 */
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this kaleo instance.
+	 * Sets the class pk of this kaleo instance.
 	 *
-	 * @param classPK the class p k of this kaleo instance
+	 * @param classPK the class pk of this kaleo instance
 	 */
 	public void setClassPK(long classPK);
 

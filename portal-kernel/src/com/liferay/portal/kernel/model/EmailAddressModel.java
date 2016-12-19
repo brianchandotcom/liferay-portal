@@ -232,17 +232,17 @@ public interface EmailAddressModel extends AttachedModel, BaseModel<EmailAddress
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this email address.
+	 * Returns the class pk of this email address.
 	 *
-	 * @return the class p k of this email address
+	 * @return the class pk of this email address
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this email address.
+	 * Sets the class pk of this email address.
 	 *
-	 * @param classPK the class p k of this email address
+	 * @param classPK the class pk of this email address
 	 */
 	@Override
 	public void setClassPK(long classPK);

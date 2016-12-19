@@ -64,10 +64,10 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Adds the web d a v props to the database. Also notifies the appropriate model listeners.
+	* Adds the web dav props to the database. Also notifies the appropriate model listeners.
 	*
-	* @param webDAVProps the web d a v props
-	* @return the web d a v props that was added
+	* @param webDAVProps the web dav props
+	* @return the web dav props that was added
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps addWebDAVProps(
@@ -76,10 +76,10 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Creates a new web d a v props with the primary key. Does not add the web d a v props to the database.
+	* Creates a new web dav props with the primary key. Does not add the web dav props to the database.
 	*
-	* @param webDavPropsId the primary key for the new web d a v props
-	* @return the new web d a v props
+	* @param webDavPropsId the primary key for the new web dav props
+	* @return the new web dav props
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps createWebDAVProps(
@@ -88,10 +88,10 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Deletes the web d a v props from the database. Also notifies the appropriate model listeners.
+	* Deletes the web dav props from the database. Also notifies the appropriate model listeners.
 	*
-	* @param webDAVProps the web d a v props
-	* @return the web d a v props that was removed
+	* @param webDAVProps the web dav props
+	* @return the web dav props that was removed
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps deleteWebDAVProps(
@@ -100,11 +100,11 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Deletes the web d a v props with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the web dav props with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param webDavPropsId the primary key of the web d a v props
-	* @return the web d a v props that was removed
-	* @throws PortalException if a web d a v props with the primary key could not be found
+	* @param webDavPropsId the primary key of the web dav props
+	* @return the web dav props that was removed
+	* @throws PortalException if a web dav props with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps deleteWebDAVProps(
@@ -127,11 +127,11 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Returns the web d a v props with the primary key.
+	* Returns the web dav props with the primary key.
 	*
-	* @param webDavPropsId the primary key of the web d a v props
-	* @return the web d a v props
-	* @throws PortalException if a web d a v props with the primary key could not be found
+	* @param webDavPropsId the primary key of the web dav props
+	* @return the web dav props
+	* @throws PortalException if a web dav props with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps getWebDAVProps(
@@ -141,10 +141,10 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Updates the web d a v props in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the web dav props in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param webDAVProps the web d a v props
-	* @return the web d a v props that was updated
+	* @param webDAVProps the web dav props
+	* @return the web dav props that was updated
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.WebDAVProps updateWebDAVProps(
@@ -153,9 +153,9 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Returns the number of web d a v propses.
+	* Returns the number of web dav propses.
 	*
-	* @return the number of web d a v propses
+	* @return the number of web dav propses
 	*/
 	@Override
 	public int getWebDAVPropsesCount() {
@@ -226,15 +226,15 @@ public class WebDAVPropsLocalServiceWrapper implements WebDAVPropsLocalService,
 	}
 
 	/**
-	* Returns a range of all the web d a v propses.
+	* Returns a range of all the web dav propses.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.WebDAVPropsModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of web d a v propses
-	* @param end the upper bound of the range of web d a v propses (not inclusive)
-	* @return the range of web d a v propses
+	* @param start the lower bound of the range of web dav propses
+	* @param end the upper bound of the range of web dav propses (not inclusive)
+	* @return the range of web dav propses
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.WebDAVProps> getWebDAVPropses(

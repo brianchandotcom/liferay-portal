@@ -879,7 +879,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the group where companyId = &#63; and friendlyURL = &#63; or throws a {@link NoSuchGroupException} if it could not be found.
 	*
 	* @param companyId the company ID
-	* @param friendlyURL the friendly u r l
+	* @param friendlyURL the friendly url
 	* @return the matching group
 	* @throws NoSuchGroupException if a matching group could not be found
 	*/
@@ -890,7 +890,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the group where companyId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param companyId the company ID
-	* @param friendlyURL the friendly u r l
+	* @param friendlyURL the friendly url
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	*/
 	public Group fetchByC_F(long companyId, java.lang.String friendlyURL);
@@ -899,7 +899,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the group where companyId = &#63; and friendlyURL = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param companyId the company ID
-	* @param friendlyURL the friendly u r l
+	* @param friendlyURL the friendly url
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	*/
@@ -910,7 +910,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Removes the group where companyId = &#63; and friendlyURL = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @param friendlyURL the friendly u r l
+	* @param friendlyURL the friendly url
 	* @return the group that was removed
 	*/
 	public Group removeByC_F(long companyId, java.lang.String friendlyURL)
@@ -920,7 +920,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the number of groups where companyId = &#63; and friendlyURL = &#63;.
 	*
 	* @param companyId the company ID
-	* @param friendlyURL the friendly u r l
+	* @param friendlyURL the friendly url
 	* @return the number of matching groups
 	*/
 	public int countByC_F(long companyId, java.lang.String friendlyURL);
@@ -1215,7 +1215,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns all the groups where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching groups
 	*/
 	public java.util.List<Group> findByC_CPK(long classNameId, long classPK);
@@ -1228,7 +1228,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of groups
 	* @param end the upper bound of the range of groups (not inclusive)
 	* @return the range of matching groups
@@ -1244,7 +1244,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of groups
 	* @param end the upper bound of the range of groups (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1262,7 +1262,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of groups
 	* @param end the upper bound of the range of groups (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1278,7 +1278,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the first group in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching group
 	* @throws NoSuchGroupException if a matching group could not be found
@@ -1291,7 +1291,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the first group in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching group, or <code>null</code> if a matching group could not be found
 	*/
@@ -1302,7 +1302,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the last group in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching group
 	* @throws NoSuchGroupException if a matching group could not be found
@@ -1315,7 +1315,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the last group in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching group, or <code>null</code> if a matching group could not be found
 	*/
@@ -1327,7 +1327,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param groupId the primary key of the current group
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next group
 	* @throws NoSuchGroupException if a group with the primary key could not be found
@@ -1341,7 +1341,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Removes all the groups where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByC_CPK(long classNameId, long classPK);
 
@@ -1349,7 +1349,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	* Returns the number of groups where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching groups
 	*/
 	public int countByC_CPK(long classNameId, long classPK);
@@ -1645,7 +1645,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching group
 	* @throws NoSuchGroupException if a matching group could not be found
 	*/
@@ -1657,7 +1657,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	*/
 	public Group fetchByC_C_C(long companyId, long classNameId, long classPK);
@@ -1667,7 +1667,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching group, or <code>null</code> if a matching group could not be found
 	*/
@@ -1679,7 +1679,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the group that was removed
 	*/
 	public Group removeByC_C_C(long companyId, long classNameId, long classPK)
@@ -1690,7 +1690,7 @@ public interface GroupPersistence extends BasePersistence<Group> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching groups
 	*/
 	public int countByC_C_C(long companyId, long classNameId, long classPK);

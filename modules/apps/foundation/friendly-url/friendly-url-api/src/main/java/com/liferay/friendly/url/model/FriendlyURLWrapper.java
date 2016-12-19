@@ -148,9 +148,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the main of this friendly u r l.
+	* Returns the main of this friendly url.
 	*
-	* @return the main of this friendly u r l
+	* @return the main of this friendly url
 	*/
 	@Override
 	public boolean getMain() {
@@ -168,9 +168,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns <code>true</code> if this friendly u r l is main.
+	* Returns <code>true</code> if this friendly url is main.
 	*
-	* @return <code>true</code> if this friendly u r l is main; <code>false</code> otherwise
+	* @return <code>true</code> if this friendly url is main; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isMain() {
@@ -213,9 +213,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the fully qualified class name of this friendly u r l.
+	* Returns the fully qualified class name of this friendly url.
 	*
-	* @return the fully qualified class name of this friendly u r l
+	* @return the fully qualified class name of this friendly url
 	*/
 	@Override
 	public java.lang.String getClassName() {
@@ -223,9 +223,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the url title of this friendly u r l.
+	* Returns the url title of this friendly url.
 	*
-	* @return the url title of this friendly u r l
+	* @return the url title of this friendly url
 	*/
 	@Override
 	public java.lang.String getUrlTitle() {
@@ -233,9 +233,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the uuid of this friendly u r l.
+	* Returns the uuid of this friendly url.
 	*
-	* @return the uuid of this friendly u r l
+	* @return the uuid of this friendly url
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -253,9 +253,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the create date of this friendly u r l.
+	* Returns the create date of this friendly url.
 	*
-	* @return the create date of this friendly u r l
+	* @return the create date of this friendly url
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -263,9 +263,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the modified date of this friendly u r l.
+	* Returns the modified date of this friendly url.
 	*
-	* @return the modified date of this friendly u r l
+	* @return the modified date of this friendly url
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -273,9 +273,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the class name ID of this friendly u r l.
+	* Returns the class name ID of this friendly url.
 	*
-	* @return the class name ID of this friendly u r l
+	* @return the class name ID of this friendly url
 	*/
 	@Override
 	public long getClassNameId() {
@@ -283,9 +283,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the class p k of this friendly u r l.
+	* Returns the class pk of this friendly url.
 	*
-	* @return the class p k of this friendly u r l
+	* @return the class pk of this friendly url
 	*/
 	@Override
 	public long getClassPK() {
@@ -293,9 +293,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the company ID of this friendly u r l.
+	* Returns the company ID of this friendly url.
 	*
-	* @return the company ID of this friendly u r l
+	* @return the company ID of this friendly url
 	*/
 	@Override
 	public long getCompanyId() {
@@ -303,9 +303,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the friendly u r l ID of this friendly u r l.
+	* Returns the friendly url ID of this friendly url.
 	*
-	* @return the friendly u r l ID of this friendly u r l
+	* @return the friendly url ID of this friendly url
 	*/
 	@Override
 	public long getFriendlyURLId() {
@@ -313,9 +313,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the group ID of this friendly u r l.
+	* Returns the group ID of this friendly url.
 	*
-	* @return the group ID of this friendly u r l
+	* @return the group ID of this friendly url
 	*/
 	@Override
 	public long getGroupId() {
@@ -323,9 +323,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Returns the primary key of this friendly u r l.
+	* Returns the primary key of this friendly url.
 	*
-	* @return the primary key of this friendly u r l
+	* @return the primary key of this friendly url
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -348,9 +348,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the class name ID of this friendly u r l.
+	* Sets the class name ID of this friendly url.
 	*
-	* @param classNameId the class name ID of this friendly u r l
+	* @param classNameId the class name ID of this friendly url
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
@@ -358,9 +358,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the class p k of this friendly u r l.
+	* Sets the class pk of this friendly url.
 	*
-	* @param classPK the class p k of this friendly u r l
+	* @param classPK the class pk of this friendly url
 	*/
 	@Override
 	public void setClassPK(long classPK) {
@@ -368,9 +368,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the company ID of this friendly u r l.
+	* Sets the company ID of this friendly url.
 	*
-	* @param companyId the company ID of this friendly u r l
+	* @param companyId the company ID of this friendly url
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -378,9 +378,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the create date of this friendly u r l.
+	* Sets the create date of this friendly url.
 	*
-	* @param createDate the create date of this friendly u r l
+	* @param createDate the create date of this friendly url
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -404,9 +404,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the friendly u r l ID of this friendly u r l.
+	* Sets the friendly url ID of this friendly url.
 	*
-	* @param friendlyURLId the friendly u r l ID of this friendly u r l
+	* @param friendlyURLId the friendly url ID of this friendly url
 	*/
 	@Override
 	public void setFriendlyURLId(long friendlyURLId) {
@@ -414,9 +414,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the group ID of this friendly u r l.
+	* Sets the group ID of this friendly url.
 	*
-	* @param groupId the group ID of this friendly u r l
+	* @param groupId the group ID of this friendly url
 	*/
 	@Override
 	public void setGroupId(long groupId) {
@@ -424,9 +424,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets whether this friendly u r l is main.
+	* Sets whether this friendly url is main.
 	*
-	* @param main the main of this friendly u r l
+	* @param main the main of this friendly url
 	*/
 	@Override
 	public void setMain(boolean main) {
@@ -434,9 +434,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the modified date of this friendly u r l.
+	* Sets the modified date of this friendly url.
 	*
-	* @param modifiedDate the modified date of this friendly u r l
+	* @param modifiedDate the modified date of this friendly url
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -449,9 +449,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the primary key of this friendly u r l.
+	* Sets the primary key of this friendly url.
 	*
-	* @param primaryKey the primary key of this friendly u r l
+	* @param primaryKey the primary key of this friendly url
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -464,9 +464,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the url title of this friendly u r l.
+	* Sets the url title of this friendly url.
 	*
-	* @param urlTitle the url title of this friendly u r l
+	* @param urlTitle the url title of this friendly url
 	*/
 	@Override
 	public void setUrlTitle(java.lang.String urlTitle) {
@@ -474,9 +474,9 @@ public class FriendlyURLWrapper implements FriendlyURL,
 	}
 
 	/**
-	* Sets the uuid of this friendly u r l.
+	* Sets the uuid of this friendly url.
 	*
-	* @param uuid the uuid of this friendly u r l
+	* @param uuid the uuid of this friendly url
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {

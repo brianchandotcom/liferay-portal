@@ -59,47 +59,47 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMStructureVersionLocalServiceUtil} to access the d d m structure version local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMStructureVersionLocalServiceUtil} to access the ddm structure version local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureVersionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMForm getStructureVersionDDMForm(
 		DDMStructureVersion structureVersion) throws PortalException;
 
 	/**
-	* Adds the d d m structure version to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm structure version to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureVersion the d d m structure version
-	* @return the d d m structure version that was added
+	* @param ddmStructureVersion the ddm structure version
+	* @return the ddm structure version that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructureVersion addDDMStructureVersion(
 		DDMStructureVersion ddmStructureVersion);
 
 	/**
-	* Creates a new d d m structure version with the primary key. Does not add the d d m structure version to the database.
+	* Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
 	*
-	* @param structureVersionId the primary key for the new d d m structure version
-	* @return the new d d m structure version
+	* @param structureVersionId the primary key for the new ddm structure version
+	* @return the new ddm structure version
 	*/
 	public DDMStructureVersion createDDMStructureVersion(
 		long structureVersionId);
 
 	/**
-	* Deletes the d d m structure version from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm structure version from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureVersion the d d m structure version
-	* @return the d d m structure version that was removed
+	* @param ddmStructureVersion the ddm structure version
+	* @return the ddm structure version that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMStructureVersion deleteDDMStructureVersion(
 		DDMStructureVersion ddmStructureVersion);
 
 	/**
-	* Deletes the d d m structure version with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm structure version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param structureVersionId the primary key of the d d m structure version
-	* @return the d d m structure version that was removed
-	* @throws PortalException if a d d m structure version with the primary key could not be found
+	* @param structureVersionId the primary key of the ddm structure version
+	* @return the ddm structure version that was removed
+	* @throws PortalException if a ddm structure version with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMStructureVersion deleteDDMStructureVersion(
@@ -109,11 +109,11 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	public DDMStructureVersion fetchDDMStructureVersion(long structureVersionId);
 
 	/**
-	* Returns the d d m structure version with the primary key.
+	* Returns the ddm structure version with the primary key.
 	*
-	* @param structureVersionId the primary key of the d d m structure version
-	* @return the d d m structure version
-	* @throws PortalException if a d d m structure version with the primary key could not be found
+	* @param structureVersionId the primary key of the ddm structure version
+	* @return the ddm structure version
+	* @throws PortalException if a ddm structure version with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureVersion getDDMStructureVersion(long structureVersionId)
@@ -132,10 +132,10 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the d d m structure version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm structure version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructureVersion the d d m structure version
-	* @return the d d m structure version that was updated
+	* @param ddmStructureVersion the ddm structure version
+	* @return the ddm structure version that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructureVersion updateDDMStructureVersion(
@@ -162,9 +162,9 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of d d m structure versions.
+	* Returns the number of ddm structure versions.
 	*
-	* @return the number of d d m structure versions
+	* @return the number of ddm structure versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMStructureVersionsCount();
@@ -219,15 +219,15 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the d d m structure versions.
+	* Returns a range of all the ddm structure versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m structure versions
-	* @param end the upper bound of the range of d d m structure versions (not inclusive)
-	* @return the range of d d m structure versions
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @return the range of ddm structure versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructureVersion> getDDMStructureVersions(int start, int end);

@@ -58,7 +58,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * The persistence implementation for the layout friendly u r l service.
+ * The persistence implementation for the layout friendly url service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -75,7 +75,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link LayoutFriendlyURLUtil} to access the layout friendly u r l persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link LayoutFriendlyURLUtil} to access the layout friendly url persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = LayoutFriendlyURLImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -115,10 +115,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { String.class.getName() });
 
 	/**
-	 * Returns all the layout friendly u r ls where uuid = &#63;.
+	 * Returns all the layout friendly urls where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the matching layout friendly u r ls
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid(String uuid) {
@@ -126,16 +126,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where uuid = &#63;.
+	 * Returns a range of all the layout friendly urls where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid(String uuid, int start, int end) {
@@ -143,17 +143,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where uuid = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid(String uuid, int start, int end,
@@ -162,18 +162,18 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where uuid = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where uuid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid(String uuid, int start, int end,
@@ -293,12 +293,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where uuid = &#63;.
+	 * Returns the first layout friendly url in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByUuid_First(String uuid,
@@ -324,11 +324,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where uuid = &#63;.
+	 * Returns the first layout friendly url in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByUuid_First(String uuid,
@@ -343,12 +343,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where uuid = &#63;.
+	 * Returns the last layout friendly url in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByUuid_Last(String uuid,
@@ -374,11 +374,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where uuid = &#63;.
+	 * Returns the last layout friendly url in the ordered set where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByUuid_Last(String uuid,
@@ -400,13 +400,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where uuid = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where uuid = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByUuid_PrevAndNext(
@@ -561,7 +561,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where uuid = &#63; from the database.
+	 * Removes all the layout friendly urls where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 */
@@ -574,10 +574,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where uuid = &#63;.
+	 * Returns the number of layout friendly urls where uuid = &#63;.
 	 *
 	 * @param uuid the uuid
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByUuid(String uuid) {
@@ -654,12 +654,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the layout friendly u r l where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
+	 * Returns the layout friendly url where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByUUID_G(String uuid, long groupId)
@@ -690,11 +690,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout friendly url where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByUUID_G(String uuid, long groupId) {
@@ -702,12 +702,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout friendly url where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByUUID_G(String uuid, long groupId,
@@ -808,11 +808,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes the layout friendly u r l where uuid = &#63; and groupId = &#63; from the database.
+	 * Removes the layout friendly url where uuid = &#63; and groupId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the layout friendly u r l that was removed
+	 * @return the layout friendly url that was removed
 	 */
 	@Override
 	public LayoutFriendlyURL removeByUUID_G(String uuid, long groupId)
@@ -823,11 +823,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where uuid = &#63; and groupId = &#63;.
+	 * Returns the number of layout friendly urls where uuid = &#63; and groupId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
@@ -920,11 +920,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns all the layout friendly u r ls where uuid = &#63; and companyId = &#63;.
+	 * Returns all the layout friendly urls where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the matching layout friendly u r ls
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid_C(String uuid, long companyId) {
@@ -933,7 +933,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where uuid = &#63; and companyId = &#63;.
+	 * Returns a range of all the layout friendly urls where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -941,9 +941,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid_C(String uuid, long companyId,
@@ -952,7 +952,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -960,10 +960,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid_C(String uuid, long companyId,
@@ -973,7 +973,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where uuid = &#63; and companyId = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -981,11 +981,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByUuid_C(String uuid, long companyId,
@@ -1115,13 +1115,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByUuid_C_First(String uuid, long companyId,
@@ -1150,12 +1150,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the first layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByUuid_C_First(String uuid, long companyId,
@@ -1171,13 +1171,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByUuid_C_Last(String uuid, long companyId,
@@ -1206,12 +1206,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the last layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByUuid_C_Last(String uuid, long companyId,
@@ -1233,14 +1233,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where uuid = &#63; and companyId = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByUuid_C_PrevAndNext(
@@ -1399,7 +1399,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where uuid = &#63; and companyId = &#63; from the database.
+	 * Removes all the layout friendly urls where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
@@ -1413,11 +1413,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where uuid = &#63; and companyId = &#63;.
+	 * Returns the number of layout friendly urls where uuid = &#63; and companyId = &#63;.
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
@@ -1509,10 +1509,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the layout friendly u r ls where groupId = &#63;.
+	 * Returns all the layout friendly urls where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the matching layout friendly u r ls
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByGroupId(long groupId) {
@@ -1520,16 +1520,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where groupId = &#63;.
+	 * Returns a range of all the layout friendly urls where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByGroupId(long groupId, int start,
@@ -1538,17 +1538,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where groupId = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByGroupId(long groupId, int start,
@@ -1557,18 +1557,18 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where groupId = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where groupId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByGroupId(long groupId, int start,
@@ -1674,12 +1674,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63;.
+	 * Returns the first layout friendly url in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByGroupId_First(long groupId,
@@ -1705,11 +1705,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63;.
+	 * Returns the first layout friendly url in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByGroupId_First(long groupId,
@@ -1725,12 +1725,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63;.
+	 * Returns the last layout friendly url in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByGroupId_Last(long groupId,
@@ -1756,11 +1756,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63;.
+	 * Returns the last layout friendly url in the ordered set where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByGroupId_Last(long groupId,
@@ -1782,13 +1782,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where groupId = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where groupId = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByGroupId_PrevAndNext(
@@ -1929,7 +1929,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where groupId = &#63; from the database.
+	 * Removes all the layout friendly urls where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 */
@@ -1942,10 +1942,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where groupId = &#63;.
+	 * Returns the number of layout friendly urls where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByGroupId(long groupId) {
@@ -2017,10 +2017,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the layout friendly u r ls where companyId = &#63;.
+	 * Returns all the layout friendly urls where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching layout friendly u r ls
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByCompanyId(long companyId) {
@@ -2029,16 +2029,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where companyId = &#63;.
+	 * Returns a range of all the layout friendly urls where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByCompanyId(long companyId, int start,
@@ -2047,17 +2047,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where companyId = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByCompanyId(long companyId, int start,
@@ -2066,18 +2066,18 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where companyId = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where companyId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByCompanyId(long companyId, int start,
@@ -2183,12 +2183,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
+	 * Returns the first layout friendly url in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByCompanyId_First(long companyId,
@@ -2214,11 +2214,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
+	 * Returns the first layout friendly url in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByCompanyId_First(long companyId,
@@ -2234,12 +2234,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
+	 * Returns the last layout friendly url in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByCompanyId_Last(long companyId,
@@ -2265,11 +2265,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
+	 * Returns the last layout friendly url in the ordered set where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByCompanyId_Last(long companyId,
@@ -2291,13 +2291,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where companyId = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where companyId = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByCompanyId_PrevAndNext(
@@ -2438,7 +2438,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where companyId = &#63; from the database.
+	 * Removes all the layout friendly urls where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
 	 */
@@ -2451,10 +2451,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where companyId = &#63;.
+	 * Returns the number of layout friendly urls where companyId = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByCompanyId(long companyId) {
@@ -2524,10 +2524,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the layout friendly u r ls where plid = &#63;.
+	 * Returns all the layout friendly urls where plid = &#63;.
 	 *
 	 * @param plid the plid
-	 * @return the matching layout friendly u r ls
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByPlid(long plid) {
@@ -2535,16 +2535,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where plid = &#63;.
+	 * Returns a range of all the layout friendly urls where plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param plid the plid
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByPlid(long plid, int start, int end) {
@@ -2552,17 +2552,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where plid = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param plid the plid
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByPlid(long plid, int start, int end,
@@ -2571,18 +2571,18 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where plid = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where plid = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param plid the plid
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByPlid(long plid, int start, int end,
@@ -2688,12 +2688,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where plid = &#63;.
+	 * Returns the first layout friendly url in the ordered set where plid = &#63;.
 	 *
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByPlid_First(long plid,
@@ -2719,11 +2719,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where plid = &#63;.
+	 * Returns the first layout friendly url in the ordered set where plid = &#63;.
 	 *
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByPlid_First(long plid,
@@ -2738,12 +2738,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where plid = &#63;.
+	 * Returns the last layout friendly url in the ordered set where plid = &#63;.
 	 *
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByPlid_Last(long plid,
@@ -2769,11 +2769,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where plid = &#63;.
+	 * Returns the last layout friendly url in the ordered set where plid = &#63;.
 	 *
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByPlid_Last(long plid,
@@ -2795,13 +2795,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where plid = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where plid = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param plid the plid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByPlid_PrevAndNext(
@@ -2942,7 +2942,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where plid = &#63; from the database.
+	 * Removes all the layout friendly urls where plid = &#63; from the database.
 	 *
 	 * @param plid the plid
 	 */
@@ -2955,10 +2955,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where plid = &#63;.
+	 * Returns the number of layout friendly urls where plid = &#63;.
 	 *
 	 * @param plid the plid
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByPlid(long plid) {
@@ -3029,11 +3029,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns all the layout friendly u r ls where plid = &#63; and friendlyURL = &#63;.
+	 * Returns all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
-	 * @return the matching layout friendly u r ls
+	 * @param friendlyURL the friendly url
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByP_F(long plid, String friendlyURL) {
@@ -3042,17 +3042,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where plid = &#63; and friendlyURL = &#63;.
+	 * Returns a range of all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByP_F(long plid, String friendlyURL,
@@ -3061,18 +3061,18 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where plid = &#63; and friendlyURL = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByP_F(long plid, String friendlyURL,
@@ -3082,19 +3082,19 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where plid = &#63; and friendlyURL = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByP_F(long plid, String friendlyURL,
@@ -3225,13 +3225,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
+	 * Returns the first layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByP_F_First(long plid, String friendlyURL,
@@ -3260,12 +3260,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
+	 * Returns the first layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByP_F_First(long plid, String friendlyURL,
@@ -3281,13 +3281,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
+	 * Returns the last layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByP_F_Last(long plid, String friendlyURL,
@@ -3316,12 +3316,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
+	 * Returns the last layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByP_F_Last(long plid, String friendlyURL,
@@ -3343,14 +3343,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where plid = &#63; and friendlyURL = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where plid = &#63; and friendlyURL = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByP_F_PrevAndNext(long layoutFriendlyURLId,
@@ -3509,10 +3509,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where plid = &#63; and friendlyURL = &#63; from the database.
+	 * Removes all the layout friendly urls where plid = &#63; and friendlyURL = &#63; from the database.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 */
 	@Override
 	public void removeByP_F(long plid, String friendlyURL) {
@@ -3523,11 +3523,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where plid = &#63; and friendlyURL = &#63;.
+	 * Returns the number of layout friendly urls where plid = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param plid the plid
-	 * @param friendlyURL the friendly u r l
-	 * @return the number of matching layout friendly u r ls
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByP_F(long plid, String friendlyURL) {
@@ -3609,12 +3609,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the layout friendly u r l where plid = &#63; and languageId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
+	 * Returns the layout friendly url where plid = &#63; and languageId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
 	 *
 	 * @param plid the plid
 	 * @param languageId the language ID
-	 * @return the matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByP_L(long plid, String languageId)
@@ -3645,11 +3645,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where plid = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout friendly url where plid = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param plid the plid
 	 * @param languageId the language ID
-	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByP_L(long plid, String languageId) {
@@ -3657,12 +3657,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where plid = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout friendly url where plid = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param plid the plid
 	 * @param languageId the language ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByP_L(long plid, String languageId,
@@ -3764,11 +3764,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes the layout friendly u r l where plid = &#63; and languageId = &#63; from the database.
+	 * Removes the layout friendly url where plid = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param plid the plid
 	 * @param languageId the language ID
-	 * @return the layout friendly u r l that was removed
+	 * @return the layout friendly url that was removed
 	 */
 	@Override
 	public LayoutFriendlyURL removeByP_L(long plid, String languageId)
@@ -3779,11 +3779,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where plid = &#63; and languageId = &#63;.
+	 * Returns the number of layout friendly urls where plid = &#63; and languageId = &#63;.
 	 *
 	 * @param plid the plid
 	 * @param languageId the language ID
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByP_L(long plid, String languageId) {
@@ -3883,12 +3883,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			});
 
 	/**
-	 * Returns all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @return the matching layout friendly u r ls
+	 * @param friendlyURL the friendly url
+	 * @return the matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
@@ -3898,7 +3898,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns a range of all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -3906,10 +3906,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of matching layout friendly u r ls
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
@@ -3918,7 +3918,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -3926,11 +3926,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
@@ -3941,7 +3941,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns an ordered range of all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -3949,12 +3949,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param friendlyURL the friendly url
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching layout friendly u r ls
+	 * @return the ordered range of matching layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findByG_P_F(long groupId,
@@ -4090,14 +4090,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the first layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByG_P_F_First(long groupId,
@@ -4130,13 +4130,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the first layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the first layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the first matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByG_P_F_First(long groupId,
@@ -4153,14 +4153,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the last layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByG_P_F_Last(long groupId,
@@ -4193,13 +4193,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the last layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the last layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the last matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByG_P_F_Last(long groupId,
@@ -4222,15 +4222,15 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the layout friendly urls before and after the current layout friendly url in the ordered set where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key of the current layout friendly url
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @return the previous, current, and next layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL[] findByG_P_F_PrevAndNext(
@@ -4396,11 +4396,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
+	 * Removes all the layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 */
 	@Override
 	public void removeByG_P_F(long groupId, boolean privateLayout,
@@ -4413,12 +4413,12 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
+	 * Returns the number of layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
-	 * @return the number of matching layout friendly u r ls
+	 * @param friendlyURL the friendly url
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByG_P_F(long groupId, boolean privateLayout,
@@ -4514,14 +4514,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			});
 
 	/**
-	 * Returns the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
+	 * Returns the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param languageId the language ID
-	 * @return the matching layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByG_P_F_L(long groupId, boolean privateLayout,
@@ -4560,13 +4560,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param languageId the language ID
-	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByG_P_F_L(long groupId,
@@ -4576,14 +4576,14 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param languageId the language ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	 * @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByG_P_F_L(long groupId,
@@ -4718,13 +4718,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes the layout friendly u r l where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; from the database.
+	 * Removes the layout friendly url where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param languageId the language ID
-	 * @return the layout friendly u r l that was removed
+	 * @return the layout friendly url that was removed
 	 */
 	@Override
 	public LayoutFriendlyURL removeByG_P_F_L(long groupId,
@@ -4737,13 +4737,13 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63;.
+	 * Returns the number of layout friendly urls where groupId = &#63; and privateLayout = &#63; and friendlyURL = &#63; and languageId = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param privateLayout the private layout
-	 * @param friendlyURL the friendly u r l
+	 * @param friendlyURL the friendly url
 	 * @param languageId the language ID
-	 * @return the number of matching layout friendly u r ls
+	 * @return the number of matching layout friendly urls
 	 */
 	@Override
 	public int countByG_P_F_L(long groupId, boolean privateLayout,
@@ -4847,9 +4847,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Caches the layout friendly u r l in the entity cache if it is enabled.
+	 * Caches the layout friendly url in the entity cache if it is enabled.
 	 *
-	 * @param layoutFriendlyURL the layout friendly u r l
+	 * @param layoutFriendlyURL the layout friendly url
 	 */
 	@Override
 	public void cacheResult(LayoutFriendlyURL layoutFriendlyURL) {
@@ -4879,9 +4879,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Caches the layout friendly u r ls in the entity cache if it is enabled.
+	 * Caches the layout friendly urls in the entity cache if it is enabled.
 	 *
-	 * @param layoutFriendlyURLs the layout friendly u r ls
+	 * @param layoutFriendlyURLs the layout friendly urls
 	 */
 	@Override
 	public void cacheResult(List<LayoutFriendlyURL> layoutFriendlyURLs) {
@@ -4899,7 +4899,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Clears the cache for all layout friendly u r ls.
+	 * Clears the cache for all layout friendly urls.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -4915,7 +4915,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Clears the cache for the layout friendly u r l.
+	 * Clears the cache for the layout friendly url.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -5054,10 +5054,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Creates a new layout friendly u r l with the primary key. Does not add the layout friendly u r l to the database.
+	 * Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
 	 *
-	 * @param layoutFriendlyURLId the primary key for the new layout friendly u r l
-	 * @return the new layout friendly u r l
+	 * @param layoutFriendlyURLId the primary key for the new layout friendly url
+	 * @return the new layout friendly url
 	 */
 	@Override
 	public LayoutFriendlyURL create(long layoutFriendlyURLId) {
@@ -5076,11 +5076,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes the layout friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l that was removed
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @param layoutFriendlyURLId the primary key of the layout friendly url
+	 * @return the layout friendly url that was removed
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL remove(long layoutFriendlyURLId)
@@ -5089,11 +5089,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes the layout friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l that was removed
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @param primaryKey the primary key of the layout friendly url
+	 * @return the layout friendly url that was removed
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL remove(Serializable primaryKey)
@@ -5402,11 +5402,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the layout friendly url with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @param primaryKey the primary key of the layout friendly url
+	 * @return the layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByPrimaryKey(Serializable primaryKey)
@@ -5426,11 +5426,11 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l with the primary key or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
+	 * Returns the layout friendly url with the primary key or throws a {@link NoSuchLayoutFriendlyURLException} if it could not be found.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l
-	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	 * @param layoutFriendlyURLId the primary key of the layout friendly url
+	 * @return the layout friendly url
+	 * @throws NoSuchLayoutFriendlyURLException if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL findByPrimaryKey(long layoutFriendlyURLId)
@@ -5439,10 +5439,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the layout friendly url with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l, or <code>null</code> if a layout friendly u r l with the primary key could not be found
+	 * @param primaryKey the primary key of the layout friendly url
+	 * @return the layout friendly url, or <code>null</code> if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByPrimaryKey(Serializable primaryKey) {
@@ -5487,10 +5487,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the layout friendly u r l with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the layout friendly url with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	 * @return the layout friendly u r l, or <code>null</code> if a layout friendly u r l with the primary key could not be found
+	 * @param layoutFriendlyURLId the primary key of the layout friendly url
+	 * @return the layout friendly url, or <code>null</code> if a layout friendly url with the primary key could not be found
 	 */
 	@Override
 	public LayoutFriendlyURL fetchByPrimaryKey(long layoutFriendlyURLId) {
@@ -5592,9 +5592,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns all the layout friendly u r ls.
+	 * Returns all the layout friendly urls.
 	 *
-	 * @return the layout friendly u r ls
+	 * @return the layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findAll() {
@@ -5602,15 +5602,15 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns a range of all the layout friendly u r ls.
+	 * Returns a range of all the layout friendly urls.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	 * @return the range of layout friendly u r ls
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
+	 * @return the range of layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findAll(int start, int end) {
@@ -5618,16 +5618,16 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls.
+	 * Returns an ordered range of all the layout friendly urls.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of layout friendly u r ls
+	 * @return the ordered range of layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findAll(int start, int end,
@@ -5636,17 +5636,17 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns an ordered range of all the layout friendly u r ls.
+	 * Returns an ordered range of all the layout friendly urls.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of layout friendly u r ls
-	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	 * @param start the lower bound of the range of layout friendly urls
+	 * @param end the upper bound of the range of layout friendly urls (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of layout friendly u r ls
+	 * @return the ordered range of layout friendly urls
 	 */
 	@Override
 	public List<LayoutFriendlyURL> findAll(int start, int end,
@@ -5735,7 +5735,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Removes all the layout friendly u r ls from the database.
+	 * Removes all the layout friendly urls from the database.
 	 *
 	 */
 	@Override
@@ -5746,9 +5746,9 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Returns the number of layout friendly u r ls.
+	 * Returns the number of layout friendly urls.
 	 *
-	 * @return the number of layout friendly u r ls
+	 * @return the number of layout friendly urls
 	 */
 	@Override
 	public int countAll() {
@@ -5793,7 +5793,7 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	}
 
 	/**
-	 * Initializes the layout friendly u r l persistence.
+	 * Initializes the layout friendly url persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

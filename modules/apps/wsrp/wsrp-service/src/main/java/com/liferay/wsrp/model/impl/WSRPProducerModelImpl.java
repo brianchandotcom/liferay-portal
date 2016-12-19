@@ -61,7 +61,7 @@ public class WSRPProducerModelImpl extends BaseModelImpl<WSRPProducer>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a w s r p producer model instance should use the {@link WSRPProducer} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a wsrp producer model instance should use the {@link WSRPProducer} interface instead.
 	 */
 	public static final String TABLE_NAME = "WSRP_WSRPProducer";
 	public static final Object[][] TABLE_COLUMNS = {

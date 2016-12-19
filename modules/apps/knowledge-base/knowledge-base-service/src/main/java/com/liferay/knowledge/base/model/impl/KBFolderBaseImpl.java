@@ -37,7 +37,7 @@ public abstract class KBFolderBaseImpl extends KBFolderModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a k b folder model instance should use the {@link KBFolder} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kb folder model instance should use the {@link KBFolder} interface instead.
 	 */
 	@Override
 	public void persist() {

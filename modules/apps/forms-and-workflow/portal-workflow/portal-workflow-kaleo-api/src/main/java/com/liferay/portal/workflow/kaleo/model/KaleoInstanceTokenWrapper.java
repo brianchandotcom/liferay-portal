@@ -369,9 +369,9 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	/**
-	* Returns the class p k of this kaleo instance token.
+	* Returns the class pk of this kaleo instance token.
 	*
-	* @return the class p k of this kaleo instance token
+	* @return the class pk of this kaleo instance token
 	*/
 	@Override
 	public long getClassPK() {
@@ -489,9 +489,9 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 	}
 
 	/**
-	* Sets the class p k of this kaleo instance token.
+	* Sets the class pk of this kaleo instance token.
 	*
-	* @param classPK the class p k of this kaleo instance token
+	* @param classPK the class pk of this kaleo instance token
 	*/
 	@Override
 	public void setClassPK(long classPK) {

@@ -582,9 +582,9 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
-	* Returns the class p k of this contact.
+	* Returns the class pk of this contact.
 	*
-	* @return the class p k of this contact
+	* @return the class pk of this contact
 	*/
 	@Override
 	public long getClassPK() {
@@ -717,9 +717,9 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	}
 
 	/**
-	* Sets the class p k of this contact.
+	* Sets the class pk of this contact.
 	*
-	* @param classPK the class p k of this contact
+	* @param classPK the class pk of this contact
 	*/
 	@Override
 	public void setClassPK(long classPK) {

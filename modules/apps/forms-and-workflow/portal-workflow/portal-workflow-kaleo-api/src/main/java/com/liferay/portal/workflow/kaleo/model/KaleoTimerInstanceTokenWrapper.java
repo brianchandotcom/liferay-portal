@@ -452,9 +452,9 @@ public class KaleoTimerInstanceTokenWrapper implements KaleoTimerInstanceToken,
 	}
 
 	/**
-	* Returns the kaleo class p k of this kaleo timer instance token.
+	* Returns the kaleo class pk of this kaleo timer instance token.
 	*
-	* @return the kaleo class p k of this kaleo timer instance token
+	* @return the kaleo class pk of this kaleo timer instance token
 	*/
 	@Override
 	public long getKaleoClassPK() {
@@ -658,9 +658,9 @@ public class KaleoTimerInstanceTokenWrapper implements KaleoTimerInstanceToken,
 	}
 
 	/**
-	* Sets the kaleo class p k of this kaleo timer instance token.
+	* Sets the kaleo class pk of this kaleo timer instance token.
 	*
-	* @param kaleoClassPK the kaleo class p k of this kaleo timer instance token
+	* @param kaleoClassPK the kaleo class pk of this kaleo timer instance token
 	*/
 	@Override
 	public void setKaleoClassPK(long kaleoClassPK) {

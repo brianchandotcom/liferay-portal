@@ -69,17 +69,17 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDMStructureLocalServiceUtil} to access the d d m structure local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDMStructureLocalServiceUtil} to access the ddm structure local service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMForm getStructureDDMForm(DDMStructure structure)
 		throws PortalException;
 
 	/**
-	* Adds the d d m structure to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm structure to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructure the d d m structure
-	* @return the d d m structure that was added
+	* @param ddmStructure the ddm structure
+	* @return the ddm structure that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure addDDMStructure(DDMStructure ddmStructure);
@@ -227,28 +227,28 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* Creates a new d d m structure with the primary key. Does not add the d d m structure to the database.
+	* Creates a new ddm structure with the primary key. Does not add the ddm structure to the database.
 	*
-	* @param structureId the primary key for the new d d m structure
-	* @return the new d d m structure
+	* @param structureId the primary key for the new ddm structure
+	* @return the new ddm structure
 	*/
 	public DDMStructure createDDMStructure(long structureId);
 
 	/**
-	* Deletes the d d m structure from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm structure from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructure the d d m structure
-	* @return the d d m structure that was removed
+	* @param ddmStructure the ddm structure
+	* @return the ddm structure that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMStructure deleteDDMStructure(DDMStructure ddmStructure);
 
 	/**
-	* Deletes the d d m structure with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm structure with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param structureId the primary key of the d d m structure
-	* @return the d d m structure that was removed
-	* @throws PortalException if a d d m structure with the primary key could not be found
+	* @param structureId the primary key of the ddm structure
+	* @return the ddm structure that was removed
+	* @throws PortalException if a ddm structure with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DDMStructure deleteDDMStructure(long structureId)
@@ -258,11 +258,11 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public DDMStructure fetchDDMStructure(long structureId);
 
 	/**
-	* Returns the d d m structure matching the UUID and group.
+	* Returns the ddm structure matching the UUID and group.
 	*
-	* @param uuid the d d m structure's UUID
+	* @param uuid the ddm structure's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
+	* @return the matching ddm structure, or <code>null</code> if a matching ddm structure could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure fetchDDMStructureByUuidAndGroupId(
@@ -321,23 +321,23 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public DDMStructure fetchStructure(long structureId);
 
 	/**
-	* Returns the d d m structure with the primary key.
+	* Returns the ddm structure with the primary key.
 	*
-	* @param structureId the primary key of the d d m structure
-	* @return the d d m structure
-	* @throws PortalException if a d d m structure with the primary key could not be found
+	* @param structureId the primary key of the ddm structure
+	* @return the ddm structure
+	* @throws PortalException if a ddm structure with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure getDDMStructure(long structureId)
 		throws PortalException;
 
 	/**
-	* Returns the d d m structure matching the UUID and group.
+	* Returns the ddm structure matching the UUID and group.
 	*
-	* @param uuid the d d m structure's UUID
+	* @param uuid the ddm structure's UUID
 	* @param groupId the primary key of the group
-	* @return the matching d d m structure
-	* @throws PortalException if a matching d d m structure could not be found
+	* @return the matching ddm structure
+	* @throws PortalException if a matching ddm structure could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructure getDDMStructureByUuidAndGroupId(java.lang.String uuid,
@@ -394,10 +394,10 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmStructure the d d m structure
-	* @return the d d m structure that was updated
+	* @param ddmStructure the ddm structure
+	* @return the ddm structure that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructure updateDDMStructure(DDMStructure ddmStructure);
@@ -513,9 +513,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of d d m structures.
+	* Returns the number of ddm structures.
 	*
-	* @return the number of d d m structures
+	* @return the number of ddm structures
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMStructuresCount();
@@ -694,39 +694,39 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		long classNameId, int start, int end);
 
 	/**
-	* Returns a range of all the d d m structures.
+	* Returns a range of all the ddm structures.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m structures
-	* @param end the upper bound of the range of d d m structures (not inclusive)
-	* @return the range of d d m structures
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
+	* @return the range of ddm structures
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getDDMStructures(int start, int end);
 
 	/**
-	* Returns all the d d m structures matching the UUID and company.
+	* Returns all the ddm structures matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d m structures
+	* @param uuid the UUID of the ddm structures
 	* @param companyId the primary key of the company
-	* @return the matching d d m structures, or an empty list if no matches were found
+	* @return the matching ddm structures, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getDDMStructuresByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	/**
-	* Returns a range of d d m structures matching the UUID and company.
+	* Returns a range of ddm structures matching the UUID and company.
 	*
-	* @param uuid the UUID of the d d m structures
+	* @param uuid the UUID of the ddm structures
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of d d m structures
-	* @param end the upper bound of the range of d d m structures (not inclusive)
+	* @param start the lower bound of the range of ddm structures
+	* @param end the upper bound of the range of ddm structures (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching d d m structures, or an empty list if no matches were found
+	* @return the range of matching ddm structures, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMStructure> getDDMStructuresByUuidAndCompanyId(

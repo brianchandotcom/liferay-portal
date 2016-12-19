@@ -37,7 +37,7 @@ public abstract class DDMStorageLinkBaseImpl extends DDMStorageLinkModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m storage link model instance should use the {@link DDMStorageLink} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm storage link model instance should use the {@link DDMStorageLink} interface instead.
 	 */
 	@Override
 	public void persist() {

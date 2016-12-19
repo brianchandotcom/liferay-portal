@@ -391,17 +391,17 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>, ShardedModel,
 	public void setCoverImageFileEntryId(long coverImageFileEntryId);
 
 	/**
-	 * Returns the cover image u r l of this blogs entry.
+	 * Returns the cover image url of this blogs entry.
 	 *
-	 * @return the cover image u r l of this blogs entry
+	 * @return the cover image url of this blogs entry
 	 */
 	@AutoEscape
 	public String getCoverImageURL();
 
 	/**
-	 * Sets the cover image u r l of this blogs entry.
+	 * Sets the cover image url of this blogs entry.
 	 *
-	 * @param coverImageURL the cover image u r l of this blogs entry
+	 * @param coverImageURL the cover image url of this blogs entry
 	 */
 	public void setCoverImageURL(String coverImageURL);
 
@@ -455,17 +455,17 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>, ShardedModel,
 	public void setSmallImageId(long smallImageId);
 
 	/**
-	 * Returns the small image u r l of this blogs entry.
+	 * Returns the small image url of this blogs entry.
 	 *
-	 * @return the small image u r l of this blogs entry
+	 * @return the small image url of this blogs entry
 	 */
 	@AutoEscape
 	public String getSmallImageURL();
 
 	/**
-	 * Sets the small image u r l of this blogs entry.
+	 * Sets the small image url of this blogs entry.
 	 *
-	 * @param smallImageURL the small image u r l of this blogs entry
+	 * @param smallImageURL the small image url of this blogs entry
 	 */
 	public void setSmallImageURL(String smallImageURL);
 

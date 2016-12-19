@@ -50,7 +50,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The persistence implementation for the d d m data provider instance link service.
+ * The persistence implementation for the ddm data provider instance link service.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -68,7 +68,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link DDMDataProviderInstanceLinkUtil} to access the d d m data provider instance link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use {@link DDMDataProviderInstanceLinkUtil} to access the ddm data provider instance link persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static final String FINDER_CLASS_NAME_ENTITY = DDMDataProviderInstanceLinkImpl.class.getName();
 	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
@@ -114,10 +114,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m data provider instance links where dataProviderInstanceId = &#63;.
+	 * Returns all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
-	 * @return the matching d d m data provider instance links
+	 * @return the matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
@@ -127,16 +127,16 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the d d m data provider instance links where dataProviderInstanceId = &#63;.
+	 * Returns a range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
-	 * @return the range of matching d d m data provider instance links
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @return the range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
@@ -146,17 +146,17 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m data provider instance links where dataProviderInstanceId = &#63;.
+	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m data provider instance links
+	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
@@ -167,18 +167,18 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m data provider instance links where dataProviderInstanceId = &#63;.
+	 * Returns an ordered range of all the ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m data provider instance links
+	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByDataProviderInstanceId(
@@ -289,12 +289,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the first d d m data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
+	 * Returns the first ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching d d m data provider instance link could not be found
+	 * @return the first matching ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByDataProviderInstanceId_First(
@@ -321,11 +321,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the first d d m data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
+	 * Returns the first ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m data provider instance link, or <code>null</code> if a matching d d m data provider instance link could not be found
+	 * @return the first matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByDataProviderInstanceId_First(
@@ -342,12 +342,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last d d m data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
+	 * Returns the last ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching d d m data provider instance link could not be found
+	 * @return the last matching ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByDataProviderInstanceId_Last(
@@ -374,11 +374,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last d d m data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
+	 * Returns the last ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m data provider instance link, or <code>null</code> if a matching d d m data provider instance link could not be found
+	 * @return the last matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByDataProviderInstanceId_Last(
@@ -401,13 +401,13 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance links before and after the current d d m data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
+	 * Returns the ddm data provider instance links before and after the current ddm data provider instance link in the ordered set where dataProviderInstanceId = &#63;.
 	 *
-	 * @param dataProviderInstanceLinkId the primary key of the current d d m data provider instance link
+	 * @param dataProviderInstanceLinkId the primary key of the current ddm data provider instance link
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a d d m data provider instance link with the primary key could not be found
+	 * @return the previous, current, and next ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink[] findByDataProviderInstanceId_PrevAndNext(
@@ -553,7 +553,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Removes all the d d m data provider instance links where dataProviderInstanceId = &#63; from the database.
+	 * Removes all the ddm data provider instance links where dataProviderInstanceId = &#63; from the database.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 */
@@ -567,10 +567,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of d d m data provider instance links where dataProviderInstanceId = &#63;.
+	 * Returns the number of ddm data provider instance links where dataProviderInstanceId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
-	 * @return the number of matching d d m data provider instance links
+	 * @return the number of matching ddm data provider instance links
 	 */
 	@Override
 	public int countByDataProviderInstanceId(long dataProviderInstanceId) {
@@ -643,10 +643,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			"countByStructureId", new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the d d m data provider instance links where structureId = &#63;.
+	 * Returns all the ddm data provider instance links where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
-	 * @return the matching d d m data provider instance links
+	 * @return the matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByStructureId(long structureId) {
@@ -655,16 +655,16 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the d d m data provider instance links where structureId = &#63;.
+	 * Returns a range of all the ddm data provider instance links where structureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
-	 * @return the range of matching d d m data provider instance links
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @return the range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByStructureId(
@@ -673,17 +673,17 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m data provider instance links where structureId = &#63;.
+	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching d d m data provider instance links
+	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByStructureId(
@@ -694,18 +694,18 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m data provider instance links where structureId = &#63;.
+	 * Returns an ordered range of all the ddm data provider instance links where structureId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param structureId the structure ID
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching d d m data provider instance links
+	 * @return the ordered range of matching ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findByStructureId(
@@ -812,12 +812,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the first d d m data provider instance link in the ordered set where structureId = &#63;.
+	 * Returns the first ddm data provider instance link in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching d d m data provider instance link could not be found
+	 * @return the first matching ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByStructureId_First(
@@ -844,11 +844,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the first d d m data provider instance link in the ordered set where structureId = &#63;.
+	 * Returns the first ddm data provider instance link in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching d d m data provider instance link, or <code>null</code> if a matching d d m data provider instance link could not be found
+	 * @return the first matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByStructureId_First(
@@ -865,12 +865,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last d d m data provider instance link in the ordered set where structureId = &#63;.
+	 * Returns the last ddm data provider instance link in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching d d m data provider instance link could not be found
+	 * @return the last matching ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByStructureId_Last(
@@ -897,11 +897,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the last d d m data provider instance link in the ordered set where structureId = &#63;.
+	 * Returns the last ddm data provider instance link in the ordered set where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching d d m data provider instance link, or <code>null</code> if a matching d d m data provider instance link could not be found
+	 * @return the last matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByStructureId_Last(
@@ -924,13 +924,13 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance links before and after the current d d m data provider instance link in the ordered set where structureId = &#63;.
+	 * Returns the ddm data provider instance links before and after the current ddm data provider instance link in the ordered set where structureId = &#63;.
 	 *
-	 * @param dataProviderInstanceLinkId the primary key of the current d d m data provider instance link
+	 * @param dataProviderInstanceLinkId the primary key of the current ddm data provider instance link
 	 * @param structureId the structure ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a d d m data provider instance link with the primary key could not be found
+	 * @return the previous, current, and next ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink[] findByStructureId_PrevAndNext(
@@ -1076,7 +1076,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Removes all the d d m data provider instance links where structureId = &#63; from the database.
+	 * Removes all the ddm data provider instance links where structureId = &#63; from the database.
 	 *
 	 * @param structureId the structure ID
 	 */
@@ -1089,10 +1089,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of d d m data provider instance links where structureId = &#63;.
+	 * Returns the number of ddm data provider instance links where structureId = &#63;.
 	 *
 	 * @param structureId the structure ID
-	 * @return the number of matching d d m data provider instance links
+	 * @return the number of matching ddm data provider instance links
 	 */
 	@Override
 	public int countByStructureId(long structureId) {
@@ -1154,12 +1154,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the d d m data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or throws a {@link NoSuchDataProviderInstanceLinkException} if it could not be found.
+	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or throws a {@link NoSuchDataProviderInstanceLinkException} if it could not be found.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
-	 * @return the matching d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a matching d d m data provider instance link could not be found
+	 * @return the matching ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByD_S(long dataProviderInstanceId,
@@ -1191,11 +1191,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
-	 * @return the matching d d m data provider instance link, or <code>null</code> if a matching d d m data provider instance link could not be found
+	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByD_S(long dataProviderInstanceId,
@@ -1204,12 +1204,12 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching d d m data provider instance link, or <code>null</code> if a matching d d m data provider instance link could not be found
+	 * @return the matching ddm data provider instance link, or <code>null</code> if a matching ddm data provider instance link could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByD_S(long dataProviderInstanceId,
@@ -1295,11 +1295,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Removes the d d m data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; from the database.
+	 * Removes the ddm data provider instance link where dataProviderInstanceId = &#63; and structureId = &#63; from the database.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
-	 * @return the d d m data provider instance link that was removed
+	 * @return the ddm data provider instance link that was removed
 	 */
 	@Override
 	public DDMDataProviderInstanceLink removeByD_S(
@@ -1312,11 +1312,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of d d m data provider instance links where dataProviderInstanceId = &#63; and structureId = &#63;.
+	 * Returns the number of ddm data provider instance links where dataProviderInstanceId = &#63; and structureId = &#63;.
 	 *
 	 * @param dataProviderInstanceId the data provider instance ID
 	 * @param structureId the structure ID
-	 * @return the number of matching d d m data provider instance links
+	 * @return the number of matching ddm data provider instance links
 	 */
 	@Override
 	public int countByD_S(long dataProviderInstanceId, long structureId) {
@@ -1375,9 +1375,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the d d m data provider instance link in the entity cache if it is enabled.
+	 * Caches the ddm data provider instance link in the entity cache if it is enabled.
 	 *
-	 * @param ddmDataProviderInstanceLink the d d m data provider instance link
+	 * @param ddmDataProviderInstanceLink the ddm data provider instance link
 	 */
 	@Override
 	public void cacheResult(
@@ -1397,9 +1397,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Caches the d d m data provider instance links in the entity cache if it is enabled.
+	 * Caches the ddm data provider instance links in the entity cache if it is enabled.
 	 *
-	 * @param ddmDataProviderInstanceLinks the d d m data provider instance links
+	 * @param ddmDataProviderInstanceLinks the ddm data provider instance links
 	 */
 	@Override
 	public void cacheResult(
@@ -1418,7 +1418,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for all d d m data provider instance links.
+	 * Clears the cache for all ddm data provider instance links.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1434,7 +1434,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Clears the cache for the d d m data provider instance link.
+	 * Clears the cache for the ddm data provider instance link.
 	 *
 	 * <p>
 	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
@@ -1509,10 +1509,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Creates a new d d m data provider instance link with the primary key. Does not add the d d m data provider instance link to the database.
+	 * Creates a new ddm data provider instance link with the primary key. Does not add the ddm data provider instance link to the database.
 	 *
-	 * @param dataProviderInstanceLinkId the primary key for the new d d m data provider instance link
-	 * @return the new d d m data provider instance link
+	 * @param dataProviderInstanceLinkId the primary key for the new ddm data provider instance link
+	 * @return the new ddm data provider instance link
 	 */
 	@Override
 	public DDMDataProviderInstanceLink create(long dataProviderInstanceLinkId) {
@@ -1527,11 +1527,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Removes the d d m data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param dataProviderInstanceLinkId the primary key of the d d m data provider instance link
-	 * @return the d d m data provider instance link that was removed
-	 * @throws NoSuchDataProviderInstanceLinkException if a d d m data provider instance link with the primary key could not be found
+	 * @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
+	 * @return the ddm data provider instance link that was removed
+	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink remove(long dataProviderInstanceLinkId)
@@ -1540,11 +1540,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Removes the d d m data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Removes the ddm data provider instance link with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param primaryKey the primary key of the d d m data provider instance link
-	 * @return the d d m data provider instance link that was removed
-	 * @throws NoSuchDataProviderInstanceLinkException if a d d m data provider instance link with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm data provider instance link
+	 * @return the ddm data provider instance link that was removed
+	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink remove(Serializable primaryKey)
@@ -1725,11 +1725,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance link with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the ddm data provider instance link with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m data provider instance link
-	 * @return the d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a d d m data provider instance link with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm data provider instance link
+	 * @return the ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByPrimaryKey(Serializable primaryKey)
@@ -1749,11 +1749,11 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance link with the primary key or throws a {@link NoSuchDataProviderInstanceLinkException} if it could not be found.
+	 * Returns the ddm data provider instance link with the primary key or throws a {@link NoSuchDataProviderInstanceLinkException} if it could not be found.
 	 *
-	 * @param dataProviderInstanceLinkId the primary key of the d d m data provider instance link
-	 * @return the d d m data provider instance link
-	 * @throws NoSuchDataProviderInstanceLinkException if a d d m data provider instance link with the primary key could not be found
+	 * @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
+	 * @return the ddm data provider instance link
+	 * @throws NoSuchDataProviderInstanceLinkException if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink findByPrimaryKey(
@@ -1763,10 +1763,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance link with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm data provider instance link with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param primaryKey the primary key of the d d m data provider instance link
-	 * @return the d d m data provider instance link, or <code>null</code> if a d d m data provider instance link with the primary key could not be found
+	 * @param primaryKey the primary key of the ddm data provider instance link
+	 * @return the ddm data provider instance link, or <code>null</code> if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByPrimaryKey(
@@ -1813,10 +1813,10 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the d d m data provider instance link with the primary key or returns <code>null</code> if it could not be found.
+	 * Returns the ddm data provider instance link with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param dataProviderInstanceLinkId the primary key of the d d m data provider instance link
-	 * @return the d d m data provider instance link, or <code>null</code> if a d d m data provider instance link with the primary key could not be found
+	 * @param dataProviderInstanceLinkId the primary key of the ddm data provider instance link
+	 * @return the ddm data provider instance link, or <code>null</code> if a ddm data provider instance link with the primary key could not be found
 	 */
 	@Override
 	public DDMDataProviderInstanceLink fetchByPrimaryKey(
@@ -1921,9 +1921,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns all the d d m data provider instance links.
+	 * Returns all the ddm data provider instance links.
 	 *
-	 * @return the d d m data provider instance links
+	 * @return the ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findAll() {
@@ -1931,15 +1931,15 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns a range of all the d d m data provider instance links.
+	 * Returns a range of all the ddm data provider instance links.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
-	 * @return the range of d d m data provider instance links
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
+	 * @return the range of ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findAll(int start, int end) {
@@ -1947,16 +1947,16 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m data provider instance links.
+	 * Returns an ordered range of all the ddm data provider instance links.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of d d m data provider instance links
+	 * @return the ordered range of ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findAll(int start, int end,
@@ -1965,17 +1965,17 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns an ordered range of all the d d m data provider instance links.
+	 * Returns an ordered range of all the ddm data provider instance links.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMDataProviderInstanceLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param start the lower bound of the range of d d m data provider instance links
-	 * @param end the upper bound of the range of d d m data provider instance links (not inclusive)
+	 * @param start the lower bound of the range of ddm data provider instance links
+	 * @param end the upper bound of the range of ddm data provider instance links (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of d d m data provider instance links
+	 * @return the ordered range of ddm data provider instance links
 	 */
 	@Override
 	public List<DDMDataProviderInstanceLink> findAll(int start, int end,
@@ -2064,7 +2064,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Removes all the d d m data provider instance links from the database.
+	 * Removes all the ddm data provider instance links from the database.
 	 *
 	 */
 	@Override
@@ -2075,9 +2075,9 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of d d m data provider instance links.
+	 * Returns the number of ddm data provider instance links.
 	 *
-	 * @return the number of d d m data provider instance links
+	 * @return the number of ddm data provider instance links
 	 */
 	@Override
 	public int countAll() {
@@ -2117,7 +2117,7 @@ public class DDMDataProviderInstanceLinkPersistenceImpl
 	}
 
 	/**
-	 * Initializes the d d m data provider instance link persistence.
+	 * Initializes the ddm data provider instance link persistence.
 	 */
 	public void afterPropertiesSet() {
 	}

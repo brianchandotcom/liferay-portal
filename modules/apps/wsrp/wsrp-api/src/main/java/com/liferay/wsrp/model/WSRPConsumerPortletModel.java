@@ -48,157 +48,157 @@ public interface WSRPConsumerPortletModel extends BaseModel<WSRPConsumerPortlet>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a w s r p consumer portlet model instance should use the {@link WSRPConsumerPortlet} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a wsrp consumer portlet model instance should use the {@link WSRPConsumerPortlet} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this w s r p consumer portlet.
+	 * Returns the primary key of this wsrp consumer portlet.
 	 *
-	 * @return the primary key of this w s r p consumer portlet
+	 * @return the primary key of this wsrp consumer portlet
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this w s r p consumer portlet.
+	 * Sets the primary key of this wsrp consumer portlet.
 	 *
-	 * @param primaryKey the primary key of this w s r p consumer portlet
+	 * @param primaryKey the primary key of this wsrp consumer portlet
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this w s r p consumer portlet.
+	 * Returns the uuid of this wsrp consumer portlet.
 	 *
-	 * @return the uuid of this w s r p consumer portlet
+	 * @return the uuid of this wsrp consumer portlet
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this w s r p consumer portlet.
+	 * Sets the uuid of this wsrp consumer portlet.
 	 *
-	 * @param uuid the uuid of this w s r p consumer portlet
+	 * @param uuid the uuid of this wsrp consumer portlet
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the wsrp consumer portlet ID of this w s r p consumer portlet.
+	 * Returns the wsrp consumer portlet ID of this wsrp consumer portlet.
 	 *
-	 * @return the wsrp consumer portlet ID of this w s r p consumer portlet
+	 * @return the wsrp consumer portlet ID of this wsrp consumer portlet
 	 */
 	public long getWsrpConsumerPortletId();
 
 	/**
-	 * Sets the wsrp consumer portlet ID of this w s r p consumer portlet.
+	 * Sets the wsrp consumer portlet ID of this wsrp consumer portlet.
 	 *
-	 * @param wsrpConsumerPortletId the wsrp consumer portlet ID of this w s r p consumer portlet
+	 * @param wsrpConsumerPortletId the wsrp consumer portlet ID of this wsrp consumer portlet
 	 */
 	public void setWsrpConsumerPortletId(long wsrpConsumerPortletId);
 
 	/**
-	 * Returns the company ID of this w s r p consumer portlet.
+	 * Returns the company ID of this wsrp consumer portlet.
 	 *
-	 * @return the company ID of this w s r p consumer portlet
+	 * @return the company ID of this wsrp consumer portlet
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this w s r p consumer portlet.
+	 * Sets the company ID of this wsrp consumer portlet.
 	 *
-	 * @param companyId the company ID of this w s r p consumer portlet
+	 * @param companyId the company ID of this wsrp consumer portlet
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the create date of this w s r p consumer portlet.
+	 * Returns the create date of this wsrp consumer portlet.
 	 *
-	 * @return the create date of this w s r p consumer portlet
+	 * @return the create date of this wsrp consumer portlet
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this w s r p consumer portlet.
+	 * Sets the create date of this wsrp consumer portlet.
 	 *
-	 * @param createDate the create date of this w s r p consumer portlet
+	 * @param createDate the create date of this wsrp consumer portlet
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this w s r p consumer portlet.
+	 * Returns the modified date of this wsrp consumer portlet.
 	 *
-	 * @return the modified date of this w s r p consumer portlet
+	 * @return the modified date of this wsrp consumer portlet
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this w s r p consumer portlet.
+	 * Sets the modified date of this wsrp consumer portlet.
 	 *
-	 * @param modifiedDate the modified date of this w s r p consumer portlet
+	 * @param modifiedDate the modified date of this wsrp consumer portlet
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the wsrp consumer ID of this w s r p consumer portlet.
+	 * Returns the wsrp consumer ID of this wsrp consumer portlet.
 	 *
-	 * @return the wsrp consumer ID of this w s r p consumer portlet
+	 * @return the wsrp consumer ID of this wsrp consumer portlet
 	 */
 	public long getWsrpConsumerId();
 
 	/**
-	 * Sets the wsrp consumer ID of this w s r p consumer portlet.
+	 * Sets the wsrp consumer ID of this wsrp consumer portlet.
 	 *
-	 * @param wsrpConsumerId the wsrp consumer ID of this w s r p consumer portlet
+	 * @param wsrpConsumerId the wsrp consumer ID of this wsrp consumer portlet
 	 */
 	public void setWsrpConsumerId(long wsrpConsumerId);
 
 	/**
-	 * Returns the name of this w s r p consumer portlet.
+	 * Returns the name of this wsrp consumer portlet.
 	 *
-	 * @return the name of this w s r p consumer portlet
+	 * @return the name of this wsrp consumer portlet
 	 */
 	@AutoEscape
 	public String getName();
 
 	/**
-	 * Sets the name of this w s r p consumer portlet.
+	 * Sets the name of this wsrp consumer portlet.
 	 *
-	 * @param name the name of this w s r p consumer portlet
+	 * @param name the name of this wsrp consumer portlet
 	 */
 	public void setName(String name);
 
 	/**
-	 * Returns the portlet handle of this w s r p consumer portlet.
+	 * Returns the portlet handle of this wsrp consumer portlet.
 	 *
-	 * @return the portlet handle of this w s r p consumer portlet
+	 * @return the portlet handle of this wsrp consumer portlet
 	 */
 	@AutoEscape
 	public String getPortletHandle();
 
 	/**
-	 * Sets the portlet handle of this w s r p consumer portlet.
+	 * Sets the portlet handle of this wsrp consumer portlet.
 	 *
-	 * @param portletHandle the portlet handle of this w s r p consumer portlet
+	 * @param portletHandle the portlet handle of this wsrp consumer portlet
 	 */
 	public void setPortletHandle(String portletHandle);
 
 	/**
-	 * Returns the last publish date of this w s r p consumer portlet.
+	 * Returns the last publish date of this wsrp consumer portlet.
 	 *
-	 * @return the last publish date of this w s r p consumer portlet
+	 * @return the last publish date of this wsrp consumer portlet
 	 */
 	public Date getLastPublishDate();
 
 	/**
-	 * Sets the last publish date of this w s r p consumer portlet.
+	 * Sets the last publish date of this wsrp consumer portlet.
 	 *
-	 * @param lastPublishDate the last publish date of this w s r p consumer portlet
+	 * @param lastPublishDate the last publish date of this wsrp consumer portlet
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
 

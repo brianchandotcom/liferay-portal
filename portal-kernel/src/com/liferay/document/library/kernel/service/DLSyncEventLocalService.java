@@ -58,14 +58,14 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DLSyncEventLocalServiceUtil} to access the d l sync event local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DLSyncEventLocalServiceUtil} to access the dl sync event local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the d l sync event to the database. Also notifies the appropriate model listeners.
+	* Adds the dl sync event to the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was added
+	* @param dlSyncEvent the dl sync event
+	* @return the dl sync event that was added
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLSyncEvent addDLSyncEvent(DLSyncEvent dlSyncEvent);
@@ -74,28 +74,28 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 		java.lang.String type, long typePK);
 
 	/**
-	* Creates a new d l sync event with the primary key. Does not add the d l sync event to the database.
+	* Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
 	*
-	* @param syncEventId the primary key for the new d l sync event
-	* @return the new d l sync event
+	* @param syncEventId the primary key for the new dl sync event
+	* @return the new dl sync event
 	*/
 	public DLSyncEvent createDLSyncEvent(long syncEventId);
 
 	/**
-	* Deletes the d l sync event from the database. Also notifies the appropriate model listeners.
+	* Deletes the dl sync event from the database. Also notifies the appropriate model listeners.
 	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was removed
+	* @param dlSyncEvent the dl sync event
+	* @return the dl sync event that was removed
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DLSyncEvent deleteDLSyncEvent(DLSyncEvent dlSyncEvent);
 
 	/**
-	* Deletes the d l sync event with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the dl sync event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param syncEventId the primary key of the d l sync event
-	* @return the d l sync event that was removed
-	* @throws PortalException if a d l sync event with the primary key could not be found
+	* @param syncEventId the primary key of the dl sync event
+	* @return the dl sync event that was removed
+	* @throws PortalException if a dl sync event with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public DLSyncEvent deleteDLSyncEvent(long syncEventId)
@@ -105,21 +105,21 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 	public DLSyncEvent fetchDLSyncEvent(long syncEventId);
 
 	/**
-	* Returns the d l sync event with the primary key.
+	* Returns the dl sync event with the primary key.
 	*
-	* @param syncEventId the primary key of the d l sync event
-	* @return the d l sync event
-	* @throws PortalException if a d l sync event with the primary key could not be found
+	* @param syncEventId the primary key of the dl sync event
+	* @return the dl sync event
+	* @throws PortalException if a dl sync event with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLSyncEvent getDLSyncEvent(long syncEventId)
 		throws PortalException;
 
 	/**
-	* Updates the d l sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the dl sync event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param dlSyncEvent the d l sync event
-	* @return the d l sync event that was updated
+	* @param dlSyncEvent the dl sync event
+	* @return the dl sync event that was updated
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent);
@@ -145,9 +145,9 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Returns the number of d l sync events.
+	* Returns the number of dl sync events.
 	*
-	* @return the number of d l sync events
+	* @return the number of dl sync events
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDLSyncEventsCount();
@@ -199,15 +199,15 @@ public interface DLSyncEventLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns a range of all the d l sync events.
+	* Returns a range of all the dl sync events.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
-	* @return the range of d l sync events
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
+	* @return the range of dl sync events
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DLSyncEvent> getDLSyncEvents(int start, int end);

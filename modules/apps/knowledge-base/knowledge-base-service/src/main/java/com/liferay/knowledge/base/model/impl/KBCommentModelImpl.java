@@ -71,7 +71,7 @@ public class KBCommentModelImpl extends BaseModelImpl<KBComment>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a k b comment model instance should use the {@link KBComment} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kb comment model instance should use the {@link KBComment} interface instead.
 	 */
 	public static final String TABLE_NAME = "KBComment";
 	public static final Object[][] TABLE_COLUMNS = {

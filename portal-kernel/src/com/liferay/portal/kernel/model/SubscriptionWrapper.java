@@ -277,9 +277,9 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	/**
-	* Returns the class p k of this subscription.
+	* Returns the class pk of this subscription.
 	*
-	* @return the class p k of this subscription
+	* @return the class pk of this subscription
 	*/
 	@Override
 	public long getClassPK() {
@@ -372,9 +372,9 @@ public class SubscriptionWrapper implements Subscription,
 	}
 
 	/**
-	* Sets the class p k of this subscription.
+	* Sets the class pk of this subscription.
 	*
-	* @param classPK the class p k of this subscription
+	* @param classPK the class pk of this subscription
 	*/
 	@Override
 	public void setClassPK(long classPK) {

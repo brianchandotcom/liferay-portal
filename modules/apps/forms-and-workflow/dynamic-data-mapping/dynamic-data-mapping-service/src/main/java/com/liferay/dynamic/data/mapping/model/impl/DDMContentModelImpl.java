@@ -72,7 +72,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m content model instance should use the {@link DDMContent} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm content model instance should use the {@link DDMContent} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMContent";
 	public static final Object[][] TABLE_COLUMNS = {

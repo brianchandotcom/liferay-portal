@@ -75,7 +75,7 @@ public class DDMTemplateVersionModelImpl extends BaseModelImpl<DDMTemplateVersio
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m template version model instance should use the {@link DDMTemplateVersion} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm template version model instance should use the {@link DDMTemplateVersion} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMTemplateVersion";
 	public static final Object[][] TABLE_COLUMNS = {

@@ -253,17 +253,17 @@ public interface AppModel extends BaseModel<App>, ShardedModel,
 	public void setCategory(String category);
 
 	/**
-	 * Returns the icon u r l of this app.
+	 * Returns the icon url of this app.
 	 *
-	 * @return the icon u r l of this app
+	 * @return the icon url of this app
 	 */
 	@AutoEscape
 	public String getIconURL();
 
 	/**
-	 * Sets the icon u r l of this app.
+	 * Sets the icon url of this app.
 	 *
-	 * @param iconURL the icon u r l of this app
+	 * @param iconURL the icon url of this app
 	 */
 	public void setIconURL(String iconURL);
 

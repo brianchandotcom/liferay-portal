@@ -44,118 +44,118 @@ public interface SyncDLFileVersionDiffModel extends BaseModel<SyncDLFileVersionD
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a sync d l file version diff model instance should use the {@link SyncDLFileVersionDiff} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a sync dl file version diff model instance should use the {@link SyncDLFileVersionDiff} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this sync d l file version diff.
+	 * Returns the primary key of this sync dl file version diff.
 	 *
-	 * @return the primary key of this sync d l file version diff
+	 * @return the primary key of this sync dl file version diff
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this sync d l file version diff.
+	 * Sets the primary key of this sync dl file version diff.
 	 *
-	 * @param primaryKey the primary key of this sync d l file version diff
+	 * @param primaryKey the primary key of this sync dl file version diff
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the sync d l file version diff ID of this sync d l file version diff.
+	 * Returns the sync dl file version diff ID of this sync dl file version diff.
 	 *
-	 * @return the sync d l file version diff ID of this sync d l file version diff
+	 * @return the sync dl file version diff ID of this sync dl file version diff
 	 */
 	public long getSyncDLFileVersionDiffId();
 
 	/**
-	 * Sets the sync d l file version diff ID of this sync d l file version diff.
+	 * Sets the sync dl file version diff ID of this sync dl file version diff.
 	 *
-	 * @param syncDLFileVersionDiffId the sync d l file version diff ID of this sync d l file version diff
+	 * @param syncDLFileVersionDiffId the sync dl file version diff ID of this sync dl file version diff
 	 */
 	public void setSyncDLFileVersionDiffId(long syncDLFileVersionDiffId);
 
 	/**
-	 * Returns the file entry ID of this sync d l file version diff.
+	 * Returns the file entry ID of this sync dl file version diff.
 	 *
-	 * @return the file entry ID of this sync d l file version diff
+	 * @return the file entry ID of this sync dl file version diff
 	 */
 	public long getFileEntryId();
 
 	/**
-	 * Sets the file entry ID of this sync d l file version diff.
+	 * Sets the file entry ID of this sync dl file version diff.
 	 *
-	 * @param fileEntryId the file entry ID of this sync d l file version diff
+	 * @param fileEntryId the file entry ID of this sync dl file version diff
 	 */
 	public void setFileEntryId(long fileEntryId);
 
 	/**
-	 * Returns the source file version ID of this sync d l file version diff.
+	 * Returns the source file version ID of this sync dl file version diff.
 	 *
-	 * @return the source file version ID of this sync d l file version diff
+	 * @return the source file version ID of this sync dl file version diff
 	 */
 	public long getSourceFileVersionId();
 
 	/**
-	 * Sets the source file version ID of this sync d l file version diff.
+	 * Sets the source file version ID of this sync dl file version diff.
 	 *
-	 * @param sourceFileVersionId the source file version ID of this sync d l file version diff
+	 * @param sourceFileVersionId the source file version ID of this sync dl file version diff
 	 */
 	public void setSourceFileVersionId(long sourceFileVersionId);
 
 	/**
-	 * Returns the target file version ID of this sync d l file version diff.
+	 * Returns the target file version ID of this sync dl file version diff.
 	 *
-	 * @return the target file version ID of this sync d l file version diff
+	 * @return the target file version ID of this sync dl file version diff
 	 */
 	public long getTargetFileVersionId();
 
 	/**
-	 * Sets the target file version ID of this sync d l file version diff.
+	 * Sets the target file version ID of this sync dl file version diff.
 	 *
-	 * @param targetFileVersionId the target file version ID of this sync d l file version diff
+	 * @param targetFileVersionId the target file version ID of this sync dl file version diff
 	 */
 	public void setTargetFileVersionId(long targetFileVersionId);
 
 	/**
-	 * Returns the data file entry ID of this sync d l file version diff.
+	 * Returns the data file entry ID of this sync dl file version diff.
 	 *
-	 * @return the data file entry ID of this sync d l file version diff
+	 * @return the data file entry ID of this sync dl file version diff
 	 */
 	public long getDataFileEntryId();
 
 	/**
-	 * Sets the data file entry ID of this sync d l file version diff.
+	 * Sets the data file entry ID of this sync dl file version diff.
 	 *
-	 * @param dataFileEntryId the data file entry ID of this sync d l file version diff
+	 * @param dataFileEntryId the data file entry ID of this sync dl file version diff
 	 */
 	public void setDataFileEntryId(long dataFileEntryId);
 
 	/**
-	 * Returns the size of this sync d l file version diff.
+	 * Returns the size of this sync dl file version diff.
 	 *
-	 * @return the size of this sync d l file version diff
+	 * @return the size of this sync dl file version diff
 	 */
 	public long getSize();
 
 	/**
-	 * Sets the size of this sync d l file version diff.
+	 * Sets the size of this sync dl file version diff.
 	 *
-	 * @param size the size of this sync d l file version diff
+	 * @param size the size of this sync dl file version diff
 	 */
 	public void setSize(long size);
 
 	/**
-	 * Returns the expiration date of this sync d l file version diff.
+	 * Returns the expiration date of this sync dl file version diff.
 	 *
-	 * @return the expiration date of this sync d l file version diff
+	 * @return the expiration date of this sync dl file version diff
 	 */
 	public Date getExpirationDate();
 
 	/**
-	 * Sets the expiration date of this sync d l file version diff.
+	 * Sets the expiration date of this sync dl file version diff.
 	 *
-	 * @param expirationDate the expiration date of this sync d l file version diff
+	 * @param expirationDate the expiration date of this sync dl file version diff
 	 */
 	public void setExpirationDate(Date expirationDate);
 

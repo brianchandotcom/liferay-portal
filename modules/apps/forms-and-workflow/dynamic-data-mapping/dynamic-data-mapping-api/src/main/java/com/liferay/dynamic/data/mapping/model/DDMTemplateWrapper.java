@@ -272,9 +272,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the cacheable of this d d m template.
+	* Returns the cacheable of this ddm template.
 	*
-	* @return the cacheable of this d d m template
+	* @return the cacheable of this ddm template
 	*/
 	@Override
 	public boolean getCacheable() {
@@ -282,9 +282,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the small image of this d d m template.
+	* Returns the small image of this ddm template.
 	*
-	* @return the small image of this d d m template
+	* @return the small image of this ddm template
 	*/
 	@Override
 	public boolean getSmallImage() {
@@ -292,9 +292,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d m template is cacheable.
+	* Returns <code>true</code> if this ddm template is cacheable.
 	*
-	* @return <code>true</code> if this d d m template is cacheable; <code>false</code> otherwise
+	* @return <code>true</code> if this ddm template is cacheable; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isCacheable() {
@@ -317,9 +317,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns <code>true</code> if this d d m template is small image.
+	* Returns <code>true</code> if this ddm template is small image.
 	*
-	* @return <code>true</code> if this d d m template is small image; <code>false</code> otherwise
+	* @return <code>true</code> if this ddm template is small image; <code>false</code> otherwise
 	*/
 	@Override
 	public boolean isSmallImage() {
@@ -357,9 +357,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the fully qualified class name of this d d m template.
+	* Returns the fully qualified class name of this ddm template.
 	*
-	* @return the fully qualified class name of this d d m template
+	* @return the fully qualified class name of this ddm template
 	*/
 	@Override
 	public java.lang.String getClassName() {
@@ -372,9 +372,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the description of this d d m template.
+	* Returns the description of this ddm template.
 	*
-	* @return the description of this d d m template
+	* @return the description of this ddm template
 	*/
 	@Override
 	public java.lang.String getDescription() {
@@ -382,10 +382,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized description of this d d m template in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm template in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
-	* @return the localized description of this d d m template
+	* @return the localized description of this ddm template
 	*/
 	@Override
 	public java.lang.String getDescription(java.lang.String languageId) {
@@ -393,11 +393,11 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized description of this d d m template in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm template in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this d d m template
+	* @return the localized description of this ddm template
 	*/
 	@Override
 	public java.lang.String getDescription(java.lang.String languageId,
@@ -406,10 +406,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized description of this d d m template in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm template in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param locale the locale of the language
-	* @return the localized description of this d d m template
+	* @return the localized description of this ddm template
 	*/
 	@Override
 	public java.lang.String getDescription(java.util.Locale locale) {
@@ -417,11 +417,11 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized description of this d d m template in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized description of this ddm template in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param locale the local of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized description of this d d m template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	* @return the localized description of this ddm template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
 	public java.lang.String getDescription(java.util.Locale locale,
@@ -440,9 +440,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the language of this d d m template.
+	* Returns the language of this ddm template.
 	*
-	* @return the language of this d d m template
+	* @return the language of this ddm template
 	*/
 	@Override
 	public java.lang.String getLanguage() {
@@ -450,9 +450,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the mode of this d d m template.
+	* Returns the mode of this ddm template.
 	*
-	* @return the mode of this d d m template
+	* @return the mode of this ddm template
 	*/
 	@Override
 	public java.lang.String getMode() {
@@ -460,9 +460,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the name of this d d m template.
+	* Returns the name of this ddm template.
 	*
-	* @return the name of this d d m template
+	* @return the name of this ddm template
 	*/
 	@Override
 	public java.lang.String getName() {
@@ -470,10 +470,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized name of this d d m template in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm template in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
-	* @return the localized name of this d d m template
+	* @return the localized name of this ddm template
 	*/
 	@Override
 	public java.lang.String getName(java.lang.String languageId) {
@@ -481,11 +481,11 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized name of this d d m template in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm template in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param languageId the ID of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this d d m template
+	* @return the localized name of this ddm template
 	*/
 	@Override
 	public java.lang.String getName(java.lang.String languageId,
@@ -494,10 +494,10 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized name of this d d m template in the language. Uses the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm template in the language. Uses the default language if no localization exists for the requested language.
 	*
 	* @param locale the locale of the language
-	* @return the localized name of this d d m template
+	* @return the localized name of this ddm template
 	*/
 	@Override
 	public java.lang.String getName(java.util.Locale locale) {
@@ -505,11 +505,11 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the localized name of this d d m template in the language, optionally using the default language if no localization exists for the requested language.
+	* Returns the localized name of this ddm template in the language, optionally using the default language if no localization exists for the requested language.
 	*
 	* @param locale the local of the language
 	* @param useDefault whether to use the default language if no localization exists for the requested language
-	* @return the localized name of this d d m template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	* @return the localized name of this ddm template. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	*/
 	@Override
 	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
@@ -527,9 +527,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the script of this d d m template.
+	* Returns the script of this ddm template.
 	*
-	* @return the script of this d d m template
+	* @return the script of this ddm template
 	*/
 	@Override
 	public java.lang.String getScript() {
@@ -543,9 +543,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the small image u r l of this d d m template.
+	* Returns the small image url of this ddm template.
 	*
-	* @return the small image u r l of this d d m template
+	* @return the small image url of this ddm template
 	*/
 	@Override
 	public java.lang.String getSmallImageURL() {
@@ -559,9 +559,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the template key of this d d m template.
+	* Returns the template key of this ddm template.
 	*
-	* @return the template key of this d d m template
+	* @return the template key of this ddm template
 	*/
 	@Override
 	public java.lang.String getTemplateKey() {
@@ -569,9 +569,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the type of this d d m template.
+	* Returns the type of this ddm template.
 	*
-	* @return the type of this d d m template
+	* @return the type of this ddm template
 	*/
 	@Override
 	public java.lang.String getType() {
@@ -579,9 +579,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the user name of this d d m template.
+	* Returns the user name of this ddm template.
 	*
-	* @return the user name of this d d m template
+	* @return the user name of this ddm template
 	*/
 	@Override
 	public java.lang.String getUserName() {
@@ -589,9 +589,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the user uuid of this d d m template.
+	* Returns the user uuid of this ddm template.
 	*
-	* @return the user uuid of this d d m template
+	* @return the user uuid of this ddm template
 	*/
 	@Override
 	public java.lang.String getUserUuid() {
@@ -599,9 +599,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the uuid of this d d m template.
+	* Returns the uuid of this ddm template.
 	*
-	* @return the uuid of this d d m template
+	* @return the uuid of this ddm template
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -609,9 +609,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the version of this d d m template.
+	* Returns the version of this ddm template.
 	*
-	* @return the version of this d d m template
+	* @return the version of this ddm template
 	*/
 	@Override
 	public java.lang.String getVersion() {
@@ -619,9 +619,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the version user name of this d d m template.
+	* Returns the version user name of this ddm template.
 	*
-	* @return the version user name of this d d m template
+	* @return the version user name of this ddm template
 	*/
 	@Override
 	public java.lang.String getVersionUserName() {
@@ -629,9 +629,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the version user uuid of this d d m template.
+	* Returns the version user uuid of this ddm template.
 	*
-	* @return the version user uuid of this d d m template
+	* @return the version user uuid of this ddm template
 	*/
 	@Override
 	public java.lang.String getVersionUserUuid() {
@@ -670,9 +670,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the create date of this d d m template.
+	* Returns the create date of this ddm template.
 	*
-	* @return the create date of this d d m template
+	* @return the create date of this ddm template
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -680,9 +680,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the last publish date of this d d m template.
+	* Returns the last publish date of this ddm template.
 	*
-	* @return the last publish date of this d d m template
+	* @return the last publish date of this ddm template
 	*/
 	@Override
 	public Date getLastPublishDate() {
@@ -690,9 +690,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the modified date of this d d m template.
+	* Returns the modified date of this ddm template.
 	*
-	* @return the modified date of this d d m template
+	* @return the modified date of this ddm template
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -700,9 +700,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns a map of the locales and localized descriptions of this d d m template.
+	* Returns a map of the locales and localized descriptions of this ddm template.
 	*
-	* @return the locales and localized descriptions of this d d m template
+	* @return the locales and localized descriptions of this ddm template
 	*/
 	@Override
 	public Map<java.util.Locale, java.lang.String> getDescriptionMap() {
@@ -710,9 +710,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns a map of the locales and localized names of this d d m template.
+	* Returns a map of the locales and localized names of this ddm template.
 	*
-	* @return the locales and localized names of this d d m template
+	* @return the locales and localized names of this ddm template
 	*/
 	@Override
 	public Map<java.util.Locale, java.lang.String> getNameMap() {
@@ -720,9 +720,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the class name ID of this d d m template.
+	* Returns the class name ID of this ddm template.
 	*
-	* @return the class name ID of this d d m template
+	* @return the class name ID of this ddm template
 	*/
 	@Override
 	public long getClassNameId() {
@@ -730,9 +730,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the class p k of this d d m template.
+	* Returns the class pk of this ddm template.
 	*
-	* @return the class p k of this d d m template
+	* @return the class pk of this ddm template
 	*/
 	@Override
 	public long getClassPK() {
@@ -740,9 +740,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the company ID of this d d m template.
+	* Returns the company ID of this ddm template.
 	*
-	* @return the company ID of this d d m template
+	* @return the company ID of this ddm template
 	*/
 	@Override
 	public long getCompanyId() {
@@ -750,9 +750,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the group ID of this d d m template.
+	* Returns the group ID of this ddm template.
 	*
-	* @return the group ID of this d d m template
+	* @return the group ID of this ddm template
 	*/
 	@Override
 	public long getGroupId() {
@@ -760,9 +760,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the primary key of this d d m template.
+	* Returns the primary key of this ddm template.
 	*
-	* @return the primary key of this d d m template
+	* @return the primary key of this ddm template
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -770,9 +770,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the resource class name ID of this d d m template.
+	* Returns the resource class name ID of this ddm template.
 	*
-	* @return the resource class name ID of this d d m template
+	* @return the resource class name ID of this ddm template
 	*/
 	@Override
 	public long getResourceClassNameId() {
@@ -780,9 +780,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the small image ID of this d d m template.
+	* Returns the small image ID of this ddm template.
 	*
-	* @return the small image ID of this d d m template
+	* @return the small image ID of this ddm template
 	*/
 	@Override
 	public long getSmallImageId() {
@@ -790,9 +790,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the template ID of this d d m template.
+	* Returns the template ID of this ddm template.
 	*
-	* @return the template ID of this d d m template
+	* @return the template ID of this ddm template
 	*/
 	@Override
 	public long getTemplateId() {
@@ -800,9 +800,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the user ID of this d d m template.
+	* Returns the user ID of this ddm template.
 	*
-	* @return the user ID of this d d m template
+	* @return the user ID of this ddm template
 	*/
 	@Override
 	public long getUserId() {
@@ -810,9 +810,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Returns the version user ID of this d d m template.
+	* Returns the version user ID of this ddm template.
 	*
-	* @return the version user ID of this d d m template
+	* @return the version user ID of this ddm template
 	*/
 	@Override
 	public long getVersionUserId() {
@@ -838,9 +838,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets whether this d d m template is cacheable.
+	* Sets whether this ddm template is cacheable.
 	*
-	* @param cacheable the cacheable of this d d m template
+	* @param cacheable the cacheable of this ddm template
 	*/
 	@Override
 	public void setCacheable(boolean cacheable) {
@@ -858,9 +858,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the class name ID of this d d m template.
+	* Sets the class name ID of this ddm template.
 	*
-	* @param classNameId the class name ID of this d d m template
+	* @param classNameId the class name ID of this ddm template
 	*/
 	@Override
 	public void setClassNameId(long classNameId) {
@@ -868,9 +868,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the class p k of this d d m template.
+	* Sets the class pk of this ddm template.
 	*
-	* @param classPK the class p k of this d d m template
+	* @param classPK the class pk of this ddm template
 	*/
 	@Override
 	public void setClassPK(long classPK) {
@@ -878,9 +878,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the company ID of this d d m template.
+	* Sets the company ID of this ddm template.
 	*
-	* @param companyId the company ID of this d d m template
+	* @param companyId the company ID of this ddm template
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -888,9 +888,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the create date of this d d m template.
+	* Sets the create date of this ddm template.
 	*
-	* @param createDate the create date of this d d m template
+	* @param createDate the create date of this ddm template
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -898,9 +898,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the description of this d d m template.
+	* Sets the description of this ddm template.
 	*
-	* @param description the description of this d d m template
+	* @param description the description of this ddm template
 	*/
 	@Override
 	public void setDescription(java.lang.String description) {
@@ -908,9 +908,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized description of this d d m template in the language.
+	* Sets the localized description of this ddm template in the language.
 	*
-	* @param description the localized description of this d d m template
+	* @param description the localized description of this ddm template
 	* @param locale the locale of the language
 	*/
 	@Override
@@ -920,9 +920,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized description of this d d m template in the language, and sets the default locale.
+	* Sets the localized description of this ddm template in the language, and sets the default locale.
 	*
-	* @param description the localized description of this d d m template
+	* @param description the localized description of this ddm template
 	* @param locale the locale of the language
 	* @param defaultLocale the default locale
 	*/
@@ -938,9 +938,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized descriptions of this d d m template from the map of locales and localized descriptions.
+	* Sets the localized descriptions of this ddm template from the map of locales and localized descriptions.
 	*
-	* @param descriptionMap the locales and localized descriptions of this d d m template
+	* @param descriptionMap the locales and localized descriptions of this ddm template
 	*/
 	@Override
 	public void setDescriptionMap(
@@ -949,9 +949,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized descriptions of this d d m template from the map of locales and localized descriptions, and sets the default locale.
+	* Sets the localized descriptions of this ddm template from the map of locales and localized descriptions, and sets the default locale.
 	*
-	* @param descriptionMap the locales and localized descriptions of this d d m template
+	* @param descriptionMap the locales and localized descriptions of this ddm template
 	* @param defaultLocale the default locale
 	*/
 	@Override
@@ -978,9 +978,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the group ID of this d d m template.
+	* Sets the group ID of this ddm template.
 	*
-	* @param groupId the group ID of this d d m template
+	* @param groupId the group ID of this ddm template
 	*/
 	@Override
 	public void setGroupId(long groupId) {
@@ -988,9 +988,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the language of this d d m template.
+	* Sets the language of this ddm template.
 	*
-	* @param language the language of this d d m template
+	* @param language the language of this ddm template
 	*/
 	@Override
 	public void setLanguage(java.lang.String language) {
@@ -998,9 +998,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the last publish date of this d d m template.
+	* Sets the last publish date of this ddm template.
 	*
-	* @param lastPublishDate the last publish date of this d d m template
+	* @param lastPublishDate the last publish date of this ddm template
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -1008,9 +1008,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the mode of this d d m template.
+	* Sets the mode of this ddm template.
 	*
-	* @param mode the mode of this d d m template
+	* @param mode the mode of this ddm template
 	*/
 	@Override
 	public void setMode(java.lang.String mode) {
@@ -1018,9 +1018,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the modified date of this d d m template.
+	* Sets the modified date of this ddm template.
 	*
-	* @param modifiedDate the modified date of this d d m template
+	* @param modifiedDate the modified date of this ddm template
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -1028,9 +1028,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the name of this d d m template.
+	* Sets the name of this ddm template.
 	*
-	* @param name the name of this d d m template
+	* @param name the name of this ddm template
 	*/
 	@Override
 	public void setName(java.lang.String name) {
@@ -1038,9 +1038,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized name of this d d m template in the language.
+	* Sets the localized name of this ddm template in the language.
 	*
-	* @param name the localized name of this d d m template
+	* @param name the localized name of this ddm template
 	* @param locale the locale of the language
 	*/
 	@Override
@@ -1049,9 +1049,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized name of this d d m template in the language, and sets the default locale.
+	* Sets the localized name of this ddm template in the language, and sets the default locale.
 	*
-	* @param name the localized name of this d d m template
+	* @param name the localized name of this ddm template
 	* @param locale the locale of the language
 	* @param defaultLocale the default locale
 	*/
@@ -1067,9 +1067,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized names of this d d m template from the map of locales and localized names.
+	* Sets the localized names of this ddm template from the map of locales and localized names.
 	*
-	* @param nameMap the locales and localized names of this d d m template
+	* @param nameMap the locales and localized names of this ddm template
 	*/
 	@Override
 	public void setNameMap(Map<java.util.Locale, java.lang.String> nameMap) {
@@ -1077,9 +1077,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the localized names of this d d m template from the map of locales and localized names, and sets the default locale.
+	* Sets the localized names of this ddm template from the map of locales and localized names, and sets the default locale.
 	*
-	* @param nameMap the locales and localized names of this d d m template
+	* @param nameMap the locales and localized names of this ddm template
 	* @param defaultLocale the default locale
 	*/
 	@Override
@@ -1094,9 +1094,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the primary key of this d d m template.
+	* Sets the primary key of this ddm template.
 	*
-	* @param primaryKey the primary key of this d d m template
+	* @param primaryKey the primary key of this ddm template
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -1109,9 +1109,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the resource class name ID of this d d m template.
+	* Sets the resource class name ID of this ddm template.
 	*
-	* @param resourceClassNameId the resource class name ID of this d d m template
+	* @param resourceClassNameId the resource class name ID of this ddm template
 	*/
 	@Override
 	public void setResourceClassNameId(long resourceClassNameId) {
@@ -1119,9 +1119,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the script of this d d m template.
+	* Sets the script of this ddm template.
 	*
-	* @param script the script of this d d m template
+	* @param script the script of this ddm template
 	*/
 	@Override
 	public void setScript(java.lang.String script) {
@@ -1129,9 +1129,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets whether this d d m template is small image.
+	* Sets whether this ddm template is small image.
 	*
-	* @param smallImage the small image of this d d m template
+	* @param smallImage the small image of this ddm template
 	*/
 	@Override
 	public void setSmallImage(boolean smallImage) {
@@ -1139,9 +1139,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the small image ID of this d d m template.
+	* Sets the small image ID of this ddm template.
 	*
-	* @param smallImageId the small image ID of this d d m template
+	* @param smallImageId the small image ID of this ddm template
 	*/
 	@Override
 	public void setSmallImageId(long smallImageId) {
@@ -1154,9 +1154,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the small image u r l of this d d m template.
+	* Sets the small image url of this ddm template.
 	*
-	* @param smallImageURL the small image u r l of this d d m template
+	* @param smallImageURL the small image url of this ddm template
 	*/
 	@Override
 	public void setSmallImageURL(java.lang.String smallImageURL) {
@@ -1164,9 +1164,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the template ID of this d d m template.
+	* Sets the template ID of this ddm template.
 	*
-	* @param templateId the template ID of this d d m template
+	* @param templateId the template ID of this ddm template
 	*/
 	@Override
 	public void setTemplateId(long templateId) {
@@ -1174,9 +1174,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the template key of this d d m template.
+	* Sets the template key of this ddm template.
 	*
-	* @param templateKey the template key of this d d m template
+	* @param templateKey the template key of this ddm template
 	*/
 	@Override
 	public void setTemplateKey(java.lang.String templateKey) {
@@ -1184,9 +1184,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the type of this d d m template.
+	* Sets the type of this ddm template.
 	*
-	* @param type the type of this d d m template
+	* @param type the type of this ddm template
 	*/
 	@Override
 	public void setType(java.lang.String type) {
@@ -1194,9 +1194,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the user ID of this d d m template.
+	* Sets the user ID of this ddm template.
 	*
-	* @param userId the user ID of this d d m template
+	* @param userId the user ID of this ddm template
 	*/
 	@Override
 	public void setUserId(long userId) {
@@ -1204,9 +1204,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the user name of this d d m template.
+	* Sets the user name of this ddm template.
 	*
-	* @param userName the user name of this d d m template
+	* @param userName the user name of this ddm template
 	*/
 	@Override
 	public void setUserName(java.lang.String userName) {
@@ -1214,9 +1214,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the user uuid of this d d m template.
+	* Sets the user uuid of this ddm template.
 	*
-	* @param userUuid the user uuid of this d d m template
+	* @param userUuid the user uuid of this ddm template
 	*/
 	@Override
 	public void setUserUuid(java.lang.String userUuid) {
@@ -1224,9 +1224,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the uuid of this d d m template.
+	* Sets the uuid of this ddm template.
 	*
-	* @param uuid the uuid of this d d m template
+	* @param uuid the uuid of this ddm template
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {
@@ -1234,9 +1234,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the version of this d d m template.
+	* Sets the version of this ddm template.
 	*
-	* @param version the version of this d d m template
+	* @param version the version of this ddm template
 	*/
 	@Override
 	public void setVersion(java.lang.String version) {
@@ -1244,9 +1244,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the version user ID of this d d m template.
+	* Sets the version user ID of this ddm template.
 	*
-	* @param versionUserId the version user ID of this d d m template
+	* @param versionUserId the version user ID of this ddm template
 	*/
 	@Override
 	public void setVersionUserId(long versionUserId) {
@@ -1254,9 +1254,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the version user name of this d d m template.
+	* Sets the version user name of this ddm template.
 	*
-	* @param versionUserName the version user name of this d d m template
+	* @param versionUserName the version user name of this ddm template
 	*/
 	@Override
 	public void setVersionUserName(java.lang.String versionUserName) {
@@ -1264,9 +1264,9 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	/**
-	* Sets the version user uuid of this d d m template.
+	* Sets the version user uuid of this ddm template.
 	*
-	* @param versionUserUuid the version user uuid of this d d m template
+	* @param versionUserUuid the version user uuid of this ddm template
 	*/
 	@Override
 	public void setVersionUserUuid(java.lang.String versionUserUuid) {

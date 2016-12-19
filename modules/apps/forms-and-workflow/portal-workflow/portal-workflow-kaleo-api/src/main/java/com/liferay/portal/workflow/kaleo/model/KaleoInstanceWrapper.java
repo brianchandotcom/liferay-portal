@@ -378,9 +378,9 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	/**
-	* Returns the class p k of this kaleo instance.
+	* Returns the class pk of this kaleo instance.
 	*
-	* @return the class p k of this kaleo instance
+	* @return the class pk of this kaleo instance
 	*/
 	@Override
 	public long getClassPK() {
@@ -478,9 +478,9 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 	}
 
 	/**
-	* Sets the class p k of this kaleo instance.
+	* Sets the class pk of this kaleo instance.
 	*
-	* @param classPK the class p k of this kaleo instance
+	* @param classPK the class pk of this kaleo instance
 	*/
 	@Override
 	public void setClassPK(long classPK) {

@@ -725,7 +725,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching websites
 	*/
 	public java.util.List<Website> findByC_C_C(long companyId,
@@ -740,7 +740,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of websites
 	* @param end the upper bound of the range of websites (not inclusive)
 	* @return the range of matching websites
@@ -757,7 +757,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of websites
 	* @param end the upper bound of the range of websites (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -776,7 +776,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of websites
 	* @param end the upper bound of the range of websites (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -793,7 +793,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching website
 	* @throws NoSuchWebsiteException if a matching website could not be found
@@ -808,7 +808,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching website, or <code>null</code> if a matching website could not be found
 	*/
@@ -821,7 +821,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching website
 	* @throws NoSuchWebsiteException if a matching website could not be found
@@ -836,7 +836,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching website, or <code>null</code> if a matching website could not be found
 	*/
@@ -850,7 +850,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @param websiteId the primary key of the current website
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next website
 	* @throws NoSuchWebsiteException if a website with the primary key could not be found
@@ -865,7 +865,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByC_C_C(long companyId, long classNameId, long classPK);
 
@@ -874,7 +874,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching websites
 	*/
 	public int countByC_C_C(long companyId, long classNameId, long classPK);
@@ -884,7 +884,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the matching websites
 	*/
@@ -900,7 +900,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of websites
 	* @param end the upper bound of the range of websites (not inclusive)
@@ -918,7 +918,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of websites
 	* @param end the upper bound of the range of websites (not inclusive)
@@ -938,7 +938,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of websites
 	* @param end the upper bound of the range of websites (not inclusive)
@@ -956,7 +956,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching website
@@ -972,7 +972,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching website, or <code>null</code> if a matching website could not be found
@@ -986,7 +986,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching website
@@ -1002,7 +1002,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching website, or <code>null</code> if a matching website could not be found
@@ -1017,7 +1017,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @param websiteId the primary key of the current website
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next website
@@ -1033,7 +1033,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	*/
 	public void removeByC_C_C_P(long companyId, long classNameId, long classPK,
@@ -1044,7 +1044,7 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the number of matching websites
 	*/

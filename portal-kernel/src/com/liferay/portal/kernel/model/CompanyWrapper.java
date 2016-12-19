@@ -323,9 +323,9 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	/**
-	* Returns the home u r l of this company.
+	* Returns the home url of this company.
 	*
-	* @return the home u r l of this company
+	* @return the home url of this company
 	*/
 	@Override
 	public java.lang.String getHomeURL() {
@@ -524,9 +524,9 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	/**
-	* Sets the home u r l of this company.
+	* Sets the home url of this company.
 	*
-	* @param homeURL the home u r l of this company
+	* @param homeURL the home url of this company
 	*/
 	@Override
 	public void setHomeURL(java.lang.String homeURL) {

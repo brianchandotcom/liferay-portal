@@ -205,9 +205,9 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	/**
-	* Returns the d d m storage ID of this document library file entry metadata.
+	* Returns the ddm storage ID of this document library file entry metadata.
 	*
-	* @return the d d m storage ID of this document library file entry metadata
+	* @return the ddm storage ID of this document library file entry metadata
 	*/
 	@Override
 	public long getDDMStorageId() {
@@ -215,9 +215,9 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	/**
-	* Returns the d d m structure ID of this document library file entry metadata.
+	* Returns the ddm structure ID of this document library file entry metadata.
 	*
-	* @return the d d m structure ID of this document library file entry metadata
+	* @return the ddm structure ID of this document library file entry metadata
 	*/
 	@Override
 	public long getDDMStructureId() {
@@ -285,9 +285,9 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	/**
-	* Sets the d d m storage ID of this document library file entry metadata.
+	* Sets the ddm storage ID of this document library file entry metadata.
 	*
-	* @param DDMStorageId the d d m storage ID of this document library file entry metadata
+	* @param DDMStorageId the ddm storage ID of this document library file entry metadata
 	*/
 	@Override
 	public void setDDMStorageId(long DDMStorageId) {
@@ -295,9 +295,9 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	}
 
 	/**
-	* Sets the d d m structure ID of this document library file entry metadata.
+	* Sets the ddm structure ID of this document library file entry metadata.
 	*
-	* @param DDMStructureId the d d m structure ID of this document library file entry metadata
+	* @param DDMStructureId the ddm structure ID of this document library file entry metadata
 	*/
 	@Override
 	public void setDDMStructureId(long DDMStructureId) {

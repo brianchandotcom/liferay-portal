@@ -848,9 +848,9 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Returns the friendly u r l of this layout.
+	* Returns the friendly url of this layout.
 	*
-	* @return the friendly u r l of this layout
+	* @return the friendly url of this layout
 	*/
 	@Override
 	public java.lang.String getFriendlyURL() {
@@ -1736,9 +1736,9 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	/**
-	* Sets the friendly u r l of this layout.
+	* Sets the friendly url of this layout.
 	*
-	* @param friendlyURL the friendly u r l of this layout
+	* @param friendlyURL the friendly url of this layout
 	*/
 	@Override
 	public void setFriendlyURL(java.lang.String friendlyURL) {

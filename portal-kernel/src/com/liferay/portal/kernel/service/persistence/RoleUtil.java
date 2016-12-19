@@ -2206,7 +2206,7 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching role
 	* @throws NoSuchRoleException if a matching role could not be found
 	*/
@@ -2221,7 +2221,7 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching role, or <code>null</code> if a matching role could not be found
 	*/
 	public static Role fetchByC_C_C(long companyId, long classNameId,
@@ -2234,7 +2234,7 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching role, or <code>null</code> if a matching role could not be found
 	*/
@@ -2250,7 +2250,7 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the role that was removed
 	*/
 	public static Role removeByC_C_C(long companyId, long classNameId,
@@ -2264,7 +2264,7 @@ public class RoleUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching roles
 	*/
 	public static int countByC_C_C(long companyId, long classNameId,

@@ -44,101 +44,101 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a web d a v props model instance should use the {@link WebDAVProps} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a web dav props model instance should use the {@link WebDAVProps} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this web d a v props.
+	 * Returns the primary key of this web dav props.
 	 *
-	 * @return the primary key of this web d a v props
+	 * @return the primary key of this web dav props
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this web d a v props.
+	 * Sets the primary key of this web dav props.
 	 *
-	 * @param primaryKey the primary key of this web d a v props
+	 * @param primaryKey the primary key of this web dav props
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the mvcc version of this web d a v props.
+	 * Returns the mvcc version of this web dav props.
 	 *
-	 * @return the mvcc version of this web d a v props
+	 * @return the mvcc version of this web dav props
 	 */
 	@Override
 	public long getMvccVersion();
 
 	/**
-	 * Sets the mvcc version of this web d a v props.
+	 * Sets the mvcc version of this web dav props.
 	 *
-	 * @param mvccVersion the mvcc version of this web d a v props
+	 * @param mvccVersion the mvcc version of this web dav props
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
 
 	/**
-	 * Returns the web dav props ID of this web d a v props.
+	 * Returns the web dav props ID of this web dav props.
 	 *
-	 * @return the web dav props ID of this web d a v props
+	 * @return the web dav props ID of this web dav props
 	 */
 	public long getWebDavPropsId();
 
 	/**
-	 * Sets the web dav props ID of this web d a v props.
+	 * Sets the web dav props ID of this web dav props.
 	 *
-	 * @param webDavPropsId the web dav props ID of this web d a v props
+	 * @param webDavPropsId the web dav props ID of this web dav props
 	 */
 	public void setWebDavPropsId(long webDavPropsId);
 
 	/**
-	 * Returns the company ID of this web d a v props.
+	 * Returns the company ID of this web dav props.
 	 *
-	 * @return the company ID of this web d a v props
+	 * @return the company ID of this web dav props
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this web d a v props.
+	 * Sets the company ID of this web dav props.
 	 *
-	 * @param companyId the company ID of this web d a v props
+	 * @param companyId the company ID of this web dav props
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the create date of this web d a v props.
+	 * Returns the create date of this web dav props.
 	 *
-	 * @return the create date of this web d a v props
+	 * @return the create date of this web dav props
 	 */
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this web d a v props.
+	 * Sets the create date of this web dav props.
 	 *
-	 * @param createDate the create date of this web d a v props
+	 * @param createDate the create date of this web dav props
 	 */
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this web d a v props.
+	 * Returns the modified date of this web dav props.
 	 *
-	 * @return the modified date of this web d a v props
+	 * @return the modified date of this web dav props
 	 */
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this web d a v props.
+	 * Sets the modified date of this web dav props.
 	 *
-	 * @param modifiedDate the modified date of this web d a v props
+	 * @param modifiedDate the modified date of this web dav props
 	 */
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the fully qualified class name of this web d a v props.
+	 * Returns the fully qualified class name of this web dav props.
 	 *
-	 * @return the fully qualified class name of this web d a v props
+	 * @return the fully qualified class name of this web dav props
 	 */
 	@Override
 	public String getClassName();
@@ -146,49 +146,49 @@ public interface WebDAVPropsModel extends AttachedModel, BaseModel<WebDAVProps>,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class name ID of this web d a v props.
+	 * Returns the class name ID of this web dav props.
 	 *
-	 * @return the class name ID of this web d a v props
+	 * @return the class name ID of this web dav props
 	 */
 	@Override
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this web d a v props.
+	 * Sets the class name ID of this web dav props.
 	 *
-	 * @param classNameId the class name ID of this web d a v props
+	 * @param classNameId the class name ID of this web dav props
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this web d a v props.
+	 * Returns the class pk of this web dav props.
 	 *
-	 * @return the class p k of this web d a v props
+	 * @return the class pk of this web dav props
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this web d a v props.
+	 * Sets the class pk of this web dav props.
 	 *
-	 * @param classPK the class p k of this web d a v props
+	 * @param classPK the class pk of this web dav props
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the props of this web d a v props.
+	 * Returns the props of this web dav props.
 	 *
-	 * @return the props of this web d a v props
+	 * @return the props of this web dav props
 	 */
 	@AutoEscape
 	public String getProps();
 
 	/**
-	 * Sets the props of this web d a v props.
+	 * Sets the props of this web dav props.
 	 *
-	 * @param props the props of this web d a v props
+	 * @param props the props of this web dav props
 	 */
 	public void setProps(String props);
 

@@ -54,10 +54,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Adds the layout friendly u r l to the database. Also notifies the appropriate model listeners.
+	* Adds the layout friendly url to the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutFriendlyURL the layout friendly u r l
-	* @return the layout friendly u r l that was added
+	* @param layoutFriendlyURL the layout friendly url
+	* @return the layout friendly url that was added
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL addLayoutFriendlyURL(
@@ -77,10 +77,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Creates a new layout friendly u r l with the primary key. Does not add the layout friendly u r l to the database.
+	* Creates a new layout friendly url with the primary key. Does not add the layout friendly url to the database.
 	*
-	* @param layoutFriendlyURLId the primary key for the new layout friendly u r l
-	* @return the new layout friendly u r l
+	* @param layoutFriendlyURLId the primary key for the new layout friendly url
+	* @return the new layout friendly url
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL createLayoutFriendlyURL(
@@ -89,10 +89,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the layout friendly u r l from the database. Also notifies the appropriate model listeners.
+	* Deletes the layout friendly url from the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutFriendlyURL the layout friendly u r l
-	* @return the layout friendly u r l that was removed
+	* @param layoutFriendlyURL the layout friendly url
+	* @return the layout friendly url that was removed
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
@@ -101,11 +101,11 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the layout friendly u r l with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the layout friendly url with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	* @return the layout friendly u r l that was removed
-	* @throws PortalException if a layout friendly u r l with the primary key could not be found
+	* @param layoutFriendlyURLId the primary key of the layout friendly url
+	* @return the layout friendly url that was removed
+	* @throws PortalException if a layout friendly url with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL deleteLayoutFriendlyURL(
@@ -150,11 +150,11 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns the layout friendly u r l matching the UUID and group.
+	* Returns the layout friendly url matching the UUID and group.
 	*
-	* @param uuid the layout friendly u r l's UUID
+	* @param uuid the layout friendly url's UUID
 	* @param groupId the primary key of the group
-	* @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	* @return the matching layout friendly url, or <code>null</code> if a matching layout friendly url could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
@@ -164,11 +164,11 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns the layout friendly u r l with the primary key.
+	* Returns the layout friendly url with the primary key.
 	*
-	* @param layoutFriendlyURLId the primary key of the layout friendly u r l
-	* @return the layout friendly u r l
-	* @throws PortalException if a layout friendly u r l with the primary key could not be found
+	* @param layoutFriendlyURLId the primary key of the layout friendly url
+	* @return the layout friendly url
+	* @throws PortalException if a layout friendly url with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURL(
@@ -194,12 +194,12 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns the layout friendly u r l matching the UUID and group.
+	* Returns the layout friendly url matching the UUID and group.
 	*
-	* @param uuid the layout friendly u r l's UUID
+	* @param uuid the layout friendly url's UUID
 	* @param groupId the primary key of the group
-	* @return the matching layout friendly u r l
-	* @throws PortalException if a matching layout friendly u r l could not be found
+	* @return the matching layout friendly url
+	* @throws PortalException if a matching layout friendly url could not be found
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(
@@ -210,10 +210,10 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Updates the layout friendly u r l in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the layout friendly url in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param layoutFriendlyURL the layout friendly u r l
-	* @return the layout friendly u r l that was updated
+	* @param layoutFriendlyURL the layout friendly url
+	* @return the layout friendly url that was updated
 	*/
 	@Override
 	public com.liferay.portal.kernel.model.LayoutFriendlyURL updateLayoutFriendlyURL(
@@ -250,9 +250,9 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of layout friendly u r ls.
+	* Returns the number of layout friendly urls.
 	*
-	* @return the number of layout friendly u r ls
+	* @return the number of layout friendly urls
 	*/
 	@Override
 	public int getLayoutFriendlyURLsCount() {
@@ -336,15 +336,15 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the layout friendly u r ls.
+	* Returns a range of all the layout friendly urls.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of layout friendly u r ls
-	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	* @return the range of layout friendly u r ls
+	* @param start the lower bound of the range of layout friendly urls
+	* @param end the upper bound of the range of layout friendly urls (not inclusive)
+	* @return the range of layout friendly urls
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLs(
@@ -366,11 +366,11 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns all the layout friendly u r ls matching the UUID and company.
+	* Returns all the layout friendly urls matching the UUID and company.
 	*
-	* @param uuid the UUID of the layout friendly u r ls
+	* @param uuid the UUID of the layout friendly urls
 	* @param companyId the primary key of the company
-	* @return the matching layout friendly u r ls, or an empty list if no matches were found
+	* @return the matching layout friendly urls, or an empty list if no matches were found
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(
@@ -380,14 +380,14 @@ public class LayoutFriendlyURLLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of layout friendly u r ls matching the UUID and company.
+	* Returns a range of layout friendly urls matching the UUID and company.
 	*
-	* @param uuid the UUID of the layout friendly u r ls
+	* @param uuid the UUID of the layout friendly urls
 	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of layout friendly u r ls
-	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	* @param start the lower bound of the range of layout friendly urls
+	* @param end the upper bound of the range of layout friendly urls (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching layout friendly u r ls, or an empty list if no matches were found
+	* @return the range of matching layout friendly urls, or an empty list if no matches were found
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.model.LayoutFriendlyURL> getLayoutFriendlyURLsByUuidAndCompanyId(

@@ -86,7 +86,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Returns all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the matching tickets
 	*/
@@ -101,7 +101,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
@@ -118,7 +118,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
@@ -137,7 +137,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
@@ -154,7 +154,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Returns the first ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ticket
@@ -168,7 +168,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Returns the first ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ticket, or <code>null</code> if a matching ticket could not be found
@@ -180,7 +180,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ticket
@@ -194,7 +194,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
@@ -207,7 +207,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	*
 	* @param ticketId the primary key of the current ticket
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ticket
@@ -222,7 +222,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Removes all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	*/
 	public void removeByC_C_T(long classNameId, long classPK, int type);
@@ -231,7 +231,7 @@ public interface TicketPersistence extends BasePersistence<Ticket> {
 	* Returns the number of tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the number of matching tickets
 	*/

@@ -310,9 +310,9 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	}
 
 	/**
-	* Returns the top m b message ID of this user thread.
+	* Returns the top mb message ID of this user thread.
 	*
-	* @return the top m b message ID of this user thread
+	* @return the top mb message ID of this user thread
 	*/
 	@Override
 	public long getTopMBMessageId() {
@@ -446,9 +446,9 @@ public class UserThreadWrapper implements UserThread, ModelWrapper<UserThread> {
 	}
 
 	/**
-	* Sets the top m b message ID of this user thread.
+	* Sets the top mb message ID of this user thread.
 	*
-	* @param topMBMessageId the top m b message ID of this user thread
+	* @param topMBMessageId the top mb message ID of this user thread
 	*/
 	@Override
 	public void setTopMBMessageId(long topMBMessageId) {

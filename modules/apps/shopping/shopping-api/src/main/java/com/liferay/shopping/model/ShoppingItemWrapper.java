@@ -630,9 +630,9 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Returns the large image u r l of this shopping item.
+	* Returns the large image url of this shopping item.
 	*
-	* @return the large image u r l of this shopping item
+	* @return the large image url of this shopping item
 	*/
 	@Override
 	public java.lang.String getLargeImageURL() {
@@ -640,9 +640,9 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Returns the medium image u r l of this shopping item.
+	* Returns the medium image url of this shopping item.
 	*
-	* @return the medium image u r l of this shopping item
+	* @return the medium image url of this shopping item
 	*/
 	@Override
 	public java.lang.String getMediumImageURL() {
@@ -686,9 +686,9 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Returns the small image u r l of this shopping item.
+	* Returns the small image url of this shopping item.
 	*
-	* @return the small image u r l of this shopping item
+	* @return the small image url of this shopping item
 	*/
 	@Override
 	public java.lang.String getSmallImageURL() {
@@ -999,9 +999,9 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Sets the large image u r l of this shopping item.
+	* Sets the large image url of this shopping item.
 	*
-	* @param largeImageURL the large image u r l of this shopping item
+	* @param largeImageURL the large image url of this shopping item
 	*/
 	@Override
 	public void setLargeImageURL(java.lang.String largeImageURL) {
@@ -1039,9 +1039,9 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Sets the medium image u r l of this shopping item.
+	* Sets the medium image url of this shopping item.
 	*
-	* @param mediumImageURL the medium image u r l of this shopping item
+	* @param mediumImageURL the medium image url of this shopping item
 	*/
 	@Override
 	public void setMediumImageURL(java.lang.String mediumImageURL) {
@@ -1179,9 +1179,9 @@ public class ShoppingItemWrapper implements ShoppingItem,
 	}
 
 	/**
-	* Sets the small image u r l of this shopping item.
+	* Sets the small image url of this shopping item.
 	*
-	* @param smallImageURL the small image u r l of this shopping item
+	* @param smallImageURL the small image url of this shopping item
 	*/
 	@Override
 	public void setSmallImageURL(java.lang.String smallImageURL) {

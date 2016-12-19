@@ -67,7 +67,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d l record version model instance should use the {@link DDLRecordVersion} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddl record version model instance should use the {@link DDLRecordVersion} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDLRecordVersion";
 	public static final Object[][] TABLE_COLUMNS = {

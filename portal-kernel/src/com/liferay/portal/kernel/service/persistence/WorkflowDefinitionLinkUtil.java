@@ -690,8 +690,8 @@ public class WorkflowDefinitionLinkUtil {
 	* @param groupId the group ID
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param typePK the type p k
+	* @param classPK the class pk
+	* @param typePK the type pk
 	* @return the matching workflow definition link
 	* @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
 	*/
@@ -709,8 +709,8 @@ public class WorkflowDefinitionLinkUtil {
 	* @param groupId the group ID
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param typePK the type p k
+	* @param classPK the class pk
+	* @param typePK the type pk
 	* @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	*/
 	public static WorkflowDefinitionLink fetchByG_C_C_C_T(long groupId,
@@ -726,8 +726,8 @@ public class WorkflowDefinitionLinkUtil {
 	* @param groupId the group ID
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param typePK the type p k
+	* @param classPK the class pk
+	* @param typePK the type pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
 	*/
@@ -745,8 +745,8 @@ public class WorkflowDefinitionLinkUtil {
 	* @param groupId the group ID
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param typePK the type p k
+	* @param classPK the class pk
+	* @param typePK the type pk
 	* @return the workflow definition link that was removed
 	*/
 	public static WorkflowDefinitionLink removeByG_C_C_C_T(long groupId,
@@ -763,8 +763,8 @@ public class WorkflowDefinitionLinkUtil {
 	* @param groupId the group ID
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @param typePK the type p k
+	* @param classPK the class pk
+	* @param typePK the type pk
 	* @return the number of matching workflow definition links
 	*/
 	public static int countByG_C_C_C_T(long groupId, long companyId,

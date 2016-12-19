@@ -208,16 +208,16 @@ public interface KaleoTaskAssignmentModel extends BaseModel<KaleoTaskAssignment>
 	public void setKaleoClassName(String kaleoClassName);
 
 	/**
-	 * Returns the kaleo class p k of this kaleo task assignment.
+	 * Returns the kaleo class pk of this kaleo task assignment.
 	 *
-	 * @return the kaleo class p k of this kaleo task assignment
+	 * @return the kaleo class pk of this kaleo task assignment
 	 */
 	public long getKaleoClassPK();
 
 	/**
-	 * Sets the kaleo class p k of this kaleo task assignment.
+	 * Sets the kaleo class pk of this kaleo task assignment.
 	 *
-	 * @param kaleoClassPK the kaleo class p k of this kaleo task assignment
+	 * @param kaleoClassPK the kaleo class pk of this kaleo task assignment
 	 */
 	public void setKaleoClassPK(long kaleoClassPK);
 
@@ -265,16 +265,16 @@ public interface KaleoTaskAssignmentModel extends BaseModel<KaleoTaskAssignment>
 	public void setAssigneeClassName(String assigneeClassName);
 
 	/**
-	 * Returns the assignee class p k of this kaleo task assignment.
+	 * Returns the assignee class pk of this kaleo task assignment.
 	 *
-	 * @return the assignee class p k of this kaleo task assignment
+	 * @return the assignee class pk of this kaleo task assignment
 	 */
 	public long getAssigneeClassPK();
 
 	/**
-	 * Sets the assignee class p k of this kaleo task assignment.
+	 * Sets the assignee class pk of this kaleo task assignment.
 	 *
-	 * @param assigneeClassPK the assignee class p k of this kaleo task assignment
+	 * @param assigneeClassPK the assignee class pk of this kaleo task assignment
 	 */
 	public void setAssigneeClassPK(long assigneeClassPK);
 

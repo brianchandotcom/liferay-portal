@@ -823,17 +823,17 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	public void setHidden(boolean hidden);
 
 	/**
-	 * Returns the friendly u r l of this layout.
+	 * Returns the friendly url of this layout.
 	 *
-	 * @return the friendly u r l of this layout
+	 * @return the friendly url of this layout
 	 */
 	@AutoEscape
 	public String getFriendlyURL();
 
 	/**
-	 * Sets the friendly u r l of this layout.
+	 * Sets the friendly url of this layout.
 	 *
-	 * @param friendlyURL the friendly u r l of this layout
+	 * @param friendlyURL the friendly url of this layout
 	 */
 	public void setFriendlyURL(String friendlyURL);
 

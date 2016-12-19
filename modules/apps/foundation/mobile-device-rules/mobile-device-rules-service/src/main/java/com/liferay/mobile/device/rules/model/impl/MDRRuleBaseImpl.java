@@ -37,7 +37,7 @@ public abstract class MDRRuleBaseImpl extends MDRRuleModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a m d r rule model instance should use the {@link MDRRule} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a mdr rule model instance should use the {@link MDRRule} interface instead.
 	 */
 	@Override
 	public void persist() {

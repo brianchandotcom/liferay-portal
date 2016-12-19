@@ -274,9 +274,9 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	/**
-	* Returns the class p k of this ticket.
+	* Returns the class pk of this ticket.
 	*
-	* @return the class p k of this ticket
+	* @return the class pk of this ticket
 	*/
 	@Override
 	public long getClassPK() {
@@ -349,9 +349,9 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	/**
-	* Sets the class p k of this ticket.
+	* Sets the class pk of this ticket.
 	*
-	* @param classPK the class p k of this ticket
+	* @param classPK the class pk of this ticket
 	*/
 	@Override
 	public void setClassPK(long classPK) {

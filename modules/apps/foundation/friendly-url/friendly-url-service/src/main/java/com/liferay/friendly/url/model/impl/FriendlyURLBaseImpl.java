@@ -37,7 +37,7 @@ public abstract class FriendlyURLBaseImpl extends FriendlyURLModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a friendly u r l model instance should use the {@link FriendlyURL} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a friendly url model instance should use the {@link FriendlyURL} interface instead.
 	 */
 	@Override
 	public void persist() {

@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * The persistence utility for the sync d l file version diff service. This utility wraps {@link com.liferay.sync.service.persistence.impl.SyncDLFileVersionDiffPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the sync dl file version diff service. This utility wraps {@link com.liferay.sync.service.persistence.impl.SyncDLFileVersionDiffPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -115,10 +115,10 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns all the sync d l file version diffs where fileEntryId = &#63;.
+	* Returns all the sync dl file version diffs where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
-	* @return the matching sync d l file version diffs
+	* @return the matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId) {
@@ -126,16 +126,16 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns a range of all the sync d l file version diffs where fileEntryId = &#63;.
+	* Returns a range of all the sync dl file version diffs where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
-	* @return the range of matching sync d l file version diffs
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
+	* @return the range of matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId, int start, int end) {
@@ -143,17 +143,17 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the sync d l file version diffs where fileEntryId = &#63;.
+	* Returns an ordered range of all the sync dl file version diffs where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching sync d l file version diffs
+	* @return the ordered range of matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId, int start, int end,
@@ -163,18 +163,18 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the sync d l file version diffs where fileEntryId = &#63;.
+	* Returns an ordered range of all the sync dl file version diffs where fileEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param fileEntryId the file entry ID
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching sync d l file version diffs
+	* @return the ordered range of matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByFileEntryId(
 		long fileEntryId, int start, int end,
@@ -186,12 +186,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the first sync d l file version diff in the ordered set where fileEntryId = &#63;.
+	* Returns the first sync dl file version diff in the ordered set where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a matching sync d l file version diff could not be found
+	* @return the first matching sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff findByFileEntryId_First(
 		long fileEntryId,
@@ -202,11 +202,11 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the first sync d l file version diff in the ordered set where fileEntryId = &#63;.
+	* Returns the first sync dl file version diff in the ordered set where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching sync d l file version diff, or <code>null</code> if a matching sync d l file version diff could not be found
+	* @return the first matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByFileEntryId_First(
 		long fileEntryId,
@@ -216,12 +216,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the last sync d l file version diff in the ordered set where fileEntryId = &#63;.
+	* Returns the last sync dl file version diff in the ordered set where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a matching sync d l file version diff could not be found
+	* @return the last matching sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff findByFileEntryId_Last(
 		long fileEntryId,
@@ -232,11 +232,11 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the last sync d l file version diff in the ordered set where fileEntryId = &#63;.
+	* Returns the last sync dl file version diff in the ordered set where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching sync d l file version diff, or <code>null</code> if a matching sync d l file version diff could not be found
+	* @return the last matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByFileEntryId_Last(
 		long fileEntryId,
@@ -246,13 +246,13 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the sync d l file version diffs before and after the current sync d l file version diff in the ordered set where fileEntryId = &#63;.
+	* Returns the sync dl file version diffs before and after the current sync dl file version diff in the ordered set where fileEntryId = &#63;.
 	*
-	* @param syncDLFileVersionDiffId the primary key of the current sync d l file version diff
+	* @param syncDLFileVersionDiffId the primary key of the current sync dl file version diff
 	* @param fileEntryId the file entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a sync d l file version diff with the primary key could not be found
+	* @return the previous, current, and next sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a sync dl file version diff with the primary key could not be found
 	*/
 	public static SyncDLFileVersionDiff[] findByFileEntryId_PrevAndNext(
 		long syncDLFileVersionDiffId, long fileEntryId,
@@ -264,7 +264,7 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Removes all the sync d l file version diffs where fileEntryId = &#63; from the database.
+	* Removes all the sync dl file version diffs where fileEntryId = &#63; from the database.
 	*
 	* @param fileEntryId the file entry ID
 	*/
@@ -273,20 +273,20 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the number of sync d l file version diffs where fileEntryId = &#63;.
+	* Returns the number of sync dl file version diffs where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
-	* @return the number of matching sync d l file version diffs
+	* @return the number of matching sync dl file version diffs
 	*/
 	public static int countByFileEntryId(long fileEntryId) {
 		return getPersistence().countByFileEntryId(fileEntryId);
 	}
 
 	/**
-	* Returns all the sync d l file version diffs where expirationDate &lt; &#63;.
+	* Returns all the sync dl file version diffs where expirationDate &lt; &#63;.
 	*
 	* @param expirationDate the expiration date
-	* @return the matching sync d l file version diffs
+	* @return the matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate) {
@@ -294,16 +294,16 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns a range of all the sync d l file version diffs where expirationDate &lt; &#63;.
+	* Returns a range of all the sync dl file version diffs where expirationDate &lt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param expirationDate the expiration date
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
-	* @return the range of matching sync d l file version diffs
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
+	* @return the range of matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate, int start, int end) {
@@ -311,17 +311,17 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the sync d l file version diffs where expirationDate &lt; &#63;.
+	* Returns an ordered range of all the sync dl file version diffs where expirationDate &lt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param expirationDate the expiration date
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching sync d l file version diffs
+	* @return the ordered range of matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate, int start, int end,
@@ -332,18 +332,18 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the sync d l file version diffs where expirationDate &lt; &#63;.
+	* Returns an ordered range of all the sync dl file version diffs where expirationDate &lt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param expirationDate the expiration date
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching sync d l file version diffs
+	* @return the ordered range of matching sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findByExpirationDate(
 		Date expirationDate, int start, int end,
@@ -355,12 +355,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the first sync d l file version diff in the ordered set where expirationDate &lt; &#63;.
+	* Returns the first sync dl file version diff in the ordered set where expirationDate &lt; &#63;.
 	*
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a matching sync d l file version diff could not be found
+	* @return the first matching sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff findByExpirationDate_First(
 		Date expirationDate,
@@ -371,11 +371,11 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the first sync d l file version diff in the ordered set where expirationDate &lt; &#63;.
+	* Returns the first sync dl file version diff in the ordered set where expirationDate &lt; &#63;.
 	*
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching sync d l file version diff, or <code>null</code> if a matching sync d l file version diff could not be found
+	* @return the first matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByExpirationDate_First(
 		Date expirationDate,
@@ -386,12 +386,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the last sync d l file version diff in the ordered set where expirationDate &lt; &#63;.
+	* Returns the last sync dl file version diff in the ordered set where expirationDate &lt; &#63;.
 	*
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a matching sync d l file version diff could not be found
+	* @return the last matching sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff findByExpirationDate_Last(
 		Date expirationDate,
@@ -402,11 +402,11 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the last sync d l file version diff in the ordered set where expirationDate &lt; &#63;.
+	* Returns the last sync dl file version diff in the ordered set where expirationDate &lt; &#63;.
 	*
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching sync d l file version diff, or <code>null</code> if a matching sync d l file version diff could not be found
+	* @return the last matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByExpirationDate_Last(
 		Date expirationDate,
@@ -416,13 +416,13 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the sync d l file version diffs before and after the current sync d l file version diff in the ordered set where expirationDate &lt; &#63;.
+	* Returns the sync dl file version diffs before and after the current sync dl file version diff in the ordered set where expirationDate &lt; &#63;.
 	*
-	* @param syncDLFileVersionDiffId the primary key of the current sync d l file version diff
+	* @param syncDLFileVersionDiffId the primary key of the current sync dl file version diff
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a sync d l file version diff with the primary key could not be found
+	* @return the previous, current, and next sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a sync dl file version diff with the primary key could not be found
 	*/
 	public static SyncDLFileVersionDiff[] findByExpirationDate_PrevAndNext(
 		long syncDLFileVersionDiffId, Date expirationDate,
@@ -434,7 +434,7 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Removes all the sync d l file version diffs where expirationDate &lt; &#63; from the database.
+	* Removes all the sync dl file version diffs where expirationDate &lt; &#63; from the database.
 	*
 	* @param expirationDate the expiration date
 	*/
@@ -443,23 +443,23 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the number of sync d l file version diffs where expirationDate &lt; &#63;.
+	* Returns the number of sync dl file version diffs where expirationDate &lt; &#63;.
 	*
 	* @param expirationDate the expiration date
-	* @return the number of matching sync d l file version diffs
+	* @return the number of matching sync dl file version diffs
 	*/
 	public static int countByExpirationDate(Date expirationDate) {
 		return getPersistence().countByExpirationDate(expirationDate);
 	}
 
 	/**
-	* Returns the sync d l file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or throws a {@link NoSuchDLFileVersionDiffException} if it could not be found.
+	* Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or throws a {@link NoSuchDLFileVersionDiffException} if it could not be found.
 	*
 	* @param fileEntryId the file entry ID
 	* @param sourceFileVersionId the source file version ID
 	* @param targetFileVersionId the target file version ID
-	* @return the matching sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a matching sync d l file version diff could not be found
+	* @return the matching sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff findByF_S_T(long fileEntryId,
 		long sourceFileVersionId, long targetFileVersionId)
@@ -470,12 +470,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the sync d l file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param fileEntryId the file entry ID
 	* @param sourceFileVersionId the source file version ID
 	* @param targetFileVersionId the target file version ID
-	* @return the matching sync d l file version diff, or <code>null</code> if a matching sync d l file version diff could not be found
+	* @return the matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByF_S_T(long fileEntryId,
 		long sourceFileVersionId, long targetFileVersionId) {
@@ -485,13 +485,13 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the sync d l file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param fileEntryId the file entry ID
 	* @param sourceFileVersionId the source file version ID
 	* @param targetFileVersionId the target file version ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching sync d l file version diff, or <code>null</code> if a matching sync d l file version diff could not be found
+	* @return the matching sync dl file version diff, or <code>null</code> if a matching sync dl file version diff could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByF_S_T(long fileEntryId,
 		long sourceFileVersionId, long targetFileVersionId,
@@ -502,12 +502,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Removes the sync d l file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; from the database.
+	* Removes the sync dl file version diff where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63; from the database.
 	*
 	* @param fileEntryId the file entry ID
 	* @param sourceFileVersionId the source file version ID
 	* @param targetFileVersionId the target file version ID
-	* @return the sync d l file version diff that was removed
+	* @return the sync dl file version diff that was removed
 	*/
 	public static SyncDLFileVersionDiff removeByF_S_T(long fileEntryId,
 		long sourceFileVersionId, long targetFileVersionId)
@@ -518,12 +518,12 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the number of sync d l file version diffs where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63;.
+	* Returns the number of sync dl file version diffs where fileEntryId = &#63; and sourceFileVersionId = &#63; and targetFileVersionId = &#63;.
 	*
 	* @param fileEntryId the file entry ID
 	* @param sourceFileVersionId the source file version ID
 	* @param targetFileVersionId the target file version ID
-	* @return the number of matching sync d l file version diffs
+	* @return the number of matching sync dl file version diffs
 	*/
 	public static int countByF_S_T(long fileEntryId, long sourceFileVersionId,
 		long targetFileVersionId) {
@@ -533,18 +533,18 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Caches the sync d l file version diff in the entity cache if it is enabled.
+	* Caches the sync dl file version diff in the entity cache if it is enabled.
 	*
-	* @param syncDLFileVersionDiff the sync d l file version diff
+	* @param syncDLFileVersionDiff the sync dl file version diff
 	*/
 	public static void cacheResult(SyncDLFileVersionDiff syncDLFileVersionDiff) {
 		getPersistence().cacheResult(syncDLFileVersionDiff);
 	}
 
 	/**
-	* Caches the sync d l file version diffs in the entity cache if it is enabled.
+	* Caches the sync dl file version diffs in the entity cache if it is enabled.
 	*
-	* @param syncDLFileVersionDiffs the sync d l file version diffs
+	* @param syncDLFileVersionDiffs the sync dl file version diffs
 	*/
 	public static void cacheResult(
 		List<SyncDLFileVersionDiff> syncDLFileVersionDiffs) {
@@ -552,21 +552,21 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Creates a new sync d l file version diff with the primary key. Does not add the sync d l file version diff to the database.
+	* Creates a new sync dl file version diff with the primary key. Does not add the sync dl file version diff to the database.
 	*
-	* @param syncDLFileVersionDiffId the primary key for the new sync d l file version diff
-	* @return the new sync d l file version diff
+	* @param syncDLFileVersionDiffId the primary key for the new sync dl file version diff
+	* @return the new sync dl file version diff
 	*/
 	public static SyncDLFileVersionDiff create(long syncDLFileVersionDiffId) {
 		return getPersistence().create(syncDLFileVersionDiffId);
 	}
 
 	/**
-	* Removes the sync d l file version diff with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the sync dl file version diff with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param syncDLFileVersionDiffId the primary key of the sync d l file version diff
-	* @return the sync d l file version diff that was removed
-	* @throws NoSuchDLFileVersionDiffException if a sync d l file version diff with the primary key could not be found
+	* @param syncDLFileVersionDiffId the primary key of the sync dl file version diff
+	* @return the sync dl file version diff that was removed
+	* @throws NoSuchDLFileVersionDiffException if a sync dl file version diff with the primary key could not be found
 	*/
 	public static SyncDLFileVersionDiff remove(long syncDLFileVersionDiffId)
 		throws com.liferay.sync.exception.NoSuchDLFileVersionDiffException {
@@ -579,11 +579,11 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the sync d l file version diff with the primary key or throws a {@link NoSuchDLFileVersionDiffException} if it could not be found.
+	* Returns the sync dl file version diff with the primary key or throws a {@link NoSuchDLFileVersionDiffException} if it could not be found.
 	*
-	* @param syncDLFileVersionDiffId the primary key of the sync d l file version diff
-	* @return the sync d l file version diff
-	* @throws NoSuchDLFileVersionDiffException if a sync d l file version diff with the primary key could not be found
+	* @param syncDLFileVersionDiffId the primary key of the sync dl file version diff
+	* @return the sync dl file version diff
+	* @throws NoSuchDLFileVersionDiffException if a sync dl file version diff with the primary key could not be found
 	*/
 	public static SyncDLFileVersionDiff findByPrimaryKey(
 		long syncDLFileVersionDiffId)
@@ -592,10 +592,10 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns the sync d l file version diff with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the sync dl file version diff with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param syncDLFileVersionDiffId the primary key of the sync d l file version diff
-	* @return the sync d l file version diff, or <code>null</code> if a sync d l file version diff with the primary key could not be found
+	* @param syncDLFileVersionDiffId the primary key of the sync dl file version diff
+	* @return the sync dl file version diff, or <code>null</code> if a sync dl file version diff with the primary key could not be found
 	*/
 	public static SyncDLFileVersionDiff fetchByPrimaryKey(
 		long syncDLFileVersionDiffId) {
@@ -608,40 +608,40 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns all the sync d l file version diffs.
+	* Returns all the sync dl file version diffs.
 	*
-	* @return the sync d l file version diffs
+	* @return the sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the sync d l file version diffs.
+	* Returns a range of all the sync dl file version diffs.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
-	* @return the range of sync d l file version diffs
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
+	* @return the range of sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the sync d l file version diffs.
+	* Returns an ordered range of all the sync dl file version diffs.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of sync d l file version diffs
+	* @return the ordered range of sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findAll(int start, int end,
 		OrderByComparator<SyncDLFileVersionDiff> orderByComparator) {
@@ -649,17 +649,17 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the sync d l file version diffs.
+	* Returns an ordered range of all the sync dl file version diffs.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SyncDLFileVersionDiffModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of sync d l file version diffs
-	* @param end the upper bound of the range of sync d l file version diffs (not inclusive)
+	* @param start the lower bound of the range of sync dl file version diffs
+	* @param end the upper bound of the range of sync dl file version diffs (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of sync d l file version diffs
+	* @return the ordered range of sync dl file version diffs
 	*/
 	public static List<SyncDLFileVersionDiff> findAll(int start, int end,
 		OrderByComparator<SyncDLFileVersionDiff> orderByComparator,
@@ -669,16 +669,16 @@ public class SyncDLFileVersionDiffUtil {
 	}
 
 	/**
-	* Removes all the sync d l file version diffs from the database.
+	* Removes all the sync dl file version diffs from the database.
 	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of sync d l file version diffs.
+	* Returns the number of sync dl file version diffs.
 	*
-	* @return the number of sync d l file version diffs
+	* @return the number of sync dl file version diffs
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();

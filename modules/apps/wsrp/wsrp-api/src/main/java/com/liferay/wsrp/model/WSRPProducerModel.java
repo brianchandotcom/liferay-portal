@@ -48,172 +48,172 @@ public interface WSRPProducerModel extends BaseModel<WSRPProducer>, ShardedModel
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a w s r p producer model instance should use the {@link WSRPProducer} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a wsrp producer model instance should use the {@link WSRPProducer} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this w s r p producer.
+	 * Returns the primary key of this wsrp producer.
 	 *
-	 * @return the primary key of this w s r p producer
+	 * @return the primary key of this wsrp producer
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this w s r p producer.
+	 * Sets the primary key of this wsrp producer.
 	 *
-	 * @param primaryKey the primary key of this w s r p producer
+	 * @param primaryKey the primary key of this wsrp producer
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this w s r p producer.
+	 * Returns the uuid of this wsrp producer.
 	 *
-	 * @return the uuid of this w s r p producer
+	 * @return the uuid of this wsrp producer
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this w s r p producer.
+	 * Sets the uuid of this wsrp producer.
 	 *
-	 * @param uuid the uuid of this w s r p producer
+	 * @param uuid the uuid of this wsrp producer
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the wsrp producer ID of this w s r p producer.
+	 * Returns the wsrp producer ID of this wsrp producer.
 	 *
-	 * @return the wsrp producer ID of this w s r p producer
+	 * @return the wsrp producer ID of this wsrp producer
 	 */
 	public long getWsrpProducerId();
 
 	/**
-	 * Sets the wsrp producer ID of this w s r p producer.
+	 * Sets the wsrp producer ID of this wsrp producer.
 	 *
-	 * @param wsrpProducerId the wsrp producer ID of this w s r p producer
+	 * @param wsrpProducerId the wsrp producer ID of this wsrp producer
 	 */
 	public void setWsrpProducerId(long wsrpProducerId);
 
 	/**
-	 * Returns the group ID of this w s r p producer.
+	 * Returns the group ID of this wsrp producer.
 	 *
-	 * @return the group ID of this w s r p producer
+	 * @return the group ID of this wsrp producer
 	 */
 	public long getGroupId();
 
 	/**
-	 * Sets the group ID of this w s r p producer.
+	 * Sets the group ID of this wsrp producer.
 	 *
-	 * @param groupId the group ID of this w s r p producer
+	 * @param groupId the group ID of this wsrp producer
 	 */
 	public void setGroupId(long groupId);
 
 	/**
-	 * Returns the company ID of this w s r p producer.
+	 * Returns the company ID of this wsrp producer.
 	 *
-	 * @return the company ID of this w s r p producer
+	 * @return the company ID of this wsrp producer
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this w s r p producer.
+	 * Sets the company ID of this wsrp producer.
 	 *
-	 * @param companyId the company ID of this w s r p producer
+	 * @param companyId the company ID of this wsrp producer
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the create date of this w s r p producer.
+	 * Returns the create date of this wsrp producer.
 	 *
-	 * @return the create date of this w s r p producer
+	 * @return the create date of this wsrp producer
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this w s r p producer.
+	 * Sets the create date of this wsrp producer.
 	 *
-	 * @param createDate the create date of this w s r p producer
+	 * @param createDate the create date of this wsrp producer
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this w s r p producer.
+	 * Returns the modified date of this wsrp producer.
 	 *
-	 * @return the modified date of this w s r p producer
+	 * @return the modified date of this wsrp producer
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this w s r p producer.
+	 * Sets the modified date of this wsrp producer.
 	 *
-	 * @param modifiedDate the modified date of this w s r p producer
+	 * @param modifiedDate the modified date of this wsrp producer
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the name of this w s r p producer.
+	 * Returns the name of this wsrp producer.
 	 *
-	 * @return the name of this w s r p producer
+	 * @return the name of this wsrp producer
 	 */
 	@AutoEscape
 	public String getName();
 
 	/**
-	 * Sets the name of this w s r p producer.
+	 * Sets the name of this wsrp producer.
 	 *
-	 * @param name the name of this w s r p producer
+	 * @param name the name of this wsrp producer
 	 */
 	public void setName(String name);
 
 	/**
-	 * Returns the version of this w s r p producer.
+	 * Returns the version of this wsrp producer.
 	 *
-	 * @return the version of this w s r p producer
+	 * @return the version of this wsrp producer
 	 */
 	@AutoEscape
 	public String getVersion();
 
 	/**
-	 * Sets the version of this w s r p producer.
+	 * Sets the version of this wsrp producer.
 	 *
-	 * @param version the version of this w s r p producer
+	 * @param version the version of this wsrp producer
 	 */
 	public void setVersion(String version);
 
 	/**
-	 * Returns the portlet IDs of this w s r p producer.
+	 * Returns the portlet IDs of this wsrp producer.
 	 *
-	 * @return the portlet IDs of this w s r p producer
+	 * @return the portlet IDs of this wsrp producer
 	 */
 	@AutoEscape
 	public String getPortletIds();
 
 	/**
-	 * Sets the portlet IDs of this w s r p producer.
+	 * Sets the portlet IDs of this wsrp producer.
 	 *
-	 * @param portletIds the portlet IDs of this w s r p producer
+	 * @param portletIds the portlet IDs of this wsrp producer
 	 */
 	public void setPortletIds(String portletIds);
 
 	/**
-	 * Returns the last publish date of this w s r p producer.
+	 * Returns the last publish date of this wsrp producer.
 	 *
-	 * @return the last publish date of this w s r p producer
+	 * @return the last publish date of this wsrp producer
 	 */
 	public Date getLastPublishDate();
 
 	/**
-	 * Sets the last publish date of this w s r p producer.
+	 * Sets the last publish date of this wsrp producer.
 	 *
-	 * @param lastPublishDate the last publish date of this w s r p producer
+	 * @param lastPublishDate the last publish date of this wsrp producer
 	 */
 	public void setLastPublishDate(Date lastPublishDate);
 

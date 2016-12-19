@@ -312,9 +312,9 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	/**
-	* Returns the creator class p k of this microblogs entry.
+	* Returns the creator class pk of this microblogs entry.
 	*
-	* @return the creator class p k of this microblogs entry
+	* @return the creator class pk of this microblogs entry
 	*/
 	@Override
 	public long getCreatorClassPK() {
@@ -418,9 +418,9 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 	}
 
 	/**
-	* Sets the creator class p k of this microblogs entry.
+	* Sets the creator class pk of this microblogs entry.
 	*
-	* @param creatorClassPK the creator class p k of this microblogs entry
+	* @param creatorClassPK the creator class pk of this microblogs entry
 	*/
 	@Override
 	public void setCreatorClassPK(long creatorClassPK) {

@@ -926,7 +926,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching addresses
 	*/
 	public static List<Address> findByC_C_C(long companyId, long classNameId,
@@ -943,7 +943,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
 	* @return the range of matching addresses
@@ -963,7 +963,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -986,7 +986,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1006,7 +1006,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching address
 	* @throws NoSuchAddressException if a matching address could not be found
@@ -1024,7 +1024,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching address, or <code>null</code> if a matching address could not be found
 	*/
@@ -1040,7 +1040,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching address
 	* @throws NoSuchAddressException if a matching address could not be found
@@ -1058,7 +1058,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching address, or <code>null</code> if a matching address could not be found
 	*/
@@ -1075,7 +1075,7 @@ public class AddressUtil {
 	* @param addressId the primary key of the current address
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next address
 	* @throws NoSuchAddressException if a address with the primary key could not be found
@@ -1094,7 +1094,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C_C(long companyId, long classNameId,
 		long classPK) {
@@ -1106,7 +1106,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching addresses
 	*/
 	public static int countByC_C_C(long companyId, long classNameId,
@@ -1119,7 +1119,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @return the matching addresses
 	*/
@@ -1138,7 +1138,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
@@ -1160,7 +1160,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
@@ -1184,7 +1184,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
@@ -1205,7 +1205,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching address
@@ -1225,7 +1225,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching address, or <code>null</code> if a matching address could not be found
@@ -1243,7 +1243,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching address
@@ -1263,7 +1263,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching address, or <code>null</code> if a matching address could not be found
@@ -1282,7 +1282,7 @@ public class AddressUtil {
 	* @param addressId the primary key of the current address
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next address
@@ -1302,7 +1302,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	*/
 	public static void removeByC_C_C_M(long companyId, long classNameId,
@@ -1316,7 +1316,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param mailing the mailing
 	* @return the number of matching addresses
 	*/
@@ -1331,7 +1331,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the matching addresses
 	*/
@@ -1350,7 +1350,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
@@ -1372,7 +1372,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
@@ -1396,7 +1396,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
@@ -1417,7 +1417,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching address
@@ -1437,7 +1437,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching address, or <code>null</code> if a matching address could not be found
@@ -1455,7 +1455,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching address
@@ -1475,7 +1475,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching address, or <code>null</code> if a matching address could not be found
@@ -1494,7 +1494,7 @@ public class AddressUtil {
 	* @param addressId the primary key of the current address
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next address
@@ -1514,7 +1514,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	*/
 	public static void removeByC_C_C_P(long companyId, long classNameId,
@@ -1528,7 +1528,7 @@ public class AddressUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the number of matching addresses
 	*/

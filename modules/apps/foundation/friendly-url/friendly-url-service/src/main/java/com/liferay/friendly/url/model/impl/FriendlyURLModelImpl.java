@@ -62,7 +62,7 @@ public class FriendlyURLModelImpl extends BaseModelImpl<FriendlyURL>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a friendly u r l model instance should use the {@link FriendlyURL} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a friendly url model instance should use the {@link FriendlyURL} interface instead.
 	 */
 	public static final String TABLE_NAME = "FriendlyURL";
 	public static final Object[][] TABLE_COLUMNS = {

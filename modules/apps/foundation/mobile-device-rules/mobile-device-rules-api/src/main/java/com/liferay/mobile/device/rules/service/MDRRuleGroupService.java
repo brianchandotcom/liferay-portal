@@ -55,7 +55,7 @@ public interface MDRRuleGroupService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupServiceUtil} to access the m d r rule group remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link MDRRuleGroupServiceUtil} to access the mdr rule group remote service. Add custom service methods to {@link com.liferay.mobile.device.rules.service.impl.MDRRuleGroupServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public MDRRuleGroup addRuleGroup(long groupId,
 		Map<Locale, java.lang.String> nameMap,

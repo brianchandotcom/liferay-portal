@@ -203,17 +203,17 @@ public interface SocialActivityModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this social activity.
+	 * Returns the class pk of this social activity.
 	 *
-	 * @return the class p k of this social activity
+	 * @return the class pk of this social activity
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this social activity.
+	 * Sets the class pk of this social activity.
 	 *
-	 * @param classPK the class p k of this social activity
+	 * @param classPK the class pk of this social activity
 	 */
 	@Override
 	public void setClassPK(long classPK);
@@ -233,16 +233,16 @@ public interface SocialActivityModel extends AttachedModel,
 	public void setParentClassNameId(long parentClassNameId);
 
 	/**
-	 * Returns the parent class p k of this social activity.
+	 * Returns the parent class pk of this social activity.
 	 *
-	 * @return the parent class p k of this social activity
+	 * @return the parent class pk of this social activity
 	 */
 	public long getParentClassPK();
 
 	/**
-	 * Sets the parent class p k of this social activity.
+	 * Sets the parent class pk of this social activity.
 	 *
-	 * @param parentClassPK the parent class p k of this social activity
+	 * @param parentClassPK the parent class pk of this social activity
 	 */
 	public void setParentClassPK(long parentClassPK);
 

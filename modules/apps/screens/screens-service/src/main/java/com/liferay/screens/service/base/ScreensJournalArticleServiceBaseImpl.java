@@ -95,18 +95,18 @@ public abstract class ScreensJournalArticleServiceBaseImpl
 	}
 
 	/**
-	 * Returns the screens d d l record remote service.
+	 * Returns the screens ddl record remote service.
 	 *
-	 * @return the screens d d l record remote service
+	 * @return the screens ddl record remote service
 	 */
 	public com.liferay.screens.service.ScreensDDLRecordService getScreensDDLRecordService() {
 		return screensDDLRecordService;
 	}
 
 	/**
-	 * Sets the screens d d l record remote service.
+	 * Sets the screens ddl record remote service.
 	 *
-	 * @param screensDDLRecordService the screens d d l record remote service
+	 * @param screensDDLRecordService the screens ddl record remote service
 	 */
 	public void setScreensDDLRecordService(
 		com.liferay.screens.service.ScreensDDLRecordService screensDDLRecordService) {

@@ -1157,7 +1157,7 @@ public class SocialRequestUtil {
 	* Returns all the social requests where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching social requests
 	*/
 	public static List<SocialRequest> findByC_C(long classNameId, long classPK) {
@@ -1172,7 +1172,7 @@ public class SocialRequestUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social requests
 	* @param end the upper bound of the range of social requests (not inclusive)
 	* @return the range of matching social requests
@@ -1190,7 +1190,7 @@ public class SocialRequestUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social requests
 	* @param end the upper bound of the range of social requests (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1211,7 +1211,7 @@ public class SocialRequestUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of social requests
 	* @param end the upper bound of the range of social requests (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1230,7 +1230,7 @@ public class SocialRequestUtil {
 	* Returns the first social request in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
@@ -1246,7 +1246,7 @@ public class SocialRequestUtil {
 	* Returns the first social request in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social request, or <code>null</code> if a matching social request could not be found
 	*/
@@ -1260,7 +1260,7 @@ public class SocialRequestUtil {
 	* Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social request
 	* @throws NoSuchRequestException if a matching social request could not be found
@@ -1276,7 +1276,7 @@ public class SocialRequestUtil {
 	* Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social request, or <code>null</code> if a matching social request could not be found
 	*/
@@ -1291,7 +1291,7 @@ public class SocialRequestUtil {
 	*
 	* @param requestId the primary key of the current social request
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social request
 	* @throws NoSuchRequestException if a social request with the primary key could not be found
@@ -1309,7 +1309,7 @@ public class SocialRequestUtil {
 	* Removes all the social requests where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
@@ -1319,7 +1319,7 @@ public class SocialRequestUtil {
 	* Returns the number of social requests where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching social requests
 	*/
 	public static int countByC_C(long classNameId, long classPK) {
@@ -1506,7 +1506,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the matching social request
@@ -1525,7 +1525,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the matching social request, or <code>null</code> if a matching social request could not be found
@@ -1542,7 +1542,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param retrieveFromCache whether to retrieve from the finder cache
@@ -1560,7 +1560,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the social request that was removed
@@ -1578,7 +1578,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @return the number of matching social requests
@@ -1595,7 +1595,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @return the matching social requests
@@ -1615,7 +1615,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param start the lower bound of the range of social requests
@@ -1638,7 +1638,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param start the lower bound of the range of social requests
@@ -1663,7 +1663,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param start the lower bound of the range of social requests
@@ -1686,7 +1686,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1707,7 +1707,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1726,7 +1726,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1747,7 +1747,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1767,7 +1767,7 @@ public class SocialRequestUtil {
 	* @param requestId the primary key of the current social request
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1788,7 +1788,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	*/
@@ -1803,7 +1803,7 @@ public class SocialRequestUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param status the status
 	* @return the number of matching social requests
@@ -1818,7 +1818,7 @@ public class SocialRequestUtil {
 	* Returns all the social requests where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1839,7 +1839,7 @@ public class SocialRequestUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1863,7 +1863,7 @@ public class SocialRequestUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1888,7 +1888,7 @@ public class SocialRequestUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1911,7 +1911,7 @@ public class SocialRequestUtil {
 	* Returns the first social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1932,7 +1932,7 @@ public class SocialRequestUtil {
 	* Returns the first social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1951,7 +1951,7 @@ public class SocialRequestUtil {
 	* Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1972,7 +1972,7 @@ public class SocialRequestUtil {
 	* Returns the last social request in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -1992,7 +1992,7 @@ public class SocialRequestUtil {
 	*
 	* @param requestId the primary key of the current social request
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -2013,7 +2013,7 @@ public class SocialRequestUtil {
 	* Removes all the social requests where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status
@@ -2029,7 +2029,7 @@ public class SocialRequestUtil {
 	* Returns the number of social requests where classNameId = &#63; and classPK = &#63; and type = &#63; and receiverUserId = &#63; and status = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param receiverUserId the receiver user ID
 	* @param status the status

@@ -35,10 +35,10 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Adds the d d l record version to the database. Also notifies the appropriate model listeners.
+	* Adds the ddl record version to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecordVersion the d d l record version
-	* @return the d d l record version that was added
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was added
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion addDDLRecordVersion(
@@ -47,10 +47,10 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Creates a new d d l record version with the primary key. Does not add the d d l record version to the database.
+	* Creates a new ddl record version with the primary key. Does not add the ddl record version to the database.
 	*
-	* @param recordVersionId the primary key for the new d d l record version
-	* @return the new d d l record version
+	* @param recordVersionId the primary key for the new ddl record version
+	* @return the new ddl record version
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion createDDLRecordVersion(
@@ -59,10 +59,10 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d l record version from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddl record version from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecordVersion the d d l record version
-	* @return the d d l record version that was removed
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was removed
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion deleteDDLRecordVersion(
@@ -71,11 +71,11 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Deletes the d d l record version with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddl record version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param recordVersionId the primary key of the d d l record version
-	* @return the d d l record version that was removed
-	* @throws PortalException if a d d l record version with the primary key could not be found
+	* @param recordVersionId the primary key of the ddl record version
+	* @return the ddl record version that was removed
+	* @throws PortalException if a ddl record version with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion deleteDDLRecordVersion(
@@ -91,11 +91,11 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the d d l record version with the primary key.
+	* Returns the ddl record version with the primary key.
 	*
-	* @param recordVersionId the primary key of the d d l record version
-	* @return the d d l record version
-	* @throws PortalException if a d d l record version with the primary key could not be found
+	* @param recordVersionId the primary key of the ddl record version
+	* @return the ddl record version
+	* @throws PortalException if a ddl record version with the primary key could not be found
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getDDLRecordVersion(
@@ -148,10 +148,10 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Updates the d d l record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddl record version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddlRecordVersion the d d l record version
-	* @return the d d l record version that was updated
+	* @param ddlRecordVersion the ddl record version
+	* @return the ddl record version that was updated
 	*/
 	@Override
 	public com.liferay.dynamic.data.lists.model.DDLRecordVersion updateDDLRecordVersion(
@@ -192,9 +192,9 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Returns the number of d d l record versions.
+	* Returns the number of ddl record versions.
 	*
-	* @return the number of d d l record versions
+	* @return the number of ddl record versions
 	*/
 	@Override
 	public int getDDLRecordVersionsCount() {
@@ -277,15 +277,15 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	/**
-	* Returns a range of all the d d l record versions.
+	* Returns a range of all the ddl record versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d l record versions
-	* @param end the upper bound of the range of d d l record versions (not inclusive)
-	* @return the range of d d l record versions
+	* @param start the lower bound of the range of ddl record versions
+	* @param end the upper bound of the range of ddl record versions (not inclusive)
+	* @return the range of ddl record versions
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getDDLRecordVersions(

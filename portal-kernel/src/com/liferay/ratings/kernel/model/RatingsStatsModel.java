@@ -119,17 +119,17 @@ public interface RatingsStatsModel extends AttachedModel, BaseModel<RatingsStats
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this ratings stats.
+	 * Returns the class pk of this ratings stats.
 	 *
-	 * @return the class p k of this ratings stats
+	 * @return the class pk of this ratings stats
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this ratings stats.
+	 * Sets the class pk of this ratings stats.
 	 *
-	 * @param classPK the class p k of this ratings stats
+	 * @param classPK the class pk of this ratings stats
 	 */
 	@Override
 	public void setClassPK(long classPK);

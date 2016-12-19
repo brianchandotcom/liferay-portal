@@ -39,8 +39,7 @@ public interface SyncDLObject extends SyncDLObjectModel, PersistedModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.sync.model.impl.SyncDLObjectImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<SyncDLObject, Long> SYNC_D_L_OBJECT_ID_ACCESSOR =
-		new Accessor<SyncDLObject, Long>() {
+	public static final Accessor<SyncDLObject, Long> SYNC_DL_OBJECT_ID_ACCESSOR = new Accessor<SyncDLObject, Long>() {
 			@Override
 			public Long get(SyncDLObject syncDLObject) {
 				return syncDLObject.getSyncDLObjectId();

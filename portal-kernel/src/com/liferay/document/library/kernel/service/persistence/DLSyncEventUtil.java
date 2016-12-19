@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
 import java.util.List;
 
 /**
- * The persistence utility for the d l sync event service. This utility wraps {@link com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the dl sync event service. This utility wraps {@link com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -110,26 +110,26 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns all the d l sync events where modifiedTime &gt; &#63;.
+	* Returns all the dl sync events where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
-	* @return the matching d l sync events
+	* @return the matching dl sync events
 	*/
 	public static List<DLSyncEvent> findByModifiedTime(long modifiedTime) {
 		return getPersistence().findByModifiedTime(modifiedTime);
 	}
 
 	/**
-	* Returns a range of all the d l sync events where modifiedTime &gt; &#63;.
+	* Returns a range of all the dl sync events where modifiedTime &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param modifiedTime the modified time
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
-	* @return the range of matching d l sync events
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
+	* @return the range of matching dl sync events
 	*/
 	public static List<DLSyncEvent> findByModifiedTime(long modifiedTime,
 		int start, int end) {
@@ -137,17 +137,17 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l sync events where modifiedTime &gt; &#63;.
+	* Returns an ordered range of all the dl sync events where modifiedTime &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param modifiedTime the modified time
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d l sync events
+	* @return the ordered range of matching dl sync events
 	*/
 	public static List<DLSyncEvent> findByModifiedTime(long modifiedTime,
 		int start, int end, OrderByComparator<DLSyncEvent> orderByComparator) {
@@ -157,18 +157,18 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l sync events where modifiedTime &gt; &#63;.
+	* Returns an ordered range of all the dl sync events where modifiedTime &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param modifiedTime the modified time
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching d l sync events
+	* @return the ordered range of matching dl sync events
 	*/
 	public static List<DLSyncEvent> findByModifiedTime(long modifiedTime,
 		int start, int end, OrderByComparator<DLSyncEvent> orderByComparator,
@@ -179,12 +179,12 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
+	* Returns the first dl sync event in the ordered set where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l sync event
-	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
+	* @return the first matching dl sync event
+	* @throws NoSuchSyncEventException if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent findByModifiedTime_First(long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator)
@@ -194,11 +194,11 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
+	* Returns the first dl sync event in the ordered set where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
+	* @return the first matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent fetchByModifiedTime_First(long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator) {
@@ -207,12 +207,12 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
+	* Returns the last dl sync event in the ordered set where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l sync event
-	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
+	* @return the last matching dl sync event
+	* @throws NoSuchSyncEventException if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent findByModifiedTime_Last(long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator)
@@ -222,11 +222,11 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
+	* Returns the last dl sync event in the ordered set where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
+	* @return the last matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent fetchByModifiedTime_Last(long modifiedTime,
 		OrderByComparator<DLSyncEvent> orderByComparator) {
@@ -235,13 +235,13 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the d l sync events before and after the current d l sync event in the ordered set where modifiedTime &gt; &#63;.
+	* Returns the dl sync events before and after the current dl sync event in the ordered set where modifiedTime &gt; &#63;.
 	*
-	* @param syncEventId the primary key of the current d l sync event
+	* @param syncEventId the primary key of the current dl sync event
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d l sync event
-	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
+	* @return the previous, current, and next dl sync event
+	* @throws NoSuchSyncEventException if a dl sync event with the primary key could not be found
 	*/
 	public static DLSyncEvent[] findByModifiedTime_PrevAndNext(
 		long syncEventId, long modifiedTime,
@@ -253,7 +253,7 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Removes all the d l sync events where modifiedTime &gt; &#63; from the database.
+	* Removes all the dl sync events where modifiedTime &gt; &#63; from the database.
 	*
 	* @param modifiedTime the modified time
 	*/
@@ -262,21 +262,21 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the number of d l sync events where modifiedTime &gt; &#63;.
+	* Returns the number of dl sync events where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
-	* @return the number of matching d l sync events
+	* @return the number of matching dl sync events
 	*/
 	public static int countByModifiedTime(long modifiedTime) {
 		return getPersistence().countByModifiedTime(modifiedTime);
 	}
 
 	/**
-	* Returns the d l sync event where typePK = &#63; or throws a {@link NoSuchSyncEventException} if it could not be found.
+	* Returns the dl sync event where typePK = &#63; or throws a {@link NoSuchSyncEventException} if it could not be found.
 	*
-	* @param typePK the type p k
-	* @return the matching d l sync event
-	* @throws NoSuchSyncEventException if a matching d l sync event could not be found
+	* @param typePK the type pk
+	* @return the matching dl sync event
+	* @throws NoSuchSyncEventException if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent findByTypePK(long typePK)
 		throws com.liferay.document.library.kernel.exception.NoSuchSyncEventException {
@@ -284,21 +284,21 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the d l sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param typePK the type p k
-	* @return the matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
+	* @param typePK the type pk
+	* @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent fetchByTypePK(long typePK) {
 		return getPersistence().fetchByTypePK(typePK);
 	}
 
 	/**
-	* Returns the d l sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the dl sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param typePK the type p k
+	* @param typePK the type pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
+	* @return the matching dl sync event, or <code>null</code> if a matching dl sync event could not be found
 	*/
 	public static DLSyncEvent fetchByTypePK(long typePK,
 		boolean retrieveFromCache) {
@@ -306,10 +306,10 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Removes the d l sync event where typePK = &#63; from the database.
+	* Removes the dl sync event where typePK = &#63; from the database.
 	*
-	* @param typePK the type p k
-	* @return the d l sync event that was removed
+	* @param typePK the type pk
+	* @return the dl sync event that was removed
 	*/
 	public static DLSyncEvent removeByTypePK(long typePK)
 		throws com.liferay.document.library.kernel.exception.NoSuchSyncEventException {
@@ -317,49 +317,49 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the number of d l sync events where typePK = &#63;.
+	* Returns the number of dl sync events where typePK = &#63;.
 	*
-	* @param typePK the type p k
-	* @return the number of matching d l sync events
+	* @param typePK the type pk
+	* @return the number of matching dl sync events
 	*/
 	public static int countByTypePK(long typePK) {
 		return getPersistence().countByTypePK(typePK);
 	}
 
 	/**
-	* Caches the d l sync event in the entity cache if it is enabled.
+	* Caches the dl sync event in the entity cache if it is enabled.
 	*
-	* @param dlSyncEvent the d l sync event
+	* @param dlSyncEvent the dl sync event
 	*/
 	public static void cacheResult(DLSyncEvent dlSyncEvent) {
 		getPersistence().cacheResult(dlSyncEvent);
 	}
 
 	/**
-	* Caches the d l sync events in the entity cache if it is enabled.
+	* Caches the dl sync events in the entity cache if it is enabled.
 	*
-	* @param dlSyncEvents the d l sync events
+	* @param dlSyncEvents the dl sync events
 	*/
 	public static void cacheResult(List<DLSyncEvent> dlSyncEvents) {
 		getPersistence().cacheResult(dlSyncEvents);
 	}
 
 	/**
-	* Creates a new d l sync event with the primary key. Does not add the d l sync event to the database.
+	* Creates a new dl sync event with the primary key. Does not add the dl sync event to the database.
 	*
-	* @param syncEventId the primary key for the new d l sync event
-	* @return the new d l sync event
+	* @param syncEventId the primary key for the new dl sync event
+	* @return the new dl sync event
 	*/
 	public static DLSyncEvent create(long syncEventId) {
 		return getPersistence().create(syncEventId);
 	}
 
 	/**
-	* Removes the d l sync event with the primary key from the database. Also notifies the appropriate model listeners.
+	* Removes the dl sync event with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param syncEventId the primary key of the d l sync event
-	* @return the d l sync event that was removed
-	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
+	* @param syncEventId the primary key of the dl sync event
+	* @return the dl sync event that was removed
+	* @throws NoSuchSyncEventException if a dl sync event with the primary key could not be found
 	*/
 	public static DLSyncEvent remove(long syncEventId)
 		throws com.liferay.document.library.kernel.exception.NoSuchSyncEventException {
@@ -371,11 +371,11 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the d l sync event with the primary key or throws a {@link NoSuchSyncEventException} if it could not be found.
+	* Returns the dl sync event with the primary key or throws a {@link NoSuchSyncEventException} if it could not be found.
 	*
-	* @param syncEventId the primary key of the d l sync event
-	* @return the d l sync event
-	* @throws NoSuchSyncEventException if a d l sync event with the primary key could not be found
+	* @param syncEventId the primary key of the dl sync event
+	* @return the dl sync event
+	* @throws NoSuchSyncEventException if a dl sync event with the primary key could not be found
 	*/
 	public static DLSyncEvent findByPrimaryKey(long syncEventId)
 		throws com.liferay.document.library.kernel.exception.NoSuchSyncEventException {
@@ -383,10 +383,10 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns the d l sync event with the primary key or returns <code>null</code> if it could not be found.
+	* Returns the dl sync event with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param syncEventId the primary key of the d l sync event
-	* @return the d l sync event, or <code>null</code> if a d l sync event with the primary key could not be found
+	* @param syncEventId the primary key of the dl sync event
+	* @return the dl sync event, or <code>null</code> if a dl sync event with the primary key could not be found
 	*/
 	public static DLSyncEvent fetchByPrimaryKey(long syncEventId) {
 		return getPersistence().fetchByPrimaryKey(syncEventId);
@@ -398,40 +398,40 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns all the d l sync events.
+	* Returns all the dl sync events.
 	*
-	* @return the d l sync events
+	* @return the dl sync events
 	*/
 	public static List<DLSyncEvent> findAll() {
 		return getPersistence().findAll();
 	}
 
 	/**
-	* Returns a range of all the d l sync events.
+	* Returns a range of all the dl sync events.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
-	* @return the range of d l sync events
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
+	* @return the range of dl sync events
 	*/
 	public static List<DLSyncEvent> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the d l sync events.
+	* Returns an ordered range of all the dl sync events.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of d l sync events
+	* @return the ordered range of dl sync events
 	*/
 	public static List<DLSyncEvent> findAll(int start, int end,
 		OrderByComparator<DLSyncEvent> orderByComparator) {
@@ -439,17 +439,17 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Returns an ordered range of all the d l sync events.
+	* Returns an ordered range of all the dl sync events.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DLSyncEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d l sync events
-	* @param end the upper bound of the range of d l sync events (not inclusive)
+	* @param start the lower bound of the range of dl sync events
+	* @param end the upper bound of the range of dl sync events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of d l sync events
+	* @return the ordered range of dl sync events
 	*/
 	public static List<DLSyncEvent> findAll(int start, int end,
 		OrderByComparator<DLSyncEvent> orderByComparator,
@@ -459,16 +459,16 @@ public class DLSyncEventUtil {
 	}
 
 	/**
-	* Removes all the d l sync events from the database.
+	* Removes all the dl sync events from the database.
 	*/
 	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
 	/**
-	* Returns the number of d l sync events.
+	* Returns the number of dl sync events.
 	*
-	* @return the number of d l sync events
+	* @return the number of dl sync events
 	*/
 	public static int countAll() {
 		return getPersistence().countAll();

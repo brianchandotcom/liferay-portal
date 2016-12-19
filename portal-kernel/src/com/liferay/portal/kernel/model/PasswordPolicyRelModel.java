@@ -145,17 +145,17 @@ public interface PasswordPolicyRelModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this password policy rel.
+	 * Returns the class pk of this password policy rel.
 	 *
-	 * @return the class p k of this password policy rel
+	 * @return the class pk of this password policy rel
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this password policy rel.
+	 * Sets the class pk of this password policy rel.
 	 *
-	 * @param classPK the class p k of this password policy rel
+	 * @param classPK the class pk of this password policy rel
 	 */
 	@Override
 	public void setClassPK(long classPK);

@@ -37,7 +37,7 @@ public abstract class DDMStructureLayoutBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m structure layout model instance should use the {@link DDMStructureLayout} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm structure layout model instance should use the {@link DDMStructureLayout} interface instead.
 	 */
 	@Override
 	public void persist() {

@@ -757,18 +757,18 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the layout friendly u r l local service.
+	 * Returns the layout friendly url local service.
 	 *
-	 * @return the layout friendly u r l local service
+	 * @return the layout friendly url local service
 	 */
 	public com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService getLayoutFriendlyURLLocalService() {
 		return layoutFriendlyURLLocalService;
 	}
 
 	/**
-	 * Sets the layout friendly u r l local service.
+	 * Sets the layout friendly url local service.
 	 *
-	 * @param layoutFriendlyURLLocalService the layout friendly u r l local service
+	 * @param layoutFriendlyURLLocalService the layout friendly url local service
 	 */
 	public void setLayoutFriendlyURLLocalService(
 		com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService layoutFriendlyURLLocalService) {
@@ -776,18 +776,18 @@ public abstract class LayoutServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the layout friendly u r l persistence.
+	 * Returns the layout friendly url persistence.
 	 *
-	 * @return the layout friendly u r l persistence
+	 * @return the layout friendly url persistence
 	 */
 	public LayoutFriendlyURLPersistence getLayoutFriendlyURLPersistence() {
 		return layoutFriendlyURLPersistence;
 	}
 
 	/**
-	 * Sets the layout friendly u r l persistence.
+	 * Sets the layout friendly url persistence.
 	 *
-	 * @param layoutFriendlyURLPersistence the layout friendly u r l persistence
+	 * @param layoutFriendlyURLPersistence the layout friendly url persistence
 	 */
 	public void setLayoutFriendlyURLPersistence(
 		LayoutFriendlyURLPersistence layoutFriendlyURLPersistence) {

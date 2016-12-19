@@ -43,10 +43,10 @@ public class DDMTemplateVersionLocalServiceUtil {
 	 */
 
 	/**
-	* Adds the d d m template version to the database. Also notifies the appropriate model listeners.
+	* Adds the ddm template version to the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplateVersion the d d m template version
-	* @return the d d m template version that was added
+	* @param ddmTemplateVersion the ddm template version
+	* @return the ddm template version that was added
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion addDDMTemplateVersion(
 		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion) {
@@ -54,10 +54,10 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new d d m template version with the primary key. Does not add the d d m template version to the database.
+	* Creates a new ddm template version with the primary key. Does not add the ddm template version to the database.
 	*
-	* @param templateVersionId the primary key for the new d d m template version
-	* @return the new d d m template version
+	* @param templateVersionId the primary key for the new ddm template version
+	* @return the new ddm template version
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion createDDMTemplateVersion(
 		long templateVersionId) {
@@ -65,10 +65,10 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d d m template version from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm template version from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplateVersion the d d m template version
-	* @return the d d m template version that was removed
+	* @param ddmTemplateVersion the ddm template version
+	* @return the ddm template version that was removed
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion deleteDDMTemplateVersion(
 		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion) {
@@ -76,11 +76,11 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the d d m template version with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the ddm template version with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param templateVersionId the primary key of the d d m template version
-	* @return the d d m template version that was removed
-	* @throws PortalException if a d d m template version with the primary key could not be found
+	* @param templateVersionId the primary key of the ddm template version
+	* @return the ddm template version that was removed
+	* @throws PortalException if a ddm template version with the primary key could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion deleteDDMTemplateVersion(
 		long templateVersionId)
@@ -94,11 +94,11 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the d d m template version with the primary key.
+	* Returns the ddm template version with the primary key.
 	*
-	* @param templateVersionId the primary key of the d d m template version
-	* @return the d d m template version
-	* @throws PortalException if a d d m template version with the primary key could not be found
+	* @param templateVersionId the primary key of the ddm template version
+	* @return the ddm template version
+	* @throws PortalException if a ddm template version with the primary key could not be found
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getDDMTemplateVersion(
 		long templateVersionId)
@@ -125,10 +125,10 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Updates the d d m template version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the ddm template version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param ddmTemplateVersion the d d m template version
-	* @return the d d m template version that was updated
+	* @param ddmTemplateVersion the ddm template version
+	* @return the ddm template version that was updated
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateVersion updateDDMTemplateVersion(
 		com.liferay.dynamic.data.mapping.model.DDMTemplateVersion ddmTemplateVersion) {
@@ -163,9 +163,9 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of d d m template versions.
+	* Returns the number of ddm template versions.
 	*
-	* @return the number of d d m template versions
+	* @return the number of ddm template versions
 	*/
 	public static int getDDMTemplateVersionsCount() {
 		return getService().getDDMTemplateVersionsCount();
@@ -235,15 +235,15 @@ public class DDMTemplateVersionLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the d d m template versions.
+	* Returns a range of all the ddm template versions.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of d d m template versions
-	* @param end the upper bound of the range of d d m template versions (not inclusive)
-	* @return the range of d d m template versions
+	* @param start the lower bound of the range of ddm template versions
+	* @param end the upper bound of the range of ddm template versions (not inclusive)
+	* @return the range of ddm template versions
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplateVersion> getDDMTemplateVersions(
 		int start, int end) {

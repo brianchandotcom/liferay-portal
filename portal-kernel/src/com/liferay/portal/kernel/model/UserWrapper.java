@@ -1021,9 +1021,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Returns the last login i p of this user.
+	* Returns the last login ip of this user.
 	*
-	* @return the last login i p of this user
+	* @return the last login ip of this user
 	*/
 	@Override
 	public java.lang.String getLastLoginIP() {
@@ -1047,9 +1047,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Returns the login i p of this user.
+	* Returns the login ip of this user.
 	*
-	* @return the login i p of this user
+	* @return the login ip of this user
 	*/
 	@Override
 	public java.lang.String getLoginIP() {
@@ -1714,9 +1714,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Sets the last login i p of this user.
+	* Sets the last login ip of this user.
 	*
-	* @param lastLoginIP the last login i p of this user
+	* @param lastLoginIP the last login ip of this user
 	*/
 	@Override
 	public void setLastLoginIP(java.lang.String lastLoginIP) {
@@ -1774,9 +1774,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* Sets the login i p of this user.
+	* Sets the login ip of this user.
 	*
-	* @param loginIP the login i p of this user
+	* @param loginIP the login ip of this user
 	*/
 	@Override
 	public void setLoginIP(java.lang.String loginIP) {

@@ -37,7 +37,7 @@ public abstract class DDLRecordVersionBaseImpl extends DDLRecordVersionModelImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d l record version model instance should use the {@link DDLRecordVersion} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddl record version model instance should use the {@link DDLRecordVersion} interface instead.
 	 */
 	@Override
 	public void persist() {

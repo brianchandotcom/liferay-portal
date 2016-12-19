@@ -45,57 +45,57 @@ public interface DDMStructureLinkModel extends AttachedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a d d m structure link model instance should use the {@link DDMStructureLink} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a ddm structure link model instance should use the {@link DDMStructureLink} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this d d m structure link.
+	 * Returns the primary key of this ddm structure link.
 	 *
-	 * @return the primary key of this d d m structure link
+	 * @return the primary key of this ddm structure link
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this d d m structure link.
+	 * Sets the primary key of this ddm structure link.
 	 *
-	 * @param primaryKey the primary key of this d d m structure link
+	 * @param primaryKey the primary key of this ddm structure link
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the structure link ID of this d d m structure link.
+	 * Returns the structure link ID of this ddm structure link.
 	 *
-	 * @return the structure link ID of this d d m structure link
+	 * @return the structure link ID of this ddm structure link
 	 */
 	public long getStructureLinkId();
 
 	/**
-	 * Sets the structure link ID of this d d m structure link.
+	 * Sets the structure link ID of this ddm structure link.
 	 *
-	 * @param structureLinkId the structure link ID of this d d m structure link
+	 * @param structureLinkId the structure link ID of this ddm structure link
 	 */
 	public void setStructureLinkId(long structureLinkId);
 
 	/**
-	 * Returns the company ID of this d d m structure link.
+	 * Returns the company ID of this ddm structure link.
 	 *
-	 * @return the company ID of this d d m structure link
+	 * @return the company ID of this ddm structure link
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this d d m structure link.
+	 * Sets the company ID of this ddm structure link.
 	 *
-	 * @param companyId the company ID of this d d m structure link
+	 * @param companyId the company ID of this ddm structure link
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the fully qualified class name of this d d m structure link.
+	 * Returns the fully qualified class name of this ddm structure link.
 	 *
-	 * @return the fully qualified class name of this d d m structure link
+	 * @return the fully qualified class name of this ddm structure link
 	 */
 	@Override
 	public String getClassName();
@@ -103,48 +103,48 @@ public interface DDMStructureLinkModel extends AttachedModel,
 	public void setClassName(String className);
 
 	/**
-	 * Returns the class name ID of this d d m structure link.
+	 * Returns the class name ID of this ddm structure link.
 	 *
-	 * @return the class name ID of this d d m structure link
+	 * @return the class name ID of this ddm structure link
 	 */
 	@Override
 	public long getClassNameId();
 
 	/**
-	 * Sets the class name ID of this d d m structure link.
+	 * Sets the class name ID of this ddm structure link.
 	 *
-	 * @param classNameId the class name ID of this d d m structure link
+	 * @param classNameId the class name ID of this ddm structure link
 	 */
 	@Override
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this d d m structure link.
+	 * Returns the class pk of this ddm structure link.
 	 *
-	 * @return the class p k of this d d m structure link
+	 * @return the class pk of this ddm structure link
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this d d m structure link.
+	 * Sets the class pk of this ddm structure link.
 	 *
-	 * @param classPK the class p k of this d d m structure link
+	 * @param classPK the class pk of this ddm structure link
 	 */
 	@Override
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the structure ID of this d d m structure link.
+	 * Returns the structure ID of this ddm structure link.
 	 *
-	 * @return the structure ID of this d d m structure link
+	 * @return the structure ID of this ddm structure link
 	 */
 	public long getStructureId();
 
 	/**
-	 * Sets the structure ID of this d d m structure link.
+	 * Sets the structure ID of this ddm structure link.
 	 *
-	 * @param structureId the structure ID of this d d m structure link
+	 * @param structureId the structure ID of this ddm structure link
 	 */
 	public void setStructureId(long structureId);
 

@@ -320,7 +320,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching system events
 	*/
 	public java.util.List<SystemEvent> findByG_C_C(long groupId,
@@ -335,7 +335,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of system events
 	* @param end the upper bound of the range of system events (not inclusive)
 	* @return the range of matching system events
@@ -352,7 +352,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of system events
 	* @param end the upper bound of the range of system events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -371,7 +371,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of system events
 	* @param end the upper bound of the range of system events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -388,7 +388,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching system event
 	* @throws NoSuchSystemEventException if a matching system event could not be found
@@ -403,7 +403,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching system event, or <code>null</code> if a matching system event could not be found
 	*/
@@ -416,7 +416,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching system event
 	* @throws NoSuchSystemEventException if a matching system event could not be found
@@ -431,7 +431,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching system event, or <code>null</code> if a matching system event could not be found
 	*/
@@ -445,7 +445,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	* @param systemEventId the primary key of the current system event
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next system event
 	* @throws NoSuchSystemEventException if a system event with the primary key could not be found
@@ -460,7 +460,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByG_C_C(long groupId, long classNameId, long classPK);
 
@@ -469,7 +469,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching system events
 	*/
 	public int countByG_C_C(long groupId, long classNameId, long classPK);
@@ -479,7 +479,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the matching system events
 	*/
@@ -495,7 +495,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of system events
 	* @param end the upper bound of the range of system events (not inclusive)
@@ -513,7 +513,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of system events
 	* @param end the upper bound of the range of system events (not inclusive)
@@ -533,7 +533,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of system events
 	* @param end the upper bound of the range of system events (not inclusive)
@@ -551,7 +551,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching system event
@@ -567,7 +567,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching system event, or <code>null</code> if a matching system event could not be found
@@ -581,7 +581,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching system event
@@ -597,7 +597,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching system event, or <code>null</code> if a matching system event could not be found
@@ -612,7 +612,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	* @param systemEventId the primary key of the current system event
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next system event
@@ -628,7 +628,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	*/
 	public void removeByG_C_C_T(long groupId, long classNameId, long classPK,
@@ -639,7 +639,7 @@ public interface SystemEventPersistence extends BasePersistence<SystemEvent> {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the number of matching system events
 	*/

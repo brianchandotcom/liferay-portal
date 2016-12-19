@@ -193,17 +193,17 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this trash entry.
+	 * Returns the class pk of this trash entry.
 	 *
-	 * @return the class p k of this trash entry
+	 * @return the class pk of this trash entry
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this trash entry.
+	 * Sets the class pk of this trash entry.
 	 *
-	 * @param classPK the class p k of this trash entry
+	 * @param classPK the class pk of this trash entry
 	 */
 	@Override
 	public void setClassPK(long classPK);

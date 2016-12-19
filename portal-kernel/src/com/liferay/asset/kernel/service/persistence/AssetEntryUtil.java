@@ -1138,7 +1138,7 @@ public class AssetEntryUtil {
 	* Returns the asset entry where classNameId = &#63; and classPK = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching asset entry
 	* @throws NoSuchEntryException if a matching asset entry could not be found
 	*/
@@ -1151,7 +1151,7 @@ public class AssetEntryUtil {
 	* Returns the asset entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
 	public static AssetEntry fetchByC_C(long classNameId, long classPK) {
@@ -1162,7 +1162,7 @@ public class AssetEntryUtil {
 	* Returns the asset entry where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching asset entry, or <code>null</code> if a matching asset entry could not be found
 	*/
@@ -1176,7 +1176,7 @@ public class AssetEntryUtil {
 	* Removes the asset entry where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the asset entry that was removed
 	*/
 	public static AssetEntry removeByC_C(long classNameId, long classPK)
@@ -1188,7 +1188,7 @@ public class AssetEntryUtil {
 	* Returns the number of asset entries where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching asset entries
 	*/
 	public static int countByC_C(long classNameId, long classPK) {

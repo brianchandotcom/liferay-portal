@@ -454,7 +454,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @return the matching microblogs entries
 	*/
 	public java.util.List<MicroblogsEntry> findByCCNI_CCPK(
@@ -468,7 +468,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
@@ -484,7 +484,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -502,7 +502,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -518,7 +518,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry
 	* @throws NoSuchEntryException if a matching microblogs entry could not be found
@@ -532,7 +532,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
@@ -544,7 +544,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry
 	* @throws NoSuchEntryException if a matching microblogs entry could not be found
@@ -558,7 +558,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
@@ -571,7 +571,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param microblogsEntryId the primary key of the current microblogs entry
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next microblogs entry
 	* @throws NoSuchEntryException if a microblogs entry with the primary key could not be found
@@ -589,7 +589,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @return the matching microblogs entries
 	*/
 	public java.util.List<MicroblogsEntry> findByCCNI_CCPK(
@@ -603,7 +603,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
@@ -619,7 +619,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -637,7 +637,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -653,7 +653,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Removes all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; from the database.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	*/
 	public void removeByCCNI_CCPK(long creatorClassNameId, long creatorClassPK);
 
@@ -661,7 +661,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the number of microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @return the number of matching microblogs entries
 	*/
 	public int countByCCNI_CCPK(long creatorClassNameId, long creatorClassPK);
@@ -670,7 +670,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the number of microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @return the number of matching microblogs entries
 	*/
 	public int countByCCNI_CCPK(long creatorClassNameId, long[] creatorClassPKs);
@@ -975,7 +975,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @return the matching microblogs entries
 	*/
 	public java.util.List<MicroblogsEntry> findByC_CCNI_CCPK(long companyId,
@@ -990,7 +990,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
@@ -1007,7 +1007,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1026,7 +1026,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1043,7 +1043,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry
 	* @throws NoSuchEntryException if a matching microblogs entry could not be found
@@ -1058,7 +1058,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
@@ -1071,7 +1071,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry
 	* @throws NoSuchEntryException if a matching microblogs entry could not be found
@@ -1086,7 +1086,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
 	*/
@@ -1100,7 +1100,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* @param microblogsEntryId the primary key of the current microblogs entry
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next microblogs entry
 	* @throws NoSuchEntryException if a microblogs entry with the primary key could not be found
@@ -1120,7 +1120,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @return the matching microblogs entries
 	*/
 	public java.util.List<MicroblogsEntry> findByC_CCNI_CCPK(long companyId,
@@ -1135,7 +1135,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @return the range of matching microblogs entries
@@ -1152,7 +1152,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1171,7 +1171,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1188,7 +1188,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	*/
 	public void removeByC_CCNI_CCPK(long companyId, long creatorClassNameId,
 		long creatorClassPK);
@@ -1198,7 +1198,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @return the number of matching microblogs entries
 	*/
 	public int countByC_CCNI_CCPK(long companyId, long creatorClassNameId,
@@ -1209,7 +1209,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @return the number of matching microblogs entries
 	*/
 	public int countByC_CCNI_CCPK(long companyId, long creatorClassNameId,
@@ -1380,7 +1380,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
@@ -1395,7 +1395,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1413,7 +1413,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1433,7 +1433,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1451,7 +1451,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry
@@ -1466,7 +1466,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the first microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
@@ -1479,7 +1479,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry
@@ -1494,7 +1494,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the last microblogs entry in the ordered set where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
@@ -1508,7 +1508,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param microblogsEntryId the primary key of the current microblogs entry
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next microblogs entry
@@ -1528,7 +1528,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
@@ -1543,7 +1543,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1561,7 +1561,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1581,7 +1581,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* </p>
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1599,7 +1599,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Removes all the microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63; from the database.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	*/
 	public void removeByCCNI_CCPK_T(long creatorClassNameId,
@@ -1609,7 +1609,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the number of microblogs entries where creatorClassNameId = &#63; and creatorClassPK = &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @return the number of matching microblogs entries
 	*/
@@ -1620,7 +1620,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* Returns the number of microblogs entries where creatorClassNameId = &#63; and creatorClassPK = any &#63; and type = &#63;.
 	*
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @return the number of matching microblogs entries
 	*/
@@ -1632,7 +1632,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
@@ -1648,7 +1648,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1667,7 +1667,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1688,7 +1688,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1707,7 +1707,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry
@@ -1723,7 +1723,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
@@ -1737,7 +1737,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry
@@ -1753,7 +1753,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching microblogs entry, or <code>null</code> if a matching microblogs entry could not be found
@@ -1768,7 +1768,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	* @param microblogsEntryId the primary key of the current microblogs entry
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next microblogs entry
@@ -1789,7 +1789,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @return the matching microblogs entries
 	*/
@@ -1805,7 +1805,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1824,7 +1824,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1845,7 +1845,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @param start the lower bound of the range of microblogs entries
 	* @param end the upper bound of the range of microblogs entries (not inclusive)
@@ -1864,7 +1864,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	*/
 	public void removeByC_CCNI_CCPK_T(long companyId, long creatorClassNameId,
@@ -1875,7 +1875,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPK the creator class p k
+	* @param creatorClassPK the creator class pk
 	* @param type the type
 	* @return the number of matching microblogs entries
 	*/
@@ -1887,7 +1887,7 @@ public interface MicroblogsEntryPersistence extends BasePersistence<MicroblogsEn
 	*
 	* @param companyId the company ID
 	* @param creatorClassNameId the creator class name ID
-	* @param creatorClassPKs the creator class p ks
+	* @param creatorClassPKs the creator class pks
 	* @param type the type
 	* @return the number of matching microblogs entries
 	*/

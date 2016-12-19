@@ -77,7 +77,7 @@ public class MDRRuleModelImpl extends BaseModelImpl<MDRRule>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a m d r rule model instance should use the {@link MDRRule} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a mdr rule model instance should use the {@link MDRRule} interface instead.
 	 */
 	public static final String TABLE_NAME = "MDRRule";
 	public static final Object[][] TABLE_COLUMNS = {

@@ -428,9 +428,9 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	/**
-	* Returns the recipient class p k of this kaleo notification recipient.
+	* Returns the recipient class pk of this kaleo notification recipient.
 	*
-	* @return the recipient class p k of this kaleo notification recipient
+	* @return the recipient class pk of this kaleo notification recipient
 	*/
 	@Override
 	public long getRecipientClassPK() {
@@ -596,9 +596,9 @@ public class KaleoNotificationRecipientWrapper
 	}
 
 	/**
-	* Sets the recipient class p k of this kaleo notification recipient.
+	* Sets the recipient class pk of this kaleo notification recipient.
 	*
-	* @param recipientClassPK the recipient class p k of this kaleo notification recipient
+	* @param recipientClassPK the recipient class pk of this kaleo notification recipient
 	*/
 	@Override
 	public void setRecipientClassPK(long recipientClassPK) {

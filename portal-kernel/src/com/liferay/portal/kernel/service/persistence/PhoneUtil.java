@@ -921,7 +921,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching phones
 	*/
 	public static List<Phone> findByC_C_C(long companyId, long classNameId,
@@ -938,7 +938,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
 	* @return the range of matching phones
@@ -958,7 +958,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -981,7 +981,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1001,7 +1001,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching phone
 	* @throws NoSuchPhoneException if a matching phone could not be found
@@ -1019,7 +1019,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching phone, or <code>null</code> if a matching phone could not be found
 	*/
@@ -1035,7 +1035,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching phone
 	* @throws NoSuchPhoneException if a matching phone could not be found
@@ -1053,7 +1053,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching phone, or <code>null</code> if a matching phone could not be found
 	*/
@@ -1070,7 +1070,7 @@ public class PhoneUtil {
 	* @param phoneId the primary key of the current phone
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next phone
 	* @throws NoSuchPhoneException if a phone with the primary key could not be found
@@ -1089,7 +1089,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public static void removeByC_C_C(long companyId, long classNameId,
 		long classPK) {
@@ -1101,7 +1101,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching phones
 	*/
 	public static int countByC_C_C(long companyId, long classNameId,
@@ -1114,7 +1114,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the matching phones
 	*/
@@ -1133,7 +1133,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
@@ -1155,7 +1155,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
@@ -1179,7 +1179,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
@@ -1200,7 +1200,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching phone
@@ -1220,7 +1220,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching phone, or <code>null</code> if a matching phone could not be found
@@ -1238,7 +1238,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching phone
@@ -1258,7 +1258,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching phone, or <code>null</code> if a matching phone could not be found
@@ -1277,7 +1277,7 @@ public class PhoneUtil {
 	* @param phoneId the primary key of the current phone
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next phone
@@ -1297,7 +1297,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	*/
 	public static void removeByC_C_C_P(long companyId, long classNameId,
@@ -1311,7 +1311,7 @@ public class PhoneUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the number of matching phones
 	*/

@@ -179,17 +179,17 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this group.
+	 * Returns the class pk of this group.
 	 *
-	 * @return the class p k of this group
+	 * @return the class pk of this group
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this group.
+	 * Sets the class pk of this group.
 	 *
-	 * @param classPK the class p k of this group
+	 * @param classPK the class pk of this group
 	 */
 	@Override
 	public void setClassPK(long classPK);
@@ -517,17 +517,17 @@ public interface GroupModel extends AttachedModel, BaseModel<Group>,
 	public void setMembershipRestriction(int membershipRestriction);
 
 	/**
-	 * Returns the friendly u r l of this group.
+	 * Returns the friendly url of this group.
 	 *
-	 * @return the friendly u r l of this group
+	 * @return the friendly url of this group
 	 */
 	@AutoEscape
 	public String getFriendlyURL();
 
 	/**
-	 * Sets the friendly u r l of this group.
+	 * Sets the friendly url of this group.
 	 *
-	 * @param friendlyURL the friendly u r l of this group
+	 * @param friendlyURL the friendly url of this group
 	 */
 	public void setFriendlyURL(String friendlyURL);
 

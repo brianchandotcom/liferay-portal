@@ -74,10 +74,10 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Adds the w s r p consumer to the database. Also notifies the appropriate model listeners.
+	* Adds the wsrp consumer to the database. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumer the w s r p consumer
-	* @return the w s r p consumer that was added
+	* @param wsrpConsumer the wsrp consumer
+	* @return the wsrp consumer that was added
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer addWSRPConsumer(
 		com.liferay.wsrp.model.WSRPConsumer wsrpConsumer) {
@@ -96,10 +96,10 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Creates a new w s r p consumer with the primary key. Does not add the w s r p consumer to the database.
+	* Creates a new wsrp consumer with the primary key. Does not add the wsrp consumer to the database.
 	*
-	* @param wsrpConsumerId the primary key for the new w s r p consumer
-	* @return the new w s r p consumer
+	* @param wsrpConsumerId the primary key for the new wsrp consumer
+	* @return the new wsrp consumer
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer createWSRPConsumer(
 		long wsrpConsumerId) {
@@ -107,10 +107,10 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the w s r p consumer from the database. Also notifies the appropriate model listeners.
+	* Deletes the wsrp consumer from the database. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumer the w s r p consumer
-	* @return the w s r p consumer that was removed
+	* @param wsrpConsumer the wsrp consumer
+	* @return the wsrp consumer that was removed
 	* @throws PortalException
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer deleteWSRPConsumer(
@@ -120,11 +120,11 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Deletes the w s r p consumer with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the wsrp consumer with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumerId the primary key of the w s r p consumer
-	* @return the w s r p consumer that was removed
-	* @throws PortalException if a w s r p consumer with the primary key could not be found
+	* @param wsrpConsumerId the primary key of the wsrp consumer
+	* @return the wsrp consumer that was removed
+	* @throws PortalException if a wsrp consumer with the primary key could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer deleteWSRPConsumer(
 		long wsrpConsumerId)
@@ -138,11 +138,11 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Returns the w s r p consumer with the matching UUID and company.
+	* Returns the wsrp consumer with the matching UUID and company.
 	*
-	* @param uuid the w s r p consumer's UUID
+	* @param uuid the wsrp consumer's UUID
 	* @param companyId the primary key of the company
-	* @return the matching w s r p consumer, or <code>null</code> if a matching w s r p consumer could not be found
+	* @return the matching wsrp consumer, or <code>null</code> if a matching wsrp consumer could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer fetchWSRPConsumerByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -156,11 +156,11 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Returns the w s r p consumer with the primary key.
+	* Returns the wsrp consumer with the primary key.
 	*
-	* @param wsrpConsumerId the primary key of the w s r p consumer
-	* @return the w s r p consumer
-	* @throws PortalException if a w s r p consumer with the primary key could not be found
+	* @param wsrpConsumerId the primary key of the wsrp consumer
+	* @return the wsrp consumer
+	* @throws PortalException if a wsrp consumer with the primary key could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer getWSRPConsumer(
 		long wsrpConsumerId)
@@ -169,12 +169,12 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Returns the w s r p consumer with the matching UUID and company.
+	* Returns the wsrp consumer with the matching UUID and company.
 	*
-	* @param uuid the w s r p consumer's UUID
+	* @param uuid the wsrp consumer's UUID
 	* @param companyId the primary key of the company
-	* @return the matching w s r p consumer
-	* @throws PortalException if a matching w s r p consumer could not be found
+	* @return the matching wsrp consumer
+	* @throws PortalException if a matching wsrp consumer could not be found
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer getWSRPConsumerByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
@@ -193,10 +193,10 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Updates the w s r p consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the wsrp consumer in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param wsrpConsumer the w s r p consumer
-	* @return the w s r p consumer that was updated
+	* @param wsrpConsumer the wsrp consumer
+	* @return the wsrp consumer that was updated
 	*/
 	public static com.liferay.wsrp.model.WSRPConsumer updateWSRPConsumer(
 		com.liferay.wsrp.model.WSRPConsumer wsrpConsumer) {
@@ -215,9 +215,9 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of w s r p consumers.
+	* Returns the number of wsrp consumers.
 	*
-	* @return the number of w s r p consumers
+	* @return the number of wsrp consumers
 	*/
 	public static int getWSRPConsumersCount() {
 		return getService().getWSRPConsumersCount();
@@ -287,15 +287,15 @@ public class WSRPConsumerLocalServiceUtil {
 	}
 
 	/**
-	* Returns a range of all the w s r p consumers.
+	* Returns a range of all the wsrp consumers.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.wsrp.model.impl.WSRPConsumerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of w s r p consumers
-	* @param end the upper bound of the range of w s r p consumers (not inclusive)
-	* @return the range of w s r p consumers
+	* @param start the lower bound of the range of wsrp consumers
+	* @param end the upper bound of the range of wsrp consumers (not inclusive)
+	* @return the range of wsrp consumers
 	*/
 	public static java.util.List<com.liferay.wsrp.model.WSRPConsumer> getWSRPConsumers(
 		int start, int end) {

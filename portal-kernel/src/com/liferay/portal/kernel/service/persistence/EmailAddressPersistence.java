@@ -732,7 +732,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the matching email addresses
 	*/
 	public java.util.List<EmailAddress> findByC_C_C(long companyId,
@@ -747,7 +747,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of email addresses
 	* @param end the upper bound of the range of email addresses (not inclusive)
 	* @return the range of matching email addresses
@@ -764,7 +764,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of email addresses
 	* @param end the upper bound of the range of email addresses (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -783,7 +783,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param start the lower bound of the range of email addresses
 	* @param end the upper bound of the range of email addresses (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -800,7 +800,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching email address
 	* @throws NoSuchEmailAddressException if a matching email address could not be found
@@ -815,7 +815,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
 	*/
@@ -828,7 +828,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching email address
 	* @throws NoSuchEmailAddressException if a matching email address could not be found
@@ -843,7 +843,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
 	*/
@@ -857,7 +857,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	* @param emailAddressId the primary key of the current email address
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next email address
 	* @throws NoSuchEmailAddressException if a email address with the primary key could not be found
@@ -872,7 +872,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	*/
 	public void removeByC_C_C(long companyId, long classNameId, long classPK);
 
@@ -881,7 +881,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @return the number of matching email addresses
 	*/
 	public int countByC_C_C(long companyId, long classNameId, long classPK);
@@ -891,7 +891,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the matching email addresses
 	*/
@@ -907,7 +907,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of email addresses
 	* @param end the upper bound of the range of email addresses (not inclusive)
@@ -925,7 +925,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of email addresses
 	* @param end the upper bound of the range of email addresses (not inclusive)
@@ -945,7 +945,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param start the lower bound of the range of email addresses
 	* @param end the upper bound of the range of email addresses (not inclusive)
@@ -963,7 +963,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching email address
@@ -979,7 +979,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching email address, or <code>null</code> if a matching email address could not be found
@@ -993,7 +993,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching email address
@@ -1009,7 +1009,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching email address, or <code>null</code> if a matching email address could not be found
@@ -1024,7 +1024,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	* @param emailAddressId the primary key of the current email address
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next email address
@@ -1040,7 +1040,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	*/
 	public void removeByC_C_C_P(long companyId, long classNameId, long classPK,
@@ -1051,7 +1051,7 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param primary the primary
 	* @return the number of matching email addresses
 	*/

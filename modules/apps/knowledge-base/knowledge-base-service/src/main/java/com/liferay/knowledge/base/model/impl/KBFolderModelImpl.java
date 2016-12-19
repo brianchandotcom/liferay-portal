@@ -69,7 +69,7 @@ public class KBFolderModelImpl extends BaseModelImpl<KBFolder>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a k b folder model instance should use the {@link KBFolder} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a kb folder model instance should use the {@link KBFolder} interface instead.
 	 */
 	public static final String TABLE_NAME = "KBFolder";
 	public static final Object[][] TABLE_COLUMNS = {

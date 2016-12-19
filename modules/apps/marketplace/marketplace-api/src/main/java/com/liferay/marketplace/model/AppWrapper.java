@@ -286,9 +286,9 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	/**
-	* Returns the icon u r l of this app.
+	* Returns the icon url of this app.
 	*
-	* @return the icon u r l of this app
+	* @return the icon url of this app
 	*/
 	@Override
 	public java.lang.String getIconURL() {
@@ -512,9 +512,9 @@ public class AppWrapper implements App, ModelWrapper<App> {
 	}
 
 	/**
-	* Sets the icon u r l of this app.
+	* Sets the icon url of this app.
 	*
-	* @param iconURL the icon u r l of this app
+	* @param iconURL the icon url of this app
 	*/
 	@Override
 	public void setIconURL(java.lang.String iconURL) {

@@ -164,7 +164,7 @@ public class TicketUtil {
 	* Returns all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the matching tickets
 	*/
@@ -181,7 +181,7 @@ public class TicketUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
@@ -201,7 +201,7 @@ public class TicketUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
@@ -224,7 +224,7 @@ public class TicketUtil {
 	* </p>
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
@@ -244,7 +244,7 @@ public class TicketUtil {
 	* Returns the first ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ticket
@@ -262,7 +262,7 @@ public class TicketUtil {
 	* Returns the first ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching ticket, or <code>null</code> if a matching ticket could not be found
@@ -278,7 +278,7 @@ public class TicketUtil {
 	* Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ticket
@@ -296,7 +296,7 @@ public class TicketUtil {
 	* Returns the last ticket in the ordered set where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching ticket, or <code>null</code> if a matching ticket could not be found
@@ -313,7 +313,7 @@ public class TicketUtil {
 	*
 	* @param ticketId the primary key of the current ticket
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next ticket
@@ -332,7 +332,7 @@ public class TicketUtil {
 	* Removes all the tickets where classNameId = &#63; and classPK = &#63; and type = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	*/
 	public static void removeByC_C_T(long classNameId, long classPK, int type) {
@@ -343,7 +343,7 @@ public class TicketUtil {
 	* Returns the number of tickets where classNameId = &#63; and classPK = &#63; and type = &#63;.
 	*
 	* @param classNameId the class name ID
-	* @param classPK the class p k
+	* @param classPK the class pk
 	* @param type the type
 	* @return the number of matching tickets
 	*/

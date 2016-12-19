@@ -193,9 +193,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the name of this w s r p producer.
+	* Returns the name of this wsrp producer.
 	*
-	* @return the name of this w s r p producer
+	* @return the name of this wsrp producer
 	*/
 	@Override
 	public java.lang.String getName() {
@@ -203,9 +203,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the portlet IDs of this w s r p producer.
+	* Returns the portlet IDs of this wsrp producer.
 	*
-	* @return the portlet IDs of this w s r p producer
+	* @return the portlet IDs of this wsrp producer
 	*/
 	@Override
 	public java.lang.String getPortletIds() {
@@ -218,9 +218,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the uuid of this w s r p producer.
+	* Returns the uuid of this wsrp producer.
 	*
-	* @return the uuid of this w s r p producer
+	* @return the uuid of this wsrp producer
 	*/
 	@Override
 	public java.lang.String getUuid() {
@@ -228,9 +228,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the version of this w s r p producer.
+	* Returns the version of this wsrp producer.
 	*
-	* @return the version of this w s r p producer
+	* @return the version of this wsrp producer
 	*/
 	@Override
 	public java.lang.String getVersion() {
@@ -248,9 +248,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the create date of this w s r p producer.
+	* Returns the create date of this wsrp producer.
 	*
-	* @return the create date of this w s r p producer
+	* @return the create date of this wsrp producer
 	*/
 	@Override
 	public Date getCreateDate() {
@@ -258,9 +258,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the last publish date of this w s r p producer.
+	* Returns the last publish date of this wsrp producer.
 	*
-	* @return the last publish date of this w s r p producer
+	* @return the last publish date of this wsrp producer
 	*/
 	@Override
 	public Date getLastPublishDate() {
@@ -268,9 +268,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the modified date of this w s r p producer.
+	* Returns the modified date of this wsrp producer.
 	*
-	* @return the modified date of this w s r p producer
+	* @return the modified date of this wsrp producer
 	*/
 	@Override
 	public Date getModifiedDate() {
@@ -278,9 +278,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the company ID of this w s r p producer.
+	* Returns the company ID of this wsrp producer.
 	*
-	* @return the company ID of this w s r p producer
+	* @return the company ID of this wsrp producer
 	*/
 	@Override
 	public long getCompanyId() {
@@ -288,9 +288,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the group ID of this w s r p producer.
+	* Returns the group ID of this wsrp producer.
 	*
-	* @return the group ID of this w s r p producer
+	* @return the group ID of this wsrp producer
 	*/
 	@Override
 	public long getGroupId() {
@@ -298,9 +298,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the primary key of this w s r p producer.
+	* Returns the primary key of this wsrp producer.
 	*
-	* @return the primary key of this w s r p producer
+	* @return the primary key of this wsrp producer
 	*/
 	@Override
 	public long getPrimaryKey() {
@@ -308,9 +308,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Returns the wsrp producer ID of this w s r p producer.
+	* Returns the wsrp producer ID of this wsrp producer.
 	*
-	* @return the wsrp producer ID of this w s r p producer
+	* @return the wsrp producer ID of this wsrp producer
 	*/
 	@Override
 	public long getWsrpProducerId() {
@@ -328,9 +328,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the company ID of this w s r p producer.
+	* Sets the company ID of this wsrp producer.
 	*
-	* @param companyId the company ID of this w s r p producer
+	* @param companyId the company ID of this wsrp producer
 	*/
 	@Override
 	public void setCompanyId(long companyId) {
@@ -338,9 +338,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the create date of this w s r p producer.
+	* Sets the create date of this wsrp producer.
 	*
-	* @param createDate the create date of this w s r p producer
+	* @param createDate the create date of this wsrp producer
 	*/
 	@Override
 	public void setCreateDate(Date createDate) {
@@ -364,9 +364,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the group ID of this w s r p producer.
+	* Sets the group ID of this wsrp producer.
 	*
-	* @param groupId the group ID of this w s r p producer
+	* @param groupId the group ID of this wsrp producer
 	*/
 	@Override
 	public void setGroupId(long groupId) {
@@ -374,9 +374,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the last publish date of this w s r p producer.
+	* Sets the last publish date of this wsrp producer.
 	*
-	* @param lastPublishDate the last publish date of this w s r p producer
+	* @param lastPublishDate the last publish date of this wsrp producer
 	*/
 	@Override
 	public void setLastPublishDate(Date lastPublishDate) {
@@ -384,9 +384,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the modified date of this w s r p producer.
+	* Sets the modified date of this wsrp producer.
 	*
-	* @param modifiedDate the modified date of this w s r p producer
+	* @param modifiedDate the modified date of this wsrp producer
 	*/
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
@@ -394,9 +394,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the name of this w s r p producer.
+	* Sets the name of this wsrp producer.
 	*
-	* @param name the name of this w s r p producer
+	* @param name the name of this wsrp producer
 	*/
 	@Override
 	public void setName(java.lang.String name) {
@@ -409,9 +409,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the portlet IDs of this w s r p producer.
+	* Sets the portlet IDs of this wsrp producer.
 	*
-	* @param portletIds the portlet IDs of this w s r p producer
+	* @param portletIds the portlet IDs of this wsrp producer
 	*/
 	@Override
 	public void setPortletIds(java.lang.String portletIds) {
@@ -419,9 +419,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the primary key of this w s r p producer.
+	* Sets the primary key of this wsrp producer.
 	*
-	* @param primaryKey the primary key of this w s r p producer
+	* @param primaryKey the primary key of this wsrp producer
 	*/
 	@Override
 	public void setPrimaryKey(long primaryKey) {
@@ -434,9 +434,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the uuid of this w s r p producer.
+	* Sets the uuid of this wsrp producer.
 	*
-	* @param uuid the uuid of this w s r p producer
+	* @param uuid the uuid of this wsrp producer
 	*/
 	@Override
 	public void setUuid(java.lang.String uuid) {
@@ -444,9 +444,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the version of this w s r p producer.
+	* Sets the version of this wsrp producer.
 	*
-	* @param version the version of this w s r p producer
+	* @param version the version of this wsrp producer
 	*/
 	@Override
 	public void setVersion(java.lang.String version) {
@@ -454,9 +454,9 @@ public class WSRPProducerWrapper implements WSRPProducer,
 	}
 
 	/**
-	* Sets the wsrp producer ID of this w s r p producer.
+	* Sets the wsrp producer ID of this wsrp producer.
 	*
-	* @param wsrpProducerId the wsrp producer ID of this w s r p producer
+	* @param wsrpProducerId the wsrp producer ID of this wsrp producer
 	*/
 	@Override
 	public void setWsrpProducerId(long wsrpProducerId) {

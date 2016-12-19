@@ -59,7 +59,7 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m template link model instance should use the {@link DDMTemplateLink} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm template link model instance should use the {@link DDMTemplateLink} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMTemplateLink";
 	public static final Object[][] TABLE_COLUMNS = {

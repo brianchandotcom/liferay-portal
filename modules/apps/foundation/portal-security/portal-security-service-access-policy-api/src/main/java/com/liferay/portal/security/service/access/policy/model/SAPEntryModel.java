@@ -52,264 +52,264 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. All methods that expect a s a p entry model instance should use the {@link SAPEntry} interface instead.
+	 * Never modify or reference this interface directly. All methods that expect a sap entry model instance should use the {@link SAPEntry} interface instead.
 	 */
 
 	/**
-	 * Returns the primary key of this s a p entry.
+	 * Returns the primary key of this sap entry.
 	 *
-	 * @return the primary key of this s a p entry
+	 * @return the primary key of this sap entry
 	 */
 	public long getPrimaryKey();
 
 	/**
-	 * Sets the primary key of this s a p entry.
+	 * Sets the primary key of this sap entry.
 	 *
-	 * @param primaryKey the primary key of this s a p entry
+	 * @param primaryKey the primary key of this sap entry
 	 */
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the uuid of this s a p entry.
+	 * Returns the uuid of this sap entry.
 	 *
-	 * @return the uuid of this s a p entry
+	 * @return the uuid of this sap entry
 	 */
 	@AutoEscape
 	@Override
 	public String getUuid();
 
 	/**
-	 * Sets the uuid of this s a p entry.
+	 * Sets the uuid of this sap entry.
 	 *
-	 * @param uuid the uuid of this s a p entry
+	 * @param uuid the uuid of this sap entry
 	 */
 	@Override
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the sap entry ID of this s a p entry.
+	 * Returns the sap entry ID of this sap entry.
 	 *
-	 * @return the sap entry ID of this s a p entry
+	 * @return the sap entry ID of this sap entry
 	 */
 	public long getSapEntryId();
 
 	/**
-	 * Sets the sap entry ID of this s a p entry.
+	 * Sets the sap entry ID of this sap entry.
 	 *
-	 * @param sapEntryId the sap entry ID of this s a p entry
+	 * @param sapEntryId the sap entry ID of this sap entry
 	 */
 	public void setSapEntryId(long sapEntryId);
 
 	/**
-	 * Returns the company ID of this s a p entry.
+	 * Returns the company ID of this sap entry.
 	 *
-	 * @return the company ID of this s a p entry
+	 * @return the company ID of this sap entry
 	 */
 	@Override
 	public long getCompanyId();
 
 	/**
-	 * Sets the company ID of this s a p entry.
+	 * Sets the company ID of this sap entry.
 	 *
-	 * @param companyId the company ID of this s a p entry
+	 * @param companyId the company ID of this sap entry
 	 */
 	@Override
 	public void setCompanyId(long companyId);
 
 	/**
-	 * Returns the user ID of this s a p entry.
+	 * Returns the user ID of this sap entry.
 	 *
-	 * @return the user ID of this s a p entry
+	 * @return the user ID of this sap entry
 	 */
 	@Override
 	public long getUserId();
 
 	/**
-	 * Sets the user ID of this s a p entry.
+	 * Sets the user ID of this sap entry.
 	 *
-	 * @param userId the user ID of this s a p entry
+	 * @param userId the user ID of this sap entry
 	 */
 	@Override
 	public void setUserId(long userId);
 
 	/**
-	 * Returns the user uuid of this s a p entry.
+	 * Returns the user uuid of this sap entry.
 	 *
-	 * @return the user uuid of this s a p entry
+	 * @return the user uuid of this sap entry
 	 */
 	@Override
 	public String getUserUuid();
 
 	/**
-	 * Sets the user uuid of this s a p entry.
+	 * Sets the user uuid of this sap entry.
 	 *
-	 * @param userUuid the user uuid of this s a p entry
+	 * @param userUuid the user uuid of this sap entry
 	 */
 	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the user name of this s a p entry.
+	 * Returns the user name of this sap entry.
 	 *
-	 * @return the user name of this s a p entry
+	 * @return the user name of this sap entry
 	 */
 	@AutoEscape
 	@Override
 	public String getUserName();
 
 	/**
-	 * Sets the user name of this s a p entry.
+	 * Sets the user name of this sap entry.
 	 *
-	 * @param userName the user name of this s a p entry
+	 * @param userName the user name of this sap entry
 	 */
 	@Override
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the create date of this s a p entry.
+	 * Returns the create date of this sap entry.
 	 *
-	 * @return the create date of this s a p entry
+	 * @return the create date of this sap entry
 	 */
 	@Override
 	public Date getCreateDate();
 
 	/**
-	 * Sets the create date of this s a p entry.
+	 * Sets the create date of this sap entry.
 	 *
-	 * @param createDate the create date of this s a p entry
+	 * @param createDate the create date of this sap entry
 	 */
 	@Override
 	public void setCreateDate(Date createDate);
 
 	/**
-	 * Returns the modified date of this s a p entry.
+	 * Returns the modified date of this sap entry.
 	 *
-	 * @return the modified date of this s a p entry
+	 * @return the modified date of this sap entry
 	 */
 	@Override
 	public Date getModifiedDate();
 
 	/**
-	 * Sets the modified date of this s a p entry.
+	 * Sets the modified date of this sap entry.
 	 *
-	 * @param modifiedDate the modified date of this s a p entry
+	 * @param modifiedDate the modified date of this sap entry
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the allowed service signatures of this s a p entry.
+	 * Returns the allowed service signatures of this sap entry.
 	 *
-	 * @return the allowed service signatures of this s a p entry
+	 * @return the allowed service signatures of this sap entry
 	 */
 	@AutoEscape
 	public String getAllowedServiceSignatures();
 
 	/**
-	 * Sets the allowed service signatures of this s a p entry.
+	 * Sets the allowed service signatures of this sap entry.
 	 *
-	 * @param allowedServiceSignatures the allowed service signatures of this s a p entry
+	 * @param allowedServiceSignatures the allowed service signatures of this sap entry
 	 */
 	public void setAllowedServiceSignatures(String allowedServiceSignatures);
 
 	/**
-	 * Returns the default s a p entry of this s a p entry.
+	 * Returns the default sap entry of this sap entry.
 	 *
-	 * @return the default s a p entry of this s a p entry
+	 * @return the default sap entry of this sap entry
 	 */
 	public boolean getDefaultSAPEntry();
 
 	/**
-	 * Returns <code>true</code> if this s a p entry is default s a p entry.
+	 * Returns <code>true</code> if this sap entry is default sap entry.
 	 *
-	 * @return <code>true</code> if this s a p entry is default s a p entry; <code>false</code> otherwise
+	 * @return <code>true</code> if this sap entry is default sap entry; <code>false</code> otherwise
 	 */
 	public boolean isDefaultSAPEntry();
 
 	/**
-	 * Sets whether this s a p entry is default s a p entry.
+	 * Sets whether this sap entry is default sap entry.
 	 *
-	 * @param defaultSAPEntry the default s a p entry of this s a p entry
+	 * @param defaultSAPEntry the default sap entry of this sap entry
 	 */
 	public void setDefaultSAPEntry(boolean defaultSAPEntry);
 
 	/**
-	 * Returns the enabled of this s a p entry.
+	 * Returns the enabled of this sap entry.
 	 *
-	 * @return the enabled of this s a p entry
+	 * @return the enabled of this sap entry
 	 */
 	public boolean getEnabled();
 
 	/**
-	 * Returns <code>true</code> if this s a p entry is enabled.
+	 * Returns <code>true</code> if this sap entry is enabled.
 	 *
-	 * @return <code>true</code> if this s a p entry is enabled; <code>false</code> otherwise
+	 * @return <code>true</code> if this sap entry is enabled; <code>false</code> otherwise
 	 */
 	public boolean isEnabled();
 
 	/**
-	 * Sets whether this s a p entry is enabled.
+	 * Sets whether this sap entry is enabled.
 	 *
-	 * @param enabled the enabled of this s a p entry
+	 * @param enabled the enabled of this sap entry
 	 */
 	public void setEnabled(boolean enabled);
 
 	/**
-	 * Returns the name of this s a p entry.
+	 * Returns the name of this sap entry.
 	 *
-	 * @return the name of this s a p entry
+	 * @return the name of this sap entry
 	 */
 	@AutoEscape
 	public String getName();
 
 	/**
-	 * Sets the name of this s a p entry.
+	 * Sets the name of this sap entry.
 	 *
-	 * @param name the name of this s a p entry
+	 * @param name the name of this sap entry
 	 */
 	public void setName(String name);
 
 	/**
-	 * Returns the title of this s a p entry.
+	 * Returns the title of this sap entry.
 	 *
-	 * @return the title of this s a p entry
+	 * @return the title of this sap entry
 	 */
 	public String getTitle();
 
 	/**
-	 * Returns the localized title of this s a p entry in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the locale of the language
-	 * @return the localized title of this s a p entry
+	 * @return the localized title of this sap entry
 	 */
 	@AutoEscape
 	public String getTitle(Locale locale);
 
 	/**
-	 * Returns the localized title of this s a p entry in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param locale the local of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this s a p entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 * @return the localized title of this sap entry. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
 	 */
 	@AutoEscape
 	public String getTitle(Locale locale, boolean useDefault);
 
 	/**
-	 * Returns the localized title of this s a p entry in the language. Uses the default language if no localization exists for the requested language.
+	 * Returns the localized title of this sap entry in the language. Uses the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
-	 * @return the localized title of this s a p entry
+	 * @return the localized title of this sap entry
 	 */
 	@AutoEscape
 	public String getTitle(String languageId);
 
 	/**
-	 * Returns the localized title of this s a p entry in the language, optionally using the default language if no localization exists for the requested language.
+	 * Returns the localized title of this sap entry in the language, optionally using the default language if no localization exists for the requested language.
 	 *
 	 * @param languageId the ID of the language
 	 * @param useDefault whether to use the default language if no localization exists for the requested language
-	 * @return the localized title of this s a p entry
+	 * @return the localized title of this sap entry
 	 */
 	@AutoEscape
 	public String getTitle(String languageId, boolean useDefault);
@@ -321,31 +321,31 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	public String getTitleCurrentValue();
 
 	/**
-	 * Returns a map of the locales and localized titles of this s a p entry.
+	 * Returns a map of the locales and localized titles of this sap entry.
 	 *
-	 * @return the locales and localized titles of this s a p entry
+	 * @return the locales and localized titles of this sap entry
 	 */
 	public Map<Locale, String> getTitleMap();
 
 	/**
-	 * Sets the title of this s a p entry.
+	 * Sets the title of this sap entry.
 	 *
-	 * @param title the title of this s a p entry
+	 * @param title the title of this sap entry
 	 */
 	public void setTitle(String title);
 
 	/**
-	 * Sets the localized title of this s a p entry in the language.
+	 * Sets the localized title of this sap entry in the language.
 	 *
-	 * @param title the localized title of this s a p entry
+	 * @param title the localized title of this sap entry
 	 * @param locale the locale of the language
 	 */
 	public void setTitle(String title, Locale locale);
 
 	/**
-	 * Sets the localized title of this s a p entry in the language, and sets the default locale.
+	 * Sets the localized title of this sap entry in the language, and sets the default locale.
 	 *
-	 * @param title the localized title of this s a p entry
+	 * @param title the localized title of this sap entry
 	 * @param locale the locale of the language
 	 * @param defaultLocale the default locale
 	 */
@@ -354,16 +354,16 @@ public interface SAPEntryModel extends BaseModel<SAPEntry>, LocalizedModel,
 	public void setTitleCurrentLanguageId(String languageId);
 
 	/**
-	 * Sets the localized titles of this s a p entry from the map of locales and localized titles.
+	 * Sets the localized titles of this sap entry from the map of locales and localized titles.
 	 *
-	 * @param titleMap the locales and localized titles of this s a p entry
+	 * @param titleMap the locales and localized titles of this sap entry
 	 */
 	public void setTitleMap(Map<Locale, String> titleMap);
 
 	/**
-	 * Sets the localized titles of this s a p entry from the map of locales and localized titles, and sets the default locale.
+	 * Sets the localized titles of this sap entry from the map of locales and localized titles, and sets the default locale.
 	 *
-	 * @param titleMap the locales and localized titles of this s a p entry
+	 * @param titleMap the locales and localized titles of this sap entry
 	 * @param defaultLocale the default locale
 	 */
 	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);

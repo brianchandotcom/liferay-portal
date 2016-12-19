@@ -452,7 +452,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @return the matching kaleo task assignments
 	*/
 	public static List<KaleoTaskAssignment> findByKCN_KCPK(
@@ -468,7 +468,7 @@ public class KaleoTaskAssignmentUtil {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param start the lower bound of the range of kaleo task assignments
 	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
 	* @return the range of matching kaleo task assignments
@@ -487,7 +487,7 @@ public class KaleoTaskAssignmentUtil {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param start the lower bound of the range of kaleo task assignments
 	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -509,7 +509,7 @@ public class KaleoTaskAssignmentUtil {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param start the lower bound of the range of kaleo task assignments
 	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -529,7 +529,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the first kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
@@ -547,7 +547,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the first kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	*/
@@ -563,7 +563,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
@@ -581,7 +581,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
 	*/
@@ -598,7 +598,7 @@ public class KaleoTaskAssignmentUtil {
 	*
 	* @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment
 	* @throws NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
@@ -617,7 +617,7 @@ public class KaleoTaskAssignmentUtil {
 	* Removes all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; from the database.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	*/
 	public static void removeByKCN_KCPK(java.lang.String kaleoClassName,
 		long kaleoClassPK) {
@@ -628,7 +628,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the number of kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @return the number of matching kaleo task assignments
 	*/
 	public static int countByKCN_KCPK(java.lang.String kaleoClassName,
@@ -640,7 +640,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @return the matching kaleo task assignments
 	*/
@@ -660,7 +660,7 @@ public class KaleoTaskAssignmentUtil {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param start the lower bound of the range of kaleo task assignments
 	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
@@ -682,7 +682,7 @@ public class KaleoTaskAssignmentUtil {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param start the lower bound of the range of kaleo task assignments
 	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
@@ -706,7 +706,7 @@ public class KaleoTaskAssignmentUtil {
 	* </p>
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param start the lower bound of the range of kaleo task assignments
 	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
@@ -728,7 +728,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the first kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment
@@ -748,7 +748,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the first kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
@@ -766,7 +766,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment
@@ -786,7 +786,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the last kaleo task assignment in the ordered set where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
@@ -805,7 +805,7 @@ public class KaleoTaskAssignmentUtil {
 	*
 	* @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next kaleo task assignment
@@ -825,7 +825,7 @@ public class KaleoTaskAssignmentUtil {
 	* Removes all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63; from the database.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	*/
 	public static void removeByKCN_KCPK_ACN(java.lang.String kaleoClassName,
@@ -839,7 +839,7 @@ public class KaleoTaskAssignmentUtil {
 	* Returns the number of kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63; and assigneeClassName = &#63;.
 	*
 	* @param kaleoClassName the kaleo class name
-	* @param kaleoClassPK the kaleo class p k
+	* @param kaleoClassPK the kaleo class pk
 	* @param assigneeClassName the assignee class name
 	* @return the number of matching kaleo task assignments
 	*/

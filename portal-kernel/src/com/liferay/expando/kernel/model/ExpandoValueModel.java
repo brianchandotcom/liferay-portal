@@ -160,17 +160,17 @@ public interface ExpandoValueModel extends AttachedModel, BaseModel<ExpandoValue
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this expando value.
+	 * Returns the class pk of this expando value.
 	 *
-	 * @return the class p k of this expando value
+	 * @return the class pk of this expando value
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this expando value.
+	 * Sets the class pk of this expando value.
 	 *
-	 * @param classPK the class p k of this expando value
+	 * @param classPK the class pk of this expando value
 	 */
 	@Override
 	public void setClassPK(long classPK);

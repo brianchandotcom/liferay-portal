@@ -232,17 +232,17 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this address.
+	 * Returns the class pk of this address.
 	 *
-	 * @return the class p k of this address
+	 * @return the class pk of this address
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this address.
+	 * Sets the class pk of this address.
 	 *
-	 * @param classPK the class p k of this address
+	 * @param classPK the class pk of this address
 	 */
 	@Override
 	public void setClassPK(long classPK);

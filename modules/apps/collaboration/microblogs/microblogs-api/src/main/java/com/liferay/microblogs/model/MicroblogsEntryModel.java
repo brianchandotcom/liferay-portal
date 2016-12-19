@@ -191,16 +191,16 @@ public interface MicroblogsEntryModel extends AuditedModel,
 	public void setCreatorClassNameId(long creatorClassNameId);
 
 	/**
-	 * Returns the creator class p k of this microblogs entry.
+	 * Returns the creator class pk of this microblogs entry.
 	 *
-	 * @return the creator class p k of this microblogs entry
+	 * @return the creator class pk of this microblogs entry
 	 */
 	public long getCreatorClassPK();
 
 	/**
-	 * Sets the creator class p k of this microblogs entry.
+	 * Sets the creator class pk of this microblogs entry.
 	 *
-	 * @param creatorClassPK the creator class p k of this microblogs entry
+	 * @param creatorClassPK the creator class pk of this microblogs entry
 	 */
 	public void setCreatorClassPK(long creatorClassPK);
 

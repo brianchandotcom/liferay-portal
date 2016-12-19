@@ -148,17 +148,17 @@ public interface CompanyModel extends BaseModel<Company>, MVCCModel {
 	public void setMx(String mx);
 
 	/**
-	 * Returns the home u r l of this company.
+	 * Returns the home url of this company.
 	 *
-	 * @return the home u r l of this company
+	 * @return the home url of this company
 	 */
 	@AutoEscape
 	public String getHomeURL();
 
 	/**
-	 * Sets the home u r l of this company.
+	 * Sets the home url of this company.
 	 *
-	 * @param homeURL the home u r l of this company
+	 * @param homeURL the home url of this company
 	 */
 	public void setHomeURL(String homeURL);
 

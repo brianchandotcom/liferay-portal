@@ -134,17 +134,17 @@ public interface SocialActivityCounterModel extends AttachedModel,
 	public void setClassNameId(long classNameId);
 
 	/**
-	 * Returns the class p k of this social activity counter.
+	 * Returns the class pk of this social activity counter.
 	 *
-	 * @return the class p k of this social activity counter
+	 * @return the class pk of this social activity counter
 	 */
 	@Override
 	public long getClassPK();
 
 	/**
-	 * Sets the class p k of this social activity counter.
+	 * Sets the class pk of this social activity counter.
 	 *
-	 * @param classPK the class p k of this social activity counter
+	 * @param classPK the class pk of this social activity counter
 	 */
 	@Override
 	public void setClassPK(long classPK);

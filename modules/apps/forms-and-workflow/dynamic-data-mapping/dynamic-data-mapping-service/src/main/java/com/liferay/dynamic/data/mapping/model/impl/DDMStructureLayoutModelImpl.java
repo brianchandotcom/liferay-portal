@@ -64,7 +64,7 @@ public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayou
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m structure layout model instance should use the {@link DDMStructureLayout} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm structure layout model instance should use the {@link DDMStructureLayout} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructureLayout";
 	public static final Object[][] TABLE_COLUMNS = {

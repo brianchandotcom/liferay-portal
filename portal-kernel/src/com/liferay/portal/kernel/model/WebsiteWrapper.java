@@ -345,9 +345,9 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	}
 
 	/**
-	* Returns the class p k of this website.
+	* Returns the class pk of this website.
 	*
-	* @return the class p k of this website
+	* @return the class pk of this website
 	*/
 	@Override
 	public long getClassPK() {
@@ -440,9 +440,9 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 	}
 
 	/**
-	* Sets the class p k of this website.
+	* Sets the class pk of this website.
 	*
-	* @param classPK the class p k of this website
+	* @param classPK the class pk of this website
 	*/
 	@Override
 	public void setClassPK(long classPK) {

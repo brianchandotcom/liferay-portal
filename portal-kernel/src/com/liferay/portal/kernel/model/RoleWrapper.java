@@ -522,9 +522,9 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	/**
-	* Returns the class p k of this role.
+	* Returns the class pk of this role.
 	*
-	* @return the class p k of this role
+	* @return the class pk of this role
 	*/
 	@Override
 	public long getClassPK() {
@@ -620,9 +620,9 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	/**
-	* Sets the class p k of this role.
+	* Sets the class pk of this role.
 	*
-	* @param classPK the class p k of this role
+	* @param classPK the class pk of this role
 	*/
 	@Override
 	public void setClassPK(long classPK) {

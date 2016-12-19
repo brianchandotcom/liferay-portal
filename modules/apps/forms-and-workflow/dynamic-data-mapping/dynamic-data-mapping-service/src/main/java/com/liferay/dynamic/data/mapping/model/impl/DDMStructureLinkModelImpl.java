@@ -59,7 +59,7 @@ public class DDMStructureLinkModelImpl extends BaseModelImpl<DDMStructureLink>
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a d d m structure link model instance should use the {@link DDMStructureLink} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a ddm structure link model instance should use the {@link DDMStructureLink} interface instead.
 	 */
 	public static final String TABLE_NAME = "DDMStructureLink";
 	public static final Object[][] TABLE_COLUMNS = {

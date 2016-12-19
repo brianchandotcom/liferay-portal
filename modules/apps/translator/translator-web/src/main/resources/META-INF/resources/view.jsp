@@ -49,18 +49,9 @@ if (translation == null) {
 
 				<%
 				MicrosoftTranslatorException mte = (MicrosoftTranslatorException)errorException;
-
-				String message = mte.getMessage();
-
-				if (message.startsWith("ACS50012") || message.startsWith("ACS70002") || message.startsWith("ACS90011")) {
 				%>
 
-					<liferay-ui:message key="please-configure-a-valid-microsoft-translator-license" />
-
-				<%
-				}
-				%>
-
+				<liferay-ui:message key="<%= mte.getMessage() %>" />
 			</liferay-ui:error>
 
 			<c:if test="<%= Validator.isNotNull(translation.getToText()) %>">

@@ -2263,7 +2263,7 @@ public class LayoutUtil {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param friendlyURL the friendly url
+	* @param friendlyURL the friendly u r l
 	* @return the matching layout
 	* @throws NoSuchLayoutException if a matching layout could not be found
 	*/
@@ -2278,7 +2278,7 @@ public class LayoutUtil {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param friendlyURL the friendly url
+	* @param friendlyURL the friendly u r l
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	*/
 	public static Layout fetchByG_P_F(long groupId, boolean privateLayout,
@@ -2291,7 +2291,7 @@ public class LayoutUtil {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param friendlyURL the friendly url
+	* @param friendlyURL the friendly u r l
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
 	*/
@@ -2307,7 +2307,7 @@ public class LayoutUtil {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param friendlyURL the friendly url
+	* @param friendlyURL the friendly u r l
 	* @return the layout that was removed
 	*/
 	public static Layout removeByG_P_F(long groupId, boolean privateLayout,
@@ -2322,7 +2322,7 @@ public class LayoutUtil {
 	*
 	* @param groupId the group ID
 	* @param privateLayout the private layout
-	* @param friendlyURL the friendly url
+	* @param friendlyURL the friendly u r l
 	* @return the number of matching layouts
 	*/
 	public static int countByG_P_F(long groupId, boolean privateLayout,

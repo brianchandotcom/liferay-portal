@@ -363,6 +363,16 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsInvalidVariableName() throws Exception {
+		String[] invalidVariableNames = {
+			null, "", "false", "hello.world", "hello/world", "hello-world",
+			"HELLO.WORLD", "HELLO-WORLD", "HELLO/WORLD", "import", "static"
+		};
+
+		testValidVariableNames(invalidVariableNames, false);
+	}
+
+	@Test
 	public void testIsNull() throws Exception {
 		String[] nullStrings = {
 			null, "", "  ", "null", " null", "null ", "  null  "
@@ -532,6 +542,16 @@ public class ValidatorTest extends PowerMockito {
 		testValidUrl(validUrls, true);
 	}
 
+	@Test
+	public void testIsVariableName() throws Exception {
+		String[] validVariableNames = {
+			"_hello_world", "_HELLO_WORLD", "helloWorld", "hElLoWoRlD",
+			"helloWorld123"
+		};
+
+		testValidVariableNames(validVariableNames, true);
+	}
+
 	protected void testIsNull(String[] strings, boolean valid) {
 		for (String string : strings) {
 			boolean b = Validator.isNull(string);
@@ -605,6 +625,12 @@ public class ValidatorTest extends PowerMockito {
 
 	protected void testValidUrl(String[] urls, boolean valid) {
 		testIsValidByMethodName("isUrl", urls, valid);
+	}
+
+	protected void testValidVariableNames(
+		String[] variableNames, boolean valid) {
+
+		testIsValidByMethodName("isVariableName", variableNames, valid);
 	}
 
 }

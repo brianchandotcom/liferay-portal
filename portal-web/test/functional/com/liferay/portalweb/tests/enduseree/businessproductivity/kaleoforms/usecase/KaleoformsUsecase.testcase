@@ -4618,7 +4618,7 @@
 			<var name="fieldLabel" value="Date" />
 			<var name="fieldValue" value="4/1/17" />
 		</execute>
-	</command>
+	</command>-->
 
 	<command name="ProcessUsesCreateFormWhenNoEditFormIsDefined" priority="3">
 		<execute macro="Navigator#openURL" />

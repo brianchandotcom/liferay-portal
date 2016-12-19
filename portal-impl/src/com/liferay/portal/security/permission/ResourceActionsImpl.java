@@ -675,57 +675,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		read(servletContextName, classLoader, source, new HashSet<>());
 	}
 
-	protected void read(
-			String servletContextName, ClassLoader classLoader, String source,
-			Set<String> portletNames)
-		throws Exception {
-
-		InputStream inputStream = classLoader.getResourceAsStream(source);
-
-		if (inputStream == null) {
-			if (_log.isInfoEnabled() && !source.endsWith("-ext.xml") &&
-				!source.startsWith("META-INF/")) {
-
-				_log.info("Cannot load " + source);
-			}
-
-			return;
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Loading " + source);
-		}
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
-
-		DocumentType documentType = document.getDocumentType();
-
-		String publicId = GetterUtil.getString(documentType.getPublicId());
-
-		if (publicId.equals(
-				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Please update " + source + " to use the 6.1.0 format");
-			}
-		}
-
-		Element rootElement = document.getRootElement();
-
-		for (Element resourceElement : rootElement.elements("resource")) {
-			String file = resourceElement.attributeValue("file").trim();
-
-			read(servletContextName, classLoader, file, portletNames);
-
-			String extFile = StringUtil.replace(file, ".xml", "-ext.xml");
-
-			read(servletContextName, classLoader, extFile, portletNames);
-		}
-
-		read(servletContextName, document, portletNames);
-	}
-
 	@Override
 	public void read(
 			String servletContextName, ClassLoader classLoader,
@@ -1054,6 +1003,57 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		return types;
+	}
+
+	protected void read(
+			String servletContextName, ClassLoader classLoader, String source,
+			Set<String> portletNames)
+		throws Exception {
+
+		InputStream inputStream = classLoader.getResourceAsStream(source);
+
+		if (inputStream == null) {
+			if (_log.isInfoEnabled() && !source.endsWith("-ext.xml") &&
+				!source.startsWith("META-INF/")) {
+
+				_log.info("Cannot load " + source);
+			}
+
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Loading " + source);
+		}
+
+		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
+
+		DocumentType documentType = document.getDocumentType();
+
+		String publicId = GetterUtil.getString(documentType.getPublicId());
+
+		if (publicId.equals(
+				"-//Liferay//DTD Resource Action Mapping 6.0.0//EN")) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Please update " + source + " to use the 6.1.0 format");
+			}
+		}
+
+		Element rootElement = document.getRootElement();
+
+		for (Element resourceElement : rootElement.elements("resource")) {
+			String file = resourceElement.attributeValue("file").trim();
+
+			read(servletContextName, classLoader, file, portletNames);
+
+			String extFile = StringUtil.replace(file, ".xml", "-ext.xml");
+
+			read(servletContextName, classLoader, extFile, portletNames);
+		}
+
+		read(servletContextName, document, portletNames);
 	}
 
 	protected void read(

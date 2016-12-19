@@ -17,8 +17,8 @@ package com.liferay.site.item.selector.criteria;
 import com.liferay.item.selector.ItemSelectorReturnType;
 
 /**
- * This return type should return the following information of a group as a
- * JSON object:
+ * This return type should return the following information of a group as a JSON
+ * object:
  *
  * <ul>
  * <li>

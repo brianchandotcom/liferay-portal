@@ -27,9 +27,9 @@ public class MultiDatabaseSQLQueryTest {
 		MultiDatabaseSQLQuery multiDatabaseSQLQuery = new MultiDatabaseSQLQuery(
 			_DEFAULT_SQL);
 
-		multiDatabaseSQLQuery.addSpecificSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
+		multiDatabaseSQLQuery.addSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
 
-		String sql = multiDatabaseSQLQuery.getDBSQL(DBType.MYSQL);
+		String sql = multiDatabaseSQLQuery.getSQL(DBType.MYSQL);
 
 		Assert.assertEquals(_DEFAULT_MYSQL_SQL, sql);
 	}
@@ -39,9 +39,9 @@ public class MultiDatabaseSQLQueryTest {
 		MultiDatabaseSQLQuery multiDatabaseSQLQuery = new MultiDatabaseSQLQuery(
 			_DEFAULT_SQL);
 
-		multiDatabaseSQLQuery.addSpecificSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
+		multiDatabaseSQLQuery.addSQL(DBType.MYSQL, _DEFAULT_MYSQL_SQL);
 
-		String sql = multiDatabaseSQLQuery.getDBSQL(DBType.ORACLE);
+		String sql = multiDatabaseSQLQuery.getSQL(DBType.ORACLE);
 
 		Assert.assertEquals(_DEFAULT_SQL, sql);
 	}

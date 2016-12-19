@@ -26,11 +26,11 @@ public class MultiDatabaseSQLQuery {
 		_defaultSQL = defaultSQL;
 	}
 
-	public void addSpecificSQL(DBType dbType, String sql) {
+	public void addSQL(DBType dbType, String sql) {
 		_specificSQL.put(dbType, sql);
 	}
 
-	public String getDBSQL(DBType dbType) {
+	public String getSQL(DBType dbType) {
 		if (_specificSQL.containsKey(dbType)) {
 			return _specificSQL.get(dbType);
 		}

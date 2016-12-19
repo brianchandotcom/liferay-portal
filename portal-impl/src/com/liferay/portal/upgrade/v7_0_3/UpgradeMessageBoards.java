@@ -132,7 +132,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		sb.append("and AssetEntry.classNameId = ");
 		sb.append(classNameId);
 
-		multiDatabaseSQLQuery.addSpecificSQL(DBType.MYSQL, sb.toString());
+		multiDatabaseSQLQuery.addSQL(DBType.MYSQL, sb.toString());
 
 		runSQL(multiDatabaseSQLQuery);
 	}
@@ -166,7 +166,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 		sb.append(tempTableName);
 		sb.append(".threadId");
 
-		multiDatabaseSQLQuery.addSpecificSQL(DBType.MYSQL, sb.toString());
+		multiDatabaseSQLQuery.addSQL(DBType.MYSQL, sb.toString());
 
 		runSQL(multiDatabaseSQLQuery);
 	}

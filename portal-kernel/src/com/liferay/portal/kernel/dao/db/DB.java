@@ -91,7 +91,7 @@ public interface DB {
 			Connection con, MultiDatabaseSQLQuery multiDatabaseSQLQuery)
 		throws IOException, SQLException {
 
-		String sql = multiDatabaseSQLQuery.getDBSQL(getDBType());
+		String sql = multiDatabaseSQLQuery.getSQL(getDBType());
 
 		runSQL(con, new String[] {sql});
 	}
@@ -105,7 +105,7 @@ public interface DB {
 	public default void runSQL(MultiDatabaseSQLQuery multiDatabaseSQLQuery)
 		throws IOException, SQLException {
 
-		String sql = multiDatabaseSQLQuery.getDBSQL(getDBType());
+		String sql = multiDatabaseSQLQuery.getSQL(getDBType());
 
 		runSQL(new String[] {sql});
 	}

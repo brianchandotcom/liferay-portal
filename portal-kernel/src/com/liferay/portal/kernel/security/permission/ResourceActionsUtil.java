@@ -276,6 +276,15 @@ public class ResourceActionsUtil {
 		getResourceActions().read(servletContextName, inputStream);
 	}
 
+	public static void readAndCheck(
+			String servletContextName, ClassLoader classLoader,
+			String[] sources)
+		throws Exception {
+
+		getResourceActions().readAndCheck(
+			servletContextName, classLoader, sources);
+	}
+
 	public void setResourceActions(ResourceActions resourceActions) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

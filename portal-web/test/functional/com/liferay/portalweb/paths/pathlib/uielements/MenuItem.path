@@ -910,7 +910,7 @@
 </tr>
 <tr>
 	<td>UNASSIGN_FORM</td>
-	<td>//tr[contains(.,'${key_workflowTask}')]//a[@role='menuitem' and contains(.,'Unassign Form')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Unassign Form') and contains(@onclick,'${key_workflowTask}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -120,6 +120,11 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 		}
 	}
 
+	public String getAccessorName() {
+		return TextFormatter.format(
+			TextFormatter.format(_name, TextFormatter.H), TextFormatter.A);
+	}
+
 	public String getArrayableOperator() {
 		return _arrayableOperator;
 	}

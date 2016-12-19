@@ -31,12 +31,13 @@ public class MultiDatabaseSQLQuery {
 	}
 
 	public String getSQL(DBType dbType) {
-		if (_specificSQL.containsKey(dbType)) {
-			return _specificSQL.get(dbType);
+		String sql = _specificSQL.get(dbType);
+
+		if (sql != null) {
+			return sql;
 		}
-		else {
-			return _defaultSQL;
-		}
+
+		return _defaultSQL;
 	}
 
 	private final String _defaultSQL;

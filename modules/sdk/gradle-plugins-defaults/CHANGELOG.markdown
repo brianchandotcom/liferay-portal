@@ -762,14 +762,12 @@ found.
 ## 2.2.4 - 2016-12-14
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.0.51.
 - [LPS-67694]: Disable the `install` and `uploadArchives` tasks for `*-test`
 OSGi projects, Ant plugins and themes if the `-PsnapshotIfStale` argument is
 provided.
 
-## 2.2.5 - 2016-12-14
-
 ### Changed
-- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.0.51.
 
 ## 2.3.0 - 2016-12-15
 

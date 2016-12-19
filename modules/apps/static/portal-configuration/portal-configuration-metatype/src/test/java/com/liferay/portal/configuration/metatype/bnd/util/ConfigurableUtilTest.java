@@ -95,6 +95,20 @@ public class ConfigurableUtilTest {
 		new ConfigurableUtil();
 	}
 
+	public static class TestClass {
+
+		public TestClass(String name) {
+			_name = name;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		private final String _name;
+
+	}
+
 	private void _assertTestConfiguration(
 		TestConfiguration testConfiguration, String requiredString) {
 
@@ -104,6 +118,7 @@ public class ConfigurableUtilTest {
 		Assert.assertEquals(TestEnum.TEST_VALUE, testConfiguration.testEnum());
 		Assert.assertEquals(1.0, testConfiguration.testFloat(), 0);
 		Assert.assertEquals(100, testConfiguration.testInt());
+		Assert.assertNull(testConfiguration.testNullResult());
 		Assert.assertEquals(
 			requiredString, testConfiguration.testReqiredString());
 		Assert.assertEquals(1, testConfiguration.testShort());
@@ -112,17 +127,9 @@ public class ConfigurableUtilTest {
 			new String[] {"test_string_1", "test_string_2"},
 			testConfiguration.testStringArray());
 
-		try {
-			testConfiguration.testClass();
+		TestClass testClass = testConfiguration.testClass();
 
-			Assert.fail();
-		}
-		catch (UnsupportedOperationException uoe) {
-			Assert.assertEquals("Not supported yet.", uoe.getMessage());
-		}
-	}
-
-	private class TestClass {
+		Assert.assertEquals("test.class", testClass.getName());
 	}
 
 	private interface TestConfiguration {
@@ -133,7 +140,7 @@ public class ConfigurableUtilTest {
 		@Meta.AD(deflt = "1", required = false)
 		public byte testByte();
 
-		@Meta.AD(required = false)
+		@Meta.AD(deflt = "test.class", required = false)
 		public TestClass testClass();
 
 		@Meta.AD(deflt = "1.0", required = false)
@@ -150,6 +157,9 @@ public class ConfigurableUtilTest {
 
 		@Meta.AD(deflt = "100", required = false)
 		public long testLong();
+
+		@Meta.AD(required = false)
+		public String testNullResult();
 
 		@Meta.AD(required = true)
 		public String testReqiredString();

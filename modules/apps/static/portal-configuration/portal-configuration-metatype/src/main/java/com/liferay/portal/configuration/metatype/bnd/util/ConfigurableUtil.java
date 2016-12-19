@@ -113,7 +113,9 @@ public class ConfigurableUtil {
 		for (Method method : declaredMethods) {
 			Class<?> returnType = method.getReturnType();
 
-			if (!returnType.isArray()) {
+			if (returnType.isPrimitive() || returnType.isEnum() ||
+				(returnType == String.class)) {
+
 				continue;
 			}
 
@@ -142,7 +144,9 @@ public class ConfigurableUtil {
 		for (Method method : declaredMethods) {
 			Class<?> returnType = method.getReturnType();
 
-			if (!returnType.isArray()) {
+			if (returnType.isPrimitive() || returnType.isEnum() ||
+				(returnType == String.class)) {
+
 				continue;
 			}
 
@@ -177,16 +181,7 @@ public class ConfigurableUtil {
 
 			methodVisitor.visitCode();
 
-			if (returnType.isArray()) {
-				methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
-
-				methodVisitor.visitFieldInsn(
-					Opcodes.GETFIELD, snapshotClassBinaryName, methodName,
-					Type.getDescriptor(returnType));
-
-				methodVisitor.visitInsn(Opcodes.ARETURN);
-			}
-			else if (returnType.isPrimitive() || (returnType == String.class)) {
+			if (returnType.isPrimitive() || (returnType == String.class)) {
 				Object result = method.invoke(configurable);
 
 				if (result == null) {
@@ -217,22 +212,13 @@ public class ConfigurableUtil {
 				methodVisitor.visitInsn(Opcodes.ARETURN);
 			}
 			else {
-				String unsupportedOperationExceptionBinaryName =
-					_getClassBinaryName(
-						UnsupportedOperationException.class.getName());
+				methodVisitor.visitVarInsn(Opcodes.ALOAD, 0);
 
-				methodVisitor.visitTypeInsn(
-					Opcodes.NEW, unsupportedOperationExceptionBinaryName);
+				methodVisitor.visitFieldInsn(
+					Opcodes.GETFIELD, snapshotClassBinaryName, methodName,
+					Type.getDescriptor(returnType));
 
-				methodVisitor.visitInsn(Opcodes.DUP);
-				methodVisitor.visitLdcInsn("Not supported yet.");
-				methodVisitor.visitMethodInsn(
-					Opcodes.INVOKESPECIAL,
-					unsupportedOperationExceptionBinaryName, "<init>",
-					Type.getMethodDescriptor(
-						Type.VOID_TYPE, Type.getType(String.class)),
-					false);
-				methodVisitor.visitInsn(Opcodes.ATHROW);
+				methodVisitor.visitInsn(Opcodes.ARETURN);
 			}
 
 			methodVisitor.visitMaxs(0, 0);

@@ -20,9 +20,9 @@ import java.util.Map;
 /**
  * @author Mariano Alvaro Saiz
  */
-public class SqlQuery {
+public class MultiDatabaseSQLQuery {
 
-	public SqlQuery(String defaultSQL) {
+	public MultiDatabaseSQLQuery(String defaultSQL) {
 		_defaultSQL = defaultSQL;
 	}
 

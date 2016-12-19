@@ -42,16 +42,16 @@ public abstract class BaseDBProcess implements DBProcess {
 	}
 
 	@Override
-	public void runSQL(SqlQuery sqlQuery)
+	public void runSQL(MultiDatabaseSQLQuery multiDatabaseSQLQuery)
 		throws IOException, SQLException {
 
 		DB db = DBManagerUtil.getDB();
 
 		if (connection == null) {
-			db.runSQL(sqlQuery);
+			db.runSQL(multiDatabaseSQLQuery);
 		}
 		else {
-			db.runSQL(connection, sqlQuery);
+			db.runSQL(connection, multiDatabaseSQLQuery);
 		}
 	}
 

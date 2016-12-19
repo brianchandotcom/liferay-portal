@@ -2032,7 +2032,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  avax.portlet,javax.servlet,javax.servlet.http",com.liferay.asset.kern
  el.model.adapter;version="1.0.0";uses:="com.liferay.asset.kernel.mode
  l,com.liferay.portal.kernel.model",com.liferay.asset.kernel.service;v
- ersion="1.4.0";uses:="com.liferay.asset.kernel.model,com.liferay.asse
+ ersion="1.5.0";uses:="com.liferay.asset.kernel.model,com.liferay.asse
  t.kernel.service.persistence,com.liferay.exportimport.kernel.lar,com.
  liferay.portal.kernel.cache.thread.local,com.liferay.portal.kernel.da
  o.orm,com.liferay.portal.kernel.exception,com.liferay.portal.kernel.i

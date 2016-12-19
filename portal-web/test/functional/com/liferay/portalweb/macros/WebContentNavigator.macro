@@ -36,6 +36,16 @@
 		<execute function="AssertVisible" locator1="TextInput#TITLE" />
 	</command>
 
+	<command name="gotoAddFeed">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
+
+		<execute function="AssertVisible" locator1="Button#PLUS" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+	</command>
+
 	<command name="gotoAddPGViaWCD">
 		<execute function="Click#clickNoWaitForVisible" locator1="WCD#ADD_WEB_CONTENT" />
 
@@ -79,6 +89,18 @@
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="AssertElementPresent" locator1="Icon#BACK" />
+	</command>
+
+	<command name="gotoEditFeed">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
+
+		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoEditPGViaWCD">

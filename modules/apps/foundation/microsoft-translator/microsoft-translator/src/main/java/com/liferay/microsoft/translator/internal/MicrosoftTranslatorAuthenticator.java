@@ -14,6 +14,8 @@
 
 package com.liferay.microsoft.translator.internal;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -71,10 +73,13 @@ public class MicrosoftTranslatorAuthenticator {
 			int responseCode = response.getResponseCode();
 
 			if (responseCode != HttpServletResponse.SC_OK) {
-				_error = content;
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					content);
+
+				_error = jsonObject.getString("message");
 
 				if (_log.isInfoEnabled()) {
-					_log.info("Unable to initialize access token: " + _error);
+					_log.info("Unable to initialize access token: " + content);
 				}
 			}
 			else {

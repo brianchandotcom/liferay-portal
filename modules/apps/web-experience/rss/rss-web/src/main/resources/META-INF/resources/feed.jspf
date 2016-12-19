@@ -96,7 +96,9 @@
 
 								<br />
 
-								<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink()) %>"><liferay-ui:message key="read-more" /></aui:a>
+								<c:if test="<%= Validator.isNotNull(rssFeedEntry.getSyndEntryLink()) %>">
+									<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink()) %>"><liferay-ui:message key="read-more" /></aui:a>
+								</c:if>
 							</div>
 						</aui:fieldset>
 

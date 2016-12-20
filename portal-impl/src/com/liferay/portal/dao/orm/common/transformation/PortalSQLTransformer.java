@@ -34,8 +34,11 @@ public class PortalSQLTransformer implements Transformer {
 
 	private static DB _db;
 
-	public static Function<String, String> bitwiseCheckDefaultTransformation =
+	public static Function<String, String> noTransformation =
 		(String sql) -> sql;
+
+	public static Function<String, String> bitwiseCheckDefaultTransformation =
+		noTransformation;
 	public static final Pattern bitwiseCheckPattern = Pattern.compile(
 		"BITAND\\((.+?),(.+?)\\)");
 
@@ -75,9 +78,9 @@ public class PortalSQLTransformer implements Transformer {
 	public static Function<String, String> castTextTransformation =
 		(String sql) -> _replaceCastText(castTextPattern.matcher(sql));
 	public static Function<String, String> crossJoinDefaultTransformation =
-		(String sql) -> sql;
+		noTransformation;
 	public static Function<String, String> inStrDefaultTransformation =
-		(String sql) -> sql;
+		noTransformation;
 	public static final Pattern instrPattern = Pattern.compile(
 		"INSTR\\((.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 	public static final Pattern integerDivisionPattern = Pattern.compile(
@@ -95,7 +98,7 @@ public class PortalSQLTransformer implements Transformer {
 	public static Function<String, String> nullDateTransformation =
 		(String sql) -> StringUtil.replace(sql, "[$NULL_DATE$]", "NULL");
 	public static Function<String, String> substrDefaultTransformation =
-		(String sql) -> sql;
+		noTransformation;
 	public static final Pattern substrPattern = Pattern.compile(
 		"SUBSTR\\((.+?),(.+?),(.+?)\\)", Pattern.CASE_INSENSITIVE);
 

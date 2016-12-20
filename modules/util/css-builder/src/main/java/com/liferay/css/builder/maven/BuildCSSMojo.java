@@ -20,9 +20,17 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
 
+import java.util.List;
+
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 
+import org.codehaus.plexus.component.repository.ComponentDependency;
 import org.codehaus.plexus.util.Scanner;
 
 import org.sonatype.plexus.build.incremental.BuildContext;
@@ -39,6 +47,22 @@ public class BuildCSSMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
+			for (ComponentDependency dependency :
+					pluginDescriptor.getDependencies()) {
+
+				String artifactId = dependency.getArtifactId();
+
+				if (artifactId.equals("com.liferay.frontend.css.common") &&
+					(_cssBuilderArgs.getPortalCommonPath() == null)) {
+
+					Artifact artifact = resolveArtifact(dependency);
+
+					File file = artifact.getFile();
+
+					_cssBuilderArgs.setPortalCommonPath(file.getAbsolutePath());
+				}
+			}
+
 			if (buildContext.isIncremental()) {
 				Scanner scanner = buildContext.newScanner(baseDir);
 
@@ -92,8 +116,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="/"
-	 * @required
+	 * @parameter
 	 */
 	public void setPortalCommonPath(String portalCommonPath) {
 		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
@@ -120,6 +143,29 @@ public class BuildCSSMojo extends AbstractMojo {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
 	}
 
+	protected Artifact resolveArtifact(ComponentDependency dependency)
+		throws Exception {
+
+		Artifact artifact = artifactFactory.createArtifact(
+			dependency.getGroupId(), dependency.getArtifactId(),
+			dependency.getVersion(), null, dependency.getType());
+
+		artifactResolver.resolve(
+			artifact, remoteArtifactRepositories, localArtifactRepository);
+
+		return artifact;
+	}
+
+	/**
+	 * @component
+	 */
+	protected ArtifactFactory artifactFactory;
+
+	/**
+	 * @component
+	 */
+	protected ArtifactResolver artifactResolver;
+
 	/**
 	 * @parameter default-value="${project.basedir}"
 	 * @readonly
@@ -130,6 +176,26 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @component
 	 */
 	protected BuildContext buildContext;
+
+	/**
+	 * @parameter expression="${localRepository}"
+	 * @readonly
+	 * @required
+	 */
+	protected ArtifactRepository localArtifactRepository;
+
+	/**
+	 * @parameter default-value="${plugin}"
+	 * @readonly
+	 */
+	protected PluginDescriptor pluginDescriptor;
+
+	/**
+	 * @parameter expression="${project.remoteArtifactRepositories}"
+	 * @readonly
+	 * @required
+	 */
+	protected List remoteArtifactRepositories;
 
 	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
 

@@ -148,6 +148,10 @@ public interface AssetRenderer<T> extends Renderer {
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException;
 
+	public default boolean isCategorizable(long groupId) {
+		return true;
+	}
+
 	public boolean isCommentable();
 
 	public boolean isConvertible();

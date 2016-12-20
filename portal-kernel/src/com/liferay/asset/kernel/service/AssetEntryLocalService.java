@@ -583,6 +583,10 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public void setAssetTagAssetEntries(long tagId, long[] entryIds);
 
 	public void validate(long groupId, java.lang.String className,
+		long classPK, long classTypePK, long[] categoryIds,
+		java.lang.String[] tagNames) throws PortalException;
+
+	public void validate(long groupId, java.lang.String className,
 		long classTypePK, long[] categoryIds, java.lang.String[] tagNames)
 		throws PortalException;
 

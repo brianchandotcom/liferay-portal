@@ -2183,17 +2183,9 @@ public interface UserLocalService extends BaseLocalService,
 	public void addGroupUsers(long groupId, long[] userIds)
 		throws PortalException;
 
-	/**
-	* @throws PortalException
-	*/
-	public void addOrganizationUser(long organizationId, User user)
-		throws PortalException;
+	public void addOrganizationUser(long organizationId, User user);
 
-	/**
-	* @throws PortalException
-	*/
-	public void addOrganizationUser(long organizationId, long userId)
-		throws PortalException;
+	public void addOrganizationUser(long organizationId, long userId);
 
 	/**
 	* @throws PortalException

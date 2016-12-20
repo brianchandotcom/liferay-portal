@@ -1,5 +1,6 @@
 <definition component-name="portal-portal-services" ignore="true">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="portlet.plugins.includes" value="sample-drools-portlet" />
 	<property name="testray.main.component.name" value="Development Tools" />
 	<property name="web.plugins.includes" value="drools-web" />

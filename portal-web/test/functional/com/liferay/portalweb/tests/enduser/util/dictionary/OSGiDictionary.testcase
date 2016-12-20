@@ -1,6 +1,7 @@
 <definition component-name="portal-util-misc">
 	<property name="osgi.app.includes" value="dictionary" />
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Util" />
 
 	<set-up>

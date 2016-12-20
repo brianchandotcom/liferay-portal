@@ -665,7 +665,7 @@ public class Validator {
 		return true;
 	}
 
-	public static boolean isFilePath(String path, boolean isParentDirAllowed) {
+	public static boolean isFilePath(String path, boolean parentDirAllowed) {
 		if (isNull(path)) {
 			return false;
 		}
@@ -674,7 +674,7 @@ public class Validator {
 			return false;
 		}
 
-		if (isParentDirAllowed) {
+		if (parentDirAllowed) {
 			return true;
 		}
 

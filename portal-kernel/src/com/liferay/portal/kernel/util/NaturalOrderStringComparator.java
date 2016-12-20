@@ -83,11 +83,11 @@ public class NaturalOrderStringComparator
 			if (isCheckSpecialCharacters() && Validator.isAscii(c1) &&
 				Validator.isAscii(c2)) {
 
-				boolean isDigitOrLetter1 = _isDigitOrLetter(c1);
-				boolean isDigitOrLetter2 = _isDigitOrLetter(c2);
+				boolean digitOrLetter1 = _isDigitOrLetter(c1);
+				boolean digitOrLetter2 = _isDigitOrLetter(c2);
 
-				if (isDigitOrLetter1 ^ isDigitOrLetter2) {
-					if (isDigitOrLetter1) {
+				if (digitOrLetter1 ^ digitOrLetter2) {
+					if (digitOrLetter1) {
 						value = 1;
 					}
 					else {

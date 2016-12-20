@@ -1357,7 +1357,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 	protected UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
 			UnicodeProperties typeSettingsProperties, String device,
-			String deviceThemeId, boolean isLayout)
+			String deviceThemeId, boolean layout)
 		throws Exception {
 
 		Theme theme = themeLocalService.getTheme(companyId, deviceThemeId);
@@ -1373,7 +1373,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 		setThemeSettingProperties(
 			actionRequest, typeSettingsProperties, themeSettings, device,
-			isLayout);
+			layout);
 
 		return typeSettingsProperties;
 	}

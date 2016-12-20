@@ -75,7 +75,7 @@ public class OutputStreamWriter extends Writer {
 
 	@Override
 	public void close() throws IOException {
-		if (!_isOpen) {
+		if (!_open) {
 			return;
 		}
 
@@ -87,7 +87,7 @@ public class OutputStreamWriter extends Writer {
 			_outputStream.close();
 		}
 		finally {
-			_isOpen = false;
+			_open = false;
 		}
 	}
 
@@ -186,7 +186,7 @@ public class OutputStreamWriter extends Writer {
 	}
 
 	private void _ensureOpen() throws IOException {
-		if (!_isOpen) {
+		if (!_open) {
 			throw new IOException("Stream closed");
 		}
 	}
@@ -241,7 +241,7 @@ public class OutputStreamWriter extends Writer {
 	private final CharsetEncoder _charsetEncoder;
 	private final String _charsetName;
 	private final CharBuffer _inputCharBuffer = CharBuffer.allocate(2);
-	private boolean _isOpen = true;
+	private boolean _open = true;
 	private final ByteBuffer _outputByteBuffer;
 	private final OutputStream _outputStream;
 

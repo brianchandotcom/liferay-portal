@@ -140,31 +140,31 @@ public class ImageEditorDLDisplayContextHelper {
 	}
 
 	public boolean isShowImageEditorAction() throws PortalException {
-		if (_isShowImageEditorAction != null) {
-			return _isShowImageEditorAction;
+		if (_showImageEditorAction != null) {
+			return _showImageEditorAction;
 		}
 
 		if (!isShowActions()) {
-			_isShowImageEditorAction = false;
+			_showImageEditorAction = false;
 		}
 		else if (!DLFileEntryPermission.contains(
 					_themeDisplay.getPermissionChecker(), _fileEntry,
 					ActionKeys.UPDATE) ||
 				 (_fileEntry.isCheckedOut() && !_fileEntry.hasLock())) {
 
-			_isShowImageEditorAction = false;
+			_showImageEditorAction = false;
 		}
 		else if (!ArrayUtil.contains(
 					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
 					_fileEntry.getMimeType())) {
 
-			_isShowImageEditorAction = false;
+			_showImageEditorAction = false;
 		}
 		else {
-			_isShowImageEditorAction = true;
+			_showImageEditorAction = true;
 		}
 
-		return _isShowImageEditorAction;
+		return _showImageEditorAction;
 	}
 
 	private String _getJavaScript() throws PortalException {
@@ -253,8 +253,8 @@ public class ImageEditorDLDisplayContextHelper {
 
 	private final FileEntry _fileEntry;
 	private final FileVersion _fileVersion;
-	private Boolean _isShowImageEditorAction;
 	private final HttpServletRequest _request;
+	private Boolean _showImageEditorAction;
 	private final ThemeDisplay _themeDisplay;
 
 }

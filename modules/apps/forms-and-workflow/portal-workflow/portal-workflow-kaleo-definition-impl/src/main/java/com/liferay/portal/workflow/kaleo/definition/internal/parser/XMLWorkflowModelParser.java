@@ -734,13 +734,11 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 		}
 	}
 
-	protected Timer parseTimerElement(
-		Element timerElement, boolean isTaskTimer) {
-
+	protected Timer parseTimerElement(Element timerElement, boolean taskTimer) {
 		String name = timerElement.elementText("name");
 		String description = timerElement.elementText("description");
 		boolean blocking = GetterUtil.getBoolean(
-			timerElement.elementText("blocking"), !isTaskTimer);
+			timerElement.elementText("blocking"), !taskTimer);
 
 		Timer timer = new Timer(name, description, blocking);
 

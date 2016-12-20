@@ -72,7 +72,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 	private void _checkMissingEmptyLineAfterReferencingVariable(
 		DetailAST detailAST, String name, int endLine) {
 
-		boolean isReferenced = false;
+		boolean referenced = false;
 
 		DetailAST nextSibling = detailAST.getNextSibling();
 
@@ -106,7 +106,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 			}
 
 			if (!expressionReferencesVariable) {
-				if (isReferenced) {
+				if (referenced) {
 					int startLineNextExpression = DetailASTUtil.getStartLine(
 						nextSibling);
 
@@ -121,7 +121,7 @@ public class MissingEmptyLineCheck extends AbstractCheck {
 				return;
 			}
 
-			isReferenced = true;
+			referenced = true;
 
 			endLine = DetailASTUtil.getEndLine(nextSibling);
 

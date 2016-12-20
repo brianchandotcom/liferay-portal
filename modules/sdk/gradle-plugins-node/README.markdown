@@ -157,7 +157,7 @@ The purpose of this task is to download a Node.js package. The packages are
 downloaded in the `${workingDir}/node_modules` directory, which is equal, by
 default, to the `node_modules` directory of the project. Tasks of type
 `DownloadNodeModuleTask` extend [`ExecuteNpmTask`](#executenpmtask) in order to
-execute the command `npm install ${moduleName}@${moduleVersion}`.
+execute the command [`npm install ${moduleName}@${moduleVersion}`](https://docs.npmjs.com/cli/install).
 
 `DownloadNodeModuleTask` instances are automatically disabled if the project's
 `package.json` file already lists a module with the same name in its
@@ -177,7 +177,7 @@ properties, to defer evaluation until task execution.
 
 Purpose of these tasks is to install the dependencies declared in a
 `package.json` file. Tasks of type `NpmInstallTask` extend
-[`ExecuteNpmTask`](#executenpmtask) in order to run the command `npm install`.
+[`ExecuteNpmTask`](#executenpmtask) in order to run the command [`npm install`](https://docs.npmjs.com/cli/install).
 
 `NpmInstallTask` instances are automatically disabled if the `package.json` file
 does not declare any dependency in the `dependency` or `devDependencies` object.
@@ -226,7 +226,7 @@ Method | Description
 The purpose of this task is to publish a package to the
 [NPM registry](#https://www.npmjs.com/). Tasks of type `PublishNodeModuleTask`
 extend [`ExecuteNpmTask`](#executenpmtask) in order to execute the command
-`npm publish`.
+[`npm publish`](https://docs.npmjs.com/cli/publish).
 
 These tasks generate a new temporary `package.json` file in the root of the
 project directory, based on the values provided for the task properties. If the

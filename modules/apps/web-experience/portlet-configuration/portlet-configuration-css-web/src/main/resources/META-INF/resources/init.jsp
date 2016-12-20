@@ -35,15 +35,14 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.portal.util.LayoutListUtil" %>
+page import="com.liferay.portal.util.LayoutListUtil" %><%@
+page import="com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants" %>
 
 <%@ page import="java.text.DecimalFormat" %><%@
 page import="java.text.DecimalFormatSymbols" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Locale" %>
-
-<%@ page import="javax.portlet.PortletURL" %>
 
 <liferay-theme:defineObjects />
 

@@ -27,7 +27,7 @@ import org.json.JSONObject;
 public class BatchBuild extends BaseBuild {
 
 	@Override
-	public List<TestResult> getTestResults() {
+	public List<TestResult> getTestResults(String testStatus) {
 		String status = getStatus();
 
 		if (!status.equals("completed")) {
@@ -50,7 +50,7 @@ public class BatchBuild extends BaseBuild {
 
 			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
 
-			testResults.addAll(getTestResults(suitesJSONArray));
+			testResults.addAll(getTestResults(suitesJSONArray, testStatus));
 		}
 
 		return testResults;

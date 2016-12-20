@@ -497,7 +497,9 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	public List<TestResult> getTestResults(JSONArray suitesJSONArray) {
+	public List<TestResult> getTestResults(
+		JSONArray suitesJSONArray, String testStatus) {
+
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (int i = 0; i < suitesJSONArray.length(); i++) {
@@ -526,12 +528,13 @@ public abstract class BaseBuild implements Build {
 					testMethodName = testMethodName.replace(".", "_");
 				}
 
-				String caseStatus = caseJSONObject.getString("status");
+				String status = caseJSONObject.getString("status");
 
-				testResults.add(
-					new TestResult(
-						testSimpleClassName, null, testMethodName,
-						caseStatus));
+				if ((testStatus == null) || status.equals(testStatus)) {
+					testResults.add(
+						new TestResult(
+							testSimpleClassName, null, testMethodName, status));
+				}
 			}
 		}
 
@@ -539,11 +542,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<TestResult> getTestResults() {
+	public List<TestResult> getTestResults(String testStatus) {
 		List<TestResult> testResults = new ArrayList<>();
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			testResults.addAll(downstreamBuild.getTestResults());
+			testResults.addAll(downstreamBuild.getTestResults(testStatus));
 		}
 
 		return testResults;

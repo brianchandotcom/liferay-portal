@@ -78,7 +78,7 @@ public interface Build {
 
 	public JSONObject getTestReportJSONObject();
 
-	public List<TestResult> getTestResults();
+	public List<TestResult> getTestResults(String testStatus);
 
 	public boolean hasBuildURL(String buildURL);
 

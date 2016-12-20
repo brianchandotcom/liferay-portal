@@ -102,6 +102,8 @@ public class GroupFinderTest {
 			_modelResourceAction.getName(),
 			StringUtil.valueOf(_group.getGroupId()),
 			_resourceTypePermission.getRoleId(), ResourceConstants.SCOPE_GROUP);
+
+		_organization = OrganizationTestUtil.addOrganization(true);
 	}
 
 	@AfterClass
@@ -116,6 +118,8 @@ public class GroupFinderTest {
 
 		ResourceTypePermissionLocalServiceUtil.deleteResourceTypePermission(
 			_resourceTypePermission);
+
+		OrganizationLocalServiceUtil.deleteOrganization(_organization);
 
 		UserLocalServiceUtil.deleteUser(_userGroupUser);
 

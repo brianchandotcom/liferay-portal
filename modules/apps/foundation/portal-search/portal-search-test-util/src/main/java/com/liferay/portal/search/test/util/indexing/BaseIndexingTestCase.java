@@ -103,11 +103,12 @@ public abstract class BaseIndexingTestCase {
 
 	protected abstract IndexingFixture createIndexingFixture() throws Exception;
 
-	protected Hits search(SearchContext searchContext) throws Exception {
-		Query query = new TermQueryImpl(
-			Field.ENTRY_CLASS_NAME, _entryClassName);
+	protected Query getDefaultQuery() {
+		return new TermQueryImpl(Field.ENTRY_CLASS_NAME, _entryClassName);
+	}
 
-		return search(searchContext, query);
+	protected Hits search(SearchContext searchContext) throws Exception {
+		return search(searchContext, getDefaultQuery());
 	}
 
 	protected Hits search(SearchContext searchContext, Query query)

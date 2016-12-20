@@ -27,13 +27,12 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 
-import java.lang.reflect.Method;
+import java.lang.ProcessBuilder.Redirect;
 
 import java.net.URI;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
@@ -94,24 +93,18 @@ public class ProjectTemplatesTest {
 		_httpProxyHost = System.getProperty("http.proxyHost");
 		_httpProxyPort = System.getProperty("http.proxyPort");
 
-		List<URL> mavenEmbedderDependencyURLs = new ArrayList<>();
+		String javaExecutableFileName = "java";
 
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				Paths.get("build", "maven-embedder-dependencies.txt"))) {
-
-			String line;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				Path path = Paths.get(line);
-
-				URI uri = path.toUri();
-
-				mavenEmbedderDependencyURLs.add(uri.toURL());
-			}
+		if (File.pathSeparatorChar == ';') {
+			javaExecutableFileName = "java.exe";
 		}
 
-		_mavenEmbedderDependencyURLs = mavenEmbedderDependencyURLs.toArray(
-			new URL[mavenEmbedderDependencyURLs.size()]);
+		_javaExecutableFile = new File(
+			System.getProperty("java.home"),
+			"bin" + File.separator + javaExecutableFileName);
+
+		_mavenEmbedderClasspath = FileUtil.read(
+			Paths.get("build", "maven-embedder-classpath.txt"));
 
 		_projectTemplateVersions = FileTestUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
@@ -1233,57 +1226,68 @@ public class ProjectTemplatesTest {
 	private void _executeMaven(File projectDir, String... args)
 		throws Exception {
 
-		List<String> completeArgs = new ArrayList<>();
+		List<String> commands = new ArrayList<>();
 
-		completeArgs.add("--errors");
+		commands.add(_javaExecutableFile.getAbsolutePath());
+
+		commands.add("-classpath");
+		commands.add(_mavenEmbedderClasspath);
+
+		commands.add("-Dfile.encoding=UTF-8");
+		commands.add(
+			"-Dmaven.multiModuleProjectDirectory=" +
+				projectDir.getAbsolutePath());
+
+		for (String arg : args) {
+			if (arg.startsWith("-D")) {
+				commands.add(arg);
+			}
+		}
+
+		commands.add("org.apache.maven.cli.MavenCli");
+
+		commands.add("--errors");
 
 		if (_mavenSettingsXmlFile != null) {
-			completeArgs.add(
+			commands.add(
 				"--settings=" + _mavenSettingsXmlFile.getAbsolutePath());
 		}
 
-		completeArgs.add("--update-snapshots");
+		commands.add("--update-snapshots");
 
 		for (String arg : args) {
-			completeArgs.add(arg);
+			if (!arg.startsWith("-D")) {
+				commands.add(arg);
+			}
 		}
 
-		Thread currentThread = Thread.currentThread();
+		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		processBuilder.directory(projectDir);
+		processBuilder.redirectOutput(Redirect.INHERIT);
 
-		try (URLClassLoader urlClassLoader = new URLClassLoader(
-				_mavenEmbedderDependencyURLs, null)) {
+		Process process = processBuilder.start();
 
-			currentThread.setContextClassLoader(urlClassLoader);
+		StringBuilder sb = new StringBuilder();
 
-			Class<?> mavenCliClass = urlClassLoader.loadClass(
-				"org.apache.maven.cli.MavenCli");
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(
+					process.getErrorStream(), StandardCharsets.UTF_8))) {
 
-			Method doMainMethod = mavenCliClass.getMethod(
-				"doMain", String[].class, String.class, PrintStream.class,
-				PrintStream.class);
+			String line = null;
 
-			System.setProperty(
-				"maven.multiModuleProjectDirectory",
-				projectDir.getAbsolutePath());
+			while ((line = bufferedReader.readLine()) != null) {
+				if (sb.length() > 0) {
+					sb.append(System.lineSeparator());
+				}
 
-			Object mavenCli = mavenCliClass.newInstance();
-
-			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-			ByteArrayOutputStream errorStream = new ByteArrayOutputStream();
-
-			Integer exitCode = (Integer)doMainMethod.invoke(
-				mavenCli, completeArgs.toArray(new String[completeArgs.size()]),
-				projectDir.getAbsolutePath(),
-				new PrintStream(outputStream, true),
-				new PrintStream(errorStream, true));
-
-			Assert.assertEquals(errorStream.toString(), 0, exitCode.intValue());
+				sb.append(line);
+			}
 		}
-		finally {
-			currentThread.setContextClassLoader(contextClassLoader);
-		}
+
+		int exitCode = process.waitFor();
+
+		Assert.assertEquals(sb.toString(), 0, exitCode);
 	}
 
 	private void _testBuildTemplateServiceBuilder(
@@ -1580,7 +1584,8 @@ public class ProjectTemplatesTest {
 	private static URI _gradleDistribution;
 	private static String _httpProxyHost;
 	private static String _httpProxyPort;
-	private static URL[] _mavenEmbedderDependencyURLs;
+	private static File _javaExecutableFile;
+	private static String _mavenEmbedderClasspath;
 	private static File _mavenSettingsXmlFile;
 	private static Properties _projectTemplateVersions;
 	private static String _repositoryUrl;

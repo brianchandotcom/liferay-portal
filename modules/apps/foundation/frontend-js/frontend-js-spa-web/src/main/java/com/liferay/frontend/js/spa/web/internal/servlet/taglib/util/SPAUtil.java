@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.lang.reflect.Field;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -74,26 +73,11 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 public class SPAUtil {
 
 	public long getCacheExpirationTime(long companyId) {
-		long cacheExpirationTime = _spaConfiguration.cacheExpirationTime();
-
-		if (cacheExpirationTime > 0) {
-			cacheExpirationTime *= Time.MINUTE;
-		}
-
-		return cacheExpirationTime;
+		return _cacheExpirationTime;
 	}
 
 	public String getExcludedPaths() {
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		String[] excludedPaths = StringUtil.split(
-			SPAConfigurationUtil.get("spa.excluded.paths"));
-
-		for (String excludedPath : excludedPaths) {
-			jsonArray.put(excludedPath);
-		}
-
-		return jsonArray.toString();
+		return _spaExcludedPaths;
 	}
 
 	public ResourceBundle getLanguageResourceBundle(Locale locale) {
@@ -102,15 +86,11 @@ public class SPAUtil {
 	}
 
 	public String getLoginRedirect(HttpServletRequest request) {
-		String portletNamespace = PortalUtil.getPortletNamespace(
-			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
-
-		return ParamUtil.getString(request, portletNamespace + "redirect");
+		return ParamUtil.getString(request, _redirectParamName);
 	}
 
 	public String getNavigationExceptionSelectors() {
-		return ListUtil.toString(
-			_navigationExceptionSelectors, (String)null, StringPool.BLANK);
+		return _navigationExceptionSelectorsString;
 	}
 
 	public String getPortletsBlacklist(ThemeDisplay themeDisplay) {
@@ -119,9 +99,9 @@ public class SPAUtil {
 			themeDisplay.getCompanyId());
 
 		for (Portlet portlet : companyPortlets) {
-			if (portlet.isActive() && portlet.isReady() &&
-				!portlet.isUndeployedPortlet() &&
-				!portlet.isSinglePageApplication()) {
+			if (!portlet.isSinglePageApplication() &&
+				!portlet.isUndeployedPortlet() && portlet.isActive() &&
+				portlet.isReady()) {
 
 				jsonObject.put(portlet.getPortletId(), true);
 			}
@@ -154,12 +134,15 @@ public class SPAUtil {
 
 		String portletId = request.getParameter("p_p_id");
 
+		if (Validator.isNull(portletId)) {
+			return false;
+		}
+
 		String singlePageApplicationLastPortletId =
 			(String)session.getAttribute(
 				WebKeys.SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID);
 
-		if (Validator.isNotNull(portletId) &&
-			Validator.isNotNull(singlePageApplicationLastPortletId) &&
+		if (Validator.isNotNull(singlePageApplicationLastPortletId) &&
 			!Objects.equals(portletId, singlePageApplicationLastPortletId)) {
 
 			return true;
@@ -173,10 +156,15 @@ public class SPAUtil {
 			BundleContext bundleContext, SPAConfiguration spaConfiguration)
 		throws InvalidSyntaxException {
 
+		_cacheExpirationTime = _getCacheExpirationTime(spaConfiguration);
+
 		_spaConfiguration = spaConfiguration;
 
 		_navigationExceptionSelectors.addAll(
 			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
+
+		_navigationExceptionSelectorsString = ListUtil.toString(
+			_navigationExceptionSelectors, (String)null, StringPool.BLANK);
 
 		Filter filter = bundleContext.createFilter(
 			"(&(objectClass=java.lang.Object)(" +
@@ -196,6 +184,8 @@ public class SPAUtil {
 
 	@Modified
 	protected void modified(SPAConfiguration spaConfiguration) {
+		_cacheExpirationTime = _getCacheExpirationTime(spaConfiguration);
+
 		_navigationExceptionSelectors.removeAll(
 			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
 
@@ -203,6 +193,9 @@ public class SPAUtil {
 
 		_navigationExceptionSelectors.addAll(
 			Arrays.asList(_spaConfiguration.navigationExceptionSelectors()));
+
+		_navigationExceptionSelectorsString = ListUtil.toString(
+			_navigationExceptionSelectors, (String)null, StringPool.BLANK);
 	}
 
 	@Reference(unbind = "-")
@@ -212,6 +205,16 @@ public class SPAUtil {
 		_portletLocalService = portletLocalService;
 	}
 
+	private long _getCacheExpirationTime(SPAConfiguration spaConfiguration) {
+		long cacheExpirationTime = spaConfiguration.cacheExpirationTime();
+
+		if (cacheExpirationTime > 0) {
+			cacheExpirationTime *= Time.MINUTE;
+		}
+
+		return cacheExpirationTime;
+	}
+
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =
 		"javascript.single.page.application.navigation.exception.selector";
 
@@ -219,6 +222,9 @@ public class SPAUtil {
 
 	private static final List<String> _navigationExceptionSelectors =
 		new CopyOnWriteArrayList<>();
+	private static volatile String _navigationExceptionSelectorsString;
+	private static final String _redirectParamName;
+	private static final String _spaExcludedPaths;
 
 	static {
 		Class<?> clazz = ServletResponseConstants.class;
@@ -234,8 +240,25 @@ public class SPAUtil {
 		}
 
 		_VALID_STATUS_CODES = jsonArray.toJSONString();
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
+
+		_redirectParamName = portletNamespace.concat("redirect");
+
+		jsonArray = JSONFactoryUtil.createJSONArray();
+
+		String[] excludedPaths = StringUtil.split(
+			SPAConfigurationUtil.get("spa.excluded.paths"));
+
+		for (String excludedPath : excludedPaths) {
+			jsonArray.put(excludedPath);
+		}
+
+		_spaExcludedPaths = jsonArray.toString();
 	}
 
+	private long _cacheExpirationTime;
 	private ServiceTracker<Object, Object> _navigationExceptionSelectorTracker;
 	private PortletLocalService _portletLocalService;
 	private SPAConfiguration _spaConfiguration;
@@ -254,9 +277,10 @@ public class SPAUtil {
 			List<String> selectors = StringPlus.asList(
 				reference.getProperty(_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
 
-			Collections.addAll(
-				_navigationExceptionSelectors,
-				selectors.toArray(new String[selectors.size()]));
+			_navigationExceptionSelectors.addAll(selectors);
+
+			_navigationExceptionSelectorsString = ListUtil.toString(
+				_navigationExceptionSelectors, (String)null, StringPool.BLANK);
 
 			Object service = _bundleContext.getService(reference);
 
@@ -281,7 +305,10 @@ public class SPAUtil {
 			List<String> selectors = StringPlus.asList(
 				reference.getProperty(_SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY));
 
-			_navigationExceptionSelectors.remove(selectors);
+			_navigationExceptionSelectors.removeAll(selectors);
+
+			_navigationExceptionSelectorsString = ListUtil.toString(
+				_navigationExceptionSelectors, (String)null, StringPool.BLANK);
 
 			_serviceReferences.remove(reference);
 

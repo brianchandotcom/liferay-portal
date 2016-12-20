@@ -497,6 +497,47 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	public List<TestResult> getTestResults(JSONArray suitesJSONArray) {
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject jsonObject = suitesJSONArray.getJSONObject(i);
+
+			JSONArray casesJSONArray = jsonObject.getJSONArray("cases");
+
+			for (int j = 0; j < casesJSONArray.length(); j++) {
+				JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
+
+				String testClassName = caseJSONObject.getString("className");
+
+				int x = testClassName.lastIndexOf(".");
+
+				String testSimpleClassName = testClassName.substring(x + 1);
+
+				String testPackageName = testClassName.substring(0, x);
+
+				String testMethodName = caseJSONObject.getString("name");
+
+				testMethodName = testMethodName.replace("[", "_");
+				testMethodName = testMethodName.replace("]", "_");
+				testMethodName = testMethodName.replace("#", "_");
+
+				if (testPackageName.equals("junit.framework")) {
+					testMethodName = testMethodName.replace(".", "_");
+				}
+
+				String caseStatus = caseJSONObject.getString("status");
+
+				testResults.add(
+					new TestResult(
+						testSimpleClassName, null, testMethodName,
+						caseStatus));
+			}
+		}
+
+		return testResults;
+	}
+
 	@Override
 	public List<TestResult> getTestResults() {
 		List<TestResult> testResults = new ArrayList<>();

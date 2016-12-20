@@ -50,40 +50,7 @@ public class BatchBuild extends BaseBuild {
 
 			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
 
-			for (int j = 0; j < suitesJSONArray.length(); j++) {
-				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(j);
-
-				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
-					"cases");
-
-				for (int k = 0; k < casesJSONArray.length(); k++) {
-					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
-
-					String testClassName = caseJSONObject.getString(
-						"className");
-
-					int x = testClassName.lastIndexOf(".");
-
-					String testSimpleClassName = testClassName.substring(x + 1);
-
-					String testPackageName = testClassName.substring(0, x);
-
-					String testMethodName = caseJSONObject.getString("name");
-
-					testMethodName = testMethodName.replace("[", "_");
-					testMethodName = testMethodName.replace("]", "_");
-					testMethodName = testMethodName.replace("#", "_");
-
-					if (testPackageName.equals("junit.framework")) {
-						testMethodName = testMethodName.replace(".", "_");
-					}
-
-					testResults.add(
-						new TestResult(
-							testSimpleClassName, null, testMethodName,
-							caseJSONObject.getString("status")));
-				}
-			}
+			testResults.addAll(getTestResults(suitesJSONArray));
 		}
 
 		return testResults;

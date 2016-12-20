@@ -19,8 +19,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
@@ -127,6 +131,19 @@ public class AxisBuild extends BaseBuild {
 		sb.append("[\\/]*");
 
 		return sb.toString();
+	}
+
+	@Override
+	public List<TestResult> getTestResults() {
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return Collections.emptyList();
+		}
+
+		JSONObject testReportJSONObject = getTestReportJSONObject();
+
+		return getTestResults(testReportJSONObject.getJSONArray("suites"));
 	}
 
 	@Override

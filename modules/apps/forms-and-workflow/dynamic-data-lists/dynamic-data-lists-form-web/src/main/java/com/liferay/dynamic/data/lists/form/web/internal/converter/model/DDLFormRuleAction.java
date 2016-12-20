@@ -26,8 +26,9 @@ public class DDLFormRuleAction {
 	public DDLFormRuleAction() {
 	}
 
-	public DDLFormRuleAction(String action, String target) {
+	public DDLFormRuleAction(String action, String source, String target) {
 		_action = action;
+		_source = source;
 		_target = target;
 	}
 
@@ -44,6 +45,7 @@ public class DDLFormRuleAction {
 		DDLFormRuleAction ddlFormRuleAction = (DDLFormRuleAction)obj;
 
 		if (Objects.equals(_action, ddlFormRuleAction._action) &&
+			Objects.equals(_source, ddlFormRuleAction._source) &&
 			Objects.equals(_target, ddlFormRuleAction._target)) {
 
 			return true;
@@ -56,6 +58,10 @@ public class DDLFormRuleAction {
 		return _action;
 	}
 
+	public String getSource() {
+		return _source;
+	}
+
 	public String getTarget() {
 		return _target;
 	}
@@ -64,6 +70,8 @@ public class DDLFormRuleAction {
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _action);
 
+		hash = HashUtil.hash(hash, _source);
+
 		return HashUtil.hash(hash, _target);
 	}
 
@@ -71,11 +79,16 @@ public class DDLFormRuleAction {
 		_action = action;
 	}
 
+	public void setSource(String source) {
+		_source = source;
+	}
+
 	public void setTarget(String target) {
 		_target = target;
 	}
 
 	private String _action;
+	private String _source;
 	private String _target;
 
 }

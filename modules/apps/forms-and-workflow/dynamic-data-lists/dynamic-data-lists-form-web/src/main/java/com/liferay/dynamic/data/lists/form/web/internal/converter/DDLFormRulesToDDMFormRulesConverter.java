@@ -50,12 +50,24 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	}
 
 	protected String convertAction(DDLFormRuleAction ddlFormRuleAction) {
-		String functionName = _actionFunctionNameMap.get(
-			ddlFormRuleAction.getAction());
+		String action = ddlFormRuleAction.getAction();
 
-		return String.format(
-			_setBooleanPropertyFormat, functionName,
-			ddlFormRuleAction.getTarget());
+		if (_actionBooleanFunctionNameMap.containsKey(action)) {
+			String functionName = _actionBooleanFunctionNameMap.get(action);
+
+			return String.format(
+				_setBooleanPropertyFormat, functionName,
+				ddlFormRuleAction.getTarget());
+		}
+		else if (_actionFunctionNameMap.containsKey(action)) {
+			String functionName = _actionFunctionNameMap.get(action);
+
+			return String.format(
+				_functionCallBinaryExpressionFormat, functionName,
+				ddlFormRuleAction.getSource(), ddlFormRuleAction.getTarget());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	protected String convertCondition(
@@ -75,7 +87,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		}
 
 		String action = String.format(
-			_functionCallExpressionFormat, functionName,
+			_functionCallUnaryExpressionFormat, functionName,
 			convertOperands(operands));
 
 		if (operator.startsWith("not")) {
@@ -112,7 +124,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	protected String convertOperand(DDLFormRuleCondition.Operand operand) {
 		if (Objects.equals("field", operand.getType())) {
 			return String.format(
-				_functionCallExpressionFormat, "getValue",
+				_functionCallUnaryExpressionFormat, "getValue",
 				StringUtil.quote(operand.getValue()));
 		}
 
@@ -150,10 +162,14 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		return new DDMFormRule(condition, actions);
 	}
 
+	private static final Map<String, String> _actionBooleanFunctionNameMap =
+		new HashMap<>();
 	private static final Map<String, String> _actionFunctionNameMap =
 		new HashMap<>();
 	private static final String _comparisonExpressionFormat = "%s %s %s";
-	private static final String _functionCallExpressionFormat = "%s(%s)";
+	private static final String _functionCallBinaryExpressionFormat =
+		"%s(%s, %s)";
+	private static final String _functionCallUnaryExpressionFormat = "%s(%s)";
 	private static final String _notExpressionFormat = "not(%s)";
 	private static final Map<String, String> _operatorFunctionNameMap =
 		new HashMap<>();
@@ -161,10 +177,12 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
-		_actionFunctionNameMap.put("enable", "setEnabled");
-		_actionFunctionNameMap.put("invalidate", "setInvalid");
-		_actionFunctionNameMap.put("require", "setRequired");
-		_actionFunctionNameMap.put("show", "setVisible");
+		_actionBooleanFunctionNameMap.put("enable", "setEnabled");
+		_actionBooleanFunctionNameMap.put("invalidate", "setInvalid");
+		_actionBooleanFunctionNameMap.put("require", "setRequired");
+		_actionBooleanFunctionNameMap.put("show", "setVisible");
+
+		_actionFunctionNameMap.put("jump-to-page", "jumpPage");
 
 		_operatorFunctionNameMap.put("contains", "contains");
 		_operatorFunctionNameMap.put("equals-to", "equals");

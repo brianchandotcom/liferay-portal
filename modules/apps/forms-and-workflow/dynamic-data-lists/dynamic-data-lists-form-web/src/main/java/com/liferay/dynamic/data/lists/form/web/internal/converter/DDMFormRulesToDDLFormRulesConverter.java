@@ -139,9 +139,17 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			List<Expression> parameters =
 				functionCallExpression.getParameterExpressions();
 
-			String target = doVisit(parameters.get(0));
+			if (Objects.equals(action, "jump-to-page")) {
+				String source = doVisit(parameters.get(0));
+				String target = doVisit(parameters.get(1));
 
-			return new DDLFormRuleAction(action, target);
+				return new DDLFormRuleAction(action, source, target);
+			}
+			else {
+				String target = doVisit(parameters.get(0));
+
+				return new DDLFormRuleAction(action, null, target);
+			}
 		}
 
 		@Override
@@ -157,6 +165,7 @@ public class DDMFormRulesToDDLFormRulesConverter {
 			new HashMap<>();
 
 		static {
+			_functionToActionMap.put("jumpPage", "jump-to-page");
 			_functionToActionMap.put("setEnabled", "enable");
 			_functionToActionMap.put("setInvalid", "invalidate");
 			_functionToActionMap.put("setRequired", "require");

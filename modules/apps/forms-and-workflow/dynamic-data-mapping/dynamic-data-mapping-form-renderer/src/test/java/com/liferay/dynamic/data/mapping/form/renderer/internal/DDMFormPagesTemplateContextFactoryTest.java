@@ -27,9 +27,11 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -38,6 +40,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -56,6 +59,112 @@ public class DDMFormPagesTemplateContextFactoryTest {
 	@Before
 	public void setUp() {
 		setUpLanguageUtil();
+	}
+
+	@Test
+	public void testDisablePages() {
+
+		// Dynamic data mapping form
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule("TRUE", Arrays.asList("jumpPage(0, 2)")));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field1", "Field1", "text", "string", false, false, true));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field2", "Field2", "text", "string", false, false, false));
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createDDMFormField(
+				"Field3", "Field3", "text", "string", false, false, false));
+
+		// Dynamic data mapping form layout
+
+		DDMFormLayout ddmFormLayout = new DDMFormLayout();
+
+		DDMFormLayoutPage ddmFormLayoutPage1 = createDDMFormLayoutPage(
+			"Page 1", "Page 1 Description");
+
+		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(
+			createDDMFormLayoutColumns("Field1"));
+
+		ddmFormLayoutPage1.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage1);
+
+		DDMFormLayoutPage ddmFormLayoutPage2 = createDDMFormLayoutPage(
+			"Page 2", "Page 2 Description");
+
+		ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(
+			createDDMFormLayoutColumns("Field2"));
+
+		ddmFormLayoutPage2.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage2);
+
+		DDMFormLayoutPage ddmFormLayoutPage3 = createDDMFormLayoutPage(
+			"Page 3", "Page 3 Description");
+
+		ddmFormLayoutRow = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow.setDDMFormLayoutColumns(
+			createDDMFormLayoutColumns("Field3"));
+
+		ddmFormLayoutPage3.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage3);
+
+		// Dynamic data mapping form values
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"Field1", "A"));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"Field2", ""));
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"Field3", ""));
+
+		// Template context
+
+		DDMFormPagesTemplateContextFactory ddmFormPagesTemplateContextFactory =
+			createDDMFormPagesTemplateContextFactory(
+				ddmForm, ddmFormLayout, ddmFormValues, false, false);
+
+		List<Object> pagesTemplateContext =
+			ddmFormPagesTemplateContextFactory.create();
+
+		Assert.assertEquals(3, pagesTemplateContext.size());
+
+		Map<String, Object> page1TemplateContext =
+			(Map<String, Object>)pagesTemplateContext.get(0);
+
+		Assert.assertTrue(MapUtil.getBoolean(page1TemplateContext, "enabled"));
+
+		Map<String, Object> page2TemplateContext =
+			(Map<String, Object>)pagesTemplateContext.get(1);
+
+		Assert.assertFalse(MapUtil.getBoolean(page2TemplateContext, "enabled"));
+
+		Map<String, Object> page3TemplateContext =
+			(Map<String, Object>)pagesTemplateContext.get(2);
+
+		Assert.assertTrue(MapUtil.getBoolean(page3TemplateContext, "enabled"));
 	}
 
 	@Test

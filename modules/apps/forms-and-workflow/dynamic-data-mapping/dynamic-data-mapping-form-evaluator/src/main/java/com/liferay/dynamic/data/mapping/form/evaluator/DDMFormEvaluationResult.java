@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.json.JSON;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcellus Tavares
@@ -64,10 +66,18 @@ public class DDMFormEvaluationResult {
 		return _ddmFormFieldEvaluationResultsMap;
 	}
 
+	public Set<Integer> getDisabledPagesIndexes() {
+		return _disabledPagesIndexes;
+	}
+
 	public void setDDMFormFieldEvaluationResults(
 		List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults) {
 
 		_ddmFormFieldEvaluationResults = ddmFormFieldEvaluationResults;
+	}
+
+	public void setDisabledPagesIndexes(Set<Integer> disabledPagesIndexes) {
+		_disabledPagesIndexes = disabledPagesIndexes;
 	}
 
 	protected void populateDDMFormFieldEvaluationResultsMap(
@@ -108,5 +118,6 @@ public class DDMFormEvaluationResult {
 		new ArrayList<>();
 	private Map<String, DDMFormFieldEvaluationResult>
 		_ddmFormFieldEvaluationResultsMap;
+	private Set<Integer> _disabledPagesIndexes = new HashSet<>();
 
 }

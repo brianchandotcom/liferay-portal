@@ -7,11 +7,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="com.liferay.portal.kernel.mail.MailTemplateFactoryUtil">
-		<property name="mailTemplateFactory">
-			<bean class="com.liferay.portal.mail.DefaultMailTemplateFactory" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.service.persistence.BatchSessionUtil" id="com.liferay.portal.kernel.service.persistence.BatchSessionUtil">
 		<property name="batchSession">
 			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />

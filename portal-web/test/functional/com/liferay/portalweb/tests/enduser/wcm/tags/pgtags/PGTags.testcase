@@ -766,25 +766,6 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<for list="blue,blue green,yellow" param="tagName">
-			<execute macro="Navigator#openSiteURL">
-				<var name="siteName" value="Site Name" />
-			</execute>
-
-			<execute macro="ProductMenu#gotoSitesContent">
-				<var name="portlet" value="Tags" />
-			</execute>
-
-			<execute macro="Tag#addCP">
-				<var name="tagName" value="${tagName}" />
-			</execute>
-		</for>
-
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Blogs" />
 		</execute>

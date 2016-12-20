@@ -269,10 +269,10 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 				mimeTypes.add(alias);
 			}
 			else if (GLOB_TAG.equals(childElement.getTagName())) {
-				boolean isRegex = GetterUtil.getBoolean(
+				boolean regex = GetterUtil.getBoolean(
 					childElement.getAttribute(ISREGEX_ATTR));
 
-				if (isRegex) {
+				if (regex) {
 					continue;
 				}
 

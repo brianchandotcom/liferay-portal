@@ -55,7 +55,7 @@ public class JQTFastStart {
 
 			boolean ftypFound = false;
 			boolean mdatFound = false;
-			boolean isFastStart = false;
+			boolean fastStart = false;
 
 			while (randomAccessInputFile.getFilePointer() <
 						randomAccessInputFile.length()) {
@@ -68,7 +68,7 @@ public class JQTFastStart {
 				}
 
 				if (ftypFound && !mdatFound && atom.isMOOV()) {
-					isFastStart = true;
+					fastStart = true;
 
 					break;
 				}
@@ -90,7 +90,7 @@ public class JQTFastStart {
 				}
 			}
 
-			if (isFastStart) {
+			if (fastStart) {
 				if (_log.isInfoEnabled()) {
 					_log.info("The movie is already a fast start MP4");
 				}

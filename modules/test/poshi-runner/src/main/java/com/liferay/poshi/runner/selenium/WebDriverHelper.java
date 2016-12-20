@@ -1115,10 +1115,10 @@ public class WebDriverHelper {
 		sb.append("return false;}");
 		sb.append("return true;");
 
-		Boolean isObscured = (Boolean)javascriptExecutor.executeScript(
+		Boolean obscured = (Boolean)javascriptExecutor.executeScript(
 			sb.toString(), webElement);
 
-		return isObscured.booleanValue();
+		return obscured.booleanValue();
 	}
 
 	protected static void scrollWebElementIntoView(

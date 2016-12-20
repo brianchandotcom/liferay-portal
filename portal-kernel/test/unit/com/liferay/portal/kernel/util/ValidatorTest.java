@@ -593,11 +593,11 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	protected void testValidFilePaths(
-		String[] filePaths, boolean isParentDirAllowed, boolean valid) {
+		String[] filePaths, boolean parentDirAllowed, boolean valid) {
 
 		for (String filePath : filePaths) {
 			boolean isFilePath = Validator.isFilePath(
-				filePath, isParentDirAllowed);
+				filePath, parentDirAllowed);
 
 			Assert.assertEquals(valid, isFilePath);
 		}

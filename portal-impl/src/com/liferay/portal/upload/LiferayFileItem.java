@@ -43,11 +43,11 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		PropsUtil.get(LiferayFileItem.class.getName() + ".threshold.size"));
 
 	public LiferayFileItem(
-		String fieldName, String contentType, boolean isFormField,
+		String fieldName, String contentType, boolean formField,
 		String fileName, int sizeThreshold, File repository) {
 
 		super(
-			fieldName, contentType, isFormField, fileName, sizeThreshold,
+			fieldName, contentType, formField, fileName, sizeThreshold,
 			repository);
 
 		_fileName = fileName;

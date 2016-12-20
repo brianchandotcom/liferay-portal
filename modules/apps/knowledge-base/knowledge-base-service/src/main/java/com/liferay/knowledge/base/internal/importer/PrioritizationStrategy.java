@@ -124,11 +124,11 @@ public class PrioritizationStrategy {
 	}
 
 	protected double getNumericalPrefix(
-		String filePath, boolean isChildArticleFile) {
+		String filePath, boolean childArticleFile) {
 
 		double numericalPrefix = -1.0;
 
-		if (isChildArticleFile) {
+		if (childArticleFile) {
 			String fileName = filePath;
 
 			int i = filePath.lastIndexOf(CharPool.SLASH);
@@ -203,14 +203,14 @@ public class PrioritizationStrategy {
 		kbArticles.add(kbArticle);
 
 		if (_prioritizeByNumericalPrefix) {
-			boolean isChildArticle = true;
+			boolean childArticle = true;
 
 			if (kbArticle.getParentKBArticle() == null) {
-				isChildArticle = false;
+				childArticle = false;
 			}
 
 			double sectionFileEntryNamePrefix = getNumericalPrefix(
-				filePath, isChildArticle);
+				filePath, childArticle);
 
 			if (sectionFileEntryNamePrefix < 0.0) {
 			}

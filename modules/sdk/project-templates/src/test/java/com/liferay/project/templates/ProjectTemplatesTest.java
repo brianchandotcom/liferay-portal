@@ -1235,6 +1235,8 @@ public class ProjectTemplatesTest {
 
 		List<String> completeArgs = new ArrayList<>();
 
+		completeArgs.add("--errors");
+
 		if (_mavenSettingsXmlFile != null) {
 			completeArgs.add(
 				"--settings=" + _mavenSettingsXmlFile.getAbsolutePath());

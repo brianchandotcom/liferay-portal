@@ -61,13 +61,14 @@ to defer evaluation until execution.
 
 ## Tasks
 
-The plugin adds three tasks to your project:
+The plugin adds four tasks to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
+`cleanNPM` | \- | [`Delete`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Delete.html) | Deletes the `node_modules` directory and the `npm-shrinkwrap.json` file from the project, if present.
 <a name="downloadnode"></a>`downloadNode` | \- | [`DownloadNodeTask`](#downloadnodetask) | Downloads and unpacks the local Node.js distribution for the project. If `node.download` is `false`, this task is disabled.
 `npmInstall` | `downloadNode` | [`NpmInstallTask`](#npminstalltask) | Runs `npm install` to install the dependencies declared in the project's `package.json` file, if present.
-`npmShrinkwrap` | `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which versions of each dependency will be used.
+`npmShrinkwrap` | `cleanNPM`, `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which versions of each dependency will be used.
 
 ### DownloadNodeTask
 

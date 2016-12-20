@@ -444,7 +444,10 @@ public class JavaClass {
 			Set<String> annotationsExclusions, Set<String> immutableFieldTypes)
 		throws Exception {
 
-		if (!_javaSourceProcessor.portalSource || !javaTerm.isVariable()) {
+		if ((!_javaSourceProcessor.portalSource &&
+			 !_javaSourceProcessor.subrepository) ||
+			!javaTerm.isVariable()) {
+
 			return;
 		}
 

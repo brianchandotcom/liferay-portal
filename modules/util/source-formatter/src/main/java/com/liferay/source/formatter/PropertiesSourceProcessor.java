@@ -245,7 +245,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("source-formatter.properties")) {
 			formatSourceFormatterProperties(fileName, content);
 		}
-		else if (!portalSource || !fileName.endsWith("portal.properties")) {
+		else if ((!portalSource && !subrepository) ||
+				 !fileName.endsWith("portal.properties")) {
+
 			formatPortalProperties(fileName, content);
 		}
 
@@ -395,7 +397,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				"include-and-override=portlet-ext.properties\n\n" + content;
 		}
 
-		if (!portalSource) {
+		if (!portalSource && !subrepository) {
 			return content;
 		}
 

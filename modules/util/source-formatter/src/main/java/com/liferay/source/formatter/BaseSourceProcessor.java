@@ -668,7 +668,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkResourceUtil(
 		String line, String fileName, String absolutePath, int lineCount) {
 
-		if (!portalSource || fileName.endsWith("ResourceBundleUtil.java") ||
+		if ((!portalSource && !subrepository) ||
+			fileName.endsWith("ResourceBundleUtil.java") ||
 			isExcludedPath(RUN_OUTSIDE_PORTAL_EXCLUDES, absolutePath)) {
 
 			return;
@@ -764,7 +765,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws Exception {
 
-		if (portalSource || !_usePortalCompatImport ||
+		if (portalSource || subrepository || !_usePortalCompatImport ||
 			absolutePath.contains("/ext-") ||
 			absolutePath.contains("/portal-compat-shared/")) {
 
@@ -967,7 +968,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected String fixIncorrectParameterTypeForLanguageUtil(
 		String content, boolean autoFix, String fileName) {
 
-		if (portalSource) {
+		if (portalSource || subrepository) {
 			return content;
 		}
 

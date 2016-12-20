@@ -46,7 +46,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 	protected void checkDirectoryAndBundleName(
 		String fileName, String absolutePath, String content) {
 
-		if (!portalSource || !isModulesFile(absolutePath) ||
+		if ((!portalSource && !subrepository) || !isModulesFile(absolutePath) ||
 			!fileName.endsWith("/bnd.bnd") ||
 			absolutePath.contains("/testIntegration/") ||
 			absolutePath.contains("/third-party/")) {
@@ -250,7 +250,7 @@ public class BNDSourceProcessor extends BaseSourceProcessor {
 
 		content = formatBundleClassPath(content);
 
-		if (portalSource && isModulesFile(absolutePath) &&
+		if ((portalSource || subrepository) && isModulesFile(absolutePath) &&
 			!fileName.endsWith("test-bnd.bnd")) {
 
 			content = formatIncludeResource(content);

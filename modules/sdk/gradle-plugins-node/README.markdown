@@ -61,12 +61,13 @@ to defer evaluation until execution.
 
 ## Tasks
 
-The plugin adds two tasks to your project:
+The plugin adds three tasks to your project:
 
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
 <a name="downloadnode"></a>`downloadNode` | \- | [`DownloadNodeTask`](#downloadnodetask) | Downloads and unpacks the local Node.js distribution for the project. If `node.download` is `false`, this task is disabled.
 `npmInstall` | `downloadNode` | [`NpmInstallTask`](#npminstalltask) | Runs `npm install` to install the dependencies declared in the project's `package.json` file, if present.
+`npmShrinkwrap` | `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which versions of each dependency will be used.
 
 ### DownloadNodeTask
 
@@ -191,6 +192,34 @@ Property Name | Type | Default Value | Description
 `removeShrinkwrappedUrls` | `boolean` | `true` if the [registry](#registry) property has a value, `false` otherwise. | Whether to temporarily remove all the hard-coded URLs in the `from` and `resolved` fields of the `npm-shinkwrap.json` file before invoking `npm install`. This way, it is possible to force NPM to download all dependencies from a custom registry declared in the [`registry`](#registry) property.
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
+
+### NpmShrinkwrapTask
+
+The purpose of this task is to lock down the versions of a package's
+dependencies so that you can control exactly which versions of each dependency
+will be used when your package is installed. Tasks of type `NpmShrinkwrapTask`
+extend [`ExecuteNpmTask`](#executenpmtask) in order to execute the command
+[`npm shrinkwrap`](https://docs.npmjs.com/cli/shrinkwrap).
+
+The generated `npm-shrinkwrap.json` file is automatically sorted and formatter,
+so it is easier to see the changes with the previous version.
+
+#### Task Properties
+
+Property Name | Type | Default Value | Description
+------------- | ---- | ------------- | -----------
+`excludedDependencies` | `List<String>` | `[]` | The package names to exclude from the generated `npm-shrinkwrap.json` file.
+`includeDevDependencies` | `boolean` | `true` | Whether to include the package's `devDependencies`. It sets the [`--dev`](https://docs.npmjs.com/cli/shrinkwrap#other-notes) argument.
+
+It is possible to use Closures and Callables as values for the `String`
+properties, to defer evaluation until task execution.
+
+#### Task Methods
+
+Method | Description
+------ | -----------
+`NpmShrinkwrapTask excludeDependencies(Iterable<?> excludedDependencies)` | Adds package names to exclude from the generated `npm-shrinkwrap.json` file.
+`NpmShrinkwrapTask excludeDependencies(Object... excludedDependencies)` | Adds package names to exclude from the generated `npm-shrinkwrap.json` file.
 
 ### PublishNodeModuleTask
 

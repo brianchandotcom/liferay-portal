@@ -16,6 +16,8 @@ package com.liferay.portal.upgrade.v7_0_3;
 
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.MultiDatabaseSQLQuery;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -52,47 +54,10 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 			runSQL(sb.toString());
 
-			long classNameId = PortalUtil.getClassNameId(
-				MBDiscussion.class.getName());
-
-			sb = new StringBundler(7);
-
-			sb.append("delete from AssetEntry where classPK in (");
-			sb.append("select MBMessage.messageId from MBMessage inner join ");
-			sb.append(tempTableName);
-			sb.append(" on MBMessage.threadId = ");
-			sb.append(tempTableName);
-			sb.append(".threadId) and classNameId = ");
-			sb.append(classNameId);
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBDiscussion where threadId in (");
-			sb.append("select threadId from ");
-			sb.append(tempTableName);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBMessage where threadId in (");
-			sb.append("select threadId from ");
-			sb.append(tempTableName);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			runSQL(sb.toString());
-
-			sb = new StringBundler(4);
-
-			sb.append("delete from MBThread where threadId in (");
-			sb.append("select threadId from ");
-			sb.append(tempTableName);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			runSQL(sb.toString());
+			_deleteAssetEntry(tempTableName);
+			_deleteTable("MBDiscussion", tempTableName);
+			_deleteTable("MBMessage", tempTableName);
+			_deleteTable("MBThread", tempTableName);
 		}
 		catch (Exception e) {
 			throw new UpgradeException(e);
@@ -137,6 +102,73 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 				ps1.executeBatch();
 			}
 		}
+	}
+
+	private void _deleteAssetEntry(String tempTableName) throws Exception {
+		long classNameId = PortalUtil.getClassNameId(
+			MBDiscussion.class.getName());
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("delete from AssetEntry where classPK in (");
+		sb.append("select MBMessage.messageId from MBMessage inner join ");
+		sb.append(tempTableName);
+		sb.append(" on MBMessage.threadId = ");
+		sb.append(tempTableName);
+		sb.append(".threadId) and classNameId = ");
+		sb.append(classNameId);
+
+		MultiDatabaseSQLQuery multiDatabaseSQLQuery = new MultiDatabaseSQLQuery(
+			sb.toString());
+
+		sb = new StringBundler(8);
+
+		sb.append("delete AssetEntry from AssetEntry inner join MBMessage ");
+		sb.append("inner join ");
+		sb.append(tempTableName);
+		sb.append(" where MBMessage.threadId = ");
+		sb.append(tempTableName);
+		sb.append(".threadId and AssetEntry.classPK = MBMessage.messageId ");
+		sb.append("and AssetEntry.classNameId = ");
+		sb.append(classNameId);
+
+		multiDatabaseSQLQuery.addSQL(DBType.MYSQL, sb.toString());
+
+		runSQL(multiDatabaseSQLQuery);
+	}
+
+	private void _deleteTable(String tableName, String tempTableName)
+		throws Exception {
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("delete from ");
+		sb.append(tableName);
+		sb.append(" where threadId in (");
+		sb.append("select threadId from ");
+		sb.append(tempTableName);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		MultiDatabaseSQLQuery multiDatabaseSQLQuery = new MultiDatabaseSQLQuery(
+			sb.toString());
+
+		sb = new StringBundler(11);
+
+		sb.append("delete ");
+		sb.append(tableName);
+		sb.append(" from ");
+		sb.append(tableName);
+		sb.append(" inner join ");
+		sb.append(tempTableName);
+		sb.append(" where ");
+		sb.append(tableName);
+		sb.append(".threadId = ");
+		sb.append(tempTableName);
+		sb.append(".threadId");
+
+		multiDatabaseSQLQuery.addSQL(DBType.MYSQL, sb.toString());
+
+		runSQL(multiDatabaseSQLQuery);
 	}
 
 }

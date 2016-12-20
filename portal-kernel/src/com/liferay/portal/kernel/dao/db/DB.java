@@ -87,11 +87,28 @@ public interface DB {
 
 	public boolean isSupportsUpdateWithInnerJoin();
 
+	public default void runSQL(
+			Connection con, MultiDatabaseSQLQuery multiDatabaseSQLQuery)
+		throws IOException, SQLException {
+
+		String sql = multiDatabaseSQLQuery.getSQL(getDBType());
+
+		runSQL(con, new String[] {sql});
+	}
+
 	public void runSQL(Connection con, String sql)
 		throws IOException, SQLException;
 
 	public void runSQL(Connection con, String[] sqls)
 		throws IOException, SQLException;
+
+	public default void runSQL(MultiDatabaseSQLQuery multiDatabaseSQLQuery)
+		throws IOException, SQLException {
+
+		String sql = multiDatabaseSQLQuery.getSQL(getDBType());
+
+		runSQL(new String[] {sql});
+	}
 
 	public void runSQL(String sql) throws IOException, SQLException;
 

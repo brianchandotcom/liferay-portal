@@ -1267,7 +1267,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String getTablesContent(String fileName, String absolutePath)
 		throws Exception {
 
-		if ((portalSource || subrepository) && !isModulesFile(absolutePath)) {
+		if (portalSource && !isModulesFile(absolutePath)) {
 			if (_tablesContent == null) {
 				String tablesContent = getContent(
 					"sql/portal-tables.sql", PORTAL_MAX_DIR_LEVEL);

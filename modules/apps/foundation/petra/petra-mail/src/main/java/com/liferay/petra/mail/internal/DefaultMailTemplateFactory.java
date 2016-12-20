@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.mail;
+package com.liferay.petra.mail.internal;
 
 import com.liferay.portal.kernel.mail.MailTemplate;
 import com.liferay.portal.kernel.mail.MailTemplateContextBuilder;
 import com.liferay.portal.kernel.mail.MailTemplateFactory;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = {Constants.SERVICE_RANKING + "=" + Integer.MIN_VALUE},
 	service = MailTemplateFactory.class
 )

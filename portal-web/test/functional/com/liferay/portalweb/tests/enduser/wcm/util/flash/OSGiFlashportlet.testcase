@@ -2,6 +2,7 @@
 	<property name="osgi.app.includes" value="flash" />
 	<property name="plugins.deployment.type" value="osgi" />
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Flash" />
 
 	<set-up>

@@ -1,5 +1,6 @@
 <definition component-name="portal-calendar">
 	<property name="portal.release" value="false" />
+	<property name="portal.upstream" value="true" />
 	<property name="custom.properties" value="default.layout.template.id=1_column${line.separator}company.default.time.zone=America/Los_Angeles" />
 	<property name="testray.main.component.name" value="Calendar" />
 

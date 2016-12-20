@@ -1,5 +1,6 @@
 <definition component-name="portal-security">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="testray.main.component.name" value="Security" />
 
 	<command name="CASSmoke" priority="4">

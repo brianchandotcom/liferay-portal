@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -46,23 +44,6 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	public JSONObject getTestReportJSONObject() {
 		return null;
-	}
-
-	@Override
-	public List<TestResult> getTestResults() {
-		String status = getStatus();
-
-		if (!status.equals("completed")) {
-			return null;
-		}
-
-		List<TestResult> testResults = new ArrayList<>();
-
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			testResults.addAll(downstreamBuild.getTestResults());
-		}
-
-		return testResults;
 	}
 
 	@Override

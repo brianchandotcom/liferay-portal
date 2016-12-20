@@ -14,13 +14,80 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Kevin Yen
  */
 public class BatchBuild extends BaseBuild {
+
+	@Override
+	public List<TestResult> getTestResults() {
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return null;
+		}
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		JSONObject testReportJSONObject = getTestReportJSONObject();
+
+		JSONArray childReportsJSONArray = testReportJSONObject.getJSONArray(
+			"childReports");
+
+		for (int i = 0; i < childReportsJSONArray.length(); i++) {
+			JSONObject childReportJSONObject =
+				childReportsJSONArray.getJSONObject(i);
+
+			JSONObject resultJSONObject = childReportJSONObject.getJSONObject(
+				"result");
+
+			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
+
+			for (int j = 0; j < suitesJSONArray.length(); j++) {
+				JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(j);
+
+				JSONArray casesJSONArray = suiteJSONObject.getJSONArray(
+					"cases");
+
+				for (int k = 0; k < casesJSONArray.length(); k++) {
+					JSONObject caseJSONObject = casesJSONArray.getJSONObject(k);
+
+					String testClassName = caseJSONObject.getString(
+						"className");
+
+					int x = testClassName.lastIndexOf(".");
+
+					String testSimpleClassName = testClassName.substring(x + 1);
+
+					String testPackageName = testClassName.substring(0, x);
+
+					String testMethodName = caseJSONObject.getString("name");
+
+					testMethodName = testMethodName.replace("[", "_");
+					testMethodName = testMethodName.replace("]", "_");
+					testMethodName = testMethodName.replace("#", "_");
+
+					if (testPackageName.equals("junit.framework")) {
+						testMethodName = testMethodName.replace(".", "_");
+					}
+
+					testResults.add(
+						new TestResult(
+							testSimpleClassName, null, testMethodName,
+							caseJSONObject.getString("status")));
+				}
+			}
+		}
+
+		return testResults;
+	}
 
 	protected BatchBuild(String url) {
 		this(url, null);

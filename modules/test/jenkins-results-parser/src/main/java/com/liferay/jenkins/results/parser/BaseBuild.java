@@ -499,48 +499,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public List<TestResult> getTestResults() {
-		String status = getStatus();
-
-		if (!status.equals("completed")) {
-			return null;
-		}
-
-		JSONObject testReportJSONObject = getTestReportJSONObject();
 		List<TestResult> testResults = new ArrayList<>();
 
-		JSONArray suitesJSONArray = testReportJSONObject.getJSONArray("suites");
-
-		for (int i = 0; i < suitesJSONArray.length(); i++) {
-			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
-
-			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
-
-			for (int j = 0; j < casesJSONArray.length(); j++) {
-				JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
-
-				String testClassName = caseJSONObject.getString("className");
-
-				int x = testClassName.lastIndexOf(".");
-
-				String testSimpleClassName = testClassName.substring(x + 1);
-
-				String testPackageName = testClassName.substring(0, x);
-
-				String testMethodName = caseJSONObject.getString("name");
-
-				testMethodName = testMethodName.replace("[", "_");
-				testMethodName = testMethodName.replace("]", "_");
-				testMethodName = testMethodName.replace("#", "_");
-
-				if (testPackageName.equals("junit.framework")) {
-					testMethodName = testMethodName.replace(".", "_");
-				}
-
-				testResults.add(
-					new TestResult(
-						testSimpleClassName, null, testMethodName,
-						caseJSONObject.getString("status")));
-			}
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			testResults.addAll(downstreamBuild.getTestResults());
 		}
 
 		return testResults;

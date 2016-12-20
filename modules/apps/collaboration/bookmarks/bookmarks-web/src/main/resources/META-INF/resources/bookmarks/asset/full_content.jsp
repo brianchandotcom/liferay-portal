@@ -26,11 +26,11 @@ int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_AN
 
 <p class="asset-description"><%= HtmlUtil.escape(entry.getDescription()) %></p>
 
-<liferay-ui:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
-	<liferay-ui:custom-attribute-list
+<liferay-expando:custom-attributes-available className="<%= BookmarksEntry.class.getName() %>">
+	<liferay-expando:custom-attribute-list
 		className="<%= BookmarksEntry.class.getName() %>"
 		classPK="<%= (entry != null) ? entry.getEntryId() : 0 %>"
 		editable="<%= false %>"
 		label="<%= true %>"
 	/>
-</liferay-ui:custom-attributes-available>
+</liferay-expando:custom-attributes-available>

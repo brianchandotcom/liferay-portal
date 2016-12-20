@@ -21,7 +21,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 %>
 
 <aui:fieldset>
-	<liferay-ui:custom-attribute-list
+	<liferay-expando:custom-attribute-list
 		className="com.liferay.portal.kernel.model.User"
 		classPK="<%= (selUser != null) ? selUser.getUserId() : 0 %>"
 		editable="<%= true %>"

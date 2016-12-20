@@ -320,16 +320,16 @@ if (portletTitleBasedNavigation) {
 
 						</c:if>
 
-						<liferay-ui:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
+						<liferay-expando:custom-attributes-available className="<%= DLFileEntryConstants.getClassName() %>" classPK="<%= fileVersionId %>" editable="<%= false %>">
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-custom-fields" id="documentLibraryCustomFieldsPanel" markupView="lexicon" persistState="<%= true %>" title="custom-fields">
-								<liferay-ui:custom-attribute-list
+								<liferay-expando:custom-attribute-list
 									className="<%= DLFileEntryConstants.getClassName() %>"
 									classPK="<%= fileVersionId %>"
 									editable="<%= false %>"
 									label="<%= true %>"
 								/>
 							</liferay-ui:panel>
-						</liferay-ui:custom-attributes-available>
+						</liferay-expando:custom-attributes-available>
 
 						<%
 						try {

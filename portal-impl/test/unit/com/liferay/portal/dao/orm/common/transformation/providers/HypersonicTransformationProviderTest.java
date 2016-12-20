@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common.transformers;
+package com.liferay.portal.dao.orm.common.transformation.providers;
 
-import com.liferay.portal.dao.db.PostgreSQLDB;
+import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.dao.orm.common.transformation.PortalSQLTransformer;
+import com.liferay.portal.dao.orm.common.transformation.Transformer;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
@@ -30,15 +32,17 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(DBManagerUtil.class)
 @RunWith(PowerMockRunner.class)
-public class PostgreSQLTransformerTest implements TransformerTestCase {
+public class HypersonicTransformationProviderTest
+	implements TransformerTestCase {
 
 	@Before
 	public void setUp() {
-		PostgreSQLDB db = new PostgreSQLDB(1, 0);
+		HypersonicDB db = new HypersonicDB(1, 0);
 
 		mockDB(db);
 
-		_transformer = new PostgreSQLTransformer(db);
+		_transformer = PortalSQLTransformer.buildSQLTransformer(
+			db, new HypersonicTransformationProvider());
 	}
 
 	@Override
@@ -48,7 +52,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 
 		String transformedSql = _transformer.transform(sql);
 
-		Assert.assertEquals("select (foo & bar) from Foo", transformedSql);
+		Assert.assertEquals(sql, transformedSql);
 	}
 
 	@Override
@@ -59,7 +63,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 		String transformedSql = _transformer.transform(sql);
 
 		Assert.assertEquals(
-			"select CAST(foo AS TEXT) from Foo", transformedSql);
+			"select CONVERT(foo, SQL_VARCHAR) from Foo", transformedSql);
 	}
 
 	@Override
@@ -69,7 +73,8 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 
 		String transformedSql = _transformer.transform(sql);
 
-		Assert.assertEquals("select foo from Foo", transformedSql);
+		Assert.assertEquals(
+			"select CONVERT(foo, SQL_BIGINT) from Foo", transformedSql);
 	}
 
 	@Override
@@ -119,8 +124,7 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 
 		String transformedSql = _transformer.transform(sql);
 
-		Assert.assertEquals(
-			"select CAST(NULL AS TIMESTAMP) from Foo", transformedSql);
+		Assert.assertEquals("select NULL from Foo", transformedSql);
 	}
 
 	@Override
@@ -152,16 +156,6 @@ public class PostgreSQLTransformerTest implements TransformerTestCase {
 		Assert.assertEquals(sql, transformedSql);
 	}
 
-	@Test
-	public void testTransformReplaceNegativeComparison() {
-		String sql = "select * from Foo where foo != -1";
-
-		String transformedSql = _transformer.transform(sql);
-
-		Assert.assertEquals(
-			"select * from Foo where foo != ( -1)", transformedSql);
-	}
-
-	private PostgreSQLTransformer _transformer;
+	private Transformer _transformer;
 
 }

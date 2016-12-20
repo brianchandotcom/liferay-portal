@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common.transformers;
+package com.liferay.portal.dao.orm.common.transformation.providers;
 
-import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.dao.orm.common.transformation.PortalSQLTransformer;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
@@ -24,30 +24,40 @@ import java.util.regex.Pattern;
 /**
  * @author Manuel de la Peña
  */
-public class PostgreSQLTransformer extends BaseSQLTransformer {
-
-	public PostgreSQLTransformer(DB db) {
-		super(db);
-
-		register(
-			bitwiseCheckTransformation, booleanTransformation,
-			castClobTextTransformation, castLongTransformation,
-			castTextTransformation, crossJoinDefaultTransformation,
-			_inStrTransformation, integerDivisionTransformation,
-			_nullDateTransformation, substrDefaultTransformation,
-			_negativeComparisonTransformation);
-	}
+public class PostgreSQLTransformationProvider
+	implements SQLTransformationProvider {
 
 	@Override
-	protected String replaceCastText(Matcher matcher) {
+	public Function<String, String>[] getTransformations() {
+		return _transformations;
+	}
+
+	private static String _replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS TEXT)");
 	}
+
+	private static final Function<String, String> _castClobTextTransformation =
+		(String sql) -> {
+			Pattern castClobTextPattern =
+				PortalSQLTransformer.castClobTextPattern;
+
+			return _replaceCastText(castClobTextPattern.matcher(sql));
+		};
+
+	private static final Function<String, String> _castTextTransformation =
+		(String sql) -> {
+			Pattern castTextPattern = PortalSQLTransformer.castTextPattern;
+
+			return _replaceCastText(castTextPattern.matcher(sql));
+		};
 
 	private static final Pattern _negativeComparisonPattern = Pattern.compile(
 		"(!?=)( -([0-9]+)?)", Pattern.CASE_INSENSITIVE);
 
 	private final Function<String, String> _inStrTransformation =
 		(String sql) -> {
+			Pattern instrPattern = PortalSQLTransformer.instrPattern;
+
 			Matcher matcher = instrPattern.matcher(sql);
 
 			return matcher.replaceAll("POSITION($2 in $1)");
@@ -63,5 +73,16 @@ public class PostgreSQLTransformer extends BaseSQLTransformer {
 	private final Function<String, String> _nullDateTransformation =
 		(String sql) ->
 			StringUtil.replace(sql, "[$NULL_DATE$]", "CAST(NULL AS TIMESTAMP)");
+	private final Function<String, String>[] _transformations = new Function[] {
+		PortalSQLTransformer.bitwiseCheckTransformation,
+		PortalSQLTransformer.booleanTransformation, _castClobTextTransformation,
+		PortalSQLTransformer.castLongTransformation, _castTextTransformation,
+		PortalSQLTransformer.crossJoinDefaultTransformation,
+		_inStrTransformation,
+		PortalSQLTransformer.integerDivisionTransformation,
+		_nullDateTransformation,
+		PortalSQLTransformer.substrDefaultTransformation,
+		_negativeComparisonTransformation
+	};
 
 }

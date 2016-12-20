@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common.transformers;
+package com.liferay.portal.dao.orm.common.transformation.providers;
 
 import com.liferay.portal.dao.db.MySQLDB;
+import com.liferay.portal.dao.orm.common.transformation.PortalSQLTransformer;
+import com.liferay.portal.dao.orm.common.transformation.Transformer;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 
 import org.junit.Assert;
@@ -30,14 +32,16 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest(DBManagerUtil.class)
 @RunWith(PowerMockRunner.class)
-public class MySQLTransformerTest implements TransformerTestCase {
+public class MySQLTransformationProviderTest implements TransformerTestCase {
 
 	@Before
 	public void setUp() {
 		mockDB(_db);
 
-		_transformer = new MySQLTransformer(
-			_db, _SUPPORTS_STRING_CASE_SENSITIVE_QUERY);
+		_transformer = PortalSQLTransformer.buildSQLTransformer(
+			_db,
+			new MySQLTransformationProvider(
+				_SUPPORTS_STRING_CASE_SENSITIVE_QUERY));
 	}
 
 	@Override
@@ -187,7 +191,8 @@ public class MySQLTransformerTest implements TransformerTestCase {
 
 	@Test
 	public void testTransformSupportsStringCaseSensitiveQuery() {
-		_transformer = new MySQLTransformer(_db, true);
+		_transformer = PortalSQLTransformer.buildSQLTransformer(
+			_db, new MySQLTransformationProvider(true));
 
 		String sql = "select * from foo";
 
@@ -205,6 +210,6 @@ public class MySQLTransformerTest implements TransformerTestCase {
 	private static final boolean _SUPPORTS_STRING_CASE_SENSITIVE_QUERY = false;
 
 	private final MySQLDB _db = new MySQLDB(5, 7);
-	private MySQLTransformer _transformer;
+	private Transformer _transformer;
 
 }

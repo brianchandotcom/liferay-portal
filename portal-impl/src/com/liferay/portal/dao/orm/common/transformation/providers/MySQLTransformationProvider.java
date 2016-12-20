@@ -12,32 +12,57 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common.transformers;
+package com.liferay.portal.dao.orm.common.transformation.providers;
 
-import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.dao.orm.common.transformation.PortalSQLTransformer;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Manuel de la Peña
  */
-public class MySQLTransformer extends BaseSQLTransformer {
+public class MySQLTransformationProvider implements SQLTransformationProvider {
 
-	public MySQLTransformer(DB db, boolean supportsStringCaseSensitiveQuery) {
-		super(db);
-
-		register(
-			bitwiseCheckTransformation, booleanTransformation,
-			castClobTextTransformation, castLongTransformation,
-			castTextTransformation, crossJoinDefaultTransformation,
-			inStrDefaultTransformation, _integerDivisionTransformation,
-			nullDateTransformation, substrDefaultTransformation);
+	public MySQLTransformationProvider(
+		boolean supportsStringCaseSensitiveQuery) {
 
 		if (!supportsStringCaseSensitiveQuery) {
-			register(_lowerTransformation);
+			_transformations = new Function[] {
+				PortalSQLTransformer.bitwiseCheckTransformation,
+				PortalSQLTransformer.booleanTransformation,
+				PortalSQLTransformer.castClobTextTransformation,
+				PortalSQLTransformer.castLongTransformation,
+				PortalSQLTransformer.castTextTransformation,
+				PortalSQLTransformer.crossJoinDefaultTransformation,
+				PortalSQLTransformer.inStrDefaultTransformation,
+				_integerDivisionTransformation,
+				PortalSQLTransformer.nullDateTransformation,
+				PortalSQLTransformer.substrDefaultTransformation,
+				_lowerTransformation
+			};
 		}
+		else {
+			_transformations = new Function[] {
+				PortalSQLTransformer.bitwiseCheckTransformation,
+				PortalSQLTransformer.booleanTransformation,
+				PortalSQLTransformer.castClobTextTransformation,
+				PortalSQLTransformer.castLongTransformation,
+				PortalSQLTransformer.castTextTransformation,
+				PortalSQLTransformer.crossJoinDefaultTransformation,
+				PortalSQLTransformer.inStrDefaultTransformation,
+				_integerDivisionTransformation,
+				PortalSQLTransformer.nullDateTransformation,
+				PortalSQLTransformer.substrDefaultTransformation
+			};
+		}
+	}
+
+	@Override
+	public Function<String, String>[] getTransformations() {
+		return _transformations;
 	}
 
 	private static final String _LOWER_CLOSE = StringPool.CLOSE_PARENTHESIS;
@@ -46,6 +71,9 @@ public class MySQLTransformer extends BaseSQLTransformer {
 
 	private final Function<String, String> _integerDivisionTransformation =
 		(String sql) -> {
+			Pattern integerDivisionPattern =
+				PortalSQLTransformer.integerDivisionPattern;
+
 			Matcher matcher = integerDivisionPattern.matcher(sql);
 
 			return matcher.replaceAll("$1 DIV $2");
@@ -91,5 +119,7 @@ public class MySQLTransformer extends BaseSQLTransformer {
 
 			return sql;
 		};
+
+	private final Function<String, String>[] _transformations;
 
 }

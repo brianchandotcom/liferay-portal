@@ -12,13 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common.transformers;
+package com.liferay.portal.dao.orm.common.transformation.providers;
+
+import java.util.function.Function;
 
 /**
  * @author Manuel de la Peña
  */
-public interface Transformer {
+public interface SQLTransformationProvider {
 
-	public String transform(String sql);
+	public Function<String, String>[] getTransformations();
 
 }

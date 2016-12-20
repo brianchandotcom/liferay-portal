@@ -14,14 +14,16 @@
 
 package com.liferay.portal.dao.orm.common;
 
-import com.liferay.portal.dao.orm.common.transformers.DB2Transformer;
-import com.liferay.portal.dao.orm.common.transformers.HypersonicTransformer;
-import com.liferay.portal.dao.orm.common.transformers.MySQLTransformer;
-import com.liferay.portal.dao.orm.common.transformers.OracleTransformer;
-import com.liferay.portal.dao.orm.common.transformers.PostgreSQLTransformer;
-import com.liferay.portal.dao.orm.common.transformers.SQLServerTransformer;
-import com.liferay.portal.dao.orm.common.transformers.SybaseTransformer;
-import com.liferay.portal.dao.orm.common.transformers.Transformer;
+import com.liferay.portal.dao.orm.common.transformation.PortalSQLTransformer;
+import com.liferay.portal.dao.orm.common.transformation.Transformer;
+import com.liferay.portal.dao.orm.common.transformation.providers.DB2TransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.HypersonicTransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.MySQLTransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.OracleTransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.PostgreSQLTransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.SQLServerTransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.SQLTransformationProvider;
+import com.liferay.portal.dao.orm.common.transformation.providers.SybaseTransformationProvider;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -77,28 +79,33 @@ public class SQLTransformer {
 
 		DBType dbType = db.getDBType();
 
+		SQLTransformationProvider sqlTransformationProvider = null;
+
 		if (dbType == DBType.DB2) {
-			_transformer = new DB2Transformer(db);
+			sqlTransformationProvider = new DB2TransformationProvider();
 		}
 		else if (dbType == DBType.HYPERSONIC) {
-			_transformer = new HypersonicTransformer(db);
+			sqlTransformationProvider = new HypersonicTransformationProvider();
 		}
 		else if (dbType == DBType.MYSQL) {
-			_transformer = new MySQLTransformer(
-				db, db.isSupportsStringCaseSensitiveQuery());
+			sqlTransformationProvider = new MySQLTransformationProvider(
+				db.isSupportsStringCaseSensitiveQuery());
 		}
 		else if (dbType == DBType.ORACLE) {
-			_transformer = new OracleTransformer(db);
+			sqlTransformationProvider = new OracleTransformationProvider();
 		}
 		else if (dbType == DBType.POSTGRESQL) {
-			_transformer = new PostgreSQLTransformer(db);
+			sqlTransformationProvider = new PostgreSQLTransformationProvider();
 		}
 		else if (dbType == DBType.SQLSERVER) {
-			_transformer = new SQLServerTransformer(db);
+			sqlTransformationProvider = new SQLServerTransformationProvider();
 		}
 		else if (dbType == DBType.SYBASE) {
-			_transformer = new SybaseTransformer(db);
+			sqlTransformationProvider = new SybaseTransformationProvider();
 		}
+
+		_transformer = PortalSQLTransformer.buildSQLTransformer(
+			db, sqlTransformationProvider);
 	}
 
 	private String _transformFromHqlToJpql(String sql) {

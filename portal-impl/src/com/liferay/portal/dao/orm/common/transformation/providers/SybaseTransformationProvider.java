@@ -12,40 +12,48 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common.transformers;
+package com.liferay.portal.dao.orm.common.transformation.providers;
 
-import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.dao.orm.common.transformation.PortalSQLTransformer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.function.Function;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Manuel de la Peña
  */
-public class SybaseTransformer extends BaseSQLTransformer {
-
-	public SybaseTransformer(DB db) {
-		super(db);
-
-		register(
-			bitwiseCheckTransformation, booleanTransformation,
-			castClobTextTransformation, _castLongTransformation,
-			castTextTransformation, _crossJoinTransformation,
-			_inStrTransformation, integerDivisionTransformation,
-			nullDateTransformation, _substrTransformation, _modTransformation,
-			_replaceTransformation);
-	}
+public class SybaseTransformationProvider implements SQLTransformationProvider {
 
 	@Override
-	protected String replaceCastText(Matcher matcher) {
+	public Function<String, String>[] getTransformations() {
+		return _transformations;
+	}
+
+	private static String _replaceCastText(Matcher matcher) {
 		return matcher.replaceAll("CAST($1 AS NVARCHAR(5461))");
 	}
 
+	private static final Function<String, String> _castClobTextTransformation =
+		(String sql) -> {
+			Pattern castClobTextPattern =
+				PortalSQLTransformer.castClobTextPattern;
+
+			return _replaceCastText(castClobTextPattern.matcher(sql));
+		};
+
+	private static final Function<String, String> _castTextTransformation =
+		(String sql) -> {
+			Pattern castTextPattern = PortalSQLTransformer.castTextPattern;
+
+			return _replaceCastText(castTextPattern.matcher(sql));
+		};
+
 	private final Function<String, String> _castLongTransformation =
 		(String sql) -> {
-			Matcher matcher = castLongPattern.matcher(sql);
+			Matcher matcher = PortalSQLTransformer.castLongPattern.matcher(sql);
 
 			return matcher.replaceAll("CONVERT(BIGINT, $1)");
 		};
@@ -55,14 +63,14 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 	private final Function<String, String> _inStrTransformation =
 		(String sql) -> {
-			Matcher matcher = instrPattern.matcher(sql);
+			Matcher matcher = PortalSQLTransformer.instrPattern.matcher(sql);
 
 			return matcher.replaceAll("CHARINDEX($2, $1)");
 		};
 
 	private final Function<String, String> _modTransformation =
 		(String sql) -> {
-			Matcher matcher = modPattern.matcher(sql);
+			Matcher matcher = PortalSQLTransformer.modPattern.matcher(sql);
 
 			return matcher.replaceAll("$1 % $2");
 		};
@@ -72,9 +80,19 @@ public class SybaseTransformer extends BaseSQLTransformer {
 
 	private final Function<String, String> _substrTransformation =
 		(String sql) -> {
-			Matcher matcher = substrPattern.matcher(sql);
+			Matcher matcher = PortalSQLTransformer.substrPattern.matcher(sql);
 
 			return matcher.replaceAll("SUBSTRING($1, $2, $3)");
 		};
+
+	private final Function<String, String>[] _transformations = new Function[] {
+		PortalSQLTransformer.bitwiseCheckTransformation,
+		PortalSQLTransformer.booleanTransformation, _castClobTextTransformation,
+		_castLongTransformation, _castTextTransformation,
+		_crossJoinTransformation, _inStrTransformation,
+		PortalSQLTransformer.integerDivisionTransformation,
+		PortalSQLTransformer.nullDateTransformation, _substrTransformation,
+		_modTransformation, _replaceTransformation
+	};
 
 }

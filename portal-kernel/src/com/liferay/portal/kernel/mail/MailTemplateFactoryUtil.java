@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.mail;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Adolfo Pérez
@@ -41,15 +42,9 @@ public class MailTemplateFactoryUtil {
 		return _mailTemplateFactory;
 	}
 
-	public void setMailTemplateFactory(
-		MailTemplateFactory mailTemplateFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(
-			MailTemplateFactoryUtil.class);
-
-		_mailTemplateFactory = mailTemplateFactory;
-	}
-
-	private static MailTemplateFactory _mailTemplateFactory;
+	private static volatile MailTemplateFactory _mailTemplateFactory =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MailTemplateFactory.class, MailTemplateFactoryUtil.class,
+			"_mailTemplateFactory", false);
 
 }

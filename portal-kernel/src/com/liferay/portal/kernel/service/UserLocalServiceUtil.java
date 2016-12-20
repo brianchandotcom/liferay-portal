@@ -2593,20 +2593,12 @@ public class UserLocalServiceUtil {
 		getService().addDefaultUserGroups(userId);
 	}
 
-	/**
-	* @throws PortalException
-	*/
 	public static void addGroupUser(long groupId,
-		com.liferay.portal.kernel.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.model.User user) {
 		getService().addGroupUser(groupId, user);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static void addGroupUser(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void addGroupUser(long groupId, long userId) {
 		getService().addGroupUser(groupId, userId);
 	}
 
@@ -2673,20 +2665,12 @@ public class UserLocalServiceUtil {
 		getService().addPasswordPolicyUsers(passwordPolicyId, userIds);
 	}
 
-	/**
-	* @throws PortalException
-	*/
 	public static void addRoleUser(long roleId,
-		com.liferay.portal.kernel.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.model.User user) {
 		getService().addRoleUser(roleId, user);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static void addRoleUser(long roleId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void addRoleUser(long roleId, long userId) {
 		getService().addRoleUser(roleId, userId);
 	}
 
@@ -2707,20 +2691,12 @@ public class UserLocalServiceUtil {
 		getService().addRoleUsers(roleId, userIds);
 	}
 
-	/**
-	* @throws PortalException
-	*/
 	public static void addTeamUser(long teamId,
-		com.liferay.portal.kernel.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.model.User user) {
 		getService().addTeamUser(teamId, user);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static void addTeamUser(long teamId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void addTeamUser(long teamId, long userId) {
 		getService().addTeamUser(teamId, userId);
 	}
 
@@ -2741,20 +2717,12 @@ public class UserLocalServiceUtil {
 		getService().addTeamUsers(teamId, userIds);
 	}
 
-	/**
-	* @throws PortalException
-	*/
 	public static void addUserGroupUser(long userGroupId,
-		com.liferay.portal.kernel.model.User user)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.model.User user) {
 		getService().addUserGroupUser(userGroupId, user);
 	}
 
-	/**
-	* @throws PortalException
-	*/
-	public static void addUserGroupUser(long userGroupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static void addUserGroupUser(long userGroupId, long userId) {
 		getService().addUserGroupUser(userGroupId, userId);
 	}
 

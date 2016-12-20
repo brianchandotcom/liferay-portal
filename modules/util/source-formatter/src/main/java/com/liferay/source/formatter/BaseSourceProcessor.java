@@ -3005,6 +3005,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"^(\".\"|StringPool\\.([A-Z_]+))$");
 	protected static Pattern stringUtilReplacePattern = Pattern.compile(
 		"StringUtil\\.(replace(First|Last)?)\\((.*?)\\);\n", Pattern.DOTALL);
+	protected static boolean subrepository;
 	protected static Pattern taglibSessionKeyPattern = Pattern.compile(
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
@@ -3039,6 +3040,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			_sourceFormatterHelper.init();
 
 			portalSource = _isPortalSource();
+			subrepository = _isSubrepository();
 
 			_sourceFormatterMessagesMap = new HashMap<>();
 		}
@@ -3067,8 +3069,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return true;
 		}
 
-		// Subrepositories should be treated as portal
+		return false;
+	}
 
+	private boolean _isSubrepository() {
 		String baseDirAbsolutePath = getAbsolutePath(
 			sourceFormatterArgs.getBaseDirName());
 

@@ -1,5 +1,6 @@
 <definition component-name="portal-deployment-mysql">
 	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 

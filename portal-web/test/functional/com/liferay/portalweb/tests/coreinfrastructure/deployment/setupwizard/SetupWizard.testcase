@@ -24,6 +24,7 @@
 	<command name="HypersonicToMySQL" priority="5">
 		<property name="portal.acceptance.tomcat.mysql" value="true" />
 		<property name="portal.release" value="true" />
+		<property name="portal.upstream" value="true" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />

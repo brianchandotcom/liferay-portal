@@ -6,13 +6,6 @@ import Soy from 'metal-soy/src/Soy';
 import templates from './Flags.soy';
 
 class FlagsPortlet extends Component {
-	/**
-	 * @inheritDoc
-	 */
-	created() {
-		this.message = Liferay.Language.get(this.message);
-	}
-
 	openReportDialog() {
 		AUI().use('aui-io-plugin-deprecated', (A) => {
 			let dialogTitle = Liferay.Language.get('report-inappropriate-content');

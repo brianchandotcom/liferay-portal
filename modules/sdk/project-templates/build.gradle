@@ -1,6 +1,6 @@
 import com.liferay.gradle.util.FileUtil
 
-task writeMavenEmbedderDependencies
+task writeMavenEmbedderClasspath
 task writeProjectTemplateVersions
 
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
@@ -65,7 +65,7 @@ test {
 		"${it.path}:install"
 	}
 
-	dependsOn writeMavenEmbedderDependencies
+	dependsOn writeMavenEmbedderClasspath
 	dependsOn writeProjectTemplateVersions
 
 	doFirst {
@@ -92,13 +92,13 @@ test {
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
 }
 
-writeMavenEmbedderDependencies {
+writeMavenEmbedderClasspath {
 	doLast {
-		File mavenEmbedderDependenciesFile = new File(buildDir, "maven-embedder-dependencies.txt")
+		File mavenEmbedderClasspathFile = new File(buildDir, "maven-embedder-classpath.txt")
 
-		mavenEmbedderDependenciesFile.parentFile.mkdirs()
+		mavenEmbedderClasspathFile.parentFile.mkdirs()
 
-		mavenEmbedderDependenciesFile.text = configurations.mavenEmbedder.join(System.lineSeparator())
+		mavenEmbedderClasspathFile.text = configurations.mavenEmbedder.asPath
 	}
 }
 

@@ -58,7 +58,7 @@ which can solve hanging problems with the Gradle Daemon.
 ### Fixed
 - [LPS-69677]: Fix problem with `ExecuteNpmTask` when `node.download = false`.
 
-## 1.5.0 - 2016-12-20
+## 1.5.0 - 2016-12-21
 
 ### Added
 - [LPS-69802]: Add the task `cleanNPM` to delete the `node_modules` directory

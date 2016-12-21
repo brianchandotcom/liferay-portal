@@ -67,7 +67,7 @@ with if preceded by spaces or tabs.
 - [LPS-69677]: Update the [Liferay Gradle Plugins Node] dependency to version
 1.4.2.
 
-## 2.1.5 - 2016-12-20
+## 2.1.5 - 2016-12-21
 
 ### Changed
 - [LPS-69802]: Update the [Liferay Gradle Plugins Node] dependency to version

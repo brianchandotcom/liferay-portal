@@ -5,7 +5,17 @@ import Soy from 'metal-soy/src/Soy';
 
 import templates from './Flags.soy';
 
+/**
+ * FlagsPortlet. It opens a dialog where the user can
+ * flag the page.
+ *
+ * @abstract
+ * @extends {Component}
+ */
 class FlagsPortlet extends Component {
+	/**
+	 * Opens a dialog where the user can flag the page.
+	 */
 	openReportDialog() {
 		AUI().use('aui-io-plugin-deprecated', (A) => {
 			let dialogTitle = Liferay.Language.get('report-inappropriate-content');
@@ -46,24 +56,41 @@ class FlagsPortlet extends Component {
 	}
 };
 
+/**
+ * State definition.
+ * @ignore
+ * @static
+ * @type {!Object}
+ */
 FlagsPortlet.STATE = {
+	/**
+	 * Portlet's data.
+	 * @instance
+	 * @memberof FlagsPortlet
+	 * @type {!Object}
+	 */
 	data: {
 		validator: core.isObject
 	},
-	inTrash: {
-		validator: core.isBoolean,
-		value: false
-	},
-	label: {
-		validator: core.isBoolean,
-		value: true
-	},
-	message: {
-		validator: core.isString
-	},
+
+	/**
+	 * Whether the user is signed in
+	 * and is able to flag the page.
+	 * @instance
+	 * @memberof FlagsPortlet
+	 * @type {!Boolean}
+	 */
 	signedUser: {
 		validator: core.isBoolean
 	},
+
+	/**
+	 * Uri of the page that will be opened
+	 * in the dialog.
+	 * @instance
+	 * @memberof FlagsPortlet
+	 * @type {String}
+	 */
 	uri: {
 		validator: core.isString
 	}

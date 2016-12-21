@@ -275,10 +275,10 @@ public class PollerRequestHandlerImpl
 		PollerSession pollerSession, List<PollerRequest> pollerRequests) {
 
 		for (PollerRequest pollerRequest : pollerRequests) {
-			if(pollerRequest == null){
-				continue;// skip null request
+			if (pollerRequest == null) {
+				continue;
 			}
-			
+
 			String responseId = null;
 
 			if (pollerRequest.isReceiveRequest()) {

@@ -1629,11 +1629,27 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<delete file="@{bundles.dir}/patching-tool/default.properties" />
 
-			<execute dir="@{bundles.dir}/patching-tool">
-				patching-tool${file.suffix.bat} auto-discovery
-				patching-tool${file.suffix.bat} install -force
-				patching-tool${file.suffix.bat} update-plugins
-			</execute>
+			<if>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<echo file="@{bundles.dir}/patching-tool/default.properties">patching.mode=binary
+war.path=${app.server.weblogic.portal.dir}/
+global.lib.path=${app.server.weblogic.lib.global.dir}
+liferay.home=${liferay.home}</echo>
+
+					<execute dir="@{bundles.dir}/patching-tool">
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</then>
+				<else>
+					<execute dir="@{bundles.dir}/patching-tool">
+						patching-tool${file.suffix.bat} auto-discovery
+						patching-tool${file.suffix.bat} install -force
+						patching-tool${file.suffix.bat} update-plugins
+					</execute>
+				</else>
+			</if>
 
 			<local name="patching.tool.file.name" />
 

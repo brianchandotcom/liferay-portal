@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
-import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
+import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -39,15 +39,7 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 		final String field = GROUP_FIELD;
 
 		for (int i = 1; i <= count; i++) {
-			addDocument(
-				new DocumentCreationHelper() {
-
-					@Override
-					public void populate(Document document) {
-						document.addKeyword(field, name);
-					}
-
-				});
+			addDocument(DocumentCreationHelpers.singleKeyword(field, name));
 		}
 	}
 

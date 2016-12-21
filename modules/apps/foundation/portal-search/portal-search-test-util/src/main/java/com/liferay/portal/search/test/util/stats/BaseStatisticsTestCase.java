@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.test.util.stats;
 
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -23,7 +22,7 @@ import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
-import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
+import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -66,17 +65,7 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 		final String field = STAT_FIELD;
 
 		for (int i = 1; i <= count; i++) {
-			final int value = i;
-
-			addDocument(
-				new DocumentCreationHelper() {
-
-					@Override
-					public void populate(Document document) {
-						document.addNumberSortable(field, value);
-					}
-
-				});
+			addDocument(DocumentCreationHelpers.singleNumberSortable(field, i));
 		}
 	}
 

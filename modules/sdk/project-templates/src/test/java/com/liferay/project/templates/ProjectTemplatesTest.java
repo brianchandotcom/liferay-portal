@@ -93,18 +93,8 @@ public class ProjectTemplatesTest {
 		_httpProxyHost = System.getProperty("http.proxyHost");
 		_httpProxyPort = System.getProperty("http.proxyPort");
 
-		String javaExecutableFileName = "java";
-
-		if (File.pathSeparatorChar == ';') {
-			javaExecutableFileName = "java.exe";
-		}
-
-		_javaExecutableFile = new File(
-			System.getProperty("java.home"),
-			"bin" + File.separator + javaExecutableFileName);
-
-		_mavenEmbedderClasspath = FileUtil.read(
-			Paths.get("build", "maven-embedder-classpath.txt"));
+		_mavenDistributionDir = new File(
+			System.getProperty("maven.distribution.dir"));
 
 		_projectTemplateVersions = FileTestUtil.readProperties(
 			Paths.get("build", "project-template-versions.properties"));
@@ -1241,23 +1231,19 @@ public class ProjectTemplatesTest {
 
 		List<String> commands = new ArrayList<>();
 
-		commands.add(_javaExecutableFile.getAbsolutePath());
+		String mavenExecutableFileName = "mvn";
 
-		commands.add("-classpath");
-		commands.add(_mavenEmbedderClasspath);
-
-		commands.add("-Dfile.encoding=UTF-8");
-		commands.add(
-			"-Dmaven.multiModuleProjectDirectory=" +
-				projectDir.getAbsolutePath());
-
-		for (String arg : args) {
-			if (arg.startsWith("-D")) {
-				commands.add(arg);
-			}
+		if (File.pathSeparatorChar == ';') {
+			mavenExecutableFileName += ".cmd";
 		}
 
-		commands.add("org.apache.maven.cli.MavenCli");
+		File mavenExecutableFile = new File(
+			_mavenDistributionDir, "bin/" + mavenExecutableFileName);
+
+		Assert.assertTrue(
+			"Missing " + mavenExecutableFile, mavenExecutableFile.exists());
+
+		commands.add(mavenExecutableFile.getAbsolutePath());
 
 		commands.add("--errors");
 
@@ -1269,14 +1255,18 @@ public class ProjectTemplatesTest {
 		commands.add("--update-snapshots");
 
 		for (String arg : args) {
-			if (!arg.startsWith("-D")) {
-				commands.add(arg);
-			}
+			commands.add(arg);
 		}
 
 		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
 		processBuilder.directory(projectDir);
+
+		Map<String, String> environment = processBuilder.environment();
+
+		environment.put("M2_HOME", _mavenDistributionDir.getAbsolutePath());
+		environment.put("MAVEN_OPTS", "-Dfile.encoding=UTF-8");
+
 		processBuilder.redirectOutput(Redirect.INHERIT);
 
 		Process process = processBuilder.start();
@@ -1597,8 +1587,7 @@ public class ProjectTemplatesTest {
 	private static URI _gradleDistribution;
 	private static String _httpProxyHost;
 	private static String _httpProxyPort;
-	private static File _javaExecutableFile;
-	private static String _mavenEmbedderClasspath;
+	private static File _mavenDistributionDir;
 	private static File _mavenSettingsXmlFile;
 	private static Properties _projectTemplateVersions;
 	private static String _repositoryUrl;

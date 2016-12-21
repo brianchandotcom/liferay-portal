@@ -45,7 +45,23 @@ public class VariableNameCheck extends AbstractCheck {
 
 		String name = nameAST.getText();
 
+		_checkCaps(detailAST, name);
 		_checkIsVariableName(detailAST, name);
+	}
+
+	private void _checkCaps(DetailAST detailAST, String name) {
+		for (String[] array : _ALL_CAPS_STRINGS) {
+			Pattern pattern = Pattern.compile(
+				"(.*)" + array[1] + "([A-Z].*|$)");
+
+			Matcher matcher = pattern.matcher(name);
+
+			if (matcher.find()) {
+				String newName = matcher.group(1) + array[0] + matcher.group(2);
+
+				log(detailAST.getLineNo(), MSG_RENAME_VARIABLE, name, newName);
+			}
+		}
 	}
 
 	private void _checkIsVariableName(DetailAST detailAST, String name) {
@@ -146,6 +162,11 @@ public class VariableNameCheck extends AbstractCheck {
 
 		return false;
 	}
+
+	private static final String[][] _ALL_CAPS_STRINGS = new String[][] {
+		new String[] {"DDL", "Ddl"}, new String[] {"DDM", "Ddm"},
+		new String[] {"DL", "Dl"}, new String[] {"PK", "Pk"}
+	};
 
 	private static final Pattern _isVariableNamePattern = Pattern.compile(
 		"(_?)(is|IS_)([A-Z])(.*)");

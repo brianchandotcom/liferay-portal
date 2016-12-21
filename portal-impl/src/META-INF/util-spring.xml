@@ -374,10 +374,9 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.kernel.util.HtmlUtil" id="com.liferay.portal.kernel.util.HtmlUtil">
-		<property name="html">
-			<bean class="com.liferay.portal.util.HtmlImpl" />
-		</property>
+		<property name="html" ref="com.liferay.portal.util.HtmlImpl" />
 	</bean>
+	<bean class="com.liferay.portal.util.HtmlImpl" id="com.liferay.portal.util.HtmlImpl" />
 	<bean class="com.liferay.portal.kernel.util.HttpUtil" id="com.liferay.portal.kernel.util.HttpUtil">
 		<property name="http">
 			<bean class="com.liferay.portal.util.HttpImpl" />

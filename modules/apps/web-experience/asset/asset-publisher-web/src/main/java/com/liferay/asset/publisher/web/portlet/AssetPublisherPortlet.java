@@ -288,13 +288,13 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			String rootPortletId = PortletConstants.getRootPortletId(
 				PortalUtil.getPortletId(renderRequest));
 
-				AssetPublisherCustomizer assetPublisherCustomizer =
-					assetPublisherCustomizerRegistry.
-						getAssetPublisherCustomizer(rootPortletId);
+			AssetPublisherCustomizer assetPublisherCustomizer =
+				assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
+					rootPortletId);
 
-				renderRequest.setAttribute(
-					AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
-					assetPublisherCustomizer);
+			renderRequest.setAttribute(
+				AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER,
+				assetPublisherCustomizer);
 		}
 		catch (Exception e) {
 			_log.error("Unable to get Asset Publisher customizer", e);

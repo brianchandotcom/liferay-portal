@@ -44,10 +44,10 @@ public class DLAppHelperLocalServiceUtil {
 		long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long assetClassPk)
+		long assetClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateAsset(userId, fileEntry, fileVersion, assetClassPk);
+				   .updateAsset(userId, fileEntry, fileVersion, assetClassPK);
 	}
 
 	public static com.liferay.asset.kernel.model.AssetEntry updateAsset(
@@ -300,11 +300,11 @@ public class DLAppHelperLocalServiceUtil {
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		long assetClassPk)
+		long assetClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.updateFileEntry(userId, fileEntry, sourceFileVersion,
-			destinationFileVersion, assetClassPk);
+			destinationFileVersion, assetClassPK);
 	}
 
 	public static void updateFolder(long userId,

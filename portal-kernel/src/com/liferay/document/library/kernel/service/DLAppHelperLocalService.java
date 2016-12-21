@@ -60,7 +60,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	 * Never modify or reference this interface directly. Always use {@link DLAppHelperLocalServiceUtil} to access the dl app helper local service. Add custom service methods to {@link com.liferay.portlet.documentlibrary.service.impl.DLAppHelperLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
-		FileVersion fileVersion, long assetClassPk) throws PortalException;
+		FileVersion fileVersion, long assetClassPK) throws PortalException;
 
 	public AssetEntry updateAsset(long userId, FileEntry fileEntry,
 		FileVersion fileVersion, long[] assetCategoryIds,
@@ -201,7 +201,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	public void updateFileEntry(long userId, FileEntry fileEntry,
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion,
-		long assetClassPk) throws PortalException;
+		long assetClassPK) throws PortalException;
 
 	public void updateFolder(long userId, Folder folder,
 		ServiceContext serviceContext) throws PortalException;

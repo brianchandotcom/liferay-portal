@@ -37,10 +37,10 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	public com.liferay.asset.kernel.model.AssetEntry updateAsset(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion fileVersion,
-		long assetClassPk)
+		long assetClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppHelperLocalService.updateAsset(userId, fileEntry,
-			fileVersion, assetClassPk);
+			fileVersion, assetClassPK);
 	}
 
 	@Override
@@ -319,10 +319,10 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,
 		com.liferay.portal.kernel.repository.model.FileVersion destinationFileVersion,
-		long assetClassPk)
+		long assetClassPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.updateFileEntry(userId, fileEntry,
-			sourceFileVersion, destinationFileVersion, assetClassPk);
+			sourceFileVersion, destinationFileVersion, assetClassPK);
 	}
 
 	@Override

@@ -27,7 +27,7 @@ import com.liferay.portal.search.elasticsearch.internal.connection.IndicesAdminC
 import com.liferay.portal.search.elasticsearch.internal.connection.LiferayIndexCreationHelper;
 import com.liferay.portal.search.elasticsearch.internal.index.LiferayDocumentTypeFactory;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
-import com.liferay.portal.search.test.util.indexing.DocumentCreationHelper;
+import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 
 import java.util.Arrays;
@@ -59,14 +59,8 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 		final double longitude = randomLongitude();
 
 		addDocument(
-			new DocumentCreationHelper() {
-
-				@Override
-				public void populate(Document document) {
-					document.addGeoLocation(fieldName, latitude, longitude);
-				}
-
-			});
+			DocumentCreationHelpers.singleGeoLocation(
+				fieldName, latitude, longitude));
 
 		Document document = IdempotentRetryAssert.retryAssert(
 			10, TimeUnit.SECONDS,

@@ -809,17 +809,8 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(Team.description)", StringPool.LIKE, true,
 				keywordsArray);
-
-			if (excludedNames.isEmpty()) {
-				sql = StringUtil.replace(
-					sql, "(name NOT IN ([$EXCLUDED_NAMES$])) AND",
-					StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
-			}
-
+			sql = StringUtil.replace(
+				sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
 			sql = StringUtil.replace(sql, "[$TYPES$]", StringUtil.merge(types));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
@@ -836,13 +827,13 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
+			qPos.add(keywordsArray, 2);
+			qPos.add(keywordsArray, 2);
 
 			for (String excludedName : excludedNames) {
 				qPos.add(excludedName);
 			}
 
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
 			qPos.add(ClassNameLocalServiceUtil.getClassNameId(Team.class));
 			qPos.add(excludedTeamRoleId);
 			qPos.add(teamGroupId);
@@ -974,17 +965,8 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(Team.description)", StringPool.LIKE, true,
 				keywordsArray);
-
-			if (excludedNames.isEmpty()) {
-				sql = StringUtil.replace(
-					sql, "(name NOT IN ([$EXCLUDED_NAMES$])) AND",
-					StringPool.BLANK);
-			}
-			else {
-				sql = StringUtil.replace(
-					sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
-			}
-
+			sql = StringUtil.replace(
+				sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
 			sql = StringUtil.replace(sql, "[$TYPES$]", StringUtil.merge(types));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
@@ -1001,13 +983,13 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(companyId);
+			qPos.add(keywordsArray, 2);
+			qPos.add(keywordsArray, 2);
 
 			for (String excludedName : excludedNames) {
 				qPos.add(excludedName);
 			}
 
-			qPos.add(keywordsArray, 2);
-			qPos.add(keywordsArray, 2);
 			qPos.add(ClassNameLocalServiceUtil.getClassNameId(Team.class));
 			qPos.add(excludedTeamRoleId);
 			qPos.add(teamGroupId);
@@ -1110,13 +1092,19 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 	}
 
 	protected String getExcludedNames(List<String> excludedNames) {
-		StringBundler sb = new StringBundler(excludedNames.size());
-
-		for (int i = 0; i < excludedNames.size() - 1; i++) {
-			sb.append("?, ");
+		if ((excludedNames == null) || excludedNames.isEmpty()) {
+			return StringPool.BLANK;
 		}
 
-		sb.append("?");
+		StringBundler sb = new StringBundler(excludedNames.size() + 1);
+
+		sb.append(" AND (");
+
+		for (int i = 0; i < excludedNames.size() - 1; i++) {
+			sb.append("Role_.name != ? OR ");
+		}
+
+		sb.append("Role_.name !=?)");
 
 		return sb.toString();
 	}

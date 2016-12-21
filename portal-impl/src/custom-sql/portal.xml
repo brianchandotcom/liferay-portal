@@ -976,12 +976,12 @@
 			WHERE
 				(Role_.companyId = ?) AND
 				(
-					(Role_.name NOT IN ([$EXCLUDED_NAMES$])) AND
 					(Role_.type_ IN ([$TYPES$])) AND
 					(
 						(lower(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 						(lower(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
+					[$EXCLUDED_NAMES$]
 				) OR
 				(
 					(Role_.classNameId = ?) AND
@@ -1157,12 +1157,12 @@
 			WHERE
 				(Role_.companyId = ?) AND
 				(
-					(Role_.name NOT IN ([$EXCLUDED_NAMES$])) AND
 					(Role_.type_ IN ([$TYPES$])) AND
 					(
 						(lower(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 						(lower(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
+					[$EXCLUDED_NAMES$]
 				) OR
 				(
 					(Role_.classNameId = ?) AND

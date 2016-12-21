@@ -57,6 +57,13 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 			project, NodeExtension.class);
 
 		nodeExtension.setNodeVersion(_NODE_VERSION);
+
+		String npmArgs = GradleUtil.getProperty(
+			project, "nodejs.npm.args", (String)null);
+
+		if (Validator.isNotNull(npmArgs)) {
+			nodeExtension.npmArgs((Object[])npmArgs.split("\\s+"));
+		}
 	}
 
 	private void _configureTaskExecuteNpm(ExecuteNpmTask executeNpmTask) {

@@ -606,10 +606,7 @@
 		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
 	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
-
+	<command name="EditSingleApproverDefinitionDeleteTaskNode" priority="5">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
 			<var name="portlet" value="Workflow Definition" />
 		</execute>
@@ -649,7 +646,7 @@
 		<execute macro="KaleoDesigner#viewNodeNotPresent">
 			<var name="nodeNodeLabel" value="update" />
 		</execute>
-	</command>-->
+	</command>
 
 	<command name="PublishDefaultWorkflowDefinition" priority="3">
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1386,9 +1383,7 @@
 		</execute>
 	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewDefinitionTemplateCDATARemainsWhenViewingSourceTab" priority="4">
+	<command name="ViewDefinitionTemplateCDATARemainsWhenViewingSourceTab" priority="4">
 		<description message="This is a use case for LPS-45514." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1416,11 +1411,9 @@
 			<var name="kdSourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
-	</command>-->
+	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewInvalidSourceXMLRemainsAfterTabSwitch" priority="4">
+	<command name="ViewInvalidSourceXMLRemainsAfterTabSwitch" priority="4">
 		<description message="This is a use case for LPS-48590." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1443,11 +1436,9 @@
 			<var name="kdSourceXML" value="INVALID" />
 			<var name="line" value="6" />
 		</execute>
-	</command>-->
+	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewNewUploadedDefinitionDoesNotContainDataFromDeletedDefinition" priority="4">
+	<command name="ViewNewUploadedDefinitionDoesNotContainDataFromDeletedDefinition" priority="4">
 		<description message="This is a use case for LPS-45676." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1504,11 +1495,9 @@
 			<var name="kdSourceXML" ><![CDATA[<![CDATA[The file sent by]]></var>
 			<var name="line" value="16" />
 		</execute>
-	</command>-->
+	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" priority="4">
+	<command name="ViewNodeNotificationRecipientPersistsAfterSwitchingTabs" priority="4">
 		<description message="This is a use case for LPS-46657." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1544,11 +1533,9 @@
 			<var name="roleTitle" value="Administrator" />
 			<var name="roleType" value="Regular" />
 		</execute>
-	</command>-->
+	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewSingleApproverUserNotificationOption" priority="3">
+	<command name="ViewSingleApproverUserNotificationOption" priority="3">
 		<description message="This is a use case for LPS-46605." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1567,7 +1554,7 @@
 			<var name="nodeNotificationsName" value="Review Notification" />
 			<var name="nodeNotificationsType" value="User Notification" />
 		</execute>
-	</command>-->
+	</command>
 
 	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />

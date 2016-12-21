@@ -37,6 +37,15 @@ import java.util.Set;
  */
 public class UpgradePermission extends UpgradeProcess {
 
+	public UpgradePermission() {
+		this(false);
+	}
+
+	public UpgradePermission(boolean ignoreMissingAddEntryResourceAction) {
+		_ignoreMissingAddEntryResourceAction =
+			ignoreMissingAddEntryResourceAction;
+	}
+
 	protected void addAnnouncementsAdminResourceActions() {
 		addResourceAction(
 			ActionKeys.ACCESS_IN_CONTROL_PANEL,
@@ -224,9 +233,11 @@ public class UpgradePermission extends UpgradeProcess {
 			ResultSet rs1 = ps1.executeQuery()) {
 
 			if (!rs1.next()) {
-				_log.error(
-					"Unable to upgrade ADD_ENTRY action, ResourceAction for " +
-						name + " is not initialized");
+				if (!_ignoreMissingAddEntryResourceAction) {
+					_log.error(
+						"Unable to upgrade ADD_ENTRY action, ResourceAction " +
+							"for " + name + " is not initialized");
+				}
 
 				return;
 			}
@@ -286,6 +297,7 @@ public class UpgradePermission extends UpgradeProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UpgradePermission.class);
 
+	private final boolean _ignoreMissingAddEntryResourceAction;
 	private final Set<String> _resourcePermissions = new HashSet<>();
 
 }

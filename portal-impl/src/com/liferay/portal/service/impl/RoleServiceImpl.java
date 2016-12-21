@@ -156,6 +156,27 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		return filterRoles(roles);
 	}
 
+	@Override
+	public List<Role> getGroupRolesAndTeamRoles(
+		long companyId, String keywords, List<String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end) {
+
+		return roleFinder.filterFindByGroupRoleAndTeamRole(
+			companyId, keywords, excludedNames, types, excludedTeamRoleId,
+			teamGroupId, start, end);
+	}
+
+	@Override
+	public int getGroupRolesAndTeamRolesCount(
+		long companyId, String keywords, List<String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId) {
+
+		return roleFinder.filterCountByGroupRoleAndTeamRole(
+			companyId, keywords, excludedNames, types, excludedTeamRoleId,
+			teamGroupId);
+	}
+
 	/**
 	 * Returns the role with the primary key.
 	 *

@@ -731,7 +731,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
 		int end) {
 
-		return roleFinder.filterFindByGroupRoleAndTeamRole(
+		return roleFinder.findByGroupRoleAndTeamRole(
 			companyId, keywords, excludedNames, types, excludedTeamRoleId,
 			teamGroupId, start, end);
 	}
@@ -741,7 +741,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		long companyId, String keywords, List<String> excludedNames,
 		int[] types, long excludedTeamRoleId, long teamGroupId) {
 
-		return roleFinder.filterCountByGroupRoleAndTeamRole(
+		return roleFinder.countByGroupRoleAndTeamRole(
 			companyId, keywords, excludedNames, types, excludedTeamRoleId,
 			teamGroupId);
 	}

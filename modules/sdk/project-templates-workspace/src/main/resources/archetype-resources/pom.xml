@@ -28,6 +28,8 @@
 						</goals>
 						<phase>clean</phase>
 					</execution>
+
+					<!--
 					<execution>
 						<id>default-init-bundle</id>
 						<goals>
@@ -35,6 +37,8 @@
 						</goals>
 						<phase>initialize</phase>
 					</execution>
+					-->
+
 					<execution>
 						<id>default-deploy</id>
 						<goals>

@@ -1,6 +1,7 @@
 import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
-task writeMavenEmbedderClasspath
+task expandMavenDistribution(type: Copy)
 task writeProjectTemplateVersions
 
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
@@ -12,17 +13,12 @@ bundle {
 }
 
 configurations {
-	mavenEmbedder
+	mavenDistribution
 	projectTemplates
 }
 
 dependencies {
-	mavenEmbedder group: "org.apache.maven", name: "maven-embedder", version: "3.3.9"
-	mavenEmbedder group: "org.apache.maven.wagon", name: "wagon-http", version: "2.10"
-	mavenEmbedder group: "org.eclipse.aether", name: "aether-connector-basic", version: "1.0.2.v20150114"
-	mavenEmbedder group: "org.eclipse.aether", name: "aether-transport-http", version: "1.0.2.v20150114"
-	mavenEmbedder group: "org.slf4j", name: "slf4j-simple", version: "1.7.5"
-	mavenEmbedder group: "org.sonatype.plexus", name: "plexus-build-api", version: "0.0.7"
+	mavenDistribution classifier: "bin", ext: "tar.gz", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
 
 	projectTemplates project(":sdk:project-templates-activator")
 	projectTemplates project(":sdk:project-templates-api")
@@ -56,6 +52,17 @@ dependencies {
 	testCompile group: "net.diibadaaba.zipdiff", name: "zipdiff", version: "1.0"
 }
 
+expandMavenDistribution {
+	eachFile new StripPathSegmentsAction(1)
+
+	from {
+		tarTree(configurations.mavenDistribution.singleFile)
+	}
+
+	includeEmptyDirs = false
+	into new File(buildDir, "maven-distribution")
+}
+
 processResources {
 	from configurations.projectTemplates
 }
@@ -65,7 +72,7 @@ test {
 		"${it.path}:install"
 	}
 
-	dependsOn writeMavenEmbedderClasspath
+	dependsOn expandMavenDistribution
 	dependsOn writeProjectTemplateVersions
 
 	doFirst {
@@ -90,16 +97,7 @@ test {
 	systemProperty "repository.url", System.properties["repository.url"]
 	systemProperty "http.proxyHost", System.properties["http.proxyHost"]
 	systemProperty "http.proxyPort", System.properties["http.proxyPort"]
-}
-
-writeMavenEmbedderClasspath {
-	doLast {
-		File mavenEmbedderClasspathFile = new File(buildDir, "maven-embedder-classpath.txt")
-
-		mavenEmbedderClasspathFile.parentFile.mkdirs()
-
-		mavenEmbedderClasspathFile.text = configurations.mavenEmbedder.asPath
-	}
+	systemProperty "maven.distribution.dir", expandMavenDistribution.destinationDir
 }
 
 writeProjectTemplateVersions {

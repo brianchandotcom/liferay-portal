@@ -24,6 +24,8 @@ public class TestResult {
 	public TestResult(JSONObject caseJSONObject) {
 		className = caseJSONObject.getString("className");
 
+		duration = (long)(caseJSONObject.getDouble("duration") * 1000d);
+
 		int x = className.lastIndexOf(".");
 
 		simpleClassName = className.substring(x + 1);
@@ -47,7 +49,7 @@ public class TestResult {
 		return className;
 	}
 
-	public String getDuration() {
+	public long getDuration() {
 		return duration;
 	}
 
@@ -60,10 +62,10 @@ public class TestResult {
 	}
 
 	protected String className;
-	protected String duration;
+	protected long duration;
 	protected String packageName;
-	protected String status;
 	protected String simpleClassName;
+	protected String status;
 	protected String testName;
 
 }

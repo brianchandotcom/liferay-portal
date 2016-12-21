@@ -246,7 +246,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoEditFeed">
-			<var name="rowEntry" value="WC Feed Title" />
+			<var name="feedName" value="WC Feed Title" />
 		</execute>
 
 		<var attribute="value" locator="//input[contains(@id,'JournalPortlet_url') and contains(@value,'journal/rss')]" name="rssFeedUrl" />
@@ -283,8 +283,8 @@
 		</execute>
 
 		<execute macro="RSS#viewFeedContent">
-			<var name="feedContent" value="Web Content Content" />
-			<var name="panelHeading" value="Web Content Title" />
+			<var name="feedEntryContent" value="Web Content Content" />
+			<var name="feedEntryTitle" value="Web Content Title" />
 		</execute>
 	</command>
 

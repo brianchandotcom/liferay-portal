@@ -304,7 +304,6 @@ public class KaleoTaskInstanceTokenFinderImpl
 		setAssigneeClassPK(qPos, kaleoTaskInstanceTokenQuery);
 		setCompleted(qPos, kaleoTaskInstanceTokenQuery);
 		setKaleoInstanceId(qPos, kaleoTaskInstanceTokenQuery);
-		setSearchByUserRoles(qPos, kaleoTaskInstanceTokenQuery);
 
 		setAssetPrimaryKey(qPos, kaleoTaskInstanceTokenQuery);
 		setAssetType(qPos, kaleoTaskInstanceTokenQuery);
@@ -650,10 +649,14 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return sb.toString();
 		}
 
-		StringBundler sb = new StringBundler(2);
+		StringBundler sb = new StringBundler(6);
 
-		sb.append("AND ((KaleoTaskAssignmentInstance.assigneeClassName = ?) ");
-		sb.append("AND (KaleoTaskAssignmentInstance.assigneeClassPK = ?))");
+		sb.append("AND ((KaleoTaskAssignmentInstance.assigneeClassName = '");
+		sb.append(User.class.getName());
+		sb.append("') ");
+		sb.append("AND (KaleoTaskAssignmentInstance.assigneeClassPK = ");
+		sb.append(kaleoTaskInstanceTokenQuery.getUserId());
+		sb.append("))");
 
 		return sb.toString();
 	}
@@ -828,24 +831,6 @@ public class KaleoTaskInstanceTokenFinderImpl
 		}
 
 		qPos.add(kaleoInstanceId);
-	}
-
-	protected void setSearchByUserRoles(
-			QueryPos qPos,
-			KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery)
-		throws Exception {
-
-		Boolean searchByUserRoles =
-			kaleoTaskInstanceTokenQuery.isSearchByUserRoles();
-
-		if (searchByUserRoles == null) {
-			return;
-		}
-
-		if (!searchByUserRoles) {
-			qPos.add(User.class.getName());
-			qPos.add(kaleoTaskInstanceTokenQuery.getUserId());
-		}
 	}
 
 	protected void setTaskName(

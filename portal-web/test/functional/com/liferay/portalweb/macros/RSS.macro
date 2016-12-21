@@ -106,10 +106,10 @@
 
 	<command name="viewFeedContent">
 		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="${panelHeading}" />
+			<var name="panelHeading" value="${feedEntryTitle}" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CONTENT" value1="${feedContent}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CONTENT" value1="${feedEntryContent}" />
 	</command>
 
 	<command name="viewNavigationDisplayFeedTitle">

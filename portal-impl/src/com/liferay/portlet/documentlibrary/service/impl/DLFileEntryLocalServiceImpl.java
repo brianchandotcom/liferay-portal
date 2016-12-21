@@ -611,7 +611,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName());
 
-		DLFileEntry newDlFileEntry = addFileEntry(
+		DLFileEntry newDLFileEntry = addFileEntry(
 			userId, groupId, repositoryId, destFolderId, sourceFileName,
 			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
 			dlFileEntry.getDescription(), null,
@@ -620,18 +620,18 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		DLFileVersion newDlFileVersion = newDlFileEntry.getFileVersion();
+		DLFileVersion newDLFileVersion = newDLFileEntry.getFileVersion();
 
 		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
 			dlFileVersion.getExpandoBridge(),
-			newDlFileVersion.getExpandoBridge());
+			newDLFileVersion.getExpandoBridge());
 
 		copyFileEntryMetadata(
 			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 			fileEntryId, dlFileVersion.getFileVersionId(),
-			newDlFileVersion.getFileVersionId(), serviceContext);
+			newDLFileVersion.getFileVersionId(), serviceContext);
 
-		return newDlFileEntry;
+		return newDLFileEntry;
 	}
 
 	@Override
@@ -1720,13 +1720,13 @@ public class DLFileEntryLocalServiceImpl
 			description, changeLog, majorVersion, extraSettings,
 			fileEntryTypeId, ddmFormValuesMap, null, is, size, serviceContext);
 
-		DLFileVersion newDlFileVersion =
+		DLFileVersion newDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
 		copyFileEntryMetadata(
 			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
 			fileEntryId, dlFileVersion.getFileVersionId(),
-			newDlFileVersion.getFileVersionId(), serviceContext);
+			newDLFileVersion.getFileVersionId(), serviceContext);
 	}
 
 	@Override

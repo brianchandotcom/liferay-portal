@@ -404,9 +404,9 @@ public class FolderStagedModelDataHandler
 				folder, DLFileEntryType.class);
 
 		for (Element referenceElement : referenceElements) {
-			long referenceDlFileEntryTypeId = GetterUtil.getLong(
+			long referenceDLFileEntryTypeId = GetterUtil.getLong(
 				referenceElement.attributeValue("class-pk"));
-			String referenceDlFileEntryTypeUuid =
+			String referenceDLFileEntryTypeUuid =
 				referenceElement.attributeValue("uuid");
 
 			Map<Long, Long> dlFileEntryTypeIds =
@@ -414,8 +414,8 @@ public class FolderStagedModelDataHandler
 					DLFileEntryType.class);
 
 			long dlFileEntryTypeId = MapUtil.getLong(
-				dlFileEntryTypeIds, referenceDlFileEntryTypeId,
-				referenceDlFileEntryTypeId);
+				dlFileEntryTypeIds, referenceDLFileEntryTypeId,
+				referenceDLFileEntryTypeId);
 
 			DLFileEntryType existingDLFileEntryType =
 				_dlFileEntryTypeLocalService.fetchDLFileEntryType(
@@ -428,7 +428,7 @@ public class FolderStagedModelDataHandler
 			currentFolderFileEntryTypeIds.add(
 				existingDLFileEntryType.getFileEntryTypeId());
 
-			if (defaultFileEntryTypeUuid.equals(referenceDlFileEntryTypeUuid)) {
+			if (defaultFileEntryTypeUuid.equals(referenceDLFileEntryTypeUuid)) {
 				defaultFileEntryTypeId =
 					existingDLFileEntryType.getFileEntryTypeId();
 			}

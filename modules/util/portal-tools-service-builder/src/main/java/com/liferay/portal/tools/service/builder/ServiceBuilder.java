@@ -533,7 +533,7 @@ public class ServiceBuilder {
 		_tplBadTableNames = _getTplProperty(
 			"bad_table_names", _tplBadTableNames);
 		_tplBlobModel = _getTplProperty("blob_model", _tplBlobModel);
-		_tplEjbPk = _getTplProperty("ejb_pk", _tplEjbPk);
+		_tplEjbPK = _getTplProperty("ejb_pk", _tplEjbPK);
 		_tplException = _getTplProperty("exception", _tplException);
 		_tplExtendedModel = _getTplProperty(
 			"extended_model", _tplExtendedModel);
@@ -2007,7 +2007,7 @@ public class ServiceBuilder {
 
 		// Content
 
-		String content = _processTemplate(_tplEjbPk, context);
+		String content = _processTemplate(_tplEjbPK, context);
 
 		// Write file
 
@@ -5808,7 +5808,7 @@ public class ServiceBuilder {
 	private String _tplBadColumnNames = _TPL_ROOT + "bad_column_names.txt";
 	private String _tplBadTableNames = _TPL_ROOT + "bad_table_names.txt";
 	private String _tplBlobModel = _TPL_ROOT + "blob_model.ftl";
-	private String _tplEjbPk = _TPL_ROOT + "ejb_pk.ftl";
+	private String _tplEjbPK = _TPL_ROOT + "ejb_pk.ftl";
 	private String _tplException = _TPL_ROOT + "exception.ftl";
 	private String _tplExtendedModel = _TPL_ROOT + "extended_model.ftl";
 	private String _tplExtendedModelBaseImpl =

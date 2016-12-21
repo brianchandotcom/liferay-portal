@@ -1151,11 +1151,11 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 	}
 
 	protected SyncDLObject checkModifiedTime(
-		SyncDLObject syncDLObject, long typePk) {
+		SyncDLObject syncDLObject, long typePK) {
 
 		DynamicQuery dynamicQuery = dlSyncEventLocalService.dynamicQuery();
 
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("typePK", typePk));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("typePK", typePK));
 
 		List<DLSyncEvent> dlSyncEvents = dlSyncEventLocalService.dynamicQuery(
 			dynamicQuery);

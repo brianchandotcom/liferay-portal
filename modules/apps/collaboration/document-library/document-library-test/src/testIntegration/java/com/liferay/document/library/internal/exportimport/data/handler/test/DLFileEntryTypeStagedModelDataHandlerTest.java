@@ -151,14 +151,14 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 		super.validateImportedStagedModel(stagedModel, importedStagedModel);
 
 		DLFileEntryType dlFileEntryType = (DLFileEntryType)stagedModel;
-		DLFileEntryType importedDlFileEntryType =
+		DLFileEntryType importedDLFileEntryType =
 			(DLFileEntryType)importedStagedModel;
 
 		Assert.assertEquals(
-			dlFileEntryType.getName(), importedDlFileEntryType.getName());
+			dlFileEntryType.getName(), importedDLFileEntryType.getName());
 		Assert.assertEquals(
 			dlFileEntryType.getDescription(),
-			importedDlFileEntryType.getDescription());
+			importedDLFileEntryType.getDescription());
 	}
 
 }

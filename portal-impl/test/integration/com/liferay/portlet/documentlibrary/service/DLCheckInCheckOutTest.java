@@ -555,11 +555,11 @@ public class DLCheckInCheckOutTest {
 		return folder;
 	}
 
-	protected AssetEntry getAssetEntry(long assetClassPk, boolean expectExists)
+	protected AssetEntry getAssetEntry(long assetClassPK, boolean expectExists)
 		throws Exception {
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			DLFileEntryConstants.getClassName(), assetClassPk);
+			DLFileEntryConstants.getClassName(), assetClassPK);
 
 		if (expectExists) {
 			Assert.assertNotNull(assetEntry);

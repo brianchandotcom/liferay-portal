@@ -805,9 +805,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				sql, "lower(Role_.description)", StringPool.LIKE, true,
 				keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, keywordsArray);
+				sql, "lower(Team.name)", StringPool.LIKE, false, keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(description)", StringPool.LIKE, true,
+				sql, "lower(Team.description)", StringPool.LIKE, true,
 				keywordsArray);
 
 			if (excludedNames.isEmpty()) {
@@ -970,9 +970,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				sql, "lower(Role_.description)", StringPool.LIKE, true,
 				keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, keywordsArray);
+				sql, "lower(Team.name)", StringPool.LIKE, false, keywordsArray);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(description)", StringPool.LIKE, true,
+				sql, "lower(Team.description)", StringPool.LIKE, true,
 				keywordsArray);
 
 			if (excludedNames.isEmpty()) {

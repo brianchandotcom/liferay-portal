@@ -976,26 +976,26 @@
 			WHERE
 				(Role_.companyId = ?) AND
 				(
-					(name NOT IN ([$EXCLUDED_NAMES$])) AND
-					(type_ IN ([$TYPES$])) AND
+					(Role_.name NOT IN ([$EXCLUDED_NAMES$])) AND
+					(Role_.type_ IN ([$TYPES$])) AND
 					(
 						(lower(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 						(lower(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				) OR
 				(
-					(classNameId = ?) AND
-					(roleId != ?) AND
-					(classPK IN (
+					(Role_.classNameId = ?) AND
+					(Role_.roleId != ?) AND
+					(Role_.classPK IN (
 						SELECT
-							teamId
+							Team.teamId
 						FROM
 							Team
 						WHERE
 							(groupId = ?) AND
 							(
-								(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-								(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
+								(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+								(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
 							)
 						)
 					)
@@ -1157,26 +1157,26 @@
 			WHERE
 				(Role_.companyId = ?) AND
 				(
-					(name NOT IN ([$EXCLUDED_NAMES$])) AND
-					(type_ IN ([$TYPES$])) AND
+					(Role_.name NOT IN ([$EXCLUDED_NAMES$])) AND
+					(Role_.type_ IN ([$TYPES$])) AND
 					(
 						(lower(Role_.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 						(lower(Role_.description) LIKE ? [$AND_OR_NULL_CHECK$])
 					)
 				) OR
 				(
-					(classNameId = ?) AND
-					(roleId != ?) AND
-					(classPK IN (
+					(Role_.classNameId = ?) AND
+					(Role_.roleId != ?) AND
+					(Role_.classPK IN (
 						SELECT
-							teamId
+							Team.teamId
 						FROM
 							Team
 						WHERE
 							(groupId = ?) AND
 							(
-								(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-								(lower(description) LIKE ? [$AND_OR_NULL_CHECK$])
+								(lower(Team.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+								(lower(Team.description) LIKE ? [$AND_OR_NULL_CHECK$])
 							)
 						)
 					)

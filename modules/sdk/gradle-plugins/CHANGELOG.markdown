@@ -860,6 +860,16 @@ version 1.0.28.
 - [LPS-69730]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.142.
 
+## 3.0.59 - 2016-12-20
+
+### Changed
+- [LPS-69802]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.7.
+- [LPS-69802]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.5.
+- [LPS-69802]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
+version 2.3.4.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -938,4 +948,5 @@ version 1.0.142.
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LPS-69730]: https://issues.liferay.com/browse/LPS-69730
+[LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -58,6 +58,14 @@ which can solve hanging problems with the Gradle Daemon.
 ### Fixed
 - [LPS-69677]: Fix problem with `ExecuteNpmTask` when `node.download = false`.
 
+## 1.5.0 - 2016-12-20
+
+### Added
+- [LPS-69802]: Add the task `cleanNPM` to delete the `node_modules` directory
+and the `npm-shrinkwrap.json` file from the project, if present.
+- [LPS-69802]: Execute the `cleanNPM` task before generating the
+`npm-shrinkwrap.json` file via the `npmShrinkwrap` task.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -65,3 +73,4 @@ which can solve hanging problems with the Gradle Daemon.
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
+[LPS-69802]: https://issues.liferay.com/browse/LPS-69802

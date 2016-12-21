@@ -51,7 +51,8 @@ public class DefaultAssetPublisherCustomizerRegistry
 	public void unregisterAssetPublisherCustomizer(
 		AssetPublisherCustomizer assetPublisherCustomizer) {
 
-		_assetPublisherCustomizers.remove(assetPublisherCustomizer);
+		_assetPublisherCustomizers.remove(
+			assetPublisherCustomizer.getPortletId());
 	}
 
 	private final

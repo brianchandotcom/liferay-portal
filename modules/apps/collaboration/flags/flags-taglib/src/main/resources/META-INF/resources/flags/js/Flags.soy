@@ -4,21 +4,23 @@
  * @param cssClass
  * @param inTrash
  * @param label
+ * @param id
  * @param message
  * @param pathThemeImages
  */
 {template .render}
 	{let $tooltip: not $label and $message!='' /}
-
-	<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
-		{if not $inTrash}
-			<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >
+	<div id="{$id}">
+		<span class="{$cssClass} {if $tooltip}lfr-portal-tooltip{/if}" {if $tooltip}title="{$message}"{/if}>
+			{if not $inTrash}
+				<a class="taglib-icon" href="javascript:;" data-onclick="openReportDialog" >
+					{call .icon data="all" /}
+				</a>
+			{else}
 				{call .icon data="all" /}
-			</a>
-		{else}
-			{call .icon data="all" /}
-		{/if}
-	</span>
+			{/if}
+		</span>
+	</div>
 {/template}
 
 /**

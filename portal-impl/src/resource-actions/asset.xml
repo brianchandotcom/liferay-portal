@@ -3,44 +3,6 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.asset</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_TAG</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_TAG</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.asset</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_CATEGORY</action-key>
-				<action-key>ADD_VOCABULARY</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_CATEGORY</action-key>
-				<action-key>ADD_VOCABULARY</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
 		<model-name>com.liferay.asset.categories</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet</portlet-name>

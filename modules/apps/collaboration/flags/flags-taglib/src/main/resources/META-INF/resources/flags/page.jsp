@@ -24,7 +24,7 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-flags:fl
 String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:contentTitle"));
 boolean enabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:enabled"));
 boolean label = GetterUtil.getBoolean((String)request.getAttribute("liferay-flags:flags:label"), true);
-String message = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:message"), "flag[action]");
+String message = GetterUtil.getString((String)request.getAttribute("liferay-flags:flags:message"), "flag");
 long reportedUserId = GetterUtil.getLong((String)request.getAttribute("liferay-flags:flags:reportedUserId"));
 
 String cssClass = randomNamespace;
@@ -34,30 +34,34 @@ if (enabled) {
 }
 %>
 
-<div class="taglib-flags" id="<portlet:namespace />taglibFlag" title="<liferay-ui:message key='<%= !TrashUtil.isInTrash(className, classPK) ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
-</div>
+<liferay-portlet:renderURL portletName="<%= PortletKeys.FLAGS %>" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/flags/edit_entry" /></liferay-portlet:renderURL>
 
-<aui:script require="flags-taglib/flags/js/Flags.es">
-	new flagsTaglibFlagsJsFlagsEs.default(
-		{
-			cssClass: '<%= cssClass %>',
-			data: Liferay.Util.ns(
-				'<%= PortalUtil.getPortletNamespace(PortletKeys.FLAGS) %>',
-				{
-					className: '<%= className %>',
-					classPK: '<%= classPK %>',
-					contentTitle: '<%= HtmlUtil.escapeJS(contentTitle) %>',
-					contentURL: '<%= HtmlUtil.escapeJS(PortalUtil.getPortalURL(request) + currentURL) %>',
-					reportedUserId: '<%= reportedUserId %>'
-				}
-			),
-			inTrash: <%= TrashUtil.isInTrash(className, classPK) %>,
-			label: <%= label %>,
-			message: '<%= message %>',
-			pathThemeImages: '<%= themeDisplay.getPathThemeImages() %>',
-			signedUser: <%= flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn() %>,
-			uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcRenderCommandName" value="/flags/edit_entry" /></liferay-portlet:renderURL>'
-		},
-		'#<%= namespace %>taglibFlag'
-	);
-</aui:script>
+<%
+String flagsPortletNamespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
+JSONObject dataJSON = JSONFactoryUtil.createJSONObject();
+
+dataJSON.put(flagsPortletNamespace + "className", className);
+dataJSON.put(flagsPortletNamespace + "classPK", classPK);
+dataJSON.put(flagsPortletNamespace + "contentTitle", contentTitle);
+dataJSON.put(flagsPortletNamespace + "contentURL", PortalUtil.getPortalURL(request) + currentURL);
+dataJSON.put(flagsPortletNamespace + "reportedUserId", reportedUserId);
+
+SoyContext context = new SoyContext();
+context.put("cssClass", cssClass);
+context.put("data", dataJSON);
+context.put("enable", enable);
+context.put("id", randomNamespace + "id");
+context.put("label", label);
+context.put("message", LanguageUtil.get(request, message));
+context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+context.put("signedUser", flagsGroupServiceConfiguration.guestUsersEnabled() || themeDisplay.isSignedIn());
+context.put("uri", editEntryURL.toString());
+%>
+
+<div class="taglib-flags" title="<liferay-ui:message key='<%= !enable ? message : "flags-are-disabled-because-this-entry-is-in-the-recycle-bin" %>' />">
+	<soy:template-renderer
+		context="<%= context %>"
+		module="flags-taglib/flags/js/Flags.es"
+		templateNamespace="Flags.render"
+	/>
+</div>

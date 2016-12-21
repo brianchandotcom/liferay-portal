@@ -6,5 +6,8 @@ Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/flags";\
+		version:Version="${Bundle-Version}",\
+	soy;\
+		type="flags-taglib";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /flags-taglib

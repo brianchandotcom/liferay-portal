@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
@@ -21,6 +22,8 @@ import java.net.URISyntaxException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -144,6 +147,51 @@ public class AxisBuild extends BaseBuild {
 		return sb.toString();
 	}
 
+	public String getTestRayLogsURL() {
+		StringBuilder sb = new StringBuilder();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties.", ioe);
+		}
+
+		String logBaseURL = null;
+
+		if (buildProperties.containsKey("log.base.url")) {
+			logBaseURL = buildProperties.getProperty("log.base.url");
+		}
+
+		if (logBaseURL == null) {
+			logBaseURL = defaultLogBaseURL;
+		}
+
+		sb.append(logBaseURL);
+		sb.append("/");
+		sb.append(topLevelBuild.getMaster());
+		sb.append("/");
+
+		Map<String, String> startPropertiesMap = getStartPropertiesMap();
+
+		sb.append(startPropertiesMap.get("TOP_LEVEL_START_TIME"));
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("/");
+		sb.append(getParameterValue("JOB_VARIANT"));
+		sb.append("/");
+		sb.append(getAxisVariable());
+
+		return sb.toString();
+	}
+
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		String status = getStatus();
@@ -242,6 +290,8 @@ public class AxisBuild extends BaseBuild {
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
 			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
 				"(?<buildNumber>\\d+)/?");
+	protected static final String defaultLogBaseURL =
+		"https://testray.liferay.com/reports/production/logs";
 
 	protected String axisVariable;
 

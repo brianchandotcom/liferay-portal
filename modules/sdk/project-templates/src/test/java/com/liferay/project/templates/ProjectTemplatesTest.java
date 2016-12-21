@@ -953,7 +953,8 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleWorkspaceProjectDir, mavenWorkspaceProjectDir,
 			"modules/foo-portlet/build/libs/foo.portlet-1.0.0.jar",
-			"modules/foo-portlet/target/foo-portlet-1.0.0.jar");
+			"modules/foo-portlet/target/foo-portlet-1.0.0.jar",
+			":modules:foo-portlet" + _GRADLE_TASK_PATH_BUILD);
 	}
 
 	@Test
@@ -1042,7 +1043,18 @@ public class ProjectTemplatesTest {
 			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
+		_buildProjects(
+			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
+			mavenBundleFileName, _GRADLE_TASK_PATH_BUILD);
+	}
+
+	private void _buildProjects(
+			File gradleProjectDir, File mavenProjectDir,
+			String gradleBundleFileName, String mavenBundleFileName,
+			String gradleTaskPath)
+		throws Exception {
+
+		_executeGradle(gradleProjectDir, gradleTaskPath);
 
 		File gradleBundleFile = _testExists(
 			gradleProjectDir, gradleBundleFileName);

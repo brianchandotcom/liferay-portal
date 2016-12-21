@@ -14,18 +14,33 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Leslie Wong
  */
 public class TestResult {
 
-	public TestResult(
-		String className, String duration, String testName, String status) {
+	public TestResult(JSONObject caseJSONObject) {
+		className = caseJSONObject.getString("className");
 
-		this.className = className;
-		this.duration = duration;
-		this.testName = testName;
-		this.status = status;
+		int x = className.lastIndexOf(".");
+
+		simpleClassName = className.substring(x + 1);
+
+		packageName = className.substring(0, x);
+
+		testName = caseJSONObject.getString("name");
+
+		testName = testName.replace("[", "_");
+		testName = testName.replace("]", "_");
+		testName = testName.replace("#", "_");
+
+		if (packageName.equals("junit.framework")) {
+			testName = testName.replace(".", "_");
+		}
+
+		status = caseJSONObject.getString("status");
 	}
 
 	public String getClassName() {
@@ -46,7 +61,9 @@ public class TestResult {
 
 	protected String className;
 	protected String duration;
+	protected String packageName;
 	protected String status;
+	protected String simpleClassName;
 	protected String testName;
 
 }

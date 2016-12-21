@@ -1180,32 +1180,13 @@ public abstract class BaseBuild implements Build {
 			JSONArray casesJSONArray = jsonObject.getJSONArray("cases");
 
 			for (int j = 0; j < casesJSONArray.length(); j++) {
-				JSONObject caseJSONObject = casesJSONArray.getJSONObject(j);
+				TestResult testResult = new TestResult(
+					casesJSONArray.getJSONObject(i));
 
-				String testClassName = caseJSONObject.getString("className");
+				if ((testStatus == null) ||
+					testStatus.equals(testResult.getStatus())) {
 
-				int x = testClassName.lastIndexOf(".");
-
-				String testSimpleClassName = testClassName.substring(x + 1);
-
-				String testPackageName = testClassName.substring(0, x);
-
-				String testMethodName = caseJSONObject.getString("name");
-
-				testMethodName = testMethodName.replace("[", "_");
-				testMethodName = testMethodName.replace("]", "_");
-				testMethodName = testMethodName.replace("#", "_");
-
-				if (testPackageName.equals("junit.framework")) {
-					testMethodName = testMethodName.replace(".", "_");
-				}
-
-				String status = caseJSONObject.getString("status");
-
-				if ((testStatus == null) || status.equals(testStatus)) {
-					testResults.add(
-						new TestResult(
-							testSimpleClassName, null, testMethodName, status));
+					testResults.add(testResult);
 				}
 			}
 		}

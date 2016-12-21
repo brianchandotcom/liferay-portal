@@ -37,9 +37,7 @@
 	</command>
 
 	<command name="gotoAddFeed">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
+		<execute macro="WebContentNavigator#gotoFeeds" />
 
 		<execute macro="LexiconEntry#gotoAdd" />
 	</command>
@@ -90,9 +88,7 @@
 	</command>
 
 	<command name="gotoEditFeed">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
+		<execute macro="WebContentNavigator#gotoFeeds" />
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
 			<var name="menuItem" value="Edit" />
@@ -117,6 +113,12 @@
 		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_LINK" value1="${structureName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="gotoFeeds">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
 	</command>
 
 	<command name="gotoLocalizedEditPGViaWCD">

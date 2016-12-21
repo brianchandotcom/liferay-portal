@@ -1,12 +1,12 @@
-Liferay-Releng-App-Description: This app enables content authors to quickly and easily create web content using Liferay's built-in WYSIWYG editing capabilities, without the overhead of the full CMS system. Content is associated directly with each instance of this app, and does not have any tracking metadata such as titles, versions, abstracts, or other ancillary information.<br /><br /> Content can be entered into the configuration window and is immediately displayed in the content window of the app. This should only be used when the full capabilities of Liferay's CMS system is not needed.
+Liferay-Releng-App-Description: It's recommended that you use the Web Content Display app instead of the WYSIWYG app. While the WYSIWYG app provided a quick way to create and edit web content, it did not provide any tracking metadata such as titles, versions, or abstracts. The Web Content Display app provides all these features and more.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} WYSIWYG
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
-Liferay-Releng-Deprecated:
+Liferay-Releng-Deprecated: true
 Liferay-Releng-Labs: false
 Liferay-Releng-Marketplace: true
-Liferay-Releng-Portal-Required:
+Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
 Liferay-Releng-Restart-Required: true
 Liferay-Releng-Support-Url: http://www.liferay.com

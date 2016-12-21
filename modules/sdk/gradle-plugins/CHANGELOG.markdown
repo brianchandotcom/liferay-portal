@@ -882,6 +882,12 @@ dependency to version 2.1.5.
 - [LPS-69802]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.3.4.
 
+## 3.0.61 - 2016-12-21
+
+### Added
+- [LPS-69838]: Allow to configure the `npmArgs` argument in the `node` extension
+object by setting the project property `nodejs.npm.args`.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -961,4 +967,5 @@ version 2.3.4.
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LPS-69730]: https://issues.liferay.com/browse/LPS-69730
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
+[LPS-69838]: https://issues.liferay.com/browse/LPS-69838
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

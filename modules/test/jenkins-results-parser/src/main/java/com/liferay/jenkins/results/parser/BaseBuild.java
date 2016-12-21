@@ -509,6 +509,19 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public TopLevelBuild getTopLevelBuild() {
+		Build topLevelBuild = this;
+
+		while ((topLevelBuild != null) &&
+		 !(topLevelBuild instanceof TopLevelBuild)) {
+
+			topLevelBuild = topLevelBuild.getParentBuild();
+		}
+
+		return (TopLevelBuild)topLevelBuild;
+	}
+
+	@Override
 	public boolean hasBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
@@ -1192,18 +1205,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return testResults;
-	}
-
-	protected TopLevelBuild getTopLevelBuild() {
-		Build topLevelBuild = this;
-
-		while ((topLevelBuild != null) &&
-		 !(topLevelBuild instanceof TopLevelBuild)) {
-
-			topLevelBuild = topLevelBuild.getParentBuild();
-		}
-
-		return (TopLevelBuild)topLevelBuild;
 	}
 
 	protected boolean isParentBuildRoot() {

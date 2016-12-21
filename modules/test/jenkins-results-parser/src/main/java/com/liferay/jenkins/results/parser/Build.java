@@ -80,6 +80,8 @@ public interface Build {
 
 	public List<TestResult> getTestResults(String testStatus);
 
+	public TopLevelBuild getTopLevelBuild();
+
 	public boolean hasBuildURL(String buildURL);
 
 	public void reinvoke();

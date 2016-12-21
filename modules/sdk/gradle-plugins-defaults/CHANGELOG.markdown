@@ -767,8 +767,6 @@ found.
 OSGi projects, Ant plugins and themes if the `-PsnapshotIfStale` argument is
 provided.
 
-### Changed
-
 ## 2.3.0 - 2016-12-15
 
 ### Fixed

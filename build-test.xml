@@ -1656,10 +1656,7 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			</if>
 
 			<if>
-				<and>
-					<equals arg1="${app.server.type}" arg2="tomcat" />
-					<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
-				</and>
+				<matches pattern="https?://" string="${test.build.fix.pack.zip.url}" />
 				<then>
 					<mirrors-get
 						dest="${basedir}"
@@ -7522,8 +7519,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 						<include name="*.sh" />
 					</fileset>
 				</chmod>
-
-				<prepare-fix-pack-bundle />
 			</then>
 			<else>
 				<if>
@@ -7615,6 +7610,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				<delete file="liferay-portal-osgi.zip" />
 			</else>
 		</if>
+
+		<prepare-fix-pack-bundle />
 	</target>
 
 	<target name="prepare-virtual-host-name-properties">

@@ -1640,9 +1640,7 @@
 		<execute macro="KaleoDesigner#viewNoWorkflowDefinitionsViaKDCP" />
 	</command>
 
-	<!-- LPS-66727 -->
-
-	<!--<command name="ViewWorkflowDefinitionButtonsViaWorkflowCP" priority="2">
+	<command name="ViewWorkflowDefinitionButtonsViaWorkflowCP" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 
 		<execute macro="ProductMenu#gotoControlPanelConfiguration">
@@ -1654,5 +1652,5 @@
 		</execute>
 
 		<execute macro="KaleoDesigner#viewButtons" />
-	</command>-->
+	</command>
 </definition>

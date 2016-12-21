@@ -304,7 +304,6 @@ public class KaleoTaskInstanceTokenFinderImpl
 		setAssigneeClassPK(qPos, kaleoTaskInstanceTokenQuery);
 		setCompleted(qPos, kaleoTaskInstanceTokenQuery);
 		setKaleoInstanceId(qPos, kaleoTaskInstanceTokenQuery);
-		setRoleIds(qPos, kaleoTaskInstanceTokenQuery);
 		setSearchByUserRoles(qPos, kaleoTaskInstanceTokenQuery);
 
 		setAssetPrimaryKey(qPos, kaleoTaskInstanceTokenQuery);
@@ -473,15 +472,19 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(roleIds.size() + 1);
+		StringBundler sb = new StringBundler((roleIds.size() * 2) + 1);
 
-		sb.append("AND (");
+		sb.append("AND (KaleoTaskAssignmentInstance.assigneeClassPK IN (");
 
-		for (int i = 0; i < roleIds.size() - 1; i++) {
-			sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?) OR ");
+		for (int i = 0; i < roleIds.size(); i++) {
+			sb.append(roleIds.get(i));
+
+			if (i < (roleIds.size() - 1)) {
+				sb.append(", ");
+			}
 		}
 
-		sb.append("(KaleoTaskAssignmentInstance.assigneeClassPK = ?))");
+		sb.append("))");
 
 		return sb.toString();
 	}
@@ -825,28 +828,6 @@ public class KaleoTaskInstanceTokenFinderImpl
 		}
 
 		qPos.add(kaleoInstanceId);
-	}
-
-	protected void setRoleIds(
-		QueryPos qPos,
-		KaleoTaskInstanceTokenQuery kaleoTaskInstanceTokenQuery) {
-
-		Boolean searchByUserRoles =
-			kaleoTaskInstanceTokenQuery.isSearchByUserRoles();
-
-		if (searchByUserRoles != null) {
-			return;
-		}
-
-		List<Long> roleIds = kaleoTaskInstanceTokenQuery.getRoleIds();
-
-		if ((roleIds == null) || roleIds.isEmpty()) {
-			return;
-		}
-
-		for (Long roleId : roleIds) {
-			qPos.add(roleId);
-		}
 	}
 
 	protected void setSearchByUserRoles(

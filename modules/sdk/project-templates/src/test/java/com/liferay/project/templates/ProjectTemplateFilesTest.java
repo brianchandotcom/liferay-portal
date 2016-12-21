@@ -225,28 +225,16 @@ public class ProjectTemplateFilesTest {
 
 		Assert.assertFalse("Trailing empty line in " + path, trailingEmptyLine);
 
-		boolean firstEmptyLine = false;
-
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new StringReader(text))) {
 
 			String line = null;
 
 			while ((line = bufferedReader.readLine()) != null) {
-				if (line.isEmpty()) {
-					Assert.assertFalse(
-						"Forbidden empty line in " + path,
-						firstEmptyLine && extension.equals("xml") &&
-							!fileName.equals("service.xml"));
-
-					firstEmptyLine = true;
-
-					continue;
-				}
-
 				Assert.assertFalse(
 					"Forbidden whitespace trailing character in " + path,
-					Character.isWhitespace(line.charAt(line.length() - 1)));
+					!line.isEmpty() &&
+						Character.isWhitespace(line.charAt(line.length() - 1)));
 			}
 		}
 

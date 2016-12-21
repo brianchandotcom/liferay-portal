@@ -1182,31 +1182,6 @@ public abstract class BaseBuild implements Build {
 		return tempMap;
 	}
 
-	protected List<TestResult> getTestResults(
-		JSONArray suitesJSONArray, String testStatus) {
-
-		List<TestResult> testResults = new ArrayList<>();
-
-		for (int i = 0; i < suitesJSONArray.length(); i++) {
-			JSONObject jsonObject = suitesJSONArray.getJSONObject(i);
-
-			JSONArray casesJSONArray = jsonObject.getJSONArray("cases");
-
-			for (int j = 0; j < casesJSONArray.length(); j++) {
-				TestResult testResult = new TestResult(
-					casesJSONArray.getJSONObject(i));
-
-				if ((testStatus == null) ||
-					testStatus.equals(testResult.getStatus())) {
-
-					testResults.add(testResult);
-				}
-			}
-		}
-
-		return testResults;
-	}
-
 	protected boolean isParentBuildRoot() {
 		if (_parentBuild == null) {
 			return false;

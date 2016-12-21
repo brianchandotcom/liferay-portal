@@ -143,8 +143,8 @@ public class AxisBuild extends BaseBuild {
 
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
-		return getTestResults(
-			testReportJSONObject.getJSONArray("suites"), testStatus);
+		return TestResult.getTestResults(
+			this, testReportJSONObject.getJSONArray("suites"), testStatus);
 	}
 
 	@Override
@@ -203,7 +203,7 @@ public class AxisBuild extends BaseBuild {
 				"Unable to decode " + buildURL, uee);
 		}
 
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
+		Matcher matcher = buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
 			matcher = _archiveBuildURLPattern.matcher(buildURL);
@@ -227,6 +227,11 @@ public class AxisBuild extends BaseBuild {
 		setStatus("running");
 	}
 
+	protected static final Pattern buildURLPattern = Pattern.compile(
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
+			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
+				"(?<buildNumber>\\d+)/?");
+
 	protected String axisVariable;
 
 	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
@@ -235,9 +240,5 @@ public class AxisBuild extends BaseBuild {
 				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
-	private static final Pattern _buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
-				"(?<buildNumber>\\d+)/?");
 
 }

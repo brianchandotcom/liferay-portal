@@ -14,6 +14,10 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -21,7 +25,38 @@ import org.json.JSONObject;
  */
 public class TestResult {
 
-	public TestResult(JSONObject caseJSONObject) {
+	public static List<TestResult> getTestResults(
+		AxisBuild axisBuild, JSONArray suitesJSONArray, String testStatus) {
+
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (int i = 0; i < suitesJSONArray.length(); i++) {
+			JSONObject suiteJSONObject = suitesJSONArray.getJSONObject(i);
+
+			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
+
+			for (int j = 0; j < casesJSONArray.length(); j++) {
+				TestResult testResult = new TestResult(
+					axisBuild, casesJSONArray.getJSONObject(j));
+
+				if ((testStatus == null) ||
+					testStatus.equals(testResult.getStatus())) {
+
+					testResults.add(testResult);
+				}
+			}
+		}
+
+		return testResults;
+	}
+
+	public TestResult(AxisBuild axisBuild, JSONObject caseJSONObject) {
+		if (axisBuild == null) {
+			throw new IllegalArgumentException("axisBuild may not be null");
+		}
+
+		this.axisBuild = axisBuild;
+
 		className = caseJSONObject.getString("className");
 
 		duration = (long)(caseJSONObject.getDouble("duration") * 1000d);
@@ -34,15 +69,11 @@ public class TestResult {
 
 		testName = caseJSONObject.getString("name");
 
-		testName = testName.replace("[", "_");
-		testName = testName.replace("]", "_");
-		testName = testName.replace("#", "_");
-
-		if (packageName.equals("junit.framework")) {
-			testName = testName.replace(".", "_");
-		}
-
 		status = caseJSONObject.getString("status");
+	}
+
+	public AxisBuild getAxisBuild() {
+		return axisBuild;
 	}
 
 	public String getClassName() {
@@ -61,6 +92,7 @@ public class TestResult {
 		return testName;
 	}
 
+	protected AxisBuild axisBuild;
 	protected String className;
 	protected long duration;
 	protected String packageName;

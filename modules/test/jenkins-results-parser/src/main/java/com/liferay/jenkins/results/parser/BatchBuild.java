@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,12 +46,26 @@ public class BatchBuild extends BaseBuild {
 			JSONObject childReportJSONObject =
 				childReportsJSONArray.getJSONObject(i);
 
+			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
+				"child");
+
+			String axisBuildURL = childJSONObject.getString("url");
+
+			Matcher axisBuildURLMatcher = AxisBuild.buildURLPattern.matcher(
+				axisBuildURL);
+
+			axisBuildURLMatcher.find();
+
+			String axisVariable = axisBuildURLMatcher.group("axisVariable");
+
 			JSONObject resultJSONObject = childReportJSONObject.getJSONObject(
 				"result");
 
 			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
 
-			testResults.addAll(getTestResults(suitesJSONArray, testStatus));
+			testResults.addAll(
+				TestResult.getTestResults(
+					getAxisBuild(axisVariable), suitesJSONArray, testStatus));
 		}
 
 		return testResults;
@@ -67,6 +82,18 @@ public class BatchBuild extends BaseBuild {
 	@Override
 	protected List<String> findDownstreamBuildsInConsoleText() {
 		return Collections.emptyList();
+	}
+
+	protected AxisBuild getAxisBuild(String axisVariable) {
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			AxisBuild downstreamAxisBuild = (AxisBuild)downstreamBuild;
+
+			if (axisVariable.equals(downstreamAxisBuild.getAxisVariable())) {
+				return downstreamAxisBuild;
+			}
+		}
+
+		return null;
 	}
 
 }

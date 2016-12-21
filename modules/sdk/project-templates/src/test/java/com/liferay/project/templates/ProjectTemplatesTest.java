@@ -915,7 +915,8 @@ public class ProjectTemplatesTest {
 
 		Assert.assertTrue(file.createNewFile());
 
-		_buildTemplateWithGradle(destinationDir, "workspace", "foo");
+		_buildTemplateWithGradle(
+			destinationDir, WorkspaceUtil.WORKSPACE, "foo");
 	}
 
 	@Test
@@ -927,7 +928,7 @@ public class ProjectTemplatesTest {
 		Assert.assertTrue(file.createNewFile());
 
 		_buildTemplateWithGradle(
-			destinationDir, "workspace", "forced", "--force");
+			destinationDir, WorkspaceUtil.WORKSPACE, "forced", "--force");
 	}
 
 	@Test
@@ -941,7 +942,7 @@ public class ProjectTemplatesTest {
 			gradleModulesDir, "mvc-portlet", "foo-portlet");
 
 		File mavenWorkspaceProjectDir = _buildTemplateWithMaven(
-			"workspace", "withportlet");
+			WorkspaceUtil.WORKSPACE, "withportlet");
 
 		File mavenModulesDir = new File(mavenWorkspaceProjectDir, "modules");
 

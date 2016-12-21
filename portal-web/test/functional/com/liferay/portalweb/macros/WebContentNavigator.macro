@@ -41,9 +41,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
 
-		<execute function="AssertVisible" locator1="Button#PLUS" />
-
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 	</command>
 
 	<command name="gotoAddPGViaWCD">
@@ -96,11 +94,10 @@
 
 		<execute function="AssertClick" locator1="MenuItem#FEEDS" value1="Feeds" />
 
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS">
-			<var name="key_rowEntry" value="${rowEntry}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="${feedName}" />
 		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoEditPGViaWCD">

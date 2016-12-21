@@ -41,13 +41,17 @@ public class VariableNameCheck extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		if (!_isBooleanType(detailAST.findFirstToken(TokenTypes.TYPE))) {
-			return;
-		}
-
 		DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
 		String name = nameAST.getText();
+
+		_checkIsVariableName(detailAST, name);
+	}
+
+	private void _checkIsVariableName(DetailAST detailAST, String name) {
+		if (!_isBooleanType(detailAST.findFirstToken(TokenTypes.TYPE))) {
+			return;
+		}
 
 		Matcher matcher = _isVariableNamePattern.matcher(name);
 

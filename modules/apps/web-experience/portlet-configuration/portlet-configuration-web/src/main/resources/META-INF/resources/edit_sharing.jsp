@@ -30,6 +30,8 @@ portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
 
 String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
+
+String xFrameOptionsHeader = StringUtil.toUpperCase(SystemProperties.get(SystemProperties.HTTP_HEADER_SECURE_X_FRAME_OPTIONS_255));
 %>
 
 <portlet:actionURL name="editSharing" var="editSharingURL">
@@ -70,6 +72,12 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 						<aui:field-wrapper label="code">
 							<textarea class="field form-control lfr-textarea" id="<portlet:namespace />widgetScript" onClick="this.select();" readonly="true"><%= HtmlUtil.escape(textAreaContent) %></textarea>
 						</aui:field-wrapper>
+
+						<c:if test='<%= Validator.isNull(xFrameOptionsHeader) || (xFrameOptionsHeader.indexOf("ALLOW-FROM") == -1) %>'>
+							<div class="alert alert-warning">
+								<liferay-ui:message key="your-server-may-not-be-setup-to-share-this-application" />
+							</div>
+						</c:if>
 
 						<aui:input label='<%= LanguageUtil.format(request, "allow-users-to-add-x-to-any-website", HtmlUtil.escape(portletDisplay.getTitle()), false) %>' name="widgetShowAddAppLink" type="toggle-switch" value="<%= widgetShowAddAppLink %>" />
 					</aui:fieldset>

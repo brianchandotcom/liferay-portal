@@ -4,6 +4,7 @@
 	<property name="ignore.errors" value="IX_DC6100CC" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
+	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<set-up>

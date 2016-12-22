@@ -76,7 +76,7 @@ Property Name | Default Value
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `password` | `String` | `null` | The user password for connecting to the Liferay database. It sets the `--password` argument. If [`propertiesFile`](#propertiesfile) is set, this property has no effect.
-<a name="propertiesfile"></a>`propertiesFile` | `File` | `null` | The `portal-ext.properties` file which contains the JDBC settings for connecting to the Liferay database. It sets the `--properties-file` argument.
+<a name="propertiesfile"></a>`propertiesFile` | `File` | `null` | The `portal-ext.properties` file that contains the JDBC settings for connecting to the Liferay database. It sets the `--properties-file` argument.
 <a name="servletcontextname"></a>`servletContextName` | `String` | `null` | The servlet context name (usually the value of the `Bundle-Symbolic-Name` manifest header) of the module. It sets the `--servlet-context-name` argument.
 <a name="servicexmlfile"></a>`serviceXmlFile` | `File` | `null` | The `service.xml` file of the module. It sets the `--service-xml-file` argument.
 `url` | `String` | `null` | The JDBC URL for connecting to the Liferay database. It sets the `--url` argument. If [`propertiesFile`](#propertiesfile) is set, this property has no effect.
@@ -84,7 +84,7 @@ Property Name | Type | Default Value | Description
 
 The properties of type `File` support any type that can be resolved by [`project.file`](https://docs.gradle.org/current/dsl/org.gradle.api.Project.html#org.gradle.api.Project:file(java.css.Object)).
 Moreover, it is possible to use Closures and Callables as values for the `int`
-and `String` properties, to defer evaluation until task execution.
+and `String` properties to defer evaluation until task execution.
 
 ## Additional Configuration
 

@@ -7613,12 +7613,12 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 				/>
 
 				<unzip
-					dest="${liferay.home}"
+					dest="${liferay.home}/osgi"
 					src="liferay-portal-osgi.zip"
 				>
 					<mapper
-						from="[^/]+/(osgi.*)"
-						to="\1"
+						from="[^/]+/(osgi/)?(.*)"
+						to="\2"
 						type="regexp"
 					/>
 				</unzip>

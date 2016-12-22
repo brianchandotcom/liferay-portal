@@ -2,8 +2,8 @@ configJSModules {
 	enabled = false
 }
 
-apply plugin: "com.liferay.lang.merger"
 apply plugin: "com.liferay.gulp"
+apply plugin: "com.liferay.lang.merger"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.io", version: "2.0.0"
@@ -16,11 +16,15 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-field-type")
 }
 
-task wrapSoyTemplates
 task testJS
+task wrapSoyTemplates
 
 classes {
 	dependsOn wrapSoyTemplates
+}
+
+testJS {
+	dependsOn gulpTest
 }
 
 transpileJS {
@@ -41,8 +45,4 @@ wrapSoyTemplates {
 			soyJsFile.text = soyJsWrapperHeader + soyJsFile.text.replace("(typeof ddm == 'undefined') { var ddm = {}; }", "(typeof ddm == 'undefined') { window.ddm = {}; }") + soyJsWrapperFooter
 		}
 	}
-}
-
-testJS {
-	dependsOn gulpTest
 }

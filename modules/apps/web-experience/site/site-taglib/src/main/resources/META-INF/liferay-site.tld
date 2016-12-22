@@ -6,7 +6,7 @@
 	<short-name>liferay-site</short-name>
 	<uri>http://liferay.com/tld/site</uri>
 	<tag>
-		<name>site</name>
+		<name>site-browser</name>
 		<tag-class>com.liferay.site.taglib.servlet.taglib.SiteBrowserTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>

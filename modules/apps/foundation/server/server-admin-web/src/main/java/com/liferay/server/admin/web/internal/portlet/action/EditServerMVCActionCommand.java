@@ -608,10 +608,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		String dlFileExtensions = getFileExtensions(
 			actionRequest, "dlFileExtensions");
 		long dlFileMaxSize = ParamUtil.getLong(actionRequest, "dlFileMaxSize");
-		String journalImageExtensions = getFileExtensions(
-			actionRequest, "journalImageExtensions");
-		long journalImageSmallMaxSize = ParamUtil.getLong(
-			actionRequest, "journalImageSmallMaxSize");
 		long uploadServletRequestImplMaxSize = ParamUtil.getLong(
 			actionRequest, "uploadServletRequestImplMaxSize");
 		String uploadServletRequestImplTempDir = ParamUtil.getString(
@@ -632,11 +628,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 			PropsKeys.DL_FILE_EXTENSIONS, dlFileExtensions);
 		portletPreferences.setValue(
 			PropsKeys.DL_FILE_MAX_SIZE, String.valueOf(dlFileMaxSize));
-		portletPreferences.setValue(
-			PropsKeys.JOURNAL_IMAGE_EXTENSIONS, journalImageExtensions);
-		portletPreferences.setValue(
-			PropsKeys.JOURNAL_IMAGE_SMALL_MAX_SIZE,
-			String.valueOf(journalImageSmallMaxSize));
 		portletPreferences.setValue(
 			PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
 			String.valueOf(uploadServletRequestImplMaxSize));

@@ -90,8 +90,6 @@ public class IndentationCheck extends AbstractCheck {
 		}
 
 		if (parentAST == null) {
-			System.out.println("INTERESTING");
-
 			return tabCount;
 		}
 

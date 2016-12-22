@@ -125,8 +125,7 @@ public class YouTubeDisplayContext {
 			return _presetSize;
 		}
 
-		_presetSize = _portletPreferences.getValue(
-			"presetSize", StringPool.BLANK);
+		_presetSize = _portletPreferences.getValue("presetSize", "480x360");
 
 		return _presetSize;
 	}

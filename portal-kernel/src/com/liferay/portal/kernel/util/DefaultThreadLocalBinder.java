@@ -138,17 +138,18 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 		DefaultThreadLocalBinder.class);
 
 	private static final ThreadLocal<Map<ThreadLocal<?>, ?>>
-		_threadLocalValues = new AutoResetThreadLocal<Map<ThreadLocal<?>, ?>>(
-			DefaultThreadLocalBinder.class + "._threadLocalValueMap") {
+		_threadLocalValues =
+			new AutoResetThreadLocal<Map<ThreadLocal<?>, ?>>(
+				DefaultThreadLocalBinder.class + "._threadLocalValueMap") {
 
-			@Override
-			protected Map<ThreadLocal<?>, ?> copy(
-				Map<ThreadLocal<?>, ?> threadLocalValueMap) {
+				@Override
+				protected Map<ThreadLocal<?>, ?> copy(
+					Map<ThreadLocal<?>, ?> threadLocalValueMap) {
 
-				return threadLocalValueMap;
-			}
+					return threadLocalValueMap;
+				}
 
-		};
+			};
 
 	private ClassLoader _classLoader;
 	private final Set<ThreadLocal<?>> _threadLocals = new HashSet<>();

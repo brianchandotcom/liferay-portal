@@ -42,27 +42,30 @@ public class Log4jExtender implements BundleActivator {
 
 	@Override
 	public void start(BundleContext bundleContext) throws Exception {
-		_tracker = new BundleTracker<Void>(
-			bundleContext, Bundle.STARTING, null) {
+		_tracker =
+			new BundleTracker<Void>(bundleContext, Bundle.STARTING, null) {
 
-			@Override
-			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				try {
-					_configureLog4j(bundle, "META-INF/module-log4j.xml");
-					_configureLog4j(bundle, "META-INF/module-log4j-ext.xml");
-					_configureLog4j(bundle.getSymbolicName());
+				@Override
+				public Void addingBundle(
+					Bundle bundle, BundleEvent bundleEvent) {
+
+					try {
+						_configureLog4j(bundle, "META-INF/module-log4j.xml");
+						_configureLog4j(
+							bundle, "META-INF/module-log4j-ext.xml");
+						_configureLog4j(bundle.getSymbolicName());
+					}
+					catch (IOException ioe) {
+						_logger.error(
+							"Unable to configure Log4j for bundle " +
+								bundle.getSymbolicName(),
+							ioe);
+					}
+
+					return null;
 				}
-				catch (IOException ioe) {
-					_logger.error(
-						"Unable to configure Log4j for bundle " +
-							bundle.getSymbolicName(),
-						ioe);
-				}
 
-				return null;
-			}
-
-		};
+			};
 
 		_tracker.open();
 	}

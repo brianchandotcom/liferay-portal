@@ -79,89 +79,91 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	public GetSyncDLObjectUpdateHandler(final Event event) {
 		super(event);
 
-		GetSyncContextEvent getSyncContextEvent = new GetSyncContextEvent(
-			getSyncAccountId(), Collections.<String, Object>emptyMap()) {
+		GetSyncContextEvent getSyncContextEvent =
+			new GetSyncContextEvent(
+				getSyncAccountId(), Collections.<String, Object>emptyMap()) {
 
-			@Override
-			public void executePost(
-					String urlPath, Map<String, Object> parameters)
-				throws Exception {
+				@Override
+				public void executePost(
+						String urlPath, Map<String, Object> parameters)
+					throws Exception {
 
-				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-					getSyncAccountId());
+					SyncAccount syncAccount =
+						SyncAccountService.fetchSyncAccount(getSyncAccountId());
 
-				Session session = SessionManager.getSession(
-					getSyncAccountId(), true);
+					Session session = SessionManager.getSession(
+						getSyncAccountId(), true);
 
-				HttpResponse httpResponse = session.execute(
-					new HttpPost(
-						syncAccount.getUrl() + "/api/jsonws" + urlPath));
+					HttpResponse httpResponse = session.execute(
+						new HttpPost(
+							syncAccount.getUrl() + "/api/jsonws" + urlPath));
 
-				StatusLine statusLine = httpResponse.getStatusLine();
+					StatusLine statusLine = httpResponse.getStatusLine();
 
-				if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-					doCancel();
+					if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+						doCancel();
 
-					return;
+						return;
+					}
+
+					Handler<Void> handler = event.getHandler();
+
+					String response = getResponseString(httpResponse);
+
+					if (handler.handlePortalException(getException(response))) {
+						doCancel();
+
+						return;
+					}
+
+					if (!_firedProcessingState) {
+						SyncEngineUtil.fireSyncEngineStateChanged(
+							getSyncAccountId(),
+							SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
+
+						_firedProcessingState = true;
+					}
 				}
 
-				Handler<Void> handler = event.getHandler();
+				@Override
+				protected void doRun() {
+					SyncAccount syncAccount =
+						SyncAccountService.fetchSyncAccount(getSyncAccountId());
 
-				String response = getResponseString(httpResponse);
+					SyncSite syncSite = SyncSiteService.fetchSyncSite(
+						(Long)event.getParameterValue("repositoryId"),
+						getSyncAccountId());
 
-				if (handler.handlePortalException(getException(response))) {
-					doCancel();
+					if ((syncAccount == null) ||
+						(syncAccount.getState() !=
+							SyncAccount.STATE_CONNECTED) ||
+						(syncSite == null) || !syncSite.isActive()) {
 
-					return;
+						doCancel();
+
+						return;
+					}
+
+					super.doRun();
 				}
 
-				if (!_firedProcessingState) {
-					SyncEngineUtil.fireSyncEngineStateChanged(
-						getSyncAccountId(),
-						SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSING);
+				protected void doCancel() {
+					if (_firedProcessingState) {
+						SyncEngineUtil.fireSyncEngineStateChanged(
+							getSyncAccountId(),
+							SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
 
-					_firedProcessingState = true;
-				}
-			}
+						_firedProcessingState = false;
+					}
 
-			@Override
-			protected void doRun() {
-				SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-					getSyncAccountId());
+					event.cancel();
 
-				SyncSite syncSite = SyncSiteService.fetchSyncSite(
-					(Long)event.getParameterValue("repositoryId"),
-					getSyncAccountId());
-
-				if ((syncAccount == null) ||
-					(syncAccount.getState() != SyncAccount.STATE_CONNECTED) ||
-					(syncSite == null) || !syncSite.isActive()) {
-
-					doCancel();
-
-					return;
+					_scheduledFuture.cancel(true);
 				}
 
-				super.doRun();
-			}
+				private boolean _firedProcessingState;
 
-			protected void doCancel() {
-				if (_firedProcessingState) {
-					SyncEngineUtil.fireSyncEngineStateChanged(
-						getSyncAccountId(),
-						SyncEngineUtil.SYNC_ENGINE_STATE_PROCESSED);
-
-					_firedProcessingState = false;
-				}
-
-				event.cancel();
-
-				_scheduledFuture.cancel(true);
-			}
-
-			private boolean _firedProcessingState;
-
-		};
+			};
 
 		_scheduledFuture = _scheduledExecutorService.scheduleWithFixedDelay(
 			getSyncContextEvent, 10, 5, TimeUnit.SECONDS);

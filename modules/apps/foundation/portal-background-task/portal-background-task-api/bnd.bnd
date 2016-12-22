@@ -7,5 +7,8 @@ Export-Package:\
 	com.liferay.portal.background.task.model,\
 	com.liferay.portal.background.task.service,\
 	com.liferay.portal.background.task.service.persistence
+Import-Package:\
+	com.liferay.portal.kernel.model;version='[1.0.0,2.0.0)',\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Background Tasks

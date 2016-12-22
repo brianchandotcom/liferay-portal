@@ -68,7 +68,7 @@ Name | Depends On | Type | Description
 `cleanNPM` | \- | [`Delete`](https://docs.gradle.org/current/dsl/org.gradle.api.tasks.Delete.html) | Deletes the `node_modules` directory and the `npm-shrinkwrap.json` file from the project, if present.
 <a name="downloadnode"></a>`downloadNode` | \- | [`DownloadNodeTask`](#downloadnodetask) | Downloads and unpacks the local Node.js distribution for the project. If `node.download` is `false`, this task is disabled.
 `npmInstall` | `downloadNode` | [`NpmInstallTask`](#npminstalltask) | Runs `npm install` to install the dependencies declared in the project's `package.json` file, if present.
-`npmShrinkwrap` | `cleanNPM`, `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which versions of each dependency will be used.
+`npmShrinkwrap` | `cleanNPM`, `npmInstall` | [`NpmShrinkwrapTask`](#npmshrinkwraptask) | Locks down the versions of a package's dependencies in order to control which dependency versions are used.
 
 ### DownloadNodeTask
 
@@ -197,13 +197,13 @@ The properties of type `File` support any type that can be resolved by [`project
 ### NpmShrinkwrapTask
 
 The purpose of this task is to lock down the versions of a package's
-dependencies so that you can control exactly which versions of each dependency
-will be used when your package is installed. Tasks of type `NpmShrinkwrapTask`
-extend [`ExecuteNpmTask`](#executenpmtask) in order to execute the command
+dependencies so that you can control exactly which dependency versions are used
+when your package is installed. Tasks of type `NpmShrinkwrapTask` extend
+[`ExecuteNpmTask`](#executenpmtask) to execute the command
 [`npm shrinkwrap`](https://docs.npmjs.com/cli/shrinkwrap).
 
-The generated `npm-shrinkwrap.json` file is automatically sorted and formatter,
-so it is easier to see the changes with the previous version.
+The generated `npm-shrinkwrap.json` file is automatically sorted and formatted,
+so it's easier to see the changes with the previous version.
 
 #### Task Properties
 
@@ -213,7 +213,7 @@ Property Name | Type | Default Value | Description
 `includeDevDependencies` | `boolean` | `true` | Whether to include the package's `devDependencies`. It sets the [`--dev`](https://docs.npmjs.com/cli/shrinkwrap#other-notes) argument.
 
 It is possible to use Closures and Callables as values for the `String`
-properties, to defer evaluation until task execution.
+properties to defer evaluation until task execution.
 
 #### Task Methods
 

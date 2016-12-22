@@ -1106,7 +1106,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 			sb.append("Role_.name != ? AND ");
 		}
 
-		sb.append("Role_.name !=?)");
+		sb.append("Role_.name != ?)");
 
 		return sb.toString();
 	}

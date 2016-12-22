@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Kevin Yen
  */
@@ -29,6 +31,8 @@ public interface Build {
 	public String getArchivePath();
 
 	public List<String> getBadBuildURLs();
+
+	public JSONObject getBuildJSONObject();
 
 	public int getBuildNumber();
 
@@ -71,6 +75,12 @@ public interface Build {
 	public String getStatusSummary();
 
 	public Map<String, String> getStopPropertiesMap();
+
+	public JSONObject getTestReportJSONObject();
+
+	public List<TestResult> getTestResults(String testStatus);
+
+	public TopLevelBuild getTopLevelBuild();
 
 	public boolean hasBuildURL(String buildURL);
 

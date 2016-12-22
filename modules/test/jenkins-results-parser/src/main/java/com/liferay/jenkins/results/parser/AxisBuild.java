@@ -19,8 +19,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 /**
  * @author Peter Yoo
@@ -130,6 +134,20 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public List<TestResult> getTestResults(String testStatus) {
+		String status = getStatus();
+
+		if (!status.equals("completed")) {
+			return Collections.emptyList();
+		}
+
+		JSONObject testReportJSONObject = getTestReportJSONObject();
+
+		return TestResult.getTestResults(
+			this, testReportJSONObject.getJSONArray("suites"), testStatus);
+	}
+
+	@Override
 	public void reinvoke() {
 		throw new RuntimeException("Axis builds cannot be reinvoked");
 	}
@@ -185,7 +203,7 @@ public class AxisBuild extends BaseBuild {
 				"Unable to decode " + buildURL, uee);
 		}
 
-		Matcher matcher = _buildURLPattern.matcher(buildURL);
+		Matcher matcher = buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
 			matcher = _archiveBuildURLPattern.matcher(buildURL);
@@ -209,6 +227,11 @@ public class AxisBuild extends BaseBuild {
 		setStatus("running");
 	}
 
+	protected static final Pattern buildURLPattern = Pattern.compile(
+		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
+			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
+				"(?<buildNumber>\\d+)/?");
+
 	protected String axisVariable;
 
 	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
@@ -217,9 +240,5 @@ public class AxisBuild extends BaseBuild {
 				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
-	private static final Pattern _buildURLPattern = Pattern.compile(
-		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
-			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
-				"(?<buildNumber>\\d+)/?");
 
 }

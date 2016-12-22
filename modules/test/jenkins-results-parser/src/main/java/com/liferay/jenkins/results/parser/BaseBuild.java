@@ -151,6 +151,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public JSONObject getBuildJSONObject() {
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				getBuildURL() + "api/json", false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build JSONObject", ioe);
+		}
+	}
+
+	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
 	}
@@ -472,6 +483,42 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public Map<String, String> getStopPropertiesMap() {
 		return getTempMap("stop.properties");
+	}
+
+	@Override
+	public JSONObject getTestReportJSONObject() {
+		try {
+			return JenkinsResultsParserUtil.toJSONObject(
+				getBuildURL() + "testReport/api/json", false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unbale to get testReport JSONObject", ioe);
+		}
+	}
+
+	@Override
+	public List<TestResult> getTestResults(String testStatus) {
+		List<TestResult> testResults = new ArrayList<>();
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			testResults.addAll(downstreamBuild.getTestResults(testStatus));
+		}
+
+		return testResults;
+	}
+
+	@Override
+	public TopLevelBuild getTopLevelBuild() {
+		Build topLevelBuild = this;
+
+		while ((topLevelBuild != null) &&
+		 !(topLevelBuild instanceof TopLevelBuild)) {
+
+			topLevelBuild = topLevelBuild.getParentBuild();
+		}
+
+		return (TopLevelBuild)topLevelBuild;
 	}
 
 	@Override
@@ -1133,18 +1180,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return tempMap;
-	}
-
-	protected TopLevelBuild getTopLevelBuild() {
-		Build topLevelBuild = this;
-
-		while ((topLevelBuild != null) &&
-		 !(topLevelBuild instanceof TopLevelBuild)) {
-
-			topLevelBuild = topLevelBuild.getParentBuild();
-		}
-
-		return (TopLevelBuild)topLevelBuild;
 	}
 
 	protected boolean isParentBuildRoot() {

@@ -427,6 +427,7 @@ public class ExpandoColumnLocalServiceImpl
 			(type != ExpandoColumnConstants.DOUBLE_ARRAY) &&
 			(type != ExpandoColumnConstants.FLOAT) &&
 			(type != ExpandoColumnConstants.FLOAT_ARRAY) &&
+			(type != ExpandoColumnConstants.GEOLOCATION) &&
 			(type != ExpandoColumnConstants.INTEGER) &&
 			(type != ExpandoColumnConstants.INTEGER_ARRAY) &&
 			(type != ExpandoColumnConstants.LONG) &&

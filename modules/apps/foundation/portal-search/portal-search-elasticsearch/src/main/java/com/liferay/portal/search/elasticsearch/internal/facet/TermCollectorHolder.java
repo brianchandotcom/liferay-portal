@@ -15,39 +15,46 @@
 package com.liferay.portal.search.elasticsearch.internal.facet;
 
 import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import org.elasticsearch.search.aggregations.Aggregation;
+import java.util.Map;
 
 /**
- * @author Michael C. Han
- * @author Milen Dyankov
+ * @author André de Oliveira
  */
-public class ElasticsearchFacetFieldCollector implements FacetCollector {
+public class TermCollectorHolder {
 
-	public ElasticsearchFacetFieldCollector(Aggregation aggregation) {
-		_fieldName = aggregation.getName();
+	public TermCollectorHolder(int size) {
+		_termCollectors = new ArrayList<>(size);
+		_termCollectorsByName = new HashMap<>(size);
 	}
 
-	@Override
-	public String getFieldName() {
-		return _fieldName;
+	public void add(String term, int frequency) {
+		TermCollector termCollector = new DefaultTermCollector(term, frequency);
+
+		_termCollectors.add(termCollector);
+
+		_termCollectorsByName.put(term, termCollector);
 	}
 
-	@Override
 	public TermCollector getTermCollector(String term) {
+		TermCollector termCollector = _termCollectorsByName.get(term);
+
+		if (termCollector != null) {
+			return termCollector;
+		}
+
 		return new DefaultTermCollector(term, 0);
 	}
 
-	@Override
 	public List<TermCollector> getTermCollectors() {
-		return Collections.emptyList();
+		return _termCollectors;
 	}
 
-	private final String _fieldName;
+	private final List<TermCollector> _termCollectors;
+	private final Map<String, TermCollector> _termCollectorsByName;
 
 }

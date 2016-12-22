@@ -14,40 +14,28 @@
 
 package com.liferay.portal.search.elasticsearch.internal.facet;
 
-import com.liferay.portal.kernel.search.facet.collector.DefaultTermCollector;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-
-import java.util.Collections;
-import java.util.List;
 
 import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
+import org.elasticsearch.search.aggregations.bucket.range.Range;
 
 /**
- * @author Michael C. Han
- * @author Milen Dyankov
+ * @author André de Oliveira
  */
-public class ElasticsearchFacetFieldCollector implements FacetCollector {
+public class FacetCollectorFactory {
 
-	public ElasticsearchFacetFieldCollector(Aggregation aggregation) {
-		_fieldName = aggregation.getName();
+	public FacetCollector getFacetCollector(Aggregation aggregation) {
+		if (aggregation instanceof Range) {
+			return new RangeFacetCollector((Range)aggregation);
+		}
+
+		if (aggregation instanceof MultiBucketsAggregation) {
+			return new MultiBucketsAggregationFacetCollector(
+				(MultiBucketsAggregation)aggregation);
+		}
+
+		return new ElasticsearchFacetFieldCollector(aggregation);
 	}
-
-	@Override
-	public String getFieldName() {
-		return _fieldName;
-	}
-
-	@Override
-	public TermCollector getTermCollector(String term) {
-		return new DefaultTermCollector(term, 0);
-	}
-
-	@Override
-	public List<TermCollector> getTermCollectors() {
-		return Collections.emptyList();
-	}
-
-	private final String _fieldName;
 
 }

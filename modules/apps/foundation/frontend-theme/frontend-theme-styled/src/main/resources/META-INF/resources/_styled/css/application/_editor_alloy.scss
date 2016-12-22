@@ -9,6 +9,10 @@
 				color: #B0B4BB;
 			}
 
+			&.ae-placeholder:empty {
+				min-height: 1.5em;
+			}
+
 			&.readonly {
 				color: #CCC;
 			}

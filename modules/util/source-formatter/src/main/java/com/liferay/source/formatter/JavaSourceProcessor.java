@@ -283,6 +283,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				fileName, "There should be a line break after '},'", lineCount);
 		}
 
+		if (previousLine.matches(".* = new .*\\(") &&
+			line.matches(".*\\) \\{")) {
+
+			int pos = previousLine.indexOf(" = new");
+
+			String linePart = previousLine.substring(pos);
+
+			if ((getLevel(linePart) == 1) && (getLevel(line) == -1)) {
+				linePart = StringUtil.trim(previousLine.substring(0, pos + 2));
+
+				processMessage(
+					fileName,
+					"There should be a line break after '" + linePart + "'",
+					lineCount - 1);
+			}
+		}
+
 		int lineLeadingTabCount = getLeadingTabCount(line);
 		int previousLineLeadingTabCount = getLeadingTabCount(previousLine);
 
@@ -3297,9 +3314,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					for (int i = 0;; i++) {
 						String nextLine = getLine(content, lineCount + i + 1);
 
-						if (Validator.isNull(nextLine) ||
-							nextLine.endsWith(") {")) {
-
+						if (Validator.isNull(nextLine)) {
 							processMessage(
 								fileName,
 								"'" + trimmedLine + "' should be added to " +
@@ -3309,7 +3324,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							return null;
 						}
 
-						if (nextLine.endsWith(") +")) {
+						if (nextLine.endsWith(") +") ||
+							nextLine.endsWith(") {")) {
+
 							return null;
 						}
 

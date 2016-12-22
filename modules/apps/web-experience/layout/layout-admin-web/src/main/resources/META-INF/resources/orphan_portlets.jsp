@@ -23,17 +23,21 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-List<Portlet> embeddedPortlets = Collections.emptyList();
+List<Portlet> orphanPortlets = new ArrayList<>();
 
 if (selLayout.isSupportsEmbeddedPortlets()) {
 	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
 
-	embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
+	for (PortletPreferences orphanPortletPreferences : selLayoutTypePortlet.getOrphanPortletPreferences()) {
+		Portlet orphanPortlet = PortletLocalServiceUtil.getPortletById(orphanPortletPreferences.getCompanyId(), orphanPortletPreferences.getPortletId());
+
+		orphanPortlets.add(orphanPortlet);
+	}
 }
 
 PortletTitleComparator portletTitleComparator = new PortletTitleComparator(application, locale);
 
-embeddedPortlets = ListUtil.sort(embeddedPortlets, portletTitleComparator);
+orphanPortlets = ListUtil.sort(orphanPortlets, portletTitleComparator);
 
 RowChecker rowChecker = new EmptyOnClickRowChecker(liferayPortletResponse);
 
@@ -43,18 +47,18 @@ if (selLayout.isLayoutPrototypeLinkActive()) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
+portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 %>
 
 <aui:nav-bar markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="embedded-portlets" selected="<%= true %>" />
+		<aui:nav-item label="orphan-portlets" selected="<%= true %>" />
 	</aui:nav>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
-	searchContainerId="portlets"
+	searchContainerId="orphanPortlets"
 >
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation
@@ -79,7 +83,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteEmbeddedPortlets" label="delete" />
+		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteOrphanPortlets" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -95,20 +99,20 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 		</c:choose>
 	</div>
 
-	<portlet:actionURL name="deleteEmbeddedPortlets" var="deleteEmbeddedPortletsURL">
+	<portlet:actionURL name="deleteOrphanPortlets" var="deleteOrphanPortletsURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
 	</portlet:actionURL>
 
-	<aui:form action="<%= deleteEmbeddedPortletsURL %>" name="fm">
+	<aui:form action="<%= deleteOrphanPortletsURL %>" name="fm">
 		<liferay-ui:search-container
 			deltaConfigurable="<%= false %>"
-			id="portlets"
+			id="orphanPortlets"
 			iteratorURL="<%= portletURL %>"
 			rowChecker="<%= rowChecker %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= embeddedPortlets %>"
+				results="<%= orphanPortlets %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -159,7 +163,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
-							path="/embedded_portlets_action.jsp"
+							path="/orphan_portlets_action.jsp"
 						/>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
@@ -170,7 +174,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 
 						<liferay-ui:search-container-column-text>
 							<liferay-frontend:icon-vertical-card
-								actionJsp="/embedded_portlets_action.jsp"
+								actionJsp="/orphan_portlets_action.jsp"
 								actionJspServletContext="<%= application %>"
 								icon="archive"
 								resultRow="<%= row %>"
@@ -203,7 +207,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							path="/embedded_portlets_action.jsp"
+							path="/orphan_portlets_action.jsp"
 						/>
 					</c:when>
 				</c:choose>
@@ -215,7 +219,7 @@ portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
 </div>
 
 <aui:script sandbox="<%= true %>">
-	$('#<portlet:namespace />deleteEmbeddedPortlets').on(
+	$('#<portlet:namespace />deleteOrphanPortlets').on(
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {

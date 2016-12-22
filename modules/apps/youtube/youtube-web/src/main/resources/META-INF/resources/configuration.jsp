@@ -32,15 +32,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 					<aui:input label="video-id" name="preferences--url--" value="<%= youTubeDisplayContext.getURL() %>" />
 
 					<aui:select inlineField="<%= true %>" label="preset-frame-size" name="preferences--presetSize--" onChange='<%= renderResponse.getNamespace() + "updateFrameSize(this.value);" %>' value="<%= youTubeDisplayContext.getPresetSize() %>">
-						<aui:option label="custom" value="custom" />
-						<aui:option label="standard-360-4-3" value="480x360" />
-						<aui:option label="standard-360-16-9" value="640x360" />
-						<aui:option label="enhanced-480-4-3" value="640x480" />
-						<aui:option label="enhanced-480-16-9" value="854x480" />
-						<aui:option label="hd-720-4-3" value="960x720" />
-						<aui:option label="hd-720-16-9" value="1280x720" />
-						<aui:option label="full-hd-1080-4-3" value="1440x1080" />
-						<aui:option label="full-hd-1080-16-9" value="1920x1080" />
+						<aui:option label="custom" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "custom") %>' value="custom" />
+						<aui:option label="standard-360-4-3" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "480x360") %>' value="480x360" />
+						<aui:option label="standard-360-16-9" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "640x360") %>' value="640x360" />
+						<aui:option label="enhanced-480-4-3" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "640x480") %>' value="640x480" />
+						<aui:option label="enhanced-480-16-9" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "854x480") %>' value="854x480" />
+						<aui:option label="hd-720-4-3" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "960x720") %>' value="960x720" />
+						<aui:option label="hd-720-16-9" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "1280x720") %>' value="1280x720" />
+						<aui:option label="full-hd-1080-4-3" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "1440x1080") %>' value="1440x1080" />
+						<aui:option label="full-hd-1080-16-9" selected='<%= Objects.equals(youTubeDisplayContext.getPresetSize(), "1920x1080") %>' value="1920x1080" />
 					</aui:select>
 
 					<aui:input disabled="<%= !youTubeDisplayContext.isCustomSize() %>" inlineField="<%= true %>" label="frame-width" name="preferences--width--" value="<%= youTubeDisplayContext.getWidth() %>">

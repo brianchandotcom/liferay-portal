@@ -811,7 +811,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				keywordsArray);
 			sql = StringUtil.replace(
 				sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
-			sql = StringUtil.replace(sql, "[$TYPES$]", StringUtil.merge(types));
+			sql = StringUtil.replace(sql, "[$TYPE$]", getTypes(types.length));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
@@ -834,6 +834,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				qPos.add(excludedName);
 			}
 
+			qPos.add(types);
 			qPos.add(ClassNameLocalServiceUtil.getClassNameId(Team.class));
 			qPos.add(excludedTeamRoleId);
 			qPos.add(teamGroupId);
@@ -967,7 +968,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				keywordsArray);
 			sql = StringUtil.replace(
 				sql, "[$EXCLUDED_NAMES$]", getExcludedNames(excludedNames));
-			sql = StringUtil.replace(sql, "[$TYPES$]", StringUtil.merge(types));
+			sql = StringUtil.replace(sql, "[$TYPE$]", getTypes(types.length));
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			if (inlineSQLHelper && InlineSQLHelperUtil.isEnabled()) {
@@ -990,6 +991,7 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				qPos.add(excludedName);
 			}
 
+			qPos.add(types);
 			qPos.add(ClassNameLocalServiceUtil.getClassNameId(Team.class));
 			qPos.add(excludedTeamRoleId);
 			qPos.add(teamGroupId);

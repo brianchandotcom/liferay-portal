@@ -1,0 +1,41 @@
+import groovy.time.TimeCategory
+
+apply plugin: "com.liferay.dependency.checker"
+
+task runGradleTest
+
+String standardOutputLog = ""
+
+configurations {
+	sourceFormatter
+}
+
+dependencies {
+	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.200"
+}
+
+dependencyChecker {
+	maxAge configuration: configurations.sourceFormatter.name, group: "com.liferay", name: "com.liferay.source.formatter", maxAge: TimeCategory.getDays(1)
+}
+
+repositories {
+	maven {
+		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+runGradleTest {
+	doLast {
+		configurations.sourceFormatter.resolve()
+
+		assert standardOutputLog.contains("Dependency 'com.liferay:com.liferay.source.formatter:1.0.200', published")
+	}
+}
+
+gradle.useLogger new StandardOutputListener() {
+
+	void onOutput(CharSequence output) {
+		standardOutputLog = standardOutputLog + output
+	}
+
+}

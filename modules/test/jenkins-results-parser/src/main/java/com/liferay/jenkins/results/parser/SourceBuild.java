@@ -51,6 +51,11 @@ public class SourceBuild extends BaseBuild {
 		return _failureMessageGenerators;
 	}
 
+	@Override
+	protected Element getGitHubMessageJobResultsElement() {
+		return null;
+	}
+
 	private static final FailureMessageGenerator[] _failureMessageGenerators = {
 		new RebaseFailureMessageGenerator(),
 		new SourceFormatFailureMessageGenerator(),

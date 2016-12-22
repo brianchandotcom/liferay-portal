@@ -1158,13 +1158,44 @@ public abstract class BaseBuild implements Build {
 		return jsonObject.getJSONArray("builds");
 	}
 
+	protected int getDownstreamBuildCountByResult(String result) {
+		int count = 0;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildResult = downstreamBuild.getResult();
+
+			if (downstreamBuildResult.equals(result)) {
+				count++;
+			}
+		}
+
+		return count;
+	}
+
 	protected ExecutorService getExecutorService() {
+		return null;
+	}
+
+	protected Element getFailureMessageElement() {
+		for (FailureMessageGenerator failureMessageGenerator :
+				getFailureMessageGenerators()) {
+
+			Element failureMessage = failureMessageGenerator.getMessageElement(
+				this);
+
+			if (failureMessage != null) {
+				return failureMessage;
+			}
+		}
+
 		return null;
 	}
 
 	protected FailureMessageGenerator[] getFailureMessageGenerators() {
 		return _failureMessageGenerators;
 	}
+
+	protected abstract Element getGitHubMessageJobResultsElement();
 
 	protected Set<String> getJobParameterNames() {
 		JSONObject jsonObject;

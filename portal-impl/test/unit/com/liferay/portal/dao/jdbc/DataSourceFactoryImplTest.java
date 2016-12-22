@@ -121,6 +121,7 @@ public class DataSourceFactoryImplTest {
 	@Before
 	public void setUp() {
 		_properties.setProperty("driverClassName", JDBCDriver.class.getName());
+		_properties.setProperty("initializationFailFast", "false");
 		_properties.setProperty("maximumPoolSize", "10");
 		_properties.setProperty("password", "");
 		_properties.setProperty("poolName", "TestJDBCPool");

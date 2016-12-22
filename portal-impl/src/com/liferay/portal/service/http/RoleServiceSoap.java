@@ -183,6 +183,43 @@ public class RoleServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.RoleSoap[] getGroupRolesAndTeamRoles(
+		long companyId, java.lang.String keywords,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId, int start, int end)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.model.Role> returnValue = RoleServiceUtil.getGroupRolesAndTeamRoles(companyId,
+					keywords, excludedNames, types, excludedTeamRoleId,
+					teamGroupId, start, end);
+
+			return com.liferay.portal.kernel.model.RoleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getGroupRolesAndTeamRolesCount(long companyId,
+		java.lang.String keywords,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) throws RemoteException {
+		try {
+			int returnValue = RoleServiceUtil.getGroupRolesAndTeamRolesCount(companyId,
+					keywords, excludedNames, types, excludedTeamRoleId,
+					teamGroupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the role with the primary key.
 	*

@@ -160,6 +160,11 @@ public interface RoleService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getGroupRolesAndTeamRolesCount(long companyId,
+		java.lang.String keywords, List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, java.lang.String keywords,
 		java.lang.Integer[] types,
 		LinkedHashMap<java.lang.String, java.lang.Object> params);
@@ -179,6 +184,12 @@ public interface RoleService extends BaseService {
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getGroupRoles(long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Role> getGroupRolesAndTeamRoles(long companyId,
+		java.lang.String keywords, List<java.lang.String> excludedNames,
+		int[] types, long excludedTeamRoleId, long teamGroupId, int start,
+		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Role> getRoles(int type, java.lang.String subtype)

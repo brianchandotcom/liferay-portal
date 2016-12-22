@@ -161,6 +161,15 @@ public class RoleServiceWrapper implements RoleService,
 	}
 
 	@Override
+	public int getGroupRolesAndTeamRolesCount(long companyId,
+		java.lang.String keywords,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId) {
+		return _roleService.getGroupRolesAndTeamRolesCount(companyId, keywords,
+			excludedNames, types, excludedTeamRoleId, teamGroupId);
+	}
+
+	@Override
 	public int searchCount(long companyId, java.lang.String keywords,
 		java.lang.Integer[] types,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
@@ -188,6 +197,15 @@ public class RoleServiceWrapper implements RoleService,
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _roleService.getGroupRoles(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Role> getGroupRolesAndTeamRoles(
+		long companyId, java.lang.String keywords,
+		java.util.List<java.lang.String> excludedNames, int[] types,
+		long excludedTeamRoleId, long teamGroupId, int start, int end) {
+		return _roleService.getGroupRolesAndTeamRoles(companyId, keywords,
+			excludedNames, types, excludedTeamRoleId, teamGroupId, start, end);
 	}
 
 	@Override

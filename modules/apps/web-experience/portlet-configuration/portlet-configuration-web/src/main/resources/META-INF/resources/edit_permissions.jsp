@@ -22,12 +22,10 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "regular-roles");
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
 
-String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
 
 String modelResource = ParamUtil.getString(request, "modelResource");
 String modelResourceDescription = ParamUtil.getString(request, "modelResourceDescription");
-String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
 
 long resourceGroupId = ParamUtil.getLong(request, "resourceGroupId");
 
@@ -39,21 +37,12 @@ if (Validator.isNull(resourcePrimKey)) {
 
 String selResource = modelResource;
 String selResourceDescription = modelResourceDescription;
-String selResourceName = modelResourceName;
 
 if (Validator.isNull(modelResource)) {
-	PortletURL portletURL = PortletURLFactoryUtil.create(request, portletResource, PortletRequest.ACTION_PHASE);
-
-	portletURL.setPortletMode(PortletMode.VIEW);
-	portletURL.setWindowState(WindowState.NORMAL);
-
-	redirect = portletURL.toString();
-
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
 	selResource = portlet.getRootPortletId();
 	selResourceDescription = PortalUtil.getPortletTitle(portlet, application, locale);
-	selResourceName = LanguageUtil.get(request, "portlet");
 }
 else {
 	PortalUtil.addPortletBreadcrumbEntry(request, HtmlUtil.unescape(selResourceDescription), null);

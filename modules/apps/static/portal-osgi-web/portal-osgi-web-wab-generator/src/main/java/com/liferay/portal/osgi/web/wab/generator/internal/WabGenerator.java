@@ -102,32 +102,36 @@ public class WabGenerator
 
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-		BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
-			bundleContext, Bundle.ACTIVE, null) {
+		BundleTracker<Void> bundleTracker =
+			new BundleTracker<Void>(bundleContext, Bundle.ACTIVE, null) {
 
-			@Override
-			public Void addingBundle(Bundle bundle, BundleEvent bundleEvent) {
-				String location = StringUtil.toLowerCase(bundle.getLocation());
+				@Override
+				public Void addingBundle(
+					Bundle bundle, BundleEvent bundleEvent) {
 
-				if (_log.isDebugEnabled()) {
-					_log.debug("Activated bundle " + location);
-				}
+					String location = StringUtil.toLowerCase(
+						bundle.getLocation());
 
-				if (requiredForStartupLocations.remove(location)) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Bundle " + location + " is required for startup");
+						_log.debug("Activated bundle " + location);
 					}
 
-					if (requiredForStartupLocations.isEmpty()) {
-						countDownLatch.countDown();
+					if (requiredForStartupLocations.remove(location)) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Bundle " + location +
+									" is required for startup");
+						}
+
+						if (requiredForStartupLocations.isEmpty()) {
+							countDownLatch.countDown();
+						}
 					}
+
+					return null;
 				}
 
-				return null;
-			}
-
-		};
+			};
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

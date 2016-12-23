@@ -1322,23 +1322,24 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-			BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
-				_framework.getBundleContext(), Bundle.ACTIVE, null) {
+			BundleTracker<Void> bundleTracker =
+				new BundleTracker<Void>(
+					_framework.getBundleContext(), Bundle.ACTIVE, null) {
 
-				@Override
-				public Void addingBundle(
-					Bundle trackedBundle, BundleEvent bundleEvent) {
+					@Override
+					public Void addingBundle(
+						Bundle trackedBundle, BundleEvent bundleEvent) {
 
-					if (trackedBundle == bundle) {
-						countDownLatch.countDown();
+						if (trackedBundle == bundle) {
+							countDownLatch.countDown();
 
-						close();
+							close();
+						}
+
+						return null;
 					}
 
-					return null;
-				}
-
-			};
+				};
 
 			bundleTracker.open();
 

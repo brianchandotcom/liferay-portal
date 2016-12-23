@@ -32,7 +32,7 @@ public class IndentationCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.VARIABLE_DEF};
+		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
 	}
 
 	@Override
@@ -90,6 +90,10 @@ public class IndentationCheck extends AbstractCheck {
 		}
 
 		if (parentAST == null) {
+			parentAST = _findParent(literalNewAST, TokenTypes.LITERAL_NEW);
+		}
+
+		if (parentAST == null) {
 			return tabCount;
 		}
 
@@ -97,6 +101,10 @@ public class IndentationCheck extends AbstractCheck {
 		int parentLineNumber = DetailASTUtil.getStartLine(parentAST);
 
 		if (literalNewLineNumber == parentLineNumber) {
+			if (parentAST.getType() == TokenTypes.RESOURCES) {
+				return tabCount + 2;
+			}
+
 			return tabCount;
 		}
 

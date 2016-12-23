@@ -13,6 +13,9 @@ Export-Package:\
 	com.liferay.dynamic.data.mapping.util.impl,\
 	com.liferay.dynamic.data.mapping.verify,\
 	com.liferay.dynamic.data.mapping.webdav
+Import-Package:\
+	com.liferay.portal.kernel.model;version='[1.0.0,2.0.0)',\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
 Liferay-Require-SchemaVersion: 1.0.3

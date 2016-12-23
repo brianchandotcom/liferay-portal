@@ -332,27 +332,27 @@ public class LanSession {
 			Callable<SyncLanClientQueryResult> callable =
 				new Callable<SyncLanClientQueryResult>() {
 
-				@Override
-				public synchronized SyncLanClientQueryResult call()
-					throws Exception {
+					@Override
+					public synchronized SyncLanClientQueryResult call()
+						throws Exception {
 
-					if (syncLanClientQueryResultCallables.isEmpty()) {
-						return null;
+						if (syncLanClientQueryResultCallables.isEmpty()) {
+							return null;
+						}
+
+						Callable<SyncLanClientQueryResult>
+							syncLanClientQueryResultCallable =
+								syncLanClientQueryResultCallables.remove(0);
+
+						try {
+							return syncLanClientQueryResultCallable.call();
+						}
+						catch (Exception e) {
+							return call();
+						}
 					}
 
-					Callable<SyncLanClientQueryResult>
-						syncLanClientQueryResultCallable =
-							syncLanClientQueryResultCallables.remove(0);
-
-					try {
-						return syncLanClientQueryResultCallable.call();
-					}
-					catch (Exception e) {
-						return call();
-					}
-				}
-
-			};
+				};
 
 			pendingSyncLanClientQueryResults.add(
 				executorCompletionService.submit(callable));

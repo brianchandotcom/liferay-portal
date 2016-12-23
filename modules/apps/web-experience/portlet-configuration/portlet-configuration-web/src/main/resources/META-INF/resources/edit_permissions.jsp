@@ -17,28 +17,20 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2", "regular-roles");
-
-int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
-int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
-
-String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
-
-String modelResource = ParamUtil.getString(request, "modelResource");
-String modelResourceDescription = ParamUtil.getString(request, "modelResourceDescription");
+PortletConfigurationPermissionsDisplayContext portletConfigurationPermissionsDisplayContext = new PortletConfigurationPermissionsDisplayContext(request);
 
 long resourceGroupId = ParamUtil.getLong(request, "resourceGroupId");
 
-String resourcePrimKey = ParamUtil.getString(request, "resourcePrimKey");
+String resourcePrimKey = portletConfigurationPermissionsDisplayContext.getResourcePrimKey();
 
 if (Validator.isNull(resourcePrimKey)) {
 	throw new ResourcePrimKeyException();
 }
 
-String selResource = modelResource;
-String selResourceDescription = modelResourceDescription;
+String selResource = portletConfigurationPermissionsDisplayContext.getModelResource();
+String selResourceDescription = portletConfigurationPermissionsDisplayContext.getModelResourceDescription();
 
-if (Validator.isNull(modelResource)) {
+if (Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource())) {
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
 	selResource = portlet.getRootPortletId();
@@ -59,7 +51,7 @@ Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 Layout selLayout = null;
 
-if (modelResource.equals(Layout.class.getName())) {
+if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Layout.class.getName())) {
 	selLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
 
 	group = selLayout.getGroup();
@@ -81,7 +73,7 @@ try {
 	resource = ResourceLocalServiceUtil.getResource(company.getCompanyId(), selResource, ResourceConstants.SCOPE_INDIVIDUAL, resourcePrimKey);
 }
 catch (NoSuchResourceException nsre) {
-	boolean portletActions = Validator.isNull(modelResource);
+	boolean portletActions = Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource());
 
 	ResourceLocalServiceUtil.addResources(company.getCompanyId(), groupId, 0, selResource, resourcePrimKey, portletActions, true, true);
 
@@ -96,24 +88,7 @@ if (Validator.isNotNull(roleTypesParam)) {
 	roleTypes = StringUtil.split(roleTypesParam, 0);
 }
 
-LiferayPortletURL definePermissionsURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
-
-definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
-definePermissionsURL.setParameter("backURL", currentURL);
-definePermissionsURL.setPortletMode(PortletMode.VIEW);
-definePermissionsURL.setRefererPlid(plid);
-definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
-
-PortletURL iteratorURL = PortletURLFactoryUtil.create(renderRequest, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION, PortletRequest.RENDER_PHASE);
-
-iteratorURL.setParameter("mvcPath", "/edit_permissions.jsp");
-iteratorURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-iteratorURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-iteratorURL.setParameter("portletResource", portletResource);
-iteratorURL.setParameter("resourcePrimKey", resourcePrimKey);
-iteratorURL.setWindowState(LiferayWindowState.POP_UP);
-
-SearchContainer roleSearchContainer = new RoleSearch(renderRequest, iteratorURL);
+SearchContainer roleSearchContainer = new RoleSearch(renderRequest, portletConfigurationPermissionsDisplayContext.getIteratorURL());
 
 RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerms();
 %>
@@ -126,36 +101,21 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 			</aui:nav>
 
 			<aui:nav-bar-search>
-				<aui:form action="<%= iteratorURL.toString() %>" name="searchFm">
+				<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getIteratorURL() %>" name="searchFm">
 					<liferay-ui:input-search markupView="lexicon" />
 				</aui:form>
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 
-		<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
-			<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
-			<portlet:param name="tabs2" value="<%= tabs2 %>" />
-			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
-			<portlet:param name="delta" value="<%= String.valueOf(delta) %>" />
-			<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
-			<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
-			<portlet:param name="portletResource" value="<%= portletResource %>" />
-			<portlet:param name="modelResource" value="<%= modelResource %>" />
-			<portlet:param name="modelResourceDescription" value="<%= modelResourceDescription %>" />
-			<portlet:param name="resourceGroupId" value="<%= String.valueOf(resourceGroupId) %>" />
-			<portlet:param name="resourcePrimKey" value="<%= resourcePrimKey %>" />
-			<portlet:param name="roleTypes" value="<%= roleTypesParam %>" />
-		</portlet:actionURL>
-
-		<aui:form action="<%= updateRolePermissionsURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
+		<aui:form action="<%= portletConfigurationPermissionsDisplayContext.getUpdateRolePermissionsURL() %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
 
 			<%
-			boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(modelResource);
+			boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(portletConfigurationPermissionsDisplayContext.getModelResource());
 
-			List<String> actions = ResourceActionsUtil.getResourceActions(portletResource, modelResource);
+			List<String> actions = ResourceActionsUtil.getResourceActions(portletResource, portletConfigurationPermissionsDisplayContext.getModelResource());
 
-			if (modelResource.equals(Group.class.getName())) {
+			if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Group.class.getName())) {
 				long modelResourceGroupId = GetterUtil.getLong(resourcePrimKey);
 
 				Group modelResourceGroup = GroupLocalServiceUtil.getGroup(modelResourceGroupId);
@@ -175,7 +135,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 					actions.remove(ActionKeys.VIEW_STAGING);
 				}
 			}
-			else if (modelResource.equals(Role.class.getName())) {
+			else if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Role.class.getName())) {
 				long modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
 
 				Role modelResourceRole = RoleLocalServiceUtil.getRole(modelResourceRoleId);
@@ -201,8 +161,8 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 			if (roleTypes == null) {
 				roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
 
-				if (ResourceActionsUtil.isPortalModelResource(modelResource)) {
-					if (modelResource.equals(Organization.class.getName()) || modelResource.equals(User.class.getName())) {
+				if (ResourceActionsUtil.isPortalModelResource(portletConfigurationPermissionsDisplayContext.getModelResource())) {
+					if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Organization.class.getName()) || Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), User.class.getName())) {
 						roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
 					}
 					else {
@@ -239,14 +199,14 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 
 			long modelResourceRoleId = 0;
 
-			if (modelResource.equals(Role.class.getName())) {
+			if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Role.class.getName())) {
 				modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
 			}
 
 			boolean filterGuestRole = false;
 			boolean permissionCheckGuestEnabled = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
 
-			if (Objects.equals(modelResource, Layout.class.getName())) {
+			if (Objects.equals(portletConfigurationPermissionsDisplayContext.getModelResource(), Layout.class.getName())) {
 				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
 
 				if (resourceLayout.isPrivateLayout()) {
@@ -316,6 +276,8 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 				>
 
 					<%
+					PortletURL definePermissionsURL = portletConfigurationPermissionsDisplayContext.getDefinePermissionsURL();
+
 					String definePermissionsHREF = null;
 
 					String name = role.getName();
@@ -349,7 +311,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 
 					ResourcePermissionUtil.populateResourcePermissionActionIds(groupId, role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
 
-					List<String> guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(portletResource, modelResource);
+					List<String> guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(portletResource, portletConfigurationPermissionsDisplayContext.getModelResource());
 
 					// LPS-32515
 
@@ -395,7 +357,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 							String dataMessage = StringPool.BLANK;
 
 							if (Validator.isNotNull(preselectedMsg)) {
-								dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
+								dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(portletConfigurationPermissionsDisplayContext.getModelResource()) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
 							}
 
 							String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;

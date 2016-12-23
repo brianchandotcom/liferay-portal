@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>NEXT_LINK</td>
-	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'Next')] | //ul[contains(@class,'pagination')]/li/a/span[contains(@class,'icon-caret-right')]</td>
+	<td>//ul[contains(@class,'pagination')]/li/a[contains(.,'Next')] | //ul[contains(@class,'pagination')]/li[@class='']/a/span[contains(@class,'icon-caret-right')]</td>
 	<td></td>
 </tr>
 <tr>

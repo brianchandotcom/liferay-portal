@@ -102,6 +102,7 @@ page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.LinkedHashSet" %><%@
 page import="java.util.List" %><%@
+page import="java.util.Objects" %><%@
 page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletMode" %><%@

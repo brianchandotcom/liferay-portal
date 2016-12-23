@@ -115,36 +115,21 @@ definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
 definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
-PortletURL roleSearchURL = PortletURLFactoryUtil.create(renderRequest, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION, PortletRequest.RENDER_PHASE);
+PortletURL iteratorURL = PortletURLFactoryUtil.create(renderRequest, PortletConfigurationPortletKeys.PORTLET_CONFIGURATION, PortletRequest.RENDER_PHASE);
 
-roleSearchURL.setParameter("mvcPath", "/edit_permissions.jsp");
-roleSearchURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-roleSearchURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
-roleSearchURL.setParameter("portletResource", portletResource);
-roleSearchURL.setParameter("resourcePrimKey", resourcePrimKey);
-roleSearchURL.setWindowState(LiferayWindowState.POP_UP);
+iteratorURL.setParameter("mvcPath", "/edit_permissions.jsp");
+iteratorURL.setParameter("returnToFullPageURL", returnToFullPageURL);
+iteratorURL.setParameter("portletConfiguration", Boolean.TRUE.toString());
+iteratorURL.setParameter("portletResource", portletResource);
+iteratorURL.setParameter("resourcePrimKey", resourcePrimKey);
+iteratorURL.setWindowState(LiferayWindowState.POP_UP);
 
-SearchContainer roleSearchContainer = new RoleSearch(renderRequest, roleSearchURL);
+SearchContainer roleSearchContainer = new RoleSearch(renderRequest, iteratorURL);
 
 RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerms();
 %>
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
-	<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
-		<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
-		<portlet:param name="tabs2" value="<%= tabs2 %>" />
-		<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
-		<portlet:param name="delta" value="<%= String.valueOf(delta) %>" />
-		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
-		<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
-		<portlet:param name="portletResource" value="<%= portletResource %>" />
-		<portlet:param name="modelResource" value="<%= modelResource %>" />
-		<portlet:param name="modelResourceDescription" value="<%= modelResourceDescription %>" />
-		<portlet:param name="resourceGroupId" value="<%= String.valueOf(resourceGroupId) %>" />
-		<portlet:param name="resourcePrimKey" value="<%= resourcePrimKey %>" />
-		<portlet:param name="roleTypes" value="<%= roleTypesParam %>" />
-	</portlet:actionURL>
-
 	<div class="portlet-configuration-body-content">
 		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 			<aui:nav cssClass="navbar-nav">
@@ -152,288 +137,292 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 			</aui:nav>
 
 			<aui:nav-bar-search>
-				<aui:form action="<%= roleSearchURL.toString() %>" name="searchFm">
+				<aui:form action="<%= iteratorURL.toString() %>" name="searchFm">
 					<liferay-ui:input-search markupView="lexicon" />
 				</aui:form>
 			</aui:nav-bar-search>
 		</aui:nav-bar>
 
-		<aui:form action="<%= updateRolePermissionsURL.toString() %>" cssClass="form" method="post" name="fm">
+		<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
+			<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
+			<portlet:param name="tabs2" value="<%= tabs2 %>" />
+			<portlet:param name="cur" value="<%= String.valueOf(cur) %>" />
+			<portlet:param name="delta" value="<%= String.valueOf(delta) %>" />
+			<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+			<portlet:param name="portletConfiguration" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="portletResource" value="<%= portletResource %>" />
+			<portlet:param name="modelResource" value="<%= modelResource %>" />
+			<portlet:param name="modelResourceDescription" value="<%= modelResourceDescription %>" />
+			<portlet:param name="resourceGroupId" value="<%= String.valueOf(resourceGroupId) %>" />
+			<portlet:param name="resourcePrimKey" value="<%= resourcePrimKey %>" />
+			<portlet:param name="roleTypes" value="<%= roleTypesParam %>" />
+		</portlet:actionURL>
+
+		<aui:form action="<%= updateRolePermissionsURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 			<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
 
-			<div class="container-fluid-1280">
+			<%
+			boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(modelResource);
 
-				<%
-				boolean filterGroupRoles = !ResourceActionsUtil.isPortalModelResource(modelResource);
+			List<String> actions = ResourceActionsUtil.getResourceActions(portletResource, modelResource);
 
-				List<String> actions = ResourceActionsUtil.getResourceActions(portletResource, modelResource);
+			if (modelResource.equals(Group.class.getName())) {
+				long modelResourceGroupId = GetterUtil.getLong(resourcePrimKey);
 
-				if (modelResource.equals(Group.class.getName())) {
-					long modelResourceGroupId = GetterUtil.getLong(resourcePrimKey);
+				Group modelResourceGroup = GroupLocalServiceUtil.getGroup(modelResourceGroupId);
 
-					Group modelResourceGroup = GroupLocalServiceUtil.getGroup(modelResourceGroupId);
+				if (modelResourceGroup.isLayoutPrototype() || modelResourceGroup.isLayoutSetPrototype() || modelResourceGroup.isUserGroup()) {
+					actions = new ArrayList<String>(actions);
 
-					if (modelResourceGroup.isLayoutPrototype() || modelResourceGroup.isLayoutSetPrototype() || modelResourceGroup.isUserGroup()) {
-						actions = new ArrayList<String>(actions);
-
-						actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
-						actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
-						actions.remove(ActionKeys.ASSIGN_MEMBERS);
-						actions.remove(ActionKeys.ASSIGN_USER_ROLES);
-						actions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
-						actions.remove(ActionKeys.MANAGE_STAGING);
-						actions.remove(ActionKeys.MANAGE_TEAMS);
-						actions.remove(ActionKeys.PUBLISH_STAGING);
-						actions.remove(ActionKeys.VIEW_MEMBERS);
-						actions.remove(ActionKeys.VIEW_STAGING);
-					}
+					actions.remove(ActionKeys.ADD_LAYOUT_BRANCH);
+					actions.remove(ActionKeys.ADD_LAYOUT_SET_BRANCH);
+					actions.remove(ActionKeys.ASSIGN_MEMBERS);
+					actions.remove(ActionKeys.ASSIGN_USER_ROLES);
+					actions.remove(ActionKeys.MANAGE_ANNOUNCEMENTS);
+					actions.remove(ActionKeys.MANAGE_STAGING);
+					actions.remove(ActionKeys.MANAGE_TEAMS);
+					actions.remove(ActionKeys.PUBLISH_STAGING);
+					actions.remove(ActionKeys.VIEW_MEMBERS);
+					actions.remove(ActionKeys.VIEW_STAGING);
 				}
-				else if (modelResource.equals(Role.class.getName())) {
-					long modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
+			}
+			else if (modelResource.equals(Role.class.getName())) {
+				long modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
 
-					Role modelResourceRole = RoleLocalServiceUtil.getRole(modelResourceRoleId);
+				Role modelResourceRole = RoleLocalServiceUtil.getRole(modelResourceRoleId);
 
-					String name = modelResourceRole.getName();
+				String name = modelResourceRole.getName();
 
-					if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.USER)) {
-						actions = new ArrayList<String>(actions);
+				if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.USER)) {
+					actions = new ArrayList<String>(actions);
 
-						actions.remove(ActionKeys.ASSIGN_MEMBERS);
-						actions.remove(ActionKeys.DEFINE_PERMISSIONS);
-						actions.remove(ActionKeys.DELETE);
-						actions.remove(ActionKeys.PERMISSIONS);
-						actions.remove(ActionKeys.UPDATE);
-						actions.remove(ActionKeys.VIEW);
-					}
-
-					if ((modelResourceRole.getType() == RoleConstants.TYPE_ORGANIZATION) || (modelResourceRole.getType() == RoleConstants.TYPE_SITE)) {
-						filterGroupRoles = true;
-					}
+					actions.remove(ActionKeys.ASSIGN_MEMBERS);
+					actions.remove(ActionKeys.DEFINE_PERMISSIONS);
+					actions.remove(ActionKeys.DELETE);
+					actions.remove(ActionKeys.PERMISSIONS);
+					actions.remove(ActionKeys.UPDATE);
+					actions.remove(ActionKeys.VIEW);
 				}
 
-				if (roleTypes == null) {
-					roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
+				if ((modelResourceRole.getType() == RoleConstants.TYPE_ORGANIZATION) || (modelResourceRole.getType() == RoleConstants.TYPE_SITE)) {
+					filterGroupRoles = true;
+				}
+			}
 
-					if (ResourceActionsUtil.isPortalModelResource(modelResource)) {
-						if (modelResource.equals(Organization.class.getName()) ||
-							modelResource.equals(User.class.getName())) {
+			if (roleTypes == null) {
+				roleTypes = RoleConstants.TYPES_REGULAR_AND_SITE;
 
-							roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
-						}
-						else {
-							roleTypes = RoleConstants.TYPES_REGULAR;
-						}
+				if (ResourceActionsUtil.isPortalModelResource(modelResource)) {
+					if (modelResource.equals(Organization.class.getName()) || modelResource.equals(User.class.getName())) {
+						roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR;
 					}
 					else {
-						if (group != null) {
-							Group parentGroup = null;
+						roleTypes = RoleConstants.TYPES_REGULAR;
+					}
+				}
+				else {
+					if (group != null) {
+						Group parentGroup = null;
 
-							if (group.isLayout()) {
-								parentGroup = GroupLocalServiceUtil.fetchGroup(
-									group.getParentGroupId());
-							}
+						if (group.isLayout()) {
+							parentGroup = GroupLocalServiceUtil.fetchGroup(group.getParentGroupId());
+						}
 
-							if (parentGroup == null) {
-								if (group.isOrganization()) {
-									roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-								}
-								else if (group.isUser()) {
-									roleTypes = RoleConstants.TYPES_REGULAR;
-								}
+						if (parentGroup == null) {
+							if (group.isOrganization()) {
+								roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
 							}
-							else {
-								if (parentGroup.isOrganization()) {
-									roleTypes =
-										RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
-								}
-								else if (parentGroup.isUser()) {
-									roleTypes = RoleConstants.TYPES_REGULAR;
-								}
+							else if (group.isUser()) {
+								roleTypes = RoleConstants.TYPES_REGULAR;
+							}
+						}
+						else {
+							if (parentGroup.isOrganization()) {
+								roleTypes = RoleConstants.TYPES_ORGANIZATION_AND_REGULAR_AND_SITE;
+							}
+							else if (parentGroup.isUser()) {
+								roleTypes = RoleConstants.TYPES_REGULAR;
 							}
 						}
 					}
 				}
+			}
 
-				long modelResourceRoleId = 0;
+			long modelResourceRoleId = 0;
 
-				if (modelResource.equals(Role.class.getName())) {
-					modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
+			if (modelResource.equals(Role.class.getName())) {
+				modelResourceRoleId = GetterUtil.getLong(resourcePrimKey);
+			}
+
+			boolean filterGuestRole = false;
+
+			if (Objects.equals(modelResource, Layout.class.getName())) {
+				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
+
+				if (resourceLayout.isPrivateLayout()) {
+					Group resourceLayoutGroup = resourceLayout.getGroup();
+
+					if (!resourceLayoutGroup.isLayoutSetPrototype()) {
+						filterGuestRole = true;
+					}
 				}
+			}
+			else if (Validator.isNotNull(portletResource)) {
+				int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
-				boolean filterGuestRole = false;
+				if (pos > 0) {
+					long resourcePlid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
 
-				if (modelResource.equals(Layout.class.getName())) {
-					Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
+					Layout resourceLayout = LayoutLocalServiceUtil.getLayout(resourcePlid);
 
 					if (resourceLayout.isPrivateLayout()) {
 						Group resourceLayoutGroup = resourceLayout.getGroup();
 
-						if (!resourceLayoutGroup.isLayoutSetPrototype()) {
+						if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype()) {
 							filterGuestRole = true;
 						}
 					}
 				}
-				else if (Validator.isNotNull(portletResource)) {
-					int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
+			}
 
-					if (pos > 0) {
-						long resourcePlid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+			List<String> excludedRoleNames = new ArrayList<>();
 
-						Layout resourceLayout = LayoutLocalServiceUtil.getLayout(resourcePlid);
+			excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
 
-						if (resourceLayout.isPrivateLayout()) {
-							Group resourceLayoutGroup = resourceLayout.getGroup();
+			if (filterGroupRoles) {
+				excludedRoleNames.add(RoleConstants.ORGANIZATION_ADMINISTRATOR);
+				excludedRoleNames.add(RoleConstants.ORGANIZATION_OWNER);
+				excludedRoleNames.add(RoleConstants.SITE_ADMINISTRATOR);
+				excludedRoleNames.add(RoleConstants.SITE_OWNER);
+			}
 
-							if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype()) {
-								filterGuestRole = true;
-							}
-						}
-					}
-				}
+			if (filterGuestRole) {
+				excludedRoleNames.add(RoleConstants.GUEST);
+			}
 
-				List<String> excludedRoleNames = new ArrayList<>();
+			long teamGroupId = group.getGroupId();
 
-					excludedRoleNames.add(RoleConstants.ADMINISTRATOR);
+			if (group.isLayout()) {
+				teamGroupId = group.getParentGroupId();
+			}
 
-				if (filterGroupRoles) {
-					excludedRoleNames.add(RoleConstants.ORGANIZATION_ADMINISTRATOR);
+			roleSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
 
-					excludedRoleNames.add(RoleConstants.ORGANIZATION_OWNER);
+			int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId);
 
-					excludedRoleNames.add(RoleConstants.SITE_ADMINISTRATOR);
+			roleSearchContainer.setTotal(count);
 
-					excludedRoleNames.add(RoleConstants.SITE_OWNER);
-				}
+			List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId, roleSearchContainer.getStart(), roleSearchContainer.getResultEnd());
 
-				if (filterGuestRole) {
-					excludedRoleNames.add(RoleConstants.GUEST);
-				}
+			roleSearchContainer.setResults(roles);
+			%>
 
-				long teamGroupId = group.getGroupId();
-
-				if (group.isLayout()) {
-					teamGroupId = group.getParentGroupId();
-				}
-
-				roleSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
-
-				int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId);
-
-				roleSearchContainer.setTotal(count);
-
-				List<Role> roles = RoleLocalServiceUtil.getGroupRolesAndTeamRoles(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId, roleSearchContainer.getStart(), roleSearchContainer.getResultEnd());
-
-				roleSearchContainer.setResults(roles);
-				%>
-
-				<liferay-ui:search-container
-					iteratorURL="<%= roleSearchURL %>"
-					searchContainer="<%= roleSearchContainer %>"
+			<liferay-ui:search-container
+				searchContainer="<%= roleSearchContainer %>"
+			>
+				<liferay-ui:search-container-row
+					className="com.liferay.portal.kernel.model.Role"
+					escapedModel="<%= true %>"
+					keyProperty="roleId"
+					modelVar="role"
 				>
-					<liferay-ui:search-container-row
-						className="com.liferay.portal.kernel.model.Role"
-						escapedModel="<%= true %>"
-						keyProperty="roleId"
-						modelVar="role"
-					>
 
-						<%
-						String definePermissionsHREF = null;
+					<%
+					String definePermissionsHREF = null;
 
-						String name = role.getName();
+					String name = role.getName();
 
-						if (!name.equals(RoleConstants.ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_OWNER) && !name.equals(RoleConstants.OWNER) && !name.equals(RoleConstants.SITE_ADMINISTRATOR) && !name.equals(RoleConstants.SITE_OWNER) && !role.isTeam() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DEFINE_PERMISSIONS)) {
-							definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+					if (!name.equals(RoleConstants.ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_OWNER) && !name.equals(RoleConstants.OWNER) && !name.equals(RoleConstants.SITE_ADMINISTRATOR) && !name.equals(RoleConstants.SITE_OWNER) && !role.isTeam() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DEFINE_PERMISSIONS)) {
+						definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
-							definePermissionsHREF = definePermissionsURL.toString();
+						definePermissionsHREF = definePermissionsURL.toString();
+					}
+					%>
+
+					<liferay-ui:search-container-column-text
+						href="<%= definePermissionsHREF %>"
+						name="role"
+						value="<%= role.getTitle(locale) %>"
+					/>
+
+					<%
+
+					// Actions
+
+					List<String> currentIndividualActions = new ArrayList<String>();
+					List<String> currentGroupActions = new ArrayList<String>();
+					List<String> currentGroupTemplateActions = new ArrayList<String>();
+					List<String> currentCompanyActions = new ArrayList<String>();
+
+					ResourcePermissionUtil.populateResourcePermissionActionIds(groupId, role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
+
+					List<String> guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(portletResource, modelResource);
+
+					// LPS-32515
+
+					if ((selLayout != null) && group.isGuest() && SitesUtil.isFirstLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getLayoutId())) {
+						guestUnsupportedActions = new ArrayList<String>(guestUnsupportedActions);
+
+						guestUnsupportedActions.add(ActionKeys.VIEW);
+					}
+
+					for (String action : actions) {
+						boolean checked = false;
+						boolean disabled = false;
+						String preselectedMsg = StringPool.BLANK;
+
+						if (currentIndividualActions.contains(action)) {
+							checked = true;
 						}
-						%>
+
+						if (currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action)) {
+							checked = true;
+							preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-x";
+						}
+
+						if (currentCompanyActions.contains(action)) {
+							checked = true;
+							preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-this-portal-instance";
+						}
+
+						if (name.equals(RoleConstants.GUEST) && guestUnsupportedActions.contains(action)) {
+							disabled = true;
+						}
+
+						if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+							continue;
+						}
+					%>
 
 						<liferay-ui:search-container-column-text
-							href="<%= definePermissionsHREF %>"
-							name="role"
-							value="<%= role.getTitle(locale) %>"
-						/>
+							name="<%= ResourceActionsUtil.getAction(request, action) %>"
+						>
 
-						<%
+							<%
+							String dataMessage = StringPool.BLANK;
 
-						// Actions
-
-						List<String> currentIndividualActions = new ArrayList<String>();
-						List<String> currentGroupActions = new ArrayList<String>();
-						List<String> currentGroupTemplateActions = new ArrayList<String>();
-						List<String> currentCompanyActions = new ArrayList<String>();
-
-						ResourcePermissionUtil.populateResourcePermissionActionIds(groupId, role, resource, actions, currentIndividualActions, currentGroupActions, currentGroupTemplateActions, currentCompanyActions);
-
-						List<String> guestUnsupportedActions = ResourceActionsUtil.getResourceGuestUnsupportedActions(portletResource, modelResource);
-
-						// LPS-32515
-
-						if ((selLayout != null) && group.isGuest() && SitesUtil.isFirstLayout(selLayout.getGroupId(), selLayout.isPrivateLayout(), selLayout.getLayoutId())) {
-							guestUnsupportedActions = new ArrayList<String>(guestUnsupportedActions);
-
-							guestUnsupportedActions.add(ActionKeys.VIEW);
-						}
-
-						for (String action : actions) {
-							boolean checked = false;
-							boolean disabled = false;
-							String preselectedMsg = StringPool.BLANK;
-
-							if (currentIndividualActions.contains(action)) {
-								checked = true;
+							if (Validator.isNotNull(preselectedMsg)) {
+								dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
 							}
 
-							if (currentGroupActions.contains(action) || currentGroupTemplateActions.contains(action)) {
-								checked = true;
-								preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-x";
-							}
+							String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
+							%>
 
-							if (currentCompanyActions.contains(action)) {
-								checked = true;
-								preselectedMsg = "x-is-allowed-to-do-action-x-in-all-items-of-type-x-in-this-portal-instance";
-							}
+							<c:if test="<%= disabled && checked %>">
+								<input name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
+							</c:if>
 
-							if (name.equals(RoleConstants.GUEST) && guestUnsupportedActions.contains(action)) {
-								disabled = true;
-							}
+							<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected" : StringPool.BLANK %>" data-message="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
+						</liferay-ui:search-container-column-text>
 
-							if (action.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-								continue;
-							}
-						%>
+					<%
+					}
+					%>
 
-							<liferay-ui:search-container-column-text
-								name="<%= ResourceActionsUtil.getAction(request, action) %>"
-							>
+				</liferay-ui:search-container-row>
 
-								<%
-								String dataMessage = StringPool.BLANK;
-
-								if (Validator.isNotNull(preselectedMsg)) {
-									dataMessage = HtmlUtil.escapeAttribute(LanguageUtil.format(request, preselectedMsg, new Object[] {role.getTitle(locale), ResourceActionsUtil.getAction(request, action), Validator.isNull(modelResource) ? selResourceDescription : ResourceActionsUtil.getModelResource(locale, resource.getName()), HtmlUtil.escape(group.getDescriptiveName(locale))}, false));
-								}
-
-								String actionSeparator = Validator.isNotNull(preselectedMsg) ? ActionUtil.PRESELECTED : ActionUtil.ACTION;
-								%>
-
-								<c:if test="<%= disabled && checked %>">
-									<input name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" type="hidden" value="<%= true %>" />
-								</c:if>
-
-								<input <%= checked ? "checked" : StringPool.BLANK %> class="<%= Validator.isNotNull(preselectedMsg) ? "lfr-checkbox-preselected" : StringPool.BLANK %>" data-message="<%= dataMessage %>" <%= disabled ? "disabled" : StringPool.BLANK %> id="<%= FriendlyURLNormalizerUtil.normalize(role.getName()) + actionSeparator + action %>" name="<%= renderResponse.getNamespace() + role.getRoleId() + actionSeparator + action %>" onclick="<%= Validator.isNotNull(preselectedMsg) ? "return false;" : StringPool.BLANK %>" type="checkbox" />
-							</liferay-ui:search-container-column-text>
-
-						<%
-						}
-						%>
-
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator markupView="lexicon" />
-				</liferay-ui:search-container>
-			</div>
+				<liferay-ui:search-iterator markupView="lexicon" />
+			</liferay-ui:search-container>
 		</aui:form>
 	</div>
 

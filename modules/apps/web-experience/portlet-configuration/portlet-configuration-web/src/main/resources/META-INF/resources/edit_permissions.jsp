@@ -306,8 +306,6 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 				teamGroupId = group.getParentGroupId();
 			}
 
-			roleSearchContainer.setEmptyResultsMessageCssClass(searchTerms.isSearch() ? StringPool.BLANK : "taglib-empty-result-message-header-has-plus-btn");
-
 			int count = RoleLocalServiceUtil.getGroupRolesAndTeamRolesCount(company.getCompanyId(), searchTerms.getKeywords(), excludedRoleNames, roleTypes, modelResourceRoleId, teamGroupId);
 
 			roleSearchContainer.setTotal(count);

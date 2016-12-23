@@ -11,7 +11,7 @@
 <!--APP-->
 <tr>
 	<td>APP_NAME</td>
-	<td>//div[@class='title' and contains(.,'${key_appName}')]</td>
+	<td>//div[contains(@class,'content')]//a[contains(.,'${key_appName}')]</td>
 	<td></td>
 </tr>
 <tr>

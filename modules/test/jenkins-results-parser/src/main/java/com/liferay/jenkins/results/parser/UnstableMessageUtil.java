@@ -284,8 +284,7 @@ public class UnstableMessageUtil {
 							"/jenkins-console.txt.gz\">Console Output</a>");
 
 						if (Boolean.parseBoolean(
-								project.getProperty(
-									"record.liferay.log"))) {
+								project.getProperty("record.liferay.log"))) {
 
 							sb.append(" - ");
 							sb.append("<a href=\"");

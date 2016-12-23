@@ -708,8 +708,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			}
 
 			try (PreparedStatement preparedStatement =
-					connection.prepareStatement(
-						extraDataFactory.getSQL())) {
+					connection.prepareStatement(extraDataFactory.getSQL())) {
 
 				preparedStatement.setLong(1, classPK);
 

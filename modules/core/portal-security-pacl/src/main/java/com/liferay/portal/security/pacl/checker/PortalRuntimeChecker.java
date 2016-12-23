@@ -303,8 +303,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 		String callerClassName = callerClass.getName();
 
 		if (callerClassName.equals(PortalClassLoaderUtil.class.getName()) ||
-			callerClassName.equals(
-				PortletClassLoaderUtil.class.getName())) {
+			callerClassName.equals(PortletClassLoaderUtil.class.getName())) {
 
 			callerClass = Reflection.getCallerClass(stackIndex + 1);
 		}

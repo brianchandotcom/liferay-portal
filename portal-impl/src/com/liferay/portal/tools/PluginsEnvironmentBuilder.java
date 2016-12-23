@@ -101,8 +101,7 @@ public class PluginsEnvironmentBuilder {
 
 			if (content.contains(
 					"<import file=\"../build-common-shared.xml\" />") ||
-				content.contains(
-					"../tools/sdk/build-common-shared.xml\" />")) {
+				content.contains("../tools/sdk/build-common-shared.xml\" />")) {
 
 				sharedProject = true;
 			}

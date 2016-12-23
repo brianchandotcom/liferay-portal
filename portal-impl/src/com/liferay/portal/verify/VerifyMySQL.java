@@ -77,8 +77,7 @@ public class VerifyMySQL extends VerifyProcess {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			Statement statement = connection.createStatement();
-			ResultSet rs = databaseMetaData.getTables(
-				null, null, null, null)) {
+			ResultSet rs = databaseMetaData.getTables(null, null, null, null)) {
 
 			while (rs.next()) {
 				verifyDatetimePrecisionForTable(

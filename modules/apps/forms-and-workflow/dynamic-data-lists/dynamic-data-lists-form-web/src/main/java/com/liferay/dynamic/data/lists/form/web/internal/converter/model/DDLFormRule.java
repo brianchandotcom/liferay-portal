@@ -42,8 +42,7 @@ public class DDLFormRule {
 				_ddlFormRuleActions, ddlFormRule._ddlFormRuleActions) &&
 			Objects.equals(
 				_ddlFormRuleConditions, ddlFormRule._ddlFormRuleConditions) &&
-			Objects.equals(
-				_logicalOperator, ddlFormRule._logicalOperator)) {
+			Objects.equals(_logicalOperator, ddlFormRule._logicalOperator)) {
 
 			return true;
 		}

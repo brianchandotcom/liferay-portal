@@ -49,8 +49,7 @@ public class DDMFormFieldEvaluationResult {
 
 		if (Objects.equals(
 				_instanceId, ddmFormFieldEvaluationResult._instanceId) &&
-			Objects.equals(
-				_name, ddmFormFieldEvaluationResult._name)) {
+			Objects.equals(_name, ddmFormFieldEvaluationResult._name)) {
 
 			return true;
 		}

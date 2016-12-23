@@ -1215,8 +1215,7 @@ public class BaseTextExportImportContentProcessor
 				if (urlWithoutLocale.startsWith(
 						PRIVATE_GROUP_SERVLET_MAPPING) ||
 					urlWithoutLocale.startsWith(PRIVATE_USER_SERVLET_MAPPING) ||
-					urlWithoutLocale.startsWith(
-						PUBLIC_GROUP_SERVLET_MAPPING)) {
+					urlWithoutLocale.startsWith(PUBLIC_GROUP_SERVLET_MAPPING)) {
 
 					url = urlWithoutLocale;
 				}
@@ -1244,8 +1243,7 @@ public class BaseTextExportImportContentProcessor
 
 				if (urlSBString.contains(
 						DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
-					urlSBString.contains(
-						DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
+					urlSBString.contains(DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
 
 					layoutSet = group.getPublicLayoutSet();
 				}

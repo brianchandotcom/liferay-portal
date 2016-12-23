@@ -717,8 +717,7 @@ public class ShoppingItemLocalServiceImpl
 
 				for (String imageExtension : imageExtensions) {
 					if (StringPool.STAR.equals(imageExtension) ||
-						StringUtil.endsWith(
-							smallImageName, imageExtension)) {
+						StringUtil.endsWith(smallImageName, imageExtension)) {
 
 						validSmallImageExtension = true;
 
@@ -754,8 +753,7 @@ public class ShoppingItemLocalServiceImpl
 
 				for (String imageExtension : imageExtensions) {
 					if (StringPool.STAR.equals(imageExtension) ||
-						StringUtil.endsWith(
-							mediumImageName, imageExtension)) {
+						StringUtil.endsWith(mediumImageName, imageExtension)) {
 
 						validMediumImageExtension = true;
 
@@ -794,8 +792,7 @@ public class ShoppingItemLocalServiceImpl
 
 			for (String imageExtension : imageExtensions) {
 				if (StringPool.STAR.equals(imageExtension) ||
-					StringUtil.endsWith(
-						largeImageName, imageExtension)) {
+					StringUtil.endsWith(largeImageName, imageExtension)) {
 
 					validLargeImageExtension = true;
 

@@ -472,8 +472,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			DDMFormFieldValue ddmFormFieldValue = entry.getValue();
 
 			if (key.startsWith(entryKeyPrefix) &&
-				Objects.equals(
-					ddmFormFieldValue.getName(), fieldNameFilter)) {
+				Objects.equals(ddmFormFieldValue.getName(), fieldNameFilter)) {
 
 				entryKeys.add(key);
 			}

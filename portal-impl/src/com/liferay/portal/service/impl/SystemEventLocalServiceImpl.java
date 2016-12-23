@@ -128,8 +128,7 @@ public class SystemEventLocalServiceImpl
 			action = systemEventHierarchyEntry.getAction();
 
 			if ((action == SystemEventConstants.ACTION_SKIP) &&
-				!systemEventHierarchyEntry.hasTypedModel(
-					className, classPK)) {
+				!systemEventHierarchyEntry.hasTypedModel(className, classPK)) {
 
 				return null;
 			}

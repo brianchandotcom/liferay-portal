@@ -337,8 +337,7 @@ public class DDMBeanTranslatorImpl implements DDMBeanTranslator {
 	}
 
 	protected com.liferay.dynamic.data.mapping.kernel.DDMFormFieldValue
-		translate(
-			DDMFormFieldValue ddmFormFieldValue) {
+		translate(DDMFormFieldValue ddmFormFieldValue) {
 
 		if (ddmFormFieldValue == null) {
 			return null;

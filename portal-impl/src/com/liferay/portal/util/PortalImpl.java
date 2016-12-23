@@ -7570,8 +7570,7 @@ public class PortalImpl implements Portal {
 			portletCategory.equals(PortletCategoryKeys.CONTROL_PANEL_SITES) ||
 			portletCategory.equals(PortletCategoryKeys.CONTROL_PANEL_SYSTEM) ||
 			portletCategory.equals(PortletCategoryKeys.CONTROL_PANEL_USERS) ||
-			portletCategory.equals(
-				PortletCategoryKeys.USER_MY_ACCOUNT)) {
+			portletCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
 
 			return GroupLocalServiceUtil.fetchGroup(
 				companyId, GroupConstants.CONTROL_PANEL);

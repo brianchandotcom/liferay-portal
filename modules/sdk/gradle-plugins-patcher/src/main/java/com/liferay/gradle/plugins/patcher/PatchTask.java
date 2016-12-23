@@ -473,8 +473,7 @@ public class PatchTask extends DefaultTask {
 
 			if (moduleGroup.equals(moduleVersionIdentifier.getGroup()) &&
 				moduleName.equals(moduleVersionIdentifier.getName()) &&
-				moduleVersion.equals(
-					moduleVersionIdentifier.getVersion())) {
+				moduleVersion.equals(moduleVersionIdentifier.getVersion())) {
 
 				return resolvedArtifact.getFile();
 			}

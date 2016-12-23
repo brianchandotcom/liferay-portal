@@ -1629,8 +1629,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected Class<? extends WorkflowRepositoryEventType>
-		getWorkflowRepositoryEventTypeClass(
-			String syncEvent) {
+		getWorkflowRepositoryEventTypeClass(String syncEvent) {
 
 		if (syncEvent.equals(DLSyncConstants.EVENT_ADD)) {
 			return WorkflowRepositoryEventType.Add.class;

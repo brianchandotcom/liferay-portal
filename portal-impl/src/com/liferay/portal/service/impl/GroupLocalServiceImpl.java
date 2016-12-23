@@ -3758,8 +3758,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 						if ((resourcePermission.getRoleId() ==
 								rolePermissions.getRoleId()) &&
-							resourcePermission.hasAction(
-								resourceAction)) {
+							resourcePermission.hasAction(resourceAction)) {
 
 							Group group = groupPersistence.fetchByPrimaryKey(
 								GetterUtil.getLong(

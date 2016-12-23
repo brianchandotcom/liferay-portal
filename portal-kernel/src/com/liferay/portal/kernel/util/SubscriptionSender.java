@@ -368,8 +368,7 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	public <T extends Serializable & Function<Locale, String>>
-		void setLocalizedContextAttribute(
-			String key, T function) {
+		void setLocalizedContextAttribute(String key, T function) {
 
 		setLocalizedContextAttribute(key, function, true);
 	}

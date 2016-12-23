@@ -1634,8 +1634,7 @@ public class DDMTemplateLocalServiceImpl
 				ddmGroupServiceConfiguration.smallImageExtensions()) {
 
 			if (StringPool.STAR.equals(smallImageExtension) ||
-				StringUtil.endsWith(
-					smallImageName, smallImageExtension)) {
+				StringUtil.endsWith(smallImageName, smallImageExtension)) {
 
 				validSmallImageExtension = true;
 

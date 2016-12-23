@@ -49,8 +49,7 @@ public class MultiVMPoolUtil {
 	 */
 	@Deprecated
 	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getCache(
-			String portalCacheName, boolean blocking) {
+		PortalCache<K, V> getCache(String portalCacheName, boolean blocking) {
 
 		return getPortalCache(portalCacheName, blocking);
 	}

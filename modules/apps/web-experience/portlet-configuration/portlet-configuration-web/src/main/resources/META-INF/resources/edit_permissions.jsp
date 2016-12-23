@@ -426,6 +426,8 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" name="saveButton" type="submit" />
+
+		<aui:button cssClass="btn-lg" type="cancel" />
 	</aui:button-row>
 </div>
 

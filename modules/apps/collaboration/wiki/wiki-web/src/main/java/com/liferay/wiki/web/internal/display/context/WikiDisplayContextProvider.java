@@ -23,16 +23,13 @@ import com.liferay.wiki.display.context.WikiViewPageDisplayContext;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -41,6 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Iván Zaera
+ * @author Sergio González
  */
 @Component(service = WikiDisplayContextProvider.class)
 public class WikiDisplayContextProvider {
@@ -49,14 +47,11 @@ public class WikiDisplayContextProvider {
 		HttpServletRequest request, HttpServletResponse response,
 		WikiPage wikiPage) {
 
-		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
-			_wikiDisplayContextFactories.values();
-
 		WikiEditPageDisplayContext wikiEditPageDisplayContext =
 			new DefaultWikiEditPageDisplayContext(request, response, wikiPage);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				wikiDisplayContextFactories) {
+				_wikiDisplayContextFactories) {
 
 			wikiEditPageDisplayContext =
 				wikiDisplayContextFactory.getWikiEditPageDisplayContext(
@@ -70,14 +65,11 @@ public class WikiDisplayContextProvider {
 		HttpServletRequest request, HttpServletResponse response,
 		WikiNode wikiNode) {
 
-		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
-			_wikiDisplayContextFactories.values();
-
 		WikiListPagesDisplayContext wikiListPagesDisplayContext =
 			new DefaultWikiListPagesDisplayContext(request, response, wikiNode);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				wikiDisplayContextFactories) {
+				_wikiDisplayContextFactories) {
 
 			wikiListPagesDisplayContext =
 				wikiDisplayContextFactory.getWikiListPagesDisplayContext(
@@ -90,14 +82,11 @@ public class WikiDisplayContextProvider {
 	public WikiNodeInfoPanelDisplayContext getWikiNodeInfoPanelDisplayContext(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
-			_wikiDisplayContextFactories.values();
-
 		WikiNodeInfoPanelDisplayContext wikiNodeInfoPanelDisplayContext =
 			new DefaultWikiNodeInfoPanelDisplayContext(request, response);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				wikiDisplayContextFactories) {
+				_wikiDisplayContextFactories) {
 
 			wikiNodeInfoPanelDisplayContext =
 				wikiDisplayContextFactory.getWikiNodeInfoPanelDisplayContext(
@@ -110,14 +99,11 @@ public class WikiDisplayContextProvider {
 	public WikiPageInfoPanelDisplayContext getWikiPageInfoPanelDisplayContext(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
-			_wikiDisplayContextFactories.values();
-
 		WikiPageInfoPanelDisplayContext wikiPageInfoPanelDisplayContext =
 			new DefaultWikiPageInfoPanelDisplayContext(request, response);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				wikiDisplayContextFactories) {
+				_wikiDisplayContextFactories) {
 
 			wikiPageInfoPanelDisplayContext =
 				wikiDisplayContextFactory.getWikiPageInfoPanelDisplayContext(
@@ -131,14 +117,11 @@ public class WikiDisplayContextProvider {
 		HttpServletRequest request, HttpServletResponse response,
 		WikiPage wikiPage) {
 
-		Collection<WikiDisplayContextFactory> wikiDisplayContextFactories =
-			_wikiDisplayContextFactories.values();
-
 		WikiViewPageDisplayContext wikiViewPageDisplayContext =
 			new DefaultWikiViewPageDisplayContext(request, response, wikiPage);
 
 		for (WikiDisplayContextFactory wikiDisplayContextFactory :
-				wikiDisplayContextFactories) {
+				_wikiDisplayContextFactories) {
 
 			wikiViewPageDisplayContext =
 				wikiDisplayContextFactory.getWikiViewPageDisplayContext(
@@ -148,30 +131,6 @@ public class WikiDisplayContextProvider {
 		return wikiViewPageDisplayContext;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		for (Map.Entry
-				<ServiceReference<WikiDisplayContextFactory>,
-					WikiDisplayContextFactory> entry :
-						_wikiDisplayContextFactories.entrySet()) {
-
-			if (entry.getValue() != null) {
-				continue;
-			}
-
-			ServiceReference<WikiDisplayContextFactory> serviceReference =
-				entry.getKey();
-
-			WikiDisplayContextFactory wikiDisplayContextFactory =
-				_bundleContext.getService(serviceReference);
-
-			_wikiDisplayContextFactories.put(
-				serviceReference, wikiDisplayContextFactory);
-		}
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -179,28 +138,19 @@ public class WikiDisplayContextProvider {
 		service = WikiDisplayContextFactory.class
 	)
 	protected void setWikiDisplayContextFactory(
-		ServiceReference<WikiDisplayContextFactory> serviceReference) {
+		WikiDisplayContextFactory wikiDisplayContextFactory) {
 
-		WikiDisplayContextFactory wikiDisplayContextFactory = null;
-
-		if (_bundleContext != null) {
-			wikiDisplayContextFactory = _bundleContext.getService(
-				serviceReference);
-		}
-
-		_wikiDisplayContextFactories.put(
-			serviceReference, wikiDisplayContextFactory);
+		_wikiDisplayContextFactories.add(wikiDisplayContextFactory);
 	}
 
 	protected void unsetWikiDisplayContextFactory(
-		ServiceReference<WikiDisplayContextFactory> serviceReference) {
+		WikiDisplayContextFactory wikiDisplayContextFactory) {
 
-		_wikiDisplayContextFactories.remove(serviceReference);
+		_wikiDisplayContextFactories.remove(wikiDisplayContextFactory);
 	}
 
-	private BundleContext _bundleContext;
-	private final Map
-		<ServiceReference<WikiDisplayContextFactory>, WikiDisplayContextFactory>
-			_wikiDisplayContextFactories = new ConcurrentSkipListMap<>();
+	private final BundleContext _bundleContext;
+	private final List<WikiDisplayContextFactory> _wikiDisplayContextFactories =
+		new CopyOnWriteArrayList<>();
 
 }

@@ -18,15 +18,12 @@ import com.liferay.message.boards.display.context.MBDisplayContextFactory;
 import com.liferay.message.boards.display.context.MBHomeDisplayContext;
 import com.liferay.message.boards.display.context.MBListDisplayContext;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -36,6 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Iván Zaera
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @Component(service = MBDisplayContextProvider.class)
 public class MBDisplayContextProvider {
@@ -43,14 +41,11 @@ public class MBDisplayContextProvider {
 	public MBHomeDisplayContext getMBHomeDisplayContext(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		Collection<MBDisplayContextFactory> mbDisplayContextFactories =
-			_mbDisplayContextFactories.values();
-
 		MBHomeDisplayContext mbHomeDisplayContext =
 			new DefaultMBHomeDisplayContext(request, response);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
-				mbDisplayContextFactories) {
+				_mbDisplayContextFactories) {
 
 			mbHomeDisplayContext =
 				mbDisplayContextFactory.getMBHomeDisplayContext(
@@ -64,14 +59,11 @@ public class MBDisplayContextProvider {
 		HttpServletRequest request, HttpServletResponse response,
 		long categoryId) {
 
-		Collection<MBDisplayContextFactory> mbDisplayContextFactories =
-			_mbDisplayContextFactories.values();
-
 		MBListDisplayContext mbListDisplayContext =
 			new DefaultMBListDisplayContext(request, response, categoryId);
 
 		for (MBDisplayContextFactory mbDisplayContextFactory :
-				mbDisplayContextFactories) {
+				_mbDisplayContextFactories) {
 
 			mbListDisplayContext =
 				mbDisplayContextFactory.getMBListDisplayContext(
@@ -81,10 +73,6 @@ public class MBDisplayContextProvider {
 		return mbListDisplayContext;
 	}
 
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -92,28 +80,18 @@ public class MBDisplayContextProvider {
 		service = MBDisplayContextFactory.class
 	)
 	protected void setMBDisplayContextFactory(
-		ServiceReference<MBDisplayContextFactory> serviceReference) {
+		MBDisplayContextFactory mbDisplayContextFactory) {
 
-		MBDisplayContextFactory mbDisplayContextFactory = null;
-
-		if (_bundleContext != null) {
-			mbDisplayContextFactory = _bundleContext.getService(
-				serviceReference);
-		}
-
-		_mbDisplayContextFactories.put(
-			serviceReference, mbDisplayContextFactory);
+		_mbDisplayContextFactories.add(mbDisplayContextFactory);
 	}
 
 	protected void unsetMBDisplayContextFactory(
-		ServiceReference<MBDisplayContextFactory> serviceReference) {
+		MBDisplayContextFactory mbDisplayContextFactory) {
 
-		_mbDisplayContextFactories.remove(serviceReference);
+		_mbDisplayContextFactories.remove(mbDisplayContextFactory);
 	}
 
-	private BundleContext _bundleContext;
-	private final Map
-		<ServiceReference<MBDisplayContextFactory>, MBDisplayContextFactory>
-			_mbDisplayContextFactories = new ConcurrentSkipListMap<>();
+	private final List<MBDisplayContextFactory> _mbDisplayContextFactories =
+		new CopyOnWriteArrayList<>();
 
 }

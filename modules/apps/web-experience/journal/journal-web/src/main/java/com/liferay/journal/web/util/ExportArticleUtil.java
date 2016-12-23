@@ -56,7 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ExportArticleUtil {
 
 	/**
-	 * @deprecated As of 2.0.0, replaced by {@link #sendFile(String,
+	 * @deprecated As of 1.5.0, replaced by {@link #sendFile(String,
 	 *             PortletRequest, PortletResponse)}
 	 */
 	@Deprecated

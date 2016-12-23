@@ -9,6 +9,19 @@
 		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 	</command>
 
+	<command name="selectAppCP">
+		<var name="key_appName" value="${appName}" />
+
+		<while>
+			<condition function="IsElementNotPresent" locator1="AppManager#APP_NAME" />
+			<then>
+				<execute function="Click" locator1="Pagination#NEXT_LINK" />
+			</then>
+		</while>
+
+		<execute function="AssertClick" locator1="AppManager#APP_NAME" value1="${appName}" />
+	</command>
+
 	<command name="uninstallAppCP">
 		<var name="key_appName" value="${appName}" />
 
@@ -25,6 +38,21 @@
 		<var name="key_appName" value="${appName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="AppManager#APP_NAME" value1="${appName}" />
+	</command>
+
+	<command name="viewNoAppCP">
+		<var name="key_appName" value="${appName}" />
+
+		<execute function="AssertElementNotPresent" locator1="AppManager#APP_NAME" value1="${appName}" />
+
+		<while>
+			<condition function="IsElementPresent" locator1="Pagination#NEXT_LINK" />
+			<then>
+				<execute function="Click" locator1="Pagination#NEXT_LINK" />
+
+				<execute function="AssertElementNotPresent" locator1="AppManager#APP_NAME" value1="${appName}" />
+			</then>
+		</while>
 	</command>
 
 	<command name="viewUninstallAppCP">

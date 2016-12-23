@@ -3337,16 +3337,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (((trimmedLine.length() + previousLineLength) <= _maxLineLength) &&
-			((previousLine.endsWith(StringPool.PERIOD) &&
-			  !line.endsWith(StringPool.OPEN_PARENTHESIS)) ||
-			 ((previousLine.endsWith(StringPool.OPEN_BRACKET) ||
-			   previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
-			  line.endsWith(StringPool.SEMICOLON)))) {
+		if ((trimmedLine.length() + previousLineLength) <= _maxLineLength) {
+			if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
+				line.endsWith(") {") && (getLevel(line) < 0)) {
 
-			return getCombinedLinesContent(
-				content, fileName, line, trimmedLine, lineLength, lineCount,
-				previousLine, null, false, false, 0);
+				return getCombinedLinesContent(
+					content, fileName, line, trimmedLine, lineLength, lineCount,
+					previousLine, null, false, false, 0);
+			}
+
+			if ((previousLine.endsWith(StringPool.PERIOD) &&
+				 !line.endsWith(StringPool.OPEN_PARENTHESIS)) ||
+				((previousLine.endsWith(StringPool.OPEN_BRACKET) ||
+				  previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
+				 line.endsWith(StringPool.SEMICOLON))) {
+
+				return getCombinedLinesContent(
+					content, fileName, line, trimmedLine, lineLength, lineCount,
+					previousLine, null, false, false, 0);
+			}
 		}
 
 		if (previousLine.endsWith(StringPool.EQUAL) &&

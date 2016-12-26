@@ -168,6 +168,12 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.json.JSONObject getGeolocationJSONObject()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoValue.getGeolocationJSONObject();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.CacheModel<ExpandoValue> toCacheModel() {
 		return _expandoValue.toCacheModel();
 	}
@@ -572,6 +578,13 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	public void setFloatArray(float[] data)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_expandoValue.setFloatArray(data);
+	}
+
+	@Override
+	public void setGeolocationJSONObject(
+		com.liferay.portal.kernel.json.JSONObject data)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_expandoValue.setGeolocationJSONObject(data);
 	}
 
 	@Override

@@ -292,6 +292,63 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								</c:when>
 							</c:choose>
 						</c:when>
+						<c:when test="<%= type == ExpandoColumnConstants.GEOLOCATION %>">
+
+							<%
+								JSONObject geolocationJSONObject = JSONFactoryUtil.createJSONObject(value.toString());
+							%>
+
+							<div id="<portlet:namespace/>CoordinatesContainer">
+								<div class="glyphicon glyphicon-map-marker"
+									id="<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--Location" %>">
+								</div>
+
+								<liferay-map:map-display
+									geolocation="<%= true %>"
+									latitude='<%= geolocationJSONObject.getDouble("latitude", 0) %>'
+									longitude='<%= geolocationJSONObject.getDouble("longitude", 0) %>'
+									name='<%= "ExpandoAttribute--" + name +"--" %>'
+								/>
+							</div>
+
+							<aui:script use="aui-base, liferay-map-base">
+								var inputName = "<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--" %>";
+
+								var geolocationField = {
+									init: function() {
+										Liferay.MapBase.get(
+											inputName,
+											function(map) {
+												map.on('positionChange', geolocationField.onPositionChange, geolocationField);
+											}
+										);
+									},
+
+									onPositionChange: function(event) {
+										var location = event.newVal.location;
+
+										var inputNode = A.one('[name="' + inputName + '"]');
+
+										inputNode.val(
+											JSON.stringify(
+												{
+													latitude: location.lat,
+													longitude: location.lng
+												}
+											)
+										);
+
+										var locationNode = A.one('#' + inputName + 'Location');
+
+										locationNode.html(event.newVal.address);
+									}
+								};
+
+								geolocationField.init();
+							</aui:script>
+
+							<aui:input name='<%= "ExpandoAttribute--" + name + "--" %>' type="hidden" value="<%= HtmlUtil.escape(value.toString()) %>" />
+						</c:when>
 						<c:when test="<%= type == ExpandoColumnConstants.INTEGER_ARRAY %>">
 
 							<%
@@ -686,6 +743,9 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 				else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
 					sb.append(StringUtil.merge((float[])value));
 				}
+				else if (type == ExpandoColumnConstants.GEOLOCATION) {
+					sb.append(value.toString());
+				}
 				else if (type == ExpandoColumnConstants.INTEGER) {
 					sb.append((Integer)value);
 				}
@@ -723,10 +783,30 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 				}
 				%>
 
-				<c:if test="<%= editable || Validator.isNotNull(sb.toString()) %>">
+				<c:if test="<%= (type != ExpandoColumnConstants.GEOLOCATION) && (editable || Validator.isNotNull(sb.toString())) %>">
 					<aui:field-wrapper label="<%= label ? localizedName : StringPool.BLANK %>">
 						<span id="<%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>"><%= HtmlUtil.escape(sb.toString()) %></span>
 					</aui:field-wrapper>
+				</c:if>
+
+				<c:if test="<%= (type == ExpandoColumnConstants.GEOLOCATION) && (editable || Validator.isNotNull(sb.toString())) %>">
+
+					<%
+					JSONObject geolocationJSONObject = JSONFactoryUtil.createJSONObject(value.toString());
+					%>
+
+					<div id="<portlet:namespace/>CoordinatesContainer">
+						<div class="glyphicon glyphicon-map-marker"
+							id="<%= portletDisplay.getNamespace()+"ExpandoAttribute--" + name + "--Location" %>">
+						</div>
+
+						<liferay-map:map-display
+							geolocation="<%= true %>"
+							latitude='<%= geolocationJSONObject.getDouble("latitude", 0) %>'
+							longitude='<%= geolocationJSONObject.getDouble("longitude", 0) %>'
+							name='<%= "ExpandoAttribute--" + name +"--" %>'
+						/>
+					</div>
 				</c:if>
 			</c:otherwise>
 		</c:choose>

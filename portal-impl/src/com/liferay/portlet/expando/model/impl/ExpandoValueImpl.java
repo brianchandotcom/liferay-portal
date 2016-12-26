@@ -19,6 +19,8 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -150,6 +152,13 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		validate(ExpandoColumnConstants.FLOAT_ARRAY);
 
 		return GetterUtil.getFloatValues(StringUtil.split(getData()));
+	}
+
+	@Override
+	public JSONObject getGeolocationJSONObject() throws PortalException {
+		validate(ExpandoColumnConstants.GEOLOCATION);
+
+		return JSONFactoryUtil.createJSONObject(getData());
 	}
 
 	@Override
@@ -406,6 +415,15 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 		validate(ExpandoColumnConstants.FLOAT_ARRAY);
 
 		setData(StringUtil.merge(data));
+	}
+
+	@Override
+	public void setGeolocationJSONObject(JSONObject data)
+		throws PortalException {
+
+		validate(ExpandoColumnConstants.GEOLOCATION);
+
+		setData(data.toJSONString());
 	}
 
 	@Override

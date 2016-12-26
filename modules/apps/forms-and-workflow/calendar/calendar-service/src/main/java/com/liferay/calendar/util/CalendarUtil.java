@@ -25,6 +25,7 @@ import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
 import com.liferay.calendar.service.CalendarServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.comparator.CalendarNameComparator;
+import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -340,6 +341,13 @@ public class CalendarUtil {
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (CalendarBooking calendarBooking : calendarBookings) {
+			if ((calendarBooking.getStatus() ==
+					CalendarBookingWorkflowConstants.STATUS_DRAFT) &&
+				(calendarBooking.getUserId() != themeDisplay.getUserId())) {
+
+				continue;
+			}
+
 			JSONObject jsonObject = toCalendarBookingJSONObject(
 				themeDisplay, calendarBooking, timeZone);
 

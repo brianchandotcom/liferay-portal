@@ -33,9 +33,9 @@ public class IndentationCheck extends AbstractCheck {
 	@Override
 	public int[] getDefaultTokens() {
 		return new int[] {
-			TokenTypes.ASSIGN, TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
-			TokenTypes.LITERAL_WHILE, TokenTypes.METHOD_DEF,
-			TokenTypes.VARIABLE_DEF
+			TokenTypes.ASSIGN, TokenTypes.LITERAL_BREAK, TokenTypes.LITERAL_FOR,
+			TokenTypes.LITERAL_IF, TokenTypes.LITERAL_WHILE,
+			TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF
 		};
 	}
 

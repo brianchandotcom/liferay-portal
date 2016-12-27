@@ -171,7 +171,7 @@ renderResponse.setTitle((recordSet == null) ? LanguageUtil.get(request, "new-for
 			<div class="form-group">
 				<label class="control-label ddl-publish-checkbox" for="<portlet:namespace />publishCheckbox">
 					<span class="pull-left">
-						<small><liferay-ui:message key="make-this-form-public" /></small>
+						<small><liferay-ui:message key="publish-this-form" /></small>
 					</span>
 
 					<aui:input label="" name="publishCheckbox" type="toggle-switch" value="<%= ddlFormAdminDisplayContext.isFormPublished() %>" />

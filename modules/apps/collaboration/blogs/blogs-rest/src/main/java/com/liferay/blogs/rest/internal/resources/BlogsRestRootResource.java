@@ -12,33 +12,16 @@
  * details.
  */
 
-package com.liferay.blogs.rest.internal;
+package com.liferay.blogs.rest.internal.resources;
 
-import com.liferay.blogs.rest.internal.resources.BlogsRestRootResource;
-import com.liferay.portal.kernel.util.SetUtil;
-
-import java.util.Collections;
-import java.util.Set;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.ws.rs.Path;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  */
-@ApplicationPath("/") @Component(immediate = true, service = Application.class)
-public class BlogsJaxRsApplication extends Application {
-
-	@Override
-	public Set<Object> getSingletons() {
-		return SetUtil.fromCollection(
-			Collections.singletonList(_blogsRestRootResource));
-	}
-
-	@Reference
-	private BlogsRestRootResource _blogsRestRootResource;
-
+@Component(immediate = true, service = BlogsRestRootResource.class)
+@Path("/")
+public class BlogsRestRootResource {
 }

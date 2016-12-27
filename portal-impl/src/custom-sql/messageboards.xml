@@ -9,19 +9,8 @@
 				MBCategory
 			WHERE
 				(MBCategory.groupId = ?) AND
-				(MBCategory.parentCategoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.countC_ByG_P_S">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT MBCategory.categoryId) AS COUNT_VALUE
-			FROM
-				MBCategory
-			WHERE
-				(MBCategory.groupId = ?) AND
 				(MBCategory.parentCategoryId = ?) AND
-				(MBCategory.status = ?)
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.countC_ByS_G_U_P">
@@ -49,19 +38,8 @@
 				MBThread
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBThread.categoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.countT_ByG_C_S">
-		<![CDATA[
-			SELECT
-				COUNT(DISTINCT MBThread.threadId) AS COUNT_VALUE
-			FROM
-				MBThread
-			WHERE
-				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
-				(MBThread.status = ?)
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.findC_ByG_P">
@@ -76,23 +54,8 @@
 				MBCategory
 			WHERE
 				(MBCategory.groupId = ?) AND
-				(MBCategory.parentCategoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.findC_ByG_P_S">
-		<![CDATA[
-			SELECT
-				DISTINCT MBCategory.categoryId AS modelId,
-				[$NULL_DATE$] AS modifiedDate,
-				0 AS priority,
-				MBCategory.name AS name,
-				0 AS modelCategory
-			FROM
-				MBCategory
-			WHERE
-				(MBCategory.groupId = ?) AND
 				(MBCategory.parentCategoryId = ?) AND
-				(MBCategory.status = ?)
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.findC_ByS_G_U_P">
@@ -126,23 +89,8 @@
 				MBThread
 			WHERE
 				(MBThread.groupId = ?) AND
-				(MBThread.categoryId = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder.findT_ByG_C_S">
-		<![CDATA[
-			SELECT
-				DISTINCT MBThread.threadId AS modelId,
-				MBThread.modifiedDate AS modifiedDate,
-				MBThread.priority AS priority,
-				'' AS name,
-				1 AS modelCategory
-			FROM
-				MBThread
-			WHERE
-				(MBThread.groupId = ?) AND
 				(MBThread.categoryId = ?) AND
-				(MBThread.status = ?)
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder.countByC_T">
@@ -206,6 +154,17 @@
 			WHERE
 				(AssetEntry.classPK IS NULL) AND
 				(MBMessage.categoryId != -1)
+		]]>
+	</sql>
+	<sql id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder.findByThreadId">
+		<![CDATA[
+			SELECT
+				{MBMessage.*}
+			FROM
+				MBMessage
+			WHERE
+				(MBMessage.threadId = ?) AND
+				([$STATUS$] [$OWNER_USER_ID_AND_OR_CONNECTOR$] [$OWNER_USER_ID$])
 		]]>
 	</sql>
 	<sql id="com.liferay.message.boards.kernel.service.persistence.MBMessageFinder.findByG_U_C_S">

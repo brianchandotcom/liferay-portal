@@ -756,6 +756,14 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
+		long userId, long threadId, int status, int start, int end,
+		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator) {
+		return _mbMessageLocalService.getThreadMessages(userId, threadId,
+			status, start, end, comparator);
+	}
+
+	@Override
 	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadRepliesMessages(
 		long threadId, int status, int start, int end) {
 		return _mbMessageLocalService.getThreadRepliesMessages(threadId,

@@ -124,6 +124,14 @@ public class MBCategoryServiceUtil {
 	}
 
 	public static int getCategoriesAndThreadsCount(long groupId,
+		long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getCategoriesAndThreadsCount(groupId, categoryId,
+			queryDefinition);
+	}
+
+	public static int getCategoriesAndThreadsCount(long groupId,
 		long categoryId, int status) {
 		return getService()
 				   .getCategoriesAndThreadsCount(groupId, categoryId, status);
@@ -226,6 +234,13 @@ public class MBCategoryServiceUtil {
 	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
 		long groupId, long categoryId) {
 		return getService().getCategoriesAndThreads(groupId, categoryId);
+	}
+
+	public static java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return getService()
+				   .getCategoriesAndThreads(groupId, categoryId, queryDefinition);
 	}
 
 	public static java.util.List<java.lang.Object> getCategoriesAndThreads(

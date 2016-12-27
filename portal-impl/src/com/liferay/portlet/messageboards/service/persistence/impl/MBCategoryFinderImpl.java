@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
+import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -59,32 +60,20 @@ public class MBCategoryFinderImpl
 	public static final String COUNT_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".countC_ByG_P";
 
-	public static final String COUNT_C_BY_G_P_S =
-		MBCategoryFinder.class.getName() + ".countC_ByG_P_S";
-
 	public static final String COUNT_C_BY_S_G_U_P =
 		MBCategoryFinder.class.getName() + ".countC_ByS_G_U_P";
 
 	public static final String COUNT_T_BY_G_C =
 		MBCategoryFinder.class.getName() + ".countT_ByG_C";
 
-	public static final String COUNT_T_BY_G_C_S =
-		MBCategoryFinder.class.getName() + ".countT_ByG_C_S";
-
 	public static final String FIND_C_BY_G_P =
 		MBCategoryFinder.class.getName() + ".findC_ByG_P";
-
-	public static final String FIND_C_BY_G_P_S =
-		MBCategoryFinder.class.getName() + ".findC_ByG_P_S";
 
 	public static final String FIND_C_BY_S_G_U_P =
 		MBCategoryFinder.class.getName() + ".findC_ByS_G_U_P";
 
 	public static final String FIND_T_BY_G_C =
 		MBCategoryFinder.class.getName() + ".findT_ByG_C";
-
-	public static final String FIND_T_BY_G_C_S =
-		MBCategoryFinder.class.getName() + ".findT_ByG_C_S";
 
 	@Override
 	public int countC_ByS_G_U_P(
@@ -243,16 +232,8 @@ public class MBCategoryFinderImpl
 
 			sb.append(StringPool.OPEN_PARENTHESIS);
 
-			String sql = null;
-
-			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(COUNT_T_BY_G_C);
-			}
-			else {
-				sql = CustomSQLUtil.get(COUNT_T_BY_G_C_S);
-
-				sql = replaceExcludeStatus(sql, queryDefinition);
-			}
+			String sql = CustomSQLUtil.get(
+				COUNT_T_BY_G_C, queryDefinition, MBThreadImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -263,14 +244,8 @@ public class MBCategoryFinderImpl
 			sb.append(sql);
 			sb.append(") UNION ALL (");
 
-			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(COUNT_C_BY_G_P);
-			}
-			else {
-				sql = CustomSQLUtil.get(COUNT_C_BY_G_P_S);
-
-				sql = replaceExcludeStatus(sql, queryDefinition);
-			}
+			sql = CustomSQLUtil.get(
+				COUNT_C_BY_G_P, queryDefinition, MBCategoryImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -291,16 +266,26 @@ public class MBCategoryFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(queryDefinition.getStatus());
 
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(queryDefinition.getStatus());
 
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			int count = 0;
@@ -430,16 +415,8 @@ public class MBCategoryFinderImpl
 
 			sb.append("SELECT * FROM (");
 
-			String sql = null;
-
-			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(FIND_T_BY_G_C);
-			}
-			else {
-				sql = CustomSQLUtil.get(FIND_T_BY_G_C_S);
-
-				sql = replaceExcludeStatus(sql, queryDefinition);
-			}
+			String sql = CustomSQLUtil.get(
+				FIND_T_BY_G_C, queryDefinition, MBThreadImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -450,14 +427,8 @@ public class MBCategoryFinderImpl
 			sb.append(sql);
 			sb.append(" UNION ALL ");
 
-			if (queryDefinition.getStatus() == WorkflowConstants.STATUS_ANY) {
-				sql = CustomSQLUtil.get(FIND_C_BY_G_P);
-			}
-			else {
-				sql = CustomSQLUtil.get(FIND_C_BY_G_P_S);
-
-				sql = replaceExcludeStatus(sql, queryDefinition);
-			}
+			sql = CustomSQLUtil.get(
+				FIND_C_BY_G_P, queryDefinition, MBCategoryImpl.TABLE_NAME);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -483,16 +454,26 @@ public class MBCategoryFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(queryDefinition.getStatus());
 
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			qPos.add(groupId);
 			qPos.add(categoryId);
+			qPos.add(queryDefinition.getStatus());
 
-			if (queryDefinition.getStatus() != WorkflowConstants.STATUS_ANY) {
-				qPos.add(queryDefinition.getStatus());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
+
+				if (queryDefinition.isIncludeOwner()) {
+					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
+				}
 			}
 
 			List<Object> models = new ArrayList<>();
@@ -527,16 +508,6 @@ public class MBCategoryFinderImpl
 		finally {
 			closeSession(session);
 		}
-	}
-
-	protected String replaceExcludeStatus(
-		String sql, QueryDefinition<?> queryDefinition) {
-
-		if (queryDefinition.isExcludeStatus()) {
-			sql = StringUtil.replace(sql, ".status = ?)", ".status != ?)");
-		}
-
-		return sql;
 	}
 
 	protected String updateSQL(

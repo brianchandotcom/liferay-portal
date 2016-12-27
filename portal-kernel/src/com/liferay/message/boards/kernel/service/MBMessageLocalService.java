@@ -525,6 +525,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 		Comparator<MBMessage> comparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MBMessage> getThreadMessages(long userId, long threadId,
+		int status, int start, int end, Comparator<MBMessage> comparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<MBMessage> getThreadRepliesMessages(long threadId, int status,
 		int start, int end);
 

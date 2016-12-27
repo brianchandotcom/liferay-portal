@@ -34,6 +34,7 @@ import com.liferay.message.boards.kernel.model.MBThreadConstants;
 import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateComparator;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1247,7 +1248,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return new MBMessageDisplayImpl(
-			message, parentMessage, category, thread, status, this, comparator);
+			userId, message, parentMessage, category, thread, status, this,
+			comparator);
 	}
 
 	/**
@@ -1346,6 +1348,29 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		else {
 			return mbMessagePersistence.findByT_S(threadId, status, start, end);
 		}
+	}
+
+	@Override
+	public List<MBMessage> getThreadMessages(
+		long userId, long threadId, int status, int start, int end,
+		Comparator<MBMessage> comparator) {
+
+		QueryDefinition<MBMessage> queryDefinition = new QueryDefinition<>(
+			status, userId, true, start, end, null);
+
+		if (comparator instanceof OrderByComparator) {
+			queryDefinition.setOrderByComparator(
+				(OrderByComparator<MBMessage>)comparator);
+		}
+
+		List<MBMessage> messages = mbMessageFinder.findByThreadId(
+			threadId, queryDefinition);
+
+		if (!(comparator instanceof OrderByComparator)) {
+			messages = ListUtil.sort(messages, comparator);
+		}
+
+		return messages;
 	}
 
 	@Override

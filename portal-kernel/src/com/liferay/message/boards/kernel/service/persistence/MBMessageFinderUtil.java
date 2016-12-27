@@ -89,6 +89,12 @@ public class MBMessageFinderUtil {
 		return getFinder().findByNoAssets();
 	}
 
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> findByThreadId(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBMessage> queryDefinition) {
+		return getFinder().findByThreadId(threadId, queryDefinition);
+	}
+
 	public static java.util.List<java.lang.Long> findByG_U_C_S(long groupId,
 		long userId, long[] categoryIds, int status, int start, int end) {
 		return getFinder()

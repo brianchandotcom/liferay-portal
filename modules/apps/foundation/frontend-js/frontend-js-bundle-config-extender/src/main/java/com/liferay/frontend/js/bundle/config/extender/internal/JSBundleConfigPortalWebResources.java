@@ -56,7 +56,9 @@ public class JSBundleConfigPortalWebResources {
 	protected void setBundlerConfigServlet(
 		JSBundleConfigServlet jsLBundleConfigServlet) {
 
-		_jsBundleConfigServlet = jsLBundleConfigServlet;
+		_servletContext = jsLBundleConfigServlet.getServletContext();
+
+		_contextPath = _servletContext.getContextPath();
 	}
 
 	@Reference(unbind = "-")
@@ -66,18 +68,17 @@ public class JSBundleConfigPortalWebResources {
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
-	private JSBundleConfigServlet _jsBundleConfigServlet;
+	private String _contextPath;
 	private JSBundleConfigTracker _jsBundleConfigTracker;
 	private ServiceRegistration<?> _serviceRegistration;
+	private ServletContext _servletContext;
 
 	private class InternalPortalWebResources
 		implements com.liferay.portal.kernel.servlet.PortalWebResources {
 
 		@Override
 		public String getContextPath() {
-			ServletContext servletContext = getServletContext();
-
-			return servletContext.getContextPath();
+			return _contextPath;
 		}
 
 		@Override
@@ -93,7 +94,7 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public ServletContext getServletContext() {
-			return _jsBundleConfigServlet.getServletContext();
+			return _servletContext;
 		}
 
 	}

@@ -125,6 +125,13 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 
 	@Override
 	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
+			categoryId, queryDefinition);
+	}
+
+	@Override
+	public int getCategoriesAndThreadsCount(long groupId, long categoryId,
 		int status) {
 		return _mbCategoryService.getCategoriesAndThreadsCount(groupId,
 			categoryId, status);
@@ -243,6 +250,14 @@ public class MBCategoryServiceWrapper implements MBCategoryService,
 	public java.util.List<java.lang.Object> getCategoriesAndThreads(
 		long groupId, long categoryId) {
 		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId);
+	}
+
+	@Override
+	public java.util.List<java.lang.Object> getCategoriesAndThreads(
+		long groupId, long categoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<?> queryDefinition) {
+		return _mbCategoryService.getCategoriesAndThreads(groupId, categoryId,
+			queryDefinition);
 	}
 
 	@Override

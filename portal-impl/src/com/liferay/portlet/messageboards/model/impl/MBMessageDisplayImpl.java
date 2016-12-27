@@ -33,8 +33,9 @@ import java.util.Comparator;
 public class MBMessageDisplayImpl implements MBMessageDisplay {
 
 	public MBMessageDisplayImpl(
-		MBMessage message, MBMessage parentMessage, MBCategory category,
-		MBThread thread, int status, MBMessageLocalService messageLocalService,
+		long userId, MBMessage message, MBMessage parentMessage,
+		MBCategory category, MBThread thread, int status,
+		MBMessageLocalService messageLocalService,
 		Comparator<MBMessage> comparator) {
 
 		_message = message;
@@ -43,7 +44,8 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_thread = thread;
 
 		_treeWalker = new MBTreeWalkerImpl(
-			message.getThreadId(), status, messageLocalService, comparator);
+			userId, message.getThreadId(), status, messageLocalService,
+			comparator);
 
 		_previousThread = null;
 		_nextThread = null;
@@ -61,6 +63,22 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		}
 
 		_discussionMessagesCount = dicussionMessagesCount;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #MBMessageDisplayImpl(long,
+	 *             MBMessage, MBMessage, MBCategory, MBThread, int,
+	 *             MBMessageLocalService, Comparator)}
+	 */
+	@Deprecated
+	public MBMessageDisplayImpl(
+		MBMessage message, MBMessage parentMessage, MBCategory category,
+		MBThread thread, int status, MBMessageLocalService messageLocalService,
+		Comparator<MBMessage> comparator) {
+
+		this(
+			0, message, parentMessage, category, thread, status,
+			messageLocalService, comparator);
 	}
 
 	/**

@@ -52,6 +52,10 @@ public interface MBMessageFinder {
 
 	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> findByNoAssets();
 
+	public java.util.List<com.liferay.message.boards.kernel.model.MBMessage> findByThreadId(
+		long threadId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.message.boards.kernel.model.MBMessage> queryDefinition);
+
 	public java.util.List<java.lang.Long> findByG_U_C_S(long groupId,
 		long userId, long[] categoryIds, int status, int start, int end);
 

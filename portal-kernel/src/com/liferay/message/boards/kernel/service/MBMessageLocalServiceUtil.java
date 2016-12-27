@@ -697,6 +697,14 @@ public class MBMessageLocalServiceUtil {
 		return getService().getThreadMessages(threadId, status, comparator);
 	}
 
+	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadMessages(
+		long userId, long threadId, int status, int start, int end,
+		java.util.Comparator<com.liferay.message.boards.kernel.model.MBMessage> comparator) {
+		return getService()
+				   .getThreadMessages(userId, threadId, status, start, end,
+			comparator);
+	}
+
 	public static java.util.List<com.liferay.message.boards.kernel.model.MBMessage> getThreadRepliesMessages(
 		long threadId, int status, int start, int end) {
 		return getService()

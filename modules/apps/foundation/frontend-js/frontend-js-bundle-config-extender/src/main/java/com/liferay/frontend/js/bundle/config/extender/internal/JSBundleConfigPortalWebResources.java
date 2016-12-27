@@ -27,14 +27,15 @@ import org.osgi.service.component.annotations.Reference;
  * @author Carlos Sierra Andrés
  * @author Chema Balsas
  */
-@Component(immediate = true)
+@Component(enabled = false, immediate = true)
 public class JSBundleConfigPortalWebResources {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
 			com.liferay.portal.kernel.servlet.PortalWebResources
-				portalWebResources = new InternalPortalWebResources();
+				portalWebResources = new InternalPortalWebResources(
+					_jsBundleConfigServlet.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
 				com.liferay.portal.kernel.servlet.PortalWebResources.class,
@@ -52,22 +53,12 @@ public class JSBundleConfigPortalWebResources {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setBundlerConfigServlet(
-		JSBundleConfigServlet jsLBundleConfigServlet) {
-
-		_jsBundleConfigServlet = jsLBundleConfigServlet;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSBundleConfigTracker(
-		JSBundleConfigTracker jsBundleConfigTracker) {
-
-		_jsBundleConfigTracker = jsBundleConfigTracker;
-	}
-
+	@Reference
 	private JSBundleConfigServlet _jsBundleConfigServlet;
+
+	@Reference
 	private JSBundleConfigTracker _jsBundleConfigTracker;
+
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources
@@ -75,9 +66,7 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public String getContextPath() {
-			ServletContext servletContext = getServletContext();
-
-			return servletContext.getContextPath();
+			return _contextPath;
 		}
 
 		@Override
@@ -93,8 +82,16 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public ServletContext getServletContext() {
-			return _jsBundleConfigServlet.getServletContext();
+			return _servletContext;
 		}
+
+		private InternalPortalWebResources(ServletContext servletContext) {
+			_contextPath = servletContext.getContextPath();
+			_servletContext = servletContext;
+		}
+
+		private final String _contextPath;
+		private final ServletContext _servletContext;
 
 	}
 

@@ -697,6 +697,7 @@ public class JspServlet extends HttpServlet {
 
 			_servletContext = servletContext;
 			_bundle = bundle;
+			_contextPath = servletContext.getContextPath();
 		}
 
 		@Override
@@ -732,6 +733,10 @@ public class JspServlet extends HttpServlet {
 
 			if (method.getName().equals("getClassLoader")) {
 				return _jspBundleClassloader;
+			}
+
+			if (method.getName().equals("getContextPath")) {
+				return _contextPath;
 			}
 			else if (method.getName().equals("getResource")) {
 				return _getResource((String)args[0]);
@@ -863,6 +868,7 @@ public class JspServlet extends HttpServlet {
 		}
 
 		private final Bundle _bundle;
+		private final String _contextPath;
 		private final ServletContext _servletContext;
 
 	}

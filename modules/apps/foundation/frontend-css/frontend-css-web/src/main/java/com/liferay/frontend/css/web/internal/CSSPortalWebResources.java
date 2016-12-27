@@ -33,7 +33,7 @@ public class CSSPortalWebResources implements PortalWebResources {
 
 	@Override
 	public String getContextPath() {
-		return _servletContext.getContextPath();
+		return _contextPath;
 	}
 
 	@Override
@@ -62,9 +62,11 @@ public class CSSPortalWebResources implements PortalWebResources {
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
+		_contextPath = servletContext.getContextPath();
 	}
 
 	private Bundle _bundle;
+	private String _contextPath;
 	private ServletContext _servletContext;
 
 }

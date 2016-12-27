@@ -26,14 +26,15 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(immediate = true)
+@Component(enabled = false, immediate = true)
 public class JSLoaderModulesPortalWebResources {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
 			com.liferay.portal.kernel.servlet.PortalWebResources
-				portalWebResources = new InternalPortalWebResources();
+				portalWebResources = new InternalPortalWebResources(
+					_jsLoaderModulesServlet.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
 				com.liferay.portal.kernel.servlet.PortalWebResources.class,
@@ -51,22 +52,12 @@ public class JSLoaderModulesPortalWebResources {
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setJSLoaderModulesServlet(
-		JSLoaderModulesServlet jsLoaderModulesServlet) {
-
-		_jsLoaderModulesServlet = jsLoaderModulesServlet;
-	}
-
-	@Reference(unbind = "-")
-	protected void setJSLoaderModulesTracker(
-		JSLoaderModulesTracker jsLoaderModulesTracker) {
-
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
-	}
-
+	@Reference
 	private JSLoaderModulesServlet _jsLoaderModulesServlet;
+
+	@Reference
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources
@@ -74,9 +65,7 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public String getContextPath() {
-			ServletContext servletContext = getServletContext();
-
-			return servletContext.getContextPath();
+			return _contextPath;
 		}
 
 		@Override
@@ -92,8 +81,16 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public ServletContext getServletContext() {
-			return _jsLoaderModulesServlet.getServletContext();
+			return _servletContext;
 		}
+
+		private InternalPortalWebResources(ServletContext servletContext) {
+			_contextPath = servletContext.getContextPath();
+			_servletContext = servletContext;
+		}
+
+		private final String _contextPath;
+		private final ServletContext _servletContext;
 
 	}
 

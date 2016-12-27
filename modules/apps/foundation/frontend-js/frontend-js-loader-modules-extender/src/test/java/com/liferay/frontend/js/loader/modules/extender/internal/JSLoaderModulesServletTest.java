@@ -49,6 +49,7 @@ import org.osgi.framework.Version;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.service.component.ComponentContext;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -454,6 +455,9 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 
 		JSLoaderModulesServlet jsLoaderModulesServlet =
 			new JSLoaderModulesServlet();
+
+		jsLoaderModulesServlet.activate(
+			mock(ComponentContext.class), mock(Details.class));
 
 		MockServletContext mockServletContext = new MockServletContext();
 

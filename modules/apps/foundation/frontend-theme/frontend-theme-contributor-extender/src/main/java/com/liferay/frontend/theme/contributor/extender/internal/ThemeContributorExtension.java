@@ -81,16 +81,16 @@ public class ThemeContributorExtension implements Extension {
 					ServletContext servletContext = bundleContext.getService(
 						serviceReference);
 
+					PortalWebResources portalWebResources =
+						new ThemeContributorPortalWebResources(servletContext);
+
 					serviceRegistrations.add(
 						bundleContext.registerService(
 							PortalWebResources.class.getName(),
-							new ThemeContributorPortalWebResources(
-								servletContext),
-							null));
+							portalWebResources, null));
 
-					String contextPath = servletContext.getContextPath();
-
-					_bundleWebResources.setServletContextPath(contextPath);
+					_bundleWebResources.setServletContextPath(
+						portalWebResources.getContextPath());
 
 					serviceRegistrations.add(
 						bundleContext.registerService(
@@ -136,15 +136,9 @@ public class ThemeContributorExtension implements Extension {
 	private class ThemeContributorPortalWebResources
 		implements PortalWebResources {
 
-		public ThemeContributorPortalWebResources(
-			ServletContext servletContext) {
-
-			_servletContext = servletContext;
-		}
-
 		@Override
 		public String getContextPath() {
-			return _servletContext.getContextPath();
+			return _contextPath;
 		}
 
 		@Override
@@ -162,11 +156,15 @@ public class ThemeContributorExtension implements Extension {
 			return _servletContext;
 		}
 
-		protected void setServletContext(ServletContext servletContext) {
+		private ThemeContributorPortalWebResources(
+			ServletContext servletContext) {
+
 			_servletContext = servletContext;
+			_contextPath = servletContext.getContextPath();
 		}
 
-		private volatile ServletContext _servletContext;
+		private final String _contextPath;
+		private final ServletContext _servletContext;
 
 	}
 

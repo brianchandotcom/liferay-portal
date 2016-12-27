@@ -136,6 +136,8 @@ public class ModifiableServletContextAdapter
 		_logger = logger;
 
 		_bundle = _bundleContext.getBundle();
+
+		_contextPath = servletContext.getContextPath();
 	}
 
 	public FilterRegistration.Dynamic addFilter(
@@ -322,6 +324,10 @@ public class ModifiableServletContextAdapter
 	@Override
 	public Bundle getBundle() {
 		return _bundle;
+	}
+
+	public String getContextPath() {
+		return _contextPath;
 	}
 
 	public FilterRegistration getFilterRegistration(String filterName) {
@@ -647,6 +653,7 @@ public class ModifiableServletContextAdapter
 
 	private final Bundle _bundle;
 	private final BundleContext _bundleContext;
+	private final String _contextPath;
 	private final Map<Class<? extends EventListener>, EventListener>
 		_eventListeners = new LinkedHashMap<>();
 	private final Map<String, FilterRegistrationImpl> _filterRegistrationImpls =

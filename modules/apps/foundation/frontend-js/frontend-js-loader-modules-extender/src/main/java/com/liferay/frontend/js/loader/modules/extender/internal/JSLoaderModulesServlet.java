@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +56,14 @@ import org.osgi.service.metatype.annotations.Designate;
 @Designate(ocd = Details.class)
 public class JSLoaderModulesServlet extends HttpServlet {
 
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+
+		_componentContext.enableComponent(
+			JSLoaderModulesPortalWebResources.class.getName());
+	}
+
 	@Activate
 	@Modified
 	protected void activate(ComponentContext componentContext, Details details)
@@ -62,6 +72,8 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_details = details;
 
 		_logger = new Logger(componentContext.getBundleContext());
+
+		_componentContext = componentContext;
 	}
 
 	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {
@@ -202,6 +214,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;
 	}
 
+	private ComponentContext _componentContext;
 	private volatile Details _details;
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private Logger _logger;

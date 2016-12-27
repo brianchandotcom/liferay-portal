@@ -835,6 +835,8 @@ and is older than 30 days.
 
 ### Added
 - [LPS-61987]: Enforce the use of snapshot timestamp versions for dependencies.
+- [LPS-69453]: Add an empty `deployDependencies` task to copy additional
+dependency JAR files to the deploy directory.
 - [LPS-69847]: Add the ability to ignore the locally deployed JAR files of a
 portal tool by setting the project property `[portal tool name].ignore.local`.
 
@@ -904,6 +906,7 @@ portal tool by setting the project property `[portal tool name].ignore.local`.
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
+[LPS-69453]: https://issues.liferay.com/browse/LPS-69453
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
 [LPS-69488]: https://issues.liferay.com/browse/LPS-69488
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492

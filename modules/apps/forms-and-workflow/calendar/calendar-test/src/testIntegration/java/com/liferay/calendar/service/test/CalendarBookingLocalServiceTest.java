@@ -940,9 +940,10 @@ public class CalendarBookingLocalServiceTest {
 		recurrence.setFrequency(Frequency.DAILY);
 		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
 
-		CalendarBooking calendarBooking = addRecurringCalendarBooking(
-			_user.getUserId(), calendar.getCalendarId(), startTime, endTime,
-			recurrence, serviceContext);
+		CalendarBooking calendarBooking =
+			CalendarBookingTestUtil.addRecurringCalendarBooking(
+				_user, calendar, startTime, endTime, recurrence,
+				serviceContext);
 
 		Map<Locale, String> earlierDescriptionMap = new HashMap<>(
 			calendarBooking.getDescriptionMap());

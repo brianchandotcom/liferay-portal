@@ -22,9 +22,15 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -53,11 +59,18 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			group = addFormsGroup(company.getCompanyId());
 		}
 
-		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+		Layout sharedLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 			group.getGroupId(), false, "/shared");
 
-		if (layout == null) {
-			addSharedLayout(company.getCompanyId(), group.getGroupId());
+		if (sharedLayout == null) {
+			addPublicLayout(company.getCompanyId(), group.getGroupId());
+		}
+
+		Layout privateLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			group.getGroupId(), true, "/shared");
+
+		if (privateLayout == null) {
+			addPrivateLayout(company.getCompanyId(), group.getGroupId());
 		}
 	}
 
@@ -76,7 +89,34 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 			GroupConstants.FORMS_FRIENDLY_URL, false, false, true, null);
 	}
 
-	protected void addSharedLayout(long companyId, long groupId)
+	protected void addPrivateLayout(long companyId, long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
+		serviceContext.setAttribute("layoutUpdateable", Boolean.FALSE);
+
+		serviceContext.setScopeGroupId(groupId);
+
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
+
+		serviceContext.setUserId(defaultUserId);
+
+		Layout layout = _layoutLocalService.addLayout(
+			defaultUserId, groupId, true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Shared",
+			StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_SHARED_PORTLET, true, "/shared",
+			serviceContext);
+
+		updateUserLayoutViewPermissionPermission(companyId, layout);
+	}
+
+	protected void addPublicLayout(long companyId, long groupId)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -119,12 +159,38 @@ public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 	}
 
 	@Reference(unbind = "-")
+	protected void setResourcePermissionLocalService(
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRoleLocalService(RoleLocalService roleLocalService) {
+		_roleLocalService = roleLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
+	protected void updateUserLayoutViewPermissionPermission(
+			long companyId, Layout layout)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(companyId, RoleConstants.USER);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			role.getCompanyId(), Layout.class.getName(),
+			ResourceConstants.SCOPE_GROUP, String.valueOf(layout.getGroupId()),
+			role.getRoleId(), ActionKeys.VIEW);
+	}
+
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private RoleLocalService _roleLocalService;
 	private UserLocalService _userLocalService;
 
 }

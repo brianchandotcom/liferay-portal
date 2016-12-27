@@ -11,6 +11,7 @@ dependencies {
 
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.5"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"

@@ -36,7 +36,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 							size = 12,
 							value = {
 								"requireCaptcha", "redirectURL", "storageType",
-								"workflowDefinition"
+								"workflowDefinition", "requireAuthentication"
 							}
 						)
 					}
@@ -102,6 +102,11 @@ public interface DDLRecordSetSettings {
 		validationExpression = "isURL(redirectURL)"
 	)
 	public String redirectURL();
+
+	@DDMFormField(predefinedValue = "false", visibilityExpression = "FALSE")
+	public default boolean requireAuthentication() {
+		return false;
+	}
 
 	@DDMFormField(
 		label = "%require-captcha", properties = {"showAsSwitcher=true"},

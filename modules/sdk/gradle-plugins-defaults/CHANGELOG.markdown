@@ -831,6 +831,12 @@ versions of Git.
 error if the version of [Liferay Source Formatter] in use is not the latest one
 and is older than 30 days.
 
+## 2.4.0 - 2016-12-28
+
+### Added
+- [LPS-69453]: Add an empty `deployDependencies` task to copy additional
+dependency JAR files to the deploy directory.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -896,6 +902,7 @@ and is older than 30 days.
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-69288]: https://issues.liferay.com/browse/LPS-69288
 [LPS-69445]: https://issues.liferay.com/browse/LPS-69445
+[LPS-69453]: https://issues.liferay.com/browse/LPS-69453
 [LPS-69470]: https://issues.liferay.com/browse/LPS-69470
 [LPS-69488]: https://issues.liferay.com/browse/LPS-69488
 [LPS-69492]: https://issues.liferay.com/browse/LPS-69492

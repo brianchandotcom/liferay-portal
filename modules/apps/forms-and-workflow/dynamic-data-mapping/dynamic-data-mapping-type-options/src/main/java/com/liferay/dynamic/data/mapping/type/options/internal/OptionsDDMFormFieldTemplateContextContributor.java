@@ -48,10 +48,11 @@ public class OptionsDDMFormFieldTemplateContextContributor
 		Map<String, Object> parameters = new HashMap<>();
 
 		parameters.put(
-			"value", getValue(ddmFormField, ddmFormFieldRenderingContext));
+			"allowEmptyOptions",
+			GetterUtil.getBoolean(
+				ddmFormField.getProperty("allowEmptyOptions")));
 		parameters.put(
-			"allowEmptyOptions", 
-			GetterUtil.getBoolean(ddmFormField.getProperty("allowEmptyOptions")));
+			"value", getValue(ddmFormField, ddmFormFieldRenderingContext));
 
 		return parameters;
 	}

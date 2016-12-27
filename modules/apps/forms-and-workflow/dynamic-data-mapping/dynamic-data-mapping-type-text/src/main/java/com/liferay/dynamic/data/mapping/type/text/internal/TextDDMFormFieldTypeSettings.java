@@ -95,7 +95,8 @@ public interface TextDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		dataType = "ddm-options", label = "%options",
-		properties = {"showLabel=false", "allowEmptyOptions=true"}, required = false, type = "options",
+		properties = {"showLabel=false", "allowEmptyOptions=true"},
+		required = false, type = "options",
 		visibilityExpression = "equals(dataSourceType, \"manual\")"
 	)
 	public DDMFormFieldOptions options();

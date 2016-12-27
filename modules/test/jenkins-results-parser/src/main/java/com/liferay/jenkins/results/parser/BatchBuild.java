@@ -27,6 +27,16 @@ import org.json.JSONObject;
  */
 public class BatchBuild extends BaseBuild {
 
+	public String getBatchName() {
+		String batchName = getParameterValue("JOB_VARIANT");
+
+		if ((batchName == null) || batchName.isEmpty()) {
+			batchName = getParameterValue("JENKINS_JOB_VARIANT");
+		}
+
+		return batchName;
+	}
+
 	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		String status = getStatus();

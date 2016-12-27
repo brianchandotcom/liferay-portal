@@ -32,14 +32,21 @@ public class IndentationCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF};
+		return new int[] {
+			TokenTypes.ASSIGN, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF
+		};
 	}
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
+		if (!_checkToken(detailAST)) {
+			return;
+		}
+
 		FileContents fileContents = getFileContents();
 
-		String line = fileContents.getLine(detailAST.getLineNo() - 1);
+		String line = fileContents.getLine(
+			DetailASTUtil.getStartLine(detailAST) - 1);
 
 		int expectedTabCount = _getExpectedTabCount(detailAST);
 
@@ -119,28 +126,38 @@ public class IndentationCheck extends AbstractCheck {
 		return tabCount + literalNewLineTabCount - parentLineTabCount;
 	}
 
+	private boolean _checkToken(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.ASSIGN) {
+			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
+
+			if (nameAST == null) {
+				return false;
+			}
+
+			if (_isInsideForStatementCriterium(detailAST) ||
+				_isInsideIfOrWhileStatementCriterium(detailAST)) {
+
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private DetailAST _findParent(DetailAST detailAST, int type) {
 		DetailAST match = null;
 
 		DetailAST parentAST = detailAST.getParent();
 
 		while (true) {
-			if (parentAST == null) {
+			if ((parentAST == null) ||
+				(parentAST.getType() == TokenTypes.OBJBLOCK)) {
+
 				return match;
 			}
 
 			if (parentAST.getType() == type) {
 				match = parentAST;
-			}
-
-			if (parentAST.getType() == TokenTypes.OBJBLOCK) {
-				parentAST = parentAST.getParent();
-
-				if (parentAST.getType() == TokenTypes.LITERAL_NEW) {
-					return match;
-				}
-
-				continue;
 			}
 
 			parentAST = parentAST.getParent();
@@ -187,6 +204,41 @@ public class IndentationCheck extends AbstractCheck {
 		}
 
 		return leadingTabCount;
+	}
+
+	private boolean _isInsideForStatementCriterium(DetailAST detailAST) {
+		if ((_findParent(detailAST, TokenTypes.FOR_CONDITION) != null) ||
+			(_findParent(detailAST, TokenTypes.FOR_ITERATOR) != null) ||
+			(_findParent(detailAST, TokenTypes.FOR_INIT) != null)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private boolean _isInsideIfOrWhileStatementCriterium(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return false;
+			}
+
+			if (parentAST.getType() == TokenTypes.EXPR) {
+				parentAST = parentAST.getParent();
+
+				if ((parentAST.getType() == TokenTypes.LITERAL_IF) ||
+					(parentAST.getType() == TokenTypes.LITERAL_WHILE)) {
+
+					return true;
+				}
+
+				continue;
+			}
+
+			parentAST = parentAST.getParent();
+		}
 	}
 
 }

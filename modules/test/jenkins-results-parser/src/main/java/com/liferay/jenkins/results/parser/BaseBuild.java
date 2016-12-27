@@ -526,7 +526,9 @@ public abstract class BaseBuild implements Build {
 	public JSONObject getTestReportJSONObject() {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
-				getBuildURL() + "testReport/api/json", false);
+				JenkinsResultsParserUtil.getLocalURL(
+					getBuildURL() + "testReport/api/json"),
+				false);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(

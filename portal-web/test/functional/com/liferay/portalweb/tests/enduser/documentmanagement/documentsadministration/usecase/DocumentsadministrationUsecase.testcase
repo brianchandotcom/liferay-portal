@@ -960,6 +960,8 @@
 			<var name="portlet" value="Documents and Media" />
 		</execute>
 
+		<execute function="AssertVisible" locator1="ControlMenu#HEADER_TITLE" value1="Documents and Media" />
+
 		<execute macro="DMNavigator#gotoDocumentType" />
 
 		<execute macro="DMDocumentType#edit">

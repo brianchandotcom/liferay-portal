@@ -171,15 +171,23 @@
 			<var name="userEmailAddress" value="userea@liferay.com" />
 		</execute>
 
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
 		<execute macro="ProductMenu#gotoSite">
-			<var name="site" value="Liferay DXP" />
+			<var name="site" value="${siteName}" />
 		</execute>
 
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="WC Title" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#EMPTY_INFO" value1="No results were found that matched the keywords" />
+		<execute macro="Search#viewSearchResultPG">
+			<var name="searchAssetTitle" value="WC Title" />
+			<var name="searchAssetType" value="Web Content Article" />
+		</execute>
 	</command>
 
 	<command name="SearchByUserFacet" priority="4">

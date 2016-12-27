@@ -15,33 +15,16 @@
 package com.liferay.blogs.rest.internal.resources;
 
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.portal.kernel.exception.PortalException;
-
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  */
-@Component(immediate = true, service = BlogsRestRootResource.class)
-@Path("/")
-public class BlogsRestRootResource {
+public class BlogsEntryResource {
 
-	@Path("/{entryId}")
-	public BlogsEntryResource getEntryResource(
-			@PathParam("entryId") long entryId)
-		throws PortalException {
-
-		BlogsEntry blogsEntry = _blogsEntryService.getEntry(entryId);
-
-		return new BlogsEntryResource(blogsEntry);
+	public BlogsEntryResource(BlogsEntry blogsEntry) {
+		_blogsEntry = blogsEntry;
 	}
 
-	@Reference
-	private BlogsEntryService _blogsEntryService;
+	private final BlogsEntry _blogsEntry;
 
 }

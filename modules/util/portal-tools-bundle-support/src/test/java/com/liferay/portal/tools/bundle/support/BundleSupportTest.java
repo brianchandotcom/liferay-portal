@@ -89,7 +89,7 @@ public class BundleSupportTest {
 					}
 				}
 
-		});
+			});
 
 		httpContext.setAuthenticator(
 			new BasicAuthenticator("test") {

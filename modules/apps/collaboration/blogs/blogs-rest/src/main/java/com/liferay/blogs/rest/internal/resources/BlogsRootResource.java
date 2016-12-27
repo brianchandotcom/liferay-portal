@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.blogs.rest.internal;
+package com.liferay.blogs.rest.internal.resources;
 
-import com.liferay.blogs.rest.internal.resources.BlogsRootResource;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Collections;
-import java.util.Set;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,16 +27,21 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alejandro Hernández
  */
-@ApplicationPath("/") @Component(immediate = true, service = Application.class)
-public class BlogsJaxRsApplication extends Application {
+@Component(immediate = true, service = BlogsRootResource.class)
+@Path("/")
+public class BlogsRootResource {
 
-	@Override
-	public Set<Object> getSingletons() {
-		return SetUtil.fromCollection(
-			Collections.singletonList(_blogsRootResource));
+	@Path("/{entryId}")
+	public BlogsEntryResource getEntryResource(
+			@PathParam("entryId") long entryId)
+		throws PortalException {
+
+		BlogsEntry blogsEntry = _blogsEntryService.getEntry(entryId);
+
+		return new BlogsEntryResource(blogsEntry);
 	}
 
 	@Reference
-	private BlogsRootResource _blogsRootResource;
+	private BlogsEntryService _blogsEntryService;
 
 }

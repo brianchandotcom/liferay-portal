@@ -549,5 +549,7 @@
 				</elseif>
 			</if>
 		</for>
+
+		<execute macro="PortletEntry#save" />
 	</command>
 </definition>

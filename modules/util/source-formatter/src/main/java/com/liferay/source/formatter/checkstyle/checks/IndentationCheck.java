@@ -15,6 +15,7 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
@@ -35,28 +36,28 @@ public class IndentationCheck extends AbstractCheck {
 		return new int[] {
 			TokenTypes.ASSIGN, TokenTypes.LITERAL_BREAK, TokenTypes.LITERAL_FOR,
 			TokenTypes.LITERAL_IF, TokenTypes.LITERAL_WHILE,
-			TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF
+			TokenTypes.METHOD_DEF, TokenTypes.RCURLY, TokenTypes.VARIABLE_DEF
 		};
 	}
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
-		if (!_checkToken(detailAST)) {
-			return;
-		}
-
 		FileContents fileContents = getFileContents();
 
 		String line = fileContents.getLine(
 			DetailASTUtil.getStartLine(detailAST) - 1);
+
+		int tabCount = _getLeadingTabCount(line);
+
+		if (!_checkToken(detailAST, tabCount)) {
+			return;
+		}
 
 		int expectedTabCount = _getExpectedTabCount(detailAST);
 
 		if (expectedTabCount == -1) {
 			return;
 		}
-
-		int tabCount = _getLeadingTabCount(line);
 
 		if (tabCount != expectedTabCount) {
 			log(
@@ -128,7 +129,7 @@ public class IndentationCheck extends AbstractCheck {
 		return tabCount + literalNewLineTabCount - parentLineTabCount;
 	}
 
-	private boolean _checkToken(DetailAST detailAST) {
+	private boolean _checkToken(DetailAST detailAST, int tabCount) {
 		if (detailAST.getType() == TokenTypes.ASSIGN) {
 			DetailAST nameAST = detailAST.findFirstToken(TokenTypes.IDENT);
 
@@ -143,6 +144,12 @@ public class IndentationCheck extends AbstractCheck {
 			if (_isInsideForStatementCriterium(detailAST) ||
 				_isInsideIfOrWhileStatementCriterium(detailAST)) {
 
+				return false;
+			}
+		}
+
+		if (detailAST.getType() == TokenTypes.RCURLY) {
+			if (detailAST.getColumnNo() != tabCount) {
 				return false;
 			}
 		}
@@ -171,6 +178,10 @@ public class IndentationCheck extends AbstractCheck {
 	}
 
 	private int _getExpectedTabCount(DetailAST detailAST) {
+		if (detailAST.getType() == TokenTypes.RCURLY) {
+			return _getLeadingTabCountCorrespondingLeftCurly(detailAST);
+		}
+
 		int expectedTabCount = 0;
 
 		DetailAST parentAST = detailAST.getParent();
@@ -210,6 +221,32 @@ public class IndentationCheck extends AbstractCheck {
 		}
 
 		return leadingTabCount;
+	}
+
+	private int _getLeadingTabCountCorrespondingLeftCurly(
+		DetailAST rightCurlyDetailAST) {
+
+		FileContents fileContents = getFileContents();
+
+		DetailAST parentAST = rightCurlyDetailAST.getParent();
+
+		String line = fileContents.getLine(parentAST.getLineNo() - 1);
+
+		if (parentAST.getType() == TokenTypes.LITERAL_SWITCH) {
+			return _getLeadingTabCount(line);
+		}
+
+		String trimmedLine = StringUtil.trim(line);
+
+		if (trimmedLine.equals(StringPool.OPEN_CURLY_BRACE)) {
+			return _getLeadingTabCount(line);
+		}
+
+		parentAST = parentAST.getParent();
+
+		line = fileContents.getLine(parentAST.getLineNo() - 1);
+
+		return _getLeadingTabCount(line);
 	}
 
 	private boolean _isInsideForStatementCriterium(DetailAST detailAST) {

@@ -104,6 +104,14 @@ public class ImageToolUtil {
 		getImageTool().encodeWBMP(renderedImage, os);
 	}
 
+	public static RenderedImage flipHorizontal(RenderedImage renderedImage) {
+		return getImageTool().flipHorizontal(renderedImage);
+	}
+
+	public static RenderedImage flipVertical(RenderedImage renderedImage) {
+		return getImageTool().flipVertical(renderedImage);
+	}
+
 	/**
 	 * Returns the rendered image as a {@link BufferedImage}.
 	 *
@@ -224,6 +232,12 @@ public class ImageToolUtil {
 		throws ImageResolutionException, IOException {
 
 		return getImageTool().read(inputStream);
+	}
+
+	public static RenderedImage rotate(
+		RenderedImage renderedImage, int degrees) {
+
+		return getImageTool().rotate(renderedImage, degrees);
 	}
 
 	/**

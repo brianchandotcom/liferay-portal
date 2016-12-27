@@ -41,6 +41,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
@@ -372,6 +374,36 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
+	public RenderedImage flipHorizontal(RenderedImage renderedImage) {
+		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+
+		AffineTransform affineTransform = AffineTransform.getScaleInstance(
+			-1.0, 1.0);
+
+		affineTransform.translate(-bufferedImage.getWidth(), 0);
+
+		AffineTransformOp affineTransformOp = new AffineTransformOp(
+			affineTransform, null);
+
+		return affineTransformOp.filter(bufferedImage, null);
+	}
+
+	@Override
+	public RenderedImage flipVertical(RenderedImage renderedImage) {
+		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+
+		AffineTransform affineTransform = AffineTransform.getScaleInstance(
+			1.0, -1.0);
+
+		affineTransform.translate(0, -bufferedImage.getHeight());
+
+		AffineTransformOp affineTransformOp = new AffineTransformOp(
+			affineTransform, null);
+
+		return affineTransformOp.filter(bufferedImage, null);
+	}
+
+	@Override
 	public BufferedImage getBufferedImage(RenderedImage renderedImage) {
 		if (renderedImage instanceof BufferedImage) {
 			return (BufferedImage)renderedImage;
@@ -621,6 +653,42 @@ public class ImageToolImpl implements ImageTool {
 		throws ImageResolutionException, IOException {
 
 		return read(_fileUtil.getBytes(inputStream));
+	}
+
+	@Override
+	public RenderedImage rotate(RenderedImage renderedImage, int degrees) {
+		BufferedImage bufferedImage = getBufferedImage(renderedImage);
+
+		int imageWidth = bufferedImage.getWidth();
+		int imageHeight = bufferedImage.getHeight();
+
+		double radians = Math.toRadians(degrees);
+
+		double absoluteSin = Math.abs(Math.sin(radians));
+		double absoluteCos = Math.abs(Math.cos(radians));
+
+		int rotatedImageWidth = (int)Math.floor(
+			(imageWidth * absoluteCos) + (imageHeight * absoluteSin));
+		int rotatedImageHeight = (int)Math.floor(
+			(imageHeight * absoluteCos) + (imageWidth * absoluteSin));
+
+		BufferedImage rotatedBufferedImage = new BufferedImage(
+			rotatedImageWidth, rotatedImageHeight, bufferedImage.getType());
+
+		AffineTransform affineTransform = new AffineTransform();
+
+		affineTransform.translate(
+			rotatedImageWidth / 2, rotatedImageHeight / 2);
+		affineTransform.rotate(radians);
+		affineTransform.translate(imageWidth / (-2), imageHeight / (-2));
+
+		Graphics2D graphics = rotatedBufferedImage.createGraphics();
+
+		graphics.drawImage(bufferedImage, affineTransform, null);
+
+		graphics.dispose();
+
+		return rotatedBufferedImage;
 	}
 
 	@Override

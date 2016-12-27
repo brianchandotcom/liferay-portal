@@ -7715,9 +7715,11 @@ public class JournalArticleLocalServiceImpl
 			String ddmFormFieldName = fieldValue.getKey();
 			LocalizedValue ddmFormFieldValue = fieldValue.getValue();
 
-			updateDDMFormFieldPredefinedValue(
-				fullHierarchyDDMFormFieldsMap.get(ddmFormFieldName),
-				ddmFormFieldValue);
+			if (fullHierarchyDDMFormFieldsMap.containsKey(ddmFormFieldName)) {
+				updateDDMFormFieldPredefinedValue(
+					fullHierarchyDDMFormFieldsMap.get(ddmFormFieldName),
+					ddmFormFieldValue);
+			}
 
 			if (ddmFormFieldsMap.containsKey(ddmFormFieldName)) {
 				updateDDMFormFieldPredefinedValue(

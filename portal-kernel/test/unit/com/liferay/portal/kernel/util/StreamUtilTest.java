@@ -57,8 +57,9 @@ public class StreamUtilTest {
 
 	@Test
 	public void testTransferFileChannel() throws Exception {
-		try (FileChannel fromFileChannel = new FileChannelWrapper(
-				FileChannel.open(_fromFilePath, StandardOpenOption.READ)) {
+		try (FileChannel fromFileChannel =
+				new FileChannelWrapper(
+					FileChannel.open(_fromFilePath, StandardOpenOption.READ)) {
 
 					@Override
 					public long transferTo(

@@ -277,7 +277,7 @@ public class ServiceProxyFactoryTest {
 						AbstractQueuedSynchronizer.ConditionObject.class
 					},
 					condition);
-				}
+			}
 			finally {
 				lock.unlock();
 			}

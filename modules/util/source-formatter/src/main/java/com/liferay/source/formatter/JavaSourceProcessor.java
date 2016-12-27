@@ -3301,6 +3301,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						if (Validator.isNull(nextLine) ||
 							nextLine.endsWith(") {")) {
 
+							if (trimmedPreviousLine.startsWith("try (") &&
+								trimmedLine.startsWith("new ") &&
+								(getLevel(nextLine) == -1)) {
+
+								return null;
+							}
+
 							processMessage(
 								fileName,
 								"'" + trimmedLine + "' should be added to " +

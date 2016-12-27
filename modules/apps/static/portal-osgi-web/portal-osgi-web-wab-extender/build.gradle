@@ -1,5 +1,3 @@
-task deployDependencies(type: Copy)
-
 dependencies {
 	provided fileTree(dir: "lib-patch", exclude: "*-sources.jar", include: "*.jar")
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
@@ -23,47 +21,14 @@ dependencies {
 	provided project(":core:osgi-felix-util")
 }
 
-deploy {
-	finalizedBy deployDependencies
-}
-
 deployDependencies {
-	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
-
-	ext {
-		autoClean = false
-	}
-
 	from(configurations.provided) {
 		include "commons-fileupload-*.jar"
 		include "commons-io-*.jar"
-
-		String renameSuffix = ".jar"
-
-		if (keepDependencyVersions) {
-			renameSuffix = '-$1.jar'
-		}
-
-		rename(/commons-fileupload-(.+)\.jar/, "org.apache.commons.fileupload" + renameSuffix)
-		rename(/commons-io-(.+)\.jar/, "org.apache.commons.io" + renameSuffix)
 	}
 
 	from("lib-patch") {
 		exclude "*-sources.jar"
 		include "org.eclipse.equinox.http.servlet-*.jar"
-
-		if (!keepDependencyVersions) {
-			rename {
-				"org.eclipse.equinox.http.servlet.jar"
-			}
-		}
-	}
-
-	into {
-		liferay.deployDir
-	}
-
-	outputs.upToDateWhen {
-		false
 	}
 }

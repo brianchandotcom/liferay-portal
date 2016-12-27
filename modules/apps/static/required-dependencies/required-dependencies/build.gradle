@@ -1,6 +1,5 @@
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
-task deployDependencies(type: Copy)
 task deployTestLibs(type: Copy)
 
 configurations {
@@ -36,30 +35,11 @@ deploy {
 	deleteAllActions()
 
 	dependsOn = []
-	finalizedBy deployDependencies
 	finalizedBy deployTestLibs
 }
 
 deployDependencies {
-	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
-
-	ext {
-		autoClean = false
-	}
-
 	from configurations.provided
-
-	into  {
-		liferay.deployDir
-	}
-
-	outputs.upToDateWhen {
-		false
-	}
-
-	if (!keepDependencyVersions) {
-		rename new RenameDependencyClosure(project, configurations.provided.name)
-	}
 }
 
 deployTestLibs {

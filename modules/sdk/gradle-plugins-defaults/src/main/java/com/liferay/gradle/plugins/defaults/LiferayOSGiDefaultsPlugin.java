@@ -36,6 +36,8 @@ import com.liferay.gradle.plugins.defaults.tasks.InstallCacheTask;
 import com.liferay.gradle.plugins.defaults.tasks.PrintArtifactPublishCommandsTask;
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask;
 import com.liferay.gradle.plugins.defaults.tasks.WritePropertiesTask;
+import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerExtension;
+import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
@@ -63,6 +65,9 @@ import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
 import groovy.json.JsonSlurper;
 
 import groovy.lang.Closure;
+
+import groovy.time.Duration;
+import groovy.time.TimeCategory;
 
 import java.io.File;
 import java.io.IOException;
@@ -347,6 +352,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
 		_configureConfigurations(project);
+		_configureDependencyChecker(project);
 		_configureDeployDir(project, deployToAppServerLibs, deployToTools);
 		_configureJavaPlugin(project);
 		_configureLocalPortalTool(
@@ -1059,6 +1065,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, BaselinePlugin.class);
+		GradleUtil.applyPlugin(project, DependencyCheckerPlugin.class);
 		GradleUtil.applyPlugin(project, EclipsePlugin.class);
 		GradleUtil.applyPlugin(project, FindBugsPlugin.class);
 		GradleUtil.applyPlugin(project, IdeaPlugin.class);
@@ -1566,6 +1573,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, name);
 
 		configuration.setTransitive(transitive);
+	}
+
+	private void _configureDependencyChecker(Project project) {
+		DependencyCheckerExtension dependencyCheckerExtension =
+			GradleUtil.getExtension(project, DependencyCheckerExtension.class);
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("configuration", SourceFormatterPlugin.CONFIGURATION_NAME);
+		args.put("group", GradleUtil.PORTAL_TOOL_GROUP);
+		args.put("maxAge", _PORTAL_TOOL_MAX_AGE);
+		args.put("name", _SOURCE_FORMATTER_PORTAL_TOOL_NAME);
+		args.put("throwError", Boolean.TRUE);
+
+		dependencyCheckerExtension.maxAge(args);
 	}
 
 	private void _configureDeployDir(
@@ -3221,6 +3243,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		"maven.local.ignore");
 
 	private static final String _PMD_PORTAL_TOOL_NAME = "com.liferay.pmd";
+
+	private static final Duration _PORTAL_TOOL_MAX_AGE = TimeCategory.getDays(
+		30);
 
 	private static final String _RELEASE_PORTAL_ROOT_DIR_PROPERTY_NAME =
 		"release.versions.test.other.dir";

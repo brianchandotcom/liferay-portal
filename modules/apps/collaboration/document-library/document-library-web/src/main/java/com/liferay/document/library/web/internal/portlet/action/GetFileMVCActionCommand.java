@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + DLPortletKeys.MEDIA_GALLERY_DISPLAY,
-		"render.command.name=/document_library/get_file"
+		"mvc.command.name=/document_library/get_file"
 	},
 	service = MVCActionCommand.class
 )

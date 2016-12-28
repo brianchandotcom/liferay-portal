@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.Serializable;
 
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,35 +48,34 @@ public class DDMFormValuesToFieldsConverterImpl
 			DDMStructure ddmStructure, DDMFormValues ddmFormValues)
 		throws PortalException {
 
-		Fields ddmFields = createDDMFields(ddmStructure);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
 
-		Locale defaultLocale = ddmFormValues.getDefaultLocale();
+		Fields ddmFields = createDDMFields(ddmStructure);
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				ddmFormValues.getDDMFormFieldValues()) {
 
 			addDDMFields(
-				ddmStructure, ddmFormFieldValue, ddmFields, defaultLocale);
+				ddmStructure.getStructureId(), ddmFormFieldsMap,
+				ddmFormFieldValue, ddmFields, ddmFormValues.getDefaultLocale());
 		}
 
 		return ddmFields;
 	}
 
 	protected void addDDMField(
-			DDMStructure ddmStructure, DDMFormFieldValue ddmFormFieldValue,
-			Fields ddmFields, Locale defaultLocale)
+			long ddmStructureId, DDMFormField ddmFormField,
+			DDMFormFieldValue ddmFormFieldValue, Fields ddmFields,
+			Locale defaultLocale)
 		throws PortalException {
 
-		String fieldName = ddmFormFieldValue.getName();
-
-		if (!ddmStructure.hasField(fieldName) ||
-			ddmStructure.isFieldTransient(fieldName)) {
-
+		if ((ddmFormField == null) || ddmFormField.isTransient()) {
 			return;
 		}
 
 		Field ddmField = createDDMField(
-			ddmStructure, ddmFormFieldValue, defaultLocale);
+			ddmStructureId, ddmFormField, ddmFormFieldValue, defaultLocale);
 
 		Field existingDDMField = ddmFields.get(ddmField.getName());
 
@@ -87,11 +88,17 @@ public class DDMFormValuesToFieldsConverterImpl
 	}
 
 	protected void addDDMFields(
-			DDMStructure ddmStructure, DDMFormFieldValue ddmFormFieldValue,
-			Fields ddmFields, Locale defaultLocale)
+			long ddmStructureId, Map<String, DDMFormField> ddmFormFieldsMap,
+			DDMFormFieldValue ddmFormFieldValue, Fields ddmFields,
+			Locale defaultLocale)
 		throws PortalException {
 
-		addDDMField(ddmStructure, ddmFormFieldValue, ddmFields, defaultLocale);
+		DDMFormField ddmFormField = ddmFormFieldsMap.get(
+			ddmFormFieldValue.getName());
+
+		addDDMField(
+			ddmStructureId, ddmFormField, ddmFormFieldValue, ddmFields,
+			defaultLocale);
 
 		addFieldDisplayValue(
 			ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME),
@@ -101,8 +108,8 @@ public class DDMFormValuesToFieldsConverterImpl
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			addDDMFields(
-				ddmStructure, nestedDDMFormFieldValue, ddmFields,
-				defaultLocale);
+				ddmStructureId, ddmFormFieldsMap, nestedDDMFormFieldValue,
+				ddmFields, defaultLocale);
 		}
 	}
 
@@ -128,18 +135,17 @@ public class DDMFormValuesToFieldsConverterImpl
 	}
 
 	protected Field createDDMField(
-			DDMStructure ddmStructure, DDMFormFieldValue ddmFormFieldValue,
-			Locale defaultLocale)
+			long ddmStructureId, DDMFormField ddmFormField,
+			DDMFormFieldValue ddmFormFieldValue, Locale defaultLocale)
 		throws PortalException {
 
 		Field ddmField = new Field();
 
-		ddmField.setDDMStructureId(ddmStructure.getStructureId());
+		ddmField.setDDMStructureId(ddmStructureId);
 		ddmField.setDefaultLocale(defaultLocale);
 		ddmField.setName(ddmFormFieldValue.getName());
 
-		String type = ddmStructure.getFieldDataType(
-			ddmFormFieldValue.getName());
+		String type = ddmFormField.getDataType();
 
 		setDDMFieldValue(
 			ddmField, type, ddmFormFieldValue.getValue(), defaultLocale);

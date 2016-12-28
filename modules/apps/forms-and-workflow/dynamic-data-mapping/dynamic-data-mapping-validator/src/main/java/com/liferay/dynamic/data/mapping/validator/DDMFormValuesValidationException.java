@@ -147,6 +147,10 @@ public class DDMFormValuesValidationException extends StorageException {
 
 	}
 
+	/**
+	 * @deprecated As of 2.2.0, with no direct replacement
+	 */
+	@Deprecated
 	public static class MustSetValidValues
 		extends DDMFormValuesValidationException {
 

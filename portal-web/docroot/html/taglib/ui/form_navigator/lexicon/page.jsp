@@ -26,6 +26,8 @@ for (String categoryKey : categoryKeys) {
 		filterCategoryKeys.add(categoryKey);
 	}
 }
+
+String tabsParamName = "tabs1";
 %>
 
 <c:choose>
@@ -35,7 +37,7 @@ for (String categoryKey : categoryKeys) {
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
 			names="<%= StringUtil.merge(filterCategoryKeys) %>"
-			param="tabs1"
+			param="<%= tabsParamName %>"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
@@ -86,41 +88,37 @@ for (String categoryKey : categoryKeys) {
 	var uri = metalUriSrcUri.default;
 
 	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+	var tabsParamName = '<portlet:namespace/><%= tabsParamName %>';
+
+	var updateRedirectField = function(event) {
+		var redirectURL = new uri(redirectField.value);
+
+		redirectURL.setParameterValue(tabsParamName, event.id);
+
+		redirectField.value = redirectURL.toString();
+	};
+
+	var clearFormNavigatorHandles = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			Liferay.detach('showTab', updateRedirectField);
+			Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
+		}
+	};
 
 	if (redirectField) {
 		var currentURL = new uri(document.location.href);
 
-		var parameterName = '<portlet:namespace/>tabs1';
+		var urlTabsParamValue = currentURL.getParameterValue(tabsParamName);
 
-		var tabs1 = currentURL.getParameterValue(parameterName);
-
-		var redirectFieldValue = redirectField.value;
-
-		if (redirectFieldValue) {
-			var redirectURL = new uri(redirectFieldValue);
-
-			if (redirectURL) {
-				if (tabs1) {
-					redirectURL.setParameterValue(parameterName, tabs1);
-
-					redirectField.value = redirectURL.toString();
+		if (urlTabsParamValue) {
+			updateRedirectField(
+				{
+					id: urlTabsParamValue
 				}
-
-				var resetRedirectField = function(event) {
-					console.log(event.id);
-
-					redirectURL.setParameterValue(parameterName, event.id);
-
-					redirectField.value = redirectURL.toString();
-				};
-
-				Liferay.on('showTab', resetRedirectField);
-
-				dom.on(redirectField.closest('form'), 'submit', function(event) {
-					Liferay.detach('showTab', resetRedirectField);
-				});
-			}
+			);
 		}
 
+		Liferay.on('showTab', updateRedirectField);
+		Liferay.on('destroyPortlet', clearFormNavigatorHandles);
 	}
 </aui:script>

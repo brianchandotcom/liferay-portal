@@ -26,6 +26,8 @@ for (String categoryKey : categoryKeys) {
 		filterCategoryKeys.add(categoryKey);
 	}
 }
+
+String tabsParamName = "tabs1";
 %>
 
 <c:choose>
@@ -35,6 +37,7 @@ for (String categoryKey : categoryKeys) {
 	<c:when test="<%= filterCategoryKeys.size() > 1 %>">
 		<liferay-ui:tabs
 			names="<%= StringUtil.merge(filterCategoryKeys) %>"
+			param="<%= tabsParamName %>"
 			refresh="<%= false %>"
 			type="tabs nav-tabs-default"
 		>
@@ -79,3 +82,43 @@ for (String categoryKey : categoryKeys) {
 		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
 	</aui:button-row>
 </c:if>
+
+<aui:script require="metal-dom/src/dom,metal-uri/src/Uri">
+	var dom = metalDomSrcDom.default;
+	var uri = metalUriSrcUri.default;
+
+	var redirectField = dom.toElement('input[name="<portlet:namespace />redirect"]');
+	var tabsParamName = '<portlet:namespace/><%= tabsParamName %>';
+
+	var updateRedirectField = function(event) {
+		var redirectURL = new uri(redirectField.value);
+
+		redirectURL.setParameterValue(tabsParamName, event.id);
+
+		redirectField.value = redirectURL.toString();
+	};
+
+	var clearFormNavigatorHandles = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			Liferay.detach('showTab', updateRedirectField);
+			Liferay.detach('destroyPortlet', clearFormNavigatorHandles);
+		}
+	};
+
+	if (redirectField) {
+		var currentURL = new uri(document.location.href);
+
+		var urlTabsParamValue = currentURL.getParameterValue(tabsParamName);
+
+		if (urlTabsParamValue) {
+			updateRedirectField(
+				{
+					id: urlTabsParamValue
+				}
+			);
+		}
+
+		Liferay.on('showTab', updateRedirectField);
+		Liferay.on('destroyPortlet', clearFormNavigatorHandles);
+	}
+</aui:script>

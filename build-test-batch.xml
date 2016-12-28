@@ -1395,15 +1395,15 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
-	<target name="functional-bundle-markerplaceapp-smoke-jboss-mysql56-jdk8">
+	<target name="functional-bundle-marketplaceapp-smoke-jboss-mysql56-jdk8">
 		<antcall target="functional-bundle-jboss-mysql56-jdk8" />
 	</target>
 
-	<target name="functional-bundle-markerplaceapp-smoke-tomcat-mysql56-jdk8">
+	<target name="functional-bundle-marketplaceapp-smoke-tomcat-mysql56-jdk8">
 		<antcall target="functional-bundle-tomcat-mysql56-jdk8" />
 	</target>
 
-	<target name="functional-bundle-markerplaceapp-smoke-wildfly-mysql56-jdk8">
+	<target name="functional-bundle-marketplaceapp-smoke-wildfly-mysql56-jdk8">
 		<antcall target="functional-bundle-wildfly-mysql56-jdk8" />
 	</target>
 

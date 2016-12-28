@@ -40,6 +40,24 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 </aui:form>
 
+<%
+Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
+%>
+
+<div class="hide" id="<portlet:namespace />copyPortletsFromPage">
+	<p>
+		<c:if test="<%= selLayout != null %>">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
+		</c:if>
+	</p>
+
+	<liferay-util:include page="/html/portal/layout/edit/portlet_applications.jsp" />
+
+	<aui:button-row>
+		<aui:button name="copySubmitButton" value="copy" />
+	</aui:button-row>
+</div>
+
 <aui:script use="liferay-util-window">
 	A.one('#<portlet:namespace />copyApplications').on(
 		'click',

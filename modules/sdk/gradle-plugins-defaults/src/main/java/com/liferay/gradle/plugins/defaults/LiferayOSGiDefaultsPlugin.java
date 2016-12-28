@@ -1501,6 +1501,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							Collections.singletonMap(
 								"group", "com.liferay.portal"));
 					}
+
+					String version = moduleDependency.getVersion();
+
+					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+						throw new GradleException(
+							"Please use a timestamp version for " +
+								moduleDependency);
+					}
 				}
 
 			});

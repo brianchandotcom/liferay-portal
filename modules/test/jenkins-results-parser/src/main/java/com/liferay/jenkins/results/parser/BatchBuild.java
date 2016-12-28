@@ -212,50 +212,24 @@ public class BatchBuild extends BaseBuild {
 	protected Element getGitHubMessageJobResultsElement() {
 		Element jobResultsElement = new DefaultElement("div");
 
-		Element buildAnchorElement = new DefaultElement("a");
-
-		jobResultsElement.add(buildAnchorElement);
-
-		buildAnchorElement.addAttribute("href", getBuildURL());
-
-		buildAnchorElement.addText(getDisplayName());
-
-		Element jobResultsHeadingElement = new DefaultElement("h6");
-
-		jobResultsElement.add(jobResultsHeadingElement);
-
-		jobResultsHeadingElement.addText("Job Results:");
-
-		Element paragraphElement = new DefaultElement("p");
-
-		jobResultsElement.add(paragraphElement);
-
-		int successCount = getTestCountByStatus("SUCCESS");
-
-		paragraphElement.addText(Integer.toString(successCount));
-
-		paragraphElement.addText(" Test");
-
-		if (successCount != 1) {
-			paragraphElement.addText("s");
-		}
-
-		paragraphElement.addText(" Passed.");
-		paragraphElement.add(new DefaultElement("br"));
+		Dom4JUtil.addToElement(
+			jobResultsElement,
+			Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName()),
+			Dom4JUtil.wrapWithNewElement("Job Results:", "h6"));
 
 		int failCount = getTestCountByStatus("FAILURE");
+		int successCount = getTestCountByStatus("SUCCESS");
 
-		paragraphElement.addText(Integer.toString(failCount));
-
-		paragraphElement.addText(" Test");
-
-		if (failCount != 1) {
-			paragraphElement.addText("s");
-		}
-
-		paragraphElement.addText(" Failed.");
-
-		jobResultsElement.add(getFailureMessageElement());
+		Dom4JUtil.addToElement(
+			Dom4JUtil.getNewElement("p", jobResultsElement),
+			Integer.toString(successCount),
+			JenkinsResultsParserUtil.getNounForm(
+				successCount, "Tests", " Test"),
+			" Passed.",
+			new DefaultElement("br"), Integer.toString(failCount),
+			JenkinsResultsParserUtil.getNounForm(failCount, "Tests", " Test"),
+			" Failed",
+			getFailureMessageElement());
 
 		return jobResultsElement;
 	}

@@ -652,9 +652,10 @@
 			<var name="userName" value="Test Test" />
 		</execute>
 
-		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteMail">
+			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf, Your New Account, Your New Password" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

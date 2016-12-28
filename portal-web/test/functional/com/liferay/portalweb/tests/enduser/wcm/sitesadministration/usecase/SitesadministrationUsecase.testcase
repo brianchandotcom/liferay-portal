@@ -649,6 +649,12 @@
 			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
 		</execute>
 
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteMail">
+			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
+		</execute>
+
 		<execute macro="Gmail#logoutAndLogin">
 			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
 			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
@@ -668,6 +674,12 @@
 
 		<execute function="SelectWindow" locator1="title=Verify Email Address - ${siteName}" />
 		<execute function="AssertLocation" value1="${emailAddressVerificationURL}" />
+
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteMail">
+			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
+		</execute>
 	</command>
 
 	<command name="SiteFriendlyURLLayoutImporter" priority="3">

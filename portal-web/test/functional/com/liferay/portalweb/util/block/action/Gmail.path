@@ -168,6 +168,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX</td>
+	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailMessageTitle}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME</td>
 	<td>//form[@method='POST']//table[2]/tbody/tr[contains(.,'${key_gmailAssetType}')]/td[2]</td>
 	<td></td>

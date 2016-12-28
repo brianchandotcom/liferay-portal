@@ -149,6 +149,23 @@
 		<execute function="AssertTextEquals" locator1="Gmail#SUCCESS_MESSAGE" value1="Your message has been sent." />
 	</command>
 
+	<command name="deleteMail">
+		<for list="${gmailMessageTitleList}" param="gmailMessageTitle">
+			<var name="key_gmailMessageTitle" value="${gmailMessageTitle}" />
+
+			<if>
+				<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX" />
+				<then>
+					<execute function="Check" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX" />
+
+					<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
+
+					<execute function="Pause" locator1="3000" />
+				</then>
+			</if>
+		</for>
+	</command>
+
 	<command name="tearDown">
 		<execute macro="Gmail#login">
 			<var name="userEmailAddress" value="${userEmailAddress}" />

@@ -329,16 +329,6 @@
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Wiki" />
-		</execute>
-
-		<execute macro="WikiNode#addCP">
-			<var name="wikiNodeName" value="Wiki Node Name" />
 			<var name="userFirstNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 			<var name="userLastNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 			<var name="userMiddleNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
@@ -351,34 +341,18 @@
 		</execute>
 
 		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Wiki Node Name" />
+			<var name="wikiNodeName" value="Main" />
 		</execute>
-
-		<execute macro="WikiNavigator#gotoAllPagesCP" />
 
 		<execute macro="WikiPage#addCP">
 			<var name="wikiPageContent" value="Wiki Page Content" />
 			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Wiki" />
+		<execute macro="WikiNavigator#gotoCP">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
 		</execute>
 
-		<execute macro="WikiNavigator#gotoNode">
-			<var name="wikiNodeName" value="Wiki Node Name" />
-		</execute>
-
-		<execute function="Click" locator1="Icon#INFO" />
-
-		<var name="key_wikiPageTitle" value="Wiki Page Title" />
-
-		<execute function="AssertClick" locator1="Wiki#DESCRIPTIVE_VIEW_ENTRY_CHECKBOX" value1="Wiki Page Title" />
-
-		<execute function="AssertClick" locator1="NavBar#DETAILS" value1="Details" />
-
-		<execute function="AssertAlertNotPresent" />
+		<execute function="AssertTextNotPresent" locator1="//body" value1="XSS" />
 	</command>
 </definition>

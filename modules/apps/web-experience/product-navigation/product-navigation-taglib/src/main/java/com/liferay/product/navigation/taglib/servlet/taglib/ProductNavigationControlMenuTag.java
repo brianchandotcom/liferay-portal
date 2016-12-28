@@ -14,16 +14,9 @@
 
 package com.liferay.product.navigation.taglib.servlet.taglib;
 
-import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuCategory;
-import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry;
-import com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry;
 import com.liferay.product.navigation.taglib.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -51,41 +44,6 @@ public class ProductNavigationControlMenuTag extends IncludeTag {
 	protected String getPage() {
 		return _PAGE;
 	}
-
-	@Override
-	protected boolean isCleanUpSetAttributes() {
-		return _CLEAN_UP_SET_ATTRIBUTES;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		ProductNavigationControlMenuCategoryRegistry
-			productNavigationControlMenuCategoryRegistry =
-				ServletContextUtil.
-					getProductNavigationControlMenuCategoryRegistry();
-
-		List<ProductNavigationControlMenuCategory>
-			productNavigationControlMenuCategories =
-				productNavigationControlMenuCategoryRegistry.
-					getProductNavigationControlMenuCategories(
-						ProductNavigationControlMenuCategoryKeys.ROOT);
-
-		request.setAttribute(
-			"liferay-product-navigation:control-menu:control-menu-categories",
-			productNavigationControlMenuCategories);
-
-		ProductNavigationControlMenuEntryRegistry
-			productNavigationControlMenuEntryRegistry =
-				ServletContextUtil.
-					getProductNavigationControlMenuEntryRegistry();
-
-		request.setAttribute(
-			"liferay-product-navigation:control-menu:" +
-				"control-menu-entry-registry",
-			productNavigationControlMenuEntryRegistry);
-	}
-
-	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
 
 	private static final String _PAGE = "/control_menu/page.jsp";
 

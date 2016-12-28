@@ -2908,9 +2908,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setApplicationTypes(Set<ApplicationType> applicationTypes) {
-		for (ApplicationType applicationType : applicationTypes) {
-			addApplicationType(applicationType);
-		}
+		_applicationTypes.addAll(applicationTypes);
 	}
 
 	/**
@@ -3572,8 +3570,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setProcessingEvents(Set<QName> processingEvents) {
+		_processingEvents.addAll(processingEvents);
+
 		for (QName processingEvent : processingEvents) {
-			addProcessingEvent(processingEvent);
+			_processingEventsByQName.put(
+				PortletQNameUtil.getKey(processingEvent), processingEvent);
 		}
 	}
 
@@ -3600,9 +3601,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setPublishingEvents(Set<QName> publishingEvents) {
-		for (QName publishingEvent : publishingEvents) {
-			addPublishingEvent(publishingEvent);
-		}
+		_publishingEvents.addAll(publishingEvents);
 	}
 
 	/**
@@ -3765,9 +3764,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	@Override
 	public void setSchedulerEntries(List<SchedulerEntry> schedulerEntries) {
-		for (SchedulerEntry schedulerEntry : schedulerEntries) {
-			addSchedulerEntry(schedulerEntry);
-		}
+		_schedulerEntries.addAll(schedulerEntries);
 	}
 
 	/**

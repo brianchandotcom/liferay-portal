@@ -228,20 +228,25 @@ public class HtmlImpl implements Html {
 			return escape(text);
 		}
 
-		StringBuilder sb = new StringBuilder(text.length());
+		StringBuilder sb = null;
 
 		char[] hexBuffer = new char[4];
 
-		boolean modified = false;
+		int lastReplacementIndex = 0;
 
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
 			if (c < _VALID_CHARS.length) {
-				if (_VALID_CHARS[c]) {
-					sb.append(c);
-				}
-				else {
+				if (!_VALID_CHARS[c]) {
+					if (sb == null) {
+						sb = new StringBuilder(text.length() + 64);
+					}
+
+					if (i > lastReplacementIndex) {
+						sb.append(text, lastReplacementIndex, i);
+					}
+
 					sb.append(prefix);
 
 					_appendHexChars(sb, hexBuffer, c);
@@ -260,27 +265,36 @@ public class HtmlImpl implements Html {
 						}
 					}
 
-					modified = true;
+					lastReplacementIndex = i + 1;
 				}
 			}
 			else if ((mode == ESCAPE_MODE_ATTRIBUTE) &&
 					 (!_isValidXmlCharacter(c) ||
 					  _isUnicodeCompatibilityCharacter(c))) {
 
+				if (sb == null) {
+					sb = new StringBuilder(text.length() + 64);
+				}
+
+				if (i > lastReplacementIndex) {
+					sb.append(text, lastReplacementIndex, i);
+				}
+
 				sb.append(CharPool.SPACE);
 
-				modified = true;
-			}
-			else {
-				sb.append(c);
+				lastReplacementIndex = i + 1;
 			}
 		}
 
-		if (modified) {
-			return sb.toString();
+		if (sb == null) {
+			return text;
 		}
 
-		return text;
+		if (lastReplacementIndex < text.length()) {
+			sb.append(text, lastReplacementIndex, text.length());
+		}
+
+		return sb.toString();
 	}
 
 	/**

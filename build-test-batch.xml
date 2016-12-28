@@ -2403,7 +2403,9 @@ information. Make sure to commit in all build services results.
 			<try>
 				<move file="${module.base.dir}/settings.gradle" tofile="${module.base.dir}/settings.gradle.temp" />
 
-				<gradle-execute dir="${module.base.dir}" task="checkSourceFormatting" />
+				<gradle-execute dir="${module.base.dir}" task="checkSourceFormatting">
+					<arg value="-PdependencyCheckerIgnoreFailures=false" />
+				</gradle-execute>
 			</try>
 			<catch>
 				<fail message="${failure.property}" />

@@ -275,7 +275,7 @@ public class AxisBuild extends BaseBuild {
 		Matcher matcher = buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
-			matcher = _archiveBuildURLPattern.matcher(buildURL);
+			matcher = archiveBuildURLPattern.matcher(buildURL);
 
 			if (!matcher.find()) {
 				throw new IllegalArgumentException(
@@ -296,6 +296,10 @@ public class AxisBuild extends BaseBuild {
 		setStatus("running");
 	}
 
+	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
+		"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
+			"(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>" +
+				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
 			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
@@ -305,10 +309,6 @@ public class AxisBuild extends BaseBuild {
 
 	protected String axisVariable;
 
-	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
-		"($\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
-			"(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>" +
-				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
 

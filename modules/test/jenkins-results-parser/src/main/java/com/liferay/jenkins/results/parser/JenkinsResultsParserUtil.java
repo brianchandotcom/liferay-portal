@@ -267,15 +267,21 @@ public class JenkinsResultsParserUtil {
 		return url;
 	}
 
-	public static String format(Element element) throws IOException {
+	public static String format(Element element, boolean pretty)
+		throws IOException {
+
 		Writer writer = new CharArrayWriter();
 
-		XMLWriter xmlWriter = new XMLWriter(
-			writer, OutputFormat.createPrettyPrint());
+		XMLWriter xmlWriter = pretty ? new XMLWriter(
+			writer, OutputFormat.createPrettyPrint()) : new XMLWriter(writer);
 
 		xmlWriter.write(element);
 
 		return writer.toString();
+	}
+
+	public static String format(Element element) throws IOException {
+		return format(element, true);
 	}
 
 	public static String getActualResult(String buildURL) throws IOException {

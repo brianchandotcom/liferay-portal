@@ -22,31 +22,37 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 %>
 
-<p>
-	<c:if test="<%= selLayout != null %>">
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
-	</c:if>
-</p>
+<div class="container-fluid-1280">
+	<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset>
+			<c:if test="<%= selLayout != null %>">
+				<div class="alert alert-info">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
+				</div>
+			</c:if>
 
-<aui:select label="copy-from-page" name="copyLayoutId">
+			<aui:select label="copy-from-page" name="copyLayoutId">
 
-	<%
-	List<LayoutDescription> layoutDescriptions = (List<LayoutDescription>)request.getAttribute(WebKeys.LAYOUT_DESCRIPTIONS);
+				<%
+				List<LayoutDescription> layoutDescriptions = (List<LayoutDescription>)request.getAttribute(WebKeys.LAYOUT_DESCRIPTIONS);
 
-	for (LayoutDescription layoutDescription : layoutDescriptions) {
-		Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
+				for (LayoutDescription layoutDescription : layoutDescriptions) {
+					Layout layoutDescriptionLayout = LayoutLocalServiceUtil.fetchLayout(layoutDescription.getPlid());
 
-		if (layoutDescriptionLayout != null) {
-	%>
+					if (layoutDescriptionLayout != null) {
+				%>
 
-			<aui:option disabled="<%= (selLayout != null) && selLayout.getPlid() == layoutDescriptionLayout.getPlid() %>" label="<%= layoutDescription.getDisplayName() %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
+						<aui:option disabled="<%= (selLayout != null) && selLayout.getPlid() == layoutDescriptionLayout.getPlid() %>" label="<%= layoutDescription.getDisplayName() %>" value="<%= layoutDescriptionLayout.getLayoutId() %>" />
 
-	<%
-		}
-	}
-	%>
+				<%
+					}
+				}
+				%>
 
-</aui:select>
+			</aui:select>
+		</aui:fieldset>
+	</aui:fieldset-group>
+</div>
 
 <aui:script use="aui-base">
 	var copyLayoutId = A.one('#<portlet:namespace />copyLayoutId');

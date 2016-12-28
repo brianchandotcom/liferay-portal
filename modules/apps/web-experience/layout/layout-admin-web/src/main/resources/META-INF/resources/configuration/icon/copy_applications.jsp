@@ -40,59 +40,44 @@ PortletURL redirectURL = layoutsAdminDisplayContext.getRedirectURL();
 	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 </aui:form>
 
-<%
-Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
-%>
+<aui:script use="liferay-item-selector-dialog">
+	<portlet:renderURL var="selectPageURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<portlet:param name="mvcPath" value="/configuration/icon/select_page.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="plid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+	</portlet:renderURL>
 
-<div class="hide" id="<portlet:namespace />copyPortletsFromPage">
-	<p>
-		<c:if test="<%= selLayout != null %>">
-			<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" translateArguments="<%= false %>" />
-		</c:if>
-	</p>
-
-	<liferay-util:include page="/html/portal/layout/edit/portlet_applications.jsp" />
-
-	<aui:button-row>
-		<aui:button name="copySubmitButton" value="copy" />
-	</aui:button-row>
-</div>
-
-<aui:script use="liferay-util-window">
-	A.one('#<portlet:namespace />copyApplications').on(
+	$('#<portlet:namespace />copyApplications').on(
 		'click',
-		function() {
-			var content = A.one('#<portlet:namespace />copyPortletsFromPage');
+		function(event) {
+			event.preventDefault();
 
-			var popUp = Liferay.Util.Window.getWindow(
+			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					dialog: {
-						bodyContent: content.show()
+					eventName: '<portlet:namespace />selectPage',
+					on: {
+						selectedItemChange: function(event) {
+							var selectedItem = event.newVal;
+
+							if (selectedItem) {
+								var form = A.one('#<portlet:namespace />copyApplicationsFm');
+
+								form.append(selectedItem);
+
+								submitForm(form);
+							}
+						}
 					},
-					title: '<%= UnicodeLanguageUtil.get(request, "copy-applications") %>'
+					strings: {
+						add: '<liferay-ui:message key="done" />',
+						cancel: '<liferay-ui:message key="cancel" />'
+					},
+					title: '<liferay-ui:message key="copy-applications" />',
+					url: '<%= selectPageURL %>'
 				}
 			);
 
-			popUp.show();
-
-			var submitButton = popUp.get('contentBox').one('#<portlet:namespace />copySubmitButton');
-
-			if (submitButton) {
-				submitButton.on(
-					'click',
-					function(event) {
-						popUp.hide();
-
-						var form = A.one('#<portlet:namespace />copyApplicationsFm');
-
-						if (form) {
-							form.append(content);
-
-							submitForm(form);
-						}
-					}
-				);
-			}
+			itemSelectorDialog.open();
 		}
 	);
 </aui:script>

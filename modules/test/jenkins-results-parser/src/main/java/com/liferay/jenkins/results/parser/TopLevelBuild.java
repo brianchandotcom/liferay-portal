@@ -252,8 +252,6 @@ public class TopLevelBuild extends BaseBuild {
 			JenkinsResultsParserUtil.getNounForm(failCount, "Jobs", " Job"),
 			" Failed.");
 
-		jobResultsElement.add(getFailureMessageElement());
-
 		return jobResultsElement;
 	}
 
@@ -418,7 +416,8 @@ public class TopLevelBuild extends BaseBuild {
 			Element failedJobsOrderedListElement = Dom4JUtil.getNewElement(
 				"ol", rootElement);
 
-			failedJobsOrderedListElement.add(super.getGitHubMessage());
+			failedJobsOrderedListElement.add(
+				Dom4JUtil.wrapWithNewElement(super.getGitHubMessage(), "li"));
 
 			int failureCount = 0;
 

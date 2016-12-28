@@ -1808,6 +1808,8 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
+		<execute function="Click" locator1="TextInput#TITLE" />
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />

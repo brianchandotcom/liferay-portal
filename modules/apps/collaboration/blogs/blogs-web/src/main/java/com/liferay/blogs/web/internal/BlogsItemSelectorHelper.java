@@ -24,6 +24,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +85,9 @@ public class BlogsItemSelectorHelper {
 		UploadItemSelectorCriterion uploadItemSelectorCriterion =
 			new UploadItemSelectorCriterion(
 				uploadURL.toString(),
-				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"));
+				LanguageUtil.get(themeDisplay.getLocale(), "blog-images"),
+				PropsValues.BLOGS_IMAGE_MAX_SIZE);
+		
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadCriterionDesiredItemSelectorReturnTypes);

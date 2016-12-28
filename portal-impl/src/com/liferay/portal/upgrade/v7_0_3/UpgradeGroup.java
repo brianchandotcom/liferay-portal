@@ -30,19 +30,15 @@ public class UpgradeGroup extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-		try (ResultSet groupKeyResultSet = databaseMetaData.getColumns(
+		try (ResultSet rs = databaseMetaData.getColumns(
 				null, null, normalizeName("Group_", databaseMetaData),
 				normalizeName("groupKey", databaseMetaData))) {
 
-			if (groupKeyResultSet.next()) {
-				int groupKeyColumnSize = groupKeyResultSet.getInt(
-					"COLUMN_SIZE");
+			if (rs.next()) {
+				int columnSize = rs.getInt("COLUMN_SIZE");
+				int dataType = rs.getInt("DATA_TYPE");
 
-				int groupKeyDataType = groupKeyResultSet.getInt("DATA_TYPE");
-
-				if ((groupKeyDataType != Types.VARCHAR) ||
-					(groupKeyColumnSize != 150)) {
-
+				if ((dataType != Types.VARCHAR) || (columnSize != 150)) {
 					alter(
 						GroupTable.class,
 						new AlterColumnType("groupKey", "VARCHAR(150) null"));

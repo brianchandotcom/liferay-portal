@@ -545,9 +545,9 @@
 	</command>
 
 	<command name="localizedPG">
-		<var name="key_pageLocale" value="${pageLocale}" />
-
-		<execute function="Click" locator1="Link#PAGE_LOCALE"  value1="${pageLocale}" />
+		<execute function="Click" locator1="Link#PAGE_LOCALE">
+			<var name="key_pageLocale" value="${pageLocale}" />
+		</execute>
 	</command>
 
 	<command name="openURLLocale">

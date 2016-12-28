@@ -326,10 +326,6 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="Page#localizedPG">
-			<var name="pageLocale" value="Mostrar la página en español (España)" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Sitios web" />
 			<var name="portlet" value="Plantillas de sitio web" />
@@ -355,10 +351,6 @@
 		</execute>
 
 		<execute macro="Navigator#openURL" />
-
-		<execute macro="Page#localizedPG">
-			<var name="pageLocale" value="Display the page in English (United States)" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />

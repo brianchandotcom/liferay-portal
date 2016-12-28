@@ -19,9 +19,11 @@
 <liferay-util:buffer var="iconContent">
 	<i class="icon-<%= image %>"></i>
 
-	<span class="taglib-icon-label">
-		<liferay-ui:message key="<%= label %>" />
-	</span>
+	<c:if test="<%= Validator.isNotNull(label) %>">
+		<span class="taglib-icon-label">
+			<liferay-ui:message key="<%= label %>" />
+		</span>
+	</c:if>
 </liferay-util:buffer>
 
 <c:choose>

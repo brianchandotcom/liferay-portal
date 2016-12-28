@@ -329,9 +329,6 @@
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
-			<var name="userFirstNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
-			<var name="userLastNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
-			<var name="userMiddleNameEdit"><![CDATA[<script>alert(123)</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -342,6 +339,9 @@
 
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeName" value="Wiki Node Name" />
+			<var name="userFirstNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
+			<var name="userLastNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
+			<var name="userMiddleNameEdit"><![CDATA[<script>document.write("XSS"); window.stop();</script>]]></var>
 		</execute>
 
 		<execute macro="Navigator#openURL" />

@@ -192,16 +192,28 @@ public class TopLevelBuild extends BaseBuild {
 			"https://github.com/liferay/" + getRepositoryName() + "/" +
 				getBranchName();
 
-		String repositorySHA = getRepositorySHA(getRepositoryName());
+		String repositoryName = getRepositoryName();
+
+		String repositorySHA = null;
+
+		if (!repositoryName.equals("liferay-jenkins-ee") &&
+			repositoryName.endsWith("-ee")) {
+
+			repositorySHA = getRepositorySHA(
+				repositoryName.substring(0, repositoryName.length() - 3));
+		}
+		else {
+			repositorySHA = getRepositorySHA(repositoryName);
+		}
 
 		String repositoryCommitURL =
-			"https://github.com/liferay/" + getRepositoryName() + "/commit/" +
+			"https://github.com/liferay/" + repositoryName + "/commit/" +
 				repositorySHA;
 
 		Element baseBranchDetailsElement = new DefaultElement("p");
 
 		Dom4JUtil.addToElement(
-			baseBranchDetailsElement, "BranchName: ",
+			baseBranchDetailsElement, "Branch Name: ",
 			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()),
 			new DefaultElement("br"), "Branch GIT ID: ",
 			Dom4JUtil.getNewAnchorElement(repositoryCommitURL, repositorySHA));

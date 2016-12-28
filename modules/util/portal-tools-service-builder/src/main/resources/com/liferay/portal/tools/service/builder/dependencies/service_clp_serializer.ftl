@@ -270,6 +270,7 @@ public class ClpSerializer {
 						return throwable2;
 					}
 				}
+
 				if (objectInputStream != null) {
 					try {
 						objectInputStream.close();

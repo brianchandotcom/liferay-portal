@@ -58,28 +58,13 @@ long recordSetId = ddlFormDisplayContext.getRecordSetId();
 						<liferay-ui:error exception="<%= DDMFormRenderingException.class %>" message="unable-to-render-the-selected-form" />
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.class %>" message="field-validation-failed" />
 
-						<liferay-ui:error exception="<%= DDMFormValuesValidationException.MustSetValidValues.class %>">
+						<liferay-ui:error exception="<%= DDMFormValuesValidationException.MustSetValidValue.class %>">
 
 							<%
-							DDMFormValuesValidationException.MustSetValidValues msvv = (DDMFormValuesValidationException.MustSetValidValues)errorException;
-
-							List<DDMFormFieldEvaluationResult> ddmFormFieldEvaluationResults = msvv.getDDMFormFieldEvaluationResults();
-
-							for (DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult : ddmFormFieldEvaluationResults) {
+							DDMFormValuesValidationException.MustSetValidValue msvv = (DDMFormValuesValidationException.MustSetValidValue)errorException;
 							%>
 
-								<liferay-ui:message
-									arguments="<%= new Object[] {ddmFormFieldEvaluationResult.getName(), ddmFormFieldEvaluationResult.getErrorMessage()} %>"
-									key="validation-failed-for-field-x"
-									translateArguments="<%= false %>"
-								/>
-
-								<br />
-
-							<%
-							}
-							%>
-
+							<liferay-ui:message arguments="<%= msvv.getFieldName() %>" key="validation-failed-for-field-x" translateArguments="<%= false %>" />
 						</liferay-ui:error>
 
 						<liferay-ui:error exception="<%= DDMFormValuesValidationException.RequiredValue.class %>">

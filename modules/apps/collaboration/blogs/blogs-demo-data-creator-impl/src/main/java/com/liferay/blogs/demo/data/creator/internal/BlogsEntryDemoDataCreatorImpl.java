@@ -18,12 +18,20 @@ import com.liferay.blogs.demo.data.creator.BlogsEntryDemoDataCreator;
 import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
+import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
+import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
+import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
@@ -36,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
@@ -62,9 +71,14 @@ public class BlogsEntryDemoDataCreatorImpl
 
 		Date date = _getRandomDate();
 
+		ImageSelector imageSelector = new ImageSelector(
+			_getRandomImageBytes(userId, groupId),
+			UUID.randomUUID().toString() + ".jpeg", "image/jpeg",
+			StringPool.BLANK);
+
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			userId, title, subtitle, null, _getRandomContent(), date, false,
-			false, null, null, null, null, serviceContext);
+			false, null, null, imageSelector, null, serviceContext);
 
 		_entryIds.add(blogsEntry.getEntryId());
 
@@ -84,6 +98,9 @@ public class BlogsEntryDemoDataCreatorImpl
 				_log.warn(nsee);
 			}
 		}
+
+		_fileEntryDemoDataCreator.delete();
+		_rootFolderDemoDataCreator.delete();
 	}
 
 	@Reference(unbind = "-")
@@ -91,6 +108,25 @@ public class BlogsEntryDemoDataCreatorImpl
 		BlogsEntryLocalService blogsEntryLocalService) {
 
 		_blogsEntryLocalService = blogsEntryLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFileEntryDemoDataCreator(
+		FileEntryDemoDataCreator fileEntryDemoDataCreator) {
+
+		_fileEntryDemoDataCreator = fileEntryDemoDataCreator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setRootFolderDemoDataCreator(
+		RootFolderDemoDataCreator rootFolderDemoDataCreator) {
+
+		_rootFolderDemoDataCreator = rootFolderDemoDataCreator;
 	}
 
 	private String _getRandomContent() {
@@ -128,7 +164,32 @@ public class BlogsEntryDemoDataCreatorImpl
 			list.get(RandomUtil.nextInt(list.size()))).orElse("Test");
 	}
 
+	private byte[] _getRandomImageBytes(long userId, long groupId)
+		throws IOException, PortalException {
+
+		String folderName = "Blogs Test";
+
+		Folder folder = null;
+
+		try {
+			folder = _dlAppLocalService.getFolder(groupId, 0, folderName);
+		}
+		catch (NoSuchFolderException nsfe) {
+			folder = _rootFolderDemoDataCreator.create(
+				userId, groupId, folderName);
+		}
+
+		FileEntry fileEntry = _fileEntryDemoDataCreator.create(
+			userId, folder.getFolderId());
+
+		return FileUtil.getBytes(
+			fileEntry.getFileVersion().getContentStream(false));
+	}
+
 	private BlogsEntryLocalService _blogsEntryLocalService;
+	private DLAppLocalService _dlAppLocalService;
+	private FileEntryDemoDataCreator _fileEntryDemoDataCreator;
+	private RootFolderDemoDataCreator _rootFolderDemoDataCreator;
 	private final List<Long> _entryIds = new ArrayList<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(

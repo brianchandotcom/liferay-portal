@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -189,7 +191,7 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected Element getBaseBranchDetailsElement() {
 		String baseBranchURL =
-			"https://github.com/liferay/" + getRepositoryName() + "/" +
+			"https://github.com/liferay/" + getRepositoryName() + "/tree/" +
 				getBranchName();
 
 		String repositoryName = getRepositoryName();
@@ -308,12 +310,17 @@ public class TopLevelBuild extends BaseBuild {
 	protected Element getJobSummaryListElement() {
 		Element jobSummaryListElement = new DefaultElement("ul");
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+		List<Build> builds = new ArrayList<>();
+
+		builds.add(this);
+
+		builds.addAll(getDownstreamBuilds(null));
+
+		for (Build build : builds) {
 			Element jobSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", jobSummaryListElement);
 
-			jobSummaryListItemElement.add(
-				downstreamBuild.getGitHubMessageBuildAnchor());
+			jobSummaryListItemElement.add(build.getGitHubMessageBuildAnchor());
 		}
 
 		return jobSummaryListElement;

@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.sql.Timestamp;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +60,7 @@ public class BlogsEntryDemoDataCreatorImpl
 
 		String subtitle = _getRandomElement(_entrySubtitles);
 
-		Date date = new Date();
+		Date date = _getRandomDate();
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			userId, title, subtitle, null, _getRandomContent(), date, false,
@@ -107,6 +109,18 @@ public class BlogsEntryDemoDataCreatorImpl
 
 		return paragraphs.stream().map(paragraph -> "<p>" + paragraph + "</p>").
 			collect(Collectors.joining());
+	}
+
+	private Date _getRandomDate() {
+		long start = Timestamp.valueOf("2000-01-01 00:00:00").getTime();
+		long end = new Date().getTime();
+
+		long diff = end - start + 1;
+
+		Timestamp timestamp = new Timestamp(
+			start + (long)(Math.random() * diff));
+
+		return new Date(timestamp.getTime());
 	}
 
 	private String _getRandomElement(List<String> list) {

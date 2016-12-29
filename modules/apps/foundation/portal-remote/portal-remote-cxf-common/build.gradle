@@ -1,5 +1,3 @@
-task deployDependencies(type: Copy)
-
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -24,35 +22,11 @@ dependencies {
 	provided group: "wsdl4j", name: "wsdl4j", version: "1.6.3"
 }
 
-deploy {
-	finalizedBy deployDependencies
-}
-
 deployDependencies {
-	boolean keepDependencyVersions = Boolean.getBoolean("deploy.dependencies.keep.versions")
-
-	ext {
-		autoClean = false
-	}
-
 	from configurations.provided
 
 	include "stax2-api-*.jar"
 	include "woodstox-core-asl-*.jar"
-
-	into {
-		liferay.deployDir
-	}
-
-	outputs.upToDateWhen {
-		false
-	}
-
-	String renameSuffix = ".jar"
-
-	if (keepDependencyVersions) {
-		renameSuffix = '-$1.jar'
-	}
 
 	rename(/stax2-api-(.+)\.jar/, "org.codehaus.stax2" + renameSuffix)
 	rename(/woodstox-core-asl-(.+)\.jar/, "com.ctc.wstx" + renameSuffix)

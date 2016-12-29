@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -62,6 +63,9 @@ public class TopLevelBuild extends BaseBuild {
 
 	@Override
 	public Element getGitHubMessage() {
+		Collections.sort(
+			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
+
 		if (getParentBuild() == null) {
 			return getTopGitHubMessage();
 		}

@@ -20,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -892,6 +893,19 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	public static class BuildDisplayNameComparator
+		implements Comparator<Build> {
+
+		@Override
+		public int compare(Build build1, Build build2) {
+			String displayName1 = build1.getDisplayName();
+			String displayName2 = build2.getDisplayName();
+
+			return displayName1.compareTo(displayName2);
+		}
+
+	}
+
 	protected BaseBuild(String url) {
 		this(url, null);
 	}
@@ -1679,7 +1693,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
-		"($\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
+		"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
 			"(?<master>[^/]+)/+(?<jobName>[^/]+).*/(?<buildNumber>\\d+)/?");
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/(?<buildNumber>" +

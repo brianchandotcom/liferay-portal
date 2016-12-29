@@ -18,6 +18,8 @@
 PortletURL exportAssetURL = assetRenderer.getURLExport(liferayPortletRequest, liferayPortletResponse);
 
 exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
+Map<String, Object> data = new HashMap<String, Object>();
+data.put("resource-href", exportAssetURL.toString());
 %>
 
 <liferay-ui:icon-list>
@@ -28,6 +30,7 @@ exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 	%>
 
 		<liferay-ui:icon
+			data="<%= data %>"
 			iconCssClass="<%= DLUtil.getFileIconCssClass(extension) %>"
 			label="<%= true %>"
 			message='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", assetRenderer.getTitle(locale), StringUtil.toUpperCase(HtmlUtil.escape(extension))}, false) %>'

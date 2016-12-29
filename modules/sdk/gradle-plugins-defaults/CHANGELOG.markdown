@@ -831,6 +831,11 @@ versions of Git.
 error if the version of [Liferay Source Formatter] in use is not the latest one
 and is older than 30 days.
 
+## 2.3.12 - 2016-12-29
+
+### Changed
+- [LPS-69920]: Update the [Liferay Gradle Plugins] dependency to version 3.0.62.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -908,6 +913,7 @@ and is older than 30 days.
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-69838]: https://issues.liferay.com/browse/LPS-69838
 [LPS-69847]: https://issues.liferay.com/browse/LPS-69847
+[LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

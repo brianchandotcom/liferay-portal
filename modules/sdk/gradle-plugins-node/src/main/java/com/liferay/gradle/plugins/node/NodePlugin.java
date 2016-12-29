@@ -169,6 +169,7 @@ public class NodePlugin implements Plugin<Project> {
 		npmInstallTask.mustRunAfter(cleanNpmTask);
 		npmInstallTask.setDescription(
 			"Installs Node packages from package.json.");
+		npmInstallTask.setNpmInstallRetries(2);
 
 		TaskOutputs taskOutputs = npmInstallTask.getOutputs();
 

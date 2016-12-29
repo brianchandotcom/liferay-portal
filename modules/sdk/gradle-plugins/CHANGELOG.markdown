@@ -969,6 +969,15 @@ version 2.0.0.
 - [LPS-70084]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.73.
 
+## 3.1.0 - 2017-01-11
+
+### Added
+- [LPS-69926]: Add the ability to automatically include one or more
+dependencies in the final OSGi bundle via the `compileInclude` configuration.
+
+### Changed
+- [LPS-69926]: Update the [Gradle Bundle Plugin] dependency to version 0.9.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1054,6 +1063,7 @@ to version 1.0.73.
 [LPS-69838]: https://issues.liferay.com/browse/LPS-69838
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
+[LPS-69926]: https://issues.liferay.com/browse/LPS-69926
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -27,6 +27,46 @@
 		</if>
 	</tear-down>
 
+	<command name="AddYoutubeVideo" priority="4">
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="YouTube" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="YouTube" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="YoutubePortlet#addVideoId">
+			<var name="videoId" value="PiObSymqSdo" />
+		</execute>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="YoutubePortlet#assertVideoTitle">
+			<var name="videoTitle" value="The Gospel in 6 Minutes - John Piper" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="YouTube" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="YoutubePortlet#viewPortletConfiguration">
+			<var name="videoId" value="PiObSymqSdo" />
+		</execute>
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="YoutubePortletSmoke" priority="4">
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="YouTube" />

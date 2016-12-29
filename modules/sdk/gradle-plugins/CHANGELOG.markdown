@@ -895,6 +895,10 @@ object by setting the project property `nodejs.npm.args`.
 to version 1.0.68.
 - [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
 1.0.334.
+- [LPS-69824]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 1.0.29.
+- [LPS-69824]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.143.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -975,5 +979,6 @@ to version 1.0.68.
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LPS-69730]: https://issues.liferay.com/browse/LPS-69730
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
+[LPS-69824]: https://issues.liferay.com/browse/LPS-69824
 [LPS-69838]: https://issues.liferay.com/browse/LPS-69838
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

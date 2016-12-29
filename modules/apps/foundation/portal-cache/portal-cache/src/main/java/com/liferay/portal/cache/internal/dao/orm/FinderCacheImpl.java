@@ -113,12 +113,14 @@ public class FinderCacheImpl
 
 		Map<Serializable, Serializable> localCache = null;
 
+		String encodedArguments = finderPath.encodeArguments(args);
+
 		Serializable localCacheKey = null;
 
 		if (_localCacheAvailable) {
 			localCache = _localCache.get();
 
-			localCacheKey = finderPath.encodeLocalCacheKey(args);
+			localCacheKey = finderPath.encodeLocalCacheKey(encodedArguments);
 
 			primaryKey = localCache.get(localCacheKey);
 		}
@@ -127,9 +129,8 @@ public class FinderCacheImpl
 			PortalCache<Serializable, Serializable> portalCache =
 				_getPortalCache(finderPath.getCacheName());
 
-			Serializable cacheKey = finderPath.encodeCacheKey(args);
-
-			primaryKey = portalCache.get(cacheKey);
+			primaryKey = portalCache.get(
+				finderPath.encodeCacheKey(encodedArguments));
 
 			if (primaryKey != null) {
 				if (_localCacheAvailable) {
@@ -182,18 +183,19 @@ public class FinderCacheImpl
 
 		Serializable primaryKey = _resultToPrimaryKey((Serializable)result);
 
+		String encodedArguments = finderPath.encodeArguments(args);
+
 		if (_localCacheAvailable) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
-			Serializable localCacheKey = finderPath.encodeLocalCacheKey(args);
-
-			localCache.put(localCacheKey, primaryKey);
+			localCache.put(
+				finderPath.encodeLocalCacheKey(encodedArguments), primaryKey);
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		Serializable cacheKey = finderPath.encodeCacheKey(args);
+		Serializable cacheKey = finderPath.encodeCacheKey(encodedArguments);
 
 		if (quiet) {
 			PortalCacheHelperUtil.putWithoutReplicator(
@@ -222,20 +224,18 @@ public class FinderCacheImpl
 			return;
 		}
 
+		String encodedArguments = finderPath.encodeArguments(args);
+
 		if (_localCacheAvailable) {
 			Map<Serializable, Serializable> localCache = _localCache.get();
 
-			Serializable localCacheKey = finderPath.encodeLocalCacheKey(args);
-
-			localCache.remove(localCacheKey);
+			localCache.remove(finderPath.encodeLocalCacheKey(encodedArguments));
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
 			finderPath.getCacheName());
 
-		Serializable cacheKey = finderPath.encodeCacheKey(args);
-
-		portalCache.remove(cacheKey);
+		portalCache.remove(finderPath.encodeCacheKey(encodedArguments));
 	}
 
 	@Activate

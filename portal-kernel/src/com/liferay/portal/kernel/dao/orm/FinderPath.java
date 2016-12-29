@@ -76,30 +76,66 @@ public class FinderPath {
 		_initLocalCacheKeyPrefix();
 	}
 
-	public Serializable encodeCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
+	public String encodeArguments(Object[] arguments) {
+		String[] keys = new String[arguments.length * 2];
 
-		sb.append(_cacheKeyPrefix);
+		for (int i = 0; i < arguments.length; i++) {
+			int index = i * 2;
 
-		for (Object arg : arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
+			keys[index] = StringPool.PERIOD;
+			keys[index + 1] = StringUtil.toHexString(arguments[i]);
 		}
 
-		return _getCacheKey(sb);
+		return StringUtil.toHexString(_getCacheKey(keys));
 	}
 
-	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #encodeCacheKey(String)}
+	 */
+	@Deprecated
+	public Serializable encodeCacheKey(Object[] arguments) {
+		String[] keys = new String[arguments.length * 2 + 1];
 
-		sb.append(_localCacheKeyPrefix);
+		keys[0] = _cacheKeyPrefix;
 
-		for (Object arg : arguments) {
-			sb.append(StringPool.PERIOD);
-			sb.append(StringUtil.toHexString(arg));
+		for (int i = 0; i < arguments.length; i++) {
+			int index = i * 2 + 1;
+
+			keys[index] = StringPool.PERIOD;
+			keys[index + 1] = StringUtil.toHexString(arguments[i]);
 		}
 
-		return _getCacheKey(sb);
+		return _getCacheKey(keys);
+	}
+
+	public Serializable encodeCacheKey(String encodedArguments) {
+		return _getCacheKey(new String[] {_cacheKeyPrefix, encodedArguments});
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #encodeLocalCacheKey(String)}
+	 */
+	@Deprecated
+	public Serializable encodeLocalCacheKey(Object[] arguments) {
+		String[] keys = new String[arguments.length * 2 + 1];
+
+		keys[0] = _localCacheKeyPrefix;
+
+		for (int i = 0; i < arguments.length; i++) {
+			int index = i * 2 + 1;
+
+			keys[index] = StringPool.PERIOD;
+			keys[index + 1] = StringUtil.toHexString(arguments[i]);
+		}
+
+		return _getCacheKey(keys);
+	}
+
+	public Serializable encodeLocalCacheKey(String encodedArguments) {
+		return _getCacheKey(
+			new String[] {_localCacheKeyPrefix, encodedArguments});
 	}
 
 	public String getCacheName() {
@@ -122,7 +158,7 @@ public class FinderPath {
 		return _finderCacheEnabled;
 	}
 
-	private Serializable _getCacheKey(StringBundler sb) {
+	private Serializable _getCacheKey(String[] keys) {
 		CacheKeyGenerator cacheKeyGenerator = _cacheKeyGenerator;
 
 		if (cacheKeyGenerator == null) {
@@ -130,7 +166,7 @@ public class FinderPath {
 				_cacheKeyGeneratorCacheName);
 		}
 
-		return cacheKeyGenerator.getCacheKey(sb);
+		return cacheKeyGenerator.getCacheKey(keys);
 	}
 
 	private void _initCacheKeyPrefix(String methodName, String[] params) {

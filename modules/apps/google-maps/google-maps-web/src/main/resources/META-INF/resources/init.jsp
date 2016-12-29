@@ -35,6 +35,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <portlet:defineObjects />
 
 <%
+String apiKey = GetterUtil.getString(themeDisplay.getScopeGroup().getTypeSettingsProperty("googleMapsAPIKey"), null);
 String directionsAddress = GetterUtil.getString(portletPreferences.getValue("directionsAddress", null));
 boolean directionsInputEnabled = GetterUtil.getBoolean(portletPreferences.getValue("directionsInputEnabled", null));
 String mapAddress = GetterUtil.getString(portletPreferences.getValue("mapAddress", null));

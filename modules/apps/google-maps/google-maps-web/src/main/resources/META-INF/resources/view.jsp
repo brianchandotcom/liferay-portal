@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= Validator.isNotNull(mapAddress) %>">
+	<c:when test="<%= Validator.isNotNull(apiKey) && Validator.isNotNull(mapAddress) %>">
 		<aui:form name="fm">
 			<aui:fieldset>
 				<c:choose>
@@ -88,6 +88,7 @@
 		<aui:script use="liferay-google-maps">
 			new Liferay.Portlet.GoogleMaps(
 				{
+					apiKey: '<%= apiKey %>',
 					directionsAddress: '<%= directionsAddress %>',
 
 					<c:if test="<%= PortalUtil.isSecure(request) %>">

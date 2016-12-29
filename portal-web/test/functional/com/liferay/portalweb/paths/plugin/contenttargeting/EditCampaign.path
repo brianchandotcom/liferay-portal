@@ -18,7 +18,6 @@
 	<td>//button[@title='Select User Segments']</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>CAMPAIGN_USER_SEGMENT_APPLIED</td>
 	<td>//div[contains(@id,'assetCategorySelector')]//span[contains(@class,'textboxlistentry')]</td>

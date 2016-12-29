@@ -28,6 +28,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
+import org.dom4j.tree.DefaultElement;
 
 import org.json.JSONObject;
 
@@ -171,6 +172,86 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public Element getGitHubMessage() {
+		String status = getStatus();
+
+		if (!status.equals("completed") && (getParentBuild() != null)) {
+			return null;
+		}
+
+		String result = getResult();
+
+		if (result.equals("SUCCESS")) {
+			return null;
+		}
+
+		Element messageElement = new DefaultElement("div");
+
+		Dom4JUtil.getNewAnchorElement(
+			getBuildURL(), messageElement, getDisplayName());
+
+		if (result.equals("ABORTED")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
+		}
+
+		if (result.equals("FAILURE")) {
+			Element failureMessageElement = getFailureMessageElement();
+
+			if (failureMessageElement != null) {
+				messageElement.add(failureMessageElement);
+			}
+		}
+
+		if (result.equals("UNSTABLE")) {
+			String jobVariant = getParameterValue("JOB_VARIANT");
+
+			Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
+				"ol", messageElement);
+
+			for (TestResult testResult : getTestResults(null)) {
+				String testStatus = testResult.getStatus();
+
+				if (!testStatus.equals("FAILED")) {
+					continue;
+				}
+
+				Element downstreamBuildListItemElement =
+					Dom4JUtil.getNewElement(
+						"li", downstreamBuildOrderedListElement);
+
+				downstreamBuildListItemElement.add(
+					Dom4JUtil.getNewAnchorElement(
+						testResult.getTestReportURL(),
+						testResult.getDisplayName()));
+
+				if (jobVariant.contains("functional")) {
+					Dom4JUtil.addToElement(
+						downstreamBuildListItemElement, " - ",
+						Dom4JUtil.getNewAnchorElement(
+							testResult.getPoshiReportURL(), "Poshi Report"),
+						" - ",
+						Dom4JUtil.getNewAnchorElement(
+							testResult.getPoshiSummaryURL(), "Poshi Summary"),
+						" - ",
+						Dom4JUtil.getNewAnchorElement(
+							testResult.getConsoleOutputURL(),
+							"Console Output"));
+
+					if (testResult.hasLiferayLog()) {
+						Dom4JUtil.addToElement(
+							downstreamBuildListItemElement, " - ",
+							Dom4JUtil.getNewAnchorElement(
+								testResult.getLiferayLogURL(), "Liferay Log"));
+					}
+				}
+			}
+		}
+
+		return messageElement;
+	}
+
+	@Override
 	public String getJDK() {
 		Build parentBuild = getParentBuild();
 
@@ -225,7 +306,7 @@ public class AxisBuild extends BaseBuild {
 		sb.append("/");
 		sb.append(getParameterValue("JOB_VARIANT"));
 		sb.append("/");
-		sb.append(getAxisVariable());
+		sb.append(getAxisNumber());
 
 		return sb.toString();
 	}

@@ -1182,7 +1182,13 @@ public abstract class BaseBuild implements Build {
 	protected int getDownstreamBuildCountByResult(String result) {
 		int count = 0;
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
+
+		if (result == null) {
+			return downstreamBuilds.size();
+		}
+
+		for (Build downstreamBuild : downstreamBuilds) {
 			String downstreamBuildResult = downstreamBuild.getResult();
 
 			if (downstreamBuildResult.equals(result)) {

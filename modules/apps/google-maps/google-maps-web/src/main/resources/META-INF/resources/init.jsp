@@ -24,18 +24,31 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.google.maps.web.internal.constants.GoogleMapsConstants" %><%@
+page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.portal.kernel.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
+
+<%@ page import="javax.portlet.PortletPreferences" %>
 
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-String apiKey = GetterUtil.getString(themeDisplay.getScopeGroup().getTypeSettingsProperty("googleMapsAPIKey"), null);
+Group group = themeDisplay.getScopeGroup();
+
+String apiKey = GetterUtil.getString(group.getTypeSettingsProperty("googleMapsAPIKey"), null);
+
+if (Validator.isNull(apiKey)) {
+	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
+
+	apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", null);
+}
+
 String directionsAddress = GetterUtil.getString(portletPreferences.getValue("directionsAddress", null));
 boolean directionsInputEnabled = GetterUtil.getBoolean(portletPreferences.getValue("directionsInputEnabled", null));
 String mapAddress = GetterUtil.getString(portletPreferences.getValue("mapAddress", null));

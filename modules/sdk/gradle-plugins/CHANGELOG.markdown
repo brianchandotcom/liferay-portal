@@ -888,6 +888,14 @@ version 2.3.4.
 - [LPS-69838]: Allow to configure the `npmArgs` argument in the `node` extension
 object by setting the project property `nodejs.npm.args`.
 
+## 3.0.62 - 2016-12-29
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.68.
+- [LPS-67352]: Update the [Liferay Source Formatter] dependency to version
+1.0.334.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

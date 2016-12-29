@@ -30,6 +30,10 @@ AUI.add(
 		var GoogleMaps = A.Component.create(
 			{
 				ATTRS: {
+					apiKey: {
+						validator: Lang.isString
+					},
+
 					directionsAddress: {
 						validator: Lang.isString
 					},
@@ -253,7 +257,7 @@ AUI.add(
 
 						var googleMapsURL = instance.get('googleMapsURL');
 
-						googleMapsURL = googleMapsURL + '?sensor=true&language=' + instance.get('languageId') + '&callback=Liferay.GOOGLE_MAPS.onGoogleMapsLoaded';
+						googleMapsURL = googleMapsURL + '?sensor=true&language=' + instance.get('languageId') + '&callback=Liferay.GOOGLE_MAPS.onGoogleMapsLoaded' + '&key=' + instance.get('apiKey');
 
 						A.Get.script(googleMapsURL);
 					},

@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>YoutubePortlet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">YoutubePortlet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>VIDEO_IFRAME</td>
+	<td>//iframe[contains(@src,'youtube')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIDEO_TITLE</td>
+	<td>//div[contains(@class,'ytp-title')]//span[last()]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1638,7 +1638,7 @@
 			<var name="displayStyle" value="list" />
 		</execute>
 
-		<var method="selenium#getText('//span/span/a')" name="valueName" />
+		<var method="selenium#getText('//*[@data-qa-id=\'row\']//td[contains(@class,\'download\')]//span[last()]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -1708,7 +1708,7 @@
 			<var name="displayStyle" value="list" />
 		</execute>
 
-		<var method="selenium#getText('//span/span/a')" name="valueName" />
+		<var method="selenium#getText('//*[@data-qa-id=\'row\']//td[contains(@class,\'download\')]//span[last()]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -1786,7 +1786,7 @@
 			<var name="displayStyle" value="list" />
 		</execute>
 
-		<var method="selenium#getText('//span/span/a')" name="valueName" />
+		<var method="selenium#getText('//*[@data-qa-id=\'row\']//td[contains(@class,\'download\')]//span[last()]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
@@ -1976,7 +1976,7 @@
 			<var name="displayStyle" value="list" />
 		</execute>
 
-		<var method="selenium#getText('//span/span/a')" name="valueName" />
+		<var method="selenium#getText('//*[@data-qa-id=\'row\']//td[contains(@class,\'download\')]//span[last()]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 

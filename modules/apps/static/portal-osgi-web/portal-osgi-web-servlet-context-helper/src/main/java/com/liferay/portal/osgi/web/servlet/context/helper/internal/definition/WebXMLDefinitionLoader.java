@@ -17,6 +17,7 @@ package com.liferay.portal.osgi.web.servlet.context.helper.internal.definition;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.osgi.web.servlet.context.helper.definition.FilterDefinition;
@@ -959,7 +960,29 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 			return;
 		}
 
-		WebServlet webServlet = clazz.getAnnotation(WebServlet.class);
+		WebServlet webServlet = null;
+
+		try {
+			webServlet = clazz.getAnnotation(WebServlet.class);
+		}
+		catch (Exception e) {
+
+			// See http://bugs.java.com/view_bug.do?bug_id=7183985
+
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Unexpected error retrieving the annotation ");
+			sb.append(WebServlet.class);
+			sb.append("from class ");
+			sb.append(clazz);
+			sb.append(". This is usually caused by some dependency not being ");
+			sb.append("present in the classpath. Be careful, this could ");
+			sb.append("cause problems somewhere else in your code");
+
+			_logger.log(Logger.LOG_DEBUG, sb.toString(), e);
+
+			return;
+		}
 
 		if (webServlet != null) {
 			ServletDefinition servletDefinition = new ServletDefinition();

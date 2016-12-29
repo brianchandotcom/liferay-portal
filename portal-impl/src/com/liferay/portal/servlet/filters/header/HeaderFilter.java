@@ -101,11 +101,15 @@ public class HeaderFilter extends BasePortalFilter {
 		HttpServletRequest request, HttpServletResponse response, String name,
 		String value) {
 
-		// LEP-5895 and LPS-15802
+		// LEP-5895, LPS-15802, LPS-69908
 
 		if (StringUtil.equalsIgnoreCase(name, HttpHeaders.CACHE_CONTROL)) {
-			if (PropsValues.WEB_SERVER_PROXY_LEGACY_MODE) {
-				if (_isNewSession(request)) {
+			if (_isNewSession(request)) {
+				if (value.contains(HttpHeaders.CACHE_CONTROL_PUBLIC_VALUE)) {
+					return;
+				}
+
+				if (PropsValues.WEB_SERVER_PROXY_LEGACY_MODE) {
 					String contextPath = request.getContextPath();
 
 					if (contextPath.equals(PortalUtil.getPathContext())) {

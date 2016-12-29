@@ -66,6 +66,11 @@ and the `npm-shrinkwrap.json` file from the project, if present.
 - [LPS-69802]: Execute the `cleanNPM` task before generating the
 `npm-shrinkwrap.json` file via the `npmShrinkwrap` task.
 
+## 1.5.1 - 2016-12-29
+
+### Added
+- [LPS-69920]: Automatically retry `npm install` if it fails.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -74,3 +79,4 @@ and the `npm-shrinkwrap.json` file from the project, if present.
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
+[LPS-69920]: https://issues.liferay.com/browse/LPS-69920

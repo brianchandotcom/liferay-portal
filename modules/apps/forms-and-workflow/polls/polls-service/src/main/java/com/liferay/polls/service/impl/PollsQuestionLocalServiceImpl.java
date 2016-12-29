@@ -14,6 +14,7 @@
 
 package com.liferay.polls.service.impl;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.polls.exception.QuestionChoiceException;
 import com.liferay.polls.exception.QuestionDescriptionException;
 import com.liferay.polls.exception.QuestionExpirationDateException;
@@ -370,9 +371,11 @@ public class PollsQuestionLocalServiceImpl
 			}
 		}
 
-		if ((expirationDate != null) && expirationDate.before(new Date())) {
-			throw new QuestionExpirationDateException(
-				"Expiration date " + expirationDate + " is in the past");
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			if ((expirationDate != null) && expirationDate.before(new Date())) {
+				throw new QuestionExpirationDateException(
+					"Expiration date " + expirationDate + " is in the past");
+			}
 		}
 	}
 

@@ -831,7 +831,7 @@ versions of Git.
 error if the version of [Liferay Source Formatter] in use is not the latest one
 and is older than 30 days.
 
-## 2.3.12 - 2016-12-28
+## 2.4.0 - 2016-12-29
 
 ### Added
 - [LPS-69847]: Add the ability to ignore the locally deployed JAR files of a

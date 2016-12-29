@@ -32,8 +32,6 @@ import com.liferay.portal.osgi.web.servlet.context.helper.order.Order.Path;
 
 import java.io.InputStream;
 
-import java.lang.annotation.Annotation;
-
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -954,12 +952,6 @@ public class WebXMLDefinitionLoader extends DefaultHandler {
 
 		try {
 			clazz = bundle.loadClass(className);
-
-			Annotation[] annotations = clazz.getAnnotations();
-
-			if (annotations.length == 0) {
-				return;
-			}
 		}
 		catch (Throwable t) {
 			_logger.log(Logger.LOG_DEBUG, t.getMessage());

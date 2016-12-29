@@ -28,9 +28,13 @@ public interface Build {
 
 	public void archive(String archiveName);
 
+	public String getAppServer() throws Exception;
+
 	public String getArchivePath();
 
 	public List<String> getBadBuildURLs();
+
+	public String getBrowser() throws Exception;
 
 	public JSONObject getBuildJSONObject();
 
@@ -42,17 +46,23 @@ public interface Build {
 
 	public String getConsoleText();
 
+	public String getDatabase() throws Exception;
+
 	public int getDownstreamBuildCount(String status);
 
 	public List<Build> getDownstreamBuilds(String status);
 
 	public String getInvocationURL();
 
+	public String getJavaJDK() throws Exception;
+
 	public String getJobName();
 
 	public String getJobURL();
 
 	public String getMaster();
+
+	public String getOperatingSystem() throws Exception;
 
 	public Map<String, String> getParameters();
 

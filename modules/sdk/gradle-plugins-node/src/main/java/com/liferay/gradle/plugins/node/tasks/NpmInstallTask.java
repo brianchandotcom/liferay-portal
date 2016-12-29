@@ -324,13 +324,31 @@ public class NpmInstallTask extends ExecuteNpmTask {
 	}
 
 	private void _npmInstall(boolean reset) throws Exception {
-		if (reset) {
-			Project project = getProject();
+		Logger logger = getLogger();
+		int npmInstallRetries = getNpmInstallRetries();
+		Project project = getProject();
 
-			project.delete(getNodeModulesDir());
+		for (int i = 0; i < (npmInstallRetries + 1); i++) {
+			if (reset || (i > 0)) {
+				project.delete(getNodeModulesDir());
+			}
+
+			try {
+				super.executeNode();
+
+				break;
+			}
+			catch (IOException ioe) {
+				if (i == npmInstallRetries) {
+					throw ioe;
+				}
+
+				if (logger.isWarnEnabled()) {
+					logger.warn(
+						ioe.getMessage() + ". Running \"npm install\" again");
+				}
+			}
 		}
-
-		super.executeNode();
 	}
 
 	private void _removeShrinkwrappedUrls() throws IOException {

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//section[@id='portlet_com_liferay_hello_world_web_portlet_HelloWorldPortlet']//*[contains(@class,'portlet-title-text')][name()='h2'] | //section[@id='portlet_com_liferay_hello_world_web_portlet_HelloWorldPortlet']//h2[contains(@class,'portlet-title-text')]</td>                                                                                                                                             
+	<td>//section[@id='portlet_com_liferay_hello_world_web_portlet_HelloWorldPortlet']//*[contains(@class,'portlet-title-text')][name()='h2'] | //section[@id='portlet_com_liferay_hello_world_web_portlet_HelloWorldPortlet']//h2[contains(@class,'portlet-title-text')]</td>
 	<td></td>
 </tr>
 <tr>

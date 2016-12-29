@@ -29,7 +29,6 @@
 	<td>xpath=(//div[contains(@class,'message-content') and contains(.,'${key_threadBody}')])[2]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>THREAD_REPLY_BUTTON</td>
 	<td>//div[@class='thread-container' and contains(.,'${key_threadSubject}')]//span[contains(.,'Reply to Main Thread')]</td>

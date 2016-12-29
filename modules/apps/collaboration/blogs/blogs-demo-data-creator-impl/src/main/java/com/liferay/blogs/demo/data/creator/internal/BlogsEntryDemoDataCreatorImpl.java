@@ -19,16 +19,22 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,15 +54,15 @@ public class BlogsEntryDemoDataCreatorImpl
 
 		serviceContext.setScopeGroupId(groupId);
 
-		String title = "Test title";
+		String title = _getRandomElement(_entryTitles);
 
-		String subtitle = StringPool.BLANK;
+		String subtitle = _getRandomElement(_entrySubtitles);
 
 		Date date = new Date();
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-			userId, title, subtitle, null, StringPool.BLANK, date, false, false,
-			null, null, null, null, serviceContext);
+			userId, title, subtitle, null, _getRandomContent(), date, false,
+			false, null, null, null, null, serviceContext);
 
 		_entryIds.add(blogsEntry.getEntryId());
 
@@ -85,10 +91,66 @@ public class BlogsEntryDemoDataCreatorImpl
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryDemoDataCreatorImpl.class);
+	private String _getRandomContent() {
+		List<String> paragraphs = new ArrayList<>();
+
+		for (int i = 0; i < 10; i++) {
+			List<String> lines = new ArrayList<>();
+
+			for (int j = 0; j < 15; j++) {
+				lines.add(_getRandomElement(_entryLines));
+			}
+
+			paragraphs.add(
+				lines.stream().collect(Collectors.joining(StringPool.SPACE)));
+		}
+
+		return paragraphs.stream().map(paragraph -> "<p>" + paragraph + "</p>").
+			collect(Collectors.joining());
+	}
+
+	private String _getRandomElement(List<String> list) {
+		return Optional.of(
+			list.get(RandomUtil.nextInt(list.size()))).orElse("Test");
+	}
 
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private final List<Long> _entryIds = new ArrayList<>();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BlogsEntryDemoDataCreatorImpl.class);
+
+	private static List<String> _entryTitles = new ArrayList<>();
+	private static List<String> _entrySubtitles = new ArrayList<>();
+	private static List<String> _entryLines = new ArrayList<>();
+	static {
+		_entryTitles.addAll(_getAllLines("dependencies/BlogsEntryTitles.txt"));
+		_entrySubtitles.addAll(
+			_getAllLines("dependencies/BlogsEntrySubtitles.txt"));
+		_entryLines.addAll(_getAllLines("dependencies/BlogsEntryLines.txt"));
+	}
+
+	private static List<String> _getAllLines(String file) {
+		List<String> dictionaryList = new ArrayList<>();
+
+		try (InputStream is =
+				BlogsEntryDemoDataCreatorImpl.class.getResourceAsStream(file);
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new InputStreamReader(is))) {
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				dictionaryList.add(line);
+			}
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe);
+			}
+		}
+
+		return dictionaryList;
+	}
 
 }

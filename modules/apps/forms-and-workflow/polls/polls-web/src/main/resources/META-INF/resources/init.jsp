@@ -76,6 +76,7 @@ page import="com.liferay.taglib.search.ResultRow" %>
 page import="java.text.NumberFormat" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.Date" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@

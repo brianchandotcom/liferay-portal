@@ -87,6 +87,7 @@ import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
@@ -124,6 +125,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 	public static final String CLEAN_DEPLOYED_PROPERTY_NAME = "cleanDeployed";
 
+	public static final String COMPILE_INCLUDE_CONFIGURATION_NAME =
+		"compileInclude";
+
 	public static final String PLUGIN_NAME = "liferayOSGi";
 
 	@Override
@@ -137,6 +141,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		_applyPlugins(project);
 
 		_addDeployedFile(project, JavaPlugin.JAR_TASK_NAME, false);
+
+		final Configuration compileIncludeConfiguration =
+			_addConfigurationCompileInclude(project);
 
 		_addTaskAutoUpdateXml(project);
 		_addTasksBuildWSDDJar(project);
@@ -162,7 +169,8 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 				@Override
 				public void execute(Project project) {
 					_configureBundleExtensionDefaults(
-						project, liferayOSGiExtension);
+						project, liferayOSGiExtension,
+						compileIncludeConfiguration);
 				}
 
 			});
@@ -189,6 +197,22 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 		private ClassLoader _contextClassLoader;
 
+	}
+
+	private Configuration _addConfigurationCompileInclude(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, COMPILE_INCLUDE_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Additional dependencies to include in the final JAR.");
+		configuration.setVisible(false);
+
+		Configuration compileOnlyConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_ONLY_CONFIGURATION_NAME);
+
+		compileOnlyConfiguration.extendsFrom(configuration);
+
+		return configuration;
 	}
 
 	private void _addDeployedFile(
@@ -660,7 +684,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 		File file = project.file("bnd.bnd");
 
 		if (file.exists()) {
-			Map<String, String> bundleInstructions = _getBundleInstructions(
+			Map<String, Object> bundleInstructions = _getBundleInstructions(
 				bundleExtension);
 
 			Properties properties = GUtil.loadProperties(file);
@@ -678,10 +702,34 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleExtensionDefaults(
-		Project project, LiferayOSGiExtension liferayOSGiExtension) {
+		Project project, LiferayOSGiExtension liferayOSGiExtension,
+		final Configuration compileIncludeConfiguration) {
 
-		Map<String, String> bundleInstructions = _getBundleInstructions(
+		Map<String, Object> bundleInstructions = _getBundleInstructions(
 			project);
+
+		bundleInstructions.put(
+			Constants.INCLUDERESOURCE + "." +
+				compileIncludeConfiguration.getName(),
+			new Object() {
+
+				@Override
+				public String toString() {
+					StringBuilder sb = new StringBuilder();
+
+					for (File file : compileIncludeConfiguration) {
+						if (sb.length() > 0) {
+							sb.append(',');
+						}
+
+						sb.append('@');
+						sb.append(file.getAbsolutePath());
+					}
+
+					return sb.toString();
+				}
+
+			});
 
 		Map<String, String> bundleDefaultInstructions =
 			liferayOSGiExtension.getBundleDefaultInstructions();
@@ -931,19 +979,19 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private String _getBundleInstruction(Project project, String key) {
-		Map<String, String> bundleInstructions = _getBundleInstructions(
+		Map<String, Object> bundleInstructions = _getBundleInstructions(
 			project);
 
-		return bundleInstructions.get(key);
+		return GradleUtil.toString(bundleInstructions.get(key));
 	}
 
-	private Map<String, String> _getBundleInstructions(
+	private Map<String, Object> _getBundleInstructions(
 		BundleExtension bundleExtension) {
 
-		return (Map<String, String>)bundleExtension.getInstructions();
+		return (Map<String, Object>)bundleExtension.getInstructions();
 	}
 
-	private Map<String, String> _getBundleInstructions(Project project) {
+	private Map<String, Object> _getBundleInstructions(Project project) {
 		BundleExtension bundleExtension = GradleUtil.getExtension(
 			project, BundleExtension.class);
 

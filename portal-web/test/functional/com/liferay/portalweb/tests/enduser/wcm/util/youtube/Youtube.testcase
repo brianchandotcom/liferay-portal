@@ -1,0 +1,40 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="false" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="YouTube" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="Page#tearDownPG" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="YoutubePortletSmoke" priority="4">
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="YouTube" />
+		</execute>
+
+		<execute macro="Portlet#viewPG">
+			<var name="portletBody" value="Please configure this portlet to make it visible to all users." />
+			<var name="portletName" value="YouTube" />
+		</execute>
+	</command>
+</definition>

@@ -233,6 +233,40 @@ public class TopLevelBuild extends BaseBuild {
 		return buildTimeElement;
 	}
 
+	protected Element getDownstreamGitHubMessage() {
+		String status = getStatus();
+
+		if (!status.equals("completed") && (getParentBuild() != null)) {
+			return null;
+		}
+
+		String result = getResult();
+
+		if (result.equals("SUCCESS")) {
+			return null;
+		}
+
+		Element messageElement = new DefaultElement("div");
+
+		Dom4JUtil.getNewAnchorElement(
+			getBuildURL(), messageElement, getDisplayName());
+
+		if (result.equals("ABORTED")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
+		}
+
+		if (result.equals("FAILURE")) {
+			Element failureMessageElement = getFailureMessageElement();
+
+			if (failureMessageElement != null) {
+				messageElement.add(failureMessageElement);
+			}
+		}
+
+		return messageElement;
+	}
+
 	@Override
 	protected ExecutorService getExecutorService() {
 		return Executors.newFixedThreadPool(20);

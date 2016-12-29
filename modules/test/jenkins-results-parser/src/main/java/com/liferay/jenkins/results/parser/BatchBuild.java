@@ -15,9 +15,14 @@
 package com.liferay.jenkins.results.parser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang.StringUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,6 +32,11 @@ import org.json.JSONObject;
  */
 public class BatchBuild extends BaseBuild {
 
+	@Override
+	public String getAppServer() throws Exception {
+		return getEnvironment("app.server");
+	}
+
 	public String getBatchName() {
 		String batchName = getParameterValue("JOB_VARIANT");
 
@@ -35,6 +45,26 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		return batchName;
+	}
+
+	@Override
+	public String getBrowser() throws Exception {
+		return getEnvironment("browser");
+	}
+
+	@Override
+	public String getDatabase() throws Exception {
+		return getEnvironment("database");
+	}
+
+	@Override
+	public String getJavaJDK() throws Exception {
+		return getEnvironment("java.jdk");
+	}
+
+	@Override
+	public String getOperatingSystem() throws Exception {
+		return getEnvironment("operating.system");
 	}
 
 	@Override
@@ -105,5 +135,74 @@ public class BatchBuild extends BaseBuild {
 
 		return null;
 	}
+
+	protected String getBatchComponent(
+		String batchName, String environmentOption) {
+
+		int x = batchName.indexOf(environmentOption);
+
+		int y = batchName.indexOf("-", x);
+
+		if (y == -1) {
+			y = batchName.length();
+		}
+
+		return batchName.substring(x, y);
+	}
+
+	protected String getEnvironment(String environmentType) throws Exception {
+		Properties buildProperties =
+			JenkinsResultsParserUtil.getBuildProperties();
+
+		List<String> environmentOptions = new ArrayList(
+			Arrays.asList(
+				StringUtils.split(
+					buildProperties.getProperty(environmentType + ".types"),
+					",")));
+
+		String batchName = getBatchName();
+
+		for (String environmentOption : environmentOptions) {
+			if (batchName.contains(environmentOption)) {
+				String batchComponent = getBatchComponent(
+					batchName, environmentOption);
+
+				return buildProperties.getProperty(
+					"env.option." + environmentType + "." + batchComponent);
+			}
+		}
+
+		String name = buildProperties.getProperty(environmentType + ".type");
+
+		String environmentVersion = (String)buildProperties.get(
+			environmentType + "." + name + ".version");
+
+		Matcher matcher = majorVersionPattern.matcher(
+			buildProperties.getProperty(
+				environmentType + "." + name + ".version"));
+
+		String environmentMajorVersion;
+
+		if (matcher.matches()) {
+			environmentMajorVersion = matcher.group(1);
+		}
+		else {
+			environmentMajorVersion = environmentVersion;
+		}
+
+		if (environmentType.equals("java.jdk")) {
+			return buildProperties.getProperty(
+				"env.option." + environmentType + "." + name + "." +
+					environmentMajorVersion.replace(".", ""));
+		}
+		else {
+			return buildProperties.getProperty(
+				"env.option." + environmentType + "." + name +
+					environmentMajorVersion.replace(".", ""));
+		}
+	}
+
+	protected final Pattern majorVersionPattern = Pattern.compile(
+		"((\\d+)\\.?(\\d+?)).*");
 
 }

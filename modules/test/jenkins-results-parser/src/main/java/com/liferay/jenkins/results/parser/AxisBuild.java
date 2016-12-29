@@ -39,6 +39,13 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getAppServer() throws Exception {
+		Build parentBuild = getParentBuild();
+
+		return parentBuild.getAppServer();
+	}
+
+	@Override
 	public String getArchivePath() {
 		if (archiveName == null) {
 			System.out.println(
@@ -75,6 +82,13 @@ public class AxisBuild extends BaseBuild {
 
 	public String getAxisVariable() {
 		return axisVariable;
+	}
+
+	@Override
+	public String getBrowser() throws Exception {
+		Build parentBuild = getParentBuild();
+
+		return parentBuild.getBrowser();
 	}
 
 	@Override
@@ -137,6 +151,13 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getDatabase() throws Exception {
+		Build parentBuild = getParentBuild();
+
+		return parentBuild.getDatabase();
+	}
+
+	@Override
 	public String getDisplayName() {
 		StringBuilder sb = new StringBuilder();
 
@@ -145,6 +166,20 @@ public class AxisBuild extends BaseBuild {
 		sb.append(getBuildNumber());
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getJavaJDK() throws Exception {
+		Build parentBuild = getParentBuild();
+
+		return parentBuild.getJavaJDK();
+	}
+
+	@Override
+	public String getOperatingSystem() throws Exception {
+		Build parentBuild = getParentBuild();
+
+		return parentBuild.getOperatingSystem();
 	}
 
 	public String getTestRayLogsURL() {

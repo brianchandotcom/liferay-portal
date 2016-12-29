@@ -115,6 +115,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getAppServer() throws Exception {
+		return null;
+	}
+
+	@Override
 	public String getArchivePath() {
 		StringBuilder sb = new StringBuilder(archiveName);
 
@@ -154,6 +159,11 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getBranchName() {
 		return branchName;
+	}
+
+	@Override
+	public String getBrowser() throws Exception {
+		return null;
 	}
 
 	@Override
@@ -232,6 +242,11 @@ public abstract class BaseBuild implements Build {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public String getDatabase() throws Exception {
+		return null;
 	}
 
 	@Override
@@ -327,6 +342,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getJavaJDK() throws Exception {
+		return null;
+	}
+
+	@Override
 	public String getJobName() {
 		return jobName;
 	}
@@ -354,6 +374,11 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getMaster() {
 		return master;
+	}
+
+	@Override
+	public String getOperatingSystem() throws Exception {
+		return null;
 	}
 
 	@Override

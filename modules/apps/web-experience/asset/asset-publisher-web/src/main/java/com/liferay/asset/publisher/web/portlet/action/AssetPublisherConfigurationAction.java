@@ -95,9 +95,9 @@ public class AssetPublisherConfigurationAction
 
 	@Override
 	public void include(
-		PortletConfig portletConfig, HttpServletRequest request,
-		HttpServletResponse response)
-	throws Exception {
+			PortletConfig portletConfig, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
 
 		String portletResource = ParamUtil.getString(
 			request, "portletResource");
@@ -729,12 +729,12 @@ public class AssetPublisherConfigurationAction
 		}
 	}
 
+	@Reference
+	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
+
 	protected AssetTagLocalService assetTagLocalService;
 	protected GroupLocalService groupLocalService;
 	protected LayoutLocalService layoutLocalService;
 	protected LayoutRevisionLocalService layoutRevisionLocalService;
-
-	@Reference
-	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
 
 }

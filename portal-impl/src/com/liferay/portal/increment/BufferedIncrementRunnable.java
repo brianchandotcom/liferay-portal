@@ -69,7 +69,7 @@ public class BufferedIncrementRunnable implements Runnable {
 				_log.error(
 					"Unable to persist buffered increment value: " +
 						bufferedIncreasableEntry,
-				t);
+					t);
 			}
 
 			if (_bufferedIncrementConfiguration.isStandbyEnabled()) {

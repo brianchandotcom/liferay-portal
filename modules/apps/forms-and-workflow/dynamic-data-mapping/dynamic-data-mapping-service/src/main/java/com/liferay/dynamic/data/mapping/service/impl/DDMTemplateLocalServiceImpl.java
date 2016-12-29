@@ -1335,11 +1335,11 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public DDMTemplate updateTemplate(
-			long userId, long templateId, long classPK, Map<Locale,
-			String> nameMap, Map<Locale, String> descriptionMap, String type,
-			String mode, String language, String script, boolean cacheable,
-			boolean smallImage, String smallImageURL, File smallImageFile,
-			ServiceContext serviceContext)
+			long userId, long templateId, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String type, String mode, String language, String script,
+			boolean cacheable, boolean smallImage, String smallImageURL,
+			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);

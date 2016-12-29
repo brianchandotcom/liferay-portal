@@ -162,9 +162,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 
 					List<DDMDataProviderContextContributor>
 						ddmDataProviderContextContributors =
-					ddmDataProviderTracker.
-					getDDMDataProviderContextContributors(
-						ddmDataProviderInstance.getType());
+							ddmDataProviderTracker.
+								getDDMDataProviderContextContributors(
+									ddmDataProviderInstance.getType());
 
 					addDDMDataProviderContextParameters(
 						ddmFormFieldRenderingContext.getHttpServletRequest(),

@@ -109,7 +109,7 @@ public class EhcachePortalCacheListenerFactory
 	private class EhcachePortalCacheReplicator
 		<K extends Serializable, V extends Serializable>
 			implements PortalCacheReplicator<K, V>,
-				ConfigurableEhcachePortalCacheListener {
+					   ConfigurableEhcachePortalCacheListener {
 
 		@Override
 		public void dispose() {

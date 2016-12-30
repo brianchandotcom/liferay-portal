@@ -34,6 +34,10 @@
 	.lfr-ddm-form-field-container {
 		position: relative;
 
+		&.lfr-ddm-form-field-container-inline {
+			display: inline-block;
+		}
+
 		&.has-error .liferay-ddm-form-field-date .input-group-addon {
 			border-width: 0 0 2px 0;
 		}

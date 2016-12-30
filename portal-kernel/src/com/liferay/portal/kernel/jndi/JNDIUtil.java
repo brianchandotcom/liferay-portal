@@ -79,10 +79,10 @@ public class JNDIUtil {
 					obj = context.lookup(newLocation);
 				}
 			}
-
-			// java:ObjectName to ObjectName
-
 			else if (location.contains("java:")) {
+
+				// java:ObjectName to ObjectName
+
 				try {
 					String newLocation = StringUtil.replace(
 						location, "java:", "");
@@ -109,10 +109,10 @@ public class JNDIUtil {
 					obj = context.lookup(newLocation);
 				}
 			}
-
-			// ObjectName to java:ObjectName
-
 			else if (!location.contains("java:")) {
+
+				// ObjectName to java:ObjectName
+
 				try {
 					String newLocation = "java:" + location;
 

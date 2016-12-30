@@ -6446,26 +6446,26 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		long userId = user.getUserId();
 
-		// test@test.com -> test@liferay.com
-
 		if (!user.hasCompanyMx() && user.hasCompanyMx(emailAddress) &&
 			Validator.isNotNull(password)) {
+
+			// test@test.com -> test@liferay.com
 
 			mailService.addUser(
 				user.getCompanyId(), userId, password, firstName, middleName,
 				lastName, emailAddress);
 		}
-
-		// test@liferay.com -> bob@liferay.com
-
 		else if (user.hasCompanyMx() && user.hasCompanyMx(emailAddress)) {
+
+			// test@liferay.com -> bob@liferay.com
+
 			mailService.updateEmailAddress(
 				user.getCompanyId(), userId, emailAddress);
 		}
-
-		// test@liferay.com -> test@test.com
-
 		else if (user.hasCompanyMx() && !user.hasCompanyMx(emailAddress)) {
+
+			// test@liferay.com -> test@test.com
+
 			mailService.deleteEmailAddress(user.getCompanyId(), userId);
 		}
 

@@ -198,18 +198,44 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{analyzer=");
 		sb.append(_analyzer);
+		sb.append(", className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", companyId=");
+		sb.append(_companyId);
 		sb.append(", documentUIDs=");
 		sb.append(_documentUIDs);
 		sb.append(", fields=");
 		sb.append(_fields);
+		sb.append(", includeInput=");
+		sb.append(_includeInput);
 		sb.append(", likeText=");
 		sb.append(_likeText);
+		sb.append(", maxDocFrequency=");
+		sb.append(_maxDocFrequency);
+		sb.append(", maxQueryTerms=");
+		sb.append(_maxQueryTerms);
+		sb.append(", maxWordLength=");
+		sb.append(_maxWordLength);
+		sb.append(", minDocFrequency=");
+		sb.append(_minDocFrequency);
+		sb.append(", minShouldMatch=");
+		sb.append(_minShouldMatch);
+		sb.append(", minTermFrequency=");
+		sb.append(_minTermFrequency);
+		sb.append(", minWordLength=");
+		sb.append(_minWordLength);
 		sb.append(", stopWords=");
 		sb.append(_stopWords);
+		sb.append(", termBoost=");
+		sb.append(_termBoost);
 		sb.append(", type=");
 		sb.append(_type);
 		sb.append("}");

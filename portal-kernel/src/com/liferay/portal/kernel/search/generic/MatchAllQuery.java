@@ -27,4 +27,11 @@ public class MatchAllQuery extends BaseQueryImpl {
 		return queryVisitor.visitQuery(this);
 	}
 
+	@Override
+	public String toString() {
+		Class<?> clazz = getClass();
+
+		return "{className=" + clazz.getSimpleName() + "}";
+	}
+
 }

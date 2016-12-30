@@ -69,10 +69,17 @@ public class TermRangeQueryImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(15);
 
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", field=");
 		sb.append(_field);
-		sb.append(CharPool.COLON);
+		sb.append(", range=");
 
 		if (_includesLower) {
 			sb.append(CharPool.OPEN_BRACKET);
@@ -103,6 +110,8 @@ public class TermRangeQueryImpl
 		else {
 			sb.append(CharPool.CLOSE_CURLY_BRACE);
 		}
+
+		sb.append("}");
 
 		return sb.toString();
 	}

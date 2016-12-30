@@ -53,9 +53,15 @@ public class NestedQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("{path=");
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", path=");
 		sb.append(_path);
 		sb.append(", query=");
 		sb.append(_query);

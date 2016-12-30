@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.query.FieldQueryFactoryUtil;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -364,7 +365,19 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public String toString() {
-		return "{booleanClauses=" + _booleanClauses + "}";
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{booleanClauses=");
+		sb.append(_booleanClauses);
+		sb.append(", className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final List<BooleanClause<Query>> _booleanClauses =

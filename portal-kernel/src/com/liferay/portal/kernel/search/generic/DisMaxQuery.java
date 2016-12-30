@@ -60,12 +60,18 @@ public class DisMaxQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("{tieBreaker=");
-		sb.append(_tieBreaker);
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
 		sb.append(", queries=");
 		sb.append(_queries);
+		sb.append(", tieBreaker=");
+		sb.append(_tieBreaker);
 		sb.append("}");
 
 		return sb.toString();

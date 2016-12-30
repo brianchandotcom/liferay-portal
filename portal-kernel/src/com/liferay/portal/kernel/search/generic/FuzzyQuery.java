@@ -75,12 +75,24 @@ public class FuzzyQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(15);
 
-		sb.append("{field=");
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", field=");
 		sb.append(_field);
 		sb.append(", fuzziness=");
 		sb.append(_fuzziness);
+		sb.append(", maxEdits=");
+		sb.append(_maxEdits);
+		sb.append(", maxExpansions=");
+		sb.append(_maxExpansions);
+		sb.append(", prefixLength=");
+		sb.append(_prefixLength);
 		sb.append(", value=");
 		sb.append(_value);
 		sb.append("}");

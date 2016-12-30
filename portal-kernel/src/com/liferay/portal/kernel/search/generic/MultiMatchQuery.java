@@ -179,14 +179,36 @@ public class MultiMatchQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{analyzer=");
 		sb.append(_analyzer);
+		sb.append(", className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", cutOffFrequency=");
+		sb.append(_cutOffFrequency);
 		sb.append(", fields=");
 		sb.append(_fields);
+		sb.append(", fuzziness=");
+		sb.append(_fuzziness);
+		sb.append(", lenient=");
+		sb.append(_lenient);
+		sb.append(", maxExpansions=");
+		sb.append(_maxExpansions);
+		sb.append(", minShouldMatch=");
+		sb.append(_minShouldMatch);
 		sb.append(", operator=");
 		sb.append(_operator);
+		sb.append(", prefixLength=");
+		sb.append(_prefixLength);
+		sb.append(", slop=");
+		sb.append(_slop);
+		sb.append(", tieBreaker=");
+		sb.append(_tieBreaker);
 		sb.append(", type=");
 		sb.append(_type);
 		sb.append(", value=");

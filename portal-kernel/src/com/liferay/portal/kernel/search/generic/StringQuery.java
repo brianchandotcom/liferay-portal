@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Bruno Farache
@@ -32,7 +33,19 @@ public class StringQuery extends BaseQueryImpl implements Query {
 
 	@Override
 	public String toString() {
-		return _query;
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", query=");
+		sb.append(_query);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final String _query;

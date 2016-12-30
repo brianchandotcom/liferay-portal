@@ -21,7 +21,15 @@ import com.liferay.announcements.kernel.exception.EntryTitleException;
 import com.liferay.announcements.kernel.exception.EntryURLException;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailService;
+import com.liferay.mail.kernel.template.MailTemplate;
+import com.liferay.mail.kernel.template.MailTemplateContext;
+import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
+import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -34,13 +42,12 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -49,10 +56,16 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.announcements.service.base.AnnouncementsEntryLocalServiceBaseImpl;
 import com.liferay.util.ContentUtil;
 
+import java.io.IOException;
+
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.mail.internet.InternetAddress;
 
 /**
  * @author Brian Wing Shun Chan
@@ -536,9 +549,7 @@ public class AnnouncementsEntryLocalServiceImpl
 			_log.debug("Notifying " + users.size() + " users");
 		}
 
-		boolean notifyUsers = false;
-
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		Map<String, String> notifyUsers = new HashMap<>();
 
 		for (User user : users) {
 			AnnouncementsDelivery announcementsDelivery =
@@ -546,23 +557,17 @@ public class AnnouncementsEntryLocalServiceImpl
 					user.getUserId(), entry.getType());
 
 			if (announcementsDelivery.isEmail()) {
-				subscriptionSender.addRuntimeSubscribers(
-					user.getEmailAddress(), user.getFullName());
-
-				notifyUsers = true;
+				notifyUsers.put(user.getEmailAddress(), user.getFullName());
 			}
 
 			if (announcementsDelivery.isSms()) {
 				String smsSn = user.getContact().getSmsSn();
 
-				subscriptionSender.addRuntimeSubscribers(
-					smsSn, user.getFullName());
-
-				notifyUsers = true;
+				notifyUsers.put(smsSn, user.getFullName());
 			}
 		}
 
-		if (!notifyUsers) {
+		if (notifyUsers.isEmpty()) {
 			return;
 		}
 
@@ -576,37 +581,19 @@ public class AnnouncementsEntryLocalServiceImpl
 		String subject = ContentUtil.get(
 			PropsValues.ANNOUNCEMENTS_EMAIL_SUBJECT);
 
-		subscriptionSender.setBody(body);
-		subscriptionSender.setCompanyId(entry.getCompanyId());
-		subscriptionSender.setContextAttribute(
-			"[$ENTRY_CONTENT$]", entry.getContent(), false);
-		subscriptionSender.setContextAttributes(
-			"[$ENTRY_ID$]", entry.getEntryId(), "[$ENTRY_TITLE$]",
-			entry.getTitle(), "[$ENTRY_URL$]", entry.getUrl());
-		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedContextAttributeWithFunction(
-			"[$ENTRY_TYPE$]",
-			notificationLocale ->
-				LanguageUtil.get(notificationLocale, entry.getType()));
-		subscriptionSender.setLocalizedContextAttributeWithFunction(
-			"[$PORTLET_NAME$]",
-			notificationLocale -> LanguageUtil.get(
-				notificationLocale,
-				entry.isAlert() ? "alert" : "announcement"));
-		subscriptionSender.setMailId("announcements_entry", entry.getEntryId());
+		Company company = companyLocalService.getCompany(entry.getCompanyId());
 
-		String portletId = PortletProviderUtil.getPortletId(
-			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
+		_sendNotificationEmail(
+			fromAddress, fromName, toAddress, toName, subject, body, company,
+			entry);
 
-		subscriptionSender.setPortletId(portletId);
+		for (String curToAddress : notifyUsers.keySet()) {
+			String curToName = notifyUsers.get(toAddress);
 
-		subscriptionSender.setScopeGroupId(entry.getGroupId());
-		subscriptionSender.setSubject(subject);
-
-		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
-
-		subscriptionSender.flushNotificationsAsync();
+			_sendNotificationEmail(
+				fromAddress, fromName, curToAddress, curToName, subject, body,
+				company, entry);
+		}
 	}
 
 	protected void validate(
@@ -632,6 +619,89 @@ public class AnnouncementsEntryLocalServiceImpl
 
 			throw new EntryExpirationDateException(
 				"Expiration date " + expirationDate + " is in the past");
+		}
+	}
+
+	@BeanReference(type = MailService.class)
+	protected MailService mailService;
+
+	private void _sendNotificationEmail(
+			String fromAddress, String fromName, String toAddress,
+			String toName, String subject, String body, Company company,
+			AnnouncementsEntry entry)
+		throws PortalException {
+
+		String portalURL = company.getPortalURL(0);
+
+		MailTemplateContextBuilder mailTemplateContextBuilder =
+			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
+
+		mailTemplateContextBuilder.put(
+			"[$COMPANY_ID$]", String.valueOf(company.getCompanyId()));
+		mailTemplateContextBuilder.put("[$COMPANY_MX$]", company.getMx());
+		mailTemplateContextBuilder.put("[$COMPANY_NAME$]", company.getName());
+		mailTemplateContextBuilder.put("[$ENTRY_CONTENT$]", entry.getContent());
+		mailTemplateContextBuilder.put(
+			"[$ENTRY_ID$]", String.valueOf(entry.getEntryId()));
+		mailTemplateContextBuilder.put("[$ENTRY_TITLE$]", entry.getTitle());
+		mailTemplateContextBuilder.put(
+			"[$ENTRY_TYPE$]",
+			new EscapableLocalizableFunction(
+				locale -> LanguageUtil.get(locale, entry.getType())));
+		mailTemplateContextBuilder.put("[$ENTRY_URL$]", entry.getUrl());
+		mailTemplateContextBuilder.put("[$FROM_ADDRESS$]", fromAddress);
+		mailTemplateContextBuilder.put("[$FROM_NAME$]", fromName);
+		mailTemplateContextBuilder.put("[$PORTAL_URL$]", portalURL);
+		mailTemplateContextBuilder.put(
+			"[$PORTLET_NAME$]",
+			new EscapableLocalizableFunction(
+				locale -> LanguageUtil.get(
+					locale, entry.isAlert() ? "alert" : "announcement")));
+
+		if (entry.getGroupId() > 0) {
+			Group group = groupLocalService.getGroup(entry.getGroupId());
+
+			mailTemplateContextBuilder.put(
+				"[$SITE_NAME$]", group.getDescriptiveName());
+		}
+
+		mailTemplateContextBuilder.put("[$TO_ADDRESS$]", toAddress);
+		mailTemplateContextBuilder.put("[$TO_NAME$]", toName);
+
+		MailTemplateContext mailTemplateContext =
+			mailTemplateContextBuilder.build();
+
+		try {
+			MailTemplate subjectTemplate =
+				MailTemplateFactoryUtil.createMailTemplate(subject, false);
+
+			MailTemplate bodyTemplate =
+				MailTemplateFactoryUtil.createMailTemplate(body, true);
+
+			User user = userLocalService.fetchUserByEmailAddress(
+				entry.getCompanyId(), toAddress);
+
+			Locale locale = LocaleUtil.getSiteDefault();
+
+			if (user != null) {
+				locale = user.getLocale();
+			}
+
+			MailMessage mailMessage = new MailMessage(
+				new InternetAddress(fromAddress, fromName),
+				new InternetAddress(toAddress, toName),
+				subjectTemplate.renderAsString(locale, mailTemplateContext),
+				bodyTemplate.renderAsString(locale, mailTemplateContext), true);
+
+			mailMessage.setMessageId(
+				PortalUtil.getMailId(
+					company.getMx(), "announcements_entry",
+					entry.getEntryId()));
+
+			mailService.sendEmail(mailMessage);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
 		}
 	}
 

@@ -1208,6 +1208,7 @@
 		<!-- References -->
 
 		<reference entity="Mail" package-path="com.liferay.mail" />
+		<reference entity="Company" package-path="com.liferay.portal" />
 		<reference entity="Group" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="Role" package-path="com.liferay.portal" />

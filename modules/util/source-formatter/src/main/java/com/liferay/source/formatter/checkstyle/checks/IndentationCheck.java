@@ -57,7 +57,7 @@ public class IndentationCheck extends AbstractCheck {
 			TokenTypes.LITERAL_THIS, TokenTypes.LITERAL_THROW,
 			TokenTypes.LITERAL_THROWS, TokenTypes.LITERAL_TRUE,
 			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_VOID,
-			TokenTypes.LITERAL_WHILE
+			TokenTypes.LITERAL_WHILE, TokenTypes.RCURLY, TokenTypes.RPAREN
 		};
 	}
 
@@ -353,6 +353,12 @@ public class IndentationCheck extends AbstractCheck {
 		expectedTabCount = _addExtraTabForParameterWithThrows(
 			expectedTabCount, detailAST);
 		expectedTabCount = _addExtraTabForSwitch(expectedTabCount, detailAST);
+
+		if ((detailAST.getType() == TokenTypes.RCURLY) ||
+			(detailAST.getType() == TokenTypes.RPAREN)) {
+
+			return expectedTabCount - 1;
+		}
 
 		return expectedTabCount;
 	}

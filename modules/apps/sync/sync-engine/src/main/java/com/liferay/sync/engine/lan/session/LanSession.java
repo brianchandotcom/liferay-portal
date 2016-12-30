@@ -371,8 +371,8 @@ public class LanSession {
 
 			if (future == null) {
 				for (Future<SyncLanClientQueryResult>
-					pendingSyncLanClientQueryResult :
-						pendingSyncLanClientQueryResults) {
+						pendingSyncLanClientQueryResult :
+							pendingSyncLanClientQueryResults) {
 
 					if (!pendingSyncLanClientQueryResult.isDone()) {
 						pendingSyncLanClientQueryResult.cancel(true);

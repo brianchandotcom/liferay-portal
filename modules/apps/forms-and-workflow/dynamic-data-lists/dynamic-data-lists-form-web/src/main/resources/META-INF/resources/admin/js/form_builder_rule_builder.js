@@ -20,10 +20,14 @@ AUI.add(
 							delete: Liferay.Language.get('delete'),
 							edit: Liferay.Language.get('edit'),
 							emptyListText: Liferay.Language.get('there-are-no-rules-yet-click-on-plus-icon-bellow-to-add-the-first'),
+							'enable-field': Liferay.Language.get('enable-x'),
 							'equals-to': Liferay.Language.get('is-equal-to'),
+							'jump-from-page-to-page': Liferay.Language.get('jump-from-x-to-x'),
 							'not-contains': Liferay.Language.get('does-not-contain'),
 							'not-equals-to': Liferay.Language.get('is-not-equal-to'),
-							ruleBuilder: Liferay.Language.get('rule-builder')
+							'require-field': Liferay.Language.get('require-x'),
+							ruleBuilder: Liferay.Language.get('rule-builder'),
+							'show-field': Liferay.Language.get('show-x')
 						}
 					}
 				},
@@ -113,6 +117,27 @@ AUI.add(
 						return fields;
 					},
 
+					getPages: function() {
+						var instance = this;
+
+						var pages;
+
+						var formBuilder = instance.get('formBuilder');
+
+						var pagesQuantity = formBuilder.get('layouts').length;
+
+						pages = new Array(pagesQuantity);
+
+						for (var i = 0; i < pagesQuantity; i++) {
+							pages[i] = {
+								label: (i + 1).toString(),
+								value: i.toString()
+							};
+						}
+
+						return pages;
+					},
+
 					hide: function() {
 						var instance = this;
 
@@ -125,19 +150,105 @@ AUI.add(
 						var instance = this;
 
 						if (!instance._ruleClasses) {
-							instance._ruleClasses = new Liferay.DDL.FormBuilderRule(
+							instance._ruleClasses = new Liferay.DDL.FormBuilderRenderRule(
 								{
 									boundingBox: instance.get('boundingBox'),
 									bubbleTargets: [instance],
 									contentBox: instance.get('contentBox'),
-									fields: instance.getFields()
+									fields: instance.getFields(),
+									pages: instance.getPages()
 								}
 							);
 						}
 
 						instance._ruleClasses.set('fields', instance.getFields());
+						instance._ruleClasses.set('pages', instance.getPages());
 
 						instance._ruleClasses.render(rule);
+					},
+
+					_getActionDescription: function(type, action) {
+						var instance = this;
+
+						var actionDescription = '';
+
+						var strings = instance.get('strings');
+
+						var badgeTemplate = SoyTemplateUtil.getTemplateRenderer('ddl.badge');
+
+						switch (type) {
+							case 'show':
+								actionDescription = A.Lang.sub(
+									strings['show-field'],
+									[
+										badgeTemplate(
+											{
+												content: action.target
+											}
+										)
+									]
+								);
+							break;
+							case 'require':
+								actionDescription = A.Lang.sub(
+									strings['require-field'],
+									[
+										badgeTemplate(
+											{
+												content: action.target
+											}
+										)
+									]
+								);
+							break;
+							case 'enable':
+								actionDescription = A.Lang.sub(
+									strings['enable-field'],
+									[
+										badgeTemplate(
+											{
+												content: action.target
+											}
+										)
+									]
+								);
+							break;
+							case 'jump-to-page':
+								actionDescription = A.Lang.sub(
+									strings['jump-from-page-to-page'],
+									[
+										badgeTemplate(
+											{
+												content: Number(action.source) + 1
+											}
+										),
+										badgeTemplate(
+											{
+												content: Number(action.target) + 1
+											}
+										)
+									]
+								);
+							break;
+						}
+
+						return actionDescription;
+					},
+
+					_getActionsDescription: function(actions) {
+						var instance = this;
+
+						var actionsDescription = [];
+
+						var actionDescription = '';
+
+						for (var i = 0; i < actions.length; i++) {
+							actionDescription = instance._getActionDescription(actions[i].action, actions[i]);
+
+							actionsDescription.push(actionDescription);
+						}
+
+						return actionsDescription;
 					},
 
 					_getFieldLabel: function(fieldValue) {
@@ -154,6 +265,24 @@ AUI.add(
 						}
 
 						return fieldLabel;
+					},
+
+					_getRulesDescription: function(rules) {
+						var instance = this;
+
+						var rulesDescription = [];
+
+						var ruleDescription = {};
+
+						for (var i = 0; i < rules.length; i++) {
+							ruleDescription.conditions = rules[i].conditions;
+
+							ruleDescription.actions = instance._getActionsDescription(rules[i].actions);
+
+							rulesDescription.push(ruleDescription);
+						}
+
+						return rulesDescription;
 					},
 
 					_handleAddRuleClick: function() {
@@ -226,11 +355,13 @@ AUI.add(
 
 						var ruleListTemplateRenderer = SoyTemplateUtil.getTemplateRenderer('ddl.rule_list');
 
+						var rulesDescription = instance._getRulesDescription(rules);
+
 						rulesList.setHTML(
 							ruleListTemplateRenderer(
 								{
 									kebab: Liferay.Util.getLexiconIconTpl('ellipsis-v', 'icon-monospaced'),
-									rules: rules,
+									rules: rulesDescription,
 									strings: instance.get('strings')
 								}
 							)

@@ -159,5 +159,5 @@
  * @param action
  */
 {template .action autoescape="deprecated-contextual"}
-	<b>{$action.action}</b> {call .badge} {param content: isNonnull($action.label) ? $action.label : $action.target /} {/call}
+	<b>{$action|noAutoescape}</b>
 {/template}

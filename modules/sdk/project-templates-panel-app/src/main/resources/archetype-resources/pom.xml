@@ -50,7 +50,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.css.builder</artifactId>
-				<version>1.0.20</version>
+				<version>1.0.22</version>
 				<executions>
 					<execution>
 						<id>default-build-css</id>
@@ -61,7 +61,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<portalCommonPath>/</portalCommonPath>
 					<docrootDirName>src/main/resources</docrootDirName>
 				</configuration>
 			</plugin>

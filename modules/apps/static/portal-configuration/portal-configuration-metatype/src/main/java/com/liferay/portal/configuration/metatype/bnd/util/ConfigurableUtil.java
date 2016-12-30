@@ -55,10 +55,10 @@ public class ConfigurableUtil {
 	private static <T> T _createConfigurableSnapshot(
 		Class<T> interfaceClass, T configurable) {
 
-		Package packageObject = interfaceClass.getPackage();
+		String snapshotClassName = interfaceClass.getName().concat("Snapshot");
 
-		String snapshotClassName =
-			packageObject.getName() + ".Snapshot_" + _COUNTER.getAndIncrement();
+		snapshotClassName = snapshotClassName.concat(
+			String.valueOf(_COUNTER.getAndIncrement()));
 
 		Class<T> configurableClass = (Class<T>)configurable.getClass();
 
@@ -232,6 +232,6 @@ public class ConfigurableUtil {
 		return className.replace(CharPool.PERIOD, CharPool.FORWARD_SLASH);
 	}
 
-	private static final AtomicLong _COUNTER = new AtomicLong(1);
+	private static final AtomicLong _COUNTER = new AtomicLong();
 
 }

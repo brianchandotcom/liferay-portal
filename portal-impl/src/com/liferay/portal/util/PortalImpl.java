@@ -7712,14 +7712,14 @@ public class PortalImpl implements Portal {
 				(canonicalURL ||
 				 !StringUtil.equalsIgnoreCase(virtualHostname, _LOCALHOST))) {
 
-				virtualHostname = getCanonicalDomain(
+				String canonicalDomain = getCanonicalDomain(
 					virtualHostname, portalDomain);
 
-				if (canonicalURL || virtualHostname.startsWith(portalDomain)) {
-					virtualHostname = getPortalURL(
-						virtualHostname, themeDisplay.getServerPort(),
-						themeDisplay.isSecure());
+				virtualHostname = getPortalURL(
+					canonicalDomain, themeDisplay.getServerPort(),
+					themeDisplay.isSecure());
 
+				if (canonicalURL || canonicalDomain.startsWith(portalDomain)) {
 					String path = StringPool.BLANK;
 
 					if (themeDisplay.isWidget()) {

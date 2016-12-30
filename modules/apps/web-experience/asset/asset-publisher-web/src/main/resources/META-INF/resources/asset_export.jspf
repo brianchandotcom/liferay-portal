@@ -24,11 +24,11 @@ exportAssetURL.setWindowState(LiferayWindowState.EXCLUSIVE);
 
 	<%
 	for (String extension : assetPublisherDisplayContext.getExtensions(assetRenderer)) {
+		exportAssetURL.setParameter("targetExtension", extension);
+
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		data.put("resource-href", exportAssetURL.toString());
-
-		exportAssetURL.setParameter("targetExtension", extension);
 	%>
 
 		<liferay-ui:icon

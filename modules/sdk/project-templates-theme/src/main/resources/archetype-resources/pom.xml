@@ -54,6 +54,7 @@
 				</executions>
 				<configuration>
 					<docrootDirName>${com.liferay.portal.tools.theme.builder.outputDir}</docrootDirName>
+					<precision>5</precision>
 				</configuration>
 			</plugin>
 			<plugin>

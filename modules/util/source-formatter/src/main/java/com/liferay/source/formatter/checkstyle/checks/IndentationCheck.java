@@ -65,7 +65,7 @@ public class IndentationCheck extends AbstractCheck {
 	public void visitToken(DetailAST detailAST) {
 		if (!_isAtLineStart(detailAST) ||
 			_isInsideChainedConcatMethod(detailAST) ||
-			_isInsideDoIfTryOrWhileStatementCriterium(detailAST) ||
+			_isInsideDoIfOrWhileStatementCriterium(detailAST) ||
 			_isInsideOperatorCriterium(detailAST)) {
 
 			return;
@@ -184,6 +184,38 @@ public class IndentationCheck extends AbstractCheck {
 
 			if (parentAST.getType() == TokenTypes.CASE_GROUP) {
 				return expectedTabCount + 1;
+			}
+
+			parentAST = parentAST.getParent();
+		}
+	}
+
+	private int _addExtraTabForTryStatement(
+		int expectedTabCount, DetailAST detailAST) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST == null) {
+				return expectedTabCount;
+			}
+
+			if (parentAST.getType() == TokenTypes.RESOURCE) {
+				DetailAST previousSibling = parentAST.getPreviousSibling();
+
+				if (previousSibling != null) {
+					return expectedTabCount;
+				}
+			}
+
+			if (parentAST.getType() == TokenTypes.RESOURCE_SPECIFICATION) {
+				parentAST = parentAST.getParent();
+
+				if (parentAST.getType() == TokenTypes.LITERAL_TRY) {
+					return expectedTabCount + 1;
+				}
+
+				continue;
 			}
 
 			parentAST = parentAST.getParent();
@@ -364,6 +396,8 @@ public class IndentationCheck extends AbstractCheck {
 		expectedTabCount = _addExtraTabForParameterWithThrows(
 			expectedTabCount, detailAST);
 		expectedTabCount = _addExtraTabForSwitch(expectedTabCount, detailAST);
+		expectedTabCount = _addExtraTabForTryStatement(
+			expectedTabCount, detailAST);
 
 		if ((detailAST.getType() == TokenTypes.RCURLY) ||
 			(detailAST.getType() == TokenTypes.RPAREN)) {
@@ -665,7 +699,7 @@ public class IndentationCheck extends AbstractCheck {
 		}
 	}
 
-	private boolean _isInsideDoIfTryOrWhileStatementCriterium(
+	private boolean _isInsideDoIfOrWhileStatementCriterium(
 		DetailAST detailAST) {
 
 		DetailAST parentAST = detailAST.getParent();
@@ -675,30 +709,20 @@ public class IndentationCheck extends AbstractCheck {
 				return false;
 			}
 
-			if (parentAST.getType() == TokenTypes.EXPR) {
+			if (parentAST.getType() != TokenTypes.EXPR) {
 				parentAST = parentAST.getParent();
-
-				if ((parentAST.getType() == TokenTypes.LITERAL_DO) ||
-					(parentAST.getType() == TokenTypes.LITERAL_IF) ||
-					(parentAST.getType() == TokenTypes.LITERAL_WHILE)) {
-
-					return true;
-				}
-
-				continue;
-			}
-
-			if (parentAST.getType() == TokenTypes.RESOURCE_SPECIFICATION) {
-				parentAST = parentAST.getParent();
-
-				if (parentAST.getType() == TokenTypes.LITERAL_TRY) {
-					return true;
-				}
 
 				continue;
 			}
 
 			parentAST = parentAST.getParent();
+
+			if ((parentAST.getType() == TokenTypes.LITERAL_DO) ||
+				(parentAST.getType() == TokenTypes.LITERAL_IF) ||
+				(parentAST.getType() == TokenTypes.LITERAL_WHILE)) {
+
+				return true;
+			}
 		}
 	}
 

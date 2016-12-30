@@ -169,11 +169,11 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		sb.append("from DDMStructureVersion");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
-				PreparedStatement ps2 =
-					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
-						connection,
-						"update DDMStructureVersion set definition = ? where " +
-							"structureVersionId = ?")) {
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMStructureVersion set definition = ? where " +
+						"structureVersionId = ?")) {
 
 			try (ResultSet rs = ps1.executeQuery()) {
 				while (rs.next()) {

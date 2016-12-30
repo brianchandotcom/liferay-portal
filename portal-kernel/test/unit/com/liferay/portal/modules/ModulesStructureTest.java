@@ -548,7 +548,7 @@ public class ModulesStructureTest {
 		Path dirPath = path.getParent();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-			new UnsyncBufferedReader(new FileReader(path.toFile()))) {
+				new UnsyncBufferedReader(new FileReader(path.toFile()))) {
 
 			String line = null;
 

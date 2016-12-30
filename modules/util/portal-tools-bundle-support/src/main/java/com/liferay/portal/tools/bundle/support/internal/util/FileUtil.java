@@ -160,9 +160,10 @@ public class FileUtil {
 		}
 
 		try (TarArchiveOutputStream tarArchiveOutputStream =
-			new TarArchiveOutputStream(
-				new GzipCompressorOutputStream(
-					new BufferedOutputStream(new FileOutputStream(tarFile))))) {
+				new TarArchiveOutputStream(
+					new GzipCompressorOutputStream(
+						new BufferedOutputStream(
+							new FileOutputStream(tarFile))))) {
 
 			Files.walkFileTree(
 				sourcePath,

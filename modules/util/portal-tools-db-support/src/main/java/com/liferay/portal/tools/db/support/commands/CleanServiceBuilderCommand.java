@@ -167,7 +167,7 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 					classLoader.getResourceAsStream(
 						"com/liferay/portal/tools/service/builder" +
 							"/dependencies/bad_table_names.txt"),
-						StandardCharsets.UTF_8))) {
+					StandardCharsets.UTF_8))) {
 
 			String line = null;
 

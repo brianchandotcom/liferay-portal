@@ -67,14 +67,10 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 
 			try {
 				if (constantsBeanClass == null) {
-					Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
-						ClassLoader.class, "defineClass", String.class,
-						byte[].class, int.class, int.class);
-
 					byte[] classData = generateConstantsBeanClassData(
 						constantsClass);
 
-					constantsBeanClass = (Class<?>)defineClassMethod.invoke(
+					constantsBeanClass = (Class<?>)_defineClassMethod.invoke(
 						classLoader, constantsBeanClassName, classData, 0,
 						classData.length);
 				}
@@ -188,5 +184,18 @@ public class ConstantsBeanFactoryImpl implements ConstantsBeanFactory {
 			new ConcurrentReferenceValueHashMap<Reference<Class<?>>, Object>(
 				FinalizeManager.WEAK_REFERENCE_FACTORY),
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
+
+	private static final Method _defineClassMethod;
+
+	static {
+		try {
+			_defineClassMethod = ReflectionUtil.getDeclaredMethod(
+				ClassLoader.class, "defineClass", String.class, byte[].class,
+				int.class, int.class);
+		}
+		catch (Throwable t) {
+			throw new ExceptionInInitializerError(t);
+		}
+	}
 
 }

@@ -63,15 +63,11 @@ public class ASMWrapperUtil {
 						asmWrapperClassName);
 				}
 				catch (ClassNotFoundException cnfe) {
-					Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
-						ClassLoader.class, "defineClass", String.class,
-						byte[].class, int.class, int.class);
-
 					byte[] classData = _generateASMWrapperClassData(
 						asmWrapperClassName.replace('.', '/'), interfaceClass,
 						delegateObject, defaultObject);
 
-					asmWrapperClass = (Class<?>)defineClassMethod.invoke(
+					asmWrapperClass = (Class<?>)_defineClassMethod.invoke(
 						classLoader, asmWrapperClassName, classData, 0,
 						classData.length);
 				}
@@ -244,6 +240,19 @@ public class ASMWrapperUtil {
 	}
 
 	private ASMWrapperUtil() {
+	}
+
+	private static final Method _defineClassMethod;
+
+	static {
+		try {
+			_defineClassMethod = ReflectionUtil.getDeclaredMethod(
+				ClassLoader.class, "defineClass", String.class, byte[].class,
+				int.class, int.class);
+		}
+		catch (Throwable t) {
+			throw new ExceptionInInitializerError(t);
+		}
 	}
 
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.asm;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
@@ -66,6 +67,28 @@ public class ASMWrapperUtilTest {
 		Assert.assertEquals(randomInt, method.invoke(asmWrapper, randomInt));
 	}
 
+	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testClassInitializationFailure() throws Exception {
+		Throwable throwable = new Throwable();
+
+		ReflectionUtilAdvice.setDeclaredMethodThrowable(throwable);
+
+		try {
+			ASMWrapperUtil.createASMWrapper(
+				TestInterface.class.getClassLoader(), TestInterface.class,
+				new TestDelegate(), new TestDefault());
+
+			Assert.fail();
+		}
+		catch (ExceptionInInitializerError eiie) {
+			Assert.assertSame(throwable, eiie.getCause());
+		}
+
+		ReflectionUtilAdvice.setDeclaredFieldThrowable(null);
+	}
+
 	@Test
 	public void testConstructor() throws Exception {
 		Class<ASMWrapperUtil> clazz = ASMWrapperUtil.class;
@@ -112,10 +135,29 @@ public class ASMWrapperUtilTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
 	public void testErrorCreateASMWrapper() throws Exception {
+		Method defineClassMethod = ReflectionTestUtil.getAndSetFieldValue(
+			ASMWrapperUtil.class, "_defineClassMethod", null);
+
+		try {
+			ASMWrapperUtil.createASMWrapper(
+				TestInterface.class.getClassLoader(), TestInterface.class,
+				new TestDelegate(), new TestDefault());
+
+			Assert.fail();
+		}
+		catch (RuntimeException re) {
+			Throwable throwable = re.getCause();
+
+			Assert.assertSame(NullPointerException.class, throwable.getClass());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				ASMWrapperUtil.class, "_defineClassMethod", defineClassMethod);
+		}
+
 		try {
 			ASMWrapperUtil.createASMWrapper(
 				ClassLoader.getSystemClassLoader(), Object.class, new Object(),
@@ -127,23 +169,6 @@ public class ASMWrapperUtilTest {
 			Assert.assertEquals(
 				Object.class + " is not an interface", iae.getMessage());
 		}
-
-		Throwable throwable = new Throwable();
-
-		ReflectionUtilAdvice.setDeclaredMethodThrowable(throwable);
-
-		try {
-			ASMWrapperUtil.createASMWrapper(
-				TestInterface.class.getClassLoader(), TestInterface.class,
-				new TestDelegate(), new TestDefault());
-
-			Assert.fail();
-		}
-		catch (RuntimeException re) {
-			Assert.assertSame(throwable, re.getCause());
-		}
-
-		ReflectionUtilAdvice.setDeclaredMethodThrowable(null);
 	}
 
 	public static class TestDefault implements TestInterface {

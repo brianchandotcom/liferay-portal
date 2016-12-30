@@ -16,8 +16,13 @@ package com.liferay.portal.configuration.metatype.bnd.util;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.test.aspects.ReflectionUtilAdvice;
+import com.liferay.portal.test.rule.AdviseWith;
+import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -26,6 +31,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -34,8 +40,28 @@ import org.junit.Test;
 public class ConfigurableUtilTest {
 
 	@ClassRule
-	public static final CodeCoverageAssertor codeCoverageAssertor =
-		CodeCoverageAssertor.INSTANCE;
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
+
+	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testClassInitializationFailure() throws Exception {
+		Throwable throwable = new Throwable();
+
+		ReflectionUtilAdvice.setDeclaredMethodThrowable(throwable);
+
+		try {
+			Class.forName(ConfigurableUtil.class.getName());
+
+			Assert.fail();
+		}
+		catch (ExceptionInInitializerError eiie) {
+			Assert.assertSame(throwable, eiie.getCause());
+		}
+	}
 
 	@Test
 	public void testCreateConfigurable() {

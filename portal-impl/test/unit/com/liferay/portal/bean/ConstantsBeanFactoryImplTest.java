@@ -56,13 +56,29 @@ public class ConstantsBeanFactoryImplTest {
 	@AdviseWith(adviceClasses = {ReflectionUtilAdvice.class})
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
 	@Test
+	public void testClassInitializationFailure() throws Exception {
+		Throwable throwable = new Throwable();
+
+		ReflectionUtilAdvice.setDeclaredMethodThrowable(throwable);
+
+		try {
+			Class.forName(ConstantsBeanFactoryImpl.class.getName());
+
+			Assert.fail();
+		}
+		catch (ExceptionInInitializerError eiie) {
+			Assert.assertSame(throwable, eiie.getCause());
+		}
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
 	public void testCreateConstantsBean() throws Exception {
 
 		// Exception on create
 
-		Throwable throwable = new Throwable();
-
-		ReflectionUtilAdvice.setDeclaredMethodThrowable(throwable);
+		Method defineClassMethod = ReflectionTestUtil.getAndSetFieldValue(
+			ConstantsBeanFactoryImpl.class, "_defineClassMethod", null);
 
 		try {
 			ConstantsBeanFactoryImpl.createConstantsBean(Constants.class);
@@ -70,7 +86,14 @@ public class ConstantsBeanFactoryImplTest {
 			Assert.fail();
 		}
 		catch (RuntimeException re) {
-			Assert.assertSame(throwable, re.getCause());
+			Throwable throwable = re.getCause();
+
+			Assert.assertSame(NullPointerException.class, throwable.getClass());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				ConstantsBeanFactoryImpl.class, "_defineClassMethod",
+				defineClassMethod);
 		}
 
 		// Normal create

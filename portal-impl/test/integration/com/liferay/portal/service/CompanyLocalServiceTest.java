@@ -491,7 +491,7 @@ public class CompanyLocalServiceTest {
 					return null;
 				}
 
-		});
+			});
 	}
 
 	@Test

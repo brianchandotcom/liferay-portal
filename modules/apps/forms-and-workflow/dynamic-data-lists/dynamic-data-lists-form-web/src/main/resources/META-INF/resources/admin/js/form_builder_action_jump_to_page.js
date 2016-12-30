@@ -63,6 +63,8 @@ AUI.add(
 							}
 						);
 
+						instance._sourceField.get('container').addClass('lfr-ddm-form-field-container-inline');
+
 						return instance._sourceField;
 					},
 
@@ -87,6 +89,8 @@ AUI.add(
 								visible: true
 							}
 						);
+
+						instance._targetField.get('container').addClass('lfr-ddm-form-field-container-inline');
 
 						return instance._targetField;
 					}

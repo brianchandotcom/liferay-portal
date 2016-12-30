@@ -49,6 +49,11 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 					recurrence, firstRecurrence, secondRecurrence,
 					startTimeJCalendar, splitTimeJCalendar);
 			}
+			else {
+				_setUntilJCalendar(
+					recurrence, firstRecurrence, startTimeJCalendar,
+					splitTimeJCalendar);
+			}
 		}
 		catch (SplitTimeOutsideRecurrenceException store) {
 			firstRecurrence = recurrence.clone();
@@ -105,6 +110,21 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		secondRecurrence.setCount(recurrence.getCount() - count);
 	}
 
+	private void _setUntilJCalendar(
+			Recurrence recurrence, Recurrence firstRecurrence,
+			Calendar startTimeJCalendar, Calendar splitTimeJCalendar)
+		throws SplitTimeOutsideRecurrenceException {
+
+		Calendar untilJCalendar = (Calendar)splitTimeJCalendar.clone();
+
+		untilJCalendar.add(Calendar.DATE, -1);
+
+		_validateUntilJCalendar(
+			untilJCalendar, recurrence.getUntilJCalendar(), startTimeJCalendar);
+
+		firstRecurrence.setUntilJCalendar(untilJCalendar);
+	}
+
 	private DateValue _toDateValue(Calendar jCalendar) {
 		return new DateValueImpl(
 			jCalendar.get(Calendar.YEAR), jCalendar.get(Calendar.MONTH) + 1,
@@ -118,6 +138,21 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		if (dateValue.compareTo(splitTimeDateValue) < 0) {
 			throw new SplitTimeOutsideRecurrenceException(
 				"There is no instance after split time");
+		}
+	}
+
+	private void _validateUntilJCalendar(
+			Calendar newUntilJCalendar, Calendar oldUntilJCalendar,
+			Calendar startTimeJCalendar)
+		throws SplitTimeOutsideRecurrenceException {
+
+		if (newUntilJCalendar.after(oldUntilJCalendar)) {
+			throw new SplitTimeOutsideRecurrenceException(
+				"Split date comes after the limit date of the recurrence");
+		}
+		else if (newUntilJCalendar.before(startTimeJCalendar)) {
+			throw new SplitTimeOutsideRecurrenceException(
+				"Split date comes before the start date of the recurrence");
 		}
 	}
 

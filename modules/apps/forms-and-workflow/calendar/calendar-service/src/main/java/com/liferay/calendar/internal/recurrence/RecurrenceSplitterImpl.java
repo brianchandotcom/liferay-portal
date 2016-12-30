@@ -24,7 +24,9 @@ import com.liferay.calendar.recurrence.RecurrenceSerializer;
 
 import java.text.ParseException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -54,6 +56,10 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 					recurrence, firstRecurrence, startTimeJCalendar,
 					splitTimeJCalendar);
 			}
+
+			_copyExceptionJCalendars(
+				firstRecurrence, secondRecurrence,
+				recurrence.getExceptionJCalendars(), splitTimeJCalendar);
 		}
 		catch (SplitTimeOutsideRecurrenceException store) {
 			firstRecurrence = recurrence.clone();
@@ -62,6 +68,24 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 		}
 
 		return new RecurrenceSplitImpl(firstRecurrence, secondRecurrence);
+	}
+
+	private void _copyExceptionJCalendars(
+		Recurrence firstRecurrence, Recurrence secondRecurrence,
+		List<Calendar> exceptionJCalendars, Calendar splitTimeJCalendar) {
+
+		firstRecurrence.setExceptionJCalendars(new ArrayList<Calendar>());
+
+		secondRecurrence.setExceptionJCalendars(new ArrayList<Calendar>());
+
+		for (Calendar exceptionJCalendar : exceptionJCalendars) {
+			if (exceptionJCalendar.before(splitTimeJCalendar)) {
+				firstRecurrence.addExceptionJCalendar(exceptionJCalendar);
+			}
+			else {
+				secondRecurrence.addExceptionJCalendar(exceptionJCalendar);
+			}
+		}
 	}
 
 	private RecurrenceIterator _getRecurrenceIterator(

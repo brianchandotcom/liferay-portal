@@ -2437,6 +2437,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				String trimmedLine = StringUtil.trimLeading(line);
 
+				if (trimmedLine.startsWith(StringPool.SEMICOLON)) {
+					processMessage(
+						fileName, "Line should not start with ';'", lineCount);
+				}
+
 				if (!trimmedLine.startsWith(StringPool.DOUBLE_SLASH) &&
 					!trimmedLine.startsWith(StringPool.STAR)) {
 

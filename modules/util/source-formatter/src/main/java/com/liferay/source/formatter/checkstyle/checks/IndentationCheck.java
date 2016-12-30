@@ -63,6 +63,11 @@ public class IndentationCheck extends AbstractCheck {
 
 	@Override
 	public void visitToken(DetailAST detailAST) {
+
+		// Only check types at the beginning of the line. We can skip if/while
+		// statements since we have logic in BaseSourceProcessor in place to
+		// automatically fix incorrect indentations inside those.
+
 		if (!_isAtLineStart(detailAST) ||
 			_isInsideChainedConcatMethod(detailAST) ||
 			_isInsideDoIfOrWhileStatementCriterium(detailAST) ||

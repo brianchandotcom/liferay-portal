@@ -205,7 +205,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {24, 28});
 	}
 
-	@Test
+	/*@Test
 	public void testIncorrectTabs() throws Exception {
 		test(
 			"IncorrectTabs.testjava",
@@ -216,6 +216,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			},
 			new Integer[] {26, 30, 37});
 	}
+	*/
 
 	@Test
 	public void testIncorrectVariableNames() throws Exception {

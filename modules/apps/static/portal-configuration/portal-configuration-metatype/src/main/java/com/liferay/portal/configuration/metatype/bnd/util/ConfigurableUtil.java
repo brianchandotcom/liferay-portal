@@ -58,11 +58,7 @@ public class ConfigurableUtil {
 		String snapshotClassName = interfaceClass.getName().concat("Snapshot");
 
 		snapshotClassName = snapshotClassName.concat(
-			String.valueOf(_COUNTER.getAndIncrement()));
-
-		Class<T> configurableClass = (Class<T>)configurable.getClass();
-
-		Class<T> snapshotClass = null;
+			String.valueOf(_counter.getAndIncrement()));
 
 		try {
 			Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
@@ -70,15 +66,14 @@ public class ConfigurableUtil {
 				int.class, int.class);
 
 			byte[] snapshotClassData = _generateSnapshotClassData(
-				interfaceClass, configurableClass, snapshotClassName,
-				configurable);
+				interfaceClass, snapshotClassName, configurable);
 
-			snapshotClass = (Class<T>)defineClassMethod.invoke(
+			Class<T> snapshotClass = (Class<T>)defineClassMethod.invoke(
 				interfaceClass.getClassLoader(), snapshotClassName,
 				snapshotClassData, 0, snapshotClassData.length);
 
 			Constructor<T> snapshotClassConstructor =
-				snapshotClass.getConstructor(configurableClass);
+				snapshotClass.getConstructor(configurable.getClass());
 
 			return snapshotClassConstructor.newInstance(configurable);
 		}
@@ -89,8 +84,7 @@ public class ConfigurableUtil {
 	}
 
 	private static <T> byte[] _generateSnapshotClassData(
-			Class<T> interfaceClass, Class<T> configurableClass,
-			String snapshotClassName, T configurable)
+			Class<T> interfaceClass, String snapshotClassName, T configurable)
 		throws Exception {
 
 		String snapshotClassBinaryName = _getClassBinaryName(snapshotClassName);
@@ -125,6 +119,8 @@ public class ConfigurableUtil {
 		}
 
 		// Constructor
+
+		Class<?> configurableClass = configurable.getClass();
 
 		MethodVisitor constructorMethodVisitor = classWriter.visitMethod(
 			Opcodes.ACC_PUBLIC, "<init>",
@@ -232,6 +228,6 @@ public class ConfigurableUtil {
 		return className.replace(CharPool.PERIOD, CharPool.FORWARD_SLASH);
 	}
 
-	private static final AtomicLong _COUNTER = new AtomicLong();
+	private static final AtomicLong _counter = new AtomicLong();
 
 }

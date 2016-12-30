@@ -38,7 +38,27 @@ public class IndentationCheck extends AbstractCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.IDENT};
+		return new int[] {
+			TokenTypes.IDENT, TokenTypes.LITERAL_BOOLEAN,
+			TokenTypes.LITERAL_BREAK, TokenTypes.LITERAL_BYTE,
+			TokenTypes.LITERAL_CASE, TokenTypes.LITERAL_CATCH,
+			TokenTypes.LITERAL_CHAR, TokenTypes.LITERAL_CLASS,
+			TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_DEFAULT,
+			TokenTypes.LITERAL_DO, TokenTypes.LITERAL_DOUBLE,
+			TokenTypes.LITERAL_ELSE, TokenTypes.LITERAL_FALSE,
+			TokenTypes.LITERAL_FINALLY, TokenTypes.LITERAL_FLOAT,
+			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
+			TokenTypes.LITERAL_INT, TokenTypes.LITERAL_LONG,
+			TokenTypes.LITERAL_NEW, TokenTypes.LITERAL_NULL,
+			TokenTypes.LITERAL_PRIVATE, TokenTypes.LITERAL_PROTECTED,
+			TokenTypes.LITERAL_PUBLIC, TokenTypes.LITERAL_RETURN,
+			TokenTypes.LITERAL_SHORT, TokenTypes.LITERAL_STATIC,
+			TokenTypes.LITERAL_SUPER, TokenTypes.LITERAL_SWITCH,
+			TokenTypes.LITERAL_THIS, TokenTypes.LITERAL_THROW,
+			TokenTypes.LITERAL_THROWS, TokenTypes.LITERAL_TRUE,
+			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_VOID,
+			TokenTypes.LITERAL_WHILE
+		};
 	}
 
 	@Override
@@ -139,6 +159,12 @@ public class IndentationCheck extends AbstractCheck {
 
 	private int _addExtraTabForSwitch(
 		int expectedTabCount, DetailAST detailAST) {
+
+		if ((detailAST.getType() == TokenTypes.LITERAL_CASE) ||
+			(detailAST.getType() == TokenTypes.LITERAL_DEFAULT)) {
+
+			return expectedTabCount;
+		}
 
 		DetailAST parentAST = detailAST.getParent();
 
@@ -369,22 +395,34 @@ public class IndentationCheck extends AbstractCheck {
 	}
 
 	private int _getLineBreakTabs(DetailAST detailAST) {
+		if ((detailAST.getType() == TokenTypes.LITERAL_CATCH) ||
+			(detailAST.getType() == TokenTypes.LITERAL_ELSE) ||
+			(detailAST.getType() == TokenTypes.LITERAL_FINALLY)) {
+
+			return 0;
+		}
+
 		Set<Integer> lineNumbers = new HashSet<>();
 
 		DetailAST parentAST = detailAST;
 
 		while (true) {
 			if ((parentAST == null) ||
+				(parentAST.getType() == TokenTypes.LABELED_STAT) ||
 				(parentAST.getType() == TokenTypes.OBJBLOCK) ||
 				(parentAST.getType() == TokenTypes.SLIST)) {
 
 				return lineNumbers.size();
 			}
 
-			if ((parentAST.getType() == TokenTypes.CLASS_DEF) ||
+			if ((parentAST.getType() == TokenTypes.ANNOTATION_DEF) ||
+				(parentAST.getType() == TokenTypes.ANNOTATION_FIELD_DEF) ||
+				(parentAST.getType() == TokenTypes.CLASS_DEF) ||
 				(parentAST.getType() == TokenTypes.CTOR_DEF) ||
+				(parentAST.getType() == TokenTypes.ENUM_DEF) ||
 				(parentAST.getType() == TokenTypes.INTERFACE_DEF) ||
 				(parentAST.getType() == TokenTypes.METHOD_DEF) ||
+				(parentAST.getType() == TokenTypes.MODIFIERS) ||
 				(parentAST.getType() == TokenTypes.VARIABLE_DEF)) {
 
 				DetailAST typeAST = parentAST.findFirstToken(TokenTypes.TYPE);
@@ -419,7 +457,7 @@ public class IndentationCheck extends AbstractCheck {
 					lineNumbers.add(lineNo);
 				}
 			}
-			else {
+			else if (parentAST.getType() != TokenTypes.CASE_GROUP) {
 				int lineNo = parentAST.getLineNo();
 
 				if (lineNo < detailAST.getLineNo()) {

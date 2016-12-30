@@ -14,7 +14,15 @@
 
 package com.liferay.calendar.internal.recurrence;
 
+import com.google.ical.iter.RecurrenceIterator;
+import com.google.ical.iter.RecurrenceIteratorFactory;
+import com.google.ical.values.DateValue;
+import com.google.ical.values.DateValueImpl;
+
 import com.liferay.calendar.recurrence.Recurrence;
+import com.liferay.calendar.recurrence.RecurrenceSerializer;
+
+import java.text.ParseException;
 
 import java.util.Calendar;
 
@@ -35,7 +43,90 @@ public class RecurrenceSplitterImpl implements RecurrenceSplitter {
 
 		Recurrence secondRecurrence = recurrence.clone();
 
+		try {
+			if (recurrence.getCount() != 0) {
+				_setCount(
+					recurrence, firstRecurrence, secondRecurrence,
+					startTimeJCalendar, splitTimeJCalendar);
+			}
+		}
+		catch (SplitTimeOutsideRecurrenceException store) {
+			firstRecurrence = recurrence.clone();
+
+			secondRecurrence = null;
+		}
+
 		return new RecurrenceSplitImpl(firstRecurrence, secondRecurrence);
+	}
+
+	private RecurrenceIterator _getRecurrenceIterator(
+		Recurrence recurrence, DateValue startTimeDateValue) {
+
+		try {
+			return RecurrenceIteratorFactory.createRecurrenceIterator(
+				RecurrenceSerializer.serialize(recurrence), startTimeDateValue,
+				recurrence.getTimeZone());
+		}
+		catch (ParseException pe) {
+			throw new IllegalStateException(pe);
+		}
+	}
+
+	private void _setCount(
+			Recurrence recurrence, Recurrence firstRecurrence,
+			Recurrence secondRecurrence, Calendar startTimeJCalendar,
+			Calendar splitTimeJCalendar)
+		throws SplitTimeOutsideRecurrenceException {
+
+		DateValue startTimeDateValue = _toDateValue(startTimeJCalendar);
+
+		DateValue splitTimeDateValue = _toDateValue(splitTimeJCalendar);
+
+		RecurrenceIterator recurrenceIterator = _getRecurrenceIterator(
+			recurrence, startTimeDateValue);
+
+		DateValue dateValue = recurrenceIterator.next();
+
+		int count = 0;
+
+		while (recurrenceIterator.hasNext()) {
+			if (dateValue.compareTo(splitTimeDateValue) >= 0) {
+				break;
+			}
+
+			count++;
+			dateValue = recurrenceIterator.next();
+		}
+
+		_validateCount(splitTimeDateValue, dateValue);
+
+		firstRecurrence.setCount(count);
+
+		secondRecurrence.setCount(recurrence.getCount() - count);
+	}
+
+	private DateValue _toDateValue(Calendar jCalendar) {
+		return new DateValueImpl(
+			jCalendar.get(Calendar.YEAR), jCalendar.get(Calendar.MONTH) + 1,
+			jCalendar.get(Calendar.DAY_OF_MONTH));
+	}
+
+	private void _validateCount(
+			DateValue splitTimeDateValue, DateValue dateValue)
+		throws SplitTimeOutsideRecurrenceException {
+
+		if (dateValue.compareTo(splitTimeDateValue) < 0) {
+			throw new SplitTimeOutsideRecurrenceException(
+				"There is no instance after split time");
+		}
+	}
+
+	private static class SplitTimeOutsideRecurrenceException extends Exception {
+
+		public SplitTimeOutsideRecurrenceException(String message) {
+			super(message);
+		}
+
 	}
 
 }

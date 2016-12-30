@@ -3752,6 +3752,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
 		mailTemplateContextBuilder.put(
+			"[$COMPANY_ID$]", String.valueOf(company.getCompanyId()));
+		mailTemplateContextBuilder.put("[$COMPANY_MX$]", company.getMx());
+		mailTemplateContextBuilder.put("[$COMPANY_NAME$]", company.getName());
+		mailTemplateContextBuilder.put(
 			"[$EMAIL_VERIFICATION_CODE$]", ticket.getKey());
 		mailTemplateContextBuilder.put(
 			"[$EMAIL_VERIFICATION_URL$]", verifyEmailAddressURL);

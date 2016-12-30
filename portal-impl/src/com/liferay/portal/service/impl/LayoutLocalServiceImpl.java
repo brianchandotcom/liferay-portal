@@ -482,11 +482,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		portletPreferencesLocalService.deletePortletPreferencesByPlid(
 			layout.getPlid());
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			layout.getCompanyId(), Layout.class.getName(), layout.getPlid());
-
 		// Asset
 
 		assetEntryLocalService.deleteEntry(

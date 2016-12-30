@@ -30,8 +30,6 @@
 			<bean class="com.liferay.portlet.messageboards.messaging.MailingListMessageListener" />
 		</property>
 	</bean>
-	<bean class="com.liferay.portal.messaging.subscription.SubscriptionSenderMessageListener" id="messageListener.subscription_sender" />
-	<bean class="com.liferay.portal.subscription.CleanUpSubscriptionMessageListener" id="messageListener.subscription_clean_up" />
 
 	<!-- Configurator -->
 
@@ -175,16 +173,6 @@
 				<entry key="liferay/message_boards_mailing_list">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.message_boards_mailing_list" />
-					</list>
-				</entry>
-				<entry key="liferay/subscription_clean_up">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.subscription_clean_up" />
-					</list>
-				</entry>
-				<entry key="liferay/subscription_sender">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.subscription_sender" />
 					</list>
 				</entry>
 			</map>

@@ -103,11 +103,6 @@ public class WorkflowInstanceLinkLocalServiceImpl
 
 		super.deleteWorkflowInstanceLink(workflowInstanceLink);
 
-		subscriptionLocalService.deleteSubscriptions(
-			workflowInstanceLink.getCompanyId(),
-			WorkflowInstance.class.getName(),
-			workflowInstanceLink.getWorkflowInstanceId());
-
 		WorkflowInstanceManagerUtil.deleteWorkflowInstance(
 			workflowInstanceLink.getCompanyId(),
 			workflowInstanceLink.getWorkflowInstanceId());

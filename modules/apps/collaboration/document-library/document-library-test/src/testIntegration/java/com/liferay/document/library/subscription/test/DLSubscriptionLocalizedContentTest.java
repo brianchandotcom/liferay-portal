@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.document.library.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -35,11 +36,13 @@ import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTe
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Sergio González
  * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
 public class DLSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {

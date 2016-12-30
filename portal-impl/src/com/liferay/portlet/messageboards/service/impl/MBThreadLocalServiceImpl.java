@@ -162,12 +162,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			PortletFileRepositoryUtil.deletePortletFolder(folderId);
 		}
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			thread.getCompanyId(), MBThread.class.getName(),
-			thread.getThreadId());
-
 		// Thread flags
 
 		mbThreadFlagLocalService.deleteThreadFlagsByThreadId(

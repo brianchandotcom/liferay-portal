@@ -12,20 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.messaging.subscription;
+package com.liferay.subscription.internal.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "destination.name=" + DestinationNames.SUBSCRIPTION_SENDER,
+	service = MessageListener.class
+)
 public class SubscriptionSenderMessageListener extends BaseMessageListener {
 
 	@Override

@@ -20,8 +20,6 @@ import com.liferay.asset.kernel.model.AssetLink;
 import com.liferay.asset.kernel.model.AssetLinkConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
-import com.liferay.document.library.kernel.model.DLFileEntryType;
-import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
@@ -37,12 +35,8 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
@@ -58,16 +52,12 @@ import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -75,9 +65,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
@@ -206,12 +194,6 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId());
-
 		// File ranks
 
 		dlFileRankLocalService.deleteFileRanksByFileEntryId(
@@ -238,12 +220,6 @@ public class DLAppHelperLocalServiceImpl
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}
-
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			folder.getCompanyId(), DLFolderConstants.getClassName(),
-			folder.getFolderId());
 
 		// Asset
 
@@ -1184,13 +1160,6 @@ public class DLAppHelperLocalServiceImpl
 				SocialActivityManagerUtil.addUniqueActivity(
 					latestFileVersion.getStatusByUserId(), activityCreateDate,
 					fileEntry, activityType, extraDataJSONObject.toString(), 0);
-
-				// Subscriptions
-
-				notifySubscribers(
-					userId, latestFileVersion,
-					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-					serviceContext);
 			}
 		}
 		else {
@@ -1641,160 +1610,6 @@ public class DLAppHelperLocalServiceImpl
 			throw new IllegalArgumentException(
 				String.format("Unsupported sync event %s", syncEvent));
 		}
-	}
-
-	protected void notifySubscribers(
-			long userId, FileVersion fileVersion, String entryURL,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!fileVersion.isApproved() || Validator.isNull(entryURL)) {
-			return;
-		}
-
-		DLGroupServiceSettings dlGroupServiceSettings =
-			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
-
-		boolean commandUpdate = false;
-
-		if (serviceContext.isCommandUpdate() ||
-			Constants.CHECKIN.equals(serviceContext.getCommand())) {
-
-			commandUpdate = true;
-		}
-
-		if (serviceContext.isCommandAdd() &&
-			dlGroupServiceSettings.isEmailFileEntryAddedEnabled()) {
-		}
-		else if (commandUpdate &&
-				 dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled()) {
-		}
-		else {
-			return;
-		}
-
-		String entryTitle = fileVersion.getTitle();
-
-		String fromName = dlGroupServiceSettings.getEmailFromName();
-		String fromAddress = dlGroupServiceSettings.getEmailFromAddress();
-
-		LocalizedValuesMap subjectLocalizedValuesMap = null;
-		LocalizedValuesMap bodyLocalizedValuesMap = null;
-
-		if (commandUpdate) {
-			subjectLocalizedValuesMap =
-				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
-			bodyLocalizedValuesMap =
-				dlGroupServiceSettings.getEmailFileEntryUpdatedBody();
-		}
-		else {
-			subjectLocalizedValuesMap =
-				dlGroupServiceSettings.getEmailFileEntryAddedSubject();
-			bodyLocalizedValuesMap =
-				dlGroupServiceSettings.getEmailFileEntryAddedBody();
-		}
-
-		FileEntry fileEntry = fileVersion.getFileEntry();
-
-		Folder folder = null;
-
-		long folderId = fileEntry.getFolderId();
-
-		if (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			folder = dlAppLocalService.getFolder(folderId);
-		}
-
-		SubscriptionSender subscriptionSender =
-			new GroupSubscriptionCheckSubscriptionSender(
-				DLPermission.RESOURCE_NAME);
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		DLFileEntryType dlFileEntryType =
-			dlFileEntryTypeLocalService.getDLFileEntryType(
-				dlFileEntry.getFileEntryTypeId());
-
-		subscriptionSender.setClassPK(fileVersion.getFileEntryId());
-		subscriptionSender.setClassName(DLFileEntryConstants.getClassName());
-		subscriptionSender.setCompanyId(fileVersion.getCompanyId());
-
-		if (folder != null) {
-			subscriptionSender.setContextAttribute(
-				"[$FOLDER_NAME$]", folder.getName(), true);
-		}
-		else {
-			subscriptionSender.setLocalizedContextAttributeWithFunction(
-				"[$FOLDER_NAME$]", locale -> LanguageUtil.get(locale, "home"));
-		}
-
-		subscriptionSender.setContextAttributes(
-			"[$DOCUMENT_STATUS_BY_USER_NAME$]",
-			fileVersion.getStatusByUserName(), "[$DOCUMENT_TITLE$]", entryTitle,
-			"[$DOCUMENT_URL$]", entryURL);
-		subscriptionSender.setContextCreatorUserPrefix("DOCUMENT");
-		subscriptionSender.setCreatorUserId(fileVersion.getUserId());
-		subscriptionSender.setCurrentUserId(userId);
-		subscriptionSender.setEntryTitle(entryTitle);
-		subscriptionSender.setEntryURL(entryURL);
-		subscriptionSender.setFrom(fromAddress, fromName);
-		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(
-			LocalizationUtil.getMap(bodyLocalizedValuesMap));
-		subscriptionSender.setLocalizedContextAttributeWithFunction(
-			"[$DOCUMENT_TYPE$]", locale -> dlFileEntryType.getName(locale));
-		subscriptionSender.setLocalizedSubjectMap(
-			LocalizationUtil.getMap(subjectLocalizedValuesMap));
-		subscriptionSender.setMailId(
-			"file_entry", fileVersion.getFileEntryId());
-
-		int notificationType =
-			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
-
-		if (commandUpdate) {
-			notificationType =
-				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
-		}
-
-		subscriptionSender.setNotificationType(notificationType);
-
-		String portletId = PortletProviderUtil.getPortletId(
-			FileEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		subscriptionSender.setPortletId(portletId);
-
-		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
-		subscriptionSender.setServiceContext(serviceContext);
-
-		subscriptionSender.addPersistedSubscribers(
-			DLFolder.class.getName(), fileVersion.getGroupId());
-
-		if (folder != null) {
-			subscriptionSender.addPersistedSubscribers(
-				DLFolder.class.getName(), folder.getFolderId());
-
-			for (Long ancestorFolderId : folder.getAncestorFolderIds()) {
-				subscriptionSender.addPersistedSubscribers(
-					DLFolder.class.getName(), ancestorFolderId);
-			}
-		}
-
-		if (dlFileEntryType.getFileEntryTypeId() ==
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-			subscriptionSender.addPersistedSubscribers(
-				DLFileEntryType.class.getName(), fileVersion.getGroupId());
-		}
-		else {
-			subscriptionSender.addPersistedSubscribers(
-				DLFileEntryType.class.getName(),
-				dlFileEntryType.getFileEntryTypeId());
-		}
-
-		subscriptionSender.addPersistedSubscribers(
-			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
-
-		subscriptionSender.flushNotificationsAsync();
 	}
 
 	protected void trashOrRestoreFolder(DLFolder dlFolder, boolean moveToTrash)

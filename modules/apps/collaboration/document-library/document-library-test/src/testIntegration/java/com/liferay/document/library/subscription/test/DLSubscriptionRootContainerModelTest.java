@@ -12,32 +12,38 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.subscriptions;
+package com.liferay.document.library.subscription.test;
 
-import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
- * @author José Ángel Jiménez
+ * @author Sergio González
+ * @author Roberto Díaz
  */
+@RunWith(Arquillian.class)
 @Sync
-public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
+public class DLSubscriptionRootContainerModelTest
+	extends BaseSubscriptionRootContainerModelTestCase {
 
 	@ClassRule
 	@Rule
@@ -53,15 +59,16 @@ public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		MBTestUtil.populateNotificationsServiceContext(
+		DLAppTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.ADD);
 
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			userId, RandomTestUtil.randomString(), group.getGroupId(),
-			containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			serviceContext);
 
-		return message.getMessageId();
+		return fileEntry.getFileEntryId();
 	}
 
 	@Override
@@ -72,41 +79,38 @@ public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId);
 
-		MBCategory category = MBCategoryServiceUtil.addCategory(
-			userId, containerModelId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+		Folder folder = DLAppLocalServiceUtil.addFolder(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
-		return category.getCategoryId();
+		return folder.getFolderId();
 	}
 
 	@Override
-	protected void addSubscription(long userId, long containerModelId)
+	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		MBCategoryLocalServiceUtil.subscribeCategory(
-			userId, group.getGroupId(), containerModelId);
-	}
-
-	@Override
-	protected boolean isSubscriptionForAuthorEnabled() {
-		return true;
+		DLAppLocalServiceUtil.subscribeFolder(
+			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				message.getGroupId(), userId);
+				group.getGroupId(), userId);
 
-		MBTestUtil.populateNotificationsServiceContext(
+		DLAppTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
-		MBMessageLocalServiceUtil.updateMessage(
-			userId, message.getMessageId(), RandomTestUtil.randomString(),
+		DLAppLocalServiceUtil.updateFileEntry(
+			userId, baseModelId, RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, false,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 	}
 

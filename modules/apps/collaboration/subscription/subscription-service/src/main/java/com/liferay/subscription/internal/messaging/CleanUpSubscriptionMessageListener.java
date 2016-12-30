@@ -12,15 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.subscription;
+package com.liferay.subscription.internal.messaging;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.service.SubscriptionLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Raymond Augé
+ * @author Adolfo Pérez
  */
+@Component(
+	immediate = true,
+	property = "destination.name=" + DestinationNames.SUBSCRIPTION_CLEAN_UP,
+	service = MessageListener.class
+)
 public class CleanUpSubscriptionMessageListener extends BaseMessageListener {
 
 	@Override
@@ -29,8 +39,17 @@ public class CleanUpSubscriptionMessageListener extends BaseMessageListener {
 		long[] userIds = (long[])message.get("userIds");
 
 		for (long userId : userIds) {
-			SubscriptionLocalServiceUtil.deleteSubscriptions(userId, groupId);
+			_subscriptionLocalService.deleteSubscriptions(userId, groupId);
 		}
 	}
+
+	@Reference(unbind = "-")
+	protected void setSubscriptionLocalService(
+		SubscriptionLocalService subscriptionLocalService) {
+
+		_subscriptionLocalService = subscriptionLocalService;
+	}
+
+	private SubscriptionLocalService _subscriptionLocalService;
 
 }

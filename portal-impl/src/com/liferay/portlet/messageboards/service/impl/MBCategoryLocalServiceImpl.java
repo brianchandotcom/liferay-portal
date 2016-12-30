@@ -248,12 +248,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			mbMailingListLocalService.deleteMailingList(mbMailingList);
 		}
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(
-			category.getCompanyId(), MBCategory.class.getName(),
-			category.getCategoryId());
-
 		// Expando
 
 		expandoRowLocalService.deleteRows(category.getCategoryId());
@@ -719,25 +713,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	@Override
 	public void subscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException {
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			categoryId = groupId;
-		}
-
-		subscriptionLocalService.addSubscription(
-			userId, groupId, MBCategory.class.getName(), categoryId);
 	}
 
 	@Override
 	public void unsubscribeCategory(long userId, long groupId, long categoryId)
 		throws PortalException {
-
-		if (categoryId == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			categoryId = groupId;
-		}
-
-		subscriptionLocalService.deleteSubscription(
-			userId, MBCategory.class.getName(), categoryId);
 	}
 
 	@Override

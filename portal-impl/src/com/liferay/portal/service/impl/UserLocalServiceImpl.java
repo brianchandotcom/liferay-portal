@@ -1974,10 +1974,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		passwordTrackerLocalService.deletePasswordTrackers(user.getUserId());
 
-		// Subscriptions
-
-		subscriptionLocalService.deleteSubscriptions(user.getUserId());
-
 		// External user ids
 
 		userIdMapperLocalService.deleteUserIdMappers(user.getUserId());
@@ -3751,6 +3747,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		MailTemplateContextBuilder mailTemplateContextBuilder =
 			MailTemplateFactoryUtil.createMailTemplateContextBuilder();
 
+		mailTemplateContextBuilder.put(
+			"[$COMPANY_ID$]", String.valueOf(company.getCompanyId()));
+		mailTemplateContextBuilder.put("[$COMPANY_MX$]", company.getMx());
+		mailTemplateContextBuilder.put("[$COMPANY_NAME$]", company.getName());
 		mailTemplateContextBuilder.put(
 			"[$EMAIL_VERIFICATION_CODE$]", ticket.getKey());
 		mailTemplateContextBuilder.put(

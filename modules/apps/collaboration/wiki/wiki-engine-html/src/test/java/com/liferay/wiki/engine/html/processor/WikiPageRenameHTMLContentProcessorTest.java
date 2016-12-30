@@ -52,7 +52,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 			"This is a test <img src=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=FINAL_NAME1&fileName=image.jpeg\"/> " +
 					"<img src=\"wiki/get_page_attachment?p_l_id=1234\"" +
-					"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>",
+						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>",
 			content);
 	}
 
@@ -194,7 +194,7 @@ public class WikiPageRenameHTMLContentProcessorTest {
 			"This is a test <a href=\"wiki/get_page_attachment?p_l_id=1234" +
 				"&title=FINAL_NAME1&fileName=image.jpeg\"/> " +
 					"<a href=\"wiki/get_page_attachment?p_l_id=1234\"" +
-					"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>",
+						"&title=ORIGINAL_NAME2&fileName=image.jpeg\"/>",
 			content);
 	}
 

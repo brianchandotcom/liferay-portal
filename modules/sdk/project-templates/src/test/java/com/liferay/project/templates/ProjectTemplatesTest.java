@@ -579,14 +579,14 @@ public class ProjectTemplatesTest {
 			"src/main/resources/configuration" +
 				"/com.liferay.portal.remote.cxf.common.configuration." +
 					"CXFEndpointPublisherConfiguration-cxf",
-					"contextPath=/my-rest");
+			"contextPath=/my-rest");
 		_testContains(
 			gradleProjectDir,
 			"src/main/resources/configuration/com.liferay.portal.remote.rest." +
 				"extender.configuration.RestExtenderConfiguration-rest",
 			"contextPaths=/my-rest",
-				"jaxRsServiceFilterStrings=(component.name=" +
-					"my.rest.application.MyRestApplication)");
+			"jaxRsServiceFilterStrings=(component.name=" +
+				"my.rest.application.MyRestApplication)");
 
 		File mavenProjectDir = _buildTemplateWithMaven(
 			"rest", "my-rest", "-DclassName=MyRest", "-Dpackage=my.rest");
@@ -600,7 +600,7 @@ public class ProjectTemplatesTest {
 			"src/main/resources/configuration" +
 				"/com.liferay.portal.remote.cxf.common.configuration." +
 					"CXFEndpointPublisherConfiguration-cxf",
-					"contextPath=/my-rest");
+			"contextPath=/my-rest");
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/my.rest-1.0.0.jar",

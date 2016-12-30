@@ -472,8 +472,10 @@ public class JenkinsResultsParserUtil {
 
 		List<String> masters = new ArrayList<>();
 
-		for (int i = 1; buildProperties.containsKey(
-				"master.slaves(" + prefix + "-" + i + ")"); i++) {
+		for (int i = 1;
+			buildProperties.containsKey(
+				"master.slaves(" + prefix + "-" + i + ")");
+			i++) {
 
 			masters.add(prefix + "-" + i);
 		}

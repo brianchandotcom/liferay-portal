@@ -41,9 +41,8 @@ public class SoyTemplateResourcesTracker {
 		int stateMask = Bundle.ACTIVE | Bundle.RESOLVED;
 
 		_bundleTracker = new BundleTracker<>(
-			bundleContext,
-			stateMask,
-				new SoyCapabilityBundleTrackerCustomizer("soy", _bundleMap));
+			bundleContext, stateMask,
+			new SoyCapabilityBundleTrackerCustomizer("soy", _bundleMap));
 
 		_bundleTracker.open();
 	}

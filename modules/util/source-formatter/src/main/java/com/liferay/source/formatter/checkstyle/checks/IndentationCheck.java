@@ -40,34 +40,41 @@ public class IndentationCheck extends AbstractCheck {
 	public int[] getDefaultTokens() {
 		return new int[] {
 			TokenTypes.ANNOTATION_ARRAY_INIT, TokenTypes.ARRAY_INIT,
-			TokenTypes.CHAR_LITERAL, TokenTypes.CTOR_CALL, TokenTypes.FINAL,
-			TokenTypes.GENERIC_START, TokenTypes.IDENT, TokenTypes.IMPORT,
-			TokenTypes.INC, TokenTypes.INSTANCE_INIT,
-			TokenTypes.LITERAL_BOOLEAN, TokenTypes.LITERAL_BREAK,
-			TokenTypes.LITERAL_BYTE, TokenTypes.LITERAL_CASE,
-			TokenTypes.LITERAL_CATCH, TokenTypes.LITERAL_CHAR,
-			TokenTypes.LITERAL_CLASS, TokenTypes.LITERAL_CONTINUE,
-			TokenTypes.LITERAL_DEFAULT, TokenTypes.LITERAL_DO,
-			TokenTypes.LITERAL_DOUBLE, TokenTypes.LITERAL_ELSE,
-			TokenTypes.LITERAL_FALSE, TokenTypes.LITERAL_FINALLY,
-			TokenTypes.LITERAL_FLOAT, TokenTypes.LITERAL_FOR,
-			TokenTypes.LITERAL_IF, TokenTypes.LITERAL_INT,
-			TokenTypes.LITERAL_LONG, TokenTypes.LITERAL_NEW,
-			TokenTypes.LITERAL_NULL, TokenTypes.LITERAL_PRIVATE,
-			TokenTypes.LITERAL_PROTECTED, TokenTypes.LITERAL_PUBLIC,
-			TokenTypes.LITERAL_RETURN, TokenTypes.LITERAL_SHORT,
-			TokenTypes.LITERAL_STATIC, TokenTypes.LITERAL_SUPER,
-			TokenTypes.LITERAL_SWITCH, TokenTypes.LITERAL_SYNCHRONIZED,
-			TokenTypes.LITERAL_THIS, TokenTypes.LITERAL_THROW,
-			TokenTypes.LITERAL_THROWS, TokenTypes.LITERAL_TRUE,
-			TokenTypes.LITERAL_TRY, TokenTypes.LITERAL_VOID,
-			TokenTypes.LITERAL_WHILE, TokenTypes.LNOT, TokenTypes.LPAREN,
-			TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT, TokenTypes.NUM_INT,
-			TokenTypes.NUM_LONG, TokenTypes.PACKAGE_DEF, TokenTypes.RCURLY,
-			TokenTypes.RPAREN, TokenTypes.STATIC_IMPORT, TokenTypes.STATIC_INIT,
-			TokenTypes.STRING_LITERAL, TokenTypes.SUPER_CTOR_CALL,
-			TokenTypes.TYPECAST, TokenTypes.UNARY_MINUS
+			TokenTypes.BLOCK_COMMENT_BEGIN, TokenTypes.CHAR_LITERAL,
+			TokenTypes.CTOR_CALL, TokenTypes.FINAL, TokenTypes.GENERIC_START,
+			TokenTypes.IDENT, TokenTypes.IMPORT, TokenTypes.INC,
+			TokenTypes.INSTANCE_INIT, TokenTypes.LITERAL_BOOLEAN,
+			TokenTypes.LITERAL_BREAK, TokenTypes.LITERAL_BYTE,
+			TokenTypes.LITERAL_CASE, TokenTypes.LITERAL_CATCH,
+			TokenTypes.LITERAL_CHAR, TokenTypes.LITERAL_CLASS,
+			TokenTypes.LITERAL_CONTINUE, TokenTypes.LITERAL_DEFAULT,
+			TokenTypes.LITERAL_DO, TokenTypes.LITERAL_DOUBLE,
+			TokenTypes.LITERAL_ELSE, TokenTypes.LITERAL_FALSE,
+			TokenTypes.LITERAL_FINALLY, TokenTypes.LITERAL_FLOAT,
+			TokenTypes.LITERAL_FOR, TokenTypes.LITERAL_IF,
+			TokenTypes.LITERAL_INT, TokenTypes.LITERAL_LONG,
+			TokenTypes.LITERAL_NEW, TokenTypes.LITERAL_NULL,
+			TokenTypes.LITERAL_PRIVATE, TokenTypes.LITERAL_PROTECTED,
+			TokenTypes.LITERAL_PUBLIC, TokenTypes.LITERAL_RETURN,
+			TokenTypes.LITERAL_SHORT, TokenTypes.LITERAL_STATIC,
+			TokenTypes.LITERAL_SUPER, TokenTypes.LITERAL_SWITCH,
+			TokenTypes.LITERAL_SYNCHRONIZED, TokenTypes.LITERAL_THIS,
+			TokenTypes.LITERAL_THROW, TokenTypes.LITERAL_THROWS,
+			TokenTypes.LITERAL_TRUE, TokenTypes.LITERAL_TRY,
+			TokenTypes.LITERAL_VOID, TokenTypes.LITERAL_WHILE, TokenTypes.LNOT,
+			TokenTypes.LPAREN, TokenTypes.NUM_DOUBLE, TokenTypes.NUM_FLOAT,
+			TokenTypes.NUM_INT, TokenTypes.NUM_LONG, TokenTypes.PACKAGE_DEF,
+			TokenTypes.RCURLY, TokenTypes.RPAREN,
+			TokenTypes.SINGLE_LINE_COMMENT, TokenTypes.STATIC_IMPORT,
+			TokenTypes.STATIC_INIT, TokenTypes.STRING_LITERAL,
+			TokenTypes.SUPER_CTOR_CALL, TokenTypes.TYPECAST,
+			TokenTypes.UNARY_MINUS
 		};
+	}
+
+	@Override
+	public boolean isCommentNodesRequired() {
+		return true;
 	}
 
 	@Override

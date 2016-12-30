@@ -89,8 +89,6 @@ public class UserSearchFixture {
 
 			});
 
-		;
-
 		_principal = PrincipalThreadLocal.getName();
 
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());

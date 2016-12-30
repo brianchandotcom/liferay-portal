@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-ddl-form-builder-rule',
+	'liferay-ddl-form-builder-render-rule',
 	function(A) {
 		var CSS_CAN_REMOVE_ITEM = A.getClassName('can', 'remove', 'item');
 
@@ -24,7 +24,7 @@ AUI.add(
 			}
 		];
 
-		var FormBuilderRule = A.Component.create(
+		var FormBuilderRenderRule = A.Component.create(
 			{
 				ATTRS: {
 					fields: {
@@ -37,6 +37,9 @@ AUI.add(
 						validator: '_isValidLogicOperator',
 						value: Liferay.Language.get('or')
 					},
+					pages: {
+						value: 0
+					},
 					strings: {
 						value: {
 							and: Liferay.Language.get('and'),
@@ -44,6 +47,7 @@ AUI.add(
 							description: Liferay.Language.get('define-here-a-condition-to-change-fields-and-elements-from-your-current-form'),
 							enable: Liferay.Language.get('enable'),
 							if: Liferay.Language.get('if'),
+							jumpToPage: Liferay.Language.get('jump-to-page'),
 							or: Liferay.Language.get('or'),
 							otherField: Liferay.Language.get('other-field'),
 							require: Liferay.Language.get('require'),
@@ -58,7 +62,7 @@ AUI.add(
 
 				AUGMENTS: [],
 
-				NAME: 'liferay-ddl-form-builder-rule',
+				NAME: 'liferay-ddl-form-builder-render-rule',
 
 				prototype: {
 					initializer: function() {
@@ -66,6 +70,12 @@ AUI.add(
 
 						instance._actions = {};
 						instance._conditions = {};
+						instance._actionFactory = new Liferay.DDL.FormBuilderActionFactory(
+							{
+								fields: instance.get('fields'),
+								pages: instance.get('pages')
+							}
+						);
 					},
 
 					bindUI: function() {
@@ -110,7 +120,7 @@ AUI.add(
 						instance._renderConditions(rule.conditions);
 						instance._renderActions(rule.actions);
 
-						return FormBuilderRule.superclass.render.apply(instance, []);
+						return FormBuilderRenderRule.superclass.render.apply(instance, []);
 					},
 
 					_addAction: function(index, action) {
@@ -119,7 +129,6 @@ AUI.add(
 						var contentBox = instance.get('contentBox');
 
 						instance._createActionSelect(index, action, contentBox.one('.action-' + index));
-						instance._createTargetSelect(index, action, contentBox.one('.target-' + index));
 
 						instance._actionsIndexes.push(A.Lang.toInt(index, 10));
 					},
@@ -156,6 +165,7 @@ AUI.add(
 
 						var field = new Liferay.DDM.Field.Select(
 							{
+								bubbleTargets: [instance],
 								fieldName: index + '-target',
 								options: instance._getActionOptions(),
 								showLabel: false,
@@ -166,32 +176,29 @@ AUI.add(
 
 						field.render(container);
 
+						if (value) {
+							instance._createTargetSelect(index, value, action);
+						}
+
 						instance._actions[index + '-target'] = field;
 					},
 
-					_createTargetSelect: function(index, action, container) {
+					_createTargetSelect: function(index, type, action) {
 						var instance = this;
 
-						var value;
+						var contentBox = instance.get('contentBox');
+
+						var container = contentBox.one('.target-' + index);
+
+						var target = instance._actionFactory.createAction(type, index, action, container);
 
 						if (action && action.target) {
-							value = action.target;
+							target.set('value', action.target);
 						}
 
-						var field = new Liferay.DDM.Field.Select(
-							{
-								fieldName: index + '-action',
-								label: Liferay.Language.get('the'),
-								options: instance.get('fields'),
-								showLabel: false,
-								value: value,
-								visible: true
-							}
-						);
+						target.render(container);
 
-						field.render(container);
-
-						instance._actions[index + '-action'] = field;
+						instance._actions[index + '-action'] = target;
 					},
 
 					_deleteCondition: function(index) {
@@ -239,6 +246,10 @@ AUI.add(
 								value: 'enable'
 							},
 							{
+								label: strings.jumpToPage,
+								value: 'jump-to-page'
+							},
+							{
 								label: strings.require,
 								value: 'require'
 							}
@@ -255,17 +266,9 @@ AUI.add(
 						for (var i = indexes.length - 1; i >= 0; i--) {
 							var currentIndex = indexes[i];
 
-							var actionField = instance._actions[currentIndex + '-action'];
+							var action = instance._actions[currentIndex + '-action'];
 
-							var actionFieldValue = actionField.getValue();
-
-							actions.push(
-								{
-									action: instance._actions[currentIndex + '-target'].getValue(),
-									label: instance._getFieldLabel(actionFieldValue),
-									target: actionFieldValue
-								}
-							);
+							actions.push(action.getValue());
 						}
 
 						return actions;
@@ -552,6 +555,9 @@ AUI.add(
 						}
 						else if (fieldName.match('-condition-second-operand-type')) {
 							instance._updateSecondOperandFieldVisibility(index);
+						}
+						else if (fieldName.match('-target')) {
+							instance._createTargetSelect(index, event.newVal[0]);
 						}
 					},
 
@@ -920,7 +926,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.namespace('DDL').FormBuilderRule = FormBuilderRule;
+		Liferay.namespace('DDL').FormBuilderRenderRule = FormBuilderRenderRule;
 	},
 	'',
 	{

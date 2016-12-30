@@ -147,14 +147,13 @@
 								'liferay-ddm-form-renderer-wizard'
 							]
 						},
-						'liferay-ddl-form-builder-rule': {
-							path: 'form_builder_rule.js',
-							requires: ['liferay-ddl-form-builder-rule-template', 'liferay-ddm-form-renderer-field']
+						'liferay-ddl-form-builder-render-rule': {
+							path: 'form_builder_render_rule.js',
 							requires: ['liferay-ddl-form-builder-action-factory', 'liferay-ddl-form-builder-rule-template', 'liferay-ddm-form-renderer-field']
 						},
 						'liferay-ddl-form-builder-rule-builder': {
 							path: 'form_builder_rule_builder.js',
-							requires: ['liferay-ddl-form-builder-rule-builder-template']
+							requires: ['liferay-ddl-form-builder-render-rule', 'liferay-ddl-form-builder-rule-builder-template']
 						},
 						'liferay-ddl-form-builder-rule-builder-template': {
 							path: '../templates/rule_builder.soy.js',

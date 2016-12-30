@@ -198,7 +198,11 @@ public class MoreLikeThisQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(14);
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
 
 		sb.append("{analyzer=");
 		sb.append(_analyzer);

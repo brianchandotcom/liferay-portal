@@ -147,7 +147,11 @@ public class MatchQuery extends BaseQueryImpl {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(12);
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
 
 		sb.append("{analyzer=");
 		sb.append(_analyzer);

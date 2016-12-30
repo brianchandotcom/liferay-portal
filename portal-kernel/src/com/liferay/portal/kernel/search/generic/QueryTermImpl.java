@@ -39,7 +39,11 @@ public class QueryTermImpl implements QueryTerm {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(6);
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
 
 		sb.append("{field=");
 		sb.append(_field);

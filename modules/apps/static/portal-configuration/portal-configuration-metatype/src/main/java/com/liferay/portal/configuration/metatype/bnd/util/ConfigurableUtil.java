@@ -61,14 +61,10 @@ public class ConfigurableUtil {
 			String.valueOf(_counter.getAndIncrement()));
 
 		try {
-			Method defineClassMethod = ReflectionUtil.getDeclaredMethod(
-				ClassLoader.class, "defineClass", String.class, byte[].class,
-				int.class, int.class);
-
 			byte[] snapshotClassData = _generateSnapshotClassData(
 				interfaceClass, snapshotClassName, configurable);
 
-			Class<T> snapshotClass = (Class<T>)defineClassMethod.invoke(
+			Class<T> snapshotClass = (Class<T>)_defineClassMethod.invoke(
 				interfaceClass.getClassLoader(), snapshotClassName,
 				snapshotClassData, 0, snapshotClassData.length);
 
@@ -229,5 +225,18 @@ public class ConfigurableUtil {
 	}
 
 	private static final AtomicLong _counter = new AtomicLong();
+
+	private static final Method _defineClassMethod;
+
+	static {
+		try {
+			_defineClassMethod = ReflectionUtil.getDeclaredMethod(
+				ClassLoader.class, "defineClass", String.class, byte[].class,
+				int.class, int.class);
+		}
+		catch (Throwable t) {
+			throw new ExceptionInInitializerError(t);
+		}
+	}
 
 }

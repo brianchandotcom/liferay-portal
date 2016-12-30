@@ -55,8 +55,6 @@ public class ConfigurableUtil {
 	private static <T> T _createConfigurableSnapshot(
 		Class<T> interfaceClass, T configurable) {
 
-		ClassLoader classLoader = interfaceClass.getClassLoader();
-
 		Package packageObject = interfaceClass.getPackage();
 
 		String snapshotClassName =
@@ -76,8 +74,8 @@ public class ConfigurableUtil {
 				configurable);
 
 			snapshotClass = (Class<T>)defineClassMethod.invoke(
-				classLoader, snapshotClassName, snapshotClassData, 0,
-				snapshotClassData.length);
+				interfaceClass.getClassLoader(), snapshotClassName,
+				snapshotClassData, 0, snapshotClassData.length);
 
 			Constructor<T> snapshotClassConstructor =
 				snapshotClass.getConstructor(configurableClass);

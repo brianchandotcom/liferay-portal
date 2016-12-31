@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
@@ -40,6 +41,21 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 	@Override
 	public QueryTerm getQueryTerm() {
 		return _queryTerm;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(4);
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append("{queryTerm=");
+		sb.append(_queryTerm);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private final QueryTerm _queryTerm;

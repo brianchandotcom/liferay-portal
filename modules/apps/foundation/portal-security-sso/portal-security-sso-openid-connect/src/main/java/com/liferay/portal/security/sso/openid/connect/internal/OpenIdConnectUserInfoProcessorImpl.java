@@ -102,6 +102,8 @@ public class OpenIdConnectUserInfoProcessorImpl
 			birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds,
 			organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 
+		user = _userLocalService.updatePasswordReset(user.getUserId(), false);
+
 		return user.getUserId();
 	}
 

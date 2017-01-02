@@ -1,6 +1,10 @@
 AUI.add(
 	'liferay-ddl-form-builder-action-jump-to-page',
 	function(A) {
+		var Lang = A.Lang;
+
+		var TPL_ACTION_FIELD_LABEL = '<label class="lfr-ddm-form-field-container-inline">{message}</label>';
+
 		var FormBuilderActionJumpToPage = A.Component.create(
 			{
 				ATTRS: {
@@ -14,6 +18,13 @@ AUI.add(
 
 					options: {
 						value: []
+					},
+
+					strings: {
+						value: {
+							from: Liferay.Language.get('from'),
+							to: Liferay.Language.get('to')
+						}
 					}
 				},
 
@@ -37,8 +48,31 @@ AUI.add(
 					render: function() {
 						var instance = this;
 
-						instance._createSourceField().render(instance.get('boundingBox'));
-						instance._createTargetField().render(instance.get('boundingBox'));
+						var boundingBox = instance.get('boundingBox');
+
+						var strings = instance.get('strings');
+
+						instance._createLabel(strings['from']);
+						instance._createSourceField().render(boundingBox);
+						instance._createLabel(strings['to']);
+						instance._createTargetField().render(boundingBox);
+					},
+
+					_createLabel: function(text) {
+						var instance = this;
+
+						var boundingBox = instance.get('boundingBox');
+
+						var label =	A.Node.create(
+							Lang.sub(
+								TPL_ACTION_FIELD_LABEL,
+								{
+									message: text
+								}
+							)
+						);
+
+						boundingBox.append(label);
 					},
 
 					_createSourceField: function() {

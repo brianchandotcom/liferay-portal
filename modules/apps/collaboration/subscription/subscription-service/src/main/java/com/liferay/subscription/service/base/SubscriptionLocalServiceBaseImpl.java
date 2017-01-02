@@ -121,10 +121,12 @@ public abstract class SubscriptionLocalServiceBaseImpl
 	 *
 	 * @param subscription the subscription
 	 * @return the subscription that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Subscription deleteSubscription(Subscription subscription) {
+	public Subscription deleteSubscription(Subscription subscription)
+		throws PortalException {
 		return subscriptionPersistence.remove(subscription);
 	}
 

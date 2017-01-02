@@ -20,6 +20,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -103,7 +104,7 @@ public class SubscriptionLocalServiceImpl
 
 		// Subscription
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
@@ -187,7 +188,7 @@ public class SubscriptionLocalServiceImpl
 	public void deleteSubscription(long userId, String className, long classPK)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		Subscription subscription = subscriptionPersistence.fetchByC_U_C_C(
@@ -215,8 +216,11 @@ public class SubscriptionLocalServiceImpl
 
 		// Social
 
-		AssetEntry assetEntry = assetEntryPersistence.fetchByC_C(
-			subscription.getClassNameId(), subscription.getClassPK());
+		ClassName className = classNameLocalService.getClassName(
+			subscription.getClassNameId());
+
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
+			className.getClassName(), subscription.getClassPK());
 
 		if (assetEntry != null) {
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();

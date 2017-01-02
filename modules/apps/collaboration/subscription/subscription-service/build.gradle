@@ -1,6 +1,11 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+buildService {
+	apiDir = "../subscription-api/src/main/java"
+	testDir = "../subscription-test/src/testIntegration/java"
+}
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.2.0"

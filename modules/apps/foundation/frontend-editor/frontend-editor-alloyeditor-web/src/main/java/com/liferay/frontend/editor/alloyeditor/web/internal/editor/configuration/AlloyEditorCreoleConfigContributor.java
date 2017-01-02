@@ -80,6 +80,16 @@ public class AlloyEditorCreoleConfigContributor
 
 		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
 
+		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
+
+		linkEditJSONObject.put("showTargetSelector", false);
+
+		JSONObject buttonCfgJSONObject = JSONFactoryUtil.createJSONObject();
+
+		buttonCfgJSONObject.put("linkEdit", linkEditJSONObject);
+
+		jsonObject.put("buttonCfg", buttonCfgJSONObject);
+
 		String removePlugins = jsonObject.getString("removePlugins");
 
 		StringBundler sb = new StringBundler();
@@ -157,7 +167,20 @@ public class AlloyEditorCreoleConfigContributor
 	protected JSONObject getToolbarsStylesSelectionsLinkJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
+		JSONArray linkButtonsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		JSONObject jsonLinkEditObject = JSONFactoryUtil.createJSONObject();
+
+		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
+
+		cfgJSONObject.put("showTargetSelector", false);
+
+		jsonLinkEditObject.put("name", "linkEdit");
+		jsonLinkEditObject.put("cfg", cfgJSONObject);
+
+		linkButtonsJSONArray.put(jsonLinkEditObject);
+
+		jsonObject.put("buttons", linkButtonsJSONArray);
 		jsonObject.put("name", "link");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 

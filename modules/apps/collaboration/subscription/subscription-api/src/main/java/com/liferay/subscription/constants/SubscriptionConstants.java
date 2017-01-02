@@ -12,22 +12,13 @@
  * details.
  */
 
-package com.liferay.subscription.model.impl;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.subscription.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Alexander Chow
  */
-@ProviderType
-public class SubscriptionImpl extends SubscriptionBaseImpl {
+public class SubscriptionConstants {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a subscription model instance should use the {@link com.liferay.subscription.model.Subscription} interface instead.
-	 */
-	public SubscriptionImpl() {
-	}
+	public static final String FREQUENCY_INSTANT = "instant";
 
 }

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
 	service = PortletConfigurationIcon.class
 )
-public class EmbeddedPortletsPortletConfigurationIcon
+public class OrphanPortletsPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
@@ -58,7 +58,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getLocale(portletRequest), getClass());
 
-		return LanguageUtil.get(resourceBundle, "embedded-portlets");
+		return LanguageUtil.get(resourceBundle, "orphan-portlets");
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class EmbeddedPortletsPortletConfigurationIcon
 				portletRequest, portletDisplay.getId(),
 				PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("mvcPath", "/embedded_portlets.jsp");
+			portletURL.setParameter("mvcPath", "/orphan_portlets.jsp");
 			portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 			portletURL.setParameter(
 				"selPlid", String.valueOf(getSelPlid(portletRequest)));
@@ -110,10 +110,10 @@ public class EmbeddedPortletsPortletConfigurationIcon
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			List<Portlet> embeddedPortlets =
-				layoutTypePortlet.getEmbeddedPortlets();
+			List<PortletPreferences> orphanPortletPreferences =
+				layoutTypePortlet.getOrphanPortletPreferences();
 
-			if (!embeddedPortlets.isEmpty()) {
+			if (!orphanPortletPreferences.isEmpty()) {
 				return true;
 			}
 		}

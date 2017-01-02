@@ -96,23 +96,23 @@ AUI.add(
 
 				var pagination = instance.getPagination();
 
-				var page;
-
 				var pages = instance.get('pagesState');
 
-				if (pages.length) {
-					var nextPage = pagination.get('page');
-
-					do {
-						page = pages[nextPage];
-						nextPage++;
-					} while (!page.enabled);
-
-					pagination.set('page', nextPage);
-				}
-				else {
+				if (!pages.length) {
 					pagination.next();
+					return;
 				}
+
+				var page;
+
+				var nextPage = pagination.get('page');
+
+				do {
+					page = pages[nextPage];
+					nextPage++;
+				} while (!page.enabled);
+
+				pagination.set('page', nextPage);
 			},
 
 			prevPage: function() {
@@ -120,23 +120,23 @@ AUI.add(
 
 				var pagination = instance.getPagination();
 
-				var page;
-
 				var pages = instance.get('pagesState');
 
-				if (pages.length) {
-					var prevPage = pagination.get('page') - 2;
-
-					do {
-						page = pages[prevPage];
-						prevPage--;
-					} while (!page.enabled);
-
-					pagination.set('page', prevPage + 2);
-				}
-				else {
+				if (!pages.length) {
 					pagination.prev();
+					return;
 				}
+
+				var page;
+
+				var prevPage = pagination.get('page') - 2;
+
+				do {
+					page = pages[prevPage];
+					prevPage--;
+				} while (!page.enabled);
+
+				pagination.set('page', prevPage + 2);
 			},
 
 			showPage: function(page) {

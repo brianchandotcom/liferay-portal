@@ -25,28 +25,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>com.liferay</groupId>
-									<artifactId>com.liferay.frontend.css.common</artifactId>
-									<version>2.0.1</version>
-								</artifactItem>
-							</artifactItems>
-							<outputDirectory>${project.build.directory}/deps</outputDirectory>
-							<stripVersion>true</stripVersion>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.6</version>
@@ -87,7 +65,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.css.builder</artifactId>
-				<version>1.0.20</version>
+				<version>1.0.22</version>
 				<executions>
 					<execution>
 						<id>default-build-css</id>
@@ -99,8 +77,6 @@
 				</executions>
 				<configuration>
 					<docrootDirName>src/main/resources</docrootDirName>
-					<outputDirName>/</outputDirName>
-					<portalCommonPath>target/deps/com.liferay.frontend.css.common.jar</portalCommonPath>
 				</configuration>
 			</plugin>
 		</plugins>

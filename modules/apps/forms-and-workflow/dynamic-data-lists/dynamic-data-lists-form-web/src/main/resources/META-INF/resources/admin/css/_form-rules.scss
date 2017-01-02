@@ -37,6 +37,10 @@
 	}
 
 	&.liferay-ddl-form-builder-rule-action-list {
+		.lfr-ddm-form-field-container-inline {
+			display: inline-block;
+		}
+
 		.timeline-item:last-child::before {
 			bottom: 42px;
 		}

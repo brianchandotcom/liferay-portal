@@ -437,6 +437,17 @@ public class PortletImportController implements ImportController {
 					ownerId = portletDataContext.getScopeGroupId();
 				}
 
+				long elementPlid = GetterUtil.getLong(
+					element.attributeValue("plid"));
+
+				if ((ownerType == PortletKeys.PREFS_OWNER_TYPE_LAYOUT) &&
+					(ownerId != PortletKeys.PREFS_OWNER_ID_DEFAULT) &&
+					(elementPlid == PortletKeys.PREFS_PLID_SHARED)) {
+
+					curPlid = PortletKeys.PREFS_PLID_SHARED;
+					ownerId = portletDataContext.getScopeGroupId();
+				}
+
 				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {
 					String userUuid = element.attributeValue(
 						"archive-user-uuid");

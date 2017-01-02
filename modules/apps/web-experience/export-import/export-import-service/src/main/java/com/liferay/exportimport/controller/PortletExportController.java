@@ -343,6 +343,14 @@ public class PortletExportController implements ExportController {
 				PortletKeys.PREFS_PLID_SHARED, portlet.getRootPortletId(),
 				portletElement);
 
+			// Group Embedded Portlets
+
+			exportPortletPreferences(
+				portletDataContext, portletDataContext.getScopeGroupId(),
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, false, layout,
+				PortletKeys.PREFS_PLID_SHARED, portlet.getPortletId(),
+				portletElement);
+
 			// Layout
 
 			exportPortletPreferences(

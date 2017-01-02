@@ -445,7 +445,7 @@ public class PortletImportController implements ImportController {
 					(elementPlid == PortletKeys.PREFS_PLID_SHARED)) {
 
 					curPlid = PortletKeys.PREFS_PLID_SHARED;
-					ownerId = portletDataContext.getScopeGroupId();
+					ownerId = portletDataContext.getSiteGroupId();
 				}
 
 				if (ownerType == PortletKeys.PREFS_OWNER_TYPE_ARCHIVED) {

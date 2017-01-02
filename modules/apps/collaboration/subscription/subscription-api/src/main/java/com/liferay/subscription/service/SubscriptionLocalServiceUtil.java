@@ -41,6 +41,38 @@ public class SubscriptionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.subscription.service.impl.SubscriptionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+
+	/**
+	* Returns <code>true</code> if the user is subscribed to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return <code>true</code> if the user is subscribed to the entity;
+	<code>false</code> otherwise
+	*/
+	public static boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long classPK) {
+		return getService().isSubscribed(companyId, userId, className, classPK);
+	}
+
+	/**
+	* Returns <code>true</code> if the user is subscribed to any of the
+	* entities.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return <code>true</code> if the user is subscribed to any of the
+	entities; <code>false</code> otherwise
+	*/
+	public static boolean isSubscribed(long companyId, long userId,
+		java.lang.String className, long[] classPKs) {
+		return getService().isSubscribed(companyId, userId, className, classPKs);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -80,6 +112,63 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	/**
+	* Subscribes the user to the entity, notifying him the instant the entity
+	* is created, deleted, or modified.
+	*
+	* <p>
+	* If there is no asset entry with the class name and class PK a new asset
+	* entry is created.
+	* </p>
+	*
+	* <p>
+	* A social activity for the subscription is created using the asset entry
+	* associated with the class name and class PK, or the newly created asset
+	* entry.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the entity's group
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription
+	*/
+	public static com.liferay.subscription.model.Subscription addSubscription(
+		long userId, long groupId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addSubscription(userId, groupId, className, classPK);
+	}
+
+	/**
+	* Subscribes the user to the entity, notifying him at the given frequency.
+	*
+	* <p>
+	* If there is no asset entry with the class name and class PK a new asset
+	* entry is created.
+	* </p>
+	*
+	* <p>
+	* A social activity for the subscription is created using the asset entry
+	* associated with the class name and class PK, or the newly created asset
+	* entry.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the entity's group
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @param frequency the frequency for notifications
+	* @return the subscription
+	*/
+	public static com.liferay.subscription.model.Subscription addSubscription(
+		long userId, long groupId, java.lang.String className, long classPK,
+		java.lang.String frequency)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSubscription(userId, groupId, className, classPK,
+			frequency);
+	}
+
+	/**
 	* Creates a new subscription with the primary key. Does not add the subscription to the database.
 	*
 	* @param subscriptionId the primary key for the new subscription
@@ -95,9 +184,11 @@ public class SubscriptionLocalServiceUtil {
 	*
 	* @param subscription the subscription
 	* @return the subscription that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.subscription.model.Subscription deleteSubscription(
-		com.liferay.subscription.model.Subscription subscription) {
+		com.liferay.subscription.model.Subscription subscription)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSubscription(subscription);
 	}
 
@@ -115,8 +206,30 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	public static com.liferay.subscription.model.Subscription fetchSubscription(
+		long companyId, long userId, java.lang.String className, long classPK) {
+		return getService()
+				   .fetchSubscription(companyId, userId, className, classPK);
+	}
+
+	public static com.liferay.subscription.model.Subscription fetchSubscription(
 		long subscriptionId) {
 		return getService().fetchSubscription(subscriptionId);
+	}
+
+	/**
+	* Returns the subscription of the user to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscription of the user to the entity
+	*/
+	public static com.liferay.subscription.model.Subscription getSubscription(
+		long companyId, long userId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getSubscription(companyId, userId, className, classPK);
 	}
 
 	/**
@@ -150,6 +263,16 @@ public class SubscriptionLocalServiceUtil {
 	*/
 	public static int getSubscriptionsCount() {
 		return getService().getSubscriptionsCount();
+	}
+
+	/**
+	* Returns the number of subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @return the number of subscriptions of the user
+	*/
+	public static int getUserSubscriptionsCount(long userId) {
+		return getService().getUserSubscriptionsCount(userId);
 	}
 
 	/**
@@ -228,6 +351,63 @@ public class SubscriptionLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	* @return the subscriptions to the entity
+	*/
+	public static java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
+		long companyId, java.lang.String className, long classPK) {
+		return getService().getSubscriptions(companyId, className, classPK);
+	}
+
+	/**
+	* Returns all the subscriptions of the user to the entities.
+	*
+	* @param companyId the primary key of the company
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPKs the primary key of the entities
+	* @return the subscriptions of the user to the entities
+	*/
+	public static java.util.List<com.liferay.subscription.model.Subscription> getSubscriptions(
+		long companyId, long userId, java.lang.String className, long[] classPKs) {
+		return getService()
+				   .getSubscriptions(companyId, userId, className, classPKs);
+	}
+
+	/**
+	* Returns an ordered range of all the subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	* @param start the lower bound of the range of results
+	* @param end the upper bound of the range of results (not inclusive)
+	* @param orderByComparator the comparator to order the subscriptions
+	* @return the range of subscriptions of the user
+	*/
+	public static java.util.List<com.liferay.subscription.model.Subscription> getUserSubscriptions(
+		long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.subscription.model.Subscription> orderByComparator) {
+		return getService()
+				   .getUserSubscriptions(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns all the subscriptions of the user to the entities with the class
+	* name.
+	*
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @return the subscriptions of the user to the entities with the class name
+	*/
+	public static java.util.List<com.liferay.subscription.model.Subscription> getUserSubscriptions(
+		long userId, java.lang.String className) {
+		return getService().getUserSubscriptions(userId, className);
+	}
+
+	/**
 	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
@@ -249,6 +429,48 @@ public class SubscriptionLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Deletes the user's subscription to the entity. A social activity with the
+	* unsubscribe action is created.
+	*
+	* @param userId the primary key of the user
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	*/
+	public static void deleteSubscription(long userId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteSubscription(userId, className, classPK);
+	}
+
+	/**
+	* Deletes all the subscriptions to the entity.
+	*
+	* @param companyId the primary key of the company
+	* @param className the entity's class name
+	* @param classPK the primary key of the entity's instance
+	*/
+	public static void deleteSubscriptions(long companyId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteSubscriptions(companyId, className, classPK);
+	}
+
+	/**
+	* Deletes all the subscriptions of the user.
+	*
+	* @param userId the primary key of the user
+	*/
+	public static void deleteSubscriptions(long userId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteSubscriptions(userId);
+	}
+
+	public static void deleteSubscriptions(long userId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteSubscriptions(userId, groupId);
 	}
 
 	public static SubscriptionLocalService getService() {

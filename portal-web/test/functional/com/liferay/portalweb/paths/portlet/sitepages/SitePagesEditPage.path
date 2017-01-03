@@ -295,12 +295,12 @@
 </tr>
 <tr>
 	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL</td>
-	<td>//div[contains(@id,'copyPortletsFromPage')]//label[contains(@for,'copyLayoutId')]</td>
+	<td>//label[contains(@for,'copyLayoutId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT</td>
-	<td>//div[contains(@id,'copyPortletsFromPage')]//select[contains(@id,'copyLayoutId')]/option[@value='1']</td>
+	<td>//select[contains(@id,'copyLayoutId')]/option[@value='1']</td>
 	<td></td>
 </tr>
 <tr>

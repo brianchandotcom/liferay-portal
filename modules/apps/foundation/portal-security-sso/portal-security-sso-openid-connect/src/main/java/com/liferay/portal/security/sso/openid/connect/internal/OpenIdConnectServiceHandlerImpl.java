@@ -421,15 +421,16 @@ public class OpenIdConnectServiceHandlerImpl
 			try (InputStream discoveryEndpointStream =
 					discoveryEndpointURL.openStream();
 				Scanner scanner = new Scanner(discoveryEndpointStream)) {
-					Scanner delimiterScanner = scanner.useDelimiter(
-						_DISCOVERY_END_POINT_DELIMITER);
 
-					if (delimiterScanner.hasNext()) {
-						providerInfo = scanner.next();
-					}
-					else {
-						providerInfo = StringPool.BLANK;
-					}
+				Scanner delimiterScanner = scanner.useDelimiter(
+					_DISCOVERY_END_POINT_DELIMITER);
+
+				if (delimiterScanner.hasNext()) {
+					providerInfo = scanner.next();
+				}
+				else {
+					providerInfo = StringPool.BLANK;
+				}
 			}
 
 			oidcProviderMetadata = OIDCProviderMetadata.parse(providerInfo);

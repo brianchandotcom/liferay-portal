@@ -817,11 +817,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					else {
 						bundle.uninstall();
 
-						FrameworkWiring frameworkWiring = _framework.adapt(
-							FrameworkWiring.class);
-
-						frameworkWiring.refreshBundles(
-							Collections.singletonList(bundle));
+						_refreshBundles(Collections.singletonList(bundle));
 
 						return null;
 					}
@@ -997,6 +993,36 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return false;
 	}
 
+	private void _refreshBundles(List<Bundle> refreshBundles) {
+		FrameworkWiring frameworkWiring = _framework.adapt(
+			FrameworkWiring.class);
+
+		final DefaultNoticeableFuture<FrameworkEvent> defaultNoticeableFuture =
+			new DefaultNoticeableFuture<>();
+
+		frameworkWiring.refreshBundles(
+			refreshBundles,
+			new FrameworkListener() {
+
+				@Override
+				public void frameworkEvent(FrameworkEvent frameworkEvent) {
+					defaultNoticeableFuture.set(frameworkEvent);
+				}
+
+			});
+
+		try {
+			FrameworkEvent frameworkEvent = defaultNoticeableFuture.get();
+
+			if (frameworkEvent.getType() != FrameworkEvent.PACKAGES_REFRESHED) {
+				throw frameworkEvent.getThrowable();
+			}
+		}
+		catch (Throwable t) {
+			ReflectionUtil.throwException(t);
+		}
+	}
+
 	private void _registerApplicationContext(
 		ApplicationContext applicationContext) {
 
@@ -1169,10 +1195,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		FrameworkWiring frameworkWiring = _framework.adapt(
-			FrameworkWiring.class);
-
-		frameworkWiring.refreshBundles(refreshBundles);
+		_refreshBundles(refreshBundles);
 
 		refreshBundles.clear();
 
@@ -1388,7 +1411,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			}
 		}
 
-		frameworkWiring.refreshBundles(refreshBundles);
+		_refreshBundles(refreshBundles);
 
 		return new HashSet<>(Arrays.asList(initialBundles));
 	}

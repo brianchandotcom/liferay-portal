@@ -369,7 +369,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(
 			moreDetailsElement, "For more details click ",
-			Dom4JUtil.getNewAnchorElement("jenkins.report.html", "here"), ".");
+			Dom4JUtil.getNewAnchorElement(getJenkinsReportURL(), "here"), ".");
 
 		return moreDetailsElement;
 	}

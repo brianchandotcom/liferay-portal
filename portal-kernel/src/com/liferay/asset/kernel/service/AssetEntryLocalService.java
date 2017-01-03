@@ -168,8 +168,8 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public AssetEntry updateAssetEntry(AssetEntry assetEntry);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
-	Date, Date, boolean, boolean)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#updateEntry(String, long, Date, Date, boolean, boolean)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(java.lang.String className, long classPK,
@@ -180,8 +180,8 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
-	Date, Date, boolean, boolean)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#updateEntry(String, long, Date, Date, boolean, boolean)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(java.lang.String className, long classPK,
@@ -193,10 +193,11 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String[] tagNames) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
-	Date, Date, String, long, String, long, long[], String[],
-	boolean, boolean, Date, Date, Date, Date, String, String,
-	String, String, String, String, int, int, Double)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#updateEntry(long, long, Date, Date, String, long, String,
+	long, long[], String[], boolean, boolean, Date, Date, Date,
+	Date, String, String, String, String, String, String, int,
+	int, Double)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(long userId, long groupId, Date createDate,
@@ -220,10 +221,11 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		int width, java.lang.Double priority) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
-	Date, Date, String, long, String, long, long[], String[],
-	boolean, boolean, Date, Date, Date, Date, String, String,
-	String, String, String, String, int, int, Double)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#updateEntry(long, long, Date, Date, String, long, String,
+	long, long[], String[], boolean, boolean, Date, Date, Date,
+	Date, String, String, String, String, String, String, int,
+	int, Double)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(long userId, long groupId, Date createDate,
@@ -591,8 +593,8 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long,
-	long[], String[])}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#validate(long, String, long, long[], String[])}
 	*/
 	@java.lang.Deprecated
 	public void validate(long groupId, java.lang.String className,

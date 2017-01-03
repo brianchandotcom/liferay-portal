@@ -90,7 +90,8 @@ public interface ThemeLocalService extends BaseLocalService {
 	public List<Theme> getThemes(long companyId);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getPageThemes}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#getPageThemes}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

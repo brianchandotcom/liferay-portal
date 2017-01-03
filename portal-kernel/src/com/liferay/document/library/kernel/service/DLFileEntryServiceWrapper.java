@@ -54,8 +54,8 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#isKeepFileVersionLabel(long, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	@Override

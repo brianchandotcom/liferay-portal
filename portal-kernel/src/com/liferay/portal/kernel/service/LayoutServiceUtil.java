@@ -53,7 +53,8 @@ public class LayoutServiceUtil {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layout as a byte array
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static byte[] exportLayouts(long groupId, boolean privateLayout,
@@ -79,7 +80,8 @@ public class LayoutServiceUtil {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a byte array
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static byte[] exportLayouts(long groupId, boolean privateLayout,
@@ -93,7 +95,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static byte[] exportPortletInfo(long companyId,
@@ -120,7 +123,8 @@ public class LayoutServiceUtil {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static byte[] exportPortletInfo(long plid, long groupId,
@@ -134,7 +138,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, File)}
 	*/
@@ -148,7 +152,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -163,7 +167,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static com.liferay.exportimport.kernel.lar.MissingReferences validateImportLayoutsFile(
@@ -177,7 +182,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static com.liferay.exportimport.kernel.lar.MissingReferences validateImportLayoutsFile(
@@ -191,7 +197,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, File)}
 	*/
@@ -205,7 +211,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -220,7 +226,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static com.liferay.exportimport.kernel.lar.MissingReferences validateImportPortletInfo(
@@ -234,7 +241,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static com.liferay.exportimport.kernel.lar.MissingReferences validateImportPortletInfo(
@@ -634,7 +642,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -659,7 +667,8 @@ public class LayoutServiceUtil {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a File
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static java.io.File exportLayoutsAsFile(long groupId,
@@ -673,7 +682,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportPortletInfoAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -685,7 +694,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static java.io.File exportPortletInfoAsFile(
@@ -712,7 +722,8 @@ public class LayoutServiceUtil {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a file
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static java.io.File exportPortletInfoAsFile(long plid, long groupId,
@@ -789,7 +800,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	ExportImportConfiguration)}
 	*/
@@ -802,7 +813,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long exportLayoutsAsFileInBackground(
@@ -817,7 +829,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long exportLayoutsAsFileInBackground(
@@ -833,7 +846,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	long)}
 	*/
@@ -846,7 +859,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long exportPortletInfoAsFileInBackground(
@@ -861,7 +875,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long exportPortletInfoAsFileInBackground(
@@ -902,7 +917,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long importLayoutsInBackground(java.lang.String taskName,
@@ -916,7 +932,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long importLayoutsInBackground(java.lang.String taskName,
@@ -930,7 +947,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long importPortletInfoInBackground(
@@ -945,7 +963,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static long importPortletInfoInBackground(
@@ -994,7 +1013,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, File)}
 	*/
@@ -1007,7 +1026,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -1030,7 +1049,8 @@ public class LayoutServiceUtil {
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param bytes the byte array with the data
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importLayouts(long groupId, boolean privateLayout,
@@ -1051,7 +1071,8 @@ public class LayoutServiceUtil {
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importLayouts(long groupId, boolean privateLayout,
@@ -1072,7 +1093,8 @@ public class LayoutServiceUtil {
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importLayouts(long groupId, boolean privateLayout,
@@ -1083,7 +1105,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, File)} (
 	*/
@@ -1096,7 +1118,7 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, InputStream)} (
 	*/
@@ -1109,7 +1131,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importPortletInfo(java.lang.String portletId,
@@ -1120,7 +1143,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importPortletInfo(java.lang.String portletId,
@@ -1142,7 +1166,8 @@ public class LayoutServiceUtil {
 	used in the map see {@link
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importPortletInfo(long plid, long groupId,
@@ -1166,7 +1191,8 @@ public class LayoutServiceUtil {
 	used in the map see {@link
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importPortletInfo(long plid, long groupId,
@@ -1179,7 +1205,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importPortletInfoInBackground(
@@ -1193,7 +1220,8 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	replacement
 	*/
 	@Deprecated
 	public static void importPortletInfoInBackground(
@@ -1226,9 +1254,9 @@ public class LayoutServiceUtil {
 	* @param schedulerStartDate the scheduler start date
 	* @param schedulerEndDate the scheduler end date
 	* @param description the scheduler description
-	* @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
-	long, boolean, long[], Map, String, Date, Date, String,
-	String, Date, Date, String)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#schedulePublishToLive(long, long, boolean, long[], Map,
+	String, Date, Date, String, String, Date, Date, String)}
 	*/
 	@Deprecated
 	public static void schedulePublishToLive(long sourceGroupId,
@@ -1303,9 +1331,9 @@ public class LayoutServiceUtil {
 	* @param schedulerStartDate the scheduler start date
 	* @param schedulerEndDate the scheduler end date
 	* @param description the scheduler description
-	* @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
-	long, boolean, long[], Map, String, String, Date, Date,
-	String)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#schedulePublishToLive(long, long, boolean, long[], Map,
+	String, String, Date, Date, String)}
 	*/
 	@Deprecated
 	public static void schedulePublishToLive(long sourceGroupId,

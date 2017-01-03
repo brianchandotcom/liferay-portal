@@ -1,0 +1,131 @@
+<definition component-name="portal-web-forms-and-data-lists">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Dynamic Data Lists" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Image" />
+			<var name="fieldFieldLabel" value="Image" />
+			<var name="fieldName" value="image" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addStructure">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateFieldNames" value="Image" />
+			<var name="templateLanguage" value="ftl" />
+		</execute>
+
+		<execute macro="WebContentTemplates#save" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="User#logoutAndLoginPG">
+					<var name="userLoginEmailAddress" value="test@liferay.com" />
+					<var name="userLoginFullName" value="Test Test" />
+				</execute>
+
+				<execute macro="Site#tearDownCP" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewFieldTranslations" priority="4">
+		<description message="This is a use case for LPS-69593." />
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentTitle" value="English (United States) Title" />
+		</execute>
+
+		<execute macro="ItemSelector#gotoItemSelectorViaSelectButton" />
+
+		<execute macro="ItemSelector#uploadFile">
+			<var name="navTab" value="Documents and Media" />
+			<var name="uploadFileName" value="Document_3.png" />
+		</execute>
+
+		<execute macro="FormFields#editTextAlt">
+			<var name="fieldName" value="image" />
+			<var name="fieldValue" value="English (United States) Image Description" />
+		</execute>
+
+		<for list="Spanish (Spain),Portuguese (Brazil)" param="language">
+			<execute macro="DDLRecord#addTranslation">
+				<var name="localizedLanguage" value="${language}" />
+			</execute>
+
+			<execute macro="FormFields#editText">
+				<var name="fieldName" value="title" />
+				<var name="fieldValue" value="${language} Title" />
+			</execute>
+
+			<execute macro="FormFields#editTextAlt">
+				<var name="fieldName" value="image" />
+				<var name="fieldValue" value="${language} Image Description" />
+			</execute>
+		</for>
+
+		<for list="English (United States),Spanish (Spain),Portuguese (Brazil)" param="language">
+			<execute macro="DDLRecord#selectTranslation">
+				<var name="localizedLanguage" value="${language}" />
+			</execute>
+
+			<execute macro="FormFields#viewTextValue">
+				<var name="fieldName" value="title" />
+				<var name="fieldValue" value="${language} Title" />
+			</execute>
+
+			<execute macro="FormFields#viewTextValueAlt">
+				<var name="fieldName" value="image" />
+				<var name="fieldValue" value="${language} Image Description" />
+			</execute>
+		</for>
+	</command>
+</definition>

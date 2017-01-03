@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
@@ -1957,8 +1956,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatDeprecatedJavadoc(
-			String fileName, String absolutePath, String line)
+	protected String formatDeprecatedJavadoc(String fileName, String line)
 		throws Exception {
 
 		Matcher matcher = _deprecatedPattern.matcher(line);
@@ -1967,16 +1965,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return line;
 		}
 
-		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion(fileName, absolutePath, true);
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-		if (mainReleaseComparableVersion == null) {
+		ComparableVersion releaseComparableVersion =
+			bndSettings.getReleaseComparableVersion();
+
+		if (releaseComparableVersion == null) {
 			return line;
 		}
 
 		if (matcher.group(2) == null) {
 			return StringUtil.insert(
-				line, " As of " + mainReleaseComparableVersion.toString(),
+				line, " As of " + releaseComparableVersion.toString(),
 				matcher.end(1));
 		}
 
@@ -1984,9 +1984,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		ComparableVersion comparableVersion = new ComparableVersion(version);
 
-		if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+		if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
 			return StringUtil.replaceFirst(
-				line, version, mainReleaseComparableVersion.toString());
+				line, version, releaseComparableVersion.toString());
 		}
 
 		if (StringUtil.count(version, CharPool.PERIOD) == 1) {
@@ -2456,8 +2456,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkResourceUtil(line, fileName, absolutePath, lineCount);
 
 				if (_addMissingDeprecationReleaseVersion) {
-					line = formatDeprecatedJavadoc(
-						fileName, absolutePath, line);
+					line = formatDeprecatedJavadoc(fileName, line);
 				}
 
 				if (trimmedLine.startsWith("* @see ") &&

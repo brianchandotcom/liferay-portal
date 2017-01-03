@@ -23,13 +23,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
@@ -67,7 +65,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.tools.ant.types.selectors.SelectorUtils;
 
 import org.dom4j.Document;
@@ -2099,57 +2096,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return x + 1;
 	}
 
-	protected ComparableVersion getMainReleaseComparableVersion(
-			String fileName, String absolutePath, boolean checkModuleVersion)
-		throws Exception {
-
-		boolean usePortalReleaseVersion = true;
-
-		if (checkModuleVersion &&
-			(!portalSource || isModulesFile(absolutePath))) {
-
-			usePortalReleaseVersion = false;
-		}
-
-		String releaseVersion = StringPool.BLANK;
-
-		if (usePortalReleaseVersion) {
-			if (_mainReleaseComparableVersion != null) {
-				return _mainReleaseComparableVersion;
-			}
-
-			releaseVersion = ReleaseInfo.getVersion();
-		}
-		else {
-			BNDSettings bndSettings = getBNDSettings(fileName);
-
-			if (bndSettings == null) {
-				return null;
-			}
-
-			releaseVersion = bndSettings.getReleaseVersion();
-
-			if (releaseVersion == null) {
-				return null;
-			}
-
-			putBNDSettings(bndSettings);
-		}
-
-		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
-
-		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
-
-		ComparableVersion mainReleaseComparableVersion = new ComparableVersion(
-			mainReleaseVersion);
-
-		if (usePortalReleaseVersion) {
-			_mainReleaseComparableVersion = mainReleaseComparableVersion;
-		}
-
-		return mainReleaseComparableVersion;
-	}
-
 	protected List<String> getModuleLangDirNames(
 		String moduleLocation, String buildGradleContent) {
 
@@ -3126,7 +3072,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private Map<String, List<String>> _exclusionPropertiesMap = new HashMap<>();
 	private SourceMismatchException _firstSourceMismatchException;
 	private Set<String> _immutableFieldTypes;
-	private ComparableVersion _mainReleaseComparableVersion;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private final Map<String, Properties> _moduleLangLanguageProperties =

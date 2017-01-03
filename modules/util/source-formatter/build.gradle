@@ -41,4 +41,14 @@ liferay {
 updateFileVersions {
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.source\.formatter=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
+
+	replaceOnlyIf([{
+		String group, String replacement, String content ->
+
+		if (content.contains("task runGradleTest")) {
+			return false
+		}
+
+		return true
+	}])
 }

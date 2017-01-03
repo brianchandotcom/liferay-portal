@@ -268,6 +268,41 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected void checkInternalImports(
+		String fileName, String absolutePath, String content) {
+
+		if (absolutePath.contains("/modules/core/") ||
+			absolutePath.contains("/modules/util/") ||
+			fileName.contains("/test/") ||
+			fileName.contains("/testIntegration/")) {
+
+			return;
+		}
+
+		Matcher matcher = _internalImportPattern.matcher(content);
+
+		int pos = -1;
+
+		while (matcher.find()) {
+			if (pos == -1) {
+				pos = absolutePath.lastIndexOf("/com/liferay/");
+			}
+
+			String expectedImportFileLocation =
+				absolutePath.substring(0, pos + 13) +
+					StringUtil.replace(matcher.group(1), ".", "/") + ".java";
+
+			File file = new File(expectedImportFileLocation);
+
+			if (!file.exists()) {
+				processMessage(
+					fileName,
+					"Do not import internal class from another module",
+					getLineCount(content, matcher.start(1)));
+			}
+		}
+	}
+
 	protected void checkLineBreaks(
 		String line, String previousLine, String fileName, int lineCount) {
 
@@ -466,41 +501,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (trimmedLine.matches("^\\} (catch|else|finally) .*")) {
 			processMessage(
 				fileName, "There should be a line break after '}'", lineCount);
-		}
-	}
-
-	protected void checkInternalImports(
-		String fileName, String absolutePath, String content) {
-
-		if (absolutePath.contains("/modules/core/") ||
-			absolutePath.contains("/modules/util/") ||
-			fileName.contains("/test/") ||
-			fileName.contains("/testIntegration/")) {
-
-			return;
-		}
-
-		Matcher matcher = _internalImportPattern.matcher(content);
-
-		int pos = -1;
-
-		while (matcher.find()) {
-			if (pos == -1) {
-				pos = absolutePath.lastIndexOf("/com/liferay/");
-			}
-
-			String expectedImportFileLocation =
-				absolutePath.substring(0, pos + 13) +
-					StringUtil.replace(matcher.group(1), ".", "/") + ".java";
-
-			File file = new File(expectedImportFileLocation);
-
-			if (!file.exists()) {
-				processMessage(
-					fileName,
-					"Do not import internal class from another module",
-					getLineCount(content, matcher.start(1)));
-			}
 		}
 	}
 

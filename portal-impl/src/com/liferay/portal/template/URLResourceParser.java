@@ -16,6 +16,7 @@ package com.liferay.portal.template;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
@@ -96,7 +97,9 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 		String extension = FileUtil.getExtension(templateId);
 
-		if (!extension.equals(langType)) {
+		if (!extension.equals(langType) &&
+			!_allowedFileExtensions.contains(extension)) {
+
 			return false;
 		}
 
@@ -174,5 +177,17 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		URLResourceParser.class);
+
+	private static List<String> _allowedFileExtensions;
+
+	static {
+		_allowedFileExtensions = new ArrayList<String>();
+
+		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_CSS);
+		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_FTL);
+		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_TPL);
+		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_VM);
+		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_XSL);
+	}
 
 }

@@ -244,7 +244,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			}
 		}
 		while ((bbCodeItem.getType() != BBCodeParser.TYPE_TAG_END) &&
-			!tag.equals(bbCodeItem.getValue()));
+			   !tag.equals(bbCodeItem.getValue()));
 
 		if (consume) {
 			marker.setValue(index - 1);

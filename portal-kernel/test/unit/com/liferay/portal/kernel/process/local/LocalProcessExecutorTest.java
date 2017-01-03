@@ -1730,7 +1730,7 @@ public class LocalProcessExecutorTest {
 				Thread heartbeatThread = _getHeartbeatThread(false);
 
 				while (heartbeatThread.getState() !=
-					Thread.State.TIMED_WAITING);
+							Thread.State.TIMED_WAITING);
 
 				ProcessContext.detach();
 

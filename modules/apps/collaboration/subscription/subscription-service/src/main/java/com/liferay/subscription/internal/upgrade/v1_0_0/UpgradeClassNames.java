@@ -12,27 +12,32 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_3;
+package com.liferay.subscription.internal.upgrade.v1_0_0;
+
+import com.liferay.portal.upgrade.v7_0_0.UpgradeKernelPackage;
 
 /**
- * @author Shuyang Zhou
+ * @author Adolfo Pérez
  */
-public class UpgradeModules
-	extends com.liferay.portal.upgrade.v7_0_0.UpgradeModules {
+public class UpgradeClassNames extends UpgradeKernelPackage {
 
 	@Override
-	public String[] getBundleSymbolicNames() {
-		return _BUNDLE_SYMBOLIC_NAMES;
+	protected String[][] getClassNames() {
+		return _CLASS_NAMES;
 	}
 
 	@Override
-	public String[][] getConvertedLegacyModules() {
-		return _CONVERTED_LEGACY_MODULES;
+	protected String[][] getResourceNames() {
+		return _RESOURCE_NAMES;
 	}
 
-	private static final String[] _BUNDLE_SYMBOLIC_NAMES =
-		{"com.liferay.blogs.service", "com.liferay.subscription.service"};
+	private static final String[][] _CLASS_NAMES = new String[][] {
+		{
+			"com.liferay.portal.kernel.model.Subscription",
+			"com.liferay.subscription.model.Subscription"
+		}
+	};
 
-	private static final String[][] _CONVERTED_LEGACY_MODULES = {};
+	private static final String[][] _RESOURCE_NAMES = new String[0][0];
 
 }

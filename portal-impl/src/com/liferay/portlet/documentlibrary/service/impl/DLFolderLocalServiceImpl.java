@@ -152,7 +152,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #deleteAllByGroup(long)}
+	 * @deprecated As of 2.10.0, replaced by {@link #deleteAllByGroup(long)}
 	 */
 	@Deprecated
 	@Override
@@ -377,7 +377,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getGroupFolderIds(long,
+	 * @deprecated As of 2.10.0, replaced by {@link #getGroupFolderIds(long,
 	 *             long)}
 	 */
 	@Deprecated
@@ -590,7 +590,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getGroupSubfolderIds(List,
+	 * @deprecated As of 2.10.0, replaced by {@link #getGroupSubfolderIds(List,
 	 *             long, long)}
 	 */
 	@Deprecated
@@ -782,7 +782,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 * @deprecated As of 2.10.0, replaced by {@link #updateFolder(long, long,
 	 *             String, String, long, List, int, ServiceContext)}
 	 */
 	@Deprecated
@@ -925,7 +925,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
+	 * @deprecated As of 2.10.0, replaced {@link #updateFolder(long, long,
 	 *             String, String, long, List, int, ServiceContext)}
 	 */
 	@Deprecated
@@ -972,7 +972,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #
+	 * @deprecated As of 2.10.0, replaced by {@link #
 	 *             updateFolderAndFileEntryTypes(long, long, long, String,
 	 *             String, long, List, int, ServiceContext)}
 	 */

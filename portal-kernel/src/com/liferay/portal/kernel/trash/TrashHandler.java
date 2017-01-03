@@ -100,7 +100,7 @@ public interface TrashHandler {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #checkRestorableEntry(long,
+	 * @deprecated As of 2.19.0, replaced by {@link #checkRestorableEntry(long,
 	 *             long, String)}
 	 */
 	@Deprecated
@@ -123,7 +123,7 @@ public interface TrashHandler {
 	 * @param      newName the new name to be assigned to the trash entry
 	 *             (optionally <code>null</code> to forego renaming the trash
 	 *             entry)
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 2.19.0, replaced by {@link
 	 *             #checkRestorableEntry(TrashEntry, long, String)}
 	 */
 	@Deprecated
@@ -179,7 +179,7 @@ public interface TrashHandler {
 	/**
 	 * Returns the parent container model's class name.
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 2.19.0, replaced by {@link
 	 *             #getContainerModelClassName(long)}
 	 */
 	@Deprecated
@@ -268,7 +268,7 @@ public interface TrashHandler {
 	public Filter getExcludeFilter(SearchContext searchContext);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 2.19.0, replaced by {@link
 	 *             #getExcludeFilter(SearchContext)}
 	 */
 	@Deprecated

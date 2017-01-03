@@ -29,7 +29,7 @@ public class ClusterLinkUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_getClusterLink()}
+	 * @deprecated As of 2.19.0, replaced by {@link #_getClusterLink()}
 	 */
 	@Deprecated
 	public static ClusterLink getClusterLink() {

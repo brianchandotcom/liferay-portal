@@ -48,7 +48,7 @@ public class ServerDetector {
 	public static final String WILDFLY_ID = "wildfly";
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public static ServerDetector getInstance() {
@@ -60,7 +60,7 @@ public class ServerDetector {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public static void init(String serverId) {
@@ -137,7 +137,7 @@ public class ServerDetector {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public static boolean isSupportsHotDeploy() {
@@ -177,7 +177,7 @@ public class ServerDetector {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public static void setSupportsHotDeploy(boolean supportsHotDeploy) {

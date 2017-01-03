@@ -484,7 +484,7 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				/**
-				 * @deprecated As of 7.0.0
+				 * @deprecated As of 2.19.0
 				 */
 				@Deprecated
 				@Override
@@ -1267,7 +1267,7 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				/**
-				 * @deprecated As of 7.0.0
+				 * @deprecated As of 2.19.0
 				 */
 				@Deprecated
 				@Override
@@ -1435,7 +1435,7 @@ public class MetaInfoCacheServletResponseTest {
 				}
 
 				/**
-				 * @deprecated As of 7.0.0
+				 * @deprecated As of 2.19.0
 				 */
 				@Deprecated
 				@Override

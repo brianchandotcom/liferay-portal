@@ -129,7 +129,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.19.0
 	 */
 	@Deprecated
 	protected String getNewTypeSettings(

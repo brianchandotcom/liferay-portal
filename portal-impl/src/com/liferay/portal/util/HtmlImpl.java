@@ -571,7 +571,7 @@ public class HtmlImpl implements Html {
 	 * @param      text the text
 	 * @return     the converted text, or <code>null</code> if the text is
 	 *             <code>null</code>
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.10.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

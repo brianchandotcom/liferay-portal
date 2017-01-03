@@ -32,7 +32,7 @@ public interface IndexSearcher extends QuerySuggester {
 		throws SearchException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #search(SearchContext,
+	 * @deprecated As of 2.19.0, replaced by {@link #search(SearchContext,
 	 *             Query)}
 	 */
 	@Deprecated

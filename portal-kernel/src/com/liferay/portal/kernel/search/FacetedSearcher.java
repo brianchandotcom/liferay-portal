@@ -38,7 +38,7 @@ import java.util.Set;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of 2.19.0, replaced by {@link
  *             com.liferay.portal.kernel.search.facet.searcher.FacetedSearcher}
  */
 @Deprecated

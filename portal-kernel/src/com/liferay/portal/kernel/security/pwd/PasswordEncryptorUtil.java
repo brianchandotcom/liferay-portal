@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 public class PasswordEncryptorUtil {
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 2.19.0, replaced by {@link
 	 *             #getDefaultPasswordAlgorithmType}
 	 */
 	@Deprecated

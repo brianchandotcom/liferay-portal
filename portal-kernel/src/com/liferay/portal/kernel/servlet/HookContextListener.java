@@ -19,7 +19,7 @@ import javax.servlet.ServletContextListener;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 6.2.0
+ * @deprecated As of 2.19.0
  */
 @Deprecated
 public class HookContextListener implements ServletContextListener {

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Augé
- * @deprecated As of 6.2.0
+ * @deprecated As of 2.10.0
  */
 @Deprecated
 public class PortalSecurityManagerThreadLocal {

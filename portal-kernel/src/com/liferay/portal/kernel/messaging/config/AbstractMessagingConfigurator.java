@@ -251,7 +251,7 @@ public abstract class AbstractMessagingConfigurator
 
 	/**
 	 * @param      replacementDestinations
-	 * @deprecated As of 7.0.0, replaced by {@link #setDestinations(List)}
+	 * @deprecated As of 2.19.0, replaced by {@link #setDestinations(List)}
 	 */
 	@Deprecated
 	@Override

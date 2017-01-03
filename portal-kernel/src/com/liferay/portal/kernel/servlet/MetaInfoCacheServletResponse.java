@@ -193,7 +193,7 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #finishResponse(boolean)}}
+	 * @deprecated As of 2.19.0, replaced by {@link #finishResponse(boolean)}}
 	 */
 	@Deprecated
 	public void finishResponse() throws IOException {

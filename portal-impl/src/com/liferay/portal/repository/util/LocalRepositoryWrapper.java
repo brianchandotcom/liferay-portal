@@ -342,7 +342,7 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.10.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override

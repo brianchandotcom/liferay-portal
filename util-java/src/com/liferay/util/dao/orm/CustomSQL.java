@@ -795,7 +795,7 @@ public class CustomSQL {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #_read(ClassLoader, String,
+	 * @deprecated As of 2.2.0, replaced by {@link #_read(ClassLoader, String,
 	 *             Map)}
 	 */
 	@Deprecated

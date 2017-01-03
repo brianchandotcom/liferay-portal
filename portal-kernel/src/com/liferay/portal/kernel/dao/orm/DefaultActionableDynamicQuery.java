@@ -145,7 +145,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setModelClass(Class)}
+	 * @deprecated As of 2.19.0, replaced by {@link #setModelClass(Class)}
 	 */
 	@Deprecated
 	@Override

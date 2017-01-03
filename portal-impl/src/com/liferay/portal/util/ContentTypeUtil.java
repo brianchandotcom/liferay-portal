@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 
 /**
  * @author     Alexander Chow
- * @deprecated As of 6.1.0, replaced by {@link MimeTypesUtil}
+ * @deprecated As of 2.10.0, replaced by {@link MimeTypesUtil}
  */
 @Deprecated
 public class ContentTypeUtil {

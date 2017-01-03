@@ -93,7 +93,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 2.19.0
 	 */
 	@Deprecated
 	public static Map<Locale, String> getLocalizationMap(
@@ -117,7 +117,7 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getString(ResourceBundle,
+	 * @deprecated As of 2.19.0, replaced by {@link #getString(ResourceBundle,
 	 *             String, Object...)}
 	 */
 	@Deprecated

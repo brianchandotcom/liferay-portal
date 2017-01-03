@@ -48,7 +48,7 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of 2.10.0, replaced by {@link
 	 *             #PortalSessionDestroyer(HttpSession)}
 	 */
 	@Deprecated

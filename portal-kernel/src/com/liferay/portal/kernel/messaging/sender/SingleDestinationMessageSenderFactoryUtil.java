@@ -51,7 +51,7 @@ public class SingleDestinationMessageSenderFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of 2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	protected SingleDestinationMessageSenderFactory

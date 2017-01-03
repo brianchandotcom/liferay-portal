@@ -25,7 +25,7 @@ import java.util.Date;
 
 /**
  * @author     Daniel Kocsis
- * @deprecated As of 7.0.0
+ * @deprecated As of 2.10.0
  */
 @Deprecated
 public class StagedGroupImpl extends GroupImpl implements StagedGroup {

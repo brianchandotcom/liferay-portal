@@ -325,7 +325,7 @@ public interface Localization {
 	 * @param      key the preferences key
 	 * @param      languageId the ID of the language
 	 * @return     the localized preferences key
-	 * @deprecated As of 7.0.0, replaced by {@link #getLocalizedName(String,
+	 * @deprecated As of 2.19.0, replaced by {@link #getLocalizedName(String,
 	 *             String)}
 	 */
 	@Deprecated

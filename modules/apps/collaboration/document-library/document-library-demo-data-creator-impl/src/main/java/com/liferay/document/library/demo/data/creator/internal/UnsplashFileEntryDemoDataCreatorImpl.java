@@ -15,8 +15,11 @@
 package com.liferay.document.library.demo.data.creator.internal;
 
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -73,8 +76,15 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 	@Override
 	public void delete() throws PortalException {
-		for (long fileEntryId : _fileEntryIds) {
-			_dlAppLocalService.deleteFileEntry(fileEntryId);
+		try {
+			for (long fileEntryId : _fileEntryIds) {
+				_dlAppLocalService.deleteFileEntry(fileEntryId);
+			}
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsfee);
+			}
 		}
 	}
 
@@ -115,6 +125,9 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 	}
 
 	private static final List<String> _categories = new ArrayList<>();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		UnsplashFileEntryDemoDataCreatorImpl.class);
 
 	static {
 		_categories.add("buildings");

@@ -24,6 +24,7 @@
 
 	<suppress checks="ConstantName" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />
 	<suppress checks="Indentation" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
+	<suppress checks="Indentation" files="portal-impl/test/unit/com/liferay/portal/nio/intraband/proxy/IntrabandProxyUtilTest\.java" />
 	<suppress checks="Indentation" files="portal-kernel/src/com/liferay/portal/kernel/io/BigEndianCodec\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/events/EventsProcessorUtil\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/template/AbstractTemplate\.java" />

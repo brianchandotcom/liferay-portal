@@ -14,7 +14,10 @@
 
 package com.liferay.users.admin.demo.data.creator.internal;
 
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -87,8 +90,15 @@ public abstract class BaseUserDemoDataCreator
 
 	@Override
 	public void delete() throws PortalException {
-		for (long userId : _userIds) {
-			userLocalService.deleteUser(userId);
+		try {
+			for (long userId : _userIds) {
+				userLocalService.deleteUser(userId);
+			}
+		}
+		catch (NoSuchUserException nsue) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsue);
+			}
 		}
 	}
 
@@ -120,6 +130,9 @@ public abstract class BaseUserDemoDataCreator
 
 	protected UserLocalService userLocalService;
 
-	private final List<Long> _userIds = new ArrayList();
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseUserDemoDataCreator.class);
+
+	private final List<Long> _userIds = new ArrayList<>();
 
 }

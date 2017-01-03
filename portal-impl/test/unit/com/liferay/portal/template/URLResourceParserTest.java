@@ -55,6 +55,9 @@ public class URLResourceParserTest {
 				"_SEPARATOR_/template.soy", TemplateConstants.LANG_TYPE_SOY));
 		Assert.assertTrue(
 			urlResourceParser.isTemplateResourceValid(
+				"_SEPARATOR_/template.tpl", TemplateConstants.LANG_TYPE_TPL));
+		Assert.assertTrue(
+			urlResourceParser.isTemplateResourceValid(
 				"_SEPARATOR_/template.vm", TemplateConstants.LANG_TYPE_VM));
 		Assert.assertTrue(
 			urlResourceParser.isTemplateResourceValid(
@@ -71,6 +74,9 @@ public class URLResourceParserTest {
 		Assert.assertFalse(
 			urlResourceParser.isTemplateResourceValid(
 				"portal-ext.properties", TemplateConstants.LANG_TYPE_SOY));
+		Assert.assertFalse(
+			urlResourceParser.isTemplateResourceValid(
+				"portal-ext.properties", TemplateConstants.LANG_TYPE_TPL));
 		Assert.assertFalse(
 			urlResourceParser.isTemplateResourceValid(
 				"portal-ext.properties", TemplateConstants.LANG_TYPE_VM));

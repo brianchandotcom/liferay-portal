@@ -289,11 +289,6 @@
 </tr>
 <!--COPY_APPLICATIONS-->
 <tr>
-	<td>COPY_APPLICATIONS_MESSAGE_INFO</td>
-	<td>//div[contains(@id,'copyPortletsFromPage')]/p</td>
-	<td></td>
-</tr>
-<tr>
 	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL</td>
 	<td>//label[contains(@for,'copyLayoutId')]</td>
 	<td></td>
@@ -301,11 +296,6 @@
 <tr>
 	<td>COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT</td>
 	<td>//select[contains(@id,'copyLayoutId')]/option[@value='1']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COPY_APPLICATIONS_COPY_BUTTON</td>
-	<td>//div[contains(@id,'copyPortletsFromPage')]//button[contains(@id,'copySubmitButton')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -844,7 +844,7 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#deleteMail">
+		<execute macro="Gmail#deleteSpecificMail">
 			<var name="gmailMessageTitleList" value="Test Test Published &quot;Blogs Entry Title G7B1&quot; on ${siteName} Blogs, Message Boards Home - ${siteName} New Message: MB Thread Message Subject G7MB2, Your New Account, Your New Password" />
 		</execute>
 

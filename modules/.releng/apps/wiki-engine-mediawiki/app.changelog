@@ -1,0 +1,10 @@
+#
+# Liferay App Version 1.0.0
+#
+
+app.artifacts-1.0.0=\
+	com.liferay.wiki.engine.mediawiki-2.0.4.jar
+
+app.change.log-1.0.0=LPS-60850 LPS-65012
+
+app.git.id-1.0.0=d155ee0279a5b42438947a0c8866d3e64ef993d3

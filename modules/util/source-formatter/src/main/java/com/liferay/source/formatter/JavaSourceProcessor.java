@@ -297,48 +297,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				lineCount - 1);
 		}
 
-		if ((lineLeadingTabCount == previousLineLeadingTabCount) &&
-			(previousLine.endsWith(StringPool.EQUAL) ||
-			 previousLine.endsWith(StringPool.OPEN_PARENTHESIS))) {
-
-			processMessage(fileName, "Line should be indented", lineCount);
-		}
-
-		if (Validator.isNotNull(previousLine) &&
-			!previousLine.matches(
-				".*\t(abstract|else|extends|for|if|implements|private|" +
-					"protected|public|try|while) .*") &&
-			(previousLineLeadingTabCount <= (lineLeadingTabCount - 2))) {
-
-			processMessage(fileName, "Incorrect indent", lineCount);
-		}
-
-		if (Validator.isNotNull(trimmedLine)) {
-			int expectedTabCount = -1;
-
-			if (previousLine.endsWith(StringPool.OPEN_CURLY_BRACE) &&
-				!trimmedLine.startsWith(StringPool.CLOSE_CURLY_BRACE)) {
-
-				expectedTabCount = previousLineLeadingTabCount + 1;
-			}
-			else if (previousLine.matches(".*\t(for|if|try) .*[(:]")) {
-				expectedTabCount = previousLineLeadingTabCount + 2;
-			}
-			else if (previousLine.matches(".*\t(else if|while) .*[(:]")) {
-				expectedTabCount = previousLineLeadingTabCount + 3;
-			}
-
-			if ((expectedTabCount != -1) &&
-				(lineLeadingTabCount != expectedTabCount)) {
-
-				processMessage(
-					fileName,
-					"Line starts with " + lineLeadingTabCount +
-						" tabs, but should be " + expectedTabCount,
-					lineCount);
-			}
-		}
-
 		if (previousLine.endsWith(StringPool.PERIOD)) {
 			int x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
@@ -349,15 +307,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				processMessage(fileName, "Incorrect line break", lineCount);
 			}
-		}
-
-		int diff = lineLeadingTabCount - previousLineLeadingTabCount;
-
-		if ((previousLine.contains("\tthrows ") && (diff == 0)) ||
-			(trimmedLine.startsWith("throws ") &&
-			 ((diff == 0) || (diff > 1)))) {
-
-			processMessage(fileName, "incorrect indent", lineCount);
 		}
 
 		String strippedQuotesLine = stripQuotes(trimmedLine);

@@ -2021,7 +2021,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		ComparableVersion releaseComparableVersion =
 			bndSettings.getReleaseComparableVersion();
 
-		if (releaseComparableVersion == null) {
+		if (Validator.isNull(releaseComparableVersion)) {
 			return line;
 		}
 
@@ -2030,7 +2030,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				line, " As of " + _NEXT_VERSION, matcher.end(1));
 		}
 
-		String version = matcher.group(3);
+		String bundleSymbolicName = bndSettings.getBundleSymbolicName();
+
+		if (Validator.isNull(bundleSymbolicName)) {
+			return line;
+		}
+
+		String symbolicName = matcher.group(3);
+
+		if (symbolicName == null) {
+			return StringUtil.insert(
+				line, bundleSymbolicName + "#", matcher.start(4));
+		}
+
+		if (symbolicName.equals(bundleSymbolicName)) {
+			return StringUtil.replaceFirst(
+				line, symbolicName, bundleSymbolicName);
+		}
+
+		String version = matcher.group(4);
 
 		if (!version.equals(_NEXT_VERSION)) {
 			ComparableVersion comparableVersion = new ComparableVersion(
@@ -2041,17 +2059,19 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-				return StringUtil.insert(line, ".0", matcher.end(3));
+				return StringUtil.insert(line, ".0", matcher.end(4));
 			}
 		}
 
-		String deprecatedInfo = matcher.group(4);
+		String deprecatedInfo = matcher.group(5);
 
 		if ((deprecatedInfo != null) &&
 			!deprecatedInfo.startsWith(StringPool.COMMA)) {
 
-			return StringUtil.insert(line, StringPool.COMMA, matcher.end(3));
+			return StringUtil.insert(line, StringPool.COMMA, matcher.end(4));
 		}
+
+		putBNDSettings(bndSettings);
 
 		return line;
 	}
@@ -4653,7 +4673,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+|NEXT-VERSION)(.+)?)?");
+		"(^\\s*\\* @deprecated)( As of ([\\w\\.]+#)?([0-9\\.]+|NEXT-VERSION)" +
+			"(.+)?)?");
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(

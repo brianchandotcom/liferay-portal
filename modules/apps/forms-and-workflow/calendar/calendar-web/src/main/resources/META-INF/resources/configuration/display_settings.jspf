@@ -30,4 +30,30 @@
 
 		<aui:input label="agenda" name="showAgendaView" type="checkbox" value="<%= showAgendaView %>" />
 	</aui:fieldset>
+
+	<aui:fieldset>
+		<aui:select label="how-many-days-to-display" name="maxDaysDisplayed" value="<%= maxDaysDisplayed %>">
+			<aui:option label="1" value="<%= 1 %>" />
+			<aui:option label="2" value="<%= 2 %>" />
+			<aui:option label="3" value="<%= 3 %>" />
+			<aui:option label="4" value="<%= 4 %>" />
+			<aui:option label="5" value="<%= 5 %>" />
+		</aui:select>
+
+		<aui:select label="maximum-events-to-display" name="eventsPerPage">
+
+			<%
+			int[] deltaValues = GetterUtil.getIntegerValues(PrefsPropsUtil.getStringArray(PropsKeys.SEARCH_CONTAINER_PAGE_DELTA_VALUES, StringPool.COMMA));
+
+			for (int pageDeltaValue : deltaValues) {
+			%>
+
+				<aui:option label="<%= pageDeltaValue %>" selected="<%= eventsPerPage == pageDeltaValue %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</aui:fieldset>
 </aui:fieldset>

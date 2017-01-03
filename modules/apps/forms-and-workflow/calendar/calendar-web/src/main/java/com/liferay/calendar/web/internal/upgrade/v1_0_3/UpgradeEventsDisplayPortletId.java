@@ -224,6 +224,8 @@ public class UpgradeEventsDisplayPortletId
 		sb.append(String.format(_preferenceFormat, "defaultView", "agenda"));
 		sb.append(
 			String.format(_preferenceFormat, "displaySchedulerOnly", "true"));
+		sb.append(String.format(_preferenceFormat, "eventsPerPage", "10"));
+		sb.append(String.format(_preferenceFormat, "maxDaysDisplayed", "1"));
 		sb.append(String.format(_preferenceFormat, "showUserEvents", "false"));
 		sb.append("</portlet-preferences>");
 

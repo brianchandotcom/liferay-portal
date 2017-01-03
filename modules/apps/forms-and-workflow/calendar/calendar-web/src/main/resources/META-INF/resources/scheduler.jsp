@@ -178,9 +178,11 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			</c:if>
 
 			eventRecorder: window.<portlet:namespace />eventRecorder,
+			eventsPerPage: <%= eventsPerPage %>,
 			filterCalendarBookings: window['<%= HtmlUtil.escapeJS(filterCalendarBookings) %>'],
 			firstDayOfWeek: <%= weekStartsOn %>,
 			items: A.Object.values(calendarContainer.get('availableCalendars')),
+			maxDaysDisplayed: <%= maxDaysDisplayed %>,
 			portletNamespace: '<portlet:namespace />',
 			preventPersistence: <%= preventPersistence %>,
 			remoteServices: remoteServices,

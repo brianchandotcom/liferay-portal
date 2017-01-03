@@ -158,6 +158,9 @@ boolean showDayView = GetterUtil.getBoolean(portletPreferences.getValue("showDay
 boolean showMonthView = GetterUtil.getBoolean(portletPreferences.getValue("showMonthView", null), true);
 boolean showWeekView = GetterUtil.getBoolean(portletPreferences.getValue("showWeekView", null), true);
 
+int eventsPerPage = GetterUtil.getInteger(portletPreferences.getValue("eventsPerPage", null), 10);
+int maxDaysDisplayed = GetterUtil.getInteger(portletPreferences.getValue("maxDaysDisplayed", null), 1);
+
 boolean enableRSS = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean(portletPreferences.getValue("enableRss", null), true);
 int rssDelta = GetterUtil.getInteger(portletPreferences.getValue("rssDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
 String rssDisplayStyle = portletPreferences.getValue("rssDisplayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);

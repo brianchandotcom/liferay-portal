@@ -106,6 +106,16 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 		portletPreferences.setValue(
 			"showMonthView", String.valueOf(showMonthView));
 
+		int eventsPerPage = ParamUtil.getInteger(
+			actionRequest, "eventsPerPage");
+		int maxDaysDisplayed = ParamUtil.getInteger(
+			actionRequest, "maxDaysDisplayed");
+
+		portletPreferences.setValue(
+			"eventsPerPage", String.valueOf(eventsPerPage));
+		portletPreferences.setValue(
+			"maxDaysDisplayed", String.valueOf(maxDaysDisplayed));
+
 		portletPreferences.store();
 	}
 

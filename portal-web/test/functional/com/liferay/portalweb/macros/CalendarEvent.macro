@@ -1986,6 +1986,10 @@
 		<execute function="AssertNotChecked" locator1="CalendarEditEvent#REPEAT_CHECKBOX" />
 	</command>
 
+	<command name="viewNotPresentViaAgendaView">
+		<execute function="AssertElementNotPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]" />
+	</command>
+
 	<command name="viewNoUserInviteWithUnapprovedWorkflow">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
@@ -2244,6 +2248,10 @@
 			<var name="user" value="${user}" />
 			<var name="usersList" value="${usersList}" />
 		</execute>
+	</command>
+
+	<command name="viewViaAgendaView">
+		<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${eventNumber}]" />
 	</command>
 
 	<command name="viewViaAssetPublisher">

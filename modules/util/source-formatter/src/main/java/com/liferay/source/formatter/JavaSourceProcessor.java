@@ -2667,7 +2667,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					ifClause = ifClause + line + StringPool.NEW_LINE;
 
-					if (line.endsWith(") {")) {
+					String trimmedIfClause = StringUtil.trim(ifClause);
+
+					if (line.endsWith(") {") ||
+						(line.endsWith(StringPool.SEMICOLON) &&
+						 trimmedIfClause.startsWith("while "))) {
+
 						String newIfClause = formatIfClause(
 							ifClause, fileName, lineCount);
 
@@ -2681,11 +2686,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						ifClause = StringPool.BLANK;
 					}
 					else if (line.endsWith(StringPool.SEMICOLON)) {
-						String trimmedIfClause = StringUtil.trim(ifClause);
-
-						if (!trimmedIfClause.startsWith("while ") &&
-							!trimmedIfClause.contains("{\t")) {
-
+						if (!trimmedIfClause.contains("{\t")) {
 							processMessage(
 								fileName, "Incorrect if statement", lineCount);
 						}

@@ -1,4 +1,21 @@
 <definition>
+	<command name="deleteSpecificMail">
+		<for list="${gmailMessageTitleList}" param="gmailMessageTitle">
+			<var name="key_gmailMessageTitle" value="${gmailMessageTitle}" />
+
+			<if>
+				<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX" />
+				<then>
+					<execute function="Check" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX" />
+
+					<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
+
+					<execute function="Pause" locator1="3000" />
+				</then>
+			</if>
+		</for>
+	</command>
+
 	<command name="gotoHtmlMode">
 		<execute function="Open" locator1="https://mail.google.com/mail/?ui=html&amp;zy=h" />
 
@@ -147,23 +164,6 @@
 		<execute function="AssertClick" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_QUICK_REPLY_SEND_BUTTON" value1="Send" />
 
 		<execute function="AssertTextEquals" locator1="Gmail#SUCCESS_MESSAGE" value1="Your message has been sent." />
-	</command>
-
-	<command name="deleteSpecificMail">
-		<for list="${gmailMessageTitleList}" param="gmailMessageTitle">
-			<var name="key_gmailMessageTitle" value="${gmailMessageTitle}" />
-
-			<if>
-				<condition function="IsElementPresent" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX" />
-				<then>
-					<execute function="Check" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_SPECIFIC_MESSAGE_TITLE_CHECKBOX" />
-
-					<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_MAIL_TABLE_DELETE_BUTTON" />
-
-					<execute function="Pause" locator1="3000" />
-				</then>
-			</if>
-		</for>
 	</command>
 
 	<command name="tearDown">

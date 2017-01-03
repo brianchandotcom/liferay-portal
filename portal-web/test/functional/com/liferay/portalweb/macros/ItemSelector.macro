@@ -27,6 +27,10 @@
 		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
 	</command>
 
+	<command name="gotoItemSelectorViaSelectButton">
+		<execute function="Click" locator1="Button#SELECT" />
+	</command>
+
 	<command name="searchBlogImages">
 		<var name="key_imageFileName" value="${imageFileName}" />
 

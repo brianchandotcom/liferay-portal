@@ -30,6 +30,7 @@ import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
 import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
 import org.eclipse.aether.resolution.ArtifactResult;
 
 /**
@@ -43,15 +44,15 @@ public class BuildThemeMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
-			for (ComponentDependency dependency :
+			for (ComponentDependency componentDependency :
 					_pluginDescriptor.getDependencies()) {
 
-				String artifactId = dependency.getArtifactId();
+				String artifactId = componentDependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.theme.styled") &&
 					(_themeBuilderArgs.getParentDir() == null)) {
 
-					Artifact artifact = _resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(componentDependency);
 
 					_themeBuilderArgs.setParentDir(artifact.getFile());
 
@@ -61,7 +62,7 @@ public class BuildThemeMojo extends AbstractMojo {
 							"com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
-					Artifact artifact = _resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(componentDependency);
 
 					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
 				}
@@ -125,23 +126,22 @@ public class BuildThemeMojo extends AbstractMojo {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
 
-	private Artifact _resolveArtifact(ComponentDependency dependency)
-		throws Exception {
+	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+		throws ArtifactResolutionException {
 
-		Artifact dependencyArtifact = new DefaultArtifact(
-			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getType(), dependency.getVersion());
+		Artifact artifact = new DefaultArtifact(
+			componentDependency.getGroupId(),
+			componentDependency.getArtifactId(), componentDependency.getType(),
+			componentDependency.getVersion());
 
-		ArtifactRequest request = new ArtifactRequest();
+		ArtifactRequest artifactRequest = new ArtifactRequest();
 
-		request.setArtifact(dependencyArtifact);
+		artifactRequest.setArtifact(artifact);
 
 		ArtifactResult artifactResult = _repositorySystem.resolveArtifact(
-			_repositorySystemSession, request);
+			_repositorySystemSession, artifactRequest);
 
-		Artifact artifact = artifactResult.getArtifact();
-
-		return artifact;
+		return artifactResult.getArtifact();
 	}
 
 	/**

@@ -2459,6 +2459,8 @@ drop database lportal
 go
 exec sp_configure 'lock scheme', 0, datarows
 go
+exec sp_configure 'procedure cache size', 28000
+go
 create database lportal on master = "250m"
 go
 exec sp_dboption 'lportal', 'allow nulls by default' , true

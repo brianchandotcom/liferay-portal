@@ -69,9 +69,6 @@ public class ${className}Report extends BaseJSPReport {
 		return jsonObject.toString();
 	}
 
-	@Reference(unbind = "-")
-	private volatile ReportInstanceLocalService _reportInstanceLocalService;
-
 	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=${artifactId})",
@@ -128,4 +125,8 @@ public class ${className}Report extends BaseJSPReport {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		${className}Report.class);
+
+	@Reference(unbind = "-")
+	private volatile ReportInstanceLocalService _reportInstanceLocalService;
+
 }

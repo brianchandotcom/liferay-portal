@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistratorTracker;
 
 import java.io.IOException;
@@ -51,7 +52,6 @@ import org.apache.felix.utils.log.Logger;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -183,16 +183,17 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			BundleContext bundleContext =
 				ModuleApplicationContextExtender.this.getBundleContext();
 
+			Bundle bundle = bundleContext.getBundle();
+
 			_component.setImplementation(
 				new ModuleApplicationContextRegistrator(
-					_bundle, bundleContext.getBundle(), _serviceConfigurator));
-
-			BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
-
-			ClassLoader classLoader = bundleWiring.getClassLoader();
+					_bundle, bundle, _serviceConfigurator));
 
 			List<ContextDependency> contextDependencies =
 				_processServiceReferences(_bundle);
+
+			ClassLoader classLoader = new BundleResolverClassLoader(
+				_bundle, bundle);
 
 			for (ContextDependency contextDependency : contextDependencies) {
 				ServiceDependency serviceDependency =

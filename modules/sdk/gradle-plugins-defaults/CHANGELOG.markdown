@@ -850,6 +850,16 @@ portal tool by setting the project property `[portal tool name].ignore.local`.
 ### Changed
 - [LPS-69920]: Update the [Liferay Gradle Plugins] dependency to version 3.0.63.
 
+## 2.4.3 - 2016-12-29
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.64.
+
+## 2.4.4 - 2017-01-02
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.65.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

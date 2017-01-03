@@ -79,6 +79,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		try {
 			for (long fileEntryId : _fileEntryIds) {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
+				_fileEntryIds.remove(fileEntryId);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {

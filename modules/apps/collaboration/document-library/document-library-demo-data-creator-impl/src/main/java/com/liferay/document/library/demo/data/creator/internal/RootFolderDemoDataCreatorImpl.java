@@ -59,6 +59,7 @@ public class RootFolderDemoDataCreatorImpl
 		try {
 			for (long folderId : _folderIds) {
 				_dlAppLocalService.deleteFolder(folderId);
+				_folderIds.remove(folderId);
 			}
 		}
 		catch (NoSuchFolderException nsfe) {

@@ -654,7 +654,7 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#deleteMail">
+		<execute macro="Gmail#deleteSpecificMail">
 			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf, Your New Account, Your New Password" />
 		</execute>
 

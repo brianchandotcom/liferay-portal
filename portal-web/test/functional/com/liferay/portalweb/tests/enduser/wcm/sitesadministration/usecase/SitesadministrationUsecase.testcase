@@ -651,7 +651,7 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#deleteMail">
+		<execute macro="Gmail#deleteSpecificMail">
 			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
 		</execute>
 
@@ -677,7 +677,7 @@
 
 		<execute macro="Gmail#gotoHtmlMode" />
 
-		<execute macro="Gmail#deleteMail">
+		<execute macro="Gmail#deleteSpecificMail">
 			<var name="gmailMessageTitleList" value="Email Address Verification, Your New Account, Your New Password" />
 		</execute>
 	</command>

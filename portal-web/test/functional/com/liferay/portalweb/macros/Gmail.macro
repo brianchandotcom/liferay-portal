@@ -149,7 +149,7 @@
 		<execute function="AssertTextEquals" locator1="Gmail#SUCCESS_MESSAGE" value1="Your message has been sent." />
 	</command>
 
-	<command name="deleteMail">
+	<command name="deleteSpecificMail">
 		<for list="${gmailMessageTitleList}" param="gmailMessageTitle">
 			<var name="key_gmailMessageTitle" value="${gmailMessageTitle}" />
 

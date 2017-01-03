@@ -349,6 +349,12 @@
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_LABEL" value1="Copy from Page" />
 
 		<execute function="Click" locator1="SitePagesEditPage#COPY_APPLICATIONS_COPY_FROM_PAGE_SELECT" value1="${pageNameCopy}" />
+
+		<execute function="SelectFrameTop" />
+
+		<execute macro="Button#clickDone" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="deleteFriendlyURLPG">

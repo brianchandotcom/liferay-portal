@@ -715,9 +715,10 @@
 
 		<execute function="AssertElementNotPresent" locator1="Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK" />
 
-		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.4')" name="userPassword" />
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteSpecificMail">
+			<var name="gmailMessageTitleList" value="New Report: reports_admin_template_source_sample_class_name.pdf, Your New Account, Your New Password" />
 		</execute>
 
 		<execute function="Open" locator1="http://localhost:8080" />

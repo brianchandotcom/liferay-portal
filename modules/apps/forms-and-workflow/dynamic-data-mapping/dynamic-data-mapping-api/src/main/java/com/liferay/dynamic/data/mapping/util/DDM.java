@@ -40,6 +40,10 @@ import javax.portlet.PortletRequest;
  */
 public interface DDM {
 
+	public static final String FIELDS_DISPLAY_NAME = "_fieldsDisplay";
+
+	public static final String INSTANCE_SEPARATOR = "_INSTANCE_";
+
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException;
 

@@ -7,6 +7,7 @@
 		<author>Nathan Cavanaugh</author>
 		<author>Julio Camarero</author>
 	</authors>
+	<description>Provides the AUI component tags, prefixed with <![CDATA[<code>aui:</code>]]>.</description>
 	<component bodyContent="true" name="A" writeJSP="false">
 		<description>Creates an anchor (or link) that offers custom configuration and localization.</description>
 		<attributes>

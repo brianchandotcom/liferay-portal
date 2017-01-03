@@ -842,9 +842,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteMail">
+			<var name="gmailMessageTitleList" value="Test Test Published &quot;Blogs Entry Title&quot; on ${siteName} Blogs, Message Boards Home - ${siteName} New Message: MB Thread Message Subject, Your New Account, Your New Password" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

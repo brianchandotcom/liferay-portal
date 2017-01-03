@@ -190,6 +190,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TEXT_FIELD_ALT</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}') and contains(@id,'Alt')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEXT_FIELD_2</td>
 	<td>//div[contains(@class,'ddm-form')][2]//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
 	<td></td>

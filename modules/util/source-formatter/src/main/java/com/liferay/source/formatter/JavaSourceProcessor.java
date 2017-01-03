@@ -2027,21 +2027,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (matcher.group(2) == null) {
 			return StringUtil.insert(
-				line, " As of " + releaseComparableVersion.toString(),
-				matcher.end(1));
+				line, " As of " + _NEXT_VERSION, matcher.end(1));
 		}
 
 		String version = matcher.group(3);
 
-		ComparableVersion comparableVersion = new ComparableVersion(version);
+		if (!version.equals(_NEXT_VERSION)) {
+			ComparableVersion comparableVersion = new ComparableVersion(
+				version);
 
-		if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
-			return StringUtil.replaceFirst(
-				line, version, releaseComparableVersion.toString());
-		}
+			if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
+				return StringUtil.replaceFirst(line, version, _NEXT_VERSION);
+			}
 
-		if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-			return StringUtil.insert(line, ".0", matcher.end(3));
+			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+				return StringUtil.insert(line, ".0", matcher.end(3));
+			}
 		}
 
 		String deprecatedInfo = matcher.group(4);
@@ -4597,6 +4598,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
 
+	private static final String _NEXT_VERSION = "NEXT-VERSION";
+
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 
 	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
@@ -4650,7 +4653,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+)(.+)?)?");
+		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+|NEXT-VERSION)(.+)?)?");
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(

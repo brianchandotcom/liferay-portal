@@ -93,6 +93,7 @@ public abstract class BaseUserDemoDataCreator
 		try {
 			for (long userId : _userIds) {
 				userLocalService.deleteUser(userId);
+				_userIds.remove(userId);
 			}
 		}
 		catch (NoSuchUserException nsue) {

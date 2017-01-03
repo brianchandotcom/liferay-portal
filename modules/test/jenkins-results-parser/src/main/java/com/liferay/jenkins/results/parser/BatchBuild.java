@@ -69,10 +69,10 @@ public class BatchBuild extends BaseBuild {
 			return messageElement;
 		}
 
-		int failCount = 0;
-
 		Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
 			"ol", messageElement);
+
+		List<Element> failureElements = new ArrayList<>();
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			String downstreamBuildResult = downstreamBuild.getResult();
@@ -81,17 +81,57 @@ public class BatchBuild extends BaseBuild {
 				continue;
 			}
 			else {
-				failCount++;
+				Element failureElement = downstreamBuild.getGitHubMessage();
 
-				if (failCount < 2) {
-					Dom4JUtil.addToElement(
-						Dom4JUtil.getNewElement(
-							"li", downstreamBuildOrderedListElement),
-						downstreamBuild.getGitHubMessage());
+				if (isHighPriorityBuildFailureElement(failureElement)) {
+					failureElements.add(0, failureElement);
 
-					break;
+					continue;
 				}
+
+				failureElements.add(failureElement);
 			}
+		}
+
+		int failCount = 0;
+
+		for (Element failureElement : failureElements) {
+			failCount++;
+
+			if (failCount < 4) {
+				Dom4JUtil.addToElement(
+					Dom4JUtil.getNewElement(
+						"li", downstreamBuildOrderedListElement),
+					failureElement);
+
+				continue;
+			}
+
+			Dom4JUtil.addToElement(
+				Dom4JUtil.getNewElement(
+					"li", downstreamBuildOrderedListElement),
+				"...");
+
+			break;
+		}
+
+		String downstreamBuildOrderedListElementHTML = null;
+
+		try {
+			downstreamBuildOrderedListElementHTML = Dom4JUtil.format(
+				downstreamBuildOrderedListElement, false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to format downstreamBuildOrderedListElement", ioe);
+		}
+
+		if (downstreamBuildOrderedListElementHTML.contains(">...<")) {
+			Dom4JUtil.addToElement(
+				Dom4JUtil.getNewElement("strong", messageElement), "Click ",
+				Dom4JUtil.getNewAnchorElement(
+					getBuildURL() + "testReport", "here"),
+				" for more failures.");
 		}
 
 		return messageElement;

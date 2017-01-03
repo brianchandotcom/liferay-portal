@@ -209,6 +209,8 @@ public class AxisBuild extends BaseBuild {
 			Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
 				"ol", messageElement);
 
+			int failureCount = 0;
+
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
 
@@ -220,31 +222,43 @@ public class AxisBuild extends BaseBuild {
 					Dom4JUtil.getNewElement(
 						"li", downstreamBuildOrderedListElement);
 
-				downstreamBuildListItemElement.add(
-					Dom4JUtil.getNewAnchorElement(
-						testResult.getTestReportURL(),
-						testResult.getDisplayName()));
+				if (failureCount < 3) {
+					downstreamBuildListItemElement.add(
+						Dom4JUtil.getNewAnchorElement(
+							testResult.getTestReportURL(),
+							testResult.getDisplayName()));
 
-				if (jobVariant.contains("functional")) {
-					Dom4JUtil.addToElement(
-						downstreamBuildListItemElement, " - ",
-						Dom4JUtil.getNewAnchorElement(
-							testResult.getPoshiReportURL(), "Poshi Report"),
-						" - ",
-						Dom4JUtil.getNewAnchorElement(
-							testResult.getPoshiSummaryURL(), "Poshi Summary"),
-						" - ",
-						Dom4JUtil.getNewAnchorElement(
-							testResult.getConsoleOutputURL(),
-							"Console Output"));
-
-					if (testResult.hasLiferayLog()) {
+					if (jobVariant.contains("functional")) {
 						Dom4JUtil.addToElement(
 							downstreamBuildListItemElement, " - ",
 							Dom4JUtil.getNewAnchorElement(
-								testResult.getLiferayLogURL(), "Liferay Log"));
+								testResult.getPoshiReportURL(), "Poshi Report"),
+							" - ",
+							Dom4JUtil.getNewAnchorElement(
+								testResult.getPoshiSummaryURL(),
+								"Poshi Summary"),
+							" - ",
+							Dom4JUtil.getNewAnchorElement(
+								testResult.getConsoleOutputURL(),
+								"Console Output"));
+
+						if (testResult.hasLiferayLog()) {
+							Dom4JUtil.addToElement(
+								downstreamBuildListItemElement, " - ",
+								Dom4JUtil.getNewAnchorElement(
+									testResult.getLiferayLogURL(),
+									"Liferay Log"));
+						}
 					}
+
+					failureCount++;
+
+					continue;
 				}
+
+				downstreamBuildListItemElement.addText("...");
+
+				break;
 			}
 		}
 

@@ -906,6 +906,27 @@ public abstract class BaseBuild implements Build {
 
 	}
 
+	protected static boolean isHighPriorityBuildFailureElement(
+		Element gitHubMessage) {
+
+		String content = null;
+
+		try {
+			content = Dom4JUtil.format(gitHubMessage, false);
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to format github message.", ioe);
+		}
+
+		for (String contentFlag : _highPriorityContentFlags) {
+			if (content.contains(contentFlag)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected BaseBuild(String url) {
 		this(url, null);
 	}
@@ -1721,6 +1742,9 @@ public abstract class BaseBuild implements Build {
 
 	private static final FailureMessageGenerator[] _failureMessageGenerators = {
 		new GenericFailureMessageGenerator()
+	};
+	private static final String[] _highPriorityContentFlags = new String[] {
+		"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"
 	};
 
 	private int _buildNumber = -1;

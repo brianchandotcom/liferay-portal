@@ -48,7 +48,8 @@ public abstract class BaseProxyBean {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #setDestinationName)
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #setDestinationName)
 	 */
 	@Deprecated
 	public void setSingleDestinationMessageSender(

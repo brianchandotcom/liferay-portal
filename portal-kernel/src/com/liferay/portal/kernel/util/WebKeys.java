@@ -166,7 +166,8 @@ public interface WebKeys {
 	public static final String FORWARD_URL = "FORWARD_URL";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String FRIENDLY_URL = "FRIENDLY_URL";

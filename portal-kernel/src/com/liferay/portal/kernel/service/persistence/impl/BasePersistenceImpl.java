@@ -532,7 +532,8 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	protected static final NullModel nullModel = new NullModel();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected ModelListener<T>[] listeners = new ModelListener[0];

@@ -99,7 +99,8 @@ public class PropsValues {
 	public static final boolean ASSET_ENTRY_BUFFERED_INCREMENT_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BUFFERED_INCREMENT_ENABLED, new Filter("AssetEntry")));
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String ASSET_ENTRY_VALIDATOR = PropsUtil.get(PropsKeys.ASSET_ENTRY_VALIDATOR);
@@ -899,13 +900,15 @@ public class PropsValues {
 	public static final int MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_RSS_ABSTRACT_LENGTH));
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = PropsUtil.get(PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_ID);
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_SECRET = PropsUtil.get(PropsKeys.MICROSOFT_TRANSLATOR_CLIENT_SECRET);
@@ -945,7 +948,8 @@ public class PropsValues {
 	public static final int MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL));
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String[] MODULE_FRAMEWORK_INITIAL_BUNDLES = PropsUtil.getArray(PropsKeys.MODULE_FRAMEWORK_INITIAL_BUNDLES);

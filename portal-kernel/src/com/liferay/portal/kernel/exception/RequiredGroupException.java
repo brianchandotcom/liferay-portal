@@ -39,7 +39,8 @@ public class RequiredGroupException extends PortalException {
 	public static final int SYSTEM_GROUP = 1;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by the inner
+	 *             classes
 	 */
 	@Deprecated
 	public int getType() {

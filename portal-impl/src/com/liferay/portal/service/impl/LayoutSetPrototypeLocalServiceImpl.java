@@ -114,8 +114,9 @@ public class LayoutSetPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #addLayoutSetPrototype(long,
-	 *             long, Map, Map, boolean, boolean, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #addLayoutSetPrototype(long, long, Map, Map, boolean,
+	 *             boolean, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

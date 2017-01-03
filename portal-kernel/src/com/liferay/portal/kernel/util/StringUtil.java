@@ -789,8 +789,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link HighlightUtil#highlight(String,
-	 *             String[])}}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link
+	 *             HighlightUtil#highlight(String, String[])}}
 	 */
 	@Deprecated
 	public static String highlight(String s, String[] queryTerms) {
@@ -798,8 +798,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link HighlightUtil#highlight(String,
-	 *             String[], String, String)}}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link
+	 *             HighlightUtil#highlight(String, String[], String, String)}}
 	 */
 	@Deprecated
 	public static String highlight(
@@ -2286,8 +2286,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #removeFromList(String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #removeFromList(String, String)}
 	 */
 	@Deprecated
 	public static String remove(String s, String element) {
@@ -2295,8 +2295,8 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #removeFromList(String,
-	 *             String, String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #removeFromList(String, String, String)}
 	 */
 	@Deprecated
 	public static String remove(String s, String element, String delimiter) {

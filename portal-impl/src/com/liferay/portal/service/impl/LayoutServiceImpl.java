@@ -288,7 +288,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layouts as a byte array
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -317,7 +318,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layout as a byte array
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -371,7 +373,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layouts as a File
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -431,7 +434,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -450,7 +454,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -482,7 +487,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the portlet information as a byte array
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -502,7 +508,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -561,7 +568,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the portlet information as a file
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -581,7 +589,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -604,7 +613,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -626,7 +636,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -998,7 +1009,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      bytes the byte array with the data
 	 * @see        com.liferay.exportimport.kernel.lar.LayoutImporter
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1025,7 +1037,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      file the LAR file with the data
 	 * @see        com.liferay.exportimport.kernel.lar.LayoutImporter
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1052,7 +1065,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      is the input stream
 	 * @see        com.liferay.exportimport.kernel.lar.LayoutImporter
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1069,7 +1083,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1086,7 +1101,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1161,7 +1177,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      file the LAR file with the data
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1190,7 +1207,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             used in the map see {@link
 	 *             com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	 * @param      is the input stream
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1208,7 +1226,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1230,7 +1249,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1253,7 +1273,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1272,7 +1293,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1290,7 +1312,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1313,7 +1336,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1359,9 +1383,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      schedulerStartDate the scheduler start date
 	 * @param      schedulerEndDate the scheduler end date
 	 * @param      description the scheduler description
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #schedulePublishToLive(long,
-	 *             long, boolean, long[], Map, String, String, Date, Date,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #schedulePublishToLive(long, long, boolean, long[], Map,
+	 *             String, String, Date, Date, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1456,9 +1480,9 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 * @param      schedulerStartDate the scheduler start date
 	 * @param      schedulerEndDate the scheduler end date
 	 * @param      description the scheduler description
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #schedulePublishToLive(long,
-	 *             long, boolean, long[], Map, String, Date, Date, String,
-	 *             String, Date, Date, String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #schedulePublishToLive(long, long, boolean, long[], Map,
+	 *             String, Date, Date, String, String, Date, Date, String)}
 	 */
 	@Deprecated
 	@Override
@@ -1964,7 +1988,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -1981,7 +2006,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -2049,7 +2075,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -2066,7 +2093,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override

@@ -39,7 +39,8 @@ public interface DiscussionComment extends Comment {
 	public RatingsStats getRatingsStats();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getDescendantComments()}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getDescendantComments()}
 	 */
 	@Deprecated
 	public List<DiscussionComment> getThreadComments();

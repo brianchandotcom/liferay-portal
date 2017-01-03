@@ -86,8 +86,9 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link #breadcrumb(long, String,
-	 *             boolean, boolean, boolean, boolean)}}
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link
+	 *             #breadcrumb(long, String, boolean, boolean, boolean,
+	 *             boolean)}}
 	 */
 	@Deprecated
 	public void breadcrumb(
@@ -120,7 +121,8 @@ public interface VelocityTaglib {
 	public JournalArticleTag getJournalArticleTag() throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public com.liferay.taglib.ui.MySitesTag getMySitesTag() throws Exception;
@@ -128,7 +130,8 @@ public interface VelocityTaglib {
 	public PageContext getPageContext();
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public com.liferay.taglib.ui.PngImageTag getPngImageTag() throws Exception;
@@ -267,7 +270,8 @@ public interface VelocityTaglib {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void staging() throws Exception;

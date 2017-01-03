@@ -16,7 +16,8 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link JavaDetector}
+ * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+ *             JavaDetector}
  */
 @Deprecated
 public class JavaProps extends JavaDetector {

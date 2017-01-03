@@ -50,7 +50,8 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getSearchClassNames}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getSearchClassNames}
 	 */
 	@Deprecated
 	@Override
@@ -81,7 +82,8 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getClassName}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getClassName}
 	 */
 	@Deprecated
 	@Override
@@ -110,8 +112,9 @@ public class DummyIndexer implements Indexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getSummary(Document, String, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	@Override

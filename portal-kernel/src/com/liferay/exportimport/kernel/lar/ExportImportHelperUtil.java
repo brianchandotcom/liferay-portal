@@ -98,7 +98,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Layout getExportableLayout(ThemeDisplay themeDisplay)
@@ -379,7 +380,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportDLReferences(
@@ -394,7 +396,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportDLReferences(
@@ -409,7 +412,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLayoutReferences(
@@ -421,7 +425,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLayoutReferences(
@@ -434,7 +439,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLinksToLayouts(
@@ -449,7 +455,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLinksToLayouts(
@@ -495,7 +502,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportDLReferences(
@@ -509,7 +517,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportDLReferences(
@@ -522,7 +531,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLayoutReferences(
@@ -534,7 +544,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLayoutReferences(
@@ -547,7 +558,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLinksToLayouts(
@@ -559,7 +571,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLinksToLayouts(

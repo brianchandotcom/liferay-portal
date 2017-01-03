@@ -151,7 +151,8 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #write(Writer)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #write(Writer)}
 	 */
 	@Deprecated
 	protected void _write(Writer writer) throws TemplateException {

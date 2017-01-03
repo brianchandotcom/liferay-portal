@@ -19,7 +19,7 @@ import com.liferay.taglib.util.IncludeTag;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author     Brian Wing Shun Chan
  * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link
  *             com.liferay.expando.taglib.servlet.taglib.CustomAttributeTag}
  */

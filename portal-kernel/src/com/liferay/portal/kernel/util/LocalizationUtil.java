@@ -242,8 +242,8 @@ public class LocalizationUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getLocalizedName(String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getLocalizedName(String, String)}
 	 */
 	@Deprecated
 	public static String getPreferencesKey(String key, String languageId) {

@@ -90,8 +90,9 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, see {@link #addFileEntry(long, long, String,
-	 *             String, String, String, String, File, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, see {@link
+	 *             #addFileEntry(long, long, String, String, String, String,
+	 *             String, File, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -109,9 +110,9 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, see {@link #addFileEntry(long, long, String,
-	 *             String, String, String, String, InputStream, long,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, see {@link
+	 *             #addFileEntry(long, long, String, String, String, String,
+	 *             String, InputStream, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -135,8 +136,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #addFolder(long, long,
-	 *             String, String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #addFolder(long, long, String, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -152,8 +153,9 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #checkInFileEntry(long, long,
-	 *             boolean, String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #checkInFileEntry(long, long, boolean, String,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -169,8 +171,8 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #checkInFileEntry(long, long,
-	 *             String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #checkInFileEntry(long, long, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -196,8 +198,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #copyFileEntry(long, long,
-	 *             long, long, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #copyFileEntry(long, long, long, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -357,7 +359,8 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getRepositoryEntry(String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getRepositoryEntry(String)}
 	 */
 	@Deprecated
 	public Object[] getRepositoryEntryIds(String objectId)
@@ -445,8 +448,8 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #moveFileEntry(long, long,
-	 *             long, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #moveFileEntry(long, long, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -461,8 +464,8 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #moveFolder(long, long, long,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #moveFolder(long, long, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -478,8 +481,8 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #revertFileEntry(long, long,
-	 *             String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #revertFileEntry(long, long, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -607,9 +610,9 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean, InputStream,
-	 *             long, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #updateFileEntry(long, long, String, String, String, String,
+	 *             String, boolean, InputStream, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -627,9 +630,9 @@ public abstract class BaseRepositoryImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #updateFileEntry(long, long,
-	 *             String, String, String, String, String, boolean, File,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #updateFileEntry(long, long, String, String, String, String,
+	 *             String, boolean, File, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

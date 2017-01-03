@@ -840,8 +840,8 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getRoles(long, String, int,
-	 *             String, String}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getRoles(long, String, int, String, String}
 	 */
 	@Deprecated
 	@Override

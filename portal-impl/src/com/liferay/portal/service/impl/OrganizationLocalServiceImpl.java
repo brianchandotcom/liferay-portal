@@ -1911,9 +1911,10 @@ public class OrganizationLocalServiceImpl
 	 *             names for the organization, and merge expando bridge
 	 *             attributes for the organization.
 	 * @return     the organization
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateOrganization(long,
-	 *             long, long, String, String, long, long, long, String,
-	 *             boolean, byte[], boolean, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #updateOrganization(long, long, long, String, String, long,
+	 *             long, long, String, boolean, byte[], boolean,
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -51,7 +51,8 @@ public class SingleDestinationMessageSenderFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected SingleDestinationMessageSenderFactory

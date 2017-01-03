@@ -457,8 +457,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Adds the users to the group.
 	 *
-	 * @param groupId the primary key of the group
-	 * @param users the users
+	 * @param  groupId the primary key of the group
+	 * @param  users the users
 	 * @throws PortalException
 	 */
 	@Override
@@ -609,8 +609,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Adds the users to the role.
 	 *
-	 * @param roleId the primary key of the role
-	 * @param users the users
+	 * @param  roleId the primary key of the role
+	 * @param  users the users
 	 * @throws PortalException
 	 */
 	@Override
@@ -676,8 +676,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	/**
 	 * Adds the users to the team.
 	 *
-	 * @param teamId the primary key of the team
-	 * @param users the users
+	 * @param  teamId the primary key of the team
+	 * @param  users the users
 	 * @throws PortalException
 	 */
 	@Override
@@ -2440,8 +2440,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             <code>null</code>)
 	 * @return     the ordered range of users with a social relation of the type
 	 *             with the user
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getSocialUsers(long, int,
-	 *             String, int, int, OrderByComparator)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getSocialUsers(long, int, String, int, int,
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -2474,8 +2475,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             <code>null</code>)
 	 * @return     the ordered range of users with a social relation with the
 	 *             user
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getSocialUsers(long, int,
-	 *             String, int, int, OrderByComparator)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getSocialUsers(long, int, String, int, int,
+	 *             OrderByComparator)}
 	 */
 	@Deprecated
 	@Override
@@ -2636,8 +2638,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param      userId the primary key of the user
 	 * @return     the number of users with a social relation with the user
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getSocialUsersCount(long,
-	 *             int, String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getSocialUsersCount(long, int, String)}
 	 */
 	@Deprecated
 	@Override
@@ -2656,8 +2658,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             types can be found in {@link SocialRelationConstants}.
 	 * @return     the number of users with a social relation of the type with
 	 *             the user
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getSocialUsersCount(long,
-	 *             int, String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getSocialUsersCount(long, int, String)}
 	 */
 	@Deprecated
 	@Override
@@ -5164,8 +5166,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 * @param      userId the primary key of the user
 	 * @param      status the user's new workflow status
 	 * @return     the user
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateStatus(long, int,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #updateStatus(long, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -5581,12 +5583,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *             <code>uuid</code> attribute), asset category IDs, asset tag
 	 *             names, and expando bridge attributes for the user.
 	 * @return     the user
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateUser(long, String,
-	 *             String, String, boolean, String, String, String, String,
-	 *             long, String, boolean, byte[], String, String, String,
-	 *             String, String, String, String, long, long, boolean, int,
-	 *             int, int, String, String, String, String, String, String,
-	 *             long[], long[], long[], List, long[], ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #updateUser(long, String, String, String, boolean, String,
+	 *             String, String, String, long, String, boolean, byte[],
+	 *             String, String, String, String, String, String, String, long,
+	 *             long, boolean, int, int, int, String, String, String, String,
+	 *             String, String, long[], long[], long[], List, long[],
+	 *             ServiceContext)}
 	 */
 	@Deprecated
 	@Override

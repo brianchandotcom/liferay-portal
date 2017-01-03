@@ -653,7 +653,8 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getFacebookURL(
@@ -721,7 +722,8 @@ public interface Portal {
 		Locale locale, String defaultI18nPathLanguageId);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getJournalArticleActualURL(
@@ -731,7 +733,8 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Layout getJournalArticleLayout(
@@ -1156,7 +1159,8 @@ public interface Portal {
 	public String getUserPassword(PortletRequest portletRequest);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getUserValue(long userId, String param, String defaultValue);
@@ -1169,7 +1173,8 @@ public interface Portal {
 	public String getVirtualHostname(LayoutSet layoutSet);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getVirtualLayoutActualURL(
@@ -1179,7 +1184,8 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public LayoutFriendlyURLComposite getVirtualLayoutFriendlyURLComposite(
@@ -1195,7 +1201,8 @@ public interface Portal {
 	public User initUser(HttpServletRequest request) throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void invokeTaglibDiscussion(
@@ -1204,7 +1211,8 @@ public interface Portal {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void invokeTaglibDiscussionPagination(

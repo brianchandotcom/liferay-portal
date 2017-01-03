@@ -193,7 +193,8 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #finishResponse(boolean)}}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #finishResponse(boolean)}}
 	 */
 	@Deprecated
 	public void finishResponse() throws IOException {

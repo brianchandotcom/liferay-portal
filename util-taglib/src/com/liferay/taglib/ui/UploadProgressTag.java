@@ -38,7 +38,8 @@ public class UploadProgressTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setRedirect(String redirect) {

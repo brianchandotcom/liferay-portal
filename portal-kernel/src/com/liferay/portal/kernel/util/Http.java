@@ -72,7 +72,8 @@ public interface Http {
 	public String decodeURL(String url);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #decodeURL(String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #decodeURL(String)}
 	 */
 	@Deprecated
 	public String decodeURL(String url, boolean unescapeSpaces);

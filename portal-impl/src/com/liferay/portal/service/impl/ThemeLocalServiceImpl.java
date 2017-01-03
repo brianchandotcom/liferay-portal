@@ -284,7 +284,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getPageThemes}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #getPageThemes}
 	 */
 	@Deprecated
 	@Override

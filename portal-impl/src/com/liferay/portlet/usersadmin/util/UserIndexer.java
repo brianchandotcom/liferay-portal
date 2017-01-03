@@ -56,9 +56,9 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Raymond Augé
- * @author Zsigmond Rab
- * @author Hugo Huijser
+ * @author     Raymond Augé
+ * @author     Zsigmond Rab
+ * @author     Hugo Huijser
  * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
  *             com.liferay.users.admin.internal.search.UserIndexer}
  */

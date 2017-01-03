@@ -34,7 +34,8 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -48,8 +49,8 @@ public abstract class BaseTrashRenderer implements TrashRenderer {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getSummary(PortletRequest,
-	 *             javax.portlet.PortletResponse)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getSummary(PortletRequest, javax.portlet.PortletResponse)}
 	 */
 	@Deprecated
 	@Override

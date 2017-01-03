@@ -18,7 +18,8 @@ import java.util.Locale;
 
 /**
  * @author     Leonardo Barros
- * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+ * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+ *             replacement
  */
 @Deprecated
 public interface JournalConverterManager {

@@ -27,7 +27,8 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link create(Query, String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             create(Query, String)}
 	 */
 	@Deprecated
 	public static BooleanClause<Query> create(
@@ -37,8 +38,8 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link create(String, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             create(String, String, String)}
 	 */
 	@Deprecated
 	public static BooleanClause<Query> create(
@@ -89,7 +90,8 @@ public class BooleanClauseFactoryUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link getBooleanClauseFactory()}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             getBooleanClauseFactory()}
 	 */
 	@Deprecated
 	public static BooleanClauseFactory getBooleanClauseFactory(

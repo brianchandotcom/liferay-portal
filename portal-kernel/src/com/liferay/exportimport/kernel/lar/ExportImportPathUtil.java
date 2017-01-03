@@ -114,7 +114,8 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getModelPath(StagedModel)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getModelPath(StagedModel)}
 	 */
 	@Deprecated
 	public static String getLayoutPath(
@@ -443,7 +444,8 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String getSourcePortletPath(

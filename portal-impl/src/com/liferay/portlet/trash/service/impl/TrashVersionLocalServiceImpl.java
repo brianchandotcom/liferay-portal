@@ -64,7 +64,8 @@ public class TrashVersionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #fetchVersion(String, long)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #fetchVersion(String, long)}
 	 */
 	@Deprecated
 	@Override

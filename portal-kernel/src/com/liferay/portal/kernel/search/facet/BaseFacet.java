@@ -35,7 +35,8 @@ public abstract class BaseFacet implements Facet {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getFacetFilterBooleanClause}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getFacetFilterBooleanClause}
 	 */
 	@Deprecated
 	@Override

@@ -21,9 +21,9 @@ import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Shuyang Zhou
- * @author Peter Fellwock
+ * @author     Brian Wing Shun Chan
+ * @author     Shuyang Zhou
+ * @author     Peter Fellwock
  * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
  */
 @Deprecated

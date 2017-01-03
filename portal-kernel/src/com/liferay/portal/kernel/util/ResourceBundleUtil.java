@@ -117,8 +117,8 @@ public class ResourceBundleUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getString(ResourceBundle,
-	 *             String, Object...)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getString(ResourceBundle, String, Object...)}
 	 */
 	@Deprecated
 	public static String getString(

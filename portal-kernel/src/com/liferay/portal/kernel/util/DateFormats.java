@@ -21,8 +21,8 @@ import java.util.TimeZone;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link DateFormatFactoryUtil} or {@link
- *             FastDateFormatFactoryUtil}
+ * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+ *             DateFormatFactoryUtil} or {@link FastDateFormatFactoryUtil}
  */
 @Deprecated
 public class DateFormats {

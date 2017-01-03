@@ -97,7 +97,8 @@ public interface AssetRendererFactory<T> {
 	public String getIconCssClass();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getIconPath(PortletRequest portletRequest);
@@ -111,7 +112,8 @@ public interface AssetRendererFactory<T> {
 	public String getTypeName(Locale locale);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getTypeName(Locale)}
 	 */
 	@Deprecated
 	public String getTypeName(Locale locale, boolean hasSubtypes);

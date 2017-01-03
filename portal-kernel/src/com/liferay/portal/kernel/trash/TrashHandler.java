@@ -100,8 +100,8 @@ public interface TrashHandler {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #checkRestorableEntry(long,
-	 *             long, String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #checkRestorableEntry(long, long, String)}
 	 */
 	@Deprecated
 	public void checkDuplicateEntry(

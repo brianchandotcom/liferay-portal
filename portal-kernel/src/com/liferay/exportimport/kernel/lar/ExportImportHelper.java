@@ -43,77 +43,88 @@ import javax.portlet.PortletRequest;
 public interface ExportImportHelper {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_COMPANY_SECURE_URL =
 		"@data_handler_company_secure_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_COMPANY_URL =
 		"@data_handler_company_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_GROUP_FRIENDLY_URL =
 		"@data_handler_group_friendly_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PATH_CONTEXT =
 		"@data_handler_path_context@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING =
 		"@data_handler_private_group_servlet_mapping@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL =
 		"@data_handler_private_layout_set_secure_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_URL =
 		"@data_handler_private_layout_set_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING =
 		"@data_handler_private_user_servlet_mapping@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL =
 		"@data_handler_public_layout_set_secure_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_URL =
 		"@data_handler_public_layout_set_url@";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String DATA_HANDLER_PUBLIC_SERVLET_MAPPING =
@@ -156,7 +167,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Layout getExportableLayout(ThemeDisplay themeDisplay)
@@ -327,7 +339,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceExportDLReferences(
@@ -337,7 +350,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceExportDLReferences(
@@ -347,7 +361,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceExportLayoutReferences(
@@ -355,7 +370,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceExportLayoutReferences(
@@ -364,7 +380,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceExportLinksToLayouts(
@@ -374,7 +391,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceExportLinksToLayouts(
@@ -407,7 +425,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceImportDLReferences(
@@ -416,7 +435,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceImportDLReferences(
@@ -425,7 +445,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceImportLayoutReferences(
@@ -433,7 +454,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceImportLayoutReferences(
@@ -442,7 +464,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceImportLinksToLayouts(
@@ -450,7 +473,8 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String replaceImportLinksToLayouts(

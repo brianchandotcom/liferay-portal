@@ -235,7 +235,8 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getAllModelDeletionCounts()}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #getAllModelDeletionCounts()}
 	 */
 	@Deprecated
 	public long getModelDeletionCount() {

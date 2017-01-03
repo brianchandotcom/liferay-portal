@@ -4258,9 +4258,9 @@ configuration changes.
 
 The following tags have been deprecated and replaced:
 
-- `liferay-ui:custom-attributes-available`
-- `liferay-ui:custom-attribute-list`
 - `liferay-ui:custom-attribute`
+- `liferay-ui:custom-attribute-list`
+- `liferay-ui:custom-attributes-available`
 
 #### Who is affected?
 
@@ -4272,9 +4272,9 @@ usage of the tag.
 You should import the `liferay-expando` tag library (if necessary) and update
 the tag namespace from `liferay-ui` to `liferay-expando`:
 
-- `liferay-ui:custom-attributes-available` &rarr; `liferay-expando:custom-attributes-available`
-- `liferay-ui:custom-attribute-list` &rarr; `liferay-expando:custom-attribute-list`
 - `liferay-ui:custom-attribute` &rarr; `liferay-expando:custom-attribute`
+- `liferay-ui:custom-attribute-list` &rarr; `liferay-expando:custom-attribute-list`
+- `liferay-ui:custom-attributes-available` &rarr; `liferay-expando:custom-attributes-available`
 
 #### Why was this change made?
 

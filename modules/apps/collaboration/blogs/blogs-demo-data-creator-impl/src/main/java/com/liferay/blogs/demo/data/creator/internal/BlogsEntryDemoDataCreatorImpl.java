@@ -20,8 +20,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
@@ -111,11 +109,6 @@ public class BlogsEntryDemoDataCreatorImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setDlAppLocalService(DLAppLocalService dlAppLocalService) {
-		_dlAppLocalService = dlAppLocalService;
-	}
-
-	@Reference(unbind = "-")
 	protected void setFileEntryDemoDataCreator(
 		FileEntryDemoDataCreator fileEntryDemoDataCreator) {
 
@@ -169,25 +162,20 @@ public class BlogsEntryDemoDataCreatorImpl
 
 		String folderName = "Blogs Test";
 
-		Folder folder = null;
-
-		try {
-			folder = _dlAppLocalService.getFolder(groupId, 0, folderName);
-		}
-		catch (NoSuchFolderException nsfe) {
-			folder = _rootFolderDemoDataCreator.create(
+		if (_blogsEntryImagesFolder == null) {
+			_blogsEntryImagesFolder = _rootFolderDemoDataCreator.create(
 				userId, groupId, folderName);
 		}
 
 		FileEntry fileEntry = _fileEntryDemoDataCreator.create(
-			userId, folder.getFolderId());
+			userId, _blogsEntryImagesFolder.getFolderId());
 
 		return FileUtil.getBytes(
 			fileEntry.getFileVersion().getContentStream(false));
 	}
 
+	private Folder _blogsEntryImagesFolder;
 	private BlogsEntryLocalService _blogsEntryLocalService;
-	private DLAppLocalService _dlAppLocalService;
 	private FileEntryDemoDataCreator _fileEntryDemoDataCreator;
 	private RootFolderDemoDataCreator _rootFolderDemoDataCreator;
 	private final List<Long> _entryIds = new ArrayList<>();

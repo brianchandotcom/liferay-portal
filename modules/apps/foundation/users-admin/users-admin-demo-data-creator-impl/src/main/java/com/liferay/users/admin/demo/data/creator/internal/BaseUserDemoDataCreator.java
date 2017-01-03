@@ -93,7 +93,6 @@ public abstract class BaseUserDemoDataCreator
 		try {
 			for (long userId : _userIds) {
 				userLocalService.deleteUser(userId);
-				_userIds.remove(userId);
 			}
 		}
 		catch (NoSuchUserException nsue) {
@@ -101,6 +100,8 @@ public abstract class BaseUserDemoDataCreator
 				_log.warn(nsue);
 			}
 		}
+
+		_userIds.clear();
 	}
 
 	protected String[] getFullNameArray(String emailAddress) {

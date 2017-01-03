@@ -56,15 +56,44 @@ class MBPortlet extends PortletBase {
 	}
 
 	/**
+	 * Checks if there are images that have not been uploaded yet.
+	 * In that case, it removes them after asking
+	 * confirmation to the user.
+	 *
+	 * @protected
+	 * @return {Boolean} False if there are temporal images and
+	 * user does not confirm she wants to lose them. True in other case.
+	 */
+	removeTempImages_() {
+		let tempImages = this.all('img[data-random-id]');
+
+		if (tempImages.length > 0) {
+			if (confirm(this.strings.confirmDiscardImages)) {
+				tempImages.forEach(
+					node => {
+						node.parentElement.remove();
+					}
+				);
+			} else {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Submits the message.
 	 *
 	 * @protected
 	 */
 	save_() {
-		this.one('#' + this.constants.CMD).value = this.currentAction;
-		this.one('#body').value = window[this.namespace + 'getHTML']();
+		if (this.removeTempImages_()) {
+			this.one('#' + this.constants.CMD).value = this.currentAction;
+			this.one('#body').value = window[this.namespace + 'getHTML']();
 
-		submitForm(document[this.ns('fm')]);
+			submitForm(document[this.ns('fm')]);
+		}
 	}
 
 	/**
@@ -104,6 +133,19 @@ MBPortlet.STATE = {
 	 */
 	currentAction: {
 		validator: core.isString
+	},
+
+	/**
+	 * Portlet's messages
+	 * @instance
+	 * @memberof WikiPortlet
+	 * @type {Object}
+	 */
+	strings: {
+		validator: core.isObject,
+		value: {
+			confirmDiscardImages: Liferay.Language.get('uploads-are-in-progress-confirmation')
+		}
 	}
 };
 

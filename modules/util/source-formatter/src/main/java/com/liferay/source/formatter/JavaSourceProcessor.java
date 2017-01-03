@@ -2527,7 +2527,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				checkResourceUtil(line, fileName, absolutePath, lineCount);
 
-				if (_addMissingDeprecationReleaseVersion) {
+				if (_addMissingDeprecationReleaseVersion &&
+					!isModulesFile(absolutePath)) {
+
 					line = formatDeprecatedJavadoc(fileName, line);
 				}
 

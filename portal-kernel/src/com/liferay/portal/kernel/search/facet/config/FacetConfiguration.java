@@ -36,7 +36,7 @@ public class FacetConfiguration {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public String getDisplayStyle() {
@@ -76,7 +76,7 @@ public class FacetConfiguration {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public void setDisplayStyle(String displayStyle) {

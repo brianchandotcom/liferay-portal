@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class PortletDataHandlerStatusMessageSenderUtil {
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #_getPortletDataHandlerStatusMessageSender()}
 	 */
 	@Deprecated
@@ -38,7 +38,7 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #sendStatusMessage(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #sendStatusMessage(String,
 	 *             String[], ManifestSummary)}
 	 */
 	@Deprecated

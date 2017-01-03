@@ -68,7 +68,7 @@ public class HttpUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #decodeURL(String)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #decodeURL(String)}
 	 */
 	@Deprecated
 	public static String decodeURL(String url, boolean unescapeSpaces) {

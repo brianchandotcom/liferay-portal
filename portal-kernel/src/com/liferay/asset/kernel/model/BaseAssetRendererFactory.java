@@ -90,7 +90,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	@Override
@@ -114,7 +114,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	@Override
@@ -139,7 +139,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	@Override
@@ -159,7 +159,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	@Override
@@ -186,7 +186,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -210,7 +210,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #getTypeName(Locale)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getTypeName(Locale)}
 	 */
 	@Deprecated
 	@Override
@@ -224,7 +224,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	@Override
@@ -265,7 +265,7 @@ public abstract class BaseAssetRendererFactory<T>
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	@Override

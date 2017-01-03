@@ -20,7 +20,7 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 2.6.0, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
  */
 @Deprecated
 public class PropertyTag extends TagSupport {

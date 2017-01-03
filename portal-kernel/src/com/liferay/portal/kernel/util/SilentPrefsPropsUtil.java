@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.util;
 
 /**
  * @author     Mika Koivisto
- * @deprecated As of 2.19.0, replaced with {@link PrefsPropsUtil}
+ * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced with {@link PrefsPropsUtil}
  */
 @Deprecated
 public class SilentPrefsPropsUtil extends PrefsPropsUtil {

@@ -789,7 +789,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, moved to {@link HighlightUtil#highlight(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link HighlightUtil#highlight(String,
 	 *             String[])}}
 	 */
 	@Deprecated
@@ -798,7 +798,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, moved to {@link HighlightUtil#highlight(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link HighlightUtil#highlight(String,
 	 *             String[], String, String)}}
 	 */
 	@Deprecated
@@ -2286,7 +2286,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #removeFromList(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #removeFromList(String,
 	 *             String)}
 	 */
 	@Deprecated
@@ -2295,7 +2295,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #removeFromList(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #removeFromList(String,
 	 *             String, String)}
 	 */
 	@Deprecated

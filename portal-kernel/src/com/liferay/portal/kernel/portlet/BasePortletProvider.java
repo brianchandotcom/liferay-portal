@@ -46,7 +46,7 @@ public abstract class BasePortletProvider implements PortletProvider {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {

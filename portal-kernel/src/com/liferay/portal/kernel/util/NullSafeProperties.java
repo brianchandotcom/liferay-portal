@@ -18,7 +18,7 @@ import java.util.Properties;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 2.19.0, renamed to {@link SafeProperties}
+ * @deprecated As of com.liferay.portal.kernel#2.19.0, renamed to {@link SafeProperties}
  */
 @Deprecated
 public class NullSafeProperties extends Properties {

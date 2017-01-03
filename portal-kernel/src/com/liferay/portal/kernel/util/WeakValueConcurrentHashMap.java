@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of 2.19.0, replaced by {@link ConcurrentReferenceValueHashMap}
+ * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link ConcurrentReferenceValueHashMap}
  */
 @Deprecated
 public class WeakValueConcurrentHashMap<K, V>

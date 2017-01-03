@@ -34,7 +34,7 @@ import org.hibernate.SessionFactory;
 public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	/**
-	 * @deprecated As of 2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
 	 */
 	@Deprecated
 	public void setDataSource(DataSource dataSource) {
@@ -42,7 +42,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
 	 */
 	@Deprecated
 	protected SessionFactory createSessionFactory(DataSource dataSource) {
@@ -68,7 +68,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
 	 */
 	@Deprecated
 	protected DataSource getDataSource() {
@@ -76,7 +76,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
 	 */
 	@Deprecated
 	protected SessionFactory getSessionFactory() {

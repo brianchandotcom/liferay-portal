@@ -28,7 +28,7 @@ public interface TemplateConstants {
 	public static final String DEFAUT_ENCODING = StringPool.UTF8;
 
 	/**
-	 * @deprecated As of 2.19.0
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0
 	 */
 	@Deprecated
 	public static final String JOURNAL_SEPARATOR = "_JOURNAL_CONTEXT_";

@@ -42,7 +42,7 @@ public class MergeLayoutPrototypesThreadLocal {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #isMergeComplete(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #isMergeComplete(String,
 	 *             Object...)}
 	 */
 	@Deprecated
@@ -63,7 +63,7 @@ public class MergeLayoutPrototypesThreadLocal {
 	}
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #setMergeComplete(String,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #setMergeComplete(String,
 	 *             Object...)}
 	 */
 	@Deprecated

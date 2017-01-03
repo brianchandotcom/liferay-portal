@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.model.Role;
 public interface RolesAdmin {
 
 	/**
-	 * @deprecated As of 2.19.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct replacement
 	 */
 	@Deprecated
 	public String getCssClassName(Role role);

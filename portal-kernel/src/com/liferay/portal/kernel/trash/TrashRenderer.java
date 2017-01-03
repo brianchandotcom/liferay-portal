@@ -31,7 +31,7 @@ public interface TrashRenderer extends Renderer {
 	public String getPortletId();
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #getSummary(PortletRequest,
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getSummary(PortletRequest,
 	 *             PortletResponse)}
 	 */
 	@Deprecated

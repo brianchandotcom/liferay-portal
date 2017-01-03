@@ -27,7 +27,7 @@ public class PublicRenderParameterConfiguration {
 	public static final String MAPPING_PREFIX = "lfr-prp-mapping-";
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #getIgnoreKey(String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getIgnoreKey(String)}
 	 */
 	@Deprecated
 	public static String getIgnoreKey(
@@ -45,7 +45,7 @@ public class PublicRenderParameterConfiguration {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #getMappingKey(String)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #getMappingKey(String)}
 	 */
 	@Deprecated
 	public static String getMappingKey(

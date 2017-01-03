@@ -51,7 +51,7 @@ public interface MessagingConfigurator {
 
 	/**
 	 * @param      replacementDestinations
-	 * @deprecated As of 2.19.0, replaced by {@link #setDestinations(List)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #setDestinations(List)}
 	 */
 	@Deprecated
 	public void setReplacementDestinations(

@@ -94,7 +94,7 @@ public class PageContextWrapper extends PageContext {
 	}
 
 	/**
-	 * @deprecated As of 2.6.0
+	 * @deprecated As of com.liferay.util.taglib#2.6.0
 	 */
 	@Deprecated
 	@Override
@@ -138,7 +138,7 @@ public class PageContextWrapper extends PageContext {
 	}
 
 	/**
-	 * @deprecated As of 2.6.0
+	 * @deprecated As of com.liferay.util.taglib#2.6.0
 	 */
 	@Deprecated
 	@Override

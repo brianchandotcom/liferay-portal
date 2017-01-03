@@ -33,7 +33,7 @@ public interface AuthToken {
 		HttpServletRequest request, LiferayPortletURL liferayPortletURL);
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #checkCSRFToken(HttpServletRequest, String)}
 	 */
 	@Deprecated
@@ -51,7 +51,7 @@ public interface AuthToken {
 		HttpServletRequest request, Layout layout, Portlet portlet);
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #isValidPortletInvocationToken(HttpServletRequest, Layout,
 	 *             Portlet)}
 	 */

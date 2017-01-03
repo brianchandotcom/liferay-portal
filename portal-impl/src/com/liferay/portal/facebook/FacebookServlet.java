@@ -36,7 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 2.10.0, with no direct replacement
+ * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct replacement
  */
 @Deprecated
 public class FacebookServlet extends HttpServlet {

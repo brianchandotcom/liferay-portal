@@ -76,7 +76,7 @@ public class TestGroup implements Group {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.portal.impl#1.0.0
 	 */
 	@Deprecated
 	@Override
@@ -508,7 +508,7 @@ public class TestGroup implements Group {
 	}
 
 	/**
-	 * @deprecated As of 1.0.0
+	 * @deprecated As of com.liferay.portal.impl#1.0.0
 	 */
 	@Deprecated
 	@Override

@@ -37,7 +37,7 @@ public interface PortalCache<K extends Serializable, V> {
 	public List<K> getKeys();
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link #getPortalCacheName()}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link #getPortalCacheName()}
 	 */
 	@Deprecated
 	@Id

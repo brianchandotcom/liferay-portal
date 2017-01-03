@@ -1129,7 +1129,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #updateFileShortcuts(long,
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateFileShortcuts(long,
 	 *             long)}
 	 */
 	@Deprecated

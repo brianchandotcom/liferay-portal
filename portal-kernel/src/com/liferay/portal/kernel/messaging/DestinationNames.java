@@ -102,7 +102,7 @@ public interface DestinationNames {
 	public static final String POLLER_RESPONSE = "liferay/poller_response";
 
 	/**
-	 * @deprecated As of 2.19.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             com.liferay.push.notifications.messaging.DestinationNames#PUSH_NOTIFICATION}
 	 */
 	@Deprecated

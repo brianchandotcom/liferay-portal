@@ -113,7 +113,7 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #addLayoutPrototype(long,
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #addLayoutPrototype(long,
 	 *             long, Map, Map, boolean, ServiceContext)}
 	 */
 	@Deprecated
@@ -263,7 +263,7 @@ public class LayoutPrototypeLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 2.10.0, replaced by {@link #updateLayoutPrototype(long,
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link #updateLayoutPrototype(long,
 	 *             Map, Map, boolean, ServiceContext)}
 	 */
 	@Deprecated

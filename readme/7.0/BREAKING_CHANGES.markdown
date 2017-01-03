@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `9a2d9b1`.*
+*This document has been reviewed through commit `66199bf`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -4250,30 +4250,31 @@ configuration changes.
 
 ---------------------------------------
 
-### Move the expando custom field tags to expando-taglib
+### Moved the Expando Custom Field Tags to liferay-expando Taglib
 - **Date:** 2016-Dec-12
 - **JIRA Ticket:** LPS-69400
 
 #### What changed?
 
-The `liferay-ui:custom-attributes-available`,
-`liferay-ui:custom-attribute-list`, and `liferay-ui:custom-attribute` taglibs has been deprecated and replaced with
-`liferay-expando:custom-attributes-available`,
-`liferay-expando:custom-attribute-list`, and
-`liferay-expando:custom-attribute`, respectively.
+The following tags have been deprecated and replaced:
+
+- `liferay-ui:custom-attributes-available`
+- `liferay-ui:custom-attribute-list`
+- `liferay-ui:custom-attribute`
 
 #### Who is affected?
 
-Plugins and templates that are using the
-`liferay-ui:custom-attributes-available`, `liferay-ui:custom-attribute-list`,
-and `liferay-ui:custom-attribute` taglibs tag need to update their usage of the tag.
+Plugins and templates that are using the aforementioned tags must update their
+usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-expando` tag library (if necessary) and update the tag namespace from `liferay-ui:custom-attributes-available`,
-`liferay-ui:custom-attribute-list`, and `liferay-ui:custom-attribute` to
-`liferay-expando:custom-attributes-available`,
-`liferay-expando:custom-attribute-list`, and `liferay-expando:custom-attribute`, respectively.
+You should import the `liferay-expando` tag library (if necessary) and update
+the tag namespace from `liferay-ui` to `liferay-expando`:
+
+- `liferay-ui:custom-attributes-available` &rarr; `liferay-expando:custom-attributes-available`
+- `liferay-ui:custom-attribute-list` &rarr; `liferay-expando:custom-attribute-list`
+- `liferay-ui:custom-attribute` &rarr; `liferay-expando:custom-attribute`
 
 #### Why was this change made?
 

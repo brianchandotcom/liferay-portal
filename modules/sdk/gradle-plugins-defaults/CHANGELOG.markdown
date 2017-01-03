@@ -827,8 +827,8 @@ versions of Git.
 ## 2.3.11 - 2016-12-27
 
 ### Added
-- [LPS-69847]: Apply [Liferay Gradle Plugins Dependency Checker] to throw an
-error if the version of [Liferay Source Formatter] in use is not the latest one
+- [LPS-69847]: Apply the [Liferay Gradle Plugins Dependency Checker] to throw an
+error if the [Liferay Source Formatter] version in use is not the latest one
 and is older than 30 days.
 
 ## 2.4.0 - 2016-12-29
@@ -836,7 +836,7 @@ and is older than 30 days.
 ### Added
 - [LPS-61987]: Enforce the use of snapshot timestamp versions for dependencies.
 - [LPS-69453]: Add an empty `deployDependencies` task to copy additional
-dependency JAR files to the deploy directory.
+dependency JAR files to the `deploy` directory.
 - [LPS-69847]: Add the ability to ignore the locally deployed JAR files of a
 portal tool by setting the project property `[portal tool name].ignore.local`.
 

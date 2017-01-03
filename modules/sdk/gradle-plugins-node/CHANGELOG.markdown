@@ -69,7 +69,7 @@ and the `npm-shrinkwrap.json` file from the project, if present.
 ## 1.5.1 - 2016-12-29
 
 ### Added
-- [LPS-69920]: Automatically retry `npm install` if it fails.
+- [LPS-69920]: Retry `npm install` automatically if it fails.
 
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023

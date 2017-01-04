@@ -34,6 +34,10 @@ public class BaselineJarTask extends BaseBndTask {
 		_bndFile = bndFile;
 	}
 
+	public void setNewCompatJarFile(File newCompatJarFile) {
+		_newCompatJarFile = newCompatJarFile;
+	}
+
 	public void setNewJarFile(File newJarFile) {
 		_newJarFile = newJarFile;
 	}
@@ -145,6 +149,7 @@ public class BaselineJarTask extends BaseBndTask {
 		baseline.setForceVersionOneOnAddedPackages(
 			_forceVersionOneOnAddedPackages);
 		baseline.setLogFile(_logFile);
+		baseline.setNewCompatJarFile(_newCompatJarFile);
 		baseline.setNewJarFile(_newJarFile);
 		baseline.setOldJarFile(_oldJarFile);
 		baseline.setReportDiff(_reportLevelIsDiff);
@@ -185,6 +190,7 @@ public class BaselineJarTask extends BaseBndTask {
 	private File _bndFile;
 	private boolean _forceVersionOneOnAddedPackages;
 	private File _logFile;
+	private File _newCompatJarFile;
 	private File _newJarFile;
 	private File _oldJarFile;
 	private String _reportLevel;

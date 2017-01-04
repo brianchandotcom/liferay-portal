@@ -26,6 +26,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author ${author}
+ */
 @Component(immediate = true, service = Report.class)
 public class ${className}Report extends BaseJSPReport {
 
@@ -67,13 +70,6 @@ public class ${className}Report extends BaseJSPReport {
 		jsonObject.put("setting2", setting2);
 
 		return jsonObject.toString();
-	}
-
-	@Reference(unbind = "-")
-	public void setReportInstanceLocalService(
-		ReportInstanceLocalService reportInstanceLocalService) {
-
-		_reportInstanceLocalService = reportInstanceLocalService;
 	}
 
 	@Override
@@ -133,6 +129,7 @@ public class ${className}Report extends BaseJSPReport {
 	private static final Log _log = LogFactoryUtil.getLog(
 		${className}Report.class);
 
-	private ReportInstanceLocalService _reportInstanceLocalService;
+	@Reference(unbind = "-")
+	private volatile ReportInstanceLocalService _reportInstanceLocalService;
 
 }

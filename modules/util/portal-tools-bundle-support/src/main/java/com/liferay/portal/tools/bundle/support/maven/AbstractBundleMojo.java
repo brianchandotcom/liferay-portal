@@ -45,7 +45,7 @@ public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 	protected String proxyProtocol;
 
 	@Parameter
-	protected String proxyUsername;
+	protected String proxyUserName;
 
 	@Parameter (defaultValue = "1")
 	protected int stripComponents;
@@ -57,6 +57,6 @@ public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 	protected URL url;
 
 	@Parameter
-	protected String username;
+	protected String userName;
 
 }

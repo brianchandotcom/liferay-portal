@@ -10,6 +10,7 @@
 			liferayHomeDir = "${bundle.support.liferay.home.dir}"
 		/>
 	</target>
+
 	<target name="deploy">
 		<deploy
 			file = "${bundle.support.file}"
@@ -18,6 +19,7 @@
 
 		/>
 	</target>
+
 	<target name="dist-bundle">
 		<dist-bundle
 			format = "${bundle.support.format}"
@@ -26,6 +28,7 @@
 			outputFile = "${bundle.support.output.file}"
 		/>
 	</target>
+
 	<target name="init-bundle">
 		<init-bundle
 			configsDir = "${bundle.support.configs.dir}"

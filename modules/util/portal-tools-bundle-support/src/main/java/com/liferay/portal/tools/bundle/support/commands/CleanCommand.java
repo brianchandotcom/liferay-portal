@@ -20,8 +20,6 @@ import com.beust.jcommander.Parameters;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
-import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -35,7 +33,7 @@ import java.nio.file.Path;
 public class CleanCommand extends BaseCommand {
 
 	@Override
-	public void execute() throws IOException {
+	public void execute() throws Exception {
 		String fileName = FileUtil.getFileName(_fileName);
 
 		String extension = FileUtil.getExtension(fileName);

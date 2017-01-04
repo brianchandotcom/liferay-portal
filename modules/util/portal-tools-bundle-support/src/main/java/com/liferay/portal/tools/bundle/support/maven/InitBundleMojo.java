@@ -45,10 +45,10 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			initBundleCommand.setProxyPassword(proxyPassword);
 			initBundleCommand.setProxyPort(proxyPort);
 			initBundleCommand.setProxyProtocol(proxyProtocol);
-			initBundleCommand.setProxyUsername(proxyUsername);
+			initBundleCommand.setProxyUserName(proxyUserName);
 			initBundleCommand.setStripComponents(stripComponents);
 			initBundleCommand.setUrl(url.toString());
-			initBundleCommand.setUsername(username);
+			initBundleCommand.setUserName(userName);
 
 			initBundleCommand.execute();
 		}

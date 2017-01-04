@@ -29,6 +29,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -103,8 +104,8 @@ public class InitBundleCommand extends BaseCommand {
 		return _proxyProtocol;
 	}
 
-	public String getProxyUsername() {
-		return _proxyUsername;
+	public String getProxyUserName() {
+		return _proxyUserName;
 	}
 
 	public int getStripComponents() {
@@ -115,8 +116,8 @@ public class InitBundleCommand extends BaseCommand {
 		return _url;
 	}
 
-	public String getUsername() {
-		return _username;
+	public String getUserName() {
+		return _userName;
 	}
 
 	public void setConfigsDir(File configsDir) {
@@ -147,8 +148,8 @@ public class InitBundleCommand extends BaseCommand {
 		_proxyProtocol = proxyProtocol;
 	}
 
-	public void setProxyUsername(String proxyUsername) {
-		_proxyUsername = proxyUsername;
+	public void setProxyUserName(String proxyUserName) {
+		_proxyUserName = proxyUserName;
 	}
 
 	public void setStripComponents(int stripComponents) {
@@ -159,8 +160,8 @@ public class InitBundleCommand extends BaseCommand {
 		_url = url;
 	}
 
-	public void setUsername(String username) {
-		_username = username;
+	public void setUserName(String userName) {
+		_userName = userName;
 	}
 
 	protected void copyConfigs() throws IOException {
@@ -192,9 +193,8 @@ public class InitBundleCommand extends BaseCommand {
 	protected void downloadFile() throws Exception {
 		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
 
-		requestConfigBuilder.setRedirectsEnabled(true);
-
 		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
+		requestConfigBuilder.setRedirectsEnabled(true);
 
 		HttpClientBuilder httpClientBuilder = HttpClients.custom();
 
@@ -211,11 +211,11 @@ public class InitBundleCommand extends BaseCommand {
 
 			requestConfigBuilder.setProxy(proxyHttpHost);
 
-			if (_proxyUsername != null) {
+			if (_proxyUserName != null) {
 				credentialsProvider.setCredentials(
 					new AuthScope(_proxyHost, _proxyPort),
 					new UsernamePasswordCredentials(
-						_proxyUsername, _proxyPassword));
+						_proxyUserName, _proxyPassword));
 			}
 		}
 
@@ -228,13 +228,13 @@ public class InitBundleCommand extends BaseCommand {
 
 			HttpContext httpContext = new BasicHttpContext();
 
-			if ((_username != null) && (_password != null)) {
+			if ((_userName != null) && (_password != null)) {
 				credentialsProvider.setCredentials(
 					new AuthScope(uri.getHost(), uri.getPort()),
-					new UsernamePasswordCredentials(_username, _password));
+					new UsernamePasswordCredentials(_userName, _password));
 			}
 
-			Date lastModified = null;
+			Date lastModifiedDate = null;
 
 			try (CloseableHttpResponse closeableHttpResponse =
 					closeableHttpClient.execute(httpHead, httpContext)) {
@@ -274,20 +274,20 @@ public class InitBundleCommand extends BaseCommand {
 				if (lastModifiedHeader != null) {
 					String lastModifiedValue = lastModifiedHeader.getValue();
 
-					SimpleDateFormat dateFormat = new SimpleDateFormat(
+					DateFormat dateFormat = new SimpleDateFormat(
 						"EEE, dd MMM yyyy HH:mm:ss zzz");
 
-					lastModified = dateFormat.parse(lastModifiedValue);
+					lastModifiedDate = dateFormat.parse(lastModifiedValue);
 				}
 				else {
-					lastModified = new Date();
+					lastModifiedDate = new Date();
 				}
 			}
 
 			_downloadFile = new File(_BUNDLES_CACHE, _downloadFileName);
 
 			if (_downloadFile.exists() &&
-				(_downloadFile.lastModified() == lastModified.getTime())) {
+				(_downloadFile.lastModified() == lastModifiedDate.getTime())) {
 
 				return;
 			}
@@ -313,7 +313,7 @@ public class InitBundleCommand extends BaseCommand {
 
 				fileOutputStream.write(EntityUtils.toByteArray(httpEntity));
 
-				_downloadFile.setLastModified(lastModified.getTime());
+				_downloadFile.setLastModified(lastModifiedDate.getTime());
 			}
 		}
 	}
@@ -398,9 +398,9 @@ public class InitBundleCommand extends BaseCommand {
 
 	@Parameter (
 		description = "The user name if your proxy requires authentication.",
-		names = {"--proxy-username"}
+		names = {"--proxy-username", "--proxy-user-name"}
 	)
-	private String _proxyUsername;
+	private String _proxyUserName;
 
 	@Parameter (
 		description = "The number of directories to strip when expanding your bundle.",
@@ -416,8 +416,8 @@ public class InitBundleCommand extends BaseCommand {
 
 	@Parameter (
 		description = "The user name if your URL requires authentication.",
-		names = {"-u", "--username"}
+		names = {"-u", "--username", "--user-name"}
 	)
-	private String _username;
+	private String _userName;
 
 }

@@ -19,7 +19,6 @@
 	</fileSets>
 	<requiredProperties>
 		<requiredProperty key="author">
-			<defaultValue>${user.name}</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="buildType">
 			<defaultValue>maven</defaultValue>

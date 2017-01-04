@@ -25,7 +25,6 @@
 	</fileSets>
 	<requiredProperties>
 		<requiredProperty key="author">
-			<defaultValue>${user.name}</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>

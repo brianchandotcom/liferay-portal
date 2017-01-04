@@ -376,7 +376,12 @@
 	</command>
 
 	<command name="configureShowMetadataFieldsPG">
-		<execute macro="AssetPublisherPortlet#gotoConfigurationPG" />
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="${portletName}" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
 		<execute macro="Navigator#gotoNavTab">
 			<var name="navTab" value="Display Settings" />
@@ -386,27 +391,31 @@
 			<var name="panelHeading" value="Metadata" />
 		</execute>
 
-		<if>
-			<equals arg1="${addMetadata}" arg2="true" />
-			<then>
-				<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
+		<for list="${metadataFieldList}" param="metadataField">
+			<if>
+				<equals arg1="${addMetadata}" arg2="true" />
+				<then>
+					<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
 
-				<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+					<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
 
-				<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
-			</then>
-		</if>
+					<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
+				</then>
+			</if>
+		</for>
 
-		<if>
-			<equals arg1="${removeMetadata}" arg2="true" />
-			<then>
-				<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
+		<for list="${metadataFieldList}" param="metadataField">
+			<if>
+				<equals arg1="${removeMetadata}" arg2="true" />
+				<then>
+					<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
 
-				<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
+					<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
 
-				<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
-			</then>
-		</if>
+					<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
+				</then>
+			</if>
+		</for>
 
 		<execute macro="PortletEntry#save" />
 
@@ -904,6 +913,13 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
+	<command name="viewLessViewedAsset">
+		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_LESS_VIEWED" value1="${viewCount}">
+			<var name="key_assetTitle" value="${assetTitle}" />
+			<var name="key_viewCount" value="${viewCount}" />
+		</execute>
+	</command>
+
 	<command name="viewManualAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
@@ -950,6 +966,13 @@
 
 	<command name="viewManualNoAssetsMessagePG">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
+	</command>
+
+	<command name="viewMostViewedAsset">
+		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_MOST_VIEWED" value1="${viewCount}">
+			<var name="key_assetTitle" value="${assetTitle}" />
+			<var name="key_viewCount" value="${viewCount}" />
+		</execute>
 	</command>
 
 	<command name="viewMultipleAssetOrderPGViaAP">

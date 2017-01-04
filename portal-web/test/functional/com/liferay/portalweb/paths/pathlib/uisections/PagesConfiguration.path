@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGES_SITE_TEMPLATE_SETTINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'LAYOUT_SET_PROTOTYPE_SETTINGS')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
 	<td>//input[contains(@id,'THEME_REFERENCE')]</td>
 	<td></td>

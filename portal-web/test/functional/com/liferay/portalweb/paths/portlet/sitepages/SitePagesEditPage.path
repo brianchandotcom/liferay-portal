@@ -203,6 +203,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_CURRENT_THEME_BUTTON</td>
+	<td>//button[contains(.,'Change Current Theme')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THEME</td>
+	<td>//div[contains(@data-themeid,'${key_cardText}')]/div/div[2]/div/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_THEME</td>
+	<td>//div[contains(@class, 'main-content-card')]//h4[contains(.,'Name')]/following-sibling::p[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

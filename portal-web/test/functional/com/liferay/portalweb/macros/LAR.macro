@@ -33,6 +33,20 @@
 		</if>
 
 		<if>
+			<equals arg1="${uncheckSitePagesSettings}" arg2="true" />
+			<then>
+				<execute function="Uncheck" locator1="PagesConfiguration#PAGES_SITE_PAGES_SETTINGS_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${uncheckSiteTemplateSettings}" arg2="true" />
+			<then>
+				<execute function="Uncheck" locator1="PagesConfiguration#PAGES_SITE_TEMPLATE_SETTINGS_CHECKBOX" />
+			</then>
+		</if>
+
+		<if>
 			<isset var="checkPageName" />
 			<then>
 				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
@@ -460,6 +474,8 @@
 			<var name="subContent" value="${subContent}" />
 			<var name="uncheckContentNameList" value="${uncheckContentNameList}" />
 			<var name="uncheckLogo" value="${uncheckLogo}" />
+			<var name="uncheckSitesPageSettings" value="${uncheckSitesPageSettings}" />
+			<var name="uncheckSiteTemplateSettings" value="${uncheckSiteTemplateSettings}" />
 			<var name="uncheckSubContent" value="${uncheckSubContent}" />
 			<var name="uncheckSubSubContent" value="${uncheckSubSubContent}" />
 		</execute>

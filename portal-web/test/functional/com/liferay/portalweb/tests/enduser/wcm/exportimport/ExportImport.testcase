@@ -543,6 +543,73 @@
 		</execute>
 	</command>
 
+	<command name="ExportImportThemeSettings" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#changeCurrentTheme">
+			<var name="page" value="Public Pages" />
+			<var name="themeName" value="London" />
+		</execute>
+
+		<execute macro="LAR#configureExportSiteCP">
+			<var name="uncheckLogo" value="true" />
+			<var name="uncheckSitePagesSettings" value="true" />
+			<var name="uncheckSiteTemplateSettings" value="true" />
+		</execute>
+
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+
+		<var method="selenium#getText('//ul/li/div/h5')" name="valueName" />
+
+		<echo message="value name ${valueName}" />
+
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9KB)]*" />
+
+		<echo message="file name ${larFileName}" />
+
+		<execute macro="LAR#downloadLar" />
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="LAR#importSiteCP">
+			<var name="larFileName" value="${larFileName}" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page" />
+			<var name="siteName" value="Site Name 2" />
+		</execute>
+
+		<execute macro="Page#viewCurrentTheme">
+			<var name="page" value="Public Pages" />
+			<var name="themeName" value="London" />
+		</execute>
+	</command>
+
 	<command name="ExportImportValidation" priority="4">
 		<execute macro="Navigator#openURL" />
 

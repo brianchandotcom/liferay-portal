@@ -308,6 +308,28 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Home#NODE_NAME" value1="${nodePort}" />
 	</command>
 
+	<command name="changeCurrentTheme">
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
+
+		<execute function="Click" locator1="SitePagesEditPage#CHANGE_CURRENT_THEME_BUTTON" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="key_cardText" value="${themeName}" />
+
+		<execute function="AssertTextPresent" locator1="Card#SPECIFIC_LARGE_TEXT" value1="${key_cardText}" />
+
+		<execute function="Click" locator1="Card#SPECIFIC_LARGE_TEXT" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
 	<command name="changeLogoViaPageCP">
 		<execute macro="SitePageNavigator#gotoEditPage">
 			<var name="page" value="${page}" />
@@ -638,6 +660,14 @@
 		<var name="key_childPageName" value="${childPageName}" />
 
 		<execute function="AssertTextEquals" locator1="Home#PAGE_CHILD_PAGE" value1="${childPageName}" />
+	</command>
+
+	<command name="viewCurrentTheme">
+		<execute macro="SitePageNavigator#gotoEditPage">
+			<var name="page" value="${page}" />
+		</execute>
+
+		<execute function="AssertTextPresent" locator1="SitePagesEditPage#VIEW_THEME" value1="${themeName}" />
 	</command>
 
 	<command name="viewCustomLogoPG">

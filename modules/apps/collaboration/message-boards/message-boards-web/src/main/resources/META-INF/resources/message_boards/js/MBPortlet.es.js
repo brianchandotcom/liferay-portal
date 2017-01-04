@@ -20,7 +20,7 @@ class MBPortlet extends PortletBase {
 	 * @inheritDoc
 	 */
 	attached() {
-		let publishButton = this.one('#publishButton');
+		let publishButton = this.one('button[type="submit"]');
 
 		if (publishButton) {
 			this.eventHandler_.add(publishButton.addEventListener('click', (e) => {
@@ -90,9 +90,17 @@ class MBPortlet extends PortletBase {
 	save_() {
 		if (this.removeTempImages_()) {
 			this.one('#' + this.constants.CMD).value = this.currentAction;
-			this.one('#body').value = window[this.namespace + 'getHTML']();
 
-			submitForm(document[this.ns('fm')]);
+			if (this.replyToMessageId) {
+				this.one('#body').value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
+
+				submitForm(document[this.ns('addQuickReplyFm' + this.replyToMessageId)]);
+			}
+			else {
+				this.one('#body').value = window[this.ns('bodyEditor')].getHTML();
+
+				submitForm(document[this.ns('fm')]);
+			}
 		}
 	}
 
@@ -132,6 +140,17 @@ MBPortlet.STATE = {
 	 * @type {String}
 	 */
 	currentAction: {
+		validator: core.isString
+	},
+
+	/**
+	 * The id of the message that
+	 * you are replying to.
+	 * @instance
+	 * @memberof MBPortlet
+	 * @type {String}
+	 */
+	replyToMessageId: {
 		validator: core.isString
 	},
 

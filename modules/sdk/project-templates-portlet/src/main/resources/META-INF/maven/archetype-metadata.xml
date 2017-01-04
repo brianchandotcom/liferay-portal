@@ -18,6 +18,8 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="author">
+		</requiredProperty>
 		<requiredProperty key="buildType">
 			<defaultValue>maven</defaultValue>
 		</requiredProperty>

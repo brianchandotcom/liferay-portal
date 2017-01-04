@@ -26,6 +26,9 @@ import javax.portlet.RenderResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author ${author}
+ */
 @Component(
 	immediate = true,
 	property = {
@@ -81,12 +84,6 @@ public class ${className}Portlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	private AssetEntryLocalService _assetEntryLocalService;
+	private volatile AssetEntryLocalService _assetEntryLocalService;
 
 }

@@ -36,10 +36,13 @@ import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -179,6 +183,26 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.jar",
 			"target/foo-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateApiContainsCorrectAuthor() throws Exception {
+		String author = "Test Author";
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"api", "author-test", "--author", author);
+
+		_testContains(
+			gradleProjectDir, "src/main/java/author/test/api/AuthorTest.java",
+			"@author " + author);
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"api", "author-test", "-Dauthor=" + author,
+			"-DclassName=AuthorTest", "-Dpackage=author.test");
+
+		_testContains(
+			mavenProjectDir, "src/main/java/author/test/api/AuthorTest.java",
+			"@author " + author);
 	}
 
 	@Test
@@ -1033,15 +1057,48 @@ public class ProjectTemplatesTest {
 			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
+		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
+
+		Files.walkFileTree(
+			gradleProjectDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					if (path.endsWith(".java")) {
+						hasJavaFiles.set(true);
+
+						return FileVisitResult.TERMINATE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		String[] gradleTaskPaths;
+
+		if (hasJavaFiles.get()) {
+			gradleTaskPaths = new String[] {
+				_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING,
+				_GRADLE_TASK_PATH_BUILD
+			};
+		}
+		else {
+			gradleTaskPaths = new String[] {_GRADLE_TASK_PATH_BUILD};
+		}
+
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
-			mavenBundleFileName, _GRADLE_TASK_PATH_BUILD);
+			mavenBundleFileName, gradleTaskPaths);
 	}
 
 	private void _buildProjects(
 			File gradleProjectDir, File mavenProjectDir,
 			String gradleBundleFileName, String mavenBundleFileName,
-			String gradleTaskPath)
+			String... gradleTaskPath)
 		throws Exception {
 
 		_executeGradle(gradleProjectDir, gradleTaskPath);
@@ -1142,6 +1199,7 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("-DarchetypeGroupId=com.liferay");
 		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=com.test");
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");
@@ -1569,6 +1627,9 @@ public class ProjectTemplatesTest {
 
 	private static final String _GRADLE_TASK_PATH_BUILD_SERVICE =
 		":buildService";
+
+	private static final String _GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING =
+		":checkSourceFormatting";
 
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
 		"liferay:build-service";

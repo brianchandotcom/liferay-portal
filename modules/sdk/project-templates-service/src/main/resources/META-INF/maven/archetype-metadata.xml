@@ -24,6 +24,8 @@
 		</fileSet>
 	</fileSets>
 	<requiredProperties>
+		<requiredProperty key="author">
+		</requiredProperty>
 		<requiredProperty key="className">
 		</requiredProperty>
 		<requiredProperty key="projectType">

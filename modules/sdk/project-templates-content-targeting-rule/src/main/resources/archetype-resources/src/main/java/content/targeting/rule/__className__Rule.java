@@ -27,6 +27,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author ${author}
+ */
 @Component(immediate = true, service = Rule.class)
 public class ${className}Rule extends BaseJSPRule {
 

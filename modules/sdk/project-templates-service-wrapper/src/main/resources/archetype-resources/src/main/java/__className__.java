@@ -9,6 +9,9 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * @author ${author}
+ */
 @Component(
 	immediate = true,
 	property = {

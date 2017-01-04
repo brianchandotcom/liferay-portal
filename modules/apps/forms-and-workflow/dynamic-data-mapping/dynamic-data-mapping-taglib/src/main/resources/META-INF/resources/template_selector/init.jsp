@@ -29,7 +29,6 @@ java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttri
 java.lang.String refreshURL = GetterUtil.getString((java.lang.String)request.getAttribute("liferay-ddm:template-selector:refreshURL"));
 boolean showEmptyOption = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:template-selector:showEmptyOption")));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ddm:template-selector:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("liferay-ddm:template-selector:scopedAttributes");
 %>
 
 <%@ include file="/template_selector/init-ext.jspf" %>

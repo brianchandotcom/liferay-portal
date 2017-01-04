@@ -24,7 +24,12 @@ import java.io.File;
 public class ProjectTemplatesArgs {
 
 	public ProjectTemplatesArgs() {
+		_author = System.getProperty("user.name");
 		_destinationDir = new File(System.getProperty("user.dir"));
+	}
+
+	public String getAuthor() {
+		return _author;
 	}
 
 	public String getClassName() {
@@ -114,6 +119,12 @@ public class ProjectTemplatesArgs {
 	protected boolean isList() {
 		return _list;
 	}
+
+	@Parameter(
+		description = "The name of the user associated with the code.",
+		names = "--author"
+	)
+	private String _author;
 
 	@Parameter(
 		description = "If a class is generated, provide the name of the class to be generated. If not provided, defaults to the project name.",

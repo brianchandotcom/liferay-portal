@@ -256,6 +256,10 @@ public class ProjectTemplates {
 	}
 
 	private void _checkArgs(ProjectTemplatesArgs projectTemplatesArgs) {
+		if (Validator.isNull(projectTemplatesArgs.getAuthor())) {
+			throw new IllegalArgumentException("Author is required");
+		}
+
 		String template = projectTemplatesArgs.getTemplate();
 
 		if (Validator.isNull(projectTemplatesArgs.getTemplate())) {

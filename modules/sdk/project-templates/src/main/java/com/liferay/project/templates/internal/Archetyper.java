@@ -72,7 +72,7 @@ public class Archetyper {
 		throws Exception {
 
 		String artifactId = projectTemplatesArgs.getName();
-		String author = System.getProperty("user.name");
+		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
 		String contributorType = projectTemplatesArgs.getContributorType();
 		String hostBundleSymbolicName =

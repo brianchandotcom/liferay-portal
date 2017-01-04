@@ -171,7 +171,7 @@ public class HtmlImplTest {
 	public void testEscapeNull() {
 		Assert.assertNull(_htmlImpl.escape(null));
 	}
-	
+
 	@Test
 	public void testEscapeNullChar() {
 		Assert.assertEquals(

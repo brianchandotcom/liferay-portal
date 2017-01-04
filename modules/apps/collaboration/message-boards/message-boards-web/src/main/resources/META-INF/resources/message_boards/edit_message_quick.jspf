@@ -155,7 +155,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						<liferay-captcha:captcha url="<%= captchaURL %>" />
 					</c:if>
 
-					<aui:button cssClass="advanced-reply btn btn-link btn-sm" onClick='<%= liferayPortletResponse.getNamespace() + "advancedReply" + replyToMessageId + "();" %>' value="advanced-reply" />
+					<aui:button cssClass="advanced-reply btn btn-link btn-sm" value="advanced-reply" />
 
 					<c:if test="<%= themeDisplay.isSignedIn() && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBThread.class.getName(), threadId) && !SubscriptionLocalServiceUtil.isSubscribed(themeDisplay.getCompanyId(), user.getUserId(), MBCategory.class.getName(), categoryId) %>">
 						<aui:input helpMessage="message-boards-message-subscribe-me-help" label="subscribe-me" name="subscribe" type='<%= (mbGroupServiceSettings.isEmailMessageAddedEnabled() || mbGroupServiceSettings.isEmailMessageUpdatedEnabled()) ? "checkbox" : "hidden" %>' value="<%= subscribeByDefault %>" />
@@ -206,6 +206,7 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 <aui:script require="message-boards-web/message_boards/js/MBPortlet.es">
 	new messageBoardsWebMessage_boardsJsMBPortletEs.default(
 		{
+			advancedReplyUrl: '<%= advancedReplyURL.toString() %>',
 			constants: {
 				'ACTION_PUBLISH': '<%= WorkflowConstants.ACTION_PUBLISH %>',
 				'CMD': '<%= Constants.CMD %>'
@@ -222,18 +223,4 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 	window['<portlet:namespace />replyMessageOnChange' + <%= replyToMessageId %>] = function(html) {
 		Liferay.Util.toggleDisabled('#<portlet:namespace />replyMessageButton<%= replyToMessageId %>', html === '');
 	};
-
-	function <portlet:namespace />advancedReply<%= replyToMessageId %>() {
-		var inputNode = AUI.$('#<portlet:namespace />addQuickReplyFm<%= replyToMessageId %>').fm('body');
-
-		inputNode.val(window['<portlet:namespace />replyMessageBody<%= replyToMessageId %>'].getHTML());
-
-		var form = document.createElement('form');
-
-		form.appendChild(inputNode.clone().get(0));
-		form.setAttribute('action', '<%= advancedReplyURL.toString() %>');
-		form.setAttribute('method', 'post');
-
-		submitForm(form);
-	}
 </aui:script>

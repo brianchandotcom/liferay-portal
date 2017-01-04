@@ -35,6 +35,13 @@ class MBPortlet extends PortletBase {
 				this.saveDraft_(e);
 			}));
 		}
+
+		let advancedReplyLink = this.one('.advanced-reply');
+		if (advancedReplyLink) {
+			this.eventHandler_.add(advancedReplyLink.addEventListener('click', (e) => {
+				this.openAdvancedReply_(e);
+			}));
+		}
 	}
 
 	/**
@@ -43,6 +50,25 @@ class MBPortlet extends PortletBase {
 	detached() {
 		super.detached();
 		this.eventHandler_.removeAllListeners();
+	}
+
+	/**
+	 * Redirects to the advanced reply page
+	 * keeping the current message.
+	 *
+	 * @protected
+	 */
+	openAdvancedReply_() {
+		let inputNode = this.one('#body');
+		inputNode.value = window[this.ns('replyMessageBody' + this.replyToMessageId)].getHTML();
+
+		let form = document.createElement('form');
+
+		form.appendChild(inputNode.cloneNode());
+		form.setAttribute('action', this.advancedReplyUrl);
+		form.setAttribute('method', 'post');
+
+		submitForm(form);
 	}
 
 	/**
@@ -123,8 +149,17 @@ class MBPortlet extends PortletBase {
  */
 MBPortlet.STATE = {
 	/**
+	 * Url to the advanced reply page
+	 * @instance
+	 * @memberof MBPortlet
+	 * @type {String}
+	 */
+	advancedReplyUrl: {
+		validator: core.isString
+	},
+	/**
 	 * Portlet's constants
-	 * @@instance
+	 * @instance
 	 * @memberof MBPortlet
 	 * @type {!Object}
 	 */
@@ -145,7 +180,7 @@ MBPortlet.STATE = {
 
 	/**
 	 * The id of the message that
-	 * you are replying to.
+	 * you are replying to
 	 * @instance
 	 * @memberof MBPortlet
 	 * @type {String}

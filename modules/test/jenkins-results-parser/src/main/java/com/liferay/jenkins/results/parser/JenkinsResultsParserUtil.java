@@ -39,12 +39,14 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -614,6 +616,42 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String redact(String string) {
+		Set<String> redactTokens = new HashSet<>();
+
+		Properties properties = null;
+
+		try {
+			properties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties.", ioe);
+		}
+
+		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
+			String key = properties.getProperty(_getRedactTokenKey(i));
+
+			String redactToken = key;
+
+			if (key.startsWith("${") && key.endsWith("}")) {
+				redactToken = properties.getProperty(
+					key.substring(2, key.length() - 1));
+			}
+
+			if ((redactToken != null) && !redactToken.isEmpty()) {
+				redactTokens.add(redactToken);
+			}
+		}
+
+		redactTokens.remove("test");
+
+		for (String redactToken : redactTokens) {
+			string = string.replace(redactToken, "[REDACTED]");
+		}
+
+		return string;
+	}
+
 	public static void sendEmail(
 			String body, String from, String subject, String to)
 		throws Exception {
@@ -935,6 +973,10 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return duration;
+	}
+
+	private static String _getRedactTokenKey(int index) {
+		return "github.message.redact.token[" + index + "]";
 	}
 
 	private static Hashtable<?, ?> _buildProperties;

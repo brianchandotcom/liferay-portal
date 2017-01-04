@@ -63,7 +63,7 @@ public class RootFolderDemoDataCreatorImpl
 		}
 		catch (NoSuchFolderException nsfe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfe);
+				_log.warn(nsfe, nsfe);
 			}
 		}
 

@@ -97,7 +97,7 @@ public abstract class BaseUserDemoDataCreator
 		}
 		catch (NoSuchUserException nsue) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsue);
+				_log.warn(nsue, nsue);
 			}
 		}
 

@@ -83,7 +83,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(nsfee);
+				_log.warn(nsfee, nsfee);
 			}
 		}
 

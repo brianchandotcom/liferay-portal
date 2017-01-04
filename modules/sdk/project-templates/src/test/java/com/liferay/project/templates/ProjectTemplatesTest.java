@@ -1196,6 +1196,7 @@ public class ProjectTemplatesTest {
 
 		completeArgs.add("-DarchetypeGroupId=com.liferay");
 		completeArgs.add("-DarchetypeVersion=" + projectTemplateVersion);
+		completeArgs.add("-Dauthor=" + System.getProperty("user.name"));
 		completeArgs.add("-DgroupId=com.test");
 		completeArgs.add("-DartifactId=" + name);
 		completeArgs.add("-Dversion=1.0.0");

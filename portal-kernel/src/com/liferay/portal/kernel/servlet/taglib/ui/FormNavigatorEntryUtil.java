@@ -129,8 +129,25 @@ public class FormNavigatorEntryUtil {
 		}
 
 		for (FormNavigatorEntry<T> formNavigatorEntry : formNavigatorEntries) {
-			if (formNavigatorEntry.isVisible(user, formModelBean)) {
-				filterFormNavigatorEntries.add(formNavigatorEntry);
+			FormNavigatorEntryVisibilitySupervisor
+				formNavigatorEntryVisibilitySupervisor =
+					_instance._formNavigatorEntryVisibilitySupervisors.
+						getService(
+							_getKey(
+								formNavigatorEntry.getFormNavigatorId(),
+								formNavigatorEntry.getCategoryKey()));
+
+			if (formNavigatorEntryVisibilitySupervisor != null) {
+				if (formNavigatorEntryVisibilitySupervisor.isVisible(
+						formNavigatorEntry, user, formModelBean)) {
+
+					filterFormNavigatorEntries.add(formNavigatorEntry);
+				}
+			}
+			else {
+				if (formNavigatorEntry.isVisible(user, formModelBean)) {
+					filterFormNavigatorEntries.add(formNavigatorEntry);
+				}
 			}
 		}
 
@@ -168,6 +185,36 @@ public class FormNavigatorEntryUtil {
 			},
 			new PropertyServiceReferenceComparator<FormNavigatorEntry>(
 				"form.navigator.entry.order"));
+
+		_formNavigatorEntryVisibilitySupervisors =
+			ServiceTrackerCollections.openSingleValueMap(
+				FormNavigatorEntryVisibilitySupervisor.class, null,
+				new ServiceReferenceMapper
+					<String, FormNavigatorEntryVisibilitySupervisor>() {
+
+					@Override
+					public void map(
+						ServiceReference<FormNavigatorEntryVisibilitySupervisor>
+							serviceReference,
+						Emitter<String> emitter) {
+
+						Registry registry = RegistryUtil.getRegistry();
+
+						FormNavigatorEntryVisibilitySupervisor<?>
+							formNavigatorEntryVisibilitySupervisor =
+								registry.getService(serviceReference);
+
+						emitter.emit(
+							_getKey(
+								formNavigatorEntryVisibilitySupervisor.
+									getFormNavigatorId(),
+								formNavigatorEntryVisibilitySupervisor.
+									getCategoryKey()));
+
+						registry.ungetService(serviceReference);
+					}
+
+				});
 	}
 
 	private static final FormNavigatorEntryUtil _instance =
@@ -176,6 +223,10 @@ public class FormNavigatorEntryUtil {
 	@SuppressWarnings("rawtypes")
 	private final ServiceTrackerMap<String, List<FormNavigatorEntry>>
 		_formNavigatorEntries;
+
+	private final ServiceTrackerMap
+		<String, FormNavigatorEntryVisibilitySupervisor>
+			_formNavigatorEntryVisibilitySupervisors;
 
 	/**
 	 * @see com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator

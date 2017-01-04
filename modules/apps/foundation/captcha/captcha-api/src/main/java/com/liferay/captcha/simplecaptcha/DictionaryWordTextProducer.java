@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.captcha.simplecaptcha;
+package com.liferay.captcha.simplecaptcha;
 
-import com.liferay.portal.kernel.util.PwdGenerator;
+import com.liferay.portal.kernel.words.WordsUtil;
 
 import nl.captcha.text.producer.TextProducer;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class PinNumberTextProducer implements TextProducer {
+public class DictionaryWordTextProducer implements TextProducer {
 
 	@Override
 	public String getText() {
-		return PwdGenerator.getPinNumber();
+		return WordsUtil.getRandomWord();
 	}
 
 }

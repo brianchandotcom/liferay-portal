@@ -32,62 +32,42 @@ public class AlertTag extends IncludeTag {
 
 	public void setAnimationTime(Integer animationTime) {
 		_animationTime = animationTime;
-
-		setScopedAttribute("animationTime", animationTime);
 	}
 
 	public void setCloseable(boolean closeable) {
 		_closeable = closeable;
-
-		setScopedAttribute("closeable", closeable);
 	}
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
-
-		setScopedAttribute("cssClass", cssClass);
 	}
 
 	public void setDestroyOnHide(boolean destroyOnHide) {
 		_destroyOnHide = destroyOnHide;
-
-		setScopedAttribute("destroyOnHide", destroyOnHide);
 	}
 
 	public void setIcon(String icon) {
 		_icon = icon;
-
-		setScopedAttribute("icon", icon);
 	}
 
 	public void setMessage(String message) {
 		_message = message;
-
-		setScopedAttribute("message", message);
 	}
 
 	public void setTargetNode(String targetNode) {
 		_targetNode = targetNode;
-
-		setScopedAttribute("targetNode", targetNode);
 	}
 
 	public void setTimeout(Integer timeout) {
 		_timeout = timeout;
-
-		setScopedAttribute("timeout", timeout);
 	}
 
 	public void setTitle(String title) {
 		_title = title;
-
-		setScopedAttribute("title", title);
 	}
 
 	public void setType(String type) {
 		_type = type;
-
-		setScopedAttribute("type", type);
 	}
 
 	@Override

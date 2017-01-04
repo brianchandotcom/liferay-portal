@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AVAILABLE_TAB</td>
+	<td>//a[@role='menuitem' and contains(.,'Available')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BASIC_ARTICLE</td>
 	<td>//a[contains(@id,'menuItem') and contains(.,'Basic Article')]</td>
 	<td></td>
@@ -291,6 +296,11 @@
 <tr>
 	<td>COPY_APPLICATIONS</td>
 	<td>//a[@role='menuitem' and contains(.,'Copy Applications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_TAB</td>
+	<td>//a[@role='menuitem' and contains(.,'Current')]</td>
 	<td></td>
 </tr>
 <tr>

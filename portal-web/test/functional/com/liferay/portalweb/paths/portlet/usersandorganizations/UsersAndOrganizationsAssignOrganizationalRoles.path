@@ -9,21 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>CURRENT_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Current')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>AVAILABLE_TAB</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Available')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADVANCED_SEARCH_ICON</td>
 	<td>//span[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>

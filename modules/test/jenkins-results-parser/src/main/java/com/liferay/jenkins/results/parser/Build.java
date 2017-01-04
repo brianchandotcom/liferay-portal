@@ -32,6 +32,8 @@ public interface Build {
 
 	public List<String> getBadBuildURLs();
 
+	public String getBranchName();
+
 	public JSONObject getBuildJSONObject();
 
 	public int getBuildNumber();
@@ -45,6 +47,8 @@ public interface Build {
 	public int getDownstreamBuildCount(String status);
 
 	public List<Build> getDownstreamBuilds(String status);
+
+	public long getDuration();
 
 	public String getInvocationURL();
 

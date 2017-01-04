@@ -152,6 +152,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getBranchName() {
+		return branchName;
+	}
+
+	@Override
 	public JSONObject getBuildJSONObject() {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
@@ -251,6 +256,21 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return filteredDownstreamBuilds;
+	}
+
+	@Override
+	public long getDuration() {
+		JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
+
+		long duration = buildJSONObject.getLong("duration");
+
+		if (duration == 0) {
+			long timestamp = buildJSONObject.getLong("timestamp");
+
+			duration = System.currentTimeMillis() - timestamp;
+		}
+
+		return duration;
 	}
 
 	@Override
@@ -1333,7 +1353,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
-		jobName = matcher.group("jobName");
+		setJobName(matcher.group("jobName"));
 		master = matcher.group("master");
 
 		loadParametersFromBuildJSONObject();
@@ -1362,13 +1382,27 @@ public abstract class BaseBuild implements Build {
 				throw new RuntimeException("Invalid invocation URL");
 			}
 
-			jobName = invocationURLMatcher.group("jobName");
+			setJobName(invocationURLMatcher.group("jobName"));
 			master = invocationURLMatcher.group("master");
 
 			loadParametersFromQueryString(invocationURL);
 
 			setStatus("starting");
 		}
+	}
+
+	protected void setJobName(String jobName) {
+		this.jobName = jobName;
+
+		Matcher matcher = jobNamePattern.matcher(jobName);
+
+		if (matcher.find()) {
+			branchName = matcher.group("branchName");
+
+			return;
+		}
+
+		branchName = "master";
 	}
 
 	protected void setStatus(String status) {
@@ -1410,11 +1444,14 @@ public abstract class BaseBuild implements Build {
 	protected static final Pattern invocationURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
 			"buildWithParameters\\?(?<queryString>.*)");
+	protected static final Pattern jobNamePattern = Pattern.compile(
+		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
 	protected static final String tempMapBaseURL =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
+	protected String branchName;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
 	protected String jobName;

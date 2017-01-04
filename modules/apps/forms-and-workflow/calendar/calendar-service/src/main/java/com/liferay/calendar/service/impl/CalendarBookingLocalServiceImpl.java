@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -86,6 +87,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TimeZone;
 
 /**
  * @author Eduardo Lundgren
@@ -124,10 +126,12 @@ public class CalendarBookingLocalServiceImpl
 			descriptionMap.put(entry.getKey(), sanitizedDescription);
 		}
 
+		TimeZone timeZone = getTimeZone(calendar, allDay);
+
 		java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
-			startTime);
+			startTime, timeZone);
 		java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
-			endTime);
+			endTime, timeZone);
 
 		if (allDay) {
 			startTimeJCalendar = JCalendarUtil.toMidnightJCalendar(
@@ -1098,10 +1102,12 @@ public class CalendarBookingLocalServiceImpl
 			descriptionMap.put(entry.getKey(), sanitizedDescription);
 		}
 
+		TimeZone timeZone = getTimeZone(calendar, allDay);
+
 		java.util.Calendar startTimeJCalendar = JCalendarUtil.getJCalendar(
-			startTime);
+			startTime, timeZone);
 		java.util.Calendar endTimeJCalendar = JCalendarUtil.getJCalendar(
-			endTime);
+			endTime, timeZone);
 
 		if (allDay) {
 			startTimeJCalendar = JCalendarUtil.toMidnightJCalendar(
@@ -1624,6 +1630,16 @@ public class CalendarBookingLocalServiceImpl
 		jsonObject.put("title", calendarBooking.getTitle());
 
 		return jsonObject.toString();
+	}
+
+	protected TimeZone getTimeZone(Calendar calendar, boolean allDay) {
+		TimeZone timeZone = calendar.getTimeZone();
+
+		if (allDay) {
+			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
+		}
+
+		return timeZone;
 	}
 
 	protected List<String> getUnmodifiedAttributesNames(

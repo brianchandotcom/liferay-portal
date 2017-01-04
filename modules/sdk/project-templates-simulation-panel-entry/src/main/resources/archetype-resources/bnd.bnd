@@ -1,8 +1,8 @@
 Bundle-Name: ${artifactId}
 Bundle-SymbolicName: ${package}
 Bundle-Version: ${version}
-Web-ContextPath: /simulation-panel-app-${artifactId}
-#if (${buildType} != "gradle")
+Web-ContextPath: /simulation-panel-app-${artifactId}#if (${buildType} != "gradle")
+
 -jsp: *.jsp,*.jspf
 -plugin.jsp: com.liferay.ant.bnd.jsp.JspAnalyzerPlugin
 -plugin.resourcebundle: com.liferay.ant.bnd.resource.bundle.ResourceBundleLoaderAnalyzerPlugin

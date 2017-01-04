@@ -3,6 +3,9 @@ package ${package};
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
+/**
+ * @author ${author}
+ */
 public class ${className} implements BundleActivator {
 
 	@Override

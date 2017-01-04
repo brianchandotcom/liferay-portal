@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * @author ${author}
+ */
 @Component(
 	immediate = true,
 	property = {"type=" + TemplateContextContributor.TYPE_THEME},

@@ -22,6 +22,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author ${author}
+ */
 @Component(immediate = true, service = TrackingAction.class)
 public class ${className}TrackingAction extends BaseJSPTrackingAction {
 

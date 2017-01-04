@@ -10,6 +10,9 @@ import com.liferay.portal.kernel.model.Portlet;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+/**
+ * @author ${author}
+ */
 @Component(
 	immediate = true,
 	property = {

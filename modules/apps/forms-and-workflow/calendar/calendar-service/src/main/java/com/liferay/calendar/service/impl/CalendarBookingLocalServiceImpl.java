@@ -21,6 +21,8 @@ import com.liferay.calendar.exception.CalendarBookingRecurrenceException;
 import com.liferay.calendar.exporter.CalendarDataFormat;
 import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
+import com.liferay.calendar.internal.recurrence.RecurrenceSplit;
+import com.liferay.calendar.internal.recurrence.RecurrenceSplitter;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
@@ -74,6 +76,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.kernel.model.SocialActivityConstants;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.exception.TrashEntryException;
@@ -1728,35 +1731,6 @@ public class CalendarBookingLocalServiceImpl
 		return unmodifiedAttributesNames;
 	}
 
-	protected void modifyCalendarBookingRecurrenceFromCountToUntilDate(
-			CalendarBooking calendarBooking)
-		throws PortalException {
-
-		Recurrence recurrenceObj = calendarBooking.getRecurrenceObj();
-
-		int finalInstanceIndex = recurrenceObj.getCount() - 1;
-
-		List<java.util.Calendar> exceptionJCalendars =
-			recurrenceObj.getExceptionJCalendars();
-
-		finalInstanceIndex -= exceptionJCalendars.size();
-
-		CalendarBooking calendarBookingInstance = getCalendarBookingInstance(
-			calendarBooking.getCalendarBookingId(), finalInstanceIndex);
-
-		java.util.Calendar untilJCalendar = JCalendarUtil.getJCalendar(
-			calendarBookingInstance.getEndTime());
-
-		recurrenceObj.setCount(0);
-
-		recurrenceObj.setUntilJCalendar(untilJCalendar);
-
-		calendarBooking.setRecurrence(
-			RecurrenceSerializer.serialize(recurrenceObj));
-
-		calendarBookingPersistence.update(calendarBooking);
-	}
-
 	protected void sendNotification(
 		CalendarBooking calendarBooking,
 		NotificationTemplateType notificationTemplateType,
@@ -1878,26 +1852,24 @@ public class CalendarBookingLocalServiceImpl
 					recurringCalendarBooking.getRecurrenceObj();
 
 				if (Validator.isNotNull(recurrenceObj)) {
-					if (recurrenceObj.getCount() > 0) {
-						modifyCalendarBookingRecurrenceFromCountToUntilDate(
-							recurringCalendarBooking);
-					}
-
-					java.util.Calendar untilJCalendar =
-						recurrenceObj.getUntilJCalendar();
-
-					java.util.Calendar singleInstanceJCalendar =
+					java.util.Calendar splitJCalendar =
 						JCalendarUtil.getJCalendar(
 							calendarBooking.getEndTime());
 
-					if ((untilJCalendar == null) ||
-						JCalendarUtil.isLaterDay(
-							untilJCalendar, singleInstanceJCalendar)) {
+					splitJCalendar.add(java.util.Calendar.DATE, 1);
 
+					java.util.Calendar startTimeJCalendar =
+						JCalendarUtil.getJCalendar(
+							recurringCalendarBooking.getStartTime(),
+							recurringCalendarBooking.getTimeZone());
+
+					RecurrenceSplit recurrenceSplit = recurrenceSplitter.split(
+						recurrenceObj, startTimeJCalendar, splitJCalendar);
+
+					if (recurrenceSplit.isSplit()) {
 						CalendarBooking newCalendarBooking =
 							splitCalendarBookingInstance(
-								recurringCalendarBooking,
-								singleInstanceJCalendar);
+								recurringCalendarBooking, splitJCalendar);
 
 						followingRecurringCalendarBookings.add(
 							newCalendarBooking);
@@ -2030,6 +2002,9 @@ public class CalendarBookingLocalServiceImpl
 			throw new CalendarBookingRecurrenceException();
 		}
 	}
+
+	@ServiceReference(type = RecurrenceSplitter.class)
+	protected RecurrenceSplitter recurrenceSplitter;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);

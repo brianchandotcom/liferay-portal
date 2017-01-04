@@ -122,7 +122,7 @@ public class ProjectTemplatesArgs {
 
 	@Parameter(
 		description = "The name of the user associated with the code.",
-		names = "--author", required = true
+		names = "--author"
 	)
 	private String _author;
 

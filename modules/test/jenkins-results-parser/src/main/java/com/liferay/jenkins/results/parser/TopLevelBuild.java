@@ -32,6 +32,20 @@ import org.json.JSONObject;
 public class TopLevelBuild extends BaseBuild {
 
 	@Override
+	public void archive(String archiveName) {
+		super.archive(archiveName);
+
+		try {
+			writeArchiveFile(
+				getJenkinsReport(), getArchivePath() + "/jenkins-report.html");
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to archive jenkins report.", ioe);
+		}
+	}
+
+	@Override
 	public String getDisplayName() {
 		String displayName = super.getDisplayName();
 
@@ -50,6 +64,35 @@ public class TopLevelBuild extends BaseBuild {
 		String tempMapName = "git." + repositoryType + ".properties";
 
 		return getTempMap(tempMapName);
+	}
+
+	public String getJenkinsReport() {
+		try {
+			return JenkinsResultsParserUtil.toString(
+				JenkinsResultsParserUtil.getLocalURL(getJenkinsReportURL()));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get Jenkins Report.", ioe);
+		}
+	}
+
+	public String getJenkinsReportURL() {
+		if (fromArchive) {
+			return getBuildURL() + "/jenkins-report.html";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("https://");
+		sb.append(getMaster());
+		sb.append(".liferay.com/");
+		sb.append("userContent/jobs/");
+		sb.append(getJobName());
+		sb.append("/builds/");
+		sb.append(getBuildNumber());
+		sb.append("/jenkins-report.html");
+
+		return sb.toString();
 	}
 
 	@Override

@@ -1066,15 +1066,16 @@ public class ProjectTemplatesTest {
 
 				@Override
 				public FileVisitResult visitFile(
-						Path file, BasicFileAttributes attrs)
+						Path path, BasicFileAttributes basicFileAttributes)
 					throws IOException {
 
-					if (file.endsWith(".java")) {
+					if (path.endsWith(".java")) {
 						hasJavaFiles[0] = true;
+
 						return FileVisitResult.TERMINATE;
 					}
 
-					return super.visitFile(file, attrs);
+					return FileVisitResult.CONTINUE;
 				}
 
 			});

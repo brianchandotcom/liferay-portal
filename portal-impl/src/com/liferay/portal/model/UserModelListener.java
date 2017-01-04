@@ -34,7 +34,7 @@ import java.util.Map;
 public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
-	public void onAfterUpdate(User user) {
+	public void onBeforeUpdate(User user) {
 		if (!user.isDefaultUser()) {
 			return;
 		}

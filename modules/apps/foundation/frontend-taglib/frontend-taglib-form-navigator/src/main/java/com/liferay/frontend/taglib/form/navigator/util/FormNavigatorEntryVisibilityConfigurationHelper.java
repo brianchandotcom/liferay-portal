@@ -62,9 +62,10 @@ public class FormNavigatorEntryVisibilityConfigurationHelper {
 						formNavigatorConfiguration.
 							hiddenFormNavigatorEntryQueries()
 				).anyMatch(
-					hiddenFormNavigatorEntryQueries -> _containsClass(
-						hiddenFormNavigatorEntryQueries, configurationPrefix,
-						formNavigatorEntryClassName));
+					hiddenFormNavigatorEntryQueries ->
+						containsFormNavigatorEntryClassName(
+							hiddenFormNavigatorEntryQueries,
+							configurationPrefix, formNavigatorEntryClassName));
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -73,7 +74,7 @@ public class FormNavigatorEntryVisibilityConfigurationHelper {
 		return false;
 	}
 
-	private boolean _containsClass(
+	protected boolean containsFormNavigatorEntryClassName(
 		String[] hiddenFormNavigatorEntryQueries, String prefix,
 		String formNavigatorEntryClassName) {
 

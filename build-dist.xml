@@ -1271,6 +1271,8 @@ this task.
 					<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
 					<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 				</replace>
+
+				<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m"]]></echo>
 			</then>
 			<elseif>
 				<equals arg1="${app.server.jboss.version}" arg2="7.0.0" />
@@ -1279,15 +1281,11 @@ this task.
 						<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m ]]></replacetoken>
 						<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
 					</replace>
+
+					<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">${line.separator}<![CDATA[JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=512m"]]></echo>
 				</then>
 			</elseif>
 		</if>
-
-		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
-			<![CDATA[
-				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Djboss.as.management.blocking.timeout=480 -Duser.timezone=GMT -Xmx1024m -XX:MaxMetaspaceSize=384m"
-			]]>
-		</echo>
 
 		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
 			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms1G -Xmx1G -XX:MaxPermSize=256M"]]></replacetoken>

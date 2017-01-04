@@ -171,6 +171,12 @@ public class HtmlImplTest {
 	public void testEscapeNull() {
 		Assert.assertNull(_htmlImpl.escape(null));
 	}
+	
+	@Test
+	public void testEscapeNullChar() {
+		Assert.assertEquals(
+			StringPool.SPACE, _htmlImpl.escape(StringPool.NULL_CHAR));
+	}
 
 	@Test
 	public void testEscapeSemiColon() {

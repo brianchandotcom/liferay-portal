@@ -186,7 +186,7 @@ public class ProjectTemplatesTest {
 	}
 
 	@Test
-	public void testBuildTemplateApiContainsCorrectUserName() throws Exception {
+	public void testBuildTemplateApiContainsCorrectAuthor() throws Exception {
 		String userName = System.getProperty("user.name");
 
 		File gradleProjectDir = _buildTemplateWithGradle(

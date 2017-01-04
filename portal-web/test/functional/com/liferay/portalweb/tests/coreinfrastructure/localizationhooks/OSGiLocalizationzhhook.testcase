@@ -5,7 +5,9 @@
 	<property name="testray.main.component.name" value="Localization Hooks" />
 
 	<set-up>
-		<execute macro="User#firstLoginPG" />
+		<execute macro="User#firstLoginPG">
+			<var name="localization" value="ZH" />
+		</execute>
 	</set-up>
 
 	<command name="LocalizationZHHookSmoke" priority="4">

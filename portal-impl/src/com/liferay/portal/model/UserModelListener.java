@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Override
 	public void onBeforeUpdate(User user) {
-		if (!user.isDefaultUser()) {
+		if (!user.isDefaultUser() || !isLocaleUpdated(user)) {
 			return;
 		}
 
@@ -48,6 +49,17 @@ public class UserModelListener extends BaseModelListener<User> {
 					user.getCompanyId(),
 				pe);
 		}
+	}
+
+	protected boolean isLocaleUpdated(User user) {
+		Locale newLocale = user.getLocale();
+		Locale defaultLocale = LocaleUtil.getDefault();
+
+		if (newLocale.equals(defaultLocale)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected void verifyGroupsNameMap(User user) throws PortalException {

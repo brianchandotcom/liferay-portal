@@ -14,8 +14,15 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -23,6 +30,16 @@ import org.json.JSONObject;
  * @author Kevin Yen
  */
 public class TopLevelBuild extends BaseBuild {
+
+	public Map<String, String> getGitRepositoryDetailsTempMap(
+		String repositoryName) {
+
+		String repositoryType = getRepositoryType(repositoryName);
+
+		String tempMapName = "git." + repositoryType + ".properties";
+
+		return getTempMap(tempMapName);
+	}
 
 	@Override
 	public String getStatusReport(int indentSize) {
@@ -64,30 +81,168 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
+	protected void archiveJSON() {
+		super.archiveJSON();
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			String repositoryTypes = buildProperties.getProperty(
+				"repository.types");
+
+			for (String repositoryType : repositoryTypes.split(",")) {
+				try {
+					JSONObject gitRepositoryDetailsJSONObject =
+						JenkinsResultsParserUtil.toJSONObject(
+							getGitRepositoryDetailsPropertiesTempMapURL(
+								repositoryType));
+
+					Set<?> keySet = gitRepositoryDetailsJSONObject.keySet();
+
+					if (keySet.isEmpty()) {
+						continue;
+					}
+
+					writeArchiveFile(
+						gitRepositoryDetailsJSONObject.toString(4),
+						getArchivePath() + "/git." + repositoryType +
+							".properties.json");
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(
+						"Unable to create git." + repositoryType +
+							".properties.json",
+						ioe);
+				}
+			}
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+	}
+
+	@Override
 	protected ExecutorService getExecutorService() {
 		return Executors.newFixedThreadPool(20);
 	}
 
-	@Override
-	protected String getStopPropertiesTempMapURL() {
+	protected String getGitRepositoryDetailsPropertiesTempMapURL(
+		String repositoryType) {
+
 		if (fromArchive) {
-			return getBuildURL() + "/stop-properties.json";
+			StringBuilder sb = new StringBuilder();
+
+			sb.append(getBuildURL());
+			sb.append("git.");
+			sb.append(repositoryType);
+			sb.append(".properties.json");
+
+			return sb.toString();
 		}
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(
-			"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/");
+		sb.append(tempMapBaseURL);
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		sb.append(topLevelBuild.getMaster());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+
+		sb.append("/git.");
+		sb.append(repositoryType);
+		sb.append(".properties");
+
+		return sb.toString();
+	}
+
+	@Override
+	protected String getStartPropertiesTempMapURL() {
+		if (fromArchive) {
+			return getBuildURL() + "/start.properties.json";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(tempMapBaseURL);
 		sb.append(getMaster());
 		sb.append("/");
 		sb.append(getJobName());
 		sb.append("/");
 		sb.append(getBuildNumber());
 		sb.append("/");
+		sb.append(getJobName());
+		sb.append("/");
+		sb.append("start.properties");
+
+		return sb.toString();
+	}
+
+	@Override
+	protected String getStopPropertiesTempMapURL() {
+		if (fromArchive) {
+			return getBuildURL() + "/stop.properties.json";
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(tempMapBaseURL);
+		sb.append(getMaster());
+		sb.append("/");
+		sb.append(getJobName());
+		sb.append("/");
+		sb.append(getBuildNumber());
+		sb.append("/");
+		sb.append(getJobName());
+		sb.append("/");
 		sb.append("stop.properties");
 
 		return sb.toString();
 	}
+
+	@Override
+	protected String getTempMapURL(String tempMapName) {
+		String tempMapURL = super.getTempMapURL(tempMapName);
+
+		if (tempMapURL != null) {
+			return tempMapURL;
+		}
+
+		Matcher matcher = gitRepositoryTempMapNamePattern.matcher(tempMapName);
+
+		if (matcher.find()) {
+			return getGitRepositoryDetailsPropertiesTempMapURL(
+				matcher.group("repositoryType"));
+		}
+
+		return null;
+	}
+
+	protected String getUpstreamBranchSHA() {
+		String upstreamBranchSHA = getParameterValue(
+			"GITHUB_UPSTREAM_BRANCH_SHA");
+
+		if ((upstreamBranchSHA == null) || upstreamBranchSHA.isEmpty()) {
+			Map<String, String> startPropertiesMap = getStartPropertiesMap();
+
+			upstreamBranchSHA = startPropertiesMap.get(
+				"GITHUB_UPSTREAM_BRANCH_SHA");
+		}
+
+		return upstreamBranchSHA;
+	}
+
+	protected static final Pattern gitRepositoryTempMapNamePattern =
+		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
 
 	private long _updateDuration;
 

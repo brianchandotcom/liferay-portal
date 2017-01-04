@@ -36,10 +36,13 @@ import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -179,6 +182,28 @@ public class ProjectTemplatesTest {
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.jar",
 			"target/foo-1.0.0.jar");
+	}
+
+	@Test
+	public void testBuildTemplateApiContainsCorrectUserName() throws Exception {
+		String userName = System.getProperty("user.name");
+
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"api", "username-test");
+
+		_testContains(
+			gradleProjectDir,
+			"src/main/java/username/test/api/UsernameTest.java",
+			"@author " + userName);
+
+		File mavenProjectDir = _buildTemplateWithMaven(
+			"api", "username-test", "-Dauthor=" + userName,
+			"-DclassName=UsernameTest", "-Dpackage=username.test");
+
+		_testContains(
+			mavenProjectDir,
+			"src/main/java/username/test/api/UsernameTest.java",
+			"@author " + userName);
 	}
 
 	@Test
@@ -1033,15 +1058,44 @@ public class ProjectTemplatesTest {
 			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
+		final boolean[] hasJavaFiles = new boolean[1];
+
+		Files.walkFileTree(
+			gradleProjectDir.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path file, BasicFileAttributes attrs)
+					throws IOException {
+
+					if (file.endsWith(".java")) {
+						hasJavaFiles[0] = true;
+						return FileVisitResult.TERMINATE;
+					}
+
+					return super.visitFile(file, attrs);
+				}
+
+			});
+
+		List<String> gradleTasks = new ArrayList<>();
+
+		if (hasJavaFiles[0]) {
+			gradleTasks.add(_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING);
+		}
+
+		gradleTasks.add(_GRADLE_TASK_PATH_BUILD);
+
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
-			mavenBundleFileName, _GRADLE_TASK_PATH_BUILD);
+			mavenBundleFileName, gradleTasks.toArray(new String[0]));
 	}
 
 	private void _buildProjects(
 			File gradleProjectDir, File mavenProjectDir,
 			String gradleBundleFileName, String mavenBundleFileName,
-			String gradleTaskPath)
+			String... gradleTaskPath)
 		throws Exception {
 
 		_executeGradle(gradleProjectDir, gradleTaskPath);
@@ -1569,6 +1623,9 @@ public class ProjectTemplatesTest {
 
 	private static final String _GRADLE_TASK_PATH_BUILD_SERVICE =
 		":buildService";
+
+	private static final String _GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING =
+		":checkSourceFormatting";
 
 	private static final String _MAVEN_GOAL_BUILD_SERVICE =
 		"liferay:build-service";

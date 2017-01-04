@@ -52,6 +52,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.diibadaaba.zipdiff.DifferenceCalculator;
 import net.diibadaaba.zipdiff.Differences;
@@ -1058,7 +1059,7 @@ public class ProjectTemplatesTest {
 			String gradleBundleFileName, String mavenBundleFileName)
 		throws Exception {
 
-		final boolean[] hasJavaFiles = new boolean[1];
+		final AtomicBoolean hasJavaFiles = new AtomicBoolean();
 
 		Files.walkFileTree(
 			gradleProjectDir.toPath(),
@@ -1069,7 +1070,7 @@ public class ProjectTemplatesTest {
 					Path path, BasicFileAttributes basicFileAttributes) {
 
 					if (path.endsWith(".java")) {
-						hasJavaFiles[0] = true;
+						hasJavaFiles.set(true);
 
 						return FileVisitResult.TERMINATE;
 					}
@@ -1079,17 +1080,21 @@ public class ProjectTemplatesTest {
 
 			});
 
-		List<String> gradleTasks = new ArrayList<>();
+		String[] gradleTaskPaths;
 
-		if (hasJavaFiles[0]) {
-			gradleTasks.add(_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING);
+		if (hasJavaFiles.get()) {
+			gradleTaskPaths = new String[] {
+				_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING,
+				_GRADLE_TASK_PATH_BUILD
+			};
 		}
-
-		gradleTasks.add(_GRADLE_TASK_PATH_BUILD);
+		else {
+			gradleTaskPaths = new String[] {_GRADLE_TASK_PATH_BUILD};
+		}
 
 		_buildProjects(
 			gradleProjectDir, mavenProjectDir, gradleBundleFileName,
-			mavenBundleFileName, gradleTasks.toArray(new String[0]));
+			mavenBundleFileName, gradleTaskPaths);
 	}
 
 	private void _buildProjects(

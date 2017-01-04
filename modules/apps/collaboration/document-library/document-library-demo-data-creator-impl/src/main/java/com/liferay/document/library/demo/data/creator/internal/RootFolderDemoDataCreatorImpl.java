@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,6 +58,8 @@ public class RootFolderDemoDataCreatorImpl
 	public void delete() throws PortalException {
 		try {
 			for (long folderId : _folderIds) {
+				_folderIds.remove(folderId);
+
 				_dlAppLocalService.deleteFolder(folderId);
 			}
 		}
@@ -79,6 +81,6 @@ public class RootFolderDemoDataCreatorImpl
 		RootFolderDemoDataCreatorImpl.class);
 
 	private DLAppLocalService _dlAppLocalService;
-	private final List<Long> _folderIds = new ArrayList<>();
+	private final List<Long> _folderIds = new CopyOnWriteArrayList<>();
 
 }

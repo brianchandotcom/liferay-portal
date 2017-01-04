@@ -34,6 +34,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -78,6 +79,8 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 	public void delete() throws PortalException {
 		try {
 			for (long fileEntryId : _fileEntryIds) {
+				_fileEntryIds.remove(fileEntryId);
+
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
 			}
 		}
@@ -86,8 +89,6 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 				_log.warn(nsfee, nsfee);
 			}
 		}
-
-		_fileEntryIds.clear();
 	}
 
 	@Reference(unbind = "-")
@@ -142,6 +143,6 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 	private int _categoryIndex = -1;
 	private DLAppLocalService _dlAppLocalService;
-	private final List<Long> _fileEntryIds = new ArrayList<>();
+	private final List<Long> _fileEntryIds = new CopyOnWriteArrayList<>();
 
 }

@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.users.admin.demo.data.creator.BasicUserDemoDataCreator;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -92,6 +92,8 @@ public abstract class BaseUserDemoDataCreator
 	public void delete() throws PortalException {
 		try {
 			for (long userId : _userIds) {
+				_userIds.remove(userId);
+
 				userLocalService.deleteUser(userId);
 			}
 		}
@@ -100,8 +102,6 @@ public abstract class BaseUserDemoDataCreator
 				_log.warn(nsue, nsue);
 			}
 		}
-
-		_userIds.clear();
 	}
 
 	protected String[] getFullNameArray(String emailAddress) {
@@ -135,6 +135,6 @@ public abstract class BaseUserDemoDataCreator
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUserDemoDataCreator.class);
 
-	private final List<Long> _userIds = new ArrayList<>();
+	private final List<Long> _userIds = new CopyOnWriteArrayList<>();
 
 }

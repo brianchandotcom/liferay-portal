@@ -54,14 +54,10 @@ public class SidebarPanelTag extends IncludeTag {
 
 	public void setResourceURL(String resourceURL) {
 		_resourceURL = resourceURL;
-
-		setScopedAttribute("resourceURL", _resourceURL);
 	}
 
 	public void setSearchContainerId(String searchContainerId) {
 		_searchContainerId = searchContainerId;
-
-		setScopedAttribute("searchContainerId", _searchContainerId);
 	}
 
 	@Override

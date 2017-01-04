@@ -1551,6 +1551,7 @@
 			</then>
 			<else>
 				<execute macro="User#loginPG">
+					<var name="localization" value="${localization}" />
 					<var name="setupWizardEnabled" value="${setupWizardEnabled}" />
 					<var name="specificURL" value="${virtualHostsURL}" />
 					<var name="userEmailAddress" value="${userEmailAddress}" />
@@ -1589,6 +1590,26 @@
 		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_TABS_USER_EXPANDED" />
 	</command>
 
+	<command name="loginLocalizationPG">
+		<if>
+			<equals arg1="${localization}" arg2="ZH" />
+			<then>
+				<var name="signIn" value="登录" />
+			</then>
+			<elseif>
+				<equals arg1="${localization}" arg2="JA" />
+				<then>
+					<var name="signIn" value="ログイン" />
+				</then>
+			</elseif>
+			<else>
+				<var name="signIn" value="Sign In" />
+			</else>
+		</if>
+
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="${signIn}" />
+	</command>
+
 	<command name="loginPG" summary="Log into Liferay Portal as '${userEmailAddress}' using the password '${password}'">
 		<if>
 			<isset var="nodePort" />
@@ -1620,7 +1641,9 @@
 				<equals arg1="${samlEnabled}" arg2="true" />
 			</not>
 			<then>
-				<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+				<execute macro="User#loginLocalizationPG">
+					<var name="localization" value="${localization}" />
+				</execute>
 			</then>
 		</if>
 

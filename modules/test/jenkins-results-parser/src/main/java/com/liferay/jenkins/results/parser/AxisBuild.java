@@ -255,6 +255,16 @@ public class AxisBuild extends BaseBuild {
 	@Override
 	protected void setBuildURL(String buildURL) {
 		try {
+			JenkinsResultsParserUtil.toString(
+				buildURL + "/archive-marker", false, 0, 0, 0);
+
+			fromArchive = true;
+		}
+		catch (IOException ioe) {
+			fromArchive = false;
+		}
+
+		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
 		}
 		catch (UnsupportedEncodingException uee) {

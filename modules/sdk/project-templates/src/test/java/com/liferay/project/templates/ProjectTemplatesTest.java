@@ -187,24 +187,22 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateApiContainsCorrectAuthor() throws Exception {
-		String userName = System.getProperty("user.name");
+		String author = "Test Author";
 
 		File gradleProjectDir = _buildTemplateWithGradle(
-			"api", "username-test");
+			"api", "author-test", "--author", author);
 
 		_testContains(
-			gradleProjectDir,
-			"src/main/java/username/test/api/UsernameTest.java",
-			"@author " + userName);
+			gradleProjectDir, "src/main/java/author/test/api/AuthorTest.java",
+			"@author " + author);
 
 		File mavenProjectDir = _buildTemplateWithMaven(
-			"api", "username-test", "-Dauthor=" + userName,
-			"-DclassName=UsernameTest", "-Dpackage=username.test");
+			"api", "author-test", "-Dauthor=" + author,
+			"-DclassName=AuthorTest", "-Dpackage=author.test");
 
 		_testContains(
-			mavenProjectDir,
-			"src/main/java/username/test/api/UsernameTest.java",
-			"@author " + userName);
+			mavenProjectDir, "src/main/java/author/test/api/AuthorTest.java",
+			"@author " + author);
 	}
 
 	@Test

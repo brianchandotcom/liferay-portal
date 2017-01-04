@@ -662,7 +662,12 @@ app.server.type=@{app.server.type}]]></echo>
 							</antcall>
 
 							<if>
-								<matches pattern="https?://" string="@{test.license.xml.url}" />
+								<and>
+									<matches pattern="https?://" string="@{test.license.xml.url}" />
+									<not>
+										<equals arg1="${test.deploy.license}" arg2="false" />
+									</not>
+								</and>
 								<then>
 									<antcall target="deploy-license-xml">
 										<param name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />

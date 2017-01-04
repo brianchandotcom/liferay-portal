@@ -20,10 +20,10 @@ import com.beust.jcommander.Parameters;
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author David Truong
@@ -42,9 +42,9 @@ public class CleanCommand extends BaseCommand {
 
 		String deployFolder = BundleSupportUtil.getDeployFolder(extension);
 
-		File file = new File(getLiferayHomeDir(), deployFolder + fileName);
+		Path path = getLiferayHomePath();
 
-		Files.deleteIfExists(file.toPath());
+		Files.deleteIfExists(path.resolve(deployFolder + fileName));
 	}
 
 	public String getFileName() {

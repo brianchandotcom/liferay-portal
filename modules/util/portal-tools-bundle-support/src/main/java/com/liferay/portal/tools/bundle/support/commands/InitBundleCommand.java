@@ -26,6 +26,9 @@ import java.io.IOException;
 
 import java.net.URI;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -179,13 +182,11 @@ public class InitBundleCommand extends BaseCommand {
 	}
 
 	protected void deleteBundle() throws IOException {
-		File liferayHomeDir = getLiferayHomeDir();
+		Path dirPath = getLiferayHomePath();
 
-		if (!liferayHomeDir.exists()) {
-			return;
+		if (Files.exists(dirPath)) {
+			FileUtil.deleteDirectory(dirPath);
 		}
-
-		FileUtil.deleteDirectory(liferayHomeDir.toPath());
 	}
 
 	protected void downloadFile() throws Exception {

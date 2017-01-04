@@ -121,6 +121,7 @@ import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
+import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
@@ -1559,6 +1560,23 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		DependencySet dependencySet = configuration.getDependencies();
 
 		dependencySet.withType(
+			ExternalDependency.class,
+			new Action<ExternalDependency>() {
+
+				@Override
+				public void execute(ExternalDependency externalDependency) {
+					String version = externalDependency.getVersion();
+
+					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
+						throw new GradleException(
+							"Please use a timestamp version for " +
+								externalDependency);
+					}
+				}
+
+			});
+
+		dependencySet.withType(
 			ModuleDependency.class,
 			new Action<ModuleDependency>() {
 
@@ -1576,14 +1594,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						moduleDependency.exclude(
 							Collections.singletonMap(
 								"group", "com.liferay.portal"));
-					}
-
-					String version = moduleDependency.getVersion();
-
-					if (version.endsWith(GradleUtil.SNAPSHOT_VERSION_SUFFIX)) {
-						throw new GradleException(
-							"Please use a timestamp version for " +
-								moduleDependency);
 					}
 				}
 

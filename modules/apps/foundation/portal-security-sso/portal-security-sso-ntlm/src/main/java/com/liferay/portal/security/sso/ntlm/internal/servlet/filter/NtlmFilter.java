@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -117,7 +117,7 @@ public class NtlmFilter extends BaseFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (!BrowserSnifferUtil.isIe(request)) {
+		if (!_browserSniffer.isIe(request)) {
 			return false;
 		}
 
@@ -362,6 +362,9 @@ public class NtlmFilter extends BaseFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
+
+	@Reference
+	private BrowserSniffer _browserSniffer;
 
 	private ConfigurationProvider _configurationProvider;
 	private NetlogonConnectionManager _netlogonConnectionManager;

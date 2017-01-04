@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.servlet.BaseFilter;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -64,7 +64,7 @@ public class NtlmPostFilter extends BaseFilter {
 
 		String method = request.getMethod();
 
-		if (!BrowserSnifferUtil.isIe(request) ||
+		if (!_browserSniffer.isIe(request) ||
 			!method.equals(HttpMethods.POST)) {
 
 			return false;
@@ -136,6 +136,9 @@ public class NtlmPostFilter extends BaseFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
+
+	@Reference
+	private BrowserSniffer _browserSniffer;
 
 	private ConfigurationProvider _configurationProvider;
 

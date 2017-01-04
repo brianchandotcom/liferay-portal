@@ -17,7 +17,7 @@ package com.liferay.frontend.js.spa.web.internal.servlet.filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.HttpUtil;
 
@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Chema Balsas
@@ -55,7 +56,7 @@ public class SPAFilter extends BaseFilter implements TryFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		return BrowserSnifferUtil.isIe(request);
+		return _browserSniffer.isIe(request);
 	}
 
 	@Override
@@ -64,5 +65,8 @@ public class SPAFilter extends BaseFilter implements TryFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(SPAFilter.class);
+
+	@Reference
+	private BrowserSniffer _browserSniffer;
 
 }

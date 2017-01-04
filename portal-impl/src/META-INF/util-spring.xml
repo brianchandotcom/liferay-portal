@@ -284,10 +284,9 @@
 		<property name="userPermission" ref="com.liferay.portal.service.permission.UserPermissionImpl" />
 	</bean>
 	<bean class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
-		<property name="browserSniffer">
-			<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" />
-		</property>
+		<property name="browserSniffer" ref="com.liferay.portal.servlet.BrowserSnifferImpl" />
 	</bean>
+	<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" id="com.liferay.portal.servlet.BrowserSnifferImpl" />
 	<bean class="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil" id="com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil">
 		<property name="directRequestDispatcherFactory">
 			<bean class="com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl" />

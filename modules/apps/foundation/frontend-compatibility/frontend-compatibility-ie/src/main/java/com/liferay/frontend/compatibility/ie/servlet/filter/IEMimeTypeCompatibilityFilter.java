@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.compatibility.ie.servlet.filter;
 
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -43,7 +44,7 @@ public class IEMimeTypeCompatibilityFilter extends BasePortalFilter {
 	public boolean isFilterEnabled(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		return BrowserSnifferUtil.isIe(request);
+		return _browserSniffer.isIe(request);
 	}
 
 	@Override
@@ -56,6 +57,9 @@ public class IEMimeTypeCompatibilityFilter extends BasePortalFilter {
 			IEMimeTypeCompatibilityFilter.class.getName(), request,
 			new IEMimeTypeCompatibilityResponseWrapper(response), filterChain);
 	}
+
+	@Reference
+	private BrowserSniffer _browserSniffer;
 
 	private static class IEMimeTypeCompatibilityResponseWrapper
 		extends HttpServletResponseWrapper {

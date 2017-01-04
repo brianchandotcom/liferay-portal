@@ -1066,8 +1066,7 @@ public class ProjectTemplatesTest {
 
 				@Override
 				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
+					Path path, BasicFileAttributes basicFileAttributes) {
 
 					if (path.endsWith(".java")) {
 						hasJavaFiles[0] = true;

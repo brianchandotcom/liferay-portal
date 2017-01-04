@@ -1772,16 +1772,15 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	protected CalendarBooking splitCalendarBookingInstance(
-			CalendarBooking calendarBooking, java.util.Calendar splitJCalendar)
+			CalendarBooking calendarBooking, java.util.Calendar splitJCalendar,
+			Recurrence recurrence)
 		throws PortalException {
 
 		long[] childCalendarIds = getChildCalendarIds(
 			calendarBooking.getCalendarBookingId(),
 			calendarBooking.getCalendarId());
 
-		long laterStartTime = JCalendarUtil.convertTimeToNewDay(
-			calendarBooking.getStartTime(),
-			splitJCalendar.getTimeInMillis() + Time.DAY);
+		long laterStartTime = splitJCalendar.getTimeInMillis();
 
 		long duration =
 			calendarBooking.getEndTime() - calendarBooking.getStartTime();
@@ -1795,7 +1794,8 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getRecurringCalendarBookingId(),
 			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
 			calendarBooking.getLocation(), laterStartTime, laterEndTime,
-			calendarBooking.getAllDay(), calendarBooking.getRecurrence(),
+			calendarBooking.getAllDay(),
+			RecurrenceSerializer.serialize(recurrence),
 			calendarBooking.getFirstReminder(),
 			calendarBooking.getFirstReminderType(),
 			calendarBooking.getSecondReminder(),
@@ -1804,22 +1804,6 @@ public class CalendarBookingLocalServiceImpl
 
 		deleteCalendarBookingInstance(
 			calendarBooking, splitJCalendar.getTimeInMillis(), true, false);
-
-		Recurrence laterRecurrenceObj = laterCalendarBooking.getRecurrenceObj();
-
-		List<java.util.Calendar> exceptionJCalendars = new ArrayList<>(
-			laterRecurrenceObj.getExceptionJCalendars());
-
-		for (java.util.Calendar exceptionJCalendar : exceptionJCalendars) {
-			if (!JCalendarUtil.isLaterDay(exceptionJCalendar, splitJCalendar)) {
-				laterRecurrenceObj.removeExceptionJCalendar(exceptionJCalendar);
-			}
-		}
-
-		laterCalendarBooking.setRecurrence(
-			RecurrenceSerializer.serialize(laterRecurrenceObj));
-
-		calendarBookingPersistence.update(laterCalendarBooking);
 
 		return laterCalendarBooking;
 	}
@@ -1871,9 +1855,15 @@ public class CalendarBookingLocalServiceImpl
 						recurrenceObj, startTimeJCalendar, splitJCalendar);
 
 					if (recurrenceSplit.isSplit()) {
+						java.util.Calendar newStartTimeJCalendar =
+							JCalendarUtil.mergeJCalendar(
+								splitJCalendar, startTimeJCalendar,
+								recurringCalendarBooking.getTimeZone());
+
 						CalendarBooking newCalendarBooking =
 							splitCalendarBookingInstance(
-								recurringCalendarBooking, splitJCalendar);
+								recurringCalendarBooking, newStartTimeJCalendar,
+								recurrenceSplit.getSecondRecurrence());
 
 						followingRecurringCalendarBookings.add(
 							newCalendarBooking);

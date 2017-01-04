@@ -442,7 +442,8 @@
 
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
-			<var name="metadataField" value="Categories" />
+			<var name="metadataFieldList" value="Categories" />
+			<var name="portletName" value="Asset Publisher" />
 			<var name="webContentContent" value="Web Content1 Content" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
@@ -1527,7 +1528,8 @@
 	<command name="ViewAuthorChangeViaAP" priority="3">
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
-			<var name="metadataField" value="Author" />
+			<var name="metadataFieldList" value="Author" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

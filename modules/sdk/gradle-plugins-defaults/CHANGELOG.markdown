@@ -883,6 +883,10 @@ used.
 - [LPS-69899]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.1.1.
 
+### Fixed
+- [LPS-69606]: Fix artifact publish commands for the "WSDD" commit in older
+versions of Git.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

@@ -22,7 +22,8 @@
 			</bean>
 		</constructor-arg>
 	</bean>
-	<bean class="com.liferay.portal.spring.hibernate.PortletTransactionManager" id="liferayTransactionManager">
+	<bean class="com.liferay.portal.spring.hibernate.PortletTransactionManagerFactory" factory-method="create" id="liferayTransactionManager">
+		<constructor-arg ref="liferayDataSource" />
 		<constructor-arg ref="originalLiferayTransactionManager" />
 		<constructor-arg ref="liferayHibernateSessionFactory" />
 	</bean>

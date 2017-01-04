@@ -31,6 +31,17 @@ import org.json.JSONObject;
  */
 public class TopLevelBuild extends BaseBuild {
 
+	@Override
+	public String getDisplayName() {
+		String displayName = super.getDisplayName();
+
+		if (getParentBuild() != null) {
+			displayName += "/" + getParameterValue("JENKINS_JOB_VARIANT");
+		}
+
+		return displayName;
+	}
+
 	public Map<String, String> getGitRepositoryDetailsTempMap(
 		String repositoryName) {
 

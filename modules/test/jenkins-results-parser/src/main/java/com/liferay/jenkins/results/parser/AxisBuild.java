@@ -134,6 +134,17 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getDisplayName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getAxisVariable());
+		sb.append(" #");
+		sb.append(getBuildNumber());
+
+		return sb.toString();
+	}
+
+	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		String status = getStatus();
 

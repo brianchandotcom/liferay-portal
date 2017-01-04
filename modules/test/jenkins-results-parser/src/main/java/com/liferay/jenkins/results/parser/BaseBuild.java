@@ -235,6 +235,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getDisplayName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getJobName());
+
+		String jobVariant = getParameterValue("JOB_VARIANT");
+
+		if ((jobVariant != null) && !jobVariant.isEmpty()) {
+			sb.append("/");
+			sb.append(jobVariant);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public int getDownstreamBuildCount(String status) {
 		List<Build> downstreamBuilds = getDownstreamBuilds(status);
 

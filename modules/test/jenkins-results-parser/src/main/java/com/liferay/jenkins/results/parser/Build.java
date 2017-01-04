@@ -44,6 +44,8 @@ public interface Build {
 
 	public String getConsoleText();
 
+	public String getDisplayName();
+
 	public int getDownstreamBuildCount(String status);
 
 	public List<Build> getDownstreamBuilds(String status);

@@ -374,15 +374,15 @@
 
 		<execute function="SelectFrame" locator1="//iframe[contains(@class,'dialog-iframe-node')]" />
 
-		<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/a" value1="${roleTitle}" />
+		<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/span/a" value1="${roleTitle}" />
 
-		<execute function="Click" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/a" value1="${roleTitle}" />
+		<execute function="Click" locator1="//tr[contains(.,'${roleTitle}')]/td[1]/span/a" value1="${roleTitle}" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignOrganizationalRoles#AVAILABLE_TAB" value1="Available" />
+		<execute function="AssertClick" locator1="MenuItem#AVAILABLE_TAB" value1="Available" />
 
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -394,7 +394,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignOrganizationalRoles#CURRENT_TAB" value1="Current" />
+		<execute function="AssertClick" locator1="MenuItem#CURRENT_TAB" value1="Current" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

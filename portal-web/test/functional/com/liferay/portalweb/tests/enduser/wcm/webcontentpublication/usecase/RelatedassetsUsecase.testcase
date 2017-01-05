@@ -20,7 +20,7 @@
 		</if>
 	</tear-down>
 
-	<command ignore="true" name="AssertRelatedAssetsDisplayWithCategory" priority="4">
+	<command name="AssertRelatedAssetsDisplayWithCategory" priority="4">
 		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Sites" />
 		</execute>

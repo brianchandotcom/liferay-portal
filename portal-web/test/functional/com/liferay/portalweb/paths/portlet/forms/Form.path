@@ -287,6 +287,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RULE_BUILDER_ACTION_TARGET_FIELD_2</td>
+	<td>xpath=(//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//a[contains(@id,'action') and contains(@class,'select-field-trigger')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RULE_BUILDER_SELECT_ACTION_TARGET</td>
 	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//a[contains(@id,'action')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_actionTarget}')]</td>
 	<td></td>

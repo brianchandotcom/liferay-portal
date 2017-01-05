@@ -42,6 +42,7 @@
 	var MAP_IMAGE_ATTRIBUTES = [
 		'alt',
 		'class',
+		'data-image-id',
 		'dir',
 		'height',
 		'id',

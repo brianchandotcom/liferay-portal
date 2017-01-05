@@ -346,6 +346,7 @@
 	var MAP_IMAGE_ATTRIBUTES = {
 		'alt': 1,
 		'class': 1,
+		'data-image-id': 1,
 		'dir': 1,
 		'height': 1,
 		'id': 1,
@@ -379,7 +380,7 @@
 		square: 'list-style-type: square;'
 	};
 
-	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]+)"\s*/g;
+	var REGEX_ATTRS = /\s*([^=]+)\s*=\s*"([^"]*)"\s*/g;
 
 	var REGEX_COLOR = /^(:?aqua|black|blue|fuchsia|gray|green|lime|maroon|navy|olive|purple|red|silver|teal|white|yellow|#(?:[0-9a-f]{3})?[0-9a-f]{3})$/i;
 

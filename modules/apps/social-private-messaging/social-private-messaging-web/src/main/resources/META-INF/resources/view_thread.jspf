@@ -203,28 +203,28 @@ iteratorURL.setParameter("mbThreadId", String.valueOf(mbThreadId));
 
 					<div class="row">
 
-					<%
-					List<FileEntry> attachmentsFileEntries = mbMessage.getAttachmentsFileEntries();
+						<%
+						List<FileEntry> attachmentsFileEntries = mbMessage.getAttachmentsFileEntries();
 
-					for (FileEntry fileEntry : attachmentsFileEntries) {
-						if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
-					%>
+						for (FileEntry fileEntry : attachmentsFileEntries) {
+							if (MimeTypesUtil.isWebImage(fileEntry.getMimeType())) {
+						%>
 
-							<liferay-portlet:resourceURL id="getMessageAttachment" var="imageURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-								<portlet:param name="messageId" value="<%= String.valueOf(mbMessage.getMessageId()) %>" />
-								<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-							</liferay-portlet:resourceURL>
+								<liferay-portlet:resourceURL id="getMessageAttachment" var="imageURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+									<portlet:param name="messageId" value="<%= String.valueOf(mbMessage.getMessageId()) %>" />
+									<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
+								</liferay-portlet:resourceURL>
 
-							<div class="image-thumbnail">
-								<a href="<%= imageURL %>" title="<%= fileEntry.getTitle() %>">
-									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" class="img-thumbnail" src="<%= imageURL %>" />
-								</a>
-							</div>
+								<div class="image-thumbnail">
+									<a href="<%= imageURL %>" title="<%= fileEntry.getTitle() %>">
+										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="attachment" />" class="img-thumbnail" src="<%= imageURL %>" />
+									</a>
+								</div>
 
-					<%
+						<%
+							}
 						}
-					}
-					%>
+						%>
 
 					</div>
 

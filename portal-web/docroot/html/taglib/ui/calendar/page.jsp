@@ -130,7 +130,7 @@ int weekNumber = 1;
 				</tr>
 				<tr>
 
-		<%
+			<%
 				dayOfWeek = 1;
 				weekNumber++;
 			}
@@ -161,7 +161,7 @@ int weekNumber = 1;
 			}
 
 			dayOfWeek++;
-		%>
+			%>
 
 			<td class="<%= cssClass %>">
 				<a href="javascript:<%= namespace %>updateCalendar(<%= selMonth %>, <%= i %>, <%= selYear %>);"><span><%= i %></span></a>

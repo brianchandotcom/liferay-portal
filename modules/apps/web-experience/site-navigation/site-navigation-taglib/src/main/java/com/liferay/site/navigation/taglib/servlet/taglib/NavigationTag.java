@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,15 +23,21 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -39,6 +46,53 @@ import javax.servlet.jsp.PageContext;
  * @author Tibor Lipusz
  */
 public class NavigationTag extends IncludeTag {
+
+	@Override
+	public int processEndTag() throws Exception {
+		DDMTemplate portletDisplayDDMTemplate =
+			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+				getDisplayStyleGroupId(),
+				PortalUtil.getClassNameId(NavItem.class), getDisplayStyle(),
+				true);
+
+		if (portletDisplayDDMTemplate == null) {
+			return EVAL_PAGE;
+		}
+
+		List<NavItem> branchNavItems = null;
+		List<NavItem> navItems = null;
+
+		try {
+			branchNavItems = getBranchNavItems(request);
+
+			navItems = getNavItems(branchNavItems);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		Map<String, Object> contextObjects = new HashMap<>();
+
+		contextObjects.put("branchNavItems", branchNavItems);
+		contextObjects.put("displayDepth", _displayDepth);
+		contextObjects.put("includedLayouts", _includedLayouts);
+		contextObjects.put("preview", _preview);
+		contextObjects.put("rootLayoutLevel", _rootLayoutLevel);
+		contextObjects.put("rootLayoutType", _rootLayoutType);
+
+		String result = PortletDisplayTemplateManagerUtil.renderDDMTemplate(
+			request, response, portletDisplayDDMTemplate.getTemplateId(),
+			navItems, contextObjects);
+
+		JspWriter jspWriter = pageContext.getOut();
+
+		jspWriter.write(result);
+
+		return EVAL_PAGE;
+	}
 
 	public void setDdmTemplateGroupId(long ddmTemplateGroupId) {
 		_ddmTemplateGroupId = ddmTemplateGroupId;
@@ -118,7 +172,7 @@ public class NavigationTag extends IncludeTag {
 				_ddmTemplateKey);
 		}
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	protected long getDisplayStyleGroupId() {
@@ -193,42 +247,6 @@ public class NavigationTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-site-navigation:navigation:displayDepth",
-			String.valueOf(_displayDepth));
-		request.setAttribute(
-			"liferay-site-navigation:navigation:displayStyle",
-			getDisplayStyle());
-		request.setAttribute(
-			"liferay-site-navigation:navigation:displayStyleGroupId",
-			String.valueOf(getDisplayStyleGroupId()));
-		request.setAttribute(
-			"liferay-site-navigation:navigation:includedLayouts",
-			_includedLayouts);
-
-		try {
-			List<NavItem> branchNavItems = getBranchNavItems(request);
-
-			request.setAttribute(
-				"liferay-site-navigation:navigation:branchNavItems",
-				branchNavItems);
-			request.setAttribute(
-				"liferay-site-navigation:navigation:navItems",
-				getNavItems(branchNavItems));
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		request.setAttribute(
-			"liferay-site-navigation:navigation:preview",
-			String.valueOf(_preview));
-		request.setAttribute(
-			"liferay-site-navigation:navigation:rootLayoutLevel",
-			String.valueOf(_rootLayoutLevel));
-		request.setAttribute(
-			"liferay-site-navigation:navigation:rootLayoutType",
-			_rootLayoutType);
 	}
 
 	private static final String _PAGE = "/navigation/page.jsp";

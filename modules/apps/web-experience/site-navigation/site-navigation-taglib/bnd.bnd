@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Navigation Taglib
 Bundle-SymbolicName: com.liferay.site.navigation.taglib
-Bundle-Version: 2.0.5
+Bundle-Version: 2.1.0
 Export-Package: com.liferay.site.navigation.taglib.servlet.taglib
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

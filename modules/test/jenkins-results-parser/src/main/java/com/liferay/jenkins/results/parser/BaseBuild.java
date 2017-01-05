@@ -661,6 +661,18 @@ public abstract class BaseBuild implements Build {
 	public void reinvoke() {
 		String hostName = JenkinsResultsParserUtil.getHostName("");
 
+		Build parentBuild = getParentBuild();
+
+		String parentBuildStatus = parentBuild.getStatus();
+
+		if (!parentBuildStatus.equals("running")) {
+			System.out.println(
+				"Parent build is no longer running. Reinvocation has been " +
+					"aborted.");
+
+			return;
+		}
+
 		if (!hostName.startsWith("cloud-10-0")) {
 			System.out.println("A build may not be reinvoked by " + hostName);
 

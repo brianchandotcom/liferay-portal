@@ -1,0 +1,154 @@
+<definition component-name="portal-wcm">
+	<property name="portal.release" value="true" />
+	<property name="portal.upstream" value="true" />
+	<property name="testray.main.component.name" value="Most Viewed Assets" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+		</if>
+	</tear-down>
+
+	<command name="AssertMostViewedAsset" priority="4">
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoControlPanelSites">
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<for list="1,2" param="n">
+			<execute macro="Page#add">
+				<var name="pageName" value="Test Page ${n}" />
+				<var name="siteName" value="Site Name" />
+			</execute>
+		</for>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Most Viewed Assets" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
+			<var name="addMetadata" value="true" />
+			<var name="metadataFieldList" value="View Count" />
+			<var name="portletName" value="Most Viewed Assets" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page 2" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<for list="1,2" param="n">
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="Web Content Content" />
+				<var name="webContentTitle" value="Web Content Title ${n}" />
+			</execute>
+
+			<execute macro="PortletEntry#publish" />
+		</for>
+
+		<var name="count" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="3" />
+			</not>
+			<then>
+				<execute macro="Navigator#gotoSitePage">
+					<var name="pageName" value="Test Page 2" />
+					<var name="siteName" value="Site Name" />
+				</execute>
+
+				<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
+					<var name="assetContent" value="Web Content Content" />
+					<var name="assetTitle" value="Web Content Title 1" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMostViewedAsset">
+			<var name="assetTitle" value="Web Content Title 1" />
+			<var name="viewCount" value="3 View" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewLessViewedAsset">
+			<var name="assetTitle" value="Web Content Title 2" />
+			<var name="viewCount" value="0 View" />
+		</execute>
+
+		<var name="count" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="5" />
+			</not>
+			<then>
+				<execute macro="Navigator#gotoSitePage">
+					<var name="pageName" value="Test Page 2" />
+					<var name="siteName" value="Site Name" />
+				</execute>
+
+				<execute macro="AssetPublisherPortlet#viewAssetDetailsPG">
+					<var name="assetContent" value="Web Content Content" />
+					<var name="assetTitle" value="Web Content Title 2" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewMostViewedAsset">
+			<var name="assetTitle" value="Web Content Title 2" />
+			<var name="viewCount" value="5 View" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewLessViewedAsset">
+			<var name="assetTitle" value="Web Content Title 1" />
+			<var name="viewCount" value="3 View" />
+		</execute>
+	</command>
+</definition>

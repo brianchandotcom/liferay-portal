@@ -620,7 +620,8 @@
 
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
-			<var name="metadataField" value="Tags" />
+			<var name="metadataFieldList" value="Tags" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />

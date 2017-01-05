@@ -130,6 +130,12 @@
 	font-weight: 400;
 }
 
+.liferay-ddm-form-field-grid {
+	th, td:not(:first-child) {
+		text-align: center;
+	}
+}
+
 .multi-step-progress-bar {
 	> .complete {
 		color: #65B6F0;

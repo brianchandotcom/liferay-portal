@@ -535,7 +535,7 @@
 
 		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitle" value="Blogs Entry Title G7B2" />
 			<var name="viewableBy" value="Site Members" />
 		</execute>
 
@@ -545,7 +545,7 @@
 
 		<execute macro="MessageboardsThread#addPGWithPermissions">
 			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadSubject" value="MB Thread Message Subject G7MB3" />
 			<var name="viewableBySelection" value="Site Members" />
 		</execute>
 
@@ -565,12 +565,12 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Blogs" />
-			<var name="gmailMessageBody" value="Blogs Entry Title" />
-			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title&quot; on ${siteName} Blogs" />
+			<var name="gmailMessageBody" value="Blogs Entry Title G7B2" />
+			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title G7B2&quot; on ${siteName} Blogs" />
 		</execute>
 
 		<execute macro="Gmail#openMessageContinueReadingButton">
-			<var name="contentTitle" value="Blogs Entry Title" />
+			<var name="contentTitle" value="Blogs Entry Title G7B2" />
 			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
@@ -592,11 +592,11 @@
 			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject G7MB3" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
-			<var name="contentTitle" value="MB Thread Message Subject" />
+			<var name="contentTitle" value="MB Thread Message Subject G7MB3" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
@@ -612,9 +612,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.4')" name="userPassword" />
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteSpecificMail">
+			<var name="gmailMessageTitleList" value="Test Test Published &quot;Blogs Entry Title G7B2&quot; on ${siteName} Blogs, Message Boards Home - ${siteName} New Message: MB Thread Message Subject G7MB3, Your New Account, Your New Password" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1008,7 +1009,7 @@
 
 		<execute macro="Blogs#addEntryWithPermissions">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitle" value="Blogs Entry Title G7B3" />
 			<var name="viewableBy" value="Site Members" />
 		</execute>
 
@@ -1018,7 +1019,7 @@
 
 		<execute macro="MessageboardsThread#addPGWithPermissions">
 			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadSubject" value="MB Thread Message Subject G7MB4" />
 			<var name="viewableBySelection" value="Site Members" />
 		</execute>
 
@@ -1038,12 +1039,12 @@
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
 			<var name="gmailAssetType" value="Blogs" />
-			<var name="gmailMessageBody" value="Blogs Entry Title" />
-			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title&quot; on ${siteName} Blogs" />
+			<var name="gmailMessageBody" value="Blogs Entry Title G7B3" />
+			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title G7B3&quot; on ${siteName} Blogs" />
 		</execute>
 
 		<execute macro="Gmail#openMessageContinueReadingButton">
-			<var name="contentTitle" value="Blogs Entry Title" />
+			<var name="contentTitle" value="Blogs Entry Title G7B3" />
 			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
@@ -1065,11 +1066,11 @@
 			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
-			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject" />
+			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject G7MB4" />
 		</execute>
 
 		<execute macro="Gmail#openMessageLink">
-			<var name="contentTitle" value="MB Thread Message Subject" />
+			<var name="contentTitle" value="MB Thread Message Subject G7MB4" />
 			<var name="gmailAssetType" value="Message Boards" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
@@ -1085,9 +1086,10 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="Gmail#tearDown">
-			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var method="TestPropsUtil#get('email.password.4')" name="userPassword" />
+		<execute macro="Gmail#gotoHtmlMode" />
+
+		<execute macro="Gmail#deleteSpecificMail">
+			<var name="gmailMessageTitleList" value="Test Test Published &quot;Blogs Entry Title G7B3&quot; on ${siteName} Blogs, Message Boards Home - ${siteName} New Message: MB Thread Message Subject G7MB4, Your New Account, Your New Password" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

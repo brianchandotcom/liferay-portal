@@ -1497,7 +1497,7 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
-	<target name="functional-bundle-tomcat-sybase16-jdk8">
+	<target name="functional-bundle-tomcat-sybase160-jdk8">
 		<set-tomcat-version-number liferay.portal.bundle="${test.portal.bundle.version}" />
 
 		<run-functional-test

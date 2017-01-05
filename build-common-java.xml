@@ -218,11 +218,24 @@
 					</then>
 				</if>
 
-				<baseline-jar
-					bndFile="bnd.bnd"
-					bndRootFile="${project.dir}/common.bnd"
-					newJarFile="${jar.file}.jar"
-				/>
+				<if>
+					<isset property="jar.compat.file" />
+					<then>
+						<baseline-jar
+							bndFile="bnd.bnd"
+							bndRootFile="${project.dir}/common.bnd"
+							newCompatJarFile="${jar.compat.file}"
+							newJarFile="${jar.file}.jar"
+						/>
+					</then>
+					<else>
+						<baseline-jar
+							bndFile="bnd.bnd"
+							bndRootFile="${project.dir}/common.bnd"
+							newJarFile="${jar.file}.jar"
+						/>
+					</else>
+				</if>
 			</then>
 			<else>
 				<antcall target="manifest" />

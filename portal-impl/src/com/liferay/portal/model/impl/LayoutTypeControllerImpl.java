@@ -127,6 +127,8 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 		ServletContext servletContext = (ServletContext)request.getAttribute(
 			WebKeys.CTX);
 
+		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, getEditPage());

@@ -259,7 +259,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #importMissingReference(PortletDataContext, Element)}
 	 */
 	@Deprecated
@@ -272,7 +272,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #importMissingReference(PortletDataContext, String, long,
 	 *             long)}
 	 */

@@ -42,7 +42,7 @@ public class MergeLayoutPrototypesThreadLocal {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #isMergeComplete(String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #isMergeComplete(String,
 	 *             Object...)}
 	 */
 	@Deprecated
@@ -63,7 +63,7 @@ public class MergeLayoutPrototypesThreadLocal {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setMergeComplete(String,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setMergeComplete(String,
 	 *             Object...)}
 	 */
 	@Deprecated

@@ -146,7 +146,7 @@ public interface Portal {
 	 * notified whenever the portal port is set.
 	 *
 	 * @param      portalPortEventListener the portal port event listener to add
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #addPortalInetSocketAddressEventListener(
 	 *             PortalInetSocketAddressEventListener)}
 	 */
@@ -332,7 +332,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(
 	 *             HttpServletRequest)}
 	 */
@@ -341,7 +341,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getBasicUserId(
 	 *             HttpServletRequest)}
 	 */
@@ -610,7 +610,7 @@ public interface Portal {
 	public long getDefaultCompanyId();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil#getDigestUserId(
 	 *             HttpServletRequest)}
 	 */
@@ -653,7 +653,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getFacebookURL(
@@ -721,7 +721,7 @@ public interface Portal {
 		Locale locale, String defaultI18nPathLanguageId);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getJournalArticleActualURL(
@@ -731,7 +731,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public Layout getJournalArticleLayout(
@@ -885,7 +885,7 @@ public interface Portal {
 	public int getPortalLocalPort(boolean secure);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getPortalServerPort(boolean)}
 	 */
 	@Deprecated
@@ -919,7 +919,7 @@ public interface Portal {
 	public String getPortalWebDir();
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbUtil#getPortletBreadcrumbEntries(
 	 *             HttpServletRequest)}
 	 */
@@ -1037,7 +1037,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
 	 *             long, String)}
 	 */
@@ -1047,7 +1047,7 @@ public interface Portal {
 		String portletId);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
 	 *             long, String)}
 	 */
@@ -1057,7 +1057,7 @@ public interface Portal {
 		String portletName);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getCurrentAndAncestorSiteGroupIds(long)}
 	 */
 	@Deprecated
@@ -1065,7 +1065,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #getCurrentAndAncestorSiteGroupIds(long)}
 	 */
 	@Deprecated
@@ -1156,7 +1156,7 @@ public interface Portal {
 	public String getUserPassword(PortletRequest portletRequest);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getUserValue(long userId, String param, String defaultValue);
@@ -1169,7 +1169,7 @@ public interface Portal {
 	public String getVirtualHostname(LayoutSet layoutSet);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public String getVirtualLayoutActualURL(
@@ -1179,7 +1179,7 @@ public interface Portal {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public LayoutFriendlyURLComposite getVirtualLayoutFriendlyURLComposite(
@@ -1195,7 +1195,7 @@ public interface Portal {
 	public User initUser(HttpServletRequest request) throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void invokeTaglibDiscussion(
@@ -1204,7 +1204,7 @@ public interface Portal {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void invokeTaglibDiscussionPagination(
@@ -1290,7 +1290,7 @@ public interface Portal {
 			portalInetSocketAddressEventListener);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #removePortalInetSocketAddressEventListener(
 	 *             PortalInetSocketAddressEventListener)}
 	 */
@@ -1358,7 +1358,7 @@ public interface Portal {
 	/**
 	 * Sets the port obtained on the first request to the portal.
 	 *
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             #setPortalInetSocketAddresses(HttpServletRequest)}
 	 */
 	@Deprecated

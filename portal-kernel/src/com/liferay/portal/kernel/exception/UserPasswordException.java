@@ -26,61 +26,61 @@ import java.util.List;
 public class UserPasswordException extends PortalException {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_ALREADY_USED = 1;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_CONTAINS_TRIVIAL_WORDS = 2;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_INVALID = 3;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_LENGTH = 4;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_NOT_CHANGEABLE = 5;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_SAME_AS_CURRENT = 6;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_TOO_TRIVIAL = 8;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORD_TOO_YOUNG = 9;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PASSWORDS_DO_NOT_MATCH = 10;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserPasswordException(int type) {
@@ -88,7 +88,7 @@ public class UserPasswordException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by the inner classes
+	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public int getType() {

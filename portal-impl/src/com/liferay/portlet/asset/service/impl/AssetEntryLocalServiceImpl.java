@@ -803,7 +803,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateEntry(long, long,
 	 *             Date, Date, String, long, String, long, long[], String[],
 	 *             boolean, boolean, Date, Date, Date, Date, String, String,
 	 *             String, String, String, String, int, int, Double)}
@@ -828,7 +828,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateEntry(long, long,
 	 *             Date, Date, String, long, String, long, long[], String[],
 	 *             boolean, boolean, Date, Date, Date, Date, String, String,
 	 *             String, String, String, String, int, int, Double)}
@@ -890,7 +890,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateEntry(String, long,
 	 *             Date, Date, boolean, boolean)}
 	 */
 	@Deprecated
@@ -904,7 +904,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(String, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #updateEntry(String, long,
 	 *             Date, Date, boolean, boolean)}
 	 */
 	@Deprecated
@@ -1018,7 +1018,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #validate(long, String, long,
 	 *             long[], String[])}
 	 */
 	@Deprecated

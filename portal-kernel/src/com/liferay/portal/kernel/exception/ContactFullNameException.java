@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.exception;
 
 /**
  * @author     Amos Fong
- * @deprecated As of 7.0.0, replaced by {@link
+ * @deprecated As of NEXT-VERSION, replaced by {@link
  *             ContactNameException.MustHaveValidFullName}
  */
 @Deprecated

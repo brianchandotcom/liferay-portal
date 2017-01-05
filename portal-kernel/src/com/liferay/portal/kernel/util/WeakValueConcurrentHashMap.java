@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of 7.0.0, replaced by {@link ConcurrentReferenceValueHashMap}
+ * @deprecated As of NEXT-VERSION, replaced by {@link ConcurrentReferenceValueHashMap}
  */
 @Deprecated
 public class WeakValueConcurrentHashMap<K, V>

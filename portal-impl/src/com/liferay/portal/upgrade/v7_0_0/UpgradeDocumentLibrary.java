@@ -148,7 +148,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #hasFileEntry(long, long,
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #hasFileEntry(long, long,
 	 *             long, String, String)}
 	 */
 	@Deprecated

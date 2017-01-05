@@ -88,7 +88,7 @@ public class ServiceTestUtil {
 	public static final int THREAD_COUNT = 10;
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static void addResourcePermission(
@@ -101,7 +101,7 @@ public class ServiceTestUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static void addResourcePermission(
@@ -114,7 +114,7 @@ public class ServiceTestUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static Role addRole(String roleName, int roleType) throws Exception {
@@ -122,7 +122,7 @@ public class ServiceTestUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	public static Role addRole(

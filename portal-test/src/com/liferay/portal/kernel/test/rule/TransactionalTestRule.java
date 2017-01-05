@@ -40,7 +40,7 @@ import org.junit.runners.model.Statement;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of 3.0.0, see {@link
+ * @deprecated As of NEXT-VERSION, see {@link
  *             com.liferay.portal.test.rule.TransactionalTestRule}
  */
 @Deprecated

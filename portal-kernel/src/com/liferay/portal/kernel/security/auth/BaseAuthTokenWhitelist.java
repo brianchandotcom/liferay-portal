@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -53,7 +53,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -62,7 +62,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -71,7 +71,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -80,7 +80,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -101,7 +101,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -119,7 +119,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -149,7 +149,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -158,7 +158,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -167,7 +167,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -176,7 +176,7 @@ public abstract class BaseAuthTokenWhitelist implements AuthTokenWhitelist {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

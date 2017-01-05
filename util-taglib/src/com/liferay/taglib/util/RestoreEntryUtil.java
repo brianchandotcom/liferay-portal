@@ -29,7 +29,7 @@ import javax.portlet.PortletRequest;
 
 /**
  * @author     Eudaldo Alonso
- * @deprecated As of 2.6.0, with no direct replacement
+ * @deprecated As of NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class RestoreEntryUtil {

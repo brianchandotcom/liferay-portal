@@ -91,7 +91,7 @@ public class PageIteratorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setPortletURL(PortletURL)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #setPortletURL(PortletURL)}
 	 */
 	@Deprecated
 	public void setUrl(String url) {

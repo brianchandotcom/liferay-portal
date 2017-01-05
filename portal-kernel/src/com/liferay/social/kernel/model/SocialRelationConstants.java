@@ -47,7 +47,7 @@ public class SocialRelationConstants {
 	public static final int TYPE_UNI_SUPERVISOR = 11;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             SocialRelationTypesUtil#getTypeLabel(int)}
 	 */
 	@Deprecated
@@ -56,7 +56,7 @@ public class SocialRelationConstants {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             SocialRelationTypesUtil#isTypeBi(int)}
 	 */
 	@Deprecated
@@ -65,7 +65,7 @@ public class SocialRelationConstants {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of NEXT-VERSION, replaced by {@link
 	 *             SocialRelationTypesUtil#isTypeUni(int)}
 	 */
 	@Deprecated

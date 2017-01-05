@@ -32,7 +32,7 @@ public class IndexerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static IndexerRegistry getIndexerRegistry() {
@@ -56,7 +56,7 @@ public class IndexerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #register(Indexer)}
+	 * @deprecated As of NEXT-VERSION, replaced by {@link #register(Indexer)}
 	 */
 	@Deprecated
 	public static void register(String className, Indexer<?> indexer) {

@@ -124,7 +124,7 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected boolean isNull(String value) {
@@ -136,7 +136,7 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected String normalizeValue(String value) {
@@ -148,7 +148,7 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected String[] normalizeValues(String[] values) {

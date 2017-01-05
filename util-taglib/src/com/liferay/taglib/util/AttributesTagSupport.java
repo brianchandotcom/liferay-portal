@@ -39,7 +39,7 @@ public class AttributesTagSupport
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public Map<String, Object> getScopedAttributes() {
@@ -79,7 +79,7 @@ public class AttributesTagSupport
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public void setScopedAttribute(String name, Object value) {

@@ -16,7 +16,7 @@ package com.liferay.util.bridges.mvc;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of 7.0.0, moved to {@link
+ * @deprecated As of NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet}
  */
 @Deprecated

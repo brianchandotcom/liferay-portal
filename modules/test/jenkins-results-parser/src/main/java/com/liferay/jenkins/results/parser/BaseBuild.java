@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
@@ -151,6 +152,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getBranchName() {
+		return branchName;
+	}
+
+	@Override
 	public JSONObject getBuildJSONObject() {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
@@ -229,6 +235,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getDisplayName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getJobName());
+
+		String jobVariant = getParameterValue("JOB_VARIANT");
+
+		if ((jobVariant != null) && !jobVariant.isEmpty()) {
+			sb.append("/");
+			sb.append(jobVariant);
+		}
+
+		return sb.toString();
+	}
+
+	@Override
 	public int getDownstreamBuildCount(String status) {
 		List<Build> downstreamBuilds = getDownstreamBuilds(status);
 
@@ -250,6 +272,21 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return filteredDownstreamBuilds;
+	}
+
+	@Override
+	public long getDuration() {
+		JSONObject buildJSONObject = getBuildJSONObject("duration,timestamp");
+
+		long duration = buildJSONObject.getLong("duration");
+
+		if (duration == 0) {
+			long timestamp = buildJSONObject.getLong("timestamp");
+
+			duration = System.currentTimeMillis() - timestamp;
+		}
+
+		return duration;
 	}
 
 	@Override
@@ -489,7 +526,9 @@ public abstract class BaseBuild implements Build {
 	public JSONObject getTestReportJSONObject() {
 		try {
 			return JenkinsResultsParserUtil.toJSONObject(
-				getBuildURL() + "testReport/api/json", false);
+				JenkinsResultsParserUtil.getLocalURL(
+					getBuildURL() + "testReport/api/json"),
+				false);
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(
@@ -738,11 +777,11 @@ public abstract class BaseBuild implements Build {
 
 				writeArchiveFile(
 					startPropertiesJSONObject.toString(4),
-					getArchivePath() + "/start-properties.json");
+					getArchivePath() + "/start.properties.json");
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
-					"Unable to create start-properties.json", ioe);
+					"Unable to create start.properties.json", ioe);
 			}
 		}
 
@@ -754,11 +793,11 @@ public abstract class BaseBuild implements Build {
 
 				writeArchiveFile(
 					stopPropertiesJSONObject.toString(4),
-					getArchivePath() + "/stop-properties.json");
+					getArchivePath() + "/stop.properties.json");
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
-					"Unable to create stop-properties.json", ioe);
+					"Unable to create stop.properties.json", ioe);
 			}
 		}
 	}
@@ -868,6 +907,18 @@ public abstract class BaseBuild implements Build {
 			while (downstreamBuildURLMatcher.find()) {
 				String url = downstreamBuildURLMatcher.group("url");
 
+				String reinvocationMarker = url + " restarted at ";
+
+				int reinvocationIndex = consoleText.indexOf(reinvocationMarker);
+
+				if (reinvocationIndex != -1) {
+					url = consoleText.substring(
+						reinvocationIndex + reinvocationMarker.length(),
+						consoleText.indexOf(
+							".\n",
+							reinvocationIndex + reinvocationMarker.length()));
+				}
+
 				if (!foundDownstreamBuildURLs.contains(url)) {
 					foundDownstreamBuildURLs.add(url);
 				}
@@ -937,6 +988,12 @@ public abstract class BaseBuild implements Build {
 
 			if (status.equals("running")) {
 				if (badBuildNumbers.size() > 0) {
+					sb.append(" ");
+
+					List<String> badBuildURLs = getBadBuildURLs();
+
+					sb.append(badBuildURLs.get(badBuildNumbers.size() - 1));
+
 					sb.append(" restarted at ");
 				}
 				else {
@@ -1100,6 +1157,32 @@ public abstract class BaseBuild implements Build {
 		return sb.toString();
 	}
 
+	protected String getRepositoryType(String repositoryName) {
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("repository.type[");
+			sb.append(repositoryName);
+			sb.append("]");
+
+			String repositoryType = buildProperties.getProperty(sb.toString());
+
+			if ((repositoryType == null) || repositoryType.isEmpty()) {
+				throw new RuntimeException(
+					"Unable to find repository type for repository " +
+						repositoryName);
+			}
+
+			return repositoryType;
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties.");
+		}
+	}
+
 	protected JSONObject getRunningBuildJSONObject() throws Exception {
 		JSONArray buildsJSONArray = getBuildsJSONArray();
 
@@ -1120,7 +1203,7 @@ public abstract class BaseBuild implements Build {
 
 	protected String getStartPropertiesTempMapURL() {
 		if (fromArchive) {
-			return getBuildURL() + "/start-properties.json";
+			return getBuildURL() + "/start.properties.json";
 		}
 
 		return getParameterValue("JSON_MAP_URL");
@@ -1133,15 +1216,7 @@ public abstract class BaseBuild implements Build {
 	protected Map<String, String> getTempMap(String tempMapName) {
 		JSONObject tempMapJSONObject = null;
 
-		String tempMapURL = null;
-
-		if (tempMapName.equals("start.properties")) {
-			tempMapURL = getStartPropertiesTempMapURL();
-		}
-
-		if (tempMapName.equals("stop.properties")) {
-			tempMapURL = getStopPropertiesTempMapURL();
-		}
+		String tempMapURL = getTempMapURL(tempMapName);
 
 		if (tempMapURL == null) {
 			return Collections.emptyMap();
@@ -1180,6 +1255,18 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return tempMap;
+	}
+
+	protected String getTempMapURL(String tempMapName) {
+		if (tempMapName.equals("start.properties")) {
+			return getStartPropertiesTempMapURL();
+		}
+
+		if (tempMapName.equals("stop.properties")) {
+			return getStopPropertiesTempMapURL();
+		}
+
+		return null;
 	}
 
 	protected boolean isParentBuildRoot() {
@@ -1302,7 +1389,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
-		jobName = matcher.group("jobName");
+		setJobName(matcher.group("jobName"));
 		master = matcher.group("master");
 
 		loadParametersFromBuildJSONObject();
@@ -1331,13 +1418,27 @@ public abstract class BaseBuild implements Build {
 				throw new RuntimeException("Invalid invocation URL");
 			}
 
-			jobName = invocationURLMatcher.group("jobName");
+			setJobName(invocationURLMatcher.group("jobName"));
 			master = invocationURLMatcher.group("master");
 
 			loadParametersFromQueryString(invocationURL);
 
 			setStatus("starting");
 		}
+	}
+
+	protected void setJobName(String jobName) {
+		this.jobName = jobName;
+
+		Matcher matcher = jobNamePattern.matcher(jobName);
+
+		if (matcher.find()) {
+			branchName = matcher.group("branchName");
+
+			return;
+		}
+
+		branchName = "master";
 	}
 
 	protected void setStatus(String status) {
@@ -1379,13 +1480,19 @@ public abstract class BaseBuild implements Build {
 	protected static final Pattern invocationURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/" +
 			"buildWithParameters\\?(?<queryString>.*)");
+	protected static final Pattern jobNamePattern = Pattern.compile(
+		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
+	protected static final String tempMapBaseURL =
+		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
 	protected String archiveName;
 	protected List<Integer> badBuildNumbers = new ArrayList<>();
+	protected String branchName;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
 	protected String jobName;
 	protected String master;
+	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;
 

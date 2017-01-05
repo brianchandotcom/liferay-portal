@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
@@ -21,6 +22,8 @@ import java.net.URISyntaxException;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -134,6 +137,62 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
+	public String getDisplayName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(getAxisVariable());
+		sb.append(" #");
+		sb.append(getBuildNumber());
+
+		return sb.toString();
+	}
+
+	public String getTestRayLogsURL() {
+		StringBuilder sb = new StringBuilder();
+
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties.", ioe);
+		}
+
+		String logBaseURL = null;
+
+		if (buildProperties.containsKey("log.base.url")) {
+			logBaseURL = buildProperties.getProperty("log.base.url");
+		}
+
+		if (logBaseURL == null) {
+			logBaseURL = defaultLogBaseURL;
+		}
+
+		sb.append(logBaseURL);
+		sb.append("/");
+		sb.append(topLevelBuild.getMaster());
+		sb.append("/");
+
+		Map<String, String> startPropertiesMap = getStartPropertiesMap();
+
+		sb.append(startPropertiesMap.get("TOP_LEVEL_START_TIME"));
+
+		sb.append("/");
+		sb.append(topLevelBuild.getJobName());
+		sb.append("/");
+		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("/");
+		sb.append(getParameterValue("JOB_VARIANT"));
+		sb.append("/");
+		sb.append(getAxisVariable());
+
+		return sb.toString();
+	}
+
+	@Override
 	public List<TestResult> getTestResults(String testStatus) {
 		String status = getStatus();
 
@@ -196,6 +255,16 @@ public class AxisBuild extends BaseBuild {
 	@Override
 	protected void setBuildURL(String buildURL) {
 		try {
+			JenkinsResultsParserUtil.toString(
+				buildURL + "/archive-marker", false, 0, 0, 0);
+
+			fromArchive = true;
+		}
+		catch (IOException ioe) {
+			fromArchive = false;
+		}
+
+		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);
 		}
 		catch (UnsupportedEncodingException uee) {
@@ -206,7 +275,7 @@ public class AxisBuild extends BaseBuild {
 		Matcher matcher = buildURLPattern.matcher(buildURL);
 
 		if (!matcher.find()) {
-			matcher = _archiveBuildURLPattern.matcher(buildURL);
+			matcher = archiveBuildURLPattern.matcher(buildURL);
 
 			if (!matcher.find()) {
 				throw new IllegalArgumentException(
@@ -227,17 +296,19 @@ public class AxisBuild extends BaseBuild {
 		setStatus("running");
 	}
 
+	protected static final Pattern archiveBuildURLPattern = Pattern.compile(
+		"(\\$\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
+			"(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>" +
+				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
 	protected static final Pattern buildURLPattern = Pattern.compile(
 		"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+)/" +
 			"(?<axisVariable>AXIS_VARIABLE=[^,]+,[^/]+)/" +
 				"(?<buildNumber>\\d+)/?");
+	protected static final String defaultLogBaseURL =
+		"https://testray.liferay.com/reports/production/logs";
 
 	protected String axisVariable;
 
-	private static final Pattern _archiveBuildURLPattern = Pattern.compile(
-		"($\\{dependencies\\.url\\}|file:|http://).*/(?<archiveName>[^/]+)/" +
-			"(?<master>[^/]+)/+(?<jobName>[^/]+)/(?<axisVariable>" +
-				"AXIS_VARIABLE=[^,]+,[^/]+)/(?<buildNumber>\\d+)/?");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		"AXIS_VARIABLE=(?<axisNumber>[^,]+),.*");
 

@@ -24,6 +24,7 @@ import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -38,11 +39,14 @@ import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -265,15 +269,21 @@ public class JenkinsResultsParserUtil {
 		return url;
 	}
 
-	public static String format(Element element) throws IOException {
+	public static String format(Element element, boolean pretty)
+		throws IOException {
+
 		Writer writer = new CharArrayWriter();
 
-		XMLWriter xmlWriter = new XMLWriter(
-			writer, OutputFormat.createPrettyPrint());
+		XMLWriter xmlWriter = pretty ? new XMLWriter(
+			writer, OutputFormat.createPrettyPrint()) : new XMLWriter(writer);
 
 		xmlWriter.write(element);
 
 		return writer.toString();
+	}
+
+	public static String format(Element element) throws IOException {
+		return format(element, true);
 	}
 
 	public static String getActualResult(String buildURL) throws IOException {
@@ -354,17 +364,20 @@ public class JenkinsResultsParserUtil {
 	public static Properties getBuildProperties() throws IOException {
 		Properties properties = new Properties();
 
-		String url =
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-				"/liferay-jenkins-ee/build.properties";
+		if ((_buildProperties != null) && !_buildProperties.isEmpty()) {
+			properties.putAll(_buildProperties);
 
-		properties.load(new StringReader(toString(getLocalURL(url), false)));
+			return properties;
+		}
 
-		url =
-			"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-				"/liferay-jenkins-ee/commands/build.properties";
+		if (_buildPropertiesURLs == null) {
+			_buildPropertiesURLs = DEFAULT_BUILD_PROPERTIES_URLS;
+		}
 
-		properties.load(new StringReader(toString(getLocalURL(url), false)));
+		for (String url : _buildPropertiesURLs) {
+			properties.load(
+				new StringReader(toString(getLocalURL(url), false)));
+		}
 
 		return properties;
 	}
@@ -380,7 +393,7 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static String getJobVariant(JSONObject jsonObject) throws Exception {
+	public static String getJobVariant(JSONObject jsonObject) {
 		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
 
 		for (int i = 0; i < actionsJSONArray.length(); i++) {
@@ -481,6 +494,15 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return masters;
+	}
+
+	public static String getNounForm(
+		int count, String plural, String singular) {
+		if (count == 1) {
+			return singular;
+		}
+
+		return plural;
 	}
 
 	public static List<String> getRandomList(List<String> list, int size) {
@@ -594,6 +616,42 @@ public class JenkinsResultsParserUtil {
 		return sb.toString();
 	}
 
+	public static String redact(String string) {
+		Set<String> redactTokens = new HashSet<>();
+
+		Properties properties = null;
+
+		try {
+			properties = getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties.", ioe);
+		}
+
+		for (int i = 1; properties.containsKey(_getRedactTokenKey(i)); i++) {
+			String key = properties.getProperty(_getRedactTokenKey(i));
+
+			String redactToken = key;
+
+			if (key.startsWith("${") && key.endsWith("}")) {
+				redactToken = properties.getProperty(
+					key.substring(2, key.length() - 1));
+			}
+
+			if ((redactToken != null) && !redactToken.isEmpty()) {
+				redactTokens.add(redactToken);
+			}
+		}
+
+		redactTokens.remove("test");
+
+		for (String redactToken : redactTokens) {
+			string = string.replace(redactToken, "[REDACTED]");
+		}
+
+		return string;
+	}
+
 	public static void sendEmail(
 			String body, String from, String subject, String to)
 		throws Exception {
@@ -623,6 +681,18 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	public static void setBuildProperties(Hashtable<?, ?> buildProperties) {
+		_buildPropertiesURLs = null;
+
+		_buildProperties = buildProperties;
+	}
+
+	public static void setBuildProperties(String... urls) {
+		_buildProperties = null;
+
+		_buildPropertiesURLs = urls;
+	}
+
 	public static void sleep(long duration) {
 		try {
 			Thread.sleep(duration);
@@ -630,6 +700,31 @@ public class JenkinsResultsParserUtil {
 		catch (InterruptedException ie) {
 			throw new RuntimeException(ie);
 		}
+	}
+
+	public static String toDurationString(long duration) {
+		StringBuilder sb = new StringBuilder();
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_DAY, sb, "day", "days");
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_HOUR, sb, "hour", "hours");
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_MINUTE, sb, "minute", "minutes");
+
+		duration = _appendDurationStringForUnit(
+			duration, _MILLIS_IN_SECOND, sb, "second", "seconds");
+
+		String durationString = sb.toString();
+
+		if (durationString.endsWith(" ")) {
+			durationString = durationString.substring(
+				0, durationString.length() - 1);
+		}
+
+		return durationString;
 	}
 
 	public static JSONObject toJSONObject(String url) throws IOException {
@@ -730,6 +825,23 @@ public class JenkinsResultsParserUtil {
 
 				URLConnection urlConnection = urlObject.openConnection();
 
+				if (url.startsWith("https://api.github.com")) {
+					HttpURLConnection httpURLConnection =
+						(HttpURLConnection)urlConnection;
+
+					httpURLConnection.setRequestMethod("GET");
+
+					Properties buildProperties = getBuildProperties();
+
+					httpURLConnection.setRequestProperty(
+						"Authorization",
+						"token " +
+							buildProperties.getProperty("github.access.token"));
+
+					httpURLConnection.setRequestProperty(
+						"Content-Type", "application/json");
+				}
+
 				if (timeout != 0) {
 					urlConnection.setConnectTimeout(timeout);
 					urlConnection.setReadTimeout(timeout);
@@ -805,6 +917,19 @@ public class JenkinsResultsParserUtil {
 		write(new File(path), content);
 	}
 
+	public static final String[] DEFAULT_BUILD_PROPERTIES_URLS = {
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/commands/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/ci.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/test.properties"
+	};
+
 	protected static final String DEPENDENCIES_URL_FILE;
 
 	protected static final String DEPENDENCIES_URL_HTTP =
@@ -826,7 +951,47 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
+	private static long _appendDurationStringForUnit(
+		long duration, long millisInUnit, StringBuilder sb,
+		String unitDescriptionSingular, String unitDescriptionPlural) {
+
+		if (duration >= millisInUnit) {
+			long units = duration / millisInUnit;
+
+			sb.append(units);
+
+			sb.append(" ");
+
+			sb.append(
+				getNounForm(
+					(int)units, unitDescriptionPlural,
+					unitDescriptionSingular));
+
+			sb.append(" ");
+
+			return duration % millisInUnit;
+		}
+
+		return duration;
+	}
+
+	private static String _getRedactTokenKey(int index) {
+		return "github.message.redact.token[" + index + "]";
+	}
+
+	private static Hashtable<?, ?> _buildProperties;
+
+	private static String[] _buildPropertiesURLs;
+
 	private static final int _MAX_RETRIES_DEFAULT = 3;
+
+	private static final long _MILLIS_IN_DAY = 24L * 60L * 60L * 1000L;
+
+	private static final long _MILLIS_IN_HOUR = 60L * 60L * 1000L;
+
+	private static final long _MILLIS_IN_MINUTE = 60L * 1000L;
+
+	private static final long _MILLIS_IN_SECOND = 1000L;
 
 	private static final int _RETRY_PERIOD_DEFAULT = 5;
 

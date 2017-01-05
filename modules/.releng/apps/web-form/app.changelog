@@ -1,0 +1,21 @@
+#
+# Liferay App Version 3.0.0
+#
+
+app.artifacts-3.0.0=\
+	com.liferay.web.form.web-1.0.6.jar
+
+app.change.log-3.0.0=LPS-69309
+
+app.git.id-3.0.0=16264758b7ddb2bd4861efec0d13c10a3dbe9e31
+
+#
+# Liferay App Version 3.0.0
+#
+
+app.artifacts-3.0.0=\
+	com.liferay.web.form.web-1.0.6.jar
+
+app.change.log-3.0.0=LPS-69309
+
+app.git.id-3.0.0=ce57d2ee82ab7b675e96d074b975b801b7ebabd9

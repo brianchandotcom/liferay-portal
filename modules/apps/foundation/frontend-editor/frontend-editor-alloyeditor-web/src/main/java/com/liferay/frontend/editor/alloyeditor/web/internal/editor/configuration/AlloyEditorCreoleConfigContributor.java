@@ -169,16 +169,17 @@ public class AlloyEditorCreoleConfigContributor
 
 		JSONArray linkButtonsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject jsonLinkEditObject = JSONFactoryUtil.createJSONObject();
+		JSONObject linkEditJSONObject = JSONFactoryUtil.createJSONObject();
 
 		JSONObject cfgJSONObject = JSONFactoryUtil.createJSONObject();
 
 		cfgJSONObject.put("showTargetSelector", false);
 
-		jsonLinkEditObject.put("name", "linkEdit");
-		jsonLinkEditObject.put("cfg", cfgJSONObject);
+		linkEditJSONObject.put("cfg", cfgJSONObject);
 
-		linkButtonsJSONArray.put(jsonLinkEditObject);
+		linkEditJSONObject.put("name", "linkEdit");
+
+		linkButtonsJSONArray.put(linkEditJSONObject);
 
 		jsonObject.put("buttons", linkButtonsJSONArray);
 		jsonObject.put("name", "link");

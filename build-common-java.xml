@@ -68,7 +68,11 @@
 					<then>
 						<echo append="true" file="${project.dir}/javac.output.txt" message="${line.separator}${ant.project.name}${line.separator}" />
 						<echo append="true" file="${project.dir}/javac.output.txt" message="${javac.output.txt.content}" />
+						<echo>Deprecation warning found in javac.output.txt</echo>
 					</then>
+					<else>
+						<echo>No deprecation warnings found in javac.output.txt</echo>
+					</else>
 				</if>
 			</then>
 		</if>

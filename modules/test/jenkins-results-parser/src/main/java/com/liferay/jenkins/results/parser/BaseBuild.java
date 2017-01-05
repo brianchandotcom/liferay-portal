@@ -114,6 +114,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getAppServer() {
+		return null;
+	}
+
+	@Override
 	public String getArchivePath() {
 		StringBuilder sb = new StringBuilder(archiveName);
 
@@ -148,6 +153,11 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return badBuildURLs;
+	}
+
+	@Override
+	public String getBrowser() {
+		return null;
 	}
 
 	@Override
@@ -229,6 +239,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getDatabase() {
+		return null;
+	}
+
+	@Override
 	public int getDownstreamBuildCount(String status) {
 		List<Build> downstreamBuilds = getDownstreamBuilds(status);
 
@@ -290,6 +305,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getJDK() {
+		return null;
+	}
+
+	@Override
 	public String getJobName() {
 		return jobName;
 	}
@@ -315,8 +335,24 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public String getJobVariant() {
+		String batchName = getParameterValue("JOB_VARIANT");
+
+		if ((batchName == null) || batchName.isEmpty()) {
+			batchName = getParameterValue("JENKINS_JOB_VARIANT");
+		}
+
+		return batchName;
+	}
+
+	@Override
 	public String getMaster() {
 		return master;
+	}
+
+	@Override
+	public String getOperatingSystem() {
+		return null;
 	}
 
 	@Override

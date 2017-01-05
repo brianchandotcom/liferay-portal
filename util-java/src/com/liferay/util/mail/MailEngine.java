@@ -40,6 +40,7 @@ import java.net.SocketException;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -48,6 +49,7 @@ import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 
 import javax.mail.Address;
+import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Part;
@@ -56,6 +58,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
@@ -177,6 +180,20 @@ public class MailEngine {
 			String subject, String body, boolean htmlFormat,
 			InternetAddress[] replyTo, String messageId, String inReplyTo,
 			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount)
+		throws MailEngineException {
+
+		send(
+			from, to, cc, bcc, bulkAddresses, subject, body, htmlFormat,
+			replyTo, messageId, inReplyTo, fileAttachments, smtpAccount, null);
+	}
+
+	public static void send(
+			InternetAddress from, InternetAddress[] to, InternetAddress[] cc,
+			InternetAddress[] bcc, InternetAddress[] bulkAddresses,
+			String subject, String body, boolean htmlFormat,
+			InternetAddress[] replyTo, String messageId, String inReplyTo,
+			List<FileAttachment> fileAttachments, SMTPAccount smtpAccount,
+			InternetHeaders internetHeaders)
 		throws MailEngineException {
 
 		long startTime = System.currentTimeMillis();
@@ -349,6 +366,16 @@ public class MailEngine {
 				message.setHeader("References", _sanitizeCRLF(inReplyTo));
 			}
 
+			if (internetHeaders != null) {
+				Enumeration allHeaders = internetHeaders.getAllHeaders();
+
+				while (allHeaders.hasMoreElements()) {
+					Header header = (Header)allHeaders.nextElement();
+
+					message.setHeader(header.getName(), header.getValue());
+				}
+			}
+
 			int batchSize = GetterUtil.getInteger(
 				PropsUtil.get(PropsKeys.MAIL_BATCH_SIZE), _BATCH_SIZE);
 
@@ -433,7 +460,8 @@ public class MailEngine {
 			mailMessage.getSubject(), mailMessage.getBody(),
 			mailMessage.isHTMLFormat(), mailMessage.getReplyTo(),
 			mailMessage.getMessageId(), mailMessage.getInReplyTo(),
-			mailMessage.getFileAttachments(), mailMessage.getSMTPAccount());
+			mailMessage.getFileAttachments(), mailMessage.getSMTPAccount(),
+			mailMessage.getInternetHeaders());
 	}
 
 	public static void send(String from, String to, String subject, String body)

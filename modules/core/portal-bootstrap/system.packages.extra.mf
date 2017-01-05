@@ -2231,7 +2231,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ernel.exception,com.liferay.portal.kernel.model,com.liferay.portal.ke
  rnel.theme,com.liferay.portal.kernel.util,com.liferay.portal.kernel.x
  ml",com.liferay.mail;version="1.0.0",com.liferay.mail.kernel.model;ve
- rsion="1.0.0";uses:="javax.mail.internet",com.liferay.mail.kernel.ser
+ rsion="1.1.0";uses:="javax.mail.internet",com.liferay.mail.kernel.ser
  vice;version="1.0.0";uses:="com.liferay.mail.kernel.model,com.liferay
  .portal.kernel.exception,com.liferay.portal.kernel.transaction,javax.
  mail",com.liferay.mail.kernel.template;version="1.0.0";uses:="com.lif

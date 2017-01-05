@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.InternetHeaders;
 
 /**
  * @author Brian Wing Shun Chan
@@ -103,6 +104,10 @@ public class MailMessage implements Serializable {
 		return _inReplyTo;
 	}
 
+	public InternetHeaders getInternetHeaders() {
+		return _internetHeaders;
+	}
+
 	public String getMessageId() {
 		return _messageId;
 	}
@@ -163,6 +168,10 @@ public class MailMessage implements Serializable {
 		_inReplyTo = inReplyTo;
 	}
 
+	public void setInternetHeaders(InternetHeaders internetHeaders) {
+		_internetHeaders = internetHeaders;
+	}
+
 	public void setMessageId(String messageId) {
 		_messageId = messageId;
 	}
@@ -195,6 +204,7 @@ public class MailMessage implements Serializable {
 	private InternetAddress _from;
 	private boolean _htmlFormat;
 	private String _inReplyTo;
+	private InternetHeaders _internetHeaders;
 	private String _messageId;
 	private InternetAddress[] _replyTo;
 	private SMTPAccount _smtpAccount;

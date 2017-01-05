@@ -71,13 +71,14 @@ AUI.add(
 						definitionFields.forEach(
 							function(fieldSetting) {
 								var name = fieldSetting.name;
+								var type = fieldSetting.type;
 
 								var value = field.get(name);
 
 								if (name === 'name') {
 									config[name] = field.get('fieldName');
 								}
-								else if (name === 'options' && value) {
+								else if (type === 'options' && value) {
 									config[name] = value.slice().map(
 										function(option) {
 											var label = {};

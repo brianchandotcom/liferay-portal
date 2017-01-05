@@ -14,10 +14,10 @@
 	<bean class="com.liferay.portal.security.permission.UserGroupGroupRoleModelListener" id="com.liferay.portal.security.permission.UserGroupGroupRoleModelListener" />
 	<bean class="com.liferay.portal.security.permission.UserGroupRoleModelListener" id="com.liferay.portal.security.permission.UserGroupRoleModelListener" />
 	<bean class="com.liferay.portal.security.permission.UserModelListener" id="com.liferay.portal.security.permission.UserModelListener" />
-	<bean class="com.liferay.portal.model.UserModelListener" id="com.liferay.portal.model.UserModelListener" />
 	<bean class="com.liferay.portal.model.LayoutModelListener" id="com.liferay.portal.model.LayoutModelListener" />
 	<bean class="com.liferay.portal.model.LayoutSetModelListener" id="com.liferay.portal.model.LayoutSetModelListener" />
 	<bean class="com.liferay.portal.model.PortletPreferencesModelListener" id="com.liferay.portal.model.PortletPreferencesModelListener" />
+	<bean class="com.liferay.portal.model.UserModelListener" id="com.liferay.portal.model.UserModelListener" />
 	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" />
 	<bean class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" />
 	<bean class="com.liferay.portlet.announcements.model.GroupModelListener" id="com.liferay.portlet.announcements.model.GroupModelListener" />

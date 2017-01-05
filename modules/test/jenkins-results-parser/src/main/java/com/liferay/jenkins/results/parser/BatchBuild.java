@@ -60,7 +60,7 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getJavaJDK() {
+	public String getJDK() {
 		return getEnvironment("java.jdk");
 	}
 

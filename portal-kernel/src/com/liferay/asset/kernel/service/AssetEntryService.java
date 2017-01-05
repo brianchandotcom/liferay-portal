@@ -63,10 +63,11 @@ public interface AssetEntryService extends BaseService {
 		long classPK) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
-	Date, String, long, String, long, long[], String[], boolean,
-	boolean, Date, Date, Date, Date, String, String, String,
-	String, String, String, int, int, Double)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateEntry(long, Date, Date, String, long, String,
+	long, long[], String[], boolean, boolean, Date, Date, Date,
+	Date, String, String, String, String, String, String, int,
+	int, Double)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(long groupId, Date createDate,
@@ -90,10 +91,11 @@ public interface AssetEntryService extends BaseService {
 		int width, java.lang.Double priority) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
-	Date, String, long, String, long, long[], String[], boolean,
-	boolean, Date, Date, Date, Date, String, String, String,
-	String, String, String, int, int, Double)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateEntry(long, Date, Date, String, long, String,
+	long, long[], String[], boolean, boolean, Date, Date, Date,
+	Date, String, String, String, String, String, String, int,
+	int, Double)}
 	*/
 	@java.lang.Deprecated
 	public AssetEntry updateEntry(long groupId, Date createDate,

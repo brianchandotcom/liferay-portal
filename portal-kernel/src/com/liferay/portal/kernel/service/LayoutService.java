@@ -74,7 +74,8 @@ public interface LayoutService extends BaseService {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layout as a byte array
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public byte[] exportLayouts(long groupId, boolean privateLayout,
@@ -95,7 +96,8 @@ public interface LayoutService extends BaseService {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a byte array
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public byte[] exportLayouts(long groupId, boolean privateLayout,
@@ -104,7 +106,8 @@ public interface LayoutService extends BaseService {
 		Date endDate) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public byte[] exportPortletInfo(long companyId, java.lang.String portletId,
@@ -125,7 +128,8 @@ public interface LayoutService extends BaseService {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public byte[] exportPortletInfo(long plid, long groupId,
@@ -134,7 +138,8 @@ public interface LayoutService extends BaseService {
 		Date endDate) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, File)}
 	*/
@@ -144,7 +149,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -154,7 +160,8 @@ public interface LayoutService extends BaseService {
 		InputStream inputStream) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public MissingReferences validateImportLayoutsFile(long groupId,
@@ -163,7 +170,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public MissingReferences validateImportLayoutsFile(long groupId,
@@ -172,7 +180,8 @@ public interface LayoutService extends BaseService {
 		InputStream inputStream) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, File)}
 	*/
@@ -182,7 +191,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -192,7 +202,8 @@ public interface LayoutService extends BaseService {
 		InputStream inputStream) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public MissingReferences validateImportPortletInfo(long plid, long groupId,
@@ -201,7 +212,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public MissingReferences validateImportPortletInfo(long plid, long groupId,
@@ -515,7 +527,8 @@ public interface LayoutService extends BaseService {
 		long parentLayoutId, int priority);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -538,7 +551,8 @@ public interface LayoutService extends BaseService {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a File
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public File exportLayoutsAsFile(long groupId, boolean privateLayout,
@@ -547,7 +561,8 @@ public interface LayoutService extends BaseService {
 		Date endDate) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportPortletInfoAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -557,7 +572,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public File exportPortletInfoAsFile(java.lang.String portletId,
@@ -578,7 +594,8 @@ public interface LayoutService extends BaseService {
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a file
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public File exportPortletInfoAsFile(long plid, long groupId,
@@ -633,7 +650,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	ExportImportConfiguration)}
 	*/
@@ -643,7 +661,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long exportLayoutsAsFileInBackground(java.lang.String taskName,
@@ -652,7 +671,8 @@ public interface LayoutService extends BaseService {
 		Date endDate) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long exportLayoutsAsFileInBackground(java.lang.String taskName,
@@ -661,7 +681,8 @@ public interface LayoutService extends BaseService {
 		Date endDate, java.lang.String fileName) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#exportLayoutsAsFileInBackground(
 	long)}
 	*/
@@ -670,7 +691,8 @@ public interface LayoutService extends BaseService {
 		long exportImportConfigurationId) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long exportPortletInfoAsFileInBackground(java.lang.String taskName,
@@ -679,7 +701,8 @@ public interface LayoutService extends BaseService {
 		Date endDate, java.lang.String fileName) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long exportPortletInfoAsFileInBackground(java.lang.String taskName,
@@ -709,7 +732,8 @@ public interface LayoutService extends BaseService {
 		java.lang.String portletId) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long importLayoutsInBackground(java.lang.String taskName,
@@ -718,7 +742,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long importLayoutsInBackground(java.lang.String taskName,
@@ -727,7 +752,8 @@ public interface LayoutService extends BaseService {
 		InputStream inputStream) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long importPortletInfoInBackground(java.lang.String taskName,
@@ -736,7 +762,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public long importPortletInfoInBackground(java.lang.String taskName,
@@ -770,7 +797,8 @@ public interface LayoutService extends BaseService {
 		java.lang.String fileName) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, File)}
 	*/
@@ -780,7 +808,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -800,7 +829,8 @@ public interface LayoutService extends BaseService {
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param bytes the byte array with the data
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importLayouts(long groupId, boolean privateLayout,
@@ -818,7 +848,8 @@ public interface LayoutService extends BaseService {
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importLayouts(long groupId, boolean privateLayout,
@@ -836,7 +867,8 @@ public interface LayoutService extends BaseService {
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importLayouts(long groupId, boolean privateLayout,
@@ -844,7 +876,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, File)} (
 	*/
@@ -854,7 +887,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, InputStream)} (
 	*/
@@ -864,7 +898,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfo(java.lang.String portletId,
@@ -872,7 +907,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfo(java.lang.String portletId,
@@ -891,7 +927,8 @@ public interface LayoutService extends BaseService {
 	used in the map see {@link
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfo(long plid, long groupId,
@@ -911,7 +948,8 @@ public interface LayoutService extends BaseService {
 	used in the map see {@link
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfo(long plid, long groupId,
@@ -920,7 +958,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfoInBackground(java.lang.String taskName,
@@ -929,7 +968,8 @@ public interface LayoutService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfoInBackground(java.lang.String taskName,
@@ -958,9 +998,9 @@ public interface LayoutService extends BaseService {
 	* @param schedulerStartDate the scheduler start date
 	* @param schedulerEndDate the scheduler end date
 	* @param description the scheduler description
-	* @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
-	long, boolean, long[], Map, String, Date, Date, String,
-	String, Date, Date, String)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #schedulePublishToLive(long, long, boolean, long[],
+	Map, String, Date, Date, String, String, Date, Date, String)}
 	*/
 	@java.lang.Deprecated
 	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
@@ -1023,9 +1063,9 @@ public interface LayoutService extends BaseService {
 	* @param schedulerStartDate the scheduler start date
 	* @param schedulerEndDate the scheduler end date
 	* @param description the scheduler description
-	* @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
-	long, boolean, long[], Map, String, String, Date, Date,
-	String)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #schedulePublishToLive(long, long, boolean, long[],
+	Map, String, String, Date, Date, String)}
 	*/
 	@java.lang.Deprecated
 	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,

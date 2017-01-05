@@ -77,8 +77,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		AnnouncementsEntry announcementsEntry);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	String, String, String, String, Date, Date, int, boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addEntry(long, long, long, String, String, String,
+	String, Date, Date, int, boolean)}
 	*/
 	@java.lang.Deprecated
 	public AnnouncementsEntry addEntry(long userId, long classNameId,
@@ -181,8 +182,9 @@ public interface AnnouncementsEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	String, String, String, Date, Date, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateEntry(long, String, String, String, String,
+	Date, Date, int)}
 	*/
 	@java.lang.Deprecated
 	public AnnouncementsEntry updateEntry(long userId, long entryId,

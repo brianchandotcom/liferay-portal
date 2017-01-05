@@ -41,8 +41,8 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addUserGroup(String, String, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -121,8 +121,9 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	* @param name the user group's name
 	* @param description the the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateUserGroup(long, String, String,
+	ServiceContext)}
 	*/
 	@Deprecated
 	@Override

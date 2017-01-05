@@ -132,8 +132,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addUserGroup(long, long, String, String,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public UserGroup addUserGroup(long userId, long companyId,
@@ -261,8 +262,9 @@ public interface UserGroupLocalService extends BaseLocalService,
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateUserGroup(long, long, String, String,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public UserGroup updateUserGroup(long companyId, long userGroupId,
@@ -683,7 +685,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of 6.2.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@java.lang.Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long userId)
@@ -695,7 +697,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
-	* @deprecated As of 6.1.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@java.lang.Deprecated
 	public void copyUserGroupLayouts(long userGroupId, long[] userIds)
@@ -706,7 +708,7 @@ public interface UserGroupLocalService extends BaseLocalService,
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of 6.1.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@java.lang.Deprecated
 	public void copyUserGroupLayouts(long[] userGroupIds, long userId)

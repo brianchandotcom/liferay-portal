@@ -94,8 +94,9 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #isKeepFileVersionLabel(long,
-	boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #isKeepFileVersionLabel(long, boolean,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -337,7 +338,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public int getFileEntriesCount();
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -381,8 +383,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		boolean incrementCounter, int increment) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
-	boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFile(long, String, boolean)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -391,8 +393,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFile(long, String,
-	boolean, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFile(long, String, boolean, int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -412,16 +414,16 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
-	String)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFileAsStream(long, String)}
 	*/
 	@java.lang.Deprecated
 	public InputStream getFileAsStream(long userId, long fileEntryId,
 		java.lang.String version) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
-	String, boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFileAsStream(long, String, boolean)}
 	*/
 	@java.lang.Deprecated
 	public InputStream getFileAsStream(long userId, long fileEntryId,
@@ -429,8 +431,8 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getFileAsStream(long,
-	String, boolean, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getFileAsStream(long, String, boolean, int)}
 	*/
 	@java.lang.Deprecated
 	public InputStream getFileAsStream(long userId, long fileEntryId,

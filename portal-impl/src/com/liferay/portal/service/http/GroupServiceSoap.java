@@ -153,9 +153,9 @@ public class GroupServiceSoap {
 	staging
 	* @return the group
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, Map,
-	Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addGroup(long, long, Map, Map, int, boolean, int,
+	String, boolean, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.GroupSoap addGroup(
@@ -870,9 +870,9 @@ public class GroupServiceSoap {
 	tag names for the group.
 	* @return the group
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
-	Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateGroup(long, long, Map, Map, int, boolean, int,
+	String, boolean, boolean, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.GroupSoap updateGroup(

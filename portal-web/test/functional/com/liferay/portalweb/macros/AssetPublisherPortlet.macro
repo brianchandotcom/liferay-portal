@@ -669,6 +669,13 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
+	<command name="viewAssetViewCount">
+		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_VIEW_COUNT" value1="${viewCount}">
+			<var name="key_assetTitle" value="${assetTitle}" />
+			<var name="key_viewCount" value="${viewCount}" />
+		</execute>
+	</command>
+
 	<command name="viewConfigureAPDisplayTemplateFullContentBookmarksPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
@@ -913,13 +920,6 @@
 		<execute function="SelectFrameTop" />
 	</command>
 
-	<command name="viewLessViewedAsset">
-		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_LESS_VIEWED" value1="${viewCount}">
-			<var name="key_assetTitle" value="${assetTitle}" />
-			<var name="key_viewCount" value="${viewCount}" />
-		</execute>
-	</command>
-
 	<command name="viewManualAssetSelectionConfigurationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="Asset Publisher" />
@@ -966,13 +966,6 @@
 
 	<command name="viewManualNoAssetsMessagePG">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no results." />
-	</command>
-
-	<command name="viewMostViewedAsset">
-		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_MOST_VIEWED" value1="${viewCount}">
-			<var name="key_assetTitle" value="${assetTitle}" />
-			<var name="key_viewCount" value="${viewCount}" />
-		</execute>
 	</command>
 
 	<command name="viewMultipleAssetOrderPGViaAP">

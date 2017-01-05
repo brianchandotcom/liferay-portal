@@ -43,6 +43,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
@@ -178,7 +179,7 @@ public class BlogsEntryDemoDataCreatorImpl
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private FileEntryDemoDataCreator _fileEntryDemoDataCreator;
 	private RootFolderDemoDataCreator _rootFolderDemoDataCreator;
-	private final List<Long> _entryIds = new ArrayList<>();
+	private final List<Long> _entryIds = new CopyOnWriteArrayList<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryDemoDataCreatorImpl.class);

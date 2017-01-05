@@ -1,4 +1,4 @@
-<definition component-name="portal-plugins-osgi" ignore="true">
+<definition component-name="portal-plugins-osgi">
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />
 	<property name="plugins.deployment.type" value="osgi" />

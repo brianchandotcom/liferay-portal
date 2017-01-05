@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion;
 import com.liferay.site.item.selector.web.internal.constants.SitesItemSelectorWebKeys;
-import com.liferay.site.item.selector.web.internal.display.context.AllSitesItemSelectorViewDisplayContext;
+import com.liferay.site.item.selector.web.internal.display.context.MySitesItemSelectorViewDisplayContext;
 import com.liferay.site.util.GroupSearchProvider;
 import com.liferay.site.util.GroupURLProvider;
 
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"item.selector.view.order:Integer=300"},
 	service = ItemSelectorView.class
 )
-public class AllSitesItemSelectorView
+public class MySitesItemSelectorView
 	implements ItemSelectorView<SiteItemSelectorCriterion> {
 
 	@Override
@@ -76,7 +76,7 @@ public class AllSitesItemSelectorView
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = PortalUtil.getResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(resourceBundle, "all-sites");
+		return ResourceBundleUtil.getString(resourceBundle, "my-sites");
 	}
 
 	@Override
@@ -100,9 +100,9 @@ public class AllSitesItemSelectorView
 			SiteWebKeys.GROUP_SEARCH_PROVIDER, _groupSearchProvider);
 		request.setAttribute(SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
-		AllSitesItemSelectorViewDisplayContext
+		MySitesItemSelectorViewDisplayContext
 			allSitesItemSelectorViewDisplayContext =
-				new AllSitesItemSelectorViewDisplayContext(
+				new MySitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)request, siteItemSelectorCriterion,
 					itemSelectedEventName, portletURL, _groupSearchProvider);
 

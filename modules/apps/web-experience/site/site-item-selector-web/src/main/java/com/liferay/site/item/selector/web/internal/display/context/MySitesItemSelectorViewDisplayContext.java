@@ -36,10 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Julio Camarero
  */
-public class AllSitesItemSelectorViewDisplayContext
+public class MySitesItemSelectorViewDisplayContext
 	extends BaseSitesItemSelectorViewDisplayContext {
 
-	public AllSitesItemSelectorViewDisplayContext(
+	public MySitesItemSelectorViewDisplayContext(
 		HttpServletRequest request,
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		String itemSelectedEventName, PortletURL portletURL,
@@ -102,7 +102,7 @@ public class AllSitesItemSelectorViewDisplayContext
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AllSitesItemSelectorViewDisplayContext.class);
+		MySitesItemSelectorViewDisplayContext.class);
 
 	private final GroupSearchProvider _groupSearchProvider;
 	private final PortletRequest _portletRequest;

@@ -48,7 +48,7 @@ public class ExportImportPathUtil {
 	public static final String PATH_PREFIX_GROUP = "group";
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final String PATH_PREFIX_LAYOUT = "layout";
@@ -114,7 +114,7 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getModelPath(StagedModel)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getModelPath(StagedModel)}
 	 */
 	@Deprecated
 	public static String getLayoutPath(
@@ -424,7 +424,7 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getModelPath(PortletDataContext, String, long)}
 	 */
 	@Deprecated
@@ -443,7 +443,7 @@ public class ExportImportPathUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static String getSourcePortletPath(

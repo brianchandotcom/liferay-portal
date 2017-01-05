@@ -21,25 +21,25 @@ package com.liferay.portal.kernel.exception;
 public class RequiredGroupException extends PortalException {
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int CURRENT_GROUP = 3;
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int PARENT_GROUP = 2;
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static final int SYSTEM_GROUP = 1;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public int getType() {

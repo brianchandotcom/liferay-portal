@@ -26,14 +26,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class UserEmailAddressException extends PortalException {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserEmailAddressException() {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserEmailAddressException(String msg) {
@@ -41,7 +41,7 @@ public class UserEmailAddressException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserEmailAddressException(String msg, Throwable cause) {
@@ -49,7 +49,7 @@ public class UserEmailAddressException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
 	 */
 	@Deprecated
 	public UserEmailAddressException(Throwable cause) {

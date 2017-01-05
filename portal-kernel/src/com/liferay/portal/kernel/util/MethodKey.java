@@ -68,7 +68,7 @@ public class MethodKey implements Externalizable {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #MethodKey(Class, String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #MethodKey(Class, String,
 	 *             Class...)}
 	 */
 	@Deprecated

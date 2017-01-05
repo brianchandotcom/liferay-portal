@@ -36,7 +36,7 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -45,7 +45,7 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -68,7 +68,7 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -77,7 +77,7 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

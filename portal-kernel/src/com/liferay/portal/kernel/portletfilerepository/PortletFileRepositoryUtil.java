@@ -112,7 +112,7 @@ public class PortletFileRepositoryUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #deletePortletFolder}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #deletePortletFolder}
 	 */
 	@Deprecated
 	public static void deleteFolder(long folderId) throws PortalException {

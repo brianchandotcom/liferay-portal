@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link
  *             com.liferay.expando.taglib.servlet.taglib.CustomAttributeListTag}
  */
 @Deprecated

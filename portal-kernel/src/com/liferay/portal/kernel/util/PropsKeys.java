@@ -94,7 +94,7 @@ public interface PropsKeys {
 	public static final String ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES = "asset.categories.selector.max.entries";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String ASSET_ENTRY_VALIDATOR = "asset.entry.validator";
@@ -1318,13 +1318,13 @@ public interface PropsKeys {
 	public static final String MESSAGE_BOARDS_USER_RANKS = "message.boards.user.ranks";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_ID = "microsoft.translator.client.id";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String MICROSOFT_TRANSLATOR_CLIENT_SECRET = "microsoft.translator.client.secret";
@@ -1366,7 +1366,7 @@ public interface PropsKeys {
 	public static final String MODULE_FRAMEWORK_DYNAMIC_INSTALL_START_LEVEL = "module.framework.dynamic.install.start.level";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String MODULE_FRAMEWORK_INITIAL_BUNDLES = "module.framework.initial.bundles";
@@ -1980,25 +1980,25 @@ public interface PropsKeys {
 	public static final String SHOPPING_EMAIL_ORDER_SHIPPING_SUBJECT = "shopping.email.order.shipping.subject";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String SHOPPING_IMAGE_EXTENSIONS = "shopping.image.extensions";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String SHOPPING_IMAGE_LARGE_MAX_SIZE = "shopping.image.large.max.size";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String SHOPPING_IMAGE_MEDIUM_MAX_SIZE = "shopping.image.medium.max.size";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static final String SHOPPING_IMAGE_SMALL_MAX_SIZE = "shopping.image.small.max.size";
@@ -2174,7 +2174,7 @@ public interface PropsKeys {
 	public static final String SYSTEM_SITE_ROLES = "system.site.roles";
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #TABLE_MAPPER_CACHELESS_MAPPING_TABLE_NAMES}
 	 */
 	@Deprecated

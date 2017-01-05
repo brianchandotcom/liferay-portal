@@ -62,7 +62,7 @@ public class MethodHandler implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #invoke}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #invoke}
 	 */
 	@Deprecated
 	public Object invoke(boolean newInstance) throws Exception {

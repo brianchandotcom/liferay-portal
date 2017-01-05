@@ -138,7 +138,7 @@ public interface DL {
 	public String getTempFileId(long id, String version, String languageId);
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             ThemeDisplay)}
 	 */
 	@Deprecated
@@ -148,7 +148,7 @@ public interface DL {
 		throws Exception;
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated

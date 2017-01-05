@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author     Alvaro del Castillo
  * @author     Eduardo Lundgren
  * @author     Jorge Ferrer
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
  */
 @Deprecated
 public class AssetTagsNavigationTag extends IncludeTag {

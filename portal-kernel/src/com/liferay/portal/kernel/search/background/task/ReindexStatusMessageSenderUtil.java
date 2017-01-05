@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class ReindexStatusMessageSenderUtil {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #_getReindexStatusMessageSender()}
 	 */
 	@Deprecated

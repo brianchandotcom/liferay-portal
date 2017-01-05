@@ -164,7 +164,7 @@ public class UnicodeProperties extends HashMap<String, String> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #toString}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #toString}
 	 */
 	@Deprecated
 	public String toSortedString() {
@@ -198,7 +198,7 @@ public class UnicodeProperties extends HashMap<String, String> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected int getToStringLength() {

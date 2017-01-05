@@ -22,7 +22,7 @@ import java.lang.annotation.Target;
 
 /**
  * @author     Shuyang Zhou
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.kernel.model.cache.CacheField}
  */
 @Deprecated

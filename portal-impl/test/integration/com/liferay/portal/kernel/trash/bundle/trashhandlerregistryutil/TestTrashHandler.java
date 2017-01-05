@@ -51,7 +51,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -60,7 +60,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -93,7 +93,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -141,7 +141,7 @@ public class TestTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

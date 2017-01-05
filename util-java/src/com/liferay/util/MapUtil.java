@@ -17,7 +17,7 @@ package com.liferay.util;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Raymond Aug�
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.util.MapUtil}
  */
 @Deprecated

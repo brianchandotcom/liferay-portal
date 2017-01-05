@@ -90,7 +90,7 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #encodeCacheKey(String)}
 	 */
 	@Deprecated
@@ -114,7 +114,7 @@ public class FinderPath {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #encodeLocalCacheKey(String)}
 	 */
 	@Deprecated

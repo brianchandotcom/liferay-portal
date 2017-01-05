@@ -20,7 +20,7 @@ import java.sql.SQLException;
 
 /**
  * @author     Adolfo Pérez
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.portal.kernel.upgrade.BaseReplacePortletId}
  */
 @Deprecated

@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, moved to {@link
  *             com.liferay.portal.words.BasicSpellCheckListener}
  */
 @Deprecated

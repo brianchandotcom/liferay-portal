@@ -142,7 +142,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		public String getIndexedColumnName();
@@ -173,7 +173,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -219,7 +219,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -263,7 +263,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override
@@ -304,7 +304,7 @@ public abstract class UpgradeProcess
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, with no direct replacement
+		 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 		 */
 		@Deprecated
 		@Override

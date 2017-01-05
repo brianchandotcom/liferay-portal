@@ -53,7 +53,7 @@ public class MBDiscussionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #addDiscussion(long, long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #addDiscussion(long, long,
 	 *             long, long, long, ServiceContext)}
 	 */
 	@Deprecated

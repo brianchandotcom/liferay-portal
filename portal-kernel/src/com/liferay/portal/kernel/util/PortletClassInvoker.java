@@ -26,7 +26,7 @@ import javax.servlet.ServletContext;
 public class PortletClassInvoker {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #invoke(String, MethodKey,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #invoke(String, MethodKey,
 	 *             Object...)}
 	 */
 	@Deprecated

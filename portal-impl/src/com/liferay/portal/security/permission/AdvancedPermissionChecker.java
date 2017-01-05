@@ -1620,7 +1620,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	protected static final String RESULTS_SEPARATOR = "_RESULTS_SEPARATOR_";

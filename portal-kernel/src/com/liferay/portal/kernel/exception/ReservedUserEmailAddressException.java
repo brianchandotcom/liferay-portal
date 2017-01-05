@@ -16,7 +16,7 @@ package com.liferay.portal.kernel.exception;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
  *             UserEmailAddressException.MustNotBeReserved}
  */
 @Deprecated

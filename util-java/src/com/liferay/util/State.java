@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link com.liferay.shopping.util.State)}
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, replaced by {@link com.liferay.shopping.util.State)}
  */
 @Deprecated
 public class State {

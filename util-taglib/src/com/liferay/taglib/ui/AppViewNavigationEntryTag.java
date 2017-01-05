@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author     Sergio González
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link
  *             com.liferay.taglib.aui.NavItemTag}
  */
 @Deprecated

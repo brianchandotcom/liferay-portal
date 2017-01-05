@@ -25,7 +25,7 @@ import javax.servlet.jsp.tagext.TagSupport;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
  */
 @Deprecated
 public class GroupSearchTag extends TagSupport {

@@ -192,7 +192,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCache(String)}
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCache(String)}
 		 */
 		@Deprecated
 		@Override
@@ -203,7 +203,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCache(String,
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCache(String,
 		 * boolean)}
 		 */
 		@Deprecated
@@ -215,7 +215,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCacheManager()}
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCacheManager()}
 		 */
 		@Deprecated
 		@Override
@@ -268,7 +268,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #removePortalCache(
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #removePortalCache(
 		 * String)}
 		 */
 		@Deprecated
@@ -307,7 +307,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCacheName()}
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCacheName()}
 		 */
 		@Deprecated
 		@Override
@@ -423,7 +423,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCache(String)}
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCache(String)}
 		 */
 		@Deprecated
 		@Override
@@ -434,7 +434,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCache(String,
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCache(String,
 		 * boolean)}
 		 */
 		@Deprecated
@@ -446,7 +446,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #getPortalCacheManager()}
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getPortalCacheManager()}
 		 */
 		@Deprecated
 		@Override
@@ -487,7 +487,7 @@ public class ToolDependencies {
 		}
 
 		/**
-		 * @deprecated As of NEXT-VERSION, replaced by {@link #removePortalCache(
+		 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #removePortalCache(
 		 * String)}
 		 */
 		@Deprecated

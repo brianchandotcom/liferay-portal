@@ -155,7 +155,7 @@ public class ResultRow
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -177,7 +177,7 @@ public class ResultRow
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -214,7 +214,7 @@ public class ResultRow
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -231,7 +231,7 @@ public class ResultRow
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -248,7 +248,7 @@ public class ResultRow
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override
@@ -287,7 +287,7 @@ public class ResultRow
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	@Override

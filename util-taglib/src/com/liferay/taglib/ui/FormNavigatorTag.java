@@ -40,7 +40,7 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setCategoryNames(String[] categoryNames) {
@@ -48,7 +48,7 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setCategorySections(String[][] categorySections) {
@@ -80,7 +80,7 @@ public class FormNavigatorTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION
 	 */
 	@Deprecated
 	public void setJspPath(String jspPath) {

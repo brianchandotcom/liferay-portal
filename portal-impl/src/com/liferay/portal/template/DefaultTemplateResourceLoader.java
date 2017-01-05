@@ -90,7 +90,7 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	public DefaultTemplateResourceLoader(

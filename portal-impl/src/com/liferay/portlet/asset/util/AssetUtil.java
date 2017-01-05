@@ -376,7 +376,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #getAddPortletURL(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, String, long, long[], String[],
 	 *             String)}
@@ -477,7 +477,7 @@ public class AssetUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #getAddPortletURLs(LiferayPortletRequest,
 	 *             LiferayPortletResponse, long, long[], long[], long[],
 	 *             String[], String)}

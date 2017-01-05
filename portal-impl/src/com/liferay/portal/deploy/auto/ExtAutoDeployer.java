@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
  */
 @Deprecated
 public class ExtAutoDeployer extends ExtDeployer implements AutoDeployer {

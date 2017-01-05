@@ -189,7 +189,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getModelAdditionCount(StagedModel)}
 	 */
 	@Deprecated
@@ -198,7 +198,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getModelAdditionCount(StagedModelType)}
 	 */
 	@Deprecated
@@ -235,7 +235,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getAllModelDeletionCounts()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getAllModelDeletionCounts()}
 	 */
 	@Deprecated
 	public long getModelDeletionCount() {
@@ -243,7 +243,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             #getModelDeletionCount(StagedModel)}
 	 */
 	@Deprecated

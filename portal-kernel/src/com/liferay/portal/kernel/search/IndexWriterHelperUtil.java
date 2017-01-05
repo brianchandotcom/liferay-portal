@@ -170,7 +170,7 @@ public class IndexWriterHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             isIndexReadOnly}
 	 */
@@ -216,7 +216,7 @@ public class IndexWriterHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
 	 *             com.liferay.portal.search.index.IndexStatusManager#
 	 *             setIndexReadOnly(boolean)}
 	 */

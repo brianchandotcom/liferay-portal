@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, moved to {@link
+ * @deprecated As of com.liferay.util.java#NEXT-VERSION, moved to {@link
  *             com.liferay.portal.kernel.servlet.DynamicServletRequest}
  */
 @Deprecated

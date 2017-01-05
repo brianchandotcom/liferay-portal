@@ -27,7 +27,7 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author     Brian Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
  *             com.liferay.taglib.ui.InputPermissionsTag}
  */
 @Deprecated

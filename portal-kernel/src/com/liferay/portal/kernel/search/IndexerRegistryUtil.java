@@ -32,7 +32,7 @@ public class IndexerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	public static IndexerRegistry getIndexerRegistry() {
@@ -56,7 +56,7 @@ public class IndexerRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #register(Indexer)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #register(Indexer)}
 	 */
 	@Deprecated
 	public static void register(String className, Indexer<?> indexer) {

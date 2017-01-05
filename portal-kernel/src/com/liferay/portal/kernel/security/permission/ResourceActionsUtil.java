@@ -52,7 +52,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static List<String> getActionsNames(
@@ -62,7 +62,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static List<String> getActionsNames(
@@ -255,7 +255,7 @@ public class ResourceActionsUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	public static void read(String servletContextName, InputStream inputStream)

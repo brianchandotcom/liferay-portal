@@ -88,7 +88,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -97,7 +97,7 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getSummary(long,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getSummary(long,
 	 *             PortletRequest, PortletResponse)}
 	 */
 	@Deprecated

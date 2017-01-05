@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.TermQueryFactory;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of NEXT-VERSION
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
  */
 @Deprecated
 public class TermQueryFactoryImpl implements TermQueryFactory {

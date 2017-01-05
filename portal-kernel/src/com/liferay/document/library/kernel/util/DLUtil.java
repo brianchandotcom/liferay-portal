@@ -216,7 +216,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             ThemeDisplay)}
 	 */
 	@Deprecated
@@ -229,7 +229,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getThumbnailSrc(FileEntry,
 	 *             FileVersion, ThemeDisplay)}
 	 */
 	@Deprecated

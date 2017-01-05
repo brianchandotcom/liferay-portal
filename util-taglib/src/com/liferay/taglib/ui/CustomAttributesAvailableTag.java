@@ -41,7 +41,7 @@ import javax.servlet.jsp.JspException;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of NEXT-VERSION, replaced by {@link
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link
  *             com.liferay.expando.taglib.servlet.taglib.CustomAttributesAvailableTag}
  */
 @Deprecated

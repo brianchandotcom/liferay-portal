@@ -37,7 +37,7 @@ import javax.portlet.ReadOnlyException;
 public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 
 	/**
-	 * @deprecated As of NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
 	 */
 	@Deprecated
 	protected void deletePortletPreferences(long portletPreferencesId)
@@ -360,7 +360,7 @@ public abstract class BaseUpgradePortletPreferences extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION
 	 */
 	@Deprecated
 	protected void updatePortletPreferences(

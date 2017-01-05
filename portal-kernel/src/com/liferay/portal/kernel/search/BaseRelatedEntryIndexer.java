@@ -90,7 +90,7 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, added strictly to support backwards
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, added strictly to support backwards
 	 *             compatibility of {@link
 	 *             Indexer#postProcessContextQuery(BooleanQuery, SearchContext)}
 	 */

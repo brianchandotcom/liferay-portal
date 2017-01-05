@@ -16,7 +16,7 @@ package com.liferay.exportimport.kernel.lar;
 
 /**
  * @author     Raymond Augé
- * @deprecated As of NEXT-VERSION, see {@link
+ * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, see {@link
  *             com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent}
  */
 @Deprecated

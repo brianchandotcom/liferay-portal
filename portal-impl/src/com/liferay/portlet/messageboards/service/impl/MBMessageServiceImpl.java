@@ -269,7 +269,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
 	 *             #deleteDiscussionMessage(long)}
 	 */
 	@Deprecated
@@ -589,7 +589,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #getMessageDisplay(long,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getMessageDisplay(long,
 	 *             int)}
 	 */
 	@Deprecated

@@ -79,7 +79,7 @@ public class SocialActivitiesTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #setFeedURL(String)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #setFeedURL(String)}
 	 */
 	@Deprecated
 	public void setFeedLink(String feedLink) {
@@ -87,7 +87,7 @@ public class SocialActivitiesTag extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of NEXT-VERSION, replaced by {@link #setFeedURLMessage(String)}
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, replaced by {@link #setFeedURLMessage(String)}
 	 */
 	@Deprecated
 	public void setFeedLinkMessage(String feedLinkMessage) {

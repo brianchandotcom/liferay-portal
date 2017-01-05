@@ -258,7 +258,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//a[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//ul[contains(.,'${key_conditionValueField}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//a[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueField}')]</td>
 	<td></td>
 </tr>
 <tr>

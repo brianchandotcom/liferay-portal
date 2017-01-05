@@ -60,6 +60,8 @@ public interface Build {
 
 	public String getJobURL();
 
+	public String getJobVariant();
+
 	public String getMaster();
 
 	public String getOperatingSystem();

@@ -39,16 +39,6 @@ public class BatchBuild extends BaseBuild {
 		return getEnvironment("app.server");
 	}
 
-	public String getBatchName() {
-		String batchName = getParameterValue("JOB_VARIANT");
-
-		if ((batchName == null) || batchName.isEmpty()) {
-			batchName = getParameterValue("JENKINS_JOB_VARIANT");
-		}
-
-		return batchName;
-	}
-
 	@Override
 	public String getBrowser() {
 		return getEnvironment("browser");
@@ -168,7 +158,7 @@ public class BatchBuild extends BaseBuild {
 					buildProperties.getProperty(environmentType + ".types"),
 					",")));
 
-		String batchName = getBatchName();
+		String batchName = getJobVariant();
 
 		for (String environmentOption : environmentOptions) {
 			if (batchName.contains(environmentOption)) {

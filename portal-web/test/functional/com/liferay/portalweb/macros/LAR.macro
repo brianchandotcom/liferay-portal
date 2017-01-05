@@ -61,7 +61,6 @@
 					<var name="panelHeading" value="Deletions" />
 				</execute>
 
-				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#DELETE_PORTLET_DATA" />
 				<execute function="Check#checkToggleSwitch" locator1="ToggleSwitch#REPLICATE_INDIVIDUAL_DELETIONS" />
 			</then>
 		</if>

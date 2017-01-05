@@ -44,12 +44,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_MOST_VIEWED</td>
-	<td>//div[contains(@class,'asset-abstract') and contains(.,'${key_assetTitle}')]//div[contains(.,'${key_viewCount}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ASSET_LESS_VIEWED</td>
+	<td>ASSET_VIEW_COUNT</td>
 	<td>//div[contains(@class,'asset-abstract') and contains(.,'${key_assetTitle}')]//div[contains(.,'${key_viewCount}')]</td>
 	<td></td>
 </tr>

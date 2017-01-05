@@ -75,62 +75,42 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	public void setCheckRequired(boolean checkRequired) {
 		_checkRequired = checkRequired;
-
-		setScopedAttribute("checkRequired", checkRequired);
 	}
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		setScopedAttribute("classNameId", classNameId);
 	}
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-
-		setScopedAttribute("classPK", classPK);
 	}
 
 	public void setDdmFormValues(com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
-
-		setScopedAttribute("ddmFormValues", ddmFormValues);
 	}
 
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
 		_fieldsNamespace = fieldsNamespace;
-
-		setScopedAttribute("fieldsNamespace", fieldsNamespace);
 	}
 
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
-
-		setScopedAttribute("ignoreRequestValue", ignoreRequestValue);
 	}
 
 	public void setReadOnly(boolean readOnly) {
 		_readOnly = readOnly;
-
-		setScopedAttribute("readOnly", readOnly);
 	}
 
 	public void setRepeatable(boolean repeatable) {
 		_repeatable = repeatable;
-
-		setScopedAttribute("repeatable", repeatable);
 	}
 
 	public void setRequestedLocale(java.util.Locale requestedLocale) {
 		_requestedLocale = requestedLocale;
-
-		setScopedAttribute("requestedLocale", requestedLocale);
 	}
 
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
-
-		setScopedAttribute("showEmptyFieldLabel", showEmptyFieldLabel);
 	}
 
 	@Override

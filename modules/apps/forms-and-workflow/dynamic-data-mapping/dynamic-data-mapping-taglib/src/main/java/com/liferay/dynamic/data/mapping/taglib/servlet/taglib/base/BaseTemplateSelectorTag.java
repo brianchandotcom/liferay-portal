@@ -71,56 +71,38 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 
 	public void setClassName(java.lang.String className) {
 		_className = className;
-
-		setScopedAttribute("className", className);
 	}
 
 	public void setDefaultDisplayStyle(java.lang.String defaultDisplayStyle) {
 		_defaultDisplayStyle = defaultDisplayStyle;
-
-		setScopedAttribute("defaultDisplayStyle", defaultDisplayStyle);
 	}
 
 	public void setDisplayStyle(java.lang.String displayStyle) {
 		_displayStyle = displayStyle;
-
-		setScopedAttribute("displayStyle", displayStyle);
 	}
 
 	public void setDisplayStyleGroupId(long displayStyleGroupId) {
 		_displayStyleGroupId = displayStyleGroupId;
-
-		setScopedAttribute("displayStyleGroupId", displayStyleGroupId);
 	}
 
 	public void setDisplayStyles(java.util.List<java.lang.String> displayStyles) {
 		_displayStyles = displayStyles;
-
-		setScopedAttribute("displayStyles", displayStyles);
 	}
 
 	public void setIcon(java.lang.String icon) {
 		_icon = icon;
-
-		setScopedAttribute("icon", icon);
 	}
 
 	public void setLabel(java.lang.String label) {
 		_label = label;
-
-		setScopedAttribute("label", label);
 	}
 
 	public void setRefreshURL(java.lang.String refreshURL) {
 		_refreshURL = refreshURL;
-
-		setScopedAttribute("refreshURL", refreshURL);
 	}
 
 	public void setShowEmptyOption(boolean showEmptyOption) {
 		_showEmptyOption = showEmptyOption;
-
-		setScopedAttribute("showEmptyOption", showEmptyOption);
 	}
 
 	@Override

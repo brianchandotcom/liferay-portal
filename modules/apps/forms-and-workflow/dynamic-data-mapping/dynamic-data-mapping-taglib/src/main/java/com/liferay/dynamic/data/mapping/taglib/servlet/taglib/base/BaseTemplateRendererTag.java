@@ -55,32 +55,22 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 
 	public void setClassName(java.lang.String className) {
 		_className = className;
-
-		setScopedAttribute("className", className);
 	}
 
 	public void setContextObjects(java.util.Map<java.lang.String, java.lang.Object> contextObjects) {
 		_contextObjects = contextObjects;
-
-		setScopedAttribute("contextObjects", contextObjects);
 	}
 
 	public void setDisplayStyle(java.lang.String displayStyle) {
 		_displayStyle = displayStyle;
-
-		setScopedAttribute("displayStyle", displayStyle);
 	}
 
 	public void setDisplayStyleGroupId(long displayStyleGroupId) {
 		_displayStyleGroupId = displayStyleGroupId;
-
-		setScopedAttribute("displayStyleGroupId", displayStyleGroupId);
 	}
 
 	public void setEntries(java.util.List<?> entries) {
 		_entries = entries;
-
-		setScopedAttribute("entries", entries);
 	}
 
 	@Override

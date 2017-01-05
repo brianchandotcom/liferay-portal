@@ -67,50 +67,34 @@ public abstract class BaseHTMLFieldTag extends com.liferay.taglib.util.IncludeTa
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-
-		setScopedAttribute("classNameId", classNameId);
 	}
 
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-
-		setScopedAttribute("classPK", classPK);
 	}
 
 	public void setField(com.liferay.dynamic.data.mapping.storage.Field field) {
 		_field = field;
-
-		setScopedAttribute("field", field);
 	}
 
 	public void setFieldsNamespace(java.lang.String fieldsNamespace) {
 		_fieldsNamespace = fieldsNamespace;
-
-		setScopedAttribute("fieldsNamespace", fieldsNamespace);
 	}
 
 	public void setReadOnly(boolean readOnly) {
 		_readOnly = readOnly;
-
-		setScopedAttribute("readOnly", readOnly);
 	}
 
 	public void setRepeatable(boolean repeatable) {
 		_repeatable = repeatable;
-
-		setScopedAttribute("repeatable", repeatable);
 	}
 
 	public void setRequestedLocale(java.util.Locale requestedLocale) {
 		_requestedLocale = requestedLocale;
-
-		setScopedAttribute("requestedLocale", requestedLocale);
 	}
 
 	public void setShowEmptyFieldLabel(boolean showEmptyFieldLabel) {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
-
-		setScopedAttribute("showEmptyFieldLabel", showEmptyFieldLabel);
 	}
 
 	@Override

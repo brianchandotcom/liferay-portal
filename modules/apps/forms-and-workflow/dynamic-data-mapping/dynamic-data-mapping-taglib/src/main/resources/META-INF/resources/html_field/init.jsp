@@ -28,7 +28,6 @@ boolean repeatable = GetterUtil.getBoolean(String.valueOf(request.getAttribute("
 java.util.Locale requestedLocale = (java.util.Locale)request.getAttribute("liferay-ddm:html-field:requestedLocale");
 boolean showEmptyFieldLabel = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-ddm:html-field:showEmptyFieldLabel")), true);
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ddm:html-field:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("liferay-ddm:html-field:scopedAttributes");
 %>
 
 <%@ include file="/html_field/init-ext.jspf" %>

@@ -25,7 +25,6 @@ java.lang.String displayStyle = GetterUtil.getString((java.lang.String)request.g
 long displayStyleGroupId = GetterUtil.getLong(String.valueOf(request.getAttribute("liferay-ddm:template-renderer:displayStyleGroupId")));
 java.util.List<?> entries = (java.util.List<?>)request.getAttribute("liferay-ddm:template-renderer:entries");
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ddm:template-renderer:dynamicAttributes");
-Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("liferay-ddm:template-renderer:scopedAttributes");
 %>
 
 <%@ include file="/template_renderer/init-ext.jspf" %>

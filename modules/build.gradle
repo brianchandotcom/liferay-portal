@@ -57,6 +57,16 @@ gradle.beforeProject {
 	configure(project) {
 		apply plugin: "com.liferay.defaults.plugin"
 
+		afterEvaluate {
+			String forcedUpdateVersion = GradleUtil.getProperty(project, "forced.update.version", (String)null)
+
+			if (forcedUpdateVersion && tasks.findByName("updateVersion")) {
+				updateVersion {
+					replacement = forcedUpdateVersion
+				}
+			}
+		}
+
 		pluginManager.withPlugin("com.liferay.ant.plugin") {
 			task buildLang(dependsOn: "build-lang")
 

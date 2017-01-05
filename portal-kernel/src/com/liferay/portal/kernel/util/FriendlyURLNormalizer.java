@@ -27,7 +27,8 @@ public interface FriendlyURLNormalizer {
 	public String normalize(String friendlyURL);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String normalize(String friendlyURL, Pattern friendlyURLPattern);

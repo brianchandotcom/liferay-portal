@@ -23,7 +23,8 @@ import aQute.bnd.annotation.ProviderType;
 public class PortletDataHandlerKeys {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String CATEGORIES = "CATEGORIES";
@@ -112,7 +113,8 @@ public class PortletDataHandlerKeys {
 		"ADD_TO_BOTTOM";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String PORTLETS_MERGE_MODE_ADD_TO_TOP = "ADD_TO_TOP";
@@ -120,14 +122,16 @@ public class PortletDataHandlerKeys {
 	public static final String PORTLETS_MERGE_MODE_REPLACE = "REPLACE";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String PUBLIC_LAYOUT_PERMISSIONS =
 		"PUBLIC_LAYOUT_PERMISSIONS";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String PUBLISH_TO_REMOTE = "PUBLISH_TO_REMOTE";

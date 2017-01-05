@@ -29,7 +29,8 @@ import javax.portlet.PortletRequest;
 
 /**
  * @author     Eudaldo Alonso
- * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class RestoreEntryUtil {

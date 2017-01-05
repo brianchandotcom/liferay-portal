@@ -319,8 +319,8 @@ public class InvokerFilterHelper {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #initFilter(ServletContext,
-	 *             String, FilterConfig)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #initFilter(ServletContext, String, FilterConfig)}
 	 */
 	@Deprecated
 	protected Filter initFilter(

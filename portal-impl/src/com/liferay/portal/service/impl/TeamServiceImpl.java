@@ -35,8 +35,8 @@ import java.util.List;
 public class TeamServiceImpl extends TeamServiceBaseImpl {
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #addTeam(long, String,
-	 *             String, ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #addTeam(long, String, String, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

@@ -23,14 +23,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class UserIdException extends PortalException {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserIdException() {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserIdException(String msg) {
@@ -38,7 +40,8 @@ public class UserIdException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserIdException(String msg, Throwable cause) {
@@ -46,7 +49,8 @@ public class UserIdException extends PortalException {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the inner classes
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by the
+	 *             inner classes
 	 */
 	@Deprecated
 	public UserIdException(Throwable cause) {

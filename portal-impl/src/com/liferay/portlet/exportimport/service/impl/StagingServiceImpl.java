@@ -54,7 +54,8 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -93,8 +94,8 @@ public class StagingServiceImpl extends StagingServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #publishStagingRequest(long,
-	 *             boolean, Map)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #publishStagingRequest(long, boolean, Map)}
 	 */
 	@Deprecated
 	@Override

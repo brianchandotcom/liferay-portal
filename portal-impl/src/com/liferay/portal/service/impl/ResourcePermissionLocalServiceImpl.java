@@ -430,9 +430,9 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #getAvailableResourcePermissionActionIds(long, String, int,
-	 *             String, Collection)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getAvailableResourcePermissionActionIds(long, String,
+	 *             int, String, Collection)}
 	 */
 	@Deprecated
 	@Override
@@ -840,8 +840,8 @@ public class ResourcePermissionLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getRoles(long, String, int,
-	 *             String, String}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getRoles(long, String, int, String, String}
 	 */
 	@Deprecated
 	@Override

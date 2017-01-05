@@ -869,8 +869,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #restoreDependentsFromTrash(long, long)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #restoreDependentsFromTrash(long, long)}
 	 */
 	@Deprecated
 	@Override

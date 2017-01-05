@@ -124,7 +124,8 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected boolean isNull(String value) {
@@ -136,7 +137,8 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected String normalizeValue(String value) {
@@ -148,7 +150,8 @@ public class PortletPreferencesSettings extends BaseModifiableSettings {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected String[] normalizeValues(String[] values) {

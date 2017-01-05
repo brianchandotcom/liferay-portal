@@ -48,8 +48,8 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #eval(Set, Map, Set, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #eval(Set, Map, Set, String, String)}
 	 */
 	@Deprecated
 	public static Map<String, Object> eval(
@@ -72,8 +72,8 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #exec(Set, Map, String,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #exec(Set, Map, String, String)}
 	 */
 	@Deprecated
 	public static void exec(
@@ -87,7 +87,8 @@ public class ScriptingUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #_getScripting()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #_getScripting()}
 	 */
 	@Deprecated
 	public static Scripting getScripting() {

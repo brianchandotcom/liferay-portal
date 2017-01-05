@@ -403,8 +403,8 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #getSubfolderIds(List, long,
-	 *             long, boolean)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #getSubfolderIds(List, long, long, boolean)}
 	 */
 	@Deprecated
 	@Override
@@ -564,9 +564,9 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by more general {@link
-	 *             #updateFolder(long, String, String, long, List, int,
-	 *             ServiceContext)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by more
+	 *             general {@link #updateFolder(long, String, String, long,
+	 *             List, int, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

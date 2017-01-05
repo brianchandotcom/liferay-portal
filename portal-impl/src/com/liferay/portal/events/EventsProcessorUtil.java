@@ -159,7 +159,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected Collection<LifecycleAction> _getLifecycleActions(String key) {
@@ -174,8 +175,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #process(String, String[], LifecycleEvent)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #process(String, String[], LifecycleEvent)}
 	 */
 	@Deprecated
 	protected void _process(
@@ -186,8 +187,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #processEvent(LifecycleAction, LifecycleEvent)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #processEvent(LifecycleAction, LifecycleEvent)}
 	 */
 	@Deprecated
 	protected void _processEvent(
@@ -198,8 +199,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #registerEvent(String, Object)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #registerEvent(String, Object)}
 	 */
 	@Deprecated
 	protected void _registerEvent(String key, Object event) {
@@ -207,8 +208,8 @@ public class EventsProcessorUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #unregisterEvent(String, Object)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #unregisterEvent(String, Object)}
 	 */
 	@Deprecated
 	protected void _unregisterEvent(String key, Object event) {

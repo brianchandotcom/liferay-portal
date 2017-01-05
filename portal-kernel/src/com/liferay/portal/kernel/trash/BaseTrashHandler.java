@@ -72,8 +72,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #checkRestorableEntry(long,
-	 *             long, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #checkRestorableEntry(long, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -85,8 +85,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #checkRestorableEntry(TrashEntry, long, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #checkRestorableEntry(TrashEntry, long, String)}
 	 */
 	@Deprecated
 	@Override
@@ -120,7 +120,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getContainerModel(long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getContainerModel(long)}
 	 */
 	@Deprecated
 	@Override
@@ -173,8 +174,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getExcludeFilter(SearchContext)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getExcludeFilter(SearchContext)}
 	 */
 	@Deprecated
 	@Override

@@ -32,7 +32,8 @@ public class LayoutConstants {
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String TYPE_ARTICLE = "article";

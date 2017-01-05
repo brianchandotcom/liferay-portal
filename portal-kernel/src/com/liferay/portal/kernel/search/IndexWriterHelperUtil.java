@@ -170,8 +170,8 @@ public class IndexWriterHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.portal.search.index.IndexStatusManager#
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.portal.search.index.IndexStatusManager#
 	 *             isIndexReadOnly}
 	 */
 	@Deprecated
@@ -216,8 +216,8 @@ public class IndexWriterHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             com.liferay.portal.search.index.IndexStatusManager#
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link com.liferay.portal.search.index.IndexStatusManager#
 	 *             setIndexReadOnly(boolean)}
 	 */
 	@Deprecated

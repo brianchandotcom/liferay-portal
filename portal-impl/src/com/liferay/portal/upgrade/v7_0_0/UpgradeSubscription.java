@@ -170,7 +170,8 @@ public class UpgradeSubscription extends UpgradeProcess {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	protected void updateSubscriptionGroupId(

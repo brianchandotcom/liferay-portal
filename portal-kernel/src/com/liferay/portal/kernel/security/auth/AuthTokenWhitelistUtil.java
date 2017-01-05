@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 public class AuthTokenWhitelistUtil {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static AuthTokenWhitelist getAuthTokenWhitelist() {
@@ -46,7 +47,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletCSRFWhitelist() {
@@ -63,7 +65,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletCSRFWhitelistActions() {
@@ -80,7 +83,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletInvocationWhitelist() {
@@ -97,7 +101,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> getPortletInvocationWhitelistActions() {
@@ -114,8 +119,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #isOriginCSRFWhitelisted(long, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isOriginCSRFWhitelisted(long, String)}
 	 */
 	@Deprecated
 	public static boolean isCSRFOrigintWhitelisted(
@@ -153,8 +158,9 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isPortletCSRFWhitelisted(HttpServletRequest,
+	 *             Portlet)}
 	 */
 	@Deprecated
 	public static boolean isPortletCSRFWhitelisted(
@@ -190,8 +196,9 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isPortletInvocationWhitelisted(HttpServletRequest,
+	 *             Portlet)}
 	 */
 	@Deprecated
 	public static boolean isPortletInvocationWhitelisted(
@@ -255,7 +262,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> resetOriginCSRFWhitelist() {
@@ -272,7 +280,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> resetPortletCSRFWhitelist() {
@@ -289,7 +298,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> resetPortletInvocationWhitelist() {
@@ -306,7 +316,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Set<String> resetPortletInvocationWhitelistActions() {
@@ -323,7 +334,8 @@ public class AuthTokenWhitelistUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced with
+	 *             no direct replacement
 	 */
 	@Deprecated
 	public void setAuthTokenWhitelist(AuthTokenWhitelist authTokenWhitelist) {

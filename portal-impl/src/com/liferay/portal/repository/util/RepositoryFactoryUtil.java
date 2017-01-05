@@ -25,7 +25,8 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author     Mika Koivisto
- * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link ExternalRepositoryFactoryUtil}
+ * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+ *             ExternalRepositoryFactoryUtil}
  */
 @Deprecated
 public class RepositoryFactoryUtil {

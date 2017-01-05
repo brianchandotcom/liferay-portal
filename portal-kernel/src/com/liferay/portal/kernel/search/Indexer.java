@@ -40,7 +40,8 @@ public interface Indexer<T> {
 	public String getClassName();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getSearchClassNames}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getSearchClassNames}
 	 */
 	@Deprecated
 	public String[] getClassNames();
@@ -57,7 +58,8 @@ public interface Indexer<T> {
 	public IndexerPostProcessor[] getIndexerPostProcessors();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getClassName}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getClassName}
 	 */
 	@Deprecated
 	public String getPortletId();
@@ -71,8 +73,9 @@ public interface Indexer<T> {
 	public String getSortField(String orderByCol, int sortType);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getSummary(Document, String,
-	 *             PortletRequest, PortletResponse)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getSummary(Document, String, PortletRequest,
+	 *             PortletResponse)}
 	 */
 	@Deprecated
 	public Summary getSummary(Document document, Locale locale, String snippet)
@@ -125,8 +128,8 @@ public interface Indexer<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #postProcessContextBooleanFilter(BooleanFilter,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #postProcessContextBooleanFilter(BooleanFilter,
 	 *             SearchContext)}
 	 */
 	@Deprecated
@@ -140,8 +143,8 @@ public interface Indexer<T> {
 		throws Exception;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #postProcessSearchQuery(BooleanQuery, BooleanFilter,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #postProcessSearchQuery(BooleanQuery, BooleanFilter,
 	 *             SearchContext)}
 	 */
 	@Deprecated

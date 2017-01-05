@@ -308,8 +308,8 @@ public class FileEntryProxyBean
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             FileVersionProxyBean#getUserId()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link FileVersionProxyBean#getUserId()}
 	 */
 	@Deprecated
 	@Override
@@ -329,8 +329,8 @@ public class FileEntryProxyBean
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             FileVersionProxyBean#getUserName()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link FileVersionProxyBean#getUserName()}
 	 */
 	@Deprecated
 	@Override
@@ -350,8 +350,8 @@ public class FileEntryProxyBean
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             FileVersionProxyBean#getUserUuid()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link FileVersionProxyBean#getUserUuid()}
 	 */
 	@Deprecated
 	@Override

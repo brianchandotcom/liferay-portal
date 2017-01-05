@@ -36,8 +36,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getBoolean(PortletPreferences, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getBoolean(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static boolean getBoolean(
@@ -47,8 +47,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getBoolean(PortletPreferences, String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getBoolean(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
 	public static boolean getBoolean(
@@ -83,8 +83,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getContent(PortletPreferences, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getContent(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static String getContent(
@@ -114,8 +114,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getDouble(PortletPreferences, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getDouble(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static double getDouble(
@@ -125,8 +125,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getDouble(PortletPreferences, String, double)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getDouble(PortletPreferences, String, double)}
 	 */
 	@Deprecated
 	public static double getDouble(
@@ -167,8 +167,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getInteger(PortletPreferences, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getInteger(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static int getInteger(
@@ -178,8 +178,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getInteger(PortletPreferences, String, int)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getInteger(PortletPreferences, String, int)}
 	 */
 	@Deprecated
 	public static int getInteger(
@@ -216,8 +216,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getLong(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getLong(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static long getLong(
@@ -227,8 +227,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getLong(PortletPreferences,
-	 *             String, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getLong(PortletPreferences, String, long)}
 	 */
 	@Deprecated
 	public static long getLong(
@@ -281,8 +281,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getProperties(PortletPreferences, String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getProperties(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
 	public static Properties getProperties(
@@ -315,8 +315,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getShort(PortletPreferences,
-	 *             String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getShort(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static short getShort(
@@ -326,8 +326,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #getShort(PortletPreferences,
-	 *             String, short)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getShort(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	public static short getShort(
@@ -366,8 +366,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -377,8 +377,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String, boolean)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String, boolean)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -389,8 +389,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String, double)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String, double)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -401,8 +401,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String, int)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String, int)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -413,8 +413,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String, long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String, long)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -425,8 +425,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String, short)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String, short)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -437,8 +437,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getString(PortletPreferences, String, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getString(PortletPreferences, String, String)}
 	 */
 	@Deprecated
 	public static String getString(
@@ -512,8 +512,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getStringArray(PortletPreferences, String, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getStringArray(PortletPreferences, String, String)}
 	 */
 	@Deprecated
 	public static String[] getStringArray(
@@ -524,8 +524,8 @@ public class PrefsPropsUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getStringArray(PortletPreferences, String, String,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getStringArray(PortletPreferences, String, String,
 	 *             String[])}
 	 */
 	@Deprecated

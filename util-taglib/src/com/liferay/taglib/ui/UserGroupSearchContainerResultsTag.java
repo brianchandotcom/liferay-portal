@@ -32,7 +32,8 @@ public class UserGroupSearchContainerResultsTag<R> extends IncludeTag {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setUseIndexer(boolean useIndexer) {

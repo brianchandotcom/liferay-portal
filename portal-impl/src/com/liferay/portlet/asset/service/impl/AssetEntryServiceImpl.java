@@ -165,10 +165,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateEntry(long, Date,
-	 *             Date, String, long, String, long, long[], String[], boolean,
-	 *             boolean, Date, Date, Date, Date, String, String, String,
-	 *             String, String, String, int, int, Double)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #updateEntry(long, Date, Date, String, long, String,
+	 *             long, long[], String[], boolean, boolean, Date, Date, Date,
+	 *             Date, String, String, String, String, String, String, int,
+	 *             int, Double)}
 	 */
 	@Deprecated
 	@Override
@@ -193,10 +194,11 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link #updateEntry(long, Date,
-	 *             Date, String, long, String, long, long[], String[], boolean,
-	 *             boolean, Date, Date, Date, Date, String, String, String,
-	 *             String, String, String, int, int, Double)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #updateEntry(long, Date, Date, String, long, String,
+	 *             long, long[], String[], boolean, boolean, Date, Date, Date,
+	 *             Date, String, String, String, String, String, String, int,
+	 *             int, Double)}
 	 */
 	@Deprecated
 	@Override

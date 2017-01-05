@@ -60,8 +60,8 @@ public class IndexSearcherProxyBean
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #search(SearchContext,
-	 *             Query)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #search(SearchContext, Query)}
 	 */
 	@Deprecated
 	@Override

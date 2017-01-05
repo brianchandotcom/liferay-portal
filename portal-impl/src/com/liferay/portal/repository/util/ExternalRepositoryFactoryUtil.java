@@ -28,7 +28,8 @@ import java.util.concurrent.ConcurrentMap;
 public class ExternalRepositoryFactoryUtil {
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             com.liferay.portal.repository.registry.RepositoryDefinitionCatalogUtil#getExternalRepositoryClassNames(
 	 *             )}
 	 */

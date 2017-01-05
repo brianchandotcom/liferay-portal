@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.StringPool;
 public class PasswordEncryptorUtil {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getDefaultPasswordAlgorithmType}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getDefaultPasswordAlgorithmType}
 	 */
 	@Deprecated
 	public static String PASSWORDS_ENCRYPTION_ALGORITHM = StringPool.BLANK;

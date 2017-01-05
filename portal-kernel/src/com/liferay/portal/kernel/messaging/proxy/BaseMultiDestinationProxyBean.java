@@ -40,14 +40,16 @@ public abstract class BaseMultiDestinationProxyBean {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link MessageBusUtil#getMessageBus)
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link MessageBusUtil#getMessageBus)
 	 */
 	@Deprecated
 	public void setMessageBus(MessageBus messageBus) {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link
 	 *             #setSynchronousMessageSenderMode(
 	 *             SynchronousMessageSender.Mode)}
 	 */

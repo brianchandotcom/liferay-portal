@@ -96,7 +96,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, Replaced by {@link #deleteCategories(long[])}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, Replaced by
+	 *             {@link #deleteCategories(long[])}
 	 */
 	@Deprecated
 	@Override

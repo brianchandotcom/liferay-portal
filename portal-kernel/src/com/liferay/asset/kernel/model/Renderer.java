@@ -36,7 +36,8 @@ public interface Renderer {
 	public String getIconCssClass() throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getIconPath(PortletRequest portletRequest);

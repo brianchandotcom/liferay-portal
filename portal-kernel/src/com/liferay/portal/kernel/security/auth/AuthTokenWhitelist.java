@@ -28,31 +28,36 @@ import javax.servlet.http.HttpServletRequest;
 public interface AuthTokenWhitelist {
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getOriginCSRFWhitelist();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletCSRFWhitelist();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletCSRFWhitelistActions();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletInvocationWhitelist();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletInvocationWhitelistActions();
@@ -63,8 +68,9 @@ public interface AuthTokenWhitelist {
 		HttpServletRequest request, Portlet portlet);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isPortletCSRFWhitelisted(HttpServletRequest,
+	 *             Portlet)}
 	 */
 	@Deprecated
 	public boolean isPortletCSRFWhitelisted(
@@ -74,8 +80,9 @@ public interface AuthTokenWhitelist {
 		HttpServletRequest request, Portlet portlet);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isPortletInvocationWhitelisted(HttpServletRequest,
+	 *             Portlet)}
 	 */
 	@Deprecated
 	public boolean isPortletInvocationWhitelisted(
@@ -90,25 +97,29 @@ public interface AuthTokenWhitelist {
 	public boolean isValidSharedSecret(String sharedSecret);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetOriginCSRFWhitelist();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletCSRFWhitelist();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletInvocationWhitelist();
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletInvocationWhitelistActions();

@@ -100,8 +100,8 @@ public interface TrashHandler {
 		throws PortalException;
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #checkRestorableEntry(long,
-	 *             long, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #checkRestorableEntry(long, long, String)}
 	 */
 	@Deprecated
 	public void checkDuplicateEntry(
@@ -123,8 +123,8 @@ public interface TrashHandler {
 	 * @param      newName the new name to be assigned to the trash entry
 	 *             (optionally <code>null</code> to forego renaming the trash
 	 *             entry)
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #checkRestorableEntry(TrashEntry, long, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #checkRestorableEntry(TrashEntry, long, String)}
 	 */
 	@Deprecated
 	public void checkDuplicateTrashEntry(
@@ -179,8 +179,8 @@ public interface TrashHandler {
 	/**
 	 * Returns the parent container model's class name.
 	 *
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getContainerModelClassName(long)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getContainerModelClassName(long)}
 	 */
 	@Deprecated
 	public String getContainerModelClassName();
@@ -268,8 +268,8 @@ public interface TrashHandler {
 	public Filter getExcludeFilter(SearchContext searchContext);
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #getExcludeFilter(SearchContext)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getExcludeFilter(SearchContext)}
 	 */
 	@Deprecated
 	public Query getExcludeQuery(SearchContext searchContext);

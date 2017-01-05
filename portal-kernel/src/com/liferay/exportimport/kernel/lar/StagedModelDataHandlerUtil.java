@@ -84,9 +84,9 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #exportReferenceStagedModel(PortletDataContext, StagedModel,
-	 *             StagedModel, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #exportReferenceStagedModel(PortletDataContext,
+	 *             StagedModel, StagedModel, String)}
 	 */
 	@Deprecated
 	public static <T extends StagedModel, U extends StagedModel> Element
@@ -102,9 +102,9 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #exportReferenceStagedModel(PortletDataContext, StagedModel,
-	 *             StagedModel, String)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #exportReferenceStagedModel(PortletDataContext,
+	 *             StagedModel, StagedModel, String)}
 	 */
 	@Deprecated
 	public static <T extends StagedModel, U extends StagedModel> Element
@@ -184,8 +184,8 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #importReferenceStagedModel(PortletDataContext, Class,
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #importReferenceStagedModel(PortletDataContext, Class,
 	 *             Serializable)}
 	 */
 	@Deprecated
@@ -222,9 +222,9 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #importReferenceStagedModel(PortletDataContext, String,
-	 *             Serializable)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #importReferenceStagedModel(PortletDataContext,
+	 *             String, Serializable)}
 	 */
 	@Deprecated
 	public static void importReferenceStagedModel(
@@ -263,9 +263,9 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
-	 *             Class, Serializable)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #importReferenceStagedModel(PortletDataContext,
+	 *             StagedModel, Class, Serializable)}
 	 */
 	@Deprecated
 	public static <T extends StagedModel> void importReferenceStagedModel(
@@ -304,9 +304,9 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link
-	 *             #importReferenceStagedModel(PortletDataContext, StagedModel,
-	 *             String, Serializable)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #importReferenceStagedModel(PortletDataContext,
+	 *             StagedModel, String, Serializable)}
 	 */
 	@Deprecated
 	public static <T extends StagedModel> void importReferenceStagedModel(

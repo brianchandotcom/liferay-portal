@@ -37,8 +37,8 @@ public class TransactionStatusAdapter
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by {@link
-	 *             #TransactionStatusAdapter(PlatformTransactionManager,
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #TransactionStatusAdapter(PlatformTransactionManager,
 	 *             TransactionStatus)}
 	 */
 	@Deprecated

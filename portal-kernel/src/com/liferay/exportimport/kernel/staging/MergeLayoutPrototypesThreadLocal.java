@@ -42,8 +42,8 @@ public class MergeLayoutPrototypesThreadLocal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #isMergeComplete(String,
-	 *             Object...)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #isMergeComplete(String, Object...)}
 	 */
 	@Deprecated
 	public static boolean isMergeComplete(Method method, Object[] arguments) {
@@ -63,8 +63,8 @@ public class MergeLayoutPrototypesThreadLocal {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #setMergeComplete(String,
-	 *             Object...)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #setMergeComplete(String, Object...)}
 	 */
 	@Deprecated
 	public static void setMergeComplete(Method method, Object[] arguments) {

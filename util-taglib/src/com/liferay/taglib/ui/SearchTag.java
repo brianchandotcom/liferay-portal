@@ -18,7 +18,8 @@ import com.liferay.taglib.util.IncludeTag;
 
 /**
  * @author     Brian Wing Shun Chan
- * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#NEXT-VERSION, with no direct
+ *             replacement
  */
 @Deprecated
 public class SearchTag extends IncludeTag {

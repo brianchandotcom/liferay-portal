@@ -29,7 +29,8 @@ public class ClusterLinkUtil {
 	}
 
 	/**
-	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by {@link #_getClusterLink()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #_getClusterLink()}
 	 */
 	@Deprecated
 	public static ClusterLink getClusterLink() {

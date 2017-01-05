@@ -1985,7 +1985,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			ComparableVersion comparableVersion = new ComparableVersion(
 				version);
 
-			if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
+			if (comparableVersion.compareTo(releaseComparableVersion) >= 0) {
 				return StringUtil.replaceFirst(line, version, _NEXT_VERSION);
 			}
 

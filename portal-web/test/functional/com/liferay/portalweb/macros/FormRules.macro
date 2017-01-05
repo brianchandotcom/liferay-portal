@@ -21,6 +21,7 @@
 		<execute macro="FormRules#selectActionTarget">
 			<var name="actionRowNumber" value="${actionRowNumber}" />
 			<var name="actionTarget" value="${actionTarget}" />
+			<var name="actionTarget2" value="${actionTarget2}" />
 		</execute>
 	</command>
 
@@ -91,6 +92,17 @@
 		<execute function="Click" locator1="Form#RULE_BUILDER_ACTION_TARGET_FIELD" />
 
 		<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget}" />
+
+		<if>
+			<isset var="actionTarget2" />
+			<then>
+				<execute function="Click" locator1="Form#RULE_BUILDER_ACTION_TARGET_FIELD_2" />
+
+				<var name="key_actionTarget" value="${actionTarget2}" />
+
+				<execute function="AssertClick" locator1="Form#RULE_BUILDER_SELECT_ACTION_TARGET" value1="${actionTarget2}" />
+			</then>
+		</if>
 	</command>
 
 	<command name="selectConditionField">

@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,7 +35,7 @@ import org.json.JSONObject;
 public class BatchBuild extends BaseBuild {
 
 	@Override
-	public String getAppServer() throws Exception {
+	public String getAppServer() {
 		return getEnvironment("app.server");
 	}
 
@@ -48,22 +50,22 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getBrowser() throws Exception {
+	public String getBrowser() {
 		return getEnvironment("browser");
 	}
 
 	@Override
-	public String getDatabase() throws Exception {
+	public String getDatabase() {
 		return getEnvironment("database");
 	}
 
 	@Override
-	public String getJavaJDK() throws Exception {
+	public String getJavaJDK() {
 		return getEnvironment("java.jdk");
 	}
 
 	@Override
-	public String getOperatingSystem() throws Exception {
+	public String getOperatingSystem() {
 		return getEnvironment("operating.system");
 	}
 
@@ -150,11 +152,17 @@ public class BatchBuild extends BaseBuild {
 		return batchName.substring(x, y);
 	}
 
-	protected String getEnvironment(String environmentType) throws Exception {
-		Properties buildProperties =
-			JenkinsResultsParserUtil.getBuildProperties();
+	protected String getEnvironment(String environmentType) {
+		Properties buildProperties = null;
 
-		List<String> environmentOptions = new ArrayList(
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties.", ioe);
+		}
+
+		List<String> environmentOptions = new ArrayList<>(
 			Arrays.asList(
 				StringUtils.split(
 					buildProperties.getProperty(environmentType + ".types"),

@@ -114,7 +114,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getAppServer() throws Exception {
+	public String getAppServer() {
 		return null;
 	}
 
@@ -156,7 +156,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getBrowser() throws Exception {
+	public String getBrowser() {
 		return null;
 	}
 
@@ -239,7 +239,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getDatabase() throws Exception {
+	public String getDatabase() {
 		return null;
 	}
 
@@ -305,7 +305,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getJavaJDK() throws Exception {
+	public String getJavaJDK() {
 		return null;
 	}
 
@@ -340,7 +340,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getOperatingSystem() throws Exception {
+	public String getOperatingSystem() {
 		return null;
 	}
 

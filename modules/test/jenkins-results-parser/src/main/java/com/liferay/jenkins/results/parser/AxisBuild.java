@@ -36,7 +36,7 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getAppServer() throws Exception {
+	public String getAppServer() {
 		Build parentBuild = getParentBuild();
 
 		return parentBuild.getAppServer();
@@ -82,7 +82,7 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getBrowser() throws Exception {
+	public String getBrowser() {
 		Build parentBuild = getParentBuild();
 
 		return parentBuild.getBrowser();
@@ -148,21 +148,21 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getDatabase() throws Exception {
+	public String getDatabase() {
 		Build parentBuild = getParentBuild();
 
 		return parentBuild.getDatabase();
 	}
 
 	@Override
-	public String getJavaJDK() throws Exception {
+	public String getJavaJDK() {
 		Build parentBuild = getParentBuild();
 
 		return parentBuild.getJavaJDK();
 	}
 
 	@Override
-	public String getOperatingSystem() throws Exception {
+	public String getOperatingSystem() {
 		Build parentBuild = getParentBuild();
 
 		return parentBuild.getOperatingSystem();

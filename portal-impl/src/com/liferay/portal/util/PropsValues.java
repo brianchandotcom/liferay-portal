@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 
 /**
@@ -840,9 +841,9 @@ public class PropsValues {
 
 	public static final String[] LOGIN_EVENTS_PRE = PropsUtil.getArray(PropsKeys.LOGIN_EVENTS_PRE);
 
-	public static String[] LOGIN_FORM_NAVIGATION_POST = PropsUtil.getArray(PropsKeys.LOGIN_FORM_NAVIGATION_POST);
+	public static final String[] LOGIN_FORM_NAVIGATION_POST = PropsUtil.getArray(PropsKeys.LOGIN_FORM_NAVIGATION_POST);
 
-	public static String[] LOGIN_FORM_NAVIGATION_PRE = PropsUtil.getArray(PropsKeys.LOGIN_FORM_NAVIGATION_PRE);
+	public static final String[] LOGIN_FORM_NAVIGATION_PRE = PropsUtil.getArray(PropsKeys.LOGIN_FORM_NAVIGATION_PRE);
 
 	public static final boolean LOGIN_SECURE_FORGOT_PASSWORD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LOGIN_SECURE_FORGOT_PASSWORD));
 
@@ -1693,6 +1694,16 @@ public class PropsValues {
 
 		if (!LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED) {
 			LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
+		}
+
+		for (int i = 0; i < LOGIN_FORM_NAVIGATION_POST.length; i++) {
+			LOGIN_FORM_NAVIGATION_POST[i] = TextFormatter.format(
+				LOGIN_FORM_NAVIGATION_POST[i], TextFormatter.N);
+		}
+
+		for (int i = 0; i < LOGIN_FORM_NAVIGATION_PRE.length; i++) {
+			LOGIN_FORM_NAVIGATION_PRE[i] = TextFormatter.format(
+				LOGIN_FORM_NAVIGATION_PRE[i], TextFormatter.N);
 		}
 	}
 

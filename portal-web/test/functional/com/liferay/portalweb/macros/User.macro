@@ -1592,14 +1592,14 @@
 
 	<command name="loginLocalizationPG">
 		<if>
-			<equals arg1="${localization}" arg2="ZH" />
+			<equals arg1="${localization}" arg2="JA" />
 			<then>
-				<var name="signIn" value="登录" />
+				<var name="signIn" value="ログイン" />
 			</then>
 			<elseif>
-				<equals arg1="${localization}" arg2="JA" />
+				<equals arg1="${localization}" arg2="ZH" />
 				<then>
-					<var name="signIn" value="ログイン" />
+					<var name="signIn" value="登录" />
 				</then>
 			</elseif>
 			<else>

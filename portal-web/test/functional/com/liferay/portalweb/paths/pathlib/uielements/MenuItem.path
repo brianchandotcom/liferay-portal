@@ -189,7 +189,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AVAILABLE_TAB</td>
+	<td>AVAILABLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Available')]</td>
 	<td></td>
 </tr>
@@ -299,7 +299,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CURRENT_TAB</td>
+	<td>CURRENT</td>
 	<td>//a[@role='menuitem' and contains(.,'Current')]</td>
 	<td></td>
 </tr>

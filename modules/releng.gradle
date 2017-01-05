@@ -1,0 +1,260 @@
+import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil
+import com.liferay.gradle.util.FileUtil
+
+import groovy.json.JsonSlurper
+
+import org.ajoberstar.grgit.Commit
+import org.ajoberstar.grgit.CommitDiff
+import org.ajoberstar.grgit.Grgit
+import org.ajoberstar.grgit.Repository
+import org.ajoberstar.grgit.util.JGitUtil
+
+import org.eclipse.jgit.lib.ObjectId
+import org.eclipse.jgit.lib.ObjectLoader
+import org.eclipse.jgit.revwalk.RevCommit
+import org.eclipse.jgit.revwalk.RevWalk
+import org.eclipse.jgit.treewalk.TreeWalk
+import org.eclipse.jgit.treewalk.filter.PathFilter
+
+import org.gradle.initialization.GradleLauncher
+import org.gradle.initialization.GradleLauncherFactory
+
+buildscript {
+	apply from: file("build-buildscript.gradle"), to: buildscript
+
+	dependencies {
+		classpath group: "org.ajoberstar", name: "gradle-git", version: "1.6.0"
+	}
+
+	repositories {
+		maven {
+			url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+}
+
+apply plugin: "org.ajoberstar.grgit"
+
+task cherryPickArtifacts
+
+cherryPickArtifacts {
+	description = "Cherry-picks artifact commits from a release branch. Required properties: '-Psince', '-Puntil'."
+
+	doLast {
+		assert project.properties["since"] : "Please provide a value for the '-Psince' property"
+		assert project.properties["until"] : "Please provide a value for the '-Puntil' property"
+
+		Commit sinceParentCommit = JGitUtil.resolveCommit(grgit.repository, since)
+
+		List<Commit> commits = grgit.log {
+			range sinceParentCommit.parentIds.first(), until
+		}
+
+		commits.reverseEach {
+			Commit commit ->
+
+			if (commit.shortMessage.contains("prep next")) {
+				_cherryPickPrepNext(commit)
+			}
+		}
+	}
+
+	group = "releng"
+}
+
+private void _cherryPickPrepNext(Commit commit) {
+	Closure<String> antVersionClosure = {
+		liferayPluginPackageProperties ->
+
+		Properties properties = GUtil.loadProperties(liferayPluginPackageProperties)
+
+		return properties.getProperty("module-incremental-version")
+	}
+
+	Closure<String> osgiVersionClosure = {
+		bndBnd ->
+
+		Properties properties = GUtil.loadProperties(bndBnd)
+
+		return properties.getProperty("Bundle-Version")
+	}
+
+	Closure<String> themeVersionClosure = {
+		packageJson ->
+
+		JsonSlurper jsonSlurper = new JsonSlurper()
+
+		Map<String, Object> map = jsonSlurper.parse(packageJson, "UTF-8")
+
+		return map["version"]
+	}
+
+	String moduleDirName
+
+	CommitDiff commitDiff = grgit.show(commit: commit)
+
+	for (String fileName : commitDiff.modified) {
+		if (fileName.endsWith("/bnd.bnd")) {
+			moduleDirName = fileName[0 .. -9]
+		}
+		else if (fileName.endsWith("/docroot/WEB-INF/liferay-plugin-package.properties")) {
+			moduleDirName = fileName[0 .. -51]
+		}
+		else if (fileName.endsWith("/package.json")) {
+			moduleDirName = fileName[0 .. -14]
+		}
+		else {
+			continue
+		}
+
+		break
+	}
+
+	assert moduleDirName : "Unable to parse commit ${commit.id}"
+
+	File moduleDir = new File(projectDir.parentFile, moduleDirName)
+
+	if (_isGitRepoReadOnly(moduleDir)) {
+		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} is in a read-only subrepo"
+
+		return
+	}
+
+	List<String> excludedTaskNames = []
+	Closure<String> versionClosure = osgiVersionClosure
+	String versionFileName = "bnd.bnd"
+
+	if (_exists(moduleDir, "build.xml")) {
+		versionClosure = antVersionClosure
+		versionFileName = "docroot/WEB-INF/liferay-plugin-package.properties"
+	}
+	else if (_contains(moduleDir, "gulpfile.js", "require('liferay-theme-tasks')")) {
+		excludedTaskNames = ["writeParentThemesDigest"]
+		versionClosure = themeVersionClosure
+		versionFileName = "package.json"
+	}
+
+	File versionFile = new File(moduleDir, versionFileName)
+
+	String newVersion = versionClosure(_getCommitFileStream(commit.id, FileUtil.relativize(versionFile, projectDir.parentFile)))
+	String curVersion = versionClosure(versionFile)
+
+	def curVersionNumber
+	def newVersionNumber
+
+	if (newVersion.indexOf('.') != -1) {
+		curVersionNumber = VersionNumber.parse(curVersion)
+		newVersionNumber = VersionNumber.parse(newVersion)
+	}
+	else {
+		curVersionNumber = curVersion as Integer
+		newVersionNumber = newVersion as Integer
+	}
+
+	if (curVersionNumber >= newVersionNumber) {
+		println "Commit ${commit.id} NOT cherry-picked: ${relativePath(moduleDir)} has a version (${curVersionNumber}) which is greater or equal than the one in the commit (${newVersionNumber})"
+
+		return
+	}
+
+	StartParameter startParameter = gradle.startParameter.newBuild()
+
+	String moduleTaskPrefix = relativePath(moduleDir)
+
+	moduleTaskPrefix = ":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
+
+	startParameter.excludedTaskNames = excludedTaskNames.collect {
+		moduleTaskPrefix + it
+	}
+
+	startParameter.projectProperties = ["forced.update.version": newVersion]
+	startParameter.taskNames = [moduleTaskPrefix + "updateVersion"]
+
+	GradleLauncherFactory gradleLauncherFactory = gradle.services.get(GradleLauncherFactory)
+
+	GradleLauncher gradleLauncher = gradleLauncherFactory.nestedInstance(startParameter)
+
+	try {
+		gradleLauncher.run()
+	}
+	finally {
+		gradleLauncher.stop()
+	}
+
+	grgit.add patterns: [moduleDirName]
+
+	grgit.commit author: commit.author, message: commit.fullMessage
+
+	println "Commit ${commit.id} cherry-picked: ${relativePath(moduleDir)} updated from version ${curVersionNumber} to ${newVersionNumber}"
+}
+
+private boolean _contains(File dir, String fileName, String s) {
+	File file = new File(dir, fileName)
+
+	if (!file.exists()) {
+		return false
+	}
+
+	if (file.text.contains(s)) {
+		return true
+	}
+
+	return false
+}
+
+private boolean _exists(File dir, String fileName) {
+	File file = new File(dir, fileName)
+
+	return file.exists()
+}
+
+private InputStream _getCommitFileStream(String commitId, String fileName) {
+	fileName = fileName.replace(File.separatorChar, '/' as char)
+
+	RevCommit revCommit = _getRevCommit(commitId)
+
+	TreeWalk treeWalk = new TreeWalk(grgit.repository.jgit.repository)
+
+	try {
+		treeWalk.addTree revCommit.tree
+
+		treeWalk.filter = PathFilter.create(fileName)
+		treeWalk.recursive = true
+
+		if (!treeWalk.next()) {
+			throw new IllegalStateException("Unable to find ${fileName}")
+		}
+
+		ObjectId objectId = treeWalk.getObjectId(0)
+
+		ObjectLoader objectLoader = grgit.repository.jgit.repository.open(objectId)
+
+		return objectLoader.openStream()
+	}
+	finally {
+		treeWalk.close()
+	}
+}
+
+private RevCommit _getRevCommit(String commitId) {
+	ObjectId objectId = JGitUtil.resolveObject(grgit.repository, commitId)
+
+	RevWalk revWalk = new RevWalk(grgit.repository.jgit.repository)
+
+	try {
+		return revWalk.parseCommit(objectId)
+	}
+	finally {
+		revWalk.dispose()
+	}
+}
+
+private boolean _isGitRepoReadOnly(File dir) {
+	File gitRepoDir = GradleUtil.getRootDir(dir, ".gitrepo")
+
+	if (!gitRepoDir) {
+		return false
+	}
+
+	return _contains(gitRepoDir, ".gitrepo", "mode = pull")
+}

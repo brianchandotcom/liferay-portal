@@ -23,6 +23,10 @@
 		<execute function="AssertTextEquals" locator1="FormPortlet#FORM_PAGE_ACTIVE" value1="${formPageNext}" />
 	</command>
 
+	<command name="previousPage">
+		<execute function="Click" locator1="Button#PREVIOUS" />
+	</command>
+
 	<command name="submit">
 		<if>
 			<condition function="IsElementPresent" locator1="FormPortlet#PORTLET_CONTENT" />

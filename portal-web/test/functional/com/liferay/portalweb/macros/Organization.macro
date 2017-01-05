@@ -390,7 +390,7 @@
 
 		<execute function="Click" locator1="//tr[contains(.,'${roleName}')]/td[1]/span/a" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="MenuItem#AVAILABLE_TAB" value1="Available" />
+		<execute function="AssertClick" locator1="MenuItem#AVAILABLE" value1="Available" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 
@@ -406,7 +406,7 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 
-		<execute function="AssertClick" locator1="MenuItem#CURRENT_TAB" value1="Current" />
+		<execute function="AssertClick" locator1="MenuItem#CURRENT" value1="Current" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_USER_NAME" value1="${userFirstName} ${userLastName}" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />

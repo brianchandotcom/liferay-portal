@@ -192,7 +192,7 @@ public class JSPSourceTabCalculator {
 			closeTagJSPLine.setClosed(true);
 		}
 
-		return content;
+		return _fixTabsInJavaSource(content);
 	}
 
 	private String _fixTabs(String content, int lineCount, int diff) {
@@ -243,6 +243,28 @@ public class JSPSourceTabCalculator {
 				trimmedLine.matches("<(pre|textarea).*")) {
 
 				insideUnformattedTextTag = true;
+			}
+		}
+
+		return content;
+	}
+
+	private String _fixTabsInJavaSource(String content) {
+		Matcher matcher = _javaSourcePattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs = matcher.group(1);
+
+			int minimumTabCount = _getMinimumTabCount(matcher.group(2));
+
+			if (tabs.length() != minimumTabCount) {
+				int diff = minimumTabCount - tabs.length();
+				int end = _jspSourceProcessor.getLineCount(
+					content, matcher.end(2));
+				int start = _jspSourceProcessor.getLineCount(
+					content, matcher.start(3));
+
+				return _fixTabs(content, start, end, diff);
 			}
 		}
 
@@ -437,6 +459,28 @@ public class JSPSourceTabCalculator {
 		return jspLines;
 	}
 
+	private int _getMinimumTabCount(String s) {
+		int minimumTabCount = -1;
+
+		String[] lines = StringUtil.splitLines(s);
+
+		for (int i = 1; i < lines.length; i++) {
+			String line = lines[i];
+
+			if (Validator.isNull(line)) {
+				continue;
+			}
+
+			int tabCount = _jspSourceProcessor.getLeadingTabCount(line);
+
+			if ((minimumTabCount == -1) || (tabCount < minimumTabCount)) {
+				minimumTabCount = tabCount;
+			}
+		}
+
+		return minimumTabCount;
+	}
+
 	private String _stripJavaSource(String text) {
 		while (true) {
 			int x = text.indexOf("<%");
@@ -455,6 +499,8 @@ public class JSPSourceTabCalculator {
 		}
 	}
 
+	private final Pattern _javaSourcePattern = Pattern.compile(
+		"\n(\t*)(<%\n(.*?))\n\t*%>\n", Pattern.DOTALL);
 	private JSPSourceProcessor _jspSourceProcessor;
 
 	private class JSPLine {

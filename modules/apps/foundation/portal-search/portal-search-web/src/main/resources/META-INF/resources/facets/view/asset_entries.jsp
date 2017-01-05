@@ -31,6 +31,18 @@ if (dataJSONObject.has("values")) {
 		values[i] = valuesJSONArray.getString(i);
 	}
 }
+
+com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder assetEntriesSearchFacetDisplayBuilder = new com.liferay.portal.search.web.internal.facet.display.builder.AssetEntriesSearchFacetDisplayBuilder();
+
+assetEntriesSearchFacetDisplayBuilder.setClassNames(values);
+assetEntriesSearchFacetDisplayBuilder.setFacet(facet);
+assetEntriesSearchFacetDisplayBuilder.setFrequenciesVisible(showAssetCount);
+assetEntriesSearchFacetDisplayBuilder.setFrequencyThreshold(frequencyThreshold);
+assetEntriesSearchFacetDisplayBuilder.setLocale(locale);
+assetEntriesSearchFacetDisplayBuilder.setParameterName(facet.getFieldId());
+assetEntriesSearchFacetDisplayBuilder.setParameterValue(fieldParam);
+
+com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetDisplayContext assetEntriesSearchFacetDisplayContext = assetEntriesSearchFacetDisplayBuilder.build();
 %>
 
 <div class="panel panel-default">
@@ -50,38 +62,15 @@ if (dataJSONObject.has("values")) {
 				</li>
 
 				<%
-				List<String> assetTypes = new SortedArrayList<String>(new ModelResourceComparator(locale));
-
-				for (String className : values) {
-					if (assetTypes.contains(className) || !ArrayUtil.contains(values, className)) {
-						continue;
-					}
-
-					assetTypes.add(className);
-				}
-
-				for (String assetType : assetTypes) {
-					TermCollector termCollector = facetCollector.getTermCollector(assetType);
-
-					int frequency = 0;
-
-					if (termCollector != null) {
-						frequency = termCollector.getFrequency();
-					}
-
-					if (frequencyThreshold > frequency) {
-						continue;
-					}
-
-					AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetType);
+				for (com.liferay.portal.search.web.internal.facet.display.context.AssetEntriesSearchFacetTermDisplayContext assetEntriesSearchFacetTermDisplayContext : assetEntriesSearchFacetDisplayContext.getTermDisplayContexts()) {
 				%>
 
 					<li class="facet-value">
-						<a class="<%= fieldParam.equals(termCollector.getTerm()) ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(assetType) %>" href="javascript:;">
-							<%= assetRendererFactory.getTypeName(locale) %>
+						<a class="<%= assetEntriesSearchFacetTermDisplayContext.isSelected() ? "text-primary" : "text-default" %>" data-value="<%= HtmlUtil.escapeAttribute(assetEntriesSearchFacetTermDisplayContext.getAssetType()) %>" href="javascript:;">
+							<%= assetEntriesSearchFacetTermDisplayContext.getTypeName() %>
 
-							<c:if test="<%= showAssetCount %>">
-								<span class="frequency">(<%= frequency %>)</span>
+							<c:if test="<%= assetEntriesSearchFacetTermDisplayContext.isFrequencyVisible() %>">
+								<span class="frequency">(<%= assetEntriesSearchFacetTermDisplayContext.getFrequency() %>)</span>
 							</c:if>
 						</a>
 					</li>

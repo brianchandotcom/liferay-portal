@@ -67,6 +67,10 @@ public abstract class Baseline {
 
 		Jar newJar = new Jar(_newJarFile);
 
+		if (_newCompatJarFile != null) {
+			newJar.addAll(new Jar(_newCompatJarFile));
+		}
+
 		Jar oldJar = null;
 
 		if (_oldJarFile != null) {
@@ -261,6 +265,10 @@ public abstract class Baseline {
 
 	public void setLogFile(File logFile) {
 		_logFile = logFile;
+	}
+
+	public void setNewCompatJarFile(File newCompatJarFile) {
+		_newCompatJarFile = newCompatJarFile;
 	}
 
 	public void setNewJarFile(File newJarFile) {
@@ -585,6 +593,7 @@ public abstract class Baseline {
 	private boolean _forceVersionOneOnAddedPackages = true;
 	private boolean _headerPrinted;
 	private File _logFile;
+	private File _newCompatJarFile;
 	private File _newJarFile;
 	private File _oldJarFile;
 	private PrintWriter _printWriter;

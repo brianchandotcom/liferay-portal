@@ -1377,6 +1377,22 @@ app.server.type=@{app.server.type}]]></echo>
 		<prepare-test-build-dist app.server.type="${axis.variable}" />
 	</target>
 
+	<target name="functional-bundle-jboss-db2105-jdk8">
+		<run-functional-test
+			app.server.type="jboss"
+			database.type="db2"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.version="${test.portal.bundle.version}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-jboss-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="jboss"
@@ -1530,6 +1546,38 @@ app.server.type=@{app.server.type}]]></echo>
 		/>
 	</target>
 
+	<target name="functional-bundle-weblogic-oracle121-jdk8">
+		<run-functional-test
+			app.server.type="weblogic"
+			database.type="oracle"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
+	<target name="functional-bundle-wildfly-mariadb100-jdk8">
+		<run-functional-test
+			app.server.type="wildfly"
+			database.type="mariadb"
+			test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+			test.fix.pack.base.url="${test.fix.pack.base.url}"
+			test.license.xml.url="${test.license.xml.url}"
+			test.plugin.zip.url="${test.plugin.zip.url}"
+			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+			test.portal.lpkg.name="${test.portal.lpkg.name}"
+			test.sql.zip.url="${test.sql.zip.url}"
+		/>
+	</target>
+
 	<target name="functional-bundle-wildfly-mysql56-jdk8">
 		<run-functional-test
 			app.server.type="wildfly"
@@ -1543,6 +1591,10 @@ app.server.type=@{app.server.type}]]></echo>
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>
+	</target>
+
+	<target name="functional-jboss70-db2105-jdk8">
+		<run-functional-test app.server.type="jboss" database.type="db2" />
 	</target>
 
 	<target name="functional-smoke-bundle-tomcat-mysql56-jdk8">
@@ -1609,6 +1661,14 @@ app.server.type=@{app.server.type}]]></echo>
 		<antcall target="functional-tomcat80-mysql56-jdk8" />
 	</target>
 
+	<target name="functional-tomcat80-postgresql94-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="postgresql" />
+	</target>
+
+	<target name="functional-tomcat80-sybase160-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="sybase" />
+	</target>
+
 	<target name="functional-upgrade-jboss70-mysql56-jdk8">
 		<run-functional-test app.server.type="jboss" database.type="mysql" />
 	</target>
@@ -1642,6 +1702,14 @@ app.server.type=@{app.server.type}]]></echo>
 	</target>
 
 	<target name="functional-upgrade-wildfly100-mariadb100-jdk8">
+		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
+	</target>
+
+	<target name="functional-weblogic121-oracle121-jdk8">
+		<run-functional-test app.server.type="weblogic" database.type="oracle" />
+	</target>
+
+	<target name="functional-wildfly100-mariadb100-jdk8">
 		<run-functional-test app.server.type="wildfly" database.type="mariadb" />
 	</target>
 

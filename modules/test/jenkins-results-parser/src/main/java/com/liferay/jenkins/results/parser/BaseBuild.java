@@ -305,7 +305,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public String getJavaJDK() {
+	public String getJDK() {
 		return null;
 	}
 

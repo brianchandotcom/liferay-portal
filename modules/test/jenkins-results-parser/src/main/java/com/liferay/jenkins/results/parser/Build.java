@@ -54,7 +54,7 @@ public interface Build {
 
 	public String getInvocationURL();
 
-	public String getJavaJDK();
+	public String getJDK();
 
 	public String getJobName();
 

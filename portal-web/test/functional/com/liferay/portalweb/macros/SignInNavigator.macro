@@ -1,0 +1,7 @@
+<definition>
+	<command name="gotoCreateAccount" >
+		<execute function="AssertClick" locator1="UserBar#USER_SIGN_IN" value1="Sign In" />
+
+		<execute function="AssertClick" locator1="Link#CREATE_ACCOUNT" value1="Create Account" />
+	</command>
+</definition>

@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Locale;
@@ -69,41 +71,37 @@ public class UserModelListener extends BaseModelListener<User> {
 		for (Group group : groups) {
 			Map<Locale, String> nameMap = group.getNameMap();
 
-			if (nameMap != null) {
-				Locale locale = user.getLocale();
-
-				String groupKey = nameMap.get(locale);
-
-				if (groupKey == null) {
-					for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
-						String value = entry.getValue();
-
-						if (value == null) {
-							continue;
-						}
-
-						if (_log.isWarnEnabled()) {
-							StringBundler sb = new StringBundler(5);
-
-							sb.append("No name was found for locale ");
-							sb.append(locale);
-							sb.append(". Using name available for ");
-							sb.append(entry.getKey());
-							sb.append(" instead.");
-
-							_log.warn(sb.toString());
-						}
-
-						nameMap.put(locale, value);
-
-						group.setNameMap(nameMap);
-
-						GroupLocalServiceUtil.updateGroup(group);
-
-						break;
-					}
-				}
+			if (MapUtil.isEmpty(nameMap)) {
+				continue;
 			}
+
+			Locale locale = user.getLocale();
+
+			String groupDefaultName = nameMap.get(locale);
+
+			if (Validator.isNotNull(groupDefaultName)) {
+				continue;
+			}
+
+			String oldGroupDefaultName = nameMap.get(LocaleUtil.getDefault());
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("No name was found for locale ");
+				sb.append(locale);
+				sb.append(". Using name ");
+				sb.append(oldGroupDefaultName);
+				sb.append("instead.");
+
+				_log.warn(sb.toString());
+			}
+
+			nameMap.put(locale, oldGroupDefaultName);
+
+			group.setNameMap(nameMap);
+
+			GroupLocalServiceUtil.updateGroup(group);
 		}
 	}
 

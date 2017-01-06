@@ -646,9 +646,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#viewCP">
 			<var name="userEmailAddress" value="userea@@liferay.com" />
@@ -886,9 +884,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#viewCP">
 			<var name="userEmailAddress" value="userea.@liferay.com" />
@@ -1010,9 +1006,7 @@
 			<var name="userScreenNameVariation" value="Invalid" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelUsers">
-			<var name="portlet" value="Users and Organizations" />
-		</execute>
+		<execute macro="Navigator#gotoBack" />
 
 		<execute macro="User#viewCP">
 			<var name="userEmailAddress" value="userea@liferay.com" />

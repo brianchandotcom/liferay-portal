@@ -28,16 +28,23 @@
 			<threadSafe>false</threadSafe>
 			<parameters>
 				<parameter>
-					<name>_repositorySystemSession</name>
-					<type>org.eclipse.aether.RepositorySystemSession</type>
-					<required>true</required>
+					<name>_baseDir</name>
+					<type>java.io.File</type>
+					<required>false</required>
 					<editable>false</editable>
 					<description/>
 				</parameter>
 				<parameter>
-					<name>baseDir</name>
-					<type>java.io.File</type>
+					<name>_pluginDescriptor</name>
+					<type>org.apache.maven.plugin.descriptor.PluginDescriptor</type>
 					<required>false</required>
+					<editable>false</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>_repositorySystemSession</name>
+					<type>org.eclipse.aether.RepositorySystemSession</type>
+					<required>true</required>
 					<editable>false</editable>
 					<description/>
 				</parameter>
@@ -70,13 +77,6 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>pluginDescriptor</name>
-					<type>org.apache.maven.plugin.descriptor.PluginDescriptor</type>
-					<required>false</required>
-					<editable>false</editable>
-					<description/>
-				</parameter>
-				<parameter>
 					<name>portalCommonPath</name>
 					<type>java.lang.String</type>
 					<required>false</required>
@@ -106,20 +106,20 @@
 				</parameter>
 			</parameters>
 			<configuration>
+				<_baseDir default-value="${project.basedir}" implementation="java.io.File" />
+				<_pluginDescriptor default-value="${plugin}" implementation="org.apache.maven.plugin.descriptor.PluginDescriptor" />
 				<_repositorySystemSession implementation="org.eclipse.aether.RepositorySystemSession">${repositorySystemSession}</_repositorySystemSession>
-				<baseDir default-value="${project.basedir}" implementation="java.io.File" />
 				<docrootDirName default-value="${project.build.directory}/${project.build.finalName}" implementation="java.lang.String" />
 				<outputDirName default-value="/" implementation="java.lang.String" />
-				<pluginDescriptor default-value="${plugin}" implementation="org.apache.maven.plugin.descriptor.PluginDescriptor" />
 			</configuration>
 			<requirements>
 				<requirement>
-					<role>org.eclipse.aether.RepositorySystem</role>
-					<field-name>_repositorySystem</field-name>
+					<role>org.sonatype.plexus.build.incremental.BuildContext</role>
+					<field-name>_buildContext</field-name>
 				</requirement>
 				<requirement>
-					<role>org.sonatype.plexus.build.incremental.BuildContext</role>
-					<field-name>buildContext</field-name>
+					<role>org.eclipse.aether.RepositorySystem</role>
+					<field-name>_repositorySystem</field-name>
 				</requirement>
 			</requirements>
 		</mojo>

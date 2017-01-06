@@ -19,17 +19,18 @@ import com.liferay.portal.tools.theme.builder.ThemeBuilderArgs;
 
 import java.io.File;
 
-import java.util.List;
-
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
 
 import org.codehaus.plexus.component.repository.ComponentDependency;
+
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResult;
 
 /**
  * Build a theme.
@@ -43,14 +44,14 @@ public class BuildThemeMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException {
 		try {
 			for (ComponentDependency dependency :
-					pluginDescriptor.getDependencies()) {
+					_pluginDescriptor.getDependencies()) {
 
 				String artifactId = dependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.theme.styled") &&
 					(_themeBuilderArgs.getParentDir() == null)) {
 
-					Artifact artifact = resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(dependency);
 
 					_themeBuilderArgs.setParentDir(artifact.getFile());
 
@@ -60,7 +61,7 @@ public class BuildThemeMojo extends AbstractMojo {
 							"com.liferay.frontend.theme.unstyled") &&
 						 (_themeBuilderArgs.getUnstyledDir() == null)) {
 
-					Artifact artifact = resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(dependency);
 
 					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
 				}
@@ -124,48 +125,42 @@ public class BuildThemeMojo extends AbstractMojo {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
 
-	protected Artifact resolveArtifact(ComponentDependency dependency)
+	private Artifact _resolveArtifact(ComponentDependency dependency)
 		throws Exception {
 
-		Artifact artifact = artifactFactory.createArtifact(
+		Artifact dependencyArtifact = new DefaultArtifact(
 			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getVersion(), null, dependency.getType());
+			dependency.getType(), dependency.getVersion());
 
-		artifactResolver.resolve(
-			artifact, remoteArtifactRepositories, localArtifactRepository);
+		ArtifactRequest request = new ArtifactRequest();
+
+		request.setArtifact(dependencyArtifact);
+
+		ArtifactResult artifactResult = _repositorySystem.resolveArtifact(
+			_repositorySystemSession, request);
+
+		Artifact artifact = artifactResult.getArtifact();
 
 		return artifact;
 	}
 
 	/**
-	 * @component
-	 */
-	protected ArtifactFactory artifactFactory;
-
-	/**
-	 * @component
-	 */
-	protected ArtifactResolver artifactResolver;
-
-	/**
-	 * @parameter expression="${localRepository}"
-	 * @readonly
-	 * @required
-	 */
-	protected ArtifactRepository localArtifactRepository;
-
-	/**
 	 * @parameter default-value="${plugin}"
 	 * @readonly
 	 */
-	protected PluginDescriptor pluginDescriptor;
+	private PluginDescriptor _pluginDescriptor;
 
 	/**
-	 * @parameter expression="${project.remoteArtifactRepositories}"
+	 * @component
+	 */
+	private RepositorySystem _repositorySystem;
+
+	/**
+	 * @parameter expression="${repositorySystemSession}"
 	 * @readonly
 	 * @required
 	 */
-	protected List remoteArtifactRepositories;
+	private RepositorySystemSession _repositorySystemSession;
 
 	private final ThemeBuilderArgs _themeBuilderArgs = new ThemeBuilderArgs();
 

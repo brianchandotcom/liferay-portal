@@ -98,7 +98,7 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 		String extension = FileUtil.getExtension(templateId);
 
 		if (!extension.equals(langType) &&
-			!_allowedFileExtensions.contains(extension)) {
+			!_allowedLangTypes.contains(extension)) {
 
 			return false;
 		}
@@ -178,16 +178,16 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		URLResourceParser.class);
 
-	private static final List<String> _allowedFileExtensions;
+	private static final List<String> _allowedLangTypes;
 
 	static {
-		_allowedFileExtensions = new ArrayList<String>();
+		_allowedLangTypes = new ArrayList<String>();
 
-		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_CSS);
-		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_FTL);
-		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_TPL);
-		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_VM);
-		_allowedFileExtensions.add(TemplateConstants.LANG_TYPE_XSL);
+		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_CSS);
+		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_FTL);
+		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_TPL);
+		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_VM);
+		_allowedLangTypes.add(TemplateConstants.LANG_TYPE_XSL);
 	}
 
 }

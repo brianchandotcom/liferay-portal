@@ -27,7 +27,8 @@ public interface MBMessageDisplay extends Serializable {
 	public MBMessage getMessage();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public MBThread getNextThread();
@@ -35,7 +36,8 @@ public interface MBMessageDisplay extends Serializable {
 	public MBMessage getParentMessage();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public MBThread getPreviousThread();
@@ -43,7 +45,8 @@ public interface MBMessageDisplay extends Serializable {
 	public MBThread getThread();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public String getThreadView();

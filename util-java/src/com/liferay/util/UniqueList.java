@@ -19,7 +19,7 @@ import java.util.Collection;
 /**
  * @author     Brian Wing Shun Chan
  * @author     Shuyang Zhou
- * @deprecated As of 6.2.0, replaced by {@link
+ * @deprecated As of com.liferay.util.java#2.2.0, replaced by {@link
  *             com.liferay.portal.kernel.util.UniqueList}
  */
 @Deprecated

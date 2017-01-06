@@ -302,7 +302,8 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Constructs a portlet with the specified parameters.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public PortletImpl(
@@ -928,8 +929,9 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Returns the Facebook integration method of the portlet.
 	 *
-	 * @return the Facebook integration method of the portlet
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @return     the Facebook integration method of the portlet
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -3070,8 +3072,10 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * Sets the Facebook integration method of the portlet.
 	 *
-	 * @param facebookIntegration the Facebook integration method of the portlet
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @param      facebookIntegration the Facebook integration method of the
+	 *             portlet
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	@Override
@@ -4218,7 +4222,8 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The Facebook integration method of the portlet.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	private String _facebookIntegration =

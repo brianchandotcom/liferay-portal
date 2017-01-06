@@ -160,9 +160,9 @@ public interface GroupLocalService extends BaseLocalService,
 	names for the group, and whether the group is for staging.
 	* @return the group
 	* @throws PortalException if a portal exception occured
-	* @deprecated As of 7.0.0, replaced by {@link #addGroup(long, long, String,
-	long, long, Map, Map, int, boolean, int, String, boolean,
-	boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#addGroup(long, long, String, long, long, Map, Map, int,
+	boolean, int, String, boolean, boolean, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public Group addGroup(long userId, long parentGroupId,
@@ -518,9 +518,9 @@ public interface GroupLocalService extends BaseLocalService,
 	names for the group.
 	* @return the group
 	* @throws PortalException if a portal exception occurred
-	* @deprecated As of 7.0.0, replaced by {@link #updateGroup(long, long, Map,
-	Map, int, boolean, int, String, boolean, boolean,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	#updateGroup(long, long, Map, Map, int, boolean, int, String,
+	boolean, boolean, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public Group updateGroup(long groupId, long parentGroupId,
@@ -835,7 +835,7 @@ public interface GroupLocalService extends BaseLocalService,
 		boolean andOperator);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	Group#getDescriptiveName(Locale)}
 	*/
 	@java.lang.Deprecated
@@ -844,7 +844,7 @@ public interface GroupLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
 	Group#getDescriptiveName(Locale)}
 	*/
 	@java.lang.Deprecated

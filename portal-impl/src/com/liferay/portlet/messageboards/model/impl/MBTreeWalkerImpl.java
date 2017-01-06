@@ -86,8 +86,9 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #MBTreeWalkerImpl(long, int,
-	 *             MBMessageLocalService, Comparator)}
+	 * @deprecated As of com.liferay.portal.impl#2.10.0, replaced by {@link
+	 *             #MBTreeWalkerImpl(long, int, MBMessageLocalService,
+	 *             Comparator)}
 	 */
 	@Deprecated
 	public MBTreeWalkerImpl(

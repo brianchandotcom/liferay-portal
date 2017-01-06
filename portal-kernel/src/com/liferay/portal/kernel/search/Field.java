@@ -118,7 +118,8 @@ public class Field implements Serializable {
 	public static final String ORGANIZATION_ID = "organizationId";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #ENTRY_CLASS_NAME}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #ENTRY_CLASS_NAME}
 	 */
 	@Deprecated
 	public static final String PORTLET_ID = "portletId";
@@ -225,7 +226,8 @@ public class Field implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link Query#getBoost}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             Query#getBoost}
 	 */
 	@Deprecated
 	public float getBoost() {
@@ -320,7 +322,8 @@ public class Field implements Serializable {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link Query#setBoost(float)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             Query#setBoost(float)}
 	 */
 	@Deprecated
 	public void setBoost(float boost) {

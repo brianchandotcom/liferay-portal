@@ -45,7 +45,8 @@ public interface ActionableDynamicQuery {
 	public void setBaseLocalService(BaseLocalService baseLocalService);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setModelClass(Class)}
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
+	 *             #setModelClass(Class)}
 	 */
 	@Deprecated
 	public void setClass(Class<?> clazz);

@@ -45,7 +45,7 @@ public class FriendlyURLResolverRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #getFriendlyURLResolversAsCollection()}
 	 */
 	@Deprecated

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.search.BooleanQueryFactory;
 
 /**
  * @author     Michael C. Han
- * @deprecated As of 7.0.0
+ * @deprecated As of com.liferay.portal.kernel#2.19.0
  */
 @Deprecated
 public class BooleanQueryFactoryImpl implements BooleanQueryFactory {

@@ -40,8 +40,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
+ * @author     Brian Wing Shun Chan
+ * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link
  *             com.liferay.expando.taglib.servlet.taglib.CustomAttributesAvailableTag}
  */
 @Deprecated

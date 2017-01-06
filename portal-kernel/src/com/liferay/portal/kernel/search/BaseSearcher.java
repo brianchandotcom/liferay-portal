@@ -90,8 +90,8 @@ public abstract class BaseSearcher extends BaseIndexer<Object> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, added strictly to
+	 *             support backwards compatibility of {@link
 	 *             Indexer#postProcessSearchQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated

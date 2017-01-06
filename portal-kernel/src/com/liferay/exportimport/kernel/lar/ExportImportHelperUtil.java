@@ -54,7 +54,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, moved to {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link
 	 *             ExportImportDateUtil#getCalendar(PortletRequest, String,
 	 *             boolean)}
 	 */
@@ -82,7 +82,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, moved to {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, moved to {@link
 	 *             ExportImportDateUtil#getDateRange(PortletRequest, long,
 	 *             boolean, long, String, String)}
 	 */
@@ -98,7 +98,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static Layout getExportableLayout(ThemeDisplay themeDisplay)
@@ -116,7 +117,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #getExportPortletControlsMap(long, String, Map)}
 	 */
 	@Deprecated
@@ -130,7 +131,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #getExportPortletControlsMap(long, String, Map, String)}
 	 */
 	@Deprecated
@@ -162,7 +163,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #getImportPortletControlsMap(long, String, Map, Element,
 	 *             ManifestSummary)}
 	 */
@@ -177,7 +178,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #getImportPortletControlsMap(long, String, Map, Element,
 	 *             ManifestSummary)}
 	 */
@@ -246,7 +247,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #getManifestSummary(PortletDataContext)}
 	 */
 	@Deprecated
@@ -325,7 +326,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessorr#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
 	 *             the export-import-api module
@@ -343,7 +344,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
 	 *             the export-import-api module
@@ -361,7 +362,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessorr#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
 	 *             the export-import-api module
@@ -379,7 +380,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportDLReferences(
@@ -394,7 +396,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportDLReferences(
@@ -409,7 +412,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLayoutReferences(
@@ -421,7 +425,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLayoutReferences(
@@ -434,7 +439,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLinksToLayouts(
@@ -449,7 +455,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceExportLinksToLayouts(
@@ -462,7 +469,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String) in the
 	 *             export-import-api module
@@ -479,7 +486,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by
 	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String) in the
 	 *             export-import-api module
@@ -495,7 +502,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportDLReferences(
@@ -509,7 +517,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportDLReferences(
@@ -522,7 +531,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLayoutReferences(
@@ -534,7 +544,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLayoutReferences(
@@ -547,7 +558,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLinksToLayouts(
@@ -559,7 +571,8 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static String replaceImportLinksToLayouts(
@@ -572,7 +585,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, see {@link
 	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(
 	 *             PortletDataContext, Portlet, PortletPreferences, String,
 	 *             String)}
@@ -588,7 +601,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #updateExportPortletPreferencesClassPKs(PortletDataContext,
 	 *             Portlet, PortletPreferences, String, String)}
 	 */
@@ -605,7 +618,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, see {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, see {@link
 	 *             DefaultConfigurationPortletDataHandler#updateImportPortletPreferencesClassPKs(
 	 *             PortletDataContext, PortletPreferences, String, Class, long)}
 	 */
@@ -621,7 +634,7 @@ public class ExportImportHelperUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #validateMissingReferences(PortletDataContext)}
 	 */
 	@Deprecated

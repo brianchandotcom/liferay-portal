@@ -25,7 +25,8 @@ import javax.servlet.jsp.PageContext;
 
 /**
  * @author     Carlos Sierra Andrés
- * @deprecated As of 7.0.0, replaced by {@link PipingServletResponse}
+ * @deprecated As of com.liferay.util.taglib#2.6.0, replaced by {@link
+ *             PipingServletResponse}
  */
 @Deprecated
 public class JspWriterHttpServletResponse extends HttpServletResponseWrapper {

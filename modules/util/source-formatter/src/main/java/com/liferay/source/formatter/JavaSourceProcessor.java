@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ImportsFormatter;
 import com.liferay.portal.tools.JavaImportsFormatter;
@@ -1957,8 +1956,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected String formatDeprecatedJavadoc(
-			String fileName, String absolutePath, String line)
+	protected String formatDeprecatedJavadoc(String fileName, String line)
 		throws Exception {
 
 		Matcher matcher = _deprecatedPattern.matcher(line);
@@ -1967,39 +1965,62 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return line;
 		}
 
-		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion(fileName, absolutePath, true);
+		BNDSettings bndSettings = getBNDSettings(fileName);
 
-		if (mainReleaseComparableVersion == null) {
+		ComparableVersion releaseComparableVersion =
+			bndSettings.getReleaseComparableVersion();
+
+		if (Validator.isNull(releaseComparableVersion)) {
 			return line;
 		}
 
 		if (matcher.group(2) == null) {
 			return StringUtil.insert(
-				line, " As of " + mainReleaseComparableVersion.toString(),
-				matcher.end(1));
+				line, " As of " + _NEXT_VERSION, matcher.end(1));
 		}
 
-		String version = matcher.group(3);
+		String bundleSymbolicName = bndSettings.getBundleSymbolicName();
 
-		ComparableVersion comparableVersion = new ComparableVersion(version);
+		if (Validator.isNull(bundleSymbolicName)) {
+			return line;
+		}
 
-		if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+		String symbolicName = matcher.group(3);
+
+		if (symbolicName == null) {
+			return StringUtil.insert(
+				line, bundleSymbolicName + "#", matcher.start(4));
+		}
+
+		if (symbolicName.equals(bundleSymbolicName)) {
 			return StringUtil.replaceFirst(
-				line, version, mainReleaseComparableVersion.toString());
+				line, symbolicName, bundleSymbolicName);
 		}
 
-		if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-			return StringUtil.insert(line, ".0", matcher.end(3));
+		String version = matcher.group(4);
+
+		if (!version.equals(_NEXT_VERSION)) {
+			ComparableVersion comparableVersion = new ComparableVersion(
+				version);
+
+			if (comparableVersion.compareTo(releaseComparableVersion) > 0) {
+				return StringUtil.replaceFirst(line, version, _NEXT_VERSION);
+			}
+
+			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+				return StringUtil.insert(line, ".0", matcher.end(4));
+			}
 		}
 
-		String deprecatedInfo = matcher.group(4);
+		String deprecatedInfo = matcher.group(5);
 
 		if ((deprecatedInfo != null) &&
 			!deprecatedInfo.startsWith(StringPool.COMMA)) {
 
-			return StringUtil.insert(line, StringPool.COMMA, matcher.end(3));
+			return StringUtil.insert(line, StringPool.COMMA, matcher.end(4));
 		}
+
+		putBNDSettings(bndSettings);
 
 		return line;
 	}
@@ -2455,9 +2476,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				checkResourceUtil(line, fileName, absolutePath, lineCount);
 
-				if (_addMissingDeprecationReleaseVersion) {
-					line = formatDeprecatedJavadoc(
-						fileName, absolutePath, line);
+				if (_addMissingDeprecationReleaseVersion &&
+					!isModulesFile(absolutePath)) {
+
+					line = formatDeprecatedJavadoc(fileName, line);
 				}
 
 				if (trimmedLine.startsWith("* @see ") &&
@@ -4548,6 +4570,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 	private static final String _LINE_LENGTH_EXCLUDES = "line.length.excludes";
 
+	private static final String _NEXT_VERSION = "NEXT-VERSION";
+
 	private static final String _PROXY_EXCLUDES = "proxy.excludes";
 
 	private static final String _SECURE_DESERIALIZATION_EXCLUDES =
@@ -4601,7 +4625,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+)(.+)?)?");
+		"(^\\s*\\* @deprecated)( As of ([\\w\\.]+#)?([0-9\\.]+|NEXT-VERSION)" +
+			"(.+)?)?");
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(

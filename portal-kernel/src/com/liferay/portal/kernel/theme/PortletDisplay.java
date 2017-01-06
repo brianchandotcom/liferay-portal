@@ -366,7 +366,8 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public boolean isAccess() {
@@ -573,7 +574,8 @@ public class PortletDisplay implements Cloneable, Serializable {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setAccess(boolean access) {

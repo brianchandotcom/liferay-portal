@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author     Iliyan Peychev
  * @author     Sergio González
- * @deprecated As of 7.0.0, with no direct replacement
+ * @deprecated As of com.liferay.util.taglib#2.6.0, with no direct replacement
  */
 @Deprecated
 public class ProgressTag extends IncludeTag {

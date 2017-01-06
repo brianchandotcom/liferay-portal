@@ -192,8 +192,8 @@ public class AssetEntriesFacet extends MultiValueFacet {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, added strictly to support backwards
-	 *             compatibility of {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, added strictly to
+	 *             support backwards compatibility of {@link
 	 *             Indexer#postProcessContextQuery(BooleanQuery, SearchContext)}
 	 */
 	@Deprecated

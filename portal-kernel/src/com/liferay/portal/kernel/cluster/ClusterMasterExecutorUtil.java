@@ -40,7 +40,8 @@ public class ClusterMasterExecutorUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static ClusterMasterExecutor getClusterMasterExecutor() {

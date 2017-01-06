@@ -28,31 +28,36 @@ import javax.servlet.http.HttpServletRequest;
 public interface AuthTokenWhitelist {
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getOriginCSRFWhitelist();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletCSRFWhitelist();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletCSRFWhitelistActions();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletInvocationWhitelist();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> getPortletInvocationWhitelistActions();
@@ -63,7 +68,7 @@ public interface AuthTokenWhitelist {
 		HttpServletRequest request, Portlet portlet);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #isPortletCSRFWhitelisted(HttpServletRequest, Portlet)}
 	 */
 	@Deprecated
@@ -74,7 +79,7 @@ public interface AuthTokenWhitelist {
 		HttpServletRequest request, Portlet portlet);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, replaced by {@link
 	 *             #isPortletInvocationWhitelisted(HttpServletRequest, Portlet)}
 	 */
 	@Deprecated
@@ -90,25 +95,29 @@ public interface AuthTokenWhitelist {
 	public boolean isValidSharedSecret(String sharedSecret);
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetOriginCSRFWhitelist();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletCSRFWhitelist();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletInvocationWhitelist();
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public Set<String> resetPortletInvocationWhitelistActions();

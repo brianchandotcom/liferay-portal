@@ -30,7 +30,8 @@ public class PortletConstants {
 	/**
 	 * Facebook integration method for FBML.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String FACEBOOK_INTEGRATION_FBML = "fbml";
@@ -38,7 +39,8 @@ public class PortletConstants {
 	/**
 	 * Facebook integration method for IFrame.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String FACEBOOK_INTEGRATION_IFRAME = "iframe";
@@ -46,7 +48,8 @@ public class PortletConstants {
 	/**
 	 * Instance separator.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String INSTANCE_SEPARATOR = "_INSTANCE_";
@@ -70,7 +73,8 @@ public class PortletConstants {
 	/**
 	 * User separator.
 	 *
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#2.19.0, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public static final String USER_SEPARATOR = "_USER_";

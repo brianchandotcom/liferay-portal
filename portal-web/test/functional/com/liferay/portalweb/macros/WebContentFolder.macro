@@ -114,6 +114,8 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
+
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="${folderName}" />
 	</command>
 
 	<command name="gotoEditCP">

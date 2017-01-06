@@ -761,13 +761,6 @@ app.server.type=@{app.server.type}]]></echo>
 						</then>
 					</if>
 
-					<if>
-						<available file="${project.dir}/plugins/dist/@{test.portal.lpkg.name}" />
-						<then>
-							<copy file="${project.dir}/plugins/dist/@{test.portal.lpkg.name}" todir="${liferay.home}/osgi/marketplace" />
-						</then>
-					</if>
-
 					<antcall target="record-test-generated-properties" />
 
 					<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>

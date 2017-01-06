@@ -14,9 +14,12 @@
 
 package com.liferay.portal.kernel.portlet.toolbar.contributor;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,6 +39,15 @@ public abstract class BasePortletToolbarContributor
 	@Override
 	public List<Menu> getPortletTitleMenus(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if ((scopeGroup == null) || scopeGroup.isLayoutPrototype()) {
+			return Collections.emptyList();
+		}
 
 		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
 			portletRequest, portletResponse);

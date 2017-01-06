@@ -96,7 +96,6 @@ public class AssetPublisherPortletToolbarContributor
 				portletRequest.getPreferences());
 
 		if (!assetPublisherDisplayContext.isShowAddContentButton() ||
-			(scopeGroup == null) || scopeGroup.isLayoutPrototype() ||
 			(scopeGroup.hasStagingGroup() && !scopeGroup.isStagingGroup() &&
 			 PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
 			portletName.equals(

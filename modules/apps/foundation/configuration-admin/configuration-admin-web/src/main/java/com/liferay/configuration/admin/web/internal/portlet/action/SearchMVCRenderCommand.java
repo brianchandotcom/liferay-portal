@@ -107,11 +107,9 @@ public class SearchMVCRenderCommand implements MVCRenderCommand {
 						configurationModelFactoryId);
 				}
 
-				if (configurationModel == null) {
-					continue;
+				if (configurationModel != null) {
+					searchResults.add(configurationModel);
 				}
-
-				searchResults.add(configurationModel);
 			}
 
 			ConfigurationModelIterator configurationModelIterator =

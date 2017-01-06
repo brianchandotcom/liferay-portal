@@ -573,6 +573,61 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	}
 
 	@Override
+	public boolean hasOtherAssignees(long workflowTaskInstanceId, long userId)
+		throws WorkflowException {
+
+		try {
+			KaleoTaskInstanceToken kaleoTaskInstanceToken =
+				_kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+					workflowTaskInstanceId);
+
+			KaleoInstanceToken kaleoInstanceToken =
+				kaleoTaskInstanceToken.getKaleoInstanceToken();
+
+			Map<String, Serializable> workflowContext =
+				WorkflowContextUtil.convert(
+					kaleoTaskInstanceToken.getWorkflowContext());
+
+			ServiceContext workflowContextServiceContext =
+				(ServiceContext)workflowContext.get(
+					WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+			ExecutionContext executionContext = new ExecutionContext(
+				kaleoInstanceToken, workflowContext,
+				workflowContextServiceContext);
+
+			List<KaleoTaskAssignment> configuredKaleoTaskAssignments =
+				_kaleoTaskAssignmentLocalService.getKaleoTaskAssignments(
+					kaleoTaskInstanceToken.getKaleoTaskId());
+
+			for (KaleoTaskAssignment configuredKaleoTaskAssignment :
+					configuredKaleoTaskAssignments) {
+
+				List<KaleoTaskAssignment> calculatedKaleoTaskAssignments =
+					new ArrayList<>(
+						getKaleoTaskAssignments(
+							configuredKaleoTaskAssignment, executionContext));
+
+				for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
+						calculatedKaleoTaskAssignments) {
+
+					if (hasOtherPooledActors(
+							calculatedKaleoTaskAssignment,
+							kaleoTaskInstanceToken, userId)) {
+
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			throw new WorkflowException(e);
+		}
+	}
+
+	@Override
 	public List<WorkflowTask> search(
 			long companyId, long userId, String keywords, Boolean completed,
 			Boolean searchByUserRoles, int start, int end,
@@ -787,6 +842,77 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 
 		return taskAssignmentSelector.calculateTaskAssignments(
 			configuredKaleoTaskAssignment, executionContext);
+	}
+
+	protected boolean hasOtherPooledActors(
+			KaleoTaskAssignment kaleoTaskAssignment,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken, long userId)
+		throws PortalException {
+
+		String assigneeClassName = kaleoTaskAssignment.getAssigneeClassName();
+		long assigneeClassPK = kaleoTaskAssignment.getAssigneeClassPK();
+
+		if (assigneeClassName.equals(User.class.getName())) {
+			if (userId == assigneeClassPK) {
+				return false;
+			}
+
+			User user = _userLocalService.fetchUser(assigneeClassPK);
+
+			if (user != null) {
+				return true;
+			}
+
+			return false;
+		}
+
+		Role role = _roleLocalService.getRole(assigneeClassPK);
+
+		if ((role.getType() == RoleConstants.TYPE_SITE) ||
+			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
+
+			List<UserGroupRole> userGroupRoles =
+				_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+					kaleoTaskInstanceToken.getGroupId(), assigneeClassPK);
+
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				User user = userGroupRole.getUser();
+
+				if (user.getUserId() != userId) {
+					return true;
+				}
+			}
+
+			List<UserGroupGroupRole> userGroupGroupRoles =
+				_userGroupGroupRoleLocalService.
+					getUserGroupGroupRolesByGroupAndRole(
+						kaleoTaskInstanceToken.getGroupId(), assigneeClassPK);
+
+			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
+				List<User> userGroupUsers = _userLocalService.getUserGroupUsers(
+					userGroupGroupRole.getUserGroupId());
+
+				for (User user : userGroupUsers) {
+					if (user.getUserId() != userId) {
+						return true;
+					}
+				}
+			}
+		}
+		else {
+			List<User> inheritedRoleUsers =
+				_userLocalService.getInheritedRoleUsers(
+					assigneeClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+			for (User user : inheritedRoleUsers) {
+				if (user.getUserId() != userId) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	protected void populatePooledActors(

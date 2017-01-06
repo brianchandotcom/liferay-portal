@@ -120,6 +120,9 @@ public interface WorkflowTaskManager {
 			OrderByComparator<WorkflowTask> orderByComparator)
 		throws WorkflowException;
 
+	public boolean hasOtherAssignees(long workflowTaskInstanceId, long userId)
+		throws WorkflowException;
+
 	public List<WorkflowTask> search(
 			long companyId, long userId, String keywords, Boolean completed,
 			Boolean searchByUserRoles, int start, int end,

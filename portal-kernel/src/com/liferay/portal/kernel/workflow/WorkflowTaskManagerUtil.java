@@ -207,6 +207,14 @@ public class WorkflowTaskManagerUtil {
 			orderByComparator);
 	}
 
+	public static boolean hasOtherAssignees(
+			long workflowTaskInstanceId, long userId)
+		throws WorkflowException {
+
+		return getWorkflowTaskManager().hasOtherAssignees(
+			workflowTaskInstanceId, userId);
+	}
+
 	public static List<WorkflowTask> search(
 			long companyId, long userId, String keywords, Boolean completed,
 			Boolean searchByUserRoles, int start, int end,

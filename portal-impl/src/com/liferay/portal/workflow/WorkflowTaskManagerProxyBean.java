@@ -176,6 +176,11 @@ public class WorkflowTaskManagerProxyBean
 	}
 
 	@Override
+	public boolean hasOtherAssignees(long workflowTaskInstanceId, long userId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public List<WorkflowTask> search(
 		long companyId, long userId, String taskName, Boolean completed,
 		Boolean searchByUserRoles, int start, int end,

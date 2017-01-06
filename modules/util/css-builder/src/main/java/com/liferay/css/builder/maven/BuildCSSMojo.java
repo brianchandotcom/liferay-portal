@@ -49,14 +49,14 @@ public class BuildCSSMojo extends AbstractMojo {
 	public void execute() throws MojoExecutionException {
 		try {
 			for (ComponentDependency dependency :
-					pluginDescriptor.getDependencies()) {
+					_pluginDescriptor.getDependencies()) {
 
 				String artifactId = dependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.css.common") &&
 					(_cssBuilderArgs.getPortalCommonPath() == null)) {
 
-					Artifact artifact = resolveArtifact(dependency);
+					Artifact artifact = _resolveArtifact(dependency);
 
 					File file = artifact.getFile();
 
@@ -64,8 +64,8 @@ public class BuildCSSMojo extends AbstractMojo {
 				}
 			}
 
-			if (buildContext.isIncremental()) {
-				Scanner scanner = buildContext.newScanner(baseDir);
+			if (_buildContext.isIncremental()) {
+				Scanner scanner = _buildContext.newScanner(_baseDir);
 
 				String[] includes = {"", "**/*.scss"};
 
@@ -76,11 +76,11 @@ public class BuildCSSMojo extends AbstractMojo {
 				String[] includedFiles = scanner.getIncludedFiles();
 
 				if (ArrayUtil.isNotEmpty(includedFiles)) {
-					CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
+					CSSBuilderInvoker.invoke(_baseDir, _cssBuilderArgs);
 				}
 			}
 			else {
-				CSSBuilderInvoker.invoke(baseDir, _cssBuilderArgs);
+				CSSBuilderInvoker.invoke(_baseDir, _cssBuilderArgs);
 			}
 		}
 		catch (Exception e) {
@@ -144,7 +144,7 @@ public class BuildCSSMojo extends AbstractMojo {
 		_cssBuilderArgs.setSassCompilerClassName(sassCompilerClassName);
 	}
 
-	protected Artifact resolveArtifact(ComponentDependency dependency)
+	private Artifact _resolveArtifact(ComponentDependency dependency)
 		throws Exception {
 
 		Artifact dependencyArtifact = new DefaultArtifact(
@@ -167,20 +167,20 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter default-value="${project.basedir}"
 	 * @readonly
 	 */
-	protected File baseDir;
+	private File _baseDir;
 
 	/**
 	 * @component
 	 */
-	protected BuildContext buildContext;
+	private BuildContext _buildContext;
+
+	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
 
 	/**
 	 * @parameter default-value="${plugin}"
 	 * @readonly
 	 */
-	protected PluginDescriptor pluginDescriptor;
-
-	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
+	private PluginDescriptor _pluginDescriptor;
 
 	/**
 	 * @component

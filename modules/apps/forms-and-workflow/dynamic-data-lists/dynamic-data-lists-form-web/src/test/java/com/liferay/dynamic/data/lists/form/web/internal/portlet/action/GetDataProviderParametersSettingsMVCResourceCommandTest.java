@@ -1,0 +1,192 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
+
+import static org.powermock.api.mockito.PowerMockito.field;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+import com.liferay.dynamic.data.mapping.annotations.DDMForm;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProvider;
+import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderParameterSettings;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
+import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PortalImpl;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.Locale;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Matchers;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+
+/**
+ * @author Rafael Praxedes
+ */
+@PrepareForTest(ResourceBundleUtil.class)
+@RunWith(PowerMockRunner.class)
+public class GetDataProviderParametersSettingsMVCResourceCommandTest {
+
+	@Before
+	public void setUp() throws Exception {
+		setUpDDMDataProvider();
+		setUpDDMFormValuesJSONDeserializer();
+		setUpGetDataProviderParametersSettingsMVCResourceCommand();
+		setUpLanguageUtil();
+		setUpResourceBundleUtil();
+	}
+
+	@Test
+	public void testCreateParametersJSONObject() throws Exception {
+		JSONObject parametersJSONObject =
+			_getDataProviderParametersSettingsMVCResourceCommand.
+				createParametersJSONObject(
+					_ddmDataProvider, getDataProviderFormValues());
+
+		String expectedValue = read(
+			"data-provider-input-output-parameters.json");
+
+		JSONAssert.assertEquals(
+			expectedValue, parametersJSONObject.toString(), false);
+	}
+
+	protected DDMFormValues getDataProviderFormValues() throws Exception {
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
+			DDMFormFactory.create(DDMDataProviderSettings.class);
+
+		String serializedDDMFormValues = read(
+			"form-values-data-provider-settings.json");
+
+		return _ddmFormValuesJSONDeserializer.deserialize(
+			ddmForm, serializedDDMFormValues);
+	}
+
+	protected String read(String fileName) throws IOException {
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/" + fileName);
+
+		return StringUtil.read(inputStream);
+	}
+
+	protected void setUpDDMDataProvider() {
+		_ddmDataProvider = mock(DDMDataProvider.class);
+
+		when(
+			_ddmDataProvider.getSettings()
+		).then(
+			new Answer<Class<?>>() {
+
+				@Override
+				public Class<?> answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					return DDMDataProviderSettings.class;
+				}
+
+			}
+		);
+	}
+
+	protected void setUpDDMFormValuesJSONDeserializer() throws Exception {
+		field(
+			DDMFormValuesJSONDeserializerImpl.class, "_jsonFactory"
+		).set(
+			_ddmFormValuesJSONDeserializer, _jsonFactory
+		);
+	}
+
+	protected void setUpGetDataProviderParametersSettingsMVCResourceCommand()
+		throws Exception {
+
+		_getDataProviderParametersSettingsMVCResourceCommand =
+			new GetDataProviderParametersSettingsMVCResourceCommand();
+
+		field(
+			_getDataProviderParametersSettingsMVCResourceCommand.getClass(),
+			"_jsonFactory"
+		).set(
+			_getDataProviderParametersSettingsMVCResourceCommand, _jsonFactory
+		);
+
+		field(
+			_getDataProviderParametersSettingsMVCResourceCommand.getClass(),
+			"_ddmFormValuesJSONDeserializer"
+		).set(
+			_getDataProviderParametersSettingsMVCResourceCommand,
+			_ddmFormValuesJSONDeserializer
+		);
+	}
+
+	protected void setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = mock(Language.class);
+
+		languageUtil.setLanguage(language);
+	}
+
+	protected void setUpPortalClassLoaderUtil() {
+		PortalClassLoaderUtil.setClassLoader(PortalImpl.class.getClassLoader());
+	}
+
+	protected void setUpResourceBundleUtil() {
+		mockStatic(ResourceBundleUtil.class);
+
+		when(
+			ResourceBundleUtil.getBundle(
+				Matchers.anyString(), Matchers.any(Locale.class),
+				Matchers.any(ClassLoader.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
+	}
+
+	private DDMDataProvider _ddmDataProvider;
+	private final DDMFormValuesJSONDeserializer _ddmFormValuesJSONDeserializer =
+		new DDMFormValuesJSONDeserializerImpl();
+	private GetDataProviderParametersSettingsMVCResourceCommand
+		_getDataProviderParametersSettingsMVCResourceCommand;
+	private final JSONFactory _jsonFactory = new JSONFactoryImpl();
+
+	@DDMForm
+	private interface DDMDataProviderSettings
+		extends DDMDataProviderParameterSettings {
+	}
+
+}

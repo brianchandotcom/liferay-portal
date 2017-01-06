@@ -1,0 +1,29 @@
+{
+	"inputs": [
+		{
+			"name": "A",
+			"required": true,
+			"type": "number"
+		},
+		{
+			"name": "B",
+			"required": false,
+			"type": "text"
+		},
+		{
+			"name": "C",
+			"required": true,
+			"type": "text"
+		}
+	],
+	"outputs": [
+		{
+			"name": "D",
+			"type": "text"
+		},
+		{
+			"name": "E",
+			"type": "number"
+		}
+	]
+}

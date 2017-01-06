@@ -62,6 +62,8 @@ AUI.add(
 				if (result && Lang.isObject(result)) {
 					var visitor = instance.get('visitor');
 
+					instance.set('pagesState', result);
+
 					visitor.set('pages', result);
 
 					visitor.set(

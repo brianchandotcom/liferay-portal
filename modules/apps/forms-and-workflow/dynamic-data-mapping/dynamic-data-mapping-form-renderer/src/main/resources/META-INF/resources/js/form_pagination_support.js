@@ -6,6 +6,13 @@ AUI.add(
 		var FormPaginationSupport = function() {
 		};
 
+		FormPaginationSupport.ATTRS = {
+			pagesState: {
+				setter: '_setPagesSate',
+				value: []
+			}
+		};
+
 		FormPaginationSupport.prototype = {
 			initializer: function() {
 				var instance = this;
@@ -89,7 +96,23 @@ AUI.add(
 
 				var pagination = instance.getPagination();
 
-				pagination.next();
+				var pages = instance.get('pagesState');
+
+				if (!pages.length) {
+					pagination.next();
+					return;
+				}
+
+				var page;
+
+				var nextPage = pagination.get('page');
+
+				do {
+					page = pages[nextPage];
+					nextPage++;
+				} while (!page.enabled);
+
+				pagination.set('page', nextPage);
 			},
 
 			prevPage: function() {
@@ -97,7 +120,23 @@ AUI.add(
 
 				var pagination = instance.getPagination();
 
-				pagination.prev();
+				var pages = instance.get('pagesState');
+
+				if (!pages.length) {
+					pagination.prev();
+					return;
+				}
+
+				var page;
+
+				var prevPage = pagination.get('page') - 2;
+
+				do {
+					page = pages[prevPage];
+					prevPage--;
+				} while (!page.enabled);
+
+				pagination.set('page', prevPage + 2);
 			},
 
 			showPage: function(page) {
@@ -267,6 +306,18 @@ AUI.add(
 
 					submitButton.toggle(currentPage === pagesTotal && !readOnly);
 				}
+			},
+
+			_setPagesSate: function(pages) {
+				var pagesState = [];
+
+				for (var i = 0;  i < pages.length; i++) {
+					pagesState[i] = {
+						enabled: pages[i].enabled
+					};
+				}
+
+				return pagesState;
 			},
 
 			_syncWizardUI: function(prevPage, currentPage) {

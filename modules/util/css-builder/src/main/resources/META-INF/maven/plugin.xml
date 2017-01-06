@@ -37,7 +37,7 @@
 				<parameter>
 					<name>_pluginDescriptor</name>
 					<type>org.apache.maven.plugin.descriptor.PluginDescriptor</type>
-					<required>false</required>
+					<required>true</required>
 					<editable>false</editable>
 					<description/>
 				</parameter>

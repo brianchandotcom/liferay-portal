@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.portal.tools.theme.builder</artifactId>
-	<version>1.0.3</version>
+	<version>1.1.0</version>
 	<goalPrefix>liferay-theme</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -30,7 +30,7 @@
 				<parameter>
 					<name>_pluginDescriptor</name>
 					<type>org.apache.maven.plugin.descriptor.PluginDescriptor</type>
-					<required>false</required>
+					<required>true</required>
 					<editable>false</editable>
 					<description/>
 				</parameter>

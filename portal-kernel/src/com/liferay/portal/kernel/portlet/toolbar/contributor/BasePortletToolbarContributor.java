@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -45,7 +48,10 @@ public abstract class BasePortletToolbarContributor
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if ((scopeGroup == null) || scopeGroup.isLayoutPrototype()) {
+		if ((scopeGroup == null) || scopeGroup.isLayoutPrototype() ||
+			(scopeGroup.hasStagingGroup() && !scopeGroup.isStagingGroup() &&
+			 _STAGING_LIVE_GROUP_LOCKING_ENABLED)) {
+
 			return Collections.emptyList();
 		}
 
@@ -82,5 +88,9 @@ public abstract class BasePortletToolbarContributor
 
 	protected abstract List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest, PortletResponse portletResponse);
+
+	private static final boolean _STAGING_LIVE_GROUP_LOCKING_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.STAGING_LIVE_GROUP_LOCKING_ENABLED));
 
 }

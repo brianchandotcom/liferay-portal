@@ -375,8 +375,11 @@ public class PrintArtifactPublishCommandsTask extends DefaultTask {
 
 		Project project = getProject();
 
-		if (all || quiet) {
-			sb.append("(git diff-index --quiet HEAD || ");
+		if (all) {
+			sb.append("(git diff --quiet || ");
+		}
+		else if (quiet) {
+			sb.append("(git diff --cached --quiet || ");
 		}
 
 		sb.append("git commit ");

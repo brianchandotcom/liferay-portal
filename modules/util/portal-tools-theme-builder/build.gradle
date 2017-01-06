@@ -39,9 +39,7 @@ dependencies {
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
 	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-model", version: "3.2.5"
 	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
-	provided group: "org.apache.maven.plugin-tools", name: "maven-plugin-annotations", transitive: false, version: "3.5"
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"

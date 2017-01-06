@@ -66,6 +66,10 @@ test {
 	systemProperty "theme.builder.classpath", jar.archivePath
 }
 
+updateFileVersions {
+	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
+}
+
 writeParentThemeDependencies {
 	configurations.parentThemes.dependencies.withType(ProjectDependency) {
 		dependsOn "${dependencyProject.path}:jar"

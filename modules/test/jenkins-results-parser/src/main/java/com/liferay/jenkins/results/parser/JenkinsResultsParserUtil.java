@@ -62,6 +62,19 @@ import org.json.JSONObject;
  */
 public class JenkinsResultsParserUtil {
 
+	public static final String[] DEFAULT_BUILD_PROPERTIES_URLS = {
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-jenkins-ee/commands/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/build.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/ci.properties",
+		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
+			"/liferay-portal/test.properties"
+	};
+
 	public static JSONObject createJSONObject(String jsonString)
 		throws IOException {
 
@@ -269,6 +282,10 @@ public class JenkinsResultsParserUtil {
 		return url;
 	}
 
+	public static String format(Element element) throws IOException {
+		return format(element, true);
+	}
+
 	public static String format(Element element, boolean pretty)
 		throws IOException {
 
@@ -280,10 +297,6 @@ public class JenkinsResultsParserUtil {
 		xmlWriter.write(element);
 
 		return writer.toString();
-	}
-
-	public static String format(Element element) throws IOException {
-		return format(element, true);
 	}
 
 	public static String getActualResult(String buildURL) throws IOException {
@@ -498,6 +511,7 @@ public class JenkinsResultsParserUtil {
 
 	public static String getNounForm(
 		int count, String plural, String singular) {
+
 		if (count == 1) {
 			return singular;
 		}
@@ -837,6 +851,7 @@ public class JenkinsResultsParserUtil {
 						"Authorization",
 						"token " +
 							buildProperties.getProperty("github.access.token"));
+
 					httpURLConnection.setRequestProperty(
 						"Content-Type", "application/json");
 				}
@@ -916,19 +931,6 @@ public class JenkinsResultsParserUtil {
 		write(new File(path), content);
 	}
 
-	public static final String[] DEFAULT_BUILD_PROPERTIES_URLS = {
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-			"/liferay-jenkins-ee/build.properties",
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-			"/liferay-jenkins-ee/commands/build.properties",
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-			"/liferay-portal/build.properties",
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-			"/liferay-portal/ci.properties",
-		"http://mirrors-no-cache.lax.liferay.com/github.com/liferay" +
-			"/liferay-portal/test.properties"
-	};
-
 	protected static final String DEPENDENCIES_URL_FILE;
 
 	protected static final String DEPENDENCIES_URL_HTTP =
@@ -978,10 +980,6 @@ public class JenkinsResultsParserUtil {
 		return "github.message.redact.token[" + index + "]";
 	}
 
-	private static Hashtable<?, ?> _buildProperties;
-
-	private static String[] _buildPropertiesURLs;
-
 	private static final int _MAX_RETRIES_DEFAULT = 3;
 
 	private static final long _MILLIS_IN_DAY = 24L * 60L * 60L * 1000L;
@@ -996,6 +994,8 @@ public class JenkinsResultsParserUtil {
 
 	private static final int _TIMEOUT_DEFAULT = 0;
 
+	private static Hashtable<?, ?> _buildProperties;
+	private static String[] _buildPropertiesURLs;
 	private static final Pattern _localURLPattern1 = Pattern.compile(
 		"https://test.liferay.com/([0-9]+)/");
 	private static final Pattern _localURLPattern2 = Pattern.compile(

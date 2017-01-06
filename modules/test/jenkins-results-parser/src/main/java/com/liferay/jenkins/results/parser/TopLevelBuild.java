@@ -40,8 +40,7 @@ public class TopLevelBuild extends BaseBuild {
 				getJenkinsReport(), getArchivePath() + "/jenkins-report.html");
 		}
 		catch (IOException ioe) {
-			throw new RuntimeException(
-				"Unable to archive Jenkins report", ioe);
+			throw new RuntimeException("Unable to archive Jenkins report", ioe);
 		}
 	}
 

@@ -1955,6 +1955,8 @@
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
+		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="Blogs" />
+
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

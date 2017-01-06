@@ -1550,8 +1550,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {
-		"**/*.action", "**/*.function", "**/*.macro", "**/*.testcase",
-		"**/*.xml"
+		"**/*.action", "**/*.function", "**/*.jrxml", "**/*.macro",
+		"**/*.testcase", "**/*.xml"
 	};
 
 	private static final String _NUMERICAL_PORTLET_NAME_ELEMENT_EXCLUDES =

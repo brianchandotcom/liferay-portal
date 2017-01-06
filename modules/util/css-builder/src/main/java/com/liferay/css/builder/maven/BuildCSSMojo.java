@@ -20,18 +20,19 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
 
-import java.util.List;
-
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.resolver.ArtifactResolver;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
 
 import org.codehaus.plexus.component.repository.ComponentDependency;
 import org.codehaus.plexus.util.Scanner;
+
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResult;
 
 import org.sonatype.plexus.build.incremental.BuildContext;
 
@@ -146,25 +147,21 @@ public class BuildCSSMojo extends AbstractMojo {
 	protected Artifact resolveArtifact(ComponentDependency dependency)
 		throws Exception {
 
-		Artifact artifact = artifactFactory.createArtifact(
+		Artifact dependencyArtifact = new DefaultArtifact(
 			dependency.getGroupId(), dependency.getArtifactId(),
-			dependency.getVersion(), null, dependency.getType());
+			dependency.getType(), dependency.getVersion());
 
-		artifactResolver.resolve(
-			artifact, remoteArtifactRepositories, localArtifactRepository);
+		ArtifactRequest request = new ArtifactRequest();
+
+		request.setArtifact(dependencyArtifact);
+
+		ArtifactResult artifactResult = _repositorySystem.resolveArtifact(
+			_repositorySystemSession, request);
+
+		Artifact artifact = artifactResult.getArtifact();
 
 		return artifact;
 	}
-
-	/**
-	 * @component
-	 */
-	protected ArtifactFactory artifactFactory;
-
-	/**
-	 * @component
-	 */
-	protected ArtifactResolver artifactResolver;
 
 	/**
 	 * @parameter default-value="${project.basedir}"
@@ -178,25 +175,23 @@ public class BuildCSSMojo extends AbstractMojo {
 	protected BuildContext buildContext;
 
 	/**
-	 * @parameter expression="${localRepository}"
-	 * @readonly
-	 * @required
-	 */
-	protected ArtifactRepository localArtifactRepository;
-
-	/**
 	 * @parameter default-value="${plugin}"
 	 * @readonly
 	 */
 	protected PluginDescriptor pluginDescriptor;
 
+	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
+
 	/**
-	 * @parameter expression="${project.remoteArtifactRepositories}"
+	 * @component
+	 */
+	private RepositorySystem _repositorySystem;
+
+	/**
+	 * @parameter expression="${repositorySystemSession}"
 	 * @readonly
 	 * @required
 	 */
-	protected List remoteArtifactRepositories;
-
-	private final CSSBuilderArgs _cssBuilderArgs = new CSSBuilderArgs();
+	private RepositorySystemSession _repositorySystemSession;
 
 }

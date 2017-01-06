@@ -22,13 +22,17 @@
 		</if>
 	</tear-down>
 
-	<command name="AssertCaptchaAndRecaptchaElements" priority="4">
-		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
-		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
+	<command name="ViewCaptchaEnabled" priority="4">
+		<execute macro="SignInNavigator#gotoCreateAccount" />
 
 		<execute macro="User#viewCaptchaPG">
 			<var name="captchaType" value="captcha" />
 		</execute>
+	</command>
+
+	<command name="ViewRecaptchaEnabled" priority="4">
+		<var name="recaptchaPrivateKey" property-value="recaptcha.private.key" />
+		<var name="recaptchaPublicKey" property-value="recaptcha.public.key" />
 
 		<execute macro="User#firstLoginPG" />
 
@@ -44,6 +48,8 @@
 		</execute>
 
 		<execute macro="User#logoutPG" />
+
+		<execute macro="SignInNavigator#gotoCreateAccount" />
 
 		<execute macro="User#viewCaptchaPG">
 			<var name="captchaType" value="recaptcha" />

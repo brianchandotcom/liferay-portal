@@ -178,7 +178,7 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 	private static final Log _log = LogFactoryUtil.getLog(
 		URLResourceParser.class);
 
-	private static List<String> _allowedFileExtensions;
+	private static final List<String> _allowedFileExtensions;
 
 	static {
 		_allowedFileExtensions = new ArrayList<String>();

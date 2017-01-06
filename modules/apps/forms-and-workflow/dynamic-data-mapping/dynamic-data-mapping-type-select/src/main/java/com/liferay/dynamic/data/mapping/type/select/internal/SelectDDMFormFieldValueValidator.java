@@ -98,7 +98,9 @@ public class SelectDDMFormFieldValueValidator
 			return Encryptor.decrypt(key, selectedValue);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
 			return selectedValue;
 		}
@@ -115,7 +117,9 @@ public class SelectDDMFormFieldValueValidator
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return key;

@@ -133,7 +133,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 			return String.format("%s#%s", optionKey, encryptedText);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 
 			return optionKey;
 		}
@@ -275,7 +277,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 			}
 		}
 		catch (Exception e) {
-			_log.error(e);
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return key;

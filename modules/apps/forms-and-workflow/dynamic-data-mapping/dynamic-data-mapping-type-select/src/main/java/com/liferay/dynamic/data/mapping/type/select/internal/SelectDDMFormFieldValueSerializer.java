@@ -55,33 +55,11 @@ public class SelectDDMFormFieldValueSerializer
 			dataSourceType, "manual");
 
 		if (value.isLocalized()) {
-			try {
-				return toJSONObject(
-					ddmFormField, value, isManualDataSourceType);
-			}
-			catch (Exception e) {
-				_log.error(e);
-
-				return null;
-			}
+			return serializeLocalizedValue(
+				ddmFormField, value, isManualDataSourceType);
 		}
 		else {
-			String valueStr = value.getString(LocaleUtil.ROOT);
-
-			if (isManualDataSourceType || Validator.isNull(valueStr)) {
-				return valueStr;
-			}
-
-			try {
-				JSONArray jsonArray = extractValuesJSONArray(valueStr);
-
-				return jsonArray.toJSONString();
-			}
-			catch (Exception e) {
-				_log.error(e);
-
-				return null;
-			}
+			return serializeUnlocalizedValue(value, isManualDataSourceType);
 		}
 	}
 
@@ -100,6 +78,45 @@ public class SelectDDMFormFieldValueSerializer
 		}
 
 		return jsonArray;
+	}
+
+	protected Object serializeLocalizedValue(
+		DDMFormField ddmFormField, Value value,
+		boolean isManualDataSourceType) {
+
+		try {
+			return toJSONObject(ddmFormField, value, isManualDataSourceType);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			return null;
+		}
+	}
+
+	protected Object serializeUnlocalizedValue(
+		Value value, boolean isManualDataSourceType) {
+
+		String valueStr = value.getString(LocaleUtil.ROOT);
+
+		if (isManualDataSourceType || Validator.isNull(valueStr)) {
+			return valueStr;
+		}
+
+		try {
+			JSONArray jsonArray = extractValuesJSONArray(valueStr);
+
+			return jsonArray.toJSONString();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
+			return null;
+		}
 	}
 
 	@Reference(unbind = "-")

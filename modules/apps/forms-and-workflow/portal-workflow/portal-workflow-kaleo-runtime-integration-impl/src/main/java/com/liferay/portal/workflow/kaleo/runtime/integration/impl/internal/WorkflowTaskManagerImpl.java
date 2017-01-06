@@ -257,68 +257,9 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 			for (KaleoTaskAssignment calculatedKaleoTaskAssignment :
 					calculatedKaleoTaskAssignments) {
 
-				String assigneeClassName =
-					calculatedKaleoTaskAssignment.getAssigneeClassName();
-				long assigneeClassPK =
-					calculatedKaleoTaskAssignment.getAssigneeClassPK();
-
-				if (assigneeClassName.equals(User.class.getName())) {
-					User user = _userLocalService.fetchUser(assigneeClassPK);
-
-					if (user != null) {
-						pooledActors.put(user.getFullName(), user.getUserId());
-					}
-
-					continue;
-				}
-
-				Role role = _roleLocalService.getRole(
-					calculatedKaleoTaskAssignment.getAssigneeClassPK());
-
-				if ((role.getType() == RoleConstants.TYPE_SITE) ||
-					(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
-
-					List<UserGroupRole> userGroupRoles =
-						_userGroupRoleLocalService.
-							getUserGroupRolesByGroupAndRole(
-								kaleoTaskInstanceToken.getGroupId(),
-								assigneeClassPK);
-
-					for (UserGroupRole userGroupRole : userGroupRoles) {
-						User user = userGroupRole.getUser();
-
-						pooledActors.put(user.getFullName(), user.getUserId());
-					}
-
-					List<UserGroupGroupRole> userGroupGroupRoles =
-						_userGroupGroupRoleLocalService.
-							getUserGroupGroupRolesByGroupAndRole(
-								kaleoTaskInstanceToken.getGroupId(),
-								assigneeClassPK);
-
-					for (UserGroupGroupRole userGroupGroupRole :
-							userGroupGroupRoles) {
-
-						List<User> userGroupUsers =
-							_userLocalService.getUserGroupUsers(
-								userGroupGroupRole.getUserGroupId());
-
-						for (User user : userGroupUsers) {
-							pooledActors.put(
-								user.getFullName(), user.getUserId());
-						}
-					}
-				}
-				else {
-					List<User> inheritedRoleUsers =
-						_userLocalService.getInheritedRoleUsers(
-							assigneeClassPK, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS, null);
-
-					for (User user : inheritedRoleUsers) {
-						pooledActors.put(user.getFullName(), user.getUserId());
-					}
-				}
+				populatePooledActors(
+					calculatedKaleoTaskAssignment, kaleoTaskInstanceToken,
+					pooledActors);
 			}
 
 			return ArrayUtil.toLongArray(pooledActors.values());
@@ -824,21 +765,89 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 		for (KaleoTaskAssignment configuredKaleoTaskAssignment :
 				configuredKaleoTaskAssignments) {
 
-			String assigneeClassName =
-				configuredKaleoTaskAssignment.getAssigneeClassName();
-
-			TaskAssignmentSelector taskAssignmentSelector =
-				_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
-					assigneeClassName);
-
-			Collection<KaleoTaskAssignment> kaleoTaskAssignments =
-				taskAssignmentSelector.calculateTaskAssignments(
-					configuredKaleoTaskAssignment, executionContext);
-
-			calculatedKaleoTaskAssignments.addAll(kaleoTaskAssignments);
+			calculatedKaleoTaskAssignments.addAll(
+				getKaleoTaskAssignments(
+					configuredKaleoTaskAssignment, executionContext));
 		}
 
 		return calculatedKaleoTaskAssignments;
+	}
+
+	protected Collection<KaleoTaskAssignment> getKaleoTaskAssignments(
+			KaleoTaskAssignment configuredKaleoTaskAssignment,
+			ExecutionContext executionContext)
+		throws PortalException {
+
+		String assigneeClassName =
+			configuredKaleoTaskAssignment.getAssigneeClassName();
+
+		TaskAssignmentSelector taskAssignmentSelector =
+			_taskAssignmentSelectorRegistry.getTaskAssignmentSelector(
+				assigneeClassName);
+
+		return taskAssignmentSelector.calculateTaskAssignments(
+			configuredKaleoTaskAssignment, executionContext);
+	}
+
+	protected void populatePooledActors(
+			KaleoTaskAssignment kaleoTaskAssignment,
+			KaleoTaskInstanceToken kaleoTaskInstanceToken,
+			Map<String, Long> pooledActors)
+		throws PortalException {
+
+		String assigneeClassName = kaleoTaskAssignment.getAssigneeClassName();
+		long assigneeClassPK = kaleoTaskAssignment.getAssigneeClassPK();
+
+		if (assigneeClassName.equals(User.class.getName())) {
+			User user = _userLocalService.fetchUser(assigneeClassPK);
+
+			if (user != null) {
+				pooledActors.put(user.getFullName(), user.getUserId());
+			}
+
+			return;
+		}
+
+		Role role = _roleLocalService.getRole(
+			kaleoTaskAssignment.getAssigneeClassPK());
+
+		if ((role.getType() == RoleConstants.TYPE_SITE) ||
+			(role.getType() == RoleConstants.TYPE_ORGANIZATION)) {
+
+			List<UserGroupRole> userGroupRoles =
+				_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
+					kaleoTaskInstanceToken.getGroupId(), assigneeClassPK);
+
+			for (UserGroupRole userGroupRole : userGroupRoles) {
+				User user = userGroupRole.getUser();
+
+				pooledActors.put(user.getFullName(), user.getUserId());
+			}
+
+			List<UserGroupGroupRole> userGroupGroupRoles =
+				_userGroupGroupRoleLocalService.
+					getUserGroupGroupRolesByGroupAndRole(
+						kaleoTaskInstanceToken.getGroupId(), assigneeClassPK);
+
+			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
+				List<User> userGroupUsers = _userLocalService.getUserGroupUsers(
+					userGroupGroupRole.getUserGroupId());
+
+				for (User user : userGroupUsers) {
+					pooledActors.put(user.getFullName(), user.getUserId());
+				}
+			}
+		}
+		else {
+			List<User> inheritedRoleUsers =
+				_userLocalService.getInheritedRoleUsers(
+					assigneeClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
+
+			for (User user : inheritedRoleUsers) {
+				pooledActors.put(user.getFullName(), user.getUserId());
+			}
+		}
 	}
 
 	protected List<WorkflowTask> toWorkflowTasks(

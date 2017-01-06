@@ -179,6 +179,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	/**
 	 * @parameter default-value="${plugin}"
 	 * @readonly
+	 * @required
 	 */
 	private PluginDescriptor _pluginDescriptor;
 

@@ -258,7 +258,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_VALUE_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//a[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//ul[contains(.,'${key_conditionValueField}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//a[contains(@id,'condition-second-operand-options')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionValueField}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -284,6 +284,11 @@
 <tr>
 	<td>RULE_BUILDER_ACTION_TARGET_FIELD</td>
 	<td>//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//a[contains(@id,'action') and contains(@class,'select-field-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_BUILDER_ACTION_TARGET_FIELD_2</td>
+	<td>xpath=(//li[contains(@class,'form-builder-rule-action')][${key_actionRowNumber}]//a[contains(@id,'action') and contains(@class,'select-field-trigger')])[2]</td>
 	<td></td>
 </tr>
 <tr>

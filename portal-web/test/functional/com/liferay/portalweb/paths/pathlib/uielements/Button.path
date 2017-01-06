@@ -514,6 +514,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PREVIOUS</td>
+	<td>//button[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH</td>
 	<td>//button[span[contains(.,'Publish')]]</td>
 	<td></td>

@@ -233,6 +233,15 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getConsoleText() {
+		String status = getStatus();
+
+		if (status.equals("running")) {
+			JenkinsConsoleTextLoader jenkinsConsoleTextLoader =
+				new JenkinsConsoleTextLoader(getBuildURL());
+
+			return jenkinsConsoleTextLoader.getConsoleText();
+		}
+
 		try {
 			return JenkinsResultsParserUtil.toString(
 				JenkinsResultsParserUtil.getLocalURL(
@@ -990,6 +999,11 @@ public abstract class BaseBuild implements Build {
 			while (downstreamBuildURLMatcher.find()) {
 				String url = downstreamBuildURLMatcher.group("url");
 
+				if (url.contains("<a href")) {
+					throw new RuntimeException(
+						"PDY2 " + downstreamBuildURLMatcher.group(0));
+				}
+
 				String reinvocationMarker = url + " restarted at ";
 
 				int reinvocationIndex = consoleText.indexOf(reinvocationMarker);
@@ -1000,6 +1014,10 @@ public abstract class BaseBuild implements Build {
 						consoleText.indexOf(
 							".\n",
 							reinvocationIndex + reinvocationMarker.length()));
+
+					if (url.contains("<a href")) {
+						throw new RuntimeException("PDY3");
+					}
 				}
 
 				if (!foundDownstreamBuildURLs.contains(url)) {

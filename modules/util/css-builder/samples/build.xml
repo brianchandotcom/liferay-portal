@@ -3,7 +3,6 @@
 
 <project>
 	<path id="css.builder.classpath">
-		<fileset dir="../lib" includes="*.jar" />
 		<fileset dir="../../../../tools/sdk/dist" includes="com.liferay.css.builder-*.jar" />
 	</path>
 
@@ -12,7 +11,7 @@
 	<target name="build-css">
 		<build-css
 			docrootDirName="css"
-			portalCommonPath="../../../frontend-css/frontend-css-common/tmp/META-INF/resources"
+			portalCommonPath="../../../apps/foundation/frontend-css/frontend-css-common/tmp/META-INF/resources"
 		/>
 	</target>
 </project>

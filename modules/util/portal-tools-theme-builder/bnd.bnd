@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Theme Builder
 Bundle-SymbolicName: com.liferay.portal.tools.theme.builder
-Bundle-Version: 1.0.3
+Bundle-Version: 1.1.0
 Export-Package: com.liferay.portal.tools.theme.builder
 Import-Package:\
 	!org.apache.maven.plugin.*,\

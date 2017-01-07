@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.theme.builder</groupId>
+	<artifactId>sample.theme.builder</artifactId>
+	<name>Sample Theme Builder Project</name>
+	<version>1.0.0</version>
+	<description>Sample Theme Builder Project</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.theme.builder</artifactId>
+				<version>1.1.0</version>
+				<configuration>
+					<diffsDir>diffs</diffsDir>
+					<parentName>_styled</parentName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

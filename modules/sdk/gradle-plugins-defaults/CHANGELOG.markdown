@@ -887,6 +887,11 @@ version 1.1.1.
 - [LPS-69606]: Fix artifact publish commands for the "WSDD" commit in older
 versions of Git.
 
+## 2.4.9 - 2017-01-06
+
+### Changed
+- [LPS-67352]: Update the [Liferay Gradle Plugins] dependency to version 3.0.68.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
@@ -962,6 +967,7 @@ versions of Git.
 [LPS-69606]: https://issues.liferay.com/browse/LPS-69606
 [LPS-69618]: https://issues.liferay.com/browse/LPS-69618
 [LPS-69677]: https://issues.liferay.com/browse/LPS-69677
+[LPS-69706]: https://issues.liferay.com/browse/LPS-69706
 [LPS-69719]: https://issues.liferay.com/browse/LPS-69719
 [LPS-69730]: https://issues.liferay.com/browse/LPS-69730
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802

@@ -73,6 +73,7 @@ public class ThemeBuilderTest {
 			ThemeBuilder.STYLED, "ftl", _unstyledJarFile);
 
 		_assertEquals("css/custom.scss", ".text { color: black; }");
+		_assertNotEquals("css/_portal.scss", "");
 		_assertExists("images/thumbnail.png");
 		_assertExists("templates/init.ftl");
 		_assertNotExists("templates/init.vm");
@@ -86,6 +87,8 @@ public class ThemeBuilderTest {
 			ThemeBuilder.UNSTYLED, "vm", _unstyledJarFile);
 
 		_assertEquals("css/custom.scss", ".text { color: black; }");
+		_assertEquals("css/_portal.scss", "");
+		_assertNotExists("images/thumbnail.png");
 		_assertNotExists("templates/init.ftl");
 		_assertExists("templates/init.vm");
 		_assertExists("WEB-INF/liferay-look-and-feel.xml");
@@ -109,10 +112,7 @@ public class ThemeBuilderTest {
 	private void _assertEquals(String fileName, String expected)
 		throws IOException {
 
-		File file = _assertExists(fileName);
-
-		String content = new String(
-			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+		String content = _read(fileName);
 
 		Assert.assertEquals(expected, content);
 	}
@@ -125,12 +125,27 @@ public class ThemeBuilderTest {
 		return file;
 	}
 
+	private void _assertNotEquals(String fileName, String expected)
+		throws IOException {
+
+		String content = _read(fileName);
+
+		Assert.assertNotEquals(expected, content);
+	}
+
 	private File _assertNotExists(String fileName) {
 		File file = new File(temporaryFolder.getRoot(), fileName);
 
 		Assert.assertFalse("Unexpected " + fileName, file.exists());
 
 		return file;
+	}
+
+	private String _read(String fileName) throws IOException {
+		File file = _assertExists(fileName);
+
+		return new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
 	}
 
 	private static final String _NAME = "Test Theme";

@@ -44,6 +44,10 @@ import net.coobird.thumbnailator.Thumbnails.Builder;
  */
 public class ThemeBuilder {
 
+	public static final String STYLED = "_styled";
+
+	public static final String UNSTYLED = "_unstyled";
+
 	public static void main(String[] args) throws Exception {
 		ThemeBuilderArgs themeBuilderArgs = new ThemeBuilderArgs();
 
@@ -158,10 +162,6 @@ public class ThemeBuilder {
 
 		_writeScreenshotThumbnail();
 	}
-
-	protected static final String STYLED = "_styled";
-
-	protected static final String UNSTYLED = "_unstyled";
 
 	private static void _printHelp(JCommander jCommander) throws Exception {
 		jCommander.usage();

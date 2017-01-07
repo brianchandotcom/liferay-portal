@@ -1,9 +1,13 @@
+import org.gradle.api.artifacts.maven.Conf2ScopeMappingContainer
+
 apply plugin: "com.liferay.maven.plugin.builder"
 
 task writeParentThemeDependencies
 task writeTestThemeDependencies
 
 buildPluginDescriptor {
+	configurationScopeMapping "mavenCompile", Conf2ScopeMappingContainer.COMPILE
+
 	ext {
 		autoClean = false
 	}
@@ -15,18 +19,27 @@ buildPluginDescriptor {
 }
 
 configurations {
+	mavenCompile {
+		extendsFrom compile
+	}
+
 	parentThemes
 	testThemes
 }
 
 dependencies {
+	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.styled", version: "2.0.13"
+	mavenCompile group: "com.liferay", name: "com.liferay.frontend.theme.unstyled", version: "2.0.13"
+
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-styled")
 	parentThemes project(":apps:foundation:frontend-theme:frontend-theme-unstyled")
 
 	provided group: "com.beust", name: "jcommander", version: "1.48"
 	provided group: "net.coobird", name: "thumbnailator", transitive: false, version: "0.4.8"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.7"
-	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
+	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
+	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
 
 	testCompile group: "com.googlecode.json-simple", name: "json-simple", version: "1.1"
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
@@ -51,6 +64,10 @@ test {
 	dependsOn writeTestThemeDependencies
 
 	systemProperty "theme.builder.classpath", jar.archivePath
+}
+
+updateFileVersions {
+	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 }
 
 writeParentThemeDependencies {

@@ -18,10 +18,20 @@ import com.liferay.portal.tools.theme.builder.ThemeBuilder;
 import com.liferay.portal.tools.theme.builder.ThemeBuilderArgs;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
+
+import org.codehaus.plexus.component.repository.ComponentDependency;
+
+import org.eclipse.aether.RepositorySystem;
+import org.eclipse.aether.RepositorySystemSession;
+import org.eclipse.aether.artifact.Artifact;
+import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.resolution.ArtifactRequest;
+import org.eclipse.aether.resolution.ArtifactResolutionException;
+import org.eclipse.aether.resolution.ArtifactResult;
 
 /**
  * Build a theme.
@@ -34,11 +44,35 @@ public class BuildThemeMojo extends AbstractMojo {
 	@Override
 	public void execute() throws MojoExecutionException {
 		try {
+			for (ComponentDependency componentDependency :
+					_pluginDescriptor.getDependencies()) {
+
+				String artifactId = componentDependency.getArtifactId();
+
+				if (artifactId.equals("com.liferay.frontend.theme.styled") &&
+					(_themeBuilderArgs.getParentDir() == null) &&
+					ThemeBuilder.STYLED.equals(
+						_themeBuilderArgs.getParentName())) {
+
+					Artifact artifact = _resolveArtifact(componentDependency);
+
+					_themeBuilderArgs.setParentDir(artifact.getFile());
+				}
+				else if (artifactId.equals(
+							"com.liferay.frontend.theme.unstyled") &&
+						 (_themeBuilderArgs.getUnstyledDir() == null)) {
+
+					Artifact artifact = _resolveArtifact(componentDependency);
+
+					_themeBuilderArgs.setUnstyledDir(artifact.getFile());
+				}
+			}
+
 			ThemeBuilder themeBuilder = new ThemeBuilder(_themeBuilderArgs);
 
 			themeBuilder.build();
 		}
-		catch (IOException ioe) {
+		catch (Exception ioe) {
 			throw new MojoExecutionException(ioe.getMessage(), ioe);
 		}
 	}
@@ -91,6 +125,43 @@ public class BuildThemeMojo extends AbstractMojo {
 	public void setUnstyledDir(File unstyledDir) {
 		_themeBuilderArgs.setUnstyledDir(unstyledDir);
 	}
+
+	private Artifact _resolveArtifact(ComponentDependency componentDependency)
+		throws ArtifactResolutionException {
+
+		Artifact artifact = new DefaultArtifact(
+			componentDependency.getGroupId(),
+			componentDependency.getArtifactId(), componentDependency.getType(),
+			componentDependency.getVersion());
+
+		ArtifactRequest artifactRequest = new ArtifactRequest();
+
+		artifactRequest.setArtifact(artifact);
+
+		ArtifactResult artifactResult = _repositorySystem.resolveArtifact(
+			_repositorySystemSession, artifactRequest);
+
+		return artifactResult.getArtifact();
+	}
+
+	/**
+	 * @parameter default-value="${plugin}"
+	 * @readonly
+	 * @required
+	 */
+	private PluginDescriptor _pluginDescriptor;
+
+	/**
+	 * @component
+	 */
+	private RepositorySystem _repositorySystem;
+
+	/**
+	 * @parameter expression="${repositorySystemSession}"
+	 * @readonly
+	 * @required
+	 */
+	private RepositorySystemSession _repositorySystemSession;
 
 	private final ThemeBuilderArgs _themeBuilderArgs = new ThemeBuilderArgs();
 

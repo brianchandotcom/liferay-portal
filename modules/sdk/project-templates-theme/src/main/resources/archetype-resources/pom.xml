@@ -60,7 +60,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.portal.tools.theme.builder</artifactId>
-				<version>1.0.2</version>
+				<version>1.1.0</version>
 				<executions>
 					<execution>
 						<phase>generate-resources</phase>
@@ -68,11 +68,9 @@
 							<goal>build-theme</goal>
 						</goals>
 						<configuration>
-							<diffsDir>src/main/webapp/</diffsDir>
+							<diffsDir>src/main/webapp</diffsDir>
 							<outputDir>${com.liferay.portal.tools.theme.builder.outputDir}</outputDir>
-							<parentDir>${project.build.directory}/deps/com.liferay.frontend.theme.styled.jar</parentDir>
 							<parentName>_styled</parentName>
-							<unstyledDir>${project.build.directory}/deps/com.liferay.frontend.theme.unstyled.jar</unstyledDir>
 						</configuration>
 					</execution>
 				</executions>

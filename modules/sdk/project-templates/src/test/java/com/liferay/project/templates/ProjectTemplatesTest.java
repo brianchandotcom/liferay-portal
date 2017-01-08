@@ -30,8 +30,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
-import java.lang.ProcessBuilder.Redirect;
-
 import java.net.URI;
 
 import java.nio.charset.StandardCharsets;
@@ -1325,11 +1323,24 @@ public class ProjectTemplatesTest {
 		environment.put("M2_HOME", _mavenDistributionDir.getAbsolutePath());
 		environment.put("MAVEN_OPTS", "-Dfile.encoding=UTF-8");
 
-		processBuilder.redirectOutput(Redirect.INHERIT);
-
 		Process process = processBuilder.start();
 
 		StringBuilder sb = new StringBuilder();
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(
+					process.getInputStream(), StandardCharsets.UTF_8))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				if (sb.length() > 0) {
+					sb.append(System.lineSeparator());
+				}
+
+				sb.append(line);
+			}
+		}
 
 		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(

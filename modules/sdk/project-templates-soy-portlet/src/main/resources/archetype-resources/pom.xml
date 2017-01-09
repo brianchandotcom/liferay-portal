@@ -111,7 +111,7 @@
 			<plugin>
 				<groupId>biz.aQute.bnd</groupId>
 				<artifactId>bnd-maven-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>3.3.0</version>
 				<executions>
 					<execution>
 						<id>default-bnd-process</id>
@@ -124,7 +124,7 @@
 					<dependency>
 						<groupId>biz.aQute.bnd</groupId>
 						<artifactId>biz.aQute.bndlib</artifactId>
-						<version>3.2.0</version>
+						<version>3.3.0</version>
 					</dependency>
 					<dependency>
 						<groupId>com.liferay</groupId>
@@ -136,7 +136,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.css.builder</artifactId>
-				<version>1.0.20</version>
+				<version>1.0.23</version>
 				<executions>
 					<execution>
 						<id>default-build-css</id>
@@ -147,7 +147,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<portalCommonPath>/</portalCommonPath>
 					<docrootDirName>src/main/resources</docrootDirName>
 				</configuration>
 			</plugin>

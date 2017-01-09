@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
@@ -51,6 +50,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -73,6 +73,8 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.Text;
 import org.dom4j.io.SAXReader;
 
 /**
@@ -606,32 +608,54 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		List<Element> elements = rootElement.elements(elementName);
+		Node previousNode = null;
 
-		Element previousElement = null;
+		Iterator<Node> iterator = rootElement.nodeIterator();
 
-		for (Element element : elements) {
-			if ((previousElement != null) &&
-				(elementComparator.compare(previousElement, element) > 0)) {
+		while (iterator.hasNext()) {
+			Node curNode = (Node)iterator.next();
 
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("Incorrect order '");
-				sb.append(elementName);
-				sb.append("':");
-
-				if (Validator.isNotNull(parentElementName)) {
-					sb.append(StringPool.SPACE);
-					sb.append(parentElementName);
-				}
-
-				sb.append(StringPool.SPACE);
-				sb.append(elementComparator.getElementName(element));
-
-				processMessage(fileName, sb.toString());
+			if (curNode instanceof Text) {
+				continue;
 			}
 
-			previousElement = element;
+			if (previousNode == null) {
+				previousNode = curNode;
+
+				continue;
+			}
+
+			if (curNode instanceof Element && previousNode instanceof Element) {
+				Element curElement = (Element)curNode;
+				Element previousElement = (Element)previousNode;
+
+				String curElementName = curElement.getName();
+				String previousElementName = previousElement.getName();
+
+				if (curElementName.equals(elementName) &&
+					previousElementName.equals(elementName) &&
+					(elementComparator.compare(previousElement, curElement) >
+						0)) {
+
+					StringBundler sb = new StringBundler(7);
+
+					sb.append("Incorrect order '");
+					sb.append(elementName);
+					sb.append("':");
+
+					if (Validator.isNotNull(parentElementName)) {
+						sb.append(StringPool.SPACE);
+						sb.append(parentElementName);
+					}
+
+					sb.append(StringPool.SPACE);
+					sb.append(elementComparator.getElementName(curElement));
+
+					processMessage(fileName, sb.toString());
+				}
+			}
+
+			previousNode = curNode;
 		}
 	}
 

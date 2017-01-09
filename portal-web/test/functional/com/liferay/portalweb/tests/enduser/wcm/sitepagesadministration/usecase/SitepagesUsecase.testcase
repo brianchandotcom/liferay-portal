@@ -571,7 +571,6 @@
 
 		<execute macro="Gmail#openMessageContinueReadingButton">
 			<var name="contentTitle" value="Blogs Entry Title G7B2" />
-			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -802,7 +801,6 @@
 
 		<execute macro="Gmail#openMessageContinueReadingButton">
 			<var name="contentTitle" value="Blogs Entry Title G7B1" />
-			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -1045,7 +1043,6 @@
 
 		<execute macro="Gmail#openMessageContinueReadingButton">
 			<var name="contentTitle" value="Blogs Entry Title G7B3" />
-			<var name="gmailAssetType" value="Blogs" />
 			<var name="pageName" value="Blog and Message Board Page" />
 			<var name="siteName" value="${siteName}" />
 		</execute>

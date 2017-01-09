@@ -119,8 +119,6 @@
 	</command>
 
 	<command name="openMessageContinueReadingButton">
-		<var name="key_gmailAssetType" value="${gmailAssetType}" />
-
 		<var method="StringUtil#replace('${pageName}', ' ', '-')" name="pageNameURL" />
 		<var method="StringUtil#lowerCase('/${pageNameURL}')" name="pageNameURL" />
 

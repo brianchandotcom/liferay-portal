@@ -946,6 +946,11 @@ to version 1.0.71.
 - [LPS-69706]: Update the [Liferay CSS Builder] dependency to version 1.0.22.
 - [LPS-69899]: Update the [Liferay Ant BND] dependency to version 2.0.32.
 
+## 3.0.69 - 2017-01-09
+
+### Changed
+- [LPS-69706]: Update the [Liferay CSS Builder] dependency to version 1.0.23.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder

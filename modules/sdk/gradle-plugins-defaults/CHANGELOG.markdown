@@ -895,6 +895,11 @@ versions of Git.
 ### Fixed
 - [LPS-65179]: Fix artifact publish commands in case of local unstaged changes.
 
+## 2.4.10 - 2017-01-09
+
+### Changed
+- [LPS-69706]: Update the [Liferay Gradle Plugins] dependency to version 3.0.69.
+
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder

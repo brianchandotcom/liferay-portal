@@ -38,6 +38,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 /**
@@ -147,28 +148,18 @@ public class BundleSupportCommandsTest {
 
 	@Test
 	public void testInitBundleZip() throws Exception {
-		File liferayHomeDir = temporaryFolder.newFolder("bundles");
-
-		File configsDir = temporaryFolder.newFolder("configs");
-
-		File configsLocalDir = _createDirectory(configsDir, "local");
-
-		File localPropertiesFile = _createFile(
-			configsLocalDir, "portal-ext.properties");
-
-		File configsProdDir = _createDirectory(configsDir, "prod");
-
-		File prodPropertiesFile = _createFile(
-			configsProdDir, "portal-prod.properties");
-
-		_initBundle(
-			configsDir, _CONTEXT_PATH_ZIP, liferayHomeDir,
-			_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME);
-
-		_assertExists(liferayHomeDir, "README.markdown");
-		_assertExists(liferayHomeDir, localPropertiesFile.getName());
-		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
+		_testInitBundleZip(_HTTP_SERVER_PASSWORD, _HTTP_SERVER_USER_NAME);
 	}
+
+	@Test
+	public void testInitBundleZipUnauthorized() throws Exception {
+		expectedException.expectMessage("Unauthorized");
+
+		_testInitBundleZip(null, null);
+	}
+
+	@Rule
+	public final ExpectedException expectedException = ExpectedException.none();
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -327,6 +318,31 @@ public class BundleSupportCommandsTest {
 		distBundle(format, liferayHomeDir, outputFile);
 
 		Assert.assertTrue(outputFile.exists());
+	}
+
+	private void _testInitBundleZip(String password, String userName)
+		throws Exception {
+
+		File liferayHomeDir = temporaryFolder.newFolder("bundles");
+
+		File configsDir = temporaryFolder.newFolder("configs");
+
+		File configsLocalDir = _createDirectory(configsDir, "local");
+
+		File localPropertiesFile = _createFile(
+			configsLocalDir, "portal-ext.properties");
+
+		File configsProdDir = _createDirectory(configsDir, "prod");
+
+		File prodPropertiesFile = _createFile(
+			configsProdDir, "portal-prod.properties");
+
+		_initBundle(
+			configsDir, _CONTEXT_PATH_ZIP, liferayHomeDir, password, userName);
+
+		_assertExists(liferayHomeDir, "README.markdown");
+		_assertExists(liferayHomeDir, localPropertiesFile.getName());
+		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
 	}
 
 	private static final String _CONTEXT_PATH_TAR = "/test.tar.gz";

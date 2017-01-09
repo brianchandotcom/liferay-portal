@@ -287,7 +287,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 					GetterUtil.getString(headers.get("Web-ContextPath")));
 
 				moduleLocalService.addModule(
-					app.getUserId(), app.getAppId(), bundle.getSymbolicName(),
+					app.getAppId(), bundle.getSymbolicName(),
 					String.valueOf(bundle.getVersion()), contextName);
 			}
 		}

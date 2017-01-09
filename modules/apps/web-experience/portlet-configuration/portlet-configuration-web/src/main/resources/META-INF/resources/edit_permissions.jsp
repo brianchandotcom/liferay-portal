@@ -245,13 +245,15 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 
 			boolean filterGuestRole = false;
 
+			boolean permissionCheckGuestEnabled = PropsValues.PERMISSIONS_CHECK_GUEST_ENABLED;
+
 			if (Objects.equals(modelResource, Layout.class.getName())) {
 				Layout resourceLayout = LayoutLocalServiceUtil.getLayout(GetterUtil.getLong(resourcePrimKey));
 
 				if (resourceLayout.isPrivateLayout()) {
 					Group resourceLayoutGroup = resourceLayout.getGroup();
 
-					if (!resourceLayoutGroup.isLayoutSetPrototype()) {
+					if (!resourceLayoutGroup.isLayoutSetPrototype() && !permissionCheckGuestEnabled) {
 						filterGuestRole = true;
 					}
 				}
@@ -267,7 +269,7 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 					if (resourceLayout.isPrivateLayout()) {
 						Group resourceLayoutGroup = resourceLayout.getGroup();
 
-						if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype()) {
+						if (!resourceLayoutGroup.isLayoutPrototype() && !resourceLayoutGroup.isLayoutSetPrototype() && !permissionCheckGuestEnabled) {
 							filterGuestRole = true;
 						}
 					}

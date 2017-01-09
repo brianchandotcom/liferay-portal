@@ -890,10 +890,7 @@ public class CalendarBookingLocalServiceTest {
 
 		long endTime = startTime + (Time.HOUR * 10);
 
-		Recurrence recurrence = new Recurrence();
-
-		recurrence.setFrequency(Frequency.DAILY);
-		recurrence.setPositionalWeekdays(new ArrayList<PositionalWeekday>());
+		Recurrence recurrence = RecurrenceTestUtil.getDailyRecurrence();
 
 		CalendarBooking calendarBooking =
 			CalendarBookingTestUtil.addRecurringCalendarBooking(

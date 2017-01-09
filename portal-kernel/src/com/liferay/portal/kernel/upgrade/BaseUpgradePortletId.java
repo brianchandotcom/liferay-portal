@@ -458,13 +458,13 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 						primKey = PortletPermissionUtil.getPrimaryKey(
 							plid, newPortletId);
+
+						ps2.setString(1, primKey);
+						ps2.setLong(2, resourcePermissionId);
+
+						ps2.addBatch();
 					}
 				}
-
-				ps2.setString(1, primKey);
-				ps2.setLong(2, resourcePermissionId);
-
-				ps2.addBatch();
 			}
 
 			ps2.executeBatch();

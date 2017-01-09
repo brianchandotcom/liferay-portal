@@ -54,6 +54,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Michael C. Han
@@ -475,10 +477,12 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 		sb.append("AND (KaleoTaskAssignmentInstance.assigneeClassPK IN (");
 
-		for (int i = 0; i < roleIds.size(); i++) {
-			sb.append(roleIds.get(i));
+		Iterator<Long> itr = roleIds.iterator();
 
-			if (i < (roleIds.size() - 1)) {
+		while (itr.hasNext()) {
+			sb.append(itr.next());
+
+			if (itr.hasNext()) {
 				sb.append(", ");
 			}
 		}
@@ -540,44 +544,28 @@ public class KaleoTaskInstanceTokenFinderImpl
 			List<Long> roleIds = getSearchByUserRoleIds(
 				kaleoTaskInstanceTokenQuery);
 
-			Map<Long, List<Long>> groupIdsMap = new HashMap<>();
+			Map<Long, Set<Long>> roleIdGroupIdsMap = new HashMap<>();
 
 			List<UserGroupRole> userGroupRoles =
 				UserGroupRoleLocalServiceUtil.getUserGroupRoles(
 					kaleoTaskInstanceTokenQuery.getUserId());
 
 			for (UserGroupRole userGroupRole : userGroupRoles) {
-				long roleId = userGroupRole.getRoleId();
-
-				List<Long> groupIds = groupIdsMap.get(roleId);
-
-				if (groupIds == null) {
-					groupIds = new ArrayList<>();
-				}
-
-				groupIds.add(userGroupRole.getGroupId());
-
-				groupIdsMap.put(userGroupRole.getRoleId(), groupIds);
+				mapRoleIdGroupId(
+					userGroupRole.getRoleId(), userGroupRole.getGroupId(),
+					roleIdGroupIdsMap);
 			}
 
 			List<UserGroupGroupRole> userGroupGroupRoles =
 				getUserGroupGroupRoles(kaleoTaskInstanceTokenQuery.getUserId());
 
 			for (UserGroupGroupRole userGroupGroupRole : userGroupGroupRoles) {
-				long roleId = userGroupGroupRole.getRoleId();
-
-				List<Long> groupIds = groupIdsMap.get(roleId);
-
-				if (groupIds == null) {
-					groupIds = new ArrayList<>();
-				}
-
-				groupIds.add(userGroupGroupRole.getGroupId());
-
-				groupIdsMap.put(userGroupGroupRole.getRoleId(), groupIds);
+				mapRoleIdGroupId(
+					userGroupGroupRole.getRoleId(),
+					userGroupGroupRole.getGroupId(), roleIdGroupIdsMap);
 			}
 
-			if (roleIds.isEmpty() && groupIdsMap.isEmpty()) {
+			if (roleIds.isEmpty() && roleIdGroupIdsMap.isEmpty()) {
 				return StringPool.BLANK;
 			}
 
@@ -602,7 +590,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 				}
 			}
 
-			if (groupIdsMap.isEmpty()) {
+			if (roleIdGroupIdsMap.isEmpty()) {
 				sb.append("))))");
 			}
 			else {
@@ -613,8 +601,8 @@ public class KaleoTaskInstanceTokenFinderImpl
 					sb.append("AND ");
 				}
 
-				for (Map.Entry<Long, List<Long>> entry :
-						groupIdsMap.entrySet()) {
+				for (Map.Entry<Long, Set<Long>> entry :
+						roleIdGroupIdsMap.entrySet()) {
 
 					sb.append(
 						"((KaleoTaskAssignmentInstance.assigneeClassPK = ");
@@ -622,12 +610,14 @@ public class KaleoTaskInstanceTokenFinderImpl
 					sb.append(") AND ");
 					sb.append("(KaleoTaskAssignmentInstance.groupId IN (");
 
-					List<Long> groupIds = entry.getValue();
+					Set<Long> groupIds = entry.getValue();
 
-					for (int i = 0; i < groupIds.size(); i++) {
-						sb.append(groupIds.get(i));
+					Iterator<Long> itr = groupIds.iterator();
 
-						if (i < (groupIds.size() - 1)) {
+					while (itr.hasNext()) {
+						sb.append(itr.next());
+
+						if (itr.hasNext()) {
 							sb.append(", ");
 						}
 					}
@@ -719,6 +709,20 @@ public class KaleoTaskInstanceTokenFinderImpl
 		}
 
 		return userGroupGroupRoles;
+	}
+
+	protected void mapRoleIdGroupId(
+		long roleId, long groupId, Map<Long, Set<Long>> roleIdGroupIdsMap) {
+
+		Set<Long> groupIds = roleIdGroupIdsMap.get(roleId);
+
+		if (groupIds == null) {
+			groupIds = new TreeSet<>();
+
+			roleIdGroupIdsMap.put(roleId, groupIds);
+		}
+
+		groupIds.add(groupId);
 	}
 
 	protected void setAssetPrimaryKey(

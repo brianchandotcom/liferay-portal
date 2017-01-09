@@ -70,6 +70,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TYPE_DESCRIPTION</td>
+	<td>//p[contains(@class,'text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TYPE_PAGE_OPTIONS</td>
 	<td>//div[contains(@id,'typeOptions')]//select[contains(@id,'type')]/option[@value='embedded']</td>
 	<td></td>
@@ -117,21 +122,6 @@
 <tr>
 	<td>PAGE_TYPE_EMBEDDED_URL_FIELD</td>
 	<td>//input[contains(@id,'urlEmbedded')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_EMBEDDED_DESCRIPTION_FIELD</td>
-	<td>//div[@id='embedded']/p[contains(@class,'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_LINK_TO_URL_URL_FIELD</td>
-	<td>//input[contains(@name,'TypeSettingsProperties--url') and contains(@type,'text')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PAGE_TYPE_LINK_TO_URL_DESCRIPTION_FIELD</td>
-	<td>//div[@id='url']/p[contains(@class,'text')]</td>
 	<td></td>
 </tr>
 <tr>

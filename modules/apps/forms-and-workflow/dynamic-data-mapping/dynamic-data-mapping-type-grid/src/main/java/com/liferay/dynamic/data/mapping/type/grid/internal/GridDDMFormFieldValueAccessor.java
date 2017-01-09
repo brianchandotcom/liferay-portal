@@ -52,8 +52,11 @@ public class GridDDMFormFieldValueAccessor
 			return jsonFactory.createJSONObject(valueString);
 		}
 		catch (JSONException jsone) {
-			throw new IllegalStateException(
-				String.format("Unable to parse JSON Object", jsone));
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
+
+			return jsonFactory.createJSONObject();
 		}
 	}
 

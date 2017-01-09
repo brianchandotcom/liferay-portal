@@ -21,7 +21,7 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import org.junit.Before;
 
 /**
- * @author Marcellus Tavares
+ * @author Pedro Queiroz
  */
 public class GridDDMFormFieldValueValidatorTest
 	extends BaseDDMFormFieldOptionsValidationTest {

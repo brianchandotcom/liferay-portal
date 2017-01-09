@@ -114,7 +114,7 @@ public class GridDDMFormFieldValueValidator
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			String value = (String)jsonObject.get(key);
+			String value = jsonObject.getString(key);
 
 			if (!rowValues.contains(key) || !columnValues.contains(value)) {
 				throw new DDMFormFieldValueValidationException(

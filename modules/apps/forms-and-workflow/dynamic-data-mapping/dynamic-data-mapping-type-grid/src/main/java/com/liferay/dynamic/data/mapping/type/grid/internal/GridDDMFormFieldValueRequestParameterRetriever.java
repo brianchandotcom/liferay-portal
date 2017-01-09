@@ -42,18 +42,17 @@ public class GridDDMFormFieldValueRequestParameterRetriever
 		Map<String, String[]> parametersMap =
 			httpServletRequest.getParameterMap();
 
-		for (Map.Entry<String, String[]> entry : parametersMap.entrySet()) {
-			if (entry.getKey().equals(ddmFormFieldParameterName)) {
-				for (String value : entry.getValue()) {
-					if (!value.isEmpty()) {
-						String[] values = value.split(";");
+		if (!parametersMap.containsKey(ddmFormFieldParameterName)) {
+			return jsonObject.toString();
+		}
 
-						String row = values[0];
-						String column = values[1];
+		String[] parameterValues = parametersMap.get(ddmFormFieldParameterName);
 
-						jsonObject.put(row, column);
-					}
-				}
+		for (String value : parameterValues) {
+			if (!value.isEmpty()) {
+				String[] values = value.split(";");
+
+				jsonObject.put(values[0], values[1]);
 			}
 		}
 

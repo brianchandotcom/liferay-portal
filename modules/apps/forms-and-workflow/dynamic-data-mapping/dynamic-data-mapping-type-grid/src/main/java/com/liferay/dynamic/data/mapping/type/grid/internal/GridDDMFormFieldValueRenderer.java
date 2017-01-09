@@ -50,7 +50,7 @@ public class GridDDMFormFieldValueRenderer
 		DDMFormFieldOptions columns = getDDMFormFieldOptions(
 			ddmFormFieldValue, "columns");
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(valuesJSONObject.length() * 5);
 
 		Iterator<String> values = valuesJSONObject.keys();
 
@@ -81,10 +81,7 @@ public class GridDDMFormFieldValueRenderer
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
-		DDMFormFieldOptions options =
-			(DDMFormFieldOptions)ddmFormField.getProperty(optionType);
-
-		return options;
+		return (DDMFormFieldOptions)ddmFormField.getProperty(optionType);
 	}
 
 	@Reference

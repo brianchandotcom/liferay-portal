@@ -27,7 +27,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Marcellus Tavares
+ * @author Pedro Queiroz
  */
 public class GridDDMFormFieldContextHelperTest {
 

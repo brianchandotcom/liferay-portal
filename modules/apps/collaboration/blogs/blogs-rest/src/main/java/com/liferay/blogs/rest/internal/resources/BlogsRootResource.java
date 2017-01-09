@@ -14,10 +14,12 @@
 
 package com.liferay.blogs.rest.internal.resources;
 
+import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -36,7 +38,14 @@ public class BlogsRootResource {
 			@PathParam("entryId") long entryId)
 		throws PortalException {
 
-		BlogsEntry blogsEntry = _blogsEntryService.getEntry(entryId);
+		BlogsEntry blogsEntry = null;
+
+		try {
+			blogsEntry = _blogsEntryService.getEntry(entryId);
+		}
+		catch (NoSuchEntryException nsee) {
+			throw new NotFoundException();
+		}
 
 		return new BlogsEntryResource(blogsEntry);
 	}

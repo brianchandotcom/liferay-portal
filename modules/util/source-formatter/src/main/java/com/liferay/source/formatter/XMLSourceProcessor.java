@@ -459,7 +459,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		else if (fileName.endsWith("/schema.xml") &&
 				 absolutePath.contains("solr")) {
 
-			formatSolrSchema(fileName, newContent);
+			formatSolrSchemaXML(fileName, newContent);
 		}
 		else if ((portalSource || subrepository) &&
 				 fileName.endsWith("/struts-config.xml")) {
@@ -1039,7 +1039,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			new ServiceExceptionElementComparator());
 	}
 
-	protected void formatSolrSchema(String fileName, String content)
+	protected void formatSolrSchemaXML(String fileName, String content)
 		throws Exception {
 
 		Document document = readXML(content);

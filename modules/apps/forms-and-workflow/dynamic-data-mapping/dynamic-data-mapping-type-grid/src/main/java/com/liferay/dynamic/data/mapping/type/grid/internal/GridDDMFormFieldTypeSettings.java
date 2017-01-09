@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
+import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -28,7 +29,19 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 /**
  * @author Pedro Queiroz
  */
-@DDMForm
+@DDMForm(
+	rules = {
+		@DDMFormRule(
+			actions = {
+				"setVisible('predefinedValue', false)",
+				"setVisible('repeatable', false)",
+				"setVisible('repeatable', false)",
+				"setVisible('validation', false)"
+			},
+			condition = "TRUE"
+		)
+	}
+)
 @DDMFormLayout(
 	paginationMode = com.liferay.dynamic.data.mapping.model.DDMFormLayout.TABBED_MODE,
 	value = {
@@ -77,11 +90,11 @@ public interface GridDDMFormFieldTypeSettings
 	)
 	public DDMFormFieldOptions columns();
 
-	@DDMFormField(visibilityExpression = "FALSE")
+	@DDMFormField
 	@Override
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField(visibilityExpression = "FALSE")
+	@DDMFormField
 	@Override
 	public boolean repeatable();
 
@@ -91,7 +104,7 @@ public interface GridDDMFormFieldTypeSettings
 	)
 	public DDMFormFieldOptions rows();
 
-	@DDMFormField(visibilityExpression = "FALSE")
+	@DDMFormField
 	@Override
 	public DDMFormFieldValidation validation();
 

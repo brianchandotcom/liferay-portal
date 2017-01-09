@@ -1561,6 +1561,10 @@ app.server.type=@{app.server.type}]]></echo>
 		<run-functional-test app.server.type="tcserver" database.type="mysql" />
 	</target>
 
+	<target name="functional-smoke-tomcat80-db2105-jdk8">
+		<run-functional-test app.server.type="tomcat" database.type="db2" />
+	</target>
+
 	<target name="functional-smoke-tomcat80-mariadb100-jdk8">
 		<run-functional-test app.server.type="tomcat" database.type="mariadb" />
 	</target>

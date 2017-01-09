@@ -4561,6 +4561,58 @@ go]]></replacevalue>
 				</then>
 			</elseif>
 		</if>
+
+		<if>
+			<or>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<equals arg1="${app.server.type}" arg2="wildfly" />
+			</or>
+			<then>
+				<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="app.server.lib.global.dir" override="true" />
+
+				<if>
+					<equals arg1="${database.type}" arg2="db2" />
+					<then>
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									<resource-root path="db2jcc4.jar" />
+									<resource-root path="db2jcc_license_cu.jar" />
+									<resource-root path="hsql.jar" />
+								]]>
+							</replacevalue>
+						</replace>
+					</then>
+					<elseif>
+						<equals arg1="${database.type}" arg2="oracle" />
+						<then>
+							<replace file="${app.server.lib.global.dir}/module.xml">
+								<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
+								<replacevalue>
+									<![CDATA[
+										<resource-root path="hsql.jar" />
+										<resource-root path="ojdbc6.jar" />
+									]]>
+								</replacevalue>
+							</replace>
+						</then>
+					</elseif>
+					<else>
+						<replace file="${app.server.lib.global.dir}/module.xml">
+							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									<resource-root path="hsql.jar" />
+									<resource-root path="mariadb.jar" />
+									<resource-root path="mysql.jar" />
+								]]>
+							</replacevalue>
+						</replace>
+					</else>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="curl-execute">
@@ -8658,43 +8710,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<antcall target="check-inet-address" />
-
-		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<equals arg1="${app.server.type}" arg2="wildfly" />
-			</or>
-			<then>
-				<propertycopy from="app.server.${app.server.type}.lib.global.dir" name="app.server.lib.global.dir" override="true" />
-
-				<if>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<then>
-						<replace file="${app.server.lib.global.dir}/module.xml">
-							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									<resource-root path="hsql.jar" />
-									<resource-root path="ojdbc6.jar" />
-								]]>
-							</replacevalue>
-						</replace>
-					</then>
-					<else>
-						<replace file="${app.server.lib.global.dir}/module.xml">
-							<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									<resource-root path="hsql.jar" />
-									<resource-root path="mariadb.jar" />
-									<resource-root path="mysql.jar" />
-								]]>
-							</replacevalue>
-						</replace>
-					</else>
-				</if>
-			</then>
-		</if>
 
 		<get-testcase-property property.name="database.jndi.enabled" />
 

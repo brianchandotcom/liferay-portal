@@ -1191,7 +1191,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Test Test" />
-			<var name="gmailAssetType" value="MB Category Name New Message" />
+			<var name="gmailAssetType" value="G7MB1" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageTitle" value="MB Category Name New Message: MB Thread Message Subject G7MB1" />
 		</execute>

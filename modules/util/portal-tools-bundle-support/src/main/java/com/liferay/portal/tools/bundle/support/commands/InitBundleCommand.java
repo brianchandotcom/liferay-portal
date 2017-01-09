@@ -38,6 +38,9 @@ import java.util.List;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
@@ -239,6 +242,8 @@ public class InitBundleCommand extends BaseCommand {
 			try (CloseableHttpResponse closeableHttpResponse =
 					closeableHttpClient.execute(httpHead, httpContext)) {
 
+				_checkResponseStatus(closeableHttpResponse);
+
 				Header dispositionHeader = closeableHttpResponse.getFirstHeader(
 					"Content-Disposition");
 
@@ -303,11 +308,12 @@ public class InitBundleCommand extends BaseCommand {
 
 			HttpGet httpGet = new HttpGet(uri);
 
-			try (FileOutputStream fileOutputStream = new FileOutputStream(
-					_downloadFile);
+			try (CloseableHttpResponse closeableHttpResponse =
+					closeableHttpClient.execute(httpGet);
+				FileOutputStream fileOutputStream = new FileOutputStream(
+					_downloadFile)) {
 
-				CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpGet)) {
+				_checkResponseStatus(closeableHttpResponse);
 
 				HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
@@ -340,6 +346,16 @@ public class InitBundleCommand extends BaseCommand {
 
 			FileUtil.untar(
 				_downloadFile, getLiferayHomePath(), _stripComponents);
+		}
+	}
+
+	private void _checkResponseStatus(HttpResponse httpResponse)
+		throws IOException {
+
+		StatusLine statusLine = httpResponse.getStatusLine();
+
+		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+			throw new IOException(statusLine.getReasonPhrase());
 		}
 	}
 

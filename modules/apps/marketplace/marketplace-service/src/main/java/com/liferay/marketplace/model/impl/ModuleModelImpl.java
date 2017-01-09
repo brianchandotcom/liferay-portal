@@ -63,6 +63,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "moduleId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "appId", Types.BIGINT },
 			{ "bundleSymbolicName", Types.VARCHAR },
 			{ "bundleVersion", Types.VARCHAR },
@@ -73,13 +74,14 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("moduleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("appId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("bundleSymbolicName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("bundleVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("contextName", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_Module (uuid_ VARCHAR(75) null,moduleId LONG not null primary key,companyId LONG,appId LONG,bundleSymbolicName VARCHAR(500) null,bundleVersion VARCHAR(75) null,contextName VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_Module";
 	public static final String ORDER_BY_JPQL = " ORDER BY module.moduleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_Module.moduleId ASC";
@@ -98,9 +100,10 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	public static final long APPID_COLUMN_BITMASK = 1L;
 	public static final long BUNDLESYMBOLICNAME_COLUMN_BITMASK = 2L;
 	public static final long BUNDLEVERSION_COLUMN_BITMASK = 4L;
-	public static final long CONTEXTNAME_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long MODULEID_COLUMN_BITMASK = 32L;
+	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+	public static final long CONTEXTNAME_COLUMN_BITMASK = 16L;
+	public static final long UUID_COLUMN_BITMASK = 32L;
+	public static final long MODULEID_COLUMN_BITMASK = 64L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.marketplace.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.marketplace.model.Module"));
 
@@ -143,6 +146,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("moduleId", getModuleId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("appId", getAppId());
 		attributes.put("bundleSymbolicName", getBundleSymbolicName());
 		attributes.put("bundleVersion", getBundleVersion());
@@ -166,6 +170,12 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 		if (moduleId != null) {
 			setModuleId(moduleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long appId = (Long)attributes.get("appId");
@@ -224,6 +234,28 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	@Override
 	public void setModuleId(long moduleId) {
 		_moduleId = moduleId;
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -329,7 +361,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Module.class.getName(), getPrimaryKey());
 	}
 
@@ -356,6 +388,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 		moduleImpl.setUuid(getUuid());
 		moduleImpl.setModuleId(getModuleId());
+		moduleImpl.setCompanyId(getCompanyId());
 		moduleImpl.setAppId(getAppId());
 		moduleImpl.setBundleSymbolicName(getBundleSymbolicName());
 		moduleImpl.setBundleVersion(getBundleVersion());
@@ -424,6 +457,10 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 		moduleModelImpl._originalUuid = moduleModelImpl._uuid;
 
+		moduleModelImpl._originalCompanyId = moduleModelImpl._companyId;
+
+		moduleModelImpl._setOriginalCompanyId = false;
+
 		moduleModelImpl._originalAppId = moduleModelImpl._appId;
 
 		moduleModelImpl._setOriginalAppId = false;
@@ -450,6 +487,8 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 		}
 
 		moduleCacheModel.moduleId = getModuleId();
+
+		moduleCacheModel.companyId = getCompanyId();
 
 		moduleCacheModel.appId = getAppId();
 
@@ -482,12 +521,14 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", moduleId=");
 		sb.append(getModuleId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", appId=");
 		sb.append(getAppId());
 		sb.append(", bundleSymbolicName=");
@@ -503,7 +544,7 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.marketplace.model.Module");
@@ -516,6 +557,10 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 		sb.append(
 			"<column><column-name>moduleId</column-name><column-value><![CDATA[");
 		sb.append(getModuleId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>appId</column-name><column-value><![CDATA[");
@@ -546,6 +591,9 @@ public class ModuleModelImpl extends BaseModelImpl<Module>
 	private String _uuid;
 	private String _originalUuid;
 	private long _moduleId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _appId;
 	private long _originalAppId;
 	private boolean _setOriginalAppId;

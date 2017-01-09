@@ -7,14 +7,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
-	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
-		<property name="targetDataSource" ref="liferayDataSourceImpl" />
+	<bean class="com.liferay.mail.util.MailSessionFactoryBean" id="mailSession">
+		<property name="propertyPrefix" value="mail.session." />
 	</bean>
 	<bean class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean" id="liferayDataSourceImpl">
 		<property name="propertyPrefix" value="jdbc.default." />
-	</bean>
-	<bean class="com.liferay.mail.util.MailSessionFactoryBean" id="mailSession">
-		<property name="propertyPrefix" value="mail.session." />
 	</bean>
 	<bean class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry" />
 	<bean class="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil" id="com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil">
@@ -24,5 +21,8 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="mailSession" ref="mailSession" />
 		<property name="transactionManager" ref="liferayTransactionManager" />
+	</bean>
+	<bean class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy" id="liferayDataSource">
+		<property name="targetDataSource" ref="liferayDataSourceImpl" />
 	</bean>
 </beans>

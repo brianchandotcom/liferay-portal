@@ -11,19 +11,15 @@
 
 	<!-- Util -->
 
-	<bean class="com.liferay.portal.poller.PollerRequestHandlerUtil" id="com.liferay.portal.poller.PollerRequestHandlerUtil">
-		<property name="pollerRequestHandler" ref="messageListener.pollerRequestHandler" />
-	</bean>
 	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobUtil" id="ccom.liferay.portal.poller.comet.PollerCometDelayedJobUtil">
 		<property name="pollerCometDelayedJob" ref="messageListener.PollerCometDelayedJob" />
+	</bean>
+	<bean class="com.liferay.portal.poller.PollerRequestHandlerUtil" id="com.liferay.portal.poller.PollerRequestHandlerUtil">
+		<property name="pollerRequestHandler" ref="messageListener.pollerRequestHandler" />
 	</bean>
 
 	<!-- Messaging -->
 
-	<bean class="com.liferay.portal.poller.messaging.PollerRequestMessageListener" id="messageListener.poller" />
-	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" id="messageListener.PollerCometDelayedJob" />
-	<bean class="com.liferay.portal.poller.messaging.PollerNotificationsBridgeMessageListener" id="messageListener.pollerNotificationsBridge" />
-	<bean class="com.liferay.portal.poller.PollerRequestHandlerImpl" id="messageListener.pollerRequestHandler" />
 	<bean class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator" id="messagingConfigurator.poller">
 		<property name="destinationConfigurations">
 			<util:set>
@@ -74,4 +70,8 @@
 			</map>
 		</property>
 	</bean>
+	<bean class="com.liferay.portal.poller.PollerRequestHandlerImpl" id="messageListener.pollerRequestHandler" />
+	<bean class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" id="messageListener.PollerCometDelayedJob" />
+	<bean class="com.liferay.portal.poller.messaging.PollerNotificationsBridgeMessageListener" id="messageListener.pollerNotificationsBridge" />
+	<bean class="com.liferay.portal.poller.messaging.PollerRequestMessageListener" id="messageListener.poller" />
 </beans>

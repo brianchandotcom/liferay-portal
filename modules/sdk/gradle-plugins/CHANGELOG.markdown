@@ -944,6 +944,7 @@ to version 1.0.70.
 - [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.71.
 - [LPS-69706]: Update the [Liferay CSS Builder] dependency to version 1.0.22.
+- [LPS-69899]: Update the [Liferay Ant BND] dependency to version 2.0.32.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -1027,5 +1028,6 @@ to version 1.0.71.
 [LPS-69802]: https://issues.liferay.com/browse/LPS-69802
 [LPS-69824]: https://issues.liferay.com/browse/LPS-69824
 [LPS-69838]: https://issues.liferay.com/browse/LPS-69838
+[LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

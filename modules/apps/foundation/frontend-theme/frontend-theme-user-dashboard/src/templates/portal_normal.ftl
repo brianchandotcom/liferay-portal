@@ -52,15 +52,11 @@
 					</#if>
 				</div>
 
-				<#assign VOID = freeMarkerPortletPreferences.setValue("portletSetupPortletDecoratorId", "barebone") />
-
 				<nav class="user-personal-bar">
 					<ul class="nav navbar-nav pull-right">
 						<@liferay.user_personal_bar />
 					</ul>
 				<nav>
-
-				<#assign VOID = freeMarkerPortletPreferences.reset() />
 			</div>
 		</div>
 	</header>

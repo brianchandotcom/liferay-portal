@@ -32,21 +32,6 @@ public abstract class AbstractBundleMojo extends AbstractLiferayMojo {
 	@Parameter
 	protected String password;
 
-	@Parameter
-	protected String proxyHost;
-
-	@Parameter
-	protected String proxyPassword;
-
-	@Parameter(defaultValue = "8080")
-	protected int proxyPort;
-
-	@Parameter(defaultValue = "http")
-	protected String proxyProtocol;
-
-	@Parameter
-	protected String proxyUserName;
-
 	@Parameter (defaultValue = "1")
 	protected int stripComponents;
 

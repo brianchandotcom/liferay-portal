@@ -109,11 +109,6 @@ public class BundleSupportAntTest extends BundleSupportCommandsTest {
 			"bundle.support.liferay.home.dir",
 			_getAbsolutePath(liferayHomeDir));
 		project.setProperty("bundle.support.password", password);
-		project.setProperty("bundle.support.proxy.host", null);
-		project.setProperty("bundle.support.proxy.password", null);
-		project.setProperty("bundle.support.proxy.port", "0");
-		project.setProperty("bundle.support.proxy.protocol", null);
-		project.setProperty("bundle.support.proxy.username", null);
 		project.setProperty("bundle.support.strip.components", "0");
 		project.setProperty("bundle.support.url", url);
 		project.setProperty("bundle.support.username", userName);

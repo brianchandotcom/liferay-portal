@@ -212,11 +212,6 @@ public class BundleSupportCommandsTest {
 		initBundleCommand.setEnvironment("local");
 		initBundleCommand.setLiferayHomeDir(liferayHomeDir);
 		initBundleCommand.setPassword(password);
-		initBundleCommand.setProxyHost(null);
-		initBundleCommand.setProxyPassword(null);
-		initBundleCommand.setProxyPort(0);
-		initBundleCommand.setProxyProtocol(null);
-		initBundleCommand.setProxyUserName(null);
 		initBundleCommand.setStripComponents(0);
 		initBundleCommand.setUrl(url);
 		initBundleCommand.setUserName(userName);

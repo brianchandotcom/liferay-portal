@@ -99,11 +99,6 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				initBundleCommand.setEnvironment(environment);
 				initBundleCommand.setLiferayHomeDir(liferayHomeDir);
 				initBundleCommand.setPassword(password);
-				initBundleCommand.setProxyHost(proxyHost);
-				initBundleCommand.setProxyPassword(proxyPassword);
-				initBundleCommand.setProxyPort(proxyPort);
-				initBundleCommand.setProxyProtocol(proxyProtocol);
-				initBundleCommand.setProxyUserName(proxyUserName);
 				initBundleCommand.setStripComponents(stripComponents);
 				initBundleCommand.setUrl(url.toString());
 				initBundleCommand.setUserName(userName);

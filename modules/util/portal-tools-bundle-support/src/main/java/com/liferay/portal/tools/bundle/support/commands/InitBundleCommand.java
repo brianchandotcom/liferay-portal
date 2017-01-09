@@ -37,7 +37,6 @@ import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -91,26 +90,6 @@ public class InitBundleCommand extends BaseCommand {
 		return _password;
 	}
 
-	public String getProxyHost() {
-		return _proxyHost;
-	}
-
-	public String getProxyPassword() {
-		return _proxyPassword;
-	}
-
-	public int getProxyPort() {
-		return _proxyPort;
-	}
-
-	public String getProxyProtocol() {
-		return _proxyProtocol;
-	}
-
-	public String getProxyUserName() {
-		return _proxyUserName;
-	}
-
 	public int getStripComponents() {
 		return _stripComponents;
 	}
@@ -133,26 +112,6 @@ public class InitBundleCommand extends BaseCommand {
 
 	public void setPassword(String password) {
 		_password = password;
-	}
-
-	public void setProxyHost(String proxyHost) {
-		_proxyHost = proxyHost;
-	}
-
-	public void setProxyPassword(String proxyPassword) {
-		_proxyPassword = proxyPassword;
-	}
-
-	public void setProxyPort(int proxyPort) {
-		_proxyPort = proxyPort;
-	}
-
-	public void setProxyProtocol(String proxyProtocol) {
-		_proxyProtocol = proxyProtocol;
-	}
-
-	public void setProxyUserName(String proxyUserName) {
-		_proxyUserName = proxyUserName;
 	}
 
 	public void setStripComponents(int stripComponents) {
@@ -344,19 +303,22 @@ public class InitBundleCommand extends BaseCommand {
 				new UsernamePasswordCredentials(_userName, _password));
 		}
 
-		if (_proxyHost != null) {
-			HttpHost proxyHttpHost = new HttpHost(
-				_proxyHost, _proxyPort, _proxyProtocol);
+		String scheme = uri.getScheme();
 
-			requestConfigBuilder.setProxy(proxyHttpHost);
+		String proxyHost = System.getProperty(scheme + ".proxyHost");
+		String proxyPort = System.getProperty(scheme + ".proxyPort");
+		String proxyUser = System.getProperty(scheme + ".proxyUser");
+		String proxyPassword = System.getProperty(scheme + ".proxyPassword");
 
-			if (_proxyUserName != null) {
-				credentialsProvider.setCredentials(
-					new AuthScope(_proxyHost, _proxyPort),
-					new UsernamePasswordCredentials(
-						_proxyUserName, _proxyPassword));
-			}
+		if ((proxyHost != null) && (proxyPort != null) && (proxyUser != null) &&
+			(proxyPassword != null)) {
+
+			credentialsProvider.setCredentials(
+				new AuthScope(proxyHost, Integer.parseInt(proxyPort)),
+				new UsernamePasswordCredentials(proxyUser, proxyPassword));
 		}
+
+		httpClientBuilder.useSystemProperties();
 
 		return httpClientBuilder.build();
 	}
@@ -391,34 +353,6 @@ public class InitBundleCommand extends BaseCommand {
 		names = {"-p", "--password"}, password = true
 	)
 	private String _password;
-
-	@Parameter (
-		description = "The host name of your proxy.", names = {"--proxy-host"}
-	)
-	private String _proxyHost;
-
-	@Parameter (
-		description = "The password if your proxy requires authentication.",
-		names = {"--proxy-password"}, password = true
-	)
-	private String _proxyPassword;
-
-	@Parameter (
-		description = "The port of your proxy.", names = {"--proxy-port"}
-	)
-	private int _proxyPort;
-
-	@Parameter (
-		description = "The protocol of your proxy.",
-		names = {"--proxy-protocol"}
-	)
-	private String _proxyProtocol;
-
-	@Parameter (
-		description = "The user name if your proxy requires authentication.",
-		names = {"--proxy-username", "--proxy-user-name"}
-	)
-	private String _proxyUserName;
 
 	@Parameter (
 		description = "The number of directories to strip when expanding your bundle.",

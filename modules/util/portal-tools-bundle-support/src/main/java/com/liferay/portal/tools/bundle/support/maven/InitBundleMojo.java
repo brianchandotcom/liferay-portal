@@ -41,11 +41,6 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			initBundleCommand.setEnvironment(environment);
 			initBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
 			initBundleCommand.setPassword(password);
-			initBundleCommand.setProxyHost(proxyHost);
-			initBundleCommand.setProxyPassword(proxyPassword);
-			initBundleCommand.setProxyPort(proxyPort);
-			initBundleCommand.setProxyProtocol(proxyProtocol);
-			initBundleCommand.setProxyUserName(proxyUserName);
 			initBundleCommand.setStripComponents(stripComponents);
 			initBundleCommand.setUrl(url.toString());
 			initBundleCommand.setUserName(userName);

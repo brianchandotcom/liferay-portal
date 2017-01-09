@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -65,44 +64,55 @@ public class UserModelListener extends BaseModelListener<User> {
 	}
 
 	protected void verifyGroupsNameMap(User user) throws PortalException {
-		List<Group> groups = GroupLocalServiceUtil.search(
-			user.getCompanyId(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		ActionableDynamicQuery groupActionableDynamicQuery =
+			GroupLocalServiceUtil.getActionableDynamicQuery();
 
-		for (Group group : groups) {
-			Map<Locale, String> nameMap = group.getNameMap();
+		groupActionableDynamicQuery.setCompanyId(user.getCompanyId());
 
-			if (MapUtil.isEmpty(nameMap)) {
-				continue;
-			}
+		groupActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<Group>() {
 
-			Locale locale = user.getLocale();
+				@Override
+				public void performAction(Group group) {
+					Map<Locale, String> nameMap = group.getNameMap();
 
-			String groupDefaultName = nameMap.get(locale);
+					if (MapUtil.isEmpty(nameMap)) {
+						return;
+					}
 
-			if (Validator.isNotNull(groupDefaultName)) {
-				continue;
-			}
+					Locale locale = user.getLocale();
 
-			String oldGroupDefaultName = nameMap.get(LocaleUtil.getDefault());
+					String groupDefaultName = nameMap.get(locale);
 
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
+					if (Validator.isNotNull(groupDefaultName)) {
+						return;
+					}
 
-				sb.append("No name was found for locale ");
-				sb.append(locale);
-				sb.append(". Using name ");
-				sb.append(oldGroupDefaultName);
-				sb.append("instead.");
+					String oldGroupDefaultName = nameMap.get(
+						LocaleUtil.getDefault());
 
-				_log.warn(sb.toString());
-			}
+					if (_log.isWarnEnabled()) {
+						StringBundler sb = new StringBundler(5);
 
-			nameMap.put(locale, oldGroupDefaultName);
+						sb.append("No name was found for locale ");
+						sb.append(locale);
+						sb.append(". Using name ");
+						sb.append(oldGroupDefaultName);
+						sb.append(" instead.");
 
-			group.setNameMap(nameMap);
+						_log.warn(sb.toString());
+					}
 
-			GroupLocalServiceUtil.updateGroup(group);
-		}
+					nameMap.put(locale, oldGroupDefaultName);
+
+					group.setNameMap(nameMap);
+
+					GroupLocalServiceUtil.updateGroup(group);
+				}
+
+			});
+
+		groupActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

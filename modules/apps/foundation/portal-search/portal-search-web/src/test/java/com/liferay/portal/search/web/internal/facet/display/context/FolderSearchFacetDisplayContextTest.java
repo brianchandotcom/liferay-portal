@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.web.internal.facet.display.builder.FolderSearchFacetDisplayBuilder;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,8 +64,8 @@ public class FolderSearchFacetDisplayContextTest {
 			folderSearchFacetTermDisplayContexts.size());
 
 		Assert.assertEquals(
-			facetParam,
-			folderSearchFacetDisplayContext.getFieldParamInputValue());
+			StringPool.BLANK,
+			folderSearchFacetDisplayContext.getParameterValue());
 		Assert.assertTrue(folderSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertTrue(folderSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -100,11 +102,10 @@ public class FolderSearchFacetDisplayContextTest {
 			folderId, folderSearchFacetTermDisplayContext.getFolderId());
 		Assert.assertTrue(folderSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
-			folderSearchFacetTermDisplayContext.isShowFrequency());
+			folderSearchFacetTermDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam,
-			folderSearchFacetDisplayContext.getFieldParamInputValue());
+			facetParam, folderSearchFacetDisplayContext.getParameterValue());
 		Assert.assertFalse(folderSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -145,11 +146,10 @@ public class FolderSearchFacetDisplayContextTest {
 			folderId, folderSearchFacetTermDisplayContext.getFolderId());
 		Assert.assertFalse(folderSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
-			folderSearchFacetTermDisplayContext.isShowFrequency());
+			folderSearchFacetTermDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam,
-			folderSearchFacetDisplayContext.getFieldParamInputValue());
+			facetParam, folderSearchFacetDisplayContext.getParameterValue());
 		Assert.assertTrue(folderSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -190,11 +190,10 @@ public class FolderSearchFacetDisplayContextTest {
 			folderId, folderSearchFacetTermDisplayContext.getFolderId());
 		Assert.assertTrue(folderSearchFacetTermDisplayContext.isSelected());
 		Assert.assertTrue(
-			folderSearchFacetTermDisplayContext.isShowFrequency());
+			folderSearchFacetTermDisplayContext.isFrequencyVisible());
 
 		Assert.assertEquals(
-			facetParam,
-			folderSearchFacetDisplayContext.getFieldParamInputValue());
+			facetParam, folderSearchFacetDisplayContext.getParameterValue());
 		Assert.assertFalse(folderSearchFacetDisplayContext.isNothingSelected());
 		Assert.assertFalse(folderSearchFacetDisplayContext.isRenderNothing());
 	}
@@ -213,8 +212,22 @@ public class FolderSearchFacetDisplayContextTest {
 			String facetParam)
 		throws Exception {
 
-		return new FolderSearchFacetDisplayContext(
-			_facet, facetParam, 0, 0, true, _folderTitleLookup);
+		FolderSearchFacetDisplayBuilder folderSearchFacetDisplayBuilder =
+			new FolderSearchFacetDisplayBuilder();
+
+		folderSearchFacetDisplayBuilder.setFacet(_facet);
+		folderSearchFacetDisplayBuilder.setFolderTitleLookup(
+			_folderTitleLookup);
+		folderSearchFacetDisplayBuilder.setFrequenciesVisible(true);
+		folderSearchFacetDisplayBuilder.setFrequencyThreshold(0);
+		folderSearchFacetDisplayBuilder.setMaxTerms(0);
+		folderSearchFacetDisplayBuilder.setParameterName(_facet.getFieldId());
+		folderSearchFacetDisplayBuilder.setParameterValue(facetParam);
+
+		FolderSearchFacetDisplayContext folderSearchFacetDisplayContext =
+			folderSearchFacetDisplayBuilder.build();
+
+		return folderSearchFacetDisplayContext;
 	}
 
 	protected TermCollector createTermCollector(long folderId, int count) {

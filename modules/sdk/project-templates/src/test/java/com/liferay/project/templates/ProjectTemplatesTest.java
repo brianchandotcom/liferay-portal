@@ -905,10 +905,6 @@ public class ProjectTemplatesTest {
 			gradleProjectDir,
 			"src/main/java/foo/portlet/MySoyPortletPortlet.java",
 			"public class MySoyPortletPortlet extends SoyPortlet {");
-
-		_executeGradle(gradleProjectDir, _GRADLE_TASK_PATH_BUILD);
-
-		_testExists(gradleProjectDir, "build/libs/foo-1.0.0.jar");
 	}
 
 	@Test

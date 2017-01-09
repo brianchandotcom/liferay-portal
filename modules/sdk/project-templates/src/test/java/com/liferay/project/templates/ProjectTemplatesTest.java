@@ -27,6 +27,7 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
@@ -999,6 +1000,24 @@ public class ProjectTemplatesTest {
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+	private static void _append(StringBuilder sb, InputStream inputStream)
+		throws IOException {
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				if (sb.length() > 0) {
+					sb.append(System.lineSeparator());
+				}
+
+				sb.append(line);
+			}
+		}
+	}
+
 	private static void _createMavenSettingsXmlFile() throws IOException {
 		boolean mirrors = false;
 		boolean proxies = false;
@@ -1327,35 +1346,8 @@ public class ProjectTemplatesTest {
 
 		StringBuilder sb = new StringBuilder();
 
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(
-					process.getInputStream(), StandardCharsets.UTF_8))) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				if (sb.length() > 0) {
-					sb.append(System.lineSeparator());
-				}
-
-				sb.append(line);
-			}
-		}
-
-		try (BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(
-					process.getErrorStream(), StandardCharsets.UTF_8))) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				if (sb.length() > 0) {
-					sb.append(System.lineSeparator());
-				}
-
-				sb.append(line);
-			}
-		}
+		_append(sb, process.getInputStream());
+		_append(sb, process.getErrorStream());
 
 		int exitCode = process.waitFor();
 

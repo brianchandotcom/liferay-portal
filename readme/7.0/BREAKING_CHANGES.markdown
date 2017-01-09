@@ -20,7 +20,7 @@ Here are some of the types of changes documented in this file:
   replaces an old API, in spite of the old API being kept in Liferay Portal for
   backwards compatibility.
 
-*This document has been reviewed through commit `66199bf`.*
+*This document has been reviewed through commit `16080bf`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -4170,6 +4170,7 @@ This change was made as part of modularization efforts to ease portlet
 configuration changes.
 
 ---------------------------------------
+
 ### Moved the liferay-ui:journal-article Tag to Journal
 - **Date:** 2016-Nov-24
 - **JIRA Ticket:** LPS-69321
@@ -4228,8 +4229,8 @@ their usage of the tag.
 
 #### How should I update my code?
 
-You should import the `liferay-captcha` tag library (if necessary) and update the
-tag namespace from `liferay-ui:captcha` to `liferay-captcha:captcha`.
+You should import the `liferay-captcha` tag library (if necessary) and update
+the tag namespace from `liferay-ui:captcha` to `liferay-captcha:captcha`.
 
 #### Why was this change made?
 
@@ -4237,6 +4238,7 @@ This change was made as a part of the ongoing strategy to modularize Liferay
 Portal by means of an OSGi container.
 
 ---------------------------------------
+
 ### Moved Shopping File Uploads Portlet Properties to OSGi Configuration
 - **Date:** 2016-Dec-08
 - **JIRA Ticket:** LPS-69210

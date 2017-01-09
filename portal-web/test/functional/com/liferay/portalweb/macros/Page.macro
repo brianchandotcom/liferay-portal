@@ -9,7 +9,7 @@
 	</command>
 
 	<command name="_addPageTypeLinkToURL">
-		<execute function="Type" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_URL_URL_FIELD" value1="${pageTypeURL}" />
+		<execute function="Type" locator1="TextInput#URL" value1="${pageTypeURL}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="SitePagesEditPage#PAGE_TYPE_DESCRIPTION" value1="Link to another website." />
 	</command>
 
@@ -458,6 +458,8 @@
 				</then>
 			</elseif>
 		</if>
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute macro="PortletEntry#save" />
 	</command>

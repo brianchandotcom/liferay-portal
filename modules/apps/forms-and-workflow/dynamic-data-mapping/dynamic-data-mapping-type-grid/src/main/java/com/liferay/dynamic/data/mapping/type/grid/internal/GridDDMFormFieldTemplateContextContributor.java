@@ -20,12 +20,15 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pedro Queiroz
@@ -61,7 +64,9 @@ public class GridDDMFormFieldTemplateContextContributor
 					ddmFormFieldRenderingContext.getValue()));
 		}
 		catch (JSONException jsone) {
-			jsone.printStackTrace();
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsone, jsone);
+			}
 		}
 
 		return parameters;
@@ -87,5 +92,8 @@ public class GridDDMFormFieldTemplateContextContributor
 
 	@Reference
 	protected JSONFactory jsonFactory;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GridDDMFormFieldTemplateContextContributor.class);
 
 }

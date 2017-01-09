@@ -24,7 +24,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * @author Renato Rego
+ * @author Pedro Queiroz
  */
 public class GridDDMFormFieldValueAccessorTest {
 
@@ -40,7 +40,8 @@ public class GridDDMFormFieldValueAccessorTest {
 		gridDDMFormFieldValueAccessor.jsonFactory = new JSONFactoryImpl();
 
 		Assert.assertEquals(
-			"{\"RowValue\":\"ColumnValue\"}", gridDDMFormFieldValueAccessor.getValue(
+			"{\"RowValue\":\"ColumnValue\"}",
+			gridDDMFormFieldValueAccessor.getValue(
 				ddmFormFieldValue, LocaleUtil.US).toString());
 	}
 

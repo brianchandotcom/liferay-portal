@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeSettings
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Renato Rego
+ * @author Pedro Queiroz
  */
 @Component(
 	immediate = true,

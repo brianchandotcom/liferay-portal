@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Renato Rego
+ * @author Pedro Queiroz
  */
 @Component(
 	immediate = true, property = "ddm.form.field.type.name=grid",
@@ -44,17 +44,17 @@ public class GridDDMFormFieldValueAccessor
 	public JSONObject getValue(
 		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 
-			Value value = ddmFormFieldValue.getValue();
+		Value value = ddmFormFieldValue.getValue();
 
-			String valueString = value.getString(locale);
+		String valueString = value.getString(locale);
 
-			try {
-				return jsonFactory.createJSONObject(valueString);
-			}
-			catch (JSONException jsone) {
-				throw new IllegalStateException(
-					String.format("Unable to parse JSON Object", jsone));
-			}
+		try {
+			return jsonFactory.createJSONObject(valueString);
+		}
+		catch (JSONException jsone) {
+			throw new IllegalStateException(
+				String.format("Unable to parse JSON Object", jsone));
+		}
 	}
 
 	@Reference

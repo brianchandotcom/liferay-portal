@@ -26,7 +26,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
- * @author Marcellus Tavares
+ * @author Pedro Queiroz
  */
 @DDMForm
 @DDMFormLayout(

@@ -172,15 +172,17 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 		tokens.add("text: " + removeWhitespace(element.getText()));
 
-		List<Element> elements = element.elements();
+		List<?> elementObjects = element.elements();
 
-		for (Element childElement : elements) {
-			tokens.addAll(getCommentTokens(childElement));
+		for (Object childElementObject : elementObjects) {
+			tokens.addAll(getCommentTokens((Element)childElementObject));
 		}
 
-		List<Attribute> attributes = element.attributes();
+		List<?> attributeObjects = element.attributes();
 
-		for (Attribute attribute : attributes) {
+		for (Object attributeObject : attributeObjects) {
+			Attribute attribute = (Attribute)attributeObject;
+
 			tokens.add("attribute: " + removeWhitespace(attribute.getValue()));
 		}
 

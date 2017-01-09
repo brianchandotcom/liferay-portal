@@ -331,8 +331,13 @@ RoleSearchTerms searchTerms = (RoleSearchTerms)roleSearchContainer.getSearchTerm
 					<liferay-ui:search-container-column-text
 						href="<%= definePermissionsHREF %>"
 						name="role"
-						value="<%= role.getTitle(locale) %>"
-					/>
+					>
+						<%= role.getTitle(locale) %>
+
+						<c:if test="<%= layout.isPrivateLayout() && name.equals(RoleConstants.GUEST) %>">
+							<liferay-ui:icon-help message="under-the-current-configuration-all-users-automatically-inherit-permissions-from-the-guest-role" />
+						</c:if>
+					</liferay-ui:search-container-column-text>
 
 					<%
 

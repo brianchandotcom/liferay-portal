@@ -1160,7 +1160,7 @@
 
 		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="MB Thread Message Body" />
-			<var name="threadSubject" value="MB Thread Message Subject" />
+			<var name="threadSubject" value="MB Thread Message Subject GMMB1" />
 		</execute>
 
 		<execute function="Pause" locator1="30000" />

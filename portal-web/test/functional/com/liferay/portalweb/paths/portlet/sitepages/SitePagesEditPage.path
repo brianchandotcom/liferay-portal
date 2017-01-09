@@ -141,7 +141,7 @@
 </tr>
 <tr>
 	<td>PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT</td>
-	<td>//div[contains(@class,'link_to_layout')]/div/select[contains(@id,'linkToLayoutId')]</td>
+	<td>//select[contains(@id,'linkToLayoutId')]</td>
 	<td></td>
 </tr>
 <tr>

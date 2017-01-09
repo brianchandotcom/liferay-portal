@@ -270,12 +270,12 @@
 </tr>
 <tr>
 	<td>DETAILS_PAGE_TYPE_PANEL_COMPONENT_TREE_ARROW</td>
-	<td>//div[contains(@id,'detailsselectPortletsTree')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea glyphicon-plus')]</td>
+	<td>//div[contains(@id,'selectPortletsTree')]//span[contains(.,'${key_componentName}')]/../span[contains(@class,'tree-hitarea glyphicon-plus')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_PAGE_TYPE_PANEL_CHECKBOX_INPUT</td>
-	<td>//li[contains(@id,'detailsselectPortletsRootNode')]//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]/input</td>
+	<td>//li[contains(@id,'selectPortletsRootNode')]//span[contains(.,'${key_componentOrPortletName}')]/../span[contains(@class,'tree-node-checkbox')]/input</td>
 	<td></td>
 </tr>
 <tr>

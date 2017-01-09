@@ -1046,22 +1046,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		Element rootElement = document.getRootElement();
 
-		SolrElementComparator solrElementComparator =
-			new SolrElementComparator();
-
-		Element typesElement = rootElement.element("types");
-
-		_solrElementsContent = typesElement.asXML();
-
 		checkOrder(
-			fileName, typesElement, "fieldType", null, solrElementComparator);
-
-		Element fieldsElement = rootElement.element("fields");
-
-		_solrElementsContent = fieldsElement.asXML();
-
+			fileName, rootElement.element("fields"), "field", null,
+			new ElementComparator());
 		checkOrder(
-			fileName, fieldsElement, "field", null, solrElementComparator);
+			fileName, rootElement.element("types"), "fieldType", null,
+			new ElementComparator());
 	}
 
 	protected void formatStrutsConfigXML(String fileName, String content)
@@ -1603,7 +1593,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"<[^\\>^/]*\\/>");
 	private final Pattern _projectNamePattern = Pattern.compile(
 		"/(\\w*-(ext|hooks|layouttpl|portlet|theme|web))/build\\.xml$");
-	private String _solrElementsContent;
 	private String _tablesContent;
 	private final Map<String, String> _tablesContentMap =
 		new ConcurrentHashMap<>();
@@ -1885,40 +1874,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		private final List<String> _columnNames;
-
-	}
-
-	private class SolrElementComparator extends ElementComparator {
-
-		@Override
-		public int compare(Element solrElement1, Element solrElement2) {
-			int value = super.compare(solrElement1, solrElement2);
-
-			if (value <= 0) {
-				return value;
-			}
-
-			String solrElementContent1 = solrElement1.asXML();
-			String solrElementContent2 = solrElement2.asXML();
-
-			int x =
-				_solrElementsContent.indexOf(solrElementContent1) +
-					solrElementContent1.length();
-			int y = _solrElementsContent.indexOf(solrElementContent2);
-
-			if (x > y) {
-				return -1;
-			}
-
-			String betweenElementsContent = _solrElementsContent.substring(
-				x, y);
-
-			if (betweenElementsContent.contains("<!--")) {
-				return -1;
-			}
-
-			return 1;
-		}
 
 	}
 

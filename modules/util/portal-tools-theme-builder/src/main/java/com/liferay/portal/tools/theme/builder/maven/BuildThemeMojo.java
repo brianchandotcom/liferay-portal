@@ -19,9 +19,13 @@ import com.liferay.portal.tools.theme.builder.ThemeBuilderArgs;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.descriptor.PluginDescriptor;
+import org.apache.maven.project.MavenProject;
 
 import org.codehaus.plexus.component.repository.ComponentDependency;
 
@@ -29,6 +33,7 @@ import org.eclipse.aether.RepositorySystem;
 import org.eclipse.aether.RepositorySystemSession;
 import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.artifact.DefaultArtifact;
+import org.eclipse.aether.repository.RemoteRepository;
 import org.eclipse.aether.resolution.ArtifactRequest;
 import org.eclipse.aether.resolution.ArtifactResolutionException;
 import org.eclipse.aether.resolution.ArtifactResult;
@@ -138,6 +143,13 @@ public class BuildThemeMojo extends AbstractMojo {
 
 		artifactRequest.setArtifact(artifact);
 
+		List<RemoteRepository> repositories = new ArrayList<>();
+
+		repositories.addAll(_project.getRemotePluginRepositories());
+		repositories.addAll(_project.getRemoteProjectRepositories());
+
+		artifactRequest.setRepositories(repositories);
+
 		ArtifactResult artifactResult = _repositorySystem.resolveArtifact(
 			_repositorySystemSession, artifactRequest);
 
@@ -152,12 +164,19 @@ public class BuildThemeMojo extends AbstractMojo {
 	private PluginDescriptor _pluginDescriptor;
 
 	/**
+	 * @parameter property="project"
+	 * @required
+	 * @readonly
+	 */
+	private MavenProject _project;
+
+	/**
 	 * @component
 	 */
 	private RepositorySystem _repositorySystem;
 
 	/**
-	 * @parameter expression="${repositorySystemSession}"
+	 * @parameter property="repositorySystemSession"
 	 * @readonly
 	 * @required
 	 */

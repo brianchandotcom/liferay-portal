@@ -297,6 +297,12 @@ public class MBUtil {
 		return GetterUtil.getLong(parts[0]);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.
+	 *             MBSubscriptionUtil#getCategorySubscriptionClassPKs(long)}
+	 */
+	@Deprecated
 	public static Set<Long> getCategorySubscriptionClassPKs(long userId) {
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(
@@ -755,6 +761,12 @@ public class MBUtil {
 		return priorityPair;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.message.boards.web.internal.util.
+	 *             MBSubscriptionUtil#getThreadSubscriptionClassPKs(long)}
+	 */
+	@Deprecated
 	public static Set<Long> getThreadSubscriptionClassPKs(long userId) {
 		List<Subscription> subscriptions =
 			SubscriptionLocalServiceUtil.getUserSubscriptions(

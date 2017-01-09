@@ -29,8 +29,8 @@ Set<Long> categorySubscriptionClassPKs = null;
 Set<Long> threadSubscriptionClassPKs = null;
 
 if (themeDisplay.isSignedIn()) {
-	categorySubscriptionClassPKs = MBUtil.getCategorySubscriptionClassPKs(user.getUserId());
-	threadSubscriptionClassPKs = MBUtil.getThreadSubscriptionClassPKs(user.getUserId());
+	categorySubscriptionClassPKs = MBSubscriptionUtil.getCategorySubscriptionClassPKs(user.getUserId());
+	threadSubscriptionClassPKs = MBSubscriptionUtil.getThreadSubscriptionClassPKs(user.getUserId());
 }
 
 long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");

@@ -37,16 +37,16 @@ boolean emailFileEntryAnyEventEnabled = dlGroupServiceSettings.isEmailFileEntryA
 	boolean unsubscribable = true;
 
 	if (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
-		subscribed = DLUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
+		subscribed = DLSubscriptionUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
 
 		if (subscribed) {
-			if (!DLUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
+			if (!DLSubscriptionUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
 				unsubscribable = false;
 			}
 		}
 	}
 	else {
-		subscribed = DLUtil.isSubscribedToFileEntryType(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), fileEntryTypeId);
+		subscribed = DLSubscriptionUtil.isSubscribedToFileEntryType(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), fileEntryTypeId);
 	}
 	%>
 

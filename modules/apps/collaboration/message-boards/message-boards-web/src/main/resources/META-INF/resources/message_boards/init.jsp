@@ -94,6 +94,7 @@ page import="com.liferay.message.boards.web.internal.display.context.MBDisplayCo
 page import="com.liferay.message.boards.web.internal.display.context.util.MBRequestHelper" %><%@
 page import="com.liferay.message.boards.web.internal.search.EntriesChecker" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBBreadcrumbUtil" %><%@
+page import="com.liferay.message.boards.web.internal.util.MBSubscriptionUtil" %><%@
 page import="com.liferay.message.boards.web.internal.util.MBWebComponentProvider" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@

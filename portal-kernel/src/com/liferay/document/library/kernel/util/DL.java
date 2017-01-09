@@ -100,6 +100,10 @@ public interface DL {
 	public String getFileEntryImage(
 		FileEntry fileEntry, ThemeDisplay themeDisplay);
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId);
 
 	public String getFileIcon(String extension);
@@ -203,13 +207,34 @@ public interface DL {
 
 	public abstract boolean isOfficeExtension(String extension);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFileEntryType(
+	 *             long, long, long, long)}
+	 */
+	@Deprecated
 	public boolean isSubscribedToFileEntryType(
 		long companyId, long groupId, long userId, long fileEntryTypeId);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(
+	 *             long, long, long, long)}
+	 */
+	@Deprecated
 	public boolean isSubscribedToFolder(
 			long companyId, long groupId, long userId, long folderId)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.document.library.web.internal.util.
+	 *             DLSubscriptionUtil#isSubscribedToFolder(
+	 *             long, long, long, long, boolean)}
+	 */
+	@Deprecated
 	public boolean isSubscribedToFolder(
 			long companyId, long groupId, long userId, long folderId,
 			boolean recursive)

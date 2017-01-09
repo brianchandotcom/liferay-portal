@@ -15,10 +15,7 @@
 package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
-import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.persistence.MBCategoryFinder;
 import com.liferay.message.boards.kernel.service.persistence.MBCategoryUtil;
 import com.liferay.message.boards.kernel.service.persistence.MBThreadUtil;
@@ -29,13 +26,8 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,7 +38,6 @@ import com.liferay.portlet.messageboards.model.impl.MBThreadImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -198,17 +189,6 @@ public class MBCategoryFinderImpl
 				}
 			}
 
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			Subscription subscription =
-				SubscriptionLocalServiceUtil.fetchSubscription(
-					group.getCompanyId(), userId, MBCategory.class.getName(),
-					groupId);
-
-			if (subscription != null) {
-				count++;
-			}
-
 			return count;
 		}
 		catch (Exception e) {
@@ -302,9 +282,6 @@ public class MBCategoryFinderImpl
 
 			return count;
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 		finally {
 			closeSession(session);
 		}
@@ -357,45 +334,9 @@ public class MBCategoryFinderImpl
 				qPos.add(queryDefinition.getStatus());
 			}
 
-			List<MBCategory> list = (List<MBCategory>)QueryUtil.list(
-				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, false);
-
-			Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-			Subscription subscription =
-				SubscriptionLocalServiceUtil.fetchSubscription(
-					group.getCompanyId(), userId, MBCategory.class.getName(),
-					groupId);
-
-			if (subscription != null) {
-				int threadCount =
-					MBThreadLocalServiceUtil.getCategoryThreadsCount(
-						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-						WorkflowConstants.STATUS_APPROVED);
-				int messageCount =
-					MBMessageLocalServiceUtil.getCategoryMessagesCount(
-						groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-						WorkflowConstants.STATUS_APPROVED);
-
-				MBCategory category = new MBCategoryImpl();
-
-				category.setGroupId(group.getGroupId());
-				category.setCompanyId(group.getCompanyId());
-				category.setName(group.getDescriptiveName());
-				category.setDescription(group.getDescription());
-				category.setThreadCount(threadCount);
-				category.setMessageCount(messageCount);
-
-				list.add(category);
-			}
-
-			return Collections.unmodifiableList(
-				ListUtil.subList(
-					list, queryDefinition.getStart(),
-					queryDefinition.getEnd()));
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
+			return (List<MBCategory>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd(), true);
 		}
 		finally {
 			closeSession(session);

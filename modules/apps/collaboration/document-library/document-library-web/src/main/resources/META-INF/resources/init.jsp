@@ -102,6 +102,7 @@ page import="com.liferay.document.library.web.internal.search.EntriesChecker" %>
 page import="com.liferay.document.library.web.internal.search.EntriesMover" %><%@
 page import="com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.internal.util.DLBreadcrumbUtil" %><%@
+page import="com.liferay.document.library.web.internal.util.DLSubscriptionUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLTrashUtil" %><%@
 page import="com.liferay.document.library.web.internal.util.DLWebComponentProvider" %><%@
 page import="com.liferay.document.library.web.internal.util.IGUtil" %><%@

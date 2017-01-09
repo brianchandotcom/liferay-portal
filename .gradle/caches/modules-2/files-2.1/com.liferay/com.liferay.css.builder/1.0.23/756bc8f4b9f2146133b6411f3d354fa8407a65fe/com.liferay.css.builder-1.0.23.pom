@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.liferay</groupId>
   <artifactId>com.liferay.css.builder</artifactId>
-  <version>1.0.22</version>
+  <version>1.0.23</version>
   <description>Liferay CSS Builder</description>
   <licenses>
     <license>

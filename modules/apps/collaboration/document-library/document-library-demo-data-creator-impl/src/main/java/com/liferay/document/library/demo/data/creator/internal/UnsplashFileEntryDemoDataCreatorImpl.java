@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -49,9 +50,11 @@ import org.osgi.service.component.annotations.Reference;
 public class UnsplashFileEntryDemoDataCreatorImpl
 	implements FileEntryDemoDataCreator {
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		UnsplashFileEntryDemoDataCreatorImpl.class);
+
 	@Override
-	public FileEntry create(long userId, long folderId)
-		throws IOException, PortalException {
+	public FileEntry create(long userId, long folderId) throws Exception {
 
 		UUID uuid = UUID.randomUUID();
 
@@ -62,7 +65,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 
 	@Override
 	public FileEntry create(long userId, long folderId, String name)
-		throws IOException, PortalException {
+		throws Exception {
 
 		Folder folder = _dlAppLocalService.getFolder(folderId);
 
@@ -96,7 +99,7 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 		_dlAppLocalService = dlAppLocalService;
 	}
 
-	private byte[] _getBytes() throws IOException {
+	private byte[] _getBytes() throws Exception {
 		URL url = _getNextUrl();
 
 		InputStream inputStream = null;
@@ -105,6 +108,16 @@ public class UnsplashFileEntryDemoDataCreatorImpl
 			inputStream = url.openStream();
 
 			return FileUtil.getBytes(inputStream);
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ioe, ioe);
+			}
+
+			String fileName = String.format(
+				"dependencies/%d.jpg", RandomUtil.nextInt(5));
+
+			return FileUtil.getBytes(getClass(), fileName);
 		}
 		finally {
 			if (inputStream != null) {

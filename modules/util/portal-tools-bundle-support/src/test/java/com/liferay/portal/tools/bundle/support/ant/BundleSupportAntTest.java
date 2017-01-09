@@ -33,7 +33,10 @@ import org.junit.Rule;
 public class BundleSupportAntTest extends BundleSupportCommandsTest {
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+
 		URL url = BundleSupportAntTest.class.getResource(
 			"dependencies/build.xml");
 

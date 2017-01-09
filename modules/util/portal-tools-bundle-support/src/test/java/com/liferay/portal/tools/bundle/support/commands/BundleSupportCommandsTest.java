@@ -21,6 +21,8 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import io.netty.handler.codec.http.HttpRequest;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,58 +32,66 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
+import java.util.Properties;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpStatus;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
+import org.littleshoot.proxy.HttpFilters;
+import org.littleshoot.proxy.HttpFiltersAdapter;
+import org.littleshoot.proxy.HttpFiltersSourceAdapter;
+import org.littleshoot.proxy.HttpProxyServer;
+import org.littleshoot.proxy.HttpProxyServerBootstrap;
+import org.littleshoot.proxy.ProxyAuthenticator;
+import org.littleshoot.proxy.impl.DefaultHttpProxyServer;
+
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class BundleSupportCommandsTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_httpServer = HttpServer.create(
-			new InetSocketAddress(_HTTP_SERVER_PORT), 0);
+		_authenticatedHttpProxyServer = _startHttpProxyServer(
+			_AUTHENTICATED_HTTP_PROXY_SERVER_PORT, true,
+			_authenticatedHttpProxyCounter);
 
-		HttpContext httpContext = _createHttpContext(
-			_CONTEXT_PATH_ZIP, "application/zip");
+		_httpProxyServer = _startHttpProxyServer(
+			_HTTP_PROXY_SERVER_PORT, false, _httpProxyCounter);
 
-		httpContext.setAuthenticator(
-			new BasicAuthenticator(_HTTP_SERVER_REALM) {
-
-				@Override
-				public boolean checkCredentials(String user, String pwd) {
-					if (user.equals(_HTTP_SERVER_USER_NAME) &&
-						pwd.equals(_HTTP_SERVER_PASSWORD)) {
-
-						return true;
-					}
-
-					return false;
-				}
-
-			});
-
-		_createHttpContext(_CONTEXT_PATH_TAR, "application/tar+gzip");
-
-		_httpServer.setExecutor(null);
-
-		_httpServer.start();
+		_httpServer = _startHttpServer();
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
+		if (_authenticatedHttpProxyServer != null) {
+			_authenticatedHttpProxyServer.stop();
+		}
+
+		if (_httpProxyServer != null) {
+			_httpProxyServer.stop();
+		}
+
 		if (_httpServer != null) {
 			_httpServer.stop(0);
 		}
+	}
+
+	@Before
+	public void setUp() throws Exception {
+		_authenticatedHttpProxyCounter.set(0);
+		_httpProxyCounter.set(0);
 	}
 
 	@Test
@@ -139,11 +149,45 @@ public class BundleSupportCommandsTest {
 
 	@Test
 	public void testInitBundleTar() throws Exception {
-		File liferayHomeDir = temporaryFolder.newFolder("bundles");
+		_testInitBundleTar(null, null, null, null, null, null, null);
+	}
 
-		_initBundle(null, _CONTEXT_PATH_TAR, liferayHomeDir, null, null);
+	@Test
+	public void testInitBundleTarProxy() throws Exception {
+		_testInitBundleTar(
+			"localhost", _HTTP_PROXY_SERVER_PORT, null, null, null,
+			_httpProxyCounter, 2);
+	}
 
-		_assertExists(liferayHomeDir, "README.markdown");
+	@Test
+	public void testInitBundleTarProxyAuthenticated() throws Exception {
+		_testInitBundleTar(
+			"localhost", _AUTHENTICATED_HTTP_PROXY_SERVER_PORT,
+			_HTTP_PROXY_SERVER_USER_NAME, _HTTP_PROXY_SERVER_PASSWORD, null,
+			_authenticatedHttpProxyCounter, 2);
+	}
+
+	@Test
+	public void testInitBundleTarProxyNonProxyHosts() throws Exception {
+		_testInitBundleTar(
+			"localhost", _HTTP_PROXY_SERVER_PORT, null, null,
+			"localhost2.localdomain", _httpProxyCounter, 2);
+	}
+
+	@Test
+	public void testInitBundleTarProxySkip() throws Exception {
+		_testInitBundleTar(
+			"localhost", _HTTP_PROXY_SERVER_PORT, null, null,
+			"localhost.localdomain", _httpProxyCounter, 0);
+	}
+
+	@Test
+	public void testInitBundleTarProxyUnauthorized() throws Exception {
+		expectedException.expectMessage("Proxy Authentication Required");
+
+		_testInitBundleTar(
+			"localhost", _AUTHENTICATED_HTTP_PROXY_SERVER_PORT, null, null,
+			null, _authenticatedHttpProxyCounter, 2);
 	}
 
 	@Test
@@ -250,7 +294,8 @@ public class BundleSupportCommandsTest {
 	}
 
 	private static HttpContext _createHttpContext(
-		final String contextPath, final String contentType) {
+		HttpServer httpServer, final String contextPath,
+		final String contentType) {
 
 		HttpHandler httpHandler = new HttpHandler() {
 
@@ -270,7 +315,7 @@ public class BundleSupportCommandsTest {
 
 					int length = (int)file.length();
 
-					byte[] byteArray = new byte[(int)length];
+					byte[] byteArray = new byte[length];
 
 					bufferedInputStream.read(byteArray, 0, length);
 
@@ -286,7 +331,124 @@ public class BundleSupportCommandsTest {
 
 		};
 
-		return _httpServer.createContext(contextPath, httpHandler);
+		return httpServer.createContext(contextPath, httpHandler);
+	}
+
+	private static Integer _setSystemProperty(String key, Integer value) {
+		String valueString = null;
+
+		if (value != null) {
+			valueString = value.toString();
+		}
+
+		valueString = _setSystemProperty(key, valueString);
+
+		if (valueString == null) {
+			return null;
+		}
+
+		return Integer.valueOf(valueString);
+	}
+
+	private static String _setSystemProperty(String key, String value) {
+		String oldValue = System.getProperty(key);
+
+		if (value == null) {
+			Properties properties = System.getProperties();
+
+			properties.remove(key);
+		}
+		else {
+			System.setProperty(key, value);
+		}
+
+		return oldValue;
+	}
+
+	private static HttpProxyServer _startHttpProxyServer(
+		int port, boolean authenticate, final AtomicInteger counter) {
+
+		HttpProxyServerBootstrap httpProxyServerBootstrap =
+			DefaultHttpProxyServer.bootstrap();
+
+		httpProxyServerBootstrap.withFiltersSource(
+			new HttpFiltersSourceAdapter() {
+
+				@Override
+				public HttpFilters filterRequest(HttpRequest httpRequest) {
+					return new HttpFiltersAdapter(httpRequest) {
+
+						@Override
+						public void proxyToServerRequestSent() {
+							counter.incrementAndGet();
+						}
+
+					};
+				}
+
+			});
+
+		httpProxyServerBootstrap.withPort(port);
+
+		if (authenticate) {
+			httpProxyServerBootstrap.withProxyAuthenticator(
+				new ProxyAuthenticator() {
+
+					@Override
+					public boolean authenticate(
+						String userName, String password) {
+
+						if (_HTTP_PROXY_SERVER_USER_NAME.equals(userName) &&
+							_HTTP_PROXY_SERVER_PASSWORD.equals(password)) {
+
+							return true;
+						}
+
+						return false;
+					}
+
+					@Override
+					public String getRealm() {
+						return _HTTP_PROXY_SERVER_REALM;
+					}
+
+				});
+		}
+
+		return httpProxyServerBootstrap.start();
+	}
+
+	private static HttpServer _startHttpServer() throws IOException {
+		HttpServer httpServer = HttpServer.create(
+			new InetSocketAddress(_HTTP_SERVER_PORT), 0);
+
+		HttpContext httpContext = _createHttpContext(
+			httpServer, _CONTEXT_PATH_ZIP, "application/zip");
+
+		httpContext.setAuthenticator(
+			new BasicAuthenticator(_HTTP_SERVER_REALM) {
+
+				@Override
+				public boolean checkCredentials(String user, String pwd) {
+					if (user.equals(_HTTP_SERVER_USER_NAME) &&
+						pwd.equals(_HTTP_SERVER_PASSWORD)) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		_createHttpContext(
+			httpServer, _CONTEXT_PATH_TAR, "application/tar+gzip");
+
+		httpServer.setExecutor(null);
+
+		httpServer.start();
+
+		return httpServer;
 	}
 
 	private void _initBundle(
@@ -294,7 +456,8 @@ public class BundleSupportCommandsTest {
 			String password, String userName)
 		throws Exception {
 
-		String url = "http://localhost:" + _HTTP_SERVER_PORT + contextPath;
+		String url =
+			"http://localhost.localdomain:" + _HTTP_SERVER_PORT + contextPath;
 
 		initBundle(configsDir, liferayHomeDir, password, url, userName);
 	}
@@ -313,6 +476,43 @@ public class BundleSupportCommandsTest {
 		distBundle(format, liferayHomeDir, outputFile);
 
 		Assert.assertTrue(outputFile.exists());
+	}
+
+	private void _testInitBundleTar(
+			String proxyHost, Integer proxyPort, String proxyUser,
+			String proxyPassword, String nonProxyHosts,
+			AtomicInteger proxyCounter, Integer expectedCounter)
+		throws Exception {
+
+		if (proxyCounter != null) {
+			Assert.assertEquals(0, proxyCounter.get());
+		}
+
+		proxyHost = _setSystemProperty("http.proxyHost", proxyHost);
+		proxyPort = _setSystemProperty("http.proxyPort", proxyPort);
+		proxyUser = _setSystemProperty("http.proxyUser", proxyUser);
+		proxyPassword = _setSystemProperty("http.proxyPassword", proxyPassword);
+		nonProxyHosts = _setSystemProperty("http.nonProxyHosts", nonProxyHosts);
+
+		try {
+			File liferayHomeDir = temporaryFolder.newFolder("bundles");
+
+			_initBundle(null, _CONTEXT_PATH_TAR, liferayHomeDir, null, null);
+
+			if (proxyCounter != null) {
+				Assert.assertEquals(
+					expectedCounter.intValue(), proxyCounter.intValue());
+			}
+
+			_assertExists(liferayHomeDir, "README.markdown");
+		}
+		finally {
+			_setSystemProperty("http.proxyHost", proxyHost);
+			_setSystemProperty("http.proxyPort", proxyPort);
+			_setSystemProperty("http.proxyUser", proxyUser);
+			_setSystemProperty("http.proxyPassword", proxyPassword);
+			_setSystemProperty("http.nonProxyHosts", nonProxyHosts);
+		}
 	}
 
 	private void _testInitBundleZip(String password, String userName)
@@ -340,9 +540,19 @@ public class BundleSupportCommandsTest {
 		_assertNotExists(liferayHomeDir, prodPropertiesFile.getName());
 	}
 
+	private static final int _AUTHENTICATED_HTTP_PROXY_SERVER_PORT = 9999;
+
 	private static final String _CONTEXT_PATH_TAR = "/test.tar.gz";
 
 	private static final String _CONTEXT_PATH_ZIP = "/test.zip";
+
+	private static final String _HTTP_PROXY_SERVER_PASSWORD = "proxyTest";
+
+	private static final int _HTTP_PROXY_SERVER_PORT = 9998;
+
+	private static final String _HTTP_PROXY_SERVER_REALM = "proxyTest";
+
+	private static final String _HTTP_PROXY_SERVER_USER_NAME = "proxyTest";
 
 	private static final String _HTTP_SERVER_PASSWORD = "test";
 
@@ -352,6 +562,11 @@ public class BundleSupportCommandsTest {
 
 	private static final String _HTTP_SERVER_USER_NAME = "test";
 
+	private static final AtomicInteger _authenticatedHttpProxyCounter =
+		new AtomicInteger();
+	private static HttpProxyServer _authenticatedHttpProxyServer;
+	private static final AtomicInteger _httpProxyCounter = new AtomicInteger();
+	private static HttpProxyServer _httpProxyServer;
 	private static HttpServer _httpServer;
 
 }

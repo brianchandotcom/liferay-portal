@@ -428,8 +428,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update ResourcePermission set name = ?, primKey = ? " +
-						"where resourcePermissionId = ?");
+					"update ResourcePermission set primKey = ? where " +
+						"resourcePermissionId = ?");
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
@@ -472,9 +472,8 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 					}
 				}
 
-				ps2.setString(1, newName);
-				ps2.setString(2, primKey);
-				ps2.setLong(3, resourcePermissionId);
+				ps2.setString(1, primKey);
+				ps2.setLong(2, resourcePermissionId);
 
 				ps2.addBatch();
 			}
@@ -485,6 +484,12 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			if (_log.isWarnEnabled()) {
 				_log.warn(sqle, sqle);
 			}
+		}
+
+		if (updateName) {
+			runSQL(
+				"update ResourcePermission set name = '" + newRootPortletId +
+					"' where name = '" + oldRootPortletId + "'");
 		}
 	}
 

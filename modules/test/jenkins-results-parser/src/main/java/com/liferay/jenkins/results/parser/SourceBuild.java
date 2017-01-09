@@ -46,4 +46,16 @@ public class SourceBuild extends BaseBuild {
 		return Collections.emptyList();
 	}
 
+	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _failureMessageGenerators;
+	}
+
+	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new RebaseFailureMessageGenerator(),
+		new SourceFormatFailureMessageGenerator(),
+
+		new GenericFailureMessageGenerator()
+	};
+
 }

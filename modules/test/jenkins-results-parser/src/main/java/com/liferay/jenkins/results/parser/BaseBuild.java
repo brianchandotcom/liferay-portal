@@ -1108,6 +1108,10 @@ public abstract class BaseBuild implements Build {
 		return null;
 	}
 
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		return _failureMessageGenerators;
+	}
+
 	protected Set<String> getJobParameterNames() {
 		JSONObject jsonObject;
 
@@ -1588,6 +1592,10 @@ public abstract class BaseBuild implements Build {
 	protected String repositoryName;
 	protected String result;
 	protected long statusModifiedTime;
+
+	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new GenericFailureMessageGenerator()
+	};
 
 	private int _buildNumber = -1;
 	private int _consoleReadCursor;

@@ -180,6 +180,15 @@ public class TopLevelBuild extends BaseBuild {
 		return Executors.newFixedThreadPool(20);
 	}
 
+	@Override
+	protected FailureMessageGenerator[] getFailureMessageGenerators() {
+		if (getParentBuild() == null) {
+			return _failureMessageGenerators;
+		}
+
+		return super.getFailureMessageGenerators();
+	}
+
 	protected String getGitRepositoryDetailsPropertiesTempMapURL(
 		String repositoryType) {
 
@@ -297,6 +306,13 @@ public class TopLevelBuild extends BaseBuild {
 
 	protected static final Pattern gitRepositoryTempMapNamePattern =
 		Pattern.compile("git\\.(?<repositoryType>.*)\\.properties");
+
+	private static final FailureMessageGenerator[] _failureMessageGenerators = {
+		new PoshiValidationFailureMessageGenerator(),
+		new DownstreamFailureMessageGenerator(),
+
+		new GenericFailureMessageGenerator()
+	};
 
 	private long _updateDuration;
 

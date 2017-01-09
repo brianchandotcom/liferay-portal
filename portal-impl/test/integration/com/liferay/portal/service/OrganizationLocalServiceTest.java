@@ -611,6 +611,61 @@ public class OrganizationLocalServiceTest {
 	}
 
 	@Test
+	public void testParentOrganizationUpdatesAllTreePaths() throws Exception {
+		Organization organizationA = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			"Organization A", false);
+
+		Organization organizationB = OrganizationTestUtil.addOrganization(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			"Organization B", false);
+
+		Organization organizationBB = OrganizationTestUtil.addOrganization(
+			organizationB.getOrganizationId(), "Organization BB", false);
+
+		Organization organizationBBB = OrganizationTestUtil.addOrganization(
+			organizationBB.getOrganizationId(), "Organization BBB", false);
+
+		_organizations.add(organizationBBB);
+
+		_organizations.add(organizationBB);
+		_organizations.add(organizationB);
+		_organizations.add(organizationA);
+
+		String shallowTreePath = OrganizationTestUtil.constructTreePath(
+			new Organization[] {
+				organizationB, organizationBB, organizationBBB
+			});
+
+		Assert.assertEquals(shallowTreePath, organizationBBB.getTreePath());
+
+		organizationB.setParentOrganizationId(
+			organizationA.getOrganizationId());
+
+		OrganizationTestUtil.updateOrganization(organizationB);
+
+		organizationBBB = OrganizationLocalServiceUtil.fetchOrganization(
+			organizationBBB.getOrganizationId());
+
+		String deepTreePath = OrganizationTestUtil.constructTreePath(
+			new Organization[] {
+				organizationA, organizationB, organizationBB, organizationBBB
+			});
+
+		Assert.assertEquals(deepTreePath, organizationBBB.getTreePath());
+
+		organizationB.setParentOrganizationId(
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+
+		OrganizationTestUtil.updateOrganization(organizationB);
+
+		organizationBBB = OrganizationLocalServiceUtil.fetchOrganization(
+			organizationBBB.getOrganizationId());
+
+		Assert.assertEquals(shallowTreePath, organizationBBB.getTreePath());
+	}
+
+	@Test
 	public void testSearchOrganizationsAndUsers() throws Exception {
 		Organization organization = OrganizationTestUtil.addOrganization();
 

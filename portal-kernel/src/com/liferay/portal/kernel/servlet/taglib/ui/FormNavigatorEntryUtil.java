@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Sergio González
@@ -41,10 +43,8 @@ public class FormNavigatorEntryUtil {
 		String formNavigatorId, String categoryKey, User user,
 		T formModelBean) {
 
-		@SuppressWarnings("rawtypes")
 		List<FormNavigatorEntry<T>> formNavigatorEntries =
-			(List)_instance._formNavigatorEntries.getService(
-				_getKey(formNavigatorId, categoryKey));
+			_getFormNavigatorEntries(formNavigatorId, categoryKey);
 
 		return filterVisibleFormNavigatorEntries(
 			formNavigatorEntries, user, formModelBean);
@@ -59,11 +59,8 @@ public class FormNavigatorEntryUtil {
 			formNavigatorId);
 
 		for (String categoryKey : categoryKeys) {
-
-			@SuppressWarnings("rawtypes")
 			List<FormNavigatorEntry<T>> curFormNavigatorEntries =
-				(List)_instance._formNavigatorEntries.getService(
-					_getKey(formNavigatorId, categoryKey));
+				_getFormNavigatorEntries(formNavigatorId, categoryKey);
 
 			if (curFormNavigatorEntries != null) {
 				formNavigatorEntries.addAll(curFormNavigatorEntries);
@@ -152,6 +149,38 @@ public class FormNavigatorEntryUtil {
 		}
 
 		return filterFormNavigatorEntries;
+	}
+
+	private static <T> List<FormNavigatorEntry<T>> _getFormNavigatorEntries(
+		String formNavigatorId, String categoryKey) {
+
+		List<FormNavigatorEntry<T>> formNavigatorEntries =
+			_getFormNavigatorEntriesFromConfig(formNavigatorId, categoryKey);
+
+		if (ListUtil.isEmpty(formNavigatorEntries)) {
+			formNavigatorEntries =
+				(List)_instance._formNavigatorEntries.getService(
+					_getKey(formNavigatorId, categoryKey));
+		}
+
+		return formNavigatorEntries;
+	}
+
+	private static <T> List<FormNavigatorEntry<T>>
+		_getFormNavigatorEntriesFromConfig(
+			String formNavigatorId, String categoryKey) {
+
+		return _getFormNavigatorEntryConfigurationHelper().map(
+			helper -> helper.<T>getFormNavigatorEntries(
+				formNavigatorId, categoryKey, "add")).orElse(new ArrayList<>());
+	}
+
+	private static Optional<FormNavigatorEntryConfigurationHelper>
+		_getFormNavigatorEntryConfigurationHelper() {
+
+		return Optional.ofNullable(
+			RegistryUtil.getRegistry().getService(
+				FormNavigatorEntryConfigurationHelper.class));
 	}
 
 	private static String _getKey(String formNavigatorId, String categoryKey) {

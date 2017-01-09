@@ -421,49 +421,49 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 			boolean updateName)
 		throws Exception {
 
-		try (PreparedStatement ps1 = connection.prepareStatement(
-				"select resourcePermissionId, scope, primKey from " +
-					"ResourcePermission where name = '" + oldRootPortletId +
-						"'");
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("select distinct primKey from ResourcePermission where ");
+		sb.append("name = '");
+		sb.append(oldRootPortletId);
+		sb.append("' and scope = ");
+		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
+
+		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					"update ResourcePermission set primKey = ? where " +
-						"resourcePermissionId = ?");
+					"update ResourcePermission set primKey = ? where primKey " +
+						"= ?");
 			ResultSet rs = ps1.executeQuery()) {
 
 			while (rs.next()) {
-				long resourcePermissionId = rs.getLong("resourcePermissionId");
-				int scope = rs.getInt("scope");
-				String primKey = rs.getString("primKey");
+				String oldPrimKey = rs.getString("primKey");
 
-				if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
-					int pos = primKey.indexOf(
-						PortletConstants.LAYOUT_SEPARATOR);
+				int pos = oldPrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
 
-					if (pos != -1) {
-						long plid = GetterUtil.getLong(
-							primKey.substring(0, pos));
+				if (pos != -1) {
+					long plid = GetterUtil.getLong(
+						oldPrimKey.substring(0, pos));
 
-						String portletId = primKey.substring(
-							pos + PortletConstants.LAYOUT_SEPARATOR.length());
+					String portletId = oldPrimKey.substring(
+						pos + PortletConstants.LAYOUT_SEPARATOR.length());
 
-						String instanceId = PortletConstants.getInstanceId(
-							portletId);
-						long userId = PortletConstants.getUserId(portletId);
+					String instanceId = PortletConstants.getInstanceId(
+						portletId);
+					long userId = PortletConstants.getUserId(portletId);
 
-						String newPortletId =
-							PortletConstants.assemblePortletId(
-								newRootPortletId, userId, instanceId);
+					String newPortletId = PortletConstants.assemblePortletId(
+						newRootPortletId, userId, instanceId);
 
-						primKey = PortletPermissionUtil.getPrimaryKey(
-							plid, newPortletId);
+					String newPrimKey = PortletPermissionUtil.getPrimaryKey(
+						plid, newPortletId);
 
-						ps2.setString(1, primKey);
-						ps2.setLong(2, resourcePermissionId);
+					ps2.setString(1, newPrimKey);
 
-						ps2.addBatch();
-					}
+					ps2.setString(2, oldPrimKey);
+
+					ps2.addBatch();
 				}
 			}
 

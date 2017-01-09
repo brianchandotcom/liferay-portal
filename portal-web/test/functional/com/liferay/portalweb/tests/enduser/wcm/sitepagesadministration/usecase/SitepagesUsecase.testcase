@@ -135,9 +135,8 @@
 		</execute>
 
 		<execute macro="Page#editSelectPageType">
-			<var name="indexNumber" value="4" />
 			<var name="page" value="Site Page2 Name" />
-			<var name="pageName" value="- - Child Page Name" />
+			<var name="pageLinkName" value="Site Page1 Name" />
 			<var name="pageType" value="Link to a Page of This Site" />
 		</execute>
 

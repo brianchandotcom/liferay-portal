@@ -449,9 +449,7 @@
 		<if>
 			<equals arg1="${pageType}" arg2="Link to a Page of This Site" />
 			<then>
-				<var name="key_indexNumber" value="${indexNumber}" />
-
-				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="index=${indexNumber}" />
+				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_LINK_TO_PAGE_PAGE_SELECT" value1="regexp:.*${pageLinkName}.*" />
 			</then>
 			<elseif>
 				<equals arg1="${pageType}" arg2="Embedded" />

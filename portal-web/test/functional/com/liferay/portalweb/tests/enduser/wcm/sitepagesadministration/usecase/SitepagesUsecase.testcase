@@ -564,7 +564,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="Blogs" />
+			<var name="gmailAssetType" value="GMB1" />
 			<var name="gmailMessageBody" value="Blogs Entry Title GMB1" />
 			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title GMB1&quot; on ${siteName} Blogs" />
 		</execute>
@@ -590,7 +590,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Test Test" />
-			<var name="gmailAssetType" value="Message Boards" />
+			<var name="gmailAssetType" value="GMMB2" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB2" />
 		</execute>
@@ -795,7 +795,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="Blogs" />
+			<var name="gmailAssetType" value="GMB2" />
 			<var name="gmailMessageBody" value="Blogs Entry Title GMB2" />
 			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title GMB2&quot; on ${siteName} Blogs" />
 		</execute>
@@ -821,7 +821,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Test Test" />
-			<var name="gmailAssetType" value="Message Boards" />
+			<var name="gmailAssetType" value="GMMB3" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB3" />
 		</execute>
@@ -1038,7 +1038,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Joe Bloggs" />
-			<var name="gmailAssetType" value="Blogs" />
+			<var name="gmailAssetType" value="GMB3" />
 			<var name="gmailMessageBody" value="Blogs Entry Title GMB3" />
 			<var name="gmailMessageTitle" value="Test Test Published &quot;Blogs Entry Title GMB3&quot; on ${siteName} Blogs" />
 		</execute>
@@ -1064,7 +1064,7 @@
 
 		<execute macro="Gmail#viewMail">
 			<var name="emailFromUserName" value="Test Test" />
-			<var name="gmailAssetType" value="Message Boards" />
+			<var name="gmailAssetType" value="GMMB4" />
 			<var name="gmailMessageBody" value="MB Thread Message Body" />
 			<var name="gmailMessageTitle" value="Message Boards Home - ${siteName} New Message: MB Thread Message Subject GMMB4" />
 		</execute>

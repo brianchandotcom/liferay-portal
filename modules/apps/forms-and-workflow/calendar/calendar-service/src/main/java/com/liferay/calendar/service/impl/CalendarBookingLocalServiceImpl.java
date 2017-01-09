@@ -1772,7 +1772,7 @@ public class CalendarBookingLocalServiceImpl
 	}
 
 	protected CalendarBooking splitCalendarBookingInstance(
-			CalendarBooking calendarBooking, java.util.Calendar splitJCalendar,
+			CalendarBooking calendarBooking, long startTime,
 			Recurrence recurrence)
 		throws PortalException {
 
@@ -1780,20 +1780,18 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getCalendarBookingId(),
 			calendarBooking.getCalendarId());
 
-		long laterStartTime = splitJCalendar.getTimeInMillis();
-
 		long duration =
 			calendarBooking.getEndTime() - calendarBooking.getStartTime();
 
-		long laterEndTime = laterStartTime + duration;
+		long endTime = startTime + duration;
 
-		CalendarBooking laterCalendarBooking = addCalendarBooking(
+		CalendarBooking calendarBookingInstance = addCalendarBooking(
 			calendarBooking.getUserId(), calendarBooking.getCalendarId(),
 			childCalendarIds,
 			CalendarBookingConstants.PARENT_CALENDAR_BOOKING_ID_DEFAULT,
 			calendarBooking.getRecurringCalendarBookingId(),
 			calendarBooking.getTitleMap(), calendarBooking.getDescriptionMap(),
-			calendarBooking.getLocation(), laterStartTime, laterEndTime,
+			calendarBooking.getLocation(), startTime, endTime,
 			calendarBooking.getAllDay(),
 			RecurrenceSerializer.serialize(recurrence),
 			calendarBooking.getFirstReminder(),
@@ -1802,10 +1800,9 @@ public class CalendarBookingLocalServiceImpl
 			calendarBooking.getSecondReminderType(),
 			ServiceContextThreadLocal.getServiceContext());
 
-		deleteCalendarBookingInstance(
-			calendarBooking, splitJCalendar.getTimeInMillis(), true, false);
+		deleteCalendarBookingInstance(calendarBooking, startTime, true, false);
 
-		return laterCalendarBooking;
+		return calendarBookingInstance;
 	}
 
 	protected List<CalendarBooking> splitCalendarBookingInstances(
@@ -1862,7 +1859,8 @@ public class CalendarBookingLocalServiceImpl
 
 						CalendarBooking newCalendarBooking =
 							splitCalendarBookingInstance(
-								recurringCalendarBooking, newStartTimeJCalendar,
+								recurringCalendarBooking,
+								newStartTimeJCalendar.getTimeInMillis(),
 								recurrenceSplit.getSecondRecurrence());
 
 						followingRecurringCalendarBookings.add(

@@ -1845,7 +1845,7 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getCalendar(), calendarBooking.isAllDay());
 
 			splitJCalendar = JCalendarUtil.getJCalendar(
-				calendarBooking.getEndTime(), timeZone);
+				calendarBooking.getStartTime(), timeZone);
 
 			splitJCalendar.add(java.util.Calendar.DATE, 1);
 		}

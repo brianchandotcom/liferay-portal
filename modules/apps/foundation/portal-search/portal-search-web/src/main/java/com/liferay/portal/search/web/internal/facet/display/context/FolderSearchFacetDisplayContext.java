@@ -14,45 +14,25 @@
 
 package com.liferay.portal.search.web.internal.facet.display.context;
 
-import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
-import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.util.GetterUtil;
+import java.io.Serializable;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetDisplayContext {
+public class FolderSearchFacetDisplayContext implements Serializable {
 
-	public FolderSearchFacetDisplayContext(
-			Facet facet, String fieldParam, int frequencyThreshold,
-			int maxTerms, boolean showFrequencies,
-			FolderTitleLookup folderTitleLookup)
-		throws SearchException {
-
-		_facet = facet;
-		_fieldParam = fieldParam;
-		_frequencyThreshold = frequencyThreshold;
-		_maxTerms = maxTerms;
-		_showFrequencies = showFrequencies;
-		_folderTitleLookup = folderTitleLookup;
-
-		_folderId = getFolderId(fieldParam);
-
-		_folderSearchFacetTermDisplayContexts = buildTermDisplayContexts();
+	public String getParameterName() {
+		return _parameterName;
 	}
 
-	public String getFieldParamInputName() {
-		return _facet.getFieldId();
+	public String getParameterValue() {
+		return _parameterValue;
 	}
 
-	public String getFieldParamInputValue() {
-		return _fieldParam;
+	public List<String> getParameterValues() {
+		return _parameterValues;
 	}
 
 	public List<FolderSearchFacetTermDisplayContext> getTermDisplayContexts() {
@@ -60,129 +40,45 @@ public class FolderSearchFacetDisplayContext {
 	}
 
 	public boolean isNothingSelected() {
-		if (_folderId == null) {
-			return true;
-		}
-
-		return false;
+		return _nothingSelected;
 	}
 
 	public boolean isRenderNothing() {
-		if (!_folderSearchFacetTermDisplayContexts.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return _renderNothing;
 	}
 
-	protected List<FolderSearchFacetTermDisplayContext>
-		buildTermDisplayContexts() throws SearchException {
-
-		FacetCollector facetCollector = _facet.getFacetCollector();
-
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		if (termCollectors.isEmpty()) {
-			return getEmptySearchResultTermDisplayContexts();
-		}
-
-		List<FolderSearchFacetTermDisplayContext>
-			folderSearchFacetTermDisplayContexts = new ArrayList<>(
-				termCollectors.size());
-
-		for (int i = 0; i < termCollectors.size(); i++) {
-			if ((_maxTerms > 0) && (i >= _maxTerms)) {
-				break;
-			}
-
-			TermCollector termCollector = termCollectors.get(i);
-
-			if ((_frequencyThreshold > 0) &&
-				(_frequencyThreshold > termCollector.getFrequency())) {
-
-				break;
-			}
-
-			FolderSearchFacetTermDisplayContext
-				folderSearchFacetTermDisplayContext = getTermDisplayContext(
-					termCollector);
-
-			if (folderSearchFacetTermDisplayContext != null) {
-				folderSearchFacetTermDisplayContexts.add(
-					folderSearchFacetTermDisplayContext);
-			}
-		}
-
-		return folderSearchFacetTermDisplayContexts;
+	public void setNothingSelected(boolean nothingSelected) {
+		_nothingSelected = nothingSelected;
 	}
 
-	protected List<FolderSearchFacetTermDisplayContext>
-		getEmptySearchResultTermDisplayContexts() throws SearchException {
-
-		if (_folderId == null) {
-			return Collections.emptyList();
-		}
-
-		String title = _folderTitleLookup.getFolderTitle(_folderId);
-
-		if (title == null) {
-			return Collections.emptyList();
-		}
-
-		FolderSearchFacetTermDisplayContext
-			folderSearchFacetTermDisplayContext =
-				new FolderSearchFacetTermDisplayContext(
-					_folderId, title, true, 0, _showFrequencies);
-
-		return Collections.singletonList(folderSearchFacetTermDisplayContext);
+	public void setParameterName(String parameterName) {
+		_parameterName = parameterName;
 	}
 
-	protected Long getFolderId(String fieldParam) {
-		long folderId = GetterUtil.getLong(fieldParam);
-
-		if (folderId == 0) {
-			return null;
-		}
-
-		return folderId;
+	public void setParameterValue(String parameterValue) {
+		_parameterValue = parameterValue;
 	}
 
-	protected FolderSearchFacetTermDisplayContext getTermDisplayContext(
-			TermCollector termCollector)
-		throws SearchException {
-
-		long curFolderId = GetterUtil.getLong(termCollector.getTerm());
-
-		if (curFolderId == 0) {
-			return null;
-		}
-
-		String title = _folderTitleLookup.getFolderTitle(curFolderId);
-
-		if (title == null) {
-			return null;
-		}
-
-		int frequency = termCollector.getFrequency();
-
-		boolean selected = false;
-
-		if ((_folderId != null) && _folderId.equals(curFolderId)) {
-			selected = true;
-		}
-
-		return new FolderSearchFacetTermDisplayContext(
-			curFolderId, title, selected, frequency, _showFrequencies);
+	public void setParameterValues(List<String> parameterValues) {
+		_parameterValues = parameterValues;
 	}
 
-	private final Facet _facet;
-	private final String _fieldParam;
-	private final Long _folderId;
-	private final List<FolderSearchFacetTermDisplayContext>
+	public void setRenderNothing(boolean renderNothing) {
+		_renderNothing = renderNothing;
+	}
+
+	public void setTermDisplayContexts(
+		List<FolderSearchFacetTermDisplayContext> termDisplayContexts) {
+
+		_folderSearchFacetTermDisplayContexts = termDisplayContexts;
+	}
+
+	private List<FolderSearchFacetTermDisplayContext>
 		_folderSearchFacetTermDisplayContexts;
-	private final FolderTitleLookup _folderTitleLookup;
-	private final int _frequencyThreshold;
-	private final int _maxTerms;
-	private final boolean _showFrequencies;
+	private boolean _nothingSelected;
+	private String _parameterName;
+	private String _parameterValue;
+	private List<String> _parameterValues;
+	private boolean _renderNothing;
 
 }

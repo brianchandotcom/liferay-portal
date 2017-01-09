@@ -16,21 +16,12 @@ package com.liferay.portal.search.web.internal.facet.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.io.Serializable;
+
 /**
  * @author Lino Alves
  */
-public class FolderSearchFacetTermDisplayContext {
-
-	public FolderSearchFacetTermDisplayContext(
-		long folderId, String displayName, boolean selected, int frequency,
-		boolean showFrequency) {
-
-		_folderId = folderId;
-		_displayName = displayName;
-		_selected = selected;
-		_frequency = frequency;
-		_showFrequency = showFrequency;
-	}
+public class FolderSearchFacetTermDisplayContext implements Serializable {
 
 	public String getDisplayName() throws PortalException {
 		return _displayName;
@@ -44,18 +35,38 @@ public class FolderSearchFacetTermDisplayContext {
 		return _frequency;
 	}
 
+	public boolean isFrequencyVisible() {
+		return _frequencyVisible;
+	}
+
 	public boolean isSelected() {
 		return _selected;
 	}
 
-	public boolean isShowFrequency() {
-		return _showFrequency;
+	public void setDisplayName(String displayName) {
+		_displayName = displayName;
 	}
 
-	private final String _displayName;
-	private final long _folderId;
-	private final int _frequency;
-	private final boolean _selected;
-	private final boolean _showFrequency;
+	public void setFolderId(long folderId) {
+		_folderId = folderId;
+	}
+
+	public void setFrequency(int frequency) {
+		_frequency = frequency;
+	}
+
+	public void setFrequencyVisible(boolean frequencyVisible) {
+		_frequencyVisible = frequencyVisible;
+	}
+
+	public void setSelected(boolean selected) {
+		_selected = selected;
+	}
+
+	private String _displayName;
+	private long _folderId;
+	private int _frequency;
+	private boolean _frequencyVisible;
+	private boolean _selected;
 
 }

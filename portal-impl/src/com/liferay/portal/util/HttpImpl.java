@@ -2081,7 +2081,8 @@ public class HttpImpl implements Http {
 	}
 
 	private static final String _DEFAULT_USER_AGENT =
-		"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)";
+		"Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.0.5) Gecko/2008121623 " +
+			"Ubuntu/8.10 (intrepid) Firefox/3.0.5";
 
 	private static final int _MAX_BYTE_ARRAY_LENGTH = Integer.MAX_VALUE - 8;
 

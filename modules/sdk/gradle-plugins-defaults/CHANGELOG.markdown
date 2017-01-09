@@ -884,7 +884,7 @@ used.
 version 1.1.1.
 
 ### Fixed
-- [LPS-69606]: Fix artifact publish commands for the "WSDD" commit in older
+- [LPS-69606]: Fix artifact publish commands for the *WSDD* commit in older
 versions of Git.
 
 ## 2.4.9 - 2017-01-06
@@ -904,7 +904,6 @@ versions of Git.
 [LPS-61099]: https://issues.liferay.com/browse/LPS-61099
 [LPS-61987]: https://issues.liferay.com/browse/LPS-61987
 [LPS-65179]: https://issues.liferay.com/browse/LPS-65179
-[LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66396]: https://issues.liferay.com/browse/LPS-66396
 [LPS-66762]: https://issues.liferay.com/browse/LPS-66762
 [LPS-66853]: https://issues.liferay.com/browse/LPS-66853

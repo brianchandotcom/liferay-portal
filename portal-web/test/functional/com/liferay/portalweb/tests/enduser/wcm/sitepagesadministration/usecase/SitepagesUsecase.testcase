@@ -1253,9 +1253,9 @@
 			<var name="siteName" value="Page Type Test Site Name" />
 		</execute>
 
-		<var name="key_pageName" value="Link to URL Page" />
-
-		<execute function="AssertClick" locator1="Home#PAGE" value1="Link to URL Page" />
+		<execute function="AssertClick" locator1="Home#PAGE" value1="Link to URL Page">
+			<var name="key_pageName" value="Link to URL Page" />
+		</execute>
 
 		<execute function="AssertLocation" value1="https://www.google.com/" />
 

@@ -66,22 +66,16 @@ public class GridDDMFormFieldTypeSettingsTest
 			"validation");
 
 		Assert.assertNotNull(validationDDMFormField);
-		Assert.assertEquals(
-			"FALSE", validationDDMFormField.getVisibilityExpression());
 
 		DDMFormField predefinedValueDDMFormField = ddmFormFieldsMap.get(
 			"predefinedValue");
 
 		Assert.assertNotNull(predefinedValueDDMFormField);
-		Assert.assertEquals(
-			"FALSE", predefinedValueDDMFormField.getVisibilityExpression());
 
 		DDMFormField repeatableDDMFormField = ddmFormFieldsMap.get(
 			"repeatable");
 
 		Assert.assertNotNull(repeatableDDMFormField);
-		Assert.assertEquals(
-			"FALSE", repeatableDDMFormField.getVisibilityExpression());
 	}
 
 }

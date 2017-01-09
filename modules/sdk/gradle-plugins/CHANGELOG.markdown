@@ -939,6 +939,10 @@ to version 1.0.70.
 ## 3.0.68 - 2017-01-06
 
 ### Changed
+- [LPS-66853]: Update the [Liferay Source Formatter] dependency to version
+1.0.338.
+- [LPS-66853]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.71.
 - [LPS-69706]: Update the [Liferay CSS Builder] dependency to version 1.0.22.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin

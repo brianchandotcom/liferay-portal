@@ -34,6 +34,8 @@ import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
+import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
@@ -41,6 +43,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -423,6 +428,9 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 			MBMessage message = null;
 
+			List<MBAttachmentFileEntryReference>
+				mbAttachmentFileEntryReferences = new ArrayList<>();
+
 			if (messageId <= 0) {
 				if (PropsValues.
 						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE) {
@@ -455,6 +463,39 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						inputStreamOVPs, anonymous, priority, allowPingbacks,
 						serviceContext);
 				}
+
+				List<FileEntry> tempMBAttachmentFileEntries =
+					MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(
+						body);
+
+				if (!tempMBAttachmentFileEntries.isEmpty()) {
+					Folder folder = message.addAttachmentsFolder();
+
+					mbAttachmentFileEntryReferences =
+						MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+							message.getGroupId(), themeDisplay.getUserId(),
+							message.getMessageId(), folder.getFolderId(),
+							tempMBAttachmentFileEntries);
+
+					if (message.getFormat().equals("bbcode")) {
+						body = MBAttachmentFileEntryUtil.updateContentBBCode(
+							body, mbAttachmentFileEntryReferences);
+					}
+					else {
+						body = MBAttachmentFileEntryUtil.updateContentHTML(
+							body, mbAttachmentFileEntryReferences);
+					}
+
+					_mbMessageService.updateMessage(
+						message.getMessageId(), message.getSubject(), body,
+						null, null, message.getPriority(),
+						message.getAllowPingbacks(), serviceContext);
+				}
+
+				for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						tempMBAttachment.getFileEntryId());
+				}
 			}
 			else {
 				List<String> existingFiles = new ArrayList<>();
@@ -468,6 +509,44 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 
+				List<FileEntry> tempMBAttachmentFileEntries =
+					MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(
+						body);
+
+				if (!tempMBAttachmentFileEntries.isEmpty()) {
+					message = _mbMessageService.getMessage(messageId);
+
+					Folder folder = message.addAttachmentsFolder();
+
+					mbAttachmentFileEntryReferences =
+						MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+							message.getGroupId(), themeDisplay.getUserId(),
+							message.getMessageId(), folder.getFolderId(),
+							tempMBAttachmentFileEntries);
+
+					for (MBAttachmentFileEntryReference
+							mbAttachmentFileEntryReference :
+								mbAttachmentFileEntryReferences) {
+
+						FileEntry mbAttachmentFileEntry =
+							mbAttachmentFileEntryReference.
+								getMbAttachmentFileEntry();
+
+						existingFiles.add(
+							String.valueOf(
+								mbAttachmentFileEntry.getFileEntryId()));
+					}
+
+					if (message.getFormat().equals("bbcode")) {
+						body = MBAttachmentFileEntryUtil.updateContentBBCode(
+							body, mbAttachmentFileEntryReferences);
+					}
+					else {
+						body = MBAttachmentFileEntryUtil.updateContentHTML(
+							body, mbAttachmentFileEntryReferences);
+					}
+				}
+
 				// Update message
 
 				message = _mbMessageService.updateMessage(
@@ -477,6 +556,11 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				if (message.isRoot()) {
 					_mbThreadLocalService.updateQuestion(
 						message.getThreadId(), question);
+				}
+
+				for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						tempMBAttachment.getFileEntryId());
 				}
 			}
 

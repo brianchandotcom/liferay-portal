@@ -1237,10 +1237,6 @@
 			<var name="sitePageType" value="Embedded" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelSites">
-			<var name="portlet" value="Sites" />
-		</execute>
-
 		<execute macro="Page#add">
 			<var name="componentName" value="Community" />
 			<var name="pageName" value="Panel Page" />

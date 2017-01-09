@@ -196,7 +196,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	private PluginDescriptor _pluginDescriptor;
 
 	/**
-	 * @parameter expression="${project}"
+	 * @parameter property="project"
 	 * @required
 	 * @readonly
 	 */
@@ -208,7 +208,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	private RepositorySystem _repositorySystem;
 
 	/**
-	 * @parameter expression="${repositorySystemSession}"
+	 * @parameter property="repositorySystemSession"
 	 * @readonly
 	 * @required
 	 */

@@ -1834,10 +1834,20 @@ public class CalendarBookingLocalServiceImpl
 		List<CalendarBooking> followingRecurringCalendarBookings =
 			new ArrayList<>();
 
+		java.util.Calendar splitJCalendar = null;
+
 		boolean singleInstance = false;
 
 		if (Validator.isNull(calendarBooking.getRecurrence())) {
 			singleInstance = true;
+
+			TimeZone timeZone = getTimeZone(
+				calendarBooking.getCalendar(), calendarBooking.isAllDay());
+
+			splitJCalendar = JCalendarUtil.getJCalendar(
+				calendarBooking.getEndTime(), timeZone);
+
+			splitJCalendar.add(java.util.Calendar.DATE, 1);
 		}
 
 		for (CalendarBooking recurringCalendarBooking :
@@ -1852,12 +1862,6 @@ public class CalendarBookingLocalServiceImpl
 					recurringCalendarBooking.getRecurrenceObj();
 
 				if (Validator.isNotNull(recurrenceObj)) {
-					java.util.Calendar splitJCalendar =
-						JCalendarUtil.getJCalendar(
-							calendarBooking.getEndTime());
-
-					splitJCalendar.add(java.util.Calendar.DATE, 1);
-
 					java.util.Calendar startTimeJCalendar =
 						JCalendarUtil.getJCalendar(
 							recurringCalendarBooking.getStartTime(),

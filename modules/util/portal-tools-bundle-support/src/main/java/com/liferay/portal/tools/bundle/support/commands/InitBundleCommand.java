@@ -194,48 +194,12 @@ public class InitBundleCommand extends BaseCommand {
 	}
 
 	protected void downloadFile() throws Exception {
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+		URI uri = new URI(_url);
 
-		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
-		requestConfigBuilder.setRedirectsEnabled(true);
-
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
-
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
-		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-
-		if (_proxyHost != null) {
-			HttpHost proxyHttpHost = new HttpHost(
-				_proxyHost, _proxyPort, _proxyProtocol);
-
-			requestConfigBuilder.setProxy(proxyHttpHost);
-
-			if (_proxyUserName != null) {
-				credentialsProvider.setCredentials(
-					new AuthScope(_proxyHost, _proxyPort),
-					new UsernamePasswordCredentials(
-						_proxyUserName, _proxyPassword));
-			}
-		}
-
-		try (CloseableHttpClient closeableHttpClient =
-				httpClientBuilder.build()) {
-
-			URI uri = new URI(_url);
-
+		try (CloseableHttpClient closeableHttpClient = _getHttpClient(uri)) {
 			HttpHead httpHead = new HttpHead(uri);
 
 			HttpContext httpContext = new BasicHttpContext();
-
-			if ((_userName != null) && (_password != null)) {
-				credentialsProvider.setCredentials(
-					new AuthScope(uri.getHost(), uri.getPort()),
-					new UsernamePasswordCredentials(_userName, _password));
-			}
 
 			Date lastModifiedDate = null;
 
@@ -357,6 +321,44 @@ public class InitBundleCommand extends BaseCommand {
 		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
 			throw new IOException(statusLine.getReasonPhrase());
 		}
+	}
+
+	private CloseableHttpClient _getHttpClient(URI uri) {
+		HttpClientBuilder httpClientBuilder = HttpClients.custom();
+
+		CredentialsProvider credentialsProvider =
+			new BasicCredentialsProvider();
+
+		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
+		requestConfigBuilder.setRedirectsEnabled(true);
+
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
+
+		if ((_userName != null) && (_password != null)) {
+			credentialsProvider.setCredentials(
+				new AuthScope(uri.getHost(), uri.getPort()),
+				new UsernamePasswordCredentials(_userName, _password));
+		}
+
+		if (_proxyHost != null) {
+			HttpHost proxyHttpHost = new HttpHost(
+				_proxyHost, _proxyPort, _proxyProtocol);
+
+			requestConfigBuilder.setProxy(proxyHttpHost);
+
+			if (_proxyUserName != null) {
+				credentialsProvider.setCredentials(
+					new AuthScope(_proxyHost, _proxyPort),
+					new UsernamePasswordCredentials(
+						_proxyUserName, _proxyPassword));
+			}
+		}
+
+		return httpClientBuilder.build();
 	}
 
 	private static final File _BUNDLES_CACHE = new File(

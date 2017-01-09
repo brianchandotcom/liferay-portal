@@ -21,6 +21,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -39,7 +40,7 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ModuleModel extends BaseModel<Module> {
+public interface ModuleModel extends BaseModel<Module>, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +89,22 @@ public interface ModuleModel extends BaseModel<Module> {
 	 * @param moduleId the module ID of this module
 	 */
 	public void setModuleId(long moduleId);
+
+	/**
+	 * Returns the company ID of this module.
+	 *
+	 * @return the company ID of this module
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this module.
+	 *
+	 * @param companyId the company ID of this module
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the app ID of this module.

@@ -137,18 +137,18 @@ import java.util.Set;
  * Groups are also the entity to which LayoutSets are generally associated.
  * Since LayoutSets are the parent entities of Layouts (i.e. pages), no entity
  * can have associated pages without also having an associated Group. This
- * relationship can be depicted as ... Layout -> LayoutSet -> Group[type] [->
- * Entity]. Note, the Entity part is optional.
+ * relationship can be depicted as ... Layout -> LayoutSet -> Group[type] ->
+ * [Entity]. Note, the Entity part is optional.
  * </p>
  *
  * <p>
  * Group has a "type" definition that is typically identified by two fields of
- * the entity - <code>String className</code>, and <code>int type </code>.
+ * the entity - <code>String className</code>, and <code>int type</code>.
  * </p>
  *
  * <p>
  * The <code>className</code> field helps create the group's association with
- * other entities (e.g. Organization, User, Company, UserGroup, ... etc.). The
+ * other entities (e.g. Organization, User, Company, UserGroup, etc.). The
  * value of <code>className</code> is the full name of the entity's class and
  * the primary key of the associated entity instance. A site has
  * <code>className="Group"</code> and has no associated entity.
@@ -161,7 +161,7 @@ import java.util.Set;
  * </p>
  *
  * <p>
- * Here is a listing of how Group is related to some portal entities ...
+ * Here is a listing of how Group is related to some portal entities:
  * </p>
  *
  * <ul>
@@ -169,28 +169,28 @@ import java.util.Set;
  * Site is a Group with <code>className="Group"</code>
  * </li>
  * <li>
- * Company has 1 Group (this is the global scope, but never has pages)
+ * Company has one Group (this is the global scope, but never has pages)
  * </li>
  * <li>
- * User has 1 Group (pages are optional based on the behavior configuration for
+ * User has one Group (pages are optional based on the behavior configuration for
  * personal pages)
  * </li>
  * <li>
- * Layout Template (<code>LayoutPrototype</code>) has 1 Group which uses only 1
- * of it's 2 LayoutSets to store a single page which can later be used to
+ * Layout Template (<code>LayoutPrototype</code>) has 1 Group which uses only one
+ * of its two LayoutSets to store a single page which can later be used to
  * derive a single page in any Site
  * </li>
  * <li>
  * Site Template (<code>LayoutSetPrototype</code>) has 1 Group which uses only
- * 1 of it's 2 LayoutSets to store many pages which can later be used to derive
+ * one of its two LayoutSets to store many pages which can later be used to derive
  * entire Sites or pulled into an existing Site
  * </li>
  * <li>
- * Organization has 1 Group, but can also be associated to a Site at any point
- * in it's life cycle in order to support having pages
+ * Organization has one Group, but can also be associated to a Site at any point
+ * in its life cycle in order to support having pages
  * </li>
  * <li>
- * UserGroup has 1 Group that can have pages in both of the group's LayoutSets
+ * UserGroup has one Group that can have pages in both of the group's LayoutSets
  * which are later inherited by users assigned to the UserGroup
  * </li>
  * </ul>

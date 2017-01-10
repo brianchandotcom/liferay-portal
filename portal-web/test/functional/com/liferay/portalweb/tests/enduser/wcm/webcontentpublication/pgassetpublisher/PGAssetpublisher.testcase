@@ -301,14 +301,24 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#rate4StarsPG" />
+		<execute macro="AssetPublisherPortlet#rateAssetPG">
+			<var name="emptyStarPosition" value="4" />
+		</execute>
 
 		<execute macro="Navigator#gotoPage">
 			<var name="assetTitle" value="WC WebContent Title" />
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewRate4StarsPG" />
+		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
+			<var name="EmptyStarPositionList" value="1" />
+			<var name="ratingStarPositionList" value="1,2,3,4" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAverageRatingStarPG">
+			<var name="averageEmptyStarList" value="1" />
+			<var name="averageRatingStarList" value="1,2,3,4" />
+		</execute>
 	</command>
 
 	<command name="ConfigureAPPortletScopeMultipleSites" priority="4">

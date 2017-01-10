@@ -124,7 +124,7 @@ public class MirrorsGetTask extends Task {
 	protected void doExecute() throws IOException {
 		if (_tryLocalNetwork && _path.startsWith(_HOSTNAME)) {
 			System.out.println(
-				"The src attribute has an unneceessary reference to " +
+				"The src attribute has an unnecessary reference to " +
 					_HOSTNAME);
 
 			_path = _path.substring(_HOSTNAME.length());

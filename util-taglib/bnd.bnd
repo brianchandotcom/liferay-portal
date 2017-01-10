@@ -20,6 +20,7 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	@../lib/development/alloy-taglib.jar,\
+	@../tmp/lib-pre/com.liferay.util.taglib.compat.jar,\
 	@../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../util-java/util-java.jar!/com/liferay/util/EncryptorException.class,\
 	@../util-java/util-java.jar!/com/liferay/util/JS.class,\

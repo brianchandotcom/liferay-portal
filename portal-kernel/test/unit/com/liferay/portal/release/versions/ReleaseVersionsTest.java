@@ -82,7 +82,9 @@ public class ReleaseVersionsTest {
 			differentTypes);
 
 		final Set<Path> ignorePaths = new HashSet<>(
-			Arrays.asList(_portalPath.resolve("modules/third-party")));
+			Arrays.asList(
+				_portalPath.resolve("modules/apps/marketplace/marketplace-api"),
+				_portalPath.resolve("modules/third-party")));
 
 		Files.walkFileTree(
 			_portalPath,

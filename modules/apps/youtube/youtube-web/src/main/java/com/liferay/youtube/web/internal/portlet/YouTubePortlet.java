@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=youtube-portlet",
 		"com.liferay.portlet.display-category=category.entertainment",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/youtube.png",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=YouTube",

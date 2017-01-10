@@ -83,9 +83,9 @@ public interface DLFolderService extends BaseService {
 		ServiceContext serviceContext) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by more general {@link
-	#updateFolder(long, String, String, long, List, int,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by more
+	general {@link #updateFolder(long, String, String, long,
+	List, int, ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public DLFolder updateFolder(long folderId, java.lang.String name,
@@ -209,8 +209,8 @@ public interface DLFolderService extends BaseService {
 		java.lang.String name) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
-	long, boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getSubfolderIds(List, long, long, boolean)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

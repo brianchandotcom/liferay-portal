@@ -91,9 +91,9 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by more general {@link
-	#updateFolder(long, String, String, long, List, int,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by more
+	general {@link #updateFolder(long, String, String, long,
+	List, int, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -327,8 +327,8 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
-	long, boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getSubfolderIds(List, long, long, boolean)}
 	*/
 	@Deprecated
 	@Override

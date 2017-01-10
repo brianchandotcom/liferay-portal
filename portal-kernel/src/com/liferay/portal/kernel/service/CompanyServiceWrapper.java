@@ -262,9 +262,10 @@ public class CompanyServiceWrapper implements CompanyService,
 	* @param size the company's account size (optionally
 	<code>null</code>)
 	* @return the the company with the primary key
-	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
-	String, String, boolean, byte[], String, String, String,
-	String, String, String, String, String, String)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateCompany(long, String, String, String, boolean,
+	byte[], String, String, String, String, String, String,
+	String, String, String)}
 	*/
 	@Deprecated
 	@Override
@@ -314,10 +315,11 @@ public class CompanyServiceWrapper implements CompanyService,
 	* @param websites the company's websites
 	* @param properties the company's properties
 	* @return the company with the primary key
-	* @deprecated As of 7.0.0, replaced by {@link #updateCompany(long, String,
-	String, String, boolean, byte[], String, String, String,
-	String, String, String, String, String, String, String,
-	String, List, List, List, List, UnicodeProperties)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateCompany(long, String, String, String, boolean,
+	byte[], String, String, String, String, String, String,
+	String, String, String, String, String, List, List, List,
+	List, UnicodeProperties)}
 	*/
 	@Deprecated
 	@Override

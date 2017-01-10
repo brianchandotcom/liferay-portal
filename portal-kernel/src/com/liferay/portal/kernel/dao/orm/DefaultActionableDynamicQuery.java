@@ -145,7 +145,8 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setModelClass(Class)}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #setModelClass(Class)}
 	 */
 	@Deprecated
 	@Override

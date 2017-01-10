@@ -48,8 +48,8 @@ public class PortalSessionDestroyer extends BasePortalLifecycle {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortalSessionDestroyer(HttpSession)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortalSessionDestroyer(HttpSession)}
 	 */
 	@Deprecated
 	public PortalSessionDestroyer(HttpSessionEvent httpSessionEvent) {

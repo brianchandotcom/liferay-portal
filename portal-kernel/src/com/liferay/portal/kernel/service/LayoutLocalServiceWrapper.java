@@ -113,7 +113,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param endDate the export's end date
 	* @return the layout as a byte array
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -139,7 +140,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param endDate the export's end date
 	* @return the layouts as a byte array
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -154,7 +156,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -181,7 +184,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -196,7 +200,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#validateImportLayoutsFile(
 	ExportImportConfiguration, File)}
 	*/
@@ -212,7 +217,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#validateImportLayoutsFile(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -228,7 +234,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -243,7 +250,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -258,7 +266,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#validateImportPortletInfo(
 	ExportImportConfiguration, File)}
 	*/
@@ -274,7 +283,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#validateImportPortletInfo(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -290,7 +300,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -305,7 +316,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -652,8 +664,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param friendlyURL the friendly URL to be assigned
 	* @param languageId the primary key of the language
 	* @return the updated layout
-	* @deprecated As of 7.0.0, replaced by {@link #updateFriendlyURL(long,
-	long, String, String)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateFriendlyURL(long, long, String, String)}
 	*/
 	@Deprecated
 	@Override
@@ -1065,7 +1077,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#exportLayoutsAsFile(
 	ExportImportConfiguration)}
 	*/
@@ -1092,7 +1105,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param endDate the export's end date
 	* @return the layouts as a File
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1107,7 +1121,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#exportPortletInfoAsFile(
 	ExportImportConfiguration)}}
 	*/
@@ -1121,7 +1136,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1149,7 +1165,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param endDate the export's end date
 	* @return the portlet information as a file
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1449,7 +1466,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#exportLayoutsAsFileInBackground(
 	long, ExportImportConfiguration)}
 	*/
@@ -1464,7 +1482,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1481,7 +1500,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1499,7 +1519,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#exportLayoutsAsFileInBackground(
 	long, long)}
 	*/
@@ -1514,7 +1535,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#exportPortletInfoAsFileInBackground(
 	long, ExportImportConfiguration)}}
 	*/
@@ -1529,7 +1551,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1545,7 +1568,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1563,7 +1587,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#exportPortletInfoAsFileInBackground(
 	long, long)}}
 	*/
@@ -1633,7 +1658,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importLayoutsInBackground(
 	long, ExportImportConfiguration, File)}
 	*/
@@ -1649,7 +1675,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1664,7 +1691,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1679,7 +1707,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importLayoutsInBackground(
 	long, long, File)}
 	*/
@@ -1694,7 +1723,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importPortletInfoInBackground(
 	long, ExportImportConfiguration, File)}
 	*/
@@ -1710,7 +1740,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1725,7 +1756,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1740,7 +1772,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1756,7 +1789,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1772,7 +1806,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importPortletInfoInBackground(
 	long, long, File)}
 	*/
@@ -1850,7 +1885,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importLayouts(
 	ExportImportConfiguration, File)}}
 	*/
@@ -1865,7 +1901,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importLayouts(
 	ExportImportConfiguration, InputStream)}}
 	*/
@@ -1891,7 +1928,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param bytes the byte array with the data
 	* @throws PortalException
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1916,7 +1954,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param file the LAR file with the data
 	* @throws PortalException
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1941,7 +1980,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param is the input stream
 	* @throws PortalException
 	* @see com.liferay.exportimport.kernel.lar.LayoutImporter
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -1955,7 +1995,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importLayoutsDataDeletions(
 	ExportImportConfiguration, File)}
 	*/
@@ -1971,7 +2012,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importPortletDataDeletions(
 	ExportImportConfiguration, File)}
 	*/
@@ -1987,7 +2029,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importPortletInfo(
 	ExportImportConfiguration, File)}
 	*/
@@ -2002,7 +2045,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, replaced by {@link
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link
 	com.liferay.exportimport.kernel.service.ExportImportLocalService#importPortletInfo(
 	ExportImportConfiguration, InputStream)}
 	*/
@@ -2017,7 +2061,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -2031,7 +2076,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	/**
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -2057,7 +2103,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -2084,7 +2131,8 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @throws PortalException
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override

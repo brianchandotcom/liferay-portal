@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -778,6 +779,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				elementComparator);
 		}
 
+		if (!portalSource) {
+			return content;
+		}
+
 		int pos = content.indexOf("<routes>\n");
 
 		if (pos == -1) {
@@ -787,7 +792,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		StringBundler sb = new StringBundler(9);
 
 		ComparableVersion mainReleaseComparableVersion =
-			getMainReleaseComparableVersion(fileName, absolutePath, false);
+			getMainReleaseComparableVersion();
 
 		String mainReleaseVersion = mainReleaseComparableVersion.toString();
 
@@ -1264,6 +1269,23 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return elements;
 	}
 
+	protected ComparableVersion getMainReleaseComparableVersion() {
+		if (_mainReleaseComparableVersion != null) {
+			return _mainReleaseComparableVersion;
+		}
+
+		String releaseVersion = ReleaseInfo.getVersion();
+
+		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
+
+		String mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
+
+		_mainReleaseComparableVersion = new ComparableVersion(
+			mainReleaseVersion);
+
+		return _mainReleaseComparableVersion;
+	}
+
 	protected String getTablesContent(String fileName, String absolutePath)
 		throws Exception {
 
@@ -1568,6 +1590,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		"<import file=\"(.*)\"");
 	private final Pattern _incorrectDefaultPreferencesFileName =
 		Pattern.compile("/default-([\\w-]+)-portlet-preferences\\.xml$");
+	private ComparableVersion _mainReleaseComparableVersion;
 	private final Pattern _poshiClosingTagPattern = Pattern.compile(
 		"</[^>/]*>");
 	private final Pattern _poshiCommandsPattern = Pattern.compile(

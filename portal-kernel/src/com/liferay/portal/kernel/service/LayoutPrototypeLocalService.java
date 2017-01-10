@@ -86,8 +86,9 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 	public LayoutPrototype addLayoutPrototype(LayoutPrototype layoutPrototype);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addLayoutPrototype(long,
-	long, Map, Map, boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addLayoutPrototype(long, long, Map, Map, boolean,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public LayoutPrototype addLayoutPrototype(long userId, long companyId,
@@ -179,8 +180,9 @@ public interface LayoutPrototypeLocalService extends BaseLocalService,
 		LayoutPrototype layoutPrototype);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateLayoutPrototype(long,
-	Map, Map, boolean, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateLayoutPrototype(long, Map, Map, boolean,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public LayoutPrototype updateLayoutPrototype(long layoutPrototypeId,

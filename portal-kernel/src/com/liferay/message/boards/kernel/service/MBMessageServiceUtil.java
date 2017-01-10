@@ -129,8 +129,8 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getMessageDisplay(long, int)}
 	*/
 	@Deprecated
 	public static com.liferay.message.boards.kernel.model.MBMessageDisplay getMessageDisplay(
@@ -248,8 +248,8 @@ public class MBMessageServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#deleteDiscussionMessage(long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #deleteDiscussionMessage(long)}
 	*/
 	@Deprecated
 	public static void deleteDiscussionMessage(long groupId,

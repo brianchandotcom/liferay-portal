@@ -132,7 +132,8 @@ public interface TrashVersionLocalService extends BaseLocalService,
 	public TrashVersion fetchVersion(java.lang.String className, long classPK);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #fetchVersion(String, long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #fetchVersion(String, long)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

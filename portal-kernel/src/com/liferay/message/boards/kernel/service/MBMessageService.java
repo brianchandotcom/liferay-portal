@@ -108,8 +108,8 @@ public interface MBMessageService extends BaseService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getMessageDisplay(long, int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -186,8 +186,8 @@ public interface MBMessageService extends BaseService {
 		File file, java.lang.String mimeType) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#deleteDiscussionMessage(long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #deleteDiscussionMessage(long)}
 	*/
 	@java.lang.Deprecated
 	public void deleteDiscussionMessage(long groupId,

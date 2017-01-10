@@ -122,8 +122,9 @@ public class UserGroupLocalServiceUtil {
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addUserGroup(long, long, String, String,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroup addUserGroup(
@@ -279,8 +280,9 @@ public class UserGroupLocalServiceUtil {
 	* @param name the user group's name
 	* @param description the user group's description
 	* @return the user group
-	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long, long,
-	String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateUserGroup(long, long, String, String,
+	ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.UserGroup updateUserGroup(
@@ -825,7 +827,7 @@ public class UserGroupLocalServiceUtil {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userId the primary key of the user
-	* @deprecated As of 6.2.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@Deprecated
 	public static void copyUserGroupLayouts(long userGroupId, long userId)
@@ -839,7 +841,7 @@ public class UserGroupLocalServiceUtil {
 	*
 	* @param userGroupId the primary key of the user group
 	* @param userIds the primary keys of the users
-	* @deprecated As of 6.1.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@Deprecated
 	public static void copyUserGroupLayouts(long userGroupId, long[] userIds)
@@ -852,7 +854,7 @@ public class UserGroupLocalServiceUtil {
 	*
 	* @param userGroupIds the primary keys of the user groups
 	* @param userId the primary key of the user
-	* @deprecated As of 6.1.0
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	*/
 	@Deprecated
 	public static void copyUserGroupLayouts(long[] userGroupIds, long userId)

@@ -38,8 +38,8 @@ public class PortalSessionCreator extends BasePortalLifecycle {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortalSessionCreator(HttpSession)}
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	 *             {@link #PortalSessionCreator(HttpSession)}
 	 */
 	@Deprecated
 	public PortalSessionCreator(HttpSessionEvent httpSessionEvent) {

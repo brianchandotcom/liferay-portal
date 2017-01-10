@@ -95,8 +95,9 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public MBMessage addMBMessage(MBMessage mbMessage);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
-	long, long, String, String, ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addMessage(long, String, long, long, String, String,
+	ServiceContext)}
 	*/
 	@java.lang.Deprecated
 	public MBMessage addMessage(long userId, java.lang.String userName,
@@ -222,7 +223,8 @@ public interface MBMessageLocalService extends BaseLocalService,
 	public MBMessage updateMBMessage(MBMessage mbMessage);
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated
 	public MBMessage updateMessage(long messageId, java.lang.String body)
@@ -240,8 +242,8 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateStatus(long, long,
-	int, ServiceContext, Map)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateStatus(long, long, int, ServiceContext, Map)}
 	*/
 	@java.lang.Deprecated
 	public MBMessage updateStatus(long userId, long messageId, int status,
@@ -258,8 +260,9 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getDiscussionMessageDisplay(long, long, String, long, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getDiscussionMessageDisplay(long, long, String, long,
+	int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -277,8 +280,8 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getMessageDisplay(long, MBMessage, int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -287,8 +290,9 @@ public interface MBMessageLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	MBMessage, int, Comparator)} (
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getMessageDisplay(long, MBMessage, int, Comparator)}
+	(
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -305,8 +309,8 @@ public interface MBMessageLocalService extends BaseLocalService,
 		int status) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getMessageDisplay(long,
-	long, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #getMessageDisplay(long, long, int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

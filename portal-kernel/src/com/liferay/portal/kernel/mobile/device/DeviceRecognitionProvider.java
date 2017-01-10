@@ -32,7 +32,8 @@ public interface DeviceRecognitionProvider {
 	public void reload() throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, with no direct
+	 *             replacement
 	 */
 	@Deprecated
 	public void setDeviceCapabilityFilter(

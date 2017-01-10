@@ -189,7 +189,7 @@ public class SessionImpl implements Session {
 	}
 
 	/**
-	 * @deprecated As of 6.1.0
+	 * @deprecated As of com.liferay.portal.impl#NEXT-VERSION
 	 */
 	@Deprecated
 	@NotPrivileged

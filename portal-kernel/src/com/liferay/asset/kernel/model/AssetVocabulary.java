@@ -65,7 +65,8 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public long[] getSelectedClassTypePKs();
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated()
 	public com.liferay.portal.kernel.util.UnicodeProperties getSettingsProperties();
@@ -88,7 +89,8 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public boolean isMultiValued();
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #isRequired(long, long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #isRequired(long, long)}
 	*/
 	@java.lang.Deprecated()
 	public boolean isRequired(long classNameId);
@@ -96,7 +98,8 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	public boolean isRequired(long classNameId, long classTypePK);
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@java.lang.Deprecated()
 	public void setSettingsProperties(

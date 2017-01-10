@@ -40,7 +40,8 @@ public class BooleanClauseImpl<T> implements BooleanClause<T> {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getClause}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #getClause}
 	 */
 	@Deprecated
 	@Override

@@ -30,8 +30,8 @@ public class BackgroundTaskStatusRegistryUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #_getBackgroundTaskStatusRegistry()}
+	 * @deprecated As of com.liferay.portal.kernel#NEXT-VERSION, replaced by
+	 *             {@link #_getBackgroundTaskStatusRegistry()}
 	 */
 	@Deprecated
 	public static BackgroundTaskStatusRegistry

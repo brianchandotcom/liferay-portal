@@ -246,10 +246,10 @@ public class OrganizationServiceUtil {
 	names for the organization, and merge expando bridge
 	attributes for the organization.
 	* @return the organization
-	* @deprecated As of 7.0.0, replaced by {@link #updateOrganization(long,
-	long, String, String, long, long, long, String, boolean,
-	byte[], boolean, List, List, List, List, List,
-	ServiceContext)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateOrganization(long, long, String, String, long,
+	long, long, String, boolean, byte[], boolean, List, List,
+	List, List, List, ServiceContext)}
 	*/
 	@Deprecated
 	public static com.liferay.portal.kernel.model.Organization updateOrganization(

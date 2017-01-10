@@ -47,8 +47,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #addEntry(long, long, long,
-	String, String, String, String, Date, Date, int, boolean)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #addEntry(long, long, long, String, String, String,
+	String, Date, Date, int, boolean)}
 	*/
 	@Deprecated
 	@Override
@@ -199,8 +200,9 @@ public class AnnouncementsEntryLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, String,
-	String, String, String, Date, Date, int)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateEntry(long, String, String, String, String,
+	Date, Date, int)}
 	*/
 	@Deprecated
 	@Override

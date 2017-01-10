@@ -157,8 +157,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #moveDependentsToTrash(DLFolder)}
 	*/
 	@java.lang.Deprecated
 	public void moveDependentsToTrash(
@@ -169,8 +169,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#restoreDependentsFromTrash(DLFolder)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #restoreDependentsFromTrash(DLFolder)}
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(
@@ -178,8 +178,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#restoreDependentsFromTrash(List)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #restoreDependentsFromTrash(List)}
 	*/
 	@java.lang.Deprecated
 	public void restoreDependentsFromTrash(

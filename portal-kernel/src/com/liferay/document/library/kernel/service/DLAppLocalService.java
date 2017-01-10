@@ -656,8 +656,8 @@ public interface DLAppLocalService extends BaseLocalService {
 		throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	long)}
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, replaced by
+	{@link #updateFileShortcuts(long, long)}
 	*/
 	@java.lang.Deprecated
 	public void updateFileShortcuts(long toRepositoryId, long oldToFileEntryId,

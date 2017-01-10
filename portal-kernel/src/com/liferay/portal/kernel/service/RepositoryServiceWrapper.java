@@ -68,7 +68,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -77,7 +78,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override
@@ -88,7 +90,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, with no direct replacement
+	* @deprecated As of com.liferay.portal.impl#NEXT-VERSION, with no direct
+	replacement
 	*/
 	@Deprecated
 	@Override

@@ -797,23 +797,9 @@ public class WorkflowTaskDisplayContext {
 	public boolean hasOtherAssignees(WorkflowTask workflowTask)
 		throws PortalException {
 
-		long[] pooledActorsIds = getPooledActorsIds(workflowTask);
-
-		if (pooledActorsIds.length == 0) {
-			return false;
-		}
-
-		if (workflowTask.isCompleted()) {
-			return false;
-		}
-
-		if ((pooledActorsIds.length == 1) &&
-			(pooledActorsIds[0] == _workflowTaskRequestHelper.getUserId())) {
-
-			return false;
-		}
-
-		return true;
+		return WorkflowTaskManagerUtil.hasOtherAssignees(
+			workflowTask.getWorkflowTaskId(),
+			_workflowTaskRequestHelper.getUserId());
 	}
 
 	public boolean hasViewDiffsPortletURL(WorkflowTask workflowTask)

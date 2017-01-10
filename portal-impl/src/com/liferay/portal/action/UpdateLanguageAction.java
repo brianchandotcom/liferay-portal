@@ -136,7 +136,7 @@ public class UpdateLanguageAction extends Action {
 			}
 		}
 
-		if (layout.isTypeControlPanel()) {
+		if (Validator.isNotNull(queryString)) {
 			redirect = redirect + queryString;
 		}
 

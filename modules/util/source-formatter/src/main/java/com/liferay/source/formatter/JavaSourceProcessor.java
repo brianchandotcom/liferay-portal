@@ -2008,6 +2008,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				return StringUtil.insert(
 					content, StringPool.COMMA, matcher.end(3));
 			}
+
+			if (deprecatedInfo.endsWith(StringPool.PERIOD) &&
+				!deprecatedInfo.matches("[\\S\\s]*\\.[ \n][\\S\\s]*")) {
+
+				return StringUtil.replaceFirst(
+					content, StringPool.PERIOD, StringPool.BLANK,
+					matcher.end(4) - 1);
+			}
 		}
 
 		return content;

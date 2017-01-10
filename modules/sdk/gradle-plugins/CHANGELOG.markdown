@@ -951,6 +951,12 @@ to version 1.0.71.
 ### Changed
 - [LPS-69706]: Update the [Liferay CSS Builder] dependency to version 1.0.23.
 
+## 3.0.70 - 2017-01-10
+
+### Changed
+- [LPS-70060]: Update the [Liferay Gradle Plugins WSDL Builder] dependency to
+version 2.0.0.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -965,6 +971,7 @@ to version 1.0.71.
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
 [Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
+[Liferay Gradle Plugins WSDL Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-wsdl-builder
 [Liferay Jasper JSPC]: https://github.com/liferay/liferay-portal/tree/master/modules/util/jasper-jspc
 [Liferay Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/javadoc-formatter
 [Liferay Lang Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/lang-builder
@@ -1035,4 +1042,5 @@ to version 1.0.71.
 [LPS-69838]: https://issues.liferay.com/browse/LPS-69838
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
+[LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

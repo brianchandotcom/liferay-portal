@@ -17,11 +17,12 @@ package com.liferay.portal.tools.soy.builder;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
-import com.liferay.portal.tools.soy.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.soy.builder.internal.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
+
+import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -30,6 +31,9 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -37,6 +41,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
 public class SoyBuilder {
 
@@ -46,7 +51,7 @@ public class SoyBuilder {
 		JCommander jCommander = new JCommander(soyBuilderArgs);
 
 		try {
-			File jarFile = FileUtil.getJarFile();
+			File jarFile = _getJarFile();
 
 			if (jarFile.isFile()) {
 				jCommander.setProgramName("java -jar " + jarFile.getName());
@@ -95,6 +100,17 @@ public class SoyBuilder {
 		_configJSModules();
 
 		_replaceSoyTranslation();
+	}
+
+	private static File _getJarFile() throws Exception {
+		ProtectionDomain protectionDomain =
+			SoyBuilder.class.getProtectionDomain();
+
+		CodeSource codeSource = protectionDomain.getCodeSource();
+
+		URL url = codeSource.getLocation();
+
+		return new File(url.toURI());
 	}
 
 	private static void _printHelp(JCommander jCommander) throws Exception {

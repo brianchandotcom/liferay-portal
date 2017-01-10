@@ -75,14 +75,14 @@ public class SoyBuilderArgs {
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The node js executable file.",
+		description = "The Node.js executable file.",
 		names = {"-n", "--node-executable"}
 	)
 	private File _nodeExecutableFile;
 
 	@Parameter(
 		converter = FileConverter.class,
-		description = "The node modules directory.",
+		description = "The \"node_modules\" directory.",
 		names = {"-n", "--node-modules"}
 	)
 	private File _nodeModulesDir;

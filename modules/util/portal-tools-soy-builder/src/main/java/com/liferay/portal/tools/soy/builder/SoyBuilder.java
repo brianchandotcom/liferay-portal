@@ -152,15 +152,14 @@ public class SoyBuilder {
 			_nodeModulesDir, "liferay-module-config-generator/bin/index.js");
 
 		if (!jsFile.exists()) {
-			throw new IllegalStateException(
-				"Could not file " + jsFile.getName() + " in node_modules.");
+			throw new IllegalStateException("Unable to find " + jsFile);
 		}
 
 		File packageJsonFile = new File(_baseDir, "package.json");
 
 		if (!packageJsonFile.exists()) {
 			throw new IllegalStateException(
-				"Could not file package.json file in basedir.");
+				"Unable to find " + packageJsonFile);
 		}
 
 		List<String> commands = new ArrayList<>();
@@ -262,8 +261,7 @@ public class SoyBuilder {
 		File jsFile = new File(_nodeModulesDir, "metal-cli/index.js");
 
 		if (!jsFile.exists()) {
-			throw new IllegalStateException(
-				"Could not file metal-cli/index.js in node_modules.");
+			throw new IllegalStateException("Unable to find " + jsFile);
 		}
 
 		List<String> commands = new ArrayList<>();

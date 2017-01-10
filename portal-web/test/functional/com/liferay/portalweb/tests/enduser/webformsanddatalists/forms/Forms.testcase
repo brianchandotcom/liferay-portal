@@ -672,7 +672,7 @@
 		</execute>
 
 		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Jump To Page" />
+			<var name="action" value="Jump to Page" />
 			<var name="actionRowNumber" value="1" />
 			<var name="actionTarget" value="1" />
 			<var name="actionTarget2" value="3" />
@@ -691,7 +691,7 @@
 		</execute>
 
 		<execute macro="FormRules#configureActionOptions">
-			<var name="action" value="Jump To Page" />
+			<var name="action" value="Jump to Page" />
 			<var name="actionRowNumber" value="1" />
 			<var name="actionTarget" value="1" />
 			<var name="actionTarget2" value="4" />

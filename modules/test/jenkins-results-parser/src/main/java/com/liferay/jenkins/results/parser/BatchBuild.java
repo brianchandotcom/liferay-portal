@@ -312,11 +312,9 @@ public class BatchBuild extends BaseBuild {
 			Integer.toString(successCount),
 			JenkinsResultsParserUtil.getNounForm(
 				successCount, "Tests", " Test"),
-			" Passed.",
-			new DefaultElement("br"), Integer.toString(failCount),
+			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
 			JenkinsResultsParserUtil.getNounForm(failCount, "Tests", " Test"),
-			" Failed",
-			getFailureMessageElement());
+			" Failed", getFailureMessageElement());
 
 		return jobResultsElement;
 	}

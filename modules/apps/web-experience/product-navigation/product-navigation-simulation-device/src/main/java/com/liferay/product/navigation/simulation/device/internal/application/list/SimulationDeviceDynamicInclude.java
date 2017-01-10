@@ -14,47 +14,55 @@
 
 package com.liferay.product.navigation.simulation.device.internal.application.list;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
+import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import javax.servlet.ServletContext;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Lancha
  */
 @Component(immediate = true, service = DynamicInclude.class)
-public class SimulationDeviceDynamicInclude extends BaseJSPDynamicInclude {
+public class SimulationDeviceDynamicInclude extends BaseDynamicInclude {
+
+	@Override
+	public void include(
+			HttpServletRequest request, HttpServletResponse response,
+			String key)
+		throws IOException {
+
+		PrintWriter printWriter = response.getWriter();
+
+		printWriter.print(_simulationDeviceDynamicIncludeTemplate);
+	}
 
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
-	@Override
-	protected String getJspPath() {
-		return "/simulation_device_dynamic_include.jsp";
-	}
+	private static final String _simulationDeviceDynamicIncludeTemplate;
 
-	@Override
-	protected Log getLog() {
-		return _log;
-	}
+	static {
+		try (InputStream inputStream =
+				SimulationDeviceDynamicInclude.class.getResourceAsStream(
+					"/META-INF/resources/simulation_device_dynamic_include." +
+						"tmpl")) {
 
-	@Override
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.product.navigation.simulation.device)",
-		unbind = "-"
-	)
-	protected void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+			_simulationDeviceDynamicIncludeTemplate = StringUtil.read(
+				inputStream);
+		}
+		catch (IOException ioe) {
+			throw new ExceptionInInitializerError(ioe);
+		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SimulationDeviceDynamicInclude.class);
 
 }

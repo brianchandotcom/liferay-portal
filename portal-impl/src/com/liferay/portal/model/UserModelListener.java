@@ -15,12 +15,18 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -68,6 +74,39 @@ public class UserModelListener extends BaseModelListener<User> {
 			GroupLocalServiceUtil.getActionableDynamicQuery();
 
 		groupActionableDynamicQuery.setCompanyId(user.getCompanyId());
+
+		groupActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property activeProperty = PropertyFactoryUtil.forName(
+						"active");
+
+					dynamicQuery.add(activeProperty.eq(Boolean.TRUE));
+
+					long[] groupOrganizationClassNameIds = new long[] {
+						ClassNameLocalServiceUtil.getClassNameId(Group.class),
+						ClassNameLocalServiceUtil.getClassNameId(
+							Organization.class)
+					};
+
+					Property classNameIdsProperty = PropertyFactoryUtil.forName(
+						"classNameIds");
+
+					classNameIdsProperty.in(groupOrganizationClassNameIds);
+
+					Property nameProperty = PropertyFactoryUtil.forName("name");
+
+					dynamicQuery.add(nameProperty.isNotNull());
+
+					Property typeProperty = PropertyFactoryUtil.forName("type");
+
+					dynamicQuery.add(
+						typeProperty.ne(GroupConstants.TYPE_SITE_SYSTEM));
+				}
+
+			});
 
 		groupActionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod<Group>() {

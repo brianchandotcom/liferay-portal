@@ -45,7 +45,7 @@ public class FileUtil {
 				destinationFile);
 
 			try {
-				copy(new FileInputStream(sourceFile), fileOutputStream);
+				_copy(new FileInputStream(sourceFile), fileOutputStream);
 			}
 			finally {
 				fileOutputStream.close();
@@ -78,35 +78,6 @@ public class FileUtil {
 			throw new FileNotFoundException(
 				"During copy: " + sourceFile.toString());
 		}
-	}
-
-	public static void copy(InputStream inputStream, DataOutput dataOutput)
-		throws IOException {
-
-		byte[] buffer = new byte[4096 * 16];
-
-		try {
-			int size = inputStream.read(buffer);
-
-			while (size > 0) {
-				dataOutput.write(buffer, 0, size);
-
-				size = inputStream.read(buffer);
-			}
-		}
-		finally {
-			inputStream.close();
-		}
-	}
-
-	public static void copy(InputStream inputStream, OutputStream outputStream)
-		throws IOException {
-
-		DataOutputStream dos = new DataOutputStream(outputStream);
-
-		copy(inputStream, (DataOutput)dos);
-
-		outputStream.flush();
 	}
 
 	public static void delete(File file) throws IOException {
@@ -152,6 +123,36 @@ public class FileUtil {
 		URL url = codeSource.getLocation();
 
 		return new File(url.toURI());
+	}
+
+	private static void _copy(InputStream inputStream, DataOutput dataOutput)
+		throws IOException {
+
+		byte[] buffer = new byte[4096 * 16];
+
+		try {
+			int size = inputStream.read(buffer);
+
+			while (size > 0) {
+				dataOutput.write(buffer, 0, size);
+
+				size = inputStream.read(buffer);
+			}
+		}
+		finally {
+			inputStream.close();
+		}
+	}
+
+	private static void _copy(
+			InputStream inputStream, OutputStream outputStream)
+		throws IOException {
+
+		DataOutputStream dos = new DataOutputStream(outputStream);
+
+		_copy(inputStream, (DataOutput)dos);
+
+		outputStream.flush();
 	}
 
 	private static boolean _isParentOf(File a, File b) {

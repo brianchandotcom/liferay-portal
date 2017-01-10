@@ -53,6 +53,48 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
+	public Element getGitHubMessage() {
+		Element messageElement = super.getGitHubMessage();
+
+		if (messageElement == null) {
+			return messageElement;
+		}
+
+		String result = getResult();
+
+		if (result.equals("ABORTED")) {
+			return messageElement;
+		}
+
+		int failCount = 0;
+
+		Element downstreamBuildOrderedListElement = Dom4JUtil.getNewElement(
+			"ol", messageElement);
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			String downstreamBuildResult = downstreamBuild.getResult();
+
+			if (downstreamBuildResult.equals("SUCCESS")) {
+				continue;
+			}
+			else {
+				failCount++;
+
+				if (failCount < 2) {
+					Dom4JUtil.addToElement(
+						Dom4JUtil.getNewElement(
+							"li", downstreamBuildOrderedListElement),
+						downstreamBuild.getGitHubMessage());
+
+					break;
+				}
+			}
+		}
+
+		return messageElement;
+	}
+
+	@Override
 	public String getJDK() {
 		return getEnvironment("java.jdk");
 	}

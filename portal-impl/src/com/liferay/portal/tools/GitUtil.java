@@ -18,16 +18,23 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import java.nio.file.Path;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
+ * @author Andrea Di Giorgi
  */
 public class GitUtil {
 
@@ -102,6 +109,78 @@ public class GitUtil {
 		return localChangesFileNames;
 	}
 
+	public static void main(String[] args) throws Exception {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
+		String baseDirName = ArgumentsUtil.getString(
+			arguments, "git.base.dir", "./");
+		String markerFileName = ArgumentsUtil.getString(
+			arguments, "git.marker.file", null);
+		String type = ArgumentsUtil.getString(
+			arguments, "git.type", "current-branch");
+
+		try {
+			Iterable<String> fileNames;
+
+			if (type.equals("current-branch")) {
+				String gitWorkingBranchName = ArgumentsUtil.getString(
+					arguments, "git.working.branch.name", "master");
+
+				fileNames = getCurrentBranchFileNames(
+					baseDirName, gitWorkingBranchName);
+			}
+			else if (type.equals("latest-author")) {
+				fileNames = getLatestAuthorFileNames(baseDirName);
+			}
+			else if (type.equals("local-changes")) {
+				fileNames = getLocalChangesFileNames(baseDirName);
+			}
+			else {
+				throw new IllegalArgumentException();
+			}
+
+			if (Validator.isNotNull(markerFileName)) {
+				fileNames = getDirNames(baseDirName, fileNames, markerFileName);
+			}
+
+			for (String fileName : fileNames) {
+				System.out.println(fileName);
+			}
+		}
+		catch (Exception e) {
+			ArgumentsUtil.processMainException(arguments, e);
+		}
+	}
+
+	protected static Set<String> getDirNames(
+		String baseDirName, Iterable<String> fileNames, String markerFileName) {
+
+		File baseDir = new File(baseDirName);
+
+		Path baseDirPath = baseDir.toPath();
+
+		Set<String> dirNames = new HashSet<>();
+
+		for (String fileName : fileNames) {
+			File file = new File(baseDir, fileName);
+
+			File dir = getRootDir(
+				file.getParentFile(), baseDir, markerFileName);
+
+			if (dir != null) {
+				String dirName = String.valueOf(
+					baseDirPath.relativize(dir.toPath()));
+
+				dirName = StringUtil.replace(
+					dirName, File.separatorChar, CharPool.SLASH);
+
+				dirNames.add(dirName);
+			}
+		}
+
+		return dirNames;
+	}
+
 	protected static String getFileName(String fileName, int gitLevel) {
 		for (int i = 0; i < gitLevel; i++) {
 			int x = fileName.indexOf(StringPool.SLASH);
@@ -172,6 +251,24 @@ public class GitUtil {
 
 		throw new GitException(
 			"Unable to retrieve files because .git directory is missing.");
+	}
+
+	protected static File getRootDir(
+		File dir, File baseDir, String markerFileName) {
+
+		while (true) {
+			File markerFile = new File(dir, markerFileName);
+
+			if (markerFile.exists()) {
+				return dir;
+			}
+
+			dir = dir.getParentFile();
+
+			if (baseDir.equals(dir)) {
+				return null;
+			}
+		}
 	}
 
 }

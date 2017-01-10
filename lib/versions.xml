@@ -18,7 +18,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.8</version>
+				<version>1.1.10</version>
 				<project-name>Alloy TagLibs</project-name>
 				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
 				<licenses>

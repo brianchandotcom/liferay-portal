@@ -183,6 +183,8 @@ public class TrackbackMVCActionCommandTest extends PowerMockito {
 			trackbackMVCActionCommand, "_portal", PortalUtil.getPortal());
 		ReflectionTestUtil.setFieldValue(
 			trackbackMVCActionCommand, "_trackback", _trackback);
+		ReflectionTestUtil.setFieldValue(
+			trackbackMVCActionCommand, "_portal", PortalUtil.getPortal());
 
 		trackbackMVCActionCommand.addTrackback(_actionRequest, _actionResponse);
 	}

@@ -17,6 +17,8 @@ package com.liferay.jenkins.results.parser;
 import java.util.Collections;
 import java.util.List;
 
+import org.dom4j.Element;
+
 import org.json.JSONObject;
 
 /**

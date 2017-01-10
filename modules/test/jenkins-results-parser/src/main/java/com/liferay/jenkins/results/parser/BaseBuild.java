@@ -317,36 +317,57 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Element getGitHubMessageBuildLink() {
-		Element link = new DefaultElement("a");
+	public Element getGitHubMessage() {
+		String status = getStatus();
 
-		link.addAttribute("href", getBuildURL());
-
-		Element labelElement = link;
+		if (!status.equals("completed") && (getParentBuild() != null)) {
+			return null;
+		}
 
 		String result = getResult();
 
-		if (!result.equals("SUCCESS")) {
-			Element strongElement = new DefaultElement("strong");
-
-			link.add(strongElement);
-
-			labelElement = new DefaultElement("strike");
-
-			strongElement.add(labelElement);
+		if (result.equals("SUCCESS")) {
+			return null;
 		}
 
-		labelElement.addText(getJobName());
+		Element messageElement = new DefaultElement("div");
 
-		String jobVariant = getParameterValue("JOB_VARIANT");
-
-		if ((jobVariant != null) && !jobVariant.isEmpty()) {
-			labelElement.addText("/");
-
-			labelElement.addText(jobVariant);
+		if (result.equals("ABORTED")) {
+			messageElement.add(
+				Dom4JUtil.toCodeSnippetElement("Build was aborted"));
 		}
 
-		return link;
+		Dom4JUtil.addToElement(
+			messageElement,
+			Dom4JUtil.wrapWithNewElement(
+				Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName()),
+				"h5"),
+			getGitHubMessageJobResultsElement());
+
+		if (result.equals("FAILURE")) {
+			Element failureMessageElement = getFailureMessageElement();
+
+			if (failureMessageElement != null) {
+				messageElement.add(failureMessageElement);
+			}
+		}
+
+		return messageElement;
+	}
+
+	@Override
+	public Element getGitHubMessageBuildAnchor() {
+		getResult();
+
+		if (result.equals("SUCCESS")) {
+			return Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), getDisplayName());
+		}
+
+		return Dom4JUtil.getNewAnchorElement(
+			getBuildURL(), null, Dom4JUtil.wrapWithNewElement(
+				Dom4JUtil.wrapWithNewElement(getDisplayName(), "strong"),
+			"strike"));
 	}
 
 	@Override

@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -61,19 +59,12 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
-	public String getGitHubMessage() {
+	public Element getGitHubMessage() {
 		if (getParentBuild() == null) {
-			try {
-				return JenkinsResultsParserUtil.format(
-					getGitHubMessageHeader());
-			}
-			catch (IOException ioe) {
-				throw new RuntimeException(
-					"Unable to format GitHubMessage HTML", ioe);
-			}
+			return getTopGitHubMessage();
 		}
 
-		return "";
+		return super.getGitHubMessage();
 	}
 
 	public Map<String, String> getGitRepositoryDetailsTempMap(
@@ -196,6 +187,38 @@ public class TopLevelBuild extends BaseBuild {
 		}
 	}
 
+	protected Element getBaseBranchDetailsElement() {
+		String baseBranchURL =
+			"https://github.com/liferay/" + getRepositoryName() + "/" +
+				getBranchName();
+
+		String repositorySHA = getRepositorySHA(getRepositoryName());
+
+		String repositoryCommitURL =
+			"https://github.com/liferay/" + getRepositoryName() + "/commit/" +
+				repositorySHA;
+
+		Element baseBranchDetailsElement = new DefaultElement("p");
+
+		Dom4JUtil.addToElement(
+			baseBranchDetailsElement, "BranchName: ",
+			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()),
+			new DefaultElement("br"), "Branch GIT ID: ",
+			Dom4JUtil.getNewAnchorElement(repositoryCommitURL, repositorySHA));
+
+		return baseBranchDetailsElement;
+	}
+
+	protected Element getBuildTimeElement() {
+		Element buildTimeElement = new DefaultElement("p");
+
+		buildTimeElement.addText(
+			"Build Time: " +
+				JenkinsResultsParserUtil.toDurationString(getDuration()));
+
+		return buildTimeElement;
+	}
+
 	@Override
 	protected ExecutorService getExecutorService() {
 		return Executors.newFixedThreadPool(20);
@@ -210,151 +233,24 @@ public class TopLevelBuild extends BaseBuild {
 		return super.getFailureMessageGenerators();
 	}
 
-	protected Element getGitHubMessageHeader() {
-		update();
-
-		Element rootElement = new DefaultElement("html");
-
-		Element resultElement = new DefaultElement("h1");
-
-		rootElement.add(resultElement);
-
-		getResult();
-
-		if (!result.equals("SUCCESS")) {
-			resultElement.addText("Some tests FAILED.");
-		}
-		else {
-			resultElement.addText("All tests PASSED.");
-		}
-
-		Element buildTimeElement = new DefaultElement("p");
-
-		buildTimeElement.addText(
-			"Build Time: " +
-				JenkinsResultsParserUtil.toDurationString(getDuration()));
-
-		rootElement.add(buildTimeElement);
-
-		Element baseBranchHeadingElement = new DefaultElement("h4");
-
-		baseBranchHeadingElement.addText("Base Branch:");
-		rootElement.add(baseBranchHeadingElement);
-
-		Element branchDetailsElement = new DefaultElement("p");
-
-		branchDetailsElement.addText("BranchName: ");
-
-		Element branchAnchorElement = new DefaultElement("a");
-
-		branchAnchorElement.addAttribute(
-			"href",
-			"https://github.com/liferay/" + getRepositoryName() + "/" +
-				getBranchName());
-		branchAnchorElement.addText(getBranchName());
-		branchDetailsElement.add(branchAnchorElement);
-
-		branchDetailsElement.add(new DefaultElement("br"));
-
-		branchDetailsElement.addText("Branch GIT ID: ");
-
-		Element gitIDAnchorElement = new DefaultElement("a");
-
-		String repositorySHA = getRepositorySHA(getRepositoryName());
-
-		gitIDAnchorElement.addAttribute(
-			"href",
-			"https://github.com/liferay/" + getRepositoryName() + "/commit/" +
-				repositorySHA);
-
-		gitIDAnchorElement.addText(repositorySHA);
-
-		branchDetailsElement.add(gitIDAnchorElement);
-
-		rootElement.add(branchDetailsElement);
-
-		Element jobSummaryHeadingElement = new DefaultElement("h4");
-
-		rootElement.add(jobSummaryHeadingElement);
-
-		jobSummaryHeadingElement.addText("Job Summary:");
-
-		Element jobSummaryListElement = new DefaultElement("ul");
-
-		rootElement.add(jobSummaryListElement);
-
-		List<Build> builds = new ArrayList<>();
-
-		builds.add(this);
-
-		builds.addAll(getDownstreamBuilds(null));
-
-		for (Build downstreamBuild : builds) {
-			Element jobSummaryListItemElement = new DefaultElement("li");
-
-			jobSummaryListElement.add(jobSummaryListItemElement);
-
-			jobSummaryListItemElement.add(
-				downstreamBuild.getGitHubMessageBuildLink());
-		}
-
-		Element moreDetailsElement = new DefaultElement("h5");
-
-		rootElement.add(moreDetailsElement);
-
-		moreDetailsElement.addText("For more details click ");
-
-		Element jenkinsReportLink = new DefaultElement("a");
-
-		jenkinsReportLink.addAttribute("href", "jenkins.report.html");
-
-		jenkinsReportLink.addText("here");
-
-		moreDetailsElement.add(jenkinsReportLink);
-
-		moreDetailsElement.addText(".");
-
-		return rootElement;
-	}
-
 	@Override
 	protected Element getGitHubMessageJobResultsElement() {
 		Element jobResultsElement = new DefaultElement("div");
 
-		Element jobResultsHeadingElement = new DefaultElement("h6");
-
-		jobResultsElement.add(jobResultsHeadingElement);
-
-		jobResultsHeadingElement.addText("Job Results:");
-
-		Element paragraphElement = new DefaultElement("p");
-
-		jobResultsElement.add(paragraphElement);
+		jobResultsElement.add(
+			Dom4JUtil.wrapWithNewElement("Job Results:", "h6"));
 
 		int successCount = getDownstreamBuildCountByResult("SUCCESS");
 
-		paragraphElement.addText(Integer.toString(successCount));
-
-		paragraphElement.addText(" Job");
-
-		if (successCount != 1) {
-			paragraphElement.addText("s");
-		}
-
-		paragraphElement.addText(" Passed.");
-		paragraphElement.add(new DefaultElement("br"));
-
 		int failCount = getDownstreamBuildCount(null) - successCount + 1;
 
-		paragraphElement.addText(Integer.toString(failCount));
-
-		paragraphElement.addText(" Job");
-
-		if (failCount != 1) {
-			paragraphElement.addText("s");
-		}
-
-		paragraphElement.addText(" Failed.");
+		Dom4JUtil.addToElement(
+			Dom4JUtil.getNewElement("p", jobResultsElement),
+			Integer.toString(successCount),
+			JenkinsResultsParserUtil.getNounForm(successCount, "Jobs", " Job"),
+			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
+			JenkinsResultsParserUtil.getNounForm(failCount, "Jobs", " Job"),
+			" Failed.");
 
 		jobResultsElement.add(getFailureMessageElement());
 
@@ -397,6 +293,45 @@ public class TopLevelBuild extends BaseBuild {
 		sb.append(".properties");
 
 		return sb.toString();
+	}
+
+	protected Element getJobSummaryListElement() {
+		Element jobSummaryListElement = new DefaultElement("ul");
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			Element jobSummaryListItemElement = Dom4JUtil.getNewElement(
+				"li", jobSummaryListElement);
+
+			jobSummaryListItemElement.add(
+				downstreamBuild.getGitHubMessageBuildAnchor());
+		}
+
+		return jobSummaryListElement;
+	}
+
+	protected Element getMoreDetailsElement() {
+		Element moreDetailsElement = new DefaultElement("h5");
+
+		Dom4JUtil.addToElement(
+			moreDetailsElement, "For more details click ",
+			Dom4JUtil.getNewAnchorElement("jenkins.report.html", "here"), ".");
+
+		return moreDetailsElement;
+	}
+
+	protected Element getResultElement() {
+		Element resultElement = new DefaultElement("h1");
+
+		String result = getResult();
+
+		if (!result.equals("SUCCESS")) {
+			resultElement.addText("Some tests FAILED.");
+		}
+		else {
+			resultElement.addText("All tests PASSED.");
+		}
+
+		return resultElement;
 	}
 
 	@Override
@@ -459,6 +394,58 @@ public class TopLevelBuild extends BaseBuild {
 		}
 
 		return null;
+	}
+
+	protected Element getTopGitHubMessage() {
+		update();
+
+		Element rootElement = new DefaultElement("html");
+
+		Dom4JUtil.addToElement(
+			rootElement, getResultElement(), getBuildTimeElement(),
+			Dom4JUtil.wrapWithNewElement("Base Branch:", "h4"),
+			getBaseBranchDetailsElement(),
+			Dom4JUtil.wrapWithNewElement("Job Summary:", "h4"),
+			getJobSummaryListElement(), getMoreDetailsElement());
+
+		String result = getResult();
+
+		if (!result.equals("SUCCESS")) {
+			Dom4JUtil.addToElement(
+				rootElement, new DefaultElement("hr"),
+				Dom4JUtil.wrapWithNewElement("Failed Jobs:", "h4"));
+
+			Element failedJobsOrderedListElement = Dom4JUtil.getNewElement(
+				"ol", rootElement);
+
+			failedJobsOrderedListElement.add(super.getGitHubMessage());
+
+			int failureCount = 0;
+
+			for (Build downstreamBuild : getDownstreamBuilds(null)) {
+				String downstreamBuildResult = downstreamBuild.getResult();
+
+				if (downstreamBuildResult.equals("SUCCESS")) {
+					continue;
+				}
+
+				Element failedJobsListItemElement = Dom4JUtil.getNewElement(
+					"li", failedJobsOrderedListElement);
+
+				if (failureCount == 5) {
+					failedJobsListItemElement.addText("...");
+
+					break;
+				}
+
+				failedJobsListItemElement.add(
+					downstreamBuild.getGitHubMessage());
+
+				failureCount++;
+			}
+		}
+
+		return rootElement;
 	}
 
 	protected String getUpstreamBranchSHA() {

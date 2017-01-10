@@ -1216,6 +1216,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkUpgradeClass(fileName, absolutePath, className, newContent);
 
+		if (_addMissingDeprecationReleaseVersion) {
+			newContent = formatDeprecatedJavadoc(
+				fileName, absolutePath, newContent);
+		}
+
 		newContent = formatAssertEquals(fileName, newContent);
 
 		newContent = formatValidatorEquals(newContent);
@@ -1958,50 +1963,54 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String formatDeprecatedJavadoc(
-			String fileName, String absolutePath, String line)
+			String fileName, String absolutePath, String content)
 		throws Exception {
-
-		Matcher matcher = _deprecatedPattern.matcher(line);
-
-		if (!matcher.find()) {
-			return line;
-		}
 
 		ComparableVersion mainReleaseComparableVersion =
 			getMainReleaseComparableVersion(fileName, absolutePath, true);
 
 		if (mainReleaseComparableVersion == null) {
-			return line;
+			return content;
 		}
 
-		if (matcher.group(2) == null) {
-			return StringUtil.insert(
-				line, " As of " + mainReleaseComparableVersion.toString(),
-				matcher.end(1));
+		Matcher matcher = _deprecatedPattern.matcher(content);
+
+		while (matcher.find()) {
+			if (matcher.group(2) == null) {
+				return StringUtil.insert(
+					content,
+					" As of " + mainReleaseComparableVersion.toString(),
+					matcher.end(1));
+			}
+
+			String version = matcher.group(3);
+
+			ComparableVersion comparableVersion = new ComparableVersion(
+				version);
+
+			if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
+				return StringUtil.replaceFirst(
+					content, version, mainReleaseComparableVersion.toString(),
+					matcher.start());
+			}
+
+			if (StringUtil.count(version, CharPool.PERIOD) == 1) {
+				return StringUtil.insert(content, ".0", matcher.end(3));
+			}
+
+			String deprecatedInfo = matcher.group(4);
+
+			if (Validator.isNull(deprecatedInfo)) {
+				return content;
+			}
+
+			if (!deprecatedInfo.startsWith(StringPool.COMMA)) {
+				return StringUtil.insert(
+					content, StringPool.COMMA, matcher.end(3));
+			}
 		}
 
-		String version = matcher.group(3);
-
-		ComparableVersion comparableVersion = new ComparableVersion(version);
-
-		if (comparableVersion.compareTo(mainReleaseComparableVersion) > 0) {
-			return StringUtil.replaceFirst(
-				line, version, mainReleaseComparableVersion.toString());
-		}
-
-		if (StringUtil.count(version, CharPool.PERIOD) == 1) {
-			return StringUtil.insert(line, ".0", matcher.end(3));
-		}
-
-		String deprecatedInfo = matcher.group(4);
-
-		if ((deprecatedInfo != null) &&
-			!deprecatedInfo.startsWith(StringPool.COMMA)) {
-
-			return StringUtil.insert(line, StringPool.COMMA, matcher.end(3));
-		}
-
-		return line;
+		return content;
 	}
 
 	protected String formatDuplicateReferenceMethods(
@@ -2454,11 +2463,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				// LPS-58529
 
 				checkResourceUtil(line, fileName, absolutePath, lineCount);
-
-				if (_addMissingDeprecationReleaseVersion) {
-					line = formatDeprecatedJavadoc(
-						fileName, absolutePath, line);
-				}
 
 				if (trimmedLine.startsWith("* @see ") &&
 					(StringUtil.count(trimmedLine, CharPool.AT) > 1)) {
@@ -4601,7 +4605,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _customSQLFilePattern = Pattern.compile(
 		"<sql file=\"(.*)\" \\/>");
 	private final Pattern _deprecatedPattern = Pattern.compile(
-		"(^\\s*\\* @deprecated)( As of ([0-9\\.]+)(.+)?)?");
+		"(\n\\s*\\* @deprecated)( As of ([0-9\\.]+)(.*?)\n\\s*\\*( @|/))?",
+		Pattern.DOTALL);
 	private final Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(\\s*)<(.+)>\\(\n*\t*.*\\);\n");
 	private final Pattern _fetchByPrimaryKeysMethodPattern = Pattern.compile(

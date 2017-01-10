@@ -695,7 +695,7 @@
 		</execute>
 
 		<execute macro="Page#add">
-			<var name="pageName" value="Site Page Name 2" />
+			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -708,7 +708,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 2" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -733,7 +733,7 @@
 		<execute macro="IFrame#selectTopFrame" />
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 2" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -771,7 +771,7 @@
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name 2" />
+			<var name="pageName" value="Asset Publisher Page" />
 			<var name="siteName" value="Site Name" />
 		</execute>
 
@@ -781,19 +781,14 @@
 			<var name="webContentTitleEdit" value="Web Content Title Updated Feed" />
 		</execute>
 
-		<execute macro="Navigator#gotoSitePage">
-			<var name="pageName" value="Site Page Name" />
-			<var name="siteName" value="Site Name" />
-		</execute>
-
-		<execute macro="RSS#viewDisplayFeedTitle">
-			<var name="feedTitle" value="Web Asset Publisher" />
-		</execute>
-
 		<execute macro="RSS#viewUpdateFeedTitle">
 			<var name="feedHeading" value="Web Content Title Updated Feed" />
 			<var name="pageName" value="Site Page Name" />
 			<var name="updateFeed" value="true" />
+		</execute>
+
+		<execute macro="RSS#viewDisplayFeedTitle">
+			<var name="feedTitle" value="Web Asset Publisher" />
 		</execute>
 	</command>
 </definition>

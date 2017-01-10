@@ -2967,7 +2967,7 @@ Export-Package: com.liferay.ibm.icu;version="4.0.1",com.liferay.ibm.ic
  ;uses:="com.liferay.portal.kernel.webdav,javax.servlet.http",com.life
  ray.portal.kernel.webserver;version="1.0.0",com.liferay.portal.kernel
  .words;version="1.0.0";uses:="com.liferay.portal.kernel.jazzy",com.li
- feray.portal.kernel.workflow;version="7.0.0";uses:="com.liferay.asset
+ feray.portal.kernel.workflow;version="7.1.0";uses:="com.liferay.asset
  .kernel.model,com.liferay.portal.kernel.exception,com.liferay.portal.
  kernel.messaging.proxy,com.liferay.portal.kernel.model,com.liferay.po
  rtal.kernel.portlet,com.liferay.portal.kernel.service,com.liferay.por

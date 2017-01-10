@@ -118,7 +118,7 @@ class EventScreen extends HtmlScreen {
 	isValidResponseStatusCode(statusCode) {
 		var validStatusCodes = Liferay.SPA.app.getValidStatusCodes();
 
-		return (statusCode >= 200 && statusCode <= 499) || (validStatusCodes.indexOf(statusCode) > -1);
+		return (statusCode >= 200 && statusCode <= 500) || (validStatusCodes.indexOf(statusCode) > -1);
 	}
 
 	load(path) {

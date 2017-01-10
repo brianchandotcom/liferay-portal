@@ -26,15 +26,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.BasePortletToolbarContributor;
 import com.liferay.portal.kernel.portlet.toolbar.contributor.PortletToolbarContributor;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -43,7 +42,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.util.AssetUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -73,25 +71,7 @@ import org.osgi.service.component.annotations.Reference;
 	}
 )
 public class AssetPublisherPortletToolbarContributor
-	implements PortletToolbarContributor {
-
-	@Override
-	public List<Menu> getPortletTitleMenus(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		Menu addEntryPortletTitleMenu = getAddEntryPortletTitleMenu(
-			portletRequest, portletResponse);
-
-		if (addEntryPortletTitleMenu == null) {
-			return Collections.emptyList();
-		}
-
-		List<Menu> menus = new ArrayList<>();
-
-		menus.add(addEntryPortletTitleMenu);
-
-		return menus;
-	}
+	extends BasePortletToolbarContributor {
 
 	protected void addPortletTitleAddAssetEntryMenuItems(
 			List<MenuItem> menuItems, PortletRequest portletRequest,
@@ -197,36 +177,7 @@ public class AssetPublisherPortletToolbarContributor
 		menuItems.add(urlMenuItem);
 	}
 
-	protected Menu getAddEntryPortletTitleMenu(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
-
-		List<MenuItem> portletTitleMenuItems = getPortletTitleMenuItems(
-			portletRequest, portletResponse);
-
-		if (ListUtil.isEmpty(portletTitleMenuItems)) {
-			return null;
-		}
-
-		Menu menu = new Menu();
-
-		Map<String, Object> data = new HashMap<>();
-
-		data.put("qa-id", "addButton");
-
-		menu.setData(data);
-
-		menu.setDirection("right");
-		menu.setExtended(false);
-		menu.setIcon("plus");
-		menu.setMarkupView("lexicon");
-		menu.setMenuItems(portletTitleMenuItems);
-		menu.setScroll(false);
-		menu.setShowArrow(false);
-		menu.setShowWhenSingleIcon(true);
-
-		return menu;
-	}
-
+	@Override
 	protected List<MenuItem> getPortletTitleMenuItems(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

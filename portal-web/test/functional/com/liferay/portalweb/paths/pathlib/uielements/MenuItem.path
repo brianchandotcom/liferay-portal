@@ -1019,6 +1019,11 @@
 	<td></td>
 </tr>
 <tr>
+ 	<td>WORKFLOW_DEFINITIONS</td>
+ 	<td>//a[@role='menuitem' and contains(.,'Workflow Definitions')]</td>
+ 	<td></td>
+</tr>
+<tr>
 	<td>VIEW_MEMBERSHIP_REQUESTS</td>
 	<td>//a[@role='menuitem' and contains(.,'View Membership Requests')]</td>
 	<td></td>

@@ -140,7 +140,7 @@ public class DLUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, with no direct replacement.
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public static Set<Long> getFileEntryTypeSubscriptionClassPKs(long userId) {

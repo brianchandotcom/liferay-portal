@@ -481,11 +481,7 @@
 	</command>
 
 	<command name="editSitePageVariationPG">
-		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
-
-		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
+		<execute macro="Staging#navigateToSitePageVariation" />
 
 		<var name="key_sitePagesVariationName" value="${sitePagesVariationName}" />
 
@@ -497,13 +493,7 @@
 
 		<execute function="AssertClick" locator1="StagingManageVariations#UPDATE_BUTTON" value1="Update" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute macro="Staging#viewVariationSuccessMessage" />
 	</command>
 
 	<command name="editStagingConfiguration">
@@ -590,11 +580,7 @@
 	</command>
 
 	<command name="mergeSitePagesVariation">
-		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
-
-		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
+		<execute macro="Staging#navigateToSitePageVariation" />
 
 		<var name="key_rowEntry" value="${sitePagesVariationName}" />
 
@@ -610,11 +596,7 @@
 
 		<execute function="Confirm" value1="Are you sure you want to merge changes from ${sitePagesVariationMergeName}?" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-
-		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
-
-		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+		<execute macro="Staging#viewVariationSuccessMessage" />
 	</command>
 
 	<command name="moveToTheRecycleBinPublishTemplate">
@@ -629,6 +611,22 @@
 		<execute function="Click" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
 
 		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+	</command>
+
+	<command name="navigateToSitePageVariation">
+		<execute function="Click" locator1="Icon#STAGING_BAR_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="Staging#MANAGE_VARIATIONS" />
+
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
+	</command>
+
+	<command name="navigateToStagingMenuItem">
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="Click" locator1="MenuItem#STAGING" />
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 	</command>
 
 	<command name="publishCustomPublication">
@@ -671,11 +669,7 @@
 	</command>
 
 	<command name="publishToLiveNowViaPortletCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#STAGING" />
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute macro="Staging#navigateToStagingMenuItem" />
 
 		<execute function="AssertClickNoError" locator1="Button#PUBLISH_TO_LIVE" value1="Publish to Live" />
 
@@ -959,11 +953,7 @@
 	</command>
 
 	<command name="viewNoPublishContentCountViaPortletStagingCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#STAGING" />
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute macro="Staging#navigateToStagingMenuItem" />
 
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_CONTENT_COUNT" />
 		<execute function="AssertElementNotPresent" locator1="Staging#STAGING_CONTENT_INFO" />
@@ -980,11 +970,7 @@
 	</command>
 
 	<command name="viewPublishContentCountViaPortletStagingCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="Click" locator1="MenuItem#STAGING" />
-
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
+		<execute macro="Staging#navigateToStagingMenuItem" />
 
 		<execute function="AssertTextEquals" locator1="Staging#STAGING_CONTENT_COUNT" value1="${contentCount}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Staging#STAGING_CONTENT_INFO" value1="${contentInformation}" />
@@ -1046,5 +1032,15 @@
 		<execute function="SelectFrameTop" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR" value1="${validateErrorMessage}" />
+	</command>
+
+	<command name="viewVariationSuccessMessage">
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="IFrame#SITE_VARIATION_IFRAME" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 </definition>

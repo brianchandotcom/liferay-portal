@@ -101,14 +101,14 @@ public class MySitesItemSelectorView
 		request.setAttribute(SiteWebKeys.GROUP_URL_PROVIDER, _groupURLProvider);
 
 		MySitesItemSelectorViewDisplayContext
-			allSitesItemSelectorViewDisplayContext =
+			mySitesItemSelectorViewDisplayContext =
 				new MySitesItemSelectorViewDisplayContext(
 					(HttpServletRequest)request, siteItemSelectorCriterion,
 					itemSelectedEventName, portletURL, _groupSearchProvider);
 
 		request.setAttribute(
 			SitesItemSelectorWebKeys.SITES_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			allSitesItemSelectorViewDisplayContext);
+			mySitesItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 

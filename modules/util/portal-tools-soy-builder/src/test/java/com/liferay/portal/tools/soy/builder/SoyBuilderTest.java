@@ -14,7 +14,7 @@
 
 package com.liferay.portal.tools.soy.builder;
 
-import com.liferay.portal.tools.soy.builder.internal.util.FileUtil;
+import com.liferay.portal.tools.soy.builder.util.FileTestUtil;
 
 import java.io.File;
 
@@ -36,7 +36,7 @@ public class SoyBuilderTest {
 		File testDir = new File("build/test");
 
 		if (testDir.exists()) {
-			FileUtil.delete(testDir);
+			FileTestUtil.delete(testDir);
 		}
 
 		Assert.assertTrue(testDir.mkdirs());
@@ -48,7 +48,7 @@ public class SoyBuilderTest {
 		Assert.assertTrue(resources.listFiles().length > 0);
 
 		for (File resource : resources.listFiles()) {
-			FileUtil.copy(resource, new File(testDir, resource.getName()));
+			FileTestUtil.copy(resource, new File(testDir, resource.getName()));
 		}
 
 		File nodeExecutableFile = new File("build/node/bin/node");

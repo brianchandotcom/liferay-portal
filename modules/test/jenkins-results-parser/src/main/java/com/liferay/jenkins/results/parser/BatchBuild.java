@@ -311,9 +311,9 @@ public class BatchBuild extends BaseBuild {
 			Dom4JUtil.getNewElement("p", jobResultsElement),
 			Integer.toString(successCount),
 			JenkinsResultsParserUtil.getNounForm(
-				successCount, "Tests", " Test"),
+				successCount, " Tests", " Test"),
 			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
-			JenkinsResultsParserUtil.getNounForm(failCount, "Tests", " Test"),
+			JenkinsResultsParserUtil.getNounForm(failCount, " Tests", " Test"),
 			" Failed", getFailureMessageElement());
 
 		return jobResultsElement;

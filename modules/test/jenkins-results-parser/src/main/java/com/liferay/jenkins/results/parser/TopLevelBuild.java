@@ -299,9 +299,9 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(
 			Dom4JUtil.getNewElement("p", jobResultsElement),
 			Integer.toString(successCount),
-			JenkinsResultsParserUtil.getNounForm(successCount, "Jobs", " Job"),
+			JenkinsResultsParserUtil.getNounForm(successCount, " Jobs", " Job"),
 			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
-			JenkinsResultsParserUtil.getNounForm(failCount, "Jobs", " Job"),
+			JenkinsResultsParserUtil.getNounForm(failCount, " Jobs", " Job"),
 			" Failed.");
 
 		return jobResultsElement;

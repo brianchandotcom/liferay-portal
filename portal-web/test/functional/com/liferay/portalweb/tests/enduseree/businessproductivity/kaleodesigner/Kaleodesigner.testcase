@@ -164,6 +164,10 @@
 			<var name="portlet" value="Kaleo Designer" />
 		</execute>
 
+		<execute function="AssertVisible" locator1="MenuItem#WORKFLOW_DEFINITIONS" />
+
+		<execute function="AssertTextEquals" locator1="ControlMenu#HEADER_TITLE" value1="Kaleo Designer" />
+
 		<execute macro="ProductMenuHelper#closeProductMenu" />
 
 		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">

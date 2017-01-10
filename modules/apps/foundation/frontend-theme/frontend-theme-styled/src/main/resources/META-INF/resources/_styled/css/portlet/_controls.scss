@@ -6,6 +6,10 @@ body.portlet {
 	border-width: 0;
 }
 
+.portlet-icon-back {
+	margin-top: -2px;
+}
+
 .portlet-topper {
 	position: relative;
 
@@ -27,13 +31,12 @@ body.portlet {
 
 .portlet-title-text {
 	display: inline-block;
-
-	@include ellipsis;
-
-	line-height: $icon-monospaced-size;
 	margin-top: 0;
 	max-width: 95%;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	vertical-align: top;
+	white-space: nowrap;
 }
 
 .panel-page-content, .panel-page-body {

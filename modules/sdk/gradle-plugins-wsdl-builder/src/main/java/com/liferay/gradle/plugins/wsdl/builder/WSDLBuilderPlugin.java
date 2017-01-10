@@ -233,7 +233,7 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 		return javaExec;
 	}
 
-	protected Task addTaskBuildWSDLJar(
+	protected Jar addTaskBuildWSDLJar(
 		BuildWSDLTask buildWSDLTask, File inputFile, Task compileTask,
 		final Task generateTask) {
 
@@ -289,14 +289,14 @@ public class WSDLBuilderPlugin implements Plugin<Project> {
 				buildWSDLTask, wsdlBuilderConfiguration, inputFile, tmpDir,
 				generateTask);
 
-			Task jarTask = addTaskBuildWSDLJar(
+			Jar jar = addTaskBuildWSDLJar(
 				buildWSDLTask, inputFile, compileTask, generateTask);
 
-			buildWSDLTask.dependsOn(jarTask);
+			buildWSDLTask.dependsOn(jar);
 
 			TaskOutputs taskOutputs = buildWSDLTask.getOutputs();
 
-			taskOutputs.file(jarTask.getOutputs());
+			taskOutputs.file(jar.getArchivePath());
 		}
 		else {
 			Task generateTask = addTaskBuildWSDLGenerate(

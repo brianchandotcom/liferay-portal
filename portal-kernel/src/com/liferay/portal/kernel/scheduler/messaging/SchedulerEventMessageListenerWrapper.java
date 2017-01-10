@@ -30,8 +30,11 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashCode;
+import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Shuyang Zhou
@@ -40,8 +43,45 @@ public class SchedulerEventMessageListenerWrapper
 	implements SchedulerEventMessageListener {
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SchedulerEventMessageListenerWrapper)) {
+			return false;
+		}
+
+		SchedulerEventMessageListenerWrapper
+			schedulerEventMessageListenerWrapper =
+				(SchedulerEventMessageListenerWrapper)obj;
+
+		if (Objects.equals(
+				_messageListener,
+				schedulerEventMessageListenerWrapper._messageListener) &&
+			Objects.equals(
+				_schedulerEntry,
+				schedulerEventMessageListenerWrapper._schedulerEntry)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public SchedulerEntry getSchedulerEntry() {
 		return _schedulerEntry;
+	}
+
+	@Override
+	public int hashCode() {
+		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+
+		hashCode.append(_messageListener);
+		hashCode.append(_schedulerEntry);
+
+		return hashCode.toHashCode();
 	}
 
 	@Override

@@ -28,8 +28,8 @@ public class SoyBuilderArgs {
 		return _baseDir;
 	}
 
-	public File getNodeExecutable() {
-		return _nodeExecutable;
+	public File getNodeExecutableFile() {
+		return _nodeExecutableFile;
 	}
 
 	public File getNodeModulesDir() {
@@ -44,8 +44,8 @@ public class SoyBuilderArgs {
 		_baseDir = baseDir;
 	}
 
-	public void setNodeExecutable(File nodeExecutable) {
-		_nodeExecutable = nodeExecutable;
+	public void setNodeExecutableFile(File nodeExecutableFile) {
+		_nodeExecutableFile = nodeExecutableFile;
 	}
 
 	public void setNodeModulesDir(File nodeModulesDir) {
@@ -78,7 +78,7 @@ public class SoyBuilderArgs {
 		description = "The node js executable file.",
 		names = {"-n", "--node-executable"}
 	)
-	private File _nodeExecutable;
+	private File _nodeExecutableFile;
 
 	@Parameter(
 		converter = FileConverter.class,

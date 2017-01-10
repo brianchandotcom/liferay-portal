@@ -61,9 +61,9 @@ public class SoyBuilder {
 				_printHelp(jCommander);
 			}
 			else {
-				SoyBuilder themeBuilder = new SoyBuilder(soyBuilderArgs);
+				SoyBuilder soyBuilder = new SoyBuilder(soyBuilderArgs);
 
-				themeBuilder.build();
+				soyBuilder.build();
 			}
 		}
 		catch (ParameterException pe) {
@@ -74,18 +74,18 @@ public class SoyBuilder {
 	}
 
 	public SoyBuilder(
-		File baseDir, File nodeExecutable, File nodeModulesDir,
+		File baseDir, File nodeExecutableFile, File nodeModulesDir,
 		File outputDir) {
 
 		_baseDir = baseDir;
-		_nodeExecutable = nodeExecutable;
+		_nodeExecutableFile = nodeExecutableFile;
 		_nodeModulesDir = nodeModulesDir;
 		_outputDir = outputDir;
 	}
 
 	public SoyBuilder(SoyBuilderArgs soyBuilderArgs) {
 		this(
-			soyBuilderArgs.getBaseDir(), soyBuilderArgs.getNodeExecutable(),
+			soyBuilderArgs.getBaseDir(), soyBuilderArgs.getNodeExecutableFile(),
 			soyBuilderArgs.getNodeModulesDir(), soyBuilderArgs.getOutputDir());
 	}
 
@@ -165,7 +165,7 @@ public class SoyBuilder {
 
 		List<String> commands = new ArrayList<>();
 
-		commands.add(_nodeExecutable.getCanonicalPath());
+		commands.add(_nodeExecutableFile.getCanonicalPath());
 		commands.add(jsFile.getCanonicalPath());
 		commands.add("--config");
 		commands.add("");
@@ -268,7 +268,7 @@ public class SoyBuilder {
 
 		List<String> commands = new ArrayList<>();
 
-		commands.add(_nodeExecutable.getAbsolutePath());
+		commands.add(_nodeExecutableFile.getAbsolutePath());
 		commands.add(jsFile.getAbsolutePath());
 		commands.add("build");
 		commands.add("--bundleFileName");
@@ -320,7 +320,7 @@ public class SoyBuilder {
 			"\\s*(?:,\\s*\\{([\\s\\S]+?)\\})?\\);");
 
 	private final File _baseDir;
-	private final File _nodeExecutable;
+	private final File _nodeExecutableFile;
 	private final File _nodeModulesDir;
 	private final File _outputDir;
 

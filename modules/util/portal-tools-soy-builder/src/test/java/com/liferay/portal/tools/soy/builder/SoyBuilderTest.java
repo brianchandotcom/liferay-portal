@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.soy.builder;
 
-import static org.junit.Assert.assertTrue;
-
 import com.liferay.portal.tools.soy.builder.internal.util.FileUtil;
 
 import java.io.File;
@@ -25,6 +23,7 @@ import java.nio.file.Files;
 
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -40,46 +39,46 @@ public class SoyBuilderTest {
 			FileUtil.delete(testDir);
 		}
 
-		assertTrue(testDir.mkdirs());
+		Assert.assertTrue(testDir.mkdirs());
 
 		File resources = new File("src/test/resources");
 
-		assertTrue(resources.exists());
+		Assert.assertTrue(resources.exists());
 
-		assertTrue(resources.listFiles().length > 0);
+		Assert.assertTrue(resources.listFiles().length > 0);
 
 		for (File resource : resources.listFiles()) {
 			FileUtil.copy(resource, new File(testDir, resource.getName()));
 		}
 
-		File nodeExecutable = new File("build/node/bin/node");
+		File nodeExecutableFile = new File("build/node/bin/node");
 
-		assertTrue(nodeExecutable.exists());
+		Assert.assertTrue(nodeExecutableFile.exists());
 
 		File nodeModulesDir = new File("node_modules");
 
-		assertTrue(nodeModulesDir.exists());
+		Assert.assertTrue(nodeModulesDir.exists());
 
 		File baseDir = new File(testDir, "srcDir");
 
 		File outputDir = new File(baseDir, "outputDir");
 
 		SoyBuilder soyBuilder = new SoyBuilder(
-			baseDir, nodeExecutable, nodeModulesDir, outputDir);
+			baseDir, nodeExecutableFile, nodeModulesDir, outputDir);
 
 		soyBuilder.build();
 
 		File outputFile = new File(
 			outputDir, "META-INF/resources/Footer.soy.js");
 
-		assertTrue(outputFile.exists());
+		Assert.assertTrue(outputFile.exists());
 
 		List<String> lines = Files.readAllLines(
 			outputFile.toPath(), StandardCharsets.UTF_8);
 
-		assertTrue(_contains("Liferay.Language.get", lines));
+		Assert.assertTrue(_contains("Liferay.Language.get", lines));
 
-		assertTrue(
+		Assert.assertTrue(
 			_contains("this-portlet-was-written-using-soy-templates", lines));
 	}
 

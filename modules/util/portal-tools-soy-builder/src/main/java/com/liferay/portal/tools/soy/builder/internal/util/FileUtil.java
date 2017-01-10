@@ -40,79 +40,89 @@ import java.security.ProtectionDomain;
  */
 public class FileUtil {
 
-	public static void copy(File src, File dest) throws IOException {
-		if (src.isFile()) {
-			FileOutputStream out = new FileOutputStream(dest);
+	public static void copy(File sourceFile, File destinationFile)
+		throws IOException {
+
+		if (sourceFile.isFile()) {
+			FileOutputStream fileOutputStream = new FileOutputStream(
+				destinationFile);
 
 			try {
-				copy(new FileInputStream(src), out);
+				copy(new FileInputStream(sourceFile), fileOutputStream);
 			}
 			finally {
-				out.close();
+				fileOutputStream.close();
 			}
 		}
-		else if (src.isDirectory()) {
-			if (!dest.exists() && !dest.mkdirs()) {
-				throw new IOException("Could not create directory " + dest);
+		else if (sourceFile.isDirectory()) {
+			if (!destinationFile.exists() && !destinationFile.mkdirs()) {
+				throw new IOException(
+					"Could not create directory " + destinationFile);
 			}
 
-			if (!dest.isDirectory()) {
+			if (!destinationFile.isDirectory()) {
 				throw new IllegalArgumentException(
 					"target directory for a directory must be a directory: " +
-						dest);
+						destinationFile);
 			}
 
-			if (_isParentOf(src, dest)) {
+			if (_isParentOf(sourceFile, destinationFile)) {
 				throw new IllegalArgumentException(
 					"target directory can not be child of source directory.");
 			}
 
-			File[] subs = src.listFiles();
+			File[] files = sourceFile.listFiles();
 
-			for (File sub : subs) {
-				copy(sub, new File(dest, sub.getName()));
+			for (File file : files) {
+				copy(file, new File(destinationFile, file.getName()));
 			}
 		}
 		else {
-			throw new FileNotFoundException("During copy: " + src.toString());
+			throw new FileNotFoundException(
+				"During copy: " + sourceFile.toString());
 		}
 	}
 
-	public static void copy(InputStream in, DataOutput out) throws IOException {
+	public static void copy(InputStream inputStream, DataOutput dataOutput)
+		throws IOException {
+
 		byte[] buffer = new byte[4096 * 16];
 
 		try {
-			int size = in.read(buffer);
+			int size = inputStream.read(buffer);
 
 			while (size > 0) {
-				out.write(buffer, 0, size);
-				size = in.read(buffer);
+				dataOutput.write(buffer, 0, size);
+
+				size = inputStream.read(buffer);
 			}
 		}
 		finally {
-			in.close();
+			inputStream.close();
 		}
 	}
 
-	public static void copy(InputStream src, File dest) throws IOException {
-		FileOutputStream out = new FileOutputStream(dest);
+	public static void copy(InputStream inputStream, File destinationFile)
+		throws IOException {
+
+		FileOutputStream out = new FileOutputStream(destinationFile);
 
 		try {
-			copy(src, out);
+			copy(inputStream, out);
 		}
 		finally {
 			out.close();
 		}
 	}
 
-	public static void copy(InputStream in, OutputStream out)
+	public static void copy(InputStream inputStream, OutputStream outputStream)
 		throws IOException {
 
-		DataOutputStream dos = new DataOutputStream(out);
+		DataOutputStream dos = new DataOutputStream(outputStream);
 
-		copy(in, (DataOutput)dos);
+		copy(inputStream, (DataOutput)dos);
 
-		out.flush();
+		outputStream.flush();
 	}
 
 	public static void delete(File file) throws IOException {
@@ -130,9 +140,9 @@ public class FileUtil {
 		boolean wasDeleted = true;
 
 		if (file.isDirectory()) {
-			File[] subs = file.listFiles();
+			File[] files = file.listFiles();
 
-			for (File sub : subs) {
+			for (File sub : files) {
 				try {
 					delete(sub);
 				}
@@ -142,9 +152,9 @@ public class FileUtil {
 			}
 		}
 
-		boolean fDeleted = file.delete();
+		boolean deleted = file.delete();
 
-		if (!fDeleted || !wasDeleted) {
+		if (!deleted || !wasDeleted) {
 			throw new IOException("Failed to delete " + file.getAbsoluteFile());
 		}
 	}

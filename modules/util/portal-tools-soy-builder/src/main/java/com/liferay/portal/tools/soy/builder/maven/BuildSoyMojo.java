@@ -52,7 +52,7 @@ public class BuildSoyMojo extends AbstractMojo {
 	 * @parameter default-value="${node.executable}"
 	 */
 	public void setNodeExecutable(File nodeExecutable) {
-		_soyBuilderArgs.setNodeExecutable(nodeExecutable);
+		_soyBuilderArgs.setNodeExecutableFile(nodeExecutable);
 	}
 
 	/**

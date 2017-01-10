@@ -85,10 +85,10 @@ public class PollsQuestionStagedModelDataHandlerTest
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 
-		PollsQuestion importedEntry = (PollsQuestion)getStagedModel(
+		PollsQuestion importedQuestion = (PollsQuestion)getStagedModel(
 			pollsQuestion.getUuid(), liveGroup);
 
-		Assert.assertNotNull(importedEntry);
+		Assert.assertNotNull(importedQuestion);
 	}
 
 	@Override

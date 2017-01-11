@@ -5,7 +5,7 @@
 		<pluginExecution>
 			<pluginExecutionFilter>
 				<goals>
-					<goal>build-soy</goal>
+					<goal>replace-translation</goal>
 				</goals>
 			</pluginExecutionFilter>
 			<action>

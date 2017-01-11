@@ -23,7 +23,3 @@ dependencies {
 formatSource {
 	mustRunAfter formatXML
 }
-
-test {
-	dependsOn downloadNode, downloadMetalCli, npmInstall
-}

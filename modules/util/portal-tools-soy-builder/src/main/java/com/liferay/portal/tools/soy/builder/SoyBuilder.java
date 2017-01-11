@@ -17,30 +17,21 @@ package com.liferay.portal.tools.soy.builder;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
-import com.liferay.portal.tools.soy.builder.internal.util.Validator;
+import com.liferay.portal.tools.soy.builder.commands.Command;
+import com.liferay.portal.tools.soy.builder.internal.SoyBuilderArgs;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.ServiceLoader;
 
 /**
- * @author Gregory Amerson
  * @author Andrea Di Giorgi
  */
 public class SoyBuilder {
@@ -50,56 +41,48 @@ public class SoyBuilder {
 
 		JCommander jCommander = new JCommander(soyBuilderArgs);
 
+		for (Command command : ServiceLoader.load(Command.class)) {
+			jCommander.addCommand(command);
+		}
+
+		File jarFile = _getJarFile();
+
+		if (jarFile.isFile()) {
+			jCommander.setProgramName("java -jar " + jarFile.getName());
+		}
+		else {
+			jCommander.setProgramName(SoyBuilder.class.getName());
+		}
+
 		try {
-			File jarFile = _getJarFile();
-
-			if (jarFile.isFile()) {
-				jCommander.setProgramName("java -jar " + jarFile.getName());
-			}
-			else {
-				jCommander.setProgramName(SoyBuilder.class.getName());
-			}
-
 			jCommander.parse(args);
 
-			if (soyBuilderArgs.isHelp()) {
+			String commandName = jCommander.getParsedCommand();
+
+			if (soyBuilderArgs.isHelp() || (commandName == null)) {
 				_printHelp(jCommander);
 			}
 			else {
-				SoyBuilder soyBuilder = new SoyBuilder(soyBuilderArgs);
+				Map<String, JCommander> commandJCommanders =
+					jCommander.getCommands();
 
-				soyBuilder.build();
+				JCommander commandJCommander = commandJCommanders.get(
+					commandName);
+
+				List<Object> commandObjects = commandJCommander.getObjects();
+
+				Command command = (Command)commandObjects.get(0);
+
+				command.execute();
 			}
 		}
 		catch (ParameterException pe) {
-			System.err.println(pe.getMessage());
+			if (!soyBuilderArgs.isHelp()) {
+				System.err.println(pe.getMessage());
+			}
 
 			_printHelp(jCommander);
 		}
-	}
-
-	public SoyBuilder(
-		File baseDir, File nodeExecutableFile, File nodeModulesDir,
-		File outputDir) {
-
-		_baseDir = baseDir;
-		_nodeExecutableFile = nodeExecutableFile;
-		_nodeModulesDir = nodeModulesDir;
-		_outputDir = outputDir;
-	}
-
-	public SoyBuilder(SoyBuilderArgs soyBuilderArgs) {
-		this(
-			soyBuilderArgs.getBaseDir(), soyBuilderArgs.getNodeExecutableFile(),
-			soyBuilderArgs.getNodeModulesDir(), soyBuilderArgs.getOutputDir());
-	}
-
-	public void build() throws Exception {
-		_transpileJS();
-
-		_configJSModules();
-
-		_replaceSoyTranslation();
 	}
 
 	private static File _getJarFile() throws Exception {
@@ -113,229 +96,15 @@ public class SoyBuilder {
 		return new File(url.toURI());
 	}
 
-	private static void _printHelp(JCommander jCommander) throws Exception {
-		jCommander.usage();
-	}
+	private static void _printHelp(JCommander jCommander) {
+		String commandName = jCommander.getParsedCommand();
 
-	private void _appendArgumentReplaces(
-		StringBuilder sb, String argumentsObject, String variableName) {
-
-		int i = 0;
-
-		Matcher matcher = _argumentsObjectPattern.matcher(argumentsObject);
-
-		while (matcher.find()) {
-			sb.append(System.lineSeparator());
-
-			sb.append(variableName);
-			sb.append(" = ");
-			sb.append(variableName);
-			sb.append(".replace('{");
-			sb.append(i);
-			sb.append("}', ");
-			sb.append(matcher.group(1));
-			sb.append(");");
-
-			i++;
+		if (commandName == null) {
+			jCommander.usage();
+		}
+		else {
+			jCommander.usage(commandName);
 		}
 	}
-
-	private String _call(
-		String variableName, String languageKey, String argumentsObject) {
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("var ");
-		sb.append(variableName);
-
-		// Split string to avoid SF error
-
-		sb.append(" = Liferay.Language");
-		sb.append(".get('");
-
-		sb.append(_fixLanguageKey(languageKey));
-		sb.append("');");
-
-		if (Validator.isNotNull(argumentsObject)) {
-			_appendArgumentReplaces(sb, argumentsObject, variableName);
-		}
-
-		return sb.toString();
-	}
-
-	private void _configJSModules() throws Exception {
-		File jsFile = new File(
-			_nodeModulesDir, "liferay-module-config-generator/bin/index.js");
-
-		if (!jsFile.exists()) {
-			throw new IllegalStateException("Unable to find " + jsFile);
-		}
-
-		File packageJsonFile = new File(_baseDir, "package.json");
-
-		if (!packageJsonFile.exists()) {
-			throw new IllegalStateException(
-				"Unable to find " + packageJsonFile);
-		}
-
-		List<String> commands = new ArrayList<>();
-
-		commands.add(_nodeExecutableFile.getCanonicalPath());
-		commands.add(jsFile.getCanonicalPath());
-		commands.add("--config");
-		commands.add("");
-		commands.add("--extension");
-		commands.add("");
-		commands.add("--filePattern");
-		commands.add("**/resources/*.js");
-		commands.add("--format");
-		commands.add("/_/g,-");
-		commands.add("--ignorePath");
-		commands.add("true");
-		commands.add("--moduleConfig");
-		commands.add(_baseDir.getAbsolutePath() + "/package.json");
-		commands.add("--output");
-		commands.add(_outputDir.getAbsolutePath() + "/META-INF/config.json");
-		commands.add("--moduleRoot");
-		commands.add(_outputDir.getAbsolutePath() + "/META-INF/resources");
-		commands.add(_outputDir.getAbsolutePath() + "/META-INF");
-
-		ProcessBuilder processBuilder = new ProcessBuilder(commands);
-
-		processBuilder.directory(_baseDir.getAbsoluteFile());
-
-		processBuilder.inheritIO();
-
-		Process process = processBuilder.start();
-
-		int exitCode = process.waitFor();
-
-		if (exitCode > 0) {
-			throw new IllegalStateException(
-				"Node executable returned error: " + exitCode);
-		}
-	}
-
-	private String _fixLanguageKey(String languageKey) {
-		Matcher matcher = _languageKeyPlaceholderPattern.matcher(languageKey);
-
-		return matcher.replaceAll("x");
-	}
-
-	private void _replaceSoyTranslation() throws IOException {
-		final List<Path> soyJsFiles = new ArrayList<>();
-
-		Files.walkFileTree(
-			_outputDir.toPath(),
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path file, BasicFileAttributes attrs)
-					throws IOException {
-
-					if (file.toString().endsWith(".soy.js")) {
-						soyJsFiles.add(file);
-					}
-
-					return super.visitFile(file, attrs);
-				}
-
-			});
-
-		for (Path soyJsFile : soyJsFiles) {
-			String content = new String(
-				Files.readAllBytes(soyJsFile), StandardCharsets.UTF_8);
-
-			Matcher matcher = _pattern.matcher(content);
-
-			StringBuffer sb = new StringBuffer();
-
-			boolean found = false;
-
-			while (matcher.find()) {
-				found = true;
-
-				String replacement = _call(
-					matcher.group(1), matcher.group(2), matcher.group(3));
-
-				matcher.appendReplacement(sb, replacement);
-			}
-
-			matcher.appendTail(sb);
-
-			if (found) {
-				content = sb.toString();
-
-				Files.write(
-					soyJsFile, content.getBytes(StandardCharsets.UTF_8));
-			}
-		}
-	}
-
-	private void _transpileJS() throws Exception {
-		File jsFile = new File(_nodeModulesDir, "metal-cli/index.js");
-
-		if (!jsFile.exists()) {
-			throw new IllegalStateException("Unable to find " + jsFile);
-		}
-
-		List<String> commands = new ArrayList<>();
-
-		commands.add(_nodeExecutableFile.getAbsolutePath());
-		commands.add(jsFile.getAbsolutePath());
-		commands.add("build");
-		commands.add("--bundleFileName");
-		commands.add("");
-		commands.add("--dest");
-		commands.add(_outputDir.getAbsolutePath() + "/META-INF/resources");
-		commands.add("--format");
-		commands.add("amd");
-		commands.add("--globalName");
-		commands.add("");
-		commands.add("--moduleName");
-		commands.add("");
-		commands.add("--soyDeps");
-		commands.add(
-			_nodeModulesDir.getAbsolutePath() + "/lexicon*/src/**/*.soy");
-		commands.add(
-			_nodeModulesDir.getAbsolutePath() + "/metal*/src/**/*.soy");
-		commands.add("--soyDest");
-		commands.add(_outputDir.getAbsolutePath() + "/META-INF/resources");
-		commands.add("--soySrc");
-		commands.add("**/*.soy");
-		commands.add("--src");
-		commands.add("**/*.es.js");
-		commands.add("**/*.soy.js");
-
-		ProcessBuilder processBuilder = new ProcessBuilder(commands);
-
-		processBuilder.directory(
-			new File(_outputDir.getAbsoluteFile(), "META-INF/resources"));
-
-		processBuilder.inheritIO();
-
-		Process process = processBuilder.start();
-
-		int exitCode = process.waitFor();
-
-		if (exitCode > 0) {
-			throw new IllegalStateException(
-				"Node executable returned error: " + exitCode);
-		}
-	}
-
-	private static final Pattern _argumentsObjectPattern = Pattern.compile(
-		"'.+'\\s*:\\s*([\\d\\w\\._]+)+");
-	private static final Pattern _languageKeyPlaceholderPattern =
-		Pattern.compile("\\{\\$\\w+\\}");
-	private static final Pattern _pattern = Pattern.compile(
-		"var (MSG_EXTERNAL_\\d+) = goog\\.getMsg\\(\\s*'([\\w-\\{\\}\\$]+)'" +
-			"\\s*(?:,\\s*\\{([\\s\\S]+?)\\})?\\);");
-
-	private final File _baseDir;
-	private final File _nodeExecutableFile;
-	private final File _nodeModulesDir;
-	private final File _outputDir;
 
 }

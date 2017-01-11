@@ -14,143 +14,43 @@
 
 package com.liferay.portal.tools.soy.builder.util;
 
-import java.io.DataOutput;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.InputStreamReader;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author Andrea Di Giorgi
- * @author Gregory Amerson
  */
 public class FileTestUtil {
 
-	public static void copy(File sourceFile, File destinationFile)
-		throws IOException {
+	public static String read(Class<?> clazz, String name) throws IOException {
+		StringBuilder sb = new StringBuilder();
 
-		if (sourceFile.isFile()) {
-			FileOutputStream fileOutputStream = new FileOutputStream(
-				destinationFile);
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(clazz.getResourceAsStream(name)))) {
 
-			try {
-				_copy(new FileInputStream(sourceFile), fileOutputStream);
-			}
-			finally {
-				fileOutputStream.close();
-			}
-		}
-		else if (sourceFile.isDirectory()) {
-			if (!destinationFile.exists() && !destinationFile.mkdirs()) {
-				throw new IOException(
-					"Could not create directory " + destinationFile);
-			}
+			String line = null;
 
-			if (!destinationFile.isDirectory()) {
-				throw new IllegalArgumentException(
-					"target directory for a directory must be a directory: " +
-						destinationFile);
-			}
-
-			if (_isParentOf(sourceFile, destinationFile)) {
-				throw new IllegalArgumentException(
-					"target directory can not be child of source directory.");
-			}
-
-			File[] files = sourceFile.listFiles();
-
-			for (File file : files) {
-				copy(file, new File(destinationFile, file.getName()));
-			}
-		}
-		else {
-			throw new FileNotFoundException(
-				"During copy: " + sourceFile.toString());
-		}
-	}
-
-	public static void delete(File file) throws IOException {
-		file = file.getAbsoluteFile();
-
-		if (!file.exists()) {
-			return;
-		}
-
-		if (file.getParentFile() == null) {
-			throw new IllegalArgumentException(
-				"Cannot recursively delete root for safety reasons");
-		}
-
-		boolean wasDeleted = true;
-
-		if (file.isDirectory()) {
-			File[] files = file.listFiles();
-
-			for (File sub : files) {
-				try {
-					delete(sub);
+			while ((line = bufferedReader.readLine()) != null) {
+				if (sb.length() > 0) {
+					sb.append('\n');
 				}
-				catch (IOException ioe) {
-					wasDeleted = false;
-				}
+
+				sb.append(line);
 			}
 		}
 
-		boolean deleted = file.delete();
-
-		if (!deleted || !wasDeleted) {
-			throw new IOException("Failed to delete " + file.getAbsoluteFile());
-		}
+		return sb.toString();
 	}
 
-	private static void _copy(InputStream inputStream, DataOutput dataOutput)
-		throws IOException {
+	public static String read(Path path) throws IOException {
+		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		byte[] buffer = new byte[4096 * 16];
-
-		try {
-			int size = inputStream.read(buffer);
-
-			while (size > 0) {
-				dataOutput.write(buffer, 0, size);
-
-				size = inputStream.read(buffer);
-			}
-		}
-		finally {
-			inputStream.close();
-		}
-	}
-
-	private static void _copy(
-			InputStream inputStream, OutputStream outputStream)
-		throws IOException {
-
-		DataOutputStream dos = new DataOutputStream(outputStream);
-
-		_copy(inputStream, (DataOutput)dos);
-
-		outputStream.flush();
-	}
-
-	private static boolean _isParentOf(File a, File b) {
-		if ((a == null) || (b == null)) {
-			return false;
-		}
-
-		if (!a.isDirectory()) {
-			return false;
-		}
-
-		if (a.equals(b.getParentFile())) {
-			return true;
-		}
-
-		return _isParentOf(a, b.getParentFile());
+		return s.replace("\r\n", "\n");
 	}
 
 }

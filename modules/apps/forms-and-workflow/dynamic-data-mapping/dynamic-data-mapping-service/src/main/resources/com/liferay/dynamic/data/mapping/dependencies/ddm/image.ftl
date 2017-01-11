@@ -1,6 +1,6 @@
 <#include "../init.ftl">
 
-<#if !(fields?? && fields.get(fieldName)??) && validator.isNull((fieldRawValue)>
+<#if !(fields?? && fields.get(fieldName)??) && validator.isNull(fieldRawValue)>
 	<#assign fieldRawValue = predefinedValue />
 </#if>
 

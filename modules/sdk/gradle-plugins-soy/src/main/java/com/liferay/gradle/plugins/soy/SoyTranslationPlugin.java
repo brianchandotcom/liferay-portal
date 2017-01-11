@@ -188,7 +188,7 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			sb.append(variableName);
 			sb.append(" = ");
 			sb.append(variableName);
-			sb.append(".replace(/\\{|\\}/g,'\\x01');");
+			sb.append(".replace(/{(\\d+)}/g, '\\x01$1\\x01')");
 		}
 
 		private void _appendArgumentReplaces(

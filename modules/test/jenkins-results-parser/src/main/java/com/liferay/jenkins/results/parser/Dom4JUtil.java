@@ -82,6 +82,10 @@ public class Dom4JUtil {
 	public static Element getNewAnchorElement(
 		String href, Element parentElement, Object... items) {
 
+		if ((items == null) || (items.length == 0)) {
+			return null;
+		}
+
 		Element anchorElement = null;
 
 		if (parentElement == null) {

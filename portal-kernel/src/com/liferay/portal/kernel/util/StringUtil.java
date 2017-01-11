@@ -2217,6 +2217,15 @@ public class StringUtil {
 		return new String(chars);
 	}
 
+	public static String read(Class<?> clazz, String name) {
+		try (InputStream inputStream = clazz.getResourceAsStream(name)) {
+			return read(inputStream);
+		}
+		catch (IOException ioe) {
+			return ReflectionUtil.throwException(ioe);
+		}
+	}
+
 	public static String read(ClassLoader classLoader, String name)
 		throws IOException {
 

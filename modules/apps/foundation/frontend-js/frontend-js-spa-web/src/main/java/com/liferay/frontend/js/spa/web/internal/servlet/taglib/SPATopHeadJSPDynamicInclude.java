@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,20 +105,6 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 		scriptData.writeTo(response.getWriter());
 	}
 
-	private static final String _initTemplate;
-
-	static {
-		try (InputStream inputStream =
-				SPATopHeadJSPDynamicInclude.class.getResourceAsStream(
-					"/META-INF/resources/init.tmpl")) {
-
-			_initTemplate = StringUtil.read(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
-		}
-	}
-
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		boolean singlePageApplicationEnabled = GetterUtil.getBoolean(
@@ -153,6 +138,9 @@ public class SPATopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 	protected void unsetSPAUtil(SPAUtil spaUtil) {
 		_spaUtil = null;
 	}
+
+	private static final String _initTemplate = StringUtil.read(
+		SPATopHeadJSPDynamicInclude.class, "/META-INF/resources/init.tmpl");
 
 	@Reference
 	private Html _html;

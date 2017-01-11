@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 
 import java.util.Collections;
@@ -54,21 +53,6 @@ public class PortletConfigurationCSSBottomDynamicInclude
 				_values));
 	}
 
-	private static final String _definitionsTemplate;
-
-	static {
-		try (InputStream inputStream =
-				PortletConfigurationCSSBottomDynamicInclude.class.
-					getResourceAsStream(
-						"/META-INF/resources/definitions.tmpl")) {
-
-			_definitionsTemplate = StringUtil.read(inputStream);
-		}
-		catch (IOException ioe) {
-			throw new ExceptionInInitializerError(ioe);
-		}
-	}
-
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
@@ -82,6 +66,10 @@ public class PortletConfigurationCSSBottomDynamicInclude
 		_values = Collections.singletonMap(
 			"contextPath", servletContext.getContextPath());
 	}
+
+	private static final String _definitionsTemplate = StringUtil.read(
+		PortletConfigurationCSSBottomDynamicInclude.class,
+		"/META-INF/resources/definitions.tmpl");
 
 	private Map<String, String> _values;
 

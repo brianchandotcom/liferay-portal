@@ -957,15 +957,36 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 					schedulerEntry.getTrigger(), storageType,
 					schedulerEntry.getDescription(), destinationName, null, 0);
 
+				ServiceRegistration<MessageListener> serviceRegistration =
+					_messageListenerServiceRegistrations.get(
+						schedulerEntry.getEventListenerClass());
+
+				if (serviceRegistration != null) {
+					ServiceReference<MessageListener> oldServiceReference =
+						serviceRegistration.getReference();
+
+					MessageListener messageListener = bundleContext.getService(
+						oldServiceReference);
+
+					SchedulerEventMessageListenerWrapper
+						schedulerEventMessageListenerWrapper =
+							(SchedulerEventMessageListenerWrapper)
+								messageListener;
+
+					schedulerEventMessageListenerWrapper.setSchedulerEntry(
+						schedulerEntry);
+
+					return null;
+				}
+
 				Dictionary<String, Object> properties =
 					new HashMapDictionary<>();
 
 				properties.put("destination.name", destinationName);
 
-				ServiceRegistration<MessageListener> serviceRegistration =
-					bundleContext.registerService(
-						MessageListener.class, schedulerEventMessageListener,
-						properties);
+				serviceRegistration = bundleContext.registerService(
+					MessageListener.class, schedulerEventMessageListener,
+					properties);
 
 				_messageListenerServiceRegistrations.put(
 					schedulerEntry.getEventListenerClass(),

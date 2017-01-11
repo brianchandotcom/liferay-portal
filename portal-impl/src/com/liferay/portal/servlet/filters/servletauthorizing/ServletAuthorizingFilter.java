@@ -79,7 +79,9 @@ public class ServletAuthorizingFilter extends BasePortalFilter {
 		// authenticated user. We use ProtectedServletRequest to ensure we get
 		// similar behavior across all servers.
 
-		request = new ProtectedServletRequest(request, remoteUser);
+		if (remoteUser != null) {
+			request = new ProtectedServletRequest(request, remoteUser);
+		}
 
 		if ((userId > 0) || (remoteUser != null)) {
 

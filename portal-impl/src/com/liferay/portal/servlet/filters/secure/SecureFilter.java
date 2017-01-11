@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PropsUtil;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -82,8 +84,11 @@ public class SecureFilter extends BasePortalFilter {
 				PropsUtil.get(propertyPrefix + "https.required"));
 		}
 
-		for (String hostAllowed : hostsAllowed) {
-			_hostsAllowed.add(hostAllowed);
+		if (hostsAllowed.length == 0) {
+			_hostsAllowed = Collections.emptySet();
+		}
+		else {
+			_hostsAllowed = new HashSet<>(Arrays.asList(hostsAllowed));
 		}
 
 		_usePermissionChecker = GetterUtil.getBoolean(
@@ -115,7 +120,8 @@ public class SecureFilter extends BasePortalFilter {
 
 			if (userId > 0) {
 				request = setCredentials(
-					request, session, userId, HttpServletRequest.BASIC_AUTH);
+					request, session, UserLocalServiceUtil.getUser(userId),
+					HttpServletRequest.BASIC_AUTH);
 			}
 			else {
 				HttpAuthorizationHeader httpAuthorizationHeader =
@@ -158,7 +164,8 @@ public class SecureFilter extends BasePortalFilter {
 
 			if (userId > 0) {
 				request = setCredentials(
-					request, session, userId, HttpServletRequest.DIGEST_AUTH);
+					request, session, UserLocalServiceUtil.getUser(userId),
+					HttpServletRequest.DIGEST_AUTH);
 			}
 			else {
 				HttpAuthorizationHeader httpAuthorizationHeader =
@@ -297,7 +304,7 @@ public class SecureFilter extends BasePortalFilter {
 
 			if (!user.isDefaultUser()) {
 				request = setCredentials(
-					request, request.getSession(), user.getUserId(), null);
+					request, request.getSession(), user, null);
 			}
 			else {
 				if (_digestAuthEnabled) {
@@ -316,14 +323,27 @@ public class SecureFilter extends BasePortalFilter {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #setCredentials(
+	 *             HttpServletRequest, HttpSession, User, String)}
+	 */
+	@Deprecated
 	protected HttpServletRequest setCredentials(
 			HttpServletRequest request, HttpSession session, long userId,
 			String authType)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		return setCredentials(
+			request, session, UserLocalServiceUtil.getUser(userId), authType);
+	}
 
-		String userIdString = String.valueOf(userId);
+	protected HttpServletRequest setCredentials(
+			HttpServletRequest request, HttpSession session, User user,
+			String authType)
+		throws Exception {
+
+		String userIdString = String.valueOf(user.getUserId());
 
 		request = new ProtectedServletRequest(request, userIdString, authType);
 
@@ -347,7 +367,7 @@ public class SecureFilter extends BasePortalFilter {
 
 	private boolean _basicAuthEnabled;
 	private boolean _digestAuthEnabled;
-	private final Set<String> _hostsAllowed = new HashSet<>();
+	private Set<String> _hostsAllowed;
 	private boolean _httpsRequired;
 	private boolean _usePermissionChecker;
 

@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.BaseFieldRenderer;
 import com.liferay.dynamic.data.mapping.storage.Field;
-import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
+import com.liferay.dynamic.data.mapping.internal.util.impl.DDMImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;

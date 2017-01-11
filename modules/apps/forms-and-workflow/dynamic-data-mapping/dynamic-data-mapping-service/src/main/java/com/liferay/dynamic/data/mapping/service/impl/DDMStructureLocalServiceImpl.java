@@ -42,7 +42,7 @@ import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermissio
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
-import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
+import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;

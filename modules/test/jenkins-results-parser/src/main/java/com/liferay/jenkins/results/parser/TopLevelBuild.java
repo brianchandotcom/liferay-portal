@@ -476,7 +476,7 @@ public class TopLevelBuild extends BaseBuild {
 			failedJobsOrderedListElement.add(
 				Dom4JUtil.wrapWithNewElement(super.getGitHubMessage(), "li"));
 
-			int failureCount = 0;
+			int failureCount = 1;
 
 			List<Element> failureElements = new ArrayList<>();
 

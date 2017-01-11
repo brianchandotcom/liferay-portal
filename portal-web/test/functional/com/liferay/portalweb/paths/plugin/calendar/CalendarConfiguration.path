@@ -33,6 +33,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--EVENTS_DISPLAYED-->
+<tr>
+	<td>EVENTS_DISPLAYED_MAX_EVENTS</td>
+	<td>//select[contains(@id,'maxDaysDisplayed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EVENTS_DISPLAYED_MAX_DAYS</td>
+	<td>//select[contains(@id,'eventsPerPage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_USER_SETTINGS</td>

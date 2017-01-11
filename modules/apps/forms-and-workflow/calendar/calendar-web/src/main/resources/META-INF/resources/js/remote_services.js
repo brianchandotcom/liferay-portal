@@ -146,7 +146,7 @@ AUI.add(
 					);
 				},
 
-				getEvents: function(calendarIds, startDate, endDate, status, callback) {
+				getEvents: function(calendarIds, eventsPerPage, startDate, endDate, status, callback) {
 					var instance = this;
 
 					instance._invokeResourceURL(
@@ -159,6 +159,7 @@ AUI.add(
 								endTimeMinute: endDate.getMinutes(),
 								endTimeMonth: endDate.getMonth(),
 								endTimeYear: endDate.getFullYear(),
+								eventsPerPage: eventsPerPage,
 								startTimeDay: startDate.getDate(),
 								startTimeHour: startDate.getHours(),
 								startTimeMinute: startDate.getMinutes(),

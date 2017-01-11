@@ -214,17 +214,22 @@ public class UpgradeEventsDisplayPortletId
 		StringBundler sb = new StringBundler(10);
 
 		sb.append("<portlet-preferences>");
+
+		sb.append(String.format(_preferenceFormat, "defaultView", "agenda"));
+
 		sb.append(
 			String.format(
 				_preferenceFormat, "displaySchedulerHeader", "false"));
-		sb.append(String.format(_preferenceFormat, "showMonthView", "false"));
-		sb.append(String.format(_preferenceFormat, "showAgendaView", "true"));
-		sb.append(String.format(_preferenceFormat, "showWeekView", "false"));
-		sb.append(String.format(_preferenceFormat, "showDayView", "false"));
-		sb.append(String.format(_preferenceFormat, "defaultView", "agenda"));
 		sb.append(
 			String.format(_preferenceFormat, "displaySchedulerOnly", "true"));
+		sb.append(String.format(_preferenceFormat, "eventsPerPage", "10"));
+		sb.append(String.format(_preferenceFormat, "maxDaysDisplayed", "1"));
+		sb.append(String.format(_preferenceFormat, "showAgendaView", "true"));
+		sb.append(String.format(_preferenceFormat, "showDayView", "false"));
+		sb.append(String.format(_preferenceFormat, "showMonthView", "false"));
+		sb.append(String.format(_preferenceFormat, "showWeekView", "false"));
 		sb.append(String.format(_preferenceFormat, "showUserEvents", "false"));
+
 		sb.append("</portlet-preferences>");
 
 		portletPreferences.setPreferences(sb.toString());

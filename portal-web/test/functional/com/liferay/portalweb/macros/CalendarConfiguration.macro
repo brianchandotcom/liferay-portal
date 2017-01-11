@@ -3,6 +3,12 @@
 		<execute function="Uncheck" locator1="CalendarConfiguration#USER_SETTINGS_GLOBAL_TIME_ZONE_CHECKBOX" />
 	</command>
 
+	<command name="editNumberOfEventsDisplayed">
+		<execute macro="CalendarConfiguration#gotoDisplaySettings" />
+
+		<execute function="Select" locator1="CalendarConfiguration#EVENTS_DISPLAYED_MAX_DAYS" value1="${maxNumberOfEvents}" />
+	</command>
+
 	<command name="editTimeZonePacific">
 		<execute macro="CalendarConfiguration#disableGlobalTimeZone" />
 
@@ -31,6 +37,10 @@
 		<execute macro="CalendarConfiguration#gotoRSS" />
 
 		<execute function="Click" locator1="CalendarConfiguration#RSS_ENABLE_RSS_SUBSCRIPTION_SWITCHER" />
+	</command>
+
+	<command name="gotoDisplaySettings">
+		<execute function="AssertClick" locator1="CalendarConfiguration#NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
 	</command>
 
 	<command name="gotoRSS">

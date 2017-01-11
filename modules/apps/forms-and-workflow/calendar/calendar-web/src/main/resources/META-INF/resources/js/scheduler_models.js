@@ -449,7 +449,19 @@ AUI.add(
 			A.SchedulerEvents,
 			[Liferay.SchedulerModelSync],
 			{
-				getLoadEndDate: function(activeView) {
+				getEventsPerPage: function(activeView, eventsPerPage) {
+					var instance = this;
+
+					var viewName = activeView.get('name');
+
+					if (viewName !== 'agenda') {
+						eventsPerPage = -1;
+					}
+
+					return eventsPerPage;
+				},
+
+				getLoadEndDate: function(activeView, maxDaysDisplayed) {
 					var instance = this;
 
 					var date = activeView.getNextDate();
@@ -457,7 +469,9 @@ AUI.add(
 					var viewName = activeView.get('name');
 
 					if (viewName === 'agenda') {
-						date = DateMath.add(date, DateMath.MONTH, 1);
+						date = DateMath.add(date, DateMath.DAY, maxDaysDisplayed);
+
+						date = DateMath.subtract(date, DateMath.MINUTES, 1);
 					}
 					else if (viewName === 'month') {
 						date = DateMath.add(date, DateMath.WEEK, 1);
@@ -487,7 +501,9 @@ AUI.add(
 					var scheduler = instance.get('scheduler');
 
 					var activeView = scheduler.get('activeView');
+					var eventsPerPage = scheduler.get('eventsPerPage');
 					var filterCalendarBookings = scheduler.get('filterCalendarBookings');
+					var maxDaysDisplayed = scheduler.get('maxDaysDisplayed');
 
 					var calendarContainer = scheduler.get('calendarContainer');
 
@@ -497,8 +513,9 @@ AUI.add(
 
 					remoteServices.getEvents(
 						calendarIds,
+						instance.getEventsPerPage(activeView, eventsPerPage),
 						instance.getLoadStartDate(activeView),
-						instance.getLoadEndDate(activeView),
+						instance.getLoadEndDate(activeView, maxDaysDisplayed),
 						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_DRAFT, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],
 						function(calendarBookings) {
 							if (filterCalendarBookings) {

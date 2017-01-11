@@ -52,6 +52,7 @@ import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
+import com.liferay.calendar.util.comparator.CalendarBookingStartTimeComparator;
 import com.liferay.calendar.web.internal.constants.CalendarWebKeys;
 import com.liferay.calendar.web.internal.display.context.CalendarDisplayContext;
 import com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade;
@@ -1180,6 +1181,9 @@ public class CalendarPortlet extends MVCPortlet {
 		int[] statuses = ParamUtil.getIntegerValues(
 			resourceRequest, "statuses");
 
+		int eventsPerPage = ParamUtil.getInteger(
+			resourceRequest, "eventsPerPage");
+
 		List<CalendarBooking> calendarBookings =
 			Collections.<CalendarBooking>emptyList();
 
@@ -1188,7 +1192,14 @@ public class CalendarPortlet extends MVCPortlet {
 				themeDisplay.getCompanyId(), new long[0], calendarIds,
 				new long[0], -1, null, startTimeJCalendar.getTimeInMillis(),
 				endTimeJCalendar.getTimeInMillis(), true, statuses,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CalendarBookingStartTimeComparator(true));
+
+			if ((eventsPerPage > 0) &&
+				(eventsPerPage < calendarBookings.size())) {
+
+				calendarBookings = calendarBookings.subList(0, eventsPerPage);
+			}
 		}
 
 		JSONArray jsonArray = CalendarUtil.toCalendarBookingsJSONArray(

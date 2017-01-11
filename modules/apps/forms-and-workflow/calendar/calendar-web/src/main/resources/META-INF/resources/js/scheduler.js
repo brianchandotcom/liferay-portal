@@ -54,6 +54,9 @@ AUI.add(
 						value: null
 					},
 
+					eventsPerPage: {
+					},
+
 					filterCalendarBookings: {
 						validator: isFunction
 					},
@@ -62,6 +65,9 @@ AUI.add(
 						valueFn: function() {
 							return A.Node.create(TPL_ICON_ADD_EVENT_NODE);
 						}
+					},
+
+					maxDaysDisplayed: {
 					},
 
 					portletNamespace: {

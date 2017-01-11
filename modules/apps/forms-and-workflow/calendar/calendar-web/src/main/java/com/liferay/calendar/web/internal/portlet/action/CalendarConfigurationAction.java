@@ -79,16 +79,12 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 			actionRequest, "displaySchedulerHeader");
 		boolean displaySchedulerOnly = ParamUtil.getBoolean(
 			actionRequest, "displaySchedulerOnly");
+		int eventsPerPage = ParamUtil.getInteger(
+			actionRequest, "eventsPerPage");
+		int maxDaysDisplayed = ParamUtil.getInteger(
+			actionRequest, "maxDaysDisplayed");
 		boolean showUserEvents = ParamUtil.getBoolean(
 			actionRequest, "showUserEvents");
-
-		portletPreferences.setValue(
-			"displaySchedulerHeader", String.valueOf(displaySchedulerHeader));
-		portletPreferences.setValue(
-			"displaySchedulerOnly", String.valueOf(displaySchedulerOnly));
-		portletPreferences.setValue(
-			"showUserEvents", String.valueOf(showUserEvents));
-
 		boolean showAgendaView = ParamUtil.getBoolean(
 			actionRequest, "showAgendaView");
 		boolean showDayView = ParamUtil.getBoolean(
@@ -99,12 +95,22 @@ public class CalendarConfigurationAction extends DefaultConfigurationAction {
 			actionRequest, "showMonthView");
 
 		portletPreferences.setValue(
+			"displaySchedulerHeader", String.valueOf(displaySchedulerHeader));
+		portletPreferences.setValue(
+			"displaySchedulerOnly", String.valueOf(displaySchedulerOnly));
+		portletPreferences.setValue(
+			"eventsPerPage", String.valueOf(eventsPerPage));
+		portletPreferences.setValue(
+			"maxDaysDisplayed", String.valueOf(maxDaysDisplayed));
+		portletPreferences.setValue(
 			"showAgendaView", String.valueOf(showAgendaView));
 		portletPreferences.setValue("showDayView", String.valueOf(showDayView));
 		portletPreferences.setValue(
 			"showWeekView", String.valueOf(showWeekView));
 		portletPreferences.setValue(
 			"showMonthView", String.valueOf(showMonthView));
+		portletPreferences.setValue(
+			"showUserEvents", String.valueOf(showUserEvents));
 
 		portletPreferences.store();
 	}

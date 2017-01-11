@@ -32,6 +32,10 @@ import org.junit.Rule;
  */
 public class ReplaceTranslationTaskTest extends ReplaceTranslationCommandTest {
 
+	public ReplaceTranslationTaskTest(String testDirName) {
+		super(testDirName);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();

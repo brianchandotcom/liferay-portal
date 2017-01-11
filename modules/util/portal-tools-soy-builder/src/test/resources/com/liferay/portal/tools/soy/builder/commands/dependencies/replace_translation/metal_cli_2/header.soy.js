@@ -1,12 +1,12 @@
-Liferay.Loader.define("hello-soy-web@1.0.4/Footer.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
+Liferay.Loader.define("hello-soy-web@1.0.4/Header.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/Soy'], function (exports, _component, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.templates = exports.Footer = undefined;
+  exports.templates = exports.Header = undefined;
 
-  var _Component3 = _interopRequireDefault(_Component2);
+  var _component2 = _interopRequireDefault(_component);
 
   var _Soy2 = _interopRequireDefault(_Soy);
 
@@ -49,15 +49,15 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Footer.soy", ['exports', 'metal-compo
   var templates;
   goog.loadModule(function (exports) {
 
-    // This file was automatically generated from Footer.soy.
+    // This file was automatically generated from Header.soy.
     // Please don't edit this file by hand.
 
     /**
-     * @fileoverview Templates in namespace Footer.
+     * @fileoverview Templates in namespace Header.
      * @public
      */
 
-    goog.module('Footer.incrementaldom');
+    goog.module('Header.incrementaldom');
 
     /** @suppress {extraRequire} */
     var soy = goog.require('soy');
@@ -67,6 +67,8 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Footer.soy", ['exports', 'metal-compo
     goog.require('goog.i18n.bidi');
     /** @suppress {extraRequire} */
     goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('goog.string');
     var IncrementalDom = goog.require('incrementaldom');
     var ie_open = IncrementalDom.elementOpen;
     var ie_close = IncrementalDom.elementClose;
@@ -84,41 +86,53 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Footer.soy", ['exports', 'metal-compo
      * @suppress {checkTypes}
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
+      ie_open('blockquote', null, null, 'class', 'blockquote-primary');
+      ie_open('p');
       /** @desc  */
-      var MSG_EXTERNAL_2986127772961742460 = Liferay.Language.get('this-portlet-was-written-using-soy-templates');
-      var msg_s136 = MSG_EXTERNAL_2986127772961742460;
-      ie_open('blockquote', null, null, 'class', 'blockquote-xs');
-      ie_open('small');
-      itext(msg_s136);
-      ie_close('small');
+      var MSG_EXTERNAL_4961493287620807008 = goog.getMsg('welcome-to-{$releaseInfo}', { 'releaseInfo': '\x010\x01' });
+      var lastIndex_11 = 0,
+          partRe_11 = /\x01\d+\x01/g,
+          match_11;
+      do {
+        match_11 = partRe_11.exec(MSG_EXTERNAL_4961493287620807008) || undefined;
+        itext(goog.string.unescapeEntities(MSG_EXTERNAL_4961493287620807008.substring(lastIndex_11, match_11 && match_11.index)));
+        lastIndex_11 = partRe_11.lastIndex;
+        switch (match_11 && match_11[0]) {
+          case '\x010\x01':
+            var dyn0 = opt_data.releaseInfo;
+            if (typeof dyn0 == 'function') dyn0();else if (dyn0 != null) itext(dyn0);
+            break;
+        }
+      } while (match_11);
+      ie_close('p');
       ie_close('blockquote');
     }
     exports.render = $render;
     if (goog.DEBUG) {
-      $render.soyTemplateName = 'Footer.render';
+      $render.soyTemplateName = 'Header.render';
     }
 
-    exports.render.params = [];
-    exports.render.types = {};
+    exports.render.params = ["releaseInfo"];
+    exports.render.types = { "releaseInfo": "any" };
     exports.templates = templates = exports;
     return exports;
   });
 
-  var Footer = function (_Component) {
-    _inherits(Footer, _Component);
+  var Header = function (_Component) {
+    _inherits(Header, _Component);
 
-    function Footer() {
-      _classCallCheck(this, Footer);
+    function Header() {
+      _classCallCheck(this, Header);
 
-      return _possibleConstructorReturn(this, (Footer.__proto__ || Object.getPrototypeOf(Footer)).apply(this, arguments));
+      return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
     }
 
-    return Footer;
-  }(_Component3.default);
+    return Header;
+  }(_component2.default);
 
-  _Soy2.default.register(Footer, templates);
-  exports.Footer = Footer;
+  _Soy2.default.register(Header, templates);
+  exports.Header = Header;
   exports.templates = templates;
   exports.default = templates;
 });
-//# sourceMappingURL=Footer.soy.js.map
+//# sourceMappingURL=Header.soy.js.map

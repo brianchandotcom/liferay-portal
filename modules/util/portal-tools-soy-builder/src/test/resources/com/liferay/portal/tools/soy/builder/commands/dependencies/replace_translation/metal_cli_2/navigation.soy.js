@@ -1,12 +1,12 @@
-Liferay.Loader.define("hello-soy-web@1.0.4/View.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
+Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/Soy'], function (exports, _component, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.templates = exports.View = undefined;
+  exports.templates = exports.Navigation = undefined;
 
-  var _Component3 = _interopRequireDefault(_Component2);
+  var _component2 = _interopRequireDefault(_component);
 
   var _Soy2 = _interopRequireDefault(_Soy);
 
@@ -49,15 +49,15 @@ Liferay.Loader.define("hello-soy-web@1.0.4/View.soy", ['exports', 'metal-compone
   var templates;
   goog.loadModule(function (exports) {
 
-    // This file was automatically generated from View.soy.
+    // This file was automatically generated from Navigation.soy.
     // Please don't edit this file by hand.
 
     /**
-     * @fileoverview Templates in namespace View.
+     * @fileoverview Templates in namespace Navigation.
      * @public
      */
 
-    goog.module('View.incrementaldom');
+    goog.module('Navigation.incrementaldom');
 
     /** @suppress {extraRequire} */
     var soy = goog.require('soy');
@@ -67,6 +67,8 @@ Liferay.Loader.define("hello-soy-web@1.0.4/View.soy", ['exports', 'metal-compone
     goog.require('goog.i18n.bidi');
     /** @suppress {extraRequire} */
     goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('goog.string');
     var IncrementalDom = goog.require('incrementaldom');
     var ie_open = IncrementalDom.elementOpen;
     var ie_close = IncrementalDom.elementClose;
@@ -88,77 +90,47 @@ Liferay.Loader.define("hello-soy-web@1.0.4/View.soy", ['exports', 'metal-compone
      * @suppress {checkTypes}
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
-      /** @desc  */
-      var MSG_EXTERNAL_7241381614077301826 = Liferay.Language.get('here-you-will-find-how-easy-it-is-to-do-things-like');
-      var msg_s144 = MSG_EXTERNAL_7241381614077301826;
-      /** @desc  */
-      var MSG_EXTERNAL_52703005167531630 = Liferay.Language.get('listing-pages');
-      var msg_s146 = MSG_EXTERNAL_52703005167531630;
-      /** @desc  */
-      var MSG_EXTERNAL_7891216484594141556 = Liferay.Language.get('navigate-to');
-      var msg_s148 = MSG_EXTERNAL_7891216484594141556;
-      /** @desc  */
-      var MSG_EXTERNAL_9050153343882765023 = Liferay.Language.get('navigating-between-views');
-      var msg_s150 = MSG_EXTERNAL_9050153343882765023;
-      /** @desc  */
-      var MSG_EXTERNAL_7202372830797071859 = Liferay.Language.get('click-here-to-navigate-to-another-view');
-      var msg_s152 = MSG_EXTERNAL_7202372830797071859;
       ie_open('div', null, null, 'id', opt_data.id);
       $templateAlias1(opt_data, null, opt_ijData);
       ie_open('p');
-      itext(msg_s144);
+      /** @desc  */
+      var MSG_EXTERNAL_8532436723280155945 = goog.getMsg('this-is-another-view');
+      itext(goog.string.unescapeEntities(MSG_EXTERNAL_8532436723280155945));
       ie_close('p');
-      ie_open('h3');
-      itext(msg_s146);
-      ie_close('h3');
-      ie_open('div', null, null, 'class', 'list-group');
-      ie_open('div', null, null, 'class', 'list-group-heading');
-      itext(msg_s148);
-      ie_close('div');
-      var layoutList60 = opt_data.themeDisplay.layouts;
-      var layoutListLen60 = layoutList60.length;
-      for (var layoutIndex60 = 0; layoutIndex60 < layoutListLen60; layoutIndex60++) {
-        var layoutData60 = layoutList60[layoutIndex60];
-        ie_open('a', null, null, 'class', 'list-group-item', 'href', layoutData60.friendlyURL);
-        itext((goog.asserts.assert(layoutData60.nameCurrentValue != null), layoutData60.nameCurrentValue));
-        ie_close('a');
-      }
-      ie_close('div');
-      ie_open('h3');
-      itext(msg_s150);
-      ie_close('h3');
       ie_open('a', null, null, 'href', opt_data.navigationURL);
-      itext(msg_s152);
+      /** @desc  */
+      var MSG_EXTERNAL_4596791579122762316 = goog.getMsg('click-here-to-navigate-back');
+      itext(goog.string.unescapeEntities(MSG_EXTERNAL_4596791579122762316));
       ie_close('a');
       $templateAlias2(opt_data, null, opt_ijData);
       ie_close('div');
     }
     exports.render = $render;
     if (goog.DEBUG) {
-      $render.soyTemplateName = 'View.render';
+      $render.soyTemplateName = 'Navigation.render';
     }
 
-    exports.render.params = ["id", "navigationURL", "themeDisplay"];
-    exports.render.types = { "id": "any", "navigationURL": "any", "themeDisplay": "any" };
+    exports.render.params = ["id", "navigationURL"];
+    exports.render.types = { "id": "any", "navigationURL": "any" };
     exports.templates = templates = exports;
     return exports;
   });
 
-  var View = function (_Component) {
-    _inherits(View, _Component);
+  var Navigation = function (_Component) {
+    _inherits(Navigation, _Component);
 
-    function View() {
-      _classCallCheck(this, View);
+    function Navigation() {
+      _classCallCheck(this, Navigation);
 
-      return _possibleConstructorReturn(this, (View.__proto__ || Object.getPrototypeOf(View)).apply(this, arguments));
+      return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
     }
 
-    return View;
-  }(_Component3.default);
+    return Navigation;
+  }(_component2.default);
 
-  _Soy2.default.register(View, templates);
-  exports.View = View;
+  _Soy2.default.register(Navigation, templates);
+  exports.Navigation = Navigation;
   exports.templates = templates;
   exports.default = templates;
 });
-//# sourceMappingURL=View.soy.js.map
+//# sourceMappingURL=Navigation.soy.js.map

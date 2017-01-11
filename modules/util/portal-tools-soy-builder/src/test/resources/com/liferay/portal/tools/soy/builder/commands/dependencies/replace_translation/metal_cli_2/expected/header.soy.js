@@ -1,12 +1,12 @@
-Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-component/src/Component', 'metal-soy/src/Soy'], function (exports, _Component2, _Soy) {
+Liferay.Loader.define("hello-soy-web@1.0.4/Header.soy", ['exports', 'metal-component/src/all/component', 'metal-soy/src/Soy'], function (exports, _component, _Soy) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.templates = exports.Navigation = undefined;
+  exports.templates = exports.Header = undefined;
 
-  var _Component3 = _interopRequireDefault(_Component2);
+  var _component2 = _interopRequireDefault(_component);
 
   var _Soy2 = _interopRequireDefault(_Soy);
 
@@ -49,15 +49,15 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-c
   var templates;
   goog.loadModule(function (exports) {
 
-    // This file was automatically generated from Navigation.soy.
+    // This file was automatically generated from Header.soy.
     // Please don't edit this file by hand.
 
     /**
-     * @fileoverview Templates in namespace Navigation.
+     * @fileoverview Templates in namespace Header.
      * @public
      */
 
-    goog.module('Navigation.incrementaldom');
+    goog.module('Header.incrementaldom');
 
     /** @suppress {extraRequire} */
     var soy = goog.require('soy');
@@ -67,6 +67,8 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-c
     goog.require('goog.i18n.bidi');
     /** @suppress {extraRequire} */
     goog.require('goog.asserts');
+    /** @suppress {extraRequire} */
+    goog.require('goog.string');
     var IncrementalDom = goog.require('incrementaldom');
     var ie_open = IncrementalDom.elementOpen;
     var ie_close = IncrementalDom.elementClose;
@@ -76,10 +78,6 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-c
     var itext = IncrementalDom.text;
     var iattr = IncrementalDom.attr;
 
-    var $templateAlias2 = _Soy2.default.getTemplate('Footer.incrementaldom', 'render');
-
-    var $templateAlias1 = _Soy2.default.getTemplate('Header.incrementaldom', 'render');
-
     /**
      * @param {Object<string, *>=} opt_data
      * @param {(null|undefined)=} opt_ignored
@@ -88,49 +86,54 @@ Liferay.Loader.define("hello-soy-web@1.0.4/Navigation.soy", ['exports', 'metal-c
      * @suppress {checkTypes}
      */
     function $render(opt_data, opt_ignored, opt_ijData) {
-      /** @desc  */
-      var MSG_EXTERNAL_8532436723280155945 = Liferay.Language.get('this-is-another-view');
-      var msg_s140 = MSG_EXTERNAL_8532436723280155945;
-      /** @desc  */
-      var MSG_EXTERNAL_4596791579122762316 = Liferay.Language.get('click-here-to-navigate-back');
-      var msg_s142 = MSG_EXTERNAL_4596791579122762316;
-      ie_open('div', null, null, 'id', opt_data.id);
-      $templateAlias1(opt_data, null, opt_ijData);
+      ie_open('blockquote', null, null, 'class', 'blockquote-primary');
       ie_open('p');
-      itext(msg_s140);
+      /** @desc  */
+      var MSG_EXTERNAL_4961493287620807008 = Liferay.Language.get('welcome-to-x');
+MSG_EXTERNAL_4961493287620807008 = MSG_EXTERNAL_4961493287620807008.replace(/{(\d+)}/g, '\x01$1\x01')
+      var lastIndex_11 = 0,
+          partRe_11 = /\x01\d+\x01/g,
+          match_11;
+      do {
+        match_11 = partRe_11.exec(MSG_EXTERNAL_4961493287620807008) || undefined;
+        itext(goog.string.unescapeEntities(MSG_EXTERNAL_4961493287620807008.substring(lastIndex_11, match_11 && match_11.index)));
+        lastIndex_11 = partRe_11.lastIndex;
+        switch (match_11 && match_11[0]) {
+          case '\x010\x01':
+            var dyn0 = opt_data.releaseInfo;
+            if (typeof dyn0 == 'function') dyn0();else if (dyn0 != null) itext(dyn0);
+            break;
+        }
+      } while (match_11);
       ie_close('p');
-      ie_open('a', null, null, 'href', opt_data.navigationURL);
-      itext(msg_s142);
-      ie_close('a');
-      $templateAlias2(opt_data, null, opt_ijData);
-      ie_close('div');
+      ie_close('blockquote');
     }
     exports.render = $render;
     if (goog.DEBUG) {
-      $render.soyTemplateName = 'Navigation.render';
+      $render.soyTemplateName = 'Header.render';
     }
 
-    exports.render.params = ["id", "navigationURL"];
-    exports.render.types = { "id": "any", "navigationURL": "any" };
+    exports.render.params = ["releaseInfo"];
+    exports.render.types = { "releaseInfo": "any" };
     exports.templates = templates = exports;
     return exports;
   });
 
-  var Navigation = function (_Component) {
-    _inherits(Navigation, _Component);
+  var Header = function (_Component) {
+    _inherits(Header, _Component);
 
-    function Navigation() {
-      _classCallCheck(this, Navigation);
+    function Header() {
+      _classCallCheck(this, Header);
 
-      return _possibleConstructorReturn(this, (Navigation.__proto__ || Object.getPrototypeOf(Navigation)).apply(this, arguments));
+      return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
     }
 
-    return Navigation;
-  }(_Component3.default);
+    return Header;
+  }(_component2.default);
 
-  _Soy2.default.register(Navigation, templates);
-  exports.Navigation = Navigation;
+  _Soy2.default.register(Header, templates);
+  exports.Header = Header;
   exports.templates = templates;
   exports.default = templates;
 });
-//# sourceMappingURL=Navigation.soy.js.map
+//# sourceMappingURL=Header.soy.js.map

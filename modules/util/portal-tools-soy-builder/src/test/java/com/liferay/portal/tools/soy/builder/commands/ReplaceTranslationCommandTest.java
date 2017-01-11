@@ -27,11 +27,24 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
 /**
  * @author Andrea Di Giorgi
  */
+@RunWith(Parameterized.class)
 public class ReplaceTranslationCommandTest {
+
+	@Parameters(name = "{0}")
+	public static String[] getTestDirNames() {
+		return new String[] {"metal_cli", "metal_cli_2"};
+	}
+
+	public ReplaceTranslationCommandTest(String testDirName) {
+		_testDirName = testDirName;
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,7 +55,8 @@ public class ReplaceTranslationCommandTest {
 		for (String fileName : _FILE_NAMES) {
 			try (InputStream inputStream =
 					ReplaceTranslationCommand.class.getResourceAsStream(
-						"dependencies/replace-translation/" + fileName)) {
+						"dependencies/replace_translation/" + _testDirName +
+							"/" + fileName)) {
 
 				Files.copy(inputStream, dirPath.resolve(fileName));
 			}
@@ -61,7 +75,8 @@ public class ReplaceTranslationCommandTest {
 			String content = FileTestUtil.read(dirPath.resolve(fileName));
 			String expectedContent = FileTestUtil.read(
 				ReplaceTranslationCommandTest.class,
-				"dependencies/replace-translation/expected/" + fileName);
+				"dependencies/replace_translation/" + _testDirName +
+					"/expected/" + fileName);
 
 			Assert.assertEquals(expectedContent, content);
 		}
@@ -82,5 +97,7 @@ public class ReplaceTranslationCommandTest {
 	private static final String[] _FILE_NAMES = {
 		"footer.soy.js", "header.soy.js", "navigation.soy.js", "view.soy.js"
 	};
+
+	private final String _testDirName;
 
 }

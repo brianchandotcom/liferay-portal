@@ -25,22 +25,6 @@ public class SourceFormatFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
-		if (!consoleText.contains(_SOURCE_FORMAT_STRING)) {
-			return null;
-		}
-
-		consoleText = consoleText.substring(
-			consoleText.lastIndexOf("format-source:"));
-
-		int end = consoleText.indexOf("merge-test-results:");
-
-		return getConsoleOutputSnippetElement(consoleText, true, end);
-	}
-
-	@Override
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
@@ -54,6 +38,22 @@ public class SourceFormatFailureMessageGenerator
 		int end = consoleOutput.indexOf("merge-test-results:");
 
 		return getConsoleOutputSnippet(consoleOutput, true, end);
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		String consoleText = build.getConsoleText();
+
+		if (!consoleText.contains(_SOURCE_FORMAT_STRING)) {
+			return null;
+		}
+
+		consoleText = consoleText.substring(
+			consoleText.lastIndexOf("format-source:"));
+
+		int end = consoleText.indexOf("merge-test-results:");
+
+		return getConsoleOutputSnippetElement(consoleText, true, end);
 	}
 
 	private static final String _SOURCE_FORMAT_STRING =

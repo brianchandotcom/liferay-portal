@@ -21,7 +21,6 @@ import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.document.library.demo.data.creator.FileEntryDemoDataCreator;
 import com.liferay.document.library.demo.data.creator.RootFolderDemoDataCreator;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -30,17 +29,13 @@ import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import java.sql.Timestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -49,10 +44,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alejandro Hernández
+ * @author Sergio González
  */
 @Component(service = BlogsEntryDemoDataCreator.class)
-public class LoremIpsumBlogsEntryDemoDataCreatorImpl
+public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	implements BlogsEntryDemoDataCreator {
 
 	@Override
@@ -68,11 +63,13 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 			StringUtil.randomString() + ".jpeg", "image/jpeg",
 			StringPool.BLANK);
 
+		int randomTitleSuffix = RandomUtil.nextInt(10) + 1;
+
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-			userId, _getRandomElement(_entryTitles),
-			_getRandomElement(_entrySubtitles), null, _getRandomContent(),
-			_getRandomDate(), false, false, null, null, imageSelector, null,
-			serviceContext);
+			userId, _getRandomTitle(randomTitleSuffix),
+			_getRandomSubtitle(randomTitleSuffix), null,
+			_getRandomContent(randomTitleSuffix), _getRandomDate(), false,
+			false, null, null, imageSelector, null, serviceContext);
 
 		_entryIds.add(blogsEntry.getEntryId());
 
@@ -119,18 +116,13 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 		_rootFolderDemoDataCreator = rootFolderDemoDataCreator;
 	}
 
-	private String _getRandomContent() {
-		int numberOfParagraphs = RandomUtil.nextInt(5) + 3;
+	private String _getRandomContent(int order) throws IOException {
+		Class<?> clazz = getClass();
 
-		StringBundler sb = new StringBundler(numberOfParagraphs * 3);
+		String titlePath =
+			"dependencies/creative/commons/content" + order + ".txt";
 
-		for (int i = 0; i < numberOfParagraphs; i++) {
-			sb.append("<p>");
-			sb.append(_getRandomElement(_entryParagraphs));
-			sb.append("</p>");
-		}
-
-		return sb.toString();
+		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
 
 	private Date _getRandomDate() {
@@ -143,10 +135,6 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 			start + (long)(Math.random() * diff));
 
 		return new Date(timestamp.getTime());
-	}
-
-	private String _getRandomElement(List<String> list) {
-		return list.get(RandomUtil.nextInt(list.size()));
 	}
 
 	private byte[] _getRandomImageBytes(long userId, long groupId)
@@ -163,50 +151,31 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 		return FileUtil.getBytes(fileEntry.getContentStream());
 	}
 
-	private Folder _blogsEntryImagesFolder;
-	private BlogsEntryLocalService _blogsEntryLocalService;
-	private FileEntryDemoDataCreator _fileEntryDemoDataCreator;
-	private RootFolderDemoDataCreator _rootFolderDemoDataCreator;
-	private final List<Long> _entryIds = new CopyOnWriteArrayList<>();
+	private String _getRandomSubtitle(int order) throws IOException {
+		Class<?> clazz = getClass();
+
+		String titlePath =
+			"dependencies/creative/commons/subtitle" + order + ".txt";
+
+		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
+	}
+
+	private String _getRandomTitle(int order) throws IOException {
+		Class<?> clazz = getClass();
+
+		String titlePath =
+			"dependencies/creative/commons/title" + order + ".txt";
+
+		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LoremIpsumBlogsEntryDemoDataCreatorImpl.class);
+		CreativeCommonsBlogsEntryDemoDataCreatorImpl.class);
 
-	private static List<String> _entryTitles = new ArrayList<>();
-	private static List<String> _entrySubtitles = new ArrayList<>();
-	private static List<String> _entryParagraphs = new ArrayList<>();
-	static {
-		_entryTitles.addAll(
-			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
-		_entrySubtitles.addAll(
-			_getAllLines("dependencies/lorem/ipsum/subtitles.txt"));
-		_entryParagraphs.addAll(
-			_getAllLines("dependencies/lorem/ipsum/paragraphs.txt"));
-	}
-
-	private static List<String> _getAllLines(String file) {
-		List<String> dictionaryList = new ArrayList<>();
-
-		try (InputStream is =
-				LoremIpsumBlogsEntryDemoDataCreatorImpl.class.
-					getResourceAsStream(file);
-
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(is))) {
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				dictionaryList.add(line);
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(ioe);
-			}
-		}
-
-		return dictionaryList;
-	}
+	private Folder _blogsEntryImagesFolder;
+	private BlogsEntryLocalService _blogsEntryLocalService;
+	private final List<Long> _entryIds = new CopyOnWriteArrayList<>();
+	private FileEntryDemoDataCreator _fileEntryDemoDataCreator;
+	private RootFolderDemoDataCreator _rootFolderDemoDataCreator;
 
 }

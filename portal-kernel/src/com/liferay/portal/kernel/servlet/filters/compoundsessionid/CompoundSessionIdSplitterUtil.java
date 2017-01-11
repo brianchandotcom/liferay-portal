@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.servlet.filters.compoundsessionid;
 
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -57,11 +57,11 @@ public class CompoundSessionIdSplitterUtil {
 	private static final String _SESSION_ID_DELIMITER;
 
 	static {
-		String sessionIdDelimiter = PropsUtil.get(
+		String sessionIdDelimiter = SystemProperties.get(
 			PropsKeys.SESSION_ID_DELIMITER);
 
 		if (Validator.isNull(sessionIdDelimiter)) {
-			sessionIdDelimiter = PropsUtil.get(
+			sessionIdDelimiter = SystemProperties.get(
 				"session.id." + ServerDetector.getServerId() + ".delimiter");
 		}
 

@@ -174,8 +174,21 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			if (Validator.isNotNull(argumentsObject)) {
 				_appendArgumentReplaces(sb, argumentsObject, variableName);
 			}
+			else {
+				_appendArgumentMarkerReplace(sb, variableName);
+			}
 
 			return sb.toString();
+		}
+
+		private void _appendArgumentMarkerReplace(
+			StringBuilder sb, String variableName) {
+
+			sb.append(System.lineSeparator());
+			sb.append(variableName);
+			sb.append(" = ");
+			sb.append(variableName);
+			sb.append(".replace(/\\{|\\}/g,'\\x01');");
 		}
 
 		private void _appendArgumentReplaces(

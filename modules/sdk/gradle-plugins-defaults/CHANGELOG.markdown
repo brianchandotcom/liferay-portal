@@ -903,7 +903,7 @@ versions of Git.
 ## 2.4.11 - 2017-01-10
 
 ### Changed
-- [LPS-70060]: Update the [Liferay Gradle Plugins] dependency to version 3.0.70.
+- [LPS-66853]: Update the [Liferay Gradle Plugins] dependency to version 3.0.70.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -989,7 +989,6 @@ versions of Git.
 [LPS-69847]: https://issues.liferay.com/browse/LPS-69847
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
-[LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

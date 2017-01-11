@@ -61,11 +61,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletRequest;
 
@@ -590,9 +590,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				SchedulerEventMessageListener.class,
 				schedulerEventMessageListenerWrapper, properties);
 
-		synchronized (_serviceRegistrations) {
-			_serviceRegistrations.put(messageListener, serviceRegistration);
-		}
+		_serviceRegistrations.put(messageListener, serviceRegistration);
 	}
 
 	@Override
@@ -661,13 +659,13 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Override
 	public void unregister(MessageListener messageListener) {
-		synchronized (_serviceRegistrations) {
-			ServiceRegistration<SchedulerEventMessageListener>
-				serviceRegistration = _serviceRegistrations.remove(
-					messageListener);
+		_serviceRegistrations.compute(
+			messageListener,
+			(key, value) -> {
+				value.unregister();
 
-			serviceRegistration.unregister();
-		}
+				return null;
+			});
 	}
 
 	@Override
@@ -897,7 +895,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_destinationServiceRegistrations = new HashSet<>();
 	private JSONFactory _jsonFactory;
 	private final Map<String, ServiceRegistration<MessageListener>>
-		_messageListenerServiceRegistrations = new HashMap<>();
+		_messageListenerServiceRegistrations = new ConcurrentHashMap<>();
 
 	@Reference
 	private Portal _portal;
@@ -907,7 +905,7 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_schedulerEngineHelperConfiguration;
 	private final Map
 		<MessageListener, ServiceRegistration<SchedulerEventMessageListener>>
-			_serviceRegistrations = new HashMap<>();
+			_serviceRegistrations = new ConcurrentHashMap<>();
 	private volatile ServiceTracker
 		<SchedulerEventMessageListener, SchedulerEventMessageListener>
 			_serviceTracker;

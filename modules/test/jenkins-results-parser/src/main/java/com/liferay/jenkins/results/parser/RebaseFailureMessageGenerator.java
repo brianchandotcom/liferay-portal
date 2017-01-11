@@ -25,40 +25,6 @@ import org.dom4j.tree.DefaultElement;
 public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
-		if (!consoleText.contains(_REBASE_END_STRING) ||
-			!consoleText.contains(_REBASE_START_STRING) ||
-			!consoleText.contains("CONFLICT")) {
-
-			return null;
-		}
-
-		Element messageElement = new DefaultElement("div");
-
-		Dom4JUtil.addToElement(
-			Dom4JUtil.getNewElement("p", messageElement), "Please fix ",
-			Dom4JUtil.wrapWithNewElement("rebase errors", "strong"), " on ",
-			Dom4JUtil.wrapWithNewElement(
-				getBaseBranchAnchorElement(build.getTopLevelBuild()),
-				"strong"));
-
-		int end = consoleText.indexOf(_REBASE_END_STRING);
-
-		end = consoleText.lastIndexOf("\n", end);
-
-		int start = consoleText.lastIndexOf(_REBASE_START_STRING, end);
-
-		start = consoleText.lastIndexOf("\n", start);
-
-		messageElement.add(
-			getConsoleOutputSnippetElement(consoleText, true, start, end));
-
-		return messageElement;
-	}
-
-	@Override
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
@@ -95,6 +61,40 @@ public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
 		sb.append(getConsoleOutputSnippet(consoleOutput, true, start, end));
 
 		return sb.toString();
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		String consoleText = build.getConsoleText();
+
+		if (!consoleText.contains(_REBASE_END_STRING) ||
+			!consoleText.contains(_REBASE_START_STRING) ||
+			!consoleText.contains("CONFLICT")) {
+
+			return null;
+		}
+
+		Element messageElement = new DefaultElement("div");
+
+		Dom4JUtil.addToElement(
+			Dom4JUtil.getNewElement("p", messageElement), "Please fix ",
+			Dom4JUtil.wrapWithNewElement("rebase errors", "strong"), " on ",
+			Dom4JUtil.wrapWithNewElement(
+				getBaseBranchAnchorElement(build.getTopLevelBuild()),
+				"strong"));
+
+		int end = consoleText.indexOf(_REBASE_END_STRING);
+
+		end = consoleText.lastIndexOf("\n", end);
+
+		int start = consoleText.lastIndexOf(_REBASE_START_STRING, end);
+
+		start = consoleText.lastIndexOf("\n", start);
+
+		messageElement.add(
+			getConsoleOutputSnippetElement(consoleText, true, start, end));
+
+		return messageElement;
 	}
 
 	private static final String _REBASE_END_STRING =

@@ -25,31 +25,6 @@ public class GenericFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessage(Build build) {
-		String consoleText = build.getConsoleText();
-
-		Element message = getExceptionSnippetElement(consoleText);
-
-		if (message != null) {
-			return message;
-		}
-
-		message = getMergeTestResultsSnippetElement(consoleText);
-
-		if (message != null) {
-			return message;
-		}
-
-		message = getBuildFailedSnippetElement(consoleText);
-
-		if (message != null) {
-			return message;
-		}
-
-		return getConsoleOutputSnippetElement(consoleText, true, -1);
-	}
-
-	@Override
 	public String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
@@ -72,6 +47,31 @@ public class GenericFailureMessageGenerator
 		}
 
 		return getConsoleOutputSnippet(consoleOutput, true, -1);
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
+		String consoleText = build.getConsoleText();
+
+		Element message = getExceptionSnippetElement(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		message = getMergeTestResultsSnippetElement(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		message = getBuildFailedSnippetElement(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		return getConsoleOutputSnippetElement(consoleText, true, -1);
 	}
 
 	protected String getBuildFailedSnippet(String consoleOutput) {

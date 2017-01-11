@@ -28,7 +28,24 @@ public class PoshiValidationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessage(Build build) {
+	public String getMessage(
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+
+		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
+			consoleOutput);
+
+		if (poshiFailureMatcher.find()) {
+			String poshiFailureMessage = poshiFailureMatcher.group(1);
+
+			return "<p>POSHI Validation Failure</p><pre><code>" +
+				poshiFailureMessage + "</code></pre>";
+		}
+
+		return null;
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
 		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(consoleText);
@@ -47,23 +64,6 @@ public class PoshiValidationFailureMessageGenerator
 			Dom4JUtil.toCodeSnippetElement(poshiFailureMatcher.group(1)));
 
 		return messageElement;
-	}
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
-
-		Matcher poshiFailureMatcher = _poshiFailurePattern.matcher(
-			consoleOutput);
-
-		if (poshiFailureMatcher.find()) {
-			String poshiFailureMessage = poshiFailureMatcher.group(1);
-
-			return "<p>POSHI Validation Failure</p><pre><code>" +
-				poshiFailureMessage + "</code></pre>";
-		}
-
-		return null;
 	}
 
 	private static final Pattern _poshiFailurePattern = Pattern.compile(

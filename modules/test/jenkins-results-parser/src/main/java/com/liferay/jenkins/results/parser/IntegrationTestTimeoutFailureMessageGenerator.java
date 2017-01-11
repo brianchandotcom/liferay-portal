@@ -28,7 +28,31 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
-	public Element getMessage(Build build) {
+	public String getMessage(
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
+
+		Matcher matcher = _pattern.matcher(consoleOutput);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("<p><strong>");
+		sb.append(matcher.group("testName"));
+		sb.append("</strong> was aborted because it exceeded the timeout ");
+		sb.append("period.</p>");
+
+		String snippet = matcher.group(0);
+
+		sb.append(getConsoleOutputSnippet(snippet, false, 0, snippet.length()));
+
+		return sb.toString();
+	}
+
+	@Override
+	public Element getMessageElement(Build build) {
 		String consoleText = build.getConsoleText();
 
 		Matcher matcher = _pattern.matcher(consoleText);
@@ -51,30 +75,6 @@ public class IntegrationTestTimeoutFailureMessageGenerator
 				snippet, false, 0, snippet.length()));
 
 		return messageElement;
-	}
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
-
-		Matcher matcher = _pattern.matcher(consoleOutput);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<p><strong>");
-		sb.append(matcher.group("testName"));
-		sb.append("</strong> was aborted because it exceeded the timeout ");
-		sb.append("period.</p>");
-
-		String snippet = matcher.group(0);
-
-		sb.append(getConsoleOutputSnippet(snippet, false, 0, snippet.length()));
-
-		return sb.toString();
 	}
 
 	private static final Pattern _pattern;

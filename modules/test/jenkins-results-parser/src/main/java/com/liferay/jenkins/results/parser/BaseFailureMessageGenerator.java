@@ -29,11 +29,11 @@ public abstract class BaseFailureMessageGenerator
 	implements FailureMessageGenerator {
 
 	@Override
-	public abstract Element getMessage(Build build);
-
-	@Override
 	public abstract String getMessage(
 		String buildURL, String consoleOutput, Hashtable<?, ?> properties);
+
+	@Override
+	public abstract Element getMessageElement(Build build);
 
 	protected Element getBaseBranchAnchorElement(TopLevelBuild topLevelBuild) {
 		StringBuilder sb = new StringBuilder();

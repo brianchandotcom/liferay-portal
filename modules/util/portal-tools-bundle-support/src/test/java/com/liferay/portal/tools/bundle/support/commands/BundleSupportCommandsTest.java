@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.bundle.support.commands;
 
+import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
+
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
@@ -32,7 +34,6 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URL;
 
-import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.http.HttpHeaders;
@@ -334,37 +335,6 @@ public class BundleSupportCommandsTest {
 		return httpServer.createContext(contextPath, httpHandler);
 	}
 
-	private static Integer _setSystemProperty(String key, Integer value) {
-		String valueString = null;
-
-		if (value != null) {
-			valueString = value.toString();
-		}
-
-		valueString = _setSystemProperty(key, valueString);
-
-		if (valueString == null) {
-			return null;
-		}
-
-		return Integer.valueOf(valueString);
-	}
-
-	private static String _setSystemProperty(String key, String value) {
-		String oldValue = System.getProperty(key);
-
-		if (value == null) {
-			Properties properties = System.getProperties();
-
-			properties.remove(key);
-		}
-		else {
-			System.setProperty(key, value);
-		}
-
-		return oldValue;
-	}
-
 	private static HttpProxyServer _startHttpProxyServer(
 		int port, boolean authenticate, final AtomicInteger counter) {
 
@@ -488,11 +458,16 @@ public class BundleSupportCommandsTest {
 			Assert.assertEquals(0, proxyCounter.get());
 		}
 
-		proxyHost = _setSystemProperty("http.proxyHost", proxyHost);
-		proxyPort = _setSystemProperty("http.proxyPort", proxyPort);
-		proxyUser = _setSystemProperty("http.proxyUser", proxyUser);
-		proxyPassword = _setSystemProperty("http.proxyPassword", proxyPassword);
-		nonProxyHosts = _setSystemProperty("http.nonProxyHosts", nonProxyHosts);
+		proxyHost = BundleSupportUtil.setSystemProperty(
+			"http.proxyHost", proxyHost);
+		proxyPort = BundleSupportUtil.setSystemProperty(
+			"http.proxyPort", proxyPort);
+		proxyUser = BundleSupportUtil.setSystemProperty(
+			"http.proxyUser", proxyUser);
+		proxyPassword = BundleSupportUtil.setSystemProperty(
+			"http.proxyPassword", proxyPassword);
+		nonProxyHosts = BundleSupportUtil.setSystemProperty(
+			"http.nonProxyHosts", nonProxyHosts);
 
 		try {
 			File liferayHomeDir = temporaryFolder.newFolder("bundles");
@@ -507,11 +482,13 @@ public class BundleSupportCommandsTest {
 			_assertExists(liferayHomeDir, "README.markdown");
 		}
 		finally {
-			_setSystemProperty("http.proxyHost", proxyHost);
-			_setSystemProperty("http.proxyPort", proxyPort);
-			_setSystemProperty("http.proxyUser", proxyUser);
-			_setSystemProperty("http.proxyPassword", proxyPassword);
-			_setSystemProperty("http.nonProxyHosts", nonProxyHosts);
+			BundleSupportUtil.setSystemProperty("http.proxyHost", proxyHost);
+			BundleSupportUtil.setSystemProperty("http.proxyPort", proxyPort);
+			BundleSupportUtil.setSystemProperty("http.proxyUser", proxyUser);
+			BundleSupportUtil.setSystemProperty(
+				"http.proxyPassword", proxyPassword);
+			BundleSupportUtil.setSystemProperty(
+				"http.nonProxyHosts", nonProxyHosts);
 		}
 	}
 

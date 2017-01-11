@@ -14,8 +14,11 @@
 
 package com.liferay.portal.tools.bundle.support.internal.util;
 
+import java.util.Properties;
+
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class BundleSupportUtil {
 
@@ -29,6 +32,37 @@ public class BundleSupportUtil {
 		}
 
 		return "deploy/";
+	}
+
+	public static Integer setSystemProperty(String key, Integer value) {
+		String valueString = null;
+
+		if (value != null) {
+			valueString = value.toString();
+		}
+
+		valueString = setSystemProperty(key, valueString);
+
+		if (valueString == null) {
+			return null;
+		}
+
+		return Integer.valueOf(valueString);
+	}
+
+	public static String setSystemProperty(String key, String value) {
+		String oldValue = System.getProperty(key);
+
+		if (value == null) {
+			Properties properties = System.getProperties();
+
+			properties.remove(key);
+		}
+		else {
+			System.setProperty(key, value);
+		}
+
+		return oldValue;
 	}
 
 }

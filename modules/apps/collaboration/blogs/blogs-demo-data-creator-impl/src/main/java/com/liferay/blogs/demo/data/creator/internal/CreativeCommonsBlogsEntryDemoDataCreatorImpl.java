@@ -94,7 +94,7 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	public void delete() throws PortalException {
 		try {
 			for (long entryId : _entryIds) {
-				_blogsEntryLocalService.deleteBlogsEntry(entryId);
+				_blogsEntryLocalService.deleteEntry(entryId);
 
 				_entryIds.remove(entryId);
 			}

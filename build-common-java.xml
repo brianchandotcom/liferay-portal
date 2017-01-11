@@ -32,13 +32,6 @@
 			<fileset dir="${javac.srcdir}" excludes="**/*.java" />
 		</copy>
 
-		<if>
-			<equals arg1="${javac.deprecation}" arg2="on" />
-			<then>
-				<record action="start" name="${project.dir}/${ant.project.name}/javac.output.txt" />
-			</then>
-		</if>
-
 		<javac
 			classpathref="${javac.classpathref}"
 			compiler="${javac.compiler}"
@@ -50,28 +43,6 @@
 			nowarn="${javac.nowarn}"
 			srcdir="${javac.srcdir}"
 		/>
-
-		<if>
-			<equals arg1="${javac.deprecation}" arg2="on" />
-			<then>
-				<record action="stop" name="${project.dir}/${ant.project.name}/javac.output.txt" />
-
-				<loadfile property="javac.output.txt.content" srcfile="${project.dir}/${ant.project.name}/javac.output.txt" />
-
-				<delete file="${project.dir}/${ant.project.name}/javac.output.txt" />
-
-				<if>
-					<or>
-						<contains string="${javac.output.txt.content}" substring="a deprecated API" />
-						<contains string="${javac.output.txt.content}" substring="[deprecation]" />
-					</or>
-					<then>
-						<echo append="true" file="${project.dir}/javac.output.txt" message="${line.separator}${ant.project.name}${line.separator}" />
-						<echo append="true" file="${project.dir}/javac.output.txt" message="${javac.output.txt.content}" />
-					</then>
-				</if>
-			</then>
-		</if>
 
 		<echo file="${javac.destdir}/.touch"></echo>
 	</target>
@@ -304,7 +275,6 @@
 					<attribute name="Import-Package" value="${import.packages}" />
 					<attribute name="Javac-Compiler" value="${javac.compiler}" />
 					<attribute name="Javac-Debug" value="${javac.debug}" />
-					<attribute name="Javac-Deprecation" value="${javac.deprecation}" />
 					<attribute name="Javac-Encoding" value="${javac.encoding}" />
 					<attribute name="Jsp-Precompile" value="${jsp.precompile}" />
 					<attribute name="Liferay-Portal-Build-Date" value="${release.info.build.date}" />

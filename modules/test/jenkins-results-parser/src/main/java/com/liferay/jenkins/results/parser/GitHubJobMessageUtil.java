@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +39,6 @@ public class GitHubJobMessageUtil {
 
 		topLevelSharedDir = topLevelSharedDir.replace(
 			"${user.dir}", System.getProperty("user.dir"));
-
-		File javacOutputFile = new File(
-			topLevelSharedDir + "/javac.output.txt");
 
 		String result = jsonObject.getString("result");
 
@@ -140,22 +135,6 @@ public class GitHubJobMessageUtil {
 		else if (result.equals("UNSTABLE")) {
 			sb.append(
 				UnstableMessageUtil.getUnstableMessage(project, buildURL));
-		}
-		else if (javacOutputFile.exists()) {
-			sb.append("<h6>Job Results:</h6>");
-			sb.append("<p>0 Tests Passed.<br />1 Test Failed.</p>");
-			sb.append("<pre><code>");
-
-			String javacOutputFileContent = JenkinsResultsParserUtil.read(
-				javacOutputFile);
-
-			if (javacOutputFileContent.length() > 5000) {
-				javacOutputFileContent = javacOutputFileContent.substring(
-					javacOutputFileContent.length() - 5000);
-			}
-
-			sb.append(javacOutputFileContent);
-			sb.append("</code></pre>");
 		}
 
 		project.setProperty("report.html.content", sb.toString());

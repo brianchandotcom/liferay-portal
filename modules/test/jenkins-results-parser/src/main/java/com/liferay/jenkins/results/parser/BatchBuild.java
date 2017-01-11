@@ -301,11 +301,17 @@ public class BatchBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(
 			jobResultsElement,
-			Dom4JUtil.getNewAnchorElement(getBuildURL(), getDisplayName()),
 			Dom4JUtil.wrapWithNewElement("Job Results:", "h6"));
 
-		int failCount = getTestCountByStatus("FAILURE");
-		int successCount = getTestCountByStatus("SUCCESS");
+		String result = getResult();
+
+		int failCount = getDownstreamBuildCountByResult("FAILURE");
+		int successCount = getDownstreamBuildCountByResult("SUCCESS");
+
+		if (result.equals("UNSTABLE")) {
+			failCount = getTestCountByStatus("FAILURE");
+			successCount = getTestCountByStatus("SUCCESS");
+		}
 
 		Dom4JUtil.addToElement(
 			Dom4JUtil.getNewElement("p", jobResultsElement),
@@ -314,7 +320,7 @@ public class BatchBuild extends BaseBuild {
 				successCount, " Tests", " Test"),
 			" Passed.", new DefaultElement("br"), Integer.toString(failCount),
 			JenkinsResultsParserUtil.getNounForm(failCount, " Tests", " Test"),
-			" Failed", getFailureMessageElement());
+			" Failed.", getFailureMessageElement());
 
 		return jobResultsElement;
 	}

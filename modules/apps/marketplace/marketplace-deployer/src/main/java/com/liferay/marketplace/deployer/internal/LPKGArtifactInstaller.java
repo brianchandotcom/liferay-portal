@@ -63,6 +63,7 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 
 		if (GetterUtil.getBoolean(
 				properties.getProperty("restart-required"), true)) {
+			_logRestartRequired(file);
 
 			return;
 		}
@@ -98,12 +99,6 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 	public void update(File file) throws Exception {
 		Properties properties = _readMarketplaceProperties(file);
 
-		if (GetterUtil.getBoolean(
-				properties.getProperty("restart-required"), true)) {
-
-			return;
-		}
-
 		Bundle bundle = _bundleContext.getBundle(file.getCanonicalPath());
 
 		if (bundle != null) {
@@ -111,8 +106,23 @@ public class LPKGArtifactInstaller implements ArtifactInstaller {
 			Version newVersion = new Version(properties.getProperty("version"));
 
 			if (newVersion.compareTo(currentVersion) > 0) {
+				if (GetterUtil.getBoolean(
+						properties.getProperty("restart-required"), true)) {
+
+					_logRestartRequired(file);
+					return;
+				}
+
 				bundle.update(_lpkgDeployer.toBundle(file));
 			}
+		}
+	}
+
+	private void _logRestartRequired(File file) {
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"The portal instance needs to be restarted to complete the " +
+					"installation of " + file.getName());
 		}
 	}
 

@@ -14,10 +14,13 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.converter;
 
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.AutoFillDDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleCondition;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DefaultDDLFormRuleAction;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -49,25 +53,85 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		return ddmFormRules;
 	}
 
+	protected String convertAutoFillInputParameters(
+		Map<String, String> inputParametersMapper) {
+		StringBundler sb = new StringBundler(
+			inputParametersMapper.size() * 4 - 1);
+
+		for (Entry<String, String> inputParameterMapper :
+				inputParametersMapper.entrySet()) {
+
+			sb.append(inputParameterMapper.getKey());
+			sb.append(CharPool.EQUAL);
+			sb.append(inputParameterMapper.getValue());
+			sb.append(CharPool.SEMICOLON);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return StringUtil.quote(sb.toString());
+	}
+
+	protected String convertAutoFillOutputParameters(
+		Map<String, String> outputParametersMapper) {
+
+		StringBundler sb = new StringBundler(
+			outputParametersMapper.size() * 4 - 1);
+
+		for (Entry<String, String> outputParameterMapper :
+				outputParametersMapper.entrySet()) {
+
+			sb.append(outputParameterMapper.getValue());
+			sb.append(CharPool.EQUAL);
+			sb.append(outputParameterMapper.getKey());
+			sb.append(CharPool.SEMICOLON);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return StringUtil.quote(sb.toString());
+	}
+
 	protected String convertAction(DDLFormRuleAction ddlFormRuleAction) {
 		String action = ddlFormRuleAction.getAction();
 
-		if (_actionBooleanFunctionNameMap.containsKey(action)) {
-			String functionName = _actionBooleanFunctionNameMap.get(action);
+		if (ddlFormRuleAction instanceof AutoFillDDLFormRuleAction) {
+			AutoFillDDLFormRuleAction autoFillDDLFormRuleAction =
+				(AutoFillDDLFormRuleAction)ddlFormRuleAction;
 
 			return String.format(
-				_setBooleanPropertyFormat, functionName,
-				ddlFormRuleAction.getTarget());
+				_functionCallTernaryExpressionFormat,
+				_actionFunctionNameMap.get(action),
+				StringUtil.quote(
+					autoFillDDLFormRuleAction.getDDMDataProviderInstanceUUID()),
+				convertAutoFillInputParameters(
+					autoFillDDLFormRuleAction.getInputParametersMapper()),
+				convertAutoFillOutputParameters(
+					autoFillDDLFormRuleAction.getOutputParametersMapper()));
 		}
-		else if (_actionFunctionNameMap.containsKey(action)) {
-			String functionName = _actionFunctionNameMap.get(action);
+		else if (ddlFormRuleAction instanceof DefaultDDLFormRuleAction) {
+			DefaultDDLFormRuleAction defaultDDLFormRuleAction =
+				(DefaultDDLFormRuleAction)ddlFormRuleAction;
 
-			return String.format(
-				_functionCallBinaryExpressionFormat, functionName,
-				ddlFormRuleAction.getSource(), ddlFormRuleAction.getTarget());
+			if (_actionBooleanFunctionNameMap.containsKey(action)) {
+				String functionName = _actionBooleanFunctionNameMap.get(action);
+
+				return String.format(
+					_setBooleanPropertyFormat, functionName,
+					defaultDDLFormRuleAction.getTarget());
+			}
+			else if (_actionFunctionNameMap.containsKey(action)) {
+				String functionName = _actionFunctionNameMap.get(action);
+
+				return String.format(
+					_functionCallBinaryExpressionFormat, functionName,
+					defaultDDLFormRuleAction.getSource(),
+					defaultDDLFormRuleAction.getTarget());
+			}
 		}
 
-		return StringPool.BLANK;
+		throw new UnsupportedOperationException(
+			String.format("Unable to convert the %s action ", action));
 	}
 
 	protected String convertCondition(
@@ -169,6 +233,8 @@ public class DDLFormRulesToDDMFormRulesConverter {
 	private static final String _comparisonExpressionFormat = "%s %s %s";
 	private static final String _functionCallBinaryExpressionFormat =
 		"%s(%s, %s)";
+	private static final String _functionCallTernaryExpressionFormat =
+		"%s(%s, %s, %s)";
 	private static final String _functionCallUnaryExpressionFormat = "%s(%s)";
 	private static final String _notExpressionFormat = "not(%s)";
 	private static final Map<String, String> _operatorFunctionNameMap =
@@ -182,6 +248,7 @@ public class DDLFormRulesToDDMFormRulesConverter {
 		_actionBooleanFunctionNameMap.put("require", "setRequired");
 		_actionBooleanFunctionNameMap.put("show", "setVisible");
 
+		_actionFunctionNameMap.put("auto-fill", "call");
 		_actionFunctionNameMap.put("jump-to-page", "jumpPage");
 
 		_operatorFunctionNameMap.put("contains", "contains");

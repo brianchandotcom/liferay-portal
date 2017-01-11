@@ -24,9 +24,11 @@ import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -99,6 +101,14 @@ public class KBFolderStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(kbFolder.getUserUuid());
 
+		Map<Long, Long> kbFolderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				KBFolder.class);
+
+		long parentFolderId = MapUtil.getLong(
+			kbFolderIds, kbFolder.getParentKBFolderId(),
+			kbFolder.getParentKBFolderId());
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			kbFolder);
 
@@ -113,13 +123,13 @@ public class KBFolderStagedModelDataHandler
 
 				importedKBFolder = _kbFolderLocalService.addKBFolder(
 					userId, portletDataContext.getScopeGroupId(),
-					kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
+					kbFolder.getClassNameId(), parentFolderId,
 					kbFolder.getName(), kbFolder.getDescription(),
 					serviceContext);
 			}
 			else {
 				importedKBFolder = _kbFolderLocalService.updateKBFolder(
-					kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
+					kbFolder.getClassNameId(), parentFolderId,
 					kbFolder.getKbFolderId(), kbFolder.getName(),
 					kbFolder.getDescription(), serviceContext);
 			}
@@ -127,8 +137,8 @@ public class KBFolderStagedModelDataHandler
 		else {
 			importedKBFolder = _kbFolderLocalService.addKBFolder(
 				userId, portletDataContext.getScopeGroupId(),
-				kbFolder.getClassNameId(), kbFolder.getParentKBFolderId(),
-				kbFolder.getName(), kbFolder.getDescription(), serviceContext);
+				kbFolder.getClassNameId(), parentFolderId, kbFolder.getName(),
+				kbFolder.getDescription(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(kbFolder, importedKBFolder);

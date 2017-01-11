@@ -579,10 +579,6 @@
 		<execute function="AssertClick" locator1="Link#VIEW_IN_CONTEXT" value1="View in Context »" />
 	</command>
 
-	<command name="rate4StarsPG">
-		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
-	</command>
-
 	<command name="rateAssetPG">
 		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY">
 			<var name="key_emptyStarPosition" value="${emptyStarPosition}" />
@@ -1130,24 +1126,6 @@
 				<execute function="AssertTextEquals" locator1="AP#METADATA_TAGS" value1="${tagName}" />
 			</then>
 		</if>
-	</command>
-
-	<command name="viewRate4StarsPG">
-		<execute function="AssertTextEquals" locator1="Ratings#AVERAGE_LABEL" value1="Average (1 Vote)" />
-
-		<var name="key_assetTitle" value="${assetTitle}" />
-
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_1" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_2" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_3" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_1" />
-
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_1" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_2" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_3" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_4" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_1" />
 	</command>
 
 	<command name="viewReadMoreLinkNotPresentPG">

@@ -20,7 +20,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelModifiedDateComparator;
-import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,7 +27,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,13 +98,6 @@ public class KBFolderStagedModelDataHandler
 		throws Exception {
 
 		long userId = portletDataContext.getUserId(kbFolder.getUserUuid());
-
-		if (kbFolder.getParentKBFolderId() !=
-				KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, kbFolder, KBFolder.class);
-		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			kbFolder);

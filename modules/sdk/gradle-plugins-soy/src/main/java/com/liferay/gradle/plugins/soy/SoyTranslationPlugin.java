@@ -171,7 +171,7 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			sb.append(_fixLanguageKey(languageKey));
 			sb.append("');");
 
-			if (Validator.isNotNull(argumentsObject)) {
+			if (_hasArguments(argumentsObject)) {
 				_appendArgumentReplaces(sb, argumentsObject, variableName);
 			}
 			else {
@@ -219,6 +219,17 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 				languageKey);
 
 			return matcher.replaceAll("x");
+		}
+
+		private boolean _hasArguments(String argumentsObject) {
+			if (Validator.isNotNull(argumentsObject)) {
+				Matcher matcher = _argumentsObjectPattern.matcher(
+					argumentsObject);
+
+				return matcher.find();
+			}
+
+			return false;
 		}
 
 		private static final Pattern _argumentsObjectPattern = Pattern.compile(

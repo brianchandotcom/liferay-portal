@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alejandro Hernández
  */
 @Component(service = BlogsEntryDemoDataCreator.class)
-public class BlogsEntryDemoDataCreatorImpl
+public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	implements BlogsEntryDemoDataCreator {
 
 	@Override
@@ -182,23 +182,27 @@ public class BlogsEntryDemoDataCreatorImpl
 	private final List<Long> _entryIds = new CopyOnWriteArrayList<>();
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryDemoDataCreatorImpl.class);
+		LoremIpsumBlogsEntryDemoDataCreatorImpl.class);
 
 	private static List<String> _entryTitles = new ArrayList<>();
 	private static List<String> _entrySubtitles = new ArrayList<>();
 	private static List<String> _entryLines = new ArrayList<>();
 	static {
-		_entryTitles.addAll(_getAllLines("dependencies/BlogsEntryTitles.txt"));
+		_entryTitles.addAll(
+			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
 		_entrySubtitles.addAll(
-			_getAllLines("dependencies/BlogsEntrySubtitles.txt"));
-		_entryLines.addAll(_getAllLines("dependencies/BlogsEntryLines.txt"));
+			_getAllLines("dependencies/lorem/ipsum/subtitles.txt"));
+		_entryLines.addAll(
+			_getAllLines("dependencies/lorem/ipsum/paragraphs.txt"));
 	}
 
 	private static List<String> _getAllLines(String file) {
 		List<String> dictionaryList = new ArrayList<>();
 
 		try (InputStream is =
-				BlogsEntryDemoDataCreatorImpl.class.getResourceAsStream(file);
+				LoremIpsumBlogsEntryDemoDataCreatorImpl.class.
+					getResourceAsStream(file);
+
 			UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new InputStreamReader(is))) {
 

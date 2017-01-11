@@ -220,9 +220,14 @@ public class TopLevelBuild extends BaseBuild {
 
 		Dom4JUtil.addToElement(
 			baseBranchDetailsElement, "Branch Name: ",
-			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()),
-			new DefaultElement("br"), "Branch GIT ID: ",
-			Dom4JUtil.getNewAnchorElement(repositoryCommitURL, repositorySHA));
+			Dom4JUtil.getNewAnchorElement(baseBranchURL, getBranchName()));
+
+		if (repositorySHA != null) {
+			Dom4JUtil.addToElement(
+				baseBranchDetailsElement, new DefaultElement("br"),
+				"Branch GIT ID: ", Dom4JUtil.getNewAnchorElement(
+					repositoryCommitURL, repositorySHA));
+		}
 
 		return baseBranchDetailsElement;
 	}

@@ -130,7 +130,7 @@ public class KBFolderStagedModelDataHandler
 			else {
 				importedKBFolder = _kbFolderLocalService.updateKBFolder(
 					kbFolder.getClassNameId(), parentFolderId,
-					kbFolder.getKbFolderId(), kbFolder.getName(),
+					existingKBFolder.getKbFolderId(), kbFolder.getName(),
 					kbFolder.getDescription(), serviceContext);
 			}
 		}

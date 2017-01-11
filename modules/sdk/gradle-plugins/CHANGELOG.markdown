@@ -977,6 +977,8 @@ dependencies in the final OSGi bundle via the `compileInclude` configuration.
 
 ### Changed
 - [LPS-69926]: Update the [Gradle Bundle Plugin] dependency to version 0.9.0.
+- [LPS-70092]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.0.0.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -989,6 +991,7 @@ dependencies in the final OSGi bundle via the `compileInclude` configuration.
 [Liferay Gradle Plugins Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-javadoc-formatter
 [Liferay Gradle Plugins Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-service-builder
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
+[Liferay Gradle Plugins Soy]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-soy
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
 [Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
@@ -1066,4 +1069,5 @@ dependencies in the final OSGi bundle via the `compileInclude` configuration.
 [LPS-69926]: https://issues.liferay.com/browse/LPS-69926
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
+[LPS-70092]: https://issues.liferay.com/browse/LPS-70092
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -27,11 +27,11 @@
 
 					name="${column.name}"
 
-					<#if column.isPrimitiveType() || (column.type == "Map") || (column.type == "String")>
+					<#if column.isPrimitiveType() || stringUtil.equals(column.type, "Map") || stringUtil.equals(column.type, "String")>
 						type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${column.type}")}Type"
 					</#if>
 
-					<#if column.type == "Date">
+					<#if stringUtil.equals(column.type, "Date")>
 						type="org.hibernate.type.TimestampType"
 					</#if>
 
@@ -58,7 +58,7 @@
 				<#if column.idType??>
 					<#assign class = serviceBuilder.getGeneratorClass("${column.idType}") />
 
-					<#if class == "class">
+					<#if stringUtil.equals(class, "class")>
 						<#assign class = column.idParam />
 					</#if>
 				<#else>
@@ -67,7 +67,7 @@
 
 				<generator class="${class}"
 
-				<#if class == "sequence">
+				<#if stringUtil.equals(class, "sequence")>
 						><param name="sequence">${column.idParam}</param>
 					</generator>
 				<#else>
@@ -87,7 +87,7 @@
 				<#assign ejbName = false />
 			</#if>
 
-			<#if !column.isPrimary() && !column.isCollection() && !ejbName && ((column.type != "Blob") || ((column.type == "Blob") && !column.lazy)) && (column.name != "mvccVersion")>
+			<#if !column.isPrimary() && !column.isCollection() && !ejbName && (!stringUtil.equals(column.type, "Blob") || (stringUtil.equals(column.type, "Blob") && !column.lazy)) && !stringUtil.equals(column.name, "mvccVersion")>
 				<property
 
 				<#if serviceBuilder.isHBMCamelCasePropertyAccessor(column.name)>
@@ -100,12 +100,12 @@
 
 				name="${column.name}"
 
-				<#if (serviceBuilder.getSqlType(entity.getName(), column.getName(), column.getType()) == "CLOB") && (column.type != "Map")>
+				<#if (serviceBuilder.getSqlType(entity.getName(), column.getName(), column.getType()) == "CLOB") && !stringUtil.equals(column.type, "Map")>
 					type="com.liferay.portal.dao.orm.hibernate.StringClobType"
-				<#elseif column.isPrimitiveType() || (column.type == "Map") || (column.type == "String")>
+				<#elseif column.isPrimitiveType() || stringUtil.equals(column.type, "Map") || stringUtil.equals(column.type, "String")>
 					type="com.liferay.portal.dao.orm.hibernate.${serviceBuilder.getPrimitiveObj("${column.type}")}Type"
 				<#else>
-					<#if column.type == "Date">
+					<#if stringUtil.equals(column.type, "Date")>
 						type="org.hibernate.type.TimestampType"
 					<#else>
 						type="org.hibernate.type.${column.type}Type"
@@ -115,7 +115,7 @@
 				/>
 			</#if>
 
-			<#if (column.type == "Blob") && column.lazy>
+			<#if stringUtil.equals(column.type, "Blob") && column.lazy>
 				<one-to-one access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" cascade="save-update" class="${apiPackagePath}.model.${entity.name}${column.methodName}BlobModel" constrained="true" name="${column.name}BlobModel" outer-join="false" />
 			</#if>
 		</#list>

@@ -1183,13 +1183,13 @@ that may or may not be enforced with a unique index at the database level. Case
 						}
 						else if (${finderCol.names}.length > 1) {
 							${finderCol.names} =
-								<#if finderCol.type == "String">
+								<#if stringUtil.equals(finderCol.type, "String")>
 									ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 								<#else>
 									ArrayUtil.unique(${finderCol.names});
 								</#if>
 
-							<#if finderCol.type == "String">
+							<#if stringUtil.equals(finderCol.type, "String")>
 								Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								Arrays.sort(${finderCol.names});
@@ -1503,13 +1503,13 @@ that may or may not be enforced with a unique index at the database level. Case
 					}
 					else if (${finderCol.names}.length > 1) {
 						${finderCol.names} =
-							<#if finderCol.type == "String">
+							<#if stringUtil.equals(finderCol.type, "String")>
 								ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								ArrayUtil.unique(${finderCol.names});
 							</#if>
 
-						<#if finderCol.type == "String">
+						<#if stringUtil.equals(finderCol.type, "String")>
 							Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							Arrays.sort(${finderCol.names});

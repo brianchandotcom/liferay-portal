@@ -23,7 +23,7 @@ public class ${entity.name}JSONSerializer {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		<#list entity.regularColList as column>
-			<#if column.type == "Date">
+			<#if stringUtil.equals(column.type, "Date")>
 				Date ${column.name} = model.get${column.methodName}();
 
 				String ${column.name}JSON = StringPool.BLANK;

@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import ${import};
 </#list>
 
-<#if sessionTypeName == "Local">
+<#if stringUtil.equals(sessionTypeName, "Local")>
 /**
  * Provides the local service interface for ${entity.name}. Methods of this
  * service will not have security checks based on the propagated JAAS
@@ -56,12 +56,12 @@ import ${import};
 	@Deprecated
 </#if>
 
-<#if entity.hasRemoteService() && (sessionTypeName != "Local")>
+<#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local")>
 	@AccessControlled
 	@JSONWebService
 </#if>
 
-<#if entity.hasRemoteService() && (sessionTypeName != "Local") && osgiModule>
+<#if entity.hasRemoteService() && !stringUtil.equals(sessionTypeName, "Local") && osgiModule>
 	@OSGiBeanProperties(
 		property = {
 			"json.web.service.context.name=${portletShortName?lower_case}",
@@ -78,13 +78,13 @@ public interface ${entity.name}${sessionTypeName}Service
 
 	<#assign overrideMethodNames = [] />
 
-	<#if pluginName != "">
+	<#if validator.isNotNull(pluginName)>
 		, Invokable${sessionTypeName}Service
 
 		<#assign overrideMethodNames = overrideMethodNames + ["invokeMethod"] />
 	</#if>
 
-	<#if (sessionTypeName == "Local") && entity.hasColumns()>
+	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasColumns()>
 		<#if entity.isPermissionedModel()>
 			, PermissionedModelLocalService
 		<#else>
@@ -99,7 +99,7 @@ public interface ${entity.name}${sessionTypeName}Service
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-<#if sessionTypeName == "Local">
+<#if stringUtil.equals(sessionTypeName, "Local")>
 	 * Never modify or reference this interface directly. Always use {@link ${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service. Add custom service methods to {@link ${packagePath}.service.impl.${entity.name}LocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 <#else>
 	 * Never modify or reference this interface directly. Always use {@link ${entity.name}ServiceUtil} to access the ${entity.humanName} remote service. Add custom service methods to {@link ${packagePath}.service.impl.${entity.name}ServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
@@ -120,7 +120,7 @@ public interface ${entity.name}${sessionTypeName}Service
 				@Override
 			</#if>
 
-			<#if serviceBuilder.isServiceReadOnlyMethod(method, entity.txRequiredList) && (method.name != "getOSGiServiceIdentifier")>
+			<#if serviceBuilder.isServiceReadOnlyMethod(method, entity.txRequiredList) && !stringUtil.equals(method.name, "getOSGiServiceIdentifier")>
 				@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 			</#if>
 			public
@@ -141,7 +141,7 @@ public interface ${entity.name}${sessionTypeName}Service
 
 			)
 
-			<#if sessionTypeName == "Local">
+			<#if stringUtil.equals(sessionTypeName, "Local")>
 				<#list method.exceptions as exception>
 					<#if exception_index == 0>
 						throws

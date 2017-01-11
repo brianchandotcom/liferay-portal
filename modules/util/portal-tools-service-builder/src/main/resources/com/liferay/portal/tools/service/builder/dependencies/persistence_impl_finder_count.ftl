@@ -108,13 +108,13 @@ public int countBy${finder.name}(
 				}
 				else if (${finderCol.names}.length > 1) {
 					${finderCol.names} =
-						<#if finderCol.type == "String">
+						<#if stringUtil.equals(finderCol.type, "String")>
 							ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							ArrayUtil.unique(${finderCol.names});
 						</#if>
 
-					<#if finderCol.type == "String">
+					<#if stringUtil.equals(finderCol.type, "String")>
 						Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 					<#else>
 						Arrays.sort(${finderCol.names});
@@ -351,13 +351,13 @@ public int countBy${finder.name}(
 					}
 					else if (${finderCol.names}.length > 1) {
 						${finderCol.names} =
-							<#if finderCol.type == "String">
+							<#if stringUtil.equals(finderCol.type, "String")>
 								ArrayUtil.distinct(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 							<#else>
 								ArrayUtil.unique(${finderCol.names});
 							</#if>
 
-						<#if finderCol.type == "String">
+						<#if stringUtil.equals(finderCol.type, "String")>
 							Arrays.sort(${finderCol.names}, NULL_SAFE_STRING_COMPARATOR);
 						<#else>
 							Arrays.sort(${finderCol.names});

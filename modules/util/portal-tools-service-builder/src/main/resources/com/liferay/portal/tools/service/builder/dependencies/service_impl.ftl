@@ -5,7 +5,7 @@ import ${packagePath}.service.base.${entity.name}${sessionTypeName}ServiceBaseIm
 
 import aQute.bnd.annotation.ProviderType;
 
-<#if sessionTypeName == "Local">
+<#if stringUtil.equals(sessionTypeName, "Local")>
 /**
  * The implementation of the ${entity.humanName} local service.
  *
@@ -43,7 +43,7 @@ public class ${entity.name}${sessionTypeName}ServiceImpl extends ${entity.name}$
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-<#if sessionTypeName == "Local">
+<#if stringUtil.equals(sessionTypeName, "Local")>
 	 * Never reference this class directly. Always use {@link ${apiPackagePath}.service.${entity.name}LocalServiceUtil} to access the ${entity.humanName} local service.
 <#else>
 	 * Never reference this class directly. Always use {@link ${apiPackagePath}.service.${entity.name}ServiceUtil} to access the ${entity.humanName} remote service.

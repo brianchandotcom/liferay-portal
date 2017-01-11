@@ -30,7 +30,7 @@ public class ${entity.name}FinderBaseImpl
 		}
 	</#if>
 
-	<#if entity.hasColumns() && (entity.name != "Counter")>
+	<#if entity.hasColumns() && !stringUtil.equals(entity.name, "Counter")>
 		/**
 		 * Returns the ${entity.humanName} persistence.
 		 *
@@ -50,7 +50,7 @@ public class ${entity.name}FinderBaseImpl
 		}
 	</#if>
 
-	<#if entity.hasColumns() && (entity.name != "Counter")>
+	<#if entity.hasColumns() && !stringUtil.equals(entity.name, "Counter")>
 		@BeanReference(type = ${entity.name}Persistence.class)
 		protected ${entity.name}Persistence ${entity.varName}Persistence;
 	</#if>

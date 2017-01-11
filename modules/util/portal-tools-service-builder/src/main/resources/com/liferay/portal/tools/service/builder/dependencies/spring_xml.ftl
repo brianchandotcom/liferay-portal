@@ -12,13 +12,13 @@
 	</#if>
 
 	<#if entity.hasColumns()>
-		<#if (entity.dataSource != "liferayDataSource") || (entity.sessionFactory != "liferaySessionFactory")>
+		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 			<bean class="${entity.getPersistenceClass()}" id="${apiPackagePath}.service.persistence.${entity.name}Persistence" parent="basePersistence">
-				<#if entity.dataSource != "liferayDataSource">
+				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
 
-				<#if entity.sessionFactory != "liferaySessionFactory">
+				<#if !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 					<property name="sessionFactory" ref="${entity.getSessionFactory()}" />
 				</#if>
 			</bean>
@@ -28,13 +28,13 @@
 	</#if>
 
 	<#if entity.hasFinderClass()>
-		<#if (entity.dataSource != "liferayDataSource") || (entity.sessionFactory != "liferaySessionFactory")>
+		<#if !stringUtil.equals(entity.dataSource, "liferayDataSource") || !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 			<bean class="${entity.finderClass}" id="${apiPackagePath}.service.persistence.${entity.name}Finder" parent="basePersistence">
-				<#if entity.dataSource != "liferayDataSource">
+				<#if !stringUtil.equals(entity.dataSource, "liferayDataSource")>
 					<property name="dataSource" ref="${entity.getDataSource()}" />
 				</#if>
 
-				<#if entity.sessionFactory != "liferaySessionFactory">
+				<#if !stringUtil.equals(entity.sessionFactory, "liferaySessionFactory")>
 					<property name="sessionFactory" ref="${entity.getSessionFactory()}" />
 				</#if>
 			</bean>

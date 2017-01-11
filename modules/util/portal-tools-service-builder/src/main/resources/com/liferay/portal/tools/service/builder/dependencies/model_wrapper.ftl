@@ -90,8 +90,8 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 	<#list methods as method>
 		<#assign parameters = method.parameters />
 
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && !(method.name == "equals" && (parameters?size == 1))>
-			<#if method.name == "getStagedModelType">
+		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && !(stringUtil.equals(method.name, "equals") && (parameters?size == 1))>
+			<#if stringUtil.equals(method.name, "getStagedModelType")>
 				<#assign hasGetStagedModelTypeMethod = true />
 			</#if>
 
@@ -127,12 +127,12 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 			</#list>
 
 			{
-				<#if method.name == "clone" && (parameters?size == 0)>
+				<#if stringUtil.equals(method.name, "clone") && (parameters?size == 0)>
 					return new ${entity.name}Wrapper((${entity.name})_${entity.varName}.clone());
-				<#elseif (method.name == "toEscapedModel" || method.name == "toUnescapedModel") && (parameters?size == 0)>
+				<#elseif (stringUtil.equals(method.name, "toEscapedModel") || stringUtil.equals(method.name, "toUnescapedModel")) && (parameters?size == 0)>
 					return new ${entity.name}Wrapper(_${entity.varName}.${method.name}());
 				<#else>
-					<#if method.returns.value != "void">
+					<#if !stringUtil.equals(method.returns.value, "void")>
 						return
 					</#if>
 

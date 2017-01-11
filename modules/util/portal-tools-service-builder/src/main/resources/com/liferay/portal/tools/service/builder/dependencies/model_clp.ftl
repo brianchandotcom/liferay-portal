@@ -184,7 +184,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	}
 
 	<#list entity.regularColList as column>
-		<#if column.name == "classNameId">
+		<#if stringUtil.equals(column.name, "classNameId")>
 			@Override
 			public String getClassName() {
 				if (getClassNameId() <= 0) {
@@ -335,7 +335,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			}
 		</#if>
 
-		<#if (column.name == "resourcePrimKey") && entity.isResourcedModel()>
+		<#if stringUtil.equals(column.name, "resourcePrimKey") && entity.isResourcedModel()>
 			@Override
 			public boolean isResourceMain() {
 				return _resourceMain;
@@ -366,7 +366,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	</#list>
 
 	<#list methods as method>
-		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && !(entity.isResourcedModel() && (method.name == "isResourceMain") && (method.parameters?size == 0))>
+		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && !(entity.isResourcedModel() && stringUtil.equals(method.name, "isResourceMain") && (method.parameters?size == 0))>
 			@Override
 			public ${serviceBuilder.getTypeGenericsName(method.returns)} ${method.name} (
 
@@ -439,7 +439,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		<#assign hasParentContainerModelId = entity.hasColumn("parentContainerModelId") />
 
 		<#list entity.columnList as column>
-			<#if column.isContainerModel() && (column.name != "containerModelId")>
+			<#if column.isContainerModel() && !stringUtil.equals(column.name, "containerModelId")>
 				public long getContainerModelId() {
 					return get${column.methodName}();
 				}
@@ -449,7 +449,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 				}
 			</#if>
 
-			<#if column.isParentContainerModel() && (column.name != "parentContainerModelId")>
+			<#if column.isParentContainerModel() && !stringUtil.equals(column.name, "parentContainerModelId")>
 				<#assign hasParentContainerModelId = true />
 
 				public long getParentContainerModelId() {
@@ -894,7 +894,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 
 			<#list entity.order.columns as column>
 				<#if column.isPrimitiveType()>
-					<#if column.type == "boolean">
+					<#if stringUtil.equals(column.type, "boolean")>
 						<#assign
 							ltComparator = "=="
 							gtComparator = "!="
@@ -915,7 +915,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 						value = 0;
 					}
 				<#else>
-					<#if column.type == "Date">
+					<#if stringUtil.equals(column.type, "Date")>
 						value = DateUtil.compareTo(get${column.methodName}(), ${entity.varName}.get${column.methodName}());
 					<#else>
 						<#if column.isCaseSensitive()>
@@ -989,7 +989,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 	@Override
 	public int hashCode() {
 		<#if entity.hasPrimitivePK(false)>
-			<#if entity.PKClassName == "int">
+			<#if stringUtil.equals(entity.PKClassName, "int")>
 				return getPrimaryKey();
 			<#else>
 				return (int)getPrimaryKey();
@@ -1056,7 +1056,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			private String _${column.name}CurrentLanguageId;
 		</#if>
 
-		<#if (column.name == "resourcePrimKey") && entity.isResourcedModel()>
+		<#if stringUtil.equals(column.name, "resourcePrimKey") && entity.isResourcedModel()>
 			private boolean _resourceMain;
 		</#if>
 	</#list>

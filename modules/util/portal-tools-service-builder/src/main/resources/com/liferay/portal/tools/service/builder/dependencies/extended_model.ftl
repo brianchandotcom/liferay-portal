@@ -115,10 +115,10 @@ public interface ${entity.name} extends
 			/>
 
 			<#list annotations as annotation>
-				<#if annotation.type.javaClass.name != "Override">
+				<#if !stringUtil.equals(annotation.type.javaClass.name, "Override")>
 					${annotation.toString()}
 				<#else>
-					<#if (method.name == "equals") && (parameters?size == 1)>
+					<#if stringUtil.equals(method.name, "equals") && (parameters?size == 1)>
 						<#assign firstParameter = parameters?first />
 
 						<#if serviceBuilder.getTypeGenericsName(firstParameter.type) == "java.lang.Object">

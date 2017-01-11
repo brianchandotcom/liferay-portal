@@ -169,7 +169,7 @@ public interface ${entity.name}Model extends
 	public void setPrimaryKey(${entity.PKClassName} primaryKey);
 
 	<#list entity.regularColList as column>
-		<#if column.name == "classNameId">
+		<#if stringUtil.equals(column.name, "classNameId")>
 			/**
 			 * Returns the fully qualified class name of this ${entity.humanName}.
 			 *
@@ -197,7 +197,7 @@ public interface ${entity.name}Model extends
 			<#if hints["auto-escape"]??>
 				<#assign autoEscapeHintValue = hints["auto-escape"] />
 
-				<#if autoEscapeHintValue == "false">
+				<#if stringUtil.equals(autoEscapeHintValue, "false")>
 					<#assign autoEscape = false />
 				</#if>
 			</#if>
@@ -209,7 +209,7 @@ public interface ${entity.name}Model extends
 		 * @return the ${column.humanName} of this ${entity.humanName}
 		 */
 
-		<#if autoEscape && (column.type == "String") && (column.localized == false)>
+		<#if autoEscape && stringUtil.equals(column.type, "String") && (column.localized == false)>
 			@AutoEscape
 		</#if>
 
@@ -272,7 +272,7 @@ public interface ${entity.name}Model extends
 			public Map<Locale, String> get${column.methodName}Map();
 		</#if>
 
-		<#if column.type == "boolean">
+		<#if stringUtil.equals(column.type, "boolean")>
 			/**
 			 * Returns <code>true</code> if this ${entity.humanName} is ${column.humanName}.
 			 *
@@ -282,7 +282,7 @@ public interface ${entity.name}Model extends
 		</#if>
 
 		/**
-		<#if column.type == "boolean">
+		<#if stringUtil.equals(column.type, "boolean")>
 		 * Sets whether this ${entity.humanName} is ${column.humanName}.
 		<#else>
 		 * Sets the ${column.humanName} of this ${entity.humanName}.
@@ -331,7 +331,7 @@ public interface ${entity.name}Model extends
 			public void set${column.methodName}Map(Map<Locale, String> ${column.name}Map, Locale defaultLocale);
 		</#if>
 
-		<#if (column.name == "resourcePrimKey") && entity.isResourcedModel()>
+		<#if stringUtil.equals(column.name, "resourcePrimKey") && entity.isResourcedModel()>
 			@Override
 			public boolean isResourceMain();
 		</#if>

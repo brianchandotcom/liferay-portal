@@ -66,7 +66,7 @@ public class ${entity.name}${sessionTypeName}ServiceWrapper implements ${entity.
 			</#list>
 
 			{
-				<#if method.returns.value != "void">
+				<#if !stringUtil.equals(method.returns.value, "void")>
 					return
 				</#if>
 

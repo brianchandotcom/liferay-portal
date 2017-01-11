@@ -176,7 +176,7 @@ public class ${entity.name}ServiceSoap {
 				try {
 					${localizationMapVariables}
 
-					<#if returnValueName != "void">
+					<#if !stringUtil.equals(returnValueName, "void")>
 						${returnTypeGenericsName} returnValue =
 					</#if>
 
@@ -221,15 +221,15 @@ public class ${entity.name}ServiceSoap {
 
 					);
 
-					<#if returnValueName != "void">
+					<#if !stringUtil.equals(returnValueName, "void")>
 						<#if returnValueName == extendedModelName>
-							<#if returnValueDimension == "">
+							<#if validator.isNull(returnValueDimension)>
 								return ${soapModelName}.toSoapModel(returnValue);
 							<#else>
 								return ${soapModelName}.toSoapModels(returnValue);
 							</#if>
 						<#elseif stringUtil.startsWith(returnValueName, apiPackagePath + ".model.") && serviceBuilder.hasEntityByGenericsName(returnValueName)>
-							<#if returnValueDimension == "">
+							<#if validator.isNull(returnValueDimension)>
 								return ${returnValueName}Soap.toSoapModel(returnValue);
 							<#else>
 								return ${returnValueName}Soap.toSoapModels(returnValue);

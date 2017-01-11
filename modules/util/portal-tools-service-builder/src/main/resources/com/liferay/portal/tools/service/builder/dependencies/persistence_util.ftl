@@ -137,7 +137,7 @@ public class ${entity.name}Util {
 			</#list>
 
 			{
-				<#if method.returns.value != "void">
+				<#if !stringUtil.equals(method.returns.value, "void")>
 					return
 				</#if>
 
@@ -161,7 +161,7 @@ public class ${entity.name}Util {
 			return _serviceTracker.getService();
 		<#else>
 			if (_persistence == null) {
-				<#if pluginName != "">
+				<#if validator.isNotNull(pluginName)>
 					_persistence = (${entity.name}Persistence)PortletBeanLocatorUtil.locate(${apiPackagePath}.service.ClpSerializer.getServletContextName(), ${entity.name}Persistence.class.getName());
 				<#else>
 					_persistence = (${entity.name}Persistence)PortalBeanLocatorUtil.locate(${entity.name}Persistence.class.getName());

@@ -69,7 +69,7 @@ public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>,
 
 		<#list entity.PKList as column>
 			<#if column.isPrimitiveType()>
-				<#if column.type == "boolean">
+				<#if stringUtil.equals(column.type, "boolean")>
 					if (!${column.name} && pk.${column.name}) {
 						value = -1;
 					}
@@ -91,7 +91,7 @@ public class ${entity.PKClassName} implements Comparable<${entity.PKClassName}>,
 					}
 				</#if>
 			<#else>
-				<#if column.type == "Date">
+				<#if stringUtil.equals(column.type, "Date")>
 					value = DateUtil.compareTo(${column.name}, pk.${column.name});
 				<#else>
 					value = ${column.name}.compareTo(pk.${column.name});

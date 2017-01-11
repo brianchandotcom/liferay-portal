@@ -9,7 +9,7 @@
 		if (${finderCol.names}.length > 0) {
 			query.append(StringPool.OPEN_PARENTHESIS);
 
-			<#if finderCol.type == "String">
+			<#if stringUtil.equals(finderCol.type, "String")>
 				for (int i = 0; i < ${finderCol.names}.length; i++) {
 					${finderCol.type} ${finderCol.name} = ${finderCol.names}[i];
 

@@ -95,12 +95,12 @@ public class ${entity.name}ServiceHttp {
 
 					);
 
-					<#if returnTypeName != "void">
+					<#if !stringUtil.equals(returnTypeName, "void")>
 						Object returnObj = null;
 					</#if>
 
 					try {
-						<#if returnTypeName != "void">
+						<#if !stringUtil.equals(returnTypeName, "void")>
 							returnObj =
 						</#if>
 
@@ -116,18 +116,18 @@ public class ${entity.name}ServiceHttp {
 						throw new com.liferay.portal.kernel.exception.SystemException(e);
 					}
 
-					<#if returnTypeName != "void">
-						<#if returnTypeName == "boolean">
+					<#if !stringUtil.equals(returnTypeName, "void")>
+						<#if stringUtil.equals(returnTypeName, "boolean")>
 							return ((Boolean)returnObj).booleanValue();
-						<#elseif returnTypeName == "double">
+						<#elseif stringUtil.equals(returnTypeName, "double")>
 							return ((Double)returnObj).doubleValue();
-						<#elseif returnTypeName == "float">
+						<#elseif stringUtil.equals(returnTypeName, "float")>
 							return ((Float)returnObj).floatValue();
-						<#elseif returnTypeName == "int">
+						<#elseif stringUtil.equals(returnTypeName, "int")>
 							return ((Integer)returnObj).intValue();
-						<#elseif returnTypeName == "long">
+						<#elseif stringUtil.equals(returnTypeName, "long")>
 							return ((Long)returnObj).longValue();
-						<#elseif returnTypeName == "short">
+						<#elseif stringUtil.equals(returnTypeName, "short")>
 							return ((Short)returnObj).shortValue();
 						<#elseif returnTypeName == "java.lang.Object">
 							return returnObj;

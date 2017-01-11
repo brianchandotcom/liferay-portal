@@ -30,7 +30,7 @@
 	;
 </#if>
 
-<#if (finderCol.type == "String") && !finderCol.isCaseSensitive()>
+<#if stringUtil.equals(finderCol.type, "String") && !finderCol.isCaseSensitive()>
 	<#assign finderColExpression = "lower(" + textFinderFieldName + ") " + finderCol.comparator + " ?" />
 <#else>
 	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ?" />
@@ -38,13 +38,13 @@
 
 private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_2${finderFieldSuffix} = "${finderColExpression}${finderColConjunction}";
 
-<#if finderCol.type == "String">
+<#if stringUtil.equals(finderCol.type, "String")>
 	<#assign finderColExpression = textFinderFieldName + " " + finderCol.comparator + " ''" />
 
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3${finderFieldSuffix} = "(${finderFieldName} IS NULL OR ${finderColExpression})${finderColConjunction}";
 </#if>
 
-<#if finderCol.hasArrayableOperator() && (finderColConjunction != "") && (finderCol.type == "String")>
+<#if finderCol.hasArrayableOperator() && validator.isNotNull(finderColConjunction) && stringUtil.equals(finderCol.type, "String")>
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_4${finderFieldSuffix} = "(" + removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1) + ")";
 
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_5${finderFieldSuffix} = "(" + removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_2) + ")";
@@ -52,6 +52,6 @@ private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_6${finderFieldSuffix} = "(" + removeConjunction(_FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_3) + ")";
 </#if>
 
-<#if finderCol.hasArrayableOperator() && (finderCol.type != "String")>
+<#if finderCol.hasArrayableOperator() && !stringUtil.equals(finderCol.type, "String")>
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_7${finderFieldSuffix} = "${finderFieldName}<#if finderCol.isArrayableAndOperator()> NOT IN (<#else> IN (</#if>";
 </#if>

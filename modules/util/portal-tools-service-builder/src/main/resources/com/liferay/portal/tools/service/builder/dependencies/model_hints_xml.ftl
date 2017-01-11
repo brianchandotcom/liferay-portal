@@ -58,7 +58,7 @@
 							/>
 
 							<#list hintElements as hintElement>
-								<#if hintElement.name == "hint">
+								<#if stringUtil.equals(hintElement.name, "hint")>
 									<hint name="${hintElement.attributeValue("name")}">${hintElement.text}</hint>
 								<#elseif hintElement.name == "hint-collection">
 									<hint-collection name="${hintElement.attributeValue("name")}" />
@@ -89,13 +89,13 @@
 
 								<validator
 
-								<#if validatorErrorMessage != "">
+								<#if validator.isNotNull(validatorErrorMessage)>
 									error-message="${validatorErrorMessage}"
 								</#if>
 
 								name="${validatorName}"
 
-								<#if validatorValue != "">
+								<#if validator.isNotNull(validatorValue)>
 									>
 										${validatorValue}
 									</validator>

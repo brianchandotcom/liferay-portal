@@ -296,38 +296,43 @@ public class ProjectTemplatesTest {
 
 	@Test
 	public void testBuildTemplateFormField() throws Exception {
-		File gradleProjectDir = _buildTemplateWithGradle("form-field", "foo");
+		File gradleProjectDir = _buildTemplateWithGradle(
+			"form-field", "foobar");
 
 		_testExists(gradleProjectDir, "bnd.bnd");
 
-		_testExists(
+		_testContains(
 			gradleProjectDir,
-			"src/main/resources/META-INF/resources/foo_field.js");
-		_testExists(
-			gradleProjectDir, "src/main/resources/META-INF/resources/foo.soy");
-		_testExists(
+			"src/main/resources/META-INF/resources/foobar_field.js",
+			"var FoobarField");
+		_testContains(
 			gradleProjectDir,
-			"src/main/resources/META-INF/resources/config.js");
+			"src/main/resources/META-INF/resources/foobar.soy",
+			"{template .Foobar autoescape");
+		_testContains(
+			gradleProjectDir, "src/main/resources/META-INF/resources/config.js",
+			"'foobar-form-field': {");
 
 		_testContains(
 			gradleProjectDir, "build.gradle",
 			"apply plugin: \"com.liferay.plugin\"");
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/foo/form/field/FooDDMFormFieldRenderer.java",
-			"public class FooDDMFormFieldRenderer extends " +
+			"src/main/java/foobar/form/field/FoobarDDMFormFieldRenderer.java",
+			"public class FoobarDDMFormFieldRenderer extends " +
 				"BaseDDMFormFieldRenderer {");
 		_testContains(
 			gradleProjectDir,
-			"src/main/java/foo/form/field/FooDDMFormFieldType.java",
-			"public class FooDDMFormFieldType extends BaseDDMFormFieldType {");
+			"src/main/java/foobar/form/field/FoobarDDMFormFieldType.java",
+			"class FoobarDDMFormFieldType extends BaseDDMFormFieldType");
 
-//		File mavenProjectDir = _buildTemplateWithMaven(
-//			"form-field", "foo", "-DclassName=Foo", "-Dpackage=foo");
-//
-//		_buildProjects(
-//			gradleProjectDir, mavenProjectDir, "build/libs/foo-1.0.0.jar",
-//			"target/foo-1.0.0.jar");
+		String[] gradleTaskPath = new String[] {
+			_GRADLE_TASK_PATH_CHECK_SOURCE_FORMATTING, _GRADLE_TASK_PATH_BUILD
+		};
+
+		_executeGradle(gradleProjectDir, gradleTaskPath);
+
+		_testExists(gradleProjectDir, "build/libs/foobar-1.0.0.jar");
 	}
 
 	@Test

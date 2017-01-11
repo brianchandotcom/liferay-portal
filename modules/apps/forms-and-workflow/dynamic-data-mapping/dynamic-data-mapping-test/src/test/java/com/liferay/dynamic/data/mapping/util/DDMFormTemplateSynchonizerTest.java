@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
 import com.liferay.dynamic.data.mapping.service.impl.DDMTemplateLocalServiceImpl;
-import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
+import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;

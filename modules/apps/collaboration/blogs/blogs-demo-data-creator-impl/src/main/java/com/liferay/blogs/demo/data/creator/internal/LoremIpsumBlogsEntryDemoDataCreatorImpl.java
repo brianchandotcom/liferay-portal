@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -60,6 +61,9 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 		throws IOException, PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
 		serviceContext.setScopeGroupId(groupId);
 
@@ -160,7 +164,9 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 		FileEntry fileEntry = _fileEntryDemoDataCreator.create(
 			userId, _blogsEntryImagesFolder.getFolderId());
 
-		return FileUtil.getBytes(fileEntry.getContentStream());
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		return FileUtil.getBytes(fileVersion.getContentStream(false));
 	}
 
 	private Folder _blogsEntryImagesFolder;

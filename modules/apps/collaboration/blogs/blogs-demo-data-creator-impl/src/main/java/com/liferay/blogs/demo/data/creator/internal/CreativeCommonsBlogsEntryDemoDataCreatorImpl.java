@@ -24,8 +24,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -36,10 +36,15 @@ import java.io.IOException;
 
 import java.sql.Timestamp;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,11 +55,21 @@ import org.osgi.service.component.annotations.Reference;
 public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	implements BlogsEntryDemoDataCreator {
 
+	@Activate
+	public void activate(BundleContext bundleContext) {
+		_availableIndexes.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+
+		Collections.shuffle(_availableIndexes);
+	}
+
 	@Override
 	public BlogsEntry create(long userId, long groupId)
 		throws IOException, PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
 
 		serviceContext.setScopeGroupId(groupId);
 
@@ -63,13 +78,12 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 			StringUtil.randomString() + ".jpeg", "image/jpeg",
 			StringPool.BLANK);
 
-		int randomTitleSuffix = RandomUtil.nextInt(10) + 1;
+		int index = _getNextIndex();
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-			userId, _getRandomTitle(randomTitleSuffix),
-			_getRandomSubtitle(randomTitleSuffix), null,
-			_getRandomContent(randomTitleSuffix), _getRandomDate(), false,
-			false, null, null, imageSelector, null, serviceContext);
+			userId, _getRandomTitle(index), _getRandomSubtitle(index), null,
+			_getRandomContent(index), _getRandomDate(), false, false, null,
+			null, imageSelector, null, serviceContext);
 
 		_entryIds.add(blogsEntry.getEntryId());
 
@@ -116,11 +130,22 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 		_rootFolderDemoDataCreator = rootFolderDemoDataCreator;
 	}
 
+	private int _getNextIndex() {
+		int index = _atomicInteger.getAndIncrement();
+
+		if (index == (_availableIndexes.size() - 1)) {
+			_atomicInteger.set(0);
+		}
+
+		return _availableIndexes.get(index);
+	}
+
 	private String _getRandomContent(int order) throws IOException {
 		Class<?> clazz = getClass();
 
 		String titlePath =
-			"dependencies/creative/commons/content" + order + ".txt";
+			"com/liferay/blogs/demo/data/creator/internal/dependencies/" +
+				"creative/commons/content" + order + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -148,14 +173,17 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 		FileEntry fileEntry = _fileEntryDemoDataCreator.create(
 			userId, _blogsEntryImagesFolder.getFolderId());
 
-		return FileUtil.getBytes(fileEntry.getContentStream());
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		return FileUtil.getBytes(fileVersion.getContentStream(false));
 	}
 
 	private String _getRandomSubtitle(int order) throws IOException {
 		Class<?> clazz = getClass();
 
 		String titlePath =
-			"dependencies/creative/commons/subtitle" + order + ".txt";
+			"com/liferay/blogs/demo/data/creator/internal/dependencies/" +
+				"creative/commons/subtitle" + order + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -164,7 +192,8 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 		Class<?> clazz = getClass();
 
 		String titlePath =
-			"dependencies/creative/commons/title" + order + ".txt";
+			"com/liferay/blogs/demo/data/creator/internal/dependencies/" +
+				"creative/commons/title" + order + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -172,6 +201,9 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreativeCommonsBlogsEntryDemoDataCreatorImpl.class);
 
+	private final AtomicInteger _atomicInteger = new AtomicInteger(0);
+	private final List<Integer> _availableIndexes =
+		new CopyOnWriteArrayList<>();
 	private Folder _blogsEntryImagesFolder;
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private final List<Long> _entryIds = new CopyOnWriteArrayList<>();

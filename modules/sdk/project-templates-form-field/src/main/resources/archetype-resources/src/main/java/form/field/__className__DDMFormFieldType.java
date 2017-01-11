@@ -5,6 +5,9 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * @author ${author}
+ */
 @Component(
 	immediate = true,
 	property = {

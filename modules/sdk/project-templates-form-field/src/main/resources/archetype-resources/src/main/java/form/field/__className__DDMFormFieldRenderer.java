@@ -10,6 +10,9 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
+/**
+ * @author ${author}
+ */
 @Component(
 	immediate = true, property = "ddm.form.field.type.name=${className}",
 	service = DDMFormFieldRenderer.class

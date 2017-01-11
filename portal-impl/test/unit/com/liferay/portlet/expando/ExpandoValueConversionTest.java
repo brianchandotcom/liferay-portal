@@ -30,6 +30,7 @@ import org.junit.Test;
 
 /**
  * @author Raymond Augé
+ * @author Amadea Fejes
  */
 public class ExpandoValueConversionTest {
 
@@ -961,6 +962,79 @@ public class ExpandoValueConversionTest {
 		shorts.add(String.valueOf(Short.MAX_VALUE));
 
 		_converter.convertType(ExpandoColumnConstants.SHORT_ARRAY, shorts);
+	}
+
+	@Test
+	public void testString1() {
+		String string = "[randomtext]";
+
+		String convertedString = (String)_converter.convertType(
+			ExpandoColumnConstants.STRING, string);
+
+		Assert.assertEquals(string, convertedString);
+	}
+
+	@Test
+	public void testString2() {
+		Integer integer = 16;
+
+		String convertedString = (String)_converter.convertType(
+			ExpandoColumnConstants.STRING, integer.toString());
+
+		Assert.assertEquals(integer.toString(), convertedString);
+	}
+
+	@Test
+	public void testStringArray1() {
+		String stringArray = "[randomtext]";
+		String stringArrayValue = "randomtext";
+
+		String[] convertedArray = (String[])_converter.convertType(
+			ExpandoColumnConstants.STRING_ARRAY, stringArray);
+
+		Assert.assertEquals(1, convertedArray.length);
+		Assert.assertEquals(stringArrayValue, convertedArray[0]);
+	}
+
+	@Test
+	public void testStringArray2() {
+		String stringArray = "[randomtext,randomtext]";
+		String stringArrayValue = "randomtext";
+
+		String[] convertedArray = (String[])_converter.convertType(
+			ExpandoColumnConstants.STRING_ARRAY, stringArray);
+
+		Assert.assertEquals(2, convertedArray.length);
+		Assert.assertEquals(stringArrayValue, convertedArray[0]);
+		Assert.assertEquals(stringArrayValue, convertedArray[1]);
+	}
+
+	@Test
+	public void testStringArray3() {
+		String stringArray = "randomtext,randomtext";
+		String stringArrayValue = "randomtext";
+
+		String[] convertedArray = (String[])_converter.convertType(
+			ExpandoColumnConstants.STRING_ARRAY, stringArray);
+
+		Assert.assertEquals(2, convertedArray.length);
+		Assert.assertEquals(stringArrayValue, convertedArray[0]);
+		Assert.assertEquals(stringArrayValue, convertedArray[1]);
+	}
+
+	@Test
+	public void testStringArray4() {
+		Collection<String> integers = new ArrayList<>();
+
+		integers.add(String.valueOf(16));
+		integers.add(String.valueOf(2016));
+
+		String[] convertedArray = (String[])_converter.convertType(
+			ExpandoColumnConstants.STRING_ARRAY, integers);
+
+		Assert.assertEquals(2, convertedArray.length);
+		Assert.assertEquals(String.valueOf(16), convertedArray[0]);
+		Assert.assertEquals(String.valueOf(2016), convertedArray[1]);
 	}
 
 	private final Converter _converter = new Converter();

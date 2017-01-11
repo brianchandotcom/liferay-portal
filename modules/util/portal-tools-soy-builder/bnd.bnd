@@ -3,10 +3,12 @@ Bundle-SymbolicName: com.liferay.portal.tools.soy.builder
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.tools.soy.builder,\
+	com.liferay.portal.tools.soy.builder.ant,\
 	com.liferay.portal.tools.soy.builder.commands,\
 	com.liferay.portal.tools.soy.builder.maven
 Import-Package:\
 	!org.apache.maven.plugin.*,\
+	!org.apache.tools.ant.*,\
 	*
 Main-Class: com.liferay.portal.tools.soy.builder.SoyBuilder
 -includeresource: @jcommander-[0-9]*.jar

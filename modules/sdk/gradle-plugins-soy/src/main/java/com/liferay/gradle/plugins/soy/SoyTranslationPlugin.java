@@ -171,10 +171,14 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			sb.append(_fixLanguageKey(languageKey));
 			sb.append("');");
 
-			if (_hasArguments(argumentsObject)) {
-				_appendArgumentReplaces(sb, argumentsObject, variableName);
+			int argumentReplaces = 0;
+
+			if (Validator.isNotNull(argumentsObject)) {
+				argumentReplaces = _appendArgumentReplaces(
+					sb, argumentsObject, variableName);
 			}
-			else {
+
+			if (argumentReplaces == 0) {
 				_appendArgumentMarkerReplace(sb, variableName);
 			}
 
@@ -191,7 +195,7 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 			sb.append(".replace(/{(\\d+)}/g, '\\x01$1\\x01')");
 		}
 
-		private void _appendArgumentReplaces(
+		private int _appendArgumentReplaces(
 			StringBuilder sb, String argumentsObject, String variableName) {
 
 			int i = 0;
@@ -212,6 +216,8 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 
 				i++;
 			}
+
+			return i;
 		}
 
 		private String _fixLanguageKey(String languageKey) {
@@ -219,17 +225,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 				languageKey);
 
 			return matcher.replaceAll("x");
-		}
-
-		private boolean _hasArguments(String argumentsObject) {
-			if (Validator.isNotNull(argumentsObject)) {
-				Matcher matcher = _argumentsObjectPattern.matcher(
-					argumentsObject);
-
-				return matcher.find();
-			}
-
-			return false;
 		}
 
 		private static final Pattern _argumentsObjectPattern = Pattern.compile(

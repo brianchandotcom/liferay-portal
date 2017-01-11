@@ -14,81 +14,11 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.converter.model;
 
-import com.liferay.portal.kernel.util.HashUtil;
-
-import java.util.Objects;
-
 /**
  * @author Marcellus Tavares
  */
-public class DDLFormRuleAction {
+public interface DDLFormRuleAction {
 
-	public DDLFormRuleAction() {
-	}
-
-	public DDLFormRuleAction(String action, String source, String target) {
-		_action = action;
-		_source = source;
-		_target = target;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-
-		if (!(obj instanceof DDLFormRuleAction)) {
-			return false;
-		}
-
-		DDLFormRuleAction ddlFormRuleAction = (DDLFormRuleAction)obj;
-
-		if (Objects.equals(_action, ddlFormRuleAction._action) &&
-			Objects.equals(_source, ddlFormRuleAction._source) &&
-			Objects.equals(_target, ddlFormRuleAction._target)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	public String getAction() {
-		return _action;
-	}
-
-	public String getSource() {
-		return _source;
-	}
-
-	public String getTarget() {
-		return _target;
-	}
-
-	@Override
-	public int hashCode() {
-		int hash = HashUtil.hash(0, _action);
-
-		hash = HashUtil.hash(hash, _source);
-
-		return HashUtil.hash(hash, _target);
-	}
-
-	public void setAction(String action) {
-		_action = action;
-	}
-
-	public void setSource(String source) {
-		_source = source;
-	}
-
-	public void setTarget(String target) {
-		_target = target;
-	}
-
-	private String _action;
-	private String _source;
-	private String _target;
+	public String getAction();
 
 }

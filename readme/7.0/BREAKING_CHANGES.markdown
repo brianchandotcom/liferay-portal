@@ -4308,3 +4308,38 @@ This change was made as part of the ongoing strategy to modularize Liferay
 Portal by means of an OSGi container.
 
 ---------------------------------------
+
+### Moved Journal File Uploads Portlet Properties to OSGi Configuration
+- **Date:** 2017-Jan-04
+- **JIRA Ticket:** LPS-69209
+
+#### What changed?
+
+The Journal file uploads portlet properties have been moved from Server
+Administration to an OSGI configuration named `JournalFileUploadsConfiguration.java`
+in the `journal-service` module.
+
+#### Who is affected?
+
+This affects anyone who is using the following portlet properties:
+
+- `journal.image.small.max.size`
+- `journal.image.extensions`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay's Control Panel &rarr; *Configuration* &rarr; *System
+Settings* &rarr; *Web Content File Uploads* and editing the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------

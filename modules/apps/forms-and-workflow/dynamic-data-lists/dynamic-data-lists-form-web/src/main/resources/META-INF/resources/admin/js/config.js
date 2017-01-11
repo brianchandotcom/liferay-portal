@@ -37,7 +37,7 @@
 						},
 						'liferay-ddl-form-builder-action-factory': {
 							path: 'form_builder_action_factory.js',
-							requires: ['liferay-ddl-form-builder-action-property', 'liferay-ddl-form-builder-action-jump-to-page']
+							requires: ['liferay-ddl-form-builder-action-jump-to-page', 'liferay-ddl-form-builder-action-property']
 						},
 						'liferay-ddl-form-builder-action-jump-to-page': {
 							path: 'form_builder_action_jump_to_page.js',

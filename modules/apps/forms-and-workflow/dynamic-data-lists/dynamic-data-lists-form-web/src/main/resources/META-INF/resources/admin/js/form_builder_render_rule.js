@@ -3,6 +3,11 @@ AUI.add(
 	function(A) {
 		var CSS_CAN_REMOVE_ITEM = A.getClassName('can', 'remove', 'item');
 
+		var MAP_SECOND_OPERANDS = {
+			fields: '-condition-second-operand-select',
+			options: '-condition-second-operand-options-select'
+		};
+
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
 
 		var textOperators = [
@@ -422,14 +427,9 @@ AUI.add(
 					_getSecondOperand: function(index, type) {
 						var instance = this;
 
-						switch (type) {
-						case 'fields':
-							return instance._conditions[index + '-condition-second-operand-select'];
-						case 'options':
-							return instance._conditions[index + '-condition-second-operand-options-select'];
-						default:
-							return instance._conditions[index + '-condition-second-operand-input'];
-						}
+						var key = MAP_SECOND_OPERANDS[type] || '-condition-second-operand-input';
+
+						return instance._conditions[index + key];
 					},
 
 					_getSecondOperandType: function(index) {
@@ -621,13 +621,15 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
+						var validLogicOperator = false;
+
 						if (A.Lang.isString(operator)) {
 							var upperCaseOperator = operator.toUpperCase();
 
-							return upperCaseOperator === strings.and || upperCaseOperator === strings.or;
+							validLogicOperator = upperCaseOperator === strings.and || upperCaseOperator === strings.or;
 						}
 
-						return false;
+						return validLogicOperator;
 					},
 
 					_onLogicOperatorChange: function(event) {

@@ -158,6 +158,7 @@ String successURL = portletPreferences.getValue("successURL", StringPool.BLANK);
 				var fieldOptional = {};
 				var fieldValidationErrorMessages = {};
 				var fieldValidationFunctions = {};
+
 				var fieldsMap = {};
 
 				<%

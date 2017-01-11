@@ -3,6 +3,13 @@ AUI.add(
 	function(A) {
 		var SoyTemplateUtil = Liferay.DDM.SoyTemplateUtil;
 
+		var MAP_ACTION_DESCRIPTIONS = {
+			enable: 'enable-field',
+			'jump-to-page': 'jump-from-page-to-page',
+			require: 'require-field',
+			show: 'show-field'
+		};
+
 		var FormBuilderRuleBuilder = A.Component.create(
 			{
 				ATTRS: {
@@ -176,60 +183,36 @@ AUI.add(
 
 						var badgeTemplate = SoyTemplateUtil.getTemplateRenderer('ddl.badge');
 
-						switch (type) {
-							case 'show':
-								actionDescription = A.Lang.sub(
-									strings['show-field'],
-									[
-										badgeTemplate(
-											{
-												content: action.target
-											}
-										)
-									]
-								);
-							break;
-							case 'require':
-								actionDescription = A.Lang.sub(
-									strings['require-field'],
-									[
-										badgeTemplate(
-											{
-												content: action.target
-											}
-										)
-									]
-								);
-							break;
-							case 'enable':
-								actionDescription = A.Lang.sub(
-									strings['enable-field'],
-									[
-										badgeTemplate(
-											{
-												content: action.target
-											}
-										)
-									]
-								);
-							break;
-							case 'jump-to-page':
-								actionDescription = A.Lang.sub(
-									strings['jump-from-page-to-page'],
-									[
-										badgeTemplate(
-											{
-												content: Number(action.source) + 1
-											}
-										),
-										badgeTemplate(
-											{
-												content: Number(action.target) + 1
-											}
-										)
-									]
-								);
-							break;
+						var actionKey = MAP_ACTION_DESCRIPTIONS[type];
+
+						if (actionKey) {
+							var data;
+
+							if (type === 'jump-to-page') {
+								data = [
+									badgeTemplate(
+										{
+											content: Number(action.source) + 1
+										}
+									),
+									badgeTemplate(
+										{
+											content: Number(action.target) + 1
+										}
+									)
+								];
+							}
+							else {
+								data = [
+									badgeTemplate(
+										{
+											content: action.target
+										}
+									)
+								];
+							}
+
+							actionDescription = A.Lang.sub(strings[actionKey], data);
 						}
 
 						return actionDescription;

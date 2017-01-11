@@ -273,6 +273,18 @@ AUI.add(
 				}
 			},
 
+			_setPagesSate: function(pages) {
+				var pagesState = [];
+
+				for (var i = 0; i < pages.length; i++) {
+					pagesState[i] = {
+						enabled: pages[i].enabled
+					};
+				}
+
+				return pagesState;
+			},
+
 			_syncPaginationControlsUI: function() {
 				var instance = this;
 
@@ -306,18 +318,6 @@ AUI.add(
 
 					submitButton.toggle(currentPage === pagesTotal && !readOnly);
 				}
-			},
-
-			_setPagesSate: function(pages) {
-				var pagesState = [];
-
-				for (var i = 0;  i < pages.length; i++) {
-					pagesState[i] = {
-						enabled: pages[i].enabled
-					};
-				}
-
-				return pagesState;
 			},
 
 			_syncWizardUI: function(prevPage, currentPage) {

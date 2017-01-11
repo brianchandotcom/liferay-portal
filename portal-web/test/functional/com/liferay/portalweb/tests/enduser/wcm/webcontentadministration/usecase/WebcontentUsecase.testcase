@@ -580,6 +580,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="portletName" value="Asset Publisher" />
 			<var name="setAsDefaultPage" value="true" />
 		</execute>
 

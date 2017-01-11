@@ -265,6 +265,7 @@
 
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
 			<var name="enableRatings" value="true" />
+			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -425,6 +426,7 @@
 
 	<command name="ConfigureAPPortletSetAsDefault" priority="4">
 		<execute macro="AssetPublisherPortlet#configureFlaggableDisplaySettingsPG">
+			<var name="portletName" value="Asset Publisher" />
 			<var name="setAsDefaultPage" value="true" />
 		</execute>
 

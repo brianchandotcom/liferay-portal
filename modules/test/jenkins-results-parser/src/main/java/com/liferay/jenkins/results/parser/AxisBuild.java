@@ -214,7 +214,7 @@ public class AxisBuild extends BaseBuild {
 			for (TestResult testResult : getTestResults(null)) {
 				String testStatus = testResult.getStatus();
 
-				if (!testStatus.equals("FAILED")) {
+				if (testStatus.equals("PASSED")) {
 					continue;
 				}
 

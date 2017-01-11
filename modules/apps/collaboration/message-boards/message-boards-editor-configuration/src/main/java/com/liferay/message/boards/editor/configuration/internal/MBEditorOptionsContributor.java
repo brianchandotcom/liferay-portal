@@ -14,18 +14,21 @@
 
 package com.liferay.message.boards.editor.configuration.internal;
 
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
+import com.liferay.portlet.messageboards.util.MBUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -40,8 +43,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditorOptionsContributor.class
 )
-public class MBEditorOptionsContributor
-	implements EditorOptionsContributor {
+public class MBEditorOptionsContributor implements EditorOptionsContributor {
 
 	@Override
 	public void populateEditorOptions(
@@ -51,11 +53,18 @@ public class MBEditorOptionsContributor
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
 		PortletURL portletURL = requestBackedPortletURLFactory.createActionURL(
-			PortletKeys.DOCUMENT_LIBRARY);
+			PortletKeys.MESSAGE_BOARDS);
 
 		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "/document_library/upload_file_entry");
-		portletURL.setParameter("folderId", "0");
+			ActionRequest.ACTION_NAME, "/message_boards/upload_temp_image");
+
+		MBMessage message = (MBMessage)themeDisplay.getRequest().getAttribute(
+			WebKeys.MESSAGE_BOARDS_MESSAGE);
+
+		long categoryId = MBUtil.getCategoryId(
+			themeDisplay.getRequest(), message);
+
+		portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 		editorOptions.setUploadURL(portletURL.toString());
 	}

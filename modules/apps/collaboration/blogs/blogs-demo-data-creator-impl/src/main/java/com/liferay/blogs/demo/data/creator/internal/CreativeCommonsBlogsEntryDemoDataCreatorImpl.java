@@ -140,12 +140,12 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 		return _availableIndexes.get(index);
 	}
 
-	private String _getRandomContent(int order) throws IOException {
+	private String _getRandomContent(int index) throws IOException {
 		Class<?> clazz = getClass();
 
 		String titlePath =
 			"com/liferay/blogs/demo/data/creator/internal/dependencies/" +
-				"creative/commons/content" + order + ".txt";
+				"creative/commons/content" + index + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
@@ -178,22 +178,22 @@ public class CreativeCommonsBlogsEntryDemoDataCreatorImpl
 		return FileUtil.getBytes(fileVersion.getContentStream(false));
 	}
 
-	private String _getRandomSubtitle(int order) throws IOException {
+	private String _getRandomSubtitle(int index) throws IOException {
 		Class<?> clazz = getClass();
 
 		String titlePath =
 			"com/liferay/blogs/demo/data/creator/internal/dependencies/" +
-				"creative/commons/subtitle" + order + ".txt";
+				"creative/commons/subtitle" + index + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}
 
-	private String _getRandomTitle(int order) throws IOException {
+	private String _getRandomTitle(int index) throws IOException {
 		Class<?> clazz = getClass();
 
 		String titlePath =
 			"com/liferay/blogs/demo/data/creator/internal/dependencies/" +
-				"creative/commons/title" + order + ".txt";
+				"creative/commons/title" + index + ".txt";
 
 		return StringUtil.read(clazz.getClassLoader(), titlePath, false);
 	}

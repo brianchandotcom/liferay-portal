@@ -702,7 +702,7 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleExtensionDefaults(
-		Project project, LiferayOSGiExtension liferayOSGiExtension,
+		Project project, final LiferayOSGiExtension liferayOSGiExtension,
 		final Configuration compileIncludeConfiguration) {
 
 		Map<String, Object> bundleInstructions = _getBundleInstructions(
@@ -715,6 +715,9 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 
 				@Override
 				public String toString() {
+					boolean expandCompileInclude =
+						liferayOSGiExtension.isExpandCompileInclude();
+
 					StringBuilder sb = new StringBuilder();
 
 					for (File file : compileIncludeConfiguration) {
@@ -722,8 +725,18 @@ public class LiferayOSGiPlugin implements Plugin<Project> {
 							sb.append(',');
 						}
 
-						sb.append('@');
+						if (expandCompileInclude) {
+							sb.append('@');
+						}
+						else {
+							sb.append("lib/=");
+						}
+
 						sb.append(file.getAbsolutePath());
+
+						if (!expandCompileInclude) {
+							sb.append(";lib:=true");
+						}
 					}
 
 					return sb.toString();

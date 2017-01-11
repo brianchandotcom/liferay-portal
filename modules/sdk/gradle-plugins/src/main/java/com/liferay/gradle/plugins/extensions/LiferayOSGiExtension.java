@@ -122,6 +122,10 @@ public class LiferayOSGiExtension {
 		return _autoUpdateXml;
 	}
 
+	public boolean isExpandCompileInclude() {
+		return _expandCompileInclude;
+	}
+
 	public void setAutoUpdateXml(boolean autoUpdateXml) {
 		_autoUpdateXml = autoUpdateXml;
 	}
@@ -132,6 +136,10 @@ public class LiferayOSGiExtension {
 		_bundleDefaultInstructions.clear();
 
 		bundleDefaultInstructions(bundleDefaultInstructions);
+	}
+
+	public void setExpandCompileInclude(boolean expandCompileInclude) {
+		_expandCompileInclude = expandCompileInclude;
 	}
 
 	private CompileOptions _getCompileOptions() {
@@ -161,6 +169,7 @@ public class LiferayOSGiExtension {
 	private boolean _autoUpdateXml = true;
 	private final Map<String, Object> _bundleDefaultInstructions =
 		new HashMap<>();
+	private boolean _expandCompileInclude = true;
 	private final Project _project;
 
 }

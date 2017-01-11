@@ -49,6 +49,13 @@ public class DDMFormRulesToDDLFormRulesConverterTest
 	}
 
 	@Test
+	public void testAutoFillActions() throws Exception {
+		assertConversion(
+			"ddm-form-rules-auto-fill-actions.json",
+			"ddl-form-rules-auto-fill-actions.json");
+	}
+
+	@Test
 	public void testBooleanActions() throws Exception {
 		assertConversion(
 			"ddm-form-rules-boolean-actions.json",

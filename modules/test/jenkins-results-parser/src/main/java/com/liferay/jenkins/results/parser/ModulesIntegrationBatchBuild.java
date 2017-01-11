@@ -120,6 +120,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 				_notificationsComplete = true;
 			}
 
+			/*
 			try {
 				JenkinsResultsParserUtil.sendEmail(
 					sb.toString(),
@@ -130,6 +131,7 @@ public class ModulesIntegrationBatchBuild extends BatchBuild {
 				System.out.println(
 					"Unable to send email notification: " + e.getMessage());
 			}
+			*/
 		}
 	}
 

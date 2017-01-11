@@ -16,16 +16,11 @@ package com.liferay.gradle.plugins.soy;
 
 import com.liferay.gradle.plugins.soy.tasks.ReplaceSoyTranslationTask;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
-
-import groovy.lang.Closure;
 
 import java.io.File;
 
 import java.util.Collections;
 import java.util.concurrent.Callable;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
@@ -64,8 +59,6 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 		replaceSoyTranslationTask.setGroup(BasePlugin.BUILD_GROUP);
 		replaceSoyTranslationTask.setIncludes(
 			Collections.singleton("**/*.soy.js"));
-		replaceSoyTranslationTask.setReplacementClosure(
-			new LiferayReplacementClosure(replaceSoyTranslationTask));
 
 		PluginContainer pluginContainer = project.getPlugins();
 
@@ -147,91 +140,5 @@ public class SoyTranslationPlugin implements Plugin<Project> {
 		"com.liferay.js.transpiler";
 
 	private static final String _TRANSPILE_JS_TASK_NAME = "transpileJS";
-
-	private static class LiferayReplacementClosure extends Closure<String> {
-
-		public LiferayReplacementClosure(Object owner) {
-			super(owner);
-		}
-
-		@SuppressWarnings("unused")
-		public String doCall(
-			String variableName, String languageKey, String argumentsObject) {
-
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("var ");
-			sb.append(variableName);
-
-			// Split string to avoid SF error
-
-			sb.append(" = Liferay.Language");
-			sb.append(".get('");
-
-			sb.append(_fixLanguageKey(languageKey));
-			sb.append("');");
-
-			int argumentReplaces = 0;
-
-			if (Validator.isNotNull(argumentsObject)) {
-				argumentReplaces = _appendArgumentReplaces(
-					sb, argumentsObject, variableName);
-			}
-
-			if (argumentReplaces == 0) {
-				_appendArgumentMarkerReplace(sb, variableName);
-			}
-
-			return sb.toString();
-		}
-
-		private void _appendArgumentMarkerReplace(
-			StringBuilder sb, String variableName) {
-
-			sb.append(System.lineSeparator());
-			sb.append(variableName);
-			sb.append(" = ");
-			sb.append(variableName);
-			sb.append(".replace(/{(\\d+)}/g, '\\x01$1\\x01')");
-		}
-
-		private int _appendArgumentReplaces(
-			StringBuilder sb, String argumentsObject, String variableName) {
-
-			int i = 0;
-
-			Matcher matcher = _argumentsObjectPattern.matcher(argumentsObject);
-
-			while (matcher.find()) {
-				sb.append(System.lineSeparator());
-
-				sb.append(variableName);
-				sb.append(" = ");
-				sb.append(variableName);
-				sb.append(".replace('{");
-				sb.append(i);
-				sb.append("}', ");
-				sb.append(matcher.group(1));
-				sb.append(");");
-
-				i++;
-			}
-
-			return i;
-		}
-
-		private String _fixLanguageKey(String languageKey) {
-			Matcher matcher = _languageKeyPlaceholderPattern.matcher(
-				languageKey);
-
-			return matcher.replaceAll("x");
-		}
-
-		private static final Pattern _argumentsObjectPattern = Pattern.compile(
-			"'.+'\\s*:\\s*([\\d\\w\\._]+)+");
-		private static final Pattern _languageKeyPlaceholderPattern =
-			Pattern.compile("\\{\\$\\w+\\}");
-
-	}
 
 }

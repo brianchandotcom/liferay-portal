@@ -85,7 +85,8 @@ public class ReplaceTranslationCommand implements Command {
 			String replacement = getReplacement(
 				matcher.group(1), matcher.group(2), matcher.group(3));
 
-			matcher.appendReplacement(sb, replacement);
+			matcher.appendReplacement(
+				sb, Matcher.quoteReplacement(replacement));
 		}
 
 		matcher.appendTail(sb);
@@ -117,14 +118,31 @@ public class ReplaceTranslationCommand implements Command {
 		sb.append(_fixLanguageKey(languageKey));
 		sb.append("');");
 
+		int argumentReplaces = 0;
+
 		if ((argumentsObject != null) && !argumentsObject.isEmpty()) {
-			_appendArgumentReplaces(sb, argumentsObject, variableName);
+			argumentReplaces = _appendArgumentReplaces(
+				sb, argumentsObject, variableName);
+		}
+
+		if (argumentReplaces == 0) {
+			_appendArgumentMarkerReplace(sb, variableName);
 		}
 
 		return sb.toString();
 	}
 
-	private void _appendArgumentReplaces(
+	private void _appendArgumentMarkerReplace(
+		StringBuilder sb, String variableName) {
+
+		sb.append(System.lineSeparator());
+		sb.append(variableName);
+		sb.append(" = ");
+		sb.append(variableName);
+		sb.append(".replace(/{(\\d+)}/g, '\\x01$1\\x01')");
+	}
+
+	private int _appendArgumentReplaces(
 		StringBuilder sb, String argumentsObject, String variableName) {
 
 		int i = 0;
@@ -145,6 +163,8 @@ public class ReplaceTranslationCommand implements Command {
 
 			i++;
 		}
+
+		return i;
 	}
 
 	private String _fixLanguageKey(String languageKey) {

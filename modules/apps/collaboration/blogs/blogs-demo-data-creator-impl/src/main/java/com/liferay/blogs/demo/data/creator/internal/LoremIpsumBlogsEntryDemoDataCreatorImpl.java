@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,10 +43,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,16 +67,15 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 
 		String subtitle = _getRandomElement(_entrySubtitles);
 
-		Date date = _getRandomDate();
-
 		ImageSelector imageSelector = new ImageSelector(
 			_getRandomImageBytes(userId, groupId),
-			UUID.randomUUID().toString() + ".jpeg", "image/jpeg",
+			StringUtil.randomString() + ".jpeg", "image/jpeg",
 			StringPool.BLANK);
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
-			userId, title, subtitle, null, _getRandomContent(), date, false,
-			false, null, null, imageSelector, null, serviceContext);
+			userId, title, subtitle, null, _getRandomContent(),
+			_getRandomDate(), false, false, null, null, imageSelector, null,
+			serviceContext);
 
 		_entryIds.add(blogsEntry.getEntryId());
 
@@ -89,6 +87,7 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 		try {
 			for (long entryId : _entryIds) {
 				_blogsEntryLocalService.deleteBlogsEntry(entryId);
+
 				_entryIds.remove(entryId);
 			}
 		}
@@ -124,21 +123,17 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	}
 
 	private String _getRandomContent() {
-		List<String> paragraphs = new ArrayList<>();
+		int numberOfParagraphs = RandomUtil.nextInt(5) + 3;
 
-		for (int i = 0; i < 10; i++) {
-			List<String> lines = new ArrayList<>();
+		StringBundler sb = new StringBundler(numberOfParagraphs * 3);
 
-			for (int j = 0; j < 15; j++) {
-				lines.add(_getRandomElement(_entryLines));
-			}
-
-			paragraphs.add(
-				lines.stream().collect(Collectors.joining(StringPool.SPACE)));
+		for (int i = 0; i < numberOfParagraphs; i++) {
+			sb.append("<p>");
+			sb.append(_getRandomElement(_entryParagraphs));
+			sb.append("</p>");
 		}
 
-		return paragraphs.stream().map(paragraph -> "<p>" + paragraph + "</p>").
-			collect(Collectors.joining());
+		return sb.toString();
 	}
 
 	private Date _getRandomDate() {
@@ -154,25 +149,21 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 	}
 
 	private String _getRandomElement(List<String> list) {
-		return Optional.of(
-			list.get(RandomUtil.nextInt(list.size()))).orElse("Test");
+		return list.get(RandomUtil.nextInt(list.size()));
 	}
 
 	private byte[] _getRandomImageBytes(long userId, long groupId)
 		throws IOException, PortalException {
 
-		String folderName = "Blogs Test";
-
 		if (_blogsEntryImagesFolder == null) {
 			_blogsEntryImagesFolder = _rootFolderDemoDataCreator.create(
-				userId, groupId, folderName);
+				userId, groupId, "Blogs Images");
 		}
 
 		FileEntry fileEntry = _fileEntryDemoDataCreator.create(
 			userId, _blogsEntryImagesFolder.getFolderId());
 
-		return FileUtil.getBytes(
-			fileEntry.getFileVersion().getContentStream(false));
+		return FileUtil.getBytes(fileEntry.getContentStream());
 	}
 
 	private Folder _blogsEntryImagesFolder;
@@ -186,13 +177,13 @@ public class LoremIpsumBlogsEntryDemoDataCreatorImpl
 
 	private static List<String> _entryTitles = new ArrayList<>();
 	private static List<String> _entrySubtitles = new ArrayList<>();
-	private static List<String> _entryLines = new ArrayList<>();
+	private static List<String> _entryParagraphs = new ArrayList<>();
 	static {
 		_entryTitles.addAll(
 			_getAllLines("dependencies/lorem/ipsum/titles.txt"));
 		_entrySubtitles.addAll(
 			_getAllLines("dependencies/lorem/ipsum/subtitles.txt"));
-		_entryLines.addAll(
+		_entryParagraphs.addAll(
 			_getAllLines("dependencies/lorem/ipsum/paragraphs.txt"));
 	}
 

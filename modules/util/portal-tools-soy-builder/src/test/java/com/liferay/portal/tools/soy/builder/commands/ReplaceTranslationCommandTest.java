@@ -17,7 +17,6 @@ package com.liferay.portal.tools.soy.builder.commands;
 import com.liferay.portal.tools.soy.builder.util.FileTestUtil;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -35,7 +34,7 @@ import org.junit.rules.TemporaryFolder;
 public class ReplaceTranslationCommandTest {
 
 	@Before
-	public void setUp() throws IOException {
+	public void setUp() throws Exception {
 		File dir = temporaryFolder.getRoot();
 
 		Path dirPath = dir.toPath();
@@ -54,12 +53,7 @@ public class ReplaceTranslationCommandTest {
 	public void testReplaceTranslation() throws Exception {
 		File dir = temporaryFolder.getRoot();
 
-		ReplaceTranslationCommand replaceTranslationCommand =
-			new ReplaceTranslationCommand();
-
-		replaceTranslationCommand.setDir(dir);
-
-		replaceTranslationCommand.execute();
+		replaceTranslation(dir);
 
 		Path dirPath = dir.toPath();
 
@@ -75,6 +69,15 @@ public class ReplaceTranslationCommandTest {
 
 	@Rule
 	public final TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	protected void replaceTranslation(File dir) throws Exception {
+		ReplaceTranslationCommand replaceTranslationCommand =
+			new ReplaceTranslationCommand();
+
+		replaceTranslationCommand.setDir(dir);
+
+		replaceTranslationCommand.execute();
+	}
 
 	private static final String[] _FILE_NAMES = {
 		"footer.soy.js", "header.soy.js", "navigation.soy.js", "view.soy.js"

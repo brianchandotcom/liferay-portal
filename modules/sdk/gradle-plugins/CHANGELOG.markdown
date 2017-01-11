@@ -964,6 +964,10 @@ to version 1.0.72.
 ### Changed
 - [LPS-70060]: Update the [Liferay Gradle Plugins WSDL Builder] dependency to
 version 2.0.0.
+- [LPS-70084]: Update the [Liferay Source Formatter] dependency to version
+1.0.340.
+- [LPS-70084]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.73.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -1051,4 +1055,5 @@ version 2.0.0.
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
+[LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

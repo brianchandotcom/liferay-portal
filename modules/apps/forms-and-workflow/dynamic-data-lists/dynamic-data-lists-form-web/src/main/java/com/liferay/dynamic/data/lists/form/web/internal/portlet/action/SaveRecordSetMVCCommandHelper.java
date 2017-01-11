@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
+import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRulesDeserializer;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRulesToDDMFormRulesConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -39,13 +40,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONDeserializer;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -207,14 +205,10 @@ public class SaveRecordSetMVCCommandHelper {
 			return Collections.emptyList();
 		}
 
-		JSONDeserializer<DDLFormRule[]> jsonDeserializer =
-			jsonFactory.createJSONDeserializer();
+		List<DDLFormRule> ddlFormRules = ddlFormRuleDeserializer.deserialize(
+			rules);
 
-		DDLFormRule[] ddlFormRules = jsonDeserializer.deserialize(
-			rules, DDLFormRule[].class);
-
-		return ddlFormRulesToDDMFormRulesConverter.convert(
-			ListUtil.toList(ddlFormRules));
+		return ddlFormRulesToDDMFormRulesConverter.convert(ddlFormRules);
 	}
 
 	protected Map<Locale, String> getLocalizedMap(Locale locale, String value) {
@@ -371,6 +365,9 @@ public class SaveRecordSetMVCCommandHelper {
 	}
 
 	@Reference
+	protected DDLFormRulesDeserializer ddlFormRuleDeserializer;
+
+	@Reference
 	protected DDLFormRulesToDDMFormRulesConverter
 		ddlFormRulesToDDMFormRulesConverter;
 
@@ -391,9 +388,6 @@ public class SaveRecordSetMVCCommandHelper {
 
 	@Reference
 	protected DDMStructureService ddmStructureService;
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 	@Reference
 	protected volatile WorkflowDefinitionLinkLocalService

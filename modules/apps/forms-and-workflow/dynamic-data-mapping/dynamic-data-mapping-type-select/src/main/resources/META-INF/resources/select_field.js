@@ -140,7 +140,7 @@ AUI.add(
 						var values = instance._getOptionsSelected(value);
 
 						if (!instance.get('multiple')) {
-							return values[0];
+							values = values[0];
 						}
 
 						return values;

@@ -41,11 +41,11 @@
 			display: inline-block;
 		}
 
-		.timeline-item:last-child::before {
+		.timeline-item:last-child:before {
 			bottom: 42px;
 		}
 
-		& + div div::before {
+		& + div div:before {
 			bottom: 20px;
 			top: -72px;
 		}
@@ -70,7 +70,7 @@
 
 	&.liferay-ddl-form-builder-rule-condition-list {
 		.timeline-item {
-			&:first-child::before {
+			&:first-child:before {
 				top: 35px;
 			}
 
@@ -116,7 +116,7 @@
 	padding-top: $baseline * 2;
 	position: relative;
 
-	&::before {
+	&:before {
 		background-color: #869CAD;
 		bottom: 0;
 		content: '';

@@ -1,11 +1,14 @@
 <script type="text/javascript">
 // <![CDATA[
-AUI().use('aui-base', function(A) {(function() {var $ = AUI.$;var _ = AUI._;
-	var frameElement = window.frameElement;
+AUI().use(
+	'aui-base',
+	function(A) {
+		var frameElement = window.frameElement;
 
-	if (frameElement && frameElement.getAttribute('id') === 'simulationDeviceIframe') {
-		AUI().one('body').addClass('lfr-has-simulation-panel');
+		if (frameElement && frameElement.getAttribute('id') === 'simulationDeviceIframe') {
+			A.getBody().addClass('lfr-has-simulation-panel');
+		}
 	}
-})();});
+);
 // ]]>
 </script>

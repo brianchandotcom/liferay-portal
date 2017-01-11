@@ -52,9 +52,9 @@ AUI.add(
 
 						var strings = instance.get('strings');
 
-						instance._createLabel(strings['from']);
+						instance._createLabel(strings.from);
 						instance._createSourceField().render(boundingBox);
-						instance._createLabel(strings['to']);
+						instance._createLabel(strings.to);
 						instance._createTargetField().render(boundingBox);
 					},
 

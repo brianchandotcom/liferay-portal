@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.VIEW) %>">
-	<liferay-ui:discussion
+	<liferay-comment:discussion
 		className="<%= Layout.class.getName() %>"
 		classPK="<%= layout.getPlid() %>"
 		formName="fm"

@@ -113,7 +113,7 @@ renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 					</liferay-ui:panel>
 
 					<liferay-ui:panel markupView="lexicon" title="comments">
-						<liferay-ui:discussion
+						<liferay-comment:discussion
 							className="<%= assetRenderer.getClassName() %>"
 							classPK="<%= assetRenderer.getClassPK() %>"
 							formName='<%= "fm" + assetRenderer.getClassPK() %>'

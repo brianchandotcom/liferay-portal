@@ -393,7 +393,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 <c:if test="<%= PropsValues.SHOPPING_ORDER_COMMENTS_ENABLED && !windowState.equals(LiferayWindowState.POP_UP) %>">
 	<liferay-ui:panel-container extended="<%= true %>" id="shoppingEditOrderPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="shoppingEditOrderCommentsPanel" persistState="<%= true %>" title="comments">
-			<liferay-ui:discussion
+			<liferay-comment:discussion
 				className="<%= ShoppingOrder.class.getName() %>"
 				classPK="<%= order.getOrderId() %>"
 				formName="fm2"

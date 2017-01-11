@@ -1247,6 +1247,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-comment:discussion</code>]]>.</description>
 		<name>discussion</name>
 		<tag-class>com.liferay.taglib.ui.DiscussionTag</tag-class>
 		<body-content>JSP</body-content>

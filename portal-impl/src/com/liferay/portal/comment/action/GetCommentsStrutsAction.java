@@ -28,7 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.comment.taglib.internal.action.
+ *             GetCommentsStrutsAction}
  */
+@Deprecated
 @OSGiBeanProperties(
 	property = "path=/portal/comment/get_comments", service = StrutsAction.class
 )

@@ -411,7 +411,7 @@ if (portletTitleBasedNavigation) {
 							<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
 								<liferay-ui:panel-container extended="<%= false %>" markupView="lexicon" persistState="<%= true %>">
 									<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= liferayPortletResponse.getNamespace() + "wikiCommentsPanel" %>' markupView="lexicon" persistState="<%= true %>" title="comments">
-										<liferay-ui:discussion
+										<liferay-comment:discussion
 											className="<%= WikiPage.class.getName() %>"
 											classPK="<%= wikiPage.getResourcePrimKey() %>"
 											formName="fm2"

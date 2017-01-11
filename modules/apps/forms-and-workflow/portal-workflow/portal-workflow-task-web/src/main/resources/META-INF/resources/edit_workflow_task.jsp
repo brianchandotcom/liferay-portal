@@ -186,7 +186,7 @@ renderResponse.setTitle(headerTitle);
 					</liferay-ui:panel>
 
 					<liferay-ui:panel extended="<%= true %>" markupView="lexicon" title="comments">
-						<liferay-ui:discussion
+						<liferay-comment:discussion
 							assetEntryVisible="<%= false %>"
 							className="<%= assetRenderer.getClassName() %>"
 							classPK="<%= assetRenderer.getClassPK() %>"

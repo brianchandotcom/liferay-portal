@@ -23,7 +23,11 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Charles May
+ *
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.comment.taglib.servlet.taglib.DiscussionTag}
  */
+@Deprecated
 public class DiscussionTag extends IncludeTag {
 
 	public void setAssetEntryVisible(boolean assetEntryVisible) {

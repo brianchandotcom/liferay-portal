@@ -195,7 +195,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 
 		<c:if test="<%= assetPublisherDisplayContext.isEnableComments() && assetRenderer.isCommentable() %>">
 			<div class="col-md-12">
-				<liferay-ui:discussion
+				<liferay-comment:discussion
 					className="<%= assetEntry.getClassName() %>"
 					classPK="<%= assetEntry.getClassPK() %>"
 					formName='<%= "fm" + assetEntry.getClassPK() %>'

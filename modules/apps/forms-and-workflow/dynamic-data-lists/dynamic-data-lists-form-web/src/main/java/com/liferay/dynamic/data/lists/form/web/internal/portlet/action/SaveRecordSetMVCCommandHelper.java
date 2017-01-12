@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.portlet.action;
 
-import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRulesDeserializer;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRulesToDDMFormRulesConverter;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleDeserializer;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.DDLFormRuleToDDMFormRuleConverter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
@@ -365,10 +365,10 @@ public class SaveRecordSetMVCCommandHelper {
 	}
 
 	@Reference
-	protected DDLFormRulesDeserializer ddlFormRuleDeserializer;
+	protected DDLFormRuleDeserializer ddlFormRuleDeserializer;
 
 	@Reference
-	protected DDLFormRulesToDDMFormRulesConverter
+	protected DDLFormRuleToDDMFormRuleConverter
 		ddlFormRulesToDDMFormRulesConverter;
 
 	@Reference

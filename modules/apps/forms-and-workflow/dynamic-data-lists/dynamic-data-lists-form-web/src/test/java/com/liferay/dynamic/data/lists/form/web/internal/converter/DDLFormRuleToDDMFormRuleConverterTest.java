@@ -42,7 +42,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Marcellus Tavares
  */
-public class DDLFormRulesToDDMFormRulesConverterTest
+public class DDLFormRuleToDDMFormRuleConverterTest
 	extends BaseDDLDDMConverterTest {
 
 	@Before
@@ -50,7 +50,7 @@ public class DDLFormRulesToDDMFormRulesConverterTest
 		setUpDDLFormRuleDeserializer();
 
 		_ddlFormRulesToDDMFormRulesConverter =
-			new DDLFormRulesToDDMFormRulesConverter();
+			new DDLFormRuleToDDMFormRuleConverter();
 	}
 
 	@Test
@@ -237,9 +237,9 @@ public class DDLFormRulesToDDMFormRulesConverterTest
 	private final Pattern _callFunctionPattern = Pattern.compile(
 		"call\\(\\s*\'([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-" +
 			"[0-9a-f]{12})\'\\s*,\\s*\'(.*)\'\\s*,\\s*\'(.*)\'\\s*\\)");
-	private final DDLFormRulesDeserializer _ddlFormRulesDeserializer =
-		new DDLFormRulesDeserializer();
-	private DDLFormRulesToDDMFormRulesConverter
+	private final DDLFormRuleDeserializer _ddlFormRulesDeserializer =
+		new DDLFormRuleDeserializer();
+	private DDLFormRuleToDDMFormRuleConverter
 		_ddlFormRulesToDDMFormRulesConverter;
 
 }

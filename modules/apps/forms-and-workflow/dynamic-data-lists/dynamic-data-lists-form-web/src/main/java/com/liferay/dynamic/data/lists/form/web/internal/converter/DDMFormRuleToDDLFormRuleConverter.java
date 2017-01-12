@@ -51,10 +51,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Leonardo Barros
  * @author Marcellus Tavares
  */
-@Component(
-	immediate = true, service = DDMFormRulesToDDLFormRulesConverter.class
-)
-public class DDMFormRulesToDDLFormRulesConverter {
+@Component(immediate = true, service = DDMFormRuleToDDLFormRuleConverter.class)
+public class DDMFormRuleToDDLFormRuleConverter {
 
 	public List<DDLFormRule> convert(List<DDMFormRule> ddmFormRules) {
 		List<DDLFormRule> ddlFormRules = new ArrayList<>();

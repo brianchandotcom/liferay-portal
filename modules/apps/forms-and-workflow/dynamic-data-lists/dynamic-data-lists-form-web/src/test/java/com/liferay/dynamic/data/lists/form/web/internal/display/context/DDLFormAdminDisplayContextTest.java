@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.DDMFormRulesToDDLFormRulesConverter;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.DDMFormRuleToDDLFormRuleConverter;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -258,7 +258,7 @@ public class DDLFormAdminDisplayContextTest extends PowerMockito {
 			mock(DDMFormJSONSerializer.class),
 			mock(DDMFormLayoutJSONSerializer.class),
 			mock(DDMFormRenderer.class),
-			mock(DDMFormRulesToDDLFormRulesConverter.class),
+			mock(DDMFormRuleToDDLFormRuleConverter.class),
 			mock(DDMFormValuesFactory.class), mock(DDMFormValuesMerger.class),
 			mock(DDMStructureLocalService.class), mock(JSONFactory.class),
 			mock(StorageEngine.class), mock(WorkflowEngineManager.class));

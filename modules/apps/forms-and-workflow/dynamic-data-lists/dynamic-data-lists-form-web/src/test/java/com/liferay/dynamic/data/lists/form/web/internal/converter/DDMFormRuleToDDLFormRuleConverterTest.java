@@ -29,13 +29,13 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormRulesToDDLFormRulesConverterTest
+public class DDMFormRuleToDDLFormRuleConverterTest
 	extends BaseDDLDDMConverterTest {
 
 	@Before
 	public void setUp() {
 		_ddmFormRulesToDDLFormRulesConverter =
-			new DDMFormRulesToDDLFormRulesConverter();
+			new DDMFormRuleToDDLFormRuleConverter();
 
 		_ddmFormRulesToDDLFormRulesConverter.ddmExpressionFactory =
 			new DDMExpressionFactoryImpl();
@@ -92,7 +92,7 @@ public class DDMFormRulesToDDLFormRulesConverterTest
 			read(toFileName), serialize(actualDDLFormRules), false);
 	}
 
-	private DDMFormRulesToDDLFormRulesConverter
+	private DDMFormRuleToDDLFormRuleConverter
 		_ddmFormRulesToDDLFormRulesConverter;
 
 }

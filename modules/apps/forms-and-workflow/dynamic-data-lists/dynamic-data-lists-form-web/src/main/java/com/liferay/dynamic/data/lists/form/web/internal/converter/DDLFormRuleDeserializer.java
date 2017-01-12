@@ -37,8 +37,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(immediate = true, service = DDLFormRulesDeserializer.class)
-public class DDLFormRulesDeserializer {
+@Component(immediate = true, service = DDLFormRuleDeserializer.class)
+public class DDLFormRuleDeserializer {
 
 	public List<DDLFormRule> deserialize(String rules) throws PortalException {
 		JSONArray rulesJSONArray = _jsonFactory.createJSONArray(rules);

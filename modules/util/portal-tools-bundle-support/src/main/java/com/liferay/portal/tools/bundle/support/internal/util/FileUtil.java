@@ -40,6 +40,9 @@ import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +53,28 @@ import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.apache.commons.compress.utils.IOUtils;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.RedirectLocations;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -116,6 +141,110 @@ public class FileUtil {
 				}
 
 			});
+	}
+
+	public static File downloadFile(
+			URI uri, String userName, String password, File cacheDir)
+		throws Exception {
+
+		File file;
+
+		try (CloseableHttpClient closeableHttpClient = _getHttpClient(
+				uri, userName, password)) {
+
+			HttpHead httpHead = new HttpHead(uri);
+
+			HttpContext httpContext = new BasicHttpContext();
+
+			String fileName = null;
+			Date lastModifiedDate;
+
+			try (CloseableHttpResponse closeableHttpResponse =
+					closeableHttpClient.execute(httpHead, httpContext)) {
+
+				_checkResponseStatus(closeableHttpResponse);
+
+				Header dispositionHeader = closeableHttpResponse.getFirstHeader(
+					"Content-Disposition");
+
+				if (dispositionHeader != null) {
+					String dispositionValue = dispositionHeader.getValue();
+
+					int index = dispositionValue.indexOf("filename=");
+
+					if (index > 0) {
+						fileName = dispositionValue.substring(
+							index + 10, dispositionValue.length() - 1);
+					}
+				}
+				else {
+					RedirectLocations redirectLocations = (RedirectLocations)
+						httpContext.getAttribute(
+							HttpClientContext.REDIRECT_LOCATIONS);
+
+					if (redirectLocations != null) {
+						uri = redirectLocations.get(
+							redirectLocations.size() - 1);
+					}
+				}
+
+				Header lastModifiedHeader =
+					closeableHttpResponse.getFirstHeader("Last-Modified");
+
+				if (lastModifiedHeader != null) {
+					String lastModifiedValue = lastModifiedHeader.getValue();
+
+					DateFormat dateFormat = new SimpleDateFormat(
+						"EEE, dd MMM yyyy HH:mm:ss zzz");
+
+					lastModifiedDate = dateFormat.parse(lastModifiedValue);
+				}
+				else {
+					lastModifiedDate = new Date();
+				}
+			}
+
+			if (fileName == null) {
+				String path = uri.getPath();
+
+				fileName = path.substring(path.lastIndexOf('/') + 1);
+			}
+
+			file = new File(cacheDir, fileName);
+
+			if (file.exists() &&
+				(file.lastModified() == lastModifiedDate.getTime())) {
+
+				return file;
+			}
+			else if (file.exists()) {
+				file.delete();
+			}
+
+			if (!cacheDir.exists()) {
+				cacheDir.mkdirs();
+			}
+
+			file.createNewFile();
+
+			HttpGet httpGet = new HttpGet(uri);
+
+			try (CloseableHttpResponse closeableHttpResponse =
+					closeableHttpClient.execute(httpGet);
+				FileOutputStream fileOutputStream = new FileOutputStream(
+					file)) {
+
+				_checkResponseStatus(closeableHttpResponse);
+
+				HttpEntity httpEntity = closeableHttpResponse.getEntity();
+
+				fileOutputStream.write(EntityUtils.toByteArray(httpEntity));
+
+				file.setLastModified(lastModifiedDate.getTime());
+			}
+		}
+
+		return file;
 	}
 
 	public static String getExtension(String fileName) {
@@ -312,6 +441,16 @@ public class FileUtil {
 		_copyFile(entryFile.toPath(), zipPath);
 	}
 
+	private static void _checkResponseStatus(HttpResponse httpResponse)
+		throws IOException {
+
+		StatusLine statusLine = httpResponse.getStatusLine();
+
+		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+			throw new IOException(statusLine.getReasonPhrase());
+		}
+	}
+
 	private static void _copyDirectory(
 			final Path sourcePath, final Path destinationPath)
 		throws IOException {
@@ -360,6 +499,49 @@ public class FileUtil {
 
 		return FileSystems.newFileSystem(
 			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
+	}
+
+	private static CloseableHttpClient _getHttpClient(
+		URI uri, String userName, String password) {
+
+		HttpClientBuilder httpClientBuilder = HttpClients.custom();
+
+		CredentialsProvider credentialsProvider =
+			new BasicCredentialsProvider();
+
+		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
+
+		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
+
+		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
+		requestConfigBuilder.setRedirectsEnabled(true);
+
+		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
+
+		if ((userName != null) && (password != null)) {
+			credentialsProvider.setCredentials(
+				new AuthScope(uri.getHost(), uri.getPort()),
+				new UsernamePasswordCredentials(userName, password));
+		}
+
+		String scheme = uri.getScheme();
+
+		String proxyHost = System.getProperty(scheme + ".proxyHost");
+		String proxyPort = System.getProperty(scheme + ".proxyPort");
+		String proxyUser = System.getProperty(scheme + ".proxyUser");
+		String proxyPassword = System.getProperty(scheme + ".proxyPassword");
+
+		if ((proxyHost != null) && (proxyPort != null) && (proxyUser != null) &&
+			(proxyPassword != null)) {
+
+			credentialsProvider.setCredentials(
+				new AuthScope(proxyHost, Integer.parseInt(proxyPort)),
+				new UsernamePasswordCredentials(proxyUser, proxyPassword));
+		}
+
+		httpClientBuilder.useSystemProperties();
+
+		return httpClientBuilder.build();
 	}
 
 }

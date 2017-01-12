@@ -20,43 +20,13 @@ import com.beust.jcommander.Parameters;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.config.CookieSpecs;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpHead;
-import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.client.RedirectLocations;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 
 /**
  * @author David Truong
@@ -72,7 +42,8 @@ public class InitBundleCommand extends BaseCommand {
 	public void execute() throws Exception {
 		_deleteBundle();
 
-		File file = _downloadFile();
+		File file = FileUtil.downloadFile(
+			_url.toURI(), _userName, _password, _bundlesCacheDir);
 
 		_unpack(file);
 
@@ -153,107 +124,6 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	private File _downloadFile() throws Exception {
-		File file;
-
-		URI uri = _url.toURI();
-
-		try (CloseableHttpClient closeableHttpClient = _getHttpClient(uri)) {
-			HttpHead httpHead = new HttpHead(uri);
-
-			HttpContext httpContext = new BasicHttpContext();
-
-			String fileName = null;
-			Date lastModifiedDate;
-
-			try (CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpHead, httpContext)) {
-
-				_checkResponseStatus(closeableHttpResponse);
-
-				Header dispositionHeader = closeableHttpResponse.getFirstHeader(
-					"Content-Disposition");
-
-				if (dispositionHeader != null) {
-					String dispositionValue = dispositionHeader.getValue();
-
-					int index = dispositionValue.indexOf("filename=");
-
-					if (index > 0) {
-						fileName = dispositionValue.substring(
-							index + 10, dispositionValue.length() - 1);
-					}
-				}
-				else {
-					RedirectLocations redirectLocations = (RedirectLocations)
-						httpContext.getAttribute(
-							HttpClientContext.REDIRECT_LOCATIONS);
-
-					if (redirectLocations != null) {
-						uri = redirectLocations.get(
-							redirectLocations.size() - 1);
-					}
-				}
-
-				Header lastModifiedHeader =
-					closeableHttpResponse.getFirstHeader("Last-Modified");
-
-				if (lastModifiedHeader != null) {
-					String lastModifiedValue = lastModifiedHeader.getValue();
-
-					DateFormat dateFormat = new SimpleDateFormat(
-						"EEE, dd MMM yyyy HH:mm:ss zzz");
-
-					lastModifiedDate = dateFormat.parse(lastModifiedValue);
-				}
-				else {
-					lastModifiedDate = new Date();
-				}
-			}
-
-			if (fileName == null) {
-				String path = uri.getPath();
-
-				fileName = path.substring(path.lastIndexOf('/') + 1);
-			}
-
-			file = new File(_bundlesCacheDir, fileName);
-
-			if (file.exists() &&
-				(file.lastModified() == lastModifiedDate.getTime())) {
-
-				return file;
-			}
-			else if (file.exists()) {
-				file.delete();
-			}
-
-			if (!_bundlesCacheDir.exists()) {
-				_bundlesCacheDir.mkdirs();
-			}
-
-			file.createNewFile();
-
-			HttpGet httpGet = new HttpGet(uri);
-
-			try (CloseableHttpResponse closeableHttpResponse =
-					closeableHttpClient.execute(httpGet);
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					file)) {
-
-				_checkResponseStatus(closeableHttpResponse);
-
-				HttpEntity httpEntity = closeableHttpResponse.getEntity();
-
-				fileOutputStream.write(EntityUtils.toByteArray(httpEntity));
-
-				file.setLastModified(lastModifiedDate.getTime());
-			}
-		}
-
-		return file;
-	}
-
 	private void _unpack(File file) throws Exception {
 		String extension = FileUtil.getExtension(file.getName());
 
@@ -265,57 +135,6 @@ public class InitBundleCommand extends BaseCommand {
 
 			FileUtil.untar(file, getLiferayHomePath(), _stripComponents);
 		}
-	}
-
-	private void _checkResponseStatus(HttpResponse httpResponse)
-		throws IOException {
-
-		StatusLine statusLine = httpResponse.getStatusLine();
-
-		if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
-			throw new IOException(statusLine.getReasonPhrase());
-		}
-	}
-
-	private CloseableHttpClient _getHttpClient(URI uri) {
-		HttpClientBuilder httpClientBuilder = HttpClients.custom();
-
-		CredentialsProvider credentialsProvider =
-			new BasicCredentialsProvider();
-
-		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
-
-		RequestConfig.Builder requestConfigBuilder = RequestConfig.custom();
-
-		requestConfigBuilder.setCookieSpec(CookieSpecs.STANDARD);
-		requestConfigBuilder.setRedirectsEnabled(true);
-
-		httpClientBuilder.setDefaultRequestConfig(requestConfigBuilder.build());
-
-		if ((_userName != null) && (_password != null)) {
-			credentialsProvider.setCredentials(
-				new AuthScope(uri.getHost(), uri.getPort()),
-				new UsernamePasswordCredentials(_userName, _password));
-		}
-
-		String scheme = uri.getScheme();
-
-		String proxyHost = System.getProperty(scheme + ".proxyHost");
-		String proxyPort = System.getProperty(scheme + ".proxyPort");
-		String proxyUser = System.getProperty(scheme + ".proxyUser");
-		String proxyPassword = System.getProperty(scheme + ".proxyPassword");
-
-		if ((proxyHost != null) && (proxyPort != null) && (proxyUser != null) &&
-			(proxyPassword != null)) {
-
-			credentialsProvider.setCredentials(
-				new AuthScope(proxyHost, Integer.parseInt(proxyPort)),
-				new UsernamePasswordCredentials(proxyUser, proxyPassword));
-		}
-
-		httpClientBuilder.useSystemProperties();
-
-		return httpClientBuilder.build();
 	}
 
 	private static final File _bundlesCacheDir = new File(

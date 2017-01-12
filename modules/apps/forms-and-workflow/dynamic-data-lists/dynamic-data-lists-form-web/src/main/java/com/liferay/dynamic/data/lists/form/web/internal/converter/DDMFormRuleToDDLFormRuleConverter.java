@@ -17,8 +17,6 @@ package com.liferay.dynamic.data.lists.form.web.internal.converter;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleCondition;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.AutoFillDDLFormRuleAction;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.DefaultDDLFormRuleAction;
 import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionException;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
@@ -32,13 +30,10 @@ import com.liferay.dynamic.data.mapping.expression.model.NotExpression;
 import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.Term;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -131,7 +126,7 @@ public class DDMFormRuleToDDLFormRuleConverter {
 	@Reference
 	protected DDMExpressionFactory ddmExpressionFactory;
 
-	private static class ActionExpressionVisitor
+	protected static class ActionExpressionVisitor
 		extends ExpressionVisitor<Object> {
 
 		@Override
@@ -142,79 +137,7 @@ public class DDMFormRuleToDDLFormRuleConverter {
 			List<Expression> parameters =
 				functionCallExpression.getParameterExpressions();
 
-			if (Objects.equals(action, "auto-fill")) {
-				String ddmDataProviderInstanceUUID = doVisit(parameters.get(0));
-				String paramsExpression = doVisit(parameters.get(1));
-				String resultMapExpression = doVisit(parameters.get(2));
-
-				return new AutoFillDDLFormRuleAction(
-					ddmDataProviderInstanceUUID,
-					createAutoFillInputParameters(paramsExpression),
-					createAutoFillOutputParameters(resultMapExpression));
-			}
-			else if (Objects.equals(action, "jump-to-page")) {
-				String source = doVisit(parameters.get(0));
-				String target = doVisit(parameters.get(1));
-
-				return new DefaultDDLFormRuleAction(action, source, target);
-			}
-			else {
-				String target = doVisit(parameters.get(0));
-
-				return new DefaultDDLFormRuleAction(action, null, target);
-			}
-		}
-
-		protected Map<String, String> createAutoFillInputParameters(
-			String paramsExpression) {
-
-			Map<String, String> map = new LinkedHashMap<>();
-
-			String[] innerExpressions = StringUtil.split(
-				paramsExpression, CharPool.SEMICOLON);
-
-			if (innerExpressions.length == 0) {
-				String[] tokens = StringUtil.split(
-					paramsExpression, CharPool.EQUAL);
-
-				map.put(tokens[0], tokens[1]);
-			}
-			else {
-				for (String innerExpression : innerExpressions) {
-					String[] tokens = StringUtil.split(
-						innerExpression, CharPool.EQUAL);
-
-					map.put(tokens[0], tokens[1]);
-				}
-			}
-
-			return map;
-		}
-
-		protected Map<String, String> createAutoFillOutputParameters(
-			String resultMapExpression) {
-
-			Map<String, String> map = new LinkedHashMap<>();
-
-			String[] innerExpressions = StringUtil.split(
-				resultMapExpression, CharPool.SEMICOLON);
-
-			if (innerExpressions.length == 0) {
-				String[] tokens = StringUtil.split(
-					resultMapExpression, CharPool.EQUAL);
-
-				map.put(tokens[1], tokens[0]);
-			}
-			else {
-				for (String innerExpression : innerExpressions) {
-					String[] tokens = StringUtil.split(
-						innerExpression, CharPool.EQUAL);
-
-					map.put(tokens[1], tokens[0]);
-				}
-			}
-
-			return map;
+			return DDLFormRuleActionFactory.create(action, parameters, this);
 		}
 
 		@Override

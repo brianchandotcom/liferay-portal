@@ -60,6 +60,7 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Parameters(
 	commandDescription = "Download and expand a new bundle.",
@@ -71,9 +72,9 @@ public class InitBundleCommand extends BaseCommand {
 	public void execute() throws Exception {
 		deleteBundle();
 
-		downloadFile();
+		File file = downloadFile();
 
-		unpack();
+		unpack(file);
 
 		copyConfigs();
 	}
@@ -152,7 +153,9 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	protected void downloadFile() throws Exception {
+	protected File downloadFile() throws Exception {
+		File file;
+
 		URI uri = new URI(_url);
 
 		try (CloseableHttpClient closeableHttpClient = _getHttpClient(uri)) {
@@ -160,7 +163,7 @@ public class InitBundleCommand extends BaseCommand {
 
 			HttpContext httpContext = new BasicHttpContext();
 
-			String downloadFileName = null;
+			String fileName = null;
 			Date lastModifiedDate;
 
 			try (CloseableHttpResponse closeableHttpResponse =
@@ -177,7 +180,7 @@ public class InitBundleCommand extends BaseCommand {
 					int index = dispositionValue.indexOf("filename=");
 
 					if (index > 0) {
-						downloadFileName = dispositionValue.substring(
+						fileName = dispositionValue.substring(
 							index + 10, dispositionValue.length() - 1);
 					}
 				}
@@ -194,7 +197,7 @@ public class InitBundleCommand extends BaseCommand {
 							redirectLocationsList.size() - 1);
 					}
 
-					downloadFileName = getDownloadFileName(uri);
+					fileName = getDownloadFileName(uri);
 				}
 
 				Header lastModifiedHeader =
@@ -213,33 +216,33 @@ public class InitBundleCommand extends BaseCommand {
 				}
 			}
 
-			if (downloadFileName == null) {
-				downloadFileName = _url.substring(_url.lastIndexOf('/') + 1);
+			if (fileName == null) {
+				fileName = _url.substring(_url.lastIndexOf('/') + 1);
 			}
 
-			_downloadFile = new File(_BUNDLES_CACHE, downloadFileName);
+			file = new File(_BUNDLES_CACHE, fileName);
 
-			if (_downloadFile.exists() &&
-				(_downloadFile.lastModified() == lastModifiedDate.getTime())) {
+			if (file.exists() &&
+				(file.lastModified() == lastModifiedDate.getTime())) {
 
-				return;
+				return file;
 			}
-			else if (_downloadFile.exists()) {
-				_downloadFile.delete();
+			else if (file.exists()) {
+				file.delete();
 			}
 
 			if (!_BUNDLES_CACHE.exists()) {
 				_BUNDLES_CACHE.mkdirs();
 			}
 
-			_downloadFile.createNewFile();
+			file.createNewFile();
 
 			HttpGet httpGet = new HttpGet(uri);
 
 			try (CloseableHttpResponse closeableHttpResponse =
 					closeableHttpClient.execute(httpGet);
 				FileOutputStream fileOutputStream = new FileOutputStream(
-					_downloadFile)) {
+					file)) {
 
 				_checkResponseStatus(closeableHttpResponse);
 
@@ -247,9 +250,11 @@ public class InitBundleCommand extends BaseCommand {
 
 				fileOutputStream.write(EntityUtils.toByteArray(httpEntity));
 
-				_downloadFile.setLastModified(lastModifiedDate.getTime());
+				file.setLastModified(lastModifiedDate.getTime());
 			}
 		}
+
+		return file;
 	}
 
 	protected String getDownloadFileName(URI uri) {
@@ -262,18 +267,16 @@ public class InitBundleCommand extends BaseCommand {
 		return fileName;
 	}
 
-	protected void unpack() throws Exception {
-		String extension = FileUtil.getExtension(_downloadFile.getName());
+	protected void unpack(File file) throws Exception {
+		String extension = FileUtil.getExtension(file.getName());
 
 		if (extension.equals("zip")) {
-			FileUtil.unzip(
-				_downloadFile, getLiferayHomePath(), _stripComponents);
+			FileUtil.unzip(file, getLiferayHomePath(), _stripComponents);
 		}
 		else if (extension.equals("gz") || extension.equals("tar") ||
 				 extension.equals("tar.gz") || extension.equals("tgz")) {
 
-			FileUtil.untar(
-				_downloadFile, getLiferayHomePath(), _stripComponents);
+			FileUtil.untar(file, getLiferayHomePath(), _stripComponents);
 		}
 	}
 
@@ -343,8 +346,6 @@ public class InitBundleCommand extends BaseCommand {
 		names = {"--configs"}
 	)
 	private File _configsDir;
-
-	private File _downloadFile;
 
 	@Parameter (
 		description = "The environment of your Liferay home deployment.",

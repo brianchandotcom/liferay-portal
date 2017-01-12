@@ -161,7 +161,7 @@ public class InitBundleCommand extends BaseCommand {
 			HttpContext httpContext = new BasicHttpContext();
 
 			String downloadFileName = null;
-			Date lastModifiedDate = null;
+			Date lastModifiedDate;
 
 			try (CloseableHttpResponse closeableHttpResponse =
 					closeableHttpClient.execute(httpHead, httpContext)) {

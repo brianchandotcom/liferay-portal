@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.model;
 
 /**
  * @author Alexander Chow
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.subscription.constants.SubscriptionConstants}
  */
+@Deprecated
 public class SubscriptionConstants {
 
 	public static final String FREQUENCY_INSTANT = "instant";

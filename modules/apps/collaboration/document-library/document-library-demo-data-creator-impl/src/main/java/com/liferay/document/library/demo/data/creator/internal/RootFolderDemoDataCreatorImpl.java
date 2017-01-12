@@ -46,8 +46,20 @@ public class RootFolderDemoDataCreatorImpl
 	public Folder create(long userId, long groupId, String name)
 		throws PortalException {
 
-		Folder folder = _dlAppLocalService.addFolder(
-			userId, groupId, 0, name, StringPool.BLANK, new ServiceContext());
+		Folder folder = null;
+
+		try {
+			folder = _dlAppLocalService.getFolder(groupId, 0, name);
+		}
+		catch (NoSuchFolderException nsfe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsfe, nsfe);
+			}
+
+			folder = _dlAppLocalService.addFolder(
+				userId, groupId, 0, name, StringPool.BLANK,
+				new ServiceContext());
+		}
 
 		_folderIds.add(folder.getFolderId());
 

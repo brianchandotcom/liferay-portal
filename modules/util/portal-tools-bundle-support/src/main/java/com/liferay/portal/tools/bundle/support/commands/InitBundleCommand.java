@@ -34,7 +34,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -191,14 +190,9 @@ public class InitBundleCommand extends BaseCommand {
 							HttpClientContext.REDIRECT_LOCATIONS);
 
 					if (redirectLocations != null) {
-						List<URI> redirectLocationsList =
-							redirectLocations.getAll();
-
-						uri = redirectLocationsList.get(
-							redirectLocationsList.size() - 1);
+						uri = redirectLocations.get(
+							redirectLocations.size() - 1);
 					}
-
-					fileName = _getDownloadFileName(uri);
 				}
 
 				Header lastModifiedHeader =
@@ -218,9 +212,9 @@ public class InitBundleCommand extends BaseCommand {
 			}
 
 			if (fileName == null) {
-				String url = _url.toString();
+				String path = uri.getPath();
 
-				fileName = url.substring(url.lastIndexOf('/') + 1);
+				fileName = path.substring(path.lastIndexOf('/') + 1);
 			}
 
 			file = new File(_BUNDLES_CACHE, fileName);
@@ -258,16 +252,6 @@ public class InitBundleCommand extends BaseCommand {
 		}
 
 		return file;
-	}
-
-	private String _getDownloadFileName(URI uri) {
-		String fileName = uri.getPath();
-
-		int index = fileName.lastIndexOf('/') + 1;
-
-		fileName = fileName.substring(index);
-
-		return fileName;
 	}
 
 	private void _unpack(File file) throws Exception {

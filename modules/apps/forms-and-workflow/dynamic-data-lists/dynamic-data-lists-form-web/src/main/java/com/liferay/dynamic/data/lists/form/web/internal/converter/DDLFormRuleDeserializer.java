@@ -27,9 +27,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,27 +47,63 @@ public class DDLFormRuleDeserializer {
 		for (int i = 0; i < rulesJSONArray.length(); i++) {
 			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
 
-			ddlFormRules.add(deserializeDDLFormRule(ruleJSONObject));
+			DDLFormRule ddlFormRule = deserializeDDLFormRule(ruleJSONObject);
+
+			ddlFormRules.add(ddlFormRule);
 		}
 
 		return ddlFormRules;
 	}
 
 	protected DDLFormRule deserializeDDLFormRule(JSONObject ruleJSONObject) {
+		List<DDLFormRuleAction> actions = deserializeDDLFormRuleActions(
+			ruleJSONObject.getJSONArray("actions"));
+
+		List<DDLFormRuleCondition> conditions =
+			deserializeDDLFormRuleConditions(
+				ruleJSONObject.getJSONArray("conditions"));
+
 		DDLFormRule ddlFormRule = new DDLFormRule();
 
-		ddlFormRule.setDDLFormRuleActions(
-			_ddlFormRuleActionDeserializerHelper.deserialize(
-				ruleJSONObject.getJSONArray("actions")));
-
-		ddlFormRule.setDDLFormRuleConditions(
-			deserializeDDLFormRuleConditions(
-				ruleJSONObject.getJSONArray("conditions")));
-
+		ddlFormRule.setDDLFormRuleActions(actions);
+		ddlFormRule.setDDLFormRuleConditions(conditions);
 		ddlFormRule.setLogicalOperator(
 			ruleJSONObject.getString("logical-operator"));
 
 		return ddlFormRule;
+	}
+
+	protected <T extends DDLFormRuleAction> DDLFormRuleAction
+		deserializeDDLFormRuleAction(
+			JSONObject actionJSONObject, Class<T> targetClass) {
+
+		JSONDeserializer<T> jsonDeserializer =
+			_jsonFactory.createJSONDeserializer();
+
+		return jsonDeserializer.deserialize(
+			actionJSONObject.toJSONString(), targetClass);
+	}
+
+	protected List<DDLFormRuleAction> deserializeDDLFormRuleActions(
+		JSONArray actionsJSONArray) {
+
+		List<DDLFormRuleAction> ddlFormRuleActions = new ArrayList<>();
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
+
+			String action = actionJSONObject.getString("action");
+
+			Class<? extends DDLFormRuleAction> clazz =
+				getDDLFormRuleActionClass(action);
+
+			DDLFormRuleAction ddlFormRuleAction = deserializeDDLFormRuleAction(
+				actionJSONObject, clazz);
+
+			ddlFormRuleActions.add(ddlFormRuleAction);
+		}
+
+		return ddlFormRuleActions;
 	}
 
 	protected List<DDLFormRuleCondition> deserializeDDLFormRuleConditions(
@@ -84,59 +118,17 @@ public class DDLFormRuleDeserializer {
 		return ListUtil.toList(ruleConditions);
 	}
 
-	private final DDLFormRuleActionDeserializerHelper
-		_ddlFormRuleActionDeserializerHelper =
-			new DDLFormRuleActionDeserializerHelper();
+	protected Class<? extends DDLFormRuleAction> getDDLFormRuleActionClass(
+		String action) {
+
+		if (action.equals("auto-fill")) {
+			return AutoFillDDLFormRuleAction.class;
+		}
+
+		return DefaultDDLFormRuleAction.class;
+	}
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	private class DDLFormRuleActionDeserializerHelper {
-
-		protected List<DDLFormRuleAction> deserialize(
-			JSONArray actionsJSONArray) {
-			List<DDLFormRuleAction> ddlFormRuleActions = new ArrayList<>();
-
-			for (int i = 0; i < actionsJSONArray.length(); i++) {
-				JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
-
-				String action = actionJSONObject.getString("action");
-
-				ddlFormRuleActions.add(
-					deserialize(actionJSONObject, getRuleActionClass(action)));
-			}
-
-			return ddlFormRuleActions;
-		}
-
-		protected <T extends DDLFormRuleAction> DDLFormRuleAction deserialize(
-			JSONObject actionJSONObject, Class<T> targetClass) {
-
-			JSONDeserializer<T> jsonDeserializer =
-				_jsonFactory.createJSONDeserializer();
-
-			return jsonDeserializer.deserialize(
-				actionJSONObject.toJSONString(), targetClass);
-		}
-
-		protected Class<? extends DDLFormRuleAction> getRuleActionClass(
-			String action) {
-
-			if (_actionNameActionClassMap.containsKey(action)) {
-				return _actionNameActionClassMap.get(action);
-			}
-
-			return DefaultDDLFormRuleAction.class;
-		}
-
-		private final Map<String, Class<? extends DDLFormRuleAction>>
-			_actionNameActionClassMap = new HashMap<>();
-
-		{
-			_actionNameActionClassMap.put(
-				"auto-fill", AutoFillDDLFormRuleAction.class);
-		}
-
-	}
 
 }

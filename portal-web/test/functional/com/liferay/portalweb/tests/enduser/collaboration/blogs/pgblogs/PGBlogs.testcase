@@ -1149,7 +1149,7 @@
 		<execute macro="BlogsEntryComment#viewSubscribedPG" />
 	</command>
 
-	<command name="UserFlagsEntryAndAdminViewsNotificationInMockMock" priority="4">
+	<command ignore="true" name="UserFlagsEntryAndAdminViewsNotificationInMockMock" priority="4">
 		<property name="test.smtp.server.enabled" value="true" />
 
 		<execute macro="TestCase#getSiteName">

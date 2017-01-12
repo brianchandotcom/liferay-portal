@@ -263,10 +263,10 @@ public class FileUtil {
 				HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
 				httpEntity.writeTo(outputStream);
-
-				Files.setLastModifiedTime(
-					path, FileTime.fromMillis(lastModifiedDate.getTime()));
 			}
+
+			Files.setLastModifiedTime(
+				path, FileTime.fromMillis(lastModifiedDate.getTime()));
 		}
 
 		return path;

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -68,8 +68,7 @@ public class ModulePersistenceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
-			new TransactionalTestRule(Propagation.REQUIRED,
-				"com.liferay.marketplace.service"));
+			new TransactionalTestRule(Propagation.REQUIRED));
 
 	@Before
 	public void setUp() {
@@ -126,6 +125,8 @@ public class ModulePersistenceTest {
 
 		newModule.setUuid(RandomTestUtil.randomString());
 
+		newModule.setCompanyId(RandomTestUtil.nextLong());
+
 		newModule.setAppId(RandomTestUtil.nextLong());
 
 		newModule.setBundleSymbolicName(RandomTestUtil.randomString());
@@ -141,6 +142,8 @@ public class ModulePersistenceTest {
 		Assert.assertEquals(existingModule.getUuid(), newModule.getUuid());
 		Assert.assertEquals(existingModule.getModuleId(),
 			newModule.getModuleId());
+		Assert.assertEquals(existingModule.getCompanyId(),
+			newModule.getCompanyId());
 		Assert.assertEquals(existingModule.getAppId(), newModule.getAppId());
 		Assert.assertEquals(existingModule.getBundleSymbolicName(),
 			newModule.getBundleSymbolicName());
@@ -157,6 +160,15 @@ public class ModulePersistenceTest {
 		_persistence.countByUuid(StringPool.NULL);
 
 		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -227,7 +239,7 @@ public class ModulePersistenceTest {
 
 	protected OrderByComparator<Module> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Marketplace_Module",
-			"uuid", true, "moduleId", true, "appId", true,
+			"uuid", true, "moduleId", true, "companyId", true, "appId", true,
 			"bundleSymbolicName", true, "bundleVersion", true, "contextName",
 			true);
 	}
@@ -453,6 +465,8 @@ public class ModulePersistenceTest {
 		Module module = _persistence.create(pk);
 
 		module.setUuid(RandomTestUtil.randomString());
+
+		module.setCompanyId(RandomTestUtil.nextLong());
 
 		module.setAppId(RandomTestUtil.nextLong());
 

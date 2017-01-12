@@ -12,20 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.lpkg;
+package com.liferay.portal.lpkg.deployer.override.test;
 
-import java.io.IOException;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
-import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Matthew Tambara
  */
-public class LPKGDowngradeTest extends LPKGVersionChangeTestCase {
-
-	@Test
-	public void testDownGradeLPKG() throws IOException {
-		testVersionChange(0, 0, -1);
-	}
-
+@RunWith(Arquillian.class)
+public class LPKGOverrideVerifyCleanStartupTest extends LPKGOverrideVerifyTest {
 }

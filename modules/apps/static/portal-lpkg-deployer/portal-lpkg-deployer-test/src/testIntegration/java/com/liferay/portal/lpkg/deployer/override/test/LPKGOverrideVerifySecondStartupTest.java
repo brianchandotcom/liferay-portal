@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.override.test;
+package com.liferay.portal.lpkg.deployer.override.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 

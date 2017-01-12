@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.persistence.test;
+package com.liferay.portal.lpkg.deployer.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 

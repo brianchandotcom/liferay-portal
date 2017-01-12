@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.override;
+package com.liferay.portal.lpkg.deployer.override;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.util.StringBundler;

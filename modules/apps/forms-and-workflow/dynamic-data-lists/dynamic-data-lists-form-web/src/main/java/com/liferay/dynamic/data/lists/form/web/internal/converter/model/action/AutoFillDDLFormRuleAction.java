@@ -15,6 +15,8 @@
 package com.liferay.dynamic.data.lists.form.web.internal.converter.model.action;
 
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.serializer.AutoFillDDLFormRuleActionSerializer;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.serializer.DDLFormRuleActionSerializer;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.HashUtil;
 
@@ -94,6 +96,11 @@ public class AutoFillDDLFormRuleAction implements DDLFormRuleAction {
 		return HashUtil.hash(hash, _inputMapper);
 	}
 
+	@Override
+	public String serialize() {
+		return _ddlFormRuleActionSerializer.serialize(this);
+	}
+
 	public void setDDMDataProviderInstanceUUID(
 		String ddmDataProviderInstanceUUID) {
 
@@ -107,6 +114,10 @@ public class AutoFillDDLFormRuleAction implements DDLFormRuleAction {
 	public void setOutputParametersMapper(Map<String, String> outputMapper) {
 		_outputMapper = outputMapper;
 	}
+
+	private static final DDLFormRuleActionSerializer<AutoFillDDLFormRuleAction>
+		_ddlFormRuleActionSerializer =
+			new AutoFillDDLFormRuleActionSerializer();
 
 	private String _ddmDataProviderInstanceUUID;
 	private Map<String, String> _inputMapper = new LinkedHashMap<>();

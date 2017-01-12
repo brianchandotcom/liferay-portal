@@ -14,6 +14,8 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.converter.model.action;
 
+import com.liferay.dynamic.data.lists.form.web.internal.converter.serializer.DDLFormRuleActionSerializer;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.serializer.JumpToPageDDLFormRuleActionSerializer;
 import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.Objects;
@@ -65,9 +67,19 @@ public class JumpToPageDDLFormRuleAction extends DefaultDDLFormRuleAction {
 		return HashUtil.hash(hash, _source);
 	}
 
+	@Override
+	public String serialize() {
+		return _ddlFormRuleActionSerializer.serialize(this);
+	}
+
 	public void setSource(String source) {
 		_source = source;
 	}
+
+	private static final
+		DDLFormRuleActionSerializer<JumpToPageDDLFormRuleAction>
+			_ddlFormRuleActionSerializer =
+				new JumpToPageDDLFormRuleActionSerializer();
 
 	private String _source;
 

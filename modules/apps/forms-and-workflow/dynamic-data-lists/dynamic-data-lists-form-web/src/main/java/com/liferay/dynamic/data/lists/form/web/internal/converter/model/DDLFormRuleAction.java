@@ -21,4 +21,6 @@ public interface DDLFormRuleAction {
 
 	public String getAction();
 
+	public String serialize();
+
 }

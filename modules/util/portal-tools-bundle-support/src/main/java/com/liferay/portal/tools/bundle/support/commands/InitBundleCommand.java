@@ -263,7 +263,7 @@ public class InitBundleCommand extends BaseCommand {
 	protected String getDownloadFileName(URI uri) {
 		String fileName = uri.getPath();
 
-		int index = fileName.lastIndexOf("/") + 1;
+		int index = fileName.lastIndexOf('/') + 1;
 
 		fileName = fileName.substring(index);
 

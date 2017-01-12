@@ -22,12 +22,12 @@ import java.util.Properties;
  */
 public class BundleSupportUtil {
 
-	public static String getDeployFolder(String type) {
-		if (type.equals("jar")) {
+	public static String getDeployDirName(String fileName) {
+		if (fileName.endsWith(".jar")) {
 			return "osgi/modules/";
 		}
 
-		if (type.equals("war")) {
+		if (fileName.endsWith(".war")) {
 			return "osgi/war/";
 		}
 

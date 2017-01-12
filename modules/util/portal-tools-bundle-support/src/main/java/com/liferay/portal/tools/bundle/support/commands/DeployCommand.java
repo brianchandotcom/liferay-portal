@@ -22,10 +22,13 @@ import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.io.File;
 
+import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Parameters(
 	commandDescription = "Deploy a file to a Liferay bundle.",
@@ -35,25 +38,25 @@ public class DeployCommand extends BaseCommand {
 
 	@Override
 	public void execute() throws Exception {
-		if (!_file.exists()) {
-			throw new NoSuchFileException(
-				"Unable to find " + _file.getAbsolutePath());
+		Path path = _file.toPath();
+
+		if (Files.notExists(path)) {
+			throw new NoSuchFileException("Unable to find " + path);
 		}
 
-		String fileName = _file.getName();
+		String fileName = String.valueOf(path.getFileName());
 
-		String extension = FileUtil.getExtension(fileName);
-
-		String deployFolder = BundleSupportUtil.getDeployFolder(extension);
+		String deployDirName = BundleSupportUtil.getDeployDirName(fileName);
 
 		if (_outputFileName == null) {
-			_outputFileName = _file.getName();
+			_outputFileName = fileName;
 		}
 
-		File outputFile = new File(
-			getLiferayHomeDir(), deployFolder + _outputFileName);
+		Path outputPath = getLiferayHomePath();
 
-		FileUtil.copyFile(_file, outputFile);
+		outputPath = outputPath.resolve(deployDirName + _outputFileName);
+
+		FileUtil.copyFile(path, outputPath);
 	}
 
 	public File getFile() {

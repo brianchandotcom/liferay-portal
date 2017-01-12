@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.net.URI;
 import java.net.URL;
@@ -74,7 +76,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.RedirectLocations;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 
 /**
  * @author Andrea Di Giorgi
@@ -98,21 +99,48 @@ public class FileUtil {
 	public static void appendZip(File entryFile, Path entryPath, File zipFile)
 		throws Exception {
 
-		try (FileSystem fileSystem = _createFileSystem(zipFile, false)) {
+		try (FileSystem fileSystem = _createFileSystem(
+				zipFile.toPath(), false)) {
+
 			_appendZip(entryFile, entryPath, fileSystem);
 		}
 	}
 
-	public static void copyDirectory(File sourceFile, File destinationFile)
+	public static void copyDirectory(
+			final Path dirPath, final Path destinationDirPath)
 		throws IOException {
 
-		_copyDirectory(sourceFile.toPath(), destinationFile.toPath());
+		Files.walkFileTree(
+			dirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path relativePath = dirPath.relativize(path);
+
+					Path destinationPath = destinationDirPath.resolve(
+						relativePath);
+
+					copyFile(path, destinationPath);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
-	public static void copyFile(File sourceFile, File destinationFile)
+	public static void copyFile(Path path, Path destinationPath)
 		throws IOException {
 
-		_copyFile(sourceFile.toPath(), destinationFile.toPath());
+		Files.createDirectories(destinationPath.getParent());
+
+		Files.copy(path, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+
+		Files.setLastModifiedTime(
+			destinationPath, Files.getLastModifiedTime(path));
 	}
 
 	public static void deleteDirectory(Path dirPath) throws IOException {
@@ -143,11 +171,11 @@ public class FileUtil {
 			});
 	}
 
-	public static File downloadFile(
-			URI uri, String userName, String password, File cacheDir)
+	public static Path downloadFile(
+			URI uri, String userName, String password, Path cacheDirPath)
 		throws Exception {
 
-		File file;
+		Path path;
 
 		try (CloseableHttpClient closeableHttpClient = _getHttpClient(
 				uri, userName, password)) {
@@ -205,64 +233,43 @@ public class FileUtil {
 			}
 
 			if (fileName == null) {
-				String path = uri.getPath();
+				String uriPath = uri.getPath();
 
-				fileName = path.substring(path.lastIndexOf('/') + 1);
+				fileName = uriPath.substring(uriPath.lastIndexOf('/') + 1);
 			}
 
-			file = new File(cacheDir, fileName);
+			path = cacheDirPath.resolve(fileName);
 
-			if (file.exists() &&
-				(file.lastModified() == lastModifiedDate.getTime())) {
+			if (Files.exists(path)) {
+				FileTime fileTime = Files.getLastModifiedTime(path);
 
-				return file;
-			}
-			else if (file.exists()) {
-				file.delete();
-			}
+				if (fileTime.toMillis() == lastModifiedDate.getTime()) {
+					return path;
+				}
 
-			if (!cacheDir.exists()) {
-				cacheDir.mkdirs();
+				Files.delete(path);
 			}
 
-			file.createNewFile();
+			Files.createDirectories(cacheDirPath);
 
 			HttpGet httpGet = new HttpGet(uri);
 
 			try (CloseableHttpResponse closeableHttpResponse =
 					closeableHttpClient.execute(httpGet);
-				FileOutputStream fileOutputStream = new FileOutputStream(
-					file)) {
+				OutputStream outputStream = Files.newOutputStream(path)) {
 
 				_checkResponseStatus(closeableHttpResponse);
 
 				HttpEntity httpEntity = closeableHttpResponse.getEntity();
 
-				fileOutputStream.write(EntityUtils.toByteArray(httpEntity));
+				httpEntity.writeTo(outputStream);
 
-				file.setLastModified(lastModifiedDate.getTime());
+				Files.setLastModifiedTime(
+					path, FileTime.fromMillis(lastModifiedDate.getTime()));
 			}
 		}
 
-		return file;
-	}
-
-	public static String getExtension(String fileName) {
-		int pos = fileName.lastIndexOf('.');
-
-		if (pos == -1) {
-			return "";
-		}
-
-		return fileName.substring(pos + 1);
-	}
-
-	public static String getFileName(String path) {
-		String fileName = path.substring(path.lastIndexOf('/') + 1);
-
-		fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
-
-		return fileName;
+		return path;
 	}
 
 	public static File getJarFile() throws Exception {
@@ -315,68 +322,23 @@ public class FileUtil {
 		}
 	}
 
-	public static void untar(
-			File tarFile, Path destinationPath, int stripComponents)
-		throws IOException {
-
-		try (TarArchiveInputStream tarArchiveInputStream =
-				new TarArchiveInputStream(
-					new GzipCompressorInputStream(
-						new FileInputStream(tarFile)))) {
-
-			TarArchiveEntry tarArchiveEntry = null;
-
-			while ((tarArchiveEntry =
-						tarArchiveInputStream.getNextTarEntry()) != null) {
-
-				if (tarArchiveEntry.isDirectory()) {
-					continue;
-				}
-
-				Path entryPath = Paths.get(tarArchiveEntry.getName());
-
-				entryPath = destinationPath.resolve(
-					entryPath.subpath(
-						stripComponents, entryPath.getNameCount()));
-
-				Files.createDirectories(entryPath.getParent());
-
-				Files.copy(tarArchiveInputStream, entryPath);
-
-				Date lastModifiedDate = tarArchiveEntry.getLastModifiedDate();
-
-				Files.setLastModifiedTime(
-					entryPath, FileTime.fromMillis(lastModifiedDate.getTime()));
-			}
-		}
-	}
-
-	public static void unzip(
-			File zipFile, final Path destinationPath, final int stripComponents)
+	public static void unpack(
+			Path path, Path destinationDirPath, int stripComponents)
 		throws Exception {
 
-		try (FileSystem fileSystem = _createFileSystem(zipFile, false)) {
-			Files.walkFileTree(
-				fileSystem.getPath("/"),
-				new SimpleFileVisitor<Path>() {
+		String fileName = String.valueOf(path.getFileName());
 
-					@Override
-					public FileVisitResult visitFile(
-							Path path, BasicFileAttributes basicFileAttributes)
-						throws IOException {
+		if (fileName.endsWith(".gz") || fileName.endsWith(".tar") ||
+			fileName.endsWith(".tgz")) {
 
-						Path entryPath = path.subpath(
-							stripComponents, path.getNameCount());
-
-						_copyFile(
-							path, Paths.get(
-								destinationPath.toString(),
-								entryPath.toString()));
-
-						return FileVisitResult.CONTINUE;
-					}
-
-				});
+			_untar(path, destinationDirPath, stripComponents);
+		}
+		else if (fileName.endsWith(".zip")) {
+			_unzip(path, destinationDirPath, stripComponents);
+		}
+		else {
+			throw new UnsupportedOperationException(
+				"Unsupported format for " + fileName);
 		}
 	}
 
@@ -393,7 +355,9 @@ public class FileUtil {
 			parentPath = sourcePath;
 		}
 
-		try (FileSystem fileSystem = _createFileSystem(zipFile, true)) {
+		try (FileSystem fileSystem = _createFileSystem(
+				zipFile.toPath(), true)) {
+
 			Files.walkFileTree(
 				sourcePath,
 				new SimpleFileVisitor<Path>() {
@@ -405,7 +369,7 @@ public class FileUtil {
 
 						Path entryPath = parentPath.relativize(path);
 
-						_copyFile(
+						copyFile(
 							path, fileSystem.getPath(entryPath.toString()));
 
 						return FileVisitResult.CONTINUE;
@@ -438,7 +402,7 @@ public class FileUtil {
 
 		Path zipPath = fileSystem.getPath(entryPath.toString());
 
-		_copyFile(entryFile.toPath(), zipPath);
+		copyFile(entryFile.toPath(), zipPath);
 	}
 
 	private static void _checkResponseStatus(HttpResponse httpResponse)
@@ -451,51 +415,15 @@ public class FileUtil {
 		}
 	}
 
-	private static void _copyDirectory(
-			final Path sourcePath, final Path destinationPath)
-		throws IOException {
-
-		Files.walkFileTree(
-			sourcePath,
-			new SimpleFileVisitor<Path>() {
-
-				@Override
-				public FileVisitResult visitFile(
-						Path path, BasicFileAttributes basicFileAttributes)
-					throws IOException {
-
-					_copyFile(
-						path,
-						destinationPath.resolve(sourcePath.relativize(path)));
-
-					return FileVisitResult.CONTINUE;
-				}
-
-			});
-	}
-
-	private static void _copyFile(Path sourcePath, Path destinationPath)
-		throws IOException {
-
-		Files.createDirectories(destinationPath);
-
-		Files.copy(
-			sourcePath.toAbsolutePath(), destinationPath,
-			StandardCopyOption.REPLACE_EXISTING);
-
-		Files.setLastModifiedTime(
-			destinationPath, Files.getLastModifiedTime(sourcePath));
-	}
-
-	private static FileSystem _createFileSystem(File file, boolean create)
+	private static FileSystem _createFileSystem(Path path, boolean create)
 		throws Exception {
+
+		URI uri = path.toUri();
 
 		Map<String, String> properties = new HashMap<>();
 
 		properties.put("create", Boolean.toString(create));
 		properties.put("encoding", StandardCharsets.UTF_8.name());
-
-		URI uri = file.toURI();
 
 		return FileSystems.newFileSystem(
 			new URI("jar:" + uri.getScheme(), uri.getPath(), null), properties);
@@ -542,6 +470,73 @@ public class FileUtil {
 		httpClientBuilder.useSystemProperties();
 
 		return httpClientBuilder.build();
+	}
+
+	private static void _untar(
+			Path tarPath, Path destinationDirPath, int stripComponents)
+		throws IOException {
+
+		try (InputStream inputStream = Files.newInputStream(tarPath);
+			TarArchiveInputStream tarArchiveInputStream =
+				new TarArchiveInputStream(
+					new GzipCompressorInputStream(inputStream))) {
+
+			TarArchiveEntry tarArchiveEntry = null;
+
+			while ((tarArchiveEntry =
+						tarArchiveInputStream.getNextTarEntry()) != null) {
+
+				if (tarArchiveEntry.isDirectory()) {
+					continue;
+				}
+
+				Path destinationPath = Paths.get(tarArchiveEntry.getName());
+
+				destinationPath = destinationDirPath.resolve(
+					destinationPath.subpath(
+						stripComponents, destinationPath.getNameCount()));
+
+				Files.createDirectories(destinationPath.getParent());
+
+				Files.copy(tarArchiveInputStream, destinationPath);
+
+				Date lastModifiedDate = tarArchiveEntry.getLastModifiedDate();
+
+				Files.setLastModifiedTime(
+					destinationPath,
+					FileTime.fromMillis(lastModifiedDate.getTime()));
+			}
+		}
+	}
+
+	private static void _unzip(
+			Path zipPath, final Path destinationDirPath,
+			final int stripComponents)
+		throws Exception {
+
+		try (FileSystem fileSystem = _createFileSystem(zipPath, false)) {
+			Files.walkFileTree(
+				fileSystem.getPath("/"),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						Path relativePath = path.subpath(
+							stripComponents, path.getNameCount());
+
+						Path destinationPath = destinationDirPath.resolve(
+							relativePath.toString());
+
+						copyFile(path, destinationPath);
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+		}
 	}
 
 }

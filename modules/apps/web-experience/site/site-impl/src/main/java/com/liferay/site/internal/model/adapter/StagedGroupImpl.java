@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.internal.model.adapter.impl;
+package com.liferay.site.internal.model.adapter;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.lar.StagedModelType;

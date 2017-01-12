@@ -24,7 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.impl.FieldsToDDMFormValuesConverterImpl;
+import com.liferay.dynamic.data.mapping.internal.util.impl.FieldsToDDMFormValuesConverterImpl;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;

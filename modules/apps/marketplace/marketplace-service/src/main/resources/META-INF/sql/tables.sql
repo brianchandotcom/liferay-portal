@@ -18,6 +18,7 @@ create table Marketplace_App (
 create table Marketplace_Module (
 	uuid_ VARCHAR(75) null,
 	moduleId LONG not null primary key,
+	companyId LONG,
 	appId LONG,
 	bundleSymbolicName VARCHAR(500) null,
 	bundleVersion VARCHAR(75) null,

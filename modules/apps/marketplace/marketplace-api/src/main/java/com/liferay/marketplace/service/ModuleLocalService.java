@@ -70,9 +70,9 @@ public interface ModuleLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Module addModule(Module module);
 
-	public Module addModule(long userId, long appId,
-		java.lang.String bundleSymbolicName, java.lang.String bundleVersion,
-		java.lang.String contextName) throws PortalException;
+	public Module addModule(long appId, java.lang.String bundleSymbolicName,
+		java.lang.String bundleVersion, java.lang.String contextName)
+		throws PortalException;
 
 	/**
 	* Creates a new module with the primary key. Does not add the module to the database.
@@ -109,6 +109,17 @@ public interface ModuleLocalService extends BaseLocalService,
 	public Module fetchModule(long moduleId);
 
 	/**
+	* Returns the module with the matching UUID and company.
+	*
+	* @param uuid the module's UUID
+	* @param companyId the primary key of the company
+	* @return the matching module, or <code>null</code> if a matching module could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Module fetchModuleByUuidAndCompanyId(java.lang.String uuid,
+		long companyId);
+
+	/**
 	* Returns the module with the primary key.
 	*
 	* @param moduleId the primary key of the module
@@ -117,6 +128,18 @@ public interface ModuleLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Module getModule(long moduleId) throws PortalException;
+
+	/**
+	* Returns the module with the matching UUID and company.
+	*
+	* @param uuid the module's UUID
+	* @param companyId the primary key of the company
+	* @return the matching module
+	* @throws PortalException if a matching module could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Module getModuleByUuidAndCompanyId(java.lang.String uuid,
+		long companyId) throws PortalException;
 
 	/**
 	* Updates the module in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

@@ -14,22 +14,22 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.converter.model.action;
 
-import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.portal.kernel.util.HashUtil;
 
 import java.util.Objects;
 
 /**
- * @author Rafael Praxedes
+ * @author Leonardo Barros
  */
-public class DefaultDDLFormRuleAction implements DDLFormRuleAction {
+public class JumpToPageDDLFormRuleAction extends DefaultDDLFormRuleAction {
 
-	public DefaultDDLFormRuleAction() {
+	public JumpToPageDDLFormRuleAction() {
 	}
 
-	public DefaultDDLFormRuleAction(String action, String target) {
-		_action = action;
-		_target = target;
+	public JumpToPageDDLFormRuleAction(String source, String target) {
+		super("jump-to-page", target);
+
+		_source = source;
 	}
 
 	@Override
@@ -38,15 +38,15 @@ public class DefaultDDLFormRuleAction implements DDLFormRuleAction {
 			return true;
 		}
 
-		if (!(obj instanceof DefaultDDLFormRuleAction)) {
+		if (!(obj instanceof JumpToPageDDLFormRuleAction)) {
 			return false;
 		}
 
-		DefaultDDLFormRuleAction ddlFormRuleAction =
-			(DefaultDDLFormRuleAction)obj;
+		JumpToPageDDLFormRuleAction ddlFormRuleAction =
+			(JumpToPageDDLFormRuleAction)obj;
 
-		if (Objects.equals(_action, ddlFormRuleAction._action) &&
-			Objects.equals(_target, ddlFormRuleAction._target)) {
+		if (super.equals(obj) &&
+			Objects.equals(_source, ddlFormRuleAction._source)) {
 
 			return true;
 		}
@@ -54,31 +54,21 @@ public class DefaultDDLFormRuleAction implements DDLFormRuleAction {
 		return false;
 	}
 
-	@Override
-	public String getAction() {
-		return _action;
-	}
-
-	public String getTarget() {
-		return _target;
+	public String getSource() {
+		return _source;
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = HashUtil.hash(0, _action);
+		int hash = super.hashCode();
 
-		return HashUtil.hash(hash, _target);
+		return HashUtil.hash(hash, _source);
 	}
 
-	public void setAction(String action) {
-		_action = action;
+	public void setSource(String source) {
+		_source = source;
 	}
 
-	public void setTarget(String target) {
-		_target = target;
-	}
-
-	private String _action;
-	private String _target;
+	private String _source;
 
 }

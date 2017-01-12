@@ -12,35 +12,26 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
-import com.liferay.dynamic.data.mapping.render.ValueAccessorException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
 /**
- * @author Bruno Basto
  * @author Marcellus Tavares
  */
-public class DocumentLibraryDDMFormFieldValueRenderer
+public class CheckboxDDMFormFieldValueRenderer
 	extends BaseDDMFormFieldValueRenderer {
 
 	@Override
 	public String getSupportedDDMFormFieldType() {
-		return DDMFormFieldType.DOCUMENT_LIBRARY;
+		return DDMFormFieldType.CHECKBOX;
 	}
 
 	@Override
@@ -51,36 +42,14 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				JSONObject jsonObject = createJSONObject(
+				boolean valueBoolean = Boolean.parseBoolean(
 					value.getString(locale));
 
-				String uuid = jsonObject.getString("uuid");
-				long groupId = jsonObject.getLong("groupId");
-
-				if (Validator.isNull(uuid) && (groupId == 0)) {
-					return StringPool.BLANK;
+				if (valueBoolean) {
+					return LanguageUtil.get(locale, "yes");
 				}
 
-				try {
-					FileEntry fileEntry =
-						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-							uuid, groupId);
-
-					return fileEntry.getTitle();
-				}
-				catch (Exception e) {
-					return LanguageUtil.format(
-						locale, "is-temporarily-unavailable", "content");
-				}
-			}
-
-			protected JSONObject createJSONObject(String json) {
-				try {
-					return JSONFactoryUtil.createJSONObject(json);
-				}
-				catch (JSONException jsone) {
-					throw new ValueAccessorException(jsone);
-				}
+				return LanguageUtil.get(locale, "no");
 			}
 
 		};

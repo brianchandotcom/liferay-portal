@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 
 /**
  * @author Marcellus Tavares
  */
-public class RadioDDMFormFieldValueRenderer
-	extends BaseListDDMFormFieldValueRenderer {
+public class TextAreaDDMFormFieldValueRenderer
+	extends BaseTextDDMFormFieldValueRenderer {
 
 	@Override
 	public String getSupportedDDMFormFieldType() {
-		return DDMFormFieldType.RADIO;
+		return DDMFormFieldType.TEXT_AREA;
 	}
 
 }

@@ -1,31 +1,31 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
-	<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DDMFormFieldRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry">
+	<bean class="com.liferay.dynamic.data.mapping.internal.render.DDMFormFieldRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry">
 		<property name="defaultDDMFormFieldRenderer">
-			<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DDMFormFieldFreeMarkerRenderer" />
+			<bean class="com.liferay.dynamic.data.mapping.internal.render.DDMFormFieldFreeMarkerRenderer" />
 		</property>
 	</bean>
 	<bean class="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil">
 		<property name="DDMFormFieldRendererRegistry" ref="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" />
 	</bean>
-	<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DDMFormFieldValueRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl">
+	<bean class="com.liferay.dynamic.data.mapping.internal.render.DDMFormFieldValueRendererRegistryImpl" id="com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryImpl">
 		<property name="defaultDDMFormFieldValueRenderers">
 			<list>
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.CheckboxDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DateDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DecimalDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DocumentLibraryDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.GeolocationDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.IntegerDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.JournalArticleDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.LinkToPageDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.NumberDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.RadioDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.SelectDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.TextAreaDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.TextDDMFormFieldValueRenderer" />
-				<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.TextHTMLDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.CheckboxDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.DateDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.DecimalDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.DocumentLibraryDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.GeolocationDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.IntegerDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.JournalArticleDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.LinkToPageDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.NumberDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.RadioDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.SelectDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.TextAreaDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.TextDDMFormFieldValueRenderer" />
+				<bean class="com.liferay.dynamic.data.mapping.internal.render.TextHTMLDDMFormFieldValueRenderer" />
 			</list>
 		</property>
 	</bean>
@@ -34,7 +34,7 @@
 	</bean>
 	<bean class="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil" id="com.liferay.dynamic.data.mapping.render.DDMFormRendererUtil">
 		<property name="DDMFormRenderer">
-			<bean class="com.liferay.dynamic.data.mapping.internal.render.impl.DDMFormRendererImpl" />
+			<bean class="com.liferay.dynamic.data.mapping.internal.render.DDMFormRendererImpl" />
 		</property>
 	</bean>
 	<bean class="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory" id="com.liferay.dynamic.data.mapping.storage.FieldRendererFactory">

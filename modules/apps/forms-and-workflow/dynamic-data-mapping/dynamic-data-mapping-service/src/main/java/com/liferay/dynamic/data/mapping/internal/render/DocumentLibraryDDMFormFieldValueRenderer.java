@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
@@ -26,20 +25,22 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 
 /**
+ * @author Bruno Basto
  * @author Marcellus Tavares
  */
-public class JournalArticleDDMFormFieldValueRenderer
+public class DocumentLibraryDDMFormFieldValueRenderer
 	extends BaseDDMFormFieldValueRenderer {
 
 	@Override
 	public String getSupportedDDMFormFieldType() {
-		return DDMFormFieldType.JOURNAL_ARTICLE;
+		return DDMFormFieldType.DOCUMENT_LIBRARY;
 	}
 
 	@Override
@@ -53,18 +54,19 @@ public class JournalArticleDDMFormFieldValueRenderer
 				JSONObject jsonObject = createJSONObject(
 					value.getString(locale));
 
-				String className = jsonObject.getString("className");
-				long classPK = jsonObject.getLong("classPK");
+				String uuid = jsonObject.getString("uuid");
+				long groupId = jsonObject.getLong("groupId");
 
-				if (Validator.isNull(className) && (classPK == 0)) {
+				if (Validator.isNull(uuid) && (groupId == 0)) {
 					return StringPool.BLANK;
 				}
 
 				try {
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-						className, classPK);
+					FileEntry fileEntry =
+						DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+							uuid, groupId);
 
-					return assetEntry.getTitle(locale);
+					return fileEntry.getTitle();
 				}
 				catch (Exception e) {
 					return LanguageUtil.format(

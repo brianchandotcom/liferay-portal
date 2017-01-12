@@ -12,21 +12,35 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.Serializable;
 
 import java.util.Locale;
 
 /**
+ * @author Bruno Basto
  * @author Marcellus Tavares
  */
-public abstract class BaseTextDDMFormFieldValueRenderer
+public class DateDDMFormFieldValueRenderer
 	extends BaseDDMFormFieldValueRenderer {
+
+	@Override
+	public String getSupportedDDMFormFieldType() {
+		return DDMFormFieldType.DATE;
+	}
 
 	@Override
 	protected ValueAccessor getValueAcessor(Locale locale) {
@@ -36,10 +50,33 @@ public abstract class BaseTextDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				return HtmlUtil.escape(value.getString(locale));
+				String valueString = value.getString(locale);
+
+				if (Validator.isNull(valueString)) {
+					return StringPool.BLANK;
+				}
+
+				return _format(valueString, locale);
 			}
 
 		};
 	}
+
+	private String _format(Serializable value, Locale locale) {
+		try {
+			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+
+			return LanguageUtil.format(
+				locale, "is-temporarily-unavailable", "content");
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DateDDMFormFieldValueRenderer.class);
 
 }

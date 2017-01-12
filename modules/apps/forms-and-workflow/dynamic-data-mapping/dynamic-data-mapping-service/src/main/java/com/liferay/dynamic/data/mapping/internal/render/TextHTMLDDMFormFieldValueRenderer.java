@@ -12,23 +12,28 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.text.NumberFormat;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
  */
-public abstract class BaseNumberDDMFormFieldValueRenderer
-	extends BaseDDMFormFieldValueRenderer {
+public class TextHTMLDDMFormFieldValueRenderer
+	extends BaseTextDDMFormFieldValueRenderer {
+
+	@Override
+	public String getSupportedDDMFormFieldType() {
+		return DDMFormFieldType.TEXT_HTML;
+	}
 
 	@Override
 	protected ValueAccessor getValueAcessor(Locale locale) {
@@ -38,17 +43,21 @@ public abstract class BaseNumberDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				String valueString = value.getString(locale);
-
-				Number number = GetterUtil.getNumber(valueString);
-
-				NumberFormat numberFormat = NumberFormat.getNumberInstance(
-					locale);
-
-				return numberFormat.format(number);
+				return StringUtil.replace(
+					_HTML,
+					new String[] {"[$DDM_FORM_FIELD_VALUE$]", "[$PREVIEW$]"},
+					new String[] {
+						HtmlUtil.escapeJS(value.getString(locale)),
+						LanguageUtil.get(locale, "preview")
+					});
 			}
 
 		};
 	}
+
+	private static final String _HTML =
+		"<a href=\"javascript:;\" onclick=\"Liferay.DDLUtil." +
+			"openPreviewDialog('[$DDM_FORM_FIELD_VALUE$]');\">([$PREVIEW$])" +
+				"</a>";
 
 }

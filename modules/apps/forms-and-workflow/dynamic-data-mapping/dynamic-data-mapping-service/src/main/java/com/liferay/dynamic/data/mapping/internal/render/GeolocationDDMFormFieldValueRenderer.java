@@ -12,30 +12,36 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
-import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.render.ValueAccessorException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.text.NumberFormat;
 
 import java.util.Locale;
 
 /**
- * @author Bruno Basto
+ * @author Sergio González
  * @author Marcellus Tavares
  */
-public abstract class BaseListDDMFormFieldValueRenderer
+public class GeolocationDDMFormFieldValueRenderer
 	extends BaseDDMFormFieldValueRenderer {
+
+	@Override
+	public String getSupportedDDMFormFieldType() {
+		return DDMFormFieldType.GEOLOCATION;
+	}
 
 	@Override
 	protected ValueAccessor getValueAcessor(Locale locale) {
@@ -45,53 +51,39 @@ public abstract class BaseListDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				JSONArray jsonArray = createJSONArray(value.getString(locale));
+				JSONObject jsonObject = createJSONObject(
+					value.getString(locale));
 
-				if (jsonArray.length() == 0) {
-					return StringPool.BLANK;
-				}
+				StringBundler sb = new StringBundler(7);
 
-				StringBundler sb = new StringBundler(jsonArray.length() * 2);
+				sb.append(LanguageUtil.get(locale, "latitude"));
+				sb.append(": ");
 
-				for (int i = 0; i < jsonArray.length(); i++) {
-					LocalizedValue label = getDDMFormFieldOptionLabel(
-						ddmFormFieldValue, jsonArray.getString(i));
+				double latitude = jsonObject.getDouble("latitude");
 
-					if (label == null) {
-						continue;
-					}
+				NumberFormat numberFormat = NumberFormat.getNumberInstance(
+					locale);
 
-					sb.append(label.getString(locale));
-					sb.append(StringPool.COMMA_AND_SPACE);
-				}
+				sb.append(numberFormat.format(latitude));
 
-				if (sb.length() == 0) {
-					return StringPool.BLANK;
-				}
+				sb.append(StringPool.COMMA_AND_SPACE);
+				sb.append(LanguageUtil.get(locale, "longitude"));
+				sb.append(": ");
 
-				sb.setIndex(sb.index() - 1);
+				double longitude = jsonObject.getDouble("longitude");
+
+				sb.append(numberFormat.format(longitude));
 
 				return sb.toString();
 			}
 
-			protected JSONArray createJSONArray(String json) {
+			protected JSONObject createJSONObject(String json) {
 				try {
-					return JSONFactoryUtil.createJSONArray(json);
+					return JSONFactoryUtil.createJSONObject(json);
 				}
 				catch (JSONException jsone) {
 					throw new ValueAccessorException(jsone);
 				}
-			}
-
-			protected LocalizedValue getDDMFormFieldOptionLabel(
-				DDMFormFieldValue ddmFormFieldValue, String optionValue) {
-
-				DDMFormField ddmFormField = getDDMFormField(ddmFormFieldValue);
-
-				DDMFormFieldOptions ddmFormFieldOptions =
-					ddmFormField.getDDMFormFieldOptions();
-
-				return ddmFormFieldOptions.getOptionLabels(optionValue);
 			}
 
 		};

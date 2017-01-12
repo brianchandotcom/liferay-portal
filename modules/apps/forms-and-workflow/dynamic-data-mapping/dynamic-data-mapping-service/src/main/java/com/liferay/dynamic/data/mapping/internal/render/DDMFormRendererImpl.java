@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
 import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.model.DDMForm;

@@ -12,27 +12,21 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 
 import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
  */
-public class CheckboxDDMFormFieldValueRenderer
+public abstract class BaseTextDDMFormFieldValueRenderer
 	extends BaseDDMFormFieldValueRenderer {
-
-	@Override
-	public String getSupportedDDMFormFieldType() {
-		return DDMFormFieldType.CHECKBOX;
-	}
 
 	@Override
 	protected ValueAccessor getValueAcessor(Locale locale) {
@@ -42,14 +36,7 @@ public class CheckboxDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				boolean valueBoolean = Boolean.parseBoolean(
-					value.getString(locale));
-
-				if (valueBoolean) {
-					return LanguageUtil.get(locale, "yes");
-				}
-
-				return LanguageUtil.get(locale, "no");
+				return HtmlUtil.escape(value.getString(locale));
 			}
 
 		};

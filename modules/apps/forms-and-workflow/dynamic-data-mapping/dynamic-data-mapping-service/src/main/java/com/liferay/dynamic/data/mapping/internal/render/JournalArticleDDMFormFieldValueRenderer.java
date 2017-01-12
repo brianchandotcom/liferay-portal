@@ -12,34 +12,34 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.render.impl;
+package com.liferay.dynamic.data.mapping.internal.render;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.BaseDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
+import com.liferay.dynamic.data.mapping.render.ValueAccessorException;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
 
 import java.util.Locale;
 
 /**
- * @author Bruno Basto
  * @author Marcellus Tavares
  */
-public class DateDDMFormFieldValueRenderer
+public class JournalArticleDDMFormFieldValueRenderer
 	extends BaseDDMFormFieldValueRenderer {
 
 	@Override
 	public String getSupportedDDMFormFieldType() {
-		return DDMFormFieldType.DATE;
+		return DDMFormFieldType.JOURNAL_ARTICLE;
 	}
 
 	@Override
@@ -50,33 +50,38 @@ public class DateDDMFormFieldValueRenderer
 			public String get(DDMFormFieldValue ddmFormFieldValue) {
 				Value value = ddmFormFieldValue.getValue();
 
-				String valueString = value.getString(locale);
+				JSONObject jsonObject = createJSONObject(
+					value.getString(locale));
 
-				if (Validator.isNull(valueString)) {
+				String className = jsonObject.getString("className");
+				long classPK = jsonObject.getLong("classPK");
+
+				if (Validator.isNull(className) && (classPK == 0)) {
 					return StringPool.BLANK;
 				}
 
-				return _format(valueString, locale);
+				try {
+					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+						className, classPK);
+
+					return assetEntry.getTitle(locale);
+				}
+				catch (Exception e) {
+					return LanguageUtil.format(
+						locale, "is-temporarily-unavailable", "content");
+				}
+			}
+
+			protected JSONObject createJSONObject(String json) {
+				try {
+					return JSONFactoryUtil.createJSONObject(json);
+				}
+				catch (JSONException jsone) {
+					throw new ValueAccessorException(jsone);
+				}
 			}
 
 		};
 	}
-
-	private String _format(Serializable value, Locale locale) {
-		try {
-			return DateUtil.formatDate("yyyy-MM-dd", value.toString(), locale);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-
-			return LanguageUtil.format(
-				locale, "is-temporarily-unavailable", "content");
-		}
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DateDDMFormFieldValueRenderer.class);
 
 }

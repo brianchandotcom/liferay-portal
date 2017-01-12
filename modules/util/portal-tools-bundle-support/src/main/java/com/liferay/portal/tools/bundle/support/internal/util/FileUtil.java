@@ -90,9 +90,9 @@ public class FileUtil {
 		_copyFile(sourceFile.toPath(), destinationFile.toPath());
 	}
 
-	public static void deleteDirectory(Path sourcePath) throws IOException {
+	public static void deleteDirectory(Path dirPath) throws IOException {
 		Files.walkFileTree(
-			sourcePath,
+			dirPath,
 			new SimpleFileVisitor<Path>() {
 
 				@Override

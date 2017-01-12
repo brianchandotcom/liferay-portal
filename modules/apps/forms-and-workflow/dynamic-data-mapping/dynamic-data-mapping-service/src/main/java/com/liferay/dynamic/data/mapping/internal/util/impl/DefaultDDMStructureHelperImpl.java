@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.util.impl;
+package com.liferay.dynamic.data.mapping.internal.util.impl;
 
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;

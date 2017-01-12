@@ -7,6 +7,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
+	<bean class="com.liferay.portal.kernel.bean.BeanPropertiesUtil" id="com.liferay.portal.kernel.bean.BeanPropertiesUtil">
+		<property name="beanProperties">
+			<bean class="com.liferay.portal.bean.BeanPropertiesImpl" />
+		</property>
+	</bean>
+	<bean class="com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil" id="com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil">
+		<property name="constantsBeanFactory">
+			<bean class="com.liferay.portal.bean.ConstantsBeanFactoryImpl" />
+		</property>
+	</bean>
 	<bean class="com.liferay.portal.kernel.service.persistence.BatchSessionUtil" id="com.liferay.portal.kernel.service.persistence.BatchSessionUtil">
 		<property name="batchSession">
 			<bean class="com.liferay.portal.service.persistence.BatchSessionImpl" />
@@ -43,16 +53,6 @@
 		</property>
 	</bean>
 	<bean class="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" id="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" />
-	<bean class="com.liferay.portal.kernel.bean.BeanPropertiesUtil" id="com.liferay.portal.kernel.bean.BeanPropertiesUtil">
-		<property name="beanProperties">
-			<bean class="com.liferay.portal.bean.BeanPropertiesImpl" />
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil" id="com.liferay.portal.kernel.bean.ConstantsBeanFactoryUtil">
-		<property name="constantsBeanFactory">
-			<bean class="com.liferay.portal.bean.ConstantsBeanFactoryImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil" id="com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil">
 		<property name="cacheKeyGenerators">
 			<map>

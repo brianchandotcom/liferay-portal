@@ -2524,7 +2524,7 @@
 		</execute>
 	</command>
 
-	<command name="SubmitFormWithParagraphField" priority="4">
+	<command ignore="true" name="SubmitFormWithParagraphField" priority="4">
 		<description message="This is a use case for LPS-61450 and LPS-61252." />
 
 		<execute macro="Navigator#openURL" />

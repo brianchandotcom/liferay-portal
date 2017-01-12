@@ -193,6 +193,8 @@
 		<execute macro="User#loginUserWithOpenIDEnabledPG">
 			<var name="openIDPassword" value="${openIDPassword}" />
 			<var name="openIDUsername" value="${openIDUsername}" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea2@liferay.com" />
 			<var name="userName" value="userfn2" />
 		</execute>
 

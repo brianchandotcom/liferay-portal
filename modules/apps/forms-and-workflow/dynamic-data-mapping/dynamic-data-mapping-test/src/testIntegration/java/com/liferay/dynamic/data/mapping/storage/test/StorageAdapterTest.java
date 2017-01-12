@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.storage.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMImpl;
+import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;

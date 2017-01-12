@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.storage.impl;
 
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMImpl;
+import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;

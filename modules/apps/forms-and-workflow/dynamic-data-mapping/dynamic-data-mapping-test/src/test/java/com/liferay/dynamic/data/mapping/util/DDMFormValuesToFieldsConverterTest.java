@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFormValuesToFieldsConverterImpl;
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMImpl;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormValuesToFieldsConverterImpl;
+import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;

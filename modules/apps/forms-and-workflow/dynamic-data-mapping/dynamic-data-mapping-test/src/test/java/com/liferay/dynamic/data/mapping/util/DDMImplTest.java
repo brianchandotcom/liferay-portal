@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMImpl;
+import com.liferay.dynamic.data.mapping.internal.util.DDMImpl;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;

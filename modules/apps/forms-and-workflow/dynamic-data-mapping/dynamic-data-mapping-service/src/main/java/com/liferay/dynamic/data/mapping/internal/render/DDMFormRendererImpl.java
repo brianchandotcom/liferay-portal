@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.internal.render;
 
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFieldsCounter;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFieldsCounter;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;

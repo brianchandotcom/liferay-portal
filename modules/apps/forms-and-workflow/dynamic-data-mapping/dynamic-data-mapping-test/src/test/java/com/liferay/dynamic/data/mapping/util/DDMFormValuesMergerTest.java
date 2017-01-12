@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFormValuesMergerImpl;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormValuesMergerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;

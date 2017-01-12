@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateElementException;
 import com.liferay.dynamic.data.mapping.exception.StructureDuplicateStructureKeyException;
 import com.liferay.dynamic.data.mapping.exception.StructureNameException;
-import com.liferay.dynamic.data.mapping.internal.util.impl.DDMFormTemplateSynchonizer;
+import com.liferay.dynamic.data.mapping.internal.util.DDMFormTemplateSynchonizer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;

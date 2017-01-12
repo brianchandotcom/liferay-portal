@@ -71,13 +71,13 @@ public class InitBundleCommand extends BaseCommand {
 
 	@Override
 	public void execute() throws Exception {
-		deleteBundle();
+		_deleteBundle();
 
-		File file = downloadFile();
+		File file = _downloadFile();
 
-		unpack(file);
+		_unpack(file);
 
-		copyConfigs();
+		_copyConfigs();
 	}
 
 	public File getConfigsDir() {
@@ -128,7 +128,7 @@ public class InitBundleCommand extends BaseCommand {
 		_userName = userName;
 	}
 
-	protected void copyConfigs() throws IOException {
+	private void _copyConfigs() throws IOException {
 		if ((_configsDir == null) || !_configsDir.exists()) {
 			return;
 		}
@@ -146,7 +146,7 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	protected void deleteBundle() throws IOException {
+	private void _deleteBundle() throws IOException {
 		Path dirPath = getLiferayHomePath();
 
 		if (Files.exists(dirPath)) {
@@ -154,7 +154,7 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	protected File downloadFile() throws Exception {
+	private File _downloadFile() throws Exception {
 		File file;
 
 		URI uri = _url.toURI();
@@ -198,7 +198,7 @@ public class InitBundleCommand extends BaseCommand {
 							redirectLocationsList.size() - 1);
 					}
 
-					fileName = getDownloadFileName(uri);
+					fileName = _getDownloadFileName(uri);
 				}
 
 				Header lastModifiedHeader =
@@ -260,7 +260,7 @@ public class InitBundleCommand extends BaseCommand {
 		return file;
 	}
 
-	protected String getDownloadFileName(URI uri) {
+	private String _getDownloadFileName(URI uri) {
 		String fileName = uri.getPath();
 
 		int index = fileName.lastIndexOf('/') + 1;
@@ -270,7 +270,7 @@ public class InitBundleCommand extends BaseCommand {
 		return fileName;
 	}
 
-	protected void unpack(File file) throws Exception {
+	private void _unpack(File file) throws Exception {
 		String extension = FileUtil.getExtension(file.getName());
 
 		if (extension.equals("zip")) {

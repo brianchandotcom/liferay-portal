@@ -16,7 +16,6 @@ package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
 
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
@@ -102,7 +101,6 @@ public class DistBundleCommand extends BaseCommand {
 	private boolean _includeFolder;
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The path of the archive.", names = {"-o", "--output"},
 		required = true
 	)

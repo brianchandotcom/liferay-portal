@@ -14,7 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.io.internal;
 
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -100,6 +103,13 @@ public class DDMFormValuesJSONSerializerImpl
 	}
 
 	@Reference(unbind = "-")
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	@Reference(unbind = "-")
 	protected void setJSONFactory(JSONFactory jsonFactory) {
 		_jsonFactory = jsonFactory;
 	}
@@ -124,7 +134,24 @@ public class DDMFormValuesJSONSerializerImpl
 
 		addNestedFieldValues(
 			jsonObject, ddmFormFieldValue.getNestedDDMFormFieldValues());
-		addValue(jsonObject, ddmFormFieldValue.getValue());
+
+		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
+
+		String type = ddmFormField.getType();
+
+		DDMFormFieldValueSerializer ddmFormFieldValueSerializer =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueSerializer(
+				type);
+
+		if (ddmFormFieldValueSerializer != null) {
+			jsonObject.put(
+				"value",
+				ddmFormFieldValueSerializer.serialize(
+					ddmFormField, ddmFormFieldValue));
+		}
+		else {
+			addValue(jsonObject, ddmFormFieldValue.getValue());
+		}
 
 		return jsonObject;
 	}
@@ -141,6 +168,7 @@ public class DDMFormValuesJSONSerializerImpl
 		return jsonObject;
 	}
 
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private JSONFactory _jsonFactory;
 
 }

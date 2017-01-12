@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueSerializer;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.comparator.DDMFormFieldTypeServiceWrapperDisplayOrderComparator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
@@ -141,6 +142,13 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		return _defaultDDMFormFieldValueRenderer;
 	}
 
+	@Override
+	public DDMFormFieldValueSerializer getDDMFormFieldValueSerializer(
+		String name) {
+
+		return _ddmFormFieldValueSerializerServiceTrackerMap.getService(name);
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_ddmFormFieldRendererServiceTrackerMap =
@@ -169,6 +177,11 @@ public class DDMFormFieldTypeServicesTrackerImpl
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DDMFormFieldValueRenderer.class,
 				"ddm.form.field.type.name");
+
+		_ddmFormFieldValueSerializerServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, DDMFormFieldValueSerializer.class,
+				"ddm.form.field.type.name");
 	}
 
 	@Deactivate
@@ -182,6 +195,8 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		_ddmFormFieldValueAccessorServiceTrackerMap.close();
 
 		_ddmFormFieldValueRendererServiceTrackerMap.close();
+
+		_ddmFormFieldValueSerializerServiceTrackerMap.close();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -200,6 +215,8 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		_ddmFormFieldValueAccessorServiceTrackerMap;
 	private ServiceTrackerMap<String, DDMFormFieldValueRenderer>
 		_ddmFormFieldValueRendererServiceTrackerMap;
+	private ServiceTrackerMap<String, DDMFormFieldValueSerializer>
+		_ddmFormFieldValueSerializerServiceTrackerMap;
 	private final DefaultDDMFormFieldValueRenderer
 		_defaultDDMFormFieldValueRenderer =
 			new DefaultDDMFormFieldValueRenderer();

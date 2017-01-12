@@ -44,4 +44,7 @@ public interface DDMFormFieldTypeServicesTracker {
 
 	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(String name);
 
+	public DDMFormFieldValueSerializer getDDMFormFieldValueSerializer(
+		String name);
+
 }

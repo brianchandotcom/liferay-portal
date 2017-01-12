@@ -27,6 +27,7 @@ import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author David Truong
@@ -42,10 +43,10 @@ public class InitBundleCommand extends BaseCommand {
 	public void execute() throws Exception {
 		_deleteBundle();
 
-		File file = FileUtil.downloadFile(
-			_url.toURI(), _userName, _password, _bundlesCacheDir);
+		Path path = FileUtil.downloadFile(
+			_url.toURI(), _userName, _password, _bundlesCacheDirPath);
 
-		_unpack(file);
+		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 
 		_copyConfigs();
 	}
@@ -103,16 +104,19 @@ public class InitBundleCommand extends BaseCommand {
 			return;
 		}
 
-		File configsCommonDir = new File(_configsDir, "common");
+		Path configsDirPath = _configsDir.toPath();
 
-		if (configsCommonDir.exists()) {
-			FileUtil.copyDirectory(configsCommonDir, getLiferayHomeDir());
+		Path configsCommonDirPath = configsDirPath.resolve("common");
+
+		if (Files.exists(configsCommonDirPath)) {
+			FileUtil.copyDirectory(configsCommonDirPath, getLiferayHomePath());
 		}
 
-		File configsEnvDir = new File(_configsDir, _environment);
+		Path configsEnvironmentDirPath = configsDirPath.resolve(_environment);
 
-		if (configsEnvDir.exists()) {
-			FileUtil.copyDirectory(configsEnvDir, getLiferayHomeDir());
+		if (Files.exists(configsEnvironmentDirPath)) {
+			FileUtil.copyDirectory(
+				configsEnvironmentDirPath, getLiferayHomePath());
 		}
 	}
 
@@ -124,20 +128,7 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	private void _unpack(File file) throws Exception {
-		String extension = FileUtil.getExtension(file.getName());
-
-		if (extension.equals("zip")) {
-			FileUtil.unzip(file, getLiferayHomePath(), _stripComponents);
-		}
-		else if (extension.equals("gz") || extension.equals("tar") ||
-				 extension.equals("tar.gz") || extension.equals("tgz")) {
-
-			FileUtil.untar(file, getLiferayHomePath(), _stripComponents);
-		}
-	}
-
-	private static final File _bundlesCacheDir = new File(
+	private static final Path _bundlesCacheDirPath = Paths.get(
 		System.getProperty("user.home"), ".liferay/bundles");
 
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;

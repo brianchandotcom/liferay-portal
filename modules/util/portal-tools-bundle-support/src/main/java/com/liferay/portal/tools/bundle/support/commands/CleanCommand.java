@@ -18,13 +18,13 @@ import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
-import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Parameters(
 	commandDescription = "Delete a file from the deploy directory of a Liferay bundle.",
@@ -34,15 +34,17 @@ public class CleanCommand extends BaseCommand {
 
 	@Override
 	public void execute() throws Exception {
-		String fileName = FileUtil.getFileName(_fileName);
+		String fileName = _fileName.substring(_fileName.lastIndexOf('/') + 1);
 
-		String extension = FileUtil.getExtension(fileName);
+		fileName = fileName.substring(fileName.lastIndexOf('\\') + 1);
 
-		String deployFolder = BundleSupportUtil.getDeployFolder(extension);
+		String deployDirName = BundleSupportUtil.getDeployDirName(fileName);
 
 		Path path = getLiferayHomePath();
 
-		Files.deleteIfExists(path.resolve(deployFolder + fileName));
+		path = path.resolve(deployDirName + fileName);
+
+		Files.deleteIfExists(path);
 	}
 
 	public String getFileName() {

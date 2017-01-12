@@ -213,6 +213,10 @@ public class InitBundleCommand extends BaseCommand {
 				}
 			}
 
+			if (downloadFileName == null) {
+				downloadFileName = _url.substring(_url.lastIndexOf('/') + 1);
+			}
+
 			_downloadFile = new File(_BUNDLES_CACHE, downloadFileName);
 
 			if (_downloadFile.exists() &&

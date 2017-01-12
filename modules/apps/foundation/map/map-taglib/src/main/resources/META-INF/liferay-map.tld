@@ -50,6 +50,11 @@
 		<tag-class>com.liferay.map.taglib.servlet.taglib.MapProviderSelectorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>configurationPrefix</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>mapProviderKey</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

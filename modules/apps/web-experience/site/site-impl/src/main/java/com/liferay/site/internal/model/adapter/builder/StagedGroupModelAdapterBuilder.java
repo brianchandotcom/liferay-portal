@@ -16,7 +16,7 @@ package com.liferay.site.internal.model.adapter.builder;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;
-import com.liferay.site.internal.model.adapter.impl.StagedGroupImpl;
+import com.liferay.site.internal.model.adapter.StagedGroupImpl;
 import com.liferay.site.model.adapter.StagedGroup;
 
 import org.osgi.service.component.annotations.Component;

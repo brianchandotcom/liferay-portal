@@ -20,7 +20,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.impl.GroupImpl;
-import com.liferay.site.internal.model.adapter.impl.StagedGroupImpl;
+import com.liferay.site.internal.model.adapter.StagedGroupImpl;
 import com.liferay.site.model.adapter.StagedGroup;
 import com.liferay.xstream.configurator.XStreamConfigurator;
 

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.set.internal.model.adapter.builder;
 
-import com.liferay.layout.set.internal.model.adapter.impl.StagedLayoutSetImpl;
+import com.liferay.layout.set.internal.model.adapter.StagedLayoutSetImpl;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.adapter.builder.ModelAdapterBuilder;

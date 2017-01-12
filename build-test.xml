@@ -4585,6 +4585,20 @@ go]]></replacevalue>
 						</replace>
 					</then>
 					<elseif>
+						<equals arg1="${database.type}" arg2="mariadb" />
+						<then>
+							<replace file="${app.server.lib.global.dir}/module.xml">
+								<replacetoken><![CDATA[<resource-root path="hsql.jar" />]]></replacetoken>
+								<replacevalue>
+									<![CDATA[
+										<resource-root path="hsql.jar" />
+										<resource-root path="mariadb.jar" />
+									]]>
+								</replacevalue>
+							</replace>
+						</then>
+					</elseif>
+					<elseif>
 						<equals arg1="${database.type}" arg2="oracle" />
 						<then>
 							<replace file="${app.server.lib.global.dir}/module.xml">
@@ -4604,7 +4618,6 @@ go]]></replacevalue>
 							<replacevalue>
 								<![CDATA[
 									<resource-root path="hsql.jar" />
-									<resource-root path="mariadb.jar" />
 									<resource-root path="mysql.jar" />
 								]]>
 							</replacevalue>

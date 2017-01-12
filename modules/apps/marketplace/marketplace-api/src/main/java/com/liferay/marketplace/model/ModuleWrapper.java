@@ -58,6 +58,7 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("moduleId", getModuleId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("appId", getAppId());
 		attributes.put("bundleSymbolicName", getBundleSymbolicName());
 		attributes.put("bundleVersion", getBundleVersion());
@@ -78,6 +79,12 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 
 		if (moduleId != null) {
 			setModuleId(moduleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long appId = (Long)attributes.get("appId");
@@ -226,6 +233,16 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	}
 
 	/**
+	* Returns the company ID of this module.
+	*
+	* @return the company ID of this module
+	*/
+	@Override
+	public long getCompanyId() {
+		return _module.getCompanyId();
+	}
+
+	/**
 	* Returns the module ID of this module.
 	*
 	* @return the module ID of this module
@@ -283,6 +300,16 @@ public class ModuleWrapper implements Module, ModelWrapper<Module> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_module.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this module.
+	*
+	* @param companyId the company ID of this module
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_module.setCompanyId(companyId);
 	}
 
 	/**

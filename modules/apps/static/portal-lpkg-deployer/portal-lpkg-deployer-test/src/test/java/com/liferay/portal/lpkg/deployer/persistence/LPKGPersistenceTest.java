@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg.persistence;
+package com.liferay.portal.lpkg.deployer.persistence;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;

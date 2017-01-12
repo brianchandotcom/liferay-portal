@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lpkg;
+package com.liferay.portal.lpkg.deployer;
 
 import java.io.IOException;
 
@@ -21,11 +21,11 @@ import org.junit.Test;
 /**
  * @author Matthew Tambara
  */
-public class LPKGDowngradeTest extends LPKGVersionChangeTestCase {
+public class LPKGUpgradeTest extends LPKGVersionChangeTestCase {
 
 	@Test
-	public void testDownGradeLPKG() throws IOException {
-		testVersionChange(0, 0, -1);
+	public void testUpgradeLPKG() throws IOException {
+		testVersionChange(0, 0, 1);
 	}
 
 }

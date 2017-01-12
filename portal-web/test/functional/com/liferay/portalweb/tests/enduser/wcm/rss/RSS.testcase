@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentFeed" priority="3">
+	<command ignore="true" name="AddWebContentFeed" priority="3">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoSitesContent">

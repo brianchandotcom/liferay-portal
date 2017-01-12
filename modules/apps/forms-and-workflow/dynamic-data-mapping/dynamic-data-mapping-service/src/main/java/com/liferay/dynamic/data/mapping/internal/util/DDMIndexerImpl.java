@@ -163,15 +163,16 @@ public class DDMIndexerImpl implements DDMIndexer {
 						String type = field.getType();
 
 						if (type.equals(DDMFormFieldType.GEOLOCATION)) {
-							JSONObject geolocationJSONObject =
+							JSONObject jsonObject =
 								JSONFactoryUtil.createJSONObject(valueString);
 
-							double latitude = geolocationJSONObject.getDouble(
-								"latitude");
-							double longitude = geolocationJSONObject.getDouble(
+							double latitude = jsonObject.getDouble("latitude");
+							double longitude = jsonObject.getDouble(
 								"longitude");
 
-							document.addGeoLocation(name, latitude, longitude);
+							document.addGeoLocation(
+								name.concat("_geolocation"), latitude,
+								longitude);
 						}
 						else if (type.equals(DDMImpl.TYPE_RADIO) ||
 								 type.equals(DDMImpl.TYPE_SELECT)) {

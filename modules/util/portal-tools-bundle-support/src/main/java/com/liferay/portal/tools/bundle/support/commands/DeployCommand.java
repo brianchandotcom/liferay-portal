@@ -16,7 +16,6 @@ package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
 
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
@@ -74,7 +73,6 @@ public class DeployCommand extends BaseCommand {
 	}
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The file to deploy to your Liferay bundle.",
 		names = {"-f", "--file"}, required = true
 	)

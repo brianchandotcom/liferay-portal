@@ -16,7 +16,6 @@ package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.beust.jcommander.converters.FileConverter;
 
 import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
@@ -355,7 +354,6 @@ public class InitBundleCommand extends BaseCommand {
 	}
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The directory that contains the configuration files.",
 		names = {"--configs"}
 	)

@@ -15,7 +15,6 @@
 package com.liferay.portal.tools.bundle.support.commands;
 
 import com.beust.jcommander.Parameter;
-import com.beust.jcommander.converters.FileConverter;
 
 import java.io.File;
 
@@ -39,7 +38,6 @@ public abstract class BaseCommand implements Command {
 	}
 
 	@Parameter(
-		converter = FileConverter.class,
 		description = "The home directory of your Liferay bundle.",
 		names = {"-l", "--liferay"}, required = true
 	)

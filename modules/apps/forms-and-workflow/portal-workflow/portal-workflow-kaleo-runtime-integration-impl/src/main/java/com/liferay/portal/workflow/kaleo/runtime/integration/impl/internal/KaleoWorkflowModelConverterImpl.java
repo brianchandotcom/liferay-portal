@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kaleo.runtime.integration.impl.internal;
+package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

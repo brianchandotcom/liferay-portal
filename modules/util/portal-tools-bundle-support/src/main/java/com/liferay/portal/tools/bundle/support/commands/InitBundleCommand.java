@@ -24,7 +24,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -95,7 +97,7 @@ public class InitBundleCommand extends BaseCommand {
 		return _stripComponents;
 	}
 
-	public String getUrl() {
+	public URL getUrl() {
 		return _url;
 	}
 
@@ -119,7 +121,7 @@ public class InitBundleCommand extends BaseCommand {
 		_stripComponents = stripComponents;
 	}
 
-	public void setUrl(String url) {
+	public void setUrl(URL url) {
 		_url = url;
 	}
 
@@ -156,7 +158,7 @@ public class InitBundleCommand extends BaseCommand {
 	protected File downloadFile() throws Exception {
 		File file;
 
-		URI uri = new URI(_url);
+		URI uri = _url.toURI();
 
 		try (CloseableHttpClient closeableHttpClient = _getHttpClient(uri)) {
 			HttpHead httpHead = new HttpHead(uri);
@@ -217,7 +219,9 @@ public class InitBundleCommand extends BaseCommand {
 			}
 
 			if (fileName == null) {
-				fileName = _url.substring(_url.lastIndexOf('/') + 1);
+				String url = _url.toString();
+
+				fileName = url.substring(url.lastIndexOf('/') + 1);
 			}
 
 			file = new File(_BUNDLES_CACHE, fileName);
@@ -336,9 +340,19 @@ public class InitBundleCommand extends BaseCommand {
 
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;
 
-	private static final String _DEFAULT_URL =
-		"https://sourceforge.net/projects/lportal/files/Liferay%20Portal/7.0." +
-			"2%20GA3/liferay-ce-portal-tomcat-7.0-ga3-20160804222206210.zip";
+	private static final URL _DEFAULT_URL;
+
+	static {
+		try {
+			_DEFAULT_URL = new URL(
+				"https://sourceforge.net/projects/lportal/files/Liferay%20" +
+					"Portal/7.0.2%20GA3/liferay-ce-portal-tomcat-7.0-ga3-" +
+						"20160804222206210.zip");
+		}
+		catch (MalformedURLException murle) {
+			throw new ExceptionInInitializerError(murle);
+		}
+	}
 
 	@Parameter(
 		converter = FileConverter.class,
@@ -369,7 +383,7 @@ public class InitBundleCommand extends BaseCommand {
 		description = "The URL of the Liferay Bundle to expand.",
 		names = {"--url"}
 	)
-	private String _url = _DEFAULT_URL;
+	private URL _url = _DEFAULT_URL;
 
 	@Parameter (
 		description = "The user name if your URL requires authentication.",

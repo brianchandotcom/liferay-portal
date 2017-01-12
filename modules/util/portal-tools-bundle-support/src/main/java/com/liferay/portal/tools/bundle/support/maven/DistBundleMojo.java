@@ -100,7 +100,7 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				initBundleCommand.setLiferayHomeDir(liferayHomeDir);
 				initBundleCommand.setPassword(password);
 				initBundleCommand.setStripComponents(stripComponents);
-				initBundleCommand.setUrl(url.toString());
+				initBundleCommand.setUrl(url);
 				initBundleCommand.setUserName(userName);
 
 				initBundleCommand.execute();

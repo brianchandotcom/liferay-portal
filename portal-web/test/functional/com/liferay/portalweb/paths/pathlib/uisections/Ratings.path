@@ -75,6 +75,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>YOUR_RATING_STAR</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[${key_ratingStarPosition}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[${key_emptyStarPosition}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -138,6 +148,16 @@
 <tr>
 	<td>AVERAGE_STAR_EMPTY_5</td>
 	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[@class='rating-element icon-star-empty'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[@class='rating-element icon-star'])[${key_averageRatingStar}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//span[@class='rating-element icon-star-empty'])[${key_averageEmptyStar}]</td>
 	<td></td>
 </tr>
 </tbody>

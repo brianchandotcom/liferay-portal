@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.velocity;
+package com.liferay.portal.template.velocity.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -31,12 +31,6 @@ import com.liferay.portal.template.ClassLoaderResourceParser;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceParser;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
-import com.liferay.portal.template.velocity.internal.FastExtendedProperties;
-import com.liferay.portal.template.velocity.internal.LiferayMethodExceptionEventHandler;
-import com.liferay.portal.template.velocity.internal.LiferayResourceLoader;
-import com.liferay.portal.template.velocity.internal.LiferayResourceManager;
-import com.liferay.portal.template.velocity.internal.VelocityTemplate;
-import com.liferay.portal.template.velocity.internal.VelocityTemplateResourceLoader;
 import com.liferay.portal.tools.ToolDependencies;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.registry.Registry;

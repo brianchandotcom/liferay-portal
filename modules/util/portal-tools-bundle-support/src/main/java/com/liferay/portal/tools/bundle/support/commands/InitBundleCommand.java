@@ -160,6 +160,7 @@ public class InitBundleCommand extends BaseCommand {
 
 			HttpContext httpContext = new BasicHttpContext();
 
+			String downloadFileName = null;
 			Date lastModifiedDate = null;
 
 			try (CloseableHttpResponse closeableHttpResponse =
@@ -176,7 +177,7 @@ public class InitBundleCommand extends BaseCommand {
 					int index = dispositionValue.indexOf("filename=");
 
 					if (index > 0) {
-						_downloadFileName = dispositionValue.substring(
+						downloadFileName = dispositionValue.substring(
 							index + 10, dispositionValue.length() - 1);
 					}
 				}
@@ -193,7 +194,7 @@ public class InitBundleCommand extends BaseCommand {
 							redirectLocationsList.size() - 1);
 					}
 
-					_downloadFileName = getDownloadFileName(uri);
+					downloadFileName = getDownloadFileName(uri);
 				}
 
 				Header lastModifiedHeader =
@@ -212,7 +213,7 @@ public class InitBundleCommand extends BaseCommand {
 				}
 			}
 
-			_downloadFile = new File(_BUNDLES_CACHE, _downloadFileName);
+			_downloadFile = new File(_BUNDLES_CACHE, downloadFileName);
 
 			if (_downloadFile.exists() &&
 				(_downloadFile.lastModified() == lastModifiedDate.getTime())) {
@@ -340,7 +341,6 @@ public class InitBundleCommand extends BaseCommand {
 	private File _configsDir;
 
 	private File _downloadFile;
-	private String _downloadFileName;
 
 	@Parameter (
 		description = "The environment of your Liferay home deployment.",

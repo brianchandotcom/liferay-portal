@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>LOGIN_ALLOW_ONCE_BUTTON</td>
+	<td>//button[@name='allow_once']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOGIN_BUTTON</td>
 	<td>//button[.='Login']</td>
 	<td></td>
@@ -21,6 +26,11 @@
 <tr>
 	<td>LOGIN_PASSWORD_FIELD</td>
 	<td>//input[@id='password']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PERSONA</td>
+	<td>//td[contains(.,'${key_userName}')]//input</td>
 	<td></td>
 </tr>
 </tbody>

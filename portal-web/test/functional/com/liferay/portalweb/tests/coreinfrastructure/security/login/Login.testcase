@@ -193,6 +193,7 @@
 		<execute macro="User#loginUserWithOpenIDEnabledPG">
 			<var name="openIDPassword" value="${openIDPassword}" />
 			<var name="openIDUsername" value="${openIDUsername}" />
+			<var name="userName" value="userfn2" />
 		</execute>
 
 		<execute macro="User#logoutPG" />

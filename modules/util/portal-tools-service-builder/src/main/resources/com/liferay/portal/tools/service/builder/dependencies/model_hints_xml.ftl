@@ -80,11 +80,11 @@
 						<#if modelHintsUtil.getValidators(modelName, column.name)??>
 							<#assign validators = modelHintsUtil.getValidators(modelName, column.name) />
 
-							<#list validators as validator>
+							<#list validators as curValidator>
 								<#assign
-									validatorName = validator.getObject(1)
-									validatorErrorMessage = validator.getObject(2)
-									validatorValue = validator.getObject(3)
+									validatorName = curValidator.getObject(1)
+									validatorErrorMessage = curValidator.getObject(2)
+									validatorValue = curValidator.getObject(3)
 								/>
 
 								<validator

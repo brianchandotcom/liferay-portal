@@ -33,7 +33,7 @@
 					redirectOnExpire: <%= SSOUtil.isSessionRedirectOnExpire(themeDisplay.getCompanyId()) %>,
 					redirectUrl: '<%= HtmlUtil.escapeJS(SSOUtil.getSessionExpirationRedirectURL(themeDisplay.getCompanyId(), themeDisplay.getURLHome())) %>',
 					sessionLength: <%= autoExtend ? PropsValues.SESSION_TIMEOUT * 60 - PropsValues.SESSION_TIMEOUT_AUTO_EXTEND_OFFSET : PropsValues.SESSION_TIMEOUT * 60 %>,
-					warningLength: <%= autoExtend ? PropsValues.SESSION_TIMEOUT_WARNING * 60 - PropsValues.SESSION_TIMEOUT_AUTO_EXTEND_OFFSET : PropsValues.SESSION_TIMEOUT_WARNING * 60 %>
+					warningLength: <%= autoExtend ? 0 : PropsValues.SESSION_TIMEOUT_WARNING * 60 %>
 				}
 			);
 

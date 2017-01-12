@@ -12,6 +12,10 @@ importClasses {
 	}
 }
 
+liferay {
+	deployDir = "../../../tmp/lib-pre"
+}
+
 Properties importedClassesProperties = new Properties()
 
 File importedClassesPropertiesFile = file("imported-classes.properties")

@@ -217,7 +217,7 @@ public class InitBundleCommand extends BaseCommand {
 				fileName = path.substring(path.lastIndexOf('/') + 1);
 			}
 
-			file = new File(_BUNDLES_CACHE, fileName);
+			file = new File(_bundlesCacheDir, fileName);
 
 			if (file.exists() &&
 				(file.lastModified() == lastModifiedDate.getTime())) {
@@ -228,8 +228,8 @@ public class InitBundleCommand extends BaseCommand {
 				file.delete();
 			}
 
-			if (!_BUNDLES_CACHE.exists()) {
-				_BUNDLES_CACHE.mkdirs();
+			if (!_bundlesCacheDir.exists()) {
+				_bundlesCacheDir.mkdirs();
 			}
 
 			file.createNewFile();
@@ -318,7 +318,7 @@ public class InitBundleCommand extends BaseCommand {
 		return httpClientBuilder.build();
 	}
 
-	private static final File _BUNDLES_CACHE = new File(
+	private static final File _bundlesCacheDir = new File(
 		System.getProperty("user.home"), ".liferay/bundles");
 
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;

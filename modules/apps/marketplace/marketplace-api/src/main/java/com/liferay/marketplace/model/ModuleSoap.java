@@ -34,6 +34,7 @@ public class ModuleSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setModuleId(model.getModuleId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setAppId(model.getAppId());
 		soapModel.setBundleSymbolicName(model.getBundleSymbolicName());
 		soapModel.setBundleVersion(model.getBundleVersion());
@@ -106,6 +107,14 @@ public class ModuleSoap implements Serializable {
 		_moduleId = moduleId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getAppId() {
 		return _appId;
 	}
@@ -140,6 +149,7 @@ public class ModuleSoap implements Serializable {
 
 	private String _uuid;
 	private long _moduleId;
+	private long _companyId;
 	private long _appId;
 	private String _bundleSymbolicName;
 	private String _bundleVersion;

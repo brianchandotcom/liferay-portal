@@ -93,7 +93,7 @@ public class LPKGDeployerRegistrar {
 					GetterUtil.getString(headers.get("Web-ContextPath")));
 
 				_moduleLocalService.addModule(
-					app.getUserId(), app.getAppId(), bundle.getSymbolicName(),
+					app.getAppId(), bundle.getSymbolicName(),
 					String.valueOf(bundle.getVersion()), contextName);
 			}
 		}
@@ -110,7 +110,7 @@ public class LPKGDeployerRegistrar {
 				String contextName = bundleStringParts[2];
 
 				_moduleLocalService.addModule(
-					0, app.getAppId(), bundleSymbolicName, bundleVersion,
+					app.getAppId(), bundleSymbolicName, bundleVersion,
 					contextName);
 			}
 
@@ -119,8 +119,7 @@ public class LPKGDeployerRegistrar {
 
 			for (String contextName : contextNames) {
 				_moduleLocalService.addModule(
-					0, app.getAppId(), contextName, StringPool.BLANK,
-					contextName);
+					app.getAppId(), contextName, StringPool.BLANK, contextName);
 			}
 		}
 	}

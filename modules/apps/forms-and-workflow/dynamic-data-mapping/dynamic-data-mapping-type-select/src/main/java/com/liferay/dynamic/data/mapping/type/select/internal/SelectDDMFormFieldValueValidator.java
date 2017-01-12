@@ -87,9 +87,11 @@ public class SelectDDMFormFieldValueValidator
 				_log.debug(jsone, jsone);
 			}
 
-			throw new DDMFormFieldValueValidationException(
-				String.format(
-					"Invalid data stored for select field \"%s\"", fieldName));
+			JSONArray jsonArray = jsonFactory.createJSONArray();
+
+			jsonArray.put(json);
+
+			return jsonArray;
 		}
 	}
 

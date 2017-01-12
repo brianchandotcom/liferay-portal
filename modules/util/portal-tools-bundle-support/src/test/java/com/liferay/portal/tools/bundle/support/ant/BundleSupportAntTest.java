@@ -99,7 +99,7 @@ public class BundleSupportAntTest extends BundleSupportCommandsTest {
 
 	@Override
 	protected void initBundle(
-			File configsDir, File liferayHomeDir, String password, String url,
+			File configsDir, File liferayHomeDir, String password, URL url,
 			String userName)
 		throws Exception {
 
@@ -113,7 +113,7 @@ public class BundleSupportAntTest extends BundleSupportCommandsTest {
 			_getAbsolutePath(liferayHomeDir));
 		project.setProperty("bundle.support.password", password);
 		project.setProperty("bundle.support.strip.components", "0");
-		project.setProperty("bundle.support.url", url);
+		project.setProperty("bundle.support.url", url.toString());
 		project.setProperty("bundle.support.username", userName);
 
 		project.executeTarget("init-bundle");

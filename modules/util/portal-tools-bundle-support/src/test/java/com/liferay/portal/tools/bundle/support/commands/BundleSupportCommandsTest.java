@@ -247,7 +247,7 @@ public class BundleSupportCommandsTest {
 	}
 
 	protected void initBundle(
-			File configsDir, File liferayHomeDir, String password, String url,
+			File configsDir, File liferayHomeDir, String password, URL url,
 			String userName)
 		throws Exception {
 
@@ -426,8 +426,8 @@ public class BundleSupportCommandsTest {
 			String password, String userName)
 		throws Exception {
 
-		String url =
-			"http://localhost.localdomain:" + _HTTP_SERVER_PORT + contextPath;
+		URL url = new URL(
+			"http", "localhost.localdomain", _HTTP_SERVER_PORT, contextPath);
 
 		initBundle(configsDir, liferayHomeDir, password, url, userName);
 	}

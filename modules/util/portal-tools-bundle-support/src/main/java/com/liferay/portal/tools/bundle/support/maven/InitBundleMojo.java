@@ -70,7 +70,7 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			initBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
 			initBundleCommand.setPassword(password);
 			initBundleCommand.setStripComponents(stripComponents);
-			initBundleCommand.setUrl(url.toString());
+			initBundleCommand.setUrl(url);
 			initBundleCommand.setUserName(userName);
 
 			initBundleCommand.execute();

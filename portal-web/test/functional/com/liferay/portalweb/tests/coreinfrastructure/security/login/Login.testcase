@@ -63,7 +63,7 @@
 		</execute>
 	</command>
 
-	<command ignore="true" name="FacebookSSOSmoke" priority="4">
+	<command name="FacebookSSOSmoke" priority="4">
 		<var name="facebookApplicationID" property-value="facebook.application.id" />
 		<var name="facebookApplicationSecret" property-value="facebook.application.secret" />
 		<var name="facebookEmail" property-value="facebook.email" />

@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.converter;
 
-import com.liferay.dynamic.data.lists.form.web.internal.converter.model.AutoFillDDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRule;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleCondition;
-import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DefaultDDLFormRuleAction;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.AutoFillDDLFormRuleAction;
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.DefaultDDLFormRuleAction;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;

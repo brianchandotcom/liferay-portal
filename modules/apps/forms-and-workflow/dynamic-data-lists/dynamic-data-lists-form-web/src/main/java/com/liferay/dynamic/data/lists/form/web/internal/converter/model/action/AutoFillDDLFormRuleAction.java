@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.form.web.internal.converter.model;
+package com.liferay.dynamic.data.lists.form.web.internal.converter.model.action;
 
+import com.liferay.dynamic.data.lists.form.web.internal.converter.model.DDLFormRuleAction;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.util.HashUtil;
 

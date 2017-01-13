@@ -1227,7 +1227,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#deleteSpecificMail">
-			<var name="gmailMessageTitleList" value="MB Category Name New Message: MB Thread Message Subject G7MB1,Your New Account,Your New Password" />
+			<var name="gmailMessageTitleList" value="MB Category Name New Message: MB Thread Message Subject G7MB1,Your New Account,Your New Password,G7MB1" />
 		</execute>
 	</command>
 

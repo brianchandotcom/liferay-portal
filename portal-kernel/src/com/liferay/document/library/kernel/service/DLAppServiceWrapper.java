@@ -913,6 +913,16 @@ public class DLAppServiceWrapper implements DLAppService,
 			folderId, status, mimeTypes, includeMountFolders);
 	}
 
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes,
+		boolean includeMountFolders,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+			folderId, mimeTypes, includeMountFolders, queryDefinition);
+	}
+
 	/**
 	* Returns the number of immediate subfolders of the parent folder.
 	*

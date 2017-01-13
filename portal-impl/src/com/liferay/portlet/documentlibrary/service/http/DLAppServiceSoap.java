@@ -1216,6 +1216,24 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static int getFoldersAndFileEntriesAndFileShortcutsCount(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes,
+		boolean includeMountFolders,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<java.lang.Object> queryDefinition)
+		throws RemoteException {
+		try {
+			int returnValue = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId,
+					folderId, mimeTypes, includeMountFolders, queryDefinition);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of immediate subfolders of the parent folder.
 	*

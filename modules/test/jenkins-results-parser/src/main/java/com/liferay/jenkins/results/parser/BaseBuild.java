@@ -768,23 +768,6 @@ public abstract class BaseBuild implements Build {
 	protected BaseBuild(String url, Build parentBuild) {
 		_parentBuild = parentBuild;
 
-		try {
-			String archiveMarkerContent = JenkinsResultsParserUtil.toString(
-				url + "/archive-marker", false, 0, 0, 0);
-
-			if ((archiveMarkerContent != null) &&
-				!archiveMarkerContent.isEmpty()) {
-
-				fromArchive = true;
-			}
-			else {
-				fromArchive = false;
-			}
-		}
-		catch (IOException ioe) {
-			fromArchive = false;
-		}
-
 		if (url.contains("buildWithParameters")) {
 			setInvocationURL(url);
 		}
@@ -1409,6 +1392,23 @@ public abstract class BaseBuild implements Build {
 		catch (UnsupportedEncodingException uee) {
 			throw new IllegalArgumentException(
 				"Unable to decode " + buildURL, uee);
+		}
+
+		try {
+			String archiveMarkerContent = JenkinsResultsParserUtil.toString(
+				buildURL + "/archive-marker", false, 0, 0, 0);
+
+			if ((archiveMarkerContent != null) &&
+				!archiveMarkerContent.isEmpty()) {
+
+				fromArchive = true;
+			}
+			else {
+				fromArchive = false;
+			}
+		}
+		catch (IOException ioe) {
+			fromArchive = false;
 		}
 
 		Matcher matcher = buildURLPattern.matcher(buildURL);

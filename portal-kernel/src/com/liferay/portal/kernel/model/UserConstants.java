@@ -20,13 +20,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
 /**
  * @author Amos Fong
@@ -58,9 +59,7 @@ public class UserConstants {
 	public static String getPortraitURL(
 		String imagePath, boolean male, long portraitId) {
 
-		if (!GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
-
+		if (!_userFileUploadsSettings.isImageCheckToken()) {
 			return getPortraitURL(imagePath, male, portraitId, null);
 		}
 
@@ -105,9 +104,7 @@ public class UserConstants {
 		sb.append("_portrait?img_id=");
 		sb.append(portraitId);
 
-		if (GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.USERS_IMAGE_CHECK_TOKEN))) {
-
+		if (_userFileUploadsSettings.isImageCheckToken()) {
 			sb.append("&img_id_token=");
 			sb.append(HttpUtil.encodeURL(DigesterUtil.digest(userUuid)));
 		}
@@ -119,5 +116,10 @@ public class UserConstants {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(UserConstants.class);
+
+	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			UserFileUploadsSettings.class, UserConstants.class,
+			"_userFileUploadsSettings", false);
 
 }

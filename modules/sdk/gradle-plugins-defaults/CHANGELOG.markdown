@@ -910,7 +910,7 @@ versions of Git.
 ### Changed
 - [LPS-70084]: Update the [Liferay Gradle Plugins] dependency to version 3.0.71.
 
-## 2.4.13 - 2017-01-11
+## 2.4.13 - 2017-01-12
 
 ### Changed
 - [LPS-70092]: Update the [Liferay Gradle Plugins] dependency to version 3.1.0.

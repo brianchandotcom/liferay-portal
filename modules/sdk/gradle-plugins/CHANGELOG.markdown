@@ -969,7 +969,7 @@ version 2.0.0.
 - [LPS-70084]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 1.0.73.
 
-## 3.1.0 - 2017-01-11
+## 3.1.0 - 2017-01-12
 
 ### Added
 - [LPS-69926]: Add the ability to automatically include one or more

@@ -14,7 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.tools.ant.Project;
+import java.util.Hashtable;
+
+import org.dom4j.Element;
 
 /**
  * @author Peter Yoo
@@ -23,9 +25,33 @@ public class GenericFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
 
 	@Override
+	public Element getMessage(Build build) {
+		String consoleText = build.getConsoleText();
+
+		Element message = getExceptionSnippetElement(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		message = getMergeTestResultsSnippetElement(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		message = getBuildFailedSnippetElement(consoleText);
+
+		if (message != null) {
+			return message;
+		}
+
+		return getConsoleOutputSnippetElement(consoleText, true, -1);
+	}
+
+	@Override
 	public String getMessage(
-			String buildURL, String consoleOutput, Project project)
-		throws Exception {
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
 		String message = getExceptionSnippet(consoleOutput);
 
@@ -60,6 +86,18 @@ public class GenericFailureMessageGenerator
 		return getConsoleOutputSnippet(consoleOutput, true, end);
 	}
 
+	protected Element getBuildFailedSnippetElement(String consoleOutput) {
+		int end = consoleOutput.indexOf("BUILD FAILED");
+
+		if (end == -1) {
+			return null;
+		}
+
+		end = consoleOutput.indexOf("Total time:", end);
+
+		return getConsoleOutputSnippetElement(consoleOutput, true, end);
+	}
+
 	protected String getExceptionSnippet(String consoleOutput) {
 		int end = consoleOutput.indexOf("[exec] * Exception is:");
 
@@ -72,6 +110,18 @@ public class GenericFailureMessageGenerator
 		return getConsoleOutputSnippet(consoleOutput, true, end);
 	}
 
+	protected Element getExceptionSnippetElement(String consoleOutput) {
+		int end = consoleOutput.indexOf("[exec] * Exception is:");
+
+		if (end == -1) {
+			return null;
+		}
+
+		end = consoleOutput.indexOf("\n", end + 500);
+
+		return getConsoleOutputSnippetElement(consoleOutput, true, end);
+	}
+
 	protected String getMergeTestResultsSnippet(String consoleOutput) {
 		int end = consoleOutput.indexOf("merge-test-results:");
 
@@ -80,6 +130,16 @@ public class GenericFailureMessageGenerator
 		}
 
 		return getConsoleOutputSnippet(consoleOutput, true, end);
+	}
+
+	protected Element getMergeTestResultsSnippetElement(String consoleOutput) {
+		int end = consoleOutput.indexOf("merge-test-results:");
+
+		if (end == -1) {
+			return null;
+		}
+
+		return getConsoleOutputSnippetElement(consoleOutput, true, end);
 	}
 
 }

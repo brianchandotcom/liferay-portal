@@ -21,8 +21,8 @@ import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceWrapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.subscription.internal.util.MBSubscriptionHelper;
+import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;
 

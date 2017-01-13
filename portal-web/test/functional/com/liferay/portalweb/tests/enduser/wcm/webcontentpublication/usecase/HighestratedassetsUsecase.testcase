@@ -126,7 +126,7 @@
 			<var name="assetTitle" value="Web Content Title 1" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
+		<execute macro="AssetPublisherPortlet#viewAssetRatingPG">
 			<var name="rating" value="3" />
 		</execute>
 
@@ -140,7 +140,7 @@
 			<var name="assetTitle" value="Web Content Title 2" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
+		<execute macro="AssetPublisherPortlet#viewAssetRatingPG">
 			<var name="rating" value="5" />
 		</execute>
 	</command>

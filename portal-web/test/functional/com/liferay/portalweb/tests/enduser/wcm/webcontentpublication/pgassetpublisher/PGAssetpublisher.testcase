@@ -311,11 +311,11 @@
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
+		<execute macro="AssetPublisherPortlet#viewAssetRatingPG">
 			<var name="rating" value="4" />
 		</execute>
 
-		<execute macro="AssetPublisherPortlet#viewAverageRatingStarPG">
+		<execute macro="AssetPublisherPortlet#viewAverageRatingPG">
 			<var name="averageRating" value="4" />
 		</execute>
 	</command>

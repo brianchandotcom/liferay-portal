@@ -666,7 +666,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${assetContent}" />
 	</command>
 
-	<command name="viewAssetRatingStarPG">
+	<command name="viewAssetRatingPG">
 		<if>
 			<equals arg1="${rating}" arg2="0" />
 			<then>
@@ -747,7 +747,7 @@
 		</execute>
 	</command>
 
-	<command name="viewAverageRatingStarPG">
+	<command name="viewAverageRatingPG">
 		<if>
 			<equals arg1="${averageRating}" arg2="0" />
 			<then>

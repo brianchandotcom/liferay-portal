@@ -312,13 +312,11 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
-			<var name="EmptyStarPositionList" value="1" />
-			<var name="ratingStarPositionList" value="1,2,3,4" />
+			<var name="rating" value="4" />
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAverageRatingStarPG">
-			<var name="averageEmptyStarList" value="1" />
-			<var name="averageRatingStarList" value="1,2,3,4" />
+			<var name="averageRating" value="4" />
 		</execute>
 	</command>
 

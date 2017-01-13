@@ -15,7 +15,6 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -31,8 +30,8 @@ import java.util.regex.Pattern;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 
 import org.json.JSONObject;
 
@@ -173,38 +172,38 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 		tokens.add("text: " + removeWhitespace(element.getText()));
 
-		List<Element> elements = element.elements();
+		List<?> elementObjects = element.elements();
 
-		for (Element childElement : elements) {
-			tokens.addAll(getCommentTokens(childElement));
+		for (Object childElementObject : elementObjects) {
+			tokens.addAll(getCommentTokens((Element)childElementObject));
 		}
 
-		List<Attribute> attributes = element.attributes();
+		List<?> attributeObjects = element.attributes();
 
-		for (Attribute attribute : attributes) {
+		for (Object attributeObject : attributeObjects) {
+			Attribute attribute = (Attribute)attributeObject;
+
 			tokens.add("attribute: " + removeWhitespace(attribute.getValue()));
 		}
 
 		return tokens;
 	}
 
-	protected Element getElement(String content) throws Exception {
-		SAXReader saxReader = new SAXReader();
-
+	protected Element getElement(String content) {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<div>");
 		sb.append(content);
 		sb.append("</div>");
 
-		content = sb.toString();
+		try {
+			Document document = Dom4JUtil.parse(sb.toString());
 
-		InputStream inputStream = new ByteArrayInputStream(
-			content.getBytes("UTF-8"));
-
-		Document document = saxReader.read(inputStream);
-
-		return document.getRootElement();
+			return document.getRootElement();
+		}
+		catch (DocumentException de) {
+			throw new RuntimeException("Unable to parse xml", de);
+		}
 	}
 
 	protected JSONObject getJSONObjectFromURL(String url) throws Exception {

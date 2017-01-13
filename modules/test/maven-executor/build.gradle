@@ -1,0 +1,18 @@
+configurations {
+	mavenDistribution
+}
+
+dependencies {
+	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
+
+	provided group: "junit", name: "junit", version: "4.12"
+}
+
+test {
+	doFirst {
+		systemProperty "http.proxyHost", System.properties["http.proxyHost"]
+		systemProperty "http.proxyPort", System.properties["http.proxyPort"]
+		systemProperty "maven.distribution.file.name", configurations.mavenDistribution.singleFile
+		systemProperty "repository.url", System.properties["repository.url"]
+	}
+}

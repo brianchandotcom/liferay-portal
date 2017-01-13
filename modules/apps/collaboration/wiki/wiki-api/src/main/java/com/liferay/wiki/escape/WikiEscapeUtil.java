@@ -30,10 +30,21 @@ public class WikiEscapeUtil {
 		return StringUtil.replace(name, _ESCAPED_CHARS, _UNESCAPED_CHARS);
 	}
 
-	private static final String[] _ESCAPED_CHARS =
-		new String[] {"<PLUS>", "<QUESTION>", "<SLASH>"};
+	private static final String[] _ESCAPED_CHARS = new String[] {
+		"<AMPERSAND>", "<APOSTROPHE>", "<AT>", "<CLOSE_BRACKET>",
+		"<CLOSE_PARENTHESIS>", "<COLON>", "<COMMA>", "<DOLLAR>", "<EQUAL>",
+		"<EXCLAMATION>", "<OPEN_BRACKET>", "<OPEN_PARENTHESIS>", "<PLUS>",
+		"<POUND>", "<QUESTION>", "<SEMICOLON>", "<SLASH>", "<STAR>"
+	};
 
-	private static final String[] _UNESCAPED_CHARS =
-		new String[] {StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH};
+	private static final String[] _UNESCAPED_CHARS = new String[] {
+		StringPool.AMPERSAND, StringPool.APOSTROPHE, StringPool.AT,
+		StringPool.CLOSE_BRACKET, StringPool.CLOSE_PARENTHESIS,
+		StringPool.COLON, StringPool.COMMA, StringPool.DOLLAR, StringPool.EQUAL,
+		StringPool.EXCLAMATION, StringPool.OPEN_BRACKET,
+		StringPool.OPEN_PARENTHESIS, StringPool.PLUS, StringPool.POUND,
+		StringPool.QUESTION, StringPool.SEMICOLON, StringPool.SLASH,
+		StringPool.STAR
+	};
 
 }

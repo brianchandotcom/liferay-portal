@@ -581,7 +581,7 @@
 
 	<command name="rateAssetPG">
 		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY">
-			<var name="key_emptyStarPosition" value="${emptyStarPosition}" />
+			<var name="key_emptyStarPosition" value="${rating}" />
 		</execute>
 	</command>
 
@@ -679,21 +679,64 @@
 	</command>
 
 	<command name="viewAssetRatingStarPG">
-		<for list="${ratingStarPositionList}" param="ratingStarPosition">
-			<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR">
-				<var name="key_ratingStarPosition" value="${ratingStarPosition}" />
-			</execute>
-		</for>
+		<if>
+			<equals arg1="${rating}" arg2="0" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR">
+					<var name="key_ratingStarPosition" value="1" />
+				</execute>
+			</then>
+			<else>
+				<var name="ratingPosition" value="1" />
+
+				<while>
+					<not>
+						<equals arg1="${ratingPosition}" arg2="${rating}" />
+					</not>
+					<then>
+						<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR">
+							<var name="key_ratingStarPosition" value="${ratingPosition}" />
+						</execute>
+
+						<var method="MathUtil#sum('${ratingPosition}', '1')" name="ratingPosition" />
+					</then>
+				</while>
+
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR">
+					<var name="key_ratingStarPosition" value="${ratingPosition}" />
+					<var method="MathUtil#sum('${ratingPosition}', '1')" name="key_ratingStarPosition" />
+				</execute>
+			</else>
+		</if>
 
 		<if>
-			<isset var="EmptyStarPositionList" />
+			<equals arg1="${rating}" arg2="5" />
 			<then>
-				<for list="${EmptyStarPositionList}" param="emptyStarPosition">
-					<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY">
-						<var name="key_emptyStarPosition" value="${emptyStarPosition}" />
-					</execute>
-				</for>
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY">
+					<var name="key_emptyStarPosition" value="1" />
+				</execute>
 			</then>
+			<else>
+				<var method="MathUtil#difference('5', '${rating}')" name="emptyRating" />
+				<var name="emptyStarPosition" value="1" />
+
+				<while>
+					<not>
+						<equals arg1="${emptyStarPosition}" arg2="${emptyRating}" />
+					</not>
+					<then>
+						<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY">
+							<var name="key_emptyStarPosition" value="${emptyStarPosition}" />
+						</execute>
+
+						<var method="MathUtil#sum('${emptyStarPosition}', '1')" name="emptyStarPosition" />
+					</then>
+				</while>
+
+				<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY">
+					<var method="MathUtil#sum('${emptyStarPosition}', '1')" name="key_emptyStarPosition" />
+				</execute>
+			</else>
 		</if>
 	</command>
 
@@ -717,21 +760,63 @@
 	</command>
 
 	<command name="viewAverageRatingStarPG">
-		<for list="${averageRatingStarList}" param="averageRatingStar">
-			<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR">
-				<var name="key_averageRatingStar" value="${averageRatingStar}" />
-			</execute>
-		</for>
+		<if>
+			<equals arg1="${averageRating}" arg2="0" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR">
+					<var name="key_averageRatingStar" value="1" />
+				</execute>
+			</then>
+			<else>
+				<var name="ratingPosition" value="1" />
+
+				<while>
+					<not>
+						<equals arg1="${ratingPosition}" arg2="${averageRating}" />
+					</not>
+					<then>
+						<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR">
+							<var name="key_averageRatingStar" value="${ratingPosition}" />
+						</execute>
+
+						<var method="MathUtil#sum('${ratingPosition}', '1')" name="ratingPosition" />
+					</then>
+				</while>
+
+				<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR">
+					<var method="MathUtil#sum('${ratingPosition}', '1')" name="key_averageRatingStar" />
+				</execute>
+			</else>
+		</if>
 
 		<if>
-			<isset var="averageEmptyStarList" />
+			<equals arg1="${averageRating}" arg2="5" />
 			<then>
-				<for list="${averageEmptyStarList}" param="averageEmptyStar">
-					<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_EMPTY">
-						<var name="key_averageEmptyStar" value="${averageEmptyStar}" />
-					</execute>
-				</for>
+				<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY">
+					<var name="key_averageEmptyStar" value="1" />
+				</execute>
 			</then>
+			<else>
+				<var method="MathUtil#difference('5', '${averageRating}')" name="emptyRating" />
+				<var name="emptyStarPosition" value="1" />
+
+				<while>
+					<not>
+						<equals arg1="${emptyStarPosition}" arg2="${emptyRating}" />
+					</not>
+					<then>
+						<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_EMPTY">
+							<var name="key_averageEmptyStar" value="${emptyStarPosition}" />
+						</execute>
+
+						<var method="MathUtil#sum('${emptyStarPosition}', '1')" name="emptyStarPosition" />
+					</then>
+				</while>
+
+				<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_EMPTY">
+					<var method="MathUtil#sum('${emptyStarPosition}', '1')" name="key_averageEmptyStar" />
+				</execute>
+			</else>
 		</if>
 
 		<execute function="AssertTextEquals" locator1="Ratings#AVERAGE_LABEL" value1="Average (1 Vote)" />

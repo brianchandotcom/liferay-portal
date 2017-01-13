@@ -127,8 +127,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
-			<var name="EmptyStarPositionList" value="1,2" />
-			<var name="ratingStarPositionList" value="1,2,3" />
+			<var name="rating" value="3" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -142,7 +141,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#viewAssetRatingStarPG">
-			<var name="ratingStarPositionList" value="1,2,3,4,5" />
+			<var name="rating" value="5" />
 		</execute>
 	</command>
 </definition>

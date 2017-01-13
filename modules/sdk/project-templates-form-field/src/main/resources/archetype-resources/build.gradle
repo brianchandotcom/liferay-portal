@@ -15,14 +15,14 @@
 apply plugin: "com.liferay.plugin"
 
 #end
+task wrapSoyTemplates
+
 dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.2.0"
 	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
 }
-
-task wrapSoyTemplates
 
 classes {
 	dependsOn buildSoy

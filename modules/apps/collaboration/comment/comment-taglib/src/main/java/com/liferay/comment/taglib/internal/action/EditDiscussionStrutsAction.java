@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,7 +74,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 		String cmd = ParamUtil.getString(namespacedRequest, Constants.CMD);
 
 		try {
-			String redirect = PortalUtil.escapeRedirect(
+			String redirect = _portal.escapeRedirect(
 				ParamUtil.getString(request, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
@@ -281,6 +281,9 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 		return discussionPermission;
 	}
+
+	@Reference
+	private Portal _portal;
 
 	private UserLocalService _userLocalService;
 

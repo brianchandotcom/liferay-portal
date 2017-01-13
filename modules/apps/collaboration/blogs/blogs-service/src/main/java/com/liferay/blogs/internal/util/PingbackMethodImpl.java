@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -200,7 +199,7 @@ public class PingbackMethodImpl implements Method {
 			return serviceContext;
 		}
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(groupId, portletId);
+		String layoutFullURL = _portal.getLayoutFullURL(groupId, portletId);
 
 		sb.append(layoutFullURL);
 
@@ -234,9 +233,9 @@ public class PingbackMethodImpl implements Method {
 			friendlyURL = friendlyURL.substring(0, end);
 		}
 
-		long plid = PortalUtil.getPlidFromFriendlyURL(companyId, friendlyURL);
+		long plid = _portal.getPlidFromFriendlyURL(companyId, friendlyURL);
 
-		long groupId = PortalUtil.getScopeGroupId(plid);
+		long groupId = _portal.getScopeGroupId(plid);
 
 		Map<String, String[]> params = new HashMap<>();
 
@@ -325,7 +324,7 @@ public class PingbackMethodImpl implements Method {
 			String portletId = PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
-			String namespace = PortalUtil.getPortletNamespace(portletId);
+			String namespace = _portal.getPortletNamespace(portletId);
 
 			paramArray = params.get(namespace + name);
 		}
@@ -396,6 +395,9 @@ public class PingbackMethodImpl implements Method {
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private Portal _portal;
 
 	private PortletLocalService _portletLocalService;
 	private String _sourceURI;

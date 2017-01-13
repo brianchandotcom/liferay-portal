@@ -35,9 +35,9 @@
 		<if>
 			<isset var="checkPageName" />
 			<then>
-				<execute function="Click" locator1="ExportImport#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
-				<execute function="Click" locator1="ExportImport#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
+				<execute function="Click" locator1="PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX" />
 
 				<for list="${checkPageName}" param="pageName">
 					<var name="key_pageName" value="${pageName}" />
@@ -168,7 +168,7 @@
 	</command>
 
 	<command name="_export">
-		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<if>
 			<isset var="larFileName" />
@@ -282,7 +282,7 @@
 				<for list="${checkContentNameList}" param="contentName">
 					<var name="key_contentName" value="${contentName}" />
 
-					<execute function="Click" locator1="SitePagesExport#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
+					<execute function="Click" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
 				</for>
 			</then>
 		</if>
@@ -308,7 +308,7 @@
 	</command>
 
 	<command name="_selectImportFile">
-		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION_DIALOG" />
 
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
 
@@ -347,8 +347,8 @@
 			<elseif>
 				<isset var="importValidationMissingItem" />
 				<then>
-					<execute function="AssertTextEquals" locator1="ExportImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
-					<execute function="AssertTextEquals" locator1="ExportImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
+					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE_HEADER" value1="The file ${larFileName} cannot be imported." />
+					<execute function="AssertTextEquals" locator1="SitePagesImport#VALIDATION_ERROR_MESSAGE" value1="An unexpected error occurred while uploading your file." />
 				</then>
 			</elseif>
 			<else>
@@ -372,7 +372,7 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="AssertClick" locator1="SitePagesImport#SELECT_FILE_BUTTON" value1="Select File" />
+		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
 		<execute function="Pause" locator1="5000" />
 
@@ -551,7 +551,7 @@
 		<if>
 			<equals arg1="${privateLayout}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="SitePagesExport#CHANGE_TO_PRIVATE_PAGES" />
+				<execute function="Click" locator1="PagesConfiguration#CHANGE_TO_PRIVATE_PAGES" />
 			</then>
 		</if>
 

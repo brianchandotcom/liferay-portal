@@ -597,24 +597,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="exportSite">
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
-
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
-
-		<execute function="SelectFrame" locator1="SitesExport#EXPORT_IFRAME" />
-
-		<execute function="Type" locator1="SitesImport#EXPORT_FILE_NAME" value1="${fileName}" />
-
-		<execute function="AssertClick" locator1="SitesExport#EXPORT_BUTTON" value1="Export" />
-
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertClick" locator1="SitesExport#DOWNLOAD_FILE" value1="${fileDownload}" />
-	</command>
-
 	<command name="gotoManageSitesTemplatesViaAddDropdown">
 		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
@@ -625,34 +607,6 @@
 		<execute function="AssertClick" locator1="ListGroupItem#ITEM_NAME_LINK" value1="${siteName}">
 			<var name="key_itemName" value="${siteName}" />
 		</execute>
-	</command>
-
-	<command name="importSite">
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
-
-		<execute function="AssertClick" locator1="SitePages#TOOLBAR_IMPORT" value1="Import" />
-
-		<execute function="SelectFrame" locator1="SitesImport#IMPORT_IFRAME" />
-
-		<execute function="AssertClick" locator1="SitesImport#SELECT_FILE" value1="Select File" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-
-		<execute function="SikuliType" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${larFileName}" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TEST_LAR_FILE_ICON_PNG" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_OPEN_BUTTON_PNG" />
-
-		<execute function="AssertClick" locator1="SitesImport#IMPORT_CONTINUE" value1="Continue" />
-
-		<execute function="AssertClick" locator1="SitesImport#IMPORT_CONTINUE_2" value1="Continue" />
-
-		<execute function="AssertClick" locator1="SitesImport#IMPORT" value1="Import" />
-
-		<execute function="Pause" locator1="2000" />
 	</command>
 
 	<command name="inactivateCP">

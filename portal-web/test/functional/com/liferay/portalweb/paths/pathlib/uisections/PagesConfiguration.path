@@ -54,8 +54,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_TO_PRIVATE_PAGES</td>
+	<td>//button[contains(@id,'changeToPrivateLayoutsButton')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
 	<td>//label[contains(.,'${key_contentName}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_ALL_PUBLIC_PAGES_CHECKBOX</td>
+	<td>xpath=(//div[contains(.,'Public Pages')]//span[contains(@class,'icon-check')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'LAYOUT_SET_SETTINGS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
+	<td>//input[contains(@id,'THEME_REFERENCE')]</td>
 	<td></td>
 </tr>
 </tbody>

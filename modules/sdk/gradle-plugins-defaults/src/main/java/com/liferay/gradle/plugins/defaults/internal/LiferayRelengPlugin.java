@@ -79,6 +79,9 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 	public static final String PRINT_ARTIFACT_PUBLISH_COMMANDS =
 		"printArtifactPublishCommands";
 
+	public static final String PRINT_DEPENDENT_ARTIFACT_TASK_NAME =
+		"printDependentArtifact";
+
 	public static final String PRINT_STALE_ARTIFACT_TASK_NAME =
 		"printStaleArtifact";
 
@@ -119,6 +122,8 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 		_addTaskPrintArtifactPublishCommands(project, recordArtifactTask);
 		_addTaskPrintStaleArtifact(project, recordArtifactTask);
+
+		_addTaskPrintDependentArtifact(project);
 
 		_configureTaskBuildChangeLog(buildChangeLogTask, relengDir);
 		_configureTaskUploadArchives(project, recordArtifactTask);
@@ -251,6 +256,45 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 			});
 
 		return printArtifactPublishCommandsTask;
+	}
+
+	private Task _addTaskPrintDependentArtifact(Project project) {
+		Task task = project.task(PRINT_DEPENDENT_ARTIFACT_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					File projectDir = project.getProjectDir();
+
+					System.out.println(projectDir.getAbsolutePath());
+				}
+
+			});
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					if (_hasProjectDependencies(task.getProject())) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		task.setDescription(
+			"Prints the project directory if this project contains " +
+				"dependencies to other projects.");
+		task.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
+		return task;
 	}
 
 	private Task _addTaskPrintStaleArtifact(

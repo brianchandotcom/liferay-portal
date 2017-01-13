@@ -45,6 +45,14 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _content;
 	}
 
+	public String getCreationDateString() {
+		return _creationDateString;
+	}
+
+	public String getCreatorUserName() {
+		return _creatorUserName;
+	}
+
 	public List<SearchResultFieldDisplayContext>
 		getDocumentFormFieldDisplayContexts() {
 
@@ -63,6 +71,10 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _highlightedTitle;
 	}
 
+	public String getIconId() {
+		return _iconId;
+	}
+
 	public String getLocaleLanguageId() {
 		return _localeLanguageId;
 	}
@@ -75,8 +87,16 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _modelResource;
 	}
 
+	public String getPathThemeImages() {
+		return _pathThemeImages;
+	}
+
 	public PortletURL getPortletURL() {
 		return _portletURL;
+	}
+
+	public String getThumbnailURLString() {
+		return _thumbnailURLString;
 	}
 
 	public String getTitle() {
@@ -99,12 +119,28 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		return _contentVisible;
 	}
 
+	public boolean isCreationDateVisible() {
+		return _creationDateVisible;
+	}
+
+	public boolean isCreatorVisible() {
+		return _creatorVisible;
+	}
+
 	public boolean isDocumentFormVisible() {
 		return _documentFormVisible;
 	}
 
+	public boolean isIconVisible() {
+		return _iconVisible;
+	}
+
 	public boolean isLocaleReminderVisible() {
 		return _localeReminderVisible;
+	}
+
+	public boolean isThumbnailVisible() {
+		return _thumbnailVisible;
 	}
 
 	public boolean isUserPortraitVisible() {
@@ -147,6 +183,22 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_contentVisible = contentVisible;
 	}
 
+	public void setCreationDateString(String creationDateString) {
+		_creationDateString = creationDateString;
+	}
+
+	public void setCreationDateVisible(boolean creationDateVisible) {
+		_creationDateVisible = creationDateVisible;
+	}
+
+	public void setCreatorUserName(String creatorUserName) {
+		_creatorUserName = creatorUserName;
+	}
+
+	public void setCreatorVisible(boolean writtenByVisible) {
+		_creatorVisible = writtenByVisible;
+	}
+
 	public void setDocumentFormFieldDisplayContexts(
 		List<SearchResultFieldDisplayContext>
 			documentFormFieldDisplayContexts) {
@@ -170,6 +222,14 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_highlightedTitle = highlightedTitle;
 	}
 
+	public void setIconId(String iconId) {
+		_iconId = iconId;
+	}
+
+	public void setIconVisible(boolean iconVisible) {
+		_iconVisible = iconVisible;
+	}
+
 	public void setLocaleLanguageId(String localeLanguageId) {
 		_localeLanguageId = localeLanguageId;
 	}
@@ -186,8 +246,20 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 		_modelResource = modelResource;
 	}
 
+	public void setPathThemeImages(String pathThemeImages) {
+		_pathThemeImages = pathThemeImages;
+	}
+
 	public void setPortletURL(PortletURL portletURL) {
 		_portletURL = portletURL;
+	}
+
+	public void setThumbnailURLString(String thumbnailURLString) {
+		_thumbnailURLString = thumbnailURLString;
+	}
+
+	public void setThumbnailVisible(boolean thumbnailVisible) {
+		_thumbnailVisible = thumbnailVisible;
 	}
 
 	public void setTitle(String title) {
@@ -210,17 +282,26 @@ public class SearchResultSummaryDisplayContext implements Serializable {
 	private long _classPK;
 	private String _content;
 	private boolean _contentVisible;
+	private String _creationDateString;
+	private boolean _creationDateVisible;
+	private String _creatorUserName;
+	private boolean _creatorVisible;
 	private List<SearchResultFieldDisplayContext>
 		_documentFormFieldDisplayContexts;
 	private boolean _documentFormVisible;
 	private String _fieldAssetCategoryIds;
 	private String _fieldAssetTagNames;
 	private String _highlightedTitle;
+	private String _iconId;
+	private boolean _iconVisible;
 	private String _localeLanguageId;
 	private String _localeReminder;
 	private boolean _localeReminderVisible;
 	private String _modelResource;
+	private String _pathThemeImages;
 	private PortletURL _portletURL;
+	private String _thumbnailURLString;
+	private boolean _thumbnailVisible;
 	private String _title;
 	private boolean _userPortraitVisible;
 	private String _viewURL;

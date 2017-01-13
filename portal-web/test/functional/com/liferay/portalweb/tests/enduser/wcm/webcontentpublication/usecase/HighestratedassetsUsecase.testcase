@@ -99,7 +99,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#rateAssetPG">
-			<var name="emptyStarPosition" value="3" />
+			<var name="rating" value="3" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">
@@ -113,7 +113,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#rateAssetPG">
-			<var name="emptyStarPosition" value="5" />
+			<var name="rating" value="5" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

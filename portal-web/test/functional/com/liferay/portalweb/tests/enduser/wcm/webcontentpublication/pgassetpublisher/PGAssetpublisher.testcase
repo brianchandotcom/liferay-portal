@@ -303,7 +303,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#rateAssetPG">
-			<var name="emptyStarPosition" value="4" />
+			<var name="rating" value="4" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">

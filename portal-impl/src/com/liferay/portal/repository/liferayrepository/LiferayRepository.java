@@ -655,6 +655,17 @@ public class LiferayRepository
 	}
 
 	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimeTypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
+		throws PortalException {
+
+		return dlFolderService.getFoldersAndFileEntriesAndFileShortcutsCount(
+			getGroupId(), toFolderId(folderId), mimeTypes, includeMountFolders,
+			queryDefinition);
+	}
+
+	@Override
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws PortalException {
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.repository.util;
 
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
@@ -487,6 +488,16 @@ public class RepositoryWrapper implements Repository {
 
 		return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, mimetypes, includeMountFolders);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimetypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
+		throws PortalException {
+
+		return _repository.getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, mimetypes, includeMountFolders, queryDefinition);
 	}
 
 	@Override

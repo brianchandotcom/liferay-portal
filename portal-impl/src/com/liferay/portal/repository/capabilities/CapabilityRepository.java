@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.capabilities;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
@@ -626,6 +627,16 @@ public class CapabilityRepository
 
 		return getRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, mimetypes, includeMountFolders);
+	}
+
+	@Override
+	public int getFoldersAndFileEntriesAndFileShortcutsCount(
+			long folderId, String[] mimetypes, boolean includeMountFolders,
+			QueryDefinition<Object> queryDefinition)
+		throws PortalException {
+
+		return getRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
+			folderId, mimetypes, includeMountFolders, queryDefinition);
 	}
 
 	@Override

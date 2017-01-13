@@ -1424,9 +1424,10 @@ public abstract class BaseBuild implements Build {
 			archiveName = matcher.group("archiveName");
 		}
 
-		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
 		setJobName(matcher.group("jobName"));
 		master = matcher.group("master");
+
+		_buildNumber = Integer.parseInt(matcher.group("buildNumber"));
 
 		loadParametersFromBuildJSONObject();
 

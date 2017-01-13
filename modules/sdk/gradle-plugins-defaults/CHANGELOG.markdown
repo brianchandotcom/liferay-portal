@@ -915,11 +915,14 @@ versions of Git.
 ### Changed
 - [LPS-70092]: Update the [Liferay Gradle Plugins] dependency to version 3.1.0.
 
-## 2.4.13 - 2017-01-13
+## 2.4.14 - 2017-01-13
 
 ### Added
 - [LPS-70146]: Add the `printDependentArtifact` task to print the project
 directory if the project contains dependencies to other projects.
+
+### Changed
+- [LPS-70036]: Update the [Liferay Gradle Plugins] dependency to version 3.1.1.
 
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
@@ -1005,6 +1008,7 @@ directory if the project contains dependencies to other projects.
 [LPS-69847]: https://issues.liferay.com/browse/LPS-69847
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
+[LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092
 [LPS-70146]: https://issues.liferay.com/browse/LPS-70146

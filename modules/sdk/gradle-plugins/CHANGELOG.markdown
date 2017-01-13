@@ -984,6 +984,12 @@ to version 1.0.74.
 - [LPS-70092]: Update the [Liferay Gradle Plugins Soy] dependency to version
 3.0.0.
 
+## 3.1.1 - 2017-01-13
+
+### Changed
+- [LPS-70036]: Update the [Liferay Gradle Plugins Soy] dependency to version
+3.0.1.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
@@ -1072,6 +1078,7 @@ to version 1.0.74.
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-69926]: https://issues.liferay.com/browse/LPS-69926
 [LPS-69980]: https://issues.liferay.com/browse/LPS-69980
+[LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

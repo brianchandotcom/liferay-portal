@@ -23,7 +23,14 @@ package to the `com.liferay.gradle.plugins.soy.tasks` package.
 - [LPS-67573]: Remove deprecated `BuildSoyTask` class from the
 `com.liferay.gradle.plugins.soy` package.
 
+## 3.0.1 - 2017-01-13
+
+### Changed
+- [LPS-70036]: Reuse logic from [Liferay Portal Tools Soy Builder].
+
 [Command Line Tools for Metal.js]: https://github.com/metal/metal-cli
+[Liferay Portal Tools Soy Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-soy-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
 [LPS-67766]: https://issues.liferay.com/browse/LPS-67766
+[LPS-70036]: https://issues.liferay.com/browse/LPS-70036
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

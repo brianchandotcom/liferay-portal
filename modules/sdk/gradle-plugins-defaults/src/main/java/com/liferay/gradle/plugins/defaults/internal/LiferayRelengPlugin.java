@@ -169,7 +169,20 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		if (projectPath.startsWith(":apps:") ||
 			projectPath.startsWith(":private:apps:")) {
 
-			_configureTaskEnabledIfLeaf(printArtifactPublishCommandsTask);
+			printArtifactPublishCommandsTask.onlyIf(
+				new Spec<Task>() {
+
+					@Override
+					public boolean isSatisfiedBy(Task task) {
+						if (_hasProjectDependencies(task.getProject())) {
+							return false;
+						}
+
+						return true;
+					}
+
+				});
+
 			_configureTaskEnabledIfDependenciesArePublished(
 				printArtifactPublishCommandsTask);
 		}
@@ -379,22 +392,6 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 					catch (IOException ioe) {
 						throw new UncheckedIOException(ioe);
 					}
-				}
-
-			});
-	}
-
-	private void _configureTaskEnabledIfLeaf(Task task) {
-		task.onlyIf(
-			new Spec<Task>() {
-
-				@Override
-				public boolean isSatisfiedBy(Task task) {
-					if (_hasProjectDependencies(task.getProject())) {
-						return false;
-					}
-
-					return true;
 				}
 
 			});

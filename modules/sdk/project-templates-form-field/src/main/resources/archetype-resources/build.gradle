@@ -36,7 +36,7 @@ transpileJS {
 
 wrapSoyTemplates {
 	doLast {
-		FileTree soyJsFileTree = fileTree(dir: "build", include: "**/*.soy.js")
+		FileTree soyJsFileTree = fileTree(dir: buildDir, include: "**/*.soy.js")
 
 		String soyJsWrapperHeader = "AUI.add('${artifactId}-form-field-template', function(A) {"
 		String soyJsWrapperFooter = "}, '', {requires: ['soyutils']});";

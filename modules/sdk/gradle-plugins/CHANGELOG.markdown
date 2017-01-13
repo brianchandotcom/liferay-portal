@@ -977,6 +977,10 @@ dependencies in the final OSGi bundle via the `compileInclude` configuration.
 
 ### Changed
 - [LPS-69926]: Update the [Gradle Bundle Plugin] dependency to version 0.9.0.
+- [LPS-69980]: Update the [Liferay Source Formatter] dependency to version
+1.0.341.
+- [LPS-69980]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 1.0.74.
 - [LPS-70092]: Update the [Liferay Gradle Plugins Soy] dependency to version
 3.0.0.
 
@@ -1067,6 +1071,7 @@ dependencies in the final OSGi bundle via the `compileInclude` configuration.
 [LPS-69899]: https://issues.liferay.com/browse/LPS-69899
 [LPS-69920]: https://issues.liferay.com/browse/LPS-69920
 [LPS-69926]: https://issues.liferay.com/browse/LPS-69926
+[LPS-69980]: https://issues.liferay.com/browse/LPS-69980
 [LPS-70060]: https://issues.liferay.com/browse/LPS-70060
 [LPS-70084]: https://issues.liferay.com/browse/LPS-70084
 [LPS-70092]: https://issues.liferay.com/browse/LPS-70092

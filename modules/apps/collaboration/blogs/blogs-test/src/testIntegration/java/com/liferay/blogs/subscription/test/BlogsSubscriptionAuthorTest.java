@@ -82,7 +82,7 @@ public class BlogsSubscriptionAuthorTest
 		BlogsTestUtil.populateNotificationsServiceContext(
 			serviceContext, Constants.UPDATE);
 
-		serviceContext.setAttribute("sendEmailEntryUpdated", true);
+		serviceContext.setAttribute("sendEmailEntryUpdated", Boolean.TRUE);
 
 		BlogsEntryLocalServiceUtil.updateEntry(
 			userId, baseModelId, RandomTestUtil.randomString(),

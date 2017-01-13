@@ -121,7 +121,7 @@ public class LayoutPrototypeStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			layoutPrototype);
 
-		serviceContext.setAttribute("addDefaultLayout", false);
+		serviceContext.setAttribute("addDefaultLayout", Boolean.FALSE);
 
 		LayoutPrototype importedLayoutPrototype = null;
 

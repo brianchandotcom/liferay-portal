@@ -96,7 +96,7 @@ public class SlimRuntimeServlet extends HttpServlet {
 			throw new ServletException(e);
 		}
 
-		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, true);
+		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, Boolean.TRUE);
 
 		registerPortalInitialized();
 

@@ -1576,7 +1576,7 @@ public class CalendarBookingLocalServiceImpl
 					childMasterRecurringBooking.getCalendarBookingId();
 			}
 
-			serviceContext.setAttribute("sendNotification", false);
+			serviceContext.setAttribute("sendNotification", Boolean.FALSE);
 
 			CalendarBooking childCalendarBooking = addCalendarBooking(
 				calendarBooking.getUserId(), calendarId, new long[0],
@@ -1589,7 +1589,7 @@ public class CalendarBookingLocalServiceImpl
 				firstReminderType, secondReminder, secondReminderType,
 				serviceContext);
 
-			serviceContext.setAttribute("sendNotification", true);
+			serviceContext.setAttribute("sendNotification", Boolean.TRUE);
 
 			int workflowAction = GetterUtil.getInteger(
 				serviceContext.getAttribute("workflowAction"));

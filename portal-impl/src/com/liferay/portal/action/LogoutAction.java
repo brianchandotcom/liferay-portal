@@ -41,7 +41,7 @@ public class LogoutAction extends Action {
 		try {
 			AuthenticatedSessionManagerUtil.logout(request, response);
 
-			request.setAttribute(WebKeys.LOGOUT, true);
+			request.setAttribute(WebKeys.LOGOUT, Boolean.TRUE);
 
 			return actionMapping.findForward(ActionConstants.COMMON_REFERER);
 		}

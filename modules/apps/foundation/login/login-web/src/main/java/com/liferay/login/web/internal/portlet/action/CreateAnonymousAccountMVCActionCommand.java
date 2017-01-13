@@ -115,7 +115,7 @@ public class CreateAnonymousAccountMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
-		serviceContext.setAttribute("anonymousUser", true);
+		serviceContext.setAttribute("anonymousUser", Boolean.TRUE);
 
 		if (PropsValues.CAPTCHA_CHECK_PORTAL_CREATE_ACCOUNT) {
 			CaptchaUtil.check(actionRequest);

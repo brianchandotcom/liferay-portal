@@ -210,7 +210,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			PortletSession portletSession = actionRequest.getPortletSession();
 
 			portletSession.setAttribute("recordSetId", recordSetId);
-			portletSession.setAttribute("shared", true);
+			portletSession.setAttribute("shared", Boolean.TRUE);
 		}
 	}
 

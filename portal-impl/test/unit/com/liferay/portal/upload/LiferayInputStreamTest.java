@@ -103,7 +103,8 @@ public class LiferayInputStreamTest {
 		throws Exception {
 
 		_mockHttpServletRequest.setAttribute(
-			UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE, false);
+			UploadServletRequestFilter.COPY_MULTIPART_STREAM_TO_FILE,
+			Boolean.FALSE);
 
 		testInitialRead(_UNCACHEABLE_BYTES);
 	}

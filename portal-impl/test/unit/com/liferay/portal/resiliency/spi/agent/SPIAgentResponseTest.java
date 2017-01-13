@@ -192,7 +192,7 @@ public class SPIAgentResponseTest {
 			new MockHttpServletRequest();
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.PORTAL_RESILIENCY_ACTION, true);
+			WebKeys.PORTAL_RESILIENCY_ACTION, Boolean.TRUE);
 
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(new MockHttpServletResponse());

@@ -1585,9 +1585,9 @@ public abstract class BaseBuild implements Build {
 	protected void setBuildNumber(int buildNumber) {
 		_buildNumber = buildNumber;
 
-		setStatus("running");
-
 		if (_buildNumber != -1) {
+			setStatus("running");
+
 			checkForReinvocation();
 		}
 	}

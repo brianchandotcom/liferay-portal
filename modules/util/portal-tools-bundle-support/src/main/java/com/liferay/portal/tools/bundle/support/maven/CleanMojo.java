@@ -16,8 +16,6 @@ package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.CleanCommand;
 
-import java.io.IOException;
-
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -44,8 +42,8 @@ public class CleanMojo extends AbstractLiferayMojo {
 
 			cleanCommand.execute();
 		}
-		catch (IOException ioe) {
-			throw new MojoExecutionException(ioe.getMessage(), ioe);
+		catch (Exception e) {
+			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
 

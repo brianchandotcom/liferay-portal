@@ -14,21 +14,55 @@
 
 package com.liferay.portal.tools.bundle.support.internal.util;
 
+import java.util.Properties;
+
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class BundleSupportUtil {
 
-	public static String getDeployFolder(String type) {
-		if (type.equals("jar")) {
+	public static String getDeployDirName(String fileName) {
+		if (fileName.endsWith(".jar")) {
 			return "osgi/modules/";
 		}
 
-		if (type.equals("war")) {
+		if (fileName.endsWith(".war")) {
 			return "osgi/war/";
 		}
 
 		return "deploy/";
+	}
+
+	public static Integer setSystemProperty(String key, Integer value) {
+		String valueString = null;
+
+		if (value != null) {
+			valueString = value.toString();
+		}
+
+		valueString = setSystemProperty(key, valueString);
+
+		if (valueString == null) {
+			return null;
+		}
+
+		return Integer.valueOf(valueString);
+	}
+
+	public static String setSystemProperty(String key, String value) {
+		String oldValue = System.getProperty(key);
+
+		if (value == null) {
+			Properties properties = System.getProperties();
+
+			properties.remove(key);
+		}
+		else {
+			System.setProperty(key, value);
+		}
+
+		return oldValue;
 	}
 
 }

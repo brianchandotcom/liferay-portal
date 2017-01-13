@@ -57,16 +57,14 @@ public class DistBundleMojo extends AbstractBundleMojo {
 
 		if (packaging.equals("jar") || packaging.equals("war")) {
 			try {
-				String extension = FileUtil.getExtension(deployFile.getName());
-
-				String deployFolder = BundleSupportUtil.getDeployFolder(
-					extension);
+				String deployDirName = BundleSupportUtil.getDeployDirName(
+					deployFile.getName());
 
 				if (includeFolder) {
-					deployFolder = archiveFileName + "/" + deployFolder;
+					deployDirName = archiveFileName + "/" + deployDirName;
 				}
 
-				Path entryPath = Paths.get(deployFolder, outputFileName);
+				Path entryPath = Paths.get(deployDirName, outputFileName);
 
 				if (format.equals("zip")) {
 					FileUtil.appendZip(deployFile, entryPath, archive);
@@ -99,14 +97,9 @@ public class DistBundleMojo extends AbstractBundleMojo {
 				initBundleCommand.setEnvironment(environment);
 				initBundleCommand.setLiferayHomeDir(liferayHomeDir);
 				initBundleCommand.setPassword(password);
-				initBundleCommand.setProxyHost(proxyHost);
-				initBundleCommand.setProxyPassword(proxyPassword);
-				initBundleCommand.setProxyPort(proxyPort);
-				initBundleCommand.setProxyProtocol(proxyProtocol);
-				initBundleCommand.setProxyUsername(proxyUsername);
 				initBundleCommand.setStripComponents(stripComponents);
-				initBundleCommand.setUrl(url.toString());
-				initBundleCommand.setUsername(username);
+				initBundleCommand.setUrl(url);
+				initBundleCommand.setUserName(userName);
 
 				initBundleCommand.execute();
 

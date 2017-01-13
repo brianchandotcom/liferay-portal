@@ -15,14 +15,20 @@
 package com.liferay.portal.tools.bundle.support.maven;
 
 import com.liferay.portal.tools.bundle.support.commands.InitBundleCommand;
+import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
+import com.liferay.portal.tools.bundle.support.internal.util.MavenUtil;
 
 import java.io.File;
 
+import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.settings.Proxy;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 @Mojo(inheritByDefault = false, name = "init-bundle")
 public class InitBundleMojo extends AbstractBundleMojo {
@@ -33,6 +39,28 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			return;
 		}
 
+		Proxy proxy = MavenUtil.getProxy(_mavenSession);
+
+		String proxyProtocol = url.getProtocol();
+		String proxyHost = null;
+		Integer proxyPort = null;
+		String proxyUser = null;
+		String proxyPassword = null;
+		String nonProxyHosts = null;
+
+		if (proxy != null) {
+			proxyHost = BundleSupportUtil.setSystemProperty(
+				proxyProtocol + ".proxyHost", proxy.getHost());
+			proxyPort = BundleSupportUtil.setSystemProperty(
+				proxyProtocol + ".proxyPort", proxy.getPort());
+			proxyUser = BundleSupportUtil.setSystemProperty(
+				proxyProtocol + ".proxyUser", proxy.getUsername());
+			proxyPassword = BundleSupportUtil.setSystemProperty(
+				proxyProtocol + ".proxyPassword", proxy.getPassword());
+			nonProxyHosts = BundleSupportUtil.setSystemProperty(
+				proxyProtocol + ".nonProxyHosts", proxy.getNonProxyHosts());
+		}
+
 		try {
 			InitBundleCommand initBundleCommand = new InitBundleCommand();
 
@@ -41,20 +69,32 @@ public class InitBundleMojo extends AbstractBundleMojo {
 			initBundleCommand.setEnvironment(environment);
 			initBundleCommand.setLiferayHomeDir(getLiferayHomeDir());
 			initBundleCommand.setPassword(password);
-			initBundleCommand.setProxyHost(proxyHost);
-			initBundleCommand.setProxyPassword(proxyPassword);
-			initBundleCommand.setProxyPort(proxyPort);
-			initBundleCommand.setProxyProtocol(proxyProtocol);
-			initBundleCommand.setProxyUsername(proxyUsername);
 			initBundleCommand.setStripComponents(stripComponents);
-			initBundleCommand.setUrl(url.toString());
-			initBundleCommand.setUsername(username);
+			initBundleCommand.setUrl(url);
+			initBundleCommand.setUserName(userName);
 
 			initBundleCommand.execute();
 		}
 		catch (Exception e) {
 			throw new MojoExecutionException("Unable to initialize bundle", e);
 		}
+		finally {
+			if (proxy != null) {
+				BundleSupportUtil.setSystemProperty(
+					proxyProtocol + ".proxyHost", proxyHost);
+				BundleSupportUtil.setSystemProperty(
+					proxyProtocol + ".proxyPort", proxyPort);
+				BundleSupportUtil.setSystemProperty(
+					proxyProtocol + ".proxyUser", proxyUser);
+				BundleSupportUtil.setSystemProperty(
+					proxyProtocol + ".proxyPassword", proxyPassword);
+				BundleSupportUtil.setSystemProperty(
+					proxyProtocol + ".nonProxyHosts", nonProxyHosts);
+			}
+		}
 	}
+
+	@Parameter(property = "session", readonly = true)
+	private MavenSession _mavenSession;
 
 }

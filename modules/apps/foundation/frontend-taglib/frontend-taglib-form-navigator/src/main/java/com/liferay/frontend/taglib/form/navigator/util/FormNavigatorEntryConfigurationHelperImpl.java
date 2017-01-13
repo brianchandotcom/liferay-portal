@@ -19,6 +19,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntryConfigurationHelper;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +45,8 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		return _formNavigatorEntryConfigurationRetriever.
 			getFormNavigatorEntryKeys(
 				formNavigatorId, categoryKey, variant).stream().map(
-				this::<T>_getFormNavigatorEntry).collect(Collectors.toList());
+				key -> this.<T>_getFormNavigatorEntry(
+					key, formNavigatorId)).collect(Collectors.toList());
 	}
 
 	@Activate
@@ -61,7 +63,9 @@ public class FormNavigatorEntryConfigurationHelperImpl
 					FormNavigatorEntry service = bundleContext.getService(
 						serviceReference);
 
-					emitter.emit(service.getKey());
+					emitter.emit(
+						_getKey(
+							service.getKey(), service.getFormNavigatorId()));
 
 					bundleContext.ungetService(serviceReference);
 				}
@@ -74,15 +78,22 @@ public class FormNavigatorEntryConfigurationHelperImpl
 		_formNavigatorEntriesMap.close();
 	}
 
-	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(String key) {
+	private <T> FormNavigatorEntry<T> _getFormNavigatorEntry(
+		String key, String formNavigatorId) {
+
 		List<FormNavigatorEntry> formNavigatorEntries =
-			(List)_formNavigatorEntriesMap.getService(key);
+			(List)_formNavigatorEntriesMap.getService(
+				_getKey(key, formNavigatorId));
 
 		if (formNavigatorEntries.isEmpty()) {
 			throw new RuntimeException("fix this");
 		}
 
 		return formNavigatorEntries.get(0);
+	}
+
+	private String _getKey(String key, String formNavigatorId) {
+		return formNavigatorId + StringPool.PERIOD + key;
 	}
 
 	private ServiceTrackerMap<String, List<FormNavigatorEntry>>

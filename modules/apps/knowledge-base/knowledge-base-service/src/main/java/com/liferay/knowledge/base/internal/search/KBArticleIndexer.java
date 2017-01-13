@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.internal.search;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
@@ -167,6 +170,8 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		indexWriterHelper.updateDocument(
 			getSearchEngineId(), kbArticle.getCompanyId(),
 			getDocument(kbArticle), isCommitImmediately());
+
+		reindexAttachments(kbArticle);
 	}
 
 	@Override
@@ -200,6 +205,20 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		}
 
 		return kbFolderNames.toArray(new String[kbFolderNames.size()]);
+	}
+
+	protected void reindexAttachments(KBArticle kbArticle)
+		throws PortalException {
+
+		List<FileEntry> attachmentsFileEntries =
+			kbArticle.getAttachmentsFileEntries();
+
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFileEntry.class);
+
+		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
+		}
 	}
 
 	protected void reindexKBArticles(KBArticle kbArticle) throws Exception {

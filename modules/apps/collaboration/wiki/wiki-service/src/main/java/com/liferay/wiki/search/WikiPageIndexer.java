@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.search;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
@@ -53,6 +55,7 @@ import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -267,6 +270,20 @@ public class WikiPageIndexer
 		_indexWriterHelper.updateDocument(
 			getSearchEngineId(), wikiPage.getCompanyId(), document,
 			isCommitImmediately());
+
+		reindexAttachments(wikiPage);
+	}
+
+	protected void reindexAttachments(WikiPage wikiPage) throws Exception {
+		List<FileEntry> attachmentsFileEntries =
+			wikiPage.getAttachmentsFileEntries();
+
+		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			DLFileEntry.class);
+
+		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
+		}
 	}
 
 	protected void reindexNodes(final long companyId) throws PortalException {

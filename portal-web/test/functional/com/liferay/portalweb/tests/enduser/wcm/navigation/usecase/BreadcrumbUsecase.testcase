@@ -195,7 +195,7 @@
 			<var name="url" value="http://127.0.0.1:8080/web/site-name" />
 		</execute>
 
-		<execute function="AssertLocation" value1="http://127.0.0.1:8080/web/site-name/site-page-name" />
+		<execute function="AssertLocation" value1="http://127.0.0.1:8080/web/site-name" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Site Page Name" />

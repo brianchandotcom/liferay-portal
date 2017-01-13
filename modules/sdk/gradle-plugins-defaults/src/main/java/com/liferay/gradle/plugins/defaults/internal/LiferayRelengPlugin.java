@@ -390,31 +390,11 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					Project project = task.getProject();
-
-					for (Configuration configuration :
-							project.getConfigurations()) {
-
-						if (_hasProjectDependencies(configuration)) {
-							return false;
-						}
+					if (_hasProjectDependencies(task.getProject())) {
+						return false;
 					}
 
 					return true;
-				}
-
-				private boolean _hasProjectDependencies(
-					Configuration configuration) {
-
-					for (Dependency dependency :
-							configuration.getDependencies()) {
-
-						if (dependency instanceof ProjectDependency) {
-							return true;
-						}
-					}
-
-					return false;
 				}
 
 			});
@@ -617,6 +597,18 @@ public class LiferayRelengPlugin implements Plugin<Project> {
 		sb.append(publishArtifact.getExtension());
 
 		return sb.toString();
+	}
+
+	private boolean _hasProjectDependencies(Project project) {
+		for (Configuration configuration : project.getConfigurations()) {
+			for (Dependency dependency : configuration.getDependencies()) {
+				if (dependency instanceof ProjectDependency) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isStale(

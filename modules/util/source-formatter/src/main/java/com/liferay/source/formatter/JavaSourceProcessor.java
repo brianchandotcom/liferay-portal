@@ -1192,6 +1192,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkGetterUtilGet(fileName, newContent);
 		}
 
+		newContent = fixIncorrectBooleanUse(newContent, "setAttribute");
+
 		// LPS-65213
 
 		if (portalSource || subrepository) {
@@ -1388,6 +1390,42 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			newLine, StringPool.FOUR_SPACES, StringPool.TAB);
 
 		return StringUtil.replace(ifClause, line, newLine);
+	}
+
+	protected String fixIncorrectBooleanUse(
+		String content, String... methodNames) {
+
+		for (String methodName : methodNames) {
+			Pattern pattern = Pattern.compile(
+				"\\." + methodName + "\\((.*?)\\);\n", Pattern.DOTALL);
+
+			Matcher matcher = pattern.matcher(content);
+
+			while (matcher.find()) {
+				String match = matcher.group();
+
+				List<String> parametersList = getParameterList(match);
+
+				if (parametersList.size() != 2) {
+					continue;
+				}
+
+				String secondParameterName = parametersList.get(1);
+
+				if (secondParameterName.equals("false") ||
+					secondParameterName.equals("true")) {
+
+					String replacement = StringUtil.replaceLast(
+						match, secondParameterName,
+						"Boolean." +
+							StringUtil.toUpperCase(secondParameterName));
+
+					return StringUtil.replace(content, match, replacement);
+				}
+			}
+		}
+
+		return content;
 	}
 
 	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(

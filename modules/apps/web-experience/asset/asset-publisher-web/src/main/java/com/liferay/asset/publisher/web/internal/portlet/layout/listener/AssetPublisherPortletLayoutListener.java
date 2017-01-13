@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web;
+package com.liferay.asset.publisher.web.internal.portlet.layout.listener;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.util.AssetPublisherUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.model.Layout;
@@ -23,11 +24,14 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.SubscriptionLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.asset.util.AssetUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Provides the implementation of <code>PortletLayoutListener</code> (in
@@ -36,9 +40,14 @@ import com.liferay.portlet.asset.util.AssetUtil;
  * the page.
  *
  * @author Zsolt Berentey
- * @deprecated As of 2.0.0, with not direct replacement
  */
-@Deprecated
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER
+	},
+	service = PortletLayoutListener.class
+)
 public class AssetPublisherPortletLayoutListener
 	implements PortletLayoutListener {
 
@@ -102,18 +111,21 @@ public class AssetPublisherPortletLayoutListener
 		}
 	}
 
+	@Reference(unbind = "-")
 	protected void setJournalArticleLocalService(
 		JournalArticleLocalService journalArticleLocalService) {
 
 		_journalArticleLocalService = journalArticleLocalService;
 	}
 
+	@Reference(unbind = "-")
 	protected void setLayoutLocalService(
 		LayoutLocalService layoutLocalService) {
 
 		_layoutLocalService = layoutLocalService;
 	}
 
+	@Reference(unbind = "-")
 	protected void setSubscriptionLocalService(
 		SubscriptionLocalService subscriptionLocalService) {
 

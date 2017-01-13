@@ -318,7 +318,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Element getGitHubMessage() {
+	public Element getGitHubMessageBuildAnchorElement() {
+		getResult();
+
+		if (result.equals("SUCCESS")) {
+			return Dom4JUtil.getNewAnchorElement(
+				getBuildURL(), getDisplayName());
+		}
+
+		return Dom4JUtil.getNewAnchorElement(
+			getBuildURL(), null, Dom4JUtil.wrapWithNewElement(
+				Dom4JUtil.wrapWithNewElement(getDisplayName(), "strong"),
+				"strike"));
+	}
+
+	@Override
+	public Element getGitHubMessageElement() {
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
@@ -354,21 +369,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return messageElement;
-	}
-
-	@Override
-	public Element getGitHubMessageBuildAnchor() {
-		getResult();
-
-		if (result.equals("SUCCESS")) {
-			return Dom4JUtil.getNewAnchorElement(
-				getBuildURL(), getDisplayName());
-		}
-
-		return Dom4JUtil.getNewAnchorElement(
-			getBuildURL(), null, Dom4JUtil.wrapWithNewElement(
-				Dom4JUtil.wrapWithNewElement(getDisplayName(), "strong"),
-			"strike"));
 	}
 
 	@Override

@@ -53,11 +53,11 @@ public class BatchBuild extends BaseBuild {
 	}
 
 	@Override
-	public Element getGitHubMessage() {
+	public Element getGitHubMessageElement() {
 		Collections.sort(
 			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
 
-		Element messageElement = super.getGitHubMessage();
+		Element messageElement = super.getGitHubMessageElement();
 
 		if (messageElement == null) {
 			return messageElement;
@@ -81,7 +81,8 @@ public class BatchBuild extends BaseBuild {
 				continue;
 			}
 			else {
-				Element failureElement = downstreamBuild.getGitHubMessage();
+				Element failureElement =
+					downstreamBuild.getGitHubMessageElement();
 
 				if (isHighPriorityBuildFailureElement(failureElement)) {
 					failureElements.add(0, failureElement);

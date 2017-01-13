@@ -172,7 +172,7 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	@Override
-	public Element getGitHubMessage() {
+	public Element getGitHubMessageElement() {
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {

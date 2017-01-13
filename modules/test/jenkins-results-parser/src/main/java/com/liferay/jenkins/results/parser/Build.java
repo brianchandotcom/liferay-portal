@@ -60,9 +60,9 @@ public interface Build {
 
 	public long getDuration();
 
-	public Element getGitHubMessage();
+	public Element getGitHubMessageBuildAnchorElement();
 
-	public Element getGitHubMessageBuildAnchor();
+	public Element getGitHubMessageElement();
 
 	public String getInvocationURL();
 

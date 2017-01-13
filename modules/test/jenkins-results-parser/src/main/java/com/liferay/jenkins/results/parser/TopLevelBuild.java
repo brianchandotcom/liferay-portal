@@ -62,15 +62,15 @@ public class TopLevelBuild extends BaseBuild {
 	}
 
 	@Override
-	public Element getGitHubMessage() {
+	public Element getGitHubMessageElement() {
 		Collections.sort(
 			downstreamBuilds, new BaseBuild.BuildDisplayNameComparator());
 
 		if (getParentBuild() == null) {
-			return getTopGitHubMessage();
+			return getTopGitHubMessageElement();
 		}
 
-		return super.getGitHubMessage();
+		return super.getGitHubMessageElement();
 	}
 
 	public Map<String, String> getGitRepositoryDetailsTempMap(
@@ -242,7 +242,7 @@ public class TopLevelBuild extends BaseBuild {
 		return buildTimeElement;
 	}
 
-	protected Element getDownstreamGitHubMessage() {
+	protected Element getDownstreamGitHubMessageElement() {
 		String status = getStatus();
 
 		if (!status.equals("completed") && (getParentBuild() != null)) {
@@ -363,7 +363,8 @@ public class TopLevelBuild extends BaseBuild {
 			Element jobSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", jobSummaryListElement);
 
-			jobSummaryListItemElement.add(build.getGitHubMessageBuildAnchor());
+			jobSummaryListItemElement.add(
+				build.getGitHubMessageBuildAnchorElement());
 		}
 
 		return jobSummaryListElement;
@@ -456,7 +457,7 @@ public class TopLevelBuild extends BaseBuild {
 		return null;
 	}
 
-	protected Element getTopGitHubMessage() {
+	protected Element getTopGitHubMessageElement() {
 		update();
 
 		Element rootElement = new DefaultElement("html");
@@ -479,7 +480,8 @@ public class TopLevelBuild extends BaseBuild {
 				"ol", rootElement);
 
 			failedJobsOrderedListElement.add(
-				Dom4JUtil.wrapWithNewElement(super.getGitHubMessage(), "li"));
+				Dom4JUtil.wrapWithNewElement(
+					super.getGitHubMessageElement(), "li"));
 
 			int failureCount = 1;
 
@@ -492,7 +494,8 @@ public class TopLevelBuild extends BaseBuild {
 					continue;
 				}
 
-				Element failureElement = downstreamBuild.getGitHubMessage();
+				Element failureElement =
+					downstreamBuild.getGitHubMessageElement();
 
 				if (isHighPriorityBuildFailureElement(failureElement)) {
 					failureElements.add(0, failureElement);
@@ -500,7 +503,7 @@ public class TopLevelBuild extends BaseBuild {
 					continue;
 				}
 
-				failureElements.add(downstreamBuild.getGitHubMessage());
+				failureElements.add(downstreamBuild.getGitHubMessageElement());
 			}
 
 			for (Element failureElement : failureElements) {

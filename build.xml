@@ -9,6 +9,46 @@
 		<antcall target="deploy" />
 	</target>
 
+	<target name="baseline-current-branch">
+		<java
+			classname="com.liferay.portal.tools.GitUtil"
+			classpathref="project.classpath"
+			dir="${project.dir}/modules"
+			failonerror="true"
+			fork="true"
+			newenvironment="true"
+			outputProperty="baseline.current.branch.dirs"
+		>
+			<arg value="git.marker.file=bnd.bnd" />
+			<arg value="tools.throw.main.exception=true" />
+		</java>
+
+		<for delimiter="${line.separator}" list="${baseline.current.branch.dirs}" param="baseline.current.branch.dir">
+			<sequential>
+				<if>
+					<not>
+						<contains string="@{baseline.current.branch.dir}" substring=" " />
+					</not>
+					<then>
+						<propertyregex
+							global="true"
+							input="@{baseline.current.branch.dir}"
+							override="true"
+							property="baseline.current.branch.project.path"
+							regexp="/"
+							replace=":"
+						/>
+
+						<gradle-execute dir="${project.dir}/modules" forcedcacheenabled="false" task=":${baseline.current.branch.project.path}:baseline">
+							<arg value="--parallel" />
+							<arg value="-Dbaseline.ignoreFailures=true" />
+						</gradle-execute>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="clean">
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="benchmarks" inheritAll="false" target="clean" />

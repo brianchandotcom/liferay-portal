@@ -148,20 +148,6 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void assertConsoleTextNotPresent(String text)
-		throws Exception {
-
-		if (isConsoleTextPresent(text)) {
-			throw new Exception("\"" + text + "\" is present in console");
-		}
-	}
-
-	public static void assertConsoleTextPresent(String text) throws Exception {
-		if (!isConsoleTextPresent(text)) {
-			throw new Exception("\"" + text + "\" is not present in console");
-		}
-	}
-
 	public static void assertLocation(
 			LiferaySelenium liferaySelenium, String pattern)
 		throws Exception {

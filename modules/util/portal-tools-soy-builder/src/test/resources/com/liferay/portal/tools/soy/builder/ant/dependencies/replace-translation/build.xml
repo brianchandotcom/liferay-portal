@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<taskdef classpath="${soy.builder.classpath}" resource="com/liferay/portal/tools/soy/builder/ant/taskdefs.properties" />
+
+	<target name="replace-translation">
+		<replace-translation
+			dir="${replace.translation.dir}"
+		/>
+	</target>
+</project>

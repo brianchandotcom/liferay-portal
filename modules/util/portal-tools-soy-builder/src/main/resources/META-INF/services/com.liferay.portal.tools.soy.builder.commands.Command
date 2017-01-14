@@ -1,0 +1,1 @@
+com.liferay.portal.tools.soy.builder.commands.ReplaceTranslationCommand

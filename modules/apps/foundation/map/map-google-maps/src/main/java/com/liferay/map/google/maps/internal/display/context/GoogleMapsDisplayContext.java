@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletPreferences;
@@ -41,6 +42,16 @@ public class GoogleMapsDisplayContext {
 			PrefsPropsUtil.getPreferences(themeDisplay.getCompanyId());
 
 		return companyPortletPreferences.getValue("googleMapsAPIKey", null);
+	}
+
+	public String getConfigurationPrefix() {
+		if (Validator.isNull(_configurationPrefix)) {
+			_configurationPrefix = GetterUtil.getString(
+				_request.getAttribute("configurationPrefix"),
+				"TypeSettingsProperties");
+		}
+
+		return _configurationPrefix;
 	}
 
 	public String getGoogleMapsAPIKey() {
@@ -82,6 +93,7 @@ public class GoogleMapsDisplayContext {
 		return null;
 	}
 
+	private String _configurationPrefix;
 	private String _googleMapsAPIKey;
 	private final HttpServletRequest _request;
 

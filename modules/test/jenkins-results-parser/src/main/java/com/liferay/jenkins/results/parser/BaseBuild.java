@@ -436,14 +436,14 @@ public abstract class BaseBuild implements Build {
 			}
 			catch (IOException ioe) {
 				throw new RuntimeException(
-					"Unable to get build.properties.", ioe);
+					"Unable to get build.properties", ioe);
 			}
 
 			repositoryName = buildProperties.getProperty(sb.toString());
 
 			if (repositoryName == null) {
 				throw new RuntimeException(
-					"Unable to find repository name for job " +
+					"Unable to get repository name for job " +
 						topLevelBuild.getJobName());
 			}
 		}

@@ -106,9 +106,9 @@ public abstract class BaseFailureMessageGenerator
 	protected Element getGitCommitPluginsAnchorElement(
 		TopLevelBuild topLevelBuild) {
 
-		String repositoryName = topLevelBuild.getRepositoryName();
-
 		String portalRepositoryName = "liferay-portal";
+
+		String repositoryName = topLevelBuild.getRepositoryName();
 
 		if (repositoryName.endsWith("-ee")) {
 			portalRepositoryName += "-ee";

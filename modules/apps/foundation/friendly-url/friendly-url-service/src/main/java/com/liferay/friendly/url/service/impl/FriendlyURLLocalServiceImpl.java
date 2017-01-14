@@ -188,9 +188,18 @@ public class FriendlyURLLocalServiceImpl
 		long companyId, long groupId, long classNameId, long classPK,
 		String urlTitle) {
 
+		int maxLength = ModelHintsUtil.getMaxLength(
+			FriendlyURL.class.getName(), "urlTitle");
+
+		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
+			urlTitle);
+
+		String curUrlTitle = normalizedUrlTitle.substring(
+			0, Math.min(maxLength, normalizedUrlTitle.length()));
+
 		for (int i = 1;; i++) {
 			FriendlyURL curFriendlyURL = fetchFriendlyURL(
-				companyId, groupId, classNameId, urlTitle);
+				companyId, groupId, classNameId, curUrlTitle);
 
 			if ((curFriendlyURL == null) ||
 				(curFriendlyURL.getClassPK() == classPK)) {
@@ -200,17 +209,15 @@ public class FriendlyURLLocalServiceImpl
 
 			String suffix = StringPool.DASH + i;
 
-			String prefix = urlTitle;
+			String prefix = normalizedUrlTitle.substring(
+				0,
+				Math.min(
+					maxLength - suffix.length(), normalizedUrlTitle.length()));
 
-			if (urlTitle.length() > suffix.length()) {
-				prefix = urlTitle.substring(
-					0, urlTitle.length() - suffix.length());
-			}
-
-			urlTitle = prefix + suffix;
+			curUrlTitle = prefix + suffix;
 		}
 
-		return urlTitle;
+		return curUrlTitle;
 	}
 
 	@Override

@@ -668,16 +668,22 @@ app.server.type=@{app.server.type}]]></echo>
 							</antcall>
 
 							<if>
-								<and>
-									<matches pattern="https?://" string="@{test.license.xml.url}" />
-									<not>
-										<equals arg1="${test.deploy.license}" arg2="false" />
-									</not>
-								</and>
+								<matches pattern="https?://" string="@{test.license.xml.url}" />
 								<then>
-									<antcall target="deploy-license-xml">
-										<param name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
-									</antcall>
+									<var name="test.build.license.xml.zip.url" unset="true" />
+
+									<property name="test.build.license.xml.zip.url" value="@{test.license.xml.url}" />
+
+									<echo append="true" file="test.${env.HOSTNAME}.properties"><![CDATA[${line.separator}test.build.license.xml.zip.url=@{test.license.xml.url}]]></echo>
+								</then>
+							</if>
+
+							<if>
+								<not>
+									<equals arg1="${test.deploy.license}" arg2="false" />
+								</not>
+								<then>
+									<antcall target="deploy-license-xml" />
 								</then>
 							</if>
 

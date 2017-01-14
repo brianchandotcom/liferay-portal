@@ -316,6 +316,15 @@ public interface DDMDataProviderInstanceLocalService extends BaseLocalService,
 		long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<DDMDataProviderInstance> search(long companyId,
 		long[] groupIds, java.lang.String keywords, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator);

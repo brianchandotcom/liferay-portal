@@ -382,6 +382,21 @@ public class DDMDataProviderInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds, int start, int end) {
+		return _ddmDataProviderInstanceLocalService.getDataProviderInstances(groupIds,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> orderByComparator) {
+		return _ddmDataProviderInstanceLocalService.getDataProviderInstances(groupIds,
+			start, end, orderByComparator);
+	}
+
+	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMDataProviderInstance> search(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end,

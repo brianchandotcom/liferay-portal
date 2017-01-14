@@ -228,6 +228,23 @@ public class DDMDataProviderInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds, int start, int end) {
+
+		return ddmDataProviderInstancePersistence.findByGroupId(
+			groupIds, start, end);
+	}
+
+	@Override
+	public List<DDMDataProviderInstance> getDataProviderInstances(
+		long[] groupIds, int start, int end,
+		OrderByComparator<DDMDataProviderInstance> orderByComparator) {
+
+		return ddmDataProviderInstancePersistence.findByGroupId(
+			groupIds, start, end, orderByComparator);
+	}
+
+	@Override
 	public List<DDMDataProviderInstance> search(
 		long companyId, long[] groupIds, String keywords, int start, int end,
 		OrderByComparator<DDMDataProviderInstance> orderByComparator) {

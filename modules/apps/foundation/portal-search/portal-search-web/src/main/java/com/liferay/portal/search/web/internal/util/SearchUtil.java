@@ -155,10 +155,9 @@ public class SearchUtil {
 	}
 
 	public static String getSearchResultViewURL(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			String className, long classPK, boolean viewInContext,
-			String currentURL)
-		throws Exception {
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		String className, long classPK, boolean viewInContext,
+		String currentURL) {
 
 		try {
 			PortletURL viewContentURL = renderResponse.createRenderURL();

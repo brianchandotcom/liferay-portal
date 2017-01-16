@@ -74,7 +74,10 @@ public class DefaultDDLFormRuleAction implements DDLFormRuleAction {
 
 	@Override
 	public String serialize() {
-		return _ddlFormRuleActionSerializer.serialize(this);
+		DDLFormRuleActionSerializer ddlFormRuleActionSerializer =
+			new DefaultDDLFormRuleActionSerializer(this);
+
+		return ddlFormRuleActionSerializer.serialize();
 	}
 
 	public void setAction(String action) {
@@ -84,9 +87,6 @@ public class DefaultDDLFormRuleAction implements DDLFormRuleAction {
 	public void setTarget(String target) {
 		_target = target;
 	}
-
-	private static final DDLFormRuleActionSerializer<DefaultDDLFormRuleAction>
-		_ddlFormRuleActionSerializer = new DefaultDDLFormRuleActionSerializer();
 
 	private String _action;
 	private String _target;

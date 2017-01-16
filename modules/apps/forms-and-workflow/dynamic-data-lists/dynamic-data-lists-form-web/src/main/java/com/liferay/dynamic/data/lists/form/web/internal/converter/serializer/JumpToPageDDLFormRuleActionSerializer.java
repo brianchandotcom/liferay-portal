@@ -20,16 +20,25 @@ import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.J
  * @author Leonardo Barros
  */
 public class JumpToPageDDLFormRuleActionSerializer
-	extends DDLFormRuleActionSerializer<JumpToPageDDLFormRuleAction> {
+	implements DDLFormRuleActionSerializer {
+
+	public JumpToPageDDLFormRuleActionSerializer(
+		JumpToPageDDLFormRuleAction jumpToPageDDLFormRuleAction) {
+
+		_jumpToPageDDLFormRuleAction = jumpToPageDDLFormRuleAction;
+	}
 
 	@Override
-	public String serialize(JumpToPageDDLFormRuleAction ddlFormRuleAction) {
-		String functionName = actionFunctionNameMap.get(
-			ddlFormRuleAction.getAction());
-
+	public String serialize() {
 		return String.format(
-			functionCallBinaryExpressionFormat, functionName,
-			ddlFormRuleAction.getSource(), ddlFormRuleAction.getTarget());
+			_functionCallBinaryExpressionFormat, "jumpPage",
+			_jumpToPageDDLFormRuleAction.getSource(),
+			_jumpToPageDDLFormRuleAction.getTarget());
 	}
+
+	private static final String _functionCallBinaryExpressionFormat =
+		"%s(%s, %s)";
+
+	private final JumpToPageDDLFormRuleAction _jumpToPageDDLFormRuleAction;
 
 }

@@ -69,17 +69,15 @@ public class JumpToPageDDLFormRuleAction extends DefaultDDLFormRuleAction {
 
 	@Override
 	public String serialize() {
-		return _ddlFormRuleActionSerializer.serialize(this);
+		DDLFormRuleActionSerializer ddlFormRuleActionSerializer =
+			new JumpToPageDDLFormRuleActionSerializer(this);
+
+		return ddlFormRuleActionSerializer.serialize();
 	}
 
 	public void setSource(String source) {
 		_source = source;
 	}
-
-	private static final
-		DDLFormRuleActionSerializer<JumpToPageDDLFormRuleAction>
-			_ddlFormRuleActionSerializer =
-				new JumpToPageDDLFormRuleActionSerializer();
 
 	private String _source;
 

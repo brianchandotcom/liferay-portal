@@ -16,20 +16,43 @@ package com.liferay.dynamic.data.lists.form.web.internal.converter.serializer;
 
 import com.liferay.dynamic.data.lists.form.web.internal.converter.model.action.DefaultDDLFormRuleAction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Leonardo Barros
  */
 public class DefaultDDLFormRuleActionSerializer
-	extends DDLFormRuleActionSerializer<DefaultDDLFormRuleAction> {
+	implements DDLFormRuleActionSerializer {
+
+	public DefaultDDLFormRuleActionSerializer(
+		DefaultDDLFormRuleAction defaultDDLFormRuleAction) {
+
+		_defaultDefaultDDLFormRuleAction = defaultDDLFormRuleAction;
+	}
 
 	@Override
-	public String serialize(DefaultDDLFormRuleAction ddlFormRuleAction) {
-		String functionName = actionBooleanFunctionNameMap.get(
-			ddlFormRuleAction.getAction());
+	public String serialize() {
+		String functionName = _actionBooleanFunctionNameMap.get(
+			_defaultDefaultDDLFormRuleAction.getAction());
 
 		return String.format(
-			setBooleanPropertyFormat, functionName,
-			ddlFormRuleAction.getTarget());
+			_setBooleanPropertyFormat, functionName,
+			_defaultDefaultDDLFormRuleAction.getTarget());
+	}
+
+	private DefaultDDLFormRuleAction _defaultDefaultDDLFormRuleAction;
+
+	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
+
+	private static final Map<String, String> _actionBooleanFunctionNameMap =
+		new HashMap<>();
+
+	static {
+		_actionBooleanFunctionNameMap.put("enable", "setEnabled");
+		_actionBooleanFunctionNameMap.put("invalidate", "setInvalid");
+		_actionBooleanFunctionNameMap.put("require", "setRequired");
+		_actionBooleanFunctionNameMap.put("show", "setVisible");
 	}
 
 }

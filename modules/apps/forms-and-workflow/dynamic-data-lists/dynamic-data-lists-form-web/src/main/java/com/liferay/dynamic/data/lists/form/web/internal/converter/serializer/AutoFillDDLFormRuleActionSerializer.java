@@ -26,19 +26,24 @@ import java.util.Map.Entry;
  * @author Leonardo Barros
  */
 public class AutoFillDDLFormRuleActionSerializer
-	extends DDLFormRuleActionSerializer<AutoFillDDLFormRuleAction> {
+	implements DDLFormRuleActionSerializer {
+
+	public AutoFillDDLFormRuleActionSerializer(
+		AutoFillDDLFormRuleAction autoFillDDLFormRuleAction) {
+
+		_autoFillDDLFormRuleAction = autoFillDDLFormRuleAction;
+	}
 
 	@Override
-	public String serialize(AutoFillDDLFormRuleAction ddlFormRuleAction) {
+	public String serialize() {
 		return String.format(
-			functionCallTernaryExpressionFormat,
-			actionFunctionNameMap.get(ddlFormRuleAction.getAction()),
+			_functionCallTernaryExpressionFormat, "call",
 			StringUtil.quote(
-				ddlFormRuleAction.getDDMDataProviderInstanceUUID()),
+				_autoFillDDLFormRuleAction.getDDMDataProviderInstanceUUID()),
 			convertAutoFillInputParameters(
-				ddlFormRuleAction.getInputParametersMapper()),
+				_autoFillDDLFormRuleAction.getInputParametersMapper()),
 			convertAutoFillOutputParameters(
-				ddlFormRuleAction.getOutputParametersMapper()));
+				_autoFillDDLFormRuleAction.getOutputParametersMapper()));
 	}
 
 	protected String convertAutoFillInputParameters(
@@ -80,5 +85,10 @@ public class AutoFillDDLFormRuleActionSerializer
 
 		return StringUtil.quote(sb.toString());
 	}
+
+	private static final String _functionCallTernaryExpressionFormat =
+		"%s(%s, %s, %s)";
+
+	private final AutoFillDDLFormRuleAction _autoFillDDLFormRuleAction;
 
 }

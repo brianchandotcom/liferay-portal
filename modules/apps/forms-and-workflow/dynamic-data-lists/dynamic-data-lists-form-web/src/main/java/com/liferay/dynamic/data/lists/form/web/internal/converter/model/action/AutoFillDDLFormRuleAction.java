@@ -98,7 +98,10 @@ public class AutoFillDDLFormRuleAction implements DDLFormRuleAction {
 
 	@Override
 	public String serialize() {
-		return _ddlFormRuleActionSerializer.serialize(this);
+		DDLFormRuleActionSerializer ddlFormRuleActionSerializer =
+			new AutoFillDDLFormRuleActionSerializer(this);
+
+		return ddlFormRuleActionSerializer.serialize();
 	}
 
 	public void setDDMDataProviderInstanceUUID(
@@ -114,10 +117,6 @@ public class AutoFillDDLFormRuleAction implements DDLFormRuleAction {
 	public void setOutputParametersMapper(Map<String, String> outputMapper) {
 		_outputMapper = outputMapper;
 	}
-
-	private static final DDLFormRuleActionSerializer<AutoFillDDLFormRuleAction>
-		_ddlFormRuleActionSerializer =
-			new AutoFillDDLFormRuleActionSerializer();
 
 	private String _ddmDataProviderInstanceUUID;
 	private Map<String, String> _inputMapper = new LinkedHashMap<>();

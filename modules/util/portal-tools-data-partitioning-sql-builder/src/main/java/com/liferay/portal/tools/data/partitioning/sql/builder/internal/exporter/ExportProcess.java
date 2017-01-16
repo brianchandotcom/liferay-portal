@@ -16,10 +16,10 @@ package com.liferay.portal.tools.data.partitioning.sql.builder.internal.exporter
 
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.DBExporter;
 import com.liferay.portal.tools.data.partitioning.sql.builder.exporter.context.ExportContext;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.DeleteExportProcessCommand;
 import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.ExportProcessCommand;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.impl.DeleteExportProcessCommand;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.impl.InsertControlExportProcessCommand;
-import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.impl.InsertPartitionedExportProcessCommand;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.InsertControlExportProcessCommand;
+import com.liferay.portal.tools.data.partitioning.sql.builder.internal.command.InsertPartitionedExportProcessCommand;
 
 import java.io.IOException;
 

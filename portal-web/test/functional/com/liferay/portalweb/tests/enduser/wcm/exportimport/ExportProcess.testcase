@@ -56,4 +56,20 @@
 			<var name="larFileName" value="DMExport" />
 		</execute>
 	</command>
+
+	<command name="ViewExportProcess" priority="3">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="LAR#configureExportSiteCP">
+			<var name="larFileName" value="CustomExport" />
+		</execute>
+
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
+
+		<execute macro="LAR#viewProcessesInListView" />
+
+		<execute macro="LAR#filterCompletedProcesses" />
+
+		<execute macro="LAR#viewProcessesInDescendingOrder" />
+	</command>
 </definition>

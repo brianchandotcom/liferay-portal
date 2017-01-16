@@ -184,6 +184,8 @@ public class OrganizationIndexerTest {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
+		searchContext.setEntryClassNames(
+			new String[] {Organization.class.getName()});
 		searchContext.setKeywords(keywords);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

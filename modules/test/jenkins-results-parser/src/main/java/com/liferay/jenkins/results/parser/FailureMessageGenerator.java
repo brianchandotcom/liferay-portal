@@ -14,7 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.tools.ant.Project;
+import java.util.Hashtable;
+
+import org.dom4j.Element;
 
 /**
  * @author Peter Yoo
@@ -22,7 +24,8 @@ import org.apache.tools.ant.Project;
 public interface FailureMessageGenerator {
 
 	public String getMessage(
-			String buildURL, String consoleOutput, Project project)
-		throws Exception;
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties);
+
+	public Element getMessageElement(Build build);
 
 }

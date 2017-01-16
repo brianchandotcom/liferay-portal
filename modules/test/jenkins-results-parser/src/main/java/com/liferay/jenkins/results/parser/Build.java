@@ -78,9 +78,11 @@ public interface Build {
 
 	public Build getParentBuild();
 
+	public String getRepositoryName();
+
 	public String getResult();
 
-	public Map<String, String> getStartPropertiesMap();
+	public Map<String, String> getStartPropertiesTempMap();
 
 	public String getStatus();
 
@@ -92,7 +94,7 @@ public interface Build {
 
 	public String getStatusSummary();
 
-	public Map<String, String> getStopPropertiesMap();
+	public Map<String, String> getStopPropertiesTempMap();
 
 	public JSONObject getTestReportJSONObject();
 

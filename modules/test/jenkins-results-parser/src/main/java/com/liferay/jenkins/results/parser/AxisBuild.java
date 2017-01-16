@@ -211,9 +211,10 @@ public class AxisBuild extends BaseBuild {
 		sb.append(topLevelBuild.getMaster());
 		sb.append("/");
 
-		Map<String, String> startPropertiesMap = getStartPropertiesMap();
+		Map<String, String> startPropertiesTempMap =
+			getStartPropertiesTempMap();
 
-		sb.append(startPropertiesMap.get("TOP_LEVEL_START_TIME"));
+		sb.append(startPropertiesTempMap.get("TOP_LEVEL_START_TIME"));
 
 		sb.append("/");
 		sb.append(topLevelBuild.getJobName());

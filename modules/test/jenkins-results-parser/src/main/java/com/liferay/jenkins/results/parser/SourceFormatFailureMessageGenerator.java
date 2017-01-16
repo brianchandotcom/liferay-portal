@@ -14,7 +14,9 @@
 
 package com.liferay.jenkins.results.parser;
 
-import org.apache.tools.ant.Project;
+import java.util.Hashtable;
+
+import org.dom4j.Element;
 
 /**
  * @author Peter Yoo
@@ -24,22 +26,37 @@ public class SourceFormatFailureMessageGenerator
 
 	@Override
 	public String getMessage(
-			String buildURL, String consoleOutput, Project project)
-		throws Exception {
+		String buildURL, String consoleOutput, Hashtable<?, ?> properties) {
 
 		if (!consoleOutput.contains(_SOURCE_FORMAT_STRING)) {
 			return null;
 		}
 
-		int end = consoleOutput.indexOf(_SOURCE_FORMAT_STRING);
+		consoleOutput = consoleOutput.substring(
+			consoleOutput.lastIndexOf("format-source:"));
 
-		end = consoleOutput.indexOf("[exec] :", end);
+		int end = consoleOutput.indexOf("merge-test-results:");
 
 		return getConsoleOutputSnippet(consoleOutput, true, end);
 	}
 
+	@Override
+	public Element getMessageElement(Build build) {
+		String consoleText = build.getConsoleText();
+
+		if (!consoleText.contains(_SOURCE_FORMAT_STRING)) {
+			return null;
+		}
+
+		consoleText = consoleText.substring(
+			consoleText.lastIndexOf("format-source:"));
+
+		int end = consoleText.indexOf("merge-test-results:");
+
+		return getConsoleOutputSnippetElement(consoleText, true, end);
+	}
+
 	private static final String _SOURCE_FORMAT_STRING =
-		"[exec] com.liferay.source.formatter.SourceFormatterTest > " +
-			"testSourceFormatter FAILED";
+		"at com.liferay.source.formatter.SourceFormatter.format";
 
 }

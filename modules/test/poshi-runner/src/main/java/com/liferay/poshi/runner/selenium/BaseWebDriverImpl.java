@@ -245,12 +245,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void assertConsoleTextNotPresent(String text) throws Exception {
-		LiferaySeleniumHelper.assertConsoleTextNotPresent(text);
+		if (isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is present in console");
+		}
 	}
 
 	@Override
 	public void assertConsoleTextPresent(String text) throws Exception {
-		LiferaySeleniumHelper.assertConsoleTextPresent(text);
+		if (!isConsoleTextPresent(text)) {
+			throw new Exception("\"" + text + "\" is not present in console");
+		}
 	}
 
 	@Override
@@ -1206,6 +1210,16 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		String confirmation = getConfirmation();
 
 		return pattern.equals(confirmation);
+	}
+
+	@Override
+	public boolean isConsoleTextNotPresent(String text) throws Exception {
+		return !LiferaySeleniumHelper.isConsoleTextPresent(text);
+	}
+
+	@Override
+	public boolean isConsoleTextPresent(String text) throws Exception {
+		return LiferaySeleniumHelper.isConsoleTextPresent(text);
 	}
 
 	@Override
@@ -2467,6 +2481,44 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			}
 			catch (Exception e) {
 			}
+		}
+	}
+
+	@Override
+	public void waitForConsoleTextNotPresent(String text) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertConsoleTextNotPresent(text);
+			}
+
+			try {
+				if (isConsoleTextNotPresent(text)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
+		}
+	}
+
+	@Override
+	public void waitForConsoleTextPresent(String text) throws Exception {
+		for (int second = 0;; second++) {
+			if (second >= PropsValues.TIMEOUT_EXPLICIT_WAIT) {
+				assertConsoleTextPresent(text);
+			}
+
+			try {
+				if (isConsoleTextPresent(text)) {
+					break;
+				}
+			}
+			catch (Exception e) {
+			}
+
+			Thread.sleep(1000);
 		}
 	}
 

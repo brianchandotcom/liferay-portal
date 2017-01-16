@@ -1847,6 +1847,23 @@ wrapper.java.additional.11="-Dfile.encoding=UTF-8"]]></replacevalue>
 			<replacevalue><![CDATA[xmlValidation="false" deployXML="false" xmlNamespaceAware="false">]]></replacevalue>
 		</replace>-->
 
+		<replace file="${app.server.tomcat.dir}/conf/web.xml">
+			<replacetoken><![CDATA[<load-on-startup>3</load-on-startup>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					<init-param>
+						<param-name>compilerSourceVM</param-name>
+						<param-value>1.8</param-value>
+					</init-param>
+					<init-param>
+						<param-name>compilerTargetVM</param-name>
+						<param-value>1.8</param-value>
+					</init-param>
+					<load-on-startup>3</load-on-startup>
+				]]>
+			</replacevalue>
+		</replace>
+
 		<if>
 			<available file="${jdk.windows.home}/jre/bin/java.exe" />
 			<then>

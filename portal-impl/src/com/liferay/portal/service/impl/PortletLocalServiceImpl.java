@@ -1167,6 +1167,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 		}
 
+		Portlet existingPortlet = portletPersistence.fetchByC_P(
+			portlet.getCompanyId(), portlet.getPortletId());
+
+		if (existingPortlet != null) {
+			boolean active = existingPortlet.isActive();
+			portlet.setActive(active);
+		}
+
 		updatePortlet(
 			portlet.getCompanyId(), portlet.getPortletId(), StringPool.BLANK,
 			portlet.isActive());

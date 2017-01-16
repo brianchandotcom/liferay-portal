@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+import java.io.StringReader;
+
+import java.util.Properties;
+
 /**
  * @author Peter Yoo
  */
@@ -71,6 +76,31 @@ public class BuildFactory {
 		}
 
 		return topLevelBuild;
+	}
+
+	public static Build newBuildFromArchive(String archiveName) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("${dependencies.url}/");
+		sb.append(archiveName);
+		sb.append("/");
+		sb.append("archive.properties");
+
+		Properties archiveProperties = new Properties();
+
+		try {
+			archiveProperties.load(
+				new StringReader(
+					JenkinsResultsParserUtil.toString(
+						JenkinsResultsParserUtil.getLocalURL(sb.toString()))));
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException(
+				"Unable to find archive " + archiveName, ioe);
+		}
+
+		return newBuild(
+			archiveProperties.getProperty("top.level.build.url"), null);
 	}
 
 	private static final String[] _BATCH_INDICATORS =

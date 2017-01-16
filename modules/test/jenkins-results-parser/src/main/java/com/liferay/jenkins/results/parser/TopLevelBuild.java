@@ -15,6 +15,7 @@
 package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
+import java.io.StringWriter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +41,26 @@ public class TopLevelBuild extends BaseBuild {
 	@Override
 	public void archive(String archiveName) {
 		super.archive(archiveName);
+
+		if (getParentBuild() == null) {
+			Properties archiveProperties = new Properties();
+
+			archiveProperties.setProperty(
+				"top.level.build.url", replaceBuildURL(getBuildURL()));
+
+			try {
+				StringWriter sw = new StringWriter();
+
+				archiveProperties.store(sw, null);
+
+				writeArchiveFile(
+					sw.toString(), archiveName + "/archive.properties");
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(
+					"Unable to write archive properties");
+			}
+		}
 
 		try {
 			writeArchiveFile(

@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -66,9 +68,15 @@ public class RequestBackedPortletURLFactoryUtil {
 		Layout layout = null;
 
 		try {
-			long plid = PortalUtil.getControlPanelPlid(companyId);
+			Group controlPanelGroup = GroupLocalServiceUtil.getGroup(
+				companyId, GroupConstants.CONTROL_PANEL);
 
-			layout = LayoutLocalServiceUtil.getLayout(plid);
+			layout = LayoutLocalServiceUtil.getDefaultLayout(
+				controlPanelGroup.getGroupId(), true);
+
+			if (layout == null) {
+				return null;
+			}
 		}
 		catch (PortalException pe) {
 			_log.error("Unable to get control panel layout", pe);

@@ -16,7 +16,7 @@ package com.liferay.gradle.plugins.dependency.checker;
 
 import com.liferay.gradle.plugins.dependency.checker.internal.DependencyChecker;
 import com.liferay.gradle.plugins.dependency.checker.internal.DependencyKey;
-import com.liferay.gradle.plugins.dependency.checker.internal.impl.MaxAgeDependencyCheckerImpl;
+import com.liferay.gradle.plugins.dependency.checker.internal.MaxAgeDependencyCheckerImpl;
 import com.liferay.gradle.util.GradleUtil;
 
 import java.io.IOException;

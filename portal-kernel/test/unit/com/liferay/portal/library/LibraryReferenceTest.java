@@ -247,10 +247,8 @@ public class LibraryReferenceTest {
 						Path sourceDirPath = dirPath.resolve(
 							_SRC_JAVA_DIR_NAME);
 
-						Path relativePath = _portalPath.relativize(
-							sourceDirPath);
-
-						String sourceDir = relativePath.toString();
+						String sourceDir = String.valueOf(
+							_portalPath.relativize(sourceDirPath));
 
 						if (File.separatorChar != CharPool.SLASH) {
 							sourceDir = StringUtil.replace(

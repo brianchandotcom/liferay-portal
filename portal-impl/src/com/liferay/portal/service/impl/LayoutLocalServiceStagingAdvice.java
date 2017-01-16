@@ -132,10 +132,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		String methodName = method.getName();
 
-		boolean showIncomplete = false;
-
 		if (!_layoutLocalServiceStagingAdviceMethodNames.contains(methodName)) {
-			return wrapReturnValue(methodInvocation.proceed(), showIncomplete);
+			return wrapReturnValue(methodInvocation.proceed(), false);
 		}
 
 		Object returnValue = null;
@@ -161,11 +159,12 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 					(ServiceContext)arguments[3]);
 			}
 			else {
-				return wrapReturnValue(
-					methodInvocation.proceed(), showIncomplete);
+				return wrapReturnValue(methodInvocation.proceed(), false);
 			}
 		}
 		else if (methodName.equals("getLayouts")) {
+			boolean showIncomplete = false;
+
 			if (arguments.length == 6) {
 				showIncomplete = (Boolean)arguments[3];
 			}
@@ -225,7 +224,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 			}
 		}
 
-		returnValue = wrapReturnValue(returnValue, showIncomplete);
+		returnValue = wrapReturnValue(returnValue, false);
 
 		return returnValue;
 	}

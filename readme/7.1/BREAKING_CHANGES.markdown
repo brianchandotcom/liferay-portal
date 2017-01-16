@@ -105,3 +105,35 @@ parameters. This was done as a preliminary step of a bigger story to create
 portlet URLs without passing the request as a necessary parameter.
 
 ---------------------------------------
+
+### Move the expando custom field tags to expando-taglib
+- **Date:** 2016-Dec-12
+- **JIRA Ticket:** LPS-69400
+
+#### What changed?
+
+The `liferay-ui:custom-attributes-available`,
+`liferay-ui:custom-attribute-list`, and `liferay-ui:custom-attribute` taglibs has been deprecated and replaced with
+`liferay-expando:custom-attributes-available`,
+`liferay-expando:custom-attribute-list`, and
+`liferay-expando:custom-attribute`, respectively.
+
+#### Who is affected?
+
+Plugins and templates that are using the
+`liferay-ui:custom-attributes-available`, `liferay-ui:custom-attribute-list`,
+and `liferay-ui:custom-attribute` taglibs tag need to update their usage of the tag.
+
+#### How should I update my code?
+
+You should import the `liferay-expando` tag library (if necessary) and update the tag namespace from `liferay-ui:custom-attributes-available`,
+`liferay-ui:custom-attribute-list`, and `liferay-ui:custom-attribute` to
+`liferay-expando:custom-attributes-available`,
+`liferay-expando:custom-attribute-list`, and `liferay-expando:custom-attribute`, respectively.
+
+#### Why was this change made?
+
+This change was made as part of the ongoing strategy to modularize Liferay
+Portal by means of an OSGi container.
+
+---------------------------------------

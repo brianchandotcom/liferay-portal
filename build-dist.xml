@@ -1772,6 +1772,24 @@ this task.
 			<replacevalue><![CDATA[redirectPort="${bio.https.port}" URIEncoding="UTF-8"/>]]></replacevalue>
 		</replace>
 
+
+		<replace file="${app.server.tcserver.dir}/liferay/conf/web.xml">
+			<replacetoken><![CDATA[<load-on-startup>3</load-on-startup>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					<init-param>
+						<param-name>compilerSourceVM</param-name>
+						<param-value>1.8</param-value>
+					</init-param>
+					<init-param>
+						<param-name>compilerTargetVM</param-name>
+						<param-value>1.8</param-value>
+					</init-param>
+					<load-on-startup>3</load-on-startup>
+				]]>
+			</replacevalue>
+		</replace>
+
 		<if>
 			<os family="windows" />
 			<then>

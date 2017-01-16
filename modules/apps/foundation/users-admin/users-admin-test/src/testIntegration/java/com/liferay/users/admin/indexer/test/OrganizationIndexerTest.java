@@ -188,7 +188,7 @@ public class OrganizationIndexerTest {
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		queryConfig.addSelectedFieldNames(Field.NAME);
+		queryConfig.setSelectedFieldNames(Field.NAME);
 
 		return _indexer.search(searchContext);
 	}

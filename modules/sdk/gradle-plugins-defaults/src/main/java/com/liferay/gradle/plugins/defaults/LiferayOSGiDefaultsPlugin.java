@@ -118,11 +118,13 @@ import org.gradle.api.UncheckedIOException;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.artifacts.DependencyResolveDetails;
 import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
 import org.gradle.api.artifacts.ExternalDependency;
 import org.gradle.api.artifacts.ModuleDependency;
+import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.ResolveException;
@@ -367,7 +369,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 		_configureBasePlugin(project, portalRootDir);
 		_configureBundleDefaultInstructions(project, portalRootDir, publishing);
-		_configureConfigurations(project);
+		_configureConfigurations(project, liferayExtension);
 		_configureDependencyChecker(project);
 		_configureDeployDir(
 			project, liferayExtension, deployToAppServerLibs, deployToTools);
@@ -1623,6 +1625,41 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureConfigurationJspC(
+		Project project, final LiferayExtension liferayExtension) {
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JspCPlugin.CONFIGURATION_NAME);
+
+		ResolutionStrategy resolutionStrategy =
+			configuration.getResolutionStrategy();
+
+		resolutionStrategy.eachDependency(
+			new Action<DependencyResolveDetails>() {
+
+				@Override
+				public void execute(
+					DependencyResolveDetails dependencyResolveDetails) {
+
+					ModuleVersionSelector moduleVersionSelector =
+						dependencyResolveDetails.getRequested();
+
+					String group = moduleVersionSelector.getGroup();
+					String name = moduleVersionSelector.getName();
+
+					if (group.equals("com.liferay.portal") &&
+						name.equals("com.liferay.util.taglib")) {
+
+						String version = liferayExtension.getDefaultVersion(
+							moduleVersionSelector);
+
+						dependencyResolveDetails.useVersion(version);
+					}
+				}
+
+			});
+	}
+
 	private void _configureConfigurationNoCache(Configuration configuration) {
 		ResolutionStrategy resolutionStrategy =
 			configuration.getResolutionStrategy();
@@ -1631,8 +1668,11 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		resolutionStrategy.cacheDynamicVersionsFor(0, TimeUnit.SECONDS);
 	}
 
-	private void _configureConfigurations(Project project) {
+	private void _configureConfigurations(
+		Project project, LiferayExtension liferayExtension) {
+
 		_configureConfigurationDefault(project);
+		_configureConfigurationJspC(project, liferayExtension);
 
 		String projectPath = project.getPath();
 

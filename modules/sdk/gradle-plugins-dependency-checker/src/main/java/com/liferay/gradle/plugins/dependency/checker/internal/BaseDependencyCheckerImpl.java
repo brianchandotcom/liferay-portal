@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.dependency.checker.internal.impl;
-
-import com.liferay.gradle.plugins.dependency.checker.internal.DependencyChecker;
+package com.liferay.gradle.plugins.dependency.checker.internal;
 
 /**
  * @author Andrea Di Giorgi

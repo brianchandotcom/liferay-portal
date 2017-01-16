@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.gradle.plugins.dependency.checker.internal.impl;
+package com.liferay.gradle.plugins.dependency.checker.internal;
 
 import com.liferay.gradle.plugins.dependency.checker.DependencyCheckerException;
 import com.liferay.gradle.util.Validator;

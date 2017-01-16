@@ -87,50 +87,16 @@ public class MBAttachmentFileEntryUtil {
 		return tempMBAttachmentFileEntries;
 	}
 
-	public static String updateContentBBCode(
-		String content,
+	public static String updateMessageContent(
+		String body, MBMessage message,
 		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
 
-		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
-				mbAttachmentFileEntryReferences) {
-
-			Matcher matcher = _BBCODE_IMG_TAG_REGEXP.matcher(content);
-
-			content = matcher.replaceAll(
-				_getMBAttachmentBBCodeImgTag(
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
+		if (message.isFormatBBCode()) {
+			return _updateContentBBCode(body, mbAttachmentFileEntryReferences);
 		}
-
-		return content;
-	}
-
-	public static String updateContentHTML(
-		String content,
-		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
-
-		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
-				mbAttachmentFileEntryReferences) {
-
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("<\\s*?img");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-			sb.append("\\s*?=\\s*?\"");
-			sb.append(
-				mbAttachmentFileEntryReference.
-					getTempMBAttachmentFileEntryId());
-			sb.append("\"");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append("/>");
-
-			content = content.replaceAll(
-				sb.toString(),
-				_getMBAttachmentHTMLImgTag(
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
+		else {
+			return _updateContentHTML(body, mbAttachmentFileEntryReferences);
 		}
-
-		return content;
 	}
 
 	private static FileEntry _fetchPortletFileEntry(
@@ -198,6 +164,52 @@ public class MBAttachmentFileEntryUtil {
 		throw new PortalException(
 			"Unable to get a unique file name for " + fileName + " in folder " +
 				folderId);
+	}
+
+	private static String _updateContentBBCode(
+		String content,
+		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
+
+		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
+				mbAttachmentFileEntryReferences) {
+
+			Matcher matcher = _BBCODE_IMG_TAG_REGEXP.matcher(content);
+
+			content = matcher.replaceAll(
+				_getMBAttachmentBBCodeImgTag(
+					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
+		}
+
+		return content;
+	}
+
+	private static String _updateContentHTML(
+		String content,
+		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
+
+		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
+				mbAttachmentFileEntryReferences) {
+
+			StringBundler sb = new StringBundler(8);
+
+			sb.append("<\\s*?img");
+			sb.append(_ATTRIBUTE_LIST_REGEXP);
+			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+			sb.append("\\s*?=\\s*?\"");
+			sb.append(
+				mbAttachmentFileEntryReference.
+					getTempMBAttachmentFileEntryId());
+			sb.append("\"");
+			sb.append(_ATTRIBUTE_LIST_REGEXP);
+			sb.append("/>");
+
+			content = content.replaceAll(
+				sb.toString(),
+				_getMBAttachmentHTMLImgTag(
+					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
+		}
+
+		return content;
 	}
 
 	private static final String _ATTRIBUTE_LIST_REGEXP =

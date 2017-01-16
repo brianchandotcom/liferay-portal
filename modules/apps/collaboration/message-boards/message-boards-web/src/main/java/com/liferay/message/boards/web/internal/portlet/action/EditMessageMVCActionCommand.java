@@ -477,14 +477,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 							message.getMessageId(), folder.getFolderId(),
 							tempMBAttachmentFileEntries);
 
-					if (message.isFormatBBCode()) {
-						body = MBAttachmentFileEntryUtil.updateContentBBCode(
-							body, mbAttachmentFileEntryReferences);
-					}
-					else {
-						body = MBAttachmentFileEntryUtil.updateContentHTML(
-							body, mbAttachmentFileEntryReferences);
-					}
+					body = MBAttachmentFileEntryUtil.updateMessageContent(
+						body, message, mbAttachmentFileEntryReferences);
 
 					_mbMessageService.updateMessage(
 						message.getMessageId(), message.getSubject(), body,
@@ -537,14 +531,8 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 								mbAttachmentFileEntry.getFileEntryId()));
 					}
 
-					if (message.isFormatBBCode()) {
-						body = MBAttachmentFileEntryUtil.updateContentBBCode(
-							body, mbAttachmentFileEntryReferences);
-					}
-					else {
-						body = MBAttachmentFileEntryUtil.updateContentHTML(
-							body, mbAttachmentFileEntryReferences);
-					}
+					body = MBAttachmentFileEntryUtil.updateMessageContent(
+						body, message, mbAttachmentFileEntryReferences);
 				}
 
 				// Update message

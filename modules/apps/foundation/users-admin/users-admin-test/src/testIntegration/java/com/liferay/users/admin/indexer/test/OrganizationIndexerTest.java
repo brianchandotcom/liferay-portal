@@ -157,7 +157,7 @@ public class OrganizationIndexerTest {
 	protected void assertHits(String keywords, int length) throws Exception {
 		Hits hits = search(keywords);
 
-		Assert.assertEquals(length, hits.getLength());
+		Assert.assertEquals(hits.toString(), length, hits.getLength());
 	}
 
 	protected void assertSearch(String keywords, List<String> names)

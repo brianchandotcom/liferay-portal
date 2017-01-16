@@ -80,8 +80,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		tag.setUserId(user.getUserId());
 		tag.setUserName(user.getFullName());
 
-		name = StringUtil.trim(name);
-		name = StringUtil.toLowerCase(name);
+		name = StringUtil.toLowerCase(StringUtil.trim(name));
 
 		if (hasTag(groupId, name)) {
 			throw new DuplicateTagException(
@@ -640,8 +639,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		String oldName = tag.getName();
 
-		name = StringUtil.trim(name);
-		name = StringUtil.toLowerCase(name);
+		name = StringUtil.toLowerCase(StringUtil.trim(name));
 
 		if (!name.equals(tag.getName()) && hasTag(tag.getGroupId(), name)) {
 			throw new DuplicateTagException(

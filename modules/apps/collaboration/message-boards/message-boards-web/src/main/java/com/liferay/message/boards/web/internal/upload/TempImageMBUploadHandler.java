@@ -14,10 +14,6 @@
 
 package com.liferay.message.boards.web.internal.upload;
 
-import com.liferay.message.boards.kernel.service.MBMessageLocalService;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageService;
-import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,7 +24,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upload.BaseUploadHandler;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBPermission;
 
 import java.io.InputStream;
 
@@ -43,9 +38,10 @@ public class TempImageMBUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected FileEntry addFileEntry(
-		long userId, long groupId, long folderId, String fileName,
-		String contentType, InputStream inputStream, long size,
-		ServiceContext serviceContext) throws PortalException {
+			long userId, long groupId, long folderId, String fileName,
+			String contentType, InputStream inputStream, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		return TempFileEntryUtil.addTempFileEntry(
 			groupId, userId, TEMP_FOLDER_NAME, fileName, inputStream,
@@ -54,18 +50,16 @@ public class TempImageMBUploadHandler extends BaseUploadHandler {
 
 	@Override
 	protected void checkPermission(
-		long groupId, long folderId, PermissionChecker permissionChecker)
+			long groupId, long folderId, PermissionChecker permissionChecker)
 		throws PortalException {
 
 		MBCategoryPermission.check(
-			permissionChecker, groupId,
-			_categoryId, ActionKeys.ADD_FILE);
-
+			permissionChecker, groupId, _categoryId, ActionKeys.ADD_FILE);
 	}
 
 	@Override
 	protected FileEntry fetchFileEntry(
-		long userId, long groupId, long folderId, String fileName)
+			long userId, long groupId, long folderId, String fileName)
 		throws PortalException {
 
 		try {
@@ -89,11 +83,11 @@ public class TempImageMBUploadHandler extends BaseUploadHandler {
 	@Override
 	protected void validateFile(String fileName, String contentType, long size)
 		throws PortalException {
-
 	}
-
-	private final long _categoryId;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempImageMBUploadHandler.class);
+
+	private final long _categoryId;
+
 }

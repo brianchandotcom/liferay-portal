@@ -19,10 +19,11 @@ import com.liferay.message.boards.web.internal.upload.TempImageMBUploadHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadHandler;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrín Chaudhary
@@ -40,14 +41,15 @@ public class UploadTempImageMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-		ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String categoryId = actionRequest.getParameter("categoryId");
 
-		UploadHandler _uploadHandler = new TempImageMBUploadHandler(Long.valueOf(categoryId));
+		UploadHandler uploadHandler = new TempImageMBUploadHandler(
+			Long.valueOf(categoryId));
 
-		_uploadHandler.upload(actionRequest, actionResponse);
+		uploadHandler.upload(actionRequest, actionResponse);
 	}
 
 }

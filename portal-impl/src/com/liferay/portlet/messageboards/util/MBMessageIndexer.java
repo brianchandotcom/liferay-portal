@@ -369,14 +369,15 @@ public class MBMessageIndexer
 		return content;
 	}
 
-	protected void reindexAttachments(MBMessage mbMessage) throws Exception {
-		List<FileEntry> attachmentsFileEntries =
-			mbMessage.getAttachmentsFileEntries();
+	protected void reindexAttachments(MBMessage mbMessage)
+		throws PortalException {
 
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+		for (FileEntry attachmentsFileEntry :
+				mbMessage.getAttachmentsFileEntries()) {
+
 			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
 		}
 	}

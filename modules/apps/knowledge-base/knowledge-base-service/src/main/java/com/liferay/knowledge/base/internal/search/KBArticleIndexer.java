@@ -210,13 +210,12 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 	protected void reindexAttachments(KBArticle kbArticle)
 		throws PortalException {
 
-		List<FileEntry> attachmentsFileEntries =
-			kbArticle.getAttachmentsFileEntries();
-
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+		for (FileEntry attachmentsFileEntry :
+				kbArticle.getAttachmentsFileEntries()) {
+
 			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
 		}
 	}

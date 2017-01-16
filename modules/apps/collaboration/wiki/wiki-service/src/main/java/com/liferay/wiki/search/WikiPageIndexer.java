@@ -55,7 +55,6 @@ import com.liferay.wiki.service.WikiNodeService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -274,14 +273,15 @@ public class WikiPageIndexer
 		reindexAttachments(wikiPage);
 	}
 
-	protected void reindexAttachments(WikiPage wikiPage) throws Exception {
-		List<FileEntry> attachmentsFileEntries =
-			wikiPage.getAttachmentsFileEntries();
+	protected void reindexAttachments(WikiPage wikiPage)
+		throws PortalException {
 
 		Indexer<DLFileEntry> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			DLFileEntry.class);
 
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+		for (FileEntry attachmentsFileEntry :
+				wikiPage.getAttachmentsFileEntries()) {
+
 			indexer.reindex((DLFileEntry)attachmentsFileEntry.getModel());
 		}
 	}

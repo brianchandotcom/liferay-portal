@@ -285,7 +285,8 @@ public class TopLevelBuild extends BaseBuild {
 			"GITHUB_UPSTREAM_BRANCH_SHA");
 
 		if ((upstreamBranchSHA == null) || upstreamBranchSHA.isEmpty()) {
-			Map<String, String> startPropertiesMap = getStartPropertiesMap();
+			Map<String, String> startPropertiesMap =
+				getStartPropertiesTempMap();
 
 			upstreamBranchSHA = startPropertiesMap.get(
 				"GITHUB_UPSTREAM_BRANCH_SHA");

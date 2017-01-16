@@ -71,7 +71,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 			long time = System.currentTimeMillis();
 
-			Map<String, String> stopPropertiesMap = getStopPropertiesMap();
+			Map<String, String> stopPropertiesMap = getStopPropertiesTempMap();
 
 			while (!stopPropertiesMap.containsKey(
 						"TOP_LEVEL_GITHUB_COMMENT_ID")) {
@@ -86,7 +86,7 @@ public class RebaseErrorTopLevelBuild extends TopLevelBuild {
 
 				JenkinsResultsParserUtil.sleep(10 * 1000);
 
-				stopPropertiesMap = getStopPropertiesMap();
+				stopPropertiesMap = getStopPropertiesTempMap();
 			}
 
 			StringBuilder sb = new StringBuilder();

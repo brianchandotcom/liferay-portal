@@ -211,7 +211,7 @@ public class AxisBuild extends BaseBuild {
 		sb.append(topLevelBuild.getMaster());
 		sb.append("/");
 
-		Map<String, String> startPropertiesMap = getStartPropertiesMap();
+		Map<String, String> startPropertiesMap = getStartPropertiesTempMap();
 
 		sb.append(startPropertiesMap.get("TOP_LEVEL_START_TIME"));
 

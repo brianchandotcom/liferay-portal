@@ -474,7 +474,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Map<String, String> getStartPropertiesMap() {
+	public Map<String, String> getStartPropertiesTempMap() {
 		return getTempMap("start.properties");
 	}
 
@@ -598,7 +598,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Map<String, String> getStopPropertiesMap() {
+	public Map<String, String> getStopPropertiesTempMap() {
 		return getTempMap("stop.properties");
 	}
 
@@ -844,7 +844,7 @@ public abstract class BaseBuild implements Build {
 		downloadSampleURL(
 			getArchivePath(), false, getBuildURL(), "testReport/api/json");
 
-		if (!getStartPropertiesMap().isEmpty()) {
+		if (!getStartPropertiesTempMap().isEmpty()) {
 			try {
 				JSONObject startPropertiesJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(
@@ -860,7 +860,7 @@ public abstract class BaseBuild implements Build {
 			}
 		}
 
-		if (!getStopPropertiesMap().isEmpty()) {
+		if (!getStopPropertiesTempMap().isEmpty()) {
 			try {
 				JSONObject stopPropertiesJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(

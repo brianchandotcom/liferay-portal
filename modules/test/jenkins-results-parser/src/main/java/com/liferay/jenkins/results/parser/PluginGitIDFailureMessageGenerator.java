@@ -99,7 +99,7 @@ public class PluginGitIDFailureMessageGenerator
 			pluginsRepositoryName += "-ee";
 		}
 
-		Map<String, String> pluginsRepositoryGitDetailsMap =
+		Map<String, String> pluginsRepositoryGitDetailsTempMap =
 			topLevelBuild.getGitRepositoryDetailsTempMap(pluginsRepositoryName);
 
 		Element pluginsBranchAnchorElement = new DefaultElement("a");
@@ -110,14 +110,16 @@ public class PluginGitIDFailureMessageGenerator
 		sb.append(pluginsRepositoryName);
 		sb.append("/commits/");
 		sb.append(
-			pluginsRepositoryGitDetailsMap.get("github.upstream.branch.name"));
+			pluginsRepositoryGitDetailsTempMap.get(
+				"github.upstream.branch.name"));
 
 		pluginsBranchAnchorElement.addAttribute("href", sb.toString());
 
 		pluginsBranchAnchorElement.addText(pluginsRepositoryName);
 		pluginsBranchAnchorElement.addText("/");
 		pluginsBranchAnchorElement.addText(
-			pluginsRepositoryGitDetailsMap.get("github.upstream.branch.name"));
+			pluginsRepositoryGitDetailsTempMap.get(
+				"github.upstream.branch.name"));
 
 		return pluginsBranchAnchorElement;
 	}

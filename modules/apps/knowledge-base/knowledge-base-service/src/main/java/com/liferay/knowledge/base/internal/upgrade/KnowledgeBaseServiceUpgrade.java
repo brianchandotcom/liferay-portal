@@ -35,6 +35,11 @@ public class KnowledgeBaseServiceUpgrade implements UpgradeStepRegistrator {
 				new BaseUpgradeServiceModuleRelease() {
 
 					@Override
+					protected String getNamespace() {
+						return "KB";
+					}
+
+					@Override
 					protected String getNewBundleSymbolicName() {
 						return "com.liferay.knowledge.base.service";
 					}

@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.bundle.support.commands;
 
 import com.liferay.portal.tools.bundle.support.internal.util.BundleSupportUtil;
+import com.liferay.portal.tools.bundle.support.internal.util.FileUtil;
 
 import com.sun.net.httpserver.BasicAuthenticator;
 import com.sun.net.httpserver.Headers;
@@ -93,6 +94,8 @@ public class BundleSupportCommandsTest {
 	public void setUp() throws Exception {
 		_authenticatedHttpProxyCounter.set(0);
 		_httpProxyCounter.set(0);
+
+		FileUtil.deleteDirectory(InitBundleCommand.bundlesCacheDirPath);
 	}
 
 	@Test

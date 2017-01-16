@@ -144,6 +144,10 @@ public class FileUtil {
 	}
 
 	public static void deleteDirectory(Path dirPath) throws IOException {
+		if (Files.notExists(dirPath)) {
+			return;
+		}
+
 		Files.walkFileTree(
 			dirPath,
 			new SimpleFileVisitor<Path>() {

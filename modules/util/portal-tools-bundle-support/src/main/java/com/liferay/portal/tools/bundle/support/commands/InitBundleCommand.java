@@ -44,7 +44,7 @@ public class InitBundleCommand extends BaseCommand {
 		_deleteBundle();
 
 		Path path = FileUtil.downloadFile(
-			_url.toURI(), _userName, _password, _bundlesCacheDirPath);
+			_url.toURI(), _userName, _password, bundlesCacheDirPath);
 
 		FileUtil.unpack(path, getLiferayHomePath(), _stripComponents);
 
@@ -128,7 +128,7 @@ public class InitBundleCommand extends BaseCommand {
 		}
 	}
 
-	private static final Path _bundlesCacheDirPath = Paths.get(
+	protected static final Path bundlesCacheDirPath = Paths.get(
 		System.getProperty("user.home"), ".liferay/bundles");
 
 	private static final int _DEFAULT_STRIP_COMPONENTS = 1;

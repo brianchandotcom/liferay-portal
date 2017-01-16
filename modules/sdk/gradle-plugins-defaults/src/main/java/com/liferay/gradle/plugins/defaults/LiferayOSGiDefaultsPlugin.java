@@ -123,10 +123,12 @@ import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.artifacts.DependencySubstitutions;
 import org.gradle.api.artifacts.DependencySubstitutions.Substitution;
 import org.gradle.api.artifacts.ExternalDependency;
+import org.gradle.api.artifacts.ExternalModuleDependency;
 import org.gradle.api.artifacts.ModuleDependency;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.artifacts.ResolvableDependencies;
 import org.gradle.api.artifacts.ResolveException;
 import org.gradle.api.artifacts.component.ComponentSelector;
 import org.gradle.api.artifacts.dsl.ArtifactHandler;
@@ -1624,10 +1626,32 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureConfigurationJspC(
-		Project project, final LiferayExtension liferayExtension) {
+		final Project project, final LiferayExtension liferayExtension) {
 
-		Configuration configuration = GradleUtil.getConfiguration(
+		final Configuration configuration = GradleUtil.getConfiguration(
 			project, JspCPlugin.CONFIGURATION_NAME);
+
+		DependencySet dependencySet = configuration.getAllDependencies();
+
+		dependencySet.withType(
+			ExternalModuleDependency.class,
+			new Action<ExternalModuleDependency>() {
+
+				@Override
+				public void execute(
+					ExternalModuleDependency externalModuleDependency) {
+
+					if (_isTaglibDependency(externalModuleDependency)) {
+						Map<String, String> args = new HashMap<>();
+
+						args.put("group", externalModuleDependency.getGroup());
+						args.put("module", externalModuleDependency.getName());
+
+						configuration.exclude(args);
+					}
+				}
+
+			});
 
 		ResolutionStrategy resolutionStrategy =
 			configuration.getResolutionStrategy();
@@ -1656,6 +1680,56 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				}
 
 			});
+
+		ResolvableDependencies resolvableDependencies =
+			configuration.getIncoming();
+
+		Action<ResolvableDependencies> action =
+			new Action<ResolvableDependencies>() {
+
+				@Override
+				public void execute(
+					ResolvableDependencies resolvableDependencies) {
+
+					DependencySet dependencySet =
+						resolvableDependencies.getDependencies();
+
+					for (ExternalModuleDependency externalModuleDependency :
+							dependencySet.withType(
+								ExternalModuleDependency.class)) {
+
+						if (!_isTaglibDependency(externalModuleDependency)) {
+							continue;
+						}
+
+						File file;
+
+						File osgiDir = new File(
+							liferayExtension.getLiferayHome(), "osgi");
+						String fileName =
+							externalModuleDependency.getName() + ".jar";
+
+						try {
+							file = FileUtil.findFile(osgiDir, fileName);
+						}
+						catch (IOException ioe) {
+							throw new UncheckedIOException(ioe);
+						}
+
+						if (file == null) {
+							throw new GradleException(
+								"Unable to find " + fileName + " in " +
+									osgiDir);
+						}
+
+						GradleUtil.addDependency(
+							project, configuration.getName(), file);
+					}
+				}
+
+			};
+
+		resolvableDependencies.beforeResolve(action);
 	}
 
 	private void _configureConfigurationNoCache(Configuration configuration) {
@@ -3238,6 +3312,21 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isTaglibDependency(
+		ExternalModuleDependency externalModuleDependency) {
+
+		String group = externalModuleDependency.getGroup();
+		String name = externalModuleDependency.getName();
+
+		if (group.equals("com.liferay") && name.startsWith("com.liferay.") &&
+			name.contains(".taglib")) {
+
+			return true;
 		}
 
 		return false;

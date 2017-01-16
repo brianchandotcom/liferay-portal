@@ -988,6 +988,20 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutPersistence.fetchByP_I(privateLayout, iconImageId);
 	}
 
+	@Override
+	public Layout getDefaultLayout(long groupId, boolean privateLayout) {
+		if (groupId > 0) {
+			List<Layout> layouts = layoutPersistence.findByG_P(
+				groupId, privateLayout, 0, 1);
+
+			if (!layouts.isEmpty()) {
+				return layouts.get(0);
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * Returns the primary key of the default layout for the group
 	 *
@@ -1021,15 +1035,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public long getDefaultPlid(long groupId, boolean privateLayout) {
-		if (groupId > 0) {
-			List<Layout> layouts = layoutPersistence.findByG_P(
-				groupId, privateLayout, 0, 1);
+		Layout layout = getDefaultLayout(groupId, privateLayout);
 
-			if (!layouts.isEmpty()) {
-				Layout layout = layouts.get(0);
-
-				return layout.getPlid();
-			}
+		if (layout != null) {
+			return layout.getPlid();
 		}
 
 		return LayoutConstants.DEFAULT_PLID;

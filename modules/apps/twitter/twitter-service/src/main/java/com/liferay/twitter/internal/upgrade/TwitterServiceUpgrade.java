@@ -34,6 +34,11 @@ public class TwitterServiceUpgrade implements UpgradeStepRegistrator {
 				new BaseUpgradeServiceModuleRelease() {
 
 					@Override
+					protected String getNamespace() {
+						return "Twitter";
+					}
+
+					@Override
 					protected String getNewBundleSymbolicName() {
 						return "com.liferay.twitter.service";
 					}

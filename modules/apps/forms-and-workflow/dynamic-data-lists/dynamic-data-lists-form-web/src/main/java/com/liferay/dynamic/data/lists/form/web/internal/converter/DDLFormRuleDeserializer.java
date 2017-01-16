@@ -46,9 +46,8 @@ public class DDLFormRuleDeserializer {
 			rulesJSONArray.length());
 
 		for (int i = 0; i < rulesJSONArray.length(); i++) {
-			JSONObject ruleJSONObject = rulesJSONArray.getJSONObject(i);
-
-			DDLFormRule ddlFormRule = deserializeDDLFormRule(ruleJSONObject);
+			DDLFormRule ddlFormRule = deserializeDDLFormRule(
+				rulesJSONArray.getJSONObject(i));
 
 			ddlFormRules.add(ddlFormRule);
 		}
@@ -57,17 +56,19 @@ public class DDLFormRuleDeserializer {
 	}
 
 	protected DDLFormRule deserializeDDLFormRule(JSONObject ruleJSONObject) {
+		DDLFormRule ddlFormRule = new DDLFormRule();
+
 		List<DDLFormRuleAction> actions = deserializeDDLFormRuleActions(
 			ruleJSONObject.getJSONArray("actions"));
+
+		ddlFormRule.setDDLFormRuleActions(actions);
 
 		List<DDLFormRuleCondition> conditions =
 			deserializeDDLFormRuleConditions(
 				ruleJSONObject.getJSONArray("conditions"));
 
-		DDLFormRule ddlFormRule = new DDLFormRule();
-
-		ddlFormRule.setDDLFormRuleActions(actions);
 		ddlFormRule.setDDLFormRuleConditions(conditions);
+
 		ddlFormRule.setLogicalOperator(
 			ruleJSONObject.getString("logical-operator"));
 
@@ -128,8 +129,9 @@ public class DDLFormRuleDeserializer {
 		else if (action.equals("jump-to-page")) {
 			return JumpToPageDDLFormRuleAction.class;
 		}
-
-		return DefaultDDLFormRuleAction.class;
+		else {
+			return DefaultDDLFormRuleAction.class;
+		}
 	}
 
 	@Reference

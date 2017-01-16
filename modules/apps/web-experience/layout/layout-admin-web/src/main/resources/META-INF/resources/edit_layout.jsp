@@ -19,6 +19,10 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
+if (Validator.isNull(backURL)) {
+	backURL = PortalUtil.getLayoutFullURL(layoutsAdminDisplayContext.getSelLayout(), themeDisplay);
+}
+
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group group = layoutsAdminDisplayContext.getGroup();

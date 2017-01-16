@@ -461,6 +461,9 @@ public interface LayoutLocalService extends BaseLocalService,
 	public Layout fetchLayoutByUuidAndGroupId(java.lang.String uuid,
 		long groupId, boolean privateLayout);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Layout getDefaultLayout(long groupId, boolean privateLayout);
+
 	/**
 	* Returns the layout for the friendly URL
 	*

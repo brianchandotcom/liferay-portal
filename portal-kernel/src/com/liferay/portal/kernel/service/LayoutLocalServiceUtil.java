@@ -546,6 +546,11 @@ public class LayoutLocalServiceUtil {
 				   .fetchLayoutByUuidAndGroupId(uuid, groupId, privateLayout);
 	}
 
+	public static com.liferay.portal.kernel.model.Layout getDefaultLayout(
+		long groupId, boolean privateLayout) {
+		return getService().getDefaultLayout(groupId, privateLayout);
+	}
+
 	/**
 	* Returns the layout for the friendly URL
 	*

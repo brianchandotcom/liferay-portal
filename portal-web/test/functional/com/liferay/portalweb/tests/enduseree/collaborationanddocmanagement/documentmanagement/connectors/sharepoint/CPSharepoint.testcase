@@ -474,11 +474,11 @@
 		</execute>
 
 		<execute macro="DMFolder#addSubfolderCP">
-			<var name="dmSubFolderName" value="Sharepoint Folder" />
+			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
 		</execute>
 
 		<execute macro="DMFolder#viewCP">
-			<var name="dmFolderName" value="Sharepoint Folder" />
+			<var name="dmFolderName" value="Sharepoint Subfolder" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
@@ -538,12 +538,12 @@
 		<execute macro="DMDocument#moveToSubFolderCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
 			<var name="dmFolderName" value="Sharepoint Repository Name" />
-			<var name="dmSubFolderName" value="Sharepoint Folder" />
+			<var name="dmSubFolderName" value="Sharepoint Subfolder" />
 		</execute>
 
 		<execute macro="DMDocument#viewMovedToFolderCP">
 			<var name="dmDocumentTitle" value="Document_1.txt" />
-			<var name="dmFolderName" value="Sharepoint Folder" />
+			<var name="dmFolderName" value="Sharepoint Subfolder" />
 		</execute>
 
 		<execute macro="DMDocument#viewIconLockedCP">

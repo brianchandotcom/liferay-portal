@@ -1880,20 +1880,9 @@
 			<var name="kfProcessFieldData" value="option 2" />
 		</execute>
 
-		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="FormFields#viewTextMultilineLabel">
-			<var name="fieldLabel" value="Text Box" />
-			<var name="fieldName" value="TextBox" />
-		</execute>
-
-		<execute macro="FormFields#viewSelectLabel">
-			<var name="fieldLabel" value="Select" />
-			<var name="fieldName" value="Select" />
-		</execute>
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper')][1]//label" value1="Text" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper')][2]//label" value1="Text Box" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper')][3]//label" value1="Select" />
 
 		<execute macro="KaleoFormsAdmin#saveProcessRecord" />
 
@@ -1965,29 +1954,16 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#previewViewContent">
-			<var name="fieldLabel" value="Text Box" />
-			<var name="fieldValue" value="Test Box Description" />
-		</execute>
-
-		<execute macro="WorkflowAsset#previewViewContent">
 			<var name="fieldLabel" value="Select" />
 			<var name="fieldValue" value="option 2" />
 		</execute>
 
-		<execute macro="FormFields#viewTextLabel">
-			<var name="fieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="FormFields#viewTextMultilineLabel">
+		<execute macro="WorkflowAsset#previewViewContentFieldNotPresent">
 			<var name="fieldLabel" value="Text Box" />
-			<var name="fieldName" value="TextBox" />
 		</execute>
 
-		<execute macro="FormFields#viewSelectLabel">
-			<var name="fieldLabel" value="Select" />
-			<var name="fieldName" value="Select" />
-		</execute>
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper')][1]//label" value1="Text" />
+		<execute function="AssertTextEquals" locator1="//div[contains(@class,'field-wrapper')][2]//label" value1="Select" />
 	</command>
 
 	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
@@ -4917,9 +4893,8 @@
 			<var name="fieldValue" value="Kaleo Text Field" />
 		</execute>
 
-		<execute macro="WorkflowAsset#previewViewContent">
+		<execute macro="WorkflowAsset#previewViewContentFieldNotPresent">
 			<var name="fieldLabel" value="Date" />
-			<var name="fieldValue" value="4/1/17" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -6616,71 +6591,6 @@
 			<var name="kfAuthor" value="Test Test" />
 			<var name="kfProcessFieldData" value="Test Data" />
 			<var name="kfStatus" value="Approved" />
-		</execute>
-	</command>
-
-	<command name="ViewNoDuplicatesCreatedByAddFormSaveAndContinue" priority="3">
-		<description message="This is a use case for LPS-48995." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Kaleo Forms Admin" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#addProcess" />
-
-		<execute macro="KaleoFormsAdmin#addProcessDetails">
-			<var name="kfProcessDescription" value="Kaleo Forms Process Description" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#addFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#saveFieldSet" />
-
-		<execute macro="KaleoFormsAdmin#chooseFieldSet">
-			<var name="kfFieldSetName" value="${kfFieldSetName}" />
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#chooseWorkflow">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowDefinitionTitle" value="Single Approver" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#next" />
-
-		<execute macro="KaleoFormsAdmin#assignForm">
-			<var name="kfProcessName" value="Kaleo Forms Process" />
-			<var name="workflowTask" value="create" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#addForm">
-			<var name="kfFormName" value="Created Task Form" />
-		</execute>
-
-		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
-		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
-		<execute macro="KaleoFormsAdmin#saveAndContinueForm" />
-
-		<execute macro="KaleoFormsAdmin#saveForm" />
-
-		<execute macro="KaleoFormsAdmin#viewNoDuplicateForms">
-			<var name="kfFormName" value="Created Task Form" />
 		</execute>
 	</command>
 

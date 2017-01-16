@@ -477,7 +477,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 							message.getMessageId(), folder.getFolderId(),
 							tempMBAttachmentFileEntries);
 
-					if (message.getFormat().equals("bbcode")) {
+					if (message.isFormatBBCode()) {
 						body = MBAttachmentFileEntryUtil.updateContentBBCode(
 							body, mbAttachmentFileEntryReferences);
 					}
@@ -537,7 +537,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 								mbAttachmentFileEntry.getFileEntryId()));
 					}
 
-					if (message.getFormat().equals("bbcode")) {
+					if (message.isFormatBBCode()) {
 						body = MBAttachmentFileEntryUtil.updateContentBBCode(
 							body, mbAttachmentFileEntryReferences);
 					}

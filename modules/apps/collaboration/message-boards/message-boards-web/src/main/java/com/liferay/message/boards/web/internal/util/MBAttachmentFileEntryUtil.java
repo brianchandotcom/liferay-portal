@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,18 +85,6 @@ public class MBAttachmentFileEntryUtil {
 		return tempMBAttachmentFileEntries;
 	}
 
-	public static String updateMessageContent(
-		String body, MBMessage message,
-		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
-
-		if (message.isFormatBBCode()) {
-			return _updateContentBBCode(body, mbAttachmentFileEntryReferences);
-		}
-		else {
-			return _updateContentHTML(body, mbAttachmentFileEntryReferences);
-		}
-	}
-
 	private static FileEntry _fetchPortletFileEntry(
 		long groupId, String fileName, long folderId) {
 
@@ -113,24 +99,6 @@ public class MBAttachmentFileEntryUtil {
 
 			return null;
 		}
-	}
-
-	private static String _getMBAttachmentBBCodeImgTag(
-		FileEntry mbAttachmentFileEntry) {
-
-		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, mbAttachmentFileEntry, StringPool.BLANK);
-
-		return "[img]" + fileEntryURL + "[/img]";
-	}
-
-	private static String _getMBAttachmentHTMLImgTag(
-		FileEntry mbAttachmentFileEntry) {
-
-		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, mbAttachmentFileEntry, StringPool.BLANK);
-
-		return "<img src=\"" + fileEntryURL + "\" />";
 	}
 
 	private static String _getUniqueFileName(
@@ -165,59 +133,6 @@ public class MBAttachmentFileEntryUtil {
 			"Unable to get a unique file name for " + fileName + " in folder " +
 				folderId);
 	}
-
-	private static String _updateContentBBCode(
-		String content,
-		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
-
-		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
-				mbAttachmentFileEntryReferences) {
-
-			Matcher matcher = _BBCODE_IMG_TAG_REGEXP.matcher(content);
-
-			content = matcher.replaceAll(
-				_getMBAttachmentBBCodeImgTag(
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
-		}
-
-		return content;
-	}
-
-	private static String _updateContentHTML(
-		String content,
-		List<MBAttachmentFileEntryReference> mbAttachmentFileEntryReferences) {
-
-		for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
-				mbAttachmentFileEntryReferences) {
-
-			StringBundler sb = new StringBundler(8);
-
-			sb.append("<\\s*?img");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-			sb.append("\\s*?=\\s*?\"");
-			sb.append(
-				mbAttachmentFileEntryReference.
-					getTempMBAttachmentFileEntryId());
-			sb.append("\"");
-			sb.append(_ATTRIBUTE_LIST_REGEXP);
-			sb.append("/>");
-
-			content = content.replaceAll(
-				sb.toString(),
-				_getMBAttachmentHTMLImgTag(
-					mbAttachmentFileEntryReference.getMbAttachmentFileEntry()));
-		}
-
-		return content;
-	}
-
-	private static final String _ATTRIBUTE_LIST_REGEXP =
-		"(\\s*?\\w+\\s*?=\\s*?\"[^\"]*\")*?\\s*?";
-
-	private static final Pattern _BBCODE_IMG_TAG_REGEXP = Pattern.compile(
-		"\\[img[^\\]]*?" + EditorConstants.ATTRIBUTE_DATA_IMAGE_ID +
-			"=\"[^\"]*\"[^\\]]*\\][^\\[]+\\[/img\\]");
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 

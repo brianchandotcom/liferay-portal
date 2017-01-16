@@ -34,6 +34,8 @@ import com.liferay.message.boards.kernel.service.MBMessageService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadService;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
+import com.liferay.message.boards.web.internal.format.MBMessageFormatHandler;
+import com.liferay.message.boards.web.internal.format.MBMessageFormatHandlerFactory;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryUtil;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
@@ -428,9 +430,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 
 			MBMessage message = null;
 
-			List<MBAttachmentFileEntryReference>
-				mbAttachmentFileEntryReferences = new ArrayList<>();
-
 			if (messageId <= 0) {
 				if (PropsValues.
 						CAPTCHA_CHECK_PORTLET_MESSAGE_BOARDS_EDIT_MESSAGE) {
@@ -464,31 +463,13 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 						serviceContext);
 				}
 
-				List<FileEntry> tempMBAttachmentFileEntries =
-					MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(
-						body);
+				MBMessageFormatHandler formatHandler =
+					_formatHandlerFactory.provide(message.getFormat());
 
-				if (!tempMBAttachmentFileEntries.isEmpty()) {
-					Folder folder = message.addAttachmentsFolder();
-
-					mbAttachmentFileEntryReferences =
-						MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
-							message.getGroupId(), themeDisplay.getUserId(),
-							message.getMessageId(), folder.getFolderId(),
-							tempMBAttachmentFileEntries);
-
-					body = MBAttachmentFileEntryUtil.updateMessageContent(
-						body, message, mbAttachmentFileEntryReferences);
-
-					_mbMessageService.updateMessage(
-						message.getMessageId(), message.getSubject(), body,
-						null, null, message.getPriority(),
-						message.getAllowPingbacks(), serviceContext);
-				}
-
-				for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
-					PortletFileRepositoryUtil.deletePortletFileEntry(
-						tempMBAttachment.getFileEntryId());
+				if (formatHandler != null) {
+					_attachTempFiles(
+						themeDisplay, body, serviceContext, message,
+						formatHandler);
 				}
 			}
 			else {
@@ -503,36 +484,15 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 					}
 				}
 
-				List<FileEntry> tempMBAttachmentFileEntries =
-					MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(
-						body);
+				message = _mbMessageService.getMessage(messageId);
 
-				if (!tempMBAttachmentFileEntries.isEmpty()) {
-					message = _mbMessageService.getMessage(messageId);
+				MBMessageFormatHandler formatHandler =
+					_formatHandlerFactory.provide(message.getFormat());
 
-					Folder folder = message.addAttachmentsFolder();
-
-					mbAttachmentFileEntryReferences =
-						MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
-							message.getGroupId(), themeDisplay.getUserId(),
-							message.getMessageId(), folder.getFolderId(),
-							tempMBAttachmentFileEntries);
-
-					for (MBAttachmentFileEntryReference
-							mbAttachmentFileEntryReference :
-								mbAttachmentFileEntryReferences) {
-
-						FileEntry mbAttachmentFileEntry =
-							mbAttachmentFileEntryReference.
-								getMbAttachmentFileEntry();
-
-						existingFiles.add(
-							String.valueOf(
-								mbAttachmentFileEntry.getFileEntryId()));
-					}
-
-					body = MBAttachmentFileEntryUtil.updateMessageContent(
-						body, message, mbAttachmentFileEntryReferences);
+				if (formatHandler != null) {
+					body = _attachTempFiles(
+						themeDisplay, body, message, existingFiles,
+						formatHandler);
 				}
 
 				// Update message
@@ -544,11 +504,6 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 				if (message.isRoot()) {
 					_mbThreadLocalService.updateQuestion(
 						message.getThreadId(), question);
-				}
-
-				for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
-					PortletFileRepositoryUtil.deletePortletFileEntry(
-						tempMBAttachment.getFileEntryId());
 				}
 			}
 
@@ -577,6 +532,83 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
+
+	private String _attachTempFiles(
+			ThemeDisplay themeDisplay, String body, MBMessage message,
+			List<String> existingFiles, MBMessageFormatHandler formatHandler)
+		throws PortalException {
+
+		List<FileEntry> tempMBAttachmentFileEntries =
+			MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(body);
+
+		if (!tempMBAttachmentFileEntries.isEmpty()) {
+			Folder folder = message.addAttachmentsFolder();
+
+			List<MBAttachmentFileEntryReference>
+				mbAttachmentFileEntryReferences =
+					MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+						message.getGroupId(), themeDisplay.getUserId(),
+						message.getMessageId(), folder.getFolderId(),
+						tempMBAttachmentFileEntries);
+
+			for (MBAttachmentFileEntryReference mbAttachmentFileEntryReference :
+					mbAttachmentFileEntryReferences) {
+
+				FileEntry mbAttachmentFileEntry =
+					mbAttachmentFileEntryReference.getMbAttachmentFileEntry();
+
+				existingFiles.add(
+					String.valueOf(mbAttachmentFileEntry.getFileEntryId()));
+			}
+
+			body = formatHandler.replaceImageReferences(
+				body, mbAttachmentFileEntryReferences);
+
+			for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempMBAttachment.getFileEntryId());
+			}
+		}
+
+		return body;
+	}
+
+	private void _attachTempFiles(
+			ThemeDisplay themeDisplay, String body,
+			ServiceContext serviceContext, MBMessage message,
+			MBMessageFormatHandler formatHandler)
+		throws PortalException {
+
+		List<FileEntry> tempMBAttachmentFileEntries =
+			MBAttachmentFileEntryUtil.getTempMBAttachmentFileEntries(body);
+
+		if (!tempMBAttachmentFileEntries.isEmpty()) {
+			Folder folder = message.addAttachmentsFolder();
+
+			List<MBAttachmentFileEntryReference>
+				mbAttachmentFileEntryReferences =
+					MBAttachmentFileEntryUtil.addMBAttachmentFileEntries(
+						message.getGroupId(), themeDisplay.getUserId(),
+						message.getMessageId(), folder.getFolderId(),
+						tempMBAttachmentFileEntries);
+
+			body = formatHandler.replaceImageReferences(
+				body, mbAttachmentFileEntryReferences);
+
+			_mbMessageService.updateMessage(
+				message.getMessageId(), message.getSubject(), body, null, null,
+				message.getPriority(), message.getAllowPingbacks(),
+				serviceContext);
+		}
+
+		for (FileEntry tempMBAttachment : tempMBAttachmentFileEntries) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				tempMBAttachment.getFileEntryId());
+		}
+	}
+
+	@Reference
+	private MBMessageFormatHandlerFactory _formatHandlerFactory;
 
 	private MBCategoryService _mbCategoryService;
 	private MBMessageService _mbMessageService;
